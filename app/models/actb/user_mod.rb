@@ -56,7 +56,7 @@ module Actb
       included do
         has_one :actb_master_xrecord, class_name: "Actb::MasterXrecord", dependent: :destroy
 
-        delegate :rating, :rensho_count, :rensho_max, to: :actb_master_xrecord
+        delegate :rating, :rensho_count, :rensho_max, :udemae, :udemae_point, to: :actb_master_xrecord
 
         after_create do
           create_actb_master_xrecord!
@@ -66,16 +66,6 @@ module Actb
       def create_actb_master_xrecord_if_blank
         actb_master_xrecord || create_actb_master_xrecord!
       end
-
-      # # 両方まとめて更新する
-      # def master_xrecord_and_current_xrecord_update(rating_diff, judge, final)
-      #   [actb_current_xrecord, actb_master_xrecord].tap do |e|
-      #     e.rating_add(rating_diff)
-      #     e.judge_set(judge)
-      #     e.final_set(final)
-      #     e.save!
-      #   end
-      # end
     end
 
     concerning :SeasonXrecordMod do

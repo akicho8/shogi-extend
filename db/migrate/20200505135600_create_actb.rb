@@ -37,6 +37,13 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    # ウデマエ
+    create_table :actb_udemaes do |t|
+      t.string :key, null: false
+      t.integer :position, null: false, index: true
+      t.timestamps
+    end
+
     ################################################################################
 
     create_table :actb_rooms do |t|
@@ -84,53 +91,40 @@ class CreateActb < ActiveRecord::Migration[6.0]
     end
 
     # Actb::MasterXrecord
-    create_table :actb_master_xrecords do |t|
-      t.belongs_to :user,          null: false, index: { unique: true }, comment: "対戦者"
-      t.belongs_to :judge,         null: false,                          comment: "直前の勝敗"
-      t.belongs_to :final,         null: false,                          comment: "直前の結果"
-      t.integer :battle_count,     null: false, index: true,             comment: "対戦数"
-      t.integer :win_count,        null: false, index: true,             comment: "勝ち数"
-      t.integer :lose_count,       null: false, index: true,             comment: "負け数"
-      t.float   :win_rate,         null: false, index: true,             comment: "勝率"
-      t.decimal :rating, precision: 8, scale: 4,          null: false, index: true,             comment: "レーティング"
-      t.decimal :rating_last_diff, precision: 8, scale: 4,null: false, index: true,             comment: "直近レーティング変化"
-      t.decimal :rating_max, precision: 8, scale: 4,      null: false, index: true,             comment: "レーティング(最大)"
-      t.integer :rensho_count,     null: false, index: true,             comment: "連勝数"
-      t.integer :renpai_count,     null: false, index: true,             comment: "連敗数"
-      t.integer :rensho_max,       null: false, index: true,             comment: "連勝数(最大)"
-      t.integer :renpai_max,       null: false, index: true,             comment: "連敗数(最大)"
+    common_columns_define = -> t {
+      t.belongs_to :user,                                  null: false, index: { unique: true }, comment: "対戦者"
+      t.belongs_to :judge,                                 null: false,                          comment: "直前の勝敗"
+      t.belongs_to :final,                                 null: false,                          comment: "直前の結果"
+      t.integer :battle_count,                             null: false, index: true,             comment: "対戦数"
+      t.integer :win_count,                                null: false, index: true,             comment: "勝ち数"
+      t.integer :lose_count,                               null: false, index: true,             comment: "負け数"
+      t.float   :win_rate,                                 null: false, index: true,             comment: "勝率"
+      t.decimal :rating,           precision: 8, scale: 4, null: false, index: true,             comment: "レーティング"
+      t.decimal :rating_last_diff, precision: 8, scale: 4, null: false, index: true,             comment: "直近レーティング変化"
+      t.decimal :rating_max,       precision: 8, scale: 4, null: false, index: true,             comment: "レーティング(最大)"
+      t.integer :rensho_count,                             null: false, index: true,             comment: "連勝数"
+      t.integer :renpai_count,                             null: false, index: true,             comment: "連敗数"
+      t.integer :rensho_max,                               null: false, index: true,             comment: "連勝数(最大)"
+      t.integer :renpai_max,                               null: false, index: true,             comment: "連敗数(最大)"
+      t.belongs_to :udemae,                                null: false, index: true,             comment: "ウデマエ"
+      t.integer :udemae_point,                             null: false, index: false,            comment: "ウデマエの内部ポイント"
+
       t.timestamps
 
       t.integer  :disconnect_count, null: false, index: true, comment: "切断数"
       t.datetime :disconnected_at,  null: true,               comment: "最終切断日時"
+    }
 
-      # t.index [:user_id, :season_id], unique: true
+    create_table :actb_master_xrecords do |t|
+      common_columns_define.call(t)
     end
 
     # Actb::SeasonXrecord
     create_table :actb_season_xrecords do |t|
-      t.belongs_to :user,          null: false,              comment: "対戦者"
+      common_columns_define.call(t)
       t.belongs_to :season,        null: false,              comment: "期"
-      t.belongs_to :judge,         null: false,              comment: "直前の勝敗"
-      t.belongs_to :final,         null: false,              comment: "直前の結果"
-      t.integer :battle_count,     null: false, index: true, comment: "対戦数"
-      t.integer :win_count,        null: false, index: true, comment: "勝ち数"
-      t.integer :lose_count,       null: false, index: true, comment: "負け数"
-      t.float   :win_rate,         null: false, index: true, comment: "勝率"
-      t.decimal :rating, precision: 8, scale: 4,          null: false, index: true, comment: "レーティング"
-      t.decimal :rating_last_diff, precision: 8, scale: 4,null: false, index: true, comment: "直近レーティング変化"
-      t.decimal :rating_max, precision: 8, scale: 4,      null: false, index: true, comment: "レーティング(最大)"
-      t.integer :rensho_count,     null: false, index: true, comment: "連勝数"
-      t.integer :renpai_count,     null: false, index: true, comment: "連敗数"
-      t.integer :rensho_max,       null: false, index: true, comment: "連勝数(最大)"
-      t.integer :renpai_max,       null: false, index: true, comment: "連敗数(最大)"
       t.integer :create_count,     null: false, index: true, comment: "users.actb_season_xrecord.create_count は users.actb_season_xrecords.count と一致"
       t.integer :generation,       null: false, index: true, comment: "世代(seasons.generationと一致)"
-      t.timestamps
-
-      t.integer  :disconnect_count, null: false, index: true, comment: "切断数"
-      t.datetime :disconnected_at,  null: true,               comment: "最終切断日時"
-
       t.index [:user_id, :season_id], unique: true
     end
 

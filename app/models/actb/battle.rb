@@ -86,62 +86,11 @@ module Actb
     end
 
     def katimashita(target_user, judge_key, final_key)
-      if end_at
-        raise "すでに終了している"
-      end
-
-      judge = Judge.fetch(judge_key)
-      final = Final.fetch(final_key)
-      judges = [judge, judge.flip]
-
-      ActiveRecord::Base.transaction do
-        self.final = final
-
-        # 引き分け
-        mm = memberships
-        c_diffs = [0, 0]
-        m_diffs = [0, 0]
-
-        if target_user
-          m1 = memberships.find_by!(user: target_user)
-          m2 = (memberships - [m1]).first
-
-          mm = [m1, m2]
-          if judge.key != "win"
-            mm = mm.reverse
-            judges = judges.reverse
-          end
-
-          # 今シーズン用
-          c_ratings = mm.collect { |e| e.user.actb_current_xrecord.rating }
-          c_diffs = EloRating.plus_minus_retval(:rating_update2, *c_ratings)
-
-          # 永続的記録用
-          m_ratings = mm.collect { |e| e.user.actb_master_xrecord.rating }
-          m_diffs = EloRating.plus_minus_retval(:rating_update2, *m_ratings)
-        end
-
-        # Actb::SeasonXrecord
-        mm.each.with_index do |m, i|
-          m.judge = judges[i]
-          m.user.actb_current_xrecord.tap do |e|
-            e.rating_add(c_diffs[i])
-            e.judge_set(judges[i])
-            e.final_set(final)
-            e.save!
-          end
-          m.user.actb_master_xrecord.tap do |e|
-            e.rating_add(m_diffs[i])
-            e.judge_set(judges[i])
-            e.final_set(final)
-            e.save!
-          end
-        end
-
-        mm.each(&:save!)
-
-        save!
-      end
+      KatimashitaCop.new(self, {
+          :target_user => target_user,
+          :judge_key   => judge_key,
+          :final_key   => final_key,
+        }).run
     end
 
     # 開始時

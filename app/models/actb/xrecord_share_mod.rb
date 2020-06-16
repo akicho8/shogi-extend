@@ -33,10 +33,13 @@
 
 module Actb
   concern :XrecordShareMod do
+    D100 = 100
+
     included do
       belongs_to :user, class_name: "::User"
       belongs_to :judge           # 直近バトルの勝敗
       belongs_to :final           # 直近バトルの結末
+      belongs_to :udemae
 
       scope :newest_order, -> { order(generation: :desc) }
       scope :oldest_order, -> { order(generation: :asc)  }
@@ -65,6 +68,10 @@ module Actb
         # 結果関連
         self.disconnect_count ||= 0
         self.final ||= Final.fetch(:f_pending)
+
+        # ウデマエ
+        self.udemae ||= Udemae.fetch("C-")
+        self.udemae_point ||= 0
       end
     end
 
@@ -120,6 +127,36 @@ module Actb
       if final.key == "f_disconnect"
         self.disconnect_count += 1
         self.disconnected_at = Time.current
+      end
+    end
+
+    # Rの変化度に応じてウデマエポイントも変化させる
+    # 同じRで勝ったら+16で、それを C- の場合は 20 に換算する
+    def udemae_point_add2(judge, diff)
+      if judge.win_or_lose?
+        base = udemae.pure_info.public_send(judge.key)
+        point = diff * base / 16.0 # 16 * (20 / 16.0) -> 20
+        p "#{diff} * #{base} / 16.0 --> #{point}"
+        logger.debug "#{diff} * #{base} / 16.0 --> #{point}" if logger
+        # point = v * judge.pure_info.sign_value # 負けの場合は符号反転
+        udemae_point_add(point)
+      end
+    end
+
+    def udemae_point_add(diff)
+      v = udemae_point + diff
+      rdiff, rest = v.divmod(D100)
+
+      if rdiff.nonzero?
+        next_udemae = UdemaeInfo.lookup(udemae.pure_info.code + rdiff)
+        if next_udemae
+          self.udemae = next_udemae.db_record!
+          self.udemae_point = rest
+        else
+          self.udemae_point = v.clamp(0, D100-1)
+        end
+      else
+        self.udemae_point = v
       end
     end
   end

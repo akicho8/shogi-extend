@@ -184,6 +184,8 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.integer "renpai_count", null: false, comment: "連敗数"
     t.integer "rensho_max", null: false, comment: "連勝数(最大)"
     t.integer "renpai_max", null: false, comment: "連敗数(最大)"
+    t.bigint "udemae_id", null: false, comment: "ウデマエ"
+    t.integer "udemae_point", null: false, comment: "ウデマエの内部ポイント"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "disconnect_count", null: false, comment: "切断数"
@@ -200,6 +202,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["renpai_max"], name: "index_actb_master_xrecords_on_renpai_max"
     t.index ["rensho_count"], name: "index_actb_master_xrecords_on_rensho_count"
     t.index ["rensho_max"], name: "index_actb_master_xrecords_on_rensho_max"
+    t.index ["udemae_id"], name: "index_actb_master_xrecords_on_udemae_id"
     t.index ["user_id"], name: "index_actb_master_xrecords_on_user_id", unique: true
     t.index ["win_count"], name: "index_actb_master_xrecords_on_win_count"
     t.index ["win_rate"], name: "index_actb_master_xrecords_on_win_rate"
@@ -322,7 +325,6 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
 
   create_table "actb_season_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "対戦者"
-    t.bigint "season_id", null: false, comment: "期"
     t.bigint "judge_id", null: false, comment: "直前の勝敗"
     t.bigint "final_id", null: false, comment: "直前の結果"
     t.integer "battle_count", null: false, comment: "対戦数"
@@ -336,12 +338,15 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.integer "renpai_count", null: false, comment: "連敗数"
     t.integer "rensho_max", null: false, comment: "連勝数(最大)"
     t.integer "renpai_max", null: false, comment: "連敗数(最大)"
-    t.integer "create_count", null: false, comment: "users.actb_season_xrecord.create_count は users.actb_season_xrecords.count と一致"
-    t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
+    t.bigint "udemae_id", null: false, comment: "ウデマエ"
+    t.integer "udemae_point", null: false, comment: "ウデマエの内部ポイント"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "disconnect_count", null: false, comment: "切断数"
     t.datetime "disconnected_at", comment: "最終切断日時"
+    t.bigint "season_id", null: false, comment: "期"
+    t.integer "create_count", null: false, comment: "users.actb_season_xrecord.create_count は users.actb_season_xrecords.count と一致"
+    t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
     t.index ["battle_count"], name: "index_actb_season_xrecords_on_battle_count"
     t.index ["create_count"], name: "index_actb_season_xrecords_on_create_count"
     t.index ["disconnect_count"], name: "index_actb_season_xrecords_on_disconnect_count"
@@ -357,8 +362,9 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["rensho_count"], name: "index_actb_season_xrecords_on_rensho_count"
     t.index ["rensho_max"], name: "index_actb_season_xrecords_on_rensho_max"
     t.index ["season_id"], name: "index_actb_season_xrecords_on_season_id"
+    t.index ["udemae_id"], name: "index_actb_season_xrecords_on_udemae_id"
     t.index ["user_id", "season_id"], name: "index_actb_season_xrecords_on_user_id_and_season_id", unique: true
-    t.index ["user_id"], name: "index_actb_season_xrecords_on_user_id"
+    t.index ["user_id"], name: "index_actb_season_xrecords_on_user_id", unique: true
     t.index ["win_count"], name: "index_actb_season_xrecords_on_win_count"
     t.index ["win_rate"], name: "index_actb_season_xrecords_on_win_rate"
   end
@@ -382,6 +388,14 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["rule_id"], name: "index_actb_settings_on_rule_id"
     t.index ["user_id"], name: "index_actb_settings_on_user_id"
+  end
+
+  create_table "actb_udemaes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_actb_udemaes_on_position"
   end
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

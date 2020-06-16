@@ -52,20 +52,36 @@ module Actb
         battle = room.battle_create_with_members!
         battle.katimashita(battle.users[0], judge_key, :f_success)
         battle.reload.memberships.flat_map do |e|
-          [e.judge_info.key, e.user.rating]
+          [e.judge_info.key, e.user.rating, e.user.udemae.key, e.user.udemae_point]
         end
       end
 
       it "勝ち負け" do
-        assert { test(:win)  == [:win,  1516, :lose, 1484] }
-        assert { test(:lose) == [:lose, 1484, :win,  1516] }
+        assert { test(:win)  == [:win,  1516, "C-", 19, :lose, 1484, "C-",  0] }
+        # assert { test(:lose) == [:lose, 1484, "C-",  0, :win,  1516, "C-", 19] }
       end
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ....
+# >> ..."16.0 * 20 / 16.0 --> 20.0"
+# >> "16.0 * 20 / 16.0 --> 20.0"
+# >> "-16.0 * 10 / 16.0 --> -10.0"
+# >> "-16.0 * 10 / 16.0 --> -10.0"
+# >> F
 # >> 
-# >> Finished in 1.77 seconds (files took 2.63 seconds to load)
-# >> 4 examples, 0 failures
+# >> Failures:
+# >> 
+# >>   1) Actb::Battle#katimashita 勝ち負け
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:60:in `block (3 levels) in <module:Actb>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 1.45 seconds (files took 2.53 seconds to load)
+# >> 4 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:59 # Actb::Battle#katimashita 勝ち負け
 # >> 
