@@ -107,7 +107,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :rensho_max,                               null: false, index: true,             comment: "連勝数(最大)"
       t.integer :renpai_max,                               null: false, index: true,             comment: "連敗数(最大)"
       t.belongs_to :udemae,                                null: false, index: true,             comment: "ウデマエ"
-      t.integer :udemae_point,                             null: false, index: false,            comment: "ウデマエの内部ポイント"
+      t.decimal :udemae_point,     precision: 8, scale: 4, null: false, index: false,            comment: "ウデマエの内部ポイント"
 
       t.timestamps
 

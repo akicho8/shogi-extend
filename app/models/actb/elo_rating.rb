@@ -53,10 +53,10 @@ module Actb
 
     mattr_accessor(:exception_enable) { true }
 
-    def plus_minus_retval(method, a, b)
-      d = send(method, a, b)
-      [d, -d]
-    end
+    # def plus_minus_retval(method, a, b)
+    #   d = send(method, a, b)
+    #   [d, -d]
+    # end
 
     # 正しい方法
     def rating_update1(a, b)

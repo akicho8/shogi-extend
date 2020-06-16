@@ -33,13 +33,11 @@
 
 module Actb
   concern :XrecordShareMod do
-    D100 = 100
-
     included do
       belongs_to :user, class_name: "::User"
       belongs_to :judge           # 直近バトルの勝敗
       belongs_to :final           # 直近バトルの結末
-      belongs_to :udemae
+      belongs_to :udemae          # ウデマエ
 
       scope :newest_order, -> { order(generation: :desc) }
       scope :oldest_order, -> { order(generation: :asc)  }
@@ -70,7 +68,7 @@ module Actb
         self.final ||= Final.fetch(:f_pending)
 
         # ウデマエ
-        self.udemae ||= Udemae.fetch("C-")
+        self.udemae       ||= Udemae.fetch(UdemaeInfo::DEFAULT)
         self.udemae_point ||= 0
       end
     end
@@ -135,16 +133,18 @@ module Actb
     def udemae_add_by_rating(judge, diff)
       if judge.win_or_lose?
         base = udemae.pure_info.public_send(judge.key)
-        point = Float(diff) * base / 16 # 16 * (20 / 16.0) -> 20
-        p "#{diff} * #{base} / 16.0 --> #{point}"
-        # point = v * judge.pure_info.sign_value # 負けの場合は符号反転
+        point = Float(diff) * base / (EloRating::K / 2) # 16 * (20 / 16.0) -> 20
+        if false
+          p "#{diff} * #{base} / 16.0 --> #{point}"
+        end
         udemae_add(point)
       end
     end
 
+    # レーティングに関係なく加算する
     def udemae_add(diff)
       v = udemae_point + diff
-      rdiff, rest = v.divmod(D100)
+      rdiff, rest = v.divmod(UdemaeInfo::MAX)
 
       if rdiff.nonzero?
         next_udemae = UdemaeInfo.lookup(udemae.pure_info.code + rdiff)
@@ -152,7 +152,7 @@ module Actb
           self.udemae = next_udemae.db_record!
           self.udemae_point = rest
         else
-          self.udemae_point = v.clamp(0, D100-1)
+          self.udemae_point = v.clamp(0, UdemaeInfo::MAX.pred)
         end
       else
         self.udemae_point = v

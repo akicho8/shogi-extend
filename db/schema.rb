@@ -185,7 +185,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.integer "rensho_max", null: false, comment: "連勝数(最大)"
     t.integer "renpai_max", null: false, comment: "連敗数(最大)"
     t.bigint "udemae_id", null: false, comment: "ウデマエ"
-    t.integer "udemae_point", null: false, comment: "ウデマエの内部ポイント"
+    t.decimal "udemae_point", precision: 8, scale: 4, null: false, comment: "ウデマエの内部ポイント"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "disconnect_count", null: false, comment: "切断数"
@@ -339,7 +339,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.integer "rensho_max", null: false, comment: "連勝数(最大)"
     t.integer "renpai_max", null: false, comment: "連敗数(最大)"
     t.bigint "udemae_id", null: false, comment: "ウデマエ"
-    t.integer "udemae_point", null: false, comment: "ウデマエの内部ポイント"
+    t.decimal "udemae_point", precision: 8, scale: 4, null: false, comment: "ウデマエの内部ポイント"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "disconnect_count", null: false, comment: "切断数"
