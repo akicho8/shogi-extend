@@ -7,7 +7,7 @@ module Actb
     def test1(udemae_key, udemae_point, diff)
       user1.actb_master_xrecord.update!(udemae: Udemae.fetch(udemae_key), udemae_point: udemae_point)
       user1.actb_master_xrecord.udemae_add(diff)
-      [user1.udemae.key, user1.udemae_point]
+      [user1.udemae.key, user1.udemae_point.to_i]
     end
 
     it do
@@ -28,9 +28,9 @@ module Actb
       assert { test1("C+",  2, -102) == ["C",   0] }
       assert { test1("C+",  2, -103) == ["C-", 99] }
       # 限界(上)
-      assert { test1("S+", 98, 1)    == ["S+", 99] }
-      assert { test1("S+", 98, 2)    == ["S+", 99] }
-      assert { test1("S+", 98, 3)    == ["S+", 99] }
+      assert { test1("X", 98, 1)     == ["X", 99] }
+      assert { test1("X", 98, 2)     == ["X", 99] }
+      assert { test1("X", 98, 3)     == ["X", 99] }
       # 限界(下)
       assert { test1("C-",  2, -1)   == ["C-",  1] }
       assert { test1("C-",  2, -2)   == ["C-",  0] }
@@ -41,6 +41,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .
 # >> 
-# >> Finished in 0.94576 seconds (files took 2.56 seconds to load)
+# >> Finished in 0.94777 seconds (files took 2.6 seconds to load)
 # >> 1 example, 0 failures
 # >> 

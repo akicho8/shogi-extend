@@ -147,7 +147,7 @@ module Actb
       rdiff, rest = v.divmod(UdemaeInfo::MAX)
 
       if rdiff.nonzero?
-        next_udemae = UdemaeInfo.lookup(udemae.pure_info.code + rdiff)
+        next_udemae = UdemaeInfo.lookup(udemae.pure_info.code + rdiff.truncate)
         if next_udemae
           self.udemae = next_udemae.db_record!
           self.udemae_point = rest
