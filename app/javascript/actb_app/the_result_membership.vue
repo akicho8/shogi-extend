@@ -20,7 +20,7 @@
     | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
 
   ////////////////////////////////////////////////////////////////////////////////
-  .user_rating.has-text-weight-bold
+  .user_rating.has-text-weight-bold(v-if="app.config.rating_display_p")
     | {{membership.user.actb_current_xrecord.rating}}
     span.rating_last_diff.has-text-danger(v-if="membership.user.actb_current_xrecord.rating_last_diff > 0")
       | (+{{membership.user.actb_current_xrecord.rating_last_diff}})
