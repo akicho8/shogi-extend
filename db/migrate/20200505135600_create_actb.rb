@@ -92,7 +92,6 @@ class CreateActb < ActiveRecord::Migration[6.0]
 
     # Actb::MasterXrecord
     common_columns_define = -> t {
-      t.belongs_to :user,                                  null: false, index: { unique: true }, comment: "対戦者"
       t.belongs_to :judge,                                 null: false,                          comment: "直前の勝敗"
       t.belongs_to :final,                                 null: false,                          comment: "直前の結果"
       t.integer :battle_count,                             null: false, index: true,             comment: "対戦数"
@@ -116,12 +115,14 @@ class CreateActb < ActiveRecord::Migration[6.0]
     }
 
     create_table :actb_master_xrecords do |t|
+      t.belongs_to :user, null: false, index: { unique: true }, comment: "対戦者"
       common_columns_define.call(t)
     end
 
     # Actb::SeasonXrecord
     create_table :actb_season_xrecords do |t|
       common_columns_define.call(t)
+      t.belongs_to :user,          null: false, index: true, comment: "対戦者"
       t.belongs_to :season,        null: false,              comment: "期"
       t.integer :create_count,     null: false, index: true, comment: "users.actb_season_xrecord.create_count は users.actb_season_xrecords.count と一致"
       t.integer :generation,       null: false, index: true, comment: "世代(seasons.generationと一致)"
