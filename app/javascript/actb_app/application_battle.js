@@ -340,7 +340,7 @@ export const application_battle = {
     },
 
     // 結果画面へ
-    katimashita_broadcasted(params) {
+    katimake_set_broadcasted(params) {
       this.result_setup(params.battle)
     },
 

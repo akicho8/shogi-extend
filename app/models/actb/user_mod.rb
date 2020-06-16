@@ -66,6 +66,13 @@ module Actb
       def create_actb_master_xrecord_if_blank
         actb_master_xrecord || create_actb_master_xrecord!
       end
+
+      # 両方に同じ処理を行う
+      def both_xrecord_each
+        [:actb_master_xrecord, :actb_current_xrecord].each do |e|
+          yield public_send(e)
+        end
+      end
     end
 
     concerning :SeasonXrecordMod do

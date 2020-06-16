@@ -107,7 +107,7 @@ Actb::Question.all.each.with_index do |question, i|
 end
 
 # 終局
-battle.katimashita(user1, :win, :f_success)
+battle.katimake_set(user1, :win, :f_success)
 
 # 切断したことにする
 user1.actb_current_xrecord.update!(final: Actb::Final.fetch(:f_disconnect))

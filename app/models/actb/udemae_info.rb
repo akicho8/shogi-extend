@@ -12,7 +12,7 @@ module Actb
       { key: "A",  win: 10, lose: 10, },
       { key: "A+", win: 10, lose: 10, },
       { key: "S",  win:  5, lose:  6, },
-      { key: "S+", win:  4, lose:  4, },
+      { key: "S+", win:  4, lose:  5, },
     ]
   end
 end

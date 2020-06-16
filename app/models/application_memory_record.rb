@@ -18,6 +18,6 @@ module ApplicationMemoryRecord
   end
 
   def db_class
-    @db_class ||= name.remove(/Info/)
+    @db_class ||= self.class.name.remove(/Info\z/).constantize
   end
 end

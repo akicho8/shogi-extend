@@ -8,7 +8,7 @@ module Actb
 
     def unsubscribed
       if current_battle.end_at.blank?
-        katimashita(current_user, :lose, :f_disconnect)
+        katimake_set(current_user, :lose, :f_disconnect)
       end
     end
 
@@ -27,10 +27,10 @@ module Actb
         args = md["command_line"].split
         command = args.shift
         if command == "win"
-          katimashita(current_user, :win, :f_success)
+          katimake_set(current_user, :win, :f_success)
         end
         if command == "lose"
-          katimashita(current_user, :lose, :f_disconnect)
+          katimake_set(current_user, :lose, :f_disconnect)
         end
       end
     end
@@ -151,10 +151,10 @@ module Actb
 
     # <-- app/javascript/actb_app/application.vue
     def goal_hook(data)
-      katimashita(current_user, :win, :f_success)
+      katimake_set(current_user, :win, :f_success)
     end
 
-    def katimashita(target_user, judge_key, final_key)
+    def katimake_set(target_user, judge_key, final_key)
       battle = current_battle
 
       if battle.end_at?
@@ -162,10 +162,10 @@ module Actb
         return
       end
 
-      battle.katimashita(target_user, judge_key, final_key)
+      battle.katimake_set(target_user, judge_key, final_key)
       battle.reload
 
-      broadcast(:katimashita_broadcasted, battle: battle.as_json_type2)
+      broadcast(:katimake_set_broadcasted, battle: battle.as_json_type2)
       # --> app/javascript/actb_app/application.vue
     end
 
@@ -217,7 +217,7 @@ module Actb
 
       b_scores = current_battle.memberships.collect { |e| data[:member_infos_hash][e.id.to_s]["b_score"] }
       if b_scores.max < Actb::Config[:b_score_max_for_win]
-        katimashita(nil, :draw, :f_draw)
+        katimake_set(nil, :draw, :f_draw)
         return
       end
 
@@ -230,7 +230,7 @@ module Actb
         ]
       }.first
 
-      katimashita(membership.user, :win, :f_success)
+      katimake_set(membership.user, :win, :f_success)
     end
 
     # membership_id が切断した風にする(デバッグ用)
@@ -239,7 +239,7 @@ module Actb
       data = data.to_options
       membership = current_battle.memberships.find(data[:membership_id])
       raise "もう終わっている" if current_battle.end_at?
-      katimashita(membership.user, :lose, :f_disconnect)
+      katimake_set(membership.user, :lose, :f_disconnect)
     end
 
     # 退出通知
