@@ -19,17 +19,20 @@ module Actb
 
         [:actb_master_xrecord, :actb_current_xrecord].each do |method|
           judge_it = judges.each
-          diff_it = diffs_get(method).each
+          diff = diffs_get(method)
 
           memberships.each do |m|
             judge = judge_it.next
-            diff  = diff_it.next
+            sdiff = diff * judge.pure_info.sign_value
 
             r = m.user.send(method)
-            r.rating_add(diff)
-            r.udemae_point_add_from_rating_diff(judge, diff)
-            r.judge_set(judge)
-            r.final_set(final)
+
+            # 順序に意味はない
+            r.rating_add(sdiff)                  # レーティング更新
+            r.udemae_add_by_rating(judge, sdiff) # ウデマエ更新(レーティングの変化度を考慮)
+            r.judge_set(judge)                   # 勝敗
+            r.final_set(final)                   # 結果
+
             r.save!
           end
         end
@@ -50,9 +53,9 @@ module Actb
     def diffs_get(method)
       if target_user
         values = memberships.collect { |e| e.user.send(method).rating }
-        EloRating.plus_minus_retval(:rating_update2, *values)
+        EloRating.rating_update2(*values)
       else
-        [0, 0]
+        0
       end
     end
 

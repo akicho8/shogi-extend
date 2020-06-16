@@ -53,7 +53,6 @@ module Actb
 
     mattr_accessor(:exception_enable) { true }
 
-    # レートの変動を 1 以上に補正する
     def plus_minus_retval(method, a, b)
       d = send(method, a, b)
       [d, -d]

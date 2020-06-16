@@ -64,16 +64,36 @@ module Actb
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..."16.0 * 20 / 16.0 --> 20.0"
-# >> "-16.0 * 10 / 16.0 --> -10.0"
-# >> "16.0 * 20 / 16.0 --> 20.0"
-# >> "-16.0 * 10 / 16.0 --> -10.0"
-# >> "16.0 * 20 / 16.0 --> 20.0"
-# >> "-16.0 * 10 / 16.0 --> -10.0"
-# >> "16.0 * 20 / 16.0 --> 20.0"
-# >> "-16.0 * 10 / 16.0 --> -10.0"
-# >> .
+# >> ...F
 # >> 
-# >> Finished in 2.2 seconds (files took 5.64 seconds to load)
-# >> 4 examples, 0 failures
+# >> Failures:
+# >> 
+# >>   1) Actb::Battle#katimake_set 勝ち負け
+# >>      Failure/Error: sdiff = diff * judge.pure_info.value_sign
+# >> 
+# >>      NoMethodError:
+# >>        undefined method `value_sign' for #<Actb::JudgeInfo:0x00007fd9baeb26c0>
+# >>      # ./app/models/actb/battle_katimake_set.rb:26:in `block (3 levels) in run'
+# >>      # ./app/models/actb/battle_katimake_set.rb:24:in `each'
+# >>      # ./app/models/actb/battle_katimake_set.rb:24:in `block (2 levels) in run'
+# >>      # ./app/models/actb/battle_katimake_set.rb:20:in `each'
+# >>      # ./app/models/actb/battle_katimake_set.rb:20:in `block in run'
+# >>      # ./app/models/actb/battle_katimake_set.rb:14:in `run'
+# >>      # ./app/models/actb/battle.rb:93:in `katimake_set'
+# >>      # -:53:in `test'
+# >>      # -:60:in `block (4 levels) in <module:Actb>'
+# >>      # <internal:prelude>:137:in `__enable'
+# >>      # <internal:prelude>:137:in `enable'
+# >>      # <internal:prelude>:137:in `__enable'
+# >>      # <internal:prelude>:137:in `enable'
+# >>      # -:60:in `block (3 levels) in <module:Actb>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 1.37 seconds (files took 2.49 seconds to load)
+# >> 4 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:59 # Actb::Battle#katimake_set 勝ち負け
 # >> 

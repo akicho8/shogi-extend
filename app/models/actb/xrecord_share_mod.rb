@@ -132,17 +132,17 @@ module Actb
 
     # Rの変化度に応じてウデマエポイントも変化させる
     # 同じRで勝ったら+16で、それを C- の場合は 20 に換算する
-    def udemae_point_add_from_rating_diff(judge, diff)
+    def udemae_add_by_rating(judge, diff)
       if judge.win_or_lose?
         base = udemae.pure_info.public_send(judge.key)
         point = Float(diff) * base / 16 # 16 * (20 / 16.0) -> 20
         p "#{diff} * #{base} / 16.0 --> #{point}"
         # point = v * judge.pure_info.sign_value # 負けの場合は符号反転
-        udemae_point_add(point)
+        udemae_add(point)
       end
     end
 
-    def udemae_point_add(diff)
+    def udemae_add(diff)
       v = udemae_point + diff
       rdiff, rest = v.divmod(D100)
 

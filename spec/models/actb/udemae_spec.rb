@@ -6,7 +6,7 @@ module Actb
 
     def test1(udemae_key, udemae_point, diff)
       user1.actb_master_xrecord.update!(udemae: Udemae.fetch(udemae_key), udemae_point: udemae_point)
-      user1.actb_master_xrecord.udemae_point_add(diff)
+      user1.actb_master_xrecord.udemae_add(diff)
       [user1.udemae.key, user1.udemae_point]
     end
 
@@ -41,6 +41,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .
 # >> 
-# >> Finished in 0.97033 seconds (files took 2.53 seconds to load)
+# >> Finished in 0.94576 seconds (files took 2.56 seconds to load)
 # >> 1 example, 0 failures
 # >> 
