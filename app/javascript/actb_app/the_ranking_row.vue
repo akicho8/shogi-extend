@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_ranking_row.is-flex(:class="{active: current_user && row.user.id === app.current_user.id}" @click="app.ov_user_info_set(row.user.id)")
+.the_ranking_row.is-flex(:class="{active: app.current_user && row.user.id === app.current_user.id}" @click="app.ov_user_info_set(row.user.id)")
   .rank_block
     .rank.is-size-5.has-text-weight-bold.has-text-right.has-text-primary
       | {{row.rank}}
