@@ -47,25 +47,29 @@ module Actb
     # > Kは自由に設定できる定数値であり、一般的には32が採用されることが多いが、
     # > プロレベルでは16が使われることもある。Kが大きいほど、適正レーティングに収束するのが早くなる一方
     # > 収束した後も頻繁に上下する不安定な値となる
-    mattr_accessor(:k) { 32 }
+    K = 32
 
     mattr_accessor(:alpha) { 400 }
 
     mattr_accessor(:exception_enable) { true }
 
+    # レートの変動を 1 以上に補正する
+    def plus_minus_retval(method, a, b)
+      d = send(method, a, b)
+      [d, -d]
+    end
+
     # 正しい方法
     def rating_update1(a, b)
       w = 1.fdiv(10**((a - b).fdiv(alpha)) + 1) # Wab は a - b
-      d = k * w
-      [ a + d, b - d ]
+      K * w
     end
 
     # レートの変動を 1 以上に補正する
     def rating_update2(a, b)
       w = 1.fdiv(10**((a - b).fdiv(alpha)) + 1)
-      d = k * w
-      d = correcting_the_1_below_the_decimal_to_1_or_minus1(d)
-      [ a + d, b - d ]
+      d = K * w
+      correcting_the_1_below_the_decimal_to_1_or_minus1(d)
     end
 
     # 擬似的な算出方法
@@ -73,11 +77,11 @@ module Actb
     def rating_update3(a, b)
       v = b - a
       w = v.fdiv(alpha*2) + 0.5
-      d = k * w
+      d = K * w
 
       if exception_enable
         if v > alpha
-          raise InvalidArgument, "R差#{v} > #{alpha} のとき加算値#{d}が#{k}を超える"
+          raise InvalidArgument, "R差#{v} > #{alpha} のとき加算値#{d}が#{K}を超える"
         end
         if v == -alpha
           raise InvalidArgument, "R差#{v} == -#{alpha} のとき加算値#{d}が0になる"
@@ -87,7 +91,7 @@ module Actb
         end
       end
 
-      [ a + d, b - d ]
+      d
     end
 
     # 擬似的な算出方法補正入り
@@ -95,16 +99,16 @@ module Actb
     def rating_update4(a, b)
       v = b - a
       if v > alpha
-        d = k           # 大金星だけどレートが上がりすぎるため 32 に補正する
+        d = K           # 大金星だけどレートが上がりすぎるため 32 に補正する
       elsif v <= -alpha
         d = 1           # 弱すぎる人に勝ったときレートが下がるのを防ぐ
       else
         w = v.fdiv(alpha*2) + 0.5
-        d = k * w
+        d = K * w
         d = correcting_the_1_below_the_decimal_to_1_or_minus1(d) # -0.9..0.9 -> -1.0..1.0
       end
 
-      [ a + d, b - d ]
+      d
     end
 
     private

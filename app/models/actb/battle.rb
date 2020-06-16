@@ -97,6 +97,11 @@ module Actb
       ActiveRecord::Base.transaction do
         self.final = final
 
+        # 引き分け
+        mm = memberships
+        c_diffs = [0, 0]
+        m_diffs = [0, 0]
+
         if target_user
           m1 = memberships.find_by!(user: target_user)
           m2 = (memberships - [m1]).first
@@ -109,30 +114,24 @@ module Actb
 
           # 今シーズン用
           c_ratings = mm.collect { |e| e.user.actb_current_xrecord.rating }
-          c_ratings = EloRating.rating_update2(*c_ratings)
-          c_ratings = c_ratings.collect(&:round)
+          c_diffs = EloRating.plus_minus_retval(:rating_update2, *c_ratings)
 
           # 永続的記録用
           m_ratings = mm.collect { |e| e.user.actb_master_xrecord.rating }
-          m_ratings = EloRating.rating_update2(*m_ratings)
-          m_ratings = m_ratings.collect(&:round)
-        else
-          mm = memberships
-          c_ratings = mm.collect { |e| e.user.actb_current_xrecord.rating }
-          m_ratings = mm.collect { |e| e.user.actb_master_xrecord.rating }
+          m_diffs = EloRating.plus_minus_retval(:rating_update2, *m_ratings)
         end
 
         # Actb::SeasonXrecord
         mm.each.with_index do |m, i|
           m.judge = judges[i]
           m.user.actb_current_xrecord.tap do |e|
-            e.rating_set(c_ratings[i])
+            e.rating_add(c_diffs[i])
             e.judge_set(judges[i])
             e.final_set(final)
             e.save!
           end
           m.user.actb_master_xrecord.tap do |e|
-            e.rating_set(m_ratings[i])
+            e.rating_add(m_diffs[i])
             e.judge_set(judges[i])
             e.final_set(final)
             e.save!

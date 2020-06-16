@@ -44,7 +44,7 @@ module Actb
       before_validation do
         # レーティング
         self.rating ||= rating_default
-        self.rating_max ||= self.rating
+        self.rating_max ||= rating
         self.rating_last_diff ||= 0
 
         # 勝敗関連
@@ -68,9 +68,9 @@ module Actb
       end
     end
 
-    def rating_set(rating)
-      self.rating_last_diff = rating - self.rating
-      self.rating = rating
+    def rating_add(value)
+      self.rating_last_diff = value
+      self.rating += value
       if rating_max < rating
         self.rating_max = rating
       end
