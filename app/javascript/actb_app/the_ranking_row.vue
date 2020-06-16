@@ -8,9 +8,15 @@
   .name_with_rating
     .name.has-text-weight-bold
       | {{row.user.name}}
-    .rating
-      | {{row.user[$parent.current_tab_info.key]}}
-      span.unit(v-if="$parent.current_tab_info.unit")
+      span.ml-1.has-text-primary(v-if="app.debug_mode_p") {{row.user.udemae_key}}
+    .value
+      template(v-if="$parent.current_tab_info.key === 'rating' && app.config.rating_display_p")
+        | R{{row.user.actb_season_xrecord.rating}}
+      template(v-if="$parent.current_tab_info.key === 'rensho_count'")
+        | {{row.user.actb_season_xrecord.rensho_count}}
+      template(v-if="$parent.current_tab_info.key === 'rensho_max'")
+        | {{row.user.actb_season_xrecord.rensho_max}}
+      span.unit.ml-1.has-text-weight-normal.has-text-grey(v-if="$parent.current_tab_info.unit")
         | {{$parent.current_tab_info.unit}}
 </template>
 
@@ -54,6 +60,4 @@ export default {
     margin-left: 1rem
     .name
     .rating
-      .unit
-        margin-left: 0.2rem
 </style>

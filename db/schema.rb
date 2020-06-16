@@ -324,7 +324,6 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
   end
 
   create_table "actb_season_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "対戦者"
     t.bigint "judge_id", null: false, comment: "直前の勝敗"
     t.bigint "final_id", null: false, comment: "直前の結果"
     t.integer "battle_count", null: false, comment: "対戦数"
@@ -344,6 +343,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "disconnect_count", null: false, comment: "切断数"
     t.datetime "disconnected_at", comment: "最終切断日時"
+    t.bigint "user_id", null: false, comment: "対戦者"
     t.bigint "season_id", null: false, comment: "期"
     t.integer "create_count", null: false, comment: "users.actb_season_xrecord.create_count は users.actb_season_xrecords.count と一致"
     t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
@@ -364,7 +364,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["season_id"], name: "index_actb_season_xrecords_on_season_id"
     t.index ["udemae_id"], name: "index_actb_season_xrecords_on_udemae_id"
     t.index ["user_id", "season_id"], name: "index_actb_season_xrecords_on_user_id_and_season_id", unique: true
-    t.index ["user_id"], name: "index_actb_season_xrecords_on_user_id", unique: true
+    t.index ["user_id"], name: "index_actb_season_xrecords_on_user_id"
     t.index ["win_count"], name: "index_actb_season_xrecords_on_win_count"
     t.index ["win_rate"], name: "index_actb_season_xrecords_on_win_rate"
   end

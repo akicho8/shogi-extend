@@ -6,9 +6,11 @@
       .image.is_clickable(@click="app.profile_edit_handle")
         img.is-rounded(:src="app.current_user.avatar_path")
       .name_with_rating.is_clickable(@click="app.ov_user_info_set(app.current_user.id)")
-        .name.has-text-weight-bold.is-size-6
+        span.name.has-text-weight-bold.is-size-6
           | {{app.current_user.name}}
-        .rating.has-text-weight-bold.is-size-7
+        span.udemae_key.has-text-weight-bold.is-size-6.ml-1
+          | {{app.current_user.udemae_key}}
+        span.rating.has-text-weight-bold.is-size-7.ml-1(v-if="development_p")
           | {{app.current_user.rating}}
 
   debug_print(v-if="app.debug_mode_p && false" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.answer_button_disable_p']" oneline)
@@ -87,6 +89,7 @@ export default {
       .name_with_rating
         margin-left: 0.5rem
         .name
+          .udemae_key
         .rating
 
   .opening

@@ -27,7 +27,7 @@ import MemoryRecord from 'js-memory-record'
 class TabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "rating",       name: "レーティング", unit: null,     },
+      { key: "rating",       name: "総合",         unit: null,     },
       { key: "rensho_count", name: "連勝中",       unit: "連勝中", },
       { key: "rensho_max",   name: "最多連勝数",   unit: "連勝",   },
     ]

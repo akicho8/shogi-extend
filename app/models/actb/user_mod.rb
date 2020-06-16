@@ -56,7 +56,7 @@ module Actb
       included do
         has_one :actb_master_xrecord, class_name: "Actb::MasterXrecord", dependent: :destroy
 
-        delegate :rating, :rensho_count, :rensho_max, :udemae, :udemae_point, to: :actb_master_xrecord
+        delegate :rating, :rensho_count, :rensho_max, :udemae, :udemae_key, :udemae_point, to: :actb_master_xrecord
 
         after_create do
           create_actb_master_xrecord!
@@ -113,6 +113,29 @@ module Actb
 
       def create_actb_setting_if_blank
         actb_setting || create_actb_setting!
+      end
+    end
+
+    concerning :UserInfoMethods do
+      def info
+        out = ""
+
+        out += {
+          "名前"               => name,
+          "レーティング"       => rating,
+          "クラス"             => udemae_key,
+          "作成問題数"         => actb_questions.count,
+          "最新シーズン情報ID" => actb_current_xrecord.id,
+          "永続的プロフ情報ID" => actb_master_xrecord.id,
+          "部屋入室数"         => actb_room_memberships.count,
+          "対局数"             => actb_battle_memberships.count,
+          "問題履歴数"         => actb_histories.count,
+          "バトル中発言数"     => actb_room_messages.count,
+          "ロビー発言数"       => actb_lobby_messages.count,
+          "問題コメント数"     => actb_question_messages.count,
+        }.to_t
+
+        out
       end
     end
   end

@@ -37,7 +37,6 @@ module Actb
       belongs_to :user, class_name: "::User"
       belongs_to :judge           # 直近バトルの勝敗
       belongs_to :final           # 直近バトルの結末
-      belongs_to :udemae          # ウデマエ
 
       scope :newest_order, -> { order(generation: :desc) }
       scope :oldest_order, -> { order(generation: :asc)  }
@@ -128,34 +127,50 @@ module Actb
       end
     end
 
-    # Rの変化度に応じてウデマエポイントも変化させる
-    # 同じRで勝ったら+16で、それを C- の場合は 20 に換算する
-    def udemae_add_by_rating(judge, diff)
-      if judge.win_or_lose?
-        base = udemae.pure_info.public_send(judge.key)
-        point = Float(diff) * base / (EloRating::K / 2) # 16 * (20 / 16.0) -> 20
-        if false
-          p "#{diff} * #{base} / 16.0 --> #{point}"
-        end
-        udemae_add(point)
+    concerning :UdemaeMethods do
+      included do
+        belongs_to :udemae          # ウデマエ
       end
-    end
 
-    # レーティングに関係なく加算する
-    def udemae_add(diff)
-      v = udemae_point + diff
-      rdiff, rest = v.divmod(UdemaeInfo::MAX)
-
-      if rdiff.nonzero?
-        next_udemae = UdemaeInfo.lookup(udemae.pure_info.code + rdiff.truncate)
-        if next_udemae
-          self.udemae = next_udemae.db_record!
-          self.udemae_point = rest
-        else
-          self.udemae_point = v.clamp(0, UdemaeInfo::MAX.pred)
+      # Rの変化度に応じてウデマエポイントも変化させる
+      # 同じRで勝ったら+16で、それを C- の場合は 20 に換算する
+      def udemae_add_by_rating(judge, diff)
+        if judge.win_or_lose?
+          base = udemae.pure_info.public_send(judge.key)
+          point = Float(diff) * base / (EloRating::K / 2) # 16 * (20 / 16.0) -> 20
+          if false
+            p "#{diff} * #{base} / 16.0 --> #{point}"
+          end
+          udemae_add(point)
         end
-      else
-        self.udemae_point = v
+      end
+
+      # レーティングに関係なく加算する
+      def udemae_add(diff)
+        v = udemae_point + diff
+        rdiff, rest = v.divmod(UdemaeInfo::MAX)
+
+        if rdiff.nonzero?
+          next_udemae = UdemaeInfo.lookup(udemae.pure_info.code + rdiff.truncate)
+          if next_udemae
+            self.udemae = next_udemae.db_record!
+            self.udemae_point = rest
+          else
+            self.udemae_point = v.clamp(0, UdemaeInfo::MAX.pred)
+          end
+        else
+          self.udemae_point = v
+        end
+      end
+
+      def udemae_key
+        if udemae
+          udemae.key
+        end
+      end
+
+      def udemae_key=(v)
+        self.udemae = Udemae.lookup(v)
       end
     end
   end

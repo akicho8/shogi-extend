@@ -106,7 +106,7 @@ module Actb
               include: {
                 user: {
                   only: [:id, :name],
-                  methods: [:avatar_path, :rating],
+                  methods: [:avatar_path, :rating, :udemae_key],
                   include: {
                     actb_current_xrecord: {
                       only: [:rensho_count, :renpai_count],

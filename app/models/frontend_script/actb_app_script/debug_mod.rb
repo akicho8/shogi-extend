@@ -67,7 +67,7 @@ module FrontendScript
       def debug_for_battle_marathon_rule(info)
         c.sysop_login_unless_logout
 
-        rule_key = current_debug_scene.remove("battle_")
+        rule_key = current_debug_scene.to_s.remove("battle_")
         rule = Actb::Rule.fetch(rule_key)
 
         room = Actb::Room.create_with_members!(users, rule: rule)
