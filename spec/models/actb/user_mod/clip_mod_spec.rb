@@ -18,7 +18,7 @@ module Actb
 
       it "json" do
         retv = user1.clip_handle(question_id: question1.id)
-        assert { retv == {enabled: true, diff: 1, count: 1} }
+        assert { retv == {question_id: question1.id, clip: {enabled: true, diff: 1, count: 1}} }
       end
     end
   end

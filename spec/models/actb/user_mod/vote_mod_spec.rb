@@ -23,15 +23,14 @@ module Actb
 
       it "json" do
         retv = user1.vote_handle(question_id: question1.id, vote_key: :good)
-        # tp retv
-        assert { retv == {good: {enabled: true, diff: 1, count: 1}, bad: {enabled: false, diff: 0, count: 0}} }
+        assert { retv == {question_id: question1.id, good: {enabled: true, diff: 1, count: 1}, bad: {enabled: false, diff: 0, count: 0}} }
       end
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ..
-# >> 
+# >>
 # >> Finished in 0.88907 seconds (files took 2.19 seconds to load)
 # >> 2 examples, 0 failures
-# >> 
+# >>
