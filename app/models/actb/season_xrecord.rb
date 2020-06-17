@@ -53,7 +53,12 @@ module Actb
     end
 
     def rating_default
-      user.rating
+      # 毎回 1500 から開始
+      # レーティングは表示させないのでこれでよい
+      EloRating.rating_default
+
+      # 永続的レーティングを引き継ぐ場合
+      # user.rating
     end
   end
 end
