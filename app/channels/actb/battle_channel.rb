@@ -176,15 +176,9 @@ module Actb
         membership_id: data[:membership_id],
       }
 
-      key = [:battle_continue_handle, current_battle.id].join("/")
-      redis.hincrby(key, data[:membership_id], 1) # ["battle_continue_handle/1"][membership_id] += 1
-      redis.expire(key, 1.days)                   # 指定秒数後に破棄(共通のキーに破棄時間を設定したいの get より hincrby を使っている)
-      counts = redis.hgetall(key)                 # => {"1" => "2"}
-      counts = counts.transform_keys(&:to_i)
-      counts = counts.transform_values(&:to_i)
-      counts                                      # => {1 => 2}
+      counts = counter_increment(data[:membership_id])
 
-      # キーが2つかつ、どちらかのカウンタが1回目のときだけ、とすれば連打されても何個も部屋は生成されなくなる
+      # 両者が押した(キーが2つ)かつ、どちらかのカウンタが1回目のときだけ、とすれば連打されても何個も部屋は生成されなくなる
       if counts.count == current_battle.users.count
         # {10 => 5, 11 => 1} なら発動して {10 => 5, 11 => 2} なら発動しない
         if counts.values.any? { |e| e == 1 }
@@ -197,9 +191,6 @@ module Actb
         membership_id: data[:membership_id],
         battle_continue_tap_counts: counts,
       }
-
-      # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, methods.grep(/broadcast/)])
-
       broadcast(:battle_continue_handle_broadcasted, bc_params)
     end
 
@@ -280,7 +271,19 @@ module Actb
     def early_press_key(data)
       [:early_press, current_battle.id, data[:question_id]].join("/")
     end
+
+    # counts[membership_id] += 1
+    def counter_increment(membership_id)
+      key = [:battle_continue_handle, current_battle.id].join("/")
+     
+      # https://qiita.com/shiozaki/items/b746dc4bb5e1e87c0528      
+      values = redis.multi do
+        redis.hincrby(key, membership_id, 1)
+        redis.expire(key, 1.days)
+        redis.hgetall(key)      # => {"1" => "2"}
+      end
+      counts = values.last
+      counts.transform_keys(&:to_i).transform_values(&:to_i)
+    end
   end
 end
-# ~> -:2:in `<module:Actb>': uninitialized constant Actb::BaseChannel (NameError)
-# ~>    from -:1:in `<main>'
