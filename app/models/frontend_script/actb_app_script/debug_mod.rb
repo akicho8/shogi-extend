@@ -91,6 +91,21 @@ module FrontendScript
       def debug_for_result(info)
         c.sysop_login_unless_logout
 
+        users.each do |user|
+          record = user.actb_master_xrecord
+          record.udemae_key = "A+"
+          record.udemae_point = 50
+          record.save!
+        end
+
+        record = users[0].actb_master_xrecord
+        record.udemae_add(60)
+        record.save!
+
+        record = users[1].actb_master_xrecord
+        record.udemae_add(60)
+        record.save!
+
         room = Actb::Room.create_with_members!(users)
         battle = room.battle_create_with_members!(final: Actb::Final.fetch(:f_disconnect))
         battle.memberships[0].update!(judge: Actb::Judge.fetch(:win))
@@ -98,7 +113,7 @@ module FrontendScript
         battle.reload
 
         info[:room] = room.as_json_type4
-        info[:battle] = battle.as_json_type2
+        info[:battle] = battle.as_json_type2_for_result
       end
 
       # 問題作成(一覧)

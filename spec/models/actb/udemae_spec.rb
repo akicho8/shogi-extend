@@ -44,8 +44,8 @@ module Actb
       assert { test1("C+",  2, -103) == ["C-", 99] }
       # 限界(上)
       assert { test1("X", 98, 1)     == ["X", 99] }
-      assert { test1("X", 98, 2)     == ["X", 99] }
-      assert { test1("X", 98, 3)     == ["X", 99] }
+      assert { test1("X", 98, 2)     == ["X", 100] }
+      assert { test1("X", 98, 3)     == ["X", 100] }
       # 限界(下)
       assert { test1("C-",  2, -1)   == ["C-",  1] }
       assert { test1("C-",  2, -2)   == ["C-",  0] }
@@ -56,6 +56,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .
 # >> 
-# >> Finished in 0.98095 seconds (files took 2.59 seconds to load)
+# >> Finished in 1.03 seconds (files took 2.67 seconds to load)
 # >> 1 example, 0 failures
 # >> 

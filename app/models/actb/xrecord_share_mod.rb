@@ -67,8 +67,9 @@ module Actb
         self.final ||= Final.fetch(:f_pending)
 
         # ウデマエ
-        self.udemae       ||= Udemae.fetch(UdemaeInfo::DEFAULT)
-        self.udemae_point ||= 0
+        self.udemae           ||= Udemae.fetch(UdemaeInfo::DEFAULT)
+        self.udemae_point     ||= 0
+        self.udemae_last_diff ||= 0
       end
     end
 
@@ -147,6 +148,8 @@ module Actb
 
       # レーティングに関係なく加算する
       def udemae_add(diff)
+        self.udemae_last_diff = diff
+
         v = udemae_point + diff
         rdiff, rest = v.divmod(UdemaeInfo::MAX)
 
@@ -156,7 +159,8 @@ module Actb
             self.udemae = next_udemae.db_record!
             self.udemae_point = rest
           else
-            self.udemae_point = v.clamp(0, UdemaeInfo::MAX.pred)
+            # 最大99だとXのときカンストしていないように見えてしまう。そのため最大100にするのが正しい
+            self.udemae_point = v.clamp(0, UdemaeInfo::MAX)
           end
         else
           self.udemae_point = v

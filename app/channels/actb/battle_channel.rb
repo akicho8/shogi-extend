@@ -165,7 +165,7 @@ module Actb
       battle.katimake_set(target_user, judge_key, final_key)
       battle.reload
 
-      broadcast(:katimake_set_broadcasted, battle: battle.as_json_type2)
+      broadcast(:katimake_set_broadcasted, battle: battle.as_json_type2_for_result)
       # --> app/javascript/actb_app/application.vue
     end
 

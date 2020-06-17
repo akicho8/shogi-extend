@@ -121,7 +121,7 @@ module Actb
     end
 
     # 結果表示時
-    def as_json_type2
+    def as_json_type2_for_result
       as_json({
           only: [:id, :rensen_index],
           include: {
@@ -139,8 +139,17 @@ module Actb
                   only: [:id, :name],
                   methods: [:avatar_path],
                   include: {
-                    actb_current_xrecord: {
-                      only: [:id, :rensho_count, :renpai_count, :rating, :rating_max, :rating_last_diff, :rensho_max, :renpai_max, :disconnect_count],
+                    actb_master_xrecord: {
+                      only: [
+                        :id,
+                        :rensho_count, :renpai_count, :rensho_max, :renpai_max,
+                        :rating, :rating_max, :rating_last_diff,
+                        :disconnect_count,
+                        :udemae_point, :udemae_last_diff,
+                      ],
+                      methods: [
+                        :udemae_key,
+                      ]
                     },
                   },
                 },

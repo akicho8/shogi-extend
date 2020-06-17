@@ -48,7 +48,7 @@ class User
         self.udemae_key = new_udemae_info.key
         self.point = rest
       else
-        self.point = v.clamp(0, 100-1)
+        self.point = v.clamp(0, 100)
       end
     else
       self.point = v
@@ -100,8 +100,8 @@ test1(user1, "C+",  2, -102) # => [:C, 0]
 test1(user1, "C+",  2, -103) # => [:"C-", 99]
 # 限界(上)
 test1(user1, "S+", 98, 1)    # => ["S+", 99]
-test1(user1, "S+", 98, 2)    # => ["S+", 99]
-test1(user1, "S+", 98, 3)    # => ["S+", 99]
+test1(user1, "S+", 98, 2)    # => ["S+", 100]
+test1(user1, "S+", 98, 3)    # => ["S+", 100]
 # 限界(下)
 test1(user1, "C-",  2, -1)   # => ["C-", 1]
 test1(user1, "C-",  2, -2)   # => ["C-", 0]

@@ -2,10 +2,10 @@
 .the_result_membership.is-flex
   //////////////////////////////////////////////////////////////////////////////// ○連勝
   .rensho_renpai.is-size-8.has-text-weight-bold
-    template(v-if="membership.user.actb_current_xrecord.rensho_count >= 1")
-      .rensho_count {{membership.user.actb_current_xrecord.rensho_count}}連勝中！
-    template(v-else-if="membership.user.actb_current_xrecord.renpai_count >= 1")
-      .renpai_count {{membership.user.actb_current_xrecord.renpai_count}}連敗中！
+    template(v-if="record.rensho_count >= 1")
+      .rensho_count {{record.rensho_count}}連勝中！
+    template(v-else-if="record.renpai_count >= 1")
+      .renpai_count {{record.renpai_count}}連敗中！
     template(v-else)
         | &nbsp;
 
@@ -21,11 +21,14 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   .user_rating.has-text-weight-bold(v-if="app.config.rating_display_p")
-    | {{membership.user.actb_current_xrecord.rating}}
-    span.rating_last_diff.has-text-danger(v-if="membership.user.actb_current_xrecord.rating_last_diff > 0")
-      | (+{{membership.user.actb_current_xrecord.rating_last_diff}})
-    span.rating_last_diff.has-text-success(v-if="membership.user.actb_current_xrecord.rating_last_diff < 0")
-      | ({{membership.user.actb_current_xrecord.rating_last_diff}})
+    | {{record.rating}}
+    span.udemae_last_diff.has-text-danger(v-if="record.udemae_last_diff > 0")
+      | (+{{record.udemae_last_diff}})
+    span.udemae_last_diff.has-text-success(v-if="record.udemae_last_diff < 0")
+      | ({{record.udemae_last_diff}})
+
+  .progress_container.mt-1
+    the_result_membership_progress(:record="record")
 
   .battle_continue_container.has-text-weight-bold
     template(v-if="app.battle_continue_tap_counts[membership.id]")
@@ -36,17 +39,26 @@
 
 <script>
 import { support } from "./support.js"
+import the_result_membership_progress from "./the_result_membership_progress"
 
 export default {
   mixins: [
     support,
   ],
+  components: {
+    the_result_membership_progress,
+  },
   props: {
     membership: { type: Object, required: true, },
+  },
+  created() {
   },
   computed: {
     mi() {
       return this.app.member_infos_hash[this.membership.id]
+    },
+    record() {
+      return this.membership.user.actb_master_xrecord
     },
   },
 }
@@ -73,6 +85,9 @@ export default {
     width: 32px
     height: 32px
 
-  .rating_last_diff
+  .udemae_last_diff
     margin-left: 0.1rem
+
+  .progress_container
+    width: 12rem
 </style>

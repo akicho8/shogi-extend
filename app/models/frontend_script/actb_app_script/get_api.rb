@@ -65,6 +65,7 @@ module FrontendScript
         {
           RuleInfo: Actb::RuleInfo.as_json(only: [:key, :name]),
           OxMarkInfo: Actb::OxMarkInfo.as_json(only: [:key, :name, :score, :sound_key, :delay_second]),
+          UdemaeInfo: Actb::UdemaeInfo.as_json(only: [:key, :name]),
         }
       end
 
