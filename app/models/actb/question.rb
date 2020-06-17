@@ -71,6 +71,8 @@ module Actb
         :clip_marks_count,
 
         :good_rate,
+
+        :updated_at,
       ]
     end
 
