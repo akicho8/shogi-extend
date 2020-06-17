@@ -173,6 +173,20 @@ export default {
       return url4
     },
 
+    piyo_shogi_full_url2(sfen, turn, flip) {
+      if (false) {
+        // この方法だとスペースが + になって、ぴよ将棋が読みこんでくれない
+        const params = new URLSearchParams()
+        params.set("sfen", sfen)
+        params.set("num", turn)
+        params.set("flip", flip)
+        return `piyoshogi://?${params}`
+      } else {
+        // この方法だとスペースが %20 になって読み込まれる(encodeURIComponentすら不要かもしれない)
+        return `piyoshogi://?num=0&flip=${flip}&sfen=${encodeURIComponent(sfen)}`
+      }
+    },
+
     kento_full_url(sfen, turn, flip) {
       if (!sfen) {
         alert("sfenが空")

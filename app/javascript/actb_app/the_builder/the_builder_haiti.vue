@@ -14,8 +14,10 @@
     @update:edit_mode_snapshot_sfen="$parent.edit_mode_snapshot_sfen"
     )
   .buttons.is-centered.are-small.footer_buttons
+    piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
+    kento_button(tag="a" :href="kento_app_with_params_url" target="_blank")
+    kif_copy_button(@click="kifu_copy_handle") コピー
     b-button(@click="any_source_read_handle") 棋譜の読み込み
-    b-button(@click="kifu_copy_handle") 棋譜コピー
 </template>
 
 <script>
@@ -101,6 +103,11 @@ export default {
       this.sound_play("click")
       this.general_kifu_copy(this.$parent.question.init_sfen, {to_format: "kif"})
     },
+  },
+
+  computed: {
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url2(this.$parent.question.init_sfen, 0, false) },
+    kento_app_with_params_url()      { return this.kento_full_url(this.$parent.question.init_sfen, 0, false) },
   },
 }
 </script>
