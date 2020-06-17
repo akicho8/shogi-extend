@@ -244,6 +244,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :bad_marks_count,  default: 0, null: false, comment: "低評価数"
       t.integer :clip_marks_count, default: 0, null: false, comment: "保存された数"
       t.integer :messages_count,   default: 0, null: false, comment: "コメント数"
+
+      t.decimal :good_rate, precision: 6, scale: 5, null: false, index: true, comment: "高評価率"
     end
 
     # MovesAnswer

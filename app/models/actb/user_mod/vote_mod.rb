@@ -38,6 +38,7 @@ module Actb
           }.tap do |e|
             e.update(vote_set(question, vote_info, enabled))
             e.update(vote_set(question, vote_info.flip, false))
+            question.good_rate_update
           end
         end
       end

@@ -30,6 +30,12 @@ export default {
       return _.floor(v * 100, precision)
     },
 
+    // 0.1234 -> 12.34
+    float_to_perc2(v) {
+      const base = 100
+      return Math.floor(v * 100 * base) / base
+    },
+
     process_now() {
       this.$buefy.loading.open()
     },

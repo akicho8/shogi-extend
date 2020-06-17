@@ -63,13 +63,17 @@ module Actb
         :endpos_answers_count,
         :o_count,
         :x_count,
-        :bad_count,
+
         :good_count,
+        :bad_count,
+
         :histories_count,
         :favorites_count,
         :bad_marks_count,
         :good_marks_count,
         :clip_marks_count,
+
+        :good_rate,
       ]
     end
 
@@ -123,6 +127,7 @@ module Actb
 
       self.bad_count ||= 0
       self.good_count ||= 0
+      self.good_rate ||= 0
 
       self.lineage ||= Lineage.fetch("詰将棋")
 
@@ -216,6 +221,14 @@ module Actb
 
     def lineage_key=(key)
       self.lineage = Lineage.fetch_if(key)
+    end
+
+    def good_rate_update
+      d = good_marks_count + bad_marks_count
+      if d.positive?
+        self.good_rate = good_marks_count.fdiv(d)
+        save!
+      end
     end
 
     def as_json_type3

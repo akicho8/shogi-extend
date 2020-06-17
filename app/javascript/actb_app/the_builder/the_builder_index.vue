@@ -34,12 +34,14 @@
       b-table-column(field="id"               :label="QuestionColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
       b-table-column(field="title"            :label="QuestionColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
         a {{props.row.title || '？'}}
+      b-table-column(field="good_rate"        :label="QuestionColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="visible_hash.good_rate") {{float_to_perc2(0.12345)}} %
+      b-table-column(field="good_marks_count" :label="QuestionColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
+      b-table-column(field="bad_marks_count"  :label="QuestionColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
+      b-table-column(field="histories_count"  :label="QuestionColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
+
       b-table-column(field="difficulty_level" :label="QuestionColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
       b-table-column(field="o_count"          :label="QuestionColumnInfo.fetch('o_count').short_name"          sortable numeric :visible="visible_hash.o_count")          {{props.row.o_count}}
       b-table-column(field="x_count"          :label="QuestionColumnInfo.fetch('x_count').short_name"          sortable numeric :visible="visible_hash.x_count")          {{props.row.x_count}}
-      b-table-column(field="histories_count"  :label="QuestionColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
-      b-table-column(field="good_marks_count" :label="QuestionColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
-      b-table-column(field="bad_marks_count"  :label="QuestionColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
       b-table-column(field="clip_marks_count"      :label="QuestionColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
       b-table-column(field="updated_at"       :label="QuestionColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
 
@@ -88,7 +90,7 @@ export default {
       if (bool) {
         this.talk(column.name, {rate: 1.5})
       }
-    }
+    },
   },
 
   computed: {
