@@ -176,13 +176,13 @@ module Actb
         membership_id: data[:membership_id],
       }
 
-      key = [:battle_continue_handle, current_battle.id].join("/") # key = "battle_continue_handle/1"
-      redis.hincrby(key, data[:membership_id], 1)       # counts[membership_id] += 1
-      redis.expire(key, 1.days)                         # 指定秒数後に破棄
-      counts = redis.hgetall(key)                       # => {"1" => "2"}
+      key = [:battle_continue_handle, current_battle.id].join("/")
+      redis.hincrby(key, data[:membership_id], 1) # ["battle_continue_handle/1"][membership_id] += 1
+      redis.expire(key, 1.days)                   # 指定秒数後に破棄(共通のキーに破棄時間を設定したいの get より hincrby を使っている)
+      counts = redis.hgetall(key)                 # => {"1" => "2"}
       counts = counts.transform_keys(&:to_i)
       counts = counts.transform_values(&:to_i)
-      counts                                            # => {1 => 2}
+      counts                                      # => {1 => 2}
 
       # キーが2つかつ、どちらかのカウンタが1回目のときだけ、とすれば連打されても何個も部屋は生成されなくなる
       if counts.count == current_battle.users.count
