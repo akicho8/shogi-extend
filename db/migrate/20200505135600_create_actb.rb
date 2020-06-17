@@ -157,14 +157,6 @@ class CreateActb < ActiveRecord::Migration[6.0]
 
     ################################################################################
 
-    # 未使用
-    create_table :actb_favorites do |t|
-      t.belongs_to :user,      null: false, comment: "自分"
-      t.belongs_to :question,  null: false, comment: "出題"
-      t.integer :score,        null: false, comment: "スコア"
-      t.timestamps
-    end
-
     create_table :actb_good_marks do |t|
       t.belongs_to :user,      null: false,comment: "自分"
       t.belongs_to :question,  null: false,comment: "出題"
@@ -234,12 +226,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :o_count, null: false, index: true,  comment: "正解数"
       t.integer :x_count, null: false, index: true,  comment: "不正解数"
 
-      t.integer :bad_count,  null: false, comment: "高評価数"
-      t.integer :good_count, null: false, comment: "低評価数"
-
       # counter_cache
       t.integer :histories_count,  default: 0, null: false, comment: "履歴数(出題数とは異なる)"
-      t.integer :favorites_count,  default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
       t.integer :good_marks_count, default: 0, null: false, comment: "高評価数"
       t.integer :bad_marks_count,  default: 0, null: false, comment: "低評価数"
       t.integer :clip_marks_count, default: 0, null: false, comment: "保存された数"

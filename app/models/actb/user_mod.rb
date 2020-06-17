@@ -25,9 +25,6 @@ module Actb
 
       # このユーザーに出題した問題(複数)
       has_many :actb_histories, class_name: "Actb::History", dependent: :destroy
-
-      # Good/Bad
-      has_many :actb_favorites, class_name: "Actb::Favorite", dependent: :destroy
     end
 
     concerning :MessageMethods do

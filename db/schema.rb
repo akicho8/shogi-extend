@@ -90,16 +90,6 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["question_id"], name: "index_actb_endpos_answers_on_question_id"
   end
 
-  create_table "actb_favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "自分"
-    t.bigint "question_id", null: false, comment: "出題"
-    t.integer "score", null: false, comment: "スコア"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_actb_favorites_on_question_id"
-    t.index ["user_id"], name: "index_actb_favorites_on_user_id"
-  end
-
   create_table "actb_finals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
@@ -260,10 +250,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.integer "endpos_answers_count", default: 0, null: false, comment: "B解答数"
     t.integer "o_count", null: false, comment: "正解数"
     t.integer "x_count", null: false, comment: "不正解数"
-    t.integer "bad_count", null: false, comment: "高評価数"
-    t.integer "good_count", null: false, comment: "低評価数"
     t.integer "histories_count", default: 0, null: false, comment: "履歴数(出題数とは異なる)"
-    t.integer "favorites_count", default: 0, null: false, comment: "高評価数+低評価数になっていないと不整合"
     t.integer "good_marks_count", default: 0, null: false, comment: "高評価数"
     t.integer "bad_marks_count", default: 0, null: false, comment: "低評価数"
     t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"

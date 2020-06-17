@@ -28,12 +28,20 @@ module Actb
       assert { user1.actb_current_xrecord.season.generation == 2 }
     end
 
-    it "レーティングを引き継ぐ" do
+    # xit "レーティングを引き継ぐ" do
+    #   assert { user1.rating == 1500 }
+    #   user1.actb_master_xrecord.update!(rating: 1501)
+    #   assert { user1.rating  == 1501 }
+    #   Actb::Season.create!
+    #   assert { user1.actb_current_xrecord.rating == 1501 }
+    # end
+
+    it "レーティングを引き継がない" do
       assert { user1.rating == 1500 }
       user1.actb_master_xrecord.update!(rating: 1501)
       assert { user1.rating  == 1501 }
       Actb::Season.create!
-      assert { user1.actb_current_xrecord.rating == 1501 }
+      assert { user1.actb_current_xrecord.rating == 1500 }
     end
 
     it "このシーズンを持っている profiles" do
@@ -43,7 +51,7 @@ module Actb
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ...
-# >> 
+# >>
 # >> Finished in 0.62592 seconds (files took 2.16 seconds to load)
 # >> 3 examples, 0 failures
-# >> 
+# >>

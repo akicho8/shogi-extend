@@ -21,7 +21,8 @@
 # | rensho_max       | Rensho max       | integer(4)    | NOT NULL    |              | M     |
 # | renpai_max       | Renpai max       | integer(4)    | NOT NULL    |              | N     |
 # | udemae_id        | Udemae           | integer(8)    | NOT NULL    |              | O     |
-# | udemae_point     | Udemae point     | decimal(8, 4) | NOT NULL    |              |       |
+# | udemae_point     | Udemae point     | decimal(7, 4) | NOT NULL    |              |       |
+# | udemae_last_diff | Udemae last diff | decimal(7, 4) | NOT NULL    |              |       |
 # | created_at       | 作成日時         | datetime      | NOT NULL    |              |       |
 # | updated_at       | 更新日時         | datetime      | NOT NULL    |              |       |
 # | disconnect_count | Disconnect count | integer(4)    | NOT NULL    |              | P     |
