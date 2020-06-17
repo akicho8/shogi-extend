@@ -9,6 +9,7 @@ module Actb
     :matching_gap_base               => 1.5, # ○**カウンター
     :matching_pow_base               => 50,  # gap < 2**(○+カウンター) ならマッチングする
     :matching_interval_second        => 3,   # カウンターをインクリメントする間隔(秒)
+    :matching_forgo_second           => 10,  # ○秒たったらマッチングを諦める(nullなら無限)
 
     # -------------------------------------------------------------------------------- バトル中の設定
     # 共通
@@ -45,7 +46,8 @@ module Actb
         :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
         :matching_interval_second     => 4,     # カウンターをインクリメントする間隔(秒)
         :thinking_time_sec            => nil,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
-        :room_messages_display_lines  => 5,    # 部屋での表示行数
+        :room_messages_display_lines  => 5,     # 部屋での表示行数
+        :matching_forgo_second        => 60,    # ○秒たったらマッチングを諦める(nullなら無限)
       })
   end
 

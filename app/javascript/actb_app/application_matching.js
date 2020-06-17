@@ -26,6 +26,11 @@ export const application_matching = {
     },
 
     matching_interval_timer_processing() {
+      if (this.matching_forgo_p) {
+        this.matching_cancel_handle()
+        this.warning_notice("対戦相手が見つかりません")
+        return
+      }
       if (this.matching_trigger_p) {
         this.matching_search()
       }
@@ -49,8 +54,9 @@ export const application_matching = {
   },
 
   computed: {
-    matching_trigger_count()  { return Math.floor(this.matching_interval_timer_count / this.app.config.matching_interval_second) },
-    matching_trigger_p()      { return (this.matching_interval_timer_count % this.app.config.matching_interval_second) === 0     },
-    matching_rate_threshold() { return Math.round(Math.pow(this.app.config.matching_gap_base, this.app.config.matching_pow_base + this.matching_trigger_count))           },
+    matching_trigger_count()  { return Math.floor(this.matching_interval_timer_count / this.app.config.matching_interval_second)                                   },
+    matching_trigger_p()      { return (this.matching_interval_timer_count % this.app.config.matching_interval_second) === 0                                       },
+    matching_rate_threshold() { return Math.round(Math.pow(this.app.config.matching_gap_base, this.app.config.matching_pow_base + this.matching_trigger_count))    },
+    matching_forgo_p()        { return this.app.config.matching_forgo_second && (this.matching_interval_timer_count >= this.app.config.matching_forgo_second) },
   },
 }

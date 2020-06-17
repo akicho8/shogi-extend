@@ -8,7 +8,7 @@
       p ±{{app.matching_rate_threshold}}
     b-progress(type="is-primary")
     .buttons.is-centered
-      button.delete.is-large(@click="app.cancel_handle")
+      button.delete.is-large(@click="app.matching_cancel_handle")
     the_lobby_debug
 </template>
 

@@ -240,24 +240,29 @@ export default {
       this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "matching_delete_all_handle", exclude_user_id: this.current_user.id }, e => {})
     },
 
-    rule_key_select_handle() {
+    start_handle() {
       this.sound_play("click")
       if (this.login_required2()) { return }
 
       this.sub_mode = "rule_key_select"
     },
 
-    rule_key_set_handle(rule_key) {
+    rule_key_set_handle(rule) {
       this.sound_play("click")
-      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule_key }, e => {
+      this.talk(rule.name, {rate: 1.5})
+      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule.key }, e => {
         this.matching_setup()
       })
     },
 
-    cancel_handle() {
+    matching_cancel_handle() {
       this.sound_play("click")
-      this.mode = "lobby"
+
+      this.app.matching_interval_timer_clear()
+
       this.$ac_lobby.perform("matching_cancel")
+
+      this.mode = "lobby"
     },
 
     lobby_handle() {
