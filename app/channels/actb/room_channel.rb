@@ -56,7 +56,7 @@ module Actb
 
     def say(*args)
       return if Rails.env.test?
-      current_user.say(current_room, *args)
+      current_user.room_speak(current_room, *args)
     end
   end
 end
