@@ -1,6 +1,6 @@
 module Actb
   class BaseChannel < ApplicationCable::Channel
-    delegate :redis, :room_user_ids, :room_user_ids_broadcast, to: "self.class"
+    delegate :redis, :room_user_ids, :room_user_ids_broadcast, :once_run, to: "self.class"
 
     class << self
       def redis
@@ -13,6 +13,26 @@ module Actb
 
       def room_user_ids_broadcast
         ActionCable.server.broadcast("actb/school_channel", bc_action: :online_status_broadcasted, bc_params: {room_user_ids: room_user_ids})
+      end
+
+      def once_run(key, options = {})
+        options = {
+          expires_in: 1.hours,
+        }.merge(options)
+
+        # https://qiita.com/shiozaki/items/b746dc4bb5e1e87c0528
+        values = redis.multi do
+          redis.incr(key)
+          redis.expire(key, options[:expires_in])
+        end
+
+        counter = values.first
+
+        Rails.logger.debug([__method__, {key: key, counter: counter, expires_in: redis.ttl(key)}])
+
+        if counter == 1
+          yield
+        end
       end
     end
   end
