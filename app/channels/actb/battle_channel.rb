@@ -6,9 +6,13 @@ module Actb
       stream_from "actb/battle_channel/#{battle_id}"
     end
 
+    # バトルが正常終了していない状態で切断された場合に負け
     def unsubscribed
       if current_battle.end_at.blank?
+        # once_run("actb/battles/#{battle.id}/disconnect") do
+        say "*切断しました"
         katimake_set(current_user, :lose, :f_disconnect)
+        # end
       end
     end
 
@@ -275,8 +279,8 @@ module Actb
     # counts[membership_id] += 1
     def counter_increment(membership_id)
       key = [:battle_continue_handle, current_battle.id].join("/")
-     
-      # https://qiita.com/shiozaki/items/b746dc4bb5e1e87c0528      
+
+      # https://qiita.com/shiozaki/items/b746dc4bb5e1e87c0528
       values = redis.multi do
         redis.hincrby(key, membership_id, 1)
         redis.expire(key, 1.days)
@@ -284,6 +288,11 @@ module Actb
       end
       counts = values.last
       counts.transform_keys(&:to_i).transform_values(&:to_i)
+    end
+
+    def say(*args)
+      return if Rails.env.test?
+      current_user.room_speak(current_battle.room, *args)
     end
   end
 end

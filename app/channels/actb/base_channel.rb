@@ -16,6 +16,8 @@ module Actb
       end
 
       def once_run(key, options = {})
+        raise ArgumentError unless key
+
         options = {
           expires_in: 1.hours,
         }.merge(options)
@@ -30,8 +32,12 @@ module Actb
 
         Rails.logger.debug([__method__, {key: key, counter: counter, expires_in: redis.ttl(key)}])
 
-        if counter == 1
-          yield
+        if block_given?
+          if counter == 1
+            yield
+          end
+        else
+          counter
         end
       end
     end
