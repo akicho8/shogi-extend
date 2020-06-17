@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_builder
-  the_footer
+  the_footer(v-if="!question")
   the_builder_index(v-if="!question")
 
   .the_builder_new_and_edit(v-if="question")
@@ -248,6 +248,8 @@ export default {
         }
       }
 
+      this.sound_play("click")
+
       // const moves_answers = this.answers.map(e => {
       //   return { moves_str: e.moves_str }
       // })
@@ -266,6 +268,10 @@ export default {
 
           this.time_limit_clock_set()
           this.ok_notice(`${before_create_or_upate_name}しました`)
+
+          if (this.app.config.save_and_back_to_index) {
+            this.builder_index_handle()
+          }
         }
       })
     },

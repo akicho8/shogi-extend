@@ -39,6 +39,7 @@ module Actb
 
     # -------------------------------------------------------------------------------- 問題作成
     :hint_enable                     => false, # ヒントカラムを有効にする？
+    :save_and_back_to_index          => true,  # 「保存」したら一覧に戻る？
   }
 
   if Rails.env.staging? || Rails.env.production?

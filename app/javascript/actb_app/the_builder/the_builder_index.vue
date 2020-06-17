@@ -9,7 +9,7 @@
       b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="bool => cb_input_handle(e, bool)")
         | {{e.name}}
 
-  b-table.index_table(
+  b-table.index_table.is-size-7(
     v-if="$parent.questions"
     :data="$parent.questions"
     :mobile-cards="false"
