@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_05_202100) do
+ActiveRecord::Schema.define(version: 2020_06_18_211300) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id"
@@ -786,5 +786,50 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["xy_rule_key"], name: "index_xy_records_on_xy_rule_key"
   end
 
+  add_foreign_key "actb_bad_marks", "actb_questions", column: "question_id"
+  add_foreign_key "actb_bad_marks", "users"
+  add_foreign_key "actb_battle_memberships", "actb_battles", column: "battle_id"
+  add_foreign_key "actb_battle_memberships", "actb_judges", column: "judge_id"
+  add_foreign_key "actb_battle_memberships", "users"
+  add_foreign_key "actb_battles", "actb_battles", column: "parent_id"
+  add_foreign_key "actb_battles", "actb_finals", column: "final_id"
+  add_foreign_key "actb_battles", "actb_rooms", column: "room_id"
+  add_foreign_key "actb_battles", "actb_rules", column: "rule_id"
+  add_foreign_key "actb_clip_marks", "actb_questions", column: "question_id"
+  add_foreign_key "actb_clip_marks", "users"
+  add_foreign_key "actb_endpos_answers", "actb_questions", column: "question_id"
+  add_foreign_key "actb_folders", "users"
+  add_foreign_key "actb_good_marks", "actb_questions", column: "question_id"
+  add_foreign_key "actb_good_marks", "users"
+  add_foreign_key "actb_histories", "actb_battle_memberships", column: "membership_id"
+  add_foreign_key "actb_histories", "actb_battles", column: "battle_id"
+  add_foreign_key "actb_histories", "actb_ox_marks", column: "ox_mark_id"
+  add_foreign_key "actb_histories", "actb_questions", column: "question_id"
+  add_foreign_key "actb_histories", "actb_rooms", column: "room_id"
+  add_foreign_key "actb_histories", "users"
+  add_foreign_key "actb_lobby_messages", "users"
+  add_foreign_key "actb_master_xrecords", "actb_finals", column: "final_id"
+  add_foreign_key "actb_master_xrecords", "actb_judges", column: "judge_id"
+  add_foreign_key "actb_master_xrecords", "actb_udemaes", column: "udemae_id"
+  add_foreign_key "actb_master_xrecords", "users"
+  add_foreign_key "actb_moves_answers", "actb_questions", column: "question_id"
+  add_foreign_key "actb_ox_records", "actb_questions", column: "question_id"
+  add_foreign_key "actb_question_messages", "actb_questions", column: "question_id"
+  add_foreign_key "actb_question_messages", "users"
+  add_foreign_key "actb_questions", "actb_folders", column: "folder_id"
+  add_foreign_key "actb_questions", "actb_lineages", column: "lineage_id"
+  add_foreign_key "actb_questions", "users"
+  add_foreign_key "actb_room_memberships", "actb_rooms", column: "room_id"
+  add_foreign_key "actb_room_memberships", "users"
+  add_foreign_key "actb_room_messages", "actb_rooms", column: "room_id"
+  add_foreign_key "actb_room_messages", "users"
+  add_foreign_key "actb_rooms", "actb_rules", column: "rule_id"
+  add_foreign_key "actb_season_xrecords", "actb_finals", column: "final_id"
+  add_foreign_key "actb_season_xrecords", "actb_judges", column: "judge_id"
+  add_foreign_key "actb_season_xrecords", "actb_seasons", column: "season_id"
+  add_foreign_key "actb_season_xrecords", "actb_udemaes", column: "udemae_id"
+  add_foreign_key "actb_season_xrecords", "users"
+  add_foreign_key "actb_settings", "actb_rules", column: "rule_id"
+  add_foreign_key "actb_settings", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
 end

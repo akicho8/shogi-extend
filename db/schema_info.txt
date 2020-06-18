@@ -671,14 +671,12 @@
 # | updated_at           | 更新日時             | datetime      | NOT NULL            |              |       |
 # | moves_answers_count  | Moves answers count  | integer(4)    | DEFAULT(0) NOT NULL |              | H     |
 # | endpos_answers_count | Endpos answers count | integer(4)    | DEFAULT(0) NOT NULL |              | I     |
-# | o_count              | O count              | integer(4)    | NOT NULL            |              | J     |
-# | x_count              | X count              | integer(4)    | NOT NULL            |              | K     |
-# | histories_count      | Histories count      | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | good_marks_count     | Good marks count     | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | bad_marks_count      | Bad marks count      | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | clip_marks_count     | Clip marks count     | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | messages_count       | Messages count       | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | good_rate            | Good rate            | decimal(6, 5) | NOT NULL            |              | L     |
+# | histories_count      | Histories count      | integer(4)    | DEFAULT(0) NOT NULL |              | J     |
+# | good_marks_count     | Good marks count     | integer(4)    | DEFAULT(0) NOT NULL |              | K     |
+# | bad_marks_count      | Bad marks count      | integer(4)    | DEFAULT(0) NOT NULL |              | L     |
+# | clip_marks_count     | Clip marks count     | integer(4)    | DEFAULT(0) NOT NULL |              | M     |
+# | messages_count       | Messages count       | integer(4)    | DEFAULT(0) NOT NULL |              | N     |
+# | good_rate            | Good rate            | decimal(6, 5) | NOT NULL            |              | O     |
 # |----------------------+----------------------+---------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -702,6 +700,23 @@
 #- Remarks ----------------------------------------------------------------------
 # User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Ox record (actb_ox_records as Actb::OxRecord)
+#
+# |-------------+----------+---------------+-------------+------+-------|
+# | name        | desc     | type          | opts        | refs | index |
+# |-------------+----------+---------------+-------------+------+-------|
+# | id          | ID       | integer(8)    | NOT NULL PK |      |       |
+# | question_id | Question | integer(8)    | NOT NULL    |      | A!    |
+# | o_count     | O count  | integer(4)    | NOT NULL    |      | B     |
+# | x_count     | X count  | integer(4)    | NOT NULL    |      | C     |
+# | ox_total    | Ox total | integer(4)    | NOT NULL    |      | D     |
+# | o_rate      | O rate   | decimal(6, 5) | NOT NULL    |      | E     |
+# | created_at  | 作成日時 | datetime      | NOT NULL    |      |       |
+# | updated_at  | 更新日時 | datetime      | NOT NULL    |      |       |
+# |-------------+----------+---------------+-------------+------+-------|
 
 # == Schema Information ==
 #

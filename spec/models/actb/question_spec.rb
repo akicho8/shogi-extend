@@ -25,14 +25,12 @@
 # | updated_at           | 更新日時             | datetime      | NOT NULL            |              |       |
 # | moves_answers_count  | Moves answers count  | integer(4)    | DEFAULT(0) NOT NULL |              | H     |
 # | endpos_answers_count | Endpos answers count | integer(4)    | DEFAULT(0) NOT NULL |              | I     |
-# | o_count              | O count              | integer(4)    | NOT NULL            |              | J     |
-# | x_count              | X count              | integer(4)    | NOT NULL            |              | K     |
-# | histories_count      | Histories count      | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | good_marks_count     | Good marks count     | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | bad_marks_count      | Bad marks count      | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | clip_marks_count     | Clip marks count     | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | messages_count       | Messages count       | integer(4)    | DEFAULT(0) NOT NULL |              |       |
-# | good_rate            | Good rate            | decimal(6, 5) | NOT NULL            |              | L     |
+# | histories_count      | Histories count      | integer(4)    | DEFAULT(0) NOT NULL |              | J     |
+# | good_marks_count     | Good marks count     | integer(4)    | DEFAULT(0) NOT NULL |              | K     |
+# | bad_marks_count      | Bad marks count      | integer(4)    | DEFAULT(0) NOT NULL |              | L     |
+# | clip_marks_count     | Clip marks count     | integer(4)    | DEFAULT(0) NOT NULL |              | M     |
+# | messages_count       | Messages count       | integer(4)    | DEFAULT(0) NOT NULL |              | N     |
+# | good_rate            | Good rate            | decimal(6, 5) | NOT NULL            |              | O     |
 # |----------------------+----------------------+---------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

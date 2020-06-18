@@ -21,7 +21,6 @@
 #   question
 #     app/models/actb/question.rb
 #     app/models/actb/moves_answer.rb
-#     app/models/actb/endpos_answer.rb
 #
 # channel
 #   app/channels/actb/lobby_channel.rb
