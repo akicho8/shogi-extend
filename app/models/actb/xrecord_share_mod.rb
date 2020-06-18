@@ -15,7 +15,7 @@
 # | lose_count       | Lose count       | integer(4) | NOT NULL    |                       | G     |
 # | win_rate         | Win rate         | float(24)  | NOT NULL    |                       | H     |
 # | rating           | Rating           | integer(4) | NOT NULL    |                       | I     |
-# | rating_last_diff | Rating last diff | integer(4) | NOT NULL    |                       | J     |
+# | rating_diff | Rating last diff | integer(4) | NOT NULL    |                       | J     |
 # | rating_max       | Rating max       | integer(4) | NOT NULL    |                       | K     |
 # | rensho_count     | Rensho count     | integer(4) | NOT NULL    |                       | L     |
 # | renpai_count     | Renpai count     | integer(4) | NOT NULL    |                       | M     |
@@ -51,7 +51,7 @@ module Actb
         # レーティング
         self.rating ||= rating_default
         self.rating_max ||= rating
-        self.rating_last_diff ||= 0
+        self.rating_diff ||= 0
 
         # 勝敗関連
         self.battle_count ||= 0
@@ -80,7 +80,7 @@ module Actb
     end
 
     def rating_add(value)
-      self.rating_last_diff = value
+      self.rating_diff = value
       self.rating += value
       if rating_max < rating
         self.rating_max = rating

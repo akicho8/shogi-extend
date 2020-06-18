@@ -143,7 +143,7 @@ module Actb
                       only: [
                         :id,
                         :rensho_count, :renpai_count, :rensho_max, :renpai_max,
-                        :rating, :rating_max, :rating_last_diff,
+                        :rating, :rating_max, :rating_diff,
                         :disconnect_count,
                         :udemae_point, :udemae_last_diff,
                       ],

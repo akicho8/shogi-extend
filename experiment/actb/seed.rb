@@ -161,7 +161,7 @@ tp Actb.info
 # >> |       lose_count | 0                         |
 # >> |         win_rate | 1.0                       |
 # >> |           rating | 1516.0                    |
-# >> | rating_last_diff | 16.0                      |
+# >> | rating_diff | 16.0                      |
 # >> |       rating_max | 1516.0                    |
 # >> |     rensho_count | 1                         |
 # >> |     renpai_count | 0                         |
@@ -188,7 +188,7 @@ tp Actb.info
 # >> |       lose_count | 0                         |
 # >> |         win_rate | 0.0                       |
 # >> |           rating | 1500.0                    |
-# >> | rating_last_diff | 0.0                       |
+# >> | rating_diff | 0.0                       |
 # >> |       rating_max | 1500.0                    |
 # >> |     rensho_count | 0                         |
 # >> |     renpai_count | 0                         |

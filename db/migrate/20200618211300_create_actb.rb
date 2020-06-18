@@ -108,7 +108,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.float   :win_rate,                                 null: false, index: true,  comment: "勝率"
 
       t.decimal :rating,           precision: 8, scale: 4, null: false, index: true,  comment: "レーティング"
-      t.decimal :rating_last_diff, precision: 8, scale: 4, null: false, index: true,  comment: "直近レーティング変化"
+      t.decimal :rating_diff, precision: 8, scale: 4, null: false, index: true,  comment: "直近レーティング変化"
       t.decimal :rating_max,       precision: 8, scale: 4, null: false, index: true,  comment: "レーティング(最大)"
 
       t.integer :rensho_count,                             null: false, index: true,  comment: "連勝数"

@@ -15,7 +15,7 @@
 # | lose_count       | Lose count       | integer(4)    | NOT NULL    |              | F     |
 # | win_rate         | Win rate         | float(24)     | NOT NULL    |              | G     |
 # | rating           | Rating           | decimal(8, 4) | NOT NULL    |              | H     |
-# | rating_last_diff | Rating last diff | decimal(8, 4) | NOT NULL    |              | I     |
+# | rating_diff | Rating last diff | decimal(8, 4) | NOT NULL    |              | I     |
 # | rating_max       | Rating max       | decimal(8, 4) | NOT NULL    |              | J     |
 # | rensho_count     | Rensho count     | integer(4)    | NOT NULL    |              | K     |
 # | renpai_count     | Renpai count     | integer(4)    | NOT NULL    |              | L     |
