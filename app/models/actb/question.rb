@@ -244,6 +244,11 @@ module Actb
             moves_answers: {
               only: [:moves_count, :moves_str, :end_sfen],
             },
+            ox_record: {
+              only: [
+                :o_rate,
+              ],
+            },
           },
         })
     end

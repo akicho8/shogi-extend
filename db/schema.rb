@@ -80,16 +80,6 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.index ["user_id"], name: "index_actb_clip_marks_on_user_id"
   end
 
-  create_table "actb_endpos_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "question_id", null: false, comment: "問題"
-    t.integer "moves_count", null: false, comment: "N手"
-    t.string "end_sfen", null: false, comment: "最後の局面"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["moves_count"], name: "index_actb_endpos_answers_on_moves_count"
-    t.index ["question_id"], name: "index_actb_endpos_answers_on_question_id"
-  end
-
   create_table "actb_finals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
@@ -262,7 +252,6 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "moves_answers_count", default: 0, null: false, comment: "A解答数"
-    t.integer "endpos_answers_count", default: 0, null: false, comment: "B解答数"
     t.integer "histories_count", default: 0, null: false, comment: "履歴数(出題数とは異なる)"
     t.integer "good_marks_count", default: 0, null: false, comment: "高評価数"
     t.integer "bad_marks_count", default: 0, null: false, comment: "低評価数"
@@ -272,7 +261,6 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.index ["bad_marks_count"], name: "index_actb_questions_on_bad_marks_count"
     t.index ["clip_marks_count"], name: "index_actb_questions_on_clip_marks_count"
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"
-    t.index ["endpos_answers_count"], name: "index_actb_questions_on_endpos_answers_count"
     t.index ["folder_id"], name: "index_actb_questions_on_folder_id"
     t.index ["good_marks_count"], name: "index_actb_questions_on_good_marks_count"
     t.index ["good_rate"], name: "index_actb_questions_on_good_rate"
@@ -797,7 +785,6 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
   add_foreign_key "actb_battles", "actb_rules", column: "rule_id"
   add_foreign_key "actb_clip_marks", "actb_questions", column: "question_id"
   add_foreign_key "actb_clip_marks", "users"
-  add_foreign_key "actb_endpos_answers", "actb_questions", column: "question_id"
   add_foreign_key "actb_folders", "users"
   add_foreign_key "actb_good_marks", "actb_questions", column: "question_id"
   add_foreign_key "actb_good_marks", "users"

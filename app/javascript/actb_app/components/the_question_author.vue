@@ -2,12 +2,15 @@
 .the_question_author.has-text-centered
   .question_title.has-text-weight-bold.is-size-6
     | {{question.title}}
-  .question_user.is-size-7.has-text-weight-bold
-    span.is-unselectable
-      | &nbsp;&nbsp;&nbsp;&nbsp;
-    span
-      | {{question.display_author}}
-    span.question_user_unit.has-text-grey 作
+
+  .question_user.is-size-9.has-text-grey
+    span {{question.display_author}}
+    span.is-size-11 作
+
+    span.has-text-grey.ml-2 正解率
+    span {{float_to_perc2(question.ox_record.o_rate)}}
+    span %
+
 </template>
 
 <script>
@@ -32,7 +35,4 @@ export default {
     //- ↓これを入れると overflow-x が効かなくなる
     //- position: relative
     //- left: 0.1rem
-    .question_user_unit
-      margin-left: 0.1rem
-      font-size: 0.6rem
 </style>
