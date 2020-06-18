@@ -1,5 +1,5 @@
 module Actb
-  class OxCount < ApplicationRecord
+  class OxRecord < ApplicationRecord
     belongs_to :question
 
     before_validation do

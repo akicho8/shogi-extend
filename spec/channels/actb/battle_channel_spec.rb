@@ -74,7 +74,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
         subscription.kotae_sentaku(data)
       }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}").with(bc_action: "kotae_sentaku_broadcasted", bc_params: data)
 
-      assert { question.ox_count.reload.o_count == 1 }
+      assert { question.ox_record.reload.o_count == 1 }
     end
   end
 

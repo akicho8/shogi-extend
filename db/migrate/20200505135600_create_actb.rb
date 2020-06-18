@@ -232,7 +232,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.decimal :good_rate, precision: 6, scale: 5, null: false, index: true, comment: "高評価率"
     end
 
-    create_table :actb_ox_counts do |t|
+    create_table :actb_ox_records do |t|
       t.belongs_to :question,                    null: false, index: { unique: true }, comment: "問題"
       t.integer :o_count,                        null: false, index: true,             comment: "正解数"
       t.integer :x_count,                        null: false, index: true,             comment: "不正解数"

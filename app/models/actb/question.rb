@@ -253,18 +253,18 @@ module Actb
         })
     end
 
-    concerning :OxCounttMethdos do
+    concerning :OxRecordtMethdos do
       included do
-        has_one :ox_count, dependent: :destroy # 正解率
+        has_one :ox_record, dependent: :destroy # 正解率
 
         after_create do
-          create_ox_count!
+          create_ox_record!
         end
       end
 
       def ox_add(column)
-        ox_count[column] += 1
-        ox_count.save!
+        ox_record[column] += 1
+        ox_record.save!
       end
     end
 

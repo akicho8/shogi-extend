@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["question_id"], name: "index_actb_moves_answers_on_question_id"
   end
 
-  create_table "actb_ox_counts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "actb_ox_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "question_id", null: false, comment: "問題"
     t.integer "o_count", null: false, comment: "正解数"
     t.integer "x_count", null: false, comment: "不正解数"
@@ -218,11 +218,11 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.decimal "o_rate", precision: 6, scale: 5, null: false, comment: "高評価率"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["o_count"], name: "index_actb_ox_counts_on_o_count"
-    t.index ["o_rate"], name: "index_actb_ox_counts_on_o_rate"
-    t.index ["ox_total"], name: "index_actb_ox_counts_on_ox_total"
-    t.index ["question_id"], name: "index_actb_ox_counts_on_question_id", unique: true
-    t.index ["x_count"], name: "index_actb_ox_counts_on_x_count"
+    t.index ["o_count"], name: "index_actb_ox_records_on_o_count"
+    t.index ["o_rate"], name: "index_actb_ox_records_on_o_rate"
+    t.index ["ox_total"], name: "index_actb_ox_records_on_ox_total"
+    t.index ["question_id"], name: "index_actb_ox_records_on_question_id", unique: true
+    t.index ["x_count"], name: "index_actb_ox_records_on_x_count"
   end
 
   create_table "actb_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

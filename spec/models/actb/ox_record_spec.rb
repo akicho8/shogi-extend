@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 module Actb
-  RSpec.describe OxCount, type: :model do
+  RSpec.describe OxRecord, type: :model do
     include ActbSupportMethods
 
     it "ox_add" do
       question1.ox_add(:o_count)
       question1.ox_add(:o_count)
       question1.ox_add(:x_count)
-      ox_count = question1.ox_count
+      ox_record = question1.ox_record
 
-      assert { ox_count.o_count  == 2       }
-      assert { ox_count.x_count  == 1       }
-      assert { ox_count.ox_total == 3       }
-      assert { ox_count.o_rate   == 0.66667 }
+      assert { ox_record.o_count  == 2       }
+      assert { ox_record.x_count  == 1       }
+      assert { ox_record.ox_total == 3       }
+      assert { ox_record.o_rate   == 0.66667 }
     end
   end
 end
