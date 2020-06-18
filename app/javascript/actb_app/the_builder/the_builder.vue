@@ -96,7 +96,6 @@ export default {
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
       tab_index:        null,
       question:         null,
-      time_limit_clock: null,   // b-timepicker 用 (question.time_limit_sec から変換する)
       answer_tab_index: null,   // 表示している正解タブの位置
 
       //////////////////////////////////////////////////////////////////////////////// 正解モード
@@ -224,11 +223,6 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // clock = advance(seconds: sec)
-    time_limit_clock_set() {
-      this.time_limit_clock = this.base_clock.add(this.question.time_limit_sec, "second").toDate()
-    },
-
     // 正解だけを削除
     moves_answers_clear() {
       this.$set(this.question, "moves_answers", [])
@@ -255,18 +249,15 @@ export default {
       // })
 
       // https://day.js.org/docs/en/durations/diffing
-      const time_limit_sec = dayjs(this.time_limit_clock).diff(this.base_clock) / 1000
-      const question_attributes = { ...this.question, time_limit_sec: time_limit_sec }
-
+      this.question.time_limit_clock_to_sec()
       const before_create_or_upate_name = this.create_or_upate_name
-      this.remote_fetch("PUT", this.app.info.put_path, {remote_action: "save_handle", question: question_attributes}, e => {
+      this.remote_fetch("PUT", this.app.info.put_path, {remote_action: "save_handle", question: this.question}, e => {
         if (e.form_error_message) {
           this.warning_notice(e.form_error_message)
         }
         if (e.question) {
           this.question = new Question(e.question)
 
-          this.time_limit_clock_set()
           this.ok_notice(`${before_create_or_upate_name}しました`)
 
           if (this.app.config.save_and_back_to_index) {
@@ -288,8 +279,6 @@ export default {
 
       this.__assert__(row.constructor.name === "Question")
       this.question = row
-
-      this.time_limit_clock_set()
 
       this.answer_tab_index = 0 // 解答リストの一番左指す
       this.answer_turn_offset = 0

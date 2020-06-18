@@ -29,7 +29,7 @@
       option(v-for="row in LineageInfo.values" :value="row.key") {{row.name}}
 
   b-field(label="制限時間" label-position="on-border")
-    b-timepicker(v-model="$parent.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
+    b-timepicker(v-model="$parent.question.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
 
   b-field(label="難易度" custom-class="is-small")
     b-rate(v-model="$parent.question.difficulty_level" spaced :max="$parent.start_level_max" :show-score="false")
