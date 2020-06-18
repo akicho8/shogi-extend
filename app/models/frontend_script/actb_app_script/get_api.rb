@@ -65,7 +65,7 @@ module FrontendScript
       # http://localhost:3000/script/actb-app.json?remote_action=resource_fetch
       def resource_fetch
         {
-          RuleInfo: Actb::RuleInfo.as_json(only: [:key, :name]),
+          RuleInfo: Actb::RuleInfo.as_json(only: [:key, :name, :display_p]),
           OxMarkInfo: Actb::OxMarkInfo.as_json(only: [:key, :name, :score, :sound_key, :delay_second]),
           UdemaeInfo: Actb::UdemaeInfo.as_json(only: [:key, :name]),
         }

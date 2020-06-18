@@ -31,10 +31,11 @@
     .title.is-3.has-text-centered ルール
     .buttons.is-centered.rule_buttons
       template(v-for="row in app.RuleInfo.values")
-        b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row)" :type="{'is-primary': app.matching_list_hash[row.key].length >= 1}")
-          | {{row.name}}
-          template(v-if="app.debug_mode_p")
-            | ({{app.matching_list_hash[row.key].length}})
+        template(v-if="row.display_p || development_p")
+          b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row)" :type="{'is-primary': app.matching_list_hash[row.key].length >= 1}")
+            | {{row.name}}
+            template(v-if="app.debug_mode_p")
+              | ({{app.matching_list_hash[row.key].length}})
     .back_button.has-text-centered
       button.delete.is-large.back_button(@click="rule_cancel_handle")
   the_lobby_debug(v-if="true")
