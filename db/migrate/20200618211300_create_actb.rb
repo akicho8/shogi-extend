@@ -184,16 +184,15 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.date :source_published_on,        null: true,  index: false, comment: "出典年月日"
       t.timestamps
 
-      t.integer :moves_answers_count,  null: false, index: true, default: 0, comment: "A解答数"
+      t.decimal :good_rate, precision: 6, scale: 5, null: false, index: true, comment: "高評価率"
 
       # counter_cache
-      t.integer :histories_count,  default: 0, null: false, index: true, comment: "履歴数(出題数とは異なる)"
-      t.integer :good_marks_count, default: 0, null: false, index: true, comment: "高評価数"
-      t.integer :bad_marks_count,  default: 0, null: false, index: true, comment: "低評価数"
-      t.integer :clip_marks_count, default: 0, null: false, index: true, comment: "保存された数"
-      t.integer :messages_count,   default: 0, null: false, index: true, comment: "コメント数"
-
-      t.decimal :good_rate, precision: 6, scale: 5, null: false, index: true, comment: "高評価率"
+      t.integer :moves_answers_count, default: 0, null: false, index: false, comment: "解答数"
+      t.integer :histories_count,     default: 0, null: false, index: true,  comment: "履歴数(出題数とは異なる)"
+      t.integer :good_marks_count,    default: 0, null: false, index: true,  comment: "高評価数"
+      t.integer :bad_marks_count,     default: 0, null: false, index: true,  comment: "低評価数"
+      t.integer :clip_marks_count,    default: 0, null: false, index: true,  comment: "保存された数"
+      t.integer :messages_count,      default: 0, null: false, index: true,  comment: "コメント数"
     end
 
     ################################################################################
