@@ -5,6 +5,7 @@ import vue_fetch       from "./vue_fetch.js"
 import vue_clipboard   from "./vue_clipboard.js"
 import vue_sound       from "./vue_sound.js"
 import vue_actioncable from "./vue_actioncable.js"
+import vue_piyo_shogi  from "./vue_piyo_shogi.js"
 
 export default {
   mixins: [
@@ -15,5 +16,6 @@ export default {
     vue_clipboard,
     vue_sound,
     vue_actioncable,
+    vue_piyo_shogi,
   ],
 }

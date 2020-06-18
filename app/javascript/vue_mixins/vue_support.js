@@ -12,6 +12,54 @@ dayjs.extend(relativeTime)
 
 import SfenParser from "shogi-player/src/sfen_parser.js"
 
+// import { isMobile } from "buefy/src/utils/helpers.js"
+// from buefy/src/utils/helpers.js
+/**
+ * Mobile detection
+ * https://www.abeautifulsite.net/detecting-mobile-devices-with-javascript
+ */
+const isMobile = {
+  Android: function () {
+    return (
+      typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/Android/i)
+    )
+  },
+  BlackBerry: function () {
+    return (
+      typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/BlackBerry/i)
+    )
+  },
+  iOS: function () {
+    return (
+      typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
+    )
+  },
+  Opera: function () {
+    return (
+      typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/Opera Mini/i)
+    )
+  },
+  Windows: function () {
+    return (
+      typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/IEMobile/i)
+    )
+  },
+  any: function () {
+    return (
+      isMobile.Android() ||
+        isMobile.BlackBerry() ||
+        isMobile.iOS() ||
+        isMobile.Opera() ||
+        isMobile.Windows()
+    )
+  }
+}
+
 export default {
   methods: {
     defval(v, default_value) {
@@ -147,46 +195,6 @@ export default {
       window.open(url, "_blank", opts)
     },
 
-    piyo_shogi_full_url(path, turn, flip) {
-      const url = this.as_full_url(path)
-
-      // ".kif" を足す方法は悪手。パスが "/xxx" で終わっているとは限らない
-      const url2 = new URL(url)
-
-      if (false) {
-        // ぴよ将棋はコンテンツを見ているのではなく .kif という拡張子を見ているのでこの方法は使えない
-        // xxx?a=1&format=kif
-        url2.searchParams.set("format", "kif")
-      } else {
-        // xxx.kif 形式
-        url2.pathname = url2.pathname + ".kif"
-      }
-
-      const url3 = url2.toString()
-      console.log(url3)
-
-      // エスケープすると動かない
-      const url4 = `piyoshogi://?num=${turn}&flip=${flip}&url=${url3}`
-
-      console.log(url4)
-
-      return url4
-    },
-
-    piyo_shogi_full_url2(sfen, turn, flip) {
-      if (false) {
-        // この方法だとスペースが + になって、ぴよ将棋が読みこんでくれない
-        const params = new URLSearchParams()
-        params.set("sfen", sfen)
-        params.set("num", turn)
-        params.set("flip", flip)
-        return `piyoshogi://?${params}`
-      } else {
-        // この方法だとスペースが %20 になって読み込まれる(encodeURIComponentすら不要かもしれない)
-        return `piyoshogi://?num=0&flip=${flip}&sfen=${encodeURIComponent(sfen)}`
-      }
-    },
-
     kento_full_url(sfen, turn, flip) {
       if (!sfen) {
         alert("sfenが空")
@@ -299,9 +307,12 @@ export default {
       return process.env.NODE_ENV === "development"
     },
 
+    isMobile() {
+      return isMobile
+    },
+
     mobile_p() {
-      const html_el = document.querySelector("html")
-      return html_el.classList.contains("mobile")
+      return this.isMobile.any()
     },
 
     desktop_p() {
