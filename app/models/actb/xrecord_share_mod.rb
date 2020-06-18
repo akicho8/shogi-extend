@@ -41,6 +41,12 @@ module Actb
       scope :newest_order, -> { order(generation: :desc) }
       scope :oldest_order, -> { order(generation: :asc)  }
 
+      with_options presence: true do
+        validates :user_id
+        validates :judge_id
+        validates :final_id
+      end
+
       before_validation do
         # レーティング
         self.rating ||= rating_default

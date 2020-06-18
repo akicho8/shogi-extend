@@ -38,6 +38,14 @@ module Actb
   class MasterXrecord < ApplicationRecord
     include XrecordShareMod
 
+    with_options presence: true do
+      validates :user_id
+    end
+
+    with_options allow_blank: true do
+      validates :user_id, uniqueness: true
+    end
+
     def rating_default
       EloRating.rating_default
     end

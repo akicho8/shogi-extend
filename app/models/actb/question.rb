@@ -87,9 +87,9 @@ module Actb
       has_many :moves_answers  # 手順一致を正解とする答え集
       has_many :endpos_answers # 最後の局面を正解とする答え集
 
-      has_many :good_marks
-      has_many :bad_marks
-      has_many :clip_marks
+      has_many :good_marks      # 高評価
+      has_many :bad_marks       # 低評価
+      has_many :clip_marks      # 保存
     end
 
     # with_options allow_destroy: true do
@@ -121,8 +121,8 @@ module Actb
 
       # self.difficulty_level ||= 0
 
-      self.o_count ||= 0
-      self.x_count ||= 0
+      # self.o_count ||= 0
+      # self.x_count ||= 0
 
       self.good_rate ||= 0
 
@@ -251,6 +251,21 @@ module Actb
             },
           },
         })
+    end
+
+    concerning :OxCounttMethdos do
+      included do
+        has_one :ox_count, dependent: :destroy # 正解率
+
+        after_create do
+          create_ox_count!
+        end
+      end
+
+      def ox_add(column)
+        ox_count[column] += 1
+        ox_count.save!
+      end
     end
 
     concerning :ImportExportMethdos do

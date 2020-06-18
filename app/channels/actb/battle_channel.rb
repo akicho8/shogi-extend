@@ -79,7 +79,7 @@ module Actb
         raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         raise ArgumentError, data.inspect unless my_membership.user == current_user
         current_user.actb_histories.find_or_initialize_by(question: question, membership: my_membership).update!(ox_mark: ox_mark)
-        question.increment!(ox_mark.pure_info.question_counter_column)
+        question.ox_add(ox_mark.pure_info.question_counter_column)
       end
 
       # 正解時         → 正解したユーザーが送信者
@@ -89,13 +89,13 @@ module Actb
         if ox_mark.key == "correct"
           my_membership.user.actb_histories.find_or_initialize_by(membership: my_membership, question: question).update!(ox_mark: ox_mark)
           op_membership.user.actb_histories.find_or_initialize_by(membership: op_membership, question: question).update!(ox_mark: Actb::OxMark.fetch(:mistake))
-          question.increment!(:o_count) # 片方が正解なら1回分の正解として、もう片方の不正解はカウントしない
+          question.ox_add(:o_count) # 片方が正解なら1回分の正解として、もう片方の不正解はカウントしない
         end
         if ox_mark.key == "timeout"
           current_battle.memberships.each do |membership|
             membership.user.actb_histories.find_or_initialize_by(question: question, membership: membership).update!(ox_mark: ox_mark)
           end
-          question.increment!(:x_count) # 2人分時間切れしたとき1回分の不正解とする
+          question.ox_add(:x_count) # 2人分時間切れしたとき1回分の不正解とする
         end
       end
 

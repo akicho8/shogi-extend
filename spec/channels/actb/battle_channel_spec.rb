@@ -73,6 +73,8 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       expect {
         subscription.kotae_sentaku(data)
       }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}").with(bc_action: "kotae_sentaku_broadcasted", bc_params: data)
+
+      assert { question.ox_count.reload.o_count == 1 }
     end
   end
 
@@ -180,6 +182,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ..........
 # >> 
-# >> Finished in 1.33 seconds (files took 2.18 seconds to load)
+# >> Finished in 1.36 seconds (files took 2.28 seconds to load)
 # >> 10 examples, 0 failures
 # >> 

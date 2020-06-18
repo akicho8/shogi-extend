@@ -210,6 +210,21 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["question_id"], name: "index_actb_moves_answers_on_question_id"
   end
 
+  create_table "actb_ox_counts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "question_id", null: false, comment: "問題"
+    t.integer "o_count", null: false, comment: "正解数"
+    t.integer "x_count", null: false, comment: "不正解数"
+    t.integer "ox_total", null: false, comment: "出題数"
+    t.decimal "o_rate", precision: 6, scale: 5, null: false, comment: "高評価率"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["o_count"], name: "index_actb_ox_counts_on_o_count"
+    t.index ["o_rate"], name: "index_actb_ox_counts_on_o_rate"
+    t.index ["ox_total"], name: "index_actb_ox_counts_on_ox_total"
+    t.index ["question_id"], name: "index_actb_ox_counts_on_question_id", unique: true
+    t.index ["x_count"], name: "index_actb_ox_counts_on_x_count"
+  end
+
   create_table "actb_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false, comment: "正解・不正解"
     t.integer "position", null: false
@@ -248,26 +263,27 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "moves_answers_count", default: 0, null: false, comment: "A解答数"
     t.integer "endpos_answers_count", default: 0, null: false, comment: "B解答数"
-    t.integer "o_count", null: false, comment: "正解数"
-    t.integer "x_count", null: false, comment: "不正解数"
     t.integer "histories_count", default: 0, null: false, comment: "履歴数(出題数とは異なる)"
     t.integer "good_marks_count", default: 0, null: false, comment: "高評価数"
     t.integer "bad_marks_count", default: 0, null: false, comment: "低評価数"
     t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
     t.integer "messages_count", default: 0, null: false, comment: "コメント数"
     t.decimal "good_rate", precision: 6, scale: 5, null: false, comment: "高評価率"
+    t.index ["bad_marks_count"], name: "index_actb_questions_on_bad_marks_count"
+    t.index ["clip_marks_count"], name: "index_actb_questions_on_clip_marks_count"
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"
     t.index ["endpos_answers_count"], name: "index_actb_questions_on_endpos_answers_count"
     t.index ["folder_id"], name: "index_actb_questions_on_folder_id"
+    t.index ["good_marks_count"], name: "index_actb_questions_on_good_marks_count"
     t.index ["good_rate"], name: "index_actb_questions_on_good_rate"
+    t.index ["histories_count"], name: "index_actb_questions_on_histories_count"
     t.index ["init_sfen"], name: "index_actb_questions_on_init_sfen"
     t.index ["key"], name: "index_actb_questions_on_key"
     t.index ["lineage_id"], name: "index_actb_questions_on_lineage_id"
+    t.index ["messages_count"], name: "index_actb_questions_on_messages_count"
     t.index ["moves_answers_count"], name: "index_actb_questions_on_moves_answers_count"
-    t.index ["o_count"], name: "index_actb_questions_on_o_count"
     t.index ["time_limit_sec"], name: "index_actb_questions_on_time_limit_sec"
     t.index ["user_id"], name: "index_actb_questions_on_user_id"
-    t.index ["x_count"], name: "index_actb_questions_on_x_count"
   end
 
   create_table "actb_room_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

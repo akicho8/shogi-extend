@@ -222,18 +222,23 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :moves_answers_count,  null: false, index: true, default: 0, comment: "A解答数"
       t.integer :endpos_answers_count, null: false, index: true, default: 0, comment: "B解答数"
 
-      # 別テーブルにするか？
-      t.integer :o_count, null: false, index: true,  comment: "正解数"
-      t.integer :x_count, null: false, index: true,  comment: "不正解数"
-
       # counter_cache
-      t.integer :histories_count,  default: 0, null: false, comment: "履歴数(出題数とは異なる)"
-      t.integer :good_marks_count, default: 0, null: false, comment: "高評価数"
-      t.integer :bad_marks_count,  default: 0, null: false, comment: "低評価数"
-      t.integer :clip_marks_count, default: 0, null: false, comment: "保存された数"
-      t.integer :messages_count,   default: 0, null: false, comment: "コメント数"
+      t.integer :histories_count,  default: 0, null: false, index: true, comment: "履歴数(出題数とは異なる)"
+      t.integer :good_marks_count, default: 0, null: false, index: true, comment: "高評価数"
+      t.integer :bad_marks_count,  default: 0, null: false, index: true, comment: "低評価数"
+      t.integer :clip_marks_count, default: 0, null: false, index: true, comment: "保存された数"
+      t.integer :messages_count,   default: 0, null: false, index: true, comment: "コメント数"
 
       t.decimal :good_rate, precision: 6, scale: 5, null: false, index: true, comment: "高評価率"
+    end
+
+    create_table :actb_ox_counts do |t|
+      t.belongs_to :question,                    null: false, index: { unique: true }, comment: "問題"
+      t.integer :o_count,                        null: false, index: true,             comment: "正解数"
+      t.integer :x_count,                        null: false, index: true,             comment: "不正解数"
+      t.integer :ox_total,                       null: false, index: true,             comment: "出題数"
+      t.decimal :o_rate, precision: 6, scale: 5, null: false, index: true,             comment: "高評価率"
+      t.timestamps
     end
 
     # MovesAnswer
