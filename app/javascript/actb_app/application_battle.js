@@ -16,6 +16,8 @@ export const application_battle = {
   ],
   data() {
     return {
+      battle: null,
+
       x_mode:                     null,  // バトル中の状態遷移
       answer_button_disable_p:    null,  // true:誤答でおてつき中
       battle_continue_tap_counts: null,  // それぞれの再戦希望数
@@ -555,6 +557,14 @@ export const application_battle = {
     // バトル終了条件
     battle_end_p() {
       return this.b_score_max >= this.app.config.b_score_max_for_win
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 自分が必ず左側にいる memberships
+    // -1:左 +1:右
+    left_memberships() {
+      return _.sortBy(this.battle.memberships, e => e.user.id === this.current_user.id ? -1 : 0)
     },
   },
 }

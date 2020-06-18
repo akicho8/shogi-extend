@@ -16,7 +16,7 @@
     | {{app.battle.final.name}}
 
   .vs_container.is-flex
-    template(v-for="(membership, i) in app.battle.memberships")
+    template(v-for="(membership, i) in app.left_memberships")
       the_result_membership(:membership="membership")
       .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs
 

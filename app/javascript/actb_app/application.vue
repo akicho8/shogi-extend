@@ -91,7 +91,6 @@ export default {
       sub_mode: "opening",
       rule_key: null,           // 未使用
       room: null,
-      battle: null,
 
       matching_list_hash:   null, // 対戦待ちの人のIDを列挙している
       online_user_ids: null, // オンライン人数
