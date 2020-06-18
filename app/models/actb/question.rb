@@ -333,7 +333,7 @@ module Actb
                 ]))
             record.moves_answers.clear
             e[:moves_answers].each do |e|
-              record.moves_answers.create!(moves_str: e)
+              record.moves_answers.create!(moves_str: e[:moves_str])
             end
           end
         end
