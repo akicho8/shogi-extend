@@ -10,16 +10,18 @@ module FrontendScript
         CLIP_FETCH_MAX      = 50
       end
 
+      # 問題一覧
       # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch
+      # app/javascript/actb_app/models/question_column_info.js
       def questions_fetch
         params[:per] ||= QUESTIONS_FETCH_PER
 
         s = current_user.actb_questions
         s = page_scope(s)       # page_mod.rb
-        s = sort_scope(s)       # sort_mod.rb
+        s = sort_scope_for_questions(s)
 
         retv = {**page_info(s), **sort_info}
-        retv[:questions] = s.as_json(question_as_json_params)
+        retv[:questions] = s.as_json(Actb::Question.json_type5)
         retv
       end
 
@@ -82,6 +84,24 @@ module FrontendScript
         lobby_messages = Actb::LobbyMessage.order(:created_at).includes(:user).last(LOBBY_MESSAGE_MAX)
         lobby_messages = lobby_messages.as_json(only: [:body], include: {user: {only: [:id, :key, :name], methods: [:avatar_path]}})
         { lobby_messages: lobby_messages }
+      end
+
+      private
+
+      def sort_scope_for_questions(s)
+        if sort_column && sort_order
+          columns = sort_column.scan(/\w+/)
+          if columns.first == "ox_record"
+            # { key: "o_rate",           name: "正解率",     short_name: "正率",     visible: true,  },
+            # { key: "o_count",          name: "正解数",     short_name: "正解",     visible: false, },
+            # { key: "x_count",          name: "誤答数",     short_name: "誤答",     visible: false, },
+            order = Actb::OxRecord.order(columns.last => sort_order)
+            s = s.joins(:ox_record).merge(order)
+          else
+            s = sort_scope(s)
+          end
+        end
+        s
       end
     end
   end

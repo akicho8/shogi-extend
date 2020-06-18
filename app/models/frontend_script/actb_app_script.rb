@@ -91,10 +91,6 @@ module FrontendScript
       c.render json: public_send(params[:remote_action])
     end
 
-    def question_as_json_params
-      { include: [:user, :moves_answers, :lineage], only: Actb::Question.index_and_form_json_columns, methods: [:folder_key] }
-    end
-
     def current_battle_id
       params[:battle_id].presence
     end

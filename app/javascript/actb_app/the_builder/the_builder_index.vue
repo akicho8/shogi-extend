@@ -40,8 +40,11 @@
       b-table-column(field="histories_count"  :label="QuestionColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
 
       b-table-column(field="difficulty_level" :label="QuestionColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
-      b-table-column(field="o_count"          :label="QuestionColumnInfo.fetch('o_count').short_name"          sortable numeric :visible="visible_hash.o_count")          {{props.row.o_count}}
-      b-table-column(field="x_count"          :label="QuestionColumnInfo.fetch('x_count').short_name"          sortable numeric :visible="visible_hash.x_count")          {{props.row.x_count}}
+
+      b-table-column(field="ox_record.o_rate"  :label="QuestionColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc2(props.row.ox_record.o_rate)}}
+      b-table-column(field="ox_record.o_count" :label="QuestionColumnInfo.fetch('o_count').short_name" sortable numeric :visible="visible_hash.o_count") {{props.row.ox_record.o_count}}
+      b-table-column(field="ox_record.x_count" :label="QuestionColumnInfo.fetch('x_count').short_name" sortable numeric :visible="visible_hash.x_count") {{props.row.ox_record.x_count}}
+
       b-table-column(field="clip_marks_count"      :label="QuestionColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
       b-table-column(field="updated_at"       :label="QuestionColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
 

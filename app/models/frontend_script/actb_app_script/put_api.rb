@@ -44,7 +44,7 @@ module FrontendScript
           c.render json: { form_error_message: error.message }
           return
         end
-        { question: question.as_json(question_as_json_params) }
+        { question: question.as_json(Actb::Question.json_type5) }
       end
 
       # curl -d _method=put -d user_name=a -d remote_action=profile_update -d _user_id=1 http://localhost:3000/script/actb-app

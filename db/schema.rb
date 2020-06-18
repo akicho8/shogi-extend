@@ -210,6 +210,15 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["question_id"], name: "index_actb_moves_answers_on_question_id"
   end
 
+  create_table "actb_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", null: false, comment: "正解・不正解"
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_actb_ox_marks_on_key"
+    t.index ["position"], name: "index_actb_ox_marks_on_position"
+  end
+
   create_table "actb_ox_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "question_id", null: false, comment: "問題"
     t.integer "o_count", null: false, comment: "正解数"
@@ -223,15 +232,6 @@ ActiveRecord::Schema.define(version: 2020_06_05_202100) do
     t.index ["ox_total"], name: "index_actb_ox_records_on_ox_total"
     t.index ["question_id"], name: "index_actb_ox_records_on_question_id", unique: true
     t.index ["x_count"], name: "index_actb_ox_records_on_x_count"
-  end
-
-  create_table "actb_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "key", null: false, comment: "正解・不正解"
-    t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["key"], name: "index_actb_ox_marks_on_key"
-    t.index ["position"], name: "index_actb_ox_marks_on_position"
   end
 
   create_table "actb_question_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

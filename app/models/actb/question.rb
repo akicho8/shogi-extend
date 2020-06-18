@@ -41,39 +41,38 @@
 
 module Actb
   class Question < ApplicationRecord
-    def self.index_and_form_json_columns
-      [
-        :id,
-        :init_sfen,
-        :time_limit_sec,
-        :difficulty_level,
-        # :display_key,
-        :title,
-        :description,
-        :hint_desc,
+    def self.json_type5
+      {
+        methods: [:folder_key],
+        include: [:user, :moves_answers, :lineage, :ox_record],
+        only: [
+          :id,
+          :init_sfen,
+          :time_limit_sec,
+          :difficulty_level,
+          # :display_key,
+          :title,
+          :description,
+          :hint_desc,
 
-        :other_author,
-        :source_media_name,
-        :source_media_url,
-        :source_published_on,
+          :other_author,
+          :source_media_name,
+          :source_media_url,
+          :source_published_on,
 
-        :moves_answers_count,
-        :endpos_answers_count,
-        :o_count,
-        :x_count,
+          :moves_answers_count,
+          :endpos_answers_count,
 
-        :good_count,
-        :bad_count,
+          :histories_count,
+          :bad_marks_count,
+          :good_marks_count,
+          :clip_marks_count,
 
-        :histories_count,
-        :bad_marks_count,
-        :good_marks_count,
-        :clip_marks_count,
+          :good_rate,
 
-        :good_rate,
-
-        :updated_at,
-      ]
+          :updated_at,
+        ],
+      }
     end
 
     belongs_to :user, class_name: "::User" # 作者
