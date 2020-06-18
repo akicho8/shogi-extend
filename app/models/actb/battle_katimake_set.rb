@@ -53,7 +53,7 @@ module Actb
     def diffs_get(method)
       if target_user
         values = memberships.collect { |e| e.user.send(method).rating }
-        EloRating.rating_update2(*values)
+        EloRating.rating_update1(*values)
       else
         0
       end

@@ -3,35 +3,34 @@
 #
 # Question (actb_questions as Actb::Question)
 #
-# |----------------------+----------------------+---------------+---------------------+--------------+-------|
-# | name                 | desc                 | type          | opts                | refs         | index |
-# |----------------------+----------------------+---------------+---------------------+--------------+-------|
-# | id                   | ID                   | integer(8)    | NOT NULL PK         |              |       |
-# | key                  | ユニークなハッシュ   | string(255)   | NOT NULL            |              | A     |
-# | user_id              | User                 | integer(8)    | NOT NULL            | => ::User#id | B     |
-# | folder_id            | Folder               | integer(8)    | NOT NULL            |              | C     |
-# | lineage_id           | Lineage              | integer(8)    | NOT NULL            |              | D     |
-# | init_sfen            | Init sfen            | string(255)   | NOT NULL            |              | E     |
-# | time_limit_sec       | Time limit sec       | integer(4)    |                     |              | F     |
-# | difficulty_level     | Difficulty level     | integer(4)    |                     |              | G     |
-# | title                | タイトル             | string(255)   |                     |              |       |
-# | description          | 説明                 | string(512)   |                     |              |       |
-# | hint_desc            | Hint desc            | string(255)   |                     |              |       |
-# | other_author         | Other author         | string(255)   |                     |              |       |
-# | source_media_name    | Source media name    | string(255)   |                     |              |       |
-# | source_media_url     | Source media url     | string(255)   |                     |              |       |
-# | source_published_on  | Source published on  | date          |                     |              |       |
-# | created_at           | 作成日時             | datetime      | NOT NULL            |              |       |
-# | updated_at           | 更新日時             | datetime      | NOT NULL            |              |       |
-# | moves_answers_count  | Moves answers count  | integer(4)    | DEFAULT(0) NOT NULL |              | H     |
-# | endpos_answers_count | Endpos answers count | integer(4)    | DEFAULT(0) NOT NULL |              | I     |
-# | histories_count      | Histories count      | integer(4)    | DEFAULT(0) NOT NULL |              | J     |
-# | good_marks_count     | Good marks count     | integer(4)    | DEFAULT(0) NOT NULL |              | K     |
-# | bad_marks_count      | Bad marks count      | integer(4)    | DEFAULT(0) NOT NULL |              | L     |
-# | clip_marks_count     | Clip marks count     | integer(4)    | DEFAULT(0) NOT NULL |              | M     |
-# | messages_count       | Messages count       | integer(4)    | DEFAULT(0) NOT NULL |              | N     |
-# | good_rate            | Good rate            | decimal(6, 5) | NOT NULL            |              | O     |
-# |----------------------+----------------------+---------------+---------------------+--------------+-------|
+# |---------------------+---------------------+---------------+---------------------+--------------+-------|
+# | name                | desc                | type          | opts                | refs         | index |
+# |---------------------+---------------------+---------------+---------------------+--------------+-------|
+# | id                  | ID                  | integer(8)    | NOT NULL PK         |              |       |
+# | key                 | ユニークなハッシュ  | string(255)   | NOT NULL            |              | A     |
+# | user_id             | User                | integer(8)    | NOT NULL            | => ::User#id | B     |
+# | folder_id           | Folder              | integer(8)    | NOT NULL            |              | C     |
+# | lineage_id          | Lineage             | integer(8)    | NOT NULL            |              | D     |
+# | init_sfen           | Init sfen           | string(255)   | NOT NULL            |              | E     |
+# | time_limit_sec      | Time limit sec      | integer(4)    |                     |              | F     |
+# | difficulty_level    | Difficulty level    | integer(4)    |                     |              | G     |
+# | title               | タイトル            | string(255)   |                     |              |       |
+# | description         | 説明                | string(512)   |                     |              |       |
+# | hint_desc           | Hint desc           | string(255)   |                     |              |       |
+# | other_author        | Other author        | string(255)   |                     |              |       |
+# | source_media_name   | Source media name   | string(255)   |                     |              |       |
+# | source_media_url    | Source media url    | string(255)   |                     |              |       |
+# | source_published_on | Source published on | date          |                     |              |       |
+# | created_at          | 作成日時            | datetime      | NOT NULL            |              |       |
+# | updated_at          | 更新日時            | datetime      | NOT NULL            |              |       |
+# | moves_answers_count | Moves answers count | integer(4)    | DEFAULT(0) NOT NULL |              | H     |
+# | histories_count     | Histories count     | integer(4)    | DEFAULT(0) NOT NULL |              | I     |
+# | good_marks_count    | Good marks count    | integer(4)    | DEFAULT(0) NOT NULL |              | J     |
+# | bad_marks_count     | Bad marks count     | integer(4)    | DEFAULT(0) NOT NULL |              | K     |
+# | clip_marks_count    | Clip marks count    | integer(4)    | DEFAULT(0) NOT NULL |              | L     |
+# | messages_count      | Messages count      | integer(4)    | DEFAULT(0) NOT NULL |              | M     |
+# | good_rate           | Good rate           | decimal(6, 5) | NOT NULL            |              | N     |
+# |---------------------+---------------------+---------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_many :actb_room_messages
