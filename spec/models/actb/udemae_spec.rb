@@ -20,8 +20,8 @@ module Actb
     include ActbSupportMethods
 
     def test1(udemae_key, udemae_point, diff)
-      user1.actb_master_xrecord.update!(udemae: Udemae.fetch(udemae_key), udemae_point: udemae_point)
-      user1.actb_master_xrecord.udemae_add(diff)
+      user1.actb_main_record.update!(udemae: Udemae.fetch(udemae_key), udemae_point: udemae_point)
+      user1.actb_main_record.udemae_add(diff)
       [user1.udemae.key, user1.udemae_point.to_i]
     end
 

@@ -99,7 +99,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
     context "レートを考慮したマッチング" do
       def user_of(rating)
         User.create!.tap do |e|
-          e.actb_master_xrecord.update!(rating: rating)
+          e.actb_main_record.update!(rating: rating)
         end
       end
 

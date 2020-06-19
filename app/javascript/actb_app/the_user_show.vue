@@ -7,9 +7,9 @@
       .user_name.has-text-weight-bold
         | {{ov_user_info.name}}
       .rate_container.has-text-weight-bold(v-if="app.config.rating_display_p")
-        | R{{ov_user_info.actb_master_xrecord.rating}}
+        | R{{ov_user_info.actb_main_record.rating}}
       .udemae_key.has-text-weight-bold.has-text-primary.is-size-5
-        | {{ov_user_info.actb_master_xrecord.udemae_key}}
+        | {{ov_user_info.actb_main_record.udemae_key}}
 
       win_lose_circle(:info="win_lose_circle_params")
 
@@ -17,23 +17,23 @@
         .level-item.has-text-centered(v-if="false")
           div
             p.heading 対戦回数
-            p.title {{ov_user_info.actb_master_xrecord.battle_count}}
+            p.title {{ov_user_info.actb_main_record.battle_count}}
         .level-item.has-text-centered
           div
             p.heading 連勝数
-            p.title {{ov_user_info.actb_master_xrecord.rensho_count}}
+            p.title {{ov_user_info.actb_main_record.rensho_count}}
         .level-item.has-text-centered
           div
             p.heading 最多連勝数
-            p.title {{ov_user_info.actb_master_xrecord.rensho_max}}
+            p.title {{ov_user_info.actb_main_record.rensho_max}}
         .level-item.has-text-centered
           div
             p.heading 最多連敗数
-            p.title {{ov_user_info.actb_master_xrecord.renpai_max}}
+            p.title {{ov_user_info.actb_main_record.renpai_max}}
         .level-item.has-text-centered
           div
             p.heading 切断回数
-            p.title {{ov_user_info.actb_master_xrecord.disconnect_count}}
+            p.title {{ov_user_info.actb_main_record.disconnect_count}}
 
       .box.description.has-background-white-ter.is-shadowless.is-size-7(v-if="ov_user_info.description" v-html="auto_link(ov_user_info.description)")
 </template>
@@ -57,8 +57,8 @@ export default {
     win_lose_circle_params() {
       return {
         judge_counts: {
-          win:  this.ov_user_info.actb_master_xrecord.win_count,
-          lose: this.ov_user_info.actb_master_xrecord.lose_count,
+          win:  this.ov_user_info.actb_main_record.win_count,
+          lose: this.ov_user_info.actb_main_record.lose_count,
         },
       }
     },

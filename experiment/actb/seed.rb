@@ -119,7 +119,7 @@ battle.katimake_set(user1, :win, :f_success)
 # 切断したことにする
 user1.actb_current_xrecord.update!(final: Actb::Final.fetch(:f_disconnect))
 tp user1.actb_current_xrecord
-tp user1.actb_master_xrecord
+tp user1.actb_main_record
 
 # Good, Bad, Clip
 user1.actb_good_marks.create!(question: Actb::Question.first!)

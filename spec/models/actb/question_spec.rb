@@ -23,13 +23,13 @@
 # | source_published_on | Source published on | date          |                     |              |       |
 # | created_at          | 作成日時            | datetime      | NOT NULL            |              |       |
 # | updated_at          | 更新日時            | datetime      | NOT NULL            |              |       |
-# | moves_answers_count | Moves answers count | integer(4)    | DEFAULT(0) NOT NULL |              | H     |
+# | good_rate           | Good rate           | decimal(6, 5) | NOT NULL            |              | H     |
+# | moves_answers_count | Moves answers count | integer(4)    | DEFAULT(0) NOT NULL |              |       |
 # | histories_count     | Histories count     | integer(4)    | DEFAULT(0) NOT NULL |              | I     |
 # | good_marks_count    | Good marks count    | integer(4)    | DEFAULT(0) NOT NULL |              | J     |
 # | bad_marks_count     | Bad marks count     | integer(4)    | DEFAULT(0) NOT NULL |              | K     |
 # | clip_marks_count    | Clip marks count    | integer(4)    | DEFAULT(0) NOT NULL |              | L     |
 # | messages_count      | Messages count      | integer(4)    | DEFAULT(0) NOT NULL |              | M     |
-# | good_rate           | Good rate           | decimal(6, 5) | NOT NULL            |              | N     |
 # |---------------------+---------------------+---------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

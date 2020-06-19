@@ -139,7 +139,7 @@ module Actb
                   only: [:id, :name],
                   methods: [:avatar_path],
                   include: {
-                    actb_master_xrecord: {
+                    actb_main_record: {
                       only: [
                         :id,
                         :rensho_count, :renpai_count, :rensho_max, :renpai_max,

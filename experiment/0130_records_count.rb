@@ -19,7 +19,7 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> |                actb_judges | 4  |
 # >> |              actb_lineages | 7  |
 # >> |        actb_lobby_messages | 0  |
-# >> |       actb_master_xrecords | 11 |
+# >> |       actb_main_records | 11 |
 # >> |         actb_moves_answers | 0  |
 # >> |              actb_ox_marks | 3  |
 # >> |     actb_question_messages | 0  |

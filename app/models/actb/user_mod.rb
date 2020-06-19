@@ -49,24 +49,24 @@ module Actb
       end
     end
 
-    concerning :MasterXrecordMod do
+    concerning :MainRecordMod do
       included do
-        has_one :actb_master_xrecord, class_name: "Actb::MasterXrecord", dependent: :destroy
+        has_one :actb_main_record, class_name: "Actb::MainRecord", dependent: :destroy
 
-        delegate :rating, :rensho_count, :rensho_max, :udemae, :udemae_key, :udemae_point, to: :actb_master_xrecord
+        delegate :rating, :rensho_count, :rensho_max, :udemae, :udemae_key, :udemae_point, to: :actb_main_record
 
         after_create do
-          create_actb_master_xrecord!
+          create_actb_main_record!
         end
       end
 
-      def create_actb_master_xrecord_if_blank
-        actb_master_xrecord || create_actb_master_xrecord!
+      def create_actb_main_record_if_blank
+        actb_main_record || create_actb_main_record!
       end
 
       # 両方に同じ処理を行う
       def both_xrecord_each
-        [:actb_master_xrecord, :actb_current_xrecord].each do |e|
+        [:actb_main_record, :actb_current_xrecord].each do |e|
           yield public_send(e)
         end
       end
@@ -89,8 +89,8 @@ module Actb
         actb_current_xrecord
       end
 
-      def create_actb_master_xrecord_if_blank
-        actb_master_xrecord || create_actb_master_xrecord!
+      def create_actb_main_record_if_blank
+        actb_main_record || create_actb_main_record!
       end
 
       # 必ず存在する最新シーズンのプロフィール
@@ -123,7 +123,7 @@ module Actb
           "クラス"             => udemae_key,
           "作成問題数"         => actb_questions.count,
           "最新シーズン情報ID" => actb_current_xrecord.id,
-          "永続的プロフ情報ID" => actb_master_xrecord.id,
+          "永続的プロフ情報ID" => actb_main_record.id,
           "部屋入室数"         => actb_room_memberships.count,
           "対局数"             => actb_battle_memberships.count,
           "問題履歴数"         => actb_histories.count,

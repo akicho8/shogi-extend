@@ -1,5 +1,7 @@
 <template lang="pug">
 .the_result_membership.is-flex
+  debug_print
+
   //////////////////////////////////////////////////////////////////////////////// ○連勝
   .rensho_renpai.is-size-8.has-text-weight-bold
     template(v-if="record.rensho_count >= 1")
@@ -58,7 +60,7 @@ export default {
       return this.app.member_infos_hash[this.membership.id]
     },
     record() {
-      return this.membership.user.actb_master_xrecord
+      return this.membership.user.actb_main_record
     },
   },
 }

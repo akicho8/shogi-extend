@@ -30,7 +30,7 @@ module Actb
 
     # xit "レーティングを引き継ぐ" do
     #   assert { user1.rating == 1500 }
-    #   user1.actb_master_xrecord.update!(rating: 1501)
+    #   user1.actb_main_record.update!(rating: 1501)
     #   assert { user1.rating  == 1501 }
     #   Actb::Season.create!
     #   assert { user1.actb_current_xrecord.rating == 1501 }
@@ -38,7 +38,7 @@ module Actb
 
     it "レーティングを引き継がない" do
       assert { user1.rating == 1500 }
-      user1.actb_master_xrecord.update!(rating: 1501)
+      user1.actb_main_record.update!(rating: 1501)
       assert { user1.rating  == 1501 }
       Actb::Season.create!
       assert { user1.actb_current_xrecord.rating == 1500 }
