@@ -16,13 +16,13 @@
     | {{app.battle.final.name}}
 
   .vs_container.is-flex
-    template(v-for="(membership, i) in app.left_memberships")
+    template(v-for="(membership, i) in app.ordered_memberships")
       the_result_membership(:membership="membership")
       .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs
 
   .footer_container
     .buttons.is-centered
-      b-button.has-text-weight-bold(:disabled="!all_alive_p" @click="app.battle_continue_handle" :type="jibun_ga_ositayo ? 'is-primary' : ''") 同じ相手と再戦する
+      b-button.has-text-weight-bold(:disabled="!all_active_p" @click="app.battle_continue_handle" :type="button_push_by_self_p ? 'is-primary' : ''") 同じ相手と再戦する
 
   .box.is-shadowless(v-if="app.debug_mode_p")
     .buttons.is-centered.are-small
@@ -55,11 +55,11 @@ export default {
   },
   computed: {
     // 参加者が全員いる？
-    all_alive_p() {
+    all_active_p() {
       return Object.values(this.app.member_infos_hash).every(e => e.member_active_p) // v.values.all?(&:member_active_p)
     },
     // 自分が押した？
-    jibun_ga_ositayo() {
+    button_push_by_self_p() {
       return this.app.battle_continue_tap_counts[this.app.current_membership.id] >= 1
     },
   },

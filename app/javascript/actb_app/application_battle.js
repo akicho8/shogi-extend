@@ -388,9 +388,7 @@ export const application_battle = {
     battle_leave_handle_broadcasted(params) {
       const membership = this.battle.memberships.find(e => e.id === params.membership_id)
       this.room_speak(`**${membership.user.name}さんが退出したことを知った`)
-
-      // membership が退出したことを記録
-      this.member_infos_hash[membership.id].member_active_p = false
+      this.member_infos_hash[membership.id].member_active_p = false // 退出記録
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -559,7 +557,7 @@ export const application_battle = {
 
     // 自分が必ず左側にいる memberships
     // -1:左 +1:右
-    left_memberships() {
+    ordered_memberships() {
       return _.sortBy(this.battle.memberships, e => e.user.id === this.current_user.id ? -1 : 0)
     },
   },
