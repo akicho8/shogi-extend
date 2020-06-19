@@ -307,7 +307,7 @@ module Actb
               },
             })
 
-          body = json.to_yaml
+          body = json.to_yaml(line_width: -1)
 
           file = Rails.root.join("app/models/actb/#{name.demodulize.underscore.pluralize}.yml")
           FileUtils.mkdir_p(file.expand_path.dirname)

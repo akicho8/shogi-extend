@@ -1,131 +1,130 @@
 ---
 - key: ef5c5009401cf717ae7e37dd8c834a7d
   init_sfen: position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1
-  time_limit_sec: 10
+  time_limit_sec: 30
   difficulty_level: 1
   title: はじまりの金
   description: いちばん簡単
   hint_desc: "(hint_desc)"
-  other_author: 
-  source_media_name: 
-  source_media_url: 
-  source_published_on: 
+  other_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
   lineage_key: 詰将棋
   moves_answers:
   - moves_str: G*5b
 - key: fa8fc185045af4d329ff13f9a632f156
   init_sfen: position sfen ln1g5/1ks6/pppp5/9/4B4/9/9/9/9 b GN2rb2g3s2n3l14p 1
-  time_limit_sec: 10
+  time_limit_sec: 30
   difficulty_level: 1
   title: 美濃囲いの弱点
-  description: 
-  hint_desc: 
-  other_author: 
-  source_media_name: 
-  source_media_url: 
-  source_published_on: 
+  description:
+  hint_desc:
+  other_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
   lineage_key: 詰将棋
   moves_answers:
   - moves_str: N*7d 8b9b G*8b
   - moves_str: N*7d 8b7a G*8b
 - key: 40085dba3bd506267fd3039dea8ea404
   init_sfen: position sfen 7nk/7sp/9/9/4B4/9/9/9/9 b N2rb4g3s2n4l17p 1
-  time_limit_sec: 10
+  time_limit_sec: 30
   difficulty_level: 1
   title: 斜めに弱い
-  description: 
-  hint_desc: 
-  other_author: 
-  source_media_name: 
-  source_media_url: 
-  source_published_on: 
+  description:
+  hint_desc:
+  other_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
   lineage_key: 詰将棋
   moves_answers:
   - moves_str: N*2c
 - key: cbd6adcc26c6ae176a04a92450f2cf27
   init_sfen: position sfen 8k/7g1/8G/9/9/9/9/9/9 b GN2r2bg4s3n4l18p 1
-  time_limit_sec: 10
+  time_limit_sec: 30
   difficulty_level: 1
   title: 桂馬をうまく使う
-  description: 
-  hint_desc: 
-  other_author: 
-  source_media_name: 
-  source_media_url: 
-  source_published_on: 
+  description:
+  hint_desc:
+  other_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
   lineage_key: 詰将棋
   moves_answers:
   - moves_str: N*2c 1a2a G*3a
   - moves_str: N*2c 2b2c G*1b
 - key: 57f055d2775e96b4c1e7e879623993b3
   init_sfen: position sfen ln7/1ks4R1/pppp5/9/9/9/9/9/9 b GSr2b3g2s3n3l14p 1
-  time_limit_sec: 10
+  time_limit_sec: 30
   difficulty_level: 1
   title: 美濃囲いあるある詰め筋1
-  description: 
-  hint_desc: 
-  other_author: 
-  source_media_name: 
-  source_media_url: 
-  source_published_on: 
+  description:
+  hint_desc:
+  other_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
   lineage_key: 実戦詰め筋
   moves_answers:
   - moves_str: S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b7c
   - moves_str: S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b8b
 - key: 84fea0e5c3fba625431e319ac6d7c4f1
   init_sfen: position sfen ln7/1ksG5/1pp6/p8/9/9/9/9/9 b BGP2rb2g3s3n3l14p 1
-  time_limit_sec: 10
+  time_limit_sec: 30
   difficulty_level: 1
   title: 美濃囲いあるある詰め筋2
-  description: 
-  hint_desc: 
-  other_author: 
-  source_media_name: 
-  source_media_url: 
-  source_published_on: 
+  description:
+  hint_desc:
+  other_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
   lineage_key: 実戦詰め筋
   moves_answers:
   - moves_str: B*7a 8b9b P*9c 8a9c G*8b
 - key: 0dcbb33d060d3507dc29f46f23f82643
   init_sfen: position sfen ln7/kSG6/1p7/p8/9/9/9/9/9 b L2r2b3g3s3n2l16p 1
-  time_limit_sec: 10
+  time_limit_sec: 30
   difficulty_level: 1
   title: 成っちゃだめ
-  description: 
-  hint_desc: 
-  other_author: 
-  source_media_name: 
-  source_media_url: 
-  source_published_on: 
+  description:
+  hint_desc:
+  other_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
   lineage_key: 詰将棋
   moves_answers:
   - moves_str: L*9c 8a9c 8b8a
 - key: b0538a0efd2a8ee173d6fd11160fcf4f
   init_sfen: position sfen 6skl/9/7G1/9/9/9/9/9/9 b GL2r2b2g2s4n2l18p 1
-  time_limit_sec: 10
+  time_limit_sec: 30
   difficulty_level: 1
   title: 銀の弱点
-  description: 
-  hint_desc: 
-  other_author: 
-  source_media_name: 
-  source_media_url: 
-  source_published_on: 
+  description:
+  hint_desc:
+  other_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
   lineage_key: 詰将棋
   moves_answers:
   - moves_str: L*2b 3a2b G*3b
 - key: ca653ae280a82b30da293032728d6928
-  init_sfen: position sfen +R7l/gnB6/k1s1G4/pgp2ppp1/1p1p1s1np/P1P2NP2/1P1P1PsPP/2+r4SL/L3+p+p+bNK
-    b GL 1
-  time_limit_sec: 30
+  init_sfen: position sfen +R7l/gnB6/k1s1G4/pgp2ppp1/1p1p1s1np/P1P2NP2/1P1P1PsPP/2+r4SL/L3+p+p+bNK b GL 1
+  time_limit_sec: 60
   difficulty_level: 4
   title: 詰ますしかない
-  description: 
-  hint_desc: 
-  other_author: 
-  source_media_name: 
-  source_media_url: 
-  source_published_on: 
+  description:
+  hint_desc:
+  other_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
   lineage_key: 実戦詰め筋
   moves_answers:
   - moves_str: 9a9b 9c9b G*9a 9b9a L*9c G*9b G*8a
