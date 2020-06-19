@@ -17,7 +17,7 @@ module Actb
           m.update!(judge: it.next)
         end
 
-        [:actb_main_record, :actb_current_xrecord].each do |method|
+        [:actb_main_xrecord, :actb_latest_xrecord].each do |method|
           judge_it = judges.each
           diff = diffs_get(method)
 

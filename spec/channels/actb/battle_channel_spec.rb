@@ -169,13 +169,13 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       assert { user1.reload.rating == 1516 }
       assert { user2.reload.rating == 1484 }
 
-      assert { user1.actb_current_xrecord.rating == 1516 }
-      assert { user2.actb_current_xrecord.rating == 1484 }
+      assert { user1.actb_latest_xrecord.rating == 1516 }
+      assert { user2.actb_latest_xrecord.rating == 1484 }
 
-      assert { user1.actb_current_xrecord.rensho_count == 1 }
-      assert { user1.actb_current_xrecord.renpai_count == 0 }
-      assert { user2.actb_current_xrecord.rensho_count == 0 }
-      assert { user2.actb_current_xrecord.renpai_count == 1 }
+      assert { user1.actb_latest_xrecord.rensho_count == 1 }
+      assert { user1.actb_latest_xrecord.renpai_count == 0 }
+      assert { user2.actb_latest_xrecord.rensho_count == 0 }
+      assert { user2.actb_latest_xrecord.renpai_count == 1 }
     end
   end
 end

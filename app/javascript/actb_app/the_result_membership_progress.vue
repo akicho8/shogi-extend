@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_result_membership_progress
-  b-progress(type="is-danger" :value="record.udemae_point" size="is-medium" show-value)
-    | {{record.udemae_key}}
+  b-progress(type="is-danger" :value="xrecord.udemae_point" size="is-medium" show-value)
+    | {{xrecord.udemae_key}}
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
     support,
   ],
   props: {
-    record: { type: Object, required: true, },
+    xrecord: { type: Object, required: true, },
   },
 }
 </script>

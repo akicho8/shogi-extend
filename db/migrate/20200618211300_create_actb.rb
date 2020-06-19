@@ -98,7 +98,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    # Actb::MainRecord
+    # Actb::MainXrecord
     common_columns_define = -> t {
       t.belongs_to :judge, foreign_key: {to_table: :actb_judges},                                 null: false,               comment: "直前の勝敗"
       t.belongs_to :final, foreign_key: {to_table: :actb_finals},                                 null: false,               comment: "直前の結果"
@@ -127,7 +127,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.datetime :disconnected_at,  null: true,               comment: "最終切断日時"
     }
 
-    create_table :actb_main_records do |t|
+    create_table :actb_main_xrecords do |t|
       t.belongs_to :user, foreign_key: true, null: false, index: { unique: true }, comment: "対戦者"
       common_columns_define.call(t)
     end

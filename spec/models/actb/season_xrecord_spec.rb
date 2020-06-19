@@ -44,7 +44,7 @@ module Actb
     include ActbSupportMethods
 
     it "切断記録" do
-      record = user1.actb_current_xrecord
+      record = user1.actb_latest_xrecord
       record.final_set(Actb::Final.fetch(:f_disconnect))
       assert { record.disconnect_count == 1 }
       assert { record.disconnected_at }

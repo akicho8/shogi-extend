@@ -23,25 +23,25 @@ module Actb
 
     it "単に新しいレコードを作るだけでユーザーの新シーズンに切り替わる" do
       assert { Season.newest.generation                   == 1 }
-      assert { user1.actb_current_xrecord.season.generation == 1 }
+      assert { user1.actb_latest_xrecord.season.generation == 1 }
       assert { Season.create!.generation                  == 2 }
-      assert { user1.actb_current_xrecord.season.generation == 2 }
+      assert { user1.actb_latest_xrecord.season.generation == 2 }
     end
 
     # xit "レーティングを引き継ぐ" do
     #   assert { user1.rating == 1500 }
-    #   user1.actb_main_record.update!(rating: 1501)
+    #   user1.actb_main_xrecord.update!(rating: 1501)
     #   assert { user1.rating  == 1501 }
     #   Actb::Season.create!
-    #   assert { user1.actb_current_xrecord.rating == 1501 }
+    #   assert { user1.actb_latest_xrecord.rating == 1501 }
     # end
 
     it "レーティングを引き継がない" do
       assert { user1.rating == 1500 }
-      user1.actb_main_record.update!(rating: 1501)
+      user1.actb_main_xrecord.update!(rating: 1501)
       assert { user1.rating  == 1501 }
       Actb::Season.create!
-      assert { user1.actb_current_xrecord.rating == 1500 }
+      assert { user1.actb_latest_xrecord.rating == 1500 }
     end
 
     it "このシーズンを持っている profiles" do

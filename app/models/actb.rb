@@ -18,7 +18,7 @@ module Actb
     User.find_each(&:create_various_folders_if_blank)
     User.find_each(&:create_actb_setting_if_blank)
     User.find_each(&:create_actb_season_xrecord_if_blank)
-    User.find_each(&:create_actb_main_record_if_blank)
+    User.find_each(&:create_actb_main_xrecord_if_blank)
   end
 
   def models

@@ -583,7 +583,21 @@
 
 # == Schema Information ==
 #
-# Main record (actb_main_records as Actb::MainRecord)
+# Rule (actb_rules as Actb::Rule)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Main xrecord (actb_main_xrecords as Actb::MainXrecord)
 #
 # |------------------+------------------+---------------+-------------+--------------+-------|
 # | name             | desc             | type          | opts        | refs         | index |
@@ -615,20 +629,6 @@
 #- Remarks ----------------------------------------------------------------------
 # User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Rule (actb_rules as Actb::Rule)
-#
-# |------------+--------------------+-------------+-------------+------+-------|
-# | name       | desc               | type        | opts        | refs | index |
-# |------------+--------------------+-------------+-------------+------+-------|
-# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
-# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
-# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
-# |------------+--------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #

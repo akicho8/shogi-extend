@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Main record (actb_main_records as Actb::MainRecord)
+# Main xrecord (actb_main_xrecords as Actb::MainXrecord)
 #
 # |------------------+------------------+---------------+-------------+--------------+-------|
 # | name             | desc             | type          | opts        | refs         | index |
@@ -35,7 +35,7 @@
 #--------------------------------------------------------------------------------
 
 module Actb
-  class MainRecord < ApplicationRecord
+  class MainXrecord < ApplicationRecord
     include XrecordShareMod
 
     with_options presence: true do

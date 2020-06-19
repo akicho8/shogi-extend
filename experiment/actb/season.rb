@@ -7,10 +7,10 @@ Actb.setup
 
 user = User.sysop
 user.rating            # => 0.15e4
-user.actb_main_record.update!(rating: 1501) 
+user.actb_main_xrecord.update!(rating: 1501) 
 user.rating            # => 0.1501e4
 Actb::Season.create!
-user.actb_current_xrecord.rating # => 0.1501e4
+user.actb_latest_xrecord.rating # => 0.1501e4
 
 tp Actb.info
 # >> load: /Users/ikeda/src/shogi_web/app/models/actb/questions.yml

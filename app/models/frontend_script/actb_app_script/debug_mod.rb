@@ -92,17 +92,17 @@ module FrontendScript
         c.sysop_login_unless_logout
 
         users.each do |user|
-          record = user.actb_main_record
+          record = user.actb_main_xrecord
           record.udemae_key = "A+"
           record.udemae_point = 50
           record.save!
         end
 
-        record = users[0].actb_main_record
+        record = users[0].actb_main_xrecord
         record.udemae_add(60)
         record.save!
 
-        record = users[1].actb_main_record
+        record = users[1].actb_main_xrecord
         record.udemae_add(60)
         record.save!
 

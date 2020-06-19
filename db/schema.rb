@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.index ["user_id"], name: "index_actb_lobby_messages_on_user_id"
   end
 
-  create_table "actb_main_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "actb_main_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "対戦者"
     t.bigint "judge_id", null: false, comment: "直前の勝敗"
     t.bigint "final_id", null: false, comment: "直前の結果"
@@ -171,22 +171,22 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "disconnect_count", null: false, comment: "切断数"
     t.datetime "disconnected_at", comment: "最終切断日時"
-    t.index ["battle_count"], name: "index_actb_main_records_on_battle_count"
-    t.index ["disconnect_count"], name: "index_actb_main_records_on_disconnect_count"
-    t.index ["final_id"], name: "index_actb_main_records_on_final_id"
-    t.index ["judge_id"], name: "index_actb_main_records_on_judge_id"
-    t.index ["lose_count"], name: "index_actb_main_records_on_lose_count"
-    t.index ["rating"], name: "index_actb_main_records_on_rating"
-    t.index ["rating_diff"], name: "index_actb_main_records_on_rating_diff"
-    t.index ["rating_max"], name: "index_actb_main_records_on_rating_max"
-    t.index ["renpai_count"], name: "index_actb_main_records_on_renpai_count"
-    t.index ["renpai_max"], name: "index_actb_main_records_on_renpai_max"
-    t.index ["rensho_count"], name: "index_actb_main_records_on_rensho_count"
-    t.index ["rensho_max"], name: "index_actb_main_records_on_rensho_max"
-    t.index ["udemae_id"], name: "index_actb_main_records_on_udemae_id"
-    t.index ["user_id"], name: "index_actb_main_records_on_user_id", unique: true
-    t.index ["win_count"], name: "index_actb_main_records_on_win_count"
-    t.index ["win_rate"], name: "index_actb_main_records_on_win_rate"
+    t.index ["battle_count"], name: "index_actb_main_xrecords_on_battle_count"
+    t.index ["disconnect_count"], name: "index_actb_main_xrecords_on_disconnect_count"
+    t.index ["final_id"], name: "index_actb_main_xrecords_on_final_id"
+    t.index ["judge_id"], name: "index_actb_main_xrecords_on_judge_id"
+    t.index ["lose_count"], name: "index_actb_main_xrecords_on_lose_count"
+    t.index ["rating"], name: "index_actb_main_xrecords_on_rating"
+    t.index ["rating_diff"], name: "index_actb_main_xrecords_on_rating_diff"
+    t.index ["rating_max"], name: "index_actb_main_xrecords_on_rating_max"
+    t.index ["renpai_count"], name: "index_actb_main_xrecords_on_renpai_count"
+    t.index ["renpai_max"], name: "index_actb_main_xrecords_on_renpai_max"
+    t.index ["rensho_count"], name: "index_actb_main_xrecords_on_rensho_count"
+    t.index ["rensho_max"], name: "index_actb_main_xrecords_on_rensho_max"
+    t.index ["udemae_id"], name: "index_actb_main_xrecords_on_udemae_id"
+    t.index ["user_id"], name: "index_actb_main_xrecords_on_user_id", unique: true
+    t.index ["win_count"], name: "index_actb_main_xrecords_on_win_count"
+    t.index ["win_rate"], name: "index_actb_main_xrecords_on_win_rate"
   end
 
   create_table "actb_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -794,10 +794,10 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
   add_foreign_key "actb_histories", "actb_rooms", column: "room_id"
   add_foreign_key "actb_histories", "users"
   add_foreign_key "actb_lobby_messages", "users"
-  add_foreign_key "actb_main_records", "actb_finals", column: "final_id"
-  add_foreign_key "actb_main_records", "actb_judges", column: "judge_id"
-  add_foreign_key "actb_main_records", "actb_udemaes", column: "udemae_id"
-  add_foreign_key "actb_main_records", "users"
+  add_foreign_key "actb_main_xrecords", "actb_finals", column: "final_id"
+  add_foreign_key "actb_main_xrecords", "actb_judges", column: "judge_id"
+  add_foreign_key "actb_main_xrecords", "actb_udemaes", column: "udemae_id"
+  add_foreign_key "actb_main_xrecords", "users"
   add_foreign_key "actb_moves_answers", "actb_questions", column: "question_id"
   add_foreign_key "actb_ox_records", "actb_questions", column: "question_id"
   add_foreign_key "actb_question_messages", "actb_questions", column: "question_id"

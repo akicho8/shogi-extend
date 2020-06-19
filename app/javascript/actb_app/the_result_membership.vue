@@ -4,10 +4,10 @@
 
   //////////////////////////////////////////////////////////////////////////////// ○連勝
   .rensho_renpai.is-size-8.has-text-weight-bold
-    template(v-if="record.rensho_count >= 1")
-      .rensho_count {{record.rensho_count}}連勝中！
-    template(v-else-if="record.renpai_count >= 1")
-      .renpai_count {{record.renpai_count}}連敗中！
+    template(v-if="xrecord.rensho_count >= 1")
+      .rensho_count {{xrecord.rensho_count}}連勝中！
+    template(v-else-if="xrecord.renpai_count >= 1")
+      .renpai_count {{xrecord.renpai_count}}連敗中！
     template(v-else)
         | &nbsp;
 
@@ -23,14 +23,14 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   .user_rating.has-text-weight-bold(v-if="app.config.rating_display_p")
-    | {{record.rating}}
-    span.udemae_last_diff.has-text-danger(v-if="record.udemae_last_diff > 0")
-      | (+{{record.udemae_last_diff}})
-    span.udemae_last_diff.has-text-success(v-if="record.udemae_last_diff < 0")
-      | ({{record.udemae_last_diff}})
+    | {{xrecord.rating}}
+    span.udemae_last_diff.has-text-danger(v-if="xrecord.udemae_last_diff > 0")
+      | (+{{xrecord.udemae_last_diff}})
+    span.udemae_last_diff.has-text-success(v-if="xrecord.udemae_last_diff < 0")
+      | ({{xrecord.udemae_last_diff}})
 
   .progress_container.mt-1
-    the_result_membership_progress(:record="record")
+    the_result_membership_progress(:xrecord="xrecord")
 
   .battle_continue_container.has-text-weight-bold
     template(v-if="app.battle_continue_tap_counts[membership.id]")
@@ -59,8 +59,8 @@ export default {
     mi() {
       return this.app.member_infos_hash[this.membership.id]
     },
-    record() {
-      return this.membership.user.actb_main_record
+    xrecord() {
+      return this.membership.user.actb_main_xrecord
     },
   },
 }
