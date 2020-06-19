@@ -1,7 +1,5 @@
 <template lang="pug">
 .the_result_membership.is-flex
-  debug_print
-
   //////////////////////////////////////////////////////////////////////////////// ○連勝
   .rensho_renpai.is-size-8.has-text-weight-bold
     template(v-if="xrecord.rensho_count >= 1")
@@ -14,11 +12,11 @@
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
   figure.image
     img.is-rounded(:src="membership.user.avatar_path")
-  .user_name.has-text-weight-bold
+  .user_name.has-text-weight-bold.mt-1
     | {{membership.user.name}}
 
   ////////////////////////////////////////////////////////////////////////////////
-  .user_quest_index.has-text-weight-bold.is-size-4
+  .user_quest_index.has-text-weight-bold.is-size-4(v-if="app.debug_mode_p && false")
     | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -91,5 +89,5 @@ export default {
     margin-left: 0.1rem
 
   .progress_container
-    width: 12rem
+    width: 8rem
 </style>
