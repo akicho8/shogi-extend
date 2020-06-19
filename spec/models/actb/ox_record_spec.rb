@@ -28,10 +28,10 @@ module Actb
       question1.ox_add(:x_count)
       ox_record = question1.ox_record
 
-      assert { ox_record.o_count  == 2       }
-      assert { ox_record.x_count  == 1       }
-      assert { ox_record.ox_total == 3       }
-      assert { ox_record.o_rate   == 0.66667 }
+      assert { ox_record.o_count  == 2                  }
+      assert { ox_record.x_count  == 1                  }
+      assert { ox_record.ox_total == 3                  }
+      assert { ox_record.o_rate   == 0.6666666666666666 }
     end
   end
 end
