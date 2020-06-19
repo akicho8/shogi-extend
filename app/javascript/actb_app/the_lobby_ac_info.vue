@@ -45,5 +45,4 @@ export default {
       margin-left: 0.5rem
       .count
         display: inline
-        font-weight: bold
 </style>
