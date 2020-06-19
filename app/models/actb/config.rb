@@ -22,7 +22,7 @@ module Actb
 
     # シングルトンモード
     :otetsuki_enabled                => true, # 誤答すると相手が解答するまで解答ボタンを押せないようにする？
-    :q2_time_limit_sec               => 3,    # 1手は○秒以内に操作しないとタイムアウトになる
+    :q2_time_limit_sec               => 5,    # 1手は○秒以内に操作しないとタイムアウトになる
     :thinking_time_sec               => 5*100,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
     :turn_limit_lazy_count           => 4,    # 3手詰なら○手足した手数まで操作できる
 
