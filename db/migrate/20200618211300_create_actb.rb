@@ -107,9 +107,9 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :lose_count,                               null: false, index: true,  comment: "負け数"
       t.float   :win_rate,                                 null: false, index: true,  comment: "勝率"
 
-      t.decimal :rating,           precision: 8, scale: 4, null: false, index: true,  comment: "レーティング"
-      t.decimal :rating_diff, precision: 8, scale: 4, null: false, index: true,  comment: "直近レーティング変化"
-      t.decimal :rating_max,       precision: 8, scale: 4, null: false, index: true,  comment: "レーティング(最大)"
+      t.float :rating, null: false, index: true,  comment: "レーティング"
+      t.float :rating_diff,  null: false, index: true,  comment: "直近レーティング変化"
+      t.float :rating_max,        null: false, index: true,  comment: "レーティング(最大)"
 
       t.integer :rensho_count,                             null: false, index: true,  comment: "連勝数"
       t.integer :renpai_count,                             null: false, index: true,  comment: "連敗数"
@@ -118,8 +118,8 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :renpai_max,                               null: false, index: true,  comment: "連敗数(最大)"
 
       t.belongs_to :udemae, foreign_key: {to_table: :actb_udemaes},                                null: false, index: true,  comment: "ウデマエ"
-      t.decimal :udemae_point,     precision: 7, scale: 4, null: false, index: false, comment: "ウデマエの内部ポイント"
-      t.decimal :udemae_last_diff, precision: 7, scale: 4, null: false, index: false, comment: "直近ウデマエ変化度"
+      t.float :udemae_point,      null: false, index: false, comment: "ウデマエの内部ポイント"
+      t.float :udemae_last_diff,  null: false, index: false, comment: "直近ウデマエ変化度"
 
       t.timestamps
 
@@ -184,7 +184,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.date :source_published_on,        null: true,  index: false, comment: "出典年月日"
       t.timestamps
 
-      t.decimal :good_rate, precision: 6, scale: 5, null: false, index: true, comment: "高評価率"
+      t.float :good_rate,  null: false, index: true, comment: "高評価率"
 
       # counter_cache
       t.integer :moves_answers_count, default: 0, null: false, index: false, comment: "解答数"
@@ -235,7 +235,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.belongs_to :battle, foreign_key: {to_table: :actb_battles},      null: false,               comment: "対戦"
       t.belongs_to :membership, foreign_key: {to_table: :actb_battle_memberships},  null: false,               comment: "自分と相手"
       t.belongs_to :ox_mark, foreign_key: {to_table: :actb_ox_marks},     null: false,               comment: "解答"
-      t.decimal :rating, precision: 8, scale: 4,        null: false, index: false, comment: "レーティング"
+      t.float :rating,         null: false, index: false, comment: "レーティング"
     end
 
     create_table :actb_ox_records do |t|
@@ -243,7 +243,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       t.integer :o_count,                        null: false, index: true,             comment: "正解数"
       t.integer :x_count,                        null: false, index: true,             comment: "不正解数"
       t.integer :ox_total,                       null: false, index: true,             comment: "出題数"
-      t.decimal :o_rate, precision: 6, scale: 5, null: false, index: true,             comment: "高評価率"
+      t.float :o_rate,  null: false, index: true,             comment: "高評価率"
       t.timestamps
     end
 
