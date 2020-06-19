@@ -246,6 +246,7 @@ module Actb
             ox_record: {
               only: [
                 :o_rate,
+                :ox_total,
               ],
             },
           },

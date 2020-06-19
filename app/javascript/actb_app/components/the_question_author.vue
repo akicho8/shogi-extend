@@ -7,8 +7,12 @@
     span {{question.display_author}}
     span.is-size-11 作
 
-    span.has-text-grey.ml-2 正解率
-    span {{float_to_perc2(question.ox_record.o_rate)}}
+    span.has-text-grey.ml-1 正解率
+    span
+      template(v-if="question.ox_record.ox_total === 0")
+        | ?
+      template(v-else)
+        | {{float_to_perc2(question.ox_record.o_rate)}}
     span %
 
 </template>
