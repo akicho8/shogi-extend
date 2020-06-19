@@ -30,11 +30,8 @@
   .progress_container.mt-1
     the_result_membership_progress(:xrecord="xrecord")
 
-  .battle_continue_container.has-text-weight-bold
-    template(v-if="app.battle_continue_tap_counts[membership.id]")
-      | 再戦希望
-    template(v-else)
-      | &nbsp;
+  .battle_continue_container.has-text-weight-bold.mt-1
+    b-tag(type="is-warning" v-if="app.battle_continue_tap_counts[membership.id]") 再戦希望
 </template>
 
 <script>
@@ -90,4 +87,7 @@ export default {
 
   .progress_container
     width: 8rem
+
+  .battle_continue_container
+    min-height: 1.75rem
 </style>

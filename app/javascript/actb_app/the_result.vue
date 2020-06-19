@@ -22,7 +22,7 @@
 
   .footer_container
     .buttons.is-centered
-      b-button.has-text-weight-bold(:disabled="!all_alive_p" @click="app.battle_continue_handle" :type="app.battle_continue_tap_counts[app.current_membership.id] ? 'is-primary' : ''") 同じ相手と再戦する
+      b-button.has-text-weight-bold(:disabled="!all_alive_p" @click="app.battle_continue_handle" :type="jibun_ga_ositayo ? 'is-primary' : ''") 同じ相手と再戦する
 
   .box.is-shadowless(v-if="app.debug_mode_p")
     .buttons.is-centered.are-small
@@ -57,6 +57,10 @@ export default {
     // 参加者が全員いる？
     all_alive_p() {
       return Object.values(this.app.member_infos_hash).every(e => e.member_active_p) // v.values.all?(&:member_active_p)
+    },
+    // 自分が押した？
+    jibun_ga_ositayo() {
+      return this.app.battle_continue_tap_counts[this.app.current_membership.id] >= 1
     },
   },
 }
