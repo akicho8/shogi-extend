@@ -4,7 +4,7 @@
     img.is-rounded(:src="message.user.avatar_path" @click="app.ov_user_info_set(message.user.id)")
   .user_name.has-text-grey.is-size-7.is_clickable(@click="app.ov_user_info_set(message.user.id)")
     | {{message.user.name}}
-  .message_body.is-size-7(v-html="message_body" :class="{'has-text-primary': system_message_p, 'has-text-danger': debug_message_p}")
+  .message_body.is-size-7.line_break_on(v-html="message_body" :class="{'has-text-primary': system_message_p, 'has-text-danger': debug_message_p}")
 </template>
 
 <script>
@@ -59,15 +59,13 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-$message_row_image_size: 16px
 .message_row
   margin-top: 0.1rem
   justify-content: flex-start
   align-items: center
   .image
     img
-      height: $message_row_image_size
-      width: $message_row_image_size
+      width: 16px
   .user_name
     white-space: nowrap
     margin-left: 0.5rem
