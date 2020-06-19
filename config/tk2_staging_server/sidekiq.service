@@ -63,6 +63,7 @@ UMask=0002
 
 # Greatly reduce Ruby memory fragmentation and heap usage
 # https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
+# https://evilmartians.com/chronicles/fullstaq-ruby-first-impressions-and-how-to-migrate-your-docker-kubernetes-ruby-apps-today
 Environment=MALLOC_ARENA_MAX=2
 
 # if we crash, restart
@@ -78,12 +79,3 @@ SyslogIdentifier=sidekiq
 
 [Install]
 WantedBy=multi-user.target
-# ~> -:47: unknown regexp options - www
-# ~> -:49: unknown regexp options - bah
-# ~> -:49: syntax error, unexpected tSTRING_BEG, expecting do or '{' or '('
-# ~> ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/b...
-# ~>                         ^
-# ~> -:57: unknown regexp option - b
-# ~> -:57: syntax error, unexpected unary-, expecting do or '{' or '('
-# ~> ExecReload=/usr/bin/kill -TSTP $MAINPID
-# ~>                          ^
