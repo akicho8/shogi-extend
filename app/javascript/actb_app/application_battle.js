@@ -355,10 +355,6 @@ export const application_battle = {
 
       this.talk("再戦希望", {rate: 1.5})
       this.$buefy.toast.open({message: "再戦希望", position: "is-top", queue: false})
-
-      if (params.membership_id === this.current_membership.id) {
-      } else {
-      }
     },
 
     battle_continue_force_handle() {

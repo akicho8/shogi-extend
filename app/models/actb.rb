@@ -19,6 +19,10 @@ module Actb
     User.find_each(&:create_actb_setting_if_blank)
     User.find_each(&:create_actb_season_xrecord_if_blank)
     User.find_each(&:create_actb_main_xrecord_if_blank)
+
+    if Rails.env.development? || Rails.env.test?
+      Actb::BaseChannel.redis_clear
+    end
   end
 
   def models

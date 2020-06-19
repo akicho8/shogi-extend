@@ -173,7 +173,7 @@ module Actb
       # --> app/javascript/actb_app/application.vue
     end
 
-    # 再戦
+    # 再戦希望
     def battle_continue_handle(data)
       data = data.to_options
       bc_params = {
