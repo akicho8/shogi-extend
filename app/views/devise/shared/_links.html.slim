@@ -11,10 +11,7 @@
               p.has-text-grey.is-size-7.has-text-centered
                 = v["user_name"]
                 = "さんは以前"
-                span.has-text-weight-bold
-                  | &nbsp;
-                  = s.name
-                  | &nbsp;
+                = s.name
                 = "でログインしました"
 
             - SocialMediaInfo.each do |e|
@@ -24,10 +21,8 @@
                     i(class="fab fa-#{e.key}")
                   span
                     = t('.sign_in_with_provider', provider: e.name, default: "Sign in with #{e.name}")
-                    - if session.dig(:provider_remember, "provider") == e.key.to_s
+                    - if session.dig(:provider_remember, "provider") == e.key.to_s && false
                       = " ←"
-
-            hr
             p
               = link_to("匿名アカウントを作成してログイン", [:session], method: :post, class: "button is-large has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button")
 .columns
