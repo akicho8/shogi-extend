@@ -5,7 +5,7 @@
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle")
 
   b-field.visible_toggle_checkboxes(grouped group-multiline)
-    .control(v-for="e in QuestionColumnInfo.values")
+    .control(v-for="e in QuestionIndexColumnInfo.values")
       b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="bool => cb_input_handle(e, bool)")
         | {{e.name}}
 
@@ -31,22 +31,22 @@
     @sort="$parent.sort_handle"
   )
     template(slot-scope="props")
-      b-table-column(field="id"               :label="QuestionColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
-      b-table-column(field="title"            :label="QuestionColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
+      b-table-column(field="id"               :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
+      b-table-column(field="title"            :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
         a {{props.row.title || '？'}}
-      b-table-column(field="good_rate"        :label="QuestionColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="visible_hash.good_rate") {{float_to_perc2(props.row.good_rate)}} %
-      b-table-column(field="good_marks_count" :label="QuestionColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
-      b-table-column(field="bad_marks_count"  :label="QuestionColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
-      b-table-column(field="histories_count"  :label="QuestionColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
+      b-table-column(field="good_rate"        :label="QuestionIndexColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="visible_hash.good_rate") {{float_to_perc2(props.row.good_rate)}} %
+      b-table-column(field="good_marks_count" :label="QuestionIndexColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
+      b-table-column(field="bad_marks_count"  :label="QuestionIndexColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
+      b-table-column(field="histories_count"  :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
 
-      b-table-column(field="difficulty_level" :label="QuestionColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
+      b-table-column(field="difficulty_level" :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
 
-      b-table-column(field="ox_record.o_rate"  :label="QuestionColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc2(props.row.ox_record.o_rate)}}
-      b-table-column(field="ox_record.o_count" :label="QuestionColumnInfo.fetch('o_count').short_name" sortable numeric :visible="visible_hash.o_count") {{props.row.ox_record.o_count}}
-      b-table-column(field="ox_record.x_count" :label="QuestionColumnInfo.fetch('x_count').short_name" sortable numeric :visible="visible_hash.x_count") {{props.row.ox_record.x_count}}
+      b-table-column(field="ox_record.o_rate"  :label="QuestionIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc2(props.row.ox_record.o_rate)}}
+      b-table-column(field="ox_record.o_count" :label="QuestionIndexColumnInfo.fetch('o_count').short_name" sortable numeric :visible="visible_hash.o_count") {{props.row.ox_record.o_count}}
+      b-table-column(field="ox_record.x_count" :label="QuestionIndexColumnInfo.fetch('x_count').short_name" sortable numeric :visible="visible_hash.x_count") {{props.row.ox_record.x_count}}
 
-      b-table-column(field="clip_marks_count"      :label="QuestionColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
-      b-table-column(field="updated_at"       :label="QuestionColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
+      b-table-column(field="clip_marks_count"      :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
+      b-table-column(field="updated_at"       :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
 
       b-table-column(label="操作")
         a(@click.stop="$parent.question_edit_for(props.row)")
@@ -68,7 +68,7 @@
 import { support } from "../support.js"
 import ls_support from "../../../../app/javascript/ls_support.js"
 
-import { QuestionColumnInfo } from "../models/question_column_info.js"
+import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
 
 export default {
   name: "the_builder_index",
@@ -97,13 +97,13 @@ export default {
   },
 
   computed: {
-    QuestionColumnInfo() { return QuestionColumnInfo },
+    QuestionIndexColumnInfo() { return QuestionIndexColumnInfo },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
 
     ls_data() {
       return {
-        visible_hash: this.as_visible_hash(QuestionColumnInfo.values),
+        visible_hash: this.as_visible_hash(QuestionIndexColumnInfo.values),
       }
     },
   },
