@@ -46,5 +46,4 @@ export default {
       .count
         display: inline
         font-weight: bold
-        color: $primary
 </style>
