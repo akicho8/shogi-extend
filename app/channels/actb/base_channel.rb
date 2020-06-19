@@ -32,11 +32,12 @@ module Actb
 
         Rails.logger.debug([__method__, {key: key, counter: counter, expires_in: redis.ttl(key)}])
 
-        if block_given?
-          if counter == 1
+        if counter == 1
+          if block_given?
             yield
           end
         else
+          Rails.logger.debug("SKIP")
           counter
         end
       end
