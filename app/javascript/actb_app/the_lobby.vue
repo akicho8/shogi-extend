@@ -1,9 +1,8 @@
 <template lang="pug">
 .the_lobby
-  the_footer
-
   ////////////////////////////////////////////////////////////////////////////////
   .start_mode(v-if="app.sub_mode === 'start_mode'")
+    the_footer
     .primary_header
       .header_item.ljust.user_info_block.is-flex.is_clickable(v-if="app.current_user" @click="app.ov_user_info_set(app.current_user.id)")
         .image
@@ -29,6 +28,7 @@
     .buttons.is-centered
       b-button.has-text-weight-bold(@click="app.start_handle" type="is-primary") START
     the_lobby_message
+    the_lobby_debug(v-if="true")
 
   ////////////////////////////////////////////////////////////////////////////////
   .rule_select_mode(v-if="app.sub_mode === 'rule_select_mode'")
@@ -44,7 +44,6 @@
             template(v-if="app.debug_mode_p")
               | ({{app.matching_list_hash[row.key].length}})
 
-  the_lobby_debug(v-if="true")
 </template>
 
 <script>
