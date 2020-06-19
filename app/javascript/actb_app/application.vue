@@ -244,6 +244,7 @@ export default {
       if (this.login_required2()) { return }
 
       this.sub_mode = "rule_select_mode"
+      this.talk("ルールを選択してください", {rate: 1.5})
     },
 
     rule_key_set_handle(rule) {
