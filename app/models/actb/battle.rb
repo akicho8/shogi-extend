@@ -108,7 +108,7 @@ module Actb
                   only: [:id, :name],
                   methods: [:avatar_path, :rating, :udemae_key],
                   include: {
-                    actb_latest_xrecord: {
+                    actb_main_xrecord: {
                       only: [:rensho_count, :renpai_count],
                     },
                   },
