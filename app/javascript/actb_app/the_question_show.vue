@@ -4,7 +4,7 @@
     //- // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(@click="delete_click_handle")
 
-    the_question_author(:question="new_ov_question_info.question")
+    question_author(:question="new_ov_question_info.question")
 
     .secondary_header
       b-tabs(v-model="tab_index" @change="tab_change_handle" expanded)
@@ -38,7 +38,7 @@
 import { support } from "./support.js"
 import the_history_row_vote      from "./the_history/the_history_row_vote.vue"
 import the_question_show_message from "./the_question_show_message.vue"
-import the_question_author       from "./components/the_question_author.vue"
+import question_author       from "./components/question_author.vue"
 
 export default {
   name: "the_question_show",
@@ -51,7 +51,7 @@ export default {
   components: {
     the_history_row_vote,
     the_question_show_message,
-    the_question_author,
+    question_author,
   },
   data() {
     return {

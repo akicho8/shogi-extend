@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_question_author.has-text-centered
+.question_author.has-text-centered
   .question_title.has-text-weight-bold.is-size-6
     | {{question.title}}
 
@@ -21,7 +21,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_question_author",
+  name: "question_author",
   mixins: [
     support,
   ],
@@ -33,7 +33,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_question_author
+.question_author
   .question_title
   .question_user
     //- ↓これを入れると overflow-x が効かなくなる
