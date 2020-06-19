@@ -61,15 +61,13 @@ module Actb
       validates :user_id, uniqueness: { scope: :battle_id }
     end
 
-    after_save do
-      if saved_changes[:judge] && judge && judge.win_or_lose?
-        season_xrecord = user.actb_latest_xrecord
-        # season_xrecord.rensho_count = rensho_count # membershipの方に持つ必要ある？？？
-        # season_xrecord.renpai_count = renpai_count
-        season_xrecord.judge = judge
-        season_xrecord.save!
-      end
-    end
+    # after_save do
+    #   if saved_changes[:judge] && judge && judge.win_or_lose?
+    #     season_xrecord = user.actb_latest_xrecord
+    #     season_xrecord.judge = judge
+    #     season_xrecord.save!
+    #   end
+    # end
 
     def judge_info
       judge.pure_info
