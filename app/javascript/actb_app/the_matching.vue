@@ -6,8 +6,10 @@
         | 対戦相手を待機中
       p {{app.matching_interval_timer_count}}
       p ±{{app.matching_rate_threshold}}
-    b-progress(type="is-primary")
-    .buttons.is-centered
+
+    b-progress.mt-2(type="is-primary")
+
+    .buttons.is-centered.mt-2
       button.delete.is-large(@click="app.matching_cancel_handle")
     the_lobby_debug
 </template>
@@ -35,4 +37,8 @@ export default {
 .the_matching
   .wait_notification
     padding: 1rem 0
+  .progress
+    animation-duration: 3.0s
+    width: 16rem
+    margin: auto
 </style>
