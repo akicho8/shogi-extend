@@ -5,10 +5,10 @@
 
   //////////////////////////////////////////////////////////////////////////////// ○連勝
   .rensho_renpai.is-size-8.has-text-weight-bold
-    template(v-if="membership.user.actb_latest_xrecord.rensho_count >= 1")
-      .rensho_count {{membership.user.actb_latest_xrecord.rensho_count}}連勝中！
-    template(v-else-if="membership.user.actb_latest_xrecord.renpai_count >= 1")
-      .renpai_count {{membership.user.actb_latest_xrecord.renpai_count}}連敗中！
+    template(v-if="xrecord.rensho_count >= 1")
+      .rensho_count {{xrecord.rensho_count}}連勝中！
+    template(v-else-if="xrecord.renpai_count >= 1")
+      .renpai_count {{xrecord.renpai_count}}連敗中！
     template(v-else)
         | &nbsp;
 
@@ -47,6 +47,9 @@ export default {
   computed: {
     mi() {
       return this.app.member_infos_hash[this.membership.id]
+    },
+    xrecord() {
+      return this.membership.user.actb_main_xrecord
     },
     droped_ox_list() {
       return this.mi.droped_ox_list(this.app.config.ox_status_line_take_n)
