@@ -2,10 +2,10 @@
 .the_lobby
   the_footer
   .primary_header
-    .user_info_block.is-flex(v-if="app.current_user")
-      .image.is_clickable(@click="app.profile_edit_handle")
+    .user_info_block.is-flex.is_clickable(v-if="app.current_user" @click="app.ov_user_info_set(app.current_user.id)")
+      .image
         img.is-rounded(:src="app.current_user.avatar_path")
-      .name_with_rating.is_clickable(@click="app.ov_user_info_set(app.current_user.id)")
+      .name_with_rating
         span.name.has-text-weight-bold.is-size-6
           | {{app.current_user.name}}
         span.udemae_key.has-text-weight-bold.is-size-6.ml-1
