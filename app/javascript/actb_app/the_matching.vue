@@ -1,17 +1,15 @@
 <template lang="pug">
-.the_matching.columns.is-paddingless
-  .column
-    .has-text-centered.has-text-weight-bold
-      .wait_notification
-        | 対戦相手を待機中
-      p {{app.matching_interval_timer_count}}
-      p ±{{app.matching_rate_threshold}}
+.the_matching
+  .primary_header
+    b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="app.matching_cancel_handle")
+    .header_center_title 対戦相手を待機中
 
+  .has-text-centered.has-text-weight-bold.mt-3
+    div {{app.matching_interval_timer_count}}
+    div ±{{app.matching_rate_threshold}}
     b-progress.mt-2(type="is-primary")
 
-    .buttons.is-centered.mt-2
-      button.delete.is-large(@click="app.matching_cancel_handle")
-    the_lobby_debug
+  the_lobby_debug
 </template>
 
 <script>
@@ -35,10 +33,9 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_matching
-  .wait_notification
-    padding: 1rem 0
+  @extend %padding_top_for_primary_header
   .progress
-    animation-duration: 1.0s
+    animation-duration: 4.0s
     width: 16rem
     margin: auto
 </style>

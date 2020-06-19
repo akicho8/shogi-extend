@@ -88,7 +88,7 @@ export default {
       current_user: this.info.current_user,
 
       mode: null,
-      sub_mode: "opening",
+      sub_mode: "start_mode",
       rule_key: null,           // 未使用
       room: null,
 
@@ -214,7 +214,7 @@ export default {
       this.room_unsubscribe()
 
       this.mode = "lobby"
-      this.sub_mode = "opening"
+      this.sub_mode = "start_mode"
 
       this.lobby_messages_setup()
 
@@ -243,7 +243,7 @@ export default {
       this.sound_play("click")
       if (this.login_required2()) { return }
 
-      this.sub_mode = "rule_key_select"
+      this.sub_mode = "rule_select_mode"
     },
 
     rule_key_set_handle(rule) {
