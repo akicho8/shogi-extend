@@ -38,7 +38,7 @@ export default {
   .wait_notification
     padding: 1rem 0
   .progress
-    animation-duration: 3.0s
+    animation-duration: 1.0s
     width: 16rem
     margin: auto
 </style>
