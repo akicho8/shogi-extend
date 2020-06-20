@@ -6,10 +6,10 @@
   title: はじまりの金
   description: いちばん簡単
   hint_desc: "(hint_desc)"
-  other_author:
-  source_media_name:
-  source_media_url:
-  source_published_on:
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
   lineage_key: 詰将棋
   moves_answers:
   - moves_str: G*5b
@@ -18,12 +18,173 @@
   time_limit_sec: 30
   difficulty_level: 1
   title: 居玉は危険
-  description:
-  hint_desc:
-  other_author:
-  source_media_name:
-  source_media_url:
-  source_published_on:
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
   lineage_key: 手筋
   moves_answers:
   - moves_str: B*9e
+- key: fa8fc185045af4d329ff13f9a632f156
+  init_sfen: position sfen ln1g5/1ks6/pppp5/9/4B4/9/9/9/9 b GN2rb2g3s2n3l14p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 美濃囲いの弱点
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: N*7d 8b9b G*8b
+  - moves_str: N*7d 8b7a G*8b
+- key: 40085dba3bd506267fd3039dea8ea404
+  init_sfen: position sfen 7nk/7sp/9/9/4B4/9/9/9/9 b N2rb4g3s2n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 斜めに弱い
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: N*2c
+- key: cbd6adcc26c6ae176a04a92450f2cf27
+  init_sfen: position sfen 8k/7g1/8G/9/9/9/9/9/9 b GN2r2bg4s3n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 桂馬をうまく使う
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: N*2c 1a2a G*3a
+  - moves_str: N*2c 2b2c G*1b
+- key: 57f055d2775e96b4c1e7e879623993b3
+  init_sfen: position sfen ln7/1ks4R1/pppp5/9/9/9/9/9/9 b GSr2b3g2s3n3l14p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 棺桶美濃あるある
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 実戦詰め筋
+  moves_answers:
+  - moves_str: S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b7c
+  - moves_str: S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b8b
+- key: 84fea0e5c3fba625431e319ac6d7c4f1
+  init_sfen: position sfen ln7/1ksG5/1pp6/p8/9/9/9/9/9 b BGP2rb2g3s3n3l14p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 美濃囲いあるある
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 実戦詰め筋
+  moves_answers:
+  - moves_str: B*7a 8b9b P*9c 8a9c G*8b
+- key: 0dcbb33d060d3507dc29f46f23f82643
+  init_sfen: position sfen ln7/kSG6/1p7/p8/9/9/9/9/9 b L2r2b3g3s3n2l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 成っちゃだめ
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: L*9c 8a9c 8b8a
+- key: b0538a0efd2a8ee173d6fd11160fcf4f
+  init_sfen: position sfen 6skl/9/7G1/9/9/9/9/9/9 b GL2r2b2g2s4n2l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 銀の弱点
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: L*2b 3a2b G*3b
+- key: cba9132a42f676ae206d3017b848b764
+  init_sfen: position sfen 6rkl/6s2/5pnpp/9/9/9/9/9/9 b 2GNr2b2g3s2n2l15p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 玉をひっぱり上げる
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: G*2b 2a2b N*3d 2b2a G*2b
+  - moves_str: G*2b 2a2b N*3d 2b1b G*2b
+- key: e1dbd0d616511f4a16016595f21f662f
+  init_sfen: position sfen 3gkg3/9/4+B4/9/9/9/9/9/9 b N2rbg4s3n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: はじまりの桂
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: N*4c
+  - moves_str: N*6c
+- key: ed76b107012f82dfa4270c673aa18e5b
+  init_sfen: position sfen ln1g5/1rsk5/p2pp4/9/1p7/9/9/9/9 b Nr2b3g3s2n3l14p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 致命傷になる玉の早逃げ
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: N*7d
+- key: c4dc5ed464b323fc75d0d872171514ee
+  init_sfen: position sfen lns3+P2/4k4/ppppp1p2/9/5P3/9/9/9/9 b B2GSN2rb2g2s2n3l10p 1
+  time_limit_sec: 180
+  difficulty_level: 4
+  title: むずいよ
+  description: 
+  hint_desc: 
+  other_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  lineage_key: 詰将棋
+  moves_answers:
+  - moves_str: N*6d 6c6d B*4a 5b6a S*6b 6a7b G*6c 7b8b 6b7a 8b7a G*7b
+  - moves_str: N*6d 6c6d B*4a 5b6a S*6b 7a6b G*5b 6a7a 5b6b 7a6b S*6c 6b7a G*7b
+  - moves_str: N*6d 6c6d B*4a 5b6a S*6b 7a6b G*5b 6a7a 5b6b 7a6b S*6c 6b6a G*6b

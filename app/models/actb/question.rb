@@ -313,7 +313,7 @@ module Actb
           file = Rails.root.join("app/models/actb/#{name.demodulize.underscore.pluralize}.yml")
           FileUtils.mkdir_p(file.expand_path.dirname)
           file.write(body)
-          puts "write: #{file}"
+          puts "write: #{file} (#{count})"
         end
 
         def import_all(user = User.sysop)
@@ -349,7 +349,7 @@ module Actb
           body = []
           if persistent_file.exist?
             body = YAML.load(persistent_file.read)
-            puts "load: #{persistent_file}"
+            puts "load: #{persistent_file} (#{body.count})"
           end
           body.collect(&:deep_symbolize_keys)
         end

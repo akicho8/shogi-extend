@@ -53,7 +53,7 @@
 
       b-table-column(field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
 
-      b-table-column(field="ox_record.o_rate"  :label="QuestionIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc2(props.row.ox_record.o_rate)}}
+      b-table-column(field="ox_record.o_rate"  :label="QuestionIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc2(props.row.ox_record.o_rate)}} %
       b-table-column(field="ox_record.o_count" :label="QuestionIndexColumnInfo.fetch('o_count').short_name" sortable numeric :visible="visible_hash.o_count") {{props.row.ox_record.o_count}}
       b-table-column(field="ox_record.x_count" :label="QuestionIndexColumnInfo.fetch('x_count').short_name" sortable numeric :visible="visible_hash.x_count") {{props.row.ox_record.x_count}}
 
