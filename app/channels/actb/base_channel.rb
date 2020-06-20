@@ -1,6 +1,6 @@
 module Actb
   class BaseChannel < ApplicationCable::Channel
-    delegate :redis, :room_user_ids, :room_user_ids_broadcast, :once_run, to: "self.class"
+    delegate :redis, :room_user_ids, :room_user_ids_broadcast, :once_run, :already_run?, to: "self.class"
 
     class << self
       def redis
@@ -22,6 +22,11 @@ module Actb
       def once_run(key, options = {})
         raise ArgumentError unless key
 
+        if key.kind_of? Array
+          raise ArgumentError unless key.flatten.all?
+          key = key.join("/")
+        end
+
         options = {
           expires_in: 1.hours,
         }.merge(options)
@@ -36,14 +41,17 @@ module Actb
 
         Rails.logger.debug([__method__, {key: key, counter: counter, expires_in: redis.ttl(key)}])
 
-        if counter == 1
-          if block_given?
+        if block_given?
+          if counter == 1
             yield
           end
         else
-          Rails.logger.debug("SKIP")
           counter
         end
+      end
+
+      def already_run?(key, options = {})
+        once_run(key, options) >= 2
       end
     end
   end

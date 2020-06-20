@@ -83,7 +83,7 @@ module Actb
       end
 
       # 正解時         → 正解したユーザーが送信者
-      # タイムアウト時 → プレイマリーユーザーが送信者
+      # タイムアウト時 → 両方が送信者
       if current_battle.rule.key == "singleton_rule" || current_battle.rule.key == "hybrid_rule"
         raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         if ox_mark.key == "correct"
@@ -92,6 +92,10 @@ module Actb
           question.ox_add(:o_count) # 片方が正解なら1回分の正解として、もう片方の不正解はカウントしない
         end
         if ox_mark.key == "timeout"
+          # 両者が送信者なので最初だけ実行
+          if already_run?([:kotae_sentaku, room_battle_keys, data[:question_id]])
+            return
+          end
           current_battle.memberships.each do |membership|
             membership.user.actb_histories.find_or_initialize_by(question: question, membership: membership).update!(ox_mark: ox_mark)
           end
@@ -129,7 +133,10 @@ module Actb
       end
 
       # リーダーが送信者なので対局者の両方にあらかじめ履歴を作っておく
-      if current_battle.rule.key == "singleton_rule"
+      if current_battle.rule.key == "singleton_rule" || current_battle.rule.key == "hybrid_rule"
+        if already_run?([:next_trigger, room_battle_keys, data[:question_id]])
+          return
+        end
         question = Question.find(data[:question_id])
         current_battle.memberships.each do |membership|
           membership.user.actb_histories.find_or_initialize_by(question: question, membership: membership).update!(ox_mark: OxMark.fetch(:mistake))
@@ -210,6 +217,14 @@ module Actb
     def owattayo(data)
       data = data.to_options
 
+      if current_battle.rule.key == "singleton_rule" || current_battle.rule.key == "hybrid_rule"
+        # 2回目の実行はキャンセル
+        if already_run?([:owattayo, room_battle_keys])
+          return
+        end
+      end
+
+      # 両方5点とってなければ引き分け
       b_scores = current_battle.memberships.collect { |e| data[:member_infos_hash][e.id.to_s]["b_score"] }
       if b_scores.max < Actb::Config[:b_score_max_for_win]
         katimake_set(nil, :draw, :f_draw)
@@ -293,6 +308,10 @@ module Actb
     def say(*args)
       return if Rails.env.test?
       current_user.room_speak(current_battle.room, *args)
+    end
+
+    def room_battle_keys
+      @room_battle_keys ||= [current_battle.room.id, current_battle.id]
     end
   end
 end

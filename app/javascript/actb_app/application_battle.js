@@ -230,9 +230,7 @@ export const application_battle = {
         this.ryousya_jikangire(ox_mark_info)          // タイムアウトのときは両者に時間切れ
         this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
 
-        if (this.leader_p) {
-          this.delay_and_owattayo_or_next_trigger(ox_mark_info)
-        }
+        this.delay_and_owattayo_or_next_trigger(ox_mark_info) // [ONCE]
       }
     },
 
@@ -261,10 +259,14 @@ export const application_battle = {
     },
 
     delay_and_owattayo_or_next_trigger(ox_mark_info) {
+      console.log(1)
       this.delay(ox_mark_info.delay_second, () => {
+        console.log(2)
         if (this.battle_end_p || this.next_question_empty_p) {
+          console.log(3)
           this.ac_battle_perform("owattayo", {member_infos_hash: this.member_infos_hash}) // --> app/channels/actb/battle_channel.rb
         } else {
+          console.log(4)
           this.next_trigger()
         }
       })
@@ -272,7 +274,7 @@ export const application_battle = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // singleton_rule では leader_p だけが呼ぶ
+    // singleton_rule では両方呼ぶが片方はキャンセルされる
     next_trigger() {
       this.ac_battle_perform("next_trigger", {
         question_index: this.question_index + 1, // 次に進めたい(希望)
@@ -422,9 +424,7 @@ export const application_battle = {
         if (this.sub_mode === "operation_mode") {
           this.main_interval_count += 1
           if (this.q1_rest_seconds === 0) {
-            if (this.leader_p) {
-              this.kotae_sentaku('timeout')
-            }
+            this.kotae_sentaku('timeout') // [ONCE]
           }
         }
       }
@@ -433,10 +433,7 @@ export const application_battle = {
           if (this.x_mode === "x1_thinking") {
             this.main_interval_count += 1
             if (this.q1_rest_seconds === 0) {
-              if (this.leader_p) {
-                // リーダーだけがトリガーする
-                this.kotae_sentaku('timeout')
-              }
+              this.kotae_sentaku('timeout') // [ONCE]
             }
           }
         }
@@ -476,9 +473,9 @@ export const application_battle = {
   },
 
   computed: {
-    leader_p() {
-      return this.battle.memberships[this.app.config.leader_index].id === this.current_membership.id
-    },
+    // leader_p() {
+    //   return this.battle.memberships[this.app.config.leader_index].id === this.current_membership.id
+    // },
     current_membership() {
       const v = this.battle.memberships.find(e => e.user.id === this.current_user.id)
       this.__assert__(v, "current_membership is blank")
