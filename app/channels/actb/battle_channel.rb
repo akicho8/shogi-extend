@@ -311,7 +311,7 @@ module Actb
     end
 
     def room_battle_keys
-      @room_battle_keys ||= [current_battle.room.id, current_battle.id]
+      [current_battle.room.id, current_battle.id]
     end
   end
 end
