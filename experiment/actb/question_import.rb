@@ -1,6 +1,8 @@
 require "./setup"
 
 # Actb::Question.exists?                 # => true
+# Actb::Question.destroy_all
 
 Actb::Question.import_all
-Actb::Question.count            # => 3
+Actb::Question.count            # => 2
+# >> load: /Users/ikeda/src/shogi_web/app/models/actb/questions.yml

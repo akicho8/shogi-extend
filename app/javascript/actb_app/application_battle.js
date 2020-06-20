@@ -58,7 +58,7 @@ export const application_battle = {
         membership_id: membership.id,
       }, params)
 
-      if (this.app.info.action_cable_debug) {
+      if (this.app.config.action_cable_debug) {
         this.room_speak(`**→ [${membership.user.name}][${action}] ` + JSON.stringify(params))
       }
 
@@ -89,7 +89,7 @@ export const application_battle = {
           this.start_hook()
         },
         received: (data) => {
-          if (this.app.info.action_cable_debug) {
+          if (this.app.config.action_cable_debug) {
             this.room_speak(`**← [${data.bc_action}] ` + JSON.stringify(data.bc_params))
           }
         },
