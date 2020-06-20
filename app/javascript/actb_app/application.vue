@@ -245,8 +245,6 @@ export default {
       this.sound_play("click")
       if (this.login_required2()) { return }
 
-      this.lobby_unsubscribe()
-
       this.mode = "rule_select"
       this.talk2("ルールを選択してください")
     },
