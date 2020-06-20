@@ -58,7 +58,9 @@ export const application_battle = {
         membership_id: membership.id,
       }, params)
 
-      this.room_speak(`**→ [${membership.user.name}][${action}] ` + JSON.stringify(params))
+      if (this.app.info.action_cable_debug) {
+        this.room_speak(`**→ [${membership.user.name}][${action}] ` + JSON.stringify(params))
+      }
 
       this.$ac_battle.perform(action, params) // --> app/channels/actb/battle_channel.rb
     },
@@ -87,7 +89,9 @@ export const application_battle = {
           this.start_hook()
         },
         received: (data) => {
-          this.room_speak(`**← [${data.bc_action}] ` + JSON.stringify(data.bc_params))
+          if (this.app.info.action_cable_debug) {
+            this.room_speak(`**← [${data.bc_action}] ` + JSON.stringify(data.bc_params))
+          }
         },
       })
     },

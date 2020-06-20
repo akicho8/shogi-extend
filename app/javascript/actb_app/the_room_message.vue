@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_room_message
-  .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_display_lines}rem`}")
-    template(v-for="message in app.room_messages")
+  .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_window_height}rem`}")
+    template(v-for="message in app.droped_room_messages.room_messages")
       message_row(:message="message")
   b-field.input_field
     b-input(v-model="app.room_message_body" expanded @keypress.native.enter="app.room_speak_handle")

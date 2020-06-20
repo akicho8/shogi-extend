@@ -75,4 +75,9 @@ export const application_room = {
 
     ////////////////////////////////////////////////////////////////////////////////
   },
+  computed: {
+    droped_room_messages() {
+      return _.takeRight(this.room_messages, this.app.config.room_message_drop_lines)
+    },
+  },
 }

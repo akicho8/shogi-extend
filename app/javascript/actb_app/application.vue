@@ -343,7 +343,8 @@ export default {
 
     debug_mode_p() {
       if (this.current_user) {
-        return this.current_user.key === "sysop" || this.current_user.name === "きなこもち" || this.current_user.name === "わらびもち"
+        // return this.current_user.key === "sysop" || this.current_user.name === "きなこもち" || this.current_user.name === "わらびもち"
+        return this.current_user.key === "sysop"
       }
     },
   },

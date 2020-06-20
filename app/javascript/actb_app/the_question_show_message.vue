@@ -45,7 +45,7 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   template(v-if="false")
-    .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.question_messages_display_lines}rem`}")
+    .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.question_messages_window_height}rem`}")
       .message_line(v-for="message in $parent.question.messages")
         | {{message.user.name}}: {{message.body}}
         span.diff_time_format
