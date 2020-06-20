@@ -274,11 +274,11 @@ module Actb
 
       class_methods do
         def setup(options = {})
-          if Rails.env.staging? || Rails.env.production? || Rails.env.development?
-            unless exists?
-              import_all
-            end
-          end
+          # if Rails.env.staging? || Rails.env.production? || Rails.env.development?
+          #   unless exists?
+          #     import_all
+          #   end
+          # end
         end
 
         def export_all

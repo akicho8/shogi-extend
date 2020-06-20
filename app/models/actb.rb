@@ -23,6 +23,12 @@ module Actb
     if Rails.env.development? || Rails.env.test?
       Actb::BaseChannel.redis_clear
     end
+
+    if Rails.env.staging? || Rails.env.production? || Rails.env.development?
+      unless Actb::Question.exists?
+        Actb::Question.import_all
+      end
+    end
   end
 
   def models
