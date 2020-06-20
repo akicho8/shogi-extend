@@ -12,8 +12,8 @@ rescue => e
 end
 
 # stagingで実験用
-test("https://staging.shogi-extend.com", "新サイトへ")                           # => [200]
-test("https://staging.shogi-extend.com/shogi/w?query=kinakom0chi", "新サイトへ") # => [404]
+test("https://staging.shogi-extend.com", "新サイトへ")                           # => [301, "https://www.shogi-extend.com/"]
+test("https://staging.shogi-extend.com/shogi/w?query=kinakom0chi", "新サイトへ") # => [301, "https://www.shogi-extend.com/shogi/w?query=kinakom0chi"]
 
 RSpec.describe do
   it "production" do
@@ -28,7 +28,8 @@ RSpec.describe do
 
   it "www をつける" do
     assert { test("https://shogi-extend.com", "www をつける")         == [301, "https://www.shogi-extend.com/"]     }
-    assert { test("http://shogi-extend.com", "まず https に飛ぶ")     == [301, "https://shogi-extend.com/"]         }
+    # assert { test("http://shogi-extend.com", "まず https に飛ぶ")     == [301, "https://shogi-extend.com/"]         }
+    assert { test("http://shogi-extend.com", "http:// -> https://www.") == [301, "https://www.shogi-extend.com/"]         }
   end
 
   # it "旧サイトを丸ごと移動させてはいけない" do
@@ -41,8 +42,19 @@ RSpec.describe do
     assert { test("http://tk2-221-20341.vs.sakura.ne.jp/shogi", "新サイトへ")                     == [301, "https://www.shogi-extend.com/"]                    }
   end
 end
-# >> ....
+# >> .F..
 # >> 
-# >> Finished in 0.70618 seconds (files took 0.75911 seconds to load)
-# >> 4 examples, 0 failures
+# >> Failures:
+# >> 
+# >>   1) staging
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      Test::Unit::AssertionFailedError:
+# >>      # -:25:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 0.45543 seconds (files took 0.4586 seconds to load)
+# >> 4 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:24 # staging
 # >> 
