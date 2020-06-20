@@ -1,8 +1,13 @@
 <template lang="pug">
 .the_builder_index
+  the_footer
   .primary_header
     .header_center_title 問題一覧
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle")
+  .secondary_header
+    b-tabs.tabs_in_secondary(v-model="question_tab_index" expanded @change="question_tab_index_change_handle")
+      template(v-for="tab_info in $parent.FolderInfo.values")
+        b-tab-item(:label="tab_info.name")
 
   b-field.visible_toggle_checkboxes(grouped group-multiline)
     .control(v-for="e in QuestionIndexColumnInfo.values")
@@ -31,22 +36,22 @@
     @sort="$parent.sort_handle"
   )
     template(slot-scope="props")
-      b-table-column(field="id"               :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
-      b-table-column(field="title"            :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
+      b-table-column(field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
+      b-table-column(field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
         a {{props.row.title || '？'}}
-      b-table-column(field="good_rate"        :label="QuestionIndexColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="visible_hash.good_rate") {{float_to_perc2(props.row.good_rate)}} %
-      b-table-column(field="good_marks_count" :label="QuestionIndexColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
-      b-table-column(field="bad_marks_count"  :label="QuestionIndexColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
-      b-table-column(field="histories_count"  :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
+      b-table-column(field="good_rate"         :label="QuestionIndexColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="visible_hash.good_rate") {{float_to_perc2(props.row.good_rate)}} %
+      b-table-column(field="good_marks_count"  :label="QuestionIndexColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
+      b-table-column(field="bad_marks_count"   :label="QuestionIndexColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
+      b-table-column(field="histories_count"   :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
 
-      b-table-column(field="difficulty_level" :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
+      b-table-column(field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
 
       b-table-column(field="ox_record.o_rate"  :label="QuestionIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc2(props.row.ox_record.o_rate)}}
       b-table-column(field="ox_record.o_count" :label="QuestionIndexColumnInfo.fetch('o_count').short_name" sortable numeric :visible="visible_hash.o_count") {{props.row.ox_record.o_count}}
       b-table-column(field="ox_record.x_count" :label="QuestionIndexColumnInfo.fetch('x_count').short_name" sortable numeric :visible="visible_hash.x_count") {{props.row.ox_record.x_count}}
 
-      b-table-column(field="clip_marks_count"      :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
-      b-table-column(field="updated_at"       :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
+      b-table-column(field="clip_marks_count"  :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
+      b-table-column(field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
 
       b-table-column(label="操作")
         a(@click.stop="$parent.question_edit_for(props.row)")
@@ -66,9 +71,14 @@
 
 <script>
 import { support } from "../support.js"
+
 import ls_support from "../../../../app/javascript/ls_support.js"
 
+import the_footer from "../the_footer.vue"
+
 import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
+
+import MemoryRecord from 'js-memory-record'
 
 export default {
   name: "the_builder_index",
@@ -76,18 +86,44 @@ export default {
     support,
     ls_support,
   ],
+  components: {
+    the_footer,
+  },
   data() {
     return {
+      question_tab_index: null,
       visible_hash: null, //  { xxx: true, yyy: false } 形式
     }
   },
-
+  created() {
+    this.folder_active_handle()
+  },
   mounted() {
-    // localStorage をクリア
-    // this.$_ls_reset()
+    // 有効にすると localStorage をクリアする
+    if (false) {
+      this.$_ls_reset()
+    }
   },
 
   methods: {
+    // 「公開」選択
+    folder_active_handle() {
+      this.question_mode_select("active")
+      this.$parent.folder_change_handle("active")
+    },
+
+    // 指定のタブを選択
+    question_mode_select(tab_key) {
+      this.question_tab_index = this.$parent.FolderInfo.fetch(tab_key).code
+    },
+
+    // タブが変更されたとき
+    question_tab_index_change_handle() {
+      this.sound_play("click")
+      this.$parent.folder_change_handle(this.question_current_tab_info.key)
+    },
+
+    // チェックボックスが変更されたとき
     cb_input_handle(column, bool) {
       this.sound_play('click')
       if (bool) {
@@ -95,9 +131,12 @@ export default {
       }
     },
   },
-
   computed: {
     QuestionIndexColumnInfo() { return QuestionIndexColumnInfo },
+
+    //////////////////////////////////////////////////////////////////////////////// タブ
+
+    question_current_tab_info() { return this.$parent.FolderInfo.fetch(this.question_tab_index) },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
 
@@ -113,7 +152,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .the_builder_index
-  @extend %padding_top_for_primary_header
+  @extend %padding_top_for_secondary_header
   .primary_header
     justify-content: space-between
 

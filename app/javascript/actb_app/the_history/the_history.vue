@@ -4,7 +4,7 @@
   .primary_header
     .header_center_title {{app.history_current_tab_info.top_nav_name}}
   .secondary_header
-    b-tabs.main_tabs(v-model="app.history_tab_index" expanded @change="app.tab_change_handle2")
+    b-tabs.tabs_in_secondary(v-model="app.history_tab_index" expanded @change="app.tab_change_handle2")
       template(v-for="tab_info in app.HistoryTabInfo.values")
         b-tab-item(:label="tab_info.tab_name")
 

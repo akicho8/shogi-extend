@@ -24,9 +24,9 @@
   b-field(label="ヒント" label-position="on-border" v-if="app.config.hint_enable")
     b-input(v-model="$parent.question.hint_desc")
 
-  b-field(label="種類" custom-class="is-small" v-if="LineageInfo")
+  b-field(label="種類" custom-class="is-small" v-if="$parent.LineageInfo")
     b-select(v-model="$parent.question.lineage.key" expanded)
-      option(v-for="row in LineageInfo.values" :value="row.key") {{row.name}}
+      option(v-for="row in $parent.LineageInfo.values" :value="row.key") {{row.name}}
 
   b-field(label="制限時間" label-position="on-border")
     b-timepicker(v-model="$parent.question.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
@@ -34,9 +34,9 @@
   b-field(label="難易度" custom-class="is-small")
     b-rate(v-model="$parent.question.difficulty_level" spaced :max="$parent.start_level_max" :show-score="false")
 
-  b-field(label="フォルダ" custom-class="is-small" v-if="FolderInfo")
+  b-field(label="フォルダ" custom-class="is-small" v-if="$parent.FolderInfo")
     b-field.is-marginless
-      template(v-for="row in FolderInfo.values")
+      template(v-for="row in $parent.FolderInfo.values")
         b-radio-button(v-model="$parent.question.folder_key" :native-value="row.key" :type="row.type")
           b-icon(:icon="row.icon" size="is-small")
           span {{row.name}}
@@ -44,8 +44,6 @@
 
 <script>
 import { support } from "../support.js"
-import { LineageInfo } from '../models/lineage_info.js'
-import { FolderInfo }  from '../models/folder_info.js'
 
 export default {
   name: "the_builder_form",
@@ -54,16 +52,7 @@ export default {
   ],
   data() {
     return {
-      LineageInfo: null,
-      FolderInfo: null,
     }
-  },
-  created() {
-    // これはトップでまとめて行なった方がよいかもしれない
-    this.remote_get(this.app.info.put_path, { remote_action: "builder_form_resource_fetch" }, e => {
-      this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
-      this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
-    })
   },
   watch: {
     "$parent.question.lineage.key": {
@@ -74,7 +63,7 @@ export default {
     },
     "$parent.question.folder_key": {
       handler(v) {
-        const folder_info = this.FolderInfo.fetch(v)
+        const folder_info = this.$parent.FolderInfo.fetch(v)
         this.sound_play("click")
         this.talk2(folder_info.name)
       },

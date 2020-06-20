@@ -2,7 +2,7 @@ module Actb
   module UserMod
     concern :FolderMod do
       included do
-        has_many :folders, class_name: "Actb::Folder", dependent: :destroy
+        has_many :actb_folders, class_name: "Actb::Folder", dependent: :destroy
 
         FolderInfo.each do |e|
           has_one :"actb_#{e.key}_box", class_name: "::" + "actb/#{e.key}_box".classify, dependent: :destroy

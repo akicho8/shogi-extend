@@ -12,11 +12,16 @@ module FrontendScript
 
       # 問題一覧
       # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch
+      # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch&folder_key=active
       # app/javascript/actb_app/models/question_column_info.js
       def questions_fetch
         params[:per] ||= QUESTIONS_FETCH_PER
 
         s = current_user.actb_questions
+        if v = params[:folder_key]
+          # OPTIMIZE: folder_id を最初に特定して join せずにひくと速くなるはず
+          s = s.joins(:folder).where(Actb::Folder.arel_table[:type].eq("actb/#{v}_box".classify))
+        end
         s = page_scope(s)       # page_mod.rb
         s = sort_scope_for_questions(s)
 

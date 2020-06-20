@@ -1,6 +1,5 @@
 <template lang="pug">
-.the_builder
-  the_footer(v-if="!question")
+.the_builder(v-if="resource_loaded_p")
   the_builder_index(v-if="!question")
 
   .the_builder_new_and_edit(v-if="question")
@@ -11,7 +10,7 @@
         | {{create_or_upate_name}}
 
     .secondary_header
-      b-tabs.main_tabs(v-model="tab_index" expanded @change="tab_change_handle")
+      b-tabs(v-model="tab_index" expanded @change="tab_change_handle")
         b-tab-item(label="配置")
 
         b-tab-item
@@ -33,17 +32,23 @@
     the_builder_form(   v-if="current_tab_info.key === 'form_mode'")
     the_builder_kensho( v-if="current_tab_info.key === 'kensho_mode'")
 
-    //- .save_container
-    //-   .buttons.is-centered
-    //-     b-button.has-text-weight-bold(@click="save_handle" :type="save_button_enabled") {{create_or_upate_name}}
-    //-     //- b-button.has-text-weight-bold(@click="back_to_index_handle") 一覧に戻る
   debug_print(v-if="app.debug_mode_p" )
 </template>
 
 <script>
 import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
-import { Question } from "../models/question.js"
+
+import { support } from "../support.js"
+import the_builder_index  from "./the_builder_index.vue"
+import the_builder_haiti  from "./the_builder_haiti.vue"
+import the_builder_seikai from "./the_builder_seikai.vue"
+import the_builder_form   from "./the_builder_form.vue"
+import the_builder_kensho from "./the_builder_kensho.vue"
+
+import { Question    } from "../models/question.js"
+import { LineageInfo } from '../models/lineage_info.js'
+import { FolderInfo  } from '../models/folder_info.js'
 
 class TabInfo extends MemoryRecord {
   static get define() {
@@ -51,7 +56,7 @@ class TabInfo extends MemoryRecord {
       { key: "haiti_mode",  name: "配置", },
       { key: "seikai_mode", name: "正解", },
       { key: "form_mode",   name: "情報", },
-      { key: "kensho_mode",   name: "検証", },
+      { key: "kensho_mode", name: "検証", },
     ]
   }
 
@@ -59,14 +64,6 @@ class TabInfo extends MemoryRecord {
     return `${this.key}_handle`
   }
 }
-
-import { support } from "../support.js"
-import the_builder_index  from "./the_builder_index.vue"
-import the_builder_haiti  from "./the_builder_haiti.vue"
-import the_builder_seikai   from "./the_builder_seikai.vue"
-import the_builder_form   from "./the_builder_form.vue"
-import the_builder_kensho from "./the_builder_kensho.vue"
-import the_footer from "../the_footer.vue"
 
 export default {
   name: "the_builder",
@@ -79,10 +76,14 @@ export default {
     the_builder_seikai,
     the_builder_form,
     the_builder_kensho,
-    the_footer,
   },
   data() {
     return {
+      //////////////////////////////////////////////////////////////////////////////// 静的情報
+      LineageInfo: null,
+      FolderInfo: null,
+      resource_loaded_p: false,
+
       //////////////////////////////////////////////////////////////////////////////// 一覧
       questions: null,          // 一覧で表示する配列
       // pagination 5点セット
@@ -92,6 +93,7 @@ export default {
       sort_column:        null,
       sort_order:         null,
       sort_order_default: null,
+      folder_key:         null,
 
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
       tab_index:        null,
@@ -109,28 +111,34 @@ export default {
   },
 
   created() {
+    this.app.lobby_unsubscribe()
+    this.sound_play("click")
+
+    // これはトップでまとめて行なった方がよいかもしれない
+    this.remote_get(this.app.info.put_path, { remote_action: "builder_form_resource_fetch" }, e => {
+      this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
+      this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
+      this.resource_loaded_p = true
+
+      if (this.app.info.debug_scene === "builder_haiti" || this.app.info.debug_scene === "builder_form") {
+        this.builder_new_handle()
+        return
+      }
+
+      this.builder_index_handle()
+      // this.kensho_mode_handle()
+    })
+
     this.total              = this.app.info.total
     this.page               = this.app.info.page
     this.per                = this.app.info.per
     this.sort_column        = this.app.info.sort_column
     this.sort_order         = this.app.info.sort_order
     this.sort_order_default = this.app.info.sort_order_default
-
-    this.app.lobby_unsubscribe()
-
-    this.sound_play("click")
+    this.folder_key         = "active"
 
     this.mode_select("haiti_mode")
     this.tab_change_handle()
-
-    if (this.app.info.debug_scene === "builder_haiti" || this.app.info.debug_scene === "builder_form") {
-      this.builder_new_handle()
-      return
-    }
-
-    this.builder_index_handle()
-    // this.kensho_mode_handle()
-
   },
 
   methods: {
@@ -315,14 +323,23 @@ export default {
       this.async_records_load()
     },
 
+    folder_change_handle(folder_key) {
+      this.folder_key = folder_key
+      this.async_records_load()
+    },
+
     async_records_load() {
       this.remote_get(this.app.info.put_path, {
         remote_action: "questions_fetch",
+        // ----------------------------------------
         page:               this.page,
         per:                this.per,
         sort_column:        this.sort_column,
         sort_order:         this.sort_order,
         sort_order_default: this.sort_order_default,
+        // ----------------------------------------
+        folder_key:         this.folder_key,
+        // ----------------------------------------
       }, e => {
         this.questions = e.questions.map(e => new Question(e))
 
@@ -367,7 +384,7 @@ export default {
   },
 
   computed: {
-    TabInfo() { return TabInfo },
+    TabInfo()     { return TabInfo     },
 
     current_tab_info() {
       return TabInfo.fetch(this.tab_index)
