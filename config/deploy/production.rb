@@ -63,8 +63,8 @@ set :open_urls, [
 
 append :linked_dirs, "storage"
 
-# after "deploy:published", "puma:restart"
-# after "deploy:published", "sidekiq:restart"
+after "deploy:published", "puma:restart"
+after "deploy:published", "sidekiq:restart"
 
 tp({
     application: fetch(:application),
