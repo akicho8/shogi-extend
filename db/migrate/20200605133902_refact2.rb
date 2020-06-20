@@ -10,9 +10,9 @@ class Refact2 < ActiveRecord::Migration[6.0]
       add_index table, :user_id
     end
 
-    ActiveStorage::Attachment.find_each do |e|
-      e.record_type = e.record_type.remove("Colosseum::")
-      e.save!
-    end
+    # ActiveStorage::Attachment.find_each do |e|
+    #   e.record_type = e.record_type.remove("Colosseum::")
+    #   e.save!
+    # end
   end
 end
