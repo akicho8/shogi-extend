@@ -11,12 +11,15 @@
 
 <script>
 import { support } from "./support.js"
+import { background_grey } from "./background_grey.js"
+
 import the_footer from "./the_footer.vue"
 
 export default {
   name: "the_menu",
   mixins: [
     support,
+    background_grey,
   ],
   components: {
     the_footer,
@@ -31,10 +34,9 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_menu
-  @extend %padding_top_for_primary_header
-  margin: 1rem 0.7rem $margin_bottom
-
+  padding: $padding_top1 0.7rem $margin_bottom
   .menu_buttons
+    margin-top: 1rem
     .button
       justify-content: flex-start
       height: 3.75rem

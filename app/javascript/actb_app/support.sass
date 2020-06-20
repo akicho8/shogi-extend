@@ -4,8 +4,13 @@
 
 $actb_primary_header_height: 48px
 $footer_height: 64px
-$margin_bottom: $footer_height + 44px
+$margin_bottom: $footer_height + 44px // 下にスクロールするときフッターと重なるのでこれだけは隙間を開けておきたい
 $lr_sukima: 0.5rem
+
+////////////////////////////////////////////////////////////////////////////////
+
+$padding_top1: $actb_primary_header_height * 1
+$padding_top2: $actb_primary_header_height * 2
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -45,9 +50,10 @@ $size-12: 0.50rem
   align-items: center
 
 %padding_top_for_primary_header
-  padding-top: $actb_primary_header_height * 1
+  padding-top: $padding_top1
+
 %padding_top_for_secondary_header
-  padding-top: $actb_primary_header_height * 2
+  padding-top: $padding_top2
 
 %icon_with_counter
   cursor: pointer

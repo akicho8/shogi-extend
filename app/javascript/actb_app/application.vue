@@ -2,6 +2,7 @@
 .actb_app(:class="mode")
   the_profile_edit( v-if="mode === 'profile_edit'")
   the_lobby(        v-if="mode === 'lobby'")
+  the_rule_select(  v-if="mode === 'rule_select'")
   the_matching(     v-if="mode === 'matching'")
   the_battle(       v-if="mode === 'battle'")
   the_result(       v-if="mode === 'result'")
@@ -29,6 +30,7 @@ import { the_user_show_mod }     from "./the_user_show_mod.js"
 import the_question_show from "./the_question_show.vue"
 import the_user_show     from "./the_user_show.vue"
 import the_lobby         from "./the_lobby.vue"
+import the_rule_select   from "./the_rule_select.vue"
 import the_profile_edit  from "./the_profile_edit.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle        from "./the_battle/the_battle.vue"
@@ -70,6 +72,7 @@ export default {
     the_question_show,
     the_user_show,
     the_lobby,
+    the_rule_select,
     the_profile_edit,
     the_matching,
     the_battle,
@@ -88,7 +91,7 @@ export default {
       current_user: this.info.current_user,
 
       mode: null,
-      sub_mode: "start_mode",
+      sub_mode: null,
       rule_key: null,           // 未使用
       room: null,
 
@@ -214,7 +217,6 @@ export default {
       this.room_unsubscribe()
 
       this.mode = "lobby"
-      this.sub_mode = "start_mode"
 
       this.lobby_messages_setup()
 
@@ -243,7 +245,9 @@ export default {
       this.sound_play("click")
       if (this.login_required2()) { return }
 
-      this.sub_mode = "rule_select_mode"
+      this.lobby_unsubscribe()
+
+      this.mode = "rule_select"
       this.talk("ルールを選択してください", {rate: 1.5})
     },
 
@@ -253,6 +257,10 @@ export default {
       this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule.key }, e => {
         this.matching_setup()
       })
+    },
+
+    rule_cancel_handle() {
+      this.lobby_handle()
     },
 
     matching_cancel_handle() {
