@@ -126,20 +126,29 @@ Rails.application.configure do
   # ################################################################################ cache_store
   config.cache_store = :redis_cache_store, { db: 1 } # Redis.new
 
+  # ################################################################################ ActionCable
+  # ActionCable.server.config.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true
+  # config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
+  # config.action_cable.allowed_request_origins = ["https://shogi-flow.xyz"]
+  # config.action_cable.url = "wss://shogi-flow.xyz:28081"
+  config.action_cable.mount_path = "/x-cable"
+
+  # ################################################################################ active_job
+  config.active_job.queue_adapter = :sidekiq
+
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
-        zip_download_function: false,
-        battle_index_permalink_show: false,
-        colosseum_battle_enable: false,
-        player_info_function: false,
-        more_import_function: false,
-        swars_tag_search_function: false,
-        search_form_datalist_function: false,
-        swars_tweet_function: false,
-        xy_master_custom_mode: false,
-        columns_detail_show: false,
-        action_cable_enable: false,
+        :battle_index_permalink_show   => false,
+        :colosseum_battle_enable       => false,
+        :player_info_function          => false,
+        :more_import_function          => false,
+        :swars_tag_search_function     => false,
+        :search_form_datalist_function => false,
+        :swars_tweet_function          => false,
+        :xy_master_custom_mode         => false,
+        :columns_detail_show           => false,
       })
   end
 end

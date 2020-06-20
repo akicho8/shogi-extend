@@ -77,7 +77,6 @@ Rails.application.configure do
   config.to_prepare do
     load Rails.root.join("config/app_config.rb")
     # Rails.application.config.app_config.deep_merge!({
-    #     zip_download_function: false,
     #   })
   end
 
