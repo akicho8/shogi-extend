@@ -4,13 +4,17 @@
   .primary_header
     .header_center_title
       | 問題一覧
-      b-tag(size="is-small") {{total}}
 
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle")
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="question_tab_index" expanded @change="question_tab_index_change_handle")
       template(v-for="tab_info in $parent.FolderInfo.values")
-        b-tab-item(:label="tab_info.name")
+        b-tab-item
+          template(slot="header")
+            span
+              | {{tab_info.name}}
+              b-tag(rounded)
+                | {{$parent.question_counts[tab_info.key] || 0}}
 
   b-field.visible_toggle_checkboxes(grouped group-multiline)
     .control(v-for="e in QuestionIndexColumnInfo.values")

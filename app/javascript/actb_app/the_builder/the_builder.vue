@@ -86,6 +86,7 @@ export default {
 
       //////////////////////////////////////////////////////////////////////////////// 一覧
       questions: null,          // 一覧で表示する配列
+      question_counts: {},
       // pagination 5点セット
       total:              null,
       page:               null,
@@ -329,6 +330,8 @@ export default {
     },
 
     async_records_load() {
+      this.total = null
+
       this.remote_get(this.app.info.put_path, {
         remote_action: "questions_fetch",
         // ----------------------------------------
@@ -343,6 +346,10 @@ export default {
       }, e => {
         this.questions = e.questions.map(e => new Question(e))
 
+        // 各フォルダごとの個数
+        this.question_counts = e.question_counts
+
+        // ひとつにまとめる
         this.total              = e.total
         this.page               = e.page
         this.per                = e.per

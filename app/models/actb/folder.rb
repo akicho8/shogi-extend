@@ -26,5 +26,10 @@ module Actb
     def name
       "#{user.name}の#{self.class.model_name.human}"
     end
+
+    # :active, :draft, :trash
+    def key
+      @key ||= self.class.name.demodulize.underscore.remove("_box").to_sym
+    end
   end
 end

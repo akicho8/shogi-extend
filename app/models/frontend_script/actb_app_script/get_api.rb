@@ -27,6 +27,8 @@ module FrontendScript
 
         retv = {**page_info(s), **sort_info}
         retv[:questions] = s.as_json(Actb::Question.json_type5)
+        retv[:question_counts] = current_user.actb_questions.group(:folder_id).count.transform_keys { |e| Actb::Folder.find(e).key }
+
         retv
       end
 
