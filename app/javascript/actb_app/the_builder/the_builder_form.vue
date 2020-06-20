@@ -69,14 +69,14 @@ export default {
     "$parent.question.lineage.key": {
       handler(v) {
         this.sound_play("click")
-        this.talk(v, {rate: 1.5})
+        this.talk2(v)
       },
     },
     "$parent.question.folder_key": {
       handler(v) {
         const folder_info = this.FolderInfo.fetch(v)
         this.sound_play("click")
-        this.talk(folder_info.name, {rate: 1.5})
+        this.talk2(folder_info.name)
       },
     },
     "$parent.question.difficulty_level": {
@@ -85,7 +85,7 @@ export default {
         if (v >= this.$parent.start_level_max && false) {
           v = "MAX"
         }
-        this.talk(v, {rate: 1.5})
+        this.talk2(v)
       },
     },
   },

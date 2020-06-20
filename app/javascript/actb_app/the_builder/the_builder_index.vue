@@ -91,7 +91,7 @@ export default {
     cb_input_handle(column, bool) {
       this.sound_play('click')
       if (bool) {
-        this.talk(column.name, {rate: 1.5})
+        this.talk2(column.name)
       }
     },
   },

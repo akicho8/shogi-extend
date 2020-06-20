@@ -21,13 +21,13 @@ export const support = {
 
     ok_notice(message_body) {
       this.$buefy.toast.open({message: message_body, position: "is-bottom", type: "is-success", queue: false})
-      this.talk(message_body, {rate: 1.5})
+      this.talk2(message_body)
     },
 
     warning_notice(message_body) {
       this.sound_play("x")
       this.$buefy.toast.open({message: message_body, position: "is-bottom", type: "is-warning", queue: false})
-      this.talk(message_body, {rate: 1.5})
+      this.talk2(message_body)
     },
 
     // position_sfen_remove(sfen) {
@@ -75,6 +75,10 @@ export const support = {
     auto_link(str) {
       return Autolinker.link(str, {newWindow: false, truncate: 30, mention: "twitter"})
     },
+
+    talk2(str, options = {}) {
+      this.talk(str, {rate: 1.5, ...options})
+    }
   },
   computed: {
     ...Vuex.mapState([
