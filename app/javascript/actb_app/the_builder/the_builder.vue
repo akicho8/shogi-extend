@@ -115,10 +115,15 @@ export default {
     this.app.lobby_unsubscribe()
     this.sound_play("click")
 
-    // これはトップでまとめて行なった方がよいかもしれない
+    // 作成画面でのデフォルト
+    this.mode_select("haiti_mode")
+    this.tab_change_handle()
+
+    // 一覧用
     this.remote_get(this.app.info.put_path, { remote_action: "builder_form_resource_fetch" }, e => {
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
+
       this.resource_loaded_p = true
 
       if (this.app.info.debug_scene === "builder_haiti" || this.app.info.debug_scene === "builder_form") {
@@ -127,19 +132,7 @@ export default {
       }
 
       this.builder_index_handle()
-      // this.kensho_mode_handle()
     })
-
-    this.total              = this.app.info.total
-    this.page               = this.app.info.page
-    this.per                = this.app.info.per
-    this.sort_column        = this.app.info.sort_column
-    this.sort_order         = this.app.info.sort_order
-    this.sort_order_default = this.app.info.sort_order_default
-    this.folder_key         = "active"
-
-    this.mode_select("haiti_mode")
-    this.tab_change_handle()
   },
 
   methods: {
@@ -330,7 +323,7 @@ export default {
     },
 
     async_records_load() {
-      this.total = null
+      console.log("async_records_load")
 
       this.remote_get(this.app.info.put_path, {
         remote_action: "questions_fetch",
@@ -381,12 +374,11 @@ export default {
       this.mediator_snapshot_sfen = sfen
     },
 
-    builder_index_handle(event) {
+    builder_index_handle(event = null) {
       if (event) {
         this.sound_play("click")
       }
       this.question = null
-      this.async_records_load()
     },
   },
 
