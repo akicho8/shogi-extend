@@ -2,7 +2,10 @@
 .the_builder_index
   the_footer
   .primary_header
-    .header_center_title 問題一覧
+    .header_center_title
+      | 問題一覧
+      b-tag(size="is-small") {{total}}
+
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle")
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="question_tab_index" expanded @change="question_tab_index_change_handle")

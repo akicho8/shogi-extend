@@ -10,7 +10,7 @@
         | {{create_or_upate_name}}
 
     .secondary_header
-      b-tabs(v-model="tab_index" expanded @change="tab_change_handle")
+      b-tabs.tabs_in_secondary(v-model="tab_index" expanded @change="tab_change_handle")
         b-tab-item(label="配置")
 
         b-tab-item
