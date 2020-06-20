@@ -23,7 +23,7 @@ module Actb
 
           memberships.each do |m|
             judge = judge_it.next
-            sdiff = diff * judge.pure_info.sign_value
+            sdiff = diff * judge.pure_info.sign_value # 引き分けの場合は 0 * 0 になる
 
             r = m.user.send(method)
 
