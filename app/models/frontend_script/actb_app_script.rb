@@ -43,6 +43,10 @@ module FrontendScript
     self.form_position = :bottom
     self.column_wrapper_enable = false
 
+    if Rails.env.production?
+      self.visibility_hidden = true
+    end
+
     delegate :current_user, to: :h
 
     def script_body
