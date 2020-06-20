@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "scp ishikari_profile.sh i:/etc/profile.d" -*-
+# -*- coding: utf-8; compile-command: "scp custom_profile.sh i:/etc/profile.d" -*-
 
 export NODENV_ROOT=/usr/local/nodenv
 export PATH="$NODENV_ROOT/bin:$PATH"
@@ -9,3 +9,9 @@ export PATH="$RBENV_ROOT/bin:$PATH"
 eval "$(rbenv init -)"
 
 export PASSENGER_INSTANCE_REGISTRY_DIR=/var/run/passenger-instreg
+
+# bundle binstubs --path .bin
+export PATH=".bin:$PATH"
+
+# for logrtate
+export PATH="/usr/sbin:$PATH"

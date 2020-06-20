@@ -13,13 +13,11 @@ staging:
   :logfile: log/sidekiq_staging.log
 
 production:
-  :concurrency: 1
+  # https://saitoxu.io/2018/03/sidekiq-introduction
+  :concurrency: 15
   :logfile: log/sidekiq_production.log
 
 :queues:
-  - most_high
   - high
   - default
   - low
-  - batch
-  - most_low

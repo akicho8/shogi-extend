@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "scp tokyo_profile.sh s:/etc/profile.d" -*-
+# -*- coding: utf-8; compile-command: "scp custom_profile.sh s:/etc/profile.d" -*-
 
 export NODENV_ROOT=/usr/local/nodenv
 export PATH="$NODENV_ROOT/bin:$PATH"

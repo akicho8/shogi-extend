@@ -1,0 +1,19 @@
+#!/bin/sh
+ssh i ls -al /etc/profile.d/custom_profile.sh
+
+ssh i ls -al /var/lib/nginx/nginx.conf
+ssh i ls -al /etc/nginx/conf.d/default.conf
+ssh i sudo nginx -v
+ssh i sudo nginx -t
+
+ssh i ls -al /var/www/shogi_web_production/current/config/puma/production.rb
+
+ssh i ls -al /usr/lib/systemd/system/nginx.service
+ssh i ls -al /etc/systemd/system/puma.service
+ssh i ls -al /etc/systemd/system/sidekiq.service
+
+ssh i sudo systemctl status nginx
+ssh i sudo systemctl status puma
+ssh i sudo systemctl status sidekiq
+
+curl -sI https://www.shogi-extend.com/ | head -1

@@ -15,6 +15,7 @@ development:
 production:
   <<: *defaults
   database: shogi_web_production
+  pool: 16
 
 staging:
   <<: *defaults
