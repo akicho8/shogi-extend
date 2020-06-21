@@ -1,5 +1,7 @@
 class FixDefaultPassowrdIsPassword < ActiveRecord::Migration[5.2]
   def change
+    User.reset_column_information
+
     User.all.each do |user|
       if user.valid_password?("password")
         user.password = Devise.friendly_token(32)
