@@ -14,11 +14,11 @@
       img.is-rounded(:src="row.question.user.avatar_path")
     .question_block.is-flex
       .uegawa
-        .question_user.is-size-7.has-text-grey
-          | {{row.question.display_author}}
-          span.question_user_unit.has-text-grey 作
         .question_title.has-text-weight-bold(v-if="row.question.title")
           | {{row.question.title}}
+        .question_user.is-size-7.has-text-grey
+          | {{row.question.display_author}}
+          span.question_user_unit.is-size-10.has-text-grey 作
         .question_description.is-size-7(v-if="row.question.description")
           | {{row.question.description}}
       .bottom_block.is-flex
@@ -86,7 +86,7 @@ export default {
     object-position: 50% 50%
 
   .image
-    margin-top: 0.08rem
+    margin-top: 0.2rem
 
   .question_block
     margin-left: 0.25rem
@@ -97,8 +97,4 @@ export default {
 
     .question_title
     .bottom_block
-
-    .question_user_unit
-      margin-left: 0.1rem
-      font-size: 0.6rem
 </style>
