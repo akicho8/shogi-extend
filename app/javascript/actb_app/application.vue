@@ -268,7 +268,7 @@ export default {
 
       this.$ac_lobby.perform("matching_cancel")
 
-      this.mode = "lobby"
+      this.mode = "rule_select"
     },
 
     lobby_handle() {
