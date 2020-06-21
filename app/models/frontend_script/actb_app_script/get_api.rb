@@ -58,7 +58,7 @@ module FrontendScript
       def question_single_fetch
         question = Actb::Question.find(params[:question_id])
         retv = {}
-        retv[:question] = question.as_json(include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}, :moves_answers => {}, :messages => {only: [:id, :body, :created_at], include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}})
+        retv[:question] = question.as_json_type6
         retv.update(current_user.good_bad_clip_flags_for(question))
         { ov_question_info: retv }
       end

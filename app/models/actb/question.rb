@@ -222,6 +222,7 @@ module Actb
       end
     end
 
+    # 出題用
     def as_json_type3
       as_json({
           only: [
@@ -248,6 +249,29 @@ module Actb
                 :o_rate,
                 :ox_total,
               ],
+            },
+          },
+        })
+    end
+
+    # 詳細用
+    def as_json_type6
+      as_json({
+          include: {
+            user: {
+              only: [:id, :key, :name],
+              methods: [:avatar_path],
+            },
+            ox_record: {},
+            moves_answers: {},
+            messages: {
+              only: [:id, :body, :created_at],
+              include: {
+                user: {
+                  only: [:id, :key, :name],
+                  methods: [:avatar_path],
+                },
+              },
             },
           },
         })

@@ -1,16 +1,37 @@
 <template lang="pug">
-.the_question_show.modal-card
+.actb.the_question_show.modal-card
   .modal-card-body.box
     //- // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(@click="delete_click_handle")
 
-    question_author(:question="new_ov_question_info.question")
+    .has-text-centered
+      .question_title.has-text-weight-bold.is-size-4 {{question.title}}
 
-    .secondary_header
-      b-tabs(v-model="tab_index" @change="tab_change_handle" expanded)
-        b-tab-item(label="初期配置")
-        template(v-for="(e, i) in new_ov_question_info.question.moves_answers")
-          b-tab-item(:label="`${i === 0 ? '解' : ''}${i + 1}`")
+      //- https://buefy.org/documentation/tag/
+      .mt-3
+        b-field(grouped group-multiline position="is-centered")
+          .control
+            b-taglist.is_clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
+              b-tag(type="is-dark") 作者
+              b-tag(type="is-info") {{question.display_author}}
+          .control
+            b-taglist(attached)
+              b-tag(type="is-dark") 高評価
+              b-tag(type="is-info")
+                | {{float_to_perc2(question.good_rate)}} %
+          .control
+            b-taglist(attached)
+              b-tag(type="is-dark") 正解率
+              b-tag(type="is-info")
+                template(v-if="question.ox_record.ox_total === 0")
+                  | ?
+                template(v-else)
+                  | {{float_to_perc2(question.ox_record.o_rate)}} %
+
+    b-tabs.mt-2(v-model="tab_index" @change="tab_change_handle" expanded)
+      b-tab-item(label="初期配置")
+      template(v-for="(e, i) in question.moves_answers")
+        b-tab-item(:label="`${i === 0 ? '解' : ''}${i + 1}`")
 
     .sp_container
       shogi_player(
@@ -31,7 +52,7 @@
     .vote_container.is-flex
       the_history_row_vote(:row="new_ov_question_info")
 
-    the_question_show_message(:question="new_ov_question_info.question")
+    the_question_show_message(:question="question")
 </template>
 
 <script>
@@ -72,7 +93,7 @@ export default {
     },
 
     play_mode_advanced_moves_set(moves) {
-      if (this.new_ov_question_info.question.moves_valid_p(moves)) {
+      if (this.question.moves_valid_p(moves)) {
         this.sound_play("o")
         this.ok_notice("正解")
       }
@@ -80,16 +101,19 @@ export default {
 
     // 指定インデックスの解のSFENを返す
     answer_sfen_for(index) {
-      return this.new_ov_question_info.question.answer_sfen_list[index]
+      return this.question.answer_sfen_list[index]
     },
   },
   computed: {
     selected_sfen() {
       if (this.tab_index === 0) {
-        return this.new_ov_question_info.question.init_sfen
+        return this.question.init_sfen
       } else {
         return this.answer_sfen_for(this.tab_index - 1)
       }
+    },
+    question() {
+      return this.new_ov_question_info.question
     },
   },
 }
@@ -102,8 +126,8 @@ export default {
     .modal-card-body
       padding: 1rem 0
 
-    .question_title
-      margin-left: 0.3rem
+    .tag
+      font-weight: bold
 
     .tab-content
       padding: 0
