@@ -52,6 +52,9 @@
     .vote_container.is-flex
       the_history_row_vote(:row="new_ov_question_info")
 
+    .box.question_description.has-background-white-ter.is-shadowless.is-size-7(v-if="question.description")
+      | {{question.description}}
+
     the_question_show_message(:question="question")
 </template>
 
@@ -136,7 +139,7 @@ export default {
       margin-top: 1.5rem
 
     .vote_container
-      margin-top: 1.5rem
+      margin-top: 0.8rem
       justify-content: center
 
       .the_history_row_vote
@@ -145,4 +148,8 @@ export default {
             margin-left: 1.5rem
           &.clip
             margin-left: 2rem
+
+    .question_description
+      white-space: pre-line
+      margin: 1.2rem 1rem
 </style>
