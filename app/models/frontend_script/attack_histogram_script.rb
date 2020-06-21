@@ -1,7 +1,7 @@
 module FrontendScript
   class AttackHistogramScript < ::FrontendScript::Base
     self.script_name = "戦法ヒストグラム"
-    self.visibility_hidden = true
+    # self.visibility_hidden = true
 
     def script_body
       counts_hash = Rails.cache.fetch(self.class.name, :expires_in => 1.days) do
