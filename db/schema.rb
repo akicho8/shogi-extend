@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_18_211300) do
+ActiveRecord::Schema.define(version: 2020_06_21_164300) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id"
@@ -58,14 +58,14 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.bigint "final_id", null: false, comment: "結果"
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
-    t.integer "battle_pos", null: false, comment: "連戦数"
+    t.integer "battle_pos", null: false, comment: "連戦インデックス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_pos"], name: "index_actb_battles_on_battle_pos"
     t.index ["begin_at"], name: "index_actb_battles_on_begin_at"
     t.index ["end_at"], name: "index_actb_battles_on_end_at"
     t.index ["final_id"], name: "index_actb_battles_on_final_id"
     t.index ["parent_id"], name: "index_actb_battles_on_parent_id"
-    t.index ["battle_pos"], name: "index_actb_battles_on_rensen_index"
     t.index ["room_id"], name: "index_actb_battles_on_room_id"
     t.index ["rule_id"], name: "index_actb_battles_on_rule_id"
   end
@@ -179,11 +179,11 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.index ["rating"], name: "index_actb_main_xrecords_on_rating"
     t.index ["rating_diff"], name: "index_actb_main_xrecords_on_rating_diff"
     t.index ["rating_max"], name: "index_actb_main_xrecords_on_rating_max"
+    t.index ["skill_id"], name: "index_actb_main_xrecords_on_skill_id"
     t.index ["straight_lose_count"], name: "index_actb_main_xrecords_on_straight_lose_count"
     t.index ["straight_lose_max"], name: "index_actb_main_xrecords_on_straight_lose_max"
     t.index ["straight_win_count"], name: "index_actb_main_xrecords_on_straight_win_count"
     t.index ["straight_win_max"], name: "index_actb_main_xrecords_on_straight_win_max"
-    t.index ["skill_id"], name: "index_actb_main_xrecords_on_skill_id"
     t.index ["user_id"], name: "index_actb_main_xrecords_on_user_id", unique: true
     t.index ["win_count"], name: "index_actb_main_xrecords_on_win_count"
     t.index ["win_rate"], name: "index_actb_main_xrecords_on_win_rate"
@@ -351,12 +351,12 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.index ["rating"], name: "index_actb_season_xrecords_on_rating"
     t.index ["rating_diff"], name: "index_actb_season_xrecords_on_rating_diff"
     t.index ["rating_max"], name: "index_actb_season_xrecords_on_rating_max"
+    t.index ["season_id"], name: "index_actb_season_xrecords_on_season_id"
+    t.index ["skill_id"], name: "index_actb_season_xrecords_on_skill_id"
     t.index ["straight_lose_count"], name: "index_actb_season_xrecords_on_straight_lose_count"
     t.index ["straight_lose_max"], name: "index_actb_season_xrecords_on_straight_lose_max"
     t.index ["straight_win_count"], name: "index_actb_season_xrecords_on_straight_win_count"
     t.index ["straight_win_max"], name: "index_actb_season_xrecords_on_straight_win_max"
-    t.index ["season_id"], name: "index_actb_season_xrecords_on_season_id"
-    t.index ["skill_id"], name: "index_actb_season_xrecords_on_skill_id"
     t.index ["user_id", "season_id"], name: "index_actb_season_xrecords_on_user_id_and_season_id", unique: true
     t.index ["user_id"], name: "index_actb_season_xrecords_on_user_id"
     t.index ["win_count"], name: "index_actb_season_xrecords_on_win_count"
