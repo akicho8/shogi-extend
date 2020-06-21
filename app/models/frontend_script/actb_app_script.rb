@@ -54,37 +54,36 @@ module FrontendScript
         return public_send(v)
       end
 
-      if params[:login_required]
-        unless current_user
-          h.session[:return_to] = h.url_for(:tb)
-          c.redirect_to :new_xuser_session
-          return
-        end
+      # JS 側からいきなりログイン画面に飛ばすとどこに戻ればよいかわからない
+      # なのでいったんここに飛ばして return_to を設定させてログイン画面に飛ぶ
+      if params[:goto_login]
+        h.session[:return_to] = h.url_for(:tb)
+        c.redirect_to :new_xuser_session
+        return
       end
 
-      out = ""
-
-      c.layout_type = :raw
+      ################################################################################
 
       info = {}
       info[:config] = Actb::Config
-
-      debug_scene_set(info)
-
-      info[:mode] ||= "lobby"
+      info[:mode] ||= "lobby"   # FIXME: とる
       info[:put_path] = h.url_for(script_link_path)
       info[:question_default] = question_default
-
-      if current_debug_scene != :no_login_lobby
-        if current_user
-          info[:current_user] = current_user_json
-        end
+      if current_user
+        info[:current_user] = current_user_json
       end
+
+      debug_scene_params_set(info)
 
       if request.format.json?
         return info
       end
 
+      ################################################################################
+
+      c.layout_type = :raw
+
+      out = ""
       out += h.javascript_tag(%(document.addEventListener('DOMContentLoaded', () => { new Vue({}).$mount("#app") })))
       out += %(<div id="app"><actb_app :info='#{info.to_json}' /></div>)
       out

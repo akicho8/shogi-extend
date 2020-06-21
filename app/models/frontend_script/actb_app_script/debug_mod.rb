@@ -40,7 +40,7 @@ module FrontendScript
         end
       end
 
-      def debug_scene_set(info)
+      def debug_scene_params_set(info)
         if current_debug_scene
           info[:debug_scene] = current_debug_scene
           send("debug_for_#{current_debug_scene}", info)
@@ -150,6 +150,7 @@ module FrontendScript
 
       # ログインしていない状態
       def debug_for_no_login_lobby(info)
+        info.delete(:current_user)
       end
     end
   end

@@ -337,7 +337,7 @@ export default {
     // いったんスクリプトに飛ばしているのは sessions[:return_to] を設定するため
     login_path() {
       const url = new URL(location)
-      url.searchParams.set("login_required", true)
+      url.searchParams.set("goto_login", true)
       return url.toString()
     },
 

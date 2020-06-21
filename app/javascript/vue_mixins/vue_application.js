@@ -23,7 +23,7 @@ import sp_show from "../sp_show.vue"
 export default {
   methods: {
     // ログイン強制
-    login_required() {
+    goto_login() {
       if (!js_global.current_user) {
         location.href = js_global.login_path
         return true
