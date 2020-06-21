@@ -9,7 +9,7 @@
       | {{app.q1_time_str}}
     shogi_player(
       :run_mode="'play_mode'"
-      :kifu_body="app.c_quest.init_sfen"
+      :kifu_body="app.current_question.init_sfen"
       :summary_show="false"
       :setting_button_show="false"
       :size="'default'"
@@ -27,7 +27,7 @@
     shogi_player(
       :key="`quest_${app.question_index}`"
       :run_mode="'play_mode'"
-      :kifu_body="app.c_quest.init_sfen"
+      :kifu_body="app.current_question.init_sfen"
       :summary_show="false"
       :setting_button_show="false"
       :size="'default'"
@@ -61,14 +61,14 @@
     )
 
   .has-text-centered.tags_container(v-if="app.debug_mode_p")
-    //- p 難易度:{{app.c_quest.difficulty_level}}
+    //- p 難易度:{{app.current_question.difficulty_level}}
     b-taglist.is-centered
-      b-tag(v-if="app.c_quest.title") {{app.c_quest.title}}
-      b-tag(v-if="app.c_quest.other_author") {{app.c_quest.other_author}}
-      b-tag(v-if="!app.c_quest.other_author") {{app.c_quest.user.name}}作
-      b-tag(v-if="app.c_quest.hint_desc") {{app.c_quest.hint_desc}}
-      b-tag(v-if="app.c_quest.difficulty_level && app.c_quest.difficulty_level >= 1")
-        template(v-for="i in app.c_quest.difficulty_level")
+      b-tag(v-if="app.current_question.title") {{app.current_question.title}}
+      b-tag(v-if="app.current_question.other_author") {{app.current_question.other_author}}
+      b-tag(v-if="!app.current_question.other_author") {{app.current_question.user.name}}作
+      b-tag(v-if="app.current_question.hint_desc") {{app.current_question.hint_desc}}
+      b-tag(v-if="app.current_question.difficulty_level && app.current_question.difficulty_level >= 1")
+        template(v-for="i in app.current_question.difficulty_level")
           | ★
 </template>
 

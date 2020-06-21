@@ -12,7 +12,7 @@
       | {{app.question_index + 1}}問目
 
   template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
-    question_author(:question="app.c_quest")
+    question_author(:question="app.current_question")
     the_battle_question_marathon_rule(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
     the_battle_question_singleton_rule(v-if="app.battle.rule.key === 'singleton_rule'")
 

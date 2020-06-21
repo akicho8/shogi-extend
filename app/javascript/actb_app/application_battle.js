@@ -111,7 +111,7 @@ export const application_battle = {
       this.debug_alert("battle 接続")
 
       this.ac_battle_perform("start_hook", {
-        question_id: this.c_quest.id,
+        question_id: this.current_question.id,
         question_index: this.question_index,
       }) // --> app/channels/actb/battle_channel.rb
 
@@ -141,7 +141,7 @@ export const application_battle = {
     q_turn_offset_set(turn) {
       this.q_turn_offset = turn
 
-      const max = this.c_quest.moves_count_max + this.config.turn_limit_lazy_count
+      const max = this.current_question.moves_count_max + this.config.turn_limit_lazy_count
       if (turn >= max) {
         this.x2_play_timeout_handle()
       }
@@ -164,7 +164,7 @@ export const application_battle = {
           this.kyouyuu(long_sfen)
         }
 
-        if (this.c_quest.sfen_valid_p(long_sfen)) {
+        if (this.current_question.sfen_valid_p(long_sfen)) {
           this.kotae_sentaku("correct")
         }
       }
@@ -192,7 +192,7 @@ export const application_battle = {
       this.__assert__(ox_mark_key === "correct" || ox_mark_key === "timeout")
       this.ac_battle_perform("kotae_sentaku", {
         ms_flip: ms_flip,
-        question_id: this.c_quest.id,
+        question_id: this.current_question.id,
         question_index: this.question_index,
         ox_mark_key: ox_mark_key,
       }) // --> app/channels/actb/battle_channel.rb
@@ -297,7 +297,7 @@ export const application_battle = {
     // 早押しボタンを押した(解答権はまだない)
     wakatta_handle(ms_flip = false) {
       this.sound_play("click")
-      this.ac_battle_perform("wakatta_handle", {ms_flip: ms_flip, question_id: this.c_quest.id}) // --> app/channels/actb/battle_channel.rb
+      this.ac_battle_perform("wakatta_handle", {ms_flip: ms_flip, question_id: this.current_question.id}) // --> app/channels/actb/battle_channel.rb
     },
     wakatta_handle_broadcasted(params) {
       if (params.membership_id === this.current_membership.id) {
@@ -311,7 +311,7 @@ export const application_battle = {
           this.answer_button_disable_p = false // 元々誤答していたら解答権利復活させる
         }
         this.x_mode = "x3_see"
-        this.share_sfen = this.c_quest.init_sfen // 初期状態にしておく
+        this.share_sfen = this.current_question.init_sfen // 初期状態にしておく
         this.sound_play("poon")
       }
     },
@@ -320,7 +320,7 @@ export const application_battle = {
     x2_play_timeout_handle(ms_flip = false) {
       this.ac_battle_perform("x2_play_timeout_handle", {
         ms_flip: ms_flip,
-        question_id: this.c_quest.id,
+        question_id: this.current_question.id,
       }) // --> app/channels/actb/battle_channel.rb
     },
     // singleton_rule での操作中の時間切れは不正解相当
@@ -486,9 +486,9 @@ export const application_battle = {
       this.__assert__(v, "opponent_membership is blank")
       return v
     },
-    c_quest() {
+    current_question() {
       const v = this.battle.best_questions[this.question_index]
-      this.__assert__(v, "c_quest is blank")
+      this.__assert__(v, "current_question is blank")
       return v
     },
     next_question() {
@@ -518,7 +518,7 @@ export const application_battle = {
       // if (this.development_p) {
       //   return 3
       // }
-      return this.c_quest.time_limit_sec
+      return this.current_question.time_limit_sec
     },
 
     ////////////////////////////////////////////////////////////////////////////////
