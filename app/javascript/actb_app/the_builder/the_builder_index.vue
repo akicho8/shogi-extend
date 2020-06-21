@@ -32,14 +32,14 @@
     paginated
     backend-pagination
     pagination-simple
-    :current-page="$parent.page"
-    :total="$parent.total"
-    :per-page="$parent.per"
+    :page="$parent.page_info.page"
+    :total="$parent.page_info.total"
+    :per-page="$parent.page_info.per"
     @page-change="$parent.page_change_handle"
 
     backend-sorting
-    :default-sort-direction="$parent.sort_order_default"
-    :default-sort="[$parent.sort_column, $parent.sort_order]"
+    :default-sort-direction="$parent.page_info.sort_order_default"
+    :default-sort="[$parent.page_info.sort_column, $parent.page_info.sort_order]"
     @sort="$parent.sort_handle"
   )
     template(slot-scope="props")

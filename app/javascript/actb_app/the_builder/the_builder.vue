@@ -93,14 +93,16 @@ export default {
       question_counts: {},      // それぞれの箱中の問題数
 
       // pagination 5点セット
-      total:              null,
-      page:               null,
-      per:                null,
-      sort_column:        null,
-      sort_order:         null,
-      sort_order_default: null,
-      //
-      folder_key:         null,
+      page_info: {
+        total:              null,
+        page:               null,
+        per:                null,
+        sort_column:        null,
+        sort_order:         null,
+        sort_order_default: null,
+        //
+        folder_key:         null,
+      },
 
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
       tab_index:        null,
@@ -313,48 +315,28 @@ export default {
     },
 
     page_change_handle(page) {
-      this.page = page
+      this.page_info.page = page
       this.async_records_load()
     },
 
     sort_handle(column, order) {
-      this.sort_column = column
-      this.sort_order = order
+      this.page_info.sort_column = column
+      this.page_info.sort_order = order
       this.async_records_load()
     },
 
     folder_change_handle(folder_key) {
-      this.folder_key = folder_key
+      this.page_info.folder_key = folder_key
       this.async_records_load()
     },
 
     async_records_load() {
       console.log("async_records_load")
 
-      this.remote_get(this.app.info.api_path, {
-        remote_action: "questions_fetch",
-        // ----------------------------------------
-        page:               this.page,
-        per:                this.per,
-        sort_column:        this.sort_column,
-        sort_order:         this.sort_order,
-        sort_order_default: this.sort_order_default,
-        // ----------------------------------------
-        folder_key:         this.folder_key,
-        // ----------------------------------------
-      }, e => {
+      this.remote_get(this.app.info.api_path, { remote_action: "questions_fetch", ...this.page_info }, e => {
         this.questions = e.questions.map(e => new Question(e))
-
-        // 各フォルダごとの個数
-        this.question_counts = e.question_counts
-
-        // ひとつにまとめる
-        this.total              = e.total
-        this.page               = e.page
-        this.per                = e.per
-        this.sort_column        = e.sort_column
-        this.sort_order         = e.sort_order
-        this.sort_order_default = e.sort_order_default
+        this.page_info = e.page_info
+        this.question_counts = e.question_counts // 各フォルダごとの個数
       })
     },
 

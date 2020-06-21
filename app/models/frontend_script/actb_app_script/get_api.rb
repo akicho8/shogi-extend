@@ -25,10 +25,10 @@ module FrontendScript
         s = page_scope(s)       # page_mod.rb
         s = sort_scope_for_questions(s)
 
-        retv = {**page_info(s), **sort_info}
-        retv[:questions] = s.as_json(Actb::Question.json_type5)
+        retv = {}
+        retv[:questions]       = s.as_json(Actb::Question.json_type5)
         retv[:question_counts] = current_user.actb_questions.group(:folder_id).count.transform_keys { |e| Actb::Folder.find(e).key }
-
+        retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key]}
         retv
       end
 
