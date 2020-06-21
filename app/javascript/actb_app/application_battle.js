@@ -83,7 +83,7 @@ export const application_battle = {
 
       this.question_index = 0
 
-      this.__assert__(this.$ac_battle)
+      this.__assert__(this.$ac_battle == null)
       this.$ac_battle = this.ac_subscription_create({channel: "Actb::BattleChannel", battle_id: this.battle.id}, {
         connected: () => {
           this.start_hook()
