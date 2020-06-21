@@ -314,7 +314,7 @@ module Swars
     def new_scope
       s = user.memberships
       s = s.joins(:battle)
-      s = s.merge(Swars::Battle.latest_order)  # 直近のものから取得
+      s = s.merge(Swars::Battle.newest_order)  # 直近のものから取得
       s = s.limit(sample_max)
     end
 

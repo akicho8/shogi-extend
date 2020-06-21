@@ -79,8 +79,6 @@ group :development, :test do
   gem "capistrano-maintenance", require: false
   gem "slackistrano"            # for cap production slack:deploy:test
 
-  gem "artii"
-
   gem "rspec-rails"
   gem "rails-controller-testing" # controller で assigns を使うため
   # gem "test-unit"      # 入れなくても rspec-rails が minitest などを入れているせいで assert は使える (が、そのせいで test-unit 経由で power_assert が使えない)
@@ -89,7 +87,7 @@ group :development, :test do
   gem "factory_bot_rails"
   # gem "webmock" # rack-proxy と干渉するため外す
 
-  gem "rails-erd"
+  gem "test-prof"               # for let_it_be
 end
 
 group :development do
@@ -127,7 +125,6 @@ gem "rmagick"                   # for Bioshogi to_img method (mini-magickに変�
 
 # for Swars::Agent
 gem "nokogiri"
-gem "mechanize"
 
 gem "faraday"                   # 主に「なんでも棋譜変換」用
 gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
@@ -144,8 +141,6 @@ gem "codecov", require: false, group: :test
 gem "rack-cors", require: "rack/cors" # 別のドメインからJSONアクセスできるようにするための何か
 
 gem "ffi", "1.9.18"             # 1.9.19 が転けるのでとりあえず …… てか何のために入ってる？？？
-
-gem "active_model_serializers"
 
 # application 用
 gem "slack-ruby-client"
@@ -193,3 +188,6 @@ gem "holiday_jp"
 # Redis用の管理画面
 gem "fastentry"
 
+# ActiveJob
+gem 'sidekiq'
+gem 'redis-namespace'

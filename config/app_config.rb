@@ -19,9 +19,7 @@ AppConfig.deep_merge!({
     :force_convert_for_twitter_image         =>  false, # 作成した画像を強制的に 1600x630 に変更する
     :html2canvas_enable                      =>  false, # html2canvas を使って盤面を取り込む機能を入れる？
     :kento_params_use_kifu_param_only        =>  false, # KENTOには kifu=*.kif だけ渡す？
-    :action_cable_enable                     =>  true,  # KENTOには kifu=*.kif だけ渡す？
 
-    :zip_download_function =>  true,  # 一括ダウンロード機能
     :zip_dl_max_default    =>  30,    # 一括ダウンロードするときの件数(初期値)
     :zip_dl_max            =>  30,    # 一括ダウンロードするときの件数(最大)
 
@@ -31,4 +29,6 @@ AppConfig.deep_merge!({
 
     :redis_db_for_xy_rule_info           => 2,    # 符号の鬼のランキング用
     :redis_db_for_colosseum_ranking_info => 3,    # 対戦のランキング用
+    :redis_db_for_actb                   => 4,    # actb
+    :redis_db_for_sidekiq                => 5,    # sidekiq
   })

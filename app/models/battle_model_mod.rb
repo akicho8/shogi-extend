@@ -6,14 +6,9 @@ module BattleModelMod
     include TagMod
     include TimeChartMod
 
-    # cattr_accessor(:kifu_cache_enable)     { true }
-    # cattr_accessor(:kifu_cache_expires_in) { 1.days }
-
     cattr_accessor(:fixed_defaut_time) { Time.zone.parse("0001/01/01") }
 
     acts_as_ordered_taggable_on :other_tags
-
-    # has_many :converted_infos, as: :convertable, dependent: :destroy, inverse_of: :convertable
 
     serialize :meta_info
 
@@ -68,22 +63,6 @@ module BattleModelMod
     }.merge(options)
 
     info = fast_parsed_info
-
-    # p Bioshogi::Parser.parse("position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1").preset_info
-    # p Bioshogi::Parser.parse(kifu_body).preset_info
-    # p kifu_body
-    # p ["#{__FILE__}:#{__LINE__}", __method__, info.preset_info.key]
-    # converted_infos.destroy_all if options[:destroy_all]
-
-    # if kifu_cache_enable
-    # else
-    #   # くそ重くなるのでこれはやってはいけない
-    #   KifuFormatWithBodInfo.each do |e|
-    #     converted_info = converted_infos.text_format_eq(e.key).take || converted_infos.build
-    #     converted_info.text_body = info.public_send("to_#{e.key}", compact: true, no_embed_if_time_blank: true)
-    #     converted_info.text_format = e.key
-    #   end
-    # end
 
     self.turn_max = info.mediator.turn_info.turn_offset
     self.critical_turn = info.mediator.critical_turn
@@ -278,15 +257,7 @@ module BattleModelMod
   concerning :KifuConvertMethods do
     # cache_key は updated_at が元になっているため、間接的に kifu_body の更新で cache_key は変化する
     def to_cached_kifu(key)
-      # if kifu_cache_enable
-        # Rails.cache.fetch([cache_key, key].join("-"), expires_in: (Rails.env.production? || Rails.env.staging?) ? kifu_cache_expires_in : 0) do
-        heavy_parsed_info.public_send("to_#{key}", compact: true, no_embed_if_time_blank: true)
-        # end
-      # else
-      #   if e = converted_infos.text_format_eq(key).take
-      #     e.text_body
-      #   end
-      # end
+      heavy_parsed_info.public_send("to_#{key}", compact: true, no_embed_if_time_blank: true)
     end
 
     # バリデーションをはずして KI2 への変換もしない前提の軽い版

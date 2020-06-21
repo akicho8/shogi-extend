@@ -30,13 +30,14 @@ module Api
     end
 
     def to_format
-      params[:to_format].presence
+      params[:to_format].presence || "sfen"
     end
 
     def convert_options
       {
         compact: true,
         no_embed_if_time_blank: true,
+        # position_startpos_disabled: true, # "position startpos ..." 形式にはしない
       }
     end
   end

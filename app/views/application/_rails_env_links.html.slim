@@ -1,5 +1,9 @@
 - if Rails.env.production?
 - else
-  = link_to("development", "http://localhost:3000/", class: ["navbar-item", Rails.env.development? ? "is-active" : ''])
-  = link_to("staging", staging_app_url, class: ["navbar-item", Rails.env.staging? ? "is-active" : ''])
-  = link_to("production", production_app_url, class: ["navbar-item", Rails.env.production? ? "is-active" : ''])
+  .navbar-item.has-dropdown.is-hoverable
+    .navbar-link
+      | stage
+    .navbar-dropdown.is-boxed.is-right
+      = link_to("development", "http://localhost:3000/", class: ["navbar-item", Rails.env.development? ? "is-active" : ''])
+      = link_to("staging", staging_app_url, class: ["navbar-item", Rails.env.staging? ? "is-active" : ''])
+      = link_to("production", production_app_url, class: ["navbar-item", Rails.env.production? ? "is-active" : ''])

@@ -1,0 +1,93 @@
+<template lang="pug">
+.the_result
+  a.delete.is-large(@click="app.yameru_handle")
+
+  .win_lose_container.has-text-centered.is-size-3.has-text-weight-bold
+    template(v-if="app.current_membership.judge.key === 'win'")
+      .has-text-danger
+        | YOU WIN !
+    template(v-if="app.current_membership.judge.key === 'lose'")
+      .has-text-success
+        | YOU LOSE !
+    template(v-if="app.current_membership.judge.key === 'draw'")
+      .has-text-info
+        | DRAW !
+  .final_container.has-text-centered.is-size-7(v-if="app.battle.final.key === 'f_disconnect'")
+    | {{app.battle.final.name}}
+
+  .vs_container.is-flex
+    template(v-for="(membership, i) in app.ordered_memberships")
+      the_result_membership(:membership="membership")
+      .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs
+
+  .footer_container
+    .buttons.is-centered
+      b-button.has-text-weight-bold(:disabled="!all_active_p" @click="app.battle_continue_handle" :type="button_push_by_self_p ? 'is-primary' : ''") 同じ相手と再戦する
+
+  .box.is-shadowless(v-if="app.debug_mode_p")
+    .buttons.is-centered.are-small
+      b-button(@click="app.battle_continue_force_handle") 強制的に続行
+      b-button(@click="app.battle_leave_handle(false)") 退出通知(自分)
+      b-button(@click="app.battle_leave_handle(true)") 退出通知(相手)
+      b-button(@click="app.battle_unsubscribe") バトル切断(自分)
+      b-button(@click="app.member_disconnect_handle(true)") バトル切断風にする(相手)
+
+  the_room_message
+
+  debug_print(v-if="app.debug_mode_p" :vars="['app.member_infos_hash']")
+  debug_print(v-if="app.debug_mode_p" :vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.rensen_index', 'app.score_debug_info']")
+
+</template>
+
+<script>
+import { support } from "./support.js"
+
+import the_result_membership from "./the_result_membership.vue"
+import the_room_message      from "./the_room_message.vue"
+
+export default {
+  mixins: [
+    support,
+  ],
+  components: {
+    the_room_message,
+    the_result_membership,
+  },
+  computed: {
+    // 参加者が全員いる？
+    all_active_p() {
+      return Object.values(this.app.member_infos_hash).every(e => e.member_active_p) // v.values.all?(&:member_active_p)
+    },
+    // 自分が押した？
+    button_push_by_self_p() {
+      return this.app.battle_continue_tap_counts[this.app.current_membership.id] >= 1
+    },
+  },
+}
+</script>
+
+<style lang="sass">
+@import "support.sass"
+.the_result
+  .delete
+    position: fixed
+    top: 0.5rem
+    left: 0.5rem
+
+  .win_lose_container
+    margin-top: 2rem
+
+  .vs_container
+    justify-content: center
+    align-items: center
+
+  // 続ける
+  .footer_container
+    margin-top: 1rem
+    .buttons
+      flex-direction: column
+      .button
+        min-width: 12rem
+        &:not(:first-child)
+          margin-top: 0.75rem
+</style>

@@ -7,6 +7,8 @@ module BattleControllerSharedMethods
   include PngShowMod
   include KentoJsonMod
   include ModalMod
+  include SortMod
+  include PageMod
 
   concerning :IndexMethods do
     included do
@@ -24,39 +26,12 @@ module BattleControllerSharedMethods
     let :current_records do
       s = current_index_scope
       s = s.select(current_model.column_names - exclude_column_names)
-      if sort_column && sort_order
-        s = s.order(sort_column => sort_order) # 1番目 order(battled_at: :desc)
-      end
-      s = s.order(id: :desc)                   # 2番目 order(id: desc)
-      s.page(params[:page]).per(current_per)
+      s = sort_scope(s).order(id: :desc) # 2番目のソートもつけないとゆらぐ
+      s = page_scope(s)
     end
 
     def exclude_column_names
       ["meta_info"]
-    end
-
-    let :current_per do
-      (params[:per].presence || default_per).to_i
-    end
-
-    def default_per
-      Kaminari.config.default_per_page
-    end
-
-    def sort_column
-      params[:sort_column].presence || default_sort_column
-    end
-
-    def default_sort_column
-      "created_at"
-    end
-
-    def sort_order
-      params[:sort_order].presence || sort_order_default
-    end
-
-    def sort_order_default
-      "desc"
     end
 
     def current_placeholder
@@ -76,17 +51,11 @@ module BattleControllerSharedMethods
         :search_scope_key                => current_search_scope_key,
         :board_show_type                 => params[:board_show_type].presence || "none",
         :xhr_index_path                  => polymorphic_path([ns_prefix, current_plural_key]),
-        :total                           => current_records.total_count, # ここで事前にSQLが走るのは仕方ない
-        :page                            => current_records.current_page,
-        :per                             => current_per,
-        :sort_column                     => sort_column,
-        :sort_order                      => sort_order,
-        :sort_order_default              => "desc",                      # カラムをクリックしたときの最初の向き
         :records                         => [],                          # JS側から最初のリクエストをしない場合は js_current_records を渡す
         :table_columns_hash              => table_columns_hash,
         :table_column_storage_prefix_key => controller_path,
         :zip_kifu_info                   => ZipKifuInfo.as_json,
-      }
+      }.merge(page_info(current_records), sort_info)
     end
 
     private
@@ -160,18 +129,18 @@ module BattleControllerSharedMethods
         s = s.where(saturn_key: :public)
       when :ss_my_public
         s = s.where(saturn_key: :public)
-        s = s.where(owner_user: current_user)
+        s = s.where(user: current_user)
         unless current_user
           s = s.none
         end
       when :ss_my_private
         s = s.where(saturn_key: :private)
-        s = s.where(owner_user: current_user)
+        s = s.where(user: current_user)
         unless current_user
           s = s.none
         end
       when :ss_my_all
-        s = s.where(owner_user: current_user)
+        s = s.where(user: current_user)
         unless current_user
           s = s.none
         end

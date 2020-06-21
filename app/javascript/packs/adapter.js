@@ -40,7 +40,7 @@ window.Adapter = Vue.extend({
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
-        return this.piyo_shogi_full_url(this.record.show_path, this.record.display_turn, this.record.flip)
+        return this.legacy_piyo_shogi_full_url(this.record.show_path, this.record.display_turn, this.record.flip)
       }
     },
 
@@ -193,7 +193,7 @@ window.Adapter = Vue.extend({
       params.set("input_text", this.input_text)
       params.set("edit_mode", "adapter")
 
-      this.http_command("POST", this.$options.post_path, params, e => {
+      this.remote_fetch("POST", this.$options.post_path, params, e => {
         this.change_counter = 0
 
         this.all_kifs = null

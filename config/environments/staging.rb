@@ -1,17 +1,29 @@
 load "#{__dir__}/production.rb"
 
 Rails.application.configure do
-  config.action_cable.url = "wss://staging.shogi-extend.com:28081"
-  Rails.application.routes.default_url_options.update(protocol: "https", host: "staging.shogi-extend.com")
+  Rails.application.routes.default_url_options.update(protocol: "https", host: "shogi-flow.xyz")
 
   # ################################################################################ cache_store
-  config.cache_store = :redis_cache_store, { db: 4 }
+  config.cache_store = :redis_cache_store, { db: 8 } # Rails.new
+
+  # ################################################################################ ActionCable
+  # ActionCable.server.config.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true
+  # config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
+  # config.action_cable.allowed_request_origins = ["https://shogi-flow.xyz"]
+  # config.action_cable.url = "wss://shogi-flow.xyz:28081"
+  config.action_cable.mount_path = "/x-cable"
+
+  # ################################################################################ active_job
+  config.active_job.queue_adapter = :sidekiq
 
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
-        :redis_db_for_xy_rule_info           => 5,    # 符号の鬼のランキング用
-        :redis_db_for_colosseum_ranking_info => 6,    # 対戦のランキング用
+        :redis_db_for_xy_rule_info           => 9,    # 符号の鬼のランキング用
+        :redis_db_for_colosseum_ranking_info => 10,   # 対戦のランキング用
+        :redis_db_for_actb                   => 11,   # actb
+        :redis_db_for_sidekiq                => 12,   # sidekiq
       })
   end
 end

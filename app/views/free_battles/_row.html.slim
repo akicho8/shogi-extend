@@ -22,7 +22,7 @@ template(slot-scope="props")
   b-table-column(field="turn_max" :label="table_columns_hash.turn_max.label" :visible="visible_hash.turn_max" sortable numeric)
     | {{props.row.turn_max}}
 
-  b-table-column(field="colosseum_user_id" :label="table_columns_hash.colosseum_user_id.label" :visible="visible_hash.colosseum_user_id" sortable)
+  b-table-column(field="user_id" :label="table_columns_hash.user_id.label" :visible="visible_hash.user_id" sortable)
     template(v-if="props.row.owner_info")
       a(@click.stop :href="props.row.owner_info.url")
         | {{props.row.owner_info.name}}

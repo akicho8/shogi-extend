@@ -1,10 +1,20 @@
-development:
-  adapter: async
+# https://railsguides.jp/action_cable_overview.html
 
-test:
-  adapter: test
+development:
+  # adapter: async
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/6" } %>
+  channel_prefix: shogi_web_development
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/6" } %>
   channel_prefix: shogi_web_production
+
+staging:
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/13" } %>
+  channel_prefix: shogi_web_staging
+
+test:
+  adapter: test

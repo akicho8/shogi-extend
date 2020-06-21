@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
-  include LightSessionMethods
+  include CurrentUserMod
+
+  attr_accessor :layout_type
 
   before_action do
     ActiveStorage::Current.host = request.base_url
@@ -66,113 +68,6 @@ class ApplicationController < ActionController::Base
       @h ||= view_context
     end
     delegate :tag, :link_to, :icon_tag, :auto_link, to: :h
-  end
-
-  concerning :CurrentUserMethods do
-    included do
-      helper_method :js_global
-      helper_method :sysop?
-      helper_method :editable_record?
-      helper_method :current_user
-      helper_method :login_display?
-    end
-
-    def js_global
-      @js_global ||= {
-        :current_user => current_user && ams_sr(current_user, serializer: Colosseum::BasicUserSerializer),
-        :talk_path    => talk_path,
-      }
-    end
-
-    let :sysop? do
-      current_user && current_user.sysop?
-    end
-
-    def editable_record?(record)
-      sysop? || current_user_is_owner_of?(record)
-    end
-
-    def current_user_is_owner_of?(record)
-      if current_user
-        if record
-          if record.respond_to?(:owner_user)
-            if record.owner_user
-              record.owner_user == current_user
-            end
-          end
-        end
-      end
-    end
-
-    let :current_user do
-      # # unless bot_agent?       # ブロックの中なので guard return してはいけない
-      # user_id = nil
-      # # if Rails.env.development? || Rails.env.test?
-      # #   user_id ||= params[:__user_id__]
-      # # end
-      # user_id ||=
-
-      user = nil
-      id = session[:user_id]
-      if AppConfig[:colosseum_battle_enable]
-        id ||= cookies.signed[:user_id]
-      end
-      if id
-        user ||= Colosseum::User.find_by(id: id)
-      end
-      user ||= current_xuser
-
-      if Rails.env.test?
-        if params[:__create_user_name__]
-          user ||= Colosseum::User.create!(name: params[:__create_user_name__], user_agent: request.user_agent)
-          user.lobby_in_handle
-          cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
-        end
-      end
-
-      # if user
-      #   cookies.signed[:user_id] = {value: user.id, expires: 1.years.from_now}
-      # end
-
-      user
-      # end
-    end
-
-    def current_user_set_id(user_id)
-      if instance_variable_defined?(:@current_user)
-        remove_instance_variable(:@current_user)
-      end
-
-      if user_id
-        session[:user_id] = user_id
-      else
-        session.delete(:user_id)
-      end
-
-      if AppConfig[:colosseum_battle_enable]
-        if user_id
-          cookies.signed[:user_id] = {value: user_id, expires: 1.years.from_now}
-        else
-          cookies.delete(:user_id)
-        end
-      end
-    end
-
-    def current_user_logout
-      if current_user
-        current_user.lobby_out_handle
-      end
-      current_user_set_id(nil)
-      sign_out(:xuser)
-    end
-
-    def login_display?
-      v = false
-      v ||= params[:controller].start_with?("colosseum")
-      v ||= params[:controller].start_with?("xy_records")
-      v ||= params[:controller].start_with?("free_battles") && params[:edit_mode] != "adapter"
-      v
-    end
   end
 
   concerning :BotCheckMethods do

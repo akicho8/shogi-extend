@@ -5,27 +5,23 @@ module ApplicationCable
     def connect
       self.current_user = find_verified_user
       if current_user
-        logger.add_tags current_user.name
+        logger.add_tags [current_user.id, current_user.name].join(":")
+        current_user.actb_lobby_messages.create!(body: "*Connection#connect") if Rails.env.development?
       end
     end
 
     def disconnect
       # Any cleanup work needed when the cable connection is cut.
+      if current_user
+        current_user.actb_lobby_messages.create!(body: "*Connection#disconnect") if Rails.env.development?
+      end
     end
 
     private
 
     def find_verified_user
-      if cookies.signed[:user_id]
-        user = Colosseum::User.find_by(id: cookies.signed[:user_id])
-        #
-        # ここで reject するとログインしていない人が観戦できなくる
-        # unless user
-        #   reject_unauthorized_connection
-        # end
-        #
-        user
-      end
+      # current_user_set で cookies に入れているので取れる
+      User.find_by(id: cookies.signed[:user_id]) or reject_unauthorized_connection
     end
   end
 end

@@ -1,0 +1,66 @@
+# -*- coding: utf-8; compile-command: "scp puma.service s:/etc/systemd/system/; ssh s 'sudo systemctl daemon-reload; sudo systemctl restart puma; sudo systemctl status puma; sudo systemctl reset-failed puma'" -*-
+
+# ssh s sudo systemctl status puma
+# bundle binstub puma --bin=sbin
+
+# https://github.com/puma/puma/blob/master/docs/systemd.md
+# https://qiita.com/ch7821/items/369090459769c603bb6b
+
+[Unit]
+Description=puma staging
+After=syslog.target network.target
+
+[Service]
+Type=simple
+# Type=notify
+# If your Puma process locks up, systemd's watchdog will restart it within seconds.
+# WatchdogSec=10
+
+WorkingDirectory=/var/www/shogi_web_staging/current
+Environment="RAILS_ENV=staging"
+Environment="PORT=3000"
+# http://thoames.hatenadiary.jp/entry/2018/07/13/104308
+# ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec puma -C config/puma/staging.rb'
+ExecStart=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec puma -C config/puma/staging.rb"
+ExecStop=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec pumactl -S /var/www/shogi_web_staging/current/tmp/pids/puma.state stop"
+# /usr/local/rbenv/bin/rbenv exec bundle exec pumactl
+# ExecStart="/usr/local/rbenv/shims/puma -e staging -C config/puma/staging.rb"
+# ExecStart="/var/www/shogi_web_staging/current/.bin/puma -e staging -C config/puma/staging.rb"
+# ExecStart="/usr/local/rbenv/shims/bundle exec puma -e staging -C config/puma/staging.rb"
+# If you use the system's ruby:
+# ExecStart=/usr/local/bin/bundle exec puma -e staging
+# If you use rvm in staging, don't.
+
+# If you use the system's ruby:
+# ExecStart=/usr/local/bin/bundle exec puma -e staging
+# If you use rvm in staging, don't.
+
+# use `systemctl reload puma` to send the quiet signal to Puma
+# at the start of your deploy process.
+# Or you can use `systemctl kill -s TSTP puma`
+# ExecReload=/usr/bin/kill -TSTP $MAINPID
+
+# !!! Change this to your deploy user account !!!
+# User=root
+User=deploy
+Group=deploy
+UMask=0002
+
+# Greatly reduce Ruby memory fragmentation and heap usage
+# https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
+# https://evilmartians.com/chronicles/fullstaq-ruby-first-impressions-and-how-to-migrate-your-docker-kubernetes-ruby-apps-today
+Environment=MALLOC_ARENA_MAX=2
+
+# if we crash, restart
+RestartSec=1
+Restart=on-failure
+
+# # output goes to /var/log/syslog (Ubuntu) or /var/log/messages (CentOS)
+# StandardOutput=syslog
+# StandardError=syslog
+# 
+# # This will default to "bundler" if we don't specify it
+# SyslogIdentifier=puma
+
+[Install]
+WantedBy=multi-user.target

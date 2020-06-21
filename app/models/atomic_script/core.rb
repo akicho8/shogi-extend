@@ -69,18 +69,14 @@ module AtomicScript
 
     def response_render_body(resp)
       if resp[:rows].present?
-        h.tag.div(:class => "columns") do
-          h.tag.div(:class => "column") do
-            o = "".html_safe
-            if resp[:rows].kind_of?(String)
-              o << resp[:rows].html_safe
-            else
-              o << html_format(resp[:rows])
-              o << basic_paginate(resp[:object])
-            end
-            o
-          end
+        o = "".html_safe
+        if resp[:rows].kind_of?(String)
+          o << resp[:rows].html_safe
+        else
+          o << html_format(resp[:rows])
+          o << basic_paginate(resp[:object])
         end
+        o
       end
     end
 

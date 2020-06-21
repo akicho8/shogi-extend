@@ -1,0 +1,7 @@
+#!/bin/sh
+curl -sI https://www.shogi-extend.com/ | head -1
+
+ssh i 'sudo systemctl daemon-reload'
+ssh i 'sudo systemctl restart nginx'
+ssh i 'sudo systemctl restart puma'
+ssh i 'sudo systemctl restart sidekiq'

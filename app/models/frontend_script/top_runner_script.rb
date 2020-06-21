@@ -18,7 +18,7 @@ module FrontendScript
         if user
           row[:battles_count] = user.memberships.count
 
-          s = user.memberships.joins(:battle).merge(Swars::Battle.win_lose_only.latest_order).limit(latest_limit)
+          s = user.memberships.joins(:battle).merge(Swars::Battle.win_lose_only.newest_order).limit(latest_limit)
           s = Swars::Membership.where(id: s.ids)
           d = s.count
           w = s.where(judge_key: :win).count

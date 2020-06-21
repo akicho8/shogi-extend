@@ -138,7 +138,7 @@ export default {
 
     // 棋譜コピー
     kifu_copy_handle() {
-      this.general_kifu_copy(this.current_body, "kif")
+      this.general_kifu_copy(this.current_body, {to_format: "kif"})
     },
 
     // ツイートする
@@ -182,7 +182,7 @@ export default {
     //   const params = new URLSearchParams()
     //   params.set("body", this.play_mode_body)
     //
-    //   this.http_command("POST", this.$route.path, params, e => {
+    //   this.remote_fetch("POST", this.$route.path, params, e => {
     //     if (e.record) {
     //       this.record = e.record
     //       callback()
@@ -241,7 +241,7 @@ export default {
         },
         events: {
           "update:any_source": any_source => {
-            this.http_command("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
+            this.remote_fetch("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
               if (e.body) {
                 this.general_ok_notice("正常に読み込みました")
                 this.play_mode_body = e.body
@@ -350,7 +350,7 @@ export default {
     snapshot_image_url() { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
 
     // 外部アプリ
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.current_url, this.turn_offset, this.board_flip) },
+    piyo_shogi_app_with_params_url() { return this.legacy_piyo_shogi_full_url(this.current_url, this.turn_offset, this.board_flip) },
     kento_app_with_params_url()      { return this.kento_full_url(this.play_mode_body, this.turn_offset, this.board_flip)   },
 
     ////////////////////////////////////////////////////////////////////////////////

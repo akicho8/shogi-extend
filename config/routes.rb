@@ -7,23 +7,27 @@ Rails.application.routes.draw do
   get "talk", to: "talk#show", as: :talk
 
   devise_for :xusers, {
-    class_name: "Colosseum::User",
+    class_name: "::User",
     controllers: {
-      omniauth_callbacks: "colosseum/omniauth_callbacks",
+      omniauth_callbacks: "omniauth_callbacks",
       # sessions: "users/sessions",
     },
   }
 
   ################################################################################ 対戦
 
-  namespace :colosseum do
-    resources :battles
-    resources :users
-    resources :rankings, only: :index
-  end
+  resources :users
+  # namespace :colosseum do
+  #   resources :battles
+  #   resources :rankings, only: :index
+  # end
 
-  # root "colosseum/battles#index"
-  root "swars/battles#index"
+  if Rails.env.development?
+    root "tops#show"
+  else
+    # root "colosseum/battles#index"
+    root "swars/battles#index"
+  end
 
   ################################################################################ Debug
 
@@ -31,9 +35,9 @@ Rails.application.routes.draw do
 
   ################################################################################ ログアウト
 
-  namespace :colosseum, path: "" do
-    resource :session, only: [:create, :destroy]
-  end
+  # namespace :colosseum, path: "" do
+  resource :session, only: [:create, :destroy]
+  # end
 
   ################################################################################ 将棋ウォーズ棋譜検索
 
@@ -91,6 +95,10 @@ Rails.application.routes.draw do
 
   resource :cpu_battles, path: "cpu/battles", only: [:show, :create]
   get "cpu/battles", to: "cpu_battles#show"
+
+  ################################################################################ 将棋トレーニングバトル
+
+  match "tb", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
 
   ################################################################################ 外部リンク
 
@@ -177,5 +185,17 @@ Rails.application.routes.draw do
       # http://localhost:3000/admin/rails-cache
       mount Fastentry::Engine, at: "rails-cache"
     end
+  end
+
+  ################################################################################ sidekiq
+
+  # require 'sidekiq/monitor/stats' # <mounted-path>/monitor-stats
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/admin/sidekiq' # authenticate :user {} で認証チェックする例がネットにあるが、それは devise のメソッド
+
+  if false
+    # Sidekiq::Web.tabs.replace({"管理画面" => "/admin"}.merge(Sidekiq::Web.tabs))
+    # Sidekiq::Web.tabs["管理画面に戻る"] = "/admin"
+    Sidekiq::Web.tabs["管理画面に戻る"] = "http://localhost:3000/admin"
   end
 end

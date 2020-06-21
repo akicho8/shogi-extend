@@ -21,7 +21,7 @@ module BackendScript
       if current_query
         s = s.where(["body like %?%", current_query])
       end
-      s = page_per(s)
+      s = page_scope(s)
       rows = s.collect(&method(:row_build))
       out = "".html_safe
       out << rows.to_html

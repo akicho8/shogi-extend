@@ -1,0 +1,21 @@
+.tops_show
+  .title.is-6 主なサービス紹介
+
+  .columns.is-multiline
+    - ServiceInfo.each do |si|
+      - if si.display_p || Rails.env.development? || Rails.env.test?
+        .column.is-one-third-desktop.is-half-tablet
+          = link_to(si.link_path, :class => "box") do
+            .content
+              - if si.image_source
+                .image= image_tag(si.image_source)
+              .title.is-5.mt-5
+                - if si.icon
+                  i.mdi.mr-2(class="mdi-#{si.icon}")
+                h2.title.is-5.is-inline #{si.title}
+              - if si.description
+                p= si.description
+              - if si.feature_items.present?
+                ul.is-size-7
+                  - si.feature_items.each do |e|
+                    li= e

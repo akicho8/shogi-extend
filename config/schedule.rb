@@ -14,7 +14,6 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 
 every("5 3 * * *") do
   runner [
-    "Colosseum::Battle.auto_close",
     "XyRecord.entry_name_blank_scope.destroy_all",
     "Swars::Battle.old_record_destroy",
     "FreeBattle.old_record_destroy",

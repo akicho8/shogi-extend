@@ -328,7 +328,7 @@ export default {
     },
 
     xy_records_hash_update() {
-      this.http_get_command(this.$root.$options.xhr_post_path, { xy_scope_key: this.xy_scope_key, entry_name_unique: this.entry_name_unique }, data => {
+      this.remote_get(this.$root.$options.xhr_post_path, { xy_scope_key: this.xy_scope_key, entry_name_unique: this.entry_name_unique }, data => {
         this.xy_records_hash = data.xy_records_hash
       })
     },
@@ -504,7 +504,7 @@ export default {
 
     // 名前を確定してからサーバーに保存する
     record_post() {
-      this.http_command("post", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
+      this.remote_fetch("POST", this.$root.$options.xhr_post_path, {xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
         this.entry_name_unique = false // 「プレイヤー別順位」の解除
         this.data_update(data)         // ランキングに反映
 
@@ -557,7 +557,7 @@ export default {
     },
 
     command_send(command, args = {}) {
-      this.http_command("post", this.$root.$options.xhr_post_path, { xy_record: { command: command, ...args } })
+      this.remote_fetch("POST", this.$root.$options.xhr_post_path, { xy_record: { command: command, ...args } })
     },
 
     timer_stop() {

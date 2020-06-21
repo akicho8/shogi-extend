@@ -322,7 +322,7 @@ module Swars
 
       # FIXME: プレイヤー情報と条件を合わせるためハードコーディングされている
       m = m.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
-      m = m.merge(Swars::Battle.latest_order)  # 直近のものから取得
+      m = m.merge(Swars::Battle.newest_order)  # 直近のものから取得
 
       if v = query_info.lookup_one(:"sample")
         m = m.limit(v)          # N件抽出
@@ -359,7 +359,7 @@ module Swars
       end
     end
 
-    def default_sort_column
+    def sort_column_default
       "battled_at"
     end
 

@@ -85,7 +85,7 @@ export default {
     async_records_load() {
       this.loading = true
 
-      this.silent_http_get_command(this.async_records_load_url, {}, data => {
+      this.silent_remote_get(this.async_records_load_url, {}, data => {
         this.loading = false
         this.records = data
         this.fetched_count += 1
@@ -115,7 +115,7 @@ export default {
     },
 
     piyo_shogi_app_with_params_url(record) {
-      return this.piyo_shogi_full_url(record.show_path, this.trick_start_turn_for(record), record.flip)
+      return this.legacy_piyo_shogi_full_url(record.show_path, this.trick_start_turn_for(record), record.flip)
     },
 
     kento_app_with_params_url(record) {
@@ -160,11 +160,12 @@ export default {
     },
 
     async_records_load_url() {
-      return `${this.$options.xhr_index_path}.json?${this.legacy_url_build(this.async_records_load_url_params)}`
+      return this.legacy_url_build(this.$options.xhr_index_path, {...this.async_records_load_url_params, format: "json"})
     },
 
+    // BUG: 変更になってもリアクティブにならない
     permalink_url() {
-      return `${this.$options.xhr_index_path}?${this.legacy_url_build(this.async_records_load_url_params)}`
+      return this.legacy_url_build(this.$options.xhr_index_path, this.async_records_load_url_params)
     },
 
     // id ですぐに引けるハッシュ

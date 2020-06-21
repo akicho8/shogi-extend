@@ -132,7 +132,7 @@ export default {
     time_chart_p() {
       if (this.time_chart_p) {
         if (!this.time_chart_params) {
-          this.http_get_command(this.record.show_path, { time_chart_fetch: true }, data => {
+          this.remote_get(this.record.show_path, { time_chart_fetch: true }, data => {
             this.time_chart_params = data.time_chart_params
           })
         }
@@ -249,7 +249,7 @@ export default {
     },
 
     piyo_shogi_app_with_params_url() {
-      return this.piyo_shogi_full_url(this.record.show_path, this.turn_offset, this.new_flip)
+      return this.legacy_piyo_shogi_full_url(this.record.show_path, this.turn_offset, this.new_flip)
     },
 
     kento_app_with_params_url() {

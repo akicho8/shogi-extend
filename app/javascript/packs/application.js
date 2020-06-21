@@ -1,15 +1,19 @@
-/* eslint no-console:0 */
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
-//
-// To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
-// layout file, like app/views/layouts/application.html.erb
 
 require("@rails/ujs").start()
 // require("turbolinks").start()
 require("@rails/activestorage").start()
+require("channels")
+
+// Uncomment to copy all static images under ../images to the output folder and reference
+// them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
+// or the `imagePath` JavaScript helper below.
+//
+// const images = require.context('../images', true)
+// const imagePath = (name) => images(name, true)
 
 import "modulable_crud.js"
 import "global_variable_set.js"
@@ -30,7 +34,7 @@ Vue.use(VueGtag, {
   config: {
     id: 'UA-109851345-1',
     params: {
-      // send_page_view: false,
+      // send_page_view: process.env.NODE_ENV !== "production",
 
       // https://developers.google.com/analytics/devguides/collection/gtagjs/cookies-user-id?hl=ja
       // > サーバーがローカル環境（例: localhost）で実行されていることが検出されると、cookie_domain は自動的に 'none' に設定されます
@@ -39,8 +43,8 @@ Vue.use(VueGtag, {
   },
 })
 
-import Repository from "Repository.js"
-Vue.prototype.$http = Repository
+import axios_support from "axios_support.js"
+Vue.prototype.$http = axios_support
 
 import "css-browser-selector"   // 読み込んだ時点で htmlタグの class に "mobile" などを付与してくれる
 
@@ -84,61 +88,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //////////////////////////////////////////////////////////////////////////////// タブがアクティブか？(見えているか？)
 
-window.tab_is_active_p = () => {
-  console.log("document.hidden", document.hidden)
-  console.log("document.visibilityState", document.visibilityState)
-  return !(document.hidden || document.visibilityState === "hidden")
-}
-
-//////////////////////////////////////////////////////////////////////////////// どこからでも使いたい
-
-import LifetimeInfo from "lifetime_info"
-import TeamInfo from "team_info"
-import LastActionInfo from "last_action_info"
-import CustomPresetInfo from "custom_preset_info"
-import HiraKomaInfo from "hira_koma_info"
-import RobotAcceptInfo from "robot_accept_info"
-
-Vue.prototype.LifetimeInfo = LifetimeInfo
-Vue.prototype.TeamInfo = TeamInfo
-Vue.prototype.LastActionInfo = LastActionInfo
-Vue.prototype.CustomPresetInfo = CustomPresetInfo
-Vue.prototype.HiraKomaInfo = HiraKomaInfo
-Vue.prototype.RobotAcceptInfo = RobotAcceptInfo
-
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
-import vue_application from "support/vue_application.js"
-import vue_support from "support/vue_support.js"
-import vue_storage from "support/vue_storage.js"
-import vue_fetch from "support/vue_fetch.js"
-import vue_clipboard from "support/vue_clipboard.js"
-import vue_sound from "support/vue_sound.js"
+import vue_mixins from "vue_mixins/vue_mixins.js"
 
-import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
-import message_link_to from "message_link_to.vue"
-import global_message_link from "global_message_link.vue"
-import swars_user_link_to from "swars_user_link_to.vue"
-import pulldown_menu from "pulldown_menu.vue"
-import buefy_table_wrapper from "buefy_table_wrapper.vue"
+// Components
+import shogi_player                    from "shogi-player/src/components/ShogiPlayer.vue"
+import swars_user_link_to              from "swars_user_link_to.vue"
+import pulldown_menu                   from "pulldown_menu.vue"
+import buefy_table_wrapper             from "buefy_table_wrapper.vue"
 import three_stage_league_player_chart from "three_stage_league_player_chart.vue"
-import custom_chart from "custom_chart.vue"
-import stopwatch from "stopwatch.vue"
-import simple_board from "simple_board.vue"
-import share_board from "share_board.vue"
-import xy_master from "xy_master.vue"
-import cpu_battle from "cpu_battle.vue"
-import sp_show from "sp_show.vue"
-import ox_modal from "ox_modal.vue"
-import tactic_show from "tactic_show.vue"
-import piyo_shogi_button from "components/piyo_shogi_button.vue"
-import kento_button from "components/kento_button.vue"
-import kif_copy_button from "components/kif_copy_button.vue"
-import sp_show_button from "components/sp_show_button.vue"
-import png_dl_button from "components/png_dl_button.vue"
-import tweet_button from "components/tweet_button.vue"
-import membership_medal from "components/membership_medal.vue"
-import win_lose_circle from "win_lose_circle.vue"
+import custom_chart                    from "custom_chart.vue"
+import acns1_sample                    from "acns1_sample.vue"
+import actb_app                        from "actb_app/application.vue"
+import stopwatch                       from "stopwatch.vue"
+import simple_board                    from "simple_board.vue"
+import share_board                     from "share_board.vue"
+import xy_master                       from "xy_master.vue"
+import cpu_battle                      from "cpu_battle.vue"
+import sp_show                         from "sp_show.vue"
+import ox_modal                        from "ox_modal.vue"
+import tactic_show                     from "tactic_show.vue"
+import piyo_shogi_button               from "components/piyo_shogi_button.vue"
+import kento_button                    from "components/kento_button.vue"
+import kif_copy_button                 from "components/kif_copy_button.vue"
+import sp_show_button                  from "components/sp_show_button.vue"
+import png_dl_button                   from "components/png_dl_button.vue"
+import tweet_button                    from "components/tweet_button.vue"
+import membership_medal                from "components/membership_medal.vue"
+import debug_print                     from "components/debug_print.vue"
+import win_lose_circle                 from "win_lose_circle.vue"
+import vr_page1                        from "vr_page1.vue"
+import vr_page2                        from "vr_page2.vue"
 
 // const router = new VueRouter({
 //   mode: 'history',
@@ -148,23 +129,25 @@ import win_lose_circle from "win_lose_circle.vue"
 //   ],
 // })
 
+import actb_app_routes from "../actb_app/routes.js"
+
 Vue.mixin({
-  router: new VueRouter({mode: "history"}),
+  router: new VueRouter({
+    mode: "history",
+    routes: [
+      { path: '/vr_page1', component: vr_page1 },
+      { path: '/vr_page2', component: vr_page2 },
+      ...actb_app_routes,
+    ]
+  }),
 
   mixins: [
-    vue_application,
-    vue_support,
-    vue_storage,
-    vue_fetch,
-    vue_clipboard,
-    vue_sound,
+    vue_mixins,
   ],
 
   // よくない命名規則だけどこっちの方が開発しやすい
   components: {
     shogi_player,
-    message_link_to,
-    global_message_link,
     swars_user_link_to,
     pulldown_menu,
     stopwatch,
@@ -178,6 +161,8 @@ Vue.mixin({
     buefy_table_wrapper,
     three_stage_league_player_chart,
     custom_chart,
+    acns1_sample,
+    actb_app,
 
     // for buefy modal
     tactic_show,
@@ -189,6 +174,7 @@ Vue.mixin({
     sp_show_button,
     png_dl_button,
     tweet_button,
+    debug_print,
 
     // icon
     membership_medal,
@@ -198,20 +184,5 @@ Vue.mixin({
 window.GVI = new Vue()           // ActionCable 側から Vue のグローバルなメソッドを呼ぶため
 
 import "audio_queue.js"
-import "light_session_app.js"
 
-import ActionCable from "actioncable"
-
-// このような書き方でいいのかどうかはわからない
 window.App = {}
-// document.addEventListener('DOMContentLoaded', () => {
-//   console.log(window.Vue)
-//   console.log(window.GVI)
-// })
-if (GVI.$route) {
-  if (GVI.$route.path.includes("/colosseum/battles")) {
-    window.App.cable = ActionCable.createConsumer()
-    ActionCable.startDebugging()
-  }
-}
-// import "action_cable_setup.js"

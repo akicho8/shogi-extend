@@ -82,7 +82,7 @@ module Tsl
       Rails.cache.fetch(source_url, :expires_in => 1.hour) do
         begin
           URI(source_url).read.toutf8 # この時点で UTF-8 にしておかないと fastentry が死ぬ
-        rescue OpenURI::HTTPError
+        rescue OpenURI::HTTPError, SocketError
         end
       end
     end

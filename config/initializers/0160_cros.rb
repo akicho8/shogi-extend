@@ -13,7 +13,7 @@
 #   Rails.application.config.middleware.insert_before 0, Rack::Cors do
 #     allow do
 #       # origins "*" とした場合、credentials: true にはできない
-#       origins "localhost:8080", "localhost:8081", "web.kokokarago.wondertap.jp"
+#       origins "localhost:8080", "localhost:8081"
 #       resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true
 #     end
 #   end
@@ -38,7 +38,15 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     #   origins "www.shogi-extend.com"
     # else
     # end
-    origins "*"                 # クッキーが欲しいときはそのサーバーを明示的に指定する必要があり)
-    resource "*", headers: :any, methods: [:head, :get, :options]
+
+    # origins "*"                 # クッキーが欲しいときはそのサーバーを明示的に指定する必要があり)
+
+    if Rails.env.development?
+      origins "localhost:4000"
+      resource "*", headers: :any, methods: [:head, :get, :post, :patch, :put, :options], credentials: true
+    else
+      origins "*"
+      resource "*", headers: :any, methods: [:head, :get, :post, :patch, :put, :options]
+    end
   end
 end

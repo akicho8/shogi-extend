@@ -17,7 +17,14 @@ module ScriptsControllerMod
     end
 
     @page_title ||= @script.script_name
-    render :html => @script.render_in_view, layout: true
+    html = @script.render_in_view
+
+    # スクリプトの中で redirect_to した場合
+    if performed?
+      return
+    end
+
+    render :html => html, layout: true
   end
 
   def update

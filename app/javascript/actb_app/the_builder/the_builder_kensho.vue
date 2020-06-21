@@ -1,0 +1,35 @@
+<template lang="pug">
+.the_builder_kensho
+  shogi_player(
+    :run_mode="'play_mode'"
+    :kifu_body="$parent.question.init_sfen"
+    :start_turn="0"
+    :slider_show="true"
+    :controller_show="true"
+    :setting_button_show="false"
+    :theme="'simple'"
+    :size="'default'"
+    :sound_effect="true"
+    :volume="0.5"
+    @update:play_mode_advanced_moves="$parent.play_mode_advanced_moves_set"
+    )
+</template>
+
+<script>
+import { support } from "../support.js"
+
+export default {
+  name: "the_builder_kensho",
+  mixins: [
+    support,
+  ],
+  created() {
+  },
+}
+</script>
+
+<style lang="sass">
+@import "../support.sass"
+.the_builder_kensho
+  margin-top: 1.5rem
+</style>
