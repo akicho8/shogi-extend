@@ -106,7 +106,7 @@ export const application_battle = {
         return
       }
 
-      this.__assert__(this.battle.best_questions.length >= 1, "best_questions is empty")
+      this.__assert__(this.battle.best_questions.length >= 1, "対戦開始しようとしたが問題集が空")
 
       this.debug_alert("battle 接続")
 
@@ -488,7 +488,7 @@ export const application_battle = {
     },
     current_question() {
       const v = this.battle.best_questions[this.question_index]
-      this.__assert__(v, "current_question is blank")
+      this.__assert__(v, `[${this.question_index}]の問題が空`)
       return v
     },
     next_question() {
