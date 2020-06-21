@@ -71,6 +71,13 @@ module FrontendScript
       info[:question_default] = question_default
       if current_user
         info[:current_user] = current_user_json
+
+        if true
+          # すでにログインしている人は x-cable で unauthorized になる
+          # これはクッキーに記録しないままログインしたのが原因
+          # なのですでにログインしていたらクッキーに埋める
+          c.current_user_set_for_action_cable(current_user)
+        end
       end
 
       debug_scene_params_set(info)

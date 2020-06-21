@@ -8,6 +8,7 @@ module CurrentUserMod
     helper_method :current_user
   end
 
+  # FIXME: セキュリティ的にだめ
   def js_global
     @js_global ||= {
       :current_user => current_user && current_user.as_json(only: [:id, :name], methods: [:show_path, :avatar_path]),
@@ -35,6 +36,8 @@ module CurrentUserMod
     end
   end
 
+  # いろんなものからログインユーザーを作っている
+  # cookies.signed[:user_id] は ActionCable の読み出し用なのでここに入れない方がいいかもしれない
   let :current_user do
     id = nil
 
@@ -48,7 +51,7 @@ module CurrentUserMod
     if id
       user = nil
       user ||= User.find_by(id: id)
-      user ||= current_xuser
+      user ||= current_xuser    # from devise
     end
   end
 
@@ -66,10 +69,16 @@ module CurrentUserMod
     end
 
     session[:user_id] = user.id
-    cookies.signed[:user_id] = { value: user.id, expires: 1.years.from_now } # for app/channels/application_cable/connection.rb
+    current_user_set_for_action_cable(user)
     sign_in(user, event: :authentication)
 
     current_user_memoize_variable_clear
+  end
+
+  # すでにログインしているユーザーのIDをActionCableで拾えるようにするため
+  def current_user_set_for_action_cable(user)
+    raise ArgumentError, user.inspect unless user.kind_of?(User)
+    cookies.signed[:user_id] = { value: user.id, expires: 1.years.from_now } # for app/channels/application_cable/connection.rb
   end
 
   def current_user_clear
