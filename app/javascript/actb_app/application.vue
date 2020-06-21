@@ -257,15 +257,19 @@ export default {
       })
     },
 
+    // ロビー → ルール選択 →●ロビー
     rule_cancel_handle() {
-      this.lobby_handle()
+      this.sound_play("click")
+      this.mode = "lobby"
     },
 
+    // ロビー → ルール選択 → マッチング開始 →●ルール選択
     matching_cancel_handle() {
       this.sound_play("click")
 
       this.app.matching_interval_timer_clear()
 
+      this.__assert__(this.$ac_lobby)
       this.$ac_lobby.perform("matching_cancel")
 
       this.mode = "rule_select"
