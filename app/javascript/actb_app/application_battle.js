@@ -254,14 +254,10 @@ export const application_battle = {
     },
 
     delay_and_owattayo_or_next_trigger(ox_mark_info) {
-      console.log(1)
       this.delay(ox_mark_info.delay_second, () => {
-        console.log(2)
         if (this.battle_end_p || this.next_question_empty_p) {
-          console.log(3)
           this.ac_battle_perform("owattayo", {member_infos_hash: this.member_infos_hash}) // --> app/channels/actb/battle_channel.rb
         } else {
-          console.log(4)
           this.next_trigger()
         }
       })

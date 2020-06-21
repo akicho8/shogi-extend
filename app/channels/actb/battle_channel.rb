@@ -93,7 +93,8 @@ module Actb
         end
         if ox_mark.key == "timeout"
           # 両者が送信者なので最初だけ実行
-          if already_run?([:kotae_sentaku, room_battle_keys, data[:question_id]])
+          if already_run?([:kotae_sentaku, room_battle_keys, data[:question_id]], expires_in: 1.minute)
+            say "**skip kotae_sentaku"
             return
           end
           current_battle.memberships.each do |membership|
@@ -134,7 +135,8 @@ module Actb
 
       # リーダーが送信者なので対局者の両方にあらかじめ履歴を作っておく
       if current_battle.rule.key == "singleton_rule" || current_battle.rule.key == "hybrid_rule"
-        if already_run?([:next_trigger, room_battle_keys, data[:question_id]])
+        if already_run?([:next_trigger, room_battle_keys, data[:question_id]], expires_in: 1.minute)
+          say "**skip next_trigger"
           return
         end
         question = Question.find(data[:question_id])
@@ -219,7 +221,8 @@ module Actb
 
       if current_battle.rule.key == "singleton_rule" || current_battle.rule.key == "hybrid_rule"
         # 2回目の実行はキャンセル
-        if already_run?([:owattayo, room_battle_keys])
+        if already_run?([:owattayo, room_battle_keys], expires_in: 1.minute)
+          say "**skip owattayo"
           return
         end
       end
