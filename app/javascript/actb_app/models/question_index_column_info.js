@@ -17,6 +17,9 @@ export class QuestionIndexColumnInfo extends MemoryRecord {
       { key: "x_count",          name: "誤答数",     short_name: "誤答",     visible: false, },
 
       { key: "clip_marks_count", name: "被保存",     short_name: "被保",     visible: false, },
+
+      { key: "messages_count",   name: "コメ数",     short_name: "コメ",     visible: true,  },
+
       { key: "updated_at",       name: "更新日時",   short_name: "更新",     visible: false, },
     ]
   }

@@ -63,6 +63,7 @@ module Actb
           :bad_marks_count,
           :good_marks_count,
           :clip_marks_count,
+          :messages_count,
 
           :good_rate,
 
