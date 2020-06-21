@@ -45,7 +45,7 @@ module Actb
 
   if Rails.env.staging? || Rails.env.production?
     Config.update({
-        :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
+        # :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
         :matching_interval_second     => 4,     # カウンターをインクリメントする間隔(秒)
         :thinking_time_sec            => nil,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
         :room_messages_window_height  => 5,     # 部屋での表示行数
