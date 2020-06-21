@@ -13,12 +13,13 @@
     :volume="0.5"
     @update:edit_mode_snapshot_sfen="$parent.edit_mode_snapshot_sfen"
     )
-  .buttons.is-centered.are-small.footer_buttons
-    piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
-    kento_button(tag="a" :href="kento_app_with_params_url" target="_blank")
-    kif_copy_button(@click="kifu_copy_handle") コピー
-  .buttons.is-centered.are-small.footer_buttons
-    b-button(icon-left="upload" @click="any_source_read_handle") 棋譜の読み込み
+  .footer_buttons
+    .buttons.is-centered.are-small.is-marginless.mt-3
+      piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
+      kento_button(tag="a" :href="kento_app_with_params_url" target="_blank")
+      kif_copy_button(@click="kifu_copy_handle") コピー
+    .buttons.is-centered.are-small.is-marginless.mt-3
+      b-button(icon-left="upload" @click="any_source_read_handle") 棋譜の読み込み
 </template>
 
 <script>
@@ -123,5 +124,6 @@ export default {
 .the_builder_haiti
   margin-top: 1.25rem
   .footer_buttons
-    margin-top: 0.8rem
+    .button
+      margin-bottom: 0
 </style>
