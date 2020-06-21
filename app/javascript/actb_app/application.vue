@@ -120,7 +120,7 @@ export default {
   },
 
   created() {
-    this.remote_get(this.app.info.put_path, { remote_action: "resource_fetch" }, e => {
+    this.remote_get(this.app.info.api_path, { remote_action: "resource_fetch" }, e => {
       this.RuleInfo   = RuleInfo.memory_record_reset(e.RuleInfo)
       this.OxMarkInfo = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
       this.UdemaeInfo = UdemaeInfo.memory_record_reset(e.UdemaeInfo)
@@ -228,17 +228,17 @@ export default {
     lobby_messages_setup() {
       this.lobby_messages = []
       this.lobby_message_body = ""
-      this.remote_get(this.app.info.put_path, { remote_action: "lobby_messages_fetch" }, e => {
+      this.remote_get(this.app.info.api_path, { remote_action: "lobby_messages_fetch" }, e => {
         this.lobby_messages = e.lobby_messages
       })
     },
 
     debug_matching_add_handle(rule_key) {
-      this.remote_fetch("PUT", this.app.info.put_path, {remote_action: "debug_matching_add_handle", exclude_user_id: this.current_user.id, rule_key: rule_key}, e => {})
+      this.remote_fetch("PUT", this.app.info.api_path, {remote_action: "debug_matching_add_handle", exclude_user_id: this.current_user.id, rule_key: rule_key}, e => {})
     },
 
     matching_delete_all_handle() {
-      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "matching_delete_all_handle", exclude_user_id: this.current_user.id }, e => {})
+      this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "matching_delete_all_handle", exclude_user_id: this.current_user.id }, e => {})
     },
 
     start_handle() {
@@ -252,7 +252,7 @@ export default {
     rule_key_set_handle(rule) {
       this.sound_play("click")
       this.talk2(rule.name)
-      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "rule_key_set_handle", rule_key: rule.key }, e => {
+      this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "rule_key_set_handle", rule_key: rule.key }, e => {
         this.matching_setup()
       })
     },

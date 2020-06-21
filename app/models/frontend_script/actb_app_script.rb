@@ -67,7 +67,7 @@ module FrontendScript
       info = {}
       info[:config] = Actb::Config
       info[:mode] ||= "lobby"   # FIXME: とる
-      info[:put_path] = h.url_for(script_link_path)
+      info[:api_path] = h.url_for(script_link_path)
       info[:question_default] = question_default
       if current_user
         info[:current_user] = current_user_json

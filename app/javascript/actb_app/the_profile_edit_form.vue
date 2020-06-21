@@ -63,7 +63,7 @@ export default {
         croped_image:     this.$parent.croped_image,
       }
 
-      this.remote_fetch("PUT", this.app.info.put_path, { remote_action: "profile_update", ...params }, e => {
+      this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "profile_update", ...params }, e => {
 
         this.app.current_user = e.current_user
 
