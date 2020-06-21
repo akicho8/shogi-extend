@@ -95,7 +95,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
     end
   end
 
-  describe "#kyouyuu" do
+  describe "#play_board_share" do
     before do
       subscribe(battle_id: current_battle.id)
     end
@@ -105,8 +105,8 @@ RSpec.describe Actb::BattleChannel, type: :channel do
         share_sfen: "position startpos",
       }
       expect {
-        subscription.kyouyuu(data)
-      }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}").with(bc_action: "kyouyuu_broadcasted", bc_params: data)
+        subscription.play_board_share(data)
+      }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}").with(bc_action: "play_board_share_broadcasted", bc_params: data)
     end
   end
 

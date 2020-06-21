@@ -152,12 +152,12 @@ module Actb
     end
 
     # 盤面を共有する
-    def kyouyuu(data)
+    def play_board_share(data)
       data = data.to_options
       bc_params = {
         share_sfen: data[:share_sfen],
       }
-      broadcast(:kyouyuu_broadcasted, bc_params)
+      broadcast(:play_board_share_broadcasted, bc_params)
     end
 
     # <-- app/javascript/actb_app/application.vue

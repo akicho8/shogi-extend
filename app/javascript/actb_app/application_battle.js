@@ -156,7 +156,7 @@ export const application_battle = {
             this.q2_interval_restart()
           }
 
-          this.kyouyuu(long_sfen)
+          this.play_board_share(long_sfen)
         }
 
         if (this.current_question.sfen_valid_p(long_sfen)) {
@@ -165,12 +165,12 @@ export const application_battle = {
       }
     },
 
-    kyouyuu(share_sfen) {
-      this.ac_battle_perform("kyouyuu", { // 戻値なし
+    play_board_share(share_sfen) {
+      this.ac_battle_perform("play_board_share", { // 戻値なし
         share_sfen: share_sfen,
       }) // --> app/channels/actb/battle_channel.rb
     },
-    kyouyuu_broadcasted(params) {
+    play_board_share_broadcasted(params) {
       if (params.membership_id === this.current_membership.id) {
         // 自分は操作中なので何も変化させない
       } else {
