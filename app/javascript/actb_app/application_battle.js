@@ -225,7 +225,9 @@ export const application_battle = {
         this.ryousya_jikangire(ox_mark_info)          // タイムアウトのときは両者に時間切れ
         this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
 
-        this.delay_and_owattayo_or_next_trigger(ox_mark_info) // [ONCE]
+        if (this.leader_p) {
+          this.delay_and_owattayo_or_next_trigger(ox_mark_info) // [ONCE]
+        }
       }
     },
 
@@ -265,7 +267,8 @@ export const application_battle = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // singleton_rule では両方呼ぶが片方はキャンセルされる
+    // singleton_rule ではリーダーだけが呼ぶ
+    // 両者が呼ぶようにするとまずい。わずかな時間差で呼ばれたとき問題が2度インクリメントされてしまう
     next_trigger() {
       this.ac_battle_perform("next_trigger", {
         question_index: this.question_index + 1, // 次に進めたい(希望)
@@ -415,7 +418,9 @@ export const application_battle = {
         if (this.sub_mode === "operation_mode") {
           this.main_interval_count += 1
           if (this.q1_rest_seconds === 0) {
-            this.kotae_sentaku('timeout') // [ONCE]
+            if (this.leader_p) {
+              this.kotae_sentaku('timeout') // [ONCE]
+            }
           }
         }
       }
@@ -424,7 +429,9 @@ export const application_battle = {
           if (this.x_mode === "x1_thinking") {
             this.main_interval_count += 1
             if (this.q1_rest_seconds === 0) {
-              this.kotae_sentaku('timeout') // [ONCE]
+              if (this.leader_p) {
+                this.kotae_sentaku('timeout') // [ONCE]
+              }
             }
           }
         }
@@ -464,9 +471,9 @@ export const application_battle = {
   },
 
   computed: {
-    // leader_p() {
-    //   return this.battle.memberships[this.app.config.leader_index].id === this.current_membership.id
-    // },
+    leader_p() {
+      return this.battle.memberships[this.app.config.leader_index].id === this.current_membership.id
+    },
     current_membership() {
       const v = this.battle.memberships.find(e => e.user.id === this.current_user.id)
       this.__assert__(v, "current_membership is blank")
