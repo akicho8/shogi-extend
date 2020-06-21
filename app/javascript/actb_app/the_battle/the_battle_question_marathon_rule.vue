@@ -16,7 +16,7 @@
     :volume="0.5"
     :controller_show="true"
     :human_side_key="'both'"
-    :theme="'real'"
+    :theme="app.config.sp_theme"
     :vlayout="false"
     @update:turn_offset="v => app.q_turn_offset = v"
     @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"

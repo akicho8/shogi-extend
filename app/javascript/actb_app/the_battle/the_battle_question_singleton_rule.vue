@@ -13,7 +13,7 @@
       :summary_show="false"
       :setting_button_show="false"
       :size="'default'"
-      :theme="'real'"
+      :theme="app.config.sp_theme"
       :human_side_key="'none'"
     )
     .kaitousuru_button.has-text-centered
@@ -35,7 +35,7 @@
       :volume="0.5"
       :human_side_key="'both'"
       :controller_show="false"
-      :theme="'real'"
+      :theme="app.config.sp_theme"
       @update:turn_offset="app.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
@@ -56,7 +56,7 @@
       :volume="0.5"
       :human_side_key="'none'"
       :controller_show="false"
-      :theme="'real'"
+      :theme="app.config.sp_theme"
       @update:turn_offset="v => app.q_turn_offset = v"
     )
 

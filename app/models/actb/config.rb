@@ -21,6 +21,7 @@ module Actb
     :ox_status_line_take_n           => 8,   # 上の○×行は最新何個表示する？
     :readygo_mode_delay              => 2.2, # 「対戦開始！」の待ち
     :deden_mode_delay                => 0.8, # 「デデン」の待ち
+    :sp_theme                        => 'simple', # 将棋盤のタイプ
 
     # シングルトンモード
     :otetsuki_enabled                => true, # 誤答すると相手が解答するまで解答ボタンを押せないようにする？
