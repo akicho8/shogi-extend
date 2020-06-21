@@ -1,8 +1,8 @@
 # ランキング
 #
-# レーティング http://localhost:3000/script/actb-app.json?ranking_fetch=true&ranking_key=rating
-# 連勝数       http://localhost:3000/script/actb-app.json?ranking_fetch=true&ranking_key=rensho_count
-# 最大連勝数   http://localhost:3000/script/actb-app.json?ranking_fetch=true&ranking_key=rensho_max
+# レーティング http://localhost:3000/script/actb-app.json?remote_action=ranking_fetch&ranking_key=rating
+# 連勝数       http://localhost:3000/script/actb-app.json?remote_action=ranking_fetch&ranking_key=rensho_count
+# 最大連勝数   http://localhost:3000/script/actb-app.json?remote_action=ranking_fetch&ranking_key=rensho_max
 #
 # season_id もある場合がある
 #
@@ -26,15 +26,18 @@ module Actb
       retv = {}
       retv[:ranking_key] = ranking_key
       if current_user
+        # ランクインしているか？
         retv[:user_rank_in] = top_users.any? { |e| e == current_user }
+
+        # ランクインしているどうかに関係なく、どっちみち表示するので、1回でもプレイしていたら情報取得
         if user_actb_season_xrecord
           retv[:current_user_rank_record] = { rank: user_rank, user: current_user.as_json(user_as_json_params) }
         else
           # そのシーズンにはプレイしていなかった場合
         end
       end
-      retv[:rank_records] = top_users.collect.with_index(1) { |user, rank|
-        { rank: rank, user: user.as_json(user_as_json_params) }
+      retv[:rank_records] = top_users.collect.with_index(1) { |user, i|
+        { rank: i, user: user.as_json(user_as_json_params) }
       }
       retv
     end
@@ -67,7 +70,9 @@ module Actb
     def base_scope
       s = User.all
       s = s.joins(:actb_season_xrecord)
-      s = s.where(Actb::SeasonXrecord.arel_table[:season_id].eq(current_season.id))
+      s = s.where(Actb::SeasonXrecord.arel_table[:season_id].eq(current_season.id)) # 指定シーズンの
+      s = s.where(Actb::SeasonXrecord.arel_table[:battle_count].gteq(1))            # 1回以上プレイした人
+      s
     end
 
     def user_score

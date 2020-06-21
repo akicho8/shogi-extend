@@ -10,13 +10,13 @@
       | {{row.user.name}}
       span.ml-1.has-text-primary(v-if="app.debug_mode_p") {{row.user.udemae_key}}
     .value
-      template(v-if="$parent.current_tab_info.key === 'rating' && app.config.rating_display_p")
-        | R{{row.user.actb_season_xrecord.rating}}
+      template(v-if="$parent.current_tab_info.key === 'rating' && (app.config.rating_display_p || development_p)")
+        | {{row.user.actb_season_xrecord.rating}}
       template(v-if="$parent.current_tab_info.key === 'rensho_count'")
         | {{row.user.actb_season_xrecord.rensho_count}}
       template(v-if="$parent.current_tab_info.key === 'rensho_max'")
         | {{row.user.actb_season_xrecord.rensho_max}}
-      span.unit.ml-1.has-text-weight-normal.has-text-grey(v-if="$parent.current_tab_info.unit")
+      span(v-if="$parent.current_tab_info.unit")
         | {{$parent.current_tab_info.unit}}
 </template>
 
