@@ -285,8 +285,7 @@ export default {
     question_edit_for(row) {
       this.sound_play("click")
 
-      console.log(Question.name)
-      this.__assert__(row.constructor.name === "Question", `問題が Question でラップされてない ${Question.name}`)
+      this.__assert__(row instanceof Question, `問題が Question でラップされてない ${Question.name}`)
       this.question = row
 
       this.answer_tab_index = 0 // 解答リストの一番左指す
