@@ -92,7 +92,7 @@ module Actb
     def user_as_json_params
       @user_as_json_params ||= {
         only: [:id, :name],
-        methods: [:avatar_path, :udemae_key],
+        methods: [:avatar_path, :skill_key],
         include: {
           actb_season_xrecord: {
             only: [ranking_key],

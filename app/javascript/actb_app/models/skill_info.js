@@ -1,4 +1,4 @@
 import MemoryRecord from 'js-memory-record'
 
-export class UdemaeInfo extends MemoryRecord {
+export class SkillInfo extends MemoryRecord {
 }

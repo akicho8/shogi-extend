@@ -52,7 +52,7 @@ module Actb
         battle = room.battle_create_with_members!
         battle.katimake_set(battle.users[0], judge_key, :f_success)
         battle.reload.memberships.flat_map do |e|
-          [e.judge_info.key, e.user.rating, e.user.udemae.key, e.user.udemae_point]
+          [e.judge_info.key, e.user.rating, e.user.skill.key, e.user.skill_point]
         end
       end
 

@@ -47,7 +47,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
       end
 
       # ウデマエ
-      create_table :actb_udemaes, force: true do |t|
+      create_table :actb_skills, force: true do |t|
         t.string :key, null: false
         t.integer :position, null: false, index: true
         t.timestamps
@@ -118,9 +118,9 @@ class CreateActb < ActiveRecord::Migration[6.0]
         t.integer :straight_win_max,                               null: false, index: true,  comment: "連勝数(最大)"
         t.integer :straight_lose_max,                               null: false, index: true,  comment: "連敗数(最大)"
 
-        t.belongs_to :udemae, foreign_key: {to_table: :actb_udemaes},                                null: false, index: true,  comment: "ウデマエ"
-        t.float :udemae_point,      null: false, index: false, comment: "ウデマエの内部ポイント"
-        t.float :udemae_last_diff,  null: false, index: false, comment: "直近ウデマエ変化度"
+        t.belongs_to :skill, foreign_key: {to_table: :actb_skills},                                null: false, index: true,  comment: "ウデマエ"
+        t.float :skill_point,      null: false, index: false, comment: "ウデマエの内部ポイント"
+        t.float :skill_last_diff,  null: false, index: false, comment: "直近ウデマエ変化度"
 
         t.timestamps
 

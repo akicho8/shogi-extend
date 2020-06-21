@@ -21,9 +21,9 @@
 # | straight_lose_count     | Renpai count     | integer(4) | NOT NULL    |              | L     |
 # | straight_win_max       | Rensho max       | integer(4) | NOT NULL    |              | M     |
 # | straight_lose_max       | Renpai max       | integer(4) | NOT NULL    |              | N     |
-# | udemae_id        | Udemae           | integer(8) | NOT NULL    |              | O     |
-# | udemae_point     | Udemae point     | float(24)  | NOT NULL    |              |       |
-# | udemae_last_diff | Udemae last diff | float(24)  | NOT NULL    |              |       |
+# | skill_id        | Skill           | integer(8) | NOT NULL    |              | O     |
+# | skill_point     | Skill point     | float(24)  | NOT NULL    |              |       |
+# | skill_last_diff | Skill last diff | float(24)  | NOT NULL    |              |       |
 # | created_at       | 作成日時         | datetime   | NOT NULL    |              |       |
 # | updated_at       | 更新日時         | datetime   | NOT NULL    |              |       |
 # | disconnect_count | Disconnect count | integer(4) | NOT NULL    |              | P     |

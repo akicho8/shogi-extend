@@ -12,7 +12,7 @@ module Actb
     Actb::Judge.setup(options)
     Actb::Rule.setup(options)
     Actb::Final.setup(options)
-    Actb::Udemae.setup(options)
+    Actb::Skill.setup(options)
     Actb::Question.setup(options)
 
     User.find_each(&:create_various_folders_if_blank)
@@ -41,7 +41,7 @@ module Actb
       Setting,
       GoodMark, BadMark, ClipMark,
       Folder,
-      Lineage, Judge, Rule, Udemae,
+      Lineage, Judge, Rule, Skill,
       LobbyMessage,
     ]
   end

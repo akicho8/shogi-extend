@@ -49,7 +49,7 @@ import { application_history_vote } from "./application_history_vote.js"
 import { config                   } from "./config.js"
 import { RuleInfo                 } from "./models/rule_info.js"
 import { OxMarkInfo               } from "./models/ox_mark_info.js"
-import { UdemaeInfo               } from "./models/udemae_info.js"
+import { SkillInfo               } from "./models/skill_info.js"
 
 export default {
   store,
@@ -105,7 +105,7 @@ export default {
 
       RuleInfo: null,
       OxMarkInfo: null,
-      UdemaeInfo: null,
+      SkillInfo: null,
 
       // リアクティブではないもの
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
@@ -123,7 +123,7 @@ export default {
     this.remote_get(this.app.info.api_path, { remote_action: "resource_fetch" }, e => {
       this.RuleInfo   = RuleInfo.memory_record_reset(e.RuleInfo)
       this.OxMarkInfo = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
-      this.UdemaeInfo = UdemaeInfo.memory_record_reset(e.UdemaeInfo)
+      this.SkillInfo = SkillInfo.memory_record_reset(e.SkillInfo)
       this.app_setup()
     })
   },

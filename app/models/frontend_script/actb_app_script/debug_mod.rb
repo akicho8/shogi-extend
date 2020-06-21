@@ -93,17 +93,17 @@ module FrontendScript
 
         users.each do |user|
           record = user.actb_main_xrecord
-          record.udemae_key = "A+"
-          record.udemae_point = 50
+          record.skill_key = "A+"
+          record.skill_point = 50
           record.save!
         end
 
         record = users[0].actb_main_xrecord
-        record.udemae_add(60)
+        record.skill_add(60)
         record.save!
 
         record = users[1].actb_main_xrecord
-        record.udemae_add(60)
+        record.skill_add(60)
         record.save!
 
         room = Actb::Room.create_with_members!(users)

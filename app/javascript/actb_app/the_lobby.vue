@@ -8,8 +8,8 @@
       .name_with_rating
         span.name.has-text-weight-bold.is-size-6
           | {{app.current_user.name}}
-        span.udemae_key.has-text-weight-bold.is-size-6.ml-1
-          | {{app.current_user.udemae_key}}
+        span.skill_key.has-text-weight-bold.is-size-6.ml-1
+          | {{app.current_user.skill_key}}
         span.rating.has-text-weight-bold.is-size-7.ml-1(v-if="development_p")
           | {{app.current_user.rating}}
 
@@ -70,7 +70,7 @@ export default {
       .name_with_rating
         margin-left: 0.5rem
         .name
-          .udemae_key
+          .skill_key
         .rating
 
   .title

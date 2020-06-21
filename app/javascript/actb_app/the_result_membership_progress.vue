@@ -1,10 +1,10 @@
 <template lang="pug">
 .the_result_membership_progress
-  //- b-progress(type="is-danger" :value="xrecord.udemae_point" size="is-medium" show-value)
-  //-   | {{xrecord.udemae_key}}
+  //- b-progress(type="is-danger" :value="xrecord.skill_point" size="is-medium" show-value)
+  //-   | {{xrecord.skill_key}}
   .has-text-centered.has-text-weight-bold
-    | {{xrecord.udemae_key}}
-  progress.progress.is-primary(:value="xrecord.udemae_point" :max="100")
+    | {{xrecord.skill_key}}
+  progress.progress.is-primary(:value="xrecord.skill_point" :max="100")
 </template>
 
 <script>

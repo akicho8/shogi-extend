@@ -1,5 +1,5 @@
 module Actb
-  class UdemaeInfo
+  class SkillInfo
     MAX     = 100               # になったら次の段へ
     DEFAULT = "C-"              # 初期値
 

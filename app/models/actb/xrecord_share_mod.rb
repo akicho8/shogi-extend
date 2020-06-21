@@ -73,9 +73,9 @@ module Actb
         self.final ||= Final.fetch(:f_pending)
 
         # ウデマエ
-        self.udemae           ||= Udemae.fetch(UdemaeInfo::DEFAULT)
-        self.udemae_point     ||= 0
-        self.udemae_last_diff ||= 0
+        self.skill           ||= Skill.fetch(SkillInfo::DEFAULT)
+        self.skill_point     ||= 0
+        self.skill_last_diff ||= 0
       end
     end
 
@@ -134,53 +134,53 @@ module Actb
       end
     end
 
-    concerning :UdemaeMethods do
+    concerning :SkillMethods do
       included do
-        belongs_to :udemae          # ウデマエ
+        belongs_to :skill          # ウデマエ
       end
 
       # Rの変化度に応じてウデマエポイントも変化させる
       # 同じRで勝ったら+16で、それを C- の場合は 20 に換算する
-      def udemae_add_by_rating(judge, diff)
+      def skill_add_by_rating(judge, diff)
         if judge.win_or_lose?
-          base = udemae.pure_info.public_send(judge.key)
+          base = skill.pure_info.public_send(judge.key)
           point = Float(diff) * base / (EloRating::K / 2) # 16 * (20 / 16.0) -> 20
           if false
             p "#{diff} * #{base} / 16.0 --> #{point}"
           end
-          udemae_add(point)
+          skill_add(point)
         end
       end
 
       # レーティングに関係なく加算する
-      def udemae_add(diff)
-        self.udemae_last_diff = diff
+      def skill_add(diff)
+        self.skill_last_diff = diff
 
-        v = udemae_point + diff
-        rdiff, rest = v.divmod(UdemaeInfo::MAX)
+        v = skill_point + diff
+        rdiff, rest = v.divmod(SkillInfo::MAX)
 
         if rdiff.nonzero?
-          next_udemae = UdemaeInfo.lookup(udemae.pure_info.code + rdiff.truncate)
-          if next_udemae
-            self.udemae = next_udemae.db_record!
-            self.udemae_point = rest
+          next_skill = SkillInfo.lookup(skill.pure_info.code + rdiff.truncate)
+          if next_skill
+            self.skill = next_skill.db_record!
+            self.skill_point = rest
           else
             # 最大99だとXのときカンストしていないように見えてしまう。そのため最大100にするのが正しい
-            self.udemae_point = v.clamp(0, UdemaeInfo::MAX)
+            self.skill_point = v.clamp(0, SkillInfo::MAX)
           end
         else
-          self.udemae_point = v
+          self.skill_point = v
         end
       end
 
-      def udemae_key
-        if udemae
-          udemae.key
+      def skill_key
+        if skill
+          skill.key
         end
       end
 
-      def udemae_key=(v)
-        self.udemae = Udemae.lookup(v)
+      def skill_key=(v)
+        self.skill = Skill.lookup(v)
       end
     end
   end

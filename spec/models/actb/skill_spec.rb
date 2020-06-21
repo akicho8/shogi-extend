@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Udemae (actb_udemaes as Actb::Udemae)
+# Skill (actb_skills as Actb::Skill)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
 # | name       | desc               | type        | opts        | refs | index |
@@ -19,10 +19,10 @@ module Actb
   RSpec.describe Battle, type: :model do
     include ActbSupportMethods
 
-    def test1(udemae_key, udemae_point, diff)
-      user1.actb_main_xrecord.update!(udemae: Udemae.fetch(udemae_key), udemae_point: udemae_point)
-      user1.actb_main_xrecord.udemae_add(diff)
-      [user1.udemae.key, user1.udemae_point.to_i]
+    def test1(skill_key, skill_point, diff)
+      user1.actb_main_xrecord.update!(skill: Skill.fetch(skill_key), skill_point: skill_point)
+      user1.actb_main_xrecord.skill_add(diff)
+      [user1.skill.key, user1.skill_point.to_i]
     end
 
     it do

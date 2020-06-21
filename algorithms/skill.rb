@@ -1,7 +1,7 @@
 require "memory_record"
 require "active_support/core_ext/array"
 
-class UdemaeInfo
+class SkillInfo
   include MemoryRecord
   memory_record [
     { key: "C-", win: 20, lose: 10, },
@@ -27,12 +27,12 @@ end
 elo_rating_diff(1500, 1500)    # => 16.0
 
 class User
-  attr_accessor :udemae_key
+  attr_accessor :skill_key
   attr_accessor :rating
   attr_accessor :point
 
   def initialize
-    @udemae_key = "C-"
+    @skill_key = "C-"
     @rating = 1500
     @point = 0
   end
@@ -42,10 +42,10 @@ class User
     rdiff, rest = v.divmod(100)
 
     if rdiff.nonzero?
-      udemae_info = UdemaeInfo.fetch(udemae_key)
-      new_udemae_info = UdemaeInfo[udemae_info.code + rdiff]
-      if new_udemae_info
-        self.udemae_key = new_udemae_info.key
+      skill_info = SkillInfo.fetch(skill_key)
+      new_skill_info = SkillInfo[skill_info.code + rdiff]
+      if new_skill_info
+        self.skill_key = new_skill_info.key
         self.point = rest
       else
         self.point = v.clamp(0, 100)
@@ -63,7 +63,7 @@ diff = elo_rating_diff(user1.rating, user2.rating) # => 16.0
 user1.rating + diff                               # => 1516.0
 user2.rating - diff                               # => 1484.0
 
-info = UdemaeInfo.fetch(user1.udemae_key)
+info = SkillInfo.fetch(user1.skill_key)
 # 同じレートで勝ったら+16(Kの半分)になってそのときウデマエ+20としたいので係数は「設定値/16」とする
 # これで 16 * 係数 で 20 になる
 16 * (20 / 16.0)                       # => 20.0
@@ -75,11 +75,11 @@ lose = diff * info[:lose].fdiv(16)     # => 10.0
 user1.point + win                     # => 20.0
 user2.point - lose                    # => -10.0
 
-def test1(user, udemae_key, point, diff)
-  user.udemae_key = udemae_key
+def test1(user, skill_key, point, diff)
+  user.skill_key = skill_key
   user.point = point
   user.add(diff)
-  [user.udemae_key, user.point]
+  [user.skill_key, user.point]
 end
 
 # 上昇

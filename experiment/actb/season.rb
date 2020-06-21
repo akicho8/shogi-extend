@@ -35,6 +35,6 @@ tp Actb.info
 # >> | Actb::Lineage          |     7 |     70 |
 # >> | Actb::Judge            |     4 |     40 |
 # >> | Actb::Rule             |     3 |     30 |
-# >> | Actb::Udemae           |    21 |    210 |
+# >> | Actb::Skill           |    21 |    210 |
 # >> | Actb::LobbyMessage     |     0 |        |
 # >> |------------------------+-------+--------|

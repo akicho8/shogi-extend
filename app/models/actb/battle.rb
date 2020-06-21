@@ -106,7 +106,7 @@ module Actb
               include: {
                 user: {
                   only: [:id, :name],
-                  methods: [:avatar_path, :rating, :udemae_key],
+                  methods: [:avatar_path, :rating, :skill_key],
                   include: {
                     actb_main_xrecord: {
                       only: [:straight_win_count, :straight_lose_count],
@@ -145,10 +145,10 @@ module Actb
                         :straight_win_count, :straight_lose_count, :straight_win_max, :straight_lose_max,
                         :rating, :rating_max, :rating_diff,
                         :disconnect_count,
-                        :udemae_point, :udemae_last_diff,
+                        :skill_point, :skill_last_diff,
                       ],
                       methods: [
-                        :udemae_key,
+                        :skill_key,
                       ]
                     },
                   },

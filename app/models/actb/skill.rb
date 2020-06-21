@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Udemae (actb_udemaes as Actb::Udemae)
+# Skill (actb_skills as Actb::Skill)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
 # | name       | desc               | type        | opts        | refs | index |
@@ -14,7 +14,7 @@
 # |------------+--------------------+-------------+-------------+------+-------|
 
 module Actb
-  class Udemae < ApplicationRecord
+  class Skill < ApplicationRecord
     include StaticArModel
   end
 end

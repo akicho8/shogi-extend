@@ -53,7 +53,7 @@ module Actb
       included do
         has_one :actb_main_xrecord, class_name: "Actb::MainXrecord", dependent: :destroy
 
-        delegate :rating, :straight_win_count, :straight_win_max, :udemae, :udemae_key, :udemae_point, to: :actb_main_xrecord
+        delegate :rating, :straight_win_count, :straight_win_max, :skill, :skill_key, :skill_point, to: :actb_main_xrecord
 
         after_create do
           create_actb_main_xrecord!
@@ -120,7 +120,7 @@ module Actb
         out += {
           "名前"               => name,
           "レーティング"       => rating,
-          "クラス"             => udemae_key,
+          "クラス"             => skill_key,
           "作成問題数"         => actb_questions.count,
           "最新シーズン情報ID" => actb_latest_xrecord.id,
           "永続的プロフ情報ID" => actb_main_xrecord.id,

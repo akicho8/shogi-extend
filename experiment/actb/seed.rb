@@ -167,8 +167,8 @@ tp Actb.info
 # >> |     straight_lose_count | 0                         |
 # >> |       straight_win_max | 1                         |
 # >> |       straight_lose_max | 0                         |
-# >> |        udemae_id | 232                       |
-# >> |     udemae_point | 20.0                      |
+# >> |        skill_id | 232                       |
+# >> |     skill_point | 20.0                      |
 # >> |       created_at | 2020-06-16 23:48:21 +0900 |
 # >> |       updated_at | 2020-06-16 23:48:22 +0900 |
 # >> | disconnect_count | 0                         |
@@ -194,8 +194,8 @@ tp Actb.info
 # >> |     straight_lose_count | 0                         |
 # >> |       straight_win_max | 0                         |
 # >> |       straight_lose_max | 0                         |
-# >> |        udemae_id | 232                       |
-# >> |     udemae_point | 0.0                       |
+# >> |        skill_id | 232                       |
+# >> |     skill_point | 0.0                       |
 # >> |       created_at | 2020-06-16 23:48:18 +0900 |
 # >> |       updated_at | 2020-06-16 23:48:18 +0900 |
 # >> | disconnect_count | 0                         |
@@ -257,6 +257,6 @@ tp Actb.info
 # >> | Actb::Lineage          |     7 |     84 |
 # >> | Actb::Judge            |     4 |     48 |
 # >> | Actb::Rule             |     3 |     36 |
-# >> | Actb::Udemae           |    21 |    252 |
+# >> | Actb::Skill           |    21 |    252 |
 # >> | Actb::LobbyMessage     |     0 |        |
 # >> |------------------------+-------+--------|

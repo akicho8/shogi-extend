@@ -164,9 +164,9 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.integer "straight_lose_count", null: false, comment: "連敗数"
     t.integer "straight_win_max", null: false, comment: "連勝数(最大)"
     t.integer "straight_lose_max", null: false, comment: "連敗数(最大)"
-    t.bigint "udemae_id", null: false, comment: "ウデマエ"
-    t.float "udemae_point", null: false, comment: "ウデマエの内部ポイント"
-    t.float "udemae_last_diff", null: false, comment: "直近ウデマエ変化度"
+    t.bigint "skill_id", null: false, comment: "ウデマエ"
+    t.float "skill_point", null: false, comment: "ウデマエの内部ポイント"
+    t.float "skill_last_diff", null: false, comment: "直近ウデマエ変化度"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "disconnect_count", null: false, comment: "切断数"
@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.index ["straight_lose_max"], name: "index_actb_main_xrecords_on_straight_lose_max"
     t.index ["straight_win_count"], name: "index_actb_main_xrecords_on_straight_win_count"
     t.index ["straight_win_max"], name: "index_actb_main_xrecords_on_straight_win_max"
-    t.index ["udemae_id"], name: "index_actb_main_xrecords_on_udemae_id"
+    t.index ["skill_id"], name: "index_actb_main_xrecords_on_skill_id"
     t.index ["user_id"], name: "index_actb_main_xrecords_on_user_id", unique: true
     t.index ["win_count"], name: "index_actb_main_xrecords_on_win_count"
     t.index ["win_rate"], name: "index_actb_main_xrecords_on_win_rate"
@@ -330,9 +330,9 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.integer "straight_lose_count", null: false, comment: "連敗数"
     t.integer "straight_win_max", null: false, comment: "連勝数(最大)"
     t.integer "straight_lose_max", null: false, comment: "連敗数(最大)"
-    t.bigint "udemae_id", null: false, comment: "ウデマエ"
-    t.float "udemae_point", null: false, comment: "ウデマエの内部ポイント"
-    t.float "udemae_last_diff", null: false, comment: "直近ウデマエ変化度"
+    t.bigint "skill_id", null: false, comment: "ウデマエ"
+    t.float "skill_point", null: false, comment: "ウデマエの内部ポイント"
+    t.float "skill_last_diff", null: false, comment: "直近ウデマエ変化度"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "disconnect_count", null: false, comment: "切断数"
@@ -356,7 +356,7 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.index ["straight_win_count"], name: "index_actb_season_xrecords_on_straight_win_count"
     t.index ["straight_win_max"], name: "index_actb_season_xrecords_on_straight_win_max"
     t.index ["season_id"], name: "index_actb_season_xrecords_on_season_id"
-    t.index ["udemae_id"], name: "index_actb_season_xrecords_on_udemae_id"
+    t.index ["skill_id"], name: "index_actb_season_xrecords_on_skill_id"
     t.index ["user_id", "season_id"], name: "index_actb_season_xrecords_on_user_id_and_season_id", unique: true
     t.index ["user_id"], name: "index_actb_season_xrecords_on_user_id"
     t.index ["win_count"], name: "index_actb_season_xrecords_on_win_count"
@@ -384,12 +384,12 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
     t.index ["user_id"], name: "index_actb_settings_on_user_id"
   end
 
-  create_table "actb_udemaes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "actb_skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["position"], name: "index_actb_udemaes_on_position"
+    t.index ["position"], name: "index_actb_skills_on_position"
   end
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -796,7 +796,7 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
   add_foreign_key "actb_lobby_messages", "users"
   add_foreign_key "actb_main_xrecords", "actb_finals", column: "final_id"
   add_foreign_key "actb_main_xrecords", "actb_judges", column: "judge_id"
-  add_foreign_key "actb_main_xrecords", "actb_udemaes", column: "udemae_id"
+  add_foreign_key "actb_main_xrecords", "actb_skills", column: "skill_id"
   add_foreign_key "actb_main_xrecords", "users"
   add_foreign_key "actb_moves_answers", "actb_questions", column: "question_id"
   add_foreign_key "actb_ox_records", "actb_questions", column: "question_id"
@@ -813,7 +813,7 @@ ActiveRecord::Schema.define(version: 2020_06_18_211300) do
   add_foreign_key "actb_season_xrecords", "actb_finals", column: "final_id"
   add_foreign_key "actb_season_xrecords", "actb_judges", column: "judge_id"
   add_foreign_key "actb_season_xrecords", "actb_seasons", column: "season_id"
-  add_foreign_key "actb_season_xrecords", "actb_udemaes", column: "udemae_id"
+  add_foreign_key "actb_season_xrecords", "actb_skills", column: "skill_id"
   add_foreign_key "actb_season_xrecords", "users"
   add_foreign_key "actb_settings", "actb_rules", column: "rule_id"
   add_foreign_key "actb_settings", "users"

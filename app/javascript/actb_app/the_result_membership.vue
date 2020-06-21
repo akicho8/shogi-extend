@@ -22,10 +22,10 @@
   ////////////////////////////////////////////////////////////////////////////////
   .user_rating.has-text-weight-bold(v-if="app.config.rating_display_p")
     | {{xrecord.rating}}
-    span.udemae_last_diff.has-text-danger(v-if="xrecord.udemae_last_diff > 0")
-      | (+{{xrecord.udemae_last_diff}})
-    span.udemae_last_diff.has-text-success(v-if="xrecord.udemae_last_diff < 0")
-      | ({{xrecord.udemae_last_diff}})
+    span.skill_last_diff.has-text-danger(v-if="xrecord.skill_last_diff > 0")
+      | (+{{xrecord.skill_last_diff}})
+    span.skill_last_diff.has-text-success(v-if="xrecord.skill_last_diff < 0")
+      | ({{xrecord.skill_last_diff}})
 
   .progress_container.mt-1
     the_result_membership_progress(:xrecord="xrecord")
@@ -82,7 +82,7 @@ export default {
     width: 32px
     height: 32px
 
-  .udemae_last_diff
+  .skill_last_diff
     margin-left: 0.1rem
 
   .progress_container

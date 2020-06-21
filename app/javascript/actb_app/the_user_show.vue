@@ -8,8 +8,8 @@
         | {{ov_user_info.name}}
       .rate_container.has-text-weight-bold(v-if="app.config.rating_display_p")
         | R{{ov_user_info.actb_main_xrecord.rating}}
-      .udemae_key.has-text-weight-bold.has-text-primary.is-size-5
-        | {{ov_user_info.actb_main_xrecord.udemae_key}}
+      .skill_key.has-text-weight-bold.has-text-primary.is-size-5
+        | {{ov_user_info.actb_main_xrecord.skill_key}}
 
       win_lose_circle(:info="win_lose_circle_params")
 
