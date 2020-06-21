@@ -29,7 +29,7 @@ application (+ store)
 * sub_mode
 |----------------+------------------------|
 | standby        | 最初                   |
-| readygo_wait   | 開始前の待ち時間       |
+| readygo_mode   | 開始前の待ち時間       |
 | deden_mode     | 問題番号表示           |
 | operation_mode | ユーザー考え中・操作中 |
 |----------------+------------------------|

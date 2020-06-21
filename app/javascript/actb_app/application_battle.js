@@ -116,19 +116,14 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
 
       this.ok_notice("対戦開始")
-      this.sub_mode = "readygo_wait"
-      this.delay(this.config.readygo_mode_delay, () => {
-        this.deden_mode_trigger()
-      })
+      this.sub_mode = "readygo_mode"
+      this.delay(this.config.readygo_mode_delay, () => this.deden_mode_trigger())
     },
 
     deden_mode_trigger() {
       this.sound_play("deden")
       this.sub_mode = "deden_mode"
-
-      this.delay(this.config.deden_mode_delay, () => {
-        this.operation_mode_trigger()
-      })
+      this.delay(this.config.deden_mode_delay, () => this.operation_mode_trigger())
     },
 
     operation_mode_trigger() {
