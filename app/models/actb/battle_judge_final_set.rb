@@ -1,5 +1,5 @@
 module Actb
-  class BattleKatimakeSet
+  class BattleJudgeFinalSet
     attr_accessor :battle
     attr_accessor :params
 

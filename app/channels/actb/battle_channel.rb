@@ -11,7 +11,7 @@ module Actb
       if current_battle.end_at.blank?
         # once_run("actb/battles/#{battle.id}/disconnect") do
         say "*切断しました"
-        katimake_set(current_user, :lose, :f_disconnect)
+        judge_final_set(current_user, :lose, :f_disconnect)
         # end
       end
     end
@@ -31,10 +31,10 @@ module Actb
         args = md["command_line"].split
         command = args.shift
         if command == "win"
-          katimake_set(current_user, :win, :f_success)
+          judge_final_set(current_user, :win, :f_success)
         end
         if command == "lose"
-          katimake_set(current_user, :lose, :f_disconnect)
+          judge_final_set(current_user, :lose, :f_disconnect)
         end
       end
     end
@@ -162,10 +162,10 @@ module Actb
 
     # <-- app/javascript/actb_app/application.vue
     def goal_hook(data)
-      katimake_set(current_user, :win, :f_success)
+      judge_final_set(current_user, :win, :f_success)
     end
 
-    def katimake_set(target_user, judge_key, final_key)
+    def judge_final_set(target_user, judge_key, final_key)
       battle = current_battle
 
       if battle.end_at?
@@ -173,10 +173,10 @@ module Actb
         return
       end
 
-      battle.katimake_set(target_user, judge_key, final_key)
+      battle.judge_final_set(target_user, judge_key, final_key)
       battle.reload
 
-      broadcast(:katimake_set_broadcasted, battle: battle.as_json_type2_for_result)
+      broadcast(:judge_final_set_broadcasted, battle: battle.as_json_type2_for_result)
       # --> app/javascript/actb_app/application.vue
     end
 
@@ -227,7 +227,7 @@ module Actb
       # 両方5点とってなければ引き分け
       b_scores = current_battle.memberships.collect { |e| data[:member_infos_hash][e.id.to_s]["b_score"] }
       if b_scores.max < Actb::Config[:b_score_max_for_win]
-        katimake_set(nil, :draw, :f_draw)
+        judge_final_set(nil, :draw, :f_draw)
         return
       end
 
@@ -240,7 +240,7 @@ module Actb
         ]
       }.first
 
-      katimake_set(membership.user, :win, :f_success)
+      judge_final_set(membership.user, :win, :f_success)
     end
 
     # membership_id が切断した風にする(デバッグ用)
@@ -249,7 +249,7 @@ module Actb
       data = data.to_options
       membership = current_battle.memberships.find(data[:membership_id])
       raise "もう終わっている" if current_battle.end_at?
-      katimake_set(membership.user, :lose, :f_disconnect)
+      judge_final_set(membership.user, :lose, :f_disconnect)
     end
 
     # 退出通知

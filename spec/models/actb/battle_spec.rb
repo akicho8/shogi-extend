@@ -45,12 +45,12 @@ module Actb
       end
     end
 
-    describe "#katimake_set" do
+    describe "#judge_final_set" do
       def test(judge_key)
         users = 2.times.collect { User.create! }
         room = Actb::Room.create_with_members!(users, rule: Actb::Rule.fetch(:marathon_rule))
         battle = room.battle_create_with_members!
-        battle.katimake_set(battle.users[0], judge_key, :f_success)
+        battle.judge_final_set(battle.users[0], judge_key, :f_success)
         battle.reload.memberships.flat_map do |e|
           [e.judge_info.key, e.user.rating, e.user.skill.key, e.user.skill_point]
         end
@@ -68,18 +68,18 @@ end
 # >> 
 # >> Failures:
 # >> 
-# >>   1) Actb::Battle#katimake_set 勝ち負け
+# >>   1) Actb::Battle#judge_final_set 勝ち負け
 # >>      Failure/Error: sdiff = diff * judge.pure_info.value_sign
 # >> 
 # >>      NoMethodError:
 # >>        undefined method `value_sign' for #<Actb::JudgeInfo:0x00007fd9baeb26c0>
-# >>      # ./app/models/actb/battle_katimake_set.rb:26:in `block (3 levels) in run'
-# >>      # ./app/models/actb/battle_katimake_set.rb:24:in `each'
-# >>      # ./app/models/actb/battle_katimake_set.rb:24:in `block (2 levels) in run'
-# >>      # ./app/models/actb/battle_katimake_set.rb:20:in `each'
-# >>      # ./app/models/actb/battle_katimake_set.rb:20:in `block in run'
-# >>      # ./app/models/actb/battle_katimake_set.rb:14:in `run'
-# >>      # ./app/models/actb/battle.rb:93:in `katimake_set'
+# >>      # ./app/models/actb/battle_judge_final_set.rb:26:in `block (3 levels) in run'
+# >>      # ./app/models/actb/battle_judge_final_set.rb:24:in `each'
+# >>      # ./app/models/actb/battle_judge_final_set.rb:24:in `block (2 levels) in run'
+# >>      # ./app/models/actb/battle_judge_final_set.rb:20:in `each'
+# >>      # ./app/models/actb/battle_judge_final_set.rb:20:in `block in run'
+# >>      # ./app/models/actb/battle_judge_final_set.rb:14:in `run'
+# >>      # ./app/models/actb/battle.rb:93:in `judge_final_set'
 # >>      # -:53:in `test'
 # >>      # -:60:in `block (4 levels) in <module:Actb>'
 # >>      # <internal:prelude>:137:in `__enable'
@@ -95,5 +95,5 @@ end
 # >> 
 # >> Failed examples:
 # >> 
-# >> rspec -:59 # Actb::Battle#katimake_set 勝ち負け
+# >> rspec -:59 # Actb::Battle#judge_final_set 勝ち負け
 # >> 

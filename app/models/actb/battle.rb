@@ -85,8 +85,8 @@ module Actb
       room.battle_create_with_members!(parent: self) # --> app/jobs/actb/battle_broadcast_job.rb
     end
 
-    def katimake_set(target_user, judge_key, final_key)
-      BattleKatimakeSet.new(self, {
+    def judge_final_set(target_user, judge_key, final_key)
+      BattleJudgeFinalSet.new(self, {
           :target_user => target_user,
           :judge_key   => judge_key,
           :final_key   => final_key,

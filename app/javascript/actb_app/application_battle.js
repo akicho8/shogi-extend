@@ -343,7 +343,7 @@ export const application_battle = {
     },
 
     // 結果画面へ
-    katimake_set_broadcasted(params) {
+    judge_final_set_broadcasted(params) {
       this.result_setup(params.battle)
     },
 

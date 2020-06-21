@@ -114,7 +114,7 @@ puts user1.info
 # exit
 
 # 終局
-battle.katimake_set(user1, :win, :f_success)
+battle.judge_final_set(user1, :win, :f_success)
 
 # 切断したことにする
 user1.actb_latest_xrecord.update!(final: Actb::Final.fetch(:f_disconnect))
