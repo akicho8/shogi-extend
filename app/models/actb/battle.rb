@@ -68,13 +68,18 @@ module Actb
 
     # 出題
     def best_questions
+      # s = Question.all
+      # s = s.joins(:folder).where(Folder.arel_table[:type].eq("Actb::ActiveBox"))
+      # s = s.order("rand()")
+      # s = s.limit(Config[:best_questions_limit])
+      # s = Question.where(id: s.ids).order(:difficulty_level)
+      # s.collect(&:as_json_type3)
+
       s = Question.all
       s = s.joins(:folder).where(Folder.arel_table[:type].eq("Actb::ActiveBox"))
-      s = s.order("rand()")
+      s = s.order(:id)
       s = s.limit(Config[:best_questions_limit])
-
-      list = Question.where(id: s.ids).order(:difficulty_level)
-      list.collect(&:as_json_type3)
+      s.collect(&:as_json_type3)
     end
 
     def final_info

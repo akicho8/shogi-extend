@@ -13,7 +13,7 @@ module Actb
         reject
       end
 
-      once_run("actb/rooms/#{current_room.id}/first_battle_create") do
+      if once_run("actb/rooms/#{current_room.id}/first_battle_create")
         battle = current_room.battle_create_with_members!
         say "**最初のバトル作成(id:#{battle.id})"
         # --> app/jobs/actb/battle_broadcast_job.rb --> battle_broadcasted --> app/javascript/actb_app/application_room.js

@@ -41,17 +41,11 @@ module Actb
 
         Rails.logger.debug([__method__, {key: key, counter: counter, expires_in: redis.ttl(key)}])
 
-        if block_given?
-          if counter == 1
-            yield
-          end
-        else
-          counter
-        end
+        counter == 1
       end
 
       def already_run?(key, options = {})
-        once_run(key, options) >= 2
+        !once_run(key, options)
       end
     end
   end

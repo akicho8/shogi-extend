@@ -83,7 +83,7 @@ export const application_battle = {
 
       this.question_index = 0
 
-      this.__assert__(this.$ac_battle == null)
+      this.__assert__(this.$ac_battle)
       this.$ac_battle = this.ac_subscription_create({channel: "Actb::BattleChannel", battle_id: this.battle.id}, {
         connected: () => {
           this.start_hook()
@@ -110,7 +110,7 @@ export const application_battle = {
 
       this.debug_alert("battle 接続")
 
-      this.ac_battle_perform("start_hook", {
+      this.ac_battle_perform("start_hook", { // 自分の最初の問題の履歴を作るだけ
         question_id: this.current_question.id,
         question_index: this.question_index,
       }) // --> app/channels/actb/battle_channel.rb
