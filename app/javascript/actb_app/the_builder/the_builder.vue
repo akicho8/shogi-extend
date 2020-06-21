@@ -5,7 +5,11 @@
   .the_builder_new_and_edit(v-if="question")
     .primary_header
       b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
-      .header_center_title {{question_new_record_p ? '新規' : '編集'}}
+      .header_center_title
+        template(v-if="question.title")
+          | {{question.title}}
+        template(v-else)
+          | {{question_new_record_p ? '新規' : '編集'}}
       .header_item.with_text.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !save_button_enabled}")
         | {{create_or_upate_name}}
 
@@ -80,13 +84,14 @@ export default {
   data() {
     return {
       //////////////////////////////////////////////////////////////////////////////// 静的情報
-      LineageInfo: null,
-      FolderInfo: null,
-      resource_loaded_p: false,
+      LineageInfo: null,        // 問題の種類
+      FolderInfo: null,         // 問題の入れ場所
+      resource_loaded_p: false, // ↑これらを読み込み終わったか？
 
       //////////////////////////////////////////////////////////////////////////////// 一覧
       questions: null,          // 一覧で表示する配列
-      question_counts: {},
+      question_counts: {},      // それぞれの箱中の問題数
+
       // pagination 5点セット
       total:              null,
       page:               null,
@@ -94,6 +99,7 @@ export default {
       sort_column:        null,
       sort_order:         null,
       sort_order_default: null,
+      //
       folder_key:         null,
 
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
