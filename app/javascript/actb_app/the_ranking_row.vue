@@ -12,10 +12,10 @@
     .value
       template(v-if="$parent.current_tab_info.key === 'rating' && (app.config.rating_display_p || development_p)")
         | {{row.user.actb_season_xrecord.rating}}
-      template(v-if="$parent.current_tab_info.key === 'rensho_count'")
-        | {{row.user.actb_season_xrecord.rensho_count}}
-      template(v-if="$parent.current_tab_info.key === 'rensho_max'")
-        | {{row.user.actb_season_xrecord.rensho_max}}
+      template(v-if="$parent.current_tab_info.key === 'straight_win_count'")
+        | {{row.user.actb_season_xrecord.straight_win_count}}
+      template(v-if="$parent.current_tab_info.key === 'straight_win_max'")
+        | {{row.user.actb_season_xrecord.straight_win_max}}
       span(v-if="$parent.current_tab_info.unit")
         | {{$parent.current_tab_info.unit}}
 </template>

@@ -13,7 +13,7 @@
 # | final_id     | Final        | integer(8) | NOT NULL    |      | D     |
 # | begin_at     | Begin at     | datetime   | NOT NULL    |      | E     |
 # | end_at       | End at       | datetime   |             |      | F     |
-# | rensen_index | Rensen index | integer(4) | NOT NULL    |      | G     |
+# | battle_pos | Rensen index | integer(4) | NOT NULL    |      | G     |
 # | created_at   | 作成日時     | datetime   | NOT NULL    |      |       |
 # | updated_at   | 更新日時     | datetime   | NOT NULL    |      |       |
 # |--------------+--------------+------------+-------------+------+-------|

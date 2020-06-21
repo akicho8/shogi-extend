@@ -21,15 +21,15 @@
         .level-item.has-text-centered
           div
             p.heading 連勝数
-            p.title {{ov_user_info.actb_main_xrecord.rensho_count}}
+            p.title {{ov_user_info.actb_main_xrecord.straight_win_count}}
         .level-item.has-text-centered
           div
             p.heading 最多連勝数
-            p.title {{ov_user_info.actb_main_xrecord.rensho_max}}
+            p.title {{ov_user_info.actb_main_xrecord.straight_win_max}}
         .level-item.has-text-centered
           div
             p.heading 最多連敗数
-            p.title {{ov_user_info.actb_main_xrecord.renpai_max}}
+            p.title {{ov_user_info.actb_main_xrecord.straight_lose_max}}
         .level-item.has-text-centered
           div
             p.heading 切断回数

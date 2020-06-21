@@ -17,10 +17,10 @@
 # | rating           | Rating           | float(24)  | NOT NULL    |              | H     |
 # | rating_diff      | Rating diff      | float(24)  | NOT NULL    |              | I     |
 # | rating_max       | Rating max       | float(24)  | NOT NULL    |              | J     |
-# | rensho_count     | Rensho count     | integer(4) | NOT NULL    |              | K     |
-# | renpai_count     | Renpai count     | integer(4) | NOT NULL    |              | L     |
-# | rensho_max       | Rensho max       | integer(4) | NOT NULL    |              | M     |
-# | renpai_max       | Renpai max       | integer(4) | NOT NULL    |              | N     |
+# | straight_win_count     | Rensho count     | integer(4) | NOT NULL    |              | K     |
+# | straight_lose_count     | Renpai count     | integer(4) | NOT NULL    |              | L     |
+# | straight_win_max       | Rensho max       | integer(4) | NOT NULL    |              | M     |
+# | straight_lose_max       | Renpai max       | integer(4) | NOT NULL    |              | N     |
 # | udemae_id        | Udemae           | integer(8) | NOT NULL    |              | O     |
 # | udemae_point     | Udemae point     | float(24)  | NOT NULL    |              |       |
 # | udemae_last_diff | Udemae last diff | float(24)  | NOT NULL    |              |       |

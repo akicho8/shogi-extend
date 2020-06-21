@@ -53,7 +53,7 @@ module Actb
       included do
         has_one :actb_main_xrecord, class_name: "Actb::MainXrecord", dependent: :destroy
 
-        delegate :rating, :rensho_count, :rensho_max, :udemae, :udemae_key, :udemae_point, to: :actb_main_xrecord
+        delegate :rating, :straight_win_count, :straight_win_max, :udemae, :udemae_key, :udemae_point, to: :actb_main_xrecord
 
         after_create do
           create_actb_main_xrecord!

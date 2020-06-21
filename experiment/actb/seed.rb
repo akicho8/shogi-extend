@@ -81,13 +81,13 @@ battle = room.battles.create! do |e|
   e.memberships.build(user: user1)
   e.memberships.build(user: user2)
 end
-battle                          # => #<Actb::Battle id: 15, room_id: 8, parent_id: nil, rule_id: 34, final_id: 5, begin_at: "2020-06-16 14:48:21", end_at: nil, rensen_index: 0, created_at: "2020-06-16 14:48:21", updated_at: "2020-06-16 14:48:21">
+battle                          # => #<Actb::Battle id: 15, room_id: 8, parent_id: nil, rule_id: 34, final_id: 5, begin_at: "2020-06-16 14:48:21", end_at: nil, battle_pos: 0, created_at: "2020-06-16 14:48:21", updated_at: "2020-06-16 14:48:21">
 
 battle.users.count                # => 2
-battle.rensen_index               # => 0
+battle.battle_pos               # => 0
 
-battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 16, room_id: 8, parent_id: 15, rule_id: 34, final_id: 5, begin_at: "2020-06-16 14:48:21", end_at: nil, rensen_index: 1, created_at: "2020-06-16 14:48:21", updated_at: "2020-06-16 14:48:21">
-battle2.rensen_index                            # => 1
+battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 16, room_id: 8, parent_id: 15, rule_id: 34, final_id: 5, begin_at: "2020-06-16 14:48:21", end_at: nil, battle_pos: 1, created_at: "2020-06-16 14:48:21", updated_at: "2020-06-16 14:48:21">
+battle2.battle_pos                            # => 1
 
 membership = battle.memberships.first
 
@@ -163,10 +163,10 @@ tp Actb.info
 # >> |           rating | 1516.0                    |
 # >> | rating_diff | 16.0                      |
 # >> |       rating_max | 1516.0                    |
-# >> |     rensho_count | 1                         |
-# >> |     renpai_count | 0                         |
-# >> |       rensho_max | 1                         |
-# >> |       renpai_max | 0                         |
+# >> |     straight_win_count | 1                         |
+# >> |     straight_lose_count | 0                         |
+# >> |       straight_win_max | 1                         |
+# >> |       straight_lose_max | 0                         |
 # >> |        udemae_id | 232                       |
 # >> |     udemae_point | 20.0                      |
 # >> |       created_at | 2020-06-16 23:48:21 +0900 |
@@ -190,10 +190,10 @@ tp Actb.info
 # >> |           rating | 1500.0                    |
 # >> | rating_diff | 0.0                       |
 # >> |       rating_max | 1500.0                    |
-# >> |     rensho_count | 0                         |
-# >> |     renpai_count | 0                         |
-# >> |       rensho_max | 0                         |
-# >> |       renpai_max | 0                         |
+# >> |     straight_win_count | 0                         |
+# >> |     straight_lose_count | 0                         |
+# >> |       straight_win_max | 0                         |
+# >> |       straight_lose_max | 0                         |
 # >> |        udemae_id | 232                       |
 # >> |     udemae_point | 0.0                       |
 # >> |       created_at | 2020-06-16 23:48:18 +0900 |

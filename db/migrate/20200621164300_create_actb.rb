@@ -78,7 +78,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
         t.belongs_to :final,  foreign_key: {to_table: :actb_finals},     null: false,               comment: "結果"
         t.datetime :begin_at,    null: false,  index: true, comment: "対戦開始日時"
         t.datetime :end_at,      null: true,   index: true, comment: "対戦終了日時"
-        t.integer :rensen_index, null: false,  index: true, comment: "連戦数"
+        t.integer :battle_pos, null: false,  index: true, comment: "連戦インデックス"
         t.timestamps
       end
 
@@ -112,11 +112,11 @@ class CreateActb < ActiveRecord::Migration[6.0]
         t.float :rating_diff,  null: false, index: true,  comment: "直近レーティング変化"
         t.float :rating_max,        null: false, index: true,  comment: "レーティング(最大)"
 
-        t.integer :rensho_count,                             null: false, index: true,  comment: "連勝数"
-        t.integer :renpai_count,                             null: false, index: true,  comment: "連敗数"
+        t.integer :straight_win_count,                             null: false, index: true,  comment: "連勝数"
+        t.integer :straight_lose_count,                             null: false, index: true,  comment: "連敗数"
 
-        t.integer :rensho_max,                               null: false, index: true,  comment: "連勝数(最大)"
-        t.integer :renpai_max,                               null: false, index: true,  comment: "連敗数(最大)"
+        t.integer :straight_win_max,                               null: false, index: true,  comment: "連勝数(最大)"
+        t.integer :straight_lose_max,                               null: false, index: true,  comment: "連敗数(最大)"
 
         t.belongs_to :udemae, foreign_key: {to_table: :actb_udemaes},                                null: false, index: true,  comment: "ウデマエ"
         t.float :udemae_point,      null: false, index: false, comment: "ウデマエの内部ポイント"

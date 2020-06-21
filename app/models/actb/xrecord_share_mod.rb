@@ -17,10 +17,10 @@
 # | rating           | Rating           | integer(4) | NOT NULL    |                       | I     |
 # | rating_diff | Rating last diff | integer(4) | NOT NULL    |                       | J     |
 # | rating_max       | Rating max       | integer(4) | NOT NULL    |                       | K     |
-# | rensho_count     | Rensho count     | integer(4) | NOT NULL    |                       | L     |
-# | renpai_count     | Renpai count     | integer(4) | NOT NULL    |                       | M     |
-# | rensho_max       | Rensho max       | integer(4) | NOT NULL    |                       | N     |
-# | renpai_max       | Renpai max       | integer(4) | NOT NULL    |                       | O     |
+# | straight_win_count     | Rensho count     | integer(4) | NOT NULL    |                       | L     |
+# | straight_lose_count     | Renpai count     | integer(4) | NOT NULL    |                       | M     |
+# | straight_win_max       | Rensho max       | integer(4) | NOT NULL    |                       | N     |
+# | straight_lose_max       | Renpai max       | integer(4) | NOT NULL    |                       | O     |
 # | create_count     | Create count     | integer(4) | NOT NULL    |                       | P     |
 # | generation       | Generation       | integer(4) | NOT NULL    |                       | Q     |
 # | created_at       | 作成日時         | datetime   | NOT NULL    |                       |       |
@@ -61,10 +61,10 @@ module Actb
 
         self.win_rate     ||= 0
 
-        self.rensho_count ||= 0
-        self.renpai_count ||= 0
-        self.rensho_max   ||= 0
-        self.renpai_max   ||= 0
+        self.straight_win_count ||= 0
+        self.straight_lose_count ||= 0
+        self.straight_win_max   ||= 0
+        self.straight_lose_max   ||= 0
 
         self.judge ||= Judge.fetch(:pending)
 
@@ -91,8 +91,8 @@ module Actb
       self.judge = judge
 
       if judge.key == "draw"
-        self.rensho_count = 0
-        self.renpai_count = 0
+        self.straight_win_count = 0
+        self.straight_lose_count = 0
 
         self.battle_count += 1
         self.win_rate = win_count.fdiv(battle_count)
@@ -113,16 +113,16 @@ module Actb
 
         # 連勝敗
         if judge.key == "win"
-          self.rensho_count += 1
-          self.renpai_count = 0
+          self.straight_win_count += 1
+          self.straight_lose_count = 0
         end
         if judge.key == "lose"
-          self.rensho_count = 0
-          self.renpai_count += 1
+          self.straight_win_count = 0
+          self.straight_lose_count += 1
         end
 
-        self.rensho_max = [rensho_max, rensho_count].max
-        self.renpai_max = [renpai_max, renpai_count].max
+        self.straight_win_max = [straight_win_max, straight_win_count].max
+        self.straight_lose_max = [straight_lose_max, straight_lose_count].max
       end
     end
 

@@ -406,7 +406,7 @@
 # | final_id     | Final        | integer(8) | NOT NULL    |      | D     |
 # | begin_at     | Begin at     | datetime   | NOT NULL    |      | E     |
 # | end_at       | End at       | datetime   |             |      | F     |
-# | rensen_index | Rensen index | integer(4) | NOT NULL    |      | G     |
+# | battle_pos | Rensen index | integer(4) | NOT NULL    |      | G     |
 # | created_at   | 作成日時     | datetime   | NOT NULL    |      |       |
 # | updated_at   | 更新日時     | datetime   | NOT NULL    |      |       |
 # |--------------+--------------+------------+-------------+------+-------|
@@ -613,10 +613,10 @@
 # | rating           | Rating           | float(24)  | NOT NULL    |              | H     |
 # | rating_diff      | Rating diff      | float(24)  | NOT NULL    |              | I     |
 # | rating_max       | Rating max       | float(24)  | NOT NULL    |              | J     |
-# | rensho_count     | Rensho count     | integer(4) | NOT NULL    |              | K     |
-# | renpai_count     | Renpai count     | integer(4) | NOT NULL    |              | L     |
-# | rensho_max       | Rensho max       | integer(4) | NOT NULL    |              | M     |
-# | renpai_max       | Renpai max       | integer(4) | NOT NULL    |              | N     |
+# | straight_win_count     | Rensho count     | integer(4) | NOT NULL    |              | K     |
+# | straight_lose_count     | Renpai count     | integer(4) | NOT NULL    |              | L     |
+# | straight_win_max       | Rensho max       | integer(4) | NOT NULL    |              | M     |
+# | straight_lose_max       | Renpai max       | integer(4) | NOT NULL    |              | N     |
 # | udemae_id        | Udemae           | integer(8) | NOT NULL    |              | O     |
 # | udemae_point     | Udemae point     | float(24)  | NOT NULL    |              |       |
 # | udemae_last_diff | Udemae last diff | float(24)  | NOT NULL    |              |       |
@@ -807,10 +807,10 @@
 # | rating           | Rating           | float(24)  | NOT NULL    |              | H     |
 # | rating_diff      | Rating diff      | float(24)  | NOT NULL    |              | I     |
 # | rating_max       | Rating max       | float(24)  | NOT NULL    |              | J     |
-# | rensho_count     | Rensho count     | integer(4) | NOT NULL    |              | K     |
-# | renpai_count     | Renpai count     | integer(4) | NOT NULL    |              | L     |
-# | rensho_max       | Rensho max       | integer(4) | NOT NULL    |              | M     |
-# | renpai_max       | Renpai max       | integer(4) | NOT NULL    |              | N     |
+# | straight_win_count     | Rensho count     | integer(4) | NOT NULL    |              | K     |
+# | straight_lose_count     | Renpai count     | integer(4) | NOT NULL    |              | L     |
+# | straight_win_max       | Rensho max       | integer(4) | NOT NULL    |              | M     |
+# | straight_lose_max       | Renpai max       | integer(4) | NOT NULL    |              | N     |
 # | udemae_id        | Udemae           | integer(8) | NOT NULL    |              | O     |
 # | udemae_point     | Udemae point     | float(24)  | NOT NULL    |              |       |
 # | udemae_last_diff | Udemae last diff | float(24)  | NOT NULL    |              |       |

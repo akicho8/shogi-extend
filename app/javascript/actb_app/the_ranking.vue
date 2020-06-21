@@ -28,8 +28,8 @@ class TabInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "rating",       name: "総合",         unit: null,     },
-      { key: "rensho_count", name: "連勝中",       unit: "連勝中", },
-      { key: "rensho_max",   name: "最多連勝数",   unit: "連勝",   },
+      { key: "straight_win_count", name: "連勝中",       unit: "連勝中", },
+      { key: "straight_win_max",   name: "最多連勝数",   unit: "連勝",   },
     ]
   }
 
@@ -81,12 +81,12 @@ export default {
       this.mode_select("rating")
     },
 
-    rensho_count_handle() {
-      this.mode_select("rensho_count")
+    straight_win_count_handle() {
+      this.mode_select("straight_win_count")
     },
 
-    rensho_max_handle() {
-      this.mode_select("rensho_max")
+    straight_win_max_handle() {
+      this.mode_select("straight_win_max")
     },
 
     ////////////////////////////////////////////////////////////////////////////////

@@ -1,11 +1,11 @@
 <template lang="pug">
 .the_result_membership.is-flex
   //////////////////////////////////////////////////////////////////////////////// ○連勝
-  .rensho_renpai.is-size-8.has-text-weight-bold
-    template(v-if="xrecord.rensho_count >= 1")
-      .rensho_count {{xrecord.rensho_count}}連勝中！
-    template(v-else-if="xrecord.renpai_count >= 1")
-      .renpai_count {{xrecord.renpai_count}}連敗中！
+  .straight_win_straight_lose.is-size-8.has-text-weight-bold
+    template(v-if="xrecord.straight_win_count >= 1")
+      .straight_win_count {{xrecord.straight_win_count}}連勝中！
+    template(v-else-if="xrecord.straight_lose_count >= 1")
+      .straight_lose_count {{xrecord.straight_lose_count}}連敗中！
     template(v-else)
         | &nbsp;
 
@@ -72,9 +72,9 @@ export default {
   // 左右大きさがぶれないように大きさを共通にする
   min-width: 12rem
 
-  .rensho_count
+  .straight_win_count
     color: $danger
-  .renpai_count
+  .straight_lose_count
     color: $success
 
   // avatar

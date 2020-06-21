@@ -34,15 +34,15 @@ module Actb
 
       self.judge ||= Judge.fetch(:pending)
 
-      # self.rensho_count ||= 0
-      # self.renpai_count ||= 0
+      # self.straight_win_count ||= 0
+      # self.straight_lose_count ||= 0
 
       # if changes_to_save[:judge] && judge && judge.win_or_lose?
       #   w = 0
       #   l = 0
       #   if record = maeno_record
-      #     w = record.rensho_count
-      #     l = record.renpai_count
+      #     w = record.straight_win_count
+      #     l = record.straight_lose_count
       #   end
       #   if judge.key == "win"
       #     w += 1
@@ -52,8 +52,8 @@ module Actb
       #     w = 0
       #     l += 1
       #   end
-      #   self.rensho_count = w
-      #   self.renpai_count = l
+      #   self.straight_win_count = w
+      #   self.straight_lose_count = l
       # end
     end
 

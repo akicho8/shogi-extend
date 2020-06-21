@@ -13,7 +13,7 @@
 # | final_id     | Final        | integer(8) | NOT NULL    |      | D     |
 # | begin_at     | Begin at     | datetime   | NOT NULL    |      | E     |
 # | end_at       | End at       | datetime   |             |      | F     |
-# | rensen_index | Rensen index | integer(4) | NOT NULL    |      | G     |
+# | battle_pos | Rensen index | integer(4) | NOT NULL    |      | G     |
 # | created_at   | 作成日時     | datetime   | NOT NULL    |      |       |
 # | updated_at   | 更新日時     | datetime   | NOT NULL    |      |       |
 # |--------------+--------------+------------+-------------+------+-------|
@@ -45,7 +45,7 @@ module Actb
       end
 
       if parent
-        self.rensen_index ||= parent.rensen_index + 1 # FIXME: これいらない？
+        self.battle_pos ||= parent.battle_pos + 1 # FIXME: これいらない？
       end
 
       self.final ||= Final.fetch(:f_pending)
@@ -55,7 +55,7 @@ module Actb
 
       self.begin_at ||= Time.current
       self.rule ||= Rule.fetch(:marathon_rule)
-      self.rensen_index ||= 0
+      self.battle_pos ||= 0
     end
 
     with_options presence: true do
@@ -96,7 +96,7 @@ module Actb
     # 開始時
     def as_json_type1
       as_json({
-          only: [:id, :rensen_index],
+          only: [:id, :battle_pos],
           include: {
             rule: { only: [:key, :name] },
             final: { only: [:key], methods: [:name] },
@@ -109,7 +109,7 @@ module Actb
                   methods: [:avatar_path, :rating, :udemae_key],
                   include: {
                     actb_main_xrecord: {
-                      only: [:rensho_count, :renpai_count],
+                      only: [:straight_win_count, :straight_lose_count],
                     },
                   },
                 },
@@ -123,7 +123,7 @@ module Actb
     # 結果表示時
     def as_json_type2_for_result
       as_json({
-          only: [:id, :rensen_index],
+          only: [:id, :battle_pos],
           include: {
             final: {
               only: [:key],
@@ -133,7 +133,7 @@ module Actb
               only: [:id, :key, :name]
             },
             memberships: {
-              only: [:id, :rensho_count, :renpai_count],
+              only: [:id, :straight_win_count, :straight_lose_count],
               include: {
                 user: {
                   only: [:id, :name],
@@ -142,7 +142,7 @@ module Actb
                     actb_main_xrecord: {
                       only: [
                         :id,
-                        :rensho_count, :renpai_count, :rensho_max, :renpai_max,
+                        :straight_win_count, :straight_lose_count, :straight_win_max, :straight_lose_max,
                         :rating, :rating_max, :rating_diff,
                         :disconnect_count,
                         :udemae_point, :udemae_last_diff,

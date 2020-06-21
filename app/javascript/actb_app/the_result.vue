@@ -35,7 +35,7 @@
   the_room_message
 
   debug_print(v-if="app.debug_mode_p" :vars="['app.member_infos_hash']")
-  debug_print(v-if="app.debug_mode_p" :vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.rensen_index', 'app.score_debug_info']")
+  debug_print(v-if="app.debug_mode_p" :vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.battle_pos', 'app.score_debug_info']")
 
 </template>
 
