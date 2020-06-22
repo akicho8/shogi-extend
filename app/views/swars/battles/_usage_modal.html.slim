@@ -10,7 +10,7 @@ b-modal.usage_modal(:active.sync="usage_modal_p" trap-focus animation="zoom-in")
           .buttons
             - ExternalAppInfo.each do |e|
               - url = url_for([:swars, :battles, query: current_swars_user, latest_open_index: 0, external_app_setup: true, external_app_key: e.key])
-              = content_tag("#{e.key}_button", "", "href" => url, :tag => "a")
+              = content_tag("#{e.key}_button", "", "href" => url, :tag => "a", :target => "_self")
         li
           | KENTOの<b>API追加</b>に下のURLをコピペするとKENTO側でも棋譜一覧を表示できるようになります
           - url = full_url_for([:swars, :battles, query: current_swars_user, format: "json", format_type: "kento"])
