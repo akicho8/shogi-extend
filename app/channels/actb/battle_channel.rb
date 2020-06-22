@@ -9,7 +9,7 @@ module Actb
     # バトルが正常終了していない状態で切断された場合に負け
     def unsubscribed
       if current_battle.end_at.blank?
-        if once_run("actb/battles/#{battle.id}/disconnect")
+        if once_run("actb/battles/#{current_battle.id}/disconnect")
           say "*切断しました"
           judge_final_set(current_user, :lose, :f_disconnect)
         end
