@@ -113,8 +113,8 @@ export default {
   },
 
   computed: {
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.$parent.question.init_sfen, 0, false) },
-    kento_app_with_params_url()      { return this.kento_full_url(this.$parent.question.init_sfen, 0, false) },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url({sfen: this.$parent.question.init_sfen, turn: 0, flip: false}) },
+    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.$parent.question.init_sfen, turn: 0, flip: false}) },
   },
 }
 </script>

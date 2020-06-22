@@ -248,8 +248,8 @@ export default {
       return `${this.record.show_path}.png?${params}`
     },
 
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url(this.record.sfen_body, this.turn_offset, this.new_flip) },
-    kento_app_with_params_url()      { return this.kento_full_url(this.record.sfen_body, this.turn_offset, this.new_flip) },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url({sfen: this.record.sfen_body, turn: this.turn_offset, flip: this.new_flip}) },
+    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.record.sfen_body, turn: this.turn_offset, flip: this.new_flip}) },
 
     tweet_url() {
       return this.tweet_intent_url(this.permalink_url)

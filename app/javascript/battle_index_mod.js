@@ -115,11 +115,31 @@ export default {
     },
 
     piyo_shogi_app_with_params_url(record) {
-      return this.piyo_shogi_full_url(record.sfen_body, this.trick_start_turn_for(record), record.flip)
+      return this.piyo_shogi_full_url(this.outside_app_with_params_url(record))
     },
 
     kento_app_with_params_url(record) {
-      return this.kento_full_url(record.sfen_body, this.trick_start_turn_for(record), record.flip)
+      return this.kento_full_url(this.outside_app_with_params_url(record))
+    },
+
+    outside_app_with_params_url(record) {
+      const params = {
+        sfen: record.sfen_body,
+        turn: this.trick_start_turn_for(record),
+        flip: record.flip,
+      }
+      if (record.memberships) {
+        params.sente_name = this.user_key_with_grade_name(record.memberships[0])
+        params.gote_name  = this.user_key_with_grade_name(record.memberships[1])
+      }
+      if (record.tournament_name) {
+        params.game_name = record.tournament_name
+      }
+      return params
+    },
+
+    user_key_with_grade_name(membership) {
+      return `${membership.user.key} ${membership.grade_info.name}`
     },
 
     row_class(row, index) {

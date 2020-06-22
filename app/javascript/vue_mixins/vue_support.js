@@ -195,7 +195,7 @@ export default {
       window.open(url, "_blank", opts)
     },
 
-    kento_full_url(sfen, turn, flip) {
+    kento_full_url({sfen, turn, flip}) {
       if (!sfen) {
         alert("sfenが空")
       }

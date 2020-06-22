@@ -3,14 +3,14 @@
 
 export default {
   methods: {
-    piyo_shogi_full_url(sfen, turn, flip) {
+    piyo_shogi_full_url({sfen, turn, flip, sente_name, gote_name, game_name}) {
       let prefix = null
       if (this.piyo_shogi_app_p) {
         prefix = "piyoshogi://"
       } else {
         prefix = "https://www.studiok-i.net/ps/"
       }
-      return `${prefix}?num=${turn}&flip=${flip}&sfen=${encodeURIComponent(sfen)}`
+      return `${prefix}?num=${turn}&flip=${flip}&sente_name=${encodeURIComponent(sente_name)}&gote_name=${encodeURIComponent(gote_name)}&game_name=${encodeURIComponent(game_name)}&sfen=${encodeURIComponent(sfen)}`
     },
   },
   computed: {
