@@ -90,7 +90,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    it "KENTOに正しく棋譜が渡せている" do
+    xit "KENTOに正しく棋譜が渡せている" do
       # pending "2020-05-13ログイン必須になったため動作しない"
 
       visit "/w?query=devuser1"
