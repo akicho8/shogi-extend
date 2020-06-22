@@ -75,7 +75,7 @@ class ServiceInfo
       display_p: true,
       link_path: [:stopwatch],
       icon: "clock",
-      title: "詰将棋RTA用ストップウォッチ",
+      title: "詰将棋RTA向けストップウォッチ",
       image_source: "stopwatch_1200x630.png",
       description: "詰将棋などの問題を解く時間や正解率を計測するサービスで次のような特徴があります",
       feature_items: [
