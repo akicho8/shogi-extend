@@ -64,9 +64,9 @@ class ServiceInfo
       link_path: FrontendScript::ThreeStageLeagueScript.script_link_path,
       title: "三段リーグ成績早見表",
       image_source: "three_stage_leage_1200x630",
-      description: "奨励会三段リーグの成績を見やすく表示するサービス",
+      description: "奨励会三段リーグの成績を見やすくするサービス",
       feature_items: [
-        "スマホ環境に最適化",
+        "スマホに最適化",
         "個人毎の成績も表示",
       ],
     },
