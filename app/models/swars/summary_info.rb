@@ -337,27 +337,14 @@ module Swars
 
     def key_wrap(key, options = {})
       if v = options[:tooltip]
-        # key = h.content_tag("b-tooltip", key, label: "あいうえお", position: "is-left", size: "is-small")
         key = h.content_tag("b-tooltip", key, label: v, position: "is-top", size: "is-small") # multilined: false
       end
 
-      if false
-        if options[:alert_p]
-          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
-        end
-        if options[:great_p]
-          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
-        end
-        if options[:warn_p]
-          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
-        end
-      else
-        if options[:alert_p] || options[:great_p] || options[:warn_p]
-          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
-        end
-        if options[:danger_p]
-          key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
-        end
+      if options[:alert_p] || options[:great_p] || options[:warn_p]
+        key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
+      end
+      if options[:danger_p]
+        key = Icon.icon_tag("alert-circle", size: "is-small", :class => "has-text-danger") + key
       end
 
       key

@@ -4,7 +4,6 @@ class ServiceInfo
     {
       display_p: true,
       link_path: [:swars, :battles],
-      icon: "magnify",
       title: "将棋ウォーズ棋譜検索",
       image_source: "swars_battles_index.png",
       description: "直近の対局の検討することを目的とした棋譜取得サービス",
@@ -20,7 +19,6 @@ class ServiceInfo
     {
       display_p: true,
       link_path: [:adapter],
-      icon: "tools",
       title: "なんでも棋譜変換",
       image_source: "adapter.png",
       description: "互換性が低い棋譜形式を一般的な形式に変換してどのソフトでも読めるようにするサービス",
@@ -37,7 +35,6 @@ class ServiceInfo
     {
       display_p: true,
       link_path: [:share_board],
-      icon: "apps",
       title: "共有将棋盤",
       image_source: "share_board_1200x630.png",
       description: "リレー将棋・詰将棋の出題・課題局面の検討などを目的とした将棋盤の共有サービス",
@@ -52,7 +49,6 @@ class ServiceInfo
     {
       display_p: true,
       link_path: [:xy_records],
-      icon: "apps",
       title: "符号の鬼",
       image_source: "xy_records_1200x630.png",
       description: "符号を覚えるためのミニゲーム",
@@ -66,7 +62,6 @@ class ServiceInfo
     {
       display_p: true,
       link_path: [:cpu_battles],
-      icon: "robot",
       title: "CPU対戦",
       image_source: "cpu_battle_1200x630.png",
       description: "自作の将棋AIと対局できます。CPUは矢倉・右四間飛車・嬉野流・アヒル戦法・振り飛車・英春流かまいたち戦法を指せます",
@@ -74,7 +69,6 @@ class ServiceInfo
     {
       display_p: true,
       link_path: [:stopwatch],
-      icon: "clock",
       title: "詰将棋RTA向けストップウォッチ",
       image_source: "stopwatch_1200x630.png",
       description: "詰将棋などの問題を解く時間や正解率を計測するサービス",
@@ -87,7 +81,6 @@ class ServiceInfo
     {
       display_p: true,
       link_path: FrontendScript::ThreeStageLeagueScript.script_link_path,
-      # icon: "chart-bar",
       title: "三段リーグ成績早見表",
       image_source: "three_stage_leage_1200x630",
       description: "奨励会三段リーグの成績を見やすく表示するサービス",
@@ -99,7 +92,6 @@ class ServiceInfo
     {
       display_p: false,
       link_path: [:tb],
-      icon: "shuriken",
       title: "将棋トレーニングバトル",
       image_source: nil,
       description: "対局ではなく問題を解く力を競う対戦ゲーム",
