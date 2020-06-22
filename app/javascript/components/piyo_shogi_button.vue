@@ -26,9 +26,9 @@ export default {
     target() {
       if (false) {
         if (this.piyo_shogi_app_p) {
-          return '_self'
+          return "_self"
         } else {
-          return '_blank'
+          return "_blank"
         }
       } else {
         if (this.$attrs.href && this.$attrs.href.match(/^http/)) {
@@ -44,10 +44,10 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/bulma_init.scss"
-@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700&display=swap')
+@import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700&display=swap")
 
 .piyo_shogi_button
-  font-family: 'M PLUS Rounded 1c', sans-serif
+  font-family: "M PLUS Rounded 1c", sans-serif
   font-weight: 700
 
   .left_icon
