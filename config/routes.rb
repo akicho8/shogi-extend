@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   #   resources :rankings, only: :index
   # end
 
-  if Rails.env.development? || true
+  if Rails.env.development?
     root "tops#show"
   else
     # root "colosseum/battles#index"
