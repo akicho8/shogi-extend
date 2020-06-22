@@ -40,7 +40,7 @@ window.Adapter = Vue.extend({
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
-        return this.piyo_shogi_full_url({sfen: this.record.sfen_body, turn: this.record.display_turn, flip: this.record.flip})
+        return this.piyo_shogi_full_url({sfen: this.record.sfen_body, num: this.record.display_turn, flip: this.record.flip})
       }
     },
 

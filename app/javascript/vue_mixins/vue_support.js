@@ -315,6 +315,12 @@ export default {
       return this.isMobile.any()
     },
 
+    // スマホなら _self の方が使いやすい
+    // PCなら _blank の方が使いやすい
+    target_default() {
+      return this.mobile_p ? "_self" : "_blank"
+    },
+
     desktop_p() {
       return !this.mobile_p
     },

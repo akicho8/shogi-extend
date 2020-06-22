@@ -119,13 +119,13 @@ export default {
     },
 
     kento_app_with_params_url(record) {
-      return this.kento_full_url(this.outside_app_with_params_url(record))
+      return this.kento_full_url({sfen: record.sfen_body, turn: this.trick_start_turn_for(record), flip: record.flip})
     },
 
     outside_app_with_params_url(record) {
       const params = {
         sfen: record.sfen_body,
-        turn: this.trick_start_turn_for(record),
+        num: this.trick_start_turn_for(record),
         flip: record.flip,
       }
       if (record.memberships) {

@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-button.kento_button.is-small(v-bind="$attrs" v-on="$listeners" @click="click_handle")
+  b-button.kento_button.is-small(v-bind="$attrs" v-on="$listeners" :target="target_default" @click="click_handle")
     span.left_icon
       | ☗
     span.name(v-if="!icon_only")
@@ -17,6 +17,9 @@ export default {
     click_handle() {
       this.$gtag.event("click", {event_category: "KENTO"})
     },
+  },
+  computed: {
+    piyo_shogi_icon() { return piyo_shogi_icon }, // TODO: Vue.js の重複強制どうにかならんの？
   },
 }
 </script>
