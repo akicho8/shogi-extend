@@ -9,7 +9,6 @@
   = link_to("ログアウト", [:admin, :session], method: :delete, :class => "button") if admin_user
   = link_to("BASIC認証強制失敗", [:admin, :root, request_http_basic_authentication: 1], :class => "button" )
   = link_to("スクリプト", [:admin, :script, id: :index], :class => "button")
-  = link_to("Rails Cache 管理", [:admin, :fastentry], :class => "button")
 
 .box
   = BackendScript.to_rows(self).to_html

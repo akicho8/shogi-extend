@@ -185,9 +185,6 @@ gem "holiday_jp"
 # たいして速くないのとCのビルドしたのがロードされないので使わない
 # gem "hiredis"
 
-# Redis用の管理画面
-gem "fastentry"
-
 # ActiveJob
 gem 'sidekiq'
 gem 'redis-namespace'
