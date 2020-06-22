@@ -1,5 +1,6 @@
 .tops_show
-  .title.is-6 主なサービスの紹介
+  .has-text-centered-touch
+    .title.is-6.mb-4 主なサービスの紹介
 
   .columns.is-multiline
     - ServiceInfo.each do |si|
@@ -18,4 +19,4 @@
               - if si.feature_items.present?
                 ul.is-size-7
                   - si.feature_items.each do |e|
-                    li= e
+                    li== e
