@@ -53,29 +53,10 @@ class ServiceInfo
       image_source: "xy_records_1200x630.png",
       description: "符号を覚えるためのミニゲーム",
       feature_items: [
-        "画面をタップする携帯用とキーボードで入力するPC用の2つのモード",
+        "画面をタップするスマホ用とキーボードで入力するPC用の2つのモード",
         "100問正解するまでの時間を競う",
         "先後両方の視点で練習可",
         "ランキングあり",
-      ],
-    },
-    {
-      display_p: true,
-      link_path: [:cpu_battles],
-      title: "CPU対戦",
-      image_source: "cpu_battle_1200x630.png",
-      description: "自作の将棋AIと対局できます。CPUは矢倉・右四間飛車・嬉野流・アヒル戦法・振り飛車・英春流かまいたち戦法を指せます",
-    },
-    {
-      display_p: true,
-      link_path: [:stopwatch],
-      title: "詰将棋RTA向けストップウォッチ",
-      image_source: "stopwatch_1200x630.png",
-      description: "詰将棋などの問題を解く時間や正解率を計測するサービス",
-      feature_items: [
-        "間違えた問題だけの復習が簡単",
-        "復習問題のリストが固定URLに入っている(のでブックマークしていれば再開が簡単)",
-        "開始と終了のタイミングで状態をブラウザに保存しているので(ブックマークしてなくても)再開が簡単",
       ],
     },
     {
@@ -87,6 +68,25 @@ class ServiceInfo
       feature_items: [
         "スマホ環境に最適化",
         "個人毎の成績も表示",
+      ],
+    },
+    {
+      display_p: true,
+      link_path: [:cpu_battles],
+      title: "CPU対戦",
+      image_source: "cpu_battle_1200x630.png",
+      description: "自作の将棋AIと対戦。CPUは矢倉・右四間飛車・嬉野流・アヒル戦法・振り飛車・英春流かまいたち戦法を指せます",
+    },
+    {
+      display_p: true,
+      link_path: [:stopwatch],
+      title: "詰将棋RTA向けストップウォッチ",
+      image_source: "stopwatch_1200x630.png",
+      description: "詰将棋などの問題を解く時間や正解率を計測するサービス",
+      feature_items: [
+        "間違えた問題だけの復習が簡単",
+        "復習問題のリストが固定URLに入っている(のでブックマークしていれば再開が簡単)",
+        "開始と終了のタイミングで状態をブラウザに保存しているので(ブックマークしてなくても)再開が簡単",
       ],
     },
     {
