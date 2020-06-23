@@ -8,7 +8,7 @@ module Actb
       if current_user
         redis.sadd(:room_user_ids, current_user.id)
         room_user_ids_broadcast
-        say "*入室しました"
+        debug_say "*入室しました"
       else
         reject
       end
