@@ -77,7 +77,9 @@ export default {
         if (d.bs_error) {       // development 環境だけで入っている
           this.bs_error_message_dialog(d.bs_error)
         } else {
-          this.error_message_dialog(`${r.statusText} (${r.status})`) // "Internal server error (500)"
+          const lines = _.split(d, "\n")
+          const first_line = _.take(lines, 10).join("<br>")
+          this.error_message_dialog(`${r.statusText} (${r.status})<br><br>${first_line}`) // "Internal server error (500)"
         }
       } else if (error.request) {
         // The request was made but no response was received
