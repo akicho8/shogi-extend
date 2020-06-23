@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_111200) do
+ActiveRecord::Schema.define(version: 2020_06_23_113600) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -426,99 +426,6 @@ ActiveRecord::Schema.define(version: 2020_06_23_111200) do
     t.text "meta_info"
     t.index ["provider", "uid"], name: "index_auth_infos_on_provider_and_uid", unique: true
     t.index ["user_id"], name: "index_auth_infos_on_user_id"
-  end
-
-  create_table "colosseum_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.string "black_preset_key", null: false, comment: "▲手合割"
-    t.string "white_preset_key", null: false, comment: "△手合割"
-    t.string "lifetime_key", null: false, comment: "時間"
-    t.string "team_key", null: false, comment: "人数"
-    t.text "full_sfen", null: false, comment: "USI形式棋譜"
-    t.text "clock_counts", null: false, comment: "対局時計情報"
-    t.text "countdown_flags", null: false, comment: "秒読み状態"
-    t.integer "turn_max", null: false, comment: "手番数"
-    t.datetime "battle_request_at", comment: "対局申し込みによる成立日時"
-    t.datetime "auto_matched_at", comment: "自動マッチングによる成立日時"
-    t.datetime "begin_at", comment: "メンバーたち部屋に入って対局開始になった日時"
-    t.datetime "end_at", comment: "バトル終了日時"
-    t.string "last_action_key", comment: "最後の状態"
-    t.string "win_location_key", comment: "勝った方の先後"
-    t.integer "memberships_count", default: 0, null: false, comment: "対局者総数"
-    t.integer "watch_ships_count", default: 0, null: false, comment: "観戦者数"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "colosseum_chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "battle_id", null: false, comment: "部屋"
-    t.bigint "user_id", null: false, comment: "ユーザー"
-    t.text "message", null: false, comment: "発言"
-    t.text "msg_options", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["battle_id"], name: "index_colosseum_chat_messages_on_battle_id"
-    t.index ["user_id"], name: "index_colosseum_chat_messages_on_user_id"
-  end
-
-  create_table "colosseum_chronicles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "ユーザー"
-    t.string "judge_key", null: false, comment: "結果"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["judge_key"], name: "index_colosseum_chronicles_on_judge_key"
-    t.index ["user_id"], name: "index_colosseum_chronicles_on_user_id"
-  end
-
-  create_table "colosseum_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "ユーザー"
-    t.text "message", null: false, comment: "発言"
-    t.text "msg_options", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_colosseum_lobby_messages_on_user_id"
-  end
-
-  create_table "colosseum_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "battle_id", null: false, comment: "部屋"
-    t.bigint "user_id", null: false, comment: "ユーザー"
-    t.string "preset_key", null: false, comment: "手合割"
-    t.string "location_key", null: false, comment: "先後"
-    t.integer "position", comment: "入室順序"
-    t.datetime "standby_at", comment: "準備完了日時"
-    t.datetime "fighting_at", comment: "部屋に入った日時で抜けたり切断すると空"
-    t.datetime "time_up_at", comment: "タイムアップしたのを検知した日時"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["battle_id"], name: "index_colosseum_memberships_on_battle_id"
-    t.index ["location_key"], name: "index_colosseum_memberships_on_location_key"
-    t.index ["position"], name: "index_colosseum_memberships_on_position"
-    t.index ["user_id"], name: "index_colosseum_memberships_on_user_id"
-  end
-
-  create_table "colosseum_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "ユーザー"
-    t.string "lifetime_key", null: false, comment: "ルール・持ち時間"
-    t.string "team_key", null: false, comment: "ルール・人数"
-    t.string "self_preset_key", null: false, comment: "ルール・自分の手合割"
-    t.string "oppo_preset_key", null: false, comment: "ルール・相手の手合割"
-    t.string "robot_accept_key", null: false, comment: "CPUと対戦するかどうか"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["lifetime_key"], name: "index_colosseum_rules_on_lifetime_key"
-    t.index ["oppo_preset_key"], name: "index_colosseum_rules_on_oppo_preset_key"
-    t.index ["robot_accept_key"], name: "index_colosseum_rules_on_robot_accept_key"
-    t.index ["self_preset_key"], name: "index_colosseum_rules_on_self_preset_key"
-    t.index ["team_key"], name: "index_colosseum_rules_on_team_key"
-    t.index ["user_id"], name: "index_colosseum_rules_on_user_id", unique: true
-  end
-
-  create_table "colosseum_watch_ships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "battle_id", null: false, comment: "部屋"
-    t.bigint "user_id", null: false, comment: "ユーザー"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["battle_id"], name: "index_colosseum_watch_ships_on_battle_id"
-    t.index ["user_id"], name: "index_colosseum_watch_ships_on_user_id"
   end
 
   create_table "cpu_battle_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
