@@ -131,8 +131,13 @@ export default {
     //   }
     // },
 
-    // 他のウィンドウで開く
-    url_open(url) {
+    // URLを開く
+    // url_open(url, this.target_default) で呼ぶとPCの場合はWindowを開く
+    url_open(url, target = null) {
+      if (target === "_blank") {
+        return window.open(url, "_blank")
+      }
+
       // this.process_now()
       location.href = url
     },

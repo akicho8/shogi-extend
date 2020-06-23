@@ -40,7 +40,7 @@ window.Adapter = Vue.extend({
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
-        return this.piyo_shogi_full_url({sfen: this.record.sfen_body, num: this.record.display_turn, flip: this.record.flip})
+        return this.piyo_shogi_full_url({sfen: this.record.sfen_body, num: this.record.display_turn, flip: this.record.flip, ...this.record.piyo_shogi_base_params})
       }
     },
 
@@ -86,11 +86,11 @@ window.Adapter = Vue.extend({
 
   methods: {
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.url_open(this.piyo_shogi_app_with_params_url))
+      this.record_fetch(() => this.url_open(this.piyo_shogi_app_with_params_url, this.target_default))
     },
 
     kento_open_handle() {
-      this.record_fetch(() => this.url_open(this.kento_app_with_params_url))
+      this.record_fetch(() => this.url_open(this.kento_app_with_params_url, this.target_default))
     },
 
     kifu_copy_handle(kifu_type) {
