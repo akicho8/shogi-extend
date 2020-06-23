@@ -3,17 +3,34 @@
 
 export default {
   methods: {
-    piyo_shogi_full_url(attributes) {
+    piyo_shogi_full_url(params) {
       const keys = ["sfen", "num", "flip", "sente_name", "gote_name", "game_name"]
-      const url_params = []
+      const values = []
 
       keys.forEach(e => {
-        const v = attributes[e]
+        const v = params[e]
         if (v != null) {
-          url_params.push([e, encodeURIComponent(v)].join("="))
+          values.push([e, encodeURIComponent(v)].join("="))
         }
       })
-      return [this.piyo_shogi_url_prefix, "?", url_params.join("&")].join("")
+      return [this.piyo_shogi_url_prefix, "?", values.join("&")].join("")
+    },
+
+    piyo_shogi_name_params(record) {
+      const params = {}
+      if (record.memberships) {
+        params.sente_name = this.ps_user_with_grade_name(record.memberships, "black")
+        params.gote_name  = this.ps_user_with_grade_name(record.memberships, "white")
+      }
+      if (record.tournament_name) {
+        params.game_name = record.tournament_name
+      }
+      return params
+    },
+
+    ps_user_with_grade_name(memberships, location_key) {
+      const membership = memberships.find(e => e.location.key === location_key)
+      return `${membership.user.key} ${membership.grade_info.name}`
     },
   },
 
