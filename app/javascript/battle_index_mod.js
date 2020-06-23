@@ -129,8 +129,8 @@ export default {
         flip: record.flip,
       }
       if (record.memberships) {
-        params.sente_name = this.user_key_with_grade_name(record.memberships[0])
-        params.gote_name  = this.user_key_with_grade_name(record.memberships[1])
+        params.sente_name = this.user_key_with_grade_name(record.memberships, "black")
+        params.gote_name  = this.user_key_with_grade_name(record.memberships, "white")
       }
       if (record.tournament_name) {
         params.game_name = record.tournament_name
@@ -138,7 +138,8 @@ export default {
       return params
     },
 
-    user_key_with_grade_name(membership) {
+    user_key_with_grade_name(memberships, location_key) {
+      const membership = memberships.find(e => e.location.key === location_key)
       return `${membership.user.key} ${membership.grade_info.name}`
     },
 
