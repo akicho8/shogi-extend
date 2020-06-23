@@ -15,7 +15,7 @@ module Actb
 
       if once_run("actb/rooms/#{current_room.id}/first_battle_create")
         battle = current_room.battle_create_with_members!
-        say "**最初のバトル作成(id:#{battle.id})"
+        debug_say "**最初のバトル作成(id:#{battle.id})"
         # --> app/jobs/actb/battle_broadcast_job.rb --> battle_broadcasted --> app/javascript/actb_app/application_room.js
       end
     end
@@ -57,6 +57,12 @@ module Actb
     def say(*args)
       return if Rails.env.test?
       current_user.room_speak(current_room, *args)
+    end
+
+    def debug_say(*args)
+      if Config[:action_cable_debug]
+        say(*args)
+      end
     end
   end
 end
