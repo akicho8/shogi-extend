@@ -297,6 +297,7 @@ module BattleControllerSharedMethods
           :player_info,
           :title,
           :description,
+          :piyo_shogi_base_params,
         ],
         ).tap do |a|
 

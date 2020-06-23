@@ -46,8 +46,6 @@ module Swars
         a[:judge] = { key: memberships.first.last.judge_key }
       end
 
-      a[:tournament_name] = "将棋ウォーズ(#{e.rule_info.name})"
-
       a[:flip] = flip
       a[:modal_on_index_path] = e.modal_on_index_path(flip: flip)
 

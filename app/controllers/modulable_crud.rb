@@ -113,7 +113,7 @@ module ModulableCrud
 
       respond_to do |format|
         format.html
-        format.json { render json: current_records }
+        format.json { render json: js_current_records }
       end
     end
   end

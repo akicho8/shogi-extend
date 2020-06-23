@@ -184,6 +184,14 @@ module Swars
       #   end
       # end
 
+      def piyo_shogi_base_params
+        a = {}
+        a[:game_name] = tournament_name
+        names = memberships.collect(&:name_with_grade)
+        a.update([:sente_name, :gote_name].zip(names).to_h)
+        a
+      end
+
       def tournament_name
         "将棋ウォーズ(#{rule_info.name})"
       end

@@ -215,11 +215,15 @@ module BattleModelMod
     @battle_decorator ||= battle_decorator_class.new(params.merge(battle: self))
   end
 
+  def mini_battle_decorator(params = {})
+    @mini_battle_decorator ||= battle_decorator_class.new(params.merge(battle: self))
+  end
+
   def battle_decorator_class
   end
 
   def player_info
-    decorator = battle_decorator_class.new(battle: self)
+    decorator = mini_battle_decorator
     Bioshogi::Location.inject({}) { |a, e|
       name = decorator.player_name_for(e.key)
       if name
