@@ -8,23 +8,3 @@
 #+html: <p><a href="https://www.shogi-extend.com/"><img src="https://raw.github.com/akicho8/shogi_web/master/montage_for_doc.png" /></a></p>
 
 https://www.shogi-extend.com/
-
-* セットアップ
-
-#+BEGIN_SRC shell
-setup
-foreman s
-open http://localhost:3000/
-#+END_SRC
-
-** 実際にオンラインでクロールする場合
-
-#+BEGIN_SRC shell
-RUN_REMOTE=true foreman s
-#+END_SRC
-
-* テスト
-
-#+BEGIN_SRC shell
-rake
-#+END_SRC
