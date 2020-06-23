@@ -396,7 +396,7 @@ class FreeBattle < ApplicationRecord
     def piyo_shogi_base_params
       decorator = mini_battle_decorator
       a = {}
-      a[:game_name] = decorator.tournament_name
+      a[:game_name] = decorator.normalized_full_tournament_name
       names = Bioshogi::Location.collect { |e| [decorator.player_name_for(e), decorator.grade_name_for(e)].compact.join(" ") }
       a.update([:sente_name, :gote_name].zip(names).to_h)
       a

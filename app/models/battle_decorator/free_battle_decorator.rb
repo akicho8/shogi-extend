@@ -73,11 +73,11 @@ module BattleDecorator
       heavy_parsed_info.mediator.player_at(location).personal_clock.total_seconds
     end
 
-    private
-
     def normalized_full_tournament_name
       normalize_str(heavy_parsed_info.header["棋戦"])
     end
+
+    private
 
     def tournament_name_md
       normalized_full_tournament_name.match(/(?<tournament_name>.*)\s*\((?<rule_name>.*)\)\z/)
