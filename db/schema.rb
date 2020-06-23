@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_113600) do
+ActiveRecord::Schema.define(version: 2020_06_23_172500) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -632,9 +632,6 @@ ActiveRecord::Schema.define(version: 2020_06_23_113600) do
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false, comment: "キー"
     t.string "name", null: false, comment: "名前"
-    t.datetime "online_at", comment: "オンラインになった日時"
-    t.datetime "fighting_at", comment: "memberships.fighting_at と同じでこれを見ると対局中かどうかがすぐにわかる"
-    t.datetime "matching_at", comment: "マッチング中(開始日時)"
     t.string "cpu_brain_key", comment: "CPUだったときの挙動"
     t.string "user_agent", null: false, comment: "ブラウザ情報"
     t.string "race_key", null: false, comment: "種族"
@@ -657,7 +654,6 @@ ActiveRecord::Schema.define(version: 2020_06_23_113600) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.datetime "joined_at", comment: "ロビーに入った時間"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["key"], name: "index_users_on_key", unique: true

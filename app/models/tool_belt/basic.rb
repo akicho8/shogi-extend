@@ -46,8 +46,6 @@ module ToolBelt
           row["操作"] = [
             link_to_eval("login")    { "current_user_set(#{e.id})"                                                    },
             link_to_eval("削除")     { "User.find(#{e.id}).destroy!"                                          },
-            link_to_eval("online")   { "User.find(#{e.id}).update!(joined_at: Time.current)" if !e.joined_at  },
-            link_to_eval("offline")  { "User.find(#{e.id}).update!(joined_at: nil)" if e.joined_at            },
             link_to_eval("logout")   { "current_user_clear" if e == h.current_user                                      },
             link_to_eval("名前変更") { "User.find(#{e.id}).update!(name: SecureRandom.hex)"                   },
           ].compact.join(" ").html_safe

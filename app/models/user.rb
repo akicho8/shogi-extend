@@ -64,10 +64,6 @@ class User < ApplicationRecord
           default_emal = "cpu-#{key}@localhost"
         end
         self.email ||= default_emal
-
-        if Rails.env.development?
-          self.joined_at ||= Time.current
-        end
       end
 
       after_create do
@@ -87,7 +83,7 @@ class User < ApplicationRecord
 
         CpuBrainInfo.each do |e|
           unless find_by(key: e.key)
-            create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, online_at: Time.current, joined_at: Time.current, cpu_brain_key: e.key)
+            create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, cpu_brain_key: e.key)
           end
         end
       end
