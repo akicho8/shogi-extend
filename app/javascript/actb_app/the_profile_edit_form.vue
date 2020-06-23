@@ -17,6 +17,9 @@
 
     b-field(label="自己紹介" label-position="on-border")
       b-input.new_description(type="textarea" v-model="$parent.new_description" rows="6" size="is-small")
+
+    b-field(label="Twitterアカウント" label-position="on-border" v-if="app.debug_mode_p")
+      b-input(type="text" v-model="$parent.new_twitter_key" size="is-small")
 </template>
 
 <script>
@@ -60,6 +63,7 @@ export default {
       const params = {
         user_name:        this.$parent.new_name,
         user_description: this.$parent.new_description,
+        user_twitter_key: this.$parent.new_twitter_key,
         croped_image:     this.$parent.croped_image,
       }
 

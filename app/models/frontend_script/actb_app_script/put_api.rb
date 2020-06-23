@@ -63,6 +63,10 @@ module FrontendScript
           current_user.profile.update!(description: v)
         end
 
+        if v = params[:user_twitter_key]
+          current_user.profile.update!(twitter_key: v)
+        end
+
         { current_user: current_user_json }
       end
 

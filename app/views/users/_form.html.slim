@@ -7,12 +7,15 @@
   .control
     = form.email_field(:email, class: "input", required: true)
 
-- if AppConfig[:colosseum_battle_enable]
-  = form.fields_for(:profile) do |form|
-    .field
-      = form.label(:description, class: "label")
-      .control
-        = form.text_field(:description, class: "input", rows: [form.object.description.to_s.lines.count, 1].max)
+= form.fields_for(:profile) do |form|
+  .field
+    = form.label(:twitter_key, class: "label")
+    .control
+      = form.text_field(:twitter_key, class: "input")
+  .field
+    = form.label(:description, class: "label")
+    .control
+      = form.text_field(:description, class: "input", rows: [form.object.description.to_s.lines.count, 1].max)
 
 .field
   = form.label(:avatar, class: "label")

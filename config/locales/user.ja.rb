@@ -24,6 +24,7 @@
         },
         profile: {
           :description => "自己紹介",
+          :twitter_key => "Twitterアカウント",
         },
       },
     },

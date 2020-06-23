@@ -147,7 +147,7 @@ module FrontendScript
     end
 
     def current_user_json
-      current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating, :skill_key, :description])
+      current_user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :rating, :skill_key, :description, :twitter_key])
     end
 
     def users

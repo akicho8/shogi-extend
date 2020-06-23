@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_172500) do
+ActiveRecord::Schema.define(version: 2020_06_23_172600) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -475,6 +475,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_172500) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "description", null: false
+    t.string "twitter_key", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 

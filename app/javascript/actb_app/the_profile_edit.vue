@@ -31,6 +31,7 @@ export default {
       croped_image:     null,   // 切り取った画像
       new_name:         null,   // 変更した名前
       new_description:  null,   // プロフィール
+      new_twitter_key:  null,   // Twitterアカウント
     }
   },
 
@@ -52,16 +53,20 @@ export default {
         this.unwatch_func()
       }
 
-      this.p_mode       = "the_profile_edit_form"
-      this.changed_p    = false
-      this.croped_image = null
-      this.new_name         = this.app.current_user.name
+      this.p_mode          = "the_profile_edit_form"
+      this.changed_p       = false
+      this.croped_image    = null
+
+      this.new_name        = this.app.current_user.name
       this.new_description = this.app.current_user.description
+      this.new_twitter_key = this.app.current_user.twitter_key
 
       this.unwatch_func = this.$watch(() => [
         this.croped_image,
+
         this.new_name,
         this.new_description,
+        this.new_twitter_key,
       ], () => this.changed_p = true, {deep: false})
     },
   },

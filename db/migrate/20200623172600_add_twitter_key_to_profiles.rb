@@ -18,11 +18,10 @@
 # User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
-class Profile < ApplicationRecord
-  belongs_to :user
-
-  before_validation do
-    self.description = description.to_s.strip
-    self.twitter_key = twitter_key.to_s.strip
+class AddTwitterKeyToProfiles < ActiveRecord::Migration[6.0]
+  def change
+    change_table :profiles do |t|
+      t.string :twitter_key, null: false
+    end
   end
 end

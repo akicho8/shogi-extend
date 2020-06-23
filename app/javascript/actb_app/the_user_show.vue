@@ -6,6 +6,8 @@
         img.is-rounded(:src="ov_user_info.avatar_path")
       .user_name.has-text-weight-bold
         | {{ov_user_info.name}}
+      a.is-block.is-size-8(:href="twitter_url" :target="target_default" v-if="twitter_url")
+        | @{{ov_user_info.twitter_key}}
       .rate_container.has-text-weight-bold(v-if="app.config.rating_display_p")
         | R{{ov_user_info.actb_main_xrecord.rating}}
       .skill_key.has-text-weight-bold.has-text-primary.is-size-5
@@ -60,6 +62,12 @@ export default {
           win:  this.ov_user_info.actb_main_xrecord.win_count,
           lose: this.ov_user_info.actb_main_xrecord.lose_count,
         },
+      }
+    },
+    twitter_url() {
+      const v = this.ov_user_info.twitter_key
+      if (v) {
+        return `https://twitter.com/${v}`
       }
     },
   },

@@ -18,11 +18,19 @@
 # User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
-class Profile < ApplicationRecord
-  belongs_to :user
+require 'rails_helper'
 
-  before_validation do
-    self.description = description.to_s.strip
-    self.twitter_key = twitter_key.to_s.strip
+RSpec.describe Profile, type: :model do
+  include ActbSupportMethods
+
+  it do
+    assert { user1.description }
+    assert { user1.twitter_key }
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> .
+# >> 
+# >> Finished in 0.84416 seconds (files took 2.08 seconds to load)
+# >> 1 example, 0 failures
+# >> 
