@@ -37,8 +37,7 @@ javascript:
 = stylesheet_pack_tag "application", media: "all"
 = javascript_pack_tag "application"
 
-- unless content_for?(:twitter_card_registry)
-  - twitter_card_registry(description: "将棋に関連する便利サービスを提供するサイトです", image: "swars_battles_index.png")
-= yield(:twitter_card_registry)
+- @ogp_params ||= { description: "将棋に関連する便利サービスを提供するサイトです", image: "swars_battles_index.png" }
+== OgpCop.as_meta_tags(self, @ogp_params)
 
 = yield :head

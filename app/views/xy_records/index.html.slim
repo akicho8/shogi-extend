@@ -1,6 +1,6 @@
 - @page_title ||= "符号の鬼"
 
-- twitter_card_registry(card: "summary", title: @page_title, description: XyRuleInfo.description, image: "#{controller_name}.png")
+- ogp_params_set(card: "summary", title: @page_title, description: XyRuleInfo.description, image: "#{controller_name}.png")
 
 - content_for :head do
   = javascript_pack_tag("xy_master_app")

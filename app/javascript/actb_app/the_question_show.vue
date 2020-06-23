@@ -4,25 +4,27 @@
     //- // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     .delete.is-large(@click="delete_click_handle")
 
-    .has-text-centered
-      .question_title.has-text-weight-bold.is-size-4 {{question.title}}
+    //- b-button.right_top(icon-left="twitter" size="is-small" type="is-twitter") Tweet
 
-      //- https://buefy.org/documentation/tag/
+    .has-text-centered
+      .question_title.has-text-weight-bold.is-size-4.mt-4 {{question.title}}
+
       .mt-3
+        //- https://buefy.org/documentation/tag/
         b-field(grouped group-multiline position="is-centered")
           .control
             b-taglist.is_clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
-              b-tag(type="is-dark") 作者
-              b-tag(type="is-info") {{question.display_author}}
+              b-tag(type="is-primary") 作者
+              b-tag(type="is-grey") {{question.display_author}}
           .control
             b-taglist(attached)
-              b-tag(type="is-dark") 高評価
-              b-tag(type="is-info")
+              b-tag(type="is-primary") 高評価
+              b-tag(type="is-grey")
                 | {{float_to_perc2(question.good_rate)}} %
           .control
             b-taglist(attached)
-              b-tag(type="is-dark") 正解率
-              b-tag(type="is-info")
+              b-tag(type="is-primary") 正解率
+              b-tag(type="is-grey")
                 template(v-if="question.ox_record.ox_total === 0")
                   | ?
                 template(v-else)
@@ -49,10 +51,13 @@
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
         )
 
-    .vote_container.is-flex
+    .vote_container.is-flex.mt-4
       the_history_row_vote(:row="new_ov_question_info")
 
-    .box.question_description.has-background-white-ter.is-shadowless.is-size-7(v-if="question.description")
+    .tweet_button_container.buttons.is-centered.mt-5
+      b-button.has-text-weight-bold(rounded icon-left="twitter" size="is-small" type="is-twitter" tag="a" :href="tweet_intent_url(permalink_url)" :target="target_default") ツイート
+
+    .box.question_description.has-background-white-ter.is-shadowless.is-size-7.mt-5(v-if="question.description")
       | {{question.description}}
 
     the_question_show_message(:question="question")
@@ -69,22 +74,36 @@ export default {
   mixins: [
     support,
   ],
+
   props: {
     ov_question_info: { type: Object, required: true },
   },
+
   components: {
     the_history_row_vote,
     the_question_show_message,
     question_author,
   },
+
   data() {
     return {
       tab_index: 0,
       new_ov_question_info: this.ov_question_info,
     }
   },
-  created() {
+
+  beforeCreate() {
+    window.history.pushState(this.$options.name, null, "")
   },
+
+  created() {
+    window.history.replaceState("", null, this.permalink_url)
+  },
+
+  beforeDestroy() {
+    window.history.back()
+  },
+
   methods: {
     delete_click_handle() {
       this.sound_play("click")
@@ -118,6 +137,11 @@ export default {
     question() {
       return this.new_ov_question_info.question
     },
+    permalink_url() {
+      const url = new URL(location)
+      url.searchParams.set("question_id", this.question.id)
+      return url.toString()
+    },
   },
 }
 </script>
@@ -127,7 +151,12 @@ export default {
 .the_question_show
   &.modal-card
     .modal-card-body
-      padding: 1rem 0
+      padding: 0 0 0.5rem
+
+    .right_top
+      position: absolute
+      top: 0
+      right: 0
 
     .tag
       font-weight: bold
@@ -139,7 +168,6 @@ export default {
       margin-top: 1.5rem
 
     .vote_container
-      margin-top: 0.8rem
       justify-content: center
 
       .the_history_row_vote
@@ -151,5 +179,5 @@ export default {
 
     .question_description
       white-space: pre-line
-      margin: 1.2rem 1rem
+      margin: 0 1rem
 </style>

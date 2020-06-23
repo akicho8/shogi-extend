@@ -36,43 +36,7 @@ module ApplicationHelper
     }.html_safe
   end
 
-  def twitter_card_registry(options = {})
-    provide(:twitter_card_registry, twitter_card_tag_build(options))
-  end
-
-  # twitter は投稿時に指定された URL を見ているだけで og:url や twitter:url を見ていない
-  def twitter_card_tag_build(options = {})
-    options = options.clone
-
-    # title などは空にすると twitter card がでない
-    twitter_card_default.each do |key, value|
-      options[key] = options[key].presence || value
-    end
-
-    twitter_prefix_set = [:card, :site, :creator].to_set
-
-    options.collect { |key, val|
-      if val.present?
-        if twitter_prefix_set.include?(key)
-          prefix = :twitter
-        else
-          prefix = :og
-        end
-        if key == :image
-          val = image_url(val)
-        end
-        tag.meta(name: "#{prefix}:#{key}", content: val)
-      end
-    }.compact.join.html_safe
-  end
-
-  def twitter_card_default
-    {
-      card: "summary_large_image", # summary or summary_large_image
-      site: "@sgkinakomochi",
-      title: AppConfig[:app_name],
-      creator: "@sgkinakomochi",
-      image: "apple-touch-icon.png",
-    }
+  def ogp_params_set(options = {})
+    @ogp_params = options
   end
 end

@@ -5,8 +5,9 @@ module ToolBelt
     def build
       out = super
 
-      if v = h.content_for(:twitter_card_registry)
-        out << h.tag.b("twitter_card_registry")
+      if v = h.instance_variable_get(:@ogp_params)
+        v = OgpCop.as_meta_tags(h, v)
+        out << h.tag.b("ogp_params_set")
         out << h.tag.pre(v.gsub(/\>/, ">\n"))
       end
 

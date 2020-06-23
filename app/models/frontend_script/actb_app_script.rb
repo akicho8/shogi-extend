@@ -54,6 +54,16 @@ module FrontendScript
         return public_send(v)
       end
 
+      # for OGP
+      if e = current_question
+        c.instance_variable_set(:@ogp_params, {
+            :title       => e.title,
+            :description => e.description,
+            :image       => e.shared_image_params,
+            :creator     => e.user.twitter_key,
+          })
+      end
+
       # JS 側からいきなりログイン画面に飛ばすとどこに戻ればよいかわからない
       # なのでいったんここに飛ばして return_to を設定させてログイン画面に飛ぶ
       if params[:goto_login]
@@ -69,6 +79,7 @@ module FrontendScript
       info[:mode] ||= "lobby"   # FIXME: とる
       info[:api_path] = h.url_for(script_link_path)
       info[:question_default] = question_default
+
       if current_user
         info[:current_user] = current_user_json
 
@@ -152,6 +163,18 @@ module FrontendScript
 
     def users
       [current_user, User.bot]
+    end
+
+    concerning :QuestionOgpMethods do
+      def current_question
+        @current_question ||= __current_question
+      end
+
+      def __current_question
+        if v = params[:question_id]
+          Actb::Question.find(v)
+        end
+      end
     end
 
     concerning :SortMod do

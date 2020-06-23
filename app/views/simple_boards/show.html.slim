@@ -1,6 +1,6 @@
 - @page_title ||= "ただの将棋盤"
 
-- twitter_card_registry(title: @page_title, description: "定跡を覚えるためのただの将棋盤です", image: "#{controller_name}.png")
+- ogp_params_set(title: @page_title, description: "定跡を覚えるためのただの将棋盤です", image: "#{controller_name}.png")
 
 - content_for :head do
   = javascript_pack_tag("simple_board_app")

@@ -3,7 +3,7 @@ ruby:
   if mobile_agent?
     @override_page_title ||= "ウォーズ検索"
   end
-  twitter_card_registry(twitter_card_options)
+  ogp_params_set(twitter_card_options)
   @apple_touch_icon ||= "apple-touch-icon-swars-search.png"
 
 = render partial: "external_app"

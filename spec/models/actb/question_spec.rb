@@ -95,24 +95,15 @@ module Actb
       assert { question1.read_attribute(:init_sfen) == "9/9/9/9/9/9/9/9/9 b - 1" }
       assert { question1.init_sfen == "position sfen 9/9/9/9/9/9/9/9/9 b - 1" }
     end
+
+    it "main_sfen" do
+      assert { question1.main_sfen == "position sfen 9/9/9/9/9/9/9/9/9 b - 1 moves G*5b" }
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..F....
+# >> ........
 # >> 
-# >> Failures:
-# >> 
-# >>   1) Actb::Question 子がエラーなら親を保存しない is expected to raise ActiveRecord::RecordInvalid
-# >>      Failure/Error: Unable to find - to read failed line
-# >>        expected ActiveRecord::RecordInvalid but nothing was raised
-# >>      # -:68:in `block (3 levels) in <module:Actb>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >> 
-# >> Finished in 0.80586 seconds (files took 2.25 seconds to load)
-# >> 7 examples, 1 failure
-# >> 
-# >> Failed examples:
-# >> 
-# >> rspec -:62 # Actb::Question 子がエラーなら親を保存しない is expected to raise ActiveRecord::RecordInvalid
+# >> Finished in 1.17 seconds (files took 2.73 seconds to load)
+# >> 8 examples, 0 failures
 # >> 

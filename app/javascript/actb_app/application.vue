@@ -223,6 +223,15 @@ export default {
       this.debug_alert("lobby_setup")
       this.__assert__(this.$ac_lobby == null)
       this.$ac_lobby = this.ac_subscription_create({channel: "Actb::LobbyChannel"})
+
+      this.after_lobby_setup()
+    },
+
+    after_lobby_setup() {
+      const id = this.$route.query.question_id
+      if (id) {
+        this.ov_question_info_set(id)
+      }
     },
 
     lobby_messages_setup() {

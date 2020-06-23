@@ -223,6 +223,16 @@ module Actb
       end
     end
 
+    # 初期配置 + 1問目
+    def main_sfen
+      "#{init_sfen} moves #{moves_answers.first.moves_str}"
+    end
+
+    # Twitter画像が表示できる url_for にそのまま渡すパラメータ
+    def shared_image_params
+      [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, image_view_point: "black"]
+    end
+
     # 出題用
     def as_json_type3
       as_json({
