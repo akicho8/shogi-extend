@@ -38,6 +38,7 @@ chdir APP_ROOT do
   # system! 'rails db:environment:set RAILS_ENV=development'
   system! 'rails db:drop:_unsafe'
   system! 'rails db:migrate:reset'
+  system! 'rails db:structure:dump'
   system! 'SETUP=1 rails db:seed'
   system! 'rails aam'
 
