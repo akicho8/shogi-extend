@@ -4,7 +4,7 @@
   .mdi.mdi-close.maru_batu.batu(v-if="mi.latest_ox === 'mistake'")
 
   //////////////////////////////////////////////////////////////////////////////// ○連勝
-  .straight_win_straight_lose.is-size-8.has-text-weight-bold
+  .straight_win_straight_lose.is-size-8.has-text-weight-bold(v-if="app.debug_mode_p")
     template(v-if="xrecord.straight_win_count >= 1")
       .straight_win_count {{xrecord.straight_win_count}}連勝中！
     template(v-else-if="xrecord.straight_lose_count >= 1")
@@ -15,13 +15,13 @@
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
   figure.image
     img.is-rounded(:src="membership.user.avatar_path")
-  .user_name.has-text-weight-bold.is-size-7
+  .user_name.has-text-weight-bold.is-size-8
     | {{membership.user.name}}
 
   //////////////////////////////////////////////////////////////////////////////// ルール毎に異なる
   .question_progress.is-size-7.has-text-weight-bold
     | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
-  .question_progress_detail
+  .question_progress_detail(v-if="app.debug_mode_p")
     template(v-if="droped_ox_list.length === 0")
       | &nbsp;
     template(v-for="ox_mark_key in droped_ox_list")

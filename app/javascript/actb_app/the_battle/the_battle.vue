@@ -12,9 +12,10 @@
       | {{app.question_index + 1}}問目
 
   template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
-    question_author(:question="app.current_question")
+    question_author(:question="app.current_question" :title_display_p="false")
     the_battle_question_marathon_rule(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
     the_battle_question_singleton_rule(v-if="app.battle.rule.key === 'singleton_rule'")
+    the_room_message
 
   template(v-if="app.sub_mode === 'mistake_mode'")
     .mistake_mode_container.has-text-centered
@@ -38,8 +39,6 @@
         .buttons.is-centered.are-small
           b-button(@click="app.battle_unsubscribe") 切断(自分)
           b-button(@click="app.member_disconnect_handle(true)") 切断(相手)
-
-  the_room_message
 </template>
 
 
@@ -78,7 +77,7 @@ export default {
     justify-content: center
     align-items: center
   .deden_mode_container
-    font-size: 5rem
+    font-size: 4rem
   .mistake_mode_container
-    font-size: 5rem
+    font-size: 4rem
 </style>

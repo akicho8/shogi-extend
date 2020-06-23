@@ -1,6 +1,6 @@
 <template lang="pug">
 .question_author.has-text-centered
-  .question_title.has-text-weight-bold.is-size-6
+  .question_title.has-text-weight-bold.is-size-6(v-if="title_display_p && question.title")
     | {{question.title}}
 
   .question_user.is-size-9.has-text-grey
@@ -22,6 +22,9 @@ import { support } from "../support.js"
 
 export default {
   name: "question_author",
+  props: {
+    title_display_p: { type: Boolean, required: false, default: true, },
+  },
   mixins: [
     support,
   ],
