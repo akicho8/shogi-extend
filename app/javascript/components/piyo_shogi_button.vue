@@ -4,6 +4,7 @@
       img.left_icon(:src="piyo_shogi_icon")
     span(v-if="!icon_only")
       | ぴよ将棋
+      span(v-if="web_version_p") ｗ
 </template>
 
 <script>
@@ -21,6 +22,11 @@ export default {
   },
   computed: {
     piyo_shogi_icon() { return piyo_shogi_icon }, // TODO: Vue.js の重複強制どうにかならんの？
+
+    // 「ぴよ将棋w」に飛ぼうとしている？
+    web_version_p() {
+      return this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")
+    },
   },
 }
 </script>
