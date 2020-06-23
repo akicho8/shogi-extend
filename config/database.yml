@@ -1,7 +1,7 @@
 defaults: &defaults
   adapter: mysql2
   charset: utf8mb4
-  collation: utf8mb4_unicode_ci
+  collation: utf8mb4_bin
   encoding: utf8mb4
   host: 127.0.0.1
   password:
