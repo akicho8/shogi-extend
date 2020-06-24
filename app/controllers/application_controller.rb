@@ -27,15 +27,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  concerning :ActiveModelSerializerMethods do
-    included do
-      # 効かないのはなぜ……？
-      #
-      # ▼active_model_serializers/serializers.md at v0.10.6 · rails-api/active_model_serializers
-      # https://github.com/rails-api/active_model_serializers/blob/v0.10.6/docs/general/serializers.md
-      #
-      # serialization_scope :view_context
-    end
+  # for devise
+  # ログインしたあとに移動するパス
+  # https://notsleeeping.com/archives/2487
+  def after_sign_in_path_for(resource_or_scope)
+    return_to = session[:return_to]
+    session[:return_to] = nil
+
+    # devise経由でログインしたときでも session と cookie に設定する
+    # これを入れないと管理者でログインしたときに devise ではログインしているが
+    # アプリではログインしたときは current_user が nil になってしまう
+    current_user_set(resource_or_scope)
+
+    return_to || :root
   end
 
   concerning :ChoreMethods do

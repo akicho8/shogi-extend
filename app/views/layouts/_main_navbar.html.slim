@@ -89,7 +89,7 @@ nav#main_nav.navbar.is-primary.is_screen_only
             = link_to("プロフィール", [current_user], class: "navbar-item")
             = link_to("設定", [:edit, current_user], class: "navbar-item")
             .navbar-divider
-            = link_to("ログアウト", [:session], method: :delete, class: "navbar-item")
+            = link_to("ログアウト", [:direct_session], method: :delete, class: "navbar-item")
             / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
         / こっちを使うと縦幅が大きくなってしまう

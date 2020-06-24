@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   ################################################################################ ログアウト
 
   # namespace :colosseum, path: "" do
-  resource :session, only: [:create, :destroy]
+  resource :direct_session, only: [:create, :destroy]
   # end
 
   ################################################################################ 将棋ウォーズ棋譜検索

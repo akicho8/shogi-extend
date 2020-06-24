@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class DirectSessionsController < ApplicationController
   def create
     user = User.create!
     flash[:toast_info] = "「#{user.name}」としてログインしました"

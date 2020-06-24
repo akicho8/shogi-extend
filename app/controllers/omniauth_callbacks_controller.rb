@@ -81,15 +81,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     :new_xuser_registration
   end
 
-  # ログインしたあとに移動するパス
-  # https://notsleeeping.com/archives/2487
-  def after_sign_in_path_for(resource_or_scope)
-    return_to = session[:return_to]
-    session[:return_to] = nil
-
-    return_to || :root
-  end
-
   private
 
   def auth
