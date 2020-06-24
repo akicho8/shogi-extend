@@ -211,7 +211,11 @@ module Actb
 
         # 追加 or 更新
         question[:moves_answers].each do |e|
-          moves_answer = moves_answers.find_or_initialize_by(id: e[:id])
+          if v = e[:id]
+            moves_answer = moves_answers.find(v)
+          else
+            moves_answer = moves_answers.build
+          end
           moves_answer.moves_str = e[:moves_str]
           moves_answer.end_sfen = e[:end_sfen]
           moves_answer.save!
