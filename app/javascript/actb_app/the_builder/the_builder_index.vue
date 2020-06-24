@@ -17,9 +17,10 @@
                 | {{$parent.question_counts[tab_info.key] || 0}}
 
   b-field.visible_toggle_checkboxes(grouped group-multiline)
-    .control(v-for="e in QuestionIndexColumnInfo.values")
-      b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="bool => cb_input_handle(e, bool)")
-        | {{e.name}}
+    template(v-for="e in QuestionIndexColumnInfo.values")
+      .control(v-if="e.scope.includes(app.user_type)")
+        b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="bool => cb_input_handle(e, bool)")
+          | {{e.name}}
 
   b-table.index_table.is-size-7(
     v-if="$parent.questions"
@@ -41,8 +42,13 @@
     :default-sort-direction="$parent.page_info.sort_order_default"
     :default-sort="[$parent.page_info.sort_column, $parent.page_info.sort_order]"
     @sort="$parent.sort_handle"
-  )
+    )
+
     template(slot-scope="props")
+      b-table-column(field="user.name"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id")
+        a(@click.stop="app.ov_user_info_set(props.row.user.id)")
+          | {{props.row.user.name}}
+
       b-table-column(field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
       b-table-column(field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
         a {{props.row.title || '？'}}

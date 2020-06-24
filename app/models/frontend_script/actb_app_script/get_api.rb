@@ -9,7 +9,12 @@ module FrontendScript
       def questions_fetch
         params[:per] ||= Actb::Config[:api_questions_fetch_per]
 
-        s = current_user.actb_questions
+        if current_user.sysop?
+          s = Actb::Question.all
+        else
+          s = current_user.actb_questions
+        end
+
         if v = params[:folder_key]
           # OPTIMIZE: folder_id を最初に特定して join せずにひくと速くなるはず
           s = s.joins(:folder).where(Actb::Folder.arel_table[:type].eq("actb/#{v}_box".classify))
@@ -90,12 +95,16 @@ module FrontendScript
       def sort_scope_for_questions(s)
         if sort_column && sort_order
           columns = sort_column.scan(/\w+/)
-          if columns.first == "ox_record"
+          case columns.first
+          when "ox_record"
             # { key: "o_rate",           name: "正解率",     short_name: "正率",     visible: true,  },
             # { key: "o_count",          name: "正解数",     short_name: "正解",     visible: false, },
             # { key: "x_count",          name: "誤答数",     short_name: "誤答",     visible: false, },
             order = Actb::OxRecord.order(columns.last => sort_order)
             s = s.joins(:ox_record).merge(order)
+          when "user"
+            order = User.order(columns.last => sort_order)
+            s = s.joins(:user).merge(order)
           else
             s = sort_scope(s)
           end

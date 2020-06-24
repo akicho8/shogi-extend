@@ -360,6 +360,15 @@ export default {
         return this.current_user.key === "sysop"
       }
     },
+    user_type() {
+      if (this.current_user) {
+        if (this.current_user.key === "sysop") {
+          return "admin"
+        } else {
+          return "general"
+        }
+      }
+    },
   },
 }
 </script>
