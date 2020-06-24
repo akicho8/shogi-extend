@@ -30,7 +30,7 @@ export default {
     },
 
     piyo_shogi_url_keys() {
-      return ["turn", "flip", "sente_name", "gote_name", "game_name", "sfen"]
+      return ["num", "flip", "sente_name", "gote_name", "game_name", "sfen"]
     },
   },
 }
