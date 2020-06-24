@@ -14,8 +14,12 @@
         b-field(grouped group-multiline position="is-centered")
           .control
             b-taglist.is_clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
-              b-tag(type="is-primary") 作者
-              b-tag(type="is-grey") {{question.display_author}}
+              b-tag(type="is-primary")
+                template(v-if="question.other_author")
+                  | 投稿
+                template(v-else)
+                  | 作者
+              b-tag(type="is-grey") {{question.user.name}}
           .control
             b-taglist(attached)
               b-tag(type="is-primary") 高評価
@@ -53,6 +57,26 @@
 
     .vote_container.is-flex.mt-4
       the_history_row_vote(:row="new_ov_question_info")
+
+    .other_author_container.mt-5(v-if="question.other_author || question.source_media_name")
+      b-field(grouped group-multiline position="is-centered")
+        template(v-if="question.other_author")
+          .control
+            b-taglist(attached)
+              b-tag(type="is-primary") 作者
+              b-tag(type="is-grey") {{question.other_author}}
+        template(v-if="question.source_media_name")
+          .control
+            b-taglist(attached)
+              b-tag(type="is-primary") 出典
+              b-tag(type="is-grey")
+                | {{question.source_media_name}}
+                span.ml-1(v-if="question.source_published_on")
+                  | {{question.source_published_on}}
+
+    template(v-if="question.source_media_url")
+      .has-text-centered.mt-3
+        a(:href="question.source_media_url") {{question.source_media_url}}
 
     .tweet_button_container.buttons.is-centered.mt-5
       b-button.has-text-weight-bold(rounded icon-left="twitter" size="is-small" type="is-twitter" tag="a" :href="tweet_intent_url(permalink_url)" :target="target_default") ツイート
