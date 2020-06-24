@@ -26,6 +26,7 @@ export default {
       const params = {
         query:        this.query,
         zip_kifu_key: this.zip_kifu_key,
+        format:       "zip",
       }
 
       const url = this.legacy_url_build(this.$options.xhr_index_path, params)

@@ -161,7 +161,7 @@ export default {
     },
 
     legacy_url_build(url, params) {
-      const obj = new URL(this.as_full_url(url))
+      const obj = new URL(this.as_full_url(url)) // URL には http から始まるURLしか渡せないので取ってはいけない
       _.each(params, (v, k) => obj.searchParams.set(k, v))
       return obj.toString()
     },
