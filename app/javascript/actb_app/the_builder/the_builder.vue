@@ -279,7 +279,7 @@ export default {
 
     // 「新規作成」ボタン
     builder_new_handle() {
-      const attributes = _.cloneDeep(this.question_default)
+      const attributes = _.cloneDeep(this.app.info.question_default_attributes)
       const question = new Question(attributes)
       this.question_edit_for(question)
     },
@@ -400,11 +400,6 @@ export default {
     question_new_record_p() {
       this.__assert__(this.question, "this.question != null")
       return this.question.id == null
-    },
-
-    // 問題の初期値
-    question_default() {
-      return this.app.info.question_default
     },
   },
 }

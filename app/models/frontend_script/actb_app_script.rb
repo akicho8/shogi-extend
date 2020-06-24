@@ -78,7 +78,7 @@ module FrontendScript
       info[:config] = Actb::Config
       info[:mode] ||= "lobby"   # FIXME: とる
       info[:api_path] = h.url_for(script_link_path)
-      info[:question_default] = question_default
+      info[:question_default_attributes] = Actb::Question.default_attributes
 
       if current_user
         info[:current_user] = current_user_json
@@ -119,42 +119,6 @@ module FrontendScript
       if v = current_battle_id
         Actb::Battle.find_by(id: v)
       end
-    end
-
-    # リアクティブになるように空でもカラムは作っておくこと
-    def question_default
-      default = {
-        :title               => nil,
-        :description         => nil,
-        :hint_desc           => nil,
-        :time_limit_sec      => 10.seconds,
-        :moves_answers       => [],
-        :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
-
-        :difficulty_level    => 1,
-        :lineage             => { key: "詰将棋" },
-        :folder_key          => "active",
-
-        # 他者が作者
-        :other_author        => nil,
-        :source_media_name   => nil,
-        :source_media_url    => nil,
-        :source_published_on => nil,
-      }
-
-      if Rails.env.development?
-        default.update({
-            :title            => "(title)",
-            :time_limit_sec   => 30.seconds,
-            :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
-            :moves_answers => [
-              :moves_str => "1c1b",
-              :end_sfen  => "7gk/8G/7G1/7N1/9/9/9/9/9 w 2r2bg4s3n4l18p 2",
-            ],
-          })
-      end
-
-      default
     end
 
     def current_user_json

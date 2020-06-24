@@ -38,10 +38,54 @@
 
 module Actb
   class Question < ApplicationRecord
+    # Vueでリアクティブになるように空でもカラムは作っておくこと
+    def self.default_attributes
+      default = {
+        :title               => nil,
+        :description         => nil,
+        :hint_desc           => nil,
+        :time_limit_sec      => 10.seconds,
+        :moves_answers       => [],
+        :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
+
+        :difficulty_level    => 1,
+        :lineage             => { key: "詰将棋" },
+        :folder_key          => "active",
+
+        # 他者が作者
+        :other_author        => nil,
+        :source_media_name   => nil,
+        :source_media_url    => nil,
+        :source_published_on => nil,
+      }
+
+      if Rails.env.development?
+        default.update({
+            :title            => "(title)",
+            :time_limit_sec   => 30.seconds,
+            :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
+            :moves_answers => [
+              :moves_str => "1c1b",
+              :end_sfen  => "7gk/8G/7G1/7N1/9/9/9/9/9 w 2r2bg4s3n4l18p 2",
+            ],
+          })
+      end
+
+      default
+    end
+
+    # 一覧用
     def self.json_type5
       {
-        methods: [:folder_key],
-        include: [:user, :moves_answers, :lineage, :ox_record],
+        methods: [
+          :folder_key,
+        ],
+        include: [
+          :user,
+          :moves_answers,
+          :lineage,
+          :ox_record,
+        ],
         only: [
           :id,
           :init_sfen,
@@ -73,8 +117,8 @@ module Actb
     end
 
     belongs_to :user, class_name: "::User" # 作者
-    belongs_to :folder # , class_name: "Actb::Folder"
-    belongs_to :lineage # , class_name: "Actb::Lineage"
+    belongs_to :folder
+    belongs_to :lineage
 
     has_many :histories, dependent: :destroy # 出題履歴
     has_many :messages, class_name: "Actb::QuestionMessage", dependent: :destroy # コメント
@@ -111,13 +155,6 @@ module Actb
       ].each do |key|
         public_send("#{key}=", public_send(key).presence)
       end
-
-      # self.title ||= "#{self.class.count.next}番目の問題"
-
-      # self.difficulty_level ||= 0
-
-      # self.o_count ||= 0
-      # self.x_count ||= 0
 
       self.good_rate ||= 0
 
