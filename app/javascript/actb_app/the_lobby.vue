@@ -10,6 +10,8 @@
           | {{app.current_user.name}}
         span.skill_key.has-text-weight-bold.is-size-6.ml-1
           | {{app.current_user.skill_key}}
+          b-tag(rounded)
+            | {{app.current_user.skill_key}}
         span.rating.has-text-weight-bold.is-size-7.ml-1(v-if="development_p")
           | {{app.current_user.rating}}
 
@@ -70,7 +72,10 @@ export default {
       .name_with_rating
         margin-left: 0.5rem
         .name
-          .skill_key
+        .skill_key
+          .tag
+            position: relative
+            top: -0.075rem
         .rating
 
   .title
