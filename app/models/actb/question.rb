@@ -312,6 +312,7 @@ module Actb
             },
             ox_record: {},
             moves_answers: {},
+            lineage: { only: [:key] },
             messages: {
               only: [:id, :body, :created_at],
               include: {

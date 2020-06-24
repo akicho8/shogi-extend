@@ -58,13 +58,19 @@
     .vote_container.is-flex.mt-4
       the_history_row_vote(:row="new_ov_question_info")
 
-    .other_author_container.mt-5(v-if="question.other_author || question.source_media_name")
+    .other_author_container.mt-5
       b-field(grouped group-multiline position="is-centered")
+        .control
+          b-taglist(attached)
+            b-tag(type="is-primary") 種類
+            b-tag(type="is-grey") {{question.lineage.key}}
+
         template(v-if="question.other_author")
           .control
             b-taglist(attached)
               b-tag(type="is-primary") 作者
               b-tag(type="is-grey") {{question.other_author}}
+
         template(v-if="question.source_media_name")
           .control
             b-taglist(attached)
