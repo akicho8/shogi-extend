@@ -37,7 +37,11 @@ module FrontendScript
       end
 
       def save_handle
-        question = current_user.actb_questions.find_or_initialize_by(id: params[:question][:id])
+        if id = params[:question][:id]
+          question = Actb::Question.find(id)
+        else
+          question = current_user.actb_questions.build
+        end
         begin
           question.together_with_params_came_from_js_update(params)
         rescue ActiveRecord::RecordInvalid => error

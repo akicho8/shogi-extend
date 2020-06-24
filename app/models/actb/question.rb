@@ -216,7 +216,6 @@ module Actb
           moves_answer.end_sfen = e[:end_sfen]
           moves_answer.save!
         end
-
       end
     end
 
