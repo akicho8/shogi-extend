@@ -58,12 +58,17 @@
     .vote_container.is-flex.mt-4
       the_history_row_vote(:row="new_ov_question_info")
 
-    .other_author_container.mt-5
+    .mt-5
       b-field(grouped group-multiline position="is-centered")
         .control
           b-taglist(attached)
             b-tag(type="is-primary") 種類
             b-tag(type="is-grey") {{question.lineage.key}}
+
+        .control
+          b-taglist(attached)
+            b-tag(type="is-primary") 出題
+            b-tag(type="is-grey") {{question.histories_count}}回
 
         template(v-if="question.other_author")
           .control
