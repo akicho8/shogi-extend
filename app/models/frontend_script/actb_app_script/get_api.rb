@@ -2,20 +2,12 @@ module FrontendScript
   class ActbAppScript
 
     concern :GetApi do
-      included do
-        QUESTIONS_FETCH_PER = 10
-        LOBBY_MESSAGE_MAX   = 64
-
-        HISTORY_FETCH_MAX   = 50
-        CLIP_FETCH_MAX      = 50
-      end
-
       # 問題一覧
       # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch
       # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch&folder_key=active
       # app/javascript/actb_app/models/question_column_info.js
       def questions_fetch
-        params[:per] ||= QUESTIONS_FETCH_PER
+        params[:per] ||= Actb::Config[:api_questions_fetch_per]
 
         s = current_user.actb_questions
         if v = params[:folder_key]
@@ -44,13 +36,13 @@ module FrontendScript
 
       # http://localhost:3000/script/actb-app.json?remote_action=history_records_fetch
       def history_records_fetch
-        s = current_user.actb_histories.order(created_at: :desc).limit(HISTORY_FETCH_MAX)
+        s = current_user.actb_histories.order(created_at: :desc).limit(Actb::Config[:api_history_fetch_max])
         { history_records: s.as_json(only: [:id], include: {:battle => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ox_mark => {only: :key}}, methods: [:good_p, :bad_p, :clip_p]) }
       end
 
       # http://localhost:3000/script/actb-app.json?remote_action=clip_records_fetch
       def clip_records_fetch
-        s = current_user.actb_clip_marks.order(created_at: :desc).limit(CLIP_FETCH_MAX)
+        s = current_user.actb_clip_marks.order(created_at: :desc).limit(Actb::Config[:api_clip_fetch_max])
         { clip_records: s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}}, methods: [:good_p, :bad_p, :clip_p]) }
       end
 
@@ -88,7 +80,7 @@ module FrontendScript
 
       # http://localhost:3000/script/actb-app.json?remote_action=lobby_messages_fetch
       def lobby_messages_fetch
-        lobby_messages = Actb::LobbyMessage.order(:created_at).includes(:user).last(LOBBY_MESSAGE_MAX)
+        lobby_messages = Actb::LobbyMessage.order(:created_at).includes(:user).last(Actb::Config[:api_lobby_message_max])
         lobby_messages = lobby_messages.as_json(only: [:body], include: {user: {only: [:id, :key, :name], methods: [:avatar_path]}})
         { lobby_messages: lobby_messages }
       end

@@ -44,6 +44,12 @@ module Actb
     # -------------------------------------------------------------------------------- 問題作成
     :hint_enable                     => false, # ヒントカラムを有効にする？
     :save_and_back_to_index          => true,  # 「保存」したら一覧に戻る？
+
+    # -------------------------------------------------------------------------------- API
+    :api_questions_fetch_per         => 5,
+    :api_lobby_message_max           => 50,
+    :api_history_fetch_max           => 50,
+    :api_clip_fetch_max              => 50,
   }
 
   if Rails.env.staging? || Rails.env.production?
@@ -54,6 +60,7 @@ module Actb
         :room_messages_window_height  => 5,     # 部屋での表示行数
         :matching_forgo_second        => 60,    # ○秒たったらマッチングを諦める(nullなら無限)
         :action_cable_debug           => false, # ActionCable関連デバッグモード
+        :api_questions_fetch_per      => 50,
       })
   end
 
