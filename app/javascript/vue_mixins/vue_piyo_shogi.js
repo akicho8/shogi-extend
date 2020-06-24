@@ -3,15 +3,62 @@
 
 export default {
   methods: {
-    piyo_shogi_full_url(params) {
+    // app, web 自動切り替え
+    // app のとき path があれば kif の URL を渡す
+    piyo_shogi_auto_url(params) {
+      if (this.piyo_shogi_app_p) {
+        if (params.path) {
+          return this.piyo_shog_native_url(params)
+        } else {
+          return this.piyo_shogi_sfen_url(params)
+        }
+      } else {
+        return this.piyo_shogi_sfen_url(params)
+      }
+    },
+
+    // ぴよ将棋はコンテンツを見ているのではなく .kif という拡張子を見ているので format=kif にはできない
+    piyo_shog_native_url(params) {
+      this.__assert__(params.path, "params.path")
+      const url = new URL(this.as_full_url(params.path))
+      const a = {...params, url: `${url}.kif`}
+      return this.piyo_shogi_url_build(a, ["num", "flip", "url"])
+    },
+
+    // app, web 自動切り替え
+    // 常にSFENを渡す
+    piyo_shogi_sfen_url(params) {
+      this.__assert__(params.sfen, "params.sfen")
+      return this.piyo_shogi_url_build(params, ["num", "flip", "sente_name", "gote_name", "game_name", "sfen"])
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// private
+
+    piyo_shogi_url_build(params, keys) {
+      params = {...params, num: params.turn} // turn -> num
+
+      return [
+        this.piyo_shogi_url_prefix,
+        "?",
+        this.piyo_shogi_url_params_build(params, keys),
+      ].join("")
+    },
+
+    piyo_shogi_url_params_build(params, keys, encode) {
       const values = []
-      this.piyo_shogi_url_keys.forEach(e => {
-        const v = params[e]
+      keys.forEach(e => {
+        let v = params[e]
         if (v != null) {
-          values.push([e, encodeURIComponent(v)].join("="))
+          if (this.piyo_shogi_app_p) {
+            // 「ぴよ将棋」のアプリ版はエンコードするとまったく読めなくなる
+            // そして .kif が最後に来るように調整しないといけない
+          } else {
+            v = encodeURIComponent(v)
+          }
+          values.push([e, v].join("="))
         }
       })
-      return [this.piyo_shogi_url_prefix, "?", values.join("&")].join("")
+      return values.join("&")
     },
   },
 
@@ -27,10 +74,6 @@ export default {
       } else {
         return "https://www.studiok-i.net/ps/"
       }
-    },
-
-    piyo_shogi_url_keys() {
-      return ["num", "flip", "sente_name", "gote_name", "game_name", "sfen"]
     },
   },
 }

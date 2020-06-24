@@ -115,7 +115,7 @@ export default {
     },
 
     piyo_shogi_app_with_params_url(record) {
-      return this.piyo_shogi_full_url({sfen: record.sfen_body, num: this.trick_start_turn_for(record), flip: record.flip, ...record.piyo_shogi_base_params})
+      return this.piyo_shogi_auto_url({path: record.show_path, sfen: record.sfen_body, turn: this.trick_start_turn_for(record), flip: record.flip, ...record.piyo_shogi_base_params})
     },
 
     kento_app_with_params_url(record) {

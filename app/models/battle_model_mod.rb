@@ -233,6 +233,9 @@ module BattleModelMod
     }
   end
 
+  # 直前開く○○
+  # JSとは関係がない
+  # Rails側だけの仕組み → JS側で処理したい
   concerning :PathMethods do
     def kento_app_path
       h.kento_app_path(sfen_info.kento_app_query_hash, display_turn)
@@ -242,10 +245,12 @@ module BattleModelMod
     # ・kento_app_url
     # ・piyo_shogi_app_url
 
+    # TODO: JS 側に渡して GVI.kento_full_url で遷移すること
     def kento_app_url
       h.kento_app_url(sfen_info.kento_app_query_hash, display_turn)
     end
 
+    # TODO: piyo_shogi_base_params を含めて JS 側に渡して GVI.piyo_shogi_auto_url で遷移すること
     def piyo_shogi_app_url
       url = h.full_url_for([self, format: :kif])
       h.piyo_shogi_app_url(url, num: display_turn)

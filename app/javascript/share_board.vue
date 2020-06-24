@@ -350,7 +350,7 @@ export default {
     snapshot_image_url() { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
 
     // 外部アプリ
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_full_url({sfen: this.play_mode_body, turn: this.turn_offset, flip: this.board_flip, game_name: this.current_title}) },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({path: this.current_url, sfen: this.play_mode_body, turn: this.turn_offset, flip: this.board_flip, game_name: this.current_title}) },
     kento_app_with_params_url()      { return this.kento_full_url({sfen: this.play_mode_body, turn: this.turn_offset, flip: this.board_flip})   },
 
     ////////////////////////////////////////////////////////////////////////////////
