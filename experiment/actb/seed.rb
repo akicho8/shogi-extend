@@ -48,7 +48,7 @@ User.setup
     end
   end
 end
-Actb::Question.count           # => 16
+Actb::Question.count           # => 23
 
 question = Actb::Question.first!
 question.lineage.key               # => "詰将棋"
@@ -57,7 +57,7 @@ question.lineage.key               # => "詰将棋"
 question = Actb::Question.first!
 # question.update!(folder: question.user.actb_trash_box) の方法はださい
 question.user.actb_trash_box.questions << question
-question.folder # => #<Actb::TrashBox id: 225, user_id: 75, type: "Actb::TrashBox", created_at: "2020-06-16 14:48:18", updated_at: "2020-06-16 14:48:18">
+question.folder # => #<Actb::TrashBox id: 54, user_id: 18, type: "Actb::TrashBox", created_at: "2020-06-24 11:25:29", updated_at: "2020-06-24 11:25:29">
 
 # 2番目の問題は下書きへ
 question = Actb::Question.second!
@@ -81,18 +81,18 @@ battle = room.battles.create! do |e|
   e.memberships.build(user: user1)
   e.memberships.build(user: user2)
 end
-battle                          # => #<Actb::Battle id: 15, room_id: 8, parent_id: nil, rule_id: 34, final_id: 5, begin_at: "2020-06-16 14:48:21", end_at: nil, battle_pos: 0, created_at: "2020-06-16 14:48:21", updated_at: "2020-06-16 14:48:21">
+battle                          # => #<Actb::Battle id: 10, room_id: 7, parent_id: nil, rule_id: 7, final_id: 5, begin_at: "2020-06-24 11:25:31", end_at: nil, battle_pos: 0, created_at: "2020-06-24 11:25:31", updated_at: "2020-06-24 11:25:31">
 
 battle.users.count                # => 2
 battle.battle_pos               # => 0
 
-battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 16, room_id: 8, parent_id: 15, rule_id: 34, final_id: 5, begin_at: "2020-06-16 14:48:21", end_at: nil, battle_pos: 1, created_at: "2020-06-16 14:48:21", updated_at: "2020-06-16 14:48:21">
+battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 11, room_id: 7, parent_id: 10, rule_id: 7, final_id: 5, begin_at: "2020-06-24 11:25:31", end_at: nil, battle_pos: 1, created_at: "2020-06-24 11:25:31", updated_at: "2020-06-24 11:25:31">
 battle2.battle_pos                            # => 1
 
 membership = battle.memberships.first
 
 # 出題
-battle.best_questions             # => [{"id"=>139, "init_sfen"=>"position sfen 7nk/7sp/9/9/4B4/9/9/9/9 b N2rb4g3s2n4l17p 1", "time_limit_sec"=>10, "difficulty_level"=>1, "title"=>"斜めに弱い", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"{:moves_str=>\"{:moves_str=>\\\"N*2c\\\"}\"}", "end_sfen"=>nil}]}, {"id"=>141, "init_sfen"=>"position sfen ln7/1ks4R1/pppp5/9/9/9/9/9/9 b GSr2b3g2s3n3l14p 1", "time_limit_sec"=>10, "difficulty_level"=>1, "title"=>"美濃囲いあるある詰め筋1", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>7, "moves_str"=>"{:moves_str=>\"S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b7c\"}", "end_sfen"=>nil}, {"moves_count"=>7, "moves_str"=>"{:moves_str=>\"S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b8b\"}", "end_sfen"=>nil}]}, {"id"=>142, "init_sfen"=>"position sfen ln7/1ksG5/1pp6/p8/9/9/9/9/9 b BGP2rb2g3s3n3l14p 1", "time_limit_sec"=>10, "difficulty_level"=>1, "title"=>"美濃囲いあるある詰め筋2", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>5, "moves_str"=>"{:moves_str=>\"B*7a 8b9b P*9c 8a9c G*8b\"}", "end_sfen"=>nil}]}, {"id"=>144, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>145, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>146, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l4p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>149, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l7p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>150, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l8p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>151, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l9p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>nil, "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}, {"id"=>152, "init_sfen"=>"position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l10p 1", "time_limit_sec"=>180, "difficulty_level"=>5, "title"=>"(title)", "description"=>"(description)", "hint_desc"=>"(hint_desc)", "other_author"=>"(other_author)", "user"=>{"id"=>75, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0000_fallback_avatar_icon-9fae4951044e65f781d23aefc5283c381e271401a491db66138690cec948c841.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"G*4b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*5b", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"G*6b", "end_sfen"=>nil}]}]
+battle.best_questions             # => [{"id"=>51, "init_sfen"=>"position sfen ln1g5/1ks6/pppp5/9/4B4/9/9/9/9 b GN2rb2g3s2n3l14p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"美濃囲いの弱点", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>3, "moves_str"=>"N*7d 8b9b G*8b", "end_sfen"=>nil}, {"moves_count"=>3, "moves_str"=>"N*7d 8b7a G*8b", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}, {"id"=>52, "init_sfen"=>"position sfen 7nk/7sp/9/9/4B4/9/9/9/9 b N2rb4g3s2n4l17p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"斜めに弱い", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"N*2c", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}, {"id"=>53, "init_sfen"=>"position sfen 8k/7g1/8G/9/9/9/9/9/9 b GN2r2bg4s3n4l18p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"桂馬をうまく使う", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>3, "moves_str"=>"N*2c 1a2a G*3a", "end_sfen"=>nil}, {"moves_count"=>3, "moves_str"=>"N*2c 2b2c G*1b", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}, {"id"=>54, "init_sfen"=>"position sfen ln7/1ks4R1/pppp5/9/9/9/9/9/9 b GSr2b3g2s3n3l14p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"棺桶美濃あるある", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>7, "moves_str"=>"S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b7c", "end_sfen"=>nil}, {"moves_count"=>7, "moves_str"=>"S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b8b", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}, {"id"=>55, "init_sfen"=>"position sfen ln7/1ksG5/1pp6/p8/9/9/9/9/9 b BGP2rb2g3s3n3l14p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"美濃囲いあるある", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>5, "moves_str"=>"B*7a 8b9b P*9c 8a9c G*8b", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}, {"id"=>56, "init_sfen"=>"position sfen ln7/kSG6/1p7/p8/9/9/9/9/9 b L2r2b3g3s3n2l16p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"成っちゃだめ", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>3, "moves_str"=>"L*9c 8a9c 8b8a", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}, {"id"=>57, "init_sfen"=>"position sfen 6skl/9/7G1/9/9/9/9/9/9 b GL2r2b2g2s4n2l18p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"銀の弱点", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>3, "moves_str"=>"L*2b 3a2b G*3b", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}, {"id"=>58, "init_sfen"=>"position sfen 6rkl/6s2/5pnpp/9/9/9/9/9/9 b 2GNr2b2g3s2n2l15p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"玉をひっぱり上げる", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>5, "moves_str"=>"G*2b 2a2b N*3d 2b2a G*2b", "end_sfen"=>nil}, {"moves_count"=>5, "moves_str"=>"G*2b 2a2b N*3d 2b1b G*2b", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}, {"id"=>59, "init_sfen"=>"position sfen 3gkg3/9/4+B4/9/9/9/9/9/9 b N2rbg4s3n4l18p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"はじまりの桂", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"N*4c", "end_sfen"=>nil}, {"moves_count"=>1, "moves_str"=>"N*6c", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}, {"id"=>60, "init_sfen"=>"position sfen ln1g5/1rsk5/p2pp4/9/1p7/9/9/9/9 b Nr2b3g3s2n3l14p 1", "time_limit_sec"=>60, "difficulty_level"=>1, "title"=>"致命傷になる玉の早逃げ", "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "user"=>{"id"=>18, "key"=>"sysop", "name"=>"運営", "avatar_path"=>"/assets/human/0004_fallback_avatar_icon-acd5a7abb08f8e740c94bd9d44ddb048763b2eab5e74418b18b6a1672ce2f3c7.png"}, "moves_answers"=>[{"moves_count"=>1, "moves_str"=>"N*7d", "end_sfen"=>nil}], "ox_record"=>{"ox_total"=>0, "o_rate"=>0.0}}]
 
 # 最初の問題に2度解答する
 # 2.times do
@@ -129,7 +129,7 @@ user1.actb_clip_marks.create!(question: Actb::Question.third!)
 # 問題に対してコメント
 5.times do
   question = Actb::Question.first!
-  question.messages.create!(user: user1, body: "message") # => #<Actb::QuestionMessage id: 21, user_id: 75, question_id: 137, body: "message", created_at: "2020-06-16 14:48:22", updated_at: "2020-06-16 14:48:22">, #<Actb::QuestionMessage id: 22, user_id: 75, question_id: 137, body: "message", created_at: "2020-06-16 14:48:22", updated_at: "2020-06-16 14:48:22">, #<Actb::QuestionMessage id: 23, user_id: 75, question_id: 137, body: "message", created_at: "2020-06-16 14:48:22", updated_at: "2020-06-16 14:48:22">, #<Actb::QuestionMessage id: 24, user_id: 75, question_id: 137, body: "message", created_at: "2020-06-16 14:48:22", updated_at: "2020-06-16 14:48:22">, #<Actb::QuestionMessage id: 25, user_id: 75, question_id: 137, body: "message", created_at: "2020-06-16 14:48:22", updated_at: "2020-06-16 14:48:22">
+  question.messages.create!(user: user1, body: "message") # => #<Actb::QuestionMessage id: 13, user_id: 18, question_id: 49, body: "message", created_at: "2020-06-24 11:25:32", updated_at: "2020-06-24 11:25:32">, #<Actb::QuestionMessage id: 14, user_id: 18, question_id: 49, body: "message", created_at: "2020-06-24 11:25:32", updated_at: "2020-06-24 11:25:32">, #<Actb::QuestionMessage id: 15, user_id: 18, question_id: 49, body: "message", created_at: "2020-06-24 11:25:32", updated_at: "2020-06-24 11:25:32">, #<Actb::QuestionMessage id: 16, user_id: 18, question_id: 49, body: "message", created_at: "2020-06-24 11:25:32", updated_at: "2020-06-24 11:25:32">, #<Actb::QuestionMessage id: 17, user_id: 18, question_id: 49, body: "message", created_at: "2020-06-24 11:25:32", updated_at: "2020-06-24 11:25:32">
   question.messages_count                    # => 1, 2, 3, 4, 5
 end
 
@@ -137,126 +137,135 @@ tp Actb::Season
 tp Actb::Question
 
 tp Actb.info
-# >> load: /Users/ikeda/src/shogi_web/app/models/actb/questions.yml
+# >> load: /Users/ikeda/src/shogi_web/app/models/actb/questions.yml (13)
 # >> |--------------------+--------|
 # >> |               名前 | 運営   |
 # >> |       レーティング | 1500.0 |
 # >> |             クラス | C-     |
-# >> |         作成問題数 | 16     |
-# >> | 最新シーズン情報ID | 96     |
-# >> | 永続的プロフ情報ID | 75     |
+# >> |         作成問題数 | 23     |
+# >> | 最新シーズン情報ID | 28     |
+# >> | 永続的プロフ情報ID | 18     |
 # >> |         部屋入室数 | 1      |
 # >> |             対局数 | 2      |
-# >> |         問題履歴数 | 16     |
+# >> |         問題履歴数 | 23     |
 # >> |     バトル中発言数 | 0      |
 # >> |       ロビー発言数 | 0      |
 # >> |     問題コメント数 | 0      |
 # >> |--------------------+--------|
-# >> |------------------+---------------------------|
-# >> |               id | 96                        |
-# >> |         judge_id | 45                        |
-# >> |         final_id | 2                         |
-# >> |     battle_count | 1                         |
-# >> |        win_count | 1                         |
-# >> |       lose_count | 0                         |
-# >> |         win_rate | 1.0                       |
-# >> |           rating | 1516.0                    |
-# >> | rating_diff | 16.0                      |
-# >> |       rating_max | 1516.0                    |
-# >> |     straight_win_count | 1                         |
-# >> |     straight_lose_count | 0                         |
-# >> |       straight_win_max | 1                         |
-# >> |       straight_lose_max | 0                         |
-# >> |        skill_id | 232                       |
-# >> |     skill_point | 20.0                      |
-# >> |       created_at | 2020-06-16 23:48:21 +0900 |
-# >> |       updated_at | 2020-06-16 23:48:22 +0900 |
-# >> | disconnect_count | 0                         |
-# >> |  disconnected_at |                           |
-# >> |          user_id | 75                        |
-# >> |        season_id | 95                        |
-# >> |     create_count | 2                         |
-# >> |       generation | 11                        |
-# >> |------------------+---------------------------|
-# >> |------------------+---------------------------|
-# >> |               id | 75                        |
-# >> |          user_id | 75                        |
-# >> |         judge_id | 48                        |
-# >> |         final_id | 5                         |
-# >> |     battle_count | 0                         |
-# >> |        win_count | 0                         |
-# >> |       lose_count | 0                         |
-# >> |         win_rate | 0.0                       |
-# >> |           rating | 1500.0                    |
-# >> | rating_diff | 0.0                       |
-# >> |       rating_max | 1500.0                    |
-# >> |     straight_win_count | 0                         |
-# >> |     straight_lose_count | 0                         |
-# >> |       straight_win_max | 0                         |
-# >> |       straight_lose_max | 0                         |
-# >> |        skill_id | 232                       |
-# >> |     skill_point | 0.0                       |
-# >> |       created_at | 2020-06-16 23:48:18 +0900 |
-# >> |       updated_at | 2020-06-16 23:48:18 +0900 |
-# >> | disconnect_count | 0                         |
-# >> |  disconnected_at |                           |
-# >> |------------------+---------------------------|
+# >> |---------------------+---------------------------|
+# >> |                  id | 28                        |
+# >> |            judge_id | 9                         |
+# >> |            final_id | 2                         |
+# >> |        battle_count | 1                         |
+# >> |           win_count | 1                         |
+# >> |          lose_count | 0                         |
+# >> |            win_rate | 1.0                       |
+# >> |              rating | 1516.0                    |
+# >> |         rating_diff | 16.0                      |
+# >> |          rating_max | 1516.0                    |
+# >> |  straight_win_count | 1                         |
+# >> | straight_lose_count | 0                         |
+# >> |    straight_win_max | 1                         |
+# >> |   straight_lose_max | 0                         |
+# >> |            skill_id | 43                        |
+# >> |         skill_point | 20.0                      |
+# >> |     skill_last_diff | 20.0                      |
+# >> |          created_at | 2020-06-24 20:25:32 +0900 |
+# >> |          updated_at | 2020-06-24 20:25:32 +0900 |
+# >> |    disconnect_count | 0                         |
+# >> |     disconnected_at |                           |
+# >> |             user_id | 18                        |
+# >> |           season_id | 23                        |
+# >> |        create_count | 2                         |
+# >> |          generation | 11                        |
+# >> |---------------------+---------------------------|
+# >> |---------------------+---------------------------|
+# >> |                  id | 18                        |
+# >> |             user_id | 18                        |
+# >> |            judge_id | 12                        |
+# >> |            final_id | 5                         |
+# >> |        battle_count | 0                         |
+# >> |           win_count | 0                         |
+# >> |          lose_count | 0                         |
+# >> |            win_rate | 0.0                       |
+# >> |              rating | 1500.0                    |
+# >> |         rating_diff | 0.0                       |
+# >> |          rating_max | 1500.0                    |
+# >> |  straight_win_count | 0                         |
+# >> | straight_lose_count | 0                         |
+# >> |    straight_win_max | 0                         |
+# >> |   straight_lose_max | 0                         |
+# >> |            skill_id | 43                        |
+# >> |         skill_point | 0.0                       |
+# >> |     skill_last_diff | 0.0                       |
+# >> |          created_at | 2020-06-24 20:25:29 +0900 |
+# >> |          updated_at | 2020-06-24 20:25:29 +0900 |
+# >> |    disconnect_count | 0                         |
+# >> |     disconnected_at |                           |
+# >> |---------------------+---------------------------|
 # >> |----+------------+------------+---------------------------+---------------------------+---------------------------+---------------------------|
 # >> | id | name       | generation | begin_at                  | end_at                    | created_at                | updated_at                |
 # >> |----+------------+------------+---------------------------+---------------------------+---------------------------+---------------------------|
-# >> | 85 | シーズン1  |          1 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:18 +0900 | 2020-06-16 23:48:18 +0900 |
-# >> | 86 | シーズン2  |          2 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
-# >> | 87 | シーズン3  |          3 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
-# >> | 88 | シーズン4  |          4 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
-# >> | 89 | シーズン5  |          5 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
-# >> | 90 | シーズン6  |          6 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
-# >> | 91 | シーズン7  |          7 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
-# >> | 92 | シーズン8  |          8 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
-# >> | 93 | シーズン9  |          9 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
-# >> | 94 | シーズン10 |         10 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
-# >> | 95 | シーズン11 |         11 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |
+# >> | 13 | シーズン1  |          1 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:28 +0900 | 2020-06-24 20:25:28 +0900 |
+# >> | 14 | シーズン2  |          2 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
+# >> | 15 | シーズン3  |          3 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
+# >> | 16 | シーズン4  |          4 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
+# >> | 17 | シーズン5  |          5 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
+# >> | 18 | シーズン6  |          6 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
+# >> | 19 | シーズン7  |          7 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
+# >> | 20 | シーズン8  |          8 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
+# >> | 21 | シーズン9  |          9 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
+# >> | 22 | シーズン10 |         10 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
+# >> | 23 | シーズン11 |         11 | 2020-06-01 00:00:00 +0900 | 2020-09-01 00:00:00 +0900 | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |
 # >> |----+------------+------------+---------------------------+---------------------------+---------------------------+---------------------------|
-# >> |-----+----------------------------------+---------+-----------+------------+-----------------------------------------------------+----------------+------------------+-------------------------+---------------+-------------+----------------+-------------------+------------------+---------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
-# >> | id  | key                              | user_id | folder_id | lineage_id | init_sfen                                           | time_limit_sec | difficulty_level | title                   | description   | hint_desc   | other_author   | source_media_name | source_media_url | source_published_on | created_at                | updated_at                | moves_answers_count | endpos_answers_count | o_count | x_count | bad_count | good_count | histories_count | favorites_count | good_marks_count | bad_marks_count | clip_marks_count | messages_count |
-# >> |-----+----------------------------------+---------+-----------+------------+-----------------------------------------------------+----------------+------------------+-------------------------+---------------+-------------+----------------+-------------------+------------------+---------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
-# >> | 137 | ef5c5009401cf717ae7e37dd8c834a7d |      75 |       225 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1          |             10 |                1 | はじまりの金            | いちばん簡単  | (hint_desc) |                |                   |                  |                     | 2020-06-16 23:48:18 +0900 | 2020-06-16 23:48:21 +0900 |                   1 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                1 |               0 |                0 |              5 |
-# >> | 138 | fa8fc185045af4d329ff13f9a632f156 |      75 |       224 |         78 | ln1g5/1ks6/pppp5/9/4B4/9/9/9/9 b GN2rb2g3s2n3l14p 1 |             10 |                1 | 美濃囲いの弱点          |               |             |                |                   |                  |                     | 2020-06-16 23:48:18 +0900 | 2020-06-16 23:48:21 +0900 |                   2 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               1 |                0 |              0 |
-# >> | 139 | 40085dba3bd506267fd3039dea8ea404 |      75 |       223 |         78 | 7nk/7sp/9/9/4B4/9/9/9/9 b N2rb4g3s2n4l17p 1         |             10 |                1 | 斜めに弱い              |               |             |                |                   |                  |                     | 2020-06-16 23:48:18 +0900 | 2020-06-16 23:48:18 +0900 |                   1 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                1 |              0 |
-# >> | 140 | cbd6adcc26c6ae176a04a92450f2cf27 |      75 |       223 |         78 | 8k/7g1/8G/9/9/9/9/9/9 b GN2r2bg4s3n4l18p 1          |             10 |                1 | 桂馬をうまく使う        |               |             |                |                   |                  |                     | 2020-06-16 23:48:18 +0900 | 2020-06-16 23:48:18 +0900 |                   2 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 141 | 57f055d2775e96b4c1e7e879623993b3 |      75 |       223 |         79 | ln7/1ks4R1/pppp5/9/9/9/9/9/9 b GSr2b3g2s3n3l14p 1   |             10 |                1 | 美濃囲いあるある詰め筋1 |               |             |                |                   |                  |                     | 2020-06-16 23:48:18 +0900 | 2020-06-16 23:48:18 +0900 |                   2 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 142 | 84fea0e5c3fba625431e319ac6d7c4f1 |      75 |       223 |         79 | ln7/1ksG5/1pp6/p8/9/9/9/9/9 b BGP2rb2g3s3n3l14p 1   |             10 |                1 | 美濃囲いあるある詰め筋2 |               |             |                |                   |                  |                     | 2020-06-16 23:48:19 +0900 | 2020-06-16 23:48:19 +0900 |                   1 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 143 | 55ff739b0752cdba9c2b092a9194ecef |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1           |            180 |                5 | (title)                 | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-16 23:48:20 +0900 | 2020-06-15 23:48:20 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 144 | c17b6f3b28146da7efba427c3a76e1e8 |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1           |            180 |                5 | (title)                 | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-16 23:48:20 +0900 | 2020-06-16 00:48:20 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 145 | 0a4ceab74bd36296990e794537502787 |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1           |            180 |                5 | (title)                 | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-16 23:48:20 +0900 | 2020-06-16 01:48:20 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 146 | e16df5b4ae7db88280b47309cc9fa320 |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l4p 1           |            180 |                5 | (title)                 | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-16 23:48:20 +0900 | 2020-06-16 02:48:20 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 147 | e04d7053728aa80c34fef806fbff5469 |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l5p 1           |            180 |                5 | (title)                 | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-16 23:48:20 +0900 | 2020-06-16 03:48:20 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 148 | 1a00f74a555e9ef02dc426cdd5fce7ed |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l6p 1           |            180 |                5 | (title)                 | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-16 23:48:20 +0900 | 2020-06-16 04:48:20 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 149 | 3fed8f7c44a4ebd83440bbee26e60cbd |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l7p 1           |            180 |                5 | (title)                 | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-16 23:48:21 +0900 | 2020-06-16 05:48:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 150 | b86096296dd9e0056cfd56446858637c |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l8p 1           |            180 |                5 | (title)                 | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-16 23:48:21 +0900 | 2020-06-16 06:48:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 151 | 5dcdd2f32aa674104174c8a6d2e4c61a |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l9p 1           |            180 |                5 | (title)                 | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-16 23:48:21 +0900 | 2020-06-16 07:48:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> | 152 | d926cf77f6815a86e23003d2c389698a |      75 |       223 |         78 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l10p 1          |            180 |                5 | (title)                 | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-16 23:48:21 +0900 | 2020-06-16 08:48:21 +0900 |                   3 |                    0 |       0 |       0 |         0 |          0 |               1 |               0 |                0 |               0 |                0 |              0 |
-# >> |-----+----------------------------------+---------+-----------+------------+-----------------------------------------------------+----------------+------------------+-------------------------+---------------+-------------+----------------+-------------------+------------------+---------------------+---------------------------+---------------------------+---------------------+----------------------+---------+---------+-----------+------------+-----------------+-----------------+------------------+-----------------+------------------+----------------|
+# >> |----+----------------------------------+---------+-----------+------------+--------------------------------------------------------------------------+----------------+------------------+------------------------+---------------+-------------+----------------+-------------------+------------------+---------------------+---------------------------+---------------------------+-----------+---------------------+-----------------+------------------+-----------------+------------------+----------------|
+# >> | id | key                              | user_id | folder_id | lineage_id | init_sfen                                                                | time_limit_sec | difficulty_level | title                  | description   | hint_desc   | other_author   | source_media_name | source_media_url | source_published_on | created_at                | updated_at                | good_rate | moves_answers_count | histories_count | good_marks_count | bad_marks_count | clip_marks_count | messages_count |
+# >> |----+----------------------------------+---------+-----------+------------+--------------------------------------------------------------------------+----------------+------------------+------------------------+---------------+-------------+----------------+-------------------+------------------+---------------------+---------------------------+---------------------------+-----------+---------------------+-----------------+------------------+-----------------+------------------+----------------|
+# >> | 49 | ef5c5009401cf717ae7e37dd8c834a7d |      18 |        54 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1                               |             60 |                1 | はじまりの金           | いちばん簡単  | (hint_desc) |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:31 +0900 |       0.0 |                   1 |               1 |                1 |               0 |                0 |              5 |
+# >> | 50 | a022f1d45ccd3460f6da8008843269e4 |      18 |        53 |         17 | ln1gk2nl/6g2/p2pppspp/2p3p2/7P1/1rP6/P2PPPP1P/2G3SR1/LN2KG1NL b BSPbsp 1 |             60 |                1 | 居玉は危険             |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:31 +0900 |       0.0 |                   1 |               1 |                0 |               1 |                0 |              0 |
+# >> | 51 | fa8fc185045af4d329ff13f9a632f156 |      18 |        52 |         15 | ln1g5/1ks6/pppp5/9/4B4/9/9/9/9 b GN2rb2g3s2n3l14p 1                      |             60 |                1 | 美濃囲いの弱点         |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   2 |               1 |                0 |               0 |                1 |              0 |
+# >> | 52 | 40085dba3bd506267fd3039dea8ea404 |      18 |        52 |         15 | 7nk/7sp/9/9/4B4/9/9/9/9 b N2rb4g3s2n4l17p 1                              |             60 |                1 | 斜めに弱い             |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   1 |               1 |                0 |               0 |                0 |              0 |
+# >> | 53 | cbd6adcc26c6ae176a04a92450f2cf27 |      18 |        52 |         15 | 8k/7g1/8G/9/9/9/9/9/9 b GN2r2bg4s3n4l18p 1                               |             60 |                1 | 桂馬をうまく使う       |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   2 |               1 |                0 |               0 |                0 |              0 |
+# >> | 54 | 57f055d2775e96b4c1e7e879623993b3 |      18 |        52 |         16 | ln7/1ks4R1/pppp5/9/9/9/9/9/9 b GSr2b3g2s3n3l14p 1                        |             60 |                1 | 棺桶美濃あるある       |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   2 |               1 |                0 |               0 |                0 |              0 |
+# >> | 55 | 84fea0e5c3fba625431e319ac6d7c4f1 |      18 |        52 |         16 | ln7/1ksG5/1pp6/p8/9/9/9/9/9 b BGP2rb2g3s3n3l14p 1                        |             60 |                1 | 美濃囲いあるある       |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   1 |               1 |                0 |               0 |                0 |              0 |
+# >> | 56 | 0dcbb33d060d3507dc29f46f23f82643 |      18 |        52 |         15 | ln7/kSG6/1p7/p8/9/9/9/9/9 b L2r2b3g3s3n2l16p 1                           |             60 |                1 | 成っちゃだめ           |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   1 |               1 |                0 |               0 |                0 |              0 |
+# >> | 57 | b0538a0efd2a8ee173d6fd11160fcf4f |      18 |        52 |         15 | 6skl/9/7G1/9/9/9/9/9/9 b GL2r2b2g2s4n2l18p 1                             |             60 |                1 | 銀の弱点               |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   1 |               1 |                0 |               0 |                0 |              0 |
+# >> | 58 | cba9132a42f676ae206d3017b848b764 |      18 |        52 |         15 | 6rkl/6s2/5pnpp/9/9/9/9/9/9 b 2GNr2b2g3s2n2l15p 1                         |             60 |                1 | 玉をひっぱり上げる     |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   2 |               1 |                0 |               0 |                0 |              0 |
+# >> | 59 | e1dbd0d616511f4a16016595f21f662f |      18 |        52 |         15 | 3gkg3/9/4+B4/9/9/9/9/9/9 b N2rbg4s3n4l18p 1                              |             60 |                1 | はじまりの桂           |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   2 |               1 |                0 |               0 |                0 |              0 |
+# >> | 60 | ed76b107012f82dfa4270c673aa18e5b |      18 |        52 |         15 | ln1g5/1rsk5/p2pp4/9/1p7/9/9/9/9 b Nr2b3g3s2n3l14p 1                      |             60 |                1 | 致命傷になる玉の早逃げ |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   1 |               1 |                0 |               0 |                0 |              0 |
+# >> | 61 | c4dc5ed464b323fc75d0d872171514ee |      18 |        52 |         15 | lns3+P2/4k4/ppppp1p2/9/5P3/9/9/9/9 b B2GSN2rb2g2s2n3l10p 1               |            180 |                4 | むずいよ               |               |             |                |                   |                  |                     | 2020-06-24 20:25:29 +0900 | 2020-06-24 20:25:29 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 62 | bab5f0812337a44f178e64d0ffda10ca |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1                                |            180 |                5 | (title)                | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-23 20:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 63 | 18933241b9e61ae9475228605559d81a |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l2p 1                                |            180 |                5 | (title)                | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-23 21:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 64 | 83b638aea9946a8228cf2b7a43225141 |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l3p 1                                |            180 |                5 | (title)                | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-23 22:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 65 | 20e8e99f973208420a604b4e516766fb |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l4p 1                                |            180 |                5 | (title)                | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-23 23:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 66 | d31d84168e3a85d42d905053875086dd |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l5p 1                                |            180 |                5 | (title)                | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-24 00:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 67 | bb81d259a8104bdc767fa8e9ddd10a9a |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l6p 1                                |            180 |                5 | (title)                | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-24 01:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 68 | f8d8fbf0177c182d2782084753d70cdd |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l7p 1                                |            180 |                5 | (title)                | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-24 02:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 69 | fce5ac51982b91e389aeec2d35480cc1 |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l8p 1                                |            180 |                5 | (title)                | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-24 03:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 70 | ed9edc7ced42586fdac51f5d3b591753 |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l9p 1                                |            180 |                5 | (title)                | (description) | (hint_desc) |                |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-24 04:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> | 71 | 17e556f9db327c3c69052693cae5cadd |      18 |        52 |         15 | 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l10p 1                               |            180 |                5 | (title)                | (description) | (hint_desc) | (other_author) |                   |                  |                     | 2020-06-24 20:25:31 +0900 | 2020-06-24 05:25:31 +0900 |       0.0 |                   3 |               1 |                0 |               0 |                0 |              0 |
+# >> |----+----------------------------------+---------+-----------+------------+--------------------------------------------------------------------------+----------------+------------------+------------------------+---------------+-------------+----------------+-------------------+------------------+---------------------+---------------------------+---------------------------+-----------+---------------------+-----------------+------------------+-----------------+------------------+----------------|
 # >> |------------------------+-------+--------|
 # >> | model                  | count | 最終ID |
 # >> |------------------------+-------+--------|
-# >> | User                   |     9 |     83 |
-# >> | Actb::Question         |    16 |    152 |
-# >> | Actb::QuestionMessage  |     5 |     25 |
-# >> | Actb::Room             |     1 |      8 |
-# >> | Actb::RoomMembership   |     2 |     16 |
+# >> | User                   |     9 |     26 |
+# >> | Actb::Question         |    23 |     71 |
+# >> | Actb::QuestionMessage  |     5 |     17 |
+# >> | Actb::Room             |     1 |      7 |
+# >> | Actb::RoomMembership   |     2 |     14 |
 # >> | Actb::RoomMessage      |     0 |        |
-# >> | Actb::Battle           |     2 |     16 |
-# >> | Actb::BattleMembership |     4 |     32 |
-# >> | Actb::Season           |    11 |     95 |
-# >> | Actb::SeasonXrecord    |    10 |     96 |
-# >> | Actb::Setting          |     9 |     83 |
-# >> | Actb::GoodMark         |     1 |      5 |
-# >> | Actb::BadMark          |     1 |      5 |
-# >> | Actb::ClipMark         |     1 |      5 |
-# >> | Actb::Folder           |    27 |    249 |
-# >> | Actb::Lineage          |     7 |     84 |
-# >> | Actb::Judge            |     4 |     48 |
-# >> | Actb::Rule             |     3 |     36 |
-# >> | Actb::Skill           |    21 |    252 |
+# >> | Actb::Battle           |     2 |     11 |
+# >> | Actb::BattleMembership |     4 |     22 |
+# >> | Actb::Season           |    11 |     23 |
+# >> | Actb::SeasonXrecord    |    10 |     28 |
+# >> | Actb::Setting          |     9 |     26 |
+# >> | Actb::GoodMark         |     1 |      3 |
+# >> | Actb::BadMark          |     1 |      4 |
+# >> | Actb::ClipMark         |     1 |     33 |
+# >> | Actb::Folder           |    27 |     78 |
+# >> | Actb::Lineage          |     7 |     21 |
+# >> | Actb::Judge            |     4 |     12 |
+# >> | Actb::Rule             |     3 |      9 |
+# >> | Actb::Skill            |    21 |     63 |
 # >> | Actb::LobbyMessage     |     0 |        |
 # >> |------------------------+-------+--------|

@@ -36,5 +36,11 @@ module Actb
         user.clip_p(question)
       end
     end
+
+    validate :on => :create do
+      # if user.actb_clip_marks.count >= 1
+      #   errors.add(:base, "これ以上は保存できません")
+      # end
+    end
   end
 end
