@@ -15,7 +15,7 @@
   .field
     = form.label(:description, class: "label")
     .control
-      = form.text_field(:description, class: "input", rows: [form.object.description.to_s.lines.count, 1].max)
+      = form.text_area(:description, class: "textarea", rows: [form.object.description.to_s.lines.count, 4].max)
 
 .field
   = form.label(:avatar, class: "label")
