@@ -71,9 +71,6 @@ export default {
     "$parent.question.difficulty_level": {
       handler(v) {
         this.sound_play("click")
-        if (v >= this.$parent.start_level_max && false) {
-          v = "MAX"
-        }
         this.talk2(v)
       },
     },
