@@ -118,6 +118,7 @@ module FrontendScript
 
       # 問題作成(一覧)
       def debug_for_builder(info)
+        c.sysop_login_unless_logout
       end
 
       # 問題作成(配置)

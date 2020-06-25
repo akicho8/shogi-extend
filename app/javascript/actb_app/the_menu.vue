@@ -1,18 +1,15 @@
 <template lang="pug">
 .the_menu
   the_footer
-  .primary_header
-    .header_center_title メニュー
-
-  .menu_buttons
-    b-button(expanded @click="app.profile_edit_handle" :disabled="!app.current_user") プロフィール編集
-    b-button(expanded tag="a" href="/" @click="sound_play('click')") TOP
+  component(:is="app.menu_component")
 </template>
 
 <script>
 import { support } from "./support.js"
 import { background_grey } from "./background_grey.js"
 
+import the_menu_root from "./the_menu_root.vue"
+import the_menu_etc from "./the_menu_etc.vue"
 import the_footer from "./the_footer.vue"
 
 export default {
@@ -22,11 +19,13 @@ export default {
     background_grey,
   ],
   components: {
+    the_menu_root,
+    the_menu_etc,
     the_footer,
   },
   created() {
     this.app.lobby_unsubscribe()
-    this.sound_play("click")
+    this.app.menu_to("the_menu_root")
   },
 }
 </script>

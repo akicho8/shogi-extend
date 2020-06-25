@@ -1,6 +1,10 @@
 module EncodeMod
   extend ActiveSupport::Concern
 
+  def current_body_encode
+    (params[:body_encode].presence || :utf8).to_sym
+  end
+
   private
 
   def current_type
@@ -39,7 +43,4 @@ module EncodeMod
     request.user_agent.to_s.match?(/Windows/i) || boolean_for(params[:shift_jis]) || boolean_for(params[:sjis])
   end
 
-  def current_body_encode
-    (params[:body_encode].presence || :utf8).to_sym
-  end
 end

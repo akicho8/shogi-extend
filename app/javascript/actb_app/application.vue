@@ -107,6 +107,8 @@ export default {
       OxMarkInfo: null,
       SkillInfo: null,
 
+      menu_component: null,
+
       // リアクティブではないもの
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
       // $ac_lobby:  null, // --> app/channels/actb/lobby_channel.rb
@@ -284,6 +286,16 @@ export default {
       this.mode = "rule_select"
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // メニュー内の切り替え
+    menu_to(v) {
+      this.sound_play("click")
+      this.app.menu_component = v
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     lobby_handle() {
       if (this.mode === "lobby") {
       } else {
@@ -335,11 +347,14 @@ export default {
 
     menu_handle() {
       if (this.mode === "menu") {
+        if (this.menu_component === "the_menu_root") {
+        } else {
+          this.menu_to("the_menu_root")
+        }
       } else {
         this.mode = "menu"
       }
     },
-
   },
 
   computed: {
