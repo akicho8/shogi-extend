@@ -30,7 +30,7 @@ set :my_heartbeat_urls, ["https://www.shogi-extend.com/"]
 # 起動するURL
 set :open_urls, [
   "https://www.shogi-extend.com",
-  "https://www.shogi-extend.com/tb",
+  "https://www.shogi-extend.com/training",
   "https://www.shogi-extend.com/w",
   "https://www.shogi-extend.com/w?query=kinakom0chi",
   "https://www.shogi-extend.com/adapter",

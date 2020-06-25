@@ -67,7 +67,7 @@ module FrontendScript
       # JS 側からいきなりログイン画面に飛ばすとどこに戻ればよいかわからない
       # なのでいったんここに飛ばして return_to を設定させてログイン画面に飛ぶ
       if params[:goto_login]
-        h.session[:return_to] = h.url_for(:tb)
+        h.session[:return_to] = h.url_for(:training)
         c.redirect_to :new_xuser_session
         return
       end

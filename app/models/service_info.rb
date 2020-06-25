@@ -85,7 +85,7 @@ class ServiceInfo
     },
     {
       display_p: false,
-      link_path: [:tb],
+      link_path: [:training],
       title: "将棋トレーニングバトル",
       image_source: nil,
       description: "対局ではなく問題を解く力を競う対戦ゲームです",

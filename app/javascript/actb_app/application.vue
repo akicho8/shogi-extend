@@ -15,7 +15,7 @@
   debug_print(v-if="app.debug_mode_p" :grep="/./")
 
   template(v-if="development_p")
-    router-link(to="/tb/menu") menu
+    router-link(to="/training/menu") menu
     router-view
 </template>
 

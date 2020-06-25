@@ -31,7 +31,7 @@ export default {
         },
         {
           title: '将棋トレーニングバトル',
-          to: { name: 'tb' },
+          to: { name: 'training' },
         },
       ]
     }

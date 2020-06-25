@@ -98,7 +98,8 @@ Rails.application.routes.draw do
 
   ################################################################################ 将棋トレーニングバトル
 
-  match "tb", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
+  match "training", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
+  get "tb" => redirect(path: "/training")
 
   ################################################################################ 外部リンク
 

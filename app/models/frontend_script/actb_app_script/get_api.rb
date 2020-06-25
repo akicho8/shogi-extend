@@ -51,12 +51,14 @@ module FrontendScript
         { clip_records: s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}}, methods: [:good_p, :bad_p, :clip_p]) }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=question_single_fetch
+      # http://localhost:3000/script/actb-app.json?remote_action=question_single_fetch&question_id=1
       def question_single_fetch
         question = Actb::Question.find(params[:question_id])
         retv = {}
         retv[:question] = question.as_json_type6
-        retv.update(current_user.good_bad_clip_flags_for(question))
+        if current_user
+          retv.update(current_user.good_bad_clip_flags_for(question))
+        end
         { ov_question_info: retv }
       end
 
