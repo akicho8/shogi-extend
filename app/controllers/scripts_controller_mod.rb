@@ -16,6 +16,11 @@ module ScriptsControllerMod
       return
     end
 
+    if request.format.zip?
+      @script.script_body
+      return
+    end
+
     @page_title ||= @script.script_name
     html = @script.render_in_view
 

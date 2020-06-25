@@ -35,6 +35,7 @@ module FrontendScript
     # FIXME: GET, PUT で分けるのではなく関心で分離する
     include GetApi
     include PutApi
+    include ZipDlMod
 
     include DebugMod
 
@@ -62,11 +63,6 @@ module FrontendScript
             :image       => e.shared_image_params,
             :creator     => e.user.twitter_key,
           })
-      end
-
-      zip_dl_process
-      if c.performed?
-        return
       end
 
       # JS 側からいきなりログイン画面に飛ばすとどこに戻ればよいかわからない
@@ -132,46 +128,6 @@ module FrontendScript
 
     def users
       [current_user, User.bot]
-    end
-
-    # http://localhost:3000/script/actb-app.zip?command=question_download
-    def zip_dl_process
-      if request.format.zip? && params[:command] == "question_download"
-        t = Time.current
-
-        zip_buffer = Zip::OutputStream.write_buffer do |zos|
-          zip_scope.each do |record|
-            zos.put_next_entry("#{record.id}_#{record.title}.kif")
-            sfen = record.main_sfen
-            kif = Bioshogi::Parser.parse(sfen).to_kif
-            kif = kif.gsub(/^.*の備考.*\n/, "")
-            if c.current_body_encode == :sjis
-              kif = kif.tosjis
-            end
-            zos.write(kif)
-          end
-        end
-
-        sec = "%.2f s" % (Time.current - t)
-        c.slack_message(key: "ZIP #{sec}", body: zip_filename)
-        c.send_data(zip_buffer.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
-        return
-      end
-    end
-
-    def zip_filename
-      parts = []
-      parts << current_user.name
-      parts << "将棋問題集"
-      parts << Time.current.strftime("%Y%m%d%H%M%S")
-      parts << c.current_body_encode
-      parts << zip_scope.count
-      str = parts.compact.join("_") + ".zip"
-      str.public_send("to#{c.current_body_encode}")
-    end
-
-    def zip_scope
-      Actb::Question.all
     end
 
     concerning :QuestionOgpMethods do

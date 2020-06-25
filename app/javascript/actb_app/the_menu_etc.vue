@@ -18,7 +18,7 @@ export default {
   computed: {
     question_download_url() {
       const url = new URL(location)
-      url.searchParams.set("command", "question_download")
+      url.searchParams.set("remote_action", "question_download")
       url.searchParams.set("format", "zip")
       return url.toString()
     },

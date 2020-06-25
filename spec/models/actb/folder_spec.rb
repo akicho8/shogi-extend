@@ -31,11 +31,15 @@ module Actb
     it "folder_key" do
       assert { user1.actb_active_box.key == :active }
     end
+
+    it "pure_class" do
+      assert { question1.folder.pure_info.name == "公開" }
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .
-# >>
-# >> Finished in 0.73437 seconds (files took 2.19 seconds to load)
-# >> 1 example, 0 failures
-# >>
+# >> ...
+# >> 
+# >> Finished in 0.72046 seconds (files took 2.15 seconds to load)
+# >> 3 examples, 0 failures
+# >> 

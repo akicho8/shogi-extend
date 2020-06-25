@@ -27,6 +27,10 @@ module Actb
       "#{user.name}の#{self.class.model_name.human}"
     end
 
+    def pure_info
+      FolderInfo.fetch(key)
+    end
+
     # :active, :draft, :trash
     def key
       @key ||= self.class.name.demodulize.underscore.remove("_box").to_sym

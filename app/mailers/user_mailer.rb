@@ -28,8 +28,7 @@ class UserMailer < ApplicationMailer
   def question_message_created(message)
     out = []
     out << message.body
-    out << message.full_url
-    # out << "https://www.shogi-extend.com/training?question_id=#{message.question.id}"
+    out << message.question.page_url
     out << ""
     out << "--"
     out << "将棋トレーニングバトル"

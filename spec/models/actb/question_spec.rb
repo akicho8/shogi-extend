@@ -97,13 +97,34 @@ module Actb
     end
 
     it "main_sfen" do
-      assert { question1.main_sfen == "position sfen 9/9/9/9/9/9/9/9/9 b - 1 moves G*5b" }
+      assert { question1.main_sfen == "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b" }
+    end
+
+    it "info" do
+      # tp question1.info
+      assert { question1.info }
+    end
+
+    it "to_kif" do
+      assert { question1.to_kif }
+    end
+
+    it "page_url" do
+      assert { question1.page_url == "http://localhost:3000/training?question_id=#{question1.id}" }
+    end
+
+    it "share_board_png_url" do
+      assert { question1.share_board_png_url == "http://localhost:3000/share-board.png?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l1p+1+moves+G%2A5b&image_view_point=black&turn=0" }
+    end
+
+    it "share_board_url" do
+      assert { question1.share_board_url == "http://localhost:3000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l1p+1+moves+G%2A5b&image_view_point=black&turn=0" }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ........
+# >> .............
 # >> 
-# >> Finished in 1.17 seconds (files took 2.73 seconds to load)
-# >> 8 examples, 0 failures
+# >> Finished in 2.06 seconds (files took 4.33 seconds to load)
+# >> 13 examples, 0 failures
 # >> 

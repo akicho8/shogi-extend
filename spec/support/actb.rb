@@ -9,7 +9,7 @@ module ActbSupportMethods
     let_it_be(:user1) { User.create! }
     let_it_be(:user2) { User.create! }
 
-    let_it_be(:question1) do
+    let(:question1) do
       user1.actb_questions.mock_type1
     end
 

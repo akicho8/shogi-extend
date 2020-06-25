@@ -180,11 +180,28 @@ module Actb
     end
 
     after_create_commit do
-      SlackAgent.message_send(key: "問題登録", body: [title, full_url].join(" "))
+      SlackAgent.message_send(key: "問題登録", body: [title, page_url].join(" "))
     end
 
-    def full_url
+    def page_url
       Rails.application.routes.url_helpers.url_for([:training, {only_path: false, question_id: id}])
+    end
+
+    def share_board_png_url
+      Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, format: "png", **share_board_params}])
+    end
+
+    def share_board_url
+      Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, **share_board_params}])
+    end
+
+    def share_board_params
+      { body: main_sfen, turn: 0, image_view_point: "black" }
+    end
+
+    # Twitter画像が表示できる url_for にそのまま渡すパラメータ
+    def shared_image_params
+      [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, image_view_point: "black"]
     end
 
     # jsから来たパラメーターでまとめて更新する
@@ -278,11 +295,6 @@ module Actb
       "#{init_sfen} moves #{moves_answers.first.moves_str}"
     end
 
-    # Twitter画像が表示できる url_for にそのまま渡すパラメータ
-    def shared_image_params
-      [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, image_view_point: "black"]
-    end
-
     # 出題用
     def as_json_type3
       as_json({
@@ -337,6 +349,89 @@ module Actb
             },
           },
         })
+    end
+
+    concerning :InfoMethods do
+      def parsed_info
+        @parsed_info ||= Bioshogi::Parser.parse(main_sfen)
+      end
+
+      def to_kif
+        str = parsed_info.to_kif
+
+        str = str.gsub(/^.*の備考.*\n/, "")
+        str = str.gsub(/^まで.*\n/, "")
+
+        info.collect { |k, v| "#{k}：#{v}\n" }.join + str
+      end
+
+      def to_oneline_ki2
+        parsed_info.mediator.to_ki2_a.join(" ")
+      end
+
+      def info
+        a = {}
+
+        a["タイトル"] = title
+
+        if other_author
+          a["投稿者"] = user.name
+        else
+          a["作者"] = user.name
+        end
+
+        a["詳細URL"]    = page_url
+        a["画像URL"]    = share_board_png_url
+        a["共有将棋盤"] = share_board_url
+
+        a["種類"] = lineage.key
+        a["フォルダ"] = folder.pure_info.name
+
+        a["制限時間"] = "#{time_limit_sec}秒"
+
+        a["難易度"] = "★" * (difficulty_level || 0)
+
+        a["出題回数"]   = histories_count
+        a["正解率"]     = "%.2f %%" % (ox_record.o_rate * 100)
+        a["正解数"]     = ox_record.o_count
+        a["誤答数"]     = ox_record.x_count
+
+        a["高評価率"]   = "%.2f %%" % (good_rate * 100)
+        a["高評価数"]   = good_marks_count
+        a["低評価数"]   = bad_marks_count
+
+        a["コメント数"] = messages_count
+
+        if true
+          if other_author
+            a["作者"] = other_author
+          end
+          if source_media_name
+            a["出典"] = source_media_name
+          end
+          if source_published_on
+            a["出典年月日"] = source_published_on
+          end
+          if source_media_url
+            a["出典URL"] = source_media_url
+          end
+        end
+
+        if v = hint_desc.presence
+          a["ヒント"] = v
+        end
+
+        a["作成日時"] = created_at.to_s(:ymdhm)
+        a["SFEN"] = main_sfen
+
+        if v = description.presence
+          a["解説"] = v.squish
+        end
+
+        a["人間向けの解答"] = to_oneline_ki2
+
+        a
+      end
     end
 
     concerning :OxRecordtMethdos do
