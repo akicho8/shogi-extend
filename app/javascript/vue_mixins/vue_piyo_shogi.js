@@ -21,8 +21,13 @@ export default {
     piyo_shog_native_url(params) {
       this.__assert__(params.path, "params.path")
       const url = new URL(this.as_full_url(params.path))
-      const a = {...params, url: `${url}.kif`}
-      return this.piyo_shogi_url_build(a, ["num", "flip", "url"])
+
+      // http://xxx/foo?yyy=1 --> http://xxx/foo.kif?yyy=1
+      url.pathname = url.pathname + ".kif"
+
+      const a = {...params, url: url}
+      const url2 = this.piyo_shogi_url_build(a, ["num", "flip", "url"])
+      return url2
     },
 
     // app, web 自動切り替え
