@@ -33,7 +33,7 @@ module Actb
 
       UserMailer.question_message_created(self).deliver_later
 
-      SlackAgent.message_send(key: "問題登録", body: full_url)
+      SlackAgent.message_send(key: "問題コメント", body: [body, question.full_url].join(" "))
     end
   end
 end

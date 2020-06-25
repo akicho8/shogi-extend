@@ -179,6 +179,14 @@ module Actb
       # validates :display_key, inclusion: DisplayInfo.keys.collect(&:to_s)
     end
 
+    after_create_commit do
+      SlackAgent.message_send(key: "問題登録", body: [title, full_url].join(" "))
+    end
+
+    def full_url
+      Rails.application.routes.url_helpers.url_for([:training, {only_path: false, question_id: id}])
+    end
+
     # jsから来たパラメーターでまとめて更新する
     def together_with_params_came_from_js_update(params)
       params = params.deep_symbolize_keys

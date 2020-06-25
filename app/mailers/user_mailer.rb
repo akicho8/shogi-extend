@@ -23,7 +23,7 @@ class UserMailer < ApplicationMailer
     mail(fixed_font(subject: "#{subject_prefix}#{user.name}さんが#{provider}で登録されました", body: body))
   end
 
-  # UserMailer.user_created(Actb::QuestionMessage.first).deliver_now
+  # UserMailer.question_message_created(Actb::QuestionMessage.first).deliver_now
   # http://0.0.0.0:3000/rails/mailers/user/question_message_created
   def question_message_created(message)
     out = []
