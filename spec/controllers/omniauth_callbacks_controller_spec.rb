@@ -2,13 +2,17 @@ require 'rails_helper'
 
 # 参考: https://github.com/andrelugomes/hello-ruby-on-rails/blob/dbbbc848d391eee6cf0448f1af695fd9df73cf4e/rails-4-devise-linkedin/spec/controllers/omniauth_callbacks_controller_spec.rb
 RSpec.describe OmniauthCallbacksController, type: :controller do
+  before(:context) do
+    Actb.setup
+  end
+
   describe "twitter: login" do
     before do
       request.env["devise.mapping"] = Devise.mappings[:xuser]
       OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new({
           :provider => 'twitter',
           :uid      => '(uid)',
-          :info     => { :name => '(name)', :image => "https://www.shogi-extend.com/foo.png" },
+          :info     => { :name => '(name)', :image => "https://www.shogi-extend.com/foo.png", email: "xxx@localhost" },
         })
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter]
       get :twitter
@@ -22,6 +26,10 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
 
     it "プロフィール画像を登録している" do
       assert { record.avatar }
+    end
+
+    it "メールアドレスを取得している" do
+      assert { record.email == "xxx@localhost" }
     end
 
     it "どっかにリダイレクトする" do
@@ -249,3 +257,9 @@ end
 #   end
 #
 # end
+# >> Run options: exclude {:slow_spec=>true}
+# >> ....
+# >> 
+# >> Finished in 1.85 seconds (files took 2.21 seconds to load)
+# >> 4 examples, 0 failures
+# >> 
