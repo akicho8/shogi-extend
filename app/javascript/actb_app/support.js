@@ -19,9 +19,9 @@ export const support = {
       })
     },
 
-    ok_notice(message_body) {
+    ok_notice(message_body, options = {}) {
       this.$buefy.toast.open({message: message_body, position: "is-bottom", type: "is-success", queue: false})
-      this.talk2(message_body)
+      this.talk2(message_body, options)
     },
 
     warning_notice(message_body) {

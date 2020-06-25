@@ -212,7 +212,11 @@ export default {
       this.$nextTick(() => this.answer_tab_index = this.question.moves_answers.length - 1)
 
       this.sound_play("click")
-      this.ok_notice(`${this.question.moves_answers.length}つ目の正解を追加しました`)
+      this.ok_notice(`${this.question.moves_answers.length}つ目の正解を追加しました`, {onend: () => {
+        if (this.question.moves_answers.length === 1) {
+          this.ok_notice(`他の変化がある場合は続けて正解手順を追加してください`)
+        }
+      }})
     },
 
     moves_answer_delete_handle(index) {
