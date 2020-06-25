@@ -12,6 +12,8 @@ export const application_history_vote = {
     //   enabled: enabled → その値に設定
     //   enabled: null       → トグルする
     vote_handle(history, vote_key, enabled) {
+      if (this.login_required_warning_notice()) { return }
+
       this.sound_play("click")
 
       const params = {
@@ -55,6 +57,8 @@ export const application_history_vote = {
     ////////////////////////////////////////////////////////////////////////////////////////// 保存
 
     clip_handle(history, enabled) {
+      if (this.login_required_warning_notice()) { return }
+
       this.sound_play("click")
 
       const params = {

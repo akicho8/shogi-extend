@@ -78,7 +78,14 @@ export const support = {
 
     talk2(str, options = {}) {
       this.talk(str, {rate: 1.5, ...options})
-    }
+    },
+
+    login_required_warning_notice() {
+      if (!this.app.current_user) {
+        this.warning_notice("ログインしてください")
+        return true
+      }
+    },
   },
   computed: {
     ...Vuex.mapState([
