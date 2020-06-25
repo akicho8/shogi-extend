@@ -17,6 +17,7 @@ module Actb
       has_many :actb_questions, class_name: "Actb::Question", dependent: :destroy do
         def mock_type1
           create! do |e|
+            e.title = "(title)"
             e.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{Actb::Question.count.next}p 1"
             e.moves_answers.build(moves_str: "G*5b")
           end
@@ -114,6 +115,31 @@ module Actb
     end
 
     concerning :UserInfoMethods do
+      def statistics
+        [
+          :active_questions_count,
+          :questions_good_rate_average,
+          :questions_good_marks_total,
+          :questions_bad_marks_total,
+        ].inject({}) {|a, e| a.merge(e => public_send(e)) }
+      end
+
+      def active_questions_count
+        actb_questions.active_only.count
+      end
+
+      def questions_good_rate_average
+        actb_questions.average(:good_rate)
+      end
+
+      def questions_good_marks_total
+        actb_questions.sum(:good_marks_count)
+      end
+
+      def questions_bad_marks_total
+        actb_questions.sum(:bad_marks_count)
+      end
+
       def info
         out = ""
 
@@ -130,10 +156,54 @@ module Actb
           "バトル中発言数"     => actb_room_messages.count,
           "ロビー発言数"       => actb_lobby_messages.count,
           "問題コメント数"     => actb_question_messages.count,
+
+          "作成問題数"         => actb_questions.count,
+          "問題高評価率"       => actb_questions.average(:good_rate),
+          "問題高評価数"       => actb_questions.sum(:good_marks_count),
+          "問題低評価数"       => actb_questions.sum(:bad_marks_count),
         }.to_t
 
         out
       end
+    end
+
+    def as_json_type7
+      as_json({
+          only: [
+            :id,
+            :key,
+            :name,
+          ],
+          methods: [
+            :avatar_path,
+            :description,
+            :twitter_key,
+            :statistics,
+          ],
+          include: {
+            actb_main_xrecord: {
+              only: [
+                :id,
+                :straight_win_count,
+                :straight_lose_count,
+                :rating,
+                :rating_max,
+                :rating_diff,
+                :straight_win_max,
+                :straight_lose_max,
+                :disconnect_count,
+                :battle_count,
+                :win_count,
+                :lose_count,
+                :win_rate,
+                :skill_point,
+              ],
+              methods: [
+                :skill_key,
+              ],
+            },
+          },
+        })
     end
   end
 end

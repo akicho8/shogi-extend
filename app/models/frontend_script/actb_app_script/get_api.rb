@@ -65,7 +65,7 @@ module FrontendScript
       # 詳細
       def user_single_fetch
         user = User.find(params[:user_id])
-        { ov_user_info: user.as_json(only: [:id, :key, :name], methods: [:avatar_path, :description, :twitter_key], include: {actb_main_xrecord: { only: [:id, :straight_win_count, :straight_lose_count, :rating, :rating_max, :rating_diff, :straight_win_max, :straight_lose_max, :disconnect_count, :battle_count, :win_count, :lose_count, :win_rate, :skill_point], methods: [:skill_key] } }) }
+        { ov_user_info: user.as_json_type7 }
       end
 
       # http://localhost:3000/script/actb-app.json?remote_action=resource_fetch

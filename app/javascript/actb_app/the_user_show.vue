@@ -10,7 +10,7 @@
         | @{{ov_user_info.twitter_key}}
       .rate_container.has-text-weight-bold(v-if="app.config.rating_display_p")
         | R{{ov_user_info.actb_main_xrecord.rating}}
-      .skill_key.has-text-weight-bold.has-text-primary.is-size-5
+      .skill_key.has-text-weight-bold.has-text-primary.is-size-3.mt-2
         | {{ov_user_info.actb_main_xrecord.skill_key}}
 
       win_lose_circle(:info="win_lose_circle_params")
@@ -36,6 +36,24 @@
           div
             p.heading 切断回数
             p.title {{ov_user_info.actb_main_xrecord.disconnect_count}}
+
+      nav.level.is-mobile.level_nav
+        .level-item.has-text-centered
+          div
+            p.heading 投稿問題数
+            p.title {{ov_user_info.statistics.active_questions_count}}
+        .level-item.has-text-centered
+          div
+            p.heading 高評価率
+            p.title {{float_to_perc2(ov_user_info.statistics.questions_good_rate_average)}} %
+        .level-item.has-text-centered
+          div
+            p.heading 高評価数
+            p.title {{ov_user_info.statistics.questions_good_marks_total}}
+        .level-item.has-text-centered
+          div
+            p.heading 低評価数
+            p.title {{ov_user_info.statistics.questions_bad_marks_total}}
 
       .box.description.has-background-white-ter.is-shadowless.is-size-7(v-if="ov_user_info.description" v-html="auto_link(ov_user_info.description)")
 </template>
