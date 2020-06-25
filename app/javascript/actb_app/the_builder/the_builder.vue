@@ -382,10 +382,6 @@ export default {
       }
     },
 
-    start_level_max() {
-      return 10
-    },
-
     base_clock() {
       return dayjs("2000-01-01T00:00:00+09:00")
     },

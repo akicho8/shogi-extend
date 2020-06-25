@@ -13,8 +13,8 @@
   b-field(label="制限時間" label-position="on-border")
     b-timepicker(v-model="$parent.question.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
 
-  b-field(label="難易度" custom-class="is-small")
-    b-rate(v-model="$parent.question.difficulty_level" spaced :max="$parent.start_level_max" :show-score="false")
+  b-field(label="難易度" custom-class="is-small" v-if="app.config.difficulty_level_max >= 1")
+    b-rate(v-model="$parent.question.difficulty_level" spaced :max="app.config.difficulty_level_max" :show-score="false")
 
   b-field(label="フォルダ" custom-class="is-small" v-if="$parent.FolderInfo")
     b-field.is-marginless
