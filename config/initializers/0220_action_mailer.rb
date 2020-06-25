@@ -1,6 +1,6 @@
 if Rails.env.production? || Rails.env.staging? || Rails.env.development?
   Rails.application.configure do
-    config.app_config.deep_merge!({admin_email: "pinpon.ikeda@gmail.com"})
+    config.app_config.deep_merge!({admin_email: "admin@shogi-extend.com"})
 
     case
     when Rails.env.production?

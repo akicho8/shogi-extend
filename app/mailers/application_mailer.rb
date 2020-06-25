@@ -8,11 +8,15 @@ class ApplicationMailer < ActionMailer::Base
 
   # ApplicationMailer.developper_notice.deliver_now
   def developper_notice(params = {})
-    body = measures_new_line_in_gmail_is_to_double(params[:body].to_s)
-    mail(subject: subject_for(params[:subject]), content_type: "text/html", body: monospaced_text(body))
+    mail(fixed_font(subject: subject_for(params[:subject])))
   end
 
   private
+
+  def fixed_font(params)
+    body = measures_new_line_in_gmail_is_to_double(params[:body].to_s)
+    params.merge(content_type: "text/html", body: monospaced_text(body))
+  end
 
   def subject_prefix
     "[#{AppConfig[:app_name]} #{Rails.env}]" + " "

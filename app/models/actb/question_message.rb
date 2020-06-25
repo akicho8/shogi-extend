@@ -24,8 +24,16 @@ module Actb
 
     belongs_to :question, counter_cache: :messages_count
 
+    def full_url
+      Rails.application.routes.url_helpers.url_for([:training, {only_path: false, question_id: question.id}])
+    end
+
     after_create_commit do
       Actb::QuestionMessageBroadcastJob.perform_later(self)
+
+      UserMailer.question_message_created(self).deliver_later
+
+      SlackAgent.message_send(key: "問題登録", body: full_url)
     end
   end
 end

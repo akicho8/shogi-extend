@@ -1,6 +1,7 @@
 # http://0.0.0.0:3000/rails/mailers/user
 
 class UserPreview < ActionMailer::Preview
+  # http://0.0.0.0:3000/rails/mailers/user/user_created
   def user_created
     if false
     # 次のようにして user を作ると初回は成功する
@@ -15,5 +16,16 @@ class UserPreview < ActionMailer::Preview
     end
 
     UserMailer.user_created(user)
+  end
+
+  # alice が作った問題に bob がコメントしたとき alice にメールが飛ぶ
+  # http://0.0.0.0:3000/rails/mailers/user/question_message_created
+  def question_message_created
+    Actb.setup
+    user1 = User.create!(name: "alice")
+    user2 = User.create!(name: "bob")
+    question = user1.actb_questions.mock_type1
+    message = question.messages.create!(user: user2, body: "message")
+    UserMailer.question_message_created(message)
   end
 end
