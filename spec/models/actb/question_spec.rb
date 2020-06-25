@@ -118,13 +118,13 @@ module Actb
     end
 
     it "share_board_url" do
-      assert { question1.share_board_url == "http://localhost:3000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l1p+1+moves+G%2A5b&image_view_point=black&turn=0" }
+      assert { question1.share_board_url == "http://localhost:3000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l1p+1+moves+G%2A5b&image_view_point=black&title=%28title%29&turn=0" }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .............
 # >> 
-# >> Finished in 2.06 seconds (files took 4.33 seconds to load)
+# >> Finished in 2.16 seconds (files took 3.04 seconds to load)
 # >> 13 examples, 0 failures
 # >> 

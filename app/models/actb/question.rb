@@ -192,7 +192,7 @@ module Actb
     end
 
     def share_board_url
-      Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, **share_board_params}])
+      Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, title: title, **share_board_params}])
     end
 
     def share_board_params
