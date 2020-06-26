@@ -111,7 +111,7 @@ class User < ApplicationRecord
   concerning :SysopMethods do
     class_methods do
       def sysop
-        find_by(key: "sysop") || create!(key: "sysop", name: "運営", email: "sysop@localhost", password: Rails.application.credentials.sysop_password)
+        find_by(key: "sysop") || create!(key: "sysop", name: "運営", email: AppConfig[:admin_email], password: Rails.application.credentials.sysop_password)
       end
       def bot
         find_by(key: "bot") || create!(key: "bot", name: "BOT", email: "bot@localhost", race_key: :robot, password: Rails.application.credentials.sysop_password)
