@@ -1,7 +1,9 @@
 AppConfig.deep_merge!({
     :app_name                                =>  "SHOGI-EXTEND",
     :volume                                  =>  0.5,
-    :admin_email                             =>  "alice@localhost",
+
+    :admin_email_name                        =>  "SHOGI-EXTEND 運営",
+    :admin_email                             =>  "shogi.extend@gmail.com",
 
     :free_battles_import                     =>  false, # 野良棋譜のセットアップ時に保持している対局を取り込むか？
     :colosseum_battle_enable                 =>  true,  # ネット対戦機能

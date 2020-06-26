@@ -1,7 +1,5 @@
 if Rails.env.production? || Rails.env.staging? || Rails.env.development?
   Rails.application.configure do
-    config.app_config.deep_merge!({admin_email: "shogi.extend@gmail.com"})
-
     case
     when Rails.env.production?
       config.action_mailer.default_url_options = { protocol: "https", host: "www.shogi-extend.com" }
@@ -11,10 +9,11 @@ if Rails.env.production? || Rails.env.staging? || Rails.env.development?
       config.action_mailer.default_url_options = { port: 3000, host: "localhost" }
     end
 
-    config.action_mailer.show_previews = true
-    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.show_previews         = true
+    config.action_mailer.delivery_method       = :smtp
     config.action_mailer.raise_delivery_errors = true
-    config.action_mailer.perform_caching = true
+    config.action_mailer.perform_caching       = true
+
     config.action_mailer.smtp_settings = {
       enable_starttls_auto: true,
       address: "smtp.gmail.com",

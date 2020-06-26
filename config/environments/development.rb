@@ -75,9 +75,11 @@ Rails.application.configure do
   # for AppConfig
   # ファイルを更新したときに呼ばれる
   config.to_prepare do
-    load Rails.root.join("config/app_config.rb")
-    # Rails.application.config.app_config.deep_merge!({
-    #   })
+    # 実行してはいけない！
+    # config/initializers/* で上書きしたのが元に戻ってしまうから
+    if false
+      load Rails.root.join("config/app_config.rb")
+    end
   end
 
   # https://qiita.com/taiteam/items/a37c60fc15c1aa5bb606

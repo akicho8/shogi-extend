@@ -27,7 +27,11 @@ module Actb
     after_create_commit do
       Actb::QuestionMessageBroadcastJob.perform_later(self)
 
-      UserMailer.question_message_created(self).deliver_later
+      if question.user.email.to_s.include?("@localhost")
+        # skip
+      else
+        UserMailer.question_message_created(self).deliver_later
+      end
 
       SlackAgent.message_send(key: "問題コメント", body: [body, question.page_url].join(" "))
     end
