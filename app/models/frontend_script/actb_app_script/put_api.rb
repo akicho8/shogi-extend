@@ -45,8 +45,7 @@ module FrontendScript
         begin
           question.together_with_params_came_from_js_update(params)
         rescue ActiveRecord::RecordInvalid => error
-          c.render json: { form_error_message: error.message }
-          return
+          return { form_error_message: error.message }
         end
         { question: question.as_json(Actb::Question.json_type5) }
       end
