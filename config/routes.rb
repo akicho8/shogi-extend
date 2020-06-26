@@ -181,6 +181,12 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/admin/sidekiq' # authenticate :user {} で認証チェックする例がネットにあるが、それは devise のメソッド
 
+  if Rails.env.production?
+    Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
+      [user, password] == ["admin", Rails.application.credentials[:admin_password]]
+    end
+  end
+
   if false
     # Sidekiq::Web.tabs.replace({"管理画面" => "/admin"}.merge(Sidekiq::Web.tabs))
     # Sidekiq::Web.tabs["管理画面に戻る"] = "/admin"
