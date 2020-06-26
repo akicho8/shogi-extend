@@ -16,6 +16,7 @@ RSpec.describe Admin::ScriptsController, type: :controller do
 
   describe "すべてのスクリプト" do
     Admin::BackendScript.bundle_scripts.each do |e|
+      next if e == BackendScript::SidekiqConpaneScript
       it e.script_name do
         login!
         get :show, params: { id: e.key }
