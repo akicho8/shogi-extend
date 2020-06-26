@@ -27,7 +27,7 @@ import MemoryRecord from 'js-memory-record'
 class TabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "rating",       name: "総合",         unit: null,     },
+      { key: "rating",             name: "総合",         unit: null,     },
       { key: "straight_win_count", name: "連勝中",       unit: "連勝中", },
       { key: "straight_win_max",   name: "最多連勝数",   unit: "連勝",   },
     ]
@@ -92,7 +92,9 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     mode_select(tab_key) {
-      this.tab_index = TabInfo.fetch(tab_key).code
+      const tab_info = TabInfo.fetch(tab_key)
+      this.tab_index = tab_info.code
+      this.$gtag.event("open", {event_category: "ランキング", event_label: tab_info.name})
     },
 
     tab_change_handle() {

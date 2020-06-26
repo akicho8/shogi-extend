@@ -70,7 +70,7 @@ export default {
     support,
   ],
   created() {
-    // 保存しておけば衝突しないけど、いまいち
+    this.$gtag.event("open", {event_category: "ユーザー詳細", event_label: this.ov_user_info.name})
   },
   computed: {
     win_lose_circle_params() {

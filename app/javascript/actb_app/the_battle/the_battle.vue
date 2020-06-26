@@ -41,7 +41,6 @@
           b-button(@click="app.member_disconnect_handle(true)") 切断(相手)
 </template>
 
-
 <script>
 import { support } from "../support.js"
 import dayjs from "dayjs"

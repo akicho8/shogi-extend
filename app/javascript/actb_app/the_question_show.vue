@@ -137,6 +137,7 @@ export default {
   },
 
   created() {
+    this.$gtag.event("open", {event_category: "問題詳細", event_label: this.question.title, value: this.question.good_marks_count})
     window.history.replaceState("", null, this.permalink_url)
   },
 

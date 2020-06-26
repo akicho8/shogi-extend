@@ -68,6 +68,8 @@ export const application_battle = {
     },
 
     battle_setup(battle) {
+      this.$gtag.event("open", {event_category: "対戦中"})
+
       this.battle_unsubscribe()
 
       this.battle = new Battle(battle)
