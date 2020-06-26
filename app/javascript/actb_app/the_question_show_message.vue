@@ -30,7 +30,7 @@
             a.level-item
               span.icon.is-small
                 i.fas.fa-heart
-    article.media
+    article.media(v-if="app.current_user")
       figure.media-left.is_clickable(@click="app.ov_user_info_set(app.current_user.id)")
         p.image.is-64x64
           img.is-rounded(:src="app.current_user.avatar_path")
