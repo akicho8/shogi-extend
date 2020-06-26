@@ -1,3 +1,5 @@
+require "open-uri" # for URI#open
+
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google
     auth_shared_process
@@ -22,7 +24,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         restoration = true
         user ||= current_auth_info.user
       end
-      user ||= User.find_by(email: auth.info.email) # これはセキュリティリスクあり
+
+      # メールアドレス一致でも復元する場合
+      # これはやりすぎ
+      # 他人が自分のメアドに設定しているとき他人が自分になれてしまう
+      if false
+        user ||= User.find_by(email: auth.info.email)
+      end
     end
 
     # 復元できないときは新規ユーザーを作成する
@@ -72,11 +80,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   # 失敗したときの遷移先 (Google+ API を有効にしなかったらこっちにくる)
-  # 17:11:32 web.1             |
-  # 17:11:32 web.1             | Processing by OmniauthCallbacksController#failure as HTML
-  # 17:11:32 web.1             |   Parameters: {"state"=>"ad8ded2ee9913242a12bf0a159805666796f07026a7f2cc1", "code"=>"4/AADISvvSHguBAnvBxf9RBvUaNCCcTAX7ejhpIyUQJ7MBcUUL2ufYBhQ2Se_l64BiJBaDGKqLhKxVXj1pKZTNogA"}
-  # 17:11:32 web.1             | Redirected to http://localhost:3000/
-  # 17:11:32 web.1             | Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  # |
+  # | Processing by OmniauthCallbacksController#failure as HTML
+  # |   Parameters: {"state"=>"ad8d...", "code"=>"4/AAD..."}
+  # | Redirected to http://localhost:3000/
+  # | Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  # |
   def after_omniauth_failure_path_for(resource_name)
     :new_xuser_registration
   end
@@ -96,7 +105,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def image_uri
-    require "open-uri" # for URI#open
     URI(auth.info.image)
   end
 end
