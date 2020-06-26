@@ -36,8 +36,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # 復元できないときは新規ユーザーを作成する
     unless user
       user = User.create({
-          :name       => auth.info.name.presence || auth.info.nickname.presence,
-          :email      => auth.info.email || "#{SecureRandom.hex}@localhost",
+          :name       => auth.info.name.presence || auth.info.nickname.presence || local_part_of_email,
+          :email      => auth.info.email
           :avatar     => {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"},
           :user_agent => request.user_agent,
         })
@@ -106,5 +106,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def image_uri
     URI(auth.info.image)
+  end
+
+  # メールアドレスの@の前を取得
+  #  "alice@localhost" --> "alice"
+  def local_part_of_email
+    if v = auth.info.email
+      Mail::Address.new(v).local
+    end
   end
 end
