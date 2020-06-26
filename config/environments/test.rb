@@ -54,7 +54,6 @@ Rails.application.configure do
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
-        help_function: true, # 使い方の表示
       })
   end
 end

@@ -141,7 +141,6 @@ Rails.application.configure do
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
         :battle_index_permalink_show   => false,
-        :colosseum_battle_enable       => false,
         :player_info_function          => false,
         :more_import_function          => false,
         :swars_tag_search_function     => false,
