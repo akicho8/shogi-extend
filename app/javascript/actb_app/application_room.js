@@ -68,6 +68,12 @@ export const application_room = {
       this.$ac_battle.perform("speak", {message_body: message_body}) // --> app/channels/actb/battle_channel.rb
     },
 
+    debug_say(message_body) {
+      if (this.app.config.action_cable_debug) {
+        this.room_speak(message_body)
+      }
+    },
+
     room_speak_broadcasted(params) {
       this.lobby_speak_broadcasted_shared_process(params)
       this.room_messages.push(params.message)
