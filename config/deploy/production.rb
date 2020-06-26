@@ -31,8 +31,11 @@ set :my_heartbeat_urls, ["https://www.shogi-extend.com/"]
 set :open_urls, [
   "https://www.shogi-extend.com",
   "https://www.shogi-extend.com/training",
+  "https://www.shogi-extend.com/training?question_id=1",
   "https://www.shogi-extend.com/w",
   "https://www.shogi-extend.com/w?query=kinakom0chi",
+  "https://www.shogi-extend.com/w?query=kinakom0chi&user_info_show=true&tab_index=1",
+  "https://www.shogi-extend.com/admin/sidekiq",
   "https://www.shogi-extend.com/adapter",
   "https://www.shogi-extend.com/xy",
   "https://www.shogi-extend.com/cpu/battles",
@@ -40,6 +43,8 @@ set :open_urls, [
   "https://www.shogi-extend.com/x",
   "https://www.shogi-extend.com/x/new",
   "https://www.shogi-extend.com/board",
+  "https://www.shogi-extend.com/script/professional",
+  "https://www.shogi-extend.com/share-board",
 ]
 
 # if ENV["USE_NEW_DOMAIN"] && false
