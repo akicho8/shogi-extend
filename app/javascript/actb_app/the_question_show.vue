@@ -92,6 +92,11 @@
     .tweet_button_container.buttons.is-centered.mt-5
       b-button.has-text-weight-bold(rounded icon-left="twitter" size="is-small" type="is-twitter" tag="a" :href="tweet_intent_url(tweet_body)" :target="target_default") ツイート
 
+    .buttons.is-centered.are-small.mt-3
+      piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
+      kento_button(tag="a" :href="kento_app_with_params_url" :target="target_default")
+      kif_copy_button(@click="kifu_copy_handle") コピー
+
     .box.question_description.has-background-white-ter.is-shadowless.is-size-7.mt-5(v-if="question.description")
       | {{question.description}}
 
@@ -160,6 +165,11 @@ export default {
     answer_sfen_for(index) {
       return this.question.answer_sfen_list[index]
     },
+
+    kifu_copy_handle() {
+      this.sound_play("click")
+      this.general_kifu_copy(this.selected_sfen, {to_format: "kif"})
+    },
   },
   computed: {
     selected_sfen() {
@@ -180,6 +190,9 @@ export default {
     tweet_body() {
       return [`#${this.question.lineage.key}`, this.permalink_url].join(" ")
     },
+
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.selected_sfen, turn: -1, flip: false, game_name: this.question.title}) },
+    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.selected_sfen, turn: -1, flip: false})   },
   },
 }
 </script>
