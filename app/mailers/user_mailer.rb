@@ -30,15 +30,19 @@ class UserMailer < ApplicationMailer
   # http://0.0.0.0:3000/rails/mailers/user/question_message_created
   def question_message_created(message)
     out = []
-    out << "#{message.user.name}さんより"
-    out << ""
+    if false
+      out << "#{message.user.name}さんより"
+      out << ""
+    end
     out << message.body
     out << ""
     out << message.question.page_url
-    out << ""
-    out << "--"
-    out << "▼将棋トレーニングバトル"
-    out << "https://www.shogi-extend.com/training"
+    if false
+      out << ""
+      out << "--"
+      out << "▼将棋トレーニングバトル"
+      out << "https://www.shogi-extend.com/training"
+    end
 
     mail(subject: "#{message.user.name}さんから「#{message.question.title}」にコメントがありました", body: out.join("\n"))
   end
