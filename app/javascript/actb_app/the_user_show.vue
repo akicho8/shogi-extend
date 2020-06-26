@@ -71,7 +71,6 @@ export default {
   ],
   created() {
     // 保存しておけば衝突しないけど、いまいち
-    this.app.ov_question_info = null // FIXME: 画面が衝突してしまうため
   },
   computed: {
     win_lose_circle_params() {
