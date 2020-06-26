@@ -44,6 +44,6 @@ class UserMailer < ApplicationMailer
       out << "https://www.shogi-extend.com/training"
     end
 
-    mail(subject: "#{message.user.name}さんから「#{message.question.title}」にコメントがありました", body: out.join("\n"))
+    mail(subject: "#{message.user.name}さんが「#{message.question.title}」にコメントしました", body: out.join("\n"))
   end
 end
