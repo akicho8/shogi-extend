@@ -4,7 +4,7 @@
     .column.is-half
       .has-text-centered.page_title(@click.prevent="book_title_input_dialog")
         | {{book_title}}
-      .box.main_box.has-text-centered.line_break_off.is-shadowless
+      .box.main_box.line_break_off.is-shadowless
         b-dropdown.options_doropdown.is-pulled-left
           b-button(slot="trigger" size="is-small" icon-left="menu")
           b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット (r)
@@ -17,33 +17,34 @@
           b-dropdown-item
             b-switch(v-model="browser_setting.sound_silent_p")
               | ミュート (スマホ電池節約用)
-        .lap_time
-          span.quest_digit(@click="track_input_dialog")
-            | {{quest_name(new_quest)}}
-          span.has-text-grey-lighter
-            |
-            | -
-          span.current_digit(@click="lap_counter_input_dialog")
-            | {{time_format(lap_counter)}}
-        .has-text-grey-light.total_time
-          b-tooltip(label="トータル" position="is-right")
-            | {{ja_time_format(total_with_lap_seconds)}}
-        .buttons.is-centered.start_or_stop
-          template(v-if="mode === 'standby'")
-            button.button.is-large.is-primary.other_button(@click="start_handle")
-              b-icon(icon="play" size="is-large")
+        .has-text-centered
+          .lap_time
+            span.quest_digit(@click="track_input_dialog")
+              | {{quest_name(new_quest)}}
+            span.has-text-grey-lighter
+              |
+              | -
+            span.current_digit(@click="lap_counter_input_dialog")
+              | {{time_format(lap_counter)}}
+          .has-text-grey-light.total_time
+            b-tooltip(label="トータル" position="is-right")
+              | {{ja_time_format(total_with_lap_seconds)}}
+          .buttons.is-centered.start_or_stop
+            template(v-if="mode === 'standby'")
+              button.button.is-large.is-primary.other_button(@click="start_handle")
+                b-icon(icon="play" size="is-large")
 
-          template(v-if="mode !== 'standby'")
-            button.button.is-large.is-danger.other_button(@click="stop_handle")
-              b-icon(icon="stop" size="is-large")
+            template(v-if="mode !== 'standby'")
+              button.button.is-large.is-danger.other_button(@click="stop_handle")
+                b-icon(icon="stop" size="is-large")
 
-        template(v-if="mode === 'playing'")
-          .buttons.is-centered.ox_buttons
-            button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
-            button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
+          template(v-if="mode === 'playing'")
+            .buttons.is-centered.ox_buttons
+              button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
+              button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
 
-        template(v-if="mode !== 'playing'")
-          button.button.is-large.other_button(@click="reset_handle" key="reset_key" v-if="total_with_lap_seconds !== 0") リセット
+          template(v-if="mode !== 'playing'")
+            button.button.is-large.other_button(@click="reset_handle" key="reset_key" v-if="total_with_lap_seconds !== 0") リセット
 
       template(v-if="mode === 'standby'")
         template(v-if="quest_list.length === 0 || true")
