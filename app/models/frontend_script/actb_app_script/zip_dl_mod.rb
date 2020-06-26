@@ -40,8 +40,8 @@ module FrontendScript
         # Actb::Question.all
         s = current_user.actb_questions
         # s = s.active_only
-        s = s.joins(:ox_record)
-        s = s.joins(:folder)
+        s = s.includes(:ox_record)
+        s = s.includes(:folder)
       end
     end
   end
