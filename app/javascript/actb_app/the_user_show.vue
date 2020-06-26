@@ -113,7 +113,7 @@ export default {
       .level_nav
         margin-top: 1rem
         .heading
-          width: 5rem
+          width: 4rem
         .title
           font-size: $size-6
       .description
