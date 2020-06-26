@@ -18,6 +18,5 @@ production:
   :logfile: log/sidekiq_production.log
 
 :queues:
-  - high
   - default
-  - low
+  - mailers
