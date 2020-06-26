@@ -43,9 +43,9 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.2]
 
     create_table :colosseum_auth_infos do |t|
       t.belongs_to :user, null: false, comment: "ユーザー"
-      t.string :provider, null: false, comment: "何経由でログインしたか"
-      t.string :uid,      null: false, comment: "長い内部ID(providerとペアではユニーク)"
-      t.text :meta_info,               comment: "とれた情報をハッシュで持っとく用"
+      t.string :provider, null: false
+      t.string :uid,      null: false
+      t.text :meta_info
 
       t.index [:provider, :uid], unique: true
     end
