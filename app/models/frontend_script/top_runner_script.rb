@@ -35,6 +35,10 @@ module FrontendScript
         return rows
       end
 
+      if rows.blank?
+        return "今は棋士団イベント中なので何もでません"
+      end
+
       rows.collect do |e|
         row = {}
         row["ウォーズID"] = h.link_to(e[:user][:name], [:swars, :battles, query: e[:user][:key]])
