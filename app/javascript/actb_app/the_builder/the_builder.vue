@@ -246,6 +246,11 @@ export default {
         return
       }
 
+      if (!this.question.title) {
+        this.warning_notice("なんかしらのタイトルを入力してください")
+        return
+      }
+
       if (this.question_new_record_p) {
         if (this.valid_count === 0) {
           this.warning_notice("1回ぐらい検証してください")
