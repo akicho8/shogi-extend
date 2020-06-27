@@ -258,7 +258,6 @@ export default {
         }
       }
 
-      this.sound_play("click")
 
       // const moves_answers = this.answers.map(e => {
       //   return { moves_str: e.moves_str }
@@ -274,6 +273,7 @@ export default {
         if (e.question) {
           this.question = new Question(e.question)
 
+          this.sound_play("click")
           this.ok_notice(`${before_create_or_upate_name}しました`)
 
           if (this.app.config.save_and_back_to_index) {
