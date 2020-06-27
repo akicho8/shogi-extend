@@ -55,19 +55,14 @@ module Actb
 
   if Rails.env.staging? || Rails.env.production?
     Config.update({
-        # :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
+        :main_navbar_enable           => false, # リンクを表示する？
+        :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
         :matching_interval_second     => 4,     # カウンターをインクリメントする間隔(秒)
         :thinking_time_sec            => nil,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
         :room_messages_window_height  => 5,     # 部屋での表示行数
         :matching_forgo_second        => 60,    # ○秒たったらマッチングを諦める(nullなら無限)
         :action_cable_debug           => false, # ActionCable関連デバッグモード
         :api_questions_fetch_per      => 50,
-      })
-  end
-
-  if Rails.env.production?
-    Config.update({
-        :main_navbar_enable           => false, # リンクを表示する？
       })
   end
 end

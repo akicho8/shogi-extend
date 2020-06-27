@@ -4,10 +4,12 @@
     b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="app.matching_cancel_handle")
     .header_center_title 対戦相手を待機中
 
-  .has-text-centered.has-text-weight-bold.mt-3
+  .progress_container.has-text-centered
+    b-progress(type="is-primary" size="is-small")
+
+  .has-text-centered.has-text-weight-bold.mt-3(v-if="app.debug_mode_p")
     div {{app.matching_interval_timer_count}}
     div ±{{app.matching_rate_threshold}}
-    b-progress.mt-2(type="is-primary")
 
   the_lobby_debug
 </template>
@@ -34,8 +36,9 @@ export default {
 @import "support.sass"
 .the_matching
   @extend %padding_top_for_primary_header
-  .progress
-    animation-duration: 4.0s
-    width: 16rem
-    margin: auto
+  .progress_container
+    margin: 3rem 3rem
+    .progress
+      animation-duration: 4.0s
+      width: 100%
 </style>
