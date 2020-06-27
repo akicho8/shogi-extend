@@ -38,6 +38,7 @@ module Actb
       Battle, BattleMembership,
       Season,
       SeasonXrecord,
+      MainXrecord,
       Setting,
       GoodMark, BadMark, ClipMark,
       Folder,

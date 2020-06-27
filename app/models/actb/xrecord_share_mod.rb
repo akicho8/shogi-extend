@@ -134,6 +134,35 @@ module Actb
       end
     end
 
+    def reset_all
+      self.judge = nil
+      self.final = nil
+
+      self.battle_count = nil
+      self.win_count = nil
+      self.lose_count = nil
+      self.win_rate = nil
+
+      self.rating = nil
+      self.rating_diff = nil
+      self.rating_max = nil
+
+      self.straight_win_count = nil
+      self.straight_lose_count = nil
+
+      self.straight_win_max = nil
+      self.straight_lose_max = nil
+
+      self.skill = nil
+      self.skill_point = nil
+      self.skill_last_diff = nil
+
+      self.disconnect_count = nil
+      self.disconnected_at = nil
+
+      save!
+    end
+
     concerning :SkillMethods do
       included do
         belongs_to :skill          # ウデマエ
