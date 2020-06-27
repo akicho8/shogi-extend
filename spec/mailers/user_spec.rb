@@ -31,12 +31,13 @@ RSpec.describe UserMailer, type: :mailer do
     it do
       assert { @mail.from == ["shogi.extend@gmail.com"] }
       assert { @mail.to   == ["user1@localhost"]        }
+      assert { @mail.bcc  == ["shogi.extend@gmail.com"] }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ...
 # >> 
-# >> Finished in 0.63602 seconds (files took 2.1 seconds to load)
+# >> Finished in 0.68275 seconds (files took 2.1 seconds to load)
 # >> 3 examples, 0 failures
 # >> 

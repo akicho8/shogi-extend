@@ -45,6 +45,6 @@ class UserMailer < ApplicationMailer
 
     body = out.join("\n")
 
-    mail(subject: subject, to: message.question.user.email, body: body)
+    mail(subject: subject, to: message.question.user.email, bcc: AppConfig[:admin_email], body: body)
   end
 end
