@@ -35,6 +35,11 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     it "どっかにリダイレクトする" do
       expect(response).to have_http_status(:redirect)
     end
+
+    it "メール" do
+      assert { ActionMailer::Base.deliveries.count == 1 }
+      assert { ActionMailer::Base.deliveries.last.subject == "[SHOGI-EXTEND][test] aliceさんがtwitterで登録されました" }
+    end
   end
 end
 
@@ -259,7 +264,7 @@ end
 # end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ....
-# >> 
+# >>
 # >> Finished in 1.85 seconds (files took 2.21 seconds to load)
 # >> 4 examples, 0 failures
-# >> 
+# >>

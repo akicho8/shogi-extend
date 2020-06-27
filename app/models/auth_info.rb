@@ -58,5 +58,7 @@ class AuthInfo < ApplicationRecord
       end
       user.profile.save!
     end
+
+    UserMailer.user_created(user).deliver_now
   end
 end

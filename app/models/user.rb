@@ -64,7 +64,6 @@ class User < ApplicationRecord
 
       after_create do
         if Rails.env.production? || Rails.env.staging?
-          UserMailer.user_created(self).deliver_now
           SlackAgent.message_send(key: "ユーザー登録", body: attributes.slice("id", "name"))
         end
       end
