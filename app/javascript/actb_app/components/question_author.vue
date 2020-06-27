@@ -22,14 +22,12 @@ import { support } from "../support.js"
 
 export default {
   name: "question_author",
-  props: {
-    title_display_p: { type: Boolean, required: false, default: true, },
-  },
   mixins: [
     support,
   ],
   props: {
-    question: { type: Object, required: true },
+    title_display_p: { type: Boolean, required: false, default: true, },
+    question:        { type: Object,  required: true,                 },
   },
 }
 </script>
