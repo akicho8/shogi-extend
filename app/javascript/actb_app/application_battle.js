@@ -288,7 +288,6 @@ export const application_battle = {
 
     // 早押しボタンを押した(解答権はまだない)
     wakatta_handle(ms_flip = false) {
-      this.sound_play("click")
       this.ac_battle_perform("wakatta_handle", {ms_flip: ms_flip, question_id: this.current_question.id}) // --> app/channels/actb/battle_channel.rb
     },
     wakatta_handle_broadcasted(params) {
