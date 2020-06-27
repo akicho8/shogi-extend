@@ -62,7 +62,7 @@ class User < ApplicationRecord
         self.email ||= default_emal
       end
 
-      after_create do
+      after_create_commit do
         if Rails.env.production? || Rails.env.staging?
           SlackAgent.message_send(key: "ユーザー登録", body: attributes.slice("id", "name"))
         end
