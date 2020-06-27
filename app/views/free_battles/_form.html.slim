@@ -35,7 +35,7 @@
           b-switch(v-model="run_mode" true-value="edit_mode" false-value="play_mode" size="is-small") 局面編集
 
 b-field(label="タイトル" label-position="on-border")
-  b-input(name="free_battle[title]" :value="$options.record_attributes.title" size="is-small")
+  b-input(name="free_battle[title]" :value="$options.record_attributes.title" size="is-small" required)
 
 b-field(label="説明" label-position="on-border")
   b-input(name="free_battle[description]" :value="$options.record_attributes.description" size="is-small" type="textarea" rows="2")
