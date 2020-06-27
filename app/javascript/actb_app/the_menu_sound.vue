@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_menu_sound
   .primary_header
-    .header_center_title 効果音テスト
+    .header_center_title サウンドテスト
   .menu_buttons
     b-button(expanded @click="sound_play('click')")   タップ
     b-button(expanded @click="sound_play('deden')")   ででん
