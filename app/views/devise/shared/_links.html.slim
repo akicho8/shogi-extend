@@ -24,7 +24,10 @@
                     - if session.dig(:provider_remember, "provider") == e.key.to_s && false
                       = " ←"
             p
-              = link_to("適当にアカウントを作成してログイン", [:direct_session], method: :post, class: "button is-large has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button")
+              = link_to([:direct_session], method: :post, class: "button is-large has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button") do
+                span.is-size-5
+                  | 適当にアカウントを作成してログイン
+
 .columns
   .column
     .card
