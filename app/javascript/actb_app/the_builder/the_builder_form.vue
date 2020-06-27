@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_builder_form
   b-field(label="タイトル" label-position="on-border")
-    b-input(v-model="$parent.question.title")
+    b-input(v-model="$parent.question.title" required)
 
   b-field(label="ヒント" label-position="on-border" v-if="app.config.hint_enable")
     b-input(v-model="$parent.question.hint_desc")
