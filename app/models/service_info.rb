@@ -17,6 +17,17 @@ class ServiceInfo
       ],
     },
     {
+      display_p: false,
+      link_path: [:training],
+      title: "将棋トレーニングバトル",
+      image_source: "actb_1200x630.png",
+      description: "早押しクイズ形式で将棋の問題を解くスピードを競うオンライン対戦ゲームです",
+      feature_items: [
+        "問題投稿可",
+        "ランキングあり",
+      ],
+    },
+    {
       display_p: true,
       link_path: [:adapter],
       title: "なんでも棋譜変換",
@@ -81,15 +92,6 @@ class ServiceInfo
         "間違えた問題だけの復習が簡単",
         "復習問題のリストが固定URLに入っている(のでブックマークしていれば再開が簡単)",
         "開始と終了のタイミングで状態をブラウザに保存しているので(ブックマークしてなくても)再開が簡単",
-      ],
-    },
-    {
-      display_p: false,
-      link_path: [:training],
-      title: "将棋トレーニングバトル",
-      image_source: nil,
-      description: "対局ではなく問題を解く力を競う対戦ゲームです",
-      feature_items: [
       ],
     },
     {
