@@ -147,7 +147,6 @@ module Actb
           "名前"               => name,
           "レーティング"       => rating,
           "クラス"             => skill_key,
-          "作成問題数"         => actb_questions.count,
           "最新シーズン情報ID" => actb_latest_xrecord.id,
           "永続的プロフ情報ID" => actb_main_xrecord.id,
           "部屋入室数"         => actb_room_memberships.count,
