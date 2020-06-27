@@ -34,9 +34,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     # 復元できないときは新規ユーザーを作成する
+    # Google の場合なぜか auth.info.name にメールアドレスが入っている
     unless user
       user = User.create({
-          :name       => auth.info.name.presence || auth.info.nickname.presence || local_part_of_email,
+          :name       => local_part_of_email(auth.info.name.presence || auth.info.nickname.presence),
           :email      => auth.info.email,
           :avatar     => {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"},
           :user_agent => request.user_agent,
@@ -108,11 +109,17 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     URI(auth.info.image)
   end
 
-  # メールアドレスの@の前を取得
+  # メールアドレスなら@の前を取得
   #  "alice@localhost" --> "alice"
-  def local_part_of_email
-    if v = auth.info.email
-      Mail::Address.new(v).local
+  #  "alice"           --> "alice"
+  def local_part_of_email(str)
+    a = Mail::Address.new(str)
+    if a.domain
+      a.local
+    else
+      str
     end
+  rescue Mail::Field::IncompleteParseError
+    str
   end
 end

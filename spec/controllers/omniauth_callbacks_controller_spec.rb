@@ -12,7 +12,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
       OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new({
           :provider => 'twitter',
           :uid      => '(uid)',
-          :info     => { :name => '(name)', :image => "https://www.shogi-extend.com/foo.png", email: "xxx@localhost" },
+          :info     => { :name => 'alice@gmail.com', :image => "https://www.shogi-extend.com/foo.png", email: "alice@localhost" },
         })
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter]
       get :twitter
@@ -21,7 +21,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     let(:record) { User.first }
 
     it "名前がある" do
-      assert { record.name == "(name)" }
+      assert { record.name == "alice" }
     end
 
     it "プロフィール画像を登録している" do
@@ -29,7 +29,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     end
 
     it "メールアドレスを取得している" do
-      assert { record.email == "xxx@localhost" }
+      assert { record.email == "alice@localhost" }
     end
 
     it "どっかにリダイレクトする" do
