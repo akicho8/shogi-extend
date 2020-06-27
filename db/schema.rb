@@ -421,9 +421,9 @@ ActiveRecord::Schema.define(version: 2020_06_27_090400) do
 
   create_table "auth_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
-    t.string "provider", null: false
-    t.string "uid", null: false
-    t.text "meta_info"
+    t.string "provider", null: false, comment: "何経由でログインしたか"
+    t.string "uid", null: false, comment: "長い内部ID(providerとペアではユニーク)"
+    t.text "meta_info", comment: "とれた情報をハッシュで持っとく用"
     t.index ["provider", "uid"], name: "index_auth_infos_on_provider_and_uid", unique: true
     t.index ["user_id"], name: "index_auth_infos_on_user_id"
   end

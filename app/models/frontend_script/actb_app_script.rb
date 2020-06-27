@@ -63,6 +63,12 @@ module FrontendScript
             :image       => e.shared_image_params,
             :creator     => e.user.twitter_key,
           })
+      else
+        c.instance_variable_set(:@ogp_params, {
+            :title       => "将棋トレーニングバトル",
+            :description => "早押しクイズ形式で将棋の問題に答えながら対戦するゲームです",
+            :image       => "actb_1200x630.png",
+          })
       end
 
       # JS 側からいきなりログイン画面に飛ばすとどこに戻ればよいかわからない
