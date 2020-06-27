@@ -21,10 +21,15 @@
 class FixUserName < ActiveRecord::Migration[6.0]
   def up
     User.find_each do |e|
-      a = Mail::Address.new(e.name)
-      if a.domain == "localhost"
-        e.update!(name: a.local)
+      e.name = e.name.remove("(絵文字)").strip
+      begin
+        a = Mail::Address.new(e.name)
+        if a.domain.to_s.match?(/\.(com|jp)\z/)
+          e.name = a.local
+        end
+      rescue Mail::Field::IncompleteParseError
       end
+      e.save!
     end
   end
 end
