@@ -158,6 +158,10 @@ module Actb
         public_send("#{key}=", public_send(key).presence)
       end
 
+      if Rails.env.test?
+        self.title ||= "(title#{self.class.count.next})"
+      end
+
       self.good_rate ||= 0
 
       self.lineage ||= Lineage.fetch("詰将棋")
@@ -170,10 +174,13 @@ module Actb
     end
 
     with_options presence: true do
+      validates :title
       validates :init_sfen
     end
 
     with_options allow_blank: true do
+      validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
+
       # validates :init_sfen # , uniqueness: { case_sensitive: true }
       # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
       # validates :display_key, inclusion: DisplayInfo.keys.collect(&:to_s)
