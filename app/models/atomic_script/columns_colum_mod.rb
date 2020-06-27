@@ -19,7 +19,7 @@ module AtomicScript
 
     def columns_column_tag
       h.tag.div(:class => "columns") do
-        h.tag.div(:class => "column") do
+        h.tag.div(:class => "column is_scroll_x") do
           yield
         end
       end
