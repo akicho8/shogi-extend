@@ -39,8 +39,8 @@
       @update:turn_offset="app.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
-    .akirameru_button.has-text-centered(:class="{'is-invisible': !app.debug_mode_p}")
-      b-button.has-text-weight-bold(@click="app.x2_play_timeout_handle(false)") 諦める
+    .akirameru_button.has-text-centered
+      b-button.has-text-weight-bold(@click="app.x2_play_timeout_handle(false)") あきらめる
 
   template(v-if="app.x_mode === 'x3_see'")
     .status_line2.has-text-centered.has-text-weight-bold
@@ -59,6 +59,8 @@
       :theme="app.config.sp_theme"
       @update:turn_offset="v => app.q_turn_offset = v"
     )
+    .akirameru_button
+      b-button.is-invisible
 
   .has-text-centered.tags_container(v-if="app.debug_mode_p")
     //- p 難易度:{{app.current_question.difficulty_level}}

@@ -20,9 +20,11 @@
       the_result_membership(:membership="membership")
       .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs
 
-  .footer_container
+  .saisen_suru_container
     .buttons.is-centered
       b-button.has-text-weight-bold(:disabled="!all_active_p" @click="app.battle_continue_handle" :type="button_push_by_self_p ? 'is-primary' : ''") 同じ相手と再戦する
+
+  the_room_message.mt-5
 
   .box.is-shadowless(v-if="app.debug_mode_p")
     .buttons.is-centered.are-small
@@ -31,8 +33,6 @@
       b-button(@click="app.battle_leave_handle(true)") 退出通知(相手)
       b-button(@click="app.battle_unsubscribe") バトル切断(自分)
       b-button(@click="app.member_disconnect_handle(true)") バトル切断風にする(相手)
-
-  the_room_message
 
   debug_print(v-if="app.debug_mode_p" :vars="['app.member_infos_hash']")
   debug_print(v-if="app.debug_mode_p" :vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.battle_pos', 'app.score_debug_info']")
@@ -85,7 +85,7 @@ export default {
     align-items: center
 
   // 続ける
-  .footer_container
+  .saisen_suru_container
     margin-top: 1rem
     .buttons
       flex-direction: column
