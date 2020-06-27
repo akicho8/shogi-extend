@@ -1,6 +1,6 @@
 class UserMailer < ApplicationMailer
   # 管理者へ通知
-  # UserMailer.user_created(User.first).deliver_now
+  # UserMailer.user_created(User.first).deliver_later
   # http://0.0.0.0:3000/rails/mailers/user/user_created
   def user_created(user)
     attrs = {
@@ -26,7 +26,7 @@ class UserMailer < ApplicationMailer
   end
 
   # 問題の作者に通知
-  # UserMailer.question_message_created(Actb::QuestionMessage.first).deliver_now
+  # UserMailer.question_message_created(Actb::QuestionMessage.first).deliver_later
   # http://0.0.0.0:3000/rails/mailers/user/question_message_created
   def question_message_created(message)
     out = []

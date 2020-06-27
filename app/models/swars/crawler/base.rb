@@ -25,7 +25,7 @@ module Swars
         @rows.clear
         perform
         if params[:developper_notice]
-          ApplicationMailer.developper_notice(subject: subject, body: mail_body).deliver_now
+          ApplicationMailer.developper_notice(subject: subject, body: mail_body).deliver_later
         end
         if Rails.env.development?
           puts params.to_t
