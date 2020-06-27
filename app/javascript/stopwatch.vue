@@ -142,7 +142,7 @@
 
 <script>
 const HYPHEN_SEP = " "
-const TITLE_DEFAULT = "詰将棋RTA向けストップウォッチ"
+const TITLE_DEFAULT = "詰将棋RTA用ストップウォッチ"
 
 import dayjs from "dayjs"
 
