@@ -197,7 +197,7 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     school_setup() {
-      this.__assert__(this.$ac_school == null)
+      this.__assert__(this.$ac_school == null, "this.$ac_school == null")
       this.$ac_school = this.ac_subscription_create({channel: "Actb::SchoolChannel"})
     },
     online_status_broadcasted(params) {
@@ -223,7 +223,7 @@ export default {
       this.lobby_messages_setup()
 
       this.debug_alert("lobby_setup")
-      this.__assert__(this.$ac_lobby == null)
+      this.__assert__(this.$ac_lobby == null, "this.$ac_lobby == null")
       this.$ac_lobby = this.ac_subscription_create({channel: "Actb::LobbyChannel"})
 
       this.after_lobby_setup()
@@ -280,7 +280,7 @@ export default {
 
       this.app.matching_interval_timer_clear()
 
-      this.__assert__(this.$ac_lobby)
+      this.__assert__(this.$ac_lobby, "this.$ac_lobby")
       this.$ac_lobby.perform("matching_cancel")
 
       this.mode = "rule_select"

@@ -83,7 +83,7 @@ export const application_battle = {
 
       this.question_index = 0
 
-      this.__assert__(this.$ac_battle == null)
+      this.__assert__(this.$ac_battle == null, "this.$ac_battle == null")
       this.$ac_battle = this.ac_subscription_create({channel: "Actb::BattleChannel", battle_id: this.battle.id}, {
         connected: () => {
           this.start_hook()
@@ -182,7 +182,7 @@ export const application_battle = {
 
     // 正解または不正解
     kotae_sentaku(ox_mark_key, ms_flip = false) {
-      this.__assert__(ox_mark_key === "correct" || ox_mark_key === "timeout")
+      this.__assert__(ox_mark_key === "correct" || ox_mark_key === "timeout", "ox_mark_keyがおかしい")
       this.ac_battle_perform("kotae_sentaku", {
         ms_flip: ms_flip,
         question_id: this.current_question.id,

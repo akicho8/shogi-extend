@@ -134,7 +134,7 @@ export default {
       this.sound_play("click")
 
       // http://fabricjs.com/docs/fabric.Canvas.html#toDataURL
-      this.__assert__(this.fcanvas)
+      this.__assert__(this.fcanvas, "this.fcanvas")
       this.$parent.croped_image = this.fcanvas.toDataURL({
         top:    CANVAS_PADDING,
         left:   CANVAS_PADDING,

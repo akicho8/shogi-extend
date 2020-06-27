@@ -25,7 +25,7 @@ export const application_room = {
 
       this.room_speak_init()
 
-      this.__assert__(this.$ac_room == null)
+      this.__assert__(this.$ac_room == null, "this.$ac_room == null")
       this.$ac_room = this.ac_subscription_create({channel: "Actb::RoomChannel", room_id: this.room.id})
     },
 
