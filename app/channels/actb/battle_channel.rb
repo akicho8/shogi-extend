@@ -261,7 +261,7 @@ module Actb
       data = data.to_options
 
       # 単に発言させるためだけ
-      if true
+      if Config[:action_cable_debug]
         membership = Actb::BattleMembership.find(data[:membership_id])
         membership.room_speak("*退室します")
       end
