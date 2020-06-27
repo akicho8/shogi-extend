@@ -628,9 +628,9 @@ DROP TABLE IF EXISTS `auth_infos`;
 CREATE TABLE `auth_infos` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT 'ユーザー',
-  `provider` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `uid` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `meta_info` text COLLATE utf8mb4_bin,
+  `provider` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '何経由でログインしたか',
+  `uid` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '長い内部ID(providerとペアではユニーク)',
+  `meta_info` text COLLATE utf8mb4_bin COMMENT 'とれた情報をハッシュで持っとく用',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_auth_infos_on_provider_and_uid` (`provider`,`uid`),
   KEY `index_auth_infos_on_user_id` (`user_id`)
@@ -1030,6 +1030,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200623111200'),
 ('20200623113600'),
 ('20200623172500'),
-('20200623172600');
+('20200623172600'),
+('20200627084100'),
+('20200627090400');
 
 
