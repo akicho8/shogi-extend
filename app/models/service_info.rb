@@ -21,7 +21,7 @@ class ServiceInfo
       link_path: [:training],
       title: "将棋トレーニングバトル",
       image_source: "actb_1200x630.png",
-      description: "早押しクイズ形式で将棋の問題を解くスピードを競うオンライン対戦ゲームです",
+      description: "早押しクイズ形式で将棋の問題を解く力を競う対戦ゲームです",
       feature_items: [
         "問題投稿可",
         "ランキングあり",
