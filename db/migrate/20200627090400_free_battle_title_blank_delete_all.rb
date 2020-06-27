@@ -20,13 +20,5 @@
 
 class FreeBattleTitleBlankDeleteAll < ActiveRecord::Migration[6.0]
   def up
-    FreeBattle.find_each do |e|
-      if e.use_key == "basic"
-        if e.title.blank?
-          p e
-          e.destroy!
-        end
-      end
-    end
   end
 end
