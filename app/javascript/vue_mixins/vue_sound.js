@@ -20,22 +20,22 @@ import { Howl, Howler } from 'howler'
 window.HowlObjects = {}
 
 const SoundPresets = {
-  o:        { file: mp3_o,        volume: 0.2, },
-  x:        { file: mp3_x,        volume: 0.2, },
-  start:    { file: mp3_start,    volume: 0.2, },
-  lose:     { file: mp3_lose,     volume: 0.5, },
-  win:      { file: mp3_win,      volume: 0.5, },
-  click:    { file: mp3_click,    volume: 0.2, },
-  shine:    { file: mp3_shine,    volume: 0.1, },
-  stupid:   { file: mp3_stupid,   volume: 0.5, }, // 使いにくい
-  poon:     { file: mp3_poon,     volume: 0.1, },
-  deden:    { file: mp3_deden,    volume: 0.1, },
-  pipopipo: { file: mp3_pipopipo, volume: 0.5, },
-  pishi:    { file: wav_pishi,    volume: 0.5, },
-  correct:  { file: mp3_o,        volume: 0.2, },
-  mistake:  { file: mp3_x,        volume: 0.2, },
-  timeout:  { file: mp3_bubuu,    volume: 0.2, },
-  draw:     { file: mp3_draw,     volume: 0.2, },
+  o:        { file: mp3_o,        volume: 0.2,  },
+  x:        { file: mp3_x,        volume: 0.2,  },
+  start:    { file: mp3_start,    volume: 0.2,  },
+  lose:     { file: mp3_lose,     volume: 0.3,  },
+  win:      { file: mp3_win,      volume: 0.15, },
+  click:    { file: mp3_click,    volume: 0.2,  },
+  shine:    { file: mp3_shine,    volume: 0.1,  },
+  stupid:   { file: mp3_stupid,   volume: 0.5,  }, // 使いにくい
+  poon:     { file: mp3_poon,     volume: 0.05, },
+  deden:    { file: mp3_deden,    volume: 0.08, },
+  pipopipo: { file: mp3_pipopipo, volume: 0.5,  },
+  pishi:    { file: wav_pishi,    volume: 0.3,  },
+  correct:  { file: mp3_o,        volume: 0.2,  },
+  mistake:  { file: mp3_x,        volume: 0.2,  },
+  timeout:  { file: mp3_bubuu,    volume: 0.2,  },
+  draw:     { file: mp3_draw,     volume: 0.3,  },
 }
 
 export default {
