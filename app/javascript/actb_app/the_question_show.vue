@@ -107,7 +107,6 @@
 import { support } from "./support.js"
 import the_history_row_vote      from "./the_history/the_history_row_vote.vue"
 import the_question_show_message from "./the_question_show_message.vue"
-import question_author       from "./components/question_author.vue"
 
 export default {
   name: "the_question_show",
@@ -122,7 +121,6 @@ export default {
   components: {
     the_history_row_vote,
     the_question_show_message,
-    question_author,
   },
 
   data() {
