@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "scp production.rb s:/var/www/shogi_web_production/current/config/puma; ssh s 'sudo systemctl restart puma'" -*-
+# -*- coding: utf-8; compile-command: "scp production.rb i:/var/www/shogi_web_production/current/config/puma; ssh i 'sudo systemctl restart puma'" -*-
 
 pp({
     "whoami"    => `whoami`.strip,
@@ -43,7 +43,7 @@ state_path "tmp/pids/puma.state"
 # the concurrency of the application would be max `threads` * `workers`.
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
-workers ENV.fetch("WEB_CONCURRENCY") { 3 }
+workers ENV.fetch("WEB_CONCURRENCY") { 2 } # 本来はCPUの数と同等で良いがメモリがやばいので2
 
 # https://techracho.bpsinc.jp/hachi8833/2017_11_13/47696
 # Use the `preload_app!` method when specifying a `workers` number.
