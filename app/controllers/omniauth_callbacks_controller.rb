@@ -37,7 +37,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     unless user
       user = User.create({
           :name       => auth.info.name.presence || auth.info.nickname.presence || local_part_of_email,
-          :email      => auth.info.email
+          :email      => auth.info.email,
           :avatar     => {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"},
           :user_agent => request.user_agent,
         })
