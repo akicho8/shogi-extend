@@ -21,9 +21,10 @@ class UserPreview < ActionMailer::Preview
   # alice が作った問題に bob がコメントしたとき alice にメールが飛ぶ
   # http://0.0.0.0:3000/rails/mailers/user/question_message_created
   def question_message_created
-    Actb.setup
-    user1 = User.create!(name: "alice")
-    user2 = User.create!(name: "bob")
+    Actb::Question.destroy_all
+
+    user1 = User.create!(name: "user1")
+    user2 = User.create!(name: "user2")
     question = user1.actb_questions.mock_type1
     message = question.messages.create!(user: user2, body: "message")
     UserMailer.question_message_created(message)

@@ -29,21 +29,22 @@ class UserMailer < ApplicationMailer
   # UserMailer.question_message_created(Actb::QuestionMessage.first).deliver_later
   # http://0.0.0.0:3000/rails/mailers/user/question_message_created
   def question_message_created(message)
+    subject = "#{message.user.name}さんが「#{message.question.title}」にコメントしました"
+
     out = []
-    if false
-      out << "#{message.user.name}さんより"
-      out << ""
-    end
     out << message.body
     out << ""
     out << message.question.page_url
-    if false
+
+    if Rails.env.test? || Rails.env.development?
       out << ""
       out << "--"
       out << "▼将棋トレーニングバトル"
-      out << "https://www.shogi-extend.com/training"
+      out << url_for(:training)
     end
 
-    mail(subject: "#{message.user.name}さんが「#{message.question.title}」にコメントしました", body: out.join("\n"))
+    body = out.join("\n")
+
+    mail(subject: subject, to: message.question.user.email, body: body)
   end
 end
