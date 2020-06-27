@@ -17,7 +17,7 @@ class ServiceInfo
       ],
     },
     {
-      display_p: false,
+      display_p: Actb::Config[:actb_display_p],
       link_path: [:training],
       title: "将棋トレーニングバトル",
       image_source: "actb_1200x630.png",

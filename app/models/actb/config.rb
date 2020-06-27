@@ -1,6 +1,6 @@
 module Actb
   Config = {
-    :main_navbar_enable              => true,
+    :actb_display_p              => true,
 
     # -------------------------------------------------------------------------------- 共通
     :rating_display_p                => false, # 内部レーティングを表示する？
@@ -55,7 +55,7 @@ module Actb
 
   if Rails.env.staging? || Rails.env.production?
     Config.update({
-        :main_navbar_enable           => false, # リンクを表示する？
+        :actb_display_p           => false, # リンクを表示する？
         :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
         :matching_interval_second     => 4,     # カウンターをインクリメントする間隔(秒)
         :thinking_time_sec            => nil,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
