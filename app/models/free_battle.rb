@@ -38,7 +38,6 @@ require "open-uri"
 
 class FreeBattle < ApplicationRecord
   include BattleModelMod
-  include StrangeKifuBodyParserMod
   include ShareBoardMod
 
   class << self
@@ -177,11 +176,9 @@ class FreeBattle < ApplicationRecord
     end
 
     if changes_to_save[:kifu_body] && kifu_body
-      url_in_kifu_body
-    end
-
-    if changes_to_save[:kifu_body] && kifu_body
-      self.kifu_body = FreeBattle.taking_into_account_tactic_and_preset_to_kifu_body(kifu_body)
+      if v = UrlEmbedKifuParser.parse(kifu_body)
+        self.kifu_body = v
+      end
     end
   end
 
@@ -272,16 +269,7 @@ class FreeBattle < ApplicationRecord
   end
 
   def http_get_body(url)
-    connection = Faraday.new do |builder|
-      builder.response :follow_redirects # リダイレクト先をおっかける
-      builder.adapter :net_http
-    end
-
-    response = connection.get(url)
-    s = response.body
-
-    s = s.toutf8
-    s = s.gsub(/\\n/, "") # 棋王戦のKIFには備考に改行コードではない '\n' という文字が入っていることがある
+    UrlEmbedKifuParser.http_get_body(url)
   end
 
   def fast_parser_options
@@ -380,19 +368,6 @@ class FreeBattle < ApplicationRecord
   end
 
   concerning :HelperMod do
-    class_methods do
-      def taking_into_account_tactic_and_preset_to_kifu_body(str)
-        case
-        when e = Bioshogi::TacticInfo.flat_lookup(str.strip)
-          e.sample_kif_file.read
-        when e = Bioshogi::PresetInfo.lookup(str.strip)
-          e.to_position_sfen
-        else
-          str
-        end
-      end
-    end
-
     def piyo_shogi_base_params
       decorator = mini_battle_decorator
       a = {}

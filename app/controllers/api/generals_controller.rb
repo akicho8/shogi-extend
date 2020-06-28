@@ -3,7 +3,8 @@ module Api
     # curl http://localhost:3000/api/general/any_source_to?any_source=68S
     # curl http://localhost:3000/api/general/any_source_to -d "any_source=68S"
     def any_source_to
-      source = FreeBattle.taking_into_account_tactic_and_preset_to_kifu_body(params[:any_source])
+      source = params[:any_source]
+      source = UrlEmbedKifuParser.convert(source) # URLや戦術名→棋譜
       info = Bioshogi::Parser.parse(source, parser_options)
       body = info.public_send("to_#{to_format}", convert_options)
       turn_max = info.mediator.turn_info.turn_offset
