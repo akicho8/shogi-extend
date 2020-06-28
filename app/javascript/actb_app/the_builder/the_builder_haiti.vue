@@ -12,6 +12,7 @@
     :sound_effect="false"
     :volume="0.5"
     @update:edit_mode_snapshot_sfen="$parent.edit_mode_snapshot_sfen"
+    ref="main_sp"
     )
   .footer_buttons
     .buttons.is-centered.are-small.is-marginless.mt-3
@@ -95,9 +96,13 @@ export default {
       })
     },
 
+    // new_kifu_body は常に今の状態を表わしているわけではない
+    // 最初の状態しか入っていない
+    // なので更新したと思っても最初の状態と変化していないので盤面に反映されない
+    // こういうときは引数を渡して変化したかどうかとかそんなまわりくどいことはせずに
+    // 直接更新すればいい
     kyokumen_set(str) {
-      this.new_kifu_body = str
-      this.$parent.edit_mode_snapshot_sfen(str) // 正解を削除するトリガーを明示的に実行
+      this.$refs.main_sp.api_sfen_or_kif_set(str)
     },
 
     // 棋譜コピー

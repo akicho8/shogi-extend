@@ -258,7 +258,6 @@ export default {
         }
       }
 
-
       // const moves_answers = this.answers.map(e => {
       //   return { moves_str: e.moves_str }
       // })
