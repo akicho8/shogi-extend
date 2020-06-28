@@ -123,10 +123,12 @@ module FrontendScript
 
       # 問題作成(配置)
       def debug_for_builder_haiti(info)
+        c.sysop_login_unless_logout
       end
 
       # 問題作成(情報)
       def debug_for_builder_form(info)
+        c.sysop_login_unless_logout
       end
 
       # ランキング
@@ -147,6 +149,7 @@ module FrontendScript
 
       # ユーザー詳細
       def debug_for_ov_user_info(info)
+        c.sysop_login_unless_logout
       end
 
       # ログインしていない状態

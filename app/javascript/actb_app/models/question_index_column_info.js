@@ -12,6 +12,7 @@ export class QuestionIndexColumnInfo extends MemoryRecord {
       { key: "bad_marks_count",  name: "低評価",     short_name: "低評",     visible: false, scope: ["admin", "general"],          },
       { key: "histories_count",  name: "出題数",     short_name: "出題",     visible: false, scope: ["admin", "general"],          },
 
+      { key: "time_limit_sec",   name: "制限時間",   short_name: "時間",     visible: false, scope: ["admin", "general"],          },
       { key: "difficulty_level", name: "難易度",     short_name: "難度",     visible: false, scope: ["admin", "general"],          },
 
       { key: "o_rate",           name: "正解率",     short_name: "正率",     visible: true,  scope: ["admin", "general"],          },
