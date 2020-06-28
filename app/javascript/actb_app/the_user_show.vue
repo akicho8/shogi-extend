@@ -45,7 +45,7 @@
         .level-item.has-text-centered
           div
             p.heading 高評価率
-            p.title {{float_to_perc2(ov_user_info.statistics.questions_good_rate_average)}} %
+            p.title {{float_to_perc(ov_user_info.statistics.questions_good_rate_average)}} %
         .level-item.has-text-centered
           div
             p.heading 高評価数

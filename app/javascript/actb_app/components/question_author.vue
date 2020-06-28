@@ -12,7 +12,7 @@
       template(v-if="question.ox_record.ox_total === 0")
         | ?
       template(v-else)
-        | {{float_to_perc2(question.ox_record.o_rate)}}
+        | {{float_to_perc(question.ox_record.o_rate)}}
     span %
 
 </template>

@@ -24,7 +24,7 @@
             b-taglist(attached)
               b-tag(type="is-primary") 高評価
               b-tag(type="is-grey")
-                | {{float_to_perc2(question.good_rate)}} %
+                | {{float_to_perc(question.good_rate)}} %
           .control
             b-taglist(attached)
               b-tag(type="is-primary") 正解率
@@ -32,7 +32,7 @@
                 template(v-if="question.ox_record.ox_total === 0")
                   | ?
                 template(v-else)
-                  | {{float_to_perc2(question.ox_record.o_rate)}} %
+                  | {{float_to_perc(question.ox_record.o_rate)}} %
 
     b-tabs.mt-2(v-model="tab_index" @change="tab_change_handle" expanded)
       b-tab-item(label="初期配置")
