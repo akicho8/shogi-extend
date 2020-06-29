@@ -574,7 +574,7 @@ export const application_battle = {
     // 自分が必ず左側にいる memberships
     // -1:左 +1:右
     ordered_memberships() {
-      if (this.app.config.jibun_wo_hidari_p)  {
+      if (this.app.config.self_is_left_side_p)  {
         return _.sortBy(this.battle.memberships, e => e.user.id === this.current_user.id ? -1 : 0)
       } else {
         return this.battle.memberships
