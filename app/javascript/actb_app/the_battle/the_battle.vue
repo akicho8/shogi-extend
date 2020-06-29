@@ -17,9 +17,9 @@
     the_battle_question_singleton_rule(v-if="app.battle.rule.key === 'singleton_rule'")
     the_room_message
 
-  template(v-if="app.sub_mode === 'mistake_mode'")
-    .mistake_mode_container.has-text-centered
-      | 時間切れ
+  template(v-if="app.sub_mode === 'timeout_mode'")
+    .mistake_mode_container.has-text-centered(v-if="development_p")
+      | 時間切れ(ではないときもある)
 
   template(v-if="app.debug_mode_p")
     .columns

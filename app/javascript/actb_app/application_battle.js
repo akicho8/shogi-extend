@@ -19,7 +19,7 @@ export const application_battle = {
       battle: null,
 
       x_mode:                     null,  // バトル中の状態遷移
-      answer_button_disable_p:    null,  // true:誤答でおてつき中
+      answer_button_disable_p:    null,  // true:誤答でおてつき中 FIXME:とる
       battle_continue_tap_counts: null,  // それぞれの再戦希望数
       battle_count:               null,  // 同じ相手との対戦回数
       share_sfen:                 null,  // 自分の操作を相手に伝える棋譜
@@ -134,6 +134,7 @@ export const application_battle = {
     q_turn_offset_set(turn) {
       this.q_turn_offset = turn
 
+      // 3手詰を7手ほど進めたたときもタイムアウト相当の処理へ進む
       const max = this.current_question.moves_count_max + this.config.turn_limit_lazy_count
       if (turn >= max) {
         this.x2_play_timeout_handle()
@@ -181,6 +182,7 @@ export const application_battle = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 正解または不正解
+    // ここにくるのは correct と timeout しかない
     kotae_sentaku(ox_mark_key, ms_flip = false) {
       this.__assert__(ox_mark_key === "correct" || ox_mark_key === "timeout", "ox_mark_keyがおかしい")
       this.ac_battle_perform("kotae_sentaku", {
@@ -239,7 +241,7 @@ export const application_battle = {
     // 正解時は正解したユーザーが送信者なので正解者には○
     seikai_user_niha_maru(mi, ox_mark_info) {
       if (ox_mark_info.key === "correct") {
-        this.score_add(mi.membership_id, ox_mark_info.score)
+        mi.score_add(ox_mark_info.score)
         mi.ox_list.push("correct")
       }
     },
@@ -288,9 +290,13 @@ export const application_battle = {
 
     // 早押しボタンを押した(解答権はまだない)
     wakatta_handle(ms_flip = false) {
-      this.ac_battle_perform("wakatta_handle", {ms_flip: ms_flip, question_id: this.current_question.id}) // --> app/channels/actb/battle_channel.rb
+      this.ac_battle_perform("wakatta_handle", {
+        ms_flip: ms_flip,
+        question_id: this.current_question.id,
+      }) // --> app/channels/actb/battle_channel.rb
     },
     wakatta_handle_broadcasted(params) {
+      const mi = this.member_infos_hash[params.membership_id]
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押せた本人
         this.x_mode = "x2_play"
@@ -298,8 +304,15 @@ export const application_battle = {
         this.sound_play("poon")
       } else {
         // 解答ボタンを押さなかった相手
-        if (this.answer_button_disable_p) {
-          this.answer_button_disable_p = false // 元々誤答していたら解答権利復活させる
+        if (this.app.config.kaitouken_hukkatu_dekiru_p) {
+          // 元々誤答していたら解答権利復活させる
+          if (this.current_mi.otetuki_p(params.question_id)) {
+            this.current_mi.otetuki_off(params.question_id)
+          }
+          // 元々誤答していたら解答権利復活させる
+          if (this.answer_button_disable_p) {
+            this.answer_button_disable_p = false
+          }
         }
         this.x_mode = "x3_see"
         this.share_sfen = this.current_question.init_sfen // 初期状態にしておく
@@ -316,27 +329,32 @@ export const application_battle = {
     },
     // singleton_rule での操作中の時間切れは不正解相当
     x2_play_timeout_handle_broadcasted(params) {
-      this.member_infos_hash[params.membership_id].ox_list.push("mistake")
-      this.score_add(params.membership_id, -1)
+      const mi = this.member_infos_hash[params.membership_id]
+      mi.ox_list.push("mistake")
+      mi.score_add(-1)
+      mi.otetuki_on(params.question_id)
       if (params.membership_id === this.current_membership.id) {
         this.answer_button_disable_p = true
-      } else {
-        this.answer_button_disable_p = false
       }
+
+      if (this.app.config.kaitouken_hukkatu_dekiru_p) {
+        // 解答権が相手にうつる場合
+      } else {
+        // 両者が御手付きしたらリーダーがタイムアウトとみなして次の問題に移行させる
+        if (this.otetuki_all_p) {
+          if (this.leader_p) {
+            this.kotae_sentaku('timeout') // [ONCE]
+          }
+          return
+        }
+      }
+
       this.sound_play("mistake")
       this.x_mode = "x1_thinking"
       this.q2_interval_stop()
     },
 
     // private
-    score_add(membership_id, diff) {
-      const mi = this.member_infos_hash[membership_id]
-      let v = mi.b_score + diff
-      if (v < 0) {
-        v = 0
-      }
-      mi.b_score = v
-    },
 
     // 結果画面へ
     judge_final_set_broadcasted(params) {
@@ -480,6 +498,12 @@ export const application_battle = {
       this.__assert__(v, "opponent_membership is blank")
       return v
     },
+    current_mi() {
+      return this.member_infos_hash[this.current_membership.id]
+    },
+    opponent_mi() {
+      return this.member_infos_hash[this.opponent_membership.id]
+    },
     current_question() {
       const v = this.battle.best_questions[this.question_index]
       this.__assert__(v, `[${this.question_index}]の問題が空`)
@@ -546,6 +570,12 @@ export const application_battle = {
     // バトル終了条件
     battle_end_p() {
       return this.b_score_max >= this.app.config.b_score_max_for_win
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// 両方誤答した？
+
+    otetuki_all_p() {
+      return _.every(this.member_infos_hash, (v, k) => v.otetuki_p(this.current_question.id))
     },
 
     ////////////////////////////////////////////////////////////////////////////////

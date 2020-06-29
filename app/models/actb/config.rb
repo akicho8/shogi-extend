@@ -14,8 +14,8 @@ module Actb
 
     # -------------------------------------------------------------------------------- バトル中の設定
     # 共通
-    :leader_index                    => 0,        # シングルトンとハイブリッドルールのときの memberships のインデックス○をリーダーにする。:0 =>左側 1:右側
-    :jibun_wo_hidari_p               => true,     # 自分を左に表示
+    :leader_index                    => 1,        # シングルトンとハイブリッドルールのときの memberships のインデックス○をリーダーにする。:0 =>左側 1:右側
+    :jibun_wo_hidari_p               => false,    # 自分を左に表示
     :best_questions_limit            => 30,       # 準備する問題数でこれが尽きたら引き分け
     :b_score_max_for_win             => 5,        # ○問正解先取で勝ち
     :ox_status_line_take_n           => 8,        # 上の○×行は最新何個表示する？
@@ -25,6 +25,7 @@ module Actb
 
     # シングルトンモード
     :otetsuki_enabled                => true,  # 誤答すると相手が解答するまで解答ボタンを押せないようにする？
+    :kaitouken_hukkatu_dekiru_p      => false, # おてつき解除可能か？
     :q2_time_limit_sec               => 3,     # 1手は○秒以内に操作しないとタイムアウトになる
     :thinking_time_sec               => 5*100, # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
     :turn_limit_lazy_count           => 4,     # 3手詰なら○手足した手数まで操作できる
