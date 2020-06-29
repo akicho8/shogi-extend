@@ -24,7 +24,7 @@ module Actb
     :sp_theme                        => 'simple', # 将棋盤のタイプ
 
     # シングルトンモード
-    :kaitouken_hukkatu_dekiru_p      => false, # おてつき解除可能か？
+    :otetuki_release_p      => false, # おてつき解除可能か？
     :q2_time_limit_sec               => 3,     # 1手は○秒以内に操作しないとタイムアウトになる
     :thinking_time_sec               => 5*100, # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
     :turn_limit_lazy_count           => 4,     # 3手詰なら○手足した手数まで操作できる

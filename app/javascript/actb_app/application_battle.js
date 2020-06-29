@@ -296,14 +296,14 @@ export const application_battle = {
     wakatta_handle_broadcasted(params) {
       const mi = this.member_infos_hash[params.membership_id]
       if (params.membership_id === this.current_membership.id) {
-        // 先に解答ボタンを押せた本人
+        // 先に解答ボタンを押した側
         this.x_mode = "x2_play"
         this.q2_interval_start()
         this.sound_play("poon")
       } else {
-        // 解答ボタンを押さなかった相手
-        if (this.app.config.kaitouken_hukkatu_dekiru_p) {
-          // 元々誤答していたら解答権利復活させる
+        // 解答ボタンを押さなかった側
+        // 元々誤答していたら解答権利復活させる
+        if (this.app.config.otetuki_release_p) {
           if (this.current_mi.otetuki_p(params.question_id)) {
             this.current_mi.otetuki_off(params.question_id)
           }
@@ -328,7 +328,7 @@ export const application_battle = {
       mi.score_add(-1)
       mi.otetuki_on(params.question_id)
 
-      if (this.app.config.kaitouken_hukkatu_dekiru_p) {
+      if (this.app.config.otetuki_release_p) {
         // 解答権が相手にうつる場合
       } else {
         // 両者が御手付きしたらリーダーがタイムアウトとみなして次の問題に移行させる
