@@ -3,7 +3,7 @@
   .primary_header
     .header_center_title その他
   .menu_buttons
-    b-button(expanded tag="a" :href="question_download_url" @click="sound_play('click')") 棋譜ダウンロード
+    b-button(expanded tag="a" :href="question_download_url" @click="sound_play('click')" :disabled="!app.current_user") 棋譜ダウンロード
     b-button(expanded @click="app.menu_to('the_menu_sound')") サウンドテスト
     b-button(expanded tag="a" href="/" @click="sound_play('click')") トップにもどる
 </template>
