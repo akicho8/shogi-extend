@@ -11,7 +11,7 @@ RSpec.describe "将棋トレーニングバトル", type: :system do
 
   it "トップ(ログインなし)" do
     visit "/training"
-    expect(page).to have_content "START"
+    expect(page).to have_content "LOGIN"
     doc_image
   end
 

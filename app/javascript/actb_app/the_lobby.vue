@@ -23,7 +23,11 @@
   the_lobby_ac_info
   .title.is-4.has-text-centered 将棋トレーニングバトル
   .buttons.is-centered
-    b-button.has-text-weight-bold(@click="app.start_handle" type="is-primary") START
+    b-button.has-text-weight-bold(@click="app.start_handle" type="is-primary")
+      template(v-if="app.current_user")
+        | START
+      template(v-else)
+        | LOGIN
   the_lobby_message
   the_lobby_debug(v-if="true")
 </template>
