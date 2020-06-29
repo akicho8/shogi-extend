@@ -19,7 +19,6 @@ export const application_battle = {
       battle: null,
 
       x_mode:                     null,  // バトル中の状態遷移
-      answer_button_disable_p:    null,  // true:誤答でおてつき中 FIXME:とる
       battle_continue_tap_counts: null,  // それぞれの再戦希望数
       battle_count:               null,  // 同じ相手との対戦回数
       share_sfen:                 null,  // 自分の操作を相手に伝える棋譜
@@ -127,7 +126,6 @@ export const application_battle = {
     operation_mode_trigger() {
       this.sub_mode = "operation_mode"
       this.x_mode = "x1_thinking"
-      this.answer_button_disable_p = false
       this.share_sfen = null
     },
 
@@ -309,10 +307,6 @@ export const application_battle = {
           if (this.current_mi.otetuki_p(params.question_id)) {
             this.current_mi.otetuki_off(params.question_id)
           }
-          // 元々誤答していたら解答権利復活させる
-          if (this.answer_button_disable_p) {
-            this.answer_button_disable_p = false
-          }
         }
         this.x_mode = "x3_see"
         this.share_sfen = this.current_question.init_sfen // 初期状態にしておく
@@ -333,9 +327,6 @@ export const application_battle = {
       mi.ox_list.push("mistake")
       mi.score_add(-1)
       mi.otetuki_on(params.question_id)
-      if (params.membership_id === this.current_membership.id) {
-        this.answer_button_disable_p = true
-      }
 
       if (this.app.config.kaitouken_hukkatu_dekiru_p) {
         // 解答権が相手にうつる場合
