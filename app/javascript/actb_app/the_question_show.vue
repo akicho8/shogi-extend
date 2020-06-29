@@ -208,6 +208,9 @@ export default {
       top: 0
       right: 0
 
+    .question_title
+      margin: 0 3rem
+
     .tag
       font-weight: bold
 
