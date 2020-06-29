@@ -17,7 +17,7 @@ module Actb
     :leader_index                    => 0,        # シングルトンとハイブリッドルールのときの memberships のインデックス○をリーダーにする。:0 =>左側 1:右側
     :jibun_wo_hidari_p               => true,     # 自分を左に表示
     :best_questions_limit            => 30,       # 準備する問題数でこれが尽きたら引き分け
-    :b_score_max_for_win             => 10,       # ○問正解先取で勝ち
+    :b_score_max_for_win             => 5,        # ○問正解先取で勝ち
     :ox_status_line_take_n           => 8,        # 上の○×行は最新何個表示する？
     :readygo_mode_delay              => 2.2,      # 「対戦開始！」の待ち
     :deden_mode_delay                => 0.8,      # 「デデン」の待ち
