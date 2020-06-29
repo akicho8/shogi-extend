@@ -17,7 +17,7 @@
       :human_side_key="'none'"
     )
     .kaitousuru_button.has-text-centered
-      b-button.has-text-weight-bold(@click="app.wakatta_handle(false)" type="is-primary" :disabled="app.config.otetsuki_enabled && app.current_mi.otetuki_p(app.current_question.id)") わかった
+      b-button.has-text-weight-bold(@click="app.wakatta_handle(false)" type="is-primary" :disabled="app.current_mi.otetuki_p(app.current_question.id)") わかった
 
   template(v-if="app.x_mode === 'x2_play'")
     .status_line2.has-text-centered.has-text-weight-bold
