@@ -144,7 +144,15 @@ module FrontendScript
       # 問題詳細
       def debug_for_ov_question_info(info)
         c.sysop_login_unless_logout
-        info[:question_id] = Actb::Question.first&.id
+
+        question = Actb::Question.first
+        question.update!({
+            :other_author        => "渡瀬荘二郎",
+            :source_media_name   => "Wikipedia",
+            :source_media_url    => "https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B",
+            :source_published_on => "1912-03-04",
+          })
+        info[:question_id] = question.id
       end
 
       # ユーザー詳細

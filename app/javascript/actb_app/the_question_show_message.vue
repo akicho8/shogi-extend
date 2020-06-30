@@ -134,7 +134,8 @@ export default {
   .articles_container
     // height: 100vh
     // overflow-y: scroll
-    margin: 1.5rem 1rem 0rem
+    margin-right: 1rem
+    margin-left: 1rem
     article
       .diff_time_format
         // margin-left: 0.25rem

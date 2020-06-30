@@ -60,6 +60,13 @@ module Actb
       }
 
       if Rails.env.development?
+
+        # 他者が作者
+        default[:other_author]        = "渡瀬荘二郎"
+        default[:source_media_name]   = "Wikipedia"
+        default[:source_media_url]    = "https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B"
+        default[:source_published_on] = "1912-03-04"
+
         default.update({
             :title            => "(title)",
             :time_limit_sec   => 30.seconds,

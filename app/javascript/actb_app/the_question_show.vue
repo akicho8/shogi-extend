@@ -58,7 +58,7 @@
     .vote_container.is-flex.mt-4
       the_history_row_vote(:row="new_ov_question_info")
 
-    .mt-5
+    .mt-6
       b-field(grouped group-multiline position="is-centered")
         .control
           b-taglist(attached)
@@ -70,6 +70,8 @@
             b-tag(type="is-primary") 出題
             b-tag(type="is-grey") {{question.histories_count}}回
 
+    .mt-5(v-if="question.other_author || question.source_media_name || question.source_media_url")
+      b-field(grouped group-multiline position="is-centered")
         template(v-if="question.other_author")
           .control
             b-taglist(attached)
@@ -85,25 +87,22 @@
                 span.ml-1(v-if="question.source_published_on")
                   | {{question.source_published_on}}
 
-    template(v-if="question.source_media_url")
-      .has-text-centered.mt-3
-        a(:href="question.source_media_url") {{question.source_media_url}}
-
-    .tweet_button_container.buttons.is-centered.mt-5
-      b-button.has-text-weight-bold(rounded icon-left="twitter" size="is-small" type="is-twitter" tag="a" :href="tweet_intent_url(tweet_body)" :target="target_default") ツイート
       template(v-if="question.source_media_url")
         .has-text-centered.mt-0.is-size-7
           span(v-html="auto_link(question.source_media_url)")
 
-    .buttons.is-centered.are-small.mt-3
+    .buttons.is-centered.are-small.mt-6
       piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
       kento_button(tag="a" :href="kento_app_with_params_url" :target="target_default")
       kif_copy_button(@click="kifu_copy_handle") コピー
 
-    .box.question_description.has-background-white-ter.is-shadowless.is-size-7.mt-5(v-if="question.description")
+    .tweet_button_container.buttons.is-centered.mt-6
+      b-button.has-text-weight-bold(rounded icon-left="twitter" size="is-small" type="is-twitter" tag="a" :href="tweet_intent_url(tweet_body)" :target="target_default") ツイート
+
+    .box.question_description.has-background-white-ter.is-shadowless.is-size-7.mt-6(v-if="question.description")
       | {{question.description}}
 
-    the_question_show_message(:question="question")
+    the_question_show_message.mt-6(:question="question")
 </template>
 
 <script>
