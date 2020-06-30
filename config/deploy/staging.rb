@@ -10,7 +10,7 @@ if ENV["APP_RESET"] == "1"
 end
 
 # DBを作り直す？
-if ENV["DB_RESET"] == "1" || true
+if ENV["DB_RESET"] == "1"
   before 'deploy:migrate', 'deploy:db_reset'
 end
 
