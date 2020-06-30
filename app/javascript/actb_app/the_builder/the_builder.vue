@@ -264,7 +264,7 @@ export default {
 
       // https://day.js.org/docs/en/durations/diffing
       this.question.time_limit_clock_to_sec()
-      const before_save_success_message = this.save_success_message
+      const before_create_or_upate_name = this.create_or_upate_name
       this.remote_fetch("PUT", this.app.info.api_path, {remote_action: "save_handle", question: this.question}, e => {
         if (e.form_error_message) {
           this.warning_notice(e.form_error_message)
@@ -273,7 +273,7 @@ export default {
           this.question = new Question(e.question)
 
           this.sound_play("click")
-          this.ok_notice(before_save_success_message)
+          this.ok_notice(`${before_create_or_upate_name}しました`)
 
           if (this.app.config.save_and_back_to_index) {
             this.builder_index_handle()
@@ -387,15 +387,7 @@ export default {
       if (this.question.id) {
         return "更新"
       } else {
-        return "投稿"
-      }
-    },
-
-    save_success_message() {
-      if (this.question.id) {
-        return "更新しました"
-      } else {
-        return "投稿ありがとうございます"
+        return "保存"
       }
     },
 
