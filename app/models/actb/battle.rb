@@ -92,7 +92,7 @@ module Actb
       as_json({
           only: [:id, :battle_pos],
           include: {
-            rule: { only: [:key, :name] },
+            rule: { only: [:key, :name, :time_limit_sec] },
             final: { only: [:key], methods: [:name] },
             room: {},
             memberships: {
