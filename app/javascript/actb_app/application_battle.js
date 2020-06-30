@@ -525,12 +525,12 @@ export const application_battle = {
     q1_time_limit_sec() {
       let v = null
 
-      v = this.app.config.thinking_time_sec
+      v = this.app.config.time_limit_sec
       if (v != null) {
         return v
       }
 
-      v = this.battle.rule.thinking_time_sec
+      v = this.battle.rule.time_limit_sec
       if (v != null) {
         return v
       }

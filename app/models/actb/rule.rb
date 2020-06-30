@@ -23,7 +23,7 @@ module Actb
 
     include StaticArModel
 
-    delegate :redis_key, to: :pure_info
+    delegate :redis_key, :time_limit_sec, to: :pure_info
 
     with_options(dependent: :destroy) do
       has_many :settings
