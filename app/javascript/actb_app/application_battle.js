@@ -519,14 +519,18 @@ export const application_battle = {
       return v
     },
     q1_time_limit_sec() {
-      const v = this.app.config.thinking_time_sec
+      let v = null
+
+      v = this.app.config.thinking_time_sec
       if (v != null) {
         return v
       }
 
-      // if (this.development_p) {
-      //   return 3
-      // }
+      v = this.battle.rule.thinking_time_sec
+      if (v != null) {
+        return v
+      }
+
       return this.current_question.time_limit_sec
     },
 

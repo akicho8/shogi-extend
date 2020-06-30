@@ -58,7 +58,7 @@ module Actb
         # :actb_display_p               => false, # リンクを表示する？
         :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
         :matching_interval_second     => 4,     # カウンターをインクリメントする間隔(秒)
-        :thinking_time_sec            => 10,    # 解く時間 nil:問題に設定した時間 整数値:一律この値に設定
+        :thinking_time_sec            => nil,   # 解く時間 nil:問題に設定した時間 整数値:一律この値に設定
         :room_messages_window_height  => 5,     # 部屋での表示行数
         :matching_forgo_second        => 60*5,  # ○秒たったらマッチングを諦める(nullなら無限)
         :action_cable_debug           => false, # ActionCable関連デバッグモード
