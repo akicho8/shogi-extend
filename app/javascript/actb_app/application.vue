@@ -12,7 +12,9 @@
   the_builder(      v-if="mode === 'builder'")
   the_menu(         v-if="mode === 'menu'")
 
-  debug_print(v-if="app.debug_mode_p" :grep="/./")
+  details(v-if="app.debug_mode_p")
+    summary DEBUG
+    debug_print( :grep="/./")
 
   template(v-if="development_p")
     router-link(to="/training/menu") menu
