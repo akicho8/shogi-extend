@@ -21,13 +21,12 @@
     .mistake_mode_container.has-text-centered(v-if="app.battle.rule.key === 'marathon_rule'")
       | 時間切れ
 
-  template(v-if="app.debug_mode_p")
+  template(v-if="development_p")
     .columns
       .column
         .buttons.is-centered.are-small
-          b-button(@click="app.kotae_sentaku('correct')") 正解(自分)
-          //- b-button(@click="app.kotae_sentaku('mistake')" icon-left="close")
-          b-button(@click="app.kotae_sentaku('timeout')") タイムアウト(自分)
+          b-button(@click="app.kotae_sentaku('correct')") O
+          b-button(@click="app.kotae_sentaku('timeout')") X
         .buttons.is-centered.are-small
           b-button(@click="app.wakatta_handle(false)") わかった(自分)
           b-button(@click="app.kotae_sentaku('correct')") 正解(自分)

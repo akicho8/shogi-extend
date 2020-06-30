@@ -125,10 +125,14 @@ export const application_battle = {
 
     operation_mode_trigger() {
       this.sub_mode = "operation_mode"
+      
+      
       this.x_mode = "x1_thinking"
+      
       this.share_sfen = null
     },
 
+     // 
     q_turn_offset_set(turn) {
       this.q_turn_offset = turn
 

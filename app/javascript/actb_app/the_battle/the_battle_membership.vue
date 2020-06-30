@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_battle_membership.is-flex
   .mdi.mdi-checkbox-blank-circle-outline.maru_batu.maru(v-if="mi.latest_ox === 'correct'")
-  .mdi.mdi-close.maru_batu.batu(v-if="mi.latest_ox === 'mistake'")
+  .mdi.mdi-close.maru_batu.batu(v-if="mi.latest_ox === 'timeout'")
 
   //////////////////////////////////////////////////////////////////////////////// ○連勝
   .straight_win_straight_lose.is-size-8.has-text-weight-bold(v-if="app.debug_mode_p")
@@ -30,7 +30,8 @@
       template(v-if="ox_mark_key === 'mistake'")
         b-icon(icon="close" size="is-small" type="is-success")
       template(v-if="ox_mark_key === 'timeout'")
-        b-icon(icon="timer-sand-empty" size="is-small")
+        b-icon(icon="close" size="is-small" type="is-success")
+        //- b-icon(icon="timer-sand-empty" size="is-small")
 </template>
 
 <script>
