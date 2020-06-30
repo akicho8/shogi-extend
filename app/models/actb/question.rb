@@ -63,11 +63,21 @@ module Actb
         default.update({
             :title            => "(title)",
             :time_limit_sec   => 30.seconds,
-            :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
+
+            # :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
+            # :moves_answers => [
+            #   :moves_str => "1c1b",
+            #   :end_sfen  => "7gk/8G/7G1/7N1/9/9/9/9/9 w 2r2bg4s3n4l18p 2",
+            # ],
+
+            :init_sfen => "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1",
             :moves_answers => [
-              :moves_str => "1c1b",
-              :end_sfen  => "7gk/8G/7G1/7N1/9/9/9/9/9 w 2r2bg4s3n4l18p 2",
+              { :moves_str => "S*2c 2b3c G*4c",            },
+              { :moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c", },
+              { :moves_str => "S*2c 2b1c 2c1b+ 1a1b G*2c", },
+              { :moves_str => "S*2c 2b3a G*3b",            },
             ],
+
           })
       end
 
