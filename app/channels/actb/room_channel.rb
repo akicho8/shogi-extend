@@ -27,6 +27,14 @@ module Actb
 
         say "*退室しました"
       end
+
+      # 部屋を閉じたら閉じた時間を end_at に入れておく
+      # べつに入れておく必要はないがデバッグしやすいように入れておく
+      if current_room.end_at.blank?
+        if once_run("actb/rooms/#{current_room.id}/disconnect")
+          current_room.update!(end_at: Time.current)
+        end
+      end
     end
 
     # for test

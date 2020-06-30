@@ -34,14 +34,19 @@ RSpec.describe Actb::RoomChannel, type: :channel do
       subscribe(room_id: current_room.id)
     end
 
-    it "退室" do
+    it "退室すると対戦中の人が減る" do
       assert { subscription.room_users == [user1] }
       unsubscribe
       assert { subscription.room_users == [] }
     end
 
-    it "人数通知" do
+    it "退室すると人数通知する" do
       expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").exactly(1)
+    end
+
+    it "退室すると終了時間が入る" do
+      unsubscribe
+      assert { current_room.reload.end_at }
     end
   end
 end
