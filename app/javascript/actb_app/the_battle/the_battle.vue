@@ -18,8 +18,8 @@
     the_room_message
 
   template(v-if="app.sub_mode === 'timeout_mode'")
-    .mistake_mode_container.has-text-centered(v-if="development_p")
-      | 時間切れ(ではないときもある)
+    .mistake_mode_container.has-text-centered(v-if="app.battle.rule.key === 'marathon_rule'")
+      | 時間切れ
 
   template(v-if="app.debug_mode_p")
     .columns
