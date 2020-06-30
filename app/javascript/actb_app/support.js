@@ -2,8 +2,6 @@ import Vuex from 'vuex'
 
 import Autolinker from 'autolinker'
 
-// const POSITION_SFEN_PREFIX = "position sfen "
-
 export const support = {
   methods: {
     warning_dialog(message_body) {
@@ -29,19 +27,6 @@ export const support = {
       this.$buefy.toast.open({message: message_body, position: "is-bottom", type: "is-warning", queue: false})
       this.talk2(message_body)
     },
-
-    // position_sfen_remove(sfen) {
-    //   this.__assert__(sfen != null, "sfen != null")
-    //   return sfen.replace(POSITION_SFEN_PREFIX, "")
-    // },
-    //
-    // position_sfen_add(sfen) {
-    //   this.__assert__(sfen != null, "sfen != null")
-    //   if (!sfen.includes(POSITION_SFEN_PREFIX)) {
-    //     sfen = POSITION_SFEN_PREFIX + sfen
-    //   }
-    //   return sfen
-    // },
 
     main_nav_set(display_p) {
       return
