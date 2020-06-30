@@ -91,6 +91,9 @@
 
     .tweet_button_container.buttons.is-centered.mt-5
       b-button.has-text-weight-bold(rounded icon-left="twitter" size="is-small" type="is-twitter" tag="a" :href="tweet_intent_url(tweet_body)" :target="target_default") ツイート
+      template(v-if="question.source_media_url")
+        .has-text-centered.mt-0.is-size-7
+          span(v-html="auto_link(question.source_media_url)")
 
     .buttons.is-centered.are-small.mt-3
       piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
