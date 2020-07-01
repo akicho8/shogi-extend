@@ -182,6 +182,7 @@ export default {
 @import "../support.sass"
 .the_builder_index
   @extend %padding_top_for_secondary_header
+  margin-bottom: $margin_bottom
 
   .visible_toggle_checkboxes
     margin-top: 1.5rem
