@@ -31,7 +31,7 @@
     the_result_membership_progress(:xrecord="xrecord")
 
   .battle_continue_container.has-text-weight-bold.mt-1
-    b-tag(type="is-warning" v-if="app.battle_continue_tap_counts[membership.id]") 再戦希望
+    b-tag(type="is-warning" v-if="app.continue_tap_counts[membership.id]") 再戦希望
 </template>
 
 <script>

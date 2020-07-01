@@ -1,9 +1,9 @@
 <template lang="pug">
 .the_battle_question_marathon_rule
   .status_line2.has-text-centered.has-text-weight-bold
-    | {{app.q1_time_str}}
+    | {{app.main_time_str}}
     template(v-if="app.debug_mode_p")
-      | ({{app.q_turn_offset}})
+      | ({{app.share_turn_offset}})
   shogi_player(
     :key="`quest_${app.question_index}`"
     ref="main_sp"
@@ -18,7 +18,7 @@
     :human_side_key="'both'"
     :theme="app.config.sp_theme"
     :vlayout="false"
-    @update:turn_offset="v => app.q_turn_offset = v"
+    @update:turn_offset="v => app.share_turn_offset = v"
     @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
   )
 

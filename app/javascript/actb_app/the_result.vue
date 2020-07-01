@@ -35,7 +35,7 @@
       b-button(@click="app.member_disconnect_handle(true)") バトル切断風にする(相手)
 
   debug_print(v-if="app.debug_mode_p" :vars="['app.member_infos_hash']")
-  debug_print(v-if="app.debug_mode_p" :vars="['app.battle_continue_tap_counts', 'app.battle_count', 'app.battle.battle_pos', 'app.score_debug_info']")
+  debug_print(v-if="app.debug_mode_p" :vars="['app.continue_tap_counts', 'app.battle_count', 'app.battle.battle_pos', 'app.score_debug_info']")
 
 </template>
 
@@ -63,7 +63,7 @@ export default {
     },
     // 自分が押した？
     button_push_by_self_p() {
-      return this.app.battle_continue_tap_counts[this.app.current_membership.id] >= 1
+      return this.app.continue_tap_counts[this.app.current_membership.id] >= 1
     },
   },
 }

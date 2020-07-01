@@ -202,7 +202,7 @@ module Actb
 
       bc_params = {
         membership_id: data[:membership_id],
-        battle_continue_tap_counts: counts,
+        continue_tap_counts: counts,
       }
       broadcast(:battle_continue_handle_broadcasted, bc_params)
     end

@@ -4,38 +4,35 @@ import { MemberInfo } from "./models/member_info.js"
 
 import dayjs from "dayjs"
 
+import { application_battle_timer } from "./application_battle_timer.js"
+
 import { application_battle_marathon_rule  } from "./application_battle_marathon_rule.js"
 import { application_battle_singleton_rule } from "./application_battle_singleton_rule.js"
 import { application_battle_hybrid_rule    } from "./application_battle_hybrid_rule.js"
 
 export const application_battle = {
   mixins: [
+    application_battle_timer,
+
     application_battle_marathon_rule,
     application_battle_singleton_rule,
     application_battle_hybrid_rule,
   ],
   data() {
     return {
-      battle: null,
+      // 共通
+      battle:            null, // 問題と memberships が入っている
+      member_infos_hash: null, // 各 membership_id はどこまで進んでいるかわかる
+      x_mode:            null, // バトル中の状態遷移
 
-      x_mode:                     null,  // バトル中の状態遷移
-      battle_continue_tap_counts: null,  // それぞれの再戦希望数
-      battle_count:               null,  // 同じ相手との対戦回数
-      share_sfen:                 null,  // 自分の操作を相手に伝える棋譜
-      question_index:             null,  // 現在の問題インデックス
+      // シングルトン専用
+      share_sfen:        null, // 自分の操作を相手に伝える棋譜
+      share_turn_offset: null, // 自分の操作を相手に伝えたときの手数
 
-      q_turn_offset: null,
-      main_interval_id: null,
-      main_interval_count: null,
-
-      q2_interval_id: null,
-      q2_interval_count: null,
-
-      // 各 membership_id はどこまで進んでいるかわかる
-      // {
-      //   3 => ["correct", "mistake"],
-      // }
-      member_infos_hash: null,
+      // 共通(別になくてもよいもの)
+      battle_count:        null, // 同じ相手との対戦回数
+      question_index:      null, // 現在の問題インデックス
+      continue_tap_counts: null, // それぞれの再戦希望数
     }
   },
 
@@ -76,7 +73,7 @@ export const application_battle = {
       this.mode = "battle"
       this.sub_mode = "standby"
 
-      this.battle_continue_tap_counts = {}
+      this.continue_tap_counts = {}
 
       this.member_infos_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: new MemberInfo(e.id)}), {})
 
@@ -125,16 +122,14 @@ export const application_battle = {
 
     operation_mode_trigger() {
       this.sub_mode = "operation_mode"
-      
-      
+
       this.x_mode = "x1_thinking"
-      
+
       this.share_sfen = null
     },
 
-     // 
     q_turn_offset_set(turn) {
-      this.q_turn_offset = turn
+      this.share_turn_offset = turn
 
       // 3手詰を7手ほど進めたたときもタイムアウト相当の処理へ進む
       const max = this.current_question.moves_count_max + this.config.turn_limit_lazy_count
@@ -314,7 +309,7 @@ export const application_battle = {
         }
         this.x_mode = "x3_see"
         this.share_sfen = this.current_question.init_sfen // 初期状態にしておく
-        this.q_turn_offset = 0                            // 相手が操作中(○手目)の部分を0に戻す
+        this.share_turn_offset = 0             // 相手が操作中(○手目)の部分を0に戻す
         this.sound_play("poon")
       }
     },
@@ -362,7 +357,7 @@ export const application_battle = {
       this.ac_battle_perform("battle_continue_handle", {membership_id: this.current_membership.id})
     },
     battle_continue_handle_broadcasted(params) {
-      this.battle_continue_tap_counts = params.battle_continue_tap_counts
+      this.continue_tap_counts = params.continue_tap_counts
 
       this.talk2("再戦希望")
       this.$buefy.toast.open({message: "再戦希望", position: "is-top", queue: false})
@@ -400,84 +395,6 @@ export const application_battle = {
       this.debug_say(`**${membership.user.name}さんが退出したことを知った`)
       this.member_infos_hash[membership.id].member_active_p = false // 退出記録
     },
-
-    ////////////////////////////////////////////////////////////////////////////////
-    main_interval_start() {
-      this.main_interval_clear()
-      this.main_interval_count = 0
-      this.main_interval_id = setInterval(this.main_interval_processing, 1000)
-    },
-
-    main_interval_clear() {
-      if (this.main_interval_id) {
-        clearInterval(this.main_interval_id)
-        this.main_interval_id = null
-      }
-    },
-
-    main_interval_processing() {
-      if (this.battle.rule.key === "marathon_rule") {
-        if (this.sub_mode === "operation_mode") {
-          this.main_interval_count += 1
-          if (this.q1_rest_seconds === 0) {
-            this.kotae_sentaku('timeout')
-          }
-        }
-      }
-      if (this.battle.rule.key === "hybrid_rule") {
-        if (this.sub_mode === "operation_mode") {
-          this.main_interval_count += 1
-          if (this.q1_rest_seconds === 0) {
-            if (this.leader_p) {
-              this.kotae_sentaku('timeout') // [ONCE]
-            }
-          }
-        }
-      }
-      if (this.battle.rule.key === "singleton_rule") {
-        if (this.sub_mode === "operation_mode") {
-          if (this.x_mode === "x1_thinking") {
-            this.main_interval_count += 1
-            if (this.q1_rest_seconds === 0) {
-              if (this.leader_p) {
-                this.kotae_sentaku('timeout') // [ONCE]
-              }
-            }
-          }
-        }
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-    q2_interval_start() {
-      this.q2_interval_stop()
-      this.q2_interval_count = 0
-      this.q2_interval_id = setInterval(this.q2_interval_processing, 1000)
-    },
-
-    q2_interval_stop() {
-      if (this.q2_interval_id) {
-        clearInterval(this.q2_interval_id)
-        this.q2_interval_id = null
-      }
-    },
-
-    q2_interval_restart() {
-      this.q2_interval_stop()
-      this.q2_interval_start()
-    },
-
-    q2_interval_processing() {
-      if (this.sub_mode === "operation_mode") {
-        this.q2_interval_count += 1
-        if (this.q2_rest_seconds === 0) {
-          this.x2_play_timeout_handle()
-        }
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
   },
 
   computed: {
@@ -508,44 +425,6 @@ export const application_battle = {
     next_question() {
       const v = this.battle.best_questions[this.question_index + 1]
       this.__assert__(v, "next_question is blank")
-      return v
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    q1_time_str() {
-      return dayjs().startOf("year").set("seconds", this.q1_rest_seconds).format("m:ss")
-    },
-    q1_rest_seconds() {
-      let v = this.q1_time_limit_sec - this.main_interval_count
-      if (v < 0) {
-        v = 0
-      }
-      return v
-    },
-    q1_time_limit_sec() {
-      let v = null
-
-      v = this.app.config.time_limit_sec
-      if (v != null) {
-        return v
-      }
-
-      v = this.battle.rule.time_limit_sec
-      if (v != null) {
-        return v
-      }
-
-      return this.current_question.time_limit_sec
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    q2_rest_seconds() {
-      let v = this.config.q2_time_limit_sec - this.q2_interval_count
-      if (v < 0) {
-        v = 0
-      }
       return v
     },
 

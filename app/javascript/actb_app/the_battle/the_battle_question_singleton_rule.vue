@@ -2,11 +2,11 @@
 .the_battle_question_singleton_rule
   .has-text-centered
     //- .status2
-    //-   | {{app.q_turn_offset}}手目
+    //-   | {{app.share_turn_offset}}手目
 
   template(v-if="app.x_mode === 'x1_thinking'")
     .status_line2.has-text-centered.has-text-weight-bold
-      | {{app.q1_time_str}}
+      | {{app.main_time_str}}
     shogi_player(
       :run_mode="'play_mode'"
       :kifu_body="app.current_question.init_sfen"
@@ -23,7 +23,7 @@
     .status_line2.has-text-centered.has-text-weight-bold
       | {{app.q2_rest_seconds}}
       template(v-if="app.debug_mode_p")
-        | ({{app.q_turn_offset}})
+        | ({{app.share_turn_offset}})
     shogi_player(
       :key="`quest_${app.question_index}`"
       :run_mode="'play_mode'"
@@ -44,7 +44,7 @@
 
   template(v-if="app.x_mode === 'x3_see'")
     .status_line2.has-text-centered.has-text-weight-bold
-      | 相手が操作中 ({{app.q_turn_offset}}手目)
+      | 相手が操作中 ({{app.share_turn_offset}}手目)
     shogi_player(
       :run_mode="'play_mode'"
       :kifu_body="app.share_sfen"
@@ -57,7 +57,7 @@
       :human_side_key="'none'"
       :controller_show="false"
       :theme="app.config.sp_theme"
-      @update:turn_offset="v => app.q_turn_offset = v"
+      @update:turn_offset="v => app.share_turn_offset = v"
     )
     .akirameru_button
       b-button.is-invisible
