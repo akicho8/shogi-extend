@@ -1,8 +1,5 @@
 class BotEmailSet < ActiveRecord::Migration[6.0]
   def up
-    User.bot.destroy
-    User.bot
-
     if user = User.find_by(email: "bot@localhost")
       user.email = "shogi.extend+bot@gmail.com"
       user.save!
