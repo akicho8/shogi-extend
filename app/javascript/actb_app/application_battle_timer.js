@@ -29,16 +29,6 @@ export const application_battle_timer = {
           }
         }
       }
-      if (this.battle.rule.key === "hybrid_rule") {
-        if (this.sub_mode === "operation_mode") {
-          this.main_interval_count += 1
-          if (this.main_rest_seconds === 0) {
-            if (this.leader_p) {
-              this.kotae_sentaku('timeout') // [ONCE]
-            }
-          }
-        }
-      }
       if (this.battle.rule.key === "singleton_rule") {
         if (this.sub_mode === "operation_mode") {
           if (this.x_mode === "x1_thinking") {
@@ -47,6 +37,16 @@ export const application_battle_timer = {
               if (this.leader_p) {
                 this.kotae_sentaku('timeout') // [ONCE]
               }
+            }
+          }
+        }
+      }
+      if (this.battle.rule.key === "hybrid_rule") {
+        if (this.sub_mode === "operation_mode") {
+          this.main_interval_count += 1
+          if (this.main_rest_seconds === 0) {
+            if (this.leader_p) {
+              this.kotae_sentaku('timeout') // [ONCE]
             }
           }
         }
