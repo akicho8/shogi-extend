@@ -54,11 +54,14 @@ class User < ApplicationRecord
           number = self.class.human_only.count.next
           self.name ||= "名無しの棋士#{number}号"
           default_emal = "#{key}@localhost"
-        else
+        end
+
+        if race_info.key == :robot
           number = self.class.robot_only.count.next
           self.name ||= "CPU#{number}号"
-          default_emal = "cpu-#{key}@localhost"
+          default_emal = "shogi.extend+cpu-#{key}@gmail.com"
         end
+
         self.email ||= default_emal
       end
 
@@ -78,7 +81,7 @@ class User < ApplicationRecord
 
         CpuBrainInfo.each do |e|
           unless find_by(key: e.key)
-            create!(key: e.key, name: "#{e.name}CPU", race_key: :robot, cpu_brain_key: e.key)
+            create!(key: e.key, name: e.name, race_key: :robot, cpu_brain_key: e.key)
           end
         end
       end
@@ -113,14 +116,8 @@ class User < ApplicationRecord
         find_by(key: "sysop") || create!(key: "sysop", name: "運営", email: AppConfig[:admin_email], password: Rails.application.credentials.sysop_password)
       end
       def bot
-        find_by(key: "bot") || create!(key: "bot", name: "BOT", email: "bot@localhost", race_key: :robot, password: Rails.application.credentials.sysop_password)
+        find_by(key: "bot") || create!(key: "bot", name: "BOT", email: AppConfig[:bot_email], race_key: :robot, password: Rails.application.credentials.sysop_password)
       end
-      # def alice
-      #   find_by(key: "alice") || create!(key: "alice", name: "alice", email: "alice@localhost", race_key: :robot, password: Rails.application.credentials.sysop_password)
-      # end
-      # def bob
-      #   find_by(key: "bob") || create!(key: "bob", name: "bob", email: "bob@localhost", race_key: :robot, password: Rails.application.credentials.sysop_password)
-      # end
     end
 
     def sysop?

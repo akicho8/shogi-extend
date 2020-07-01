@@ -4,6 +4,7 @@ AppConfig.deep_merge!({
 
     :admin_email_name                        =>  "SHOGI-EXTEND 運営",
     :admin_email                             =>  "shogi.extend@gmail.com",
+    :bot_email                               =>  "shogi.extend+bot@gmail.com",
 
     :free_battles_import                     =>  false, # 野良棋譜のセットアップ時に保持している対局を取り込むか？
     :player_info_function                    =>  true,  # プレイヤー情報
