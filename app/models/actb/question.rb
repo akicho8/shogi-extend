@@ -128,6 +128,7 @@ module Actb
 
           :good_rate,
 
+          :created_at,
           :updated_at,
         ],
       }

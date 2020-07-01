@@ -8,7 +8,7 @@
 
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="question_tab_index" expanded @change="question_tab_index_change_handle")
-      template(v-for="tab_info in $parent.FolderInfo.values")
+      template(v-for="tab_info in TabInfo.values")
         b-tab-item
           template(slot="header")
             span
@@ -45,11 +45,10 @@
     )
 
     template(slot-scope="props")
-      b-table-column(field="user.name"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id")
+      b-table-column(field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
+      b-table-column(field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id")
         a(@click.stop="app.ov_user_info_set(props.row.user.id)")
           | {{props.row.user.name}}
-
-      b-table-column(field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
       b-table-column(field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
         a {{props.row.title || '？'}}
       b-table-column(field="good_rate"         :label="QuestionIndexColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="visible_hash.good_rate") {{float_to_perc(props.row.good_rate)}} %
@@ -66,6 +65,7 @@
 
       b-table-column(field="clip_marks_count"  :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
       b-table-column(field="messages_count"  :label="QuestionIndexColumnInfo.fetch('messages_count').short_name"      sortable numeric :visible="visible_hash.messages_count")      {{props.row.messages_count}}
+      b-table-column(field="created_at"        :label="QuestionIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="visible_hash.created_at")       {{row_time_format(props.row.created_at)}}
       b-table-column(field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
 
       b-table-column(label="操作")
@@ -90,6 +90,21 @@ import the_footer from "../the_footer.vue"
 import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
 
 import MemoryRecord from 'js-memory-record'
+
+class TabInfo extends MemoryRecord {
+  static get define() {
+    return [
+      { key: "all",    name: "全体",   },
+      { key: "active", name: "公開",   },
+      { key: "draft",  name: "下書き", },
+      { key: "trash",  name: "ゴミ箱", },
+    ]
+  }
+
+  get handle_method_name() {
+    return `${this.key}_handle`
+  }
+}
 
 export default {
   name: "the_builder_index",
@@ -126,7 +141,7 @@ export default {
 
     // 指定のタブを選択
     question_mode_select(tab_key) {
-      this.question_tab_index = this.$parent.FolderInfo.fetch(tab_key).code
+      this.question_tab_index = this.TabInfo.fetch(tab_key).code
     },
 
     // タブが変更されたとき
@@ -148,7 +163,8 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// タブ
 
-    question_current_tab_info() { return this.$parent.FolderInfo.fetch(this.question_tab_index) },
+    TabInfo() { return TabInfo },
+    question_current_tab_info() { return this.TabInfo.fetch(this.question_tab_index) },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
 

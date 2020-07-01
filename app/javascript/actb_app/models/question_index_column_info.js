@@ -3,9 +3,9 @@ import MemoryRecord from 'js-memory-record'
 export class QuestionIndexColumnInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "user_id",          name: "作成者",     short_name: "作者",     visible: false, scope: ["admin"], },
-
       { key: "id",               name: "ID",         short_name: "ID",       visible: false, scope: ["admin", "general"],          },
+      { key: "user_id",          name: "作成者",     short_name: "作成者",   visible: false, scope: ["admin", "general"],          },
+
       { key: "title",            name: "タイトル",   short_name: "タイトル", visible: true,  scope: ["admin", "general"],          },
       { key: "good_rate",        name: "高評価率",   short_name: "高率",     visible: true,  scope: ["admin", "general"],          },
       { key: "good_marks_count", name: "高評価",     short_name: "高評",     visible: false, scope: ["admin", "general"],          },
@@ -23,6 +23,7 @@ export class QuestionIndexColumnInfo extends MemoryRecord {
 
       { key: "messages_count",   name: "コメ数",     short_name: "コメ",     visible: true,  scope: ["admin", "general"],          },
 
+      { key: "created_at",       name: "作成日時",   short_name: "作成",     visible: false, scope: ["admin", "general"],          },
       { key: "updated_at",       name: "更新日時",   short_name: "更新",     visible: false, scope: ["admin", "general"],          },
     ]
   }

@@ -9,15 +9,20 @@ module FrontendScript
       def questions_fetch
         params[:per] ||= Actb::Config[:api_questions_fetch_per]
 
-        if current_user.sysop?
-          s = Actb::Question.all
-        else
-          s = current_user.actb_questions
-        end
-
+        s = Actb::Question.all
         if v = params[:folder_key]
-          # OPTIMIZE: folder_id を最初に特定して join せずにひくと速くなるはず
-          s = s.joins(:folder).where(Actb::Folder.arel_table[:type].eq("actb/#{v}_box".classify))
+          if v == "all"
+            # 全体
+            s = s.active_only
+          else
+            if current_user
+              s = s.where(user: current_user)
+              # OPTIMIZE: folder_id を最初に特定して join せずにひくと速くなるはず
+              s = s.joins(:folder).where(Actb::Folder.arel_table[:type].eq("actb/#{v}_box".classify))
+            else
+              s = s.none
+            end
+          end
         end
         s = page_scope(s)       # page_mod.rb
         s = sort_scope_for_questions(s)
@@ -25,6 +30,7 @@ module FrontendScript
         retv = {}
         retv[:questions]       = s.as_json(Actb::Question.json_type5)
         retv[:question_counts] = current_user.actb_questions.group(:folder_id).count.transform_keys { |e| Actb::Folder.find(e).key }
+        retv[:question_counts].update(all: Actb::Question.active_only.count)
         retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key]}
         retv
       end
