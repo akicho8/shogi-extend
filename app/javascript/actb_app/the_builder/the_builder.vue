@@ -412,6 +412,4 @@ export default {
 .the_builder
   .the_builder_new_and_edit
     @extend %padding_top_for_secondary_header
-    .primary_header
-      justify-content: space-between
 </style>

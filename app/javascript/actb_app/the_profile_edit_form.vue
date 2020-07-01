@@ -93,8 +93,6 @@ export default {
 @import "support.sass"
 .the_profile_edit_form
   @extend %padding_top_for_primary_header
-  .primary_header
-    justify-content: space-between
 
   .image_container
     margin-top: 4rem
