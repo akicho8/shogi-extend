@@ -9,20 +9,14 @@ class UserMailer < ApplicationMailer
       :email => user.email,
     }
 
-    if auth_info = user.auth_infos.first
-      provider = auth_info.provider
-    else
-      provider = "？"
-    end
-
-    attrs[:provider] = provider
+    attrs[:provider] = user.provider_name
     attrs[:user_agent] = user.user_agent
 
     out = []
     out << attrs.to_t
     body = out.join("\n")
 
-    mail(fixed_format(subject: "#{subject_prefix}#{user.name}さんが#{provider}で登録されました", body: body))
+    mail(fixed_format(subject: subject_decorate("#{user.name}さんが#{user.provider_name}で登録されました"), body: body))
   end
 
   # 問題の作者に通知

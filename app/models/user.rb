@@ -200,5 +200,13 @@ class User < ApplicationRecord
       devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
       devise :omniauthable, omniauth_providers: [:google, :twitter, :github]
     end
+
+    def provider_name
+      if auth_info = auth_infos.first
+        auth_info.provider
+      else
+        "？"
+      end
+    end
   end
 end
