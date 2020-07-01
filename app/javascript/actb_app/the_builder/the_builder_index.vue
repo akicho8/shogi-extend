@@ -69,7 +69,8 @@
       b-table-column(field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
 
       b-table-column(label="操作")
-        a(@click.stop="$parent.question_edit_for(props.row)") 編集
+        template(v-if="app.current_user.id === props.row.user.id")
+          a(@click.stop="$parent.question_edit_for(props.row)") 編集
 
     template(slot="empty")
       section.section.is-unselectable
