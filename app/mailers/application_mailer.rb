@@ -12,7 +12,12 @@ class ApplicationMailer < ActionMailer::Base
   private
 
   def subject_prefix
-    "[#{AppConfig[:app_name]}][#{Rails.env}]" + " "
+    parts = []
+    parts << "[#{AppConfig[:app_name]}]"
+    unless Rails.env.production?
+      parts << "[#{Rails.env}]"
+    end
+    parts.join
   end
 
   def subject_for(subject)
