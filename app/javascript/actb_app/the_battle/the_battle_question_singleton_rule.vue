@@ -21,7 +21,7 @@
 
   template(v-if="app.x_mode === 'x2_play'")
     .status_line2.has-text-centered.has-text-weight-bold
-      | {{app.q2_rest_seconds}}
+      | {{app.s_rest_seconds}}
       template(v-if="app.debug_mode_p")
         | ({{app.share_turn_offset}})
     shogi_player(
@@ -87,7 +87,7 @@ export default {
   },
   beforeDestroy() {
     this.app.main_interval_clear()
-    this.app.q2_interval_stop()
+    this.app.s_interval_stop()
   },
 }
 </script>

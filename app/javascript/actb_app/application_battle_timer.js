@@ -55,28 +55,28 @@ export const application_battle_timer = {
 
     //////////////////////////////////////////////////////////////////////////////// シングルトン専用
 
-    q2_interval_start() {
-      this.q2_interval_stop()
-      this.q2_interval_count = 0
-      this.q2_interval_id = setInterval(this.q2_interval_processing, 1000)
+    s_interval_start() {
+      this.s_interval_stop()
+      this.s_interval_count = 0
+      this.s_interval_id = setInterval(this.s_interval_processing, 1000)
     },
 
-    q2_interval_stop() {
-      if (this.q2_interval_id) {
-        clearInterval(this.q2_interval_id)
-        this.q2_interval_id = null
+    s_interval_stop() {
+      if (this.s_interval_id) {
+        clearInterval(this.s_interval_id)
+        this.s_interval_id = null
       }
     },
 
-    q2_interval_restart() {
-      this.q2_interval_stop()
-      this.q2_interval_start()
+    s_interval_restart() {
+      this.s_interval_stop()
+      this.s_interval_start()
     },
 
-    q2_interval_processing() {
+    s_interval_processing() {
       if (this.sub_mode === "operation_mode") {
-        this.q2_interval_count += 1
-        if (this.q2_rest_seconds === 0) {
+        this.s_interval_count += 1
+        if (this.s_rest_seconds === 0) {
           this.x2_play_timeout_handle()
         }
       }
@@ -114,8 +114,8 @@ export const application_battle_timer = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    q2_rest_seconds() {
-      let v = this.config.q2_time_limit_sec - this.q2_interval_count
+    s_rest_seconds() {
+      let v = this.config.s_time_limit_sec - this.s_interval_count
       if (v < 0) {
         v = 0
       }

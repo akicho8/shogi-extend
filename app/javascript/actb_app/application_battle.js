@@ -143,13 +143,13 @@ export const application_battle = {
 
         if (this.battle.rule.key === "singleton_rule") {
           // 安全のため残り0秒になってから操作しても無効とする
-          if (this.q2_rest_seconds === 0) {
+          if (this.s_rest_seconds === 0) {
             return
           }
 
           // 駒を1つでも動かしたら3秒に復帰する
           if (this.x_mode === "x2_play") {
-            this.q2_interval_restart()
+            this.s_interval_restart()
           }
 
           this.play_board_share(long_sfen)
@@ -297,7 +297,7 @@ export const application_battle = {
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押した側
         this.x_mode = "x2_play"
-        this.q2_interval_start()
+        this.s_interval_start()
         this.sound_play("poon")
       } else {
         // 解答ボタンを押さなかった側
@@ -342,7 +342,7 @@ export const application_battle = {
 
       this.sound_play("mistake")
       this.x_mode = "x1_thinking"
-      this.q2_interval_stop()
+      this.s_interval_stop()
     },
 
     // private
