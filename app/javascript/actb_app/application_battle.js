@@ -314,6 +314,7 @@ export const application_battle = {
         }
         this.x_mode = "x3_see"
         this.share_sfen = this.current_question.init_sfen // 初期状態にしておく
+        this.q_turn_offset = 0                            // 相手が操作中(○手目)の部分を0に戻す
         this.sound_play("poon")
       }
     },
