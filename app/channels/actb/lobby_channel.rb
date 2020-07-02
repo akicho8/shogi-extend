@@ -5,11 +5,15 @@ module Actb
     delegate :matching_list_hash, :common_broadcast, to: "self.class"
 
     class << self
-      def matching_list_add(*user)
-        user.each do |user|
-          redis.sadd(user.actb_setting.rule.redis_key, user.id)
+      def matching_list_add(user)
+        redis_key = user.actb_setting.rule.redis_key
+        if redis.sismember(redis_key, user.id)
+          # すでに追加している
+        else
+          # 新規で追加
+          redis.sadd(redis_key, user.id)
+          common_broadcast(type: :add, add_user_id: user.id)
         end
-        common_broadcast
       end
 
       def matching_list_rem(*user)
@@ -19,8 +23,12 @@ module Actb
         common_broadcast
       end
 
-      def common_broadcast
-        ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, bc_params: {matching_list_hash: matching_list_hash})
+      def common_broadcast(params = {})
+        bc_params = {
+          matching_list_hash: matching_list_hash,
+        }.merge(params)
+
+        ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, bc_params: bc_params)
       end
 
       def matching_list_hash
