@@ -4,6 +4,8 @@
     .header_center_title システム
   .menu_buttons
     b-field
+      b-switch(v-model="app.debug_summary_p") オンライン数の表示
+    b-field
       b-switch(v-model="app.debug_read_p") デバッグモード(表示系)
     b-field
       b-switch(v-model="app.debug_write_p" type="is-danger") デバッグモード(破壊系)

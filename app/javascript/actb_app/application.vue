@@ -97,23 +97,25 @@ export default {
       rule_key: null,           // 未使用
       room: null,
 
-      matching_list_hash:   null, // 対戦待ちの人のIDを列挙している
-      online_user_ids: null, // オンライン人数
-      room_user_ids:   null, // オンライン人数
+      matching_list_hash: null, // 対戦待ちの人のIDを列挙している
+      online_user_ids:    null, // オンライン人数
+      room_user_ids:      null, // オンライン人数
 
       // チャット用
-      lobby_messages: null, // メッセージ(複数)
-      lobby_message_body:  null, // 入力中のメッセージ
+      lobby_messages:     null, // メッセージ(複数)
+      lobby_message_body: null, // 入力中のメッセージ
 
-      RuleInfo: null,
+      RuleInfo:   null,
       OxMarkInfo: null,
-      SkillInfo: null,
+      SkillInfo:  null,
 
+      // メニュー用
       menu_component: null,
 
       // デバッグ
-      debug_read_p: false,      // 表示系(安全)
-      debug_write_p: false,     // 更新系(危険)
+      debug_summary_p: false, // ちょっとした表示
+      debug_read_p:    false, // 表示系(安全)
+      debug_write_p:   false, // 更新系(危険)
 
       // リアクティブではないもの
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
@@ -130,8 +132,9 @@ export default {
   created() {
     if (this.development_p) {
       if (this.staff_only) {
-        this.debug_read_p  = true
-        this.debug_write_p = true
+        this.debug_summary_p = true
+        this.debug_read_p    = true
+        this.debug_write_p   = true
       }
     }
 
