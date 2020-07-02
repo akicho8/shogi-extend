@@ -29,9 +29,20 @@ class ServiceInfo
       ],
       description: "クイズ形式で将棋の問題を解く力を競う対戦ゲームです",
       feature_items: [
-        "対戦→間違えた問題を履歴で勉強→再挑戦して棋力アップ(？)",
-        "棋力を上げてランキング上位を目指す",
-        "自作の問題をすぐに投稿可 (審査などありません)",
+        "対戦→勉強→再挑戦のサイクルで棋力アップ(？)",
+        "棋力を上げてランキング上位をめざそう！",
+        "自作の問題をすぐに投稿可",
+      ],
+    },
+    {
+      display_p: true,
+      link_path: FrontendScript::ThreeStageLeagueScript.script_link_path,
+      title: "三段リーグ成績早見表",
+      image_source: "three_stage_leage_1200x630.png",
+      description: "奨励会三段リーグの成績を見やすくするサービスです",
+      feature_items: [
+        "スマホに最適化",
+        "名前タップで個人のシーズン毎の成績表示",
       ],
     },
     {
@@ -76,17 +87,6 @@ class ServiceInfo
         "先後両方の視点で練習可",
         "ランキングあり",
         "やっているときはおもしろいのに急に冷める",
-      ],
-    },
-    {
-      display_p: true,
-      link_path: FrontendScript::ThreeStageLeagueScript.script_link_path,
-      title: "三段リーグ成績早見表",
-      image_source: "three_stage_leage_1200x630.png",
-      description: "奨励会三段リーグの成績を見やすくするサービスです",
-      feature_items: [
-        "スマホに最適化",
-        "名前タップで個人のシーズン毎の成績表示",
       ],
     },
     {
