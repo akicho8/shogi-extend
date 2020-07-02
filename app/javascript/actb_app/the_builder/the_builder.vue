@@ -16,7 +16,7 @@
 
     ////////////////////////////////////////////////////////////////////////////////
     .secondary_header
-      b-tabs.tabs_in_secondary(v-model="tab_index" expanded @change="tab_change_handle")
+      b-tabs.tabs_in_secondary(v-model="tab_index" expanded @change="edit_tab_change_handle")
         b-tab-item(label="配置")
 
         b-tab-item
@@ -150,9 +150,8 @@ export default {
       this.tab_index = TabInfo.fetch(tab_key).code
     },
 
-    tab_change_handle() {
+    edit_tab_change_handle(v) {
       this.sound_play("click")
-      alert(this.current_tab_info.name)
       this.talk2(this.current_tab_info.name)
       this[this.current_tab_info.handle_method_name]()
     },

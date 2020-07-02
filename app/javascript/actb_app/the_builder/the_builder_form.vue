@@ -26,7 +26,7 @@
   b-field(label="解説" label-position="on-border")
     b-input(v-model="$parent.question.description" size="is-small" type="textarea" rows="4")
 
-  b-collapse.mt-5(:open="tashaga_sakusha_p")
+  b-collapse.mt-5(:open="other_author_collapse_open_p")
     button.button.is-small(slot="trigger" @click="sound_play('click')") 他者が作者の場合
     .box
       b-field(label="作者" label-position="on-border")
@@ -76,7 +76,7 @@ export default {
     },
   },
   computed: {
-    tashaga_sakusha_p() {
+    other_author_collapse_open_p() {
       return this.$parent.question.other_author || this.$parent.question.source_media_name || this.$parent.question.source_media_url
     },
   },
