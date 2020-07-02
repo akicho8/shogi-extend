@@ -94,7 +94,6 @@ export default {
 
       mode: null,
       sub_mode: null,
-      rule_key: null,           // 未使用
       room: null,
 
       matching_list_hash: null, // 対戦待ちの人のIDを列挙している
