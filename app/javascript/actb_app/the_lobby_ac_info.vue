@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_lobby_ac_info
-  .container.is-flex.has-text-grey.is-size-7
+  .container.is-flex.has-text-grey.is-size-7(v-if="app.debug_read_p")
     .element(v-if="development_p")
       | 購読{{app.ac_subscription_names}}
     .element(v-if="app.online_user_ids != null")
