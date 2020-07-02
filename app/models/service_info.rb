@@ -17,11 +17,16 @@ class ServiceInfo
       ],
     },
     {
+      on_swars_search_p: true,
       display_p: Actb::Config[:actb_display_p],
       link_path: [:training],
       title: "将棋トレーニングバトル",
       new_p: true,
-      image_source: "actb_1200x630.png",
+      image_source: [
+        "actb1_1200x630.png",
+        "actb2_1200x630.png",
+        "actb3_1200x630.png",
+      ],
       description: "早押しクイズ形式で将棋の問題を解く力を競う対戦ゲームです",
       feature_items: [
         "対戦→間違えた問題を履歴で勉強→再挑戦して棋力アップ(？)",

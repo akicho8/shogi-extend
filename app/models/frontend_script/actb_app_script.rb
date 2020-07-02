@@ -67,7 +67,7 @@ module FrontendScript
         c.instance_variable_set(:@ogp_params, {
             :title       => "将棋トレーニングバトル",
             :description => "早押しクイズ形式で将棋の問題を解く力を競う対戦ゲームです",
-            :image       => "actb_1200x630.png",
+            :image       => "actb2_1200x630.png",
           })
       end
 

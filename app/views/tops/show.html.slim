@@ -6,22 +6,5 @@ javascript:
     .title.is-6.mb-4 主なサービスの紹介
 
   .columns.is-multiline
-    - ServiceInfo.each do |si|
-      - if si.display_p || Rails.env.development? || Rails.env.test?
-        .column.is-one-third-desktop.is-half-tablet
-          = link_to(si.link_path, :class => "box") do
-            .content
-              - if si.image_source
-                .image= image_tag(si.image_source)
-              .title.is-5.mt-5
-                h2.title.is-5.is-inline #{si.title}
-                - if si.new_p
-                  span.has-text-danger.ml-2.is-size-6
-                    | NEW!
-
-              - if si.description
-                p= si.description
-              - if si.feature_items.present?
-                ul.is-size-7
-                  - si.feature_items.each do |e|
-                    li== e
+    - ServiceInfo.find_all(&:display_p).each do |si|
+      = render partial: "service_info", locals: { si: si }
