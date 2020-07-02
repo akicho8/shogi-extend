@@ -36,7 +36,7 @@
     the_builder_form(   v-if="current_tab_info.key === 'form_mode'")
     the_builder_kensho( v-if="current_tab_info.key === 'kensho_mode'")
 
-  debug_print(v-if="app.debug_mode_p" )
+  debug_print(v-if="app.debug_read_p")
 </template>
 
 <script>

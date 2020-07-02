@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_profile_edit
   component(:is="p_mode")
-  debug_print(v-if="app.debug_mode_p" :grep_v="/canvas/")
+  debug_print(v-if="app.debug_read_p" :grep_v="/canvas/")
 </template>
 
 <script>

@@ -16,7 +16,7 @@
     | {{membership.user.name}}
 
   ////////////////////////////////////////////////////////////////////////////////
-  .user_quest_index.has-text-weight-bold.is-size-4(v-if="app.debug_mode_p && false")
+  .user_quest_index.has-text-weight-bold.is-size-4(v-if="app.debug_read_p && false")
     | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
 
   ////////////////////////////////////////////////////////////////////////////////

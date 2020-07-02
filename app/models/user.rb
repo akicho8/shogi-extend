@@ -206,4 +206,10 @@ class User < ApplicationRecord
       end
     end
   end
+
+  concerning :TagMethods do
+    included do
+      acts_as_taggable_on :permit_tags
+    end
+  end
 end

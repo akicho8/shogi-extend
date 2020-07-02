@@ -26,7 +26,7 @@
 
   the_room_message.mt-5
 
-  .box.is-shadowless(v-if="app.debug_mode_p")
+  .box.is-shadowless(v-if="app.debug_read_p")
     .buttons.is-centered.are-small
       b-button(@click="app.battle_continue_force_handle") 強制的に続行
       b-button(@click="app.battle_leave_handle(false)") 退出通知(自分)
@@ -34,8 +34,8 @@
       b-button(@click="app.battle_unsubscribe") バトル切断(自分)
       b-button(@click="app.member_disconnect_handle(true)") バトル切断風にする(相手)
 
-  debug_print(v-if="app.debug_mode_p" :vars="['app.member_infos_hash']")
-  debug_print(v-if="app.debug_mode_p" :vars="['app.continue_tap_counts', 'app.battle_count', 'app.battle.battle_pos', 'app.score_debug_info']")
+  debug_print(v-if="app.debug_read_p" :vars="['app.member_infos_hash']")
+  debug_print(v-if="app.debug_read_p" :vars="['app.continue_tap_counts', 'app.battle_count', 'app.battle.battle_pos', 'app.score_debug_info']")
 
 </template>
 

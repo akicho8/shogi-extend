@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_lobby_debug.box.is_debug(v-if="app.debug_mode_p")
+.the_lobby_debug.box.is_debug(v-if="app.debug_write_p")
   .buttons.is-centered.are-small
     template(v-for="row in app.RuleInfo.values")
       b-button(@click="app.debug_matching_add_handle(row.key)") 自分以外を{{row.name}}に参加させる

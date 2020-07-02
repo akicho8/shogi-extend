@@ -4,7 +4,7 @@
   .mdi.mdi-close.maru_batu.batu(v-if="mi.latest_ox === 'timeout'")
 
   //////////////////////////////////////////////////////////////////////////////// ○連勝
-  .straight_win_straight_lose.is-size-8.has-text-weight-bold(v-if="app.debug_mode_p")
+  .straight_win_straight_lose.is-size-8.has-text-weight-bold(v-if="app.debug_read_p")
     template(v-if="xrecord.straight_win_count >= 1")
       .straight_win_count {{xrecord.straight_win_count}}連勝中！
     template(v-else-if="xrecord.straight_lose_count >= 1")
@@ -21,7 +21,7 @@
   //////////////////////////////////////////////////////////////////////////////// ルール毎に異なる
   .question_progress.is-size-7.has-text-weight-bold
     | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
-  .question_progress_detail(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule' || app.debug_mode_p")
+  .question_progress_detail(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule' || app.debug_read_p")
     template(v-if="droped_ox_list.length === 0")
       | &nbsp;
     template(v-for="ox_mark_key in droped_ox_list")

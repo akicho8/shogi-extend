@@ -82,5 +82,11 @@ export const support = {
     // ...mapState([
     //   'fooKey',
     // ]),
+
+    staff_only() {
+      if (this.app.current_user) {
+        return this.app.current_user.permit_tag_list.includes("staff")
+      }
+    },
   },
 }

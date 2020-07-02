@@ -21,7 +21,7 @@ export default {
   computed: {
     // デバッグ用のメッセージはデバッグモードのアカウントのときだけ見れる
     show_p() {
-      // if (this.debug_message_p && !this.app.debug_mode_p) {
+      // if (this.debug_message_p && !this.app.debug_read_p) {
       //   return false
       // }
       return true

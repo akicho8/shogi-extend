@@ -12,9 +12,12 @@
   the_builder(      v-if="mode === 'builder'")
   the_menu(         v-if="mode === 'menu'")
 
-  details(v-if="app.debug_mode_p")
+  | debug_read_p:{{app.debug_read_p}}
+  | debug_write_p:{{app.debug_write_p}}
+  
+  details(v-if="app.debug_read_p")
     summary DEBUG
-    debug_print( :grep="/./")
+    debug_print(:grep="/./")
 
   template(v-if="development_p")
     router-link(to="/training/menu") menu
@@ -111,6 +114,10 @@ export default {
 
       menu_component: null,
 
+      // デバッグ
+      debug_read_p: false,      // 表示系(安全)
+      debug_write_p: false,     // 更新系(危険)
+
       // リアクティブではないもの
       // $ac_school: null, // --> app/channels/actb/school_channel.rb
       // $ac_lobby:  null, // --> app/channels/actb/lobby_channel.rb
@@ -124,6 +131,13 @@ export default {
   },
 
   created() {
+    if (this.development_p) {
+      if (this.staff_only) {
+        this.debug_read_p  = true
+        this.debug_write_p = true
+      }
+    }
+
     this.remote_get(this.app.info.api_path, { remote_action: "resource_fetch" }, e => {
       this.RuleInfo   = RuleInfo.memory_record_reset(e.RuleInfo)
       this.OxMarkInfo = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
@@ -373,12 +387,6 @@ export default {
       return url.toString()
     },
 
-    debug_mode_p() {
-      if (this.current_user) {
-        // return this.current_user.key === "sysop" || this.current_user.name === "きなこもち" || this.current_user.name === "わらびもち"
-        return this.current_user.key === "sysop"
-      }
-    },
     user_type() {
       if (this.current_user) {
         if (this.current_user.key === "sysop") {
