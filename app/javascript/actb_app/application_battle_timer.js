@@ -1,3 +1,5 @@
+import dayjs from "dayjs"
+
 export const application_battle_timer = {
   data() {
     return {

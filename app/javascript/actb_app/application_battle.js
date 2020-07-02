@@ -2,8 +2,6 @@ import { Question } from "./models/question.js"
 import { Battle } from "./models/battle.js"
 import { MemberInfo } from "./models/member_info.js"
 
-import dayjs from "dayjs"
-
 import { application_battle_timer } from "./application_battle_timer.js"
 
 import { application_battle_marathon_rule  } from "./application_battle_marathon_rule.js"
