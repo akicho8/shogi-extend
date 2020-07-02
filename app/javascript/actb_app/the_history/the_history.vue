@@ -4,7 +4,7 @@
   .primary_header
     .header_center_title {{app.history_current_tab_info.top_nav_name}}
   .secondary_header
-    b-tabs.tabs_in_secondary(v-model="app.history_tab_index" expanded @change="app.tab_change_handle2")
+    b-tabs.tabs_in_secondary(v-model="app.history_tab_index" expanded @change="app.history_tab_change_handle")
       template(v-for="tab_info in app.HistoryTabInfo.values")
         b-tab-item(:label="tab_info.tab_name")
 
@@ -36,7 +36,7 @@ export default {
 
     this.app.lobby_unsubscribe()
     this.app.history_mode_select("history_index")
-    this.app.tab_change_handle2()
+    this.app.history_tab_change_handle()
   },
 }
 </script>

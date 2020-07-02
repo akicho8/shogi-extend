@@ -3,6 +3,7 @@
   the_builder_index(v-if="!question")
 
   .the_builder_new_and_edit(v-if="question")
+    ////////////////////////////////////////////////////////////////////////////////
     .primary_header
       b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
       .header_center_title
@@ -13,6 +14,7 @@
       .header_item.with_text.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !save_button_enabled}")
         | {{create_or_upate_name}}
 
+    ////////////////////////////////////////////////////////////////////////////////
     .secondary_header
       b-tabs.tabs_in_secondary(v-model="tab_index" expanded @change="tab_change_handle")
         b-tab-item(label="配置")
@@ -31,6 +33,7 @@
               | 検証
               b-tag(rounded v-if="valid_count >= 1" type="is-primary") OK
 
+    ////////////////////////////////////////////////////////////////////////////////
     the_builder_haiti(  v-if="current_tab_info.key === 'haiti_mode'")
     the_builder_seikai( v-if="current_tab_info.key === 'seikai_mode'" ref="the_builder_seikai")
     the_builder_form(   v-if="current_tab_info.key === 'form_mode'")
@@ -125,7 +128,6 @@ export default {
 
     // 作成画面でのデフォルト
     this.mode_select("haiti_mode")
-    this.tab_change_handle()
 
     // 一覧用
     this.remote_get(this.app.info.api_path, { remote_action: "builder_form_resource_fetch" }, e => {
@@ -150,10 +152,12 @@ export default {
 
     tab_change_handle() {
       this.sound_play("click")
+      alert(this.current_tab_info.name)
+      this.talk2(this.current_tab_info.name)
       this[this.current_tab_info.handle_method_name]()
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////// 各タブ切り替えた直後の初期化処理
 
     haiti_mode_handle() {
       this.mode_select("haiti_mode")

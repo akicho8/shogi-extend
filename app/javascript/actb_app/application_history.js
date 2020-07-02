@@ -55,7 +55,7 @@ export const application_history = {
       this.history_tab_index = HistoryTabInfo.fetch(tab_key).code
     },
 
-    tab_change_handle2() {
+    history_tab_change_handle() {
       this.sound_play("click")
       this.app[this.history_current_tab_info.handle_method_name]()
     },
