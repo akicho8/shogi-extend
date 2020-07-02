@@ -41,11 +41,26 @@ module Tsl
     has_many :leagues, through: :memberships                      # 対局(複数)
 
     def name_with_age
-      s = name
+      s = ""
+
+      s += "#{memberships.count} - " # 在籍N期
+
+      s += name
+
       if first_age && last_age
         s += "(#{first_age}-#{last_age})"
       end
+
+      # プロ？
+      if break_through?
+        s += " ★"
+      end
+
       s
+    end
+
+    def break_through?
+      memberships.any? { |e| e.result_key == "昇段" }
     end
   end
 end

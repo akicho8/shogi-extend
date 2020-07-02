@@ -17,8 +17,8 @@ module FrontendScript
     def script_body
       if current_uesr
         s = current_uesr.memberships
-        s = s.joins(:league).includes(:user, :league)
-        s = s.order(Tsl::League.arel_table[:generation].asc)
+        s = s.joins(:league).order(Tsl::League.arel_table[:generation].asc)
+        s = s.includes({:user => :memberships}, :league)
 
         if request.format.json?
           return s.as_json(include: [:user, :league], except: [:league_id, :user_id])
@@ -63,3 +63,5 @@ module FrontendScript
     end
   end
 end
+# ~> -:2:in `<module:FrontendScript>': uninitialized constant FrontendScript::Base (NameError)
+# ~> 	from -:1:in `<main>'
