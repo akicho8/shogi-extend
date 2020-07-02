@@ -5,6 +5,9 @@ export const application_battle_timer = {
     return {
       main_interval_id: null,
       main_interval_count: null,
+
+      s_interval_id: null,
+      s_interval_count: null,
     }
   },
 
