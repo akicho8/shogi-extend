@@ -7,7 +7,7 @@ module Actb
     :action_cable_debug              => true,  # ActionCable関連デバッグモード
 
     # -------------------------------------------------------------------------------- マッチング
-    :matching_gap_base               => 5,   # ○**カウンター
+    :matching_gap_base               => 7,   # ○**カウンター
     :matching_pow_base               => 50,  # gap < 2**(○+カウンター) ならマッチングする
     :matching_interval_second        => 3,   # カウンターをインクリメントする間隔(秒)
     :matching_forgo_second           => 10,  # ○秒たったらマッチングを諦める(nullなら無限)
