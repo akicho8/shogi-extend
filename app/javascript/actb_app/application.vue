@@ -12,9 +12,6 @@
   the_builder(      v-if="mode === 'builder'")
   the_menu(         v-if="mode === 'menu'")
 
-  | debug_read_p:{{app.debug_read_p}}
-  | debug_write_p:{{app.debug_write_p}}
-  
   details(v-if="app.debug_read_p")
     summary DEBUG
     debug_print(:grep="/./")
