@@ -148,6 +148,7 @@ export default {
     // タブが変更されたとき
     question_tab_index_change_handle() {
       this.sound_play("click")
+      this.talk2(this.question_current_tab_info.name)
       this.$parent.folder_change_handle(this.question_current_tab_info.key)
     },
 
