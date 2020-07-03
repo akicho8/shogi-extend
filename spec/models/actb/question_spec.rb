@@ -70,6 +70,13 @@ module Actb
       end
     end
 
+    describe "入力補正" do
+      it do
+        question1.update!(description: " ａ　　\n　　ｚ\n ")
+        assert { question1.description == "a\nz" }
+      end
+    end
+
     describe "属性" do
       it do
         assert { question1.lineage.name == "詰将棋" }
@@ -123,8 +130,8 @@ module Actb
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .............
+# >> ..............
 # >> 
-# >> Finished in 2.16 seconds (files took 3.04 seconds to load)
-# >> 13 examples, 0 failures
+# >> Finished in 1.92 seconds (files took 2.17 seconds to load)
+# >> 14 examples, 0 failures
 # >> 
