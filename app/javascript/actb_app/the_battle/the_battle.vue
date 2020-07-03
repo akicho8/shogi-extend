@@ -89,6 +89,6 @@ export default {
     align-items: center
   .deden_mode_container
     font-size: 4rem
-  .mistake_mode_container
+  .timeout_mode_container
     font-size: 4rem
 </style>

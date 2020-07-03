@@ -100,6 +100,10 @@ module FrontendScript
 
       debug_scene_params_set(info)
 
+      # if Rails.env.development?
+      #   Actb::BaseChannel.redis_clear
+      # end
+
       if request.format.json?
         return info
       end

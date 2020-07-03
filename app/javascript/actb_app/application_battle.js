@@ -204,7 +204,7 @@ export const application_battle = {
 
         this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
 
-        // correct_mode or mistake_mode
+        // correct_mode or timeout_mode
         if (params.membership_id === this.current_membership.id) {
           this.sub_mode = `${ox_mark_info.key}_mode`
           this.delay_and_owattayo_or_next_trigger(ox_mark_info)
@@ -214,12 +214,10 @@ export const application_battle = {
       // 正解時         → 正解したユーザーが送信者
       // タイムアウト時 → プレイマリーユーザーが送信者
       if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
-        this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or mistake_mode
+        this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or timeout_mode
 
         this.seikai_user_niha_maru(mi, ox_mark_info)  // 正解時は正解したユーザーが送信者なので正解者には○
         this.ryousya_jikangire(ox_mark_info)          // タイムアウトのときは両者に時間切れ
-        this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
-
         if (ox_mark_info.key === "correct") {        // 正解のときだけでよい。タイムアウトは両者なので通知した片方に×がでるのは変
           this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
         }

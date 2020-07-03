@@ -1,5 +1,6 @@
 <template lang="pug">
 .the_battle_membership.is-flex
+  //////////////////////////////////////////////////////////////////////////////// ○×
   .mdi.mdi-checkbox-blank-circle-outline.maru_batu.maru(v-if="mi.latest_ox === 'correct'")
   .mdi.mdi-close.maru_batu.batu(v-if="mi.latest_ox === 'timeout'")
 
