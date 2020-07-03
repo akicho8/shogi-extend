@@ -20,7 +20,7 @@ module Actb
     belongs_to :question, counter_cache: true
 
     before_validation do
-      if changes_to_save[:moves_str] && v = moves_str.presence
+      if will_save_change_to_attribute?(:moves_str) && v = moves_str.presence
         self.moves_count = v.split.size
       end
     end
@@ -33,7 +33,7 @@ module Actb
 
     validate do
       if errors.blank?
-        if changes_to_save[:moves_str] && moves_str
+        if will_save_change_to_attribute?(:moves_str) && moves_str
           # 親の init_sfen + 自分の moves_str で重複がないことを確認する
           # TODO: self.class.joins(:question).where(Question.arel_table[:init_sfen].eq(init_sfen)) とした方がいいかも
           s = Question.where(init_sfen: question.read_attribute(:init_sfen))

@@ -164,17 +164,23 @@ module Actb
         end
       end
 
-      [
-        :title,
-        :description,
-        :hint_desc,
-        :other_author,
-        :source_media_name,
-        :source_media_url,
-        :source_published_on,
-      ].each do |key|
-        public_send("#{key}=", public_send(key).presence)
-      end
+      normalize_blank_to_nil(*[
+          :title,
+          :description,
+          :hint_desc,
+          :other_author,
+          :source_media_name,
+          :source_media_url,
+          :source_published_on,
+        ])
+
+      normalize_zenkaku_to_hankaku(*[
+          :title,
+          :description,
+          :hint_desc,
+          :other_author,
+          :source_media_name,
+        ])
 
       if Rails.env.test?
         self.title ||= "(title#{self.class.count.next})"

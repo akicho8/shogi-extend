@@ -26,7 +26,7 @@ module Actb
       self.ox_total ||= 0
       self.o_rate   ||= 0
 
-      if changes_to_save[:o_count] || changes_to_save[:x_count]
+      if will_save_change_to_attribute?(:o_count) || will_save_change_to_attribute?(:x_count)
         if o_count && x_count
           self.ox_total = o_count + x_count
           if ox_total.positive?

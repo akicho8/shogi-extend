@@ -7,7 +7,7 @@ module Swars
         attr_accessor :tactic_key
 
         before_save do
-          if tactic_key || kifu_body_for_test || (changes_to_save[:csa_seq] && csa_seq)
+          if tactic_key || kifu_body_for_test || (will_save_change_to_attribute?(:csa_seq) && csa_seq)
             parser_exec
           end
         end

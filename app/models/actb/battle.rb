@@ -49,7 +49,7 @@ module Actb
       end
 
       self.final ||= Final.fetch(:f_pending)
-      if changes_to_save[:final_id] && final && final.key != "f_pending"
+      if will_save_change_to_attribute?(:final_id) && final && final.key != "f_pending"
         self.end_at ||= Time.current
       end
 

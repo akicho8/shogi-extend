@@ -4,14 +4,14 @@ module Actb
       belongs_to :user, class_name: "::User"
 
       before_validation do
-        if changes_to_save[:body] && body.present?
+        if will_save_change_to_attribute?(:body) && body.present?
           self.body = body.gsub(/\R{3,}/, "\n\n")
           self.body = body.strip
           self.body = Loofah.fragment(body).scrub!(:escape).to_s
         end
 
         # ちょんぎる
-        if changes_to_save[:body] && body
+        if will_save_change_to_attribute?(:body) && body
           self.body = body.to_s.first(self.class.columns_hash["body"].limit)
         end
       end

@@ -168,14 +168,14 @@ class FreeBattle < ApplicationRecord
       self.kifu_body = v
     end
 
-    if changes_to_save[:kifu_url]
+    if will_save_change_to_attribute?(:kifu_url)
       if v = kifu_url.presence
         self.kifu_body = http_get_body(v)
         self.kifu_url = nil
       end
     end
 
-    if changes_to_save[:kifu_body] && kifu_body
+    if will_save_change_to_attribute?(:kifu_body) && kifu_body
       if v = UrlEmbedKifuParser.parse(kifu_body)
         self.kifu_body = v
       end
@@ -183,7 +183,7 @@ class FreeBattle < ApplicationRecord
   end
 
   before_save do
-    if changes_to_save[:kifu_body]
+    if will_save_change_to_attribute?(:kifu_body)
       if kifu_body
         # 「**候補手」のようなのがついていると容量が大きすぎてDBに保存できなくなるためコメントを除外する
         # コメントは残したいので ** で始まるものだけ除去する
