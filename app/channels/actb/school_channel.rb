@@ -33,7 +33,7 @@ module Actb
     private
 
     def online_status
-      ActionCable.server.broadcast("actb/school_channel", bc_action: :online_status_broadcasted, bc_params: {online_user_ids: online_user_ids, room_user_ids: room_user_ids})
+      ActionCable.server.broadcast("actb/school_channel", bc_action: :online_status_broadcasted, bc_params: {online_user_ids: online_user_ids})
     end
   end
 end
