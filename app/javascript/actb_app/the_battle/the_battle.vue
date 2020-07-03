@@ -17,9 +17,22 @@
     the_battle_question_singleton_rule(v-if="app.battle.rule.key === 'singleton_rule'")
     the_room_message
 
-  template(v-if="app.sub_mode === 'timeout_mode'")
-    .mistake_mode_container.has-text-centered(v-if="app.battle.rule.key === 'marathon_rule'")
-      | 時間切れ
+  ////////////////////////////////////////////////////////////////////////////////
+  template(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
+    template(v-if="app.sub_mode === 'timeout_mode'")
+      .timeout_mode_container.has-text-centered
+        | 時間切れ
+
+  //- シングルトンでは両方がおてつきしたときは時間切れを出さない
+  template(v-if="app.battle.rule.key === 'singleton_rule'")
+    template(v-if="app.sub_mode === 'timeout_mode'")
+      template(v-if="app.otetuki_all_p")
+        .timeout_mode_container.has-text-centered
+          | 両者不正解
+      template(v-else)
+        .timeout_mode_container.has-text-centered
+          | 時間切れ
+  ////////////////////////////////////////////////////////////////////////////////
 
   template(v-if="development_p")
     .columns
