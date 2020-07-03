@@ -220,6 +220,9 @@ export const application_battle = {
         this.ryousya_jikangire(ox_mark_info)          // タイムアウトのときは両者に時間切れ
         this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
 
+        if (ox_mark_info.key === "correct") {        // 正解のときだけでよい。タイムアウトは両者なので通知した片方に×がでるのは変
+          this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
+        }
         if (this.leader_p) {
           this.delay_and_owattayo_or_next_trigger(ox_mark_info) // [ONCE]
         }
