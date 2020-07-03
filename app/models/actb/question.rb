@@ -212,6 +212,8 @@ module Actb
 
     after_create_commit do
       SlackAgent.message_send(key: "問題登録", body: [title, page_url].join(" "))
+
+      User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
     end
 
     def page_url
