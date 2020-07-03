@@ -19,13 +19,13 @@ export const support = {
 
     ok_notice(message_body, options = {}) {
       this.$buefy.toast.open({message: message_body, position: "is-bottom", type: "is-success", queue: false})
-      this.talk2(message_body, options)
+      this.say(message_body, options)
     },
 
     warning_notice(message_body) {
       this.sound_play("x")
       this.$buefy.toast.open({message: message_body, position: "is-bottom", type: "is-warning", queue: false})
-      this.talk2(message_body)
+      this.say(message_body)
     },
 
     main_nav_set(display_p) {
@@ -61,7 +61,7 @@ export const support = {
       return Autolinker.link(str, {newWindow: false, truncate: 30, mention: "twitter"})
     },
 
-    talk2(str, options = {}) {
+    say(str, options = {}) {
       this.talk(str, {rate: 1.5, ...options})
     },
 

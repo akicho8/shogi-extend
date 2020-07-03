@@ -58,20 +58,20 @@ export default {
     "$parent.question.lineage.key": {
       handler(v) {
         this.sound_play("click")
-        this.talk2(v)
+        this.say(v)
       },
     },
     "$parent.question.folder_key": {
       handler(v) {
         const folder_info = this.$parent.FolderInfo.fetch(v)
         this.sound_play("click")
-        this.talk2(folder_info.name)
+        this.say(folder_info.name)
       },
     },
     "$parent.question.difficulty_level": {
       handler(v) {
         this.sound_play("click")
-        this.talk2(v)
+        this.say(v)
       },
     },
   },

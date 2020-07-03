@@ -47,10 +47,10 @@ export const application_history_vote = {
 
     vote_talk(e) {
       if (e.good.diff >= 1) {
-        this.talk2("よき")
+        this.say("よき")
       }
       if (e.bad.diff >= 1) {
-        this.talk2("だめ")
+        this.say("だめ")
       }
     },
 
@@ -68,7 +68,7 @@ export const application_history_vote = {
 
       this.silent_remote_fetch("PUT", this.app.info.api_path, { remote_action: "clip_handle", ...params }, e => {
         if (e.diff >= 1) {
-          this.talk2("保存リストに追加しました")
+          this.say("保存リストに追加しました")
         }
 
         // 該当のレコードを更新

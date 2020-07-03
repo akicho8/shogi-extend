@@ -357,7 +357,7 @@ export const application_battle = {
     battle_continue_handle_broadcasted(params) {
       this.continue_tap_counts = params.continue_tap_counts
 
-      this.talk2("再戦希望")
+      this.say("再戦希望")
       this.$buefy.toast.open({message: "再戦希望", position: "is-top", queue: false})
     },
 

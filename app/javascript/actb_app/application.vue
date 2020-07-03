@@ -204,7 +204,7 @@ export default {
       const message = params.message
       if (/^\*/.test(message.body)) {
       } else {
-        this.talk2(message.body)
+        this.say(message.body)
         this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
       }
     },
@@ -272,12 +272,12 @@ export default {
       if (this.login_required2()) { return }
 
       this.mode = "rule_select"
-      this.talk2("ルールを選択してください")
+      this.say("ルールを選択してください")
     },
 
     rule_key_set_handle(rule) {
       this.sound_play("click")
-      this.talk2(rule.name)
+      this.say(rule.name)
       this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "rule_key_set_handle", rule_key: rule.key }, e => {
         this.matching_setup()
       })

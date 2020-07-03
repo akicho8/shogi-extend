@@ -152,7 +152,7 @@ export default {
 
     edit_tab_change_handle(v) {
       this.sound_play("click")
-      this.talk2(this.current_tab_info.name)
+      this.say(this.current_tab_info.name)
       this[this.current_tab_info.handle_method_name]()
     },
 

@@ -29,7 +29,7 @@ export default {
   ],
   methods: {
     voice_exercise() {
-      this.talk2(_.sample(this.sentence_list))
+      this.say(_.sample(this.sentence_list))
     },
   },
   computed: {
