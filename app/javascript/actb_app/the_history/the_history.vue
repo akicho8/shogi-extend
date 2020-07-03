@@ -45,4 +45,5 @@ export default {
 @import "../support.sass"
 .the_history
   @extend %padding_top_for_secondary_header
+  margin-bottom: $margin_bottom
 </style>
