@@ -24,7 +24,7 @@ module Actb
       end
 
       # すべてのルールから除去(トリガーあり)
-      def matching_users_delete(user)
+      def matching_users_delete_from_all_rules(user)
         RuleInfo.each { |e| e.matching_users_delete(user) }
       end
 
@@ -78,6 +78,7 @@ module Actb
       end
     end
 
+    # このルール内で user を解除
     def matching_users_delete(user)
       if redis.srem(redis_key, user.id) # 既存のIDを削除できたときだけ真
         matching_users_broadcast(trigger: :delete, user_id: user.id) # このトリガーは未使用

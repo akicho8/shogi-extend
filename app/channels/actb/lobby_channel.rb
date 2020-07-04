@@ -2,25 +2,13 @@ module Actb
   class LobbyChannel < BaseChannel
     MATCHING_RATE_THRESHOLD_DEFAULT = 50
 
-    class << self
-      def matching_users_add(user)
-        user.actb_setting.rule.matching_users_add(user)
-      end
-
-      def matching_users_delete(user)
-        Actb::Rule.matching_users_delete(user) # すべてのルールを対象に解除する
-      end
-    end
-
-    ################################################################################
-
     def subscribed
       stream_from "actb/lobby_channel"
       matching_users_broadcast
     end
 
     def unsubscribed
-      self.class.matching_users_delete(current_user)
+      Actb::Rule.matching_users_delete_from_all_rules(current_user)
     end
 
     def speak(data)
@@ -59,11 +47,11 @@ module Actb
         end
       end
 
-      self.class.matching_users_add(current_user)
+      rule.matching_users_add(current_user)
     end
 
     def matching_cancel(data)
-      self.class.matching_users_delete(current_user)
+      Actb::Rule.matching_users_delete_from_all_rules(current_user)
     end
 
     ################################################################################
@@ -85,7 +73,7 @@ module Actb
     end
 
     def room_create(*users)
-      self.class.matching_users_delete(*users)
+      users.each { |e| Actb::Rule.matching_users_delete_from_all_rules(e) }
 
       # app/models/actb/room.rb
       Room.create!(rule: rule) do |e|
