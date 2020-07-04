@@ -10,7 +10,7 @@ export default {
 
   methods: {
     ac_info_update() {
-      console.log(this.ac_info())
+      console.log("AC有効", this.ac_info().map(e => e.channel).join(" "))
       this.ac_subscriptions_count = this.ac_subscriptions_count_get()
       this.ac_subscription_names = this.ac_info().map(e => e.channel.replace(/.*::/, "").replace(/channel/i, ""))
     },
@@ -24,8 +24,11 @@ export default {
     },
 
     ac_subscription_create(params, callbacks = {}) {
+      console.log(`${params.channel} 接続開始`)
+
       return consumer.subscriptions.create(params, {
         connected: () => {
+          console.log(`${params.channel} 接続完了`)
           this.debug_alert("connected")
           this.ac_info_update()
           if (callbacks.connected) {
@@ -33,13 +36,15 @@ export default {
           }
         },
         disconnected: () => {
+          // 切断したときこのコードはもう存在しないので実行されない？
+          console.log(`${params.channel} 切断完了`)
           this.debug_alert("disconnected")
           this.ac_info_update()
           if (callbacks.disconnected) {
             callbacks.disconnected()
           }
         },
-        received: (data) => {
+        received: data => {
           if (callbacks.received) {
             callbacks.received(data)
           }

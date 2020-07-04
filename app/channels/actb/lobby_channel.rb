@@ -4,7 +4,7 @@ module Actb
 
     def subscribed
       stream_from "actb/lobby_channel"
-      matching_users_broadcast
+      Actb::Rule.matching_user_ids_broadcast
     end
 
     def unsubscribed

@@ -8,10 +8,10 @@
   .buttons.is-centered.rule_buttons
     template(v-for="row in app.RuleInfo.values")
       template(v-if="row.display_p || development_p")
-        b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row)" :type="{'is-primary': app.matching_users_hash[row.key].length >= 1}" expanded)
+        b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row)" :type="{'is-primary': app.matching_user_ids_hash[row.key].length >= 1}" expanded)
           | {{row.name}}
           template(v-if="app.debug_read_p")
-            | ({{app.matching_users_hash[row.key].length}})
+            | ({{app.matching_user_ids_hash[row.key].length}})
 
 </template>
 

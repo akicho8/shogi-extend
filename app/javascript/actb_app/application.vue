@@ -96,9 +96,9 @@ export default {
       sub_mode: null,
       room: null,
 
-      school_user_ids:    null, // オンラインのユーザーIDs
-      room_user_ids:      null, // 対戦中のユーザーIDs
-      matching_users_hash: null, // 対戦待ちの人のIDを列挙している
+      school_user_ids:        null, // オンラインのユーザーIDs
+      room_user_ids:          null, // 対戦中のユーザーIDs
+      matching_user_ids_hash: null, // 対戦待ちユーザーIDsのハッシュでルール名がキー
 
       // チャット用
       lobby_messages:     null, // メッセージ(複数)
@@ -173,6 +173,9 @@ export default {
         }
         if (this.info.debug_scene === "ov_user_info") {
           this.ov_user_info_set(this.info.current_user.id)
+        }
+        if (this.info.debug_scene === "login_lobby") {
+          this.lobby_setup()
         }
       } else {
         this.lobby_setup()
