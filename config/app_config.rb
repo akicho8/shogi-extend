@@ -6,6 +6,9 @@ AppConfig.deep_merge!({
     :admin_email                             =>  "shogi.extend@gmail.com",
     :bot_email                               =>  "shogi.extend+bot@gmail.com",
 
+    :available_providers                     =>  [:twitter, :google, :github], # SNS経由ログインできるもの
+    :password_login_enable                   =>  true,                         # パスワードログイン有効化
+
     :free_battles_import                     =>  false, # 野良棋譜のセットアップ時に保持している対局を取り込むか？
     :player_info_function                    =>  true,  # プレイヤー情報
     :more_import_function                    =>  true,  # もっと取り込む

@@ -148,6 +148,9 @@ Rails.application.configure do
         :swars_tweet_function          => false,
         :xy_master_custom_mode         => false,
         :columns_detail_show           => false,
+
+        :available_providers           =>  [:twitter, :google],
+        :password_login_enable         =>  false,
       })
   end
 end
