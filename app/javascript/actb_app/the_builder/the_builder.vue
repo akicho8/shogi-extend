@@ -256,7 +256,7 @@ export default {
 
       if (this.question_new_record_p) {
         if (this.valid_count === 0) {
-          this.warning_notice("1回ぐらい検証してください")
+          this.warning_notice("検証してください")
           return
         }
       }
