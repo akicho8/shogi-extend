@@ -1,5 +1,5 @@
 module Actb
-  concern :ActiveUserNotifyMod do
+  concern :ActiveUsersNotifyMod do
     class_methods do
       def active_user_ids
         redis.smembers(redis_key).collect(&:to_i) # set.to_a
