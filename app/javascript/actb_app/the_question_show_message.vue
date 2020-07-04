@@ -42,19 +42,6 @@
           p.control
             button.button(@click="speak_handle" :class="{'is-primary': message_body.length >= 1}")
               | 送信
-
-  ////////////////////////////////////////////////////////////////////////////////
-  template(v-if="false")
-    .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.question_messages_window_height}rem`}")
-      .message_line(v-for="message in $parent.question.messages")
-        | {{message.user.name}}: {{message.body}}
-        span.diff_time_format
-          | ({{diff_time_format(message.created_at)}})
-    b-field.input_field
-      b-input(v-model="message_body" expanded @keypress.native.enter="speak_handle")
-      p.control
-        button.button.is-primary(@click="speak_handle")
-          b-icon.play_icon(icon="play")
 </template>
 
 <script>
@@ -131,27 +118,4 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_question_show_message
-  .articles_container
-    // height: 100vh
-    // overflow-y: scroll
-    margin-right: 1rem
-    margin-left: 1rem
-    article
-      .diff_time_format
-        // margin-left: 0.25rem
-        font-size: $size-7
-        color: $grey
-
-  .messages_box
-    margin-top: 1.8rem
-    padding: 0.5rem
-    overflow-y: scroll
-    .diff_time_format
-      font-size: $size-7
-      margin-left: 0.25rem
-      color: $grey-light
-  .input_field
-    margin-top: 0.5rem
-    .play_icon
-      min-width: 3rem
 </style>
