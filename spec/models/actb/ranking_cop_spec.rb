@@ -10,7 +10,7 @@ module Actb
       user
     end
 
-    it "" do
+    it do
       user1 = test1(15)
       user2 = test1(14)
       user3 = test1(13)
@@ -26,6 +26,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .
 # >> 
-# >> Finished in 0.8312 seconds (files took 2.09 seconds to load)
+# >> Finished in 0.56924 seconds (files took 2.14 seconds to load)
 # >> 1 example, 0 failures
 # >> 
