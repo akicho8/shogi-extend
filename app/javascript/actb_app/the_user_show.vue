@@ -16,7 +16,7 @@
 
       win_lose_circle(:info="win_lose_circle_params")
 
-      nav.level.is-mobile.level_nav
+      nav.level.is-mobile.level_nav.part1
         .level-item.has-text-centered(v-if="false")
           div
             p.heading 対戦回数
@@ -38,7 +38,7 @@
             p.heading 切断回数
             p.title {{ov_user_info.actb_main_xrecord.disconnect_count}}
 
-      nav.level.is-mobile.level_nav
+      nav.level.is-mobile.level_nav.part2
         .level-item.has-text-centered
           div
             p.heading 投稿問題数
@@ -121,11 +121,15 @@ export default {
       .win_lose_circle
         margin-top: 0.6rem
       .level_nav
-        margin-top: 1rem
+        margin-bottom: 0
         .heading
           width: 4rem
         .title
           font-size: $size-6
+        &.part1
+          margin-top: 1rem
+        &.part2
+          margin-top: 1rem
       .description
         white-space: pre-line
         margin: 0 1rem
