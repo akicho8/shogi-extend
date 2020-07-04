@@ -18,7 +18,7 @@
                 a Like
                 a Reply
                 | · 3 hrs
-            span.diff_time_format.is-size-7.has-text-grey-light
+            span.diff_time_format.is-size-7.has-text-grey-light.line_break_off
               | {{diff_time_format(message.created_at)}}
         nav.level.is-mobile(v-if="false")
           .level-left

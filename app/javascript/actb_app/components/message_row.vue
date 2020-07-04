@@ -6,7 +6,7 @@
     | {{message.user.name}}
   .message_body.is-size-7.line_break_on
     span(v-html="message_body" :class="{'has-text-primary': system_message_p, 'has-text-danger': debug_message_p}")
-    span.diff_time_format.is-size-11.has-text-grey-light.ml-1
+    span.diff_time_format.is-size-11.has-text-grey-light.ml-1.is_line_break_off
       | {{diff_time_format(message.created_at)}}
 </template>
 
