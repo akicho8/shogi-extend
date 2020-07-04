@@ -113,10 +113,22 @@ class User < ApplicationRecord
   concerning :SysopMethods do
     class_methods do
       def sysop
-        find_by(key: "sysop") || create!(key: "sysop", name: "運営", email: AppConfig[:admin_email], password: Rails.application.credentials.sysop_password)
+        staff_user_factory(key: "sysop", name: "運営", email: AppConfig[:admin_email])
       end
+
       def bot
-        find_by(key: "bot") || create!(key: "bot", name: "BOT", email: AppConfig[:bot_email], race_key: :robot, password: Rails.application.credentials.sysop_password)
+        staff_user_factory(key: "bot", name: "BOT", email: AppConfig[:bot_email], race_key: :robot)
+      end
+
+      def staff_user_factory(attributes)
+        key = attributes[:key]
+        if user = find_by(key: key)
+          return user
+        end
+        user = create!(attributes.merge(password: Rails.application.credentials.sysop_password))
+        user.permit_tag_list = "staff"
+        user.save!
+        user
       end
     end
 
