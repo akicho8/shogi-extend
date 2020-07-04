@@ -19,6 +19,7 @@ module Actb
     # 切断と同時にオンラインユーザーを解除して配信する
     def unsubscribed
       self.class.active_users_delete(current_user)
+      Actb::Rule.matching_users_delete_from_all_rules(current_user)
     end
   end
 end
