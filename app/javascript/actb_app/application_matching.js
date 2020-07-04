@@ -41,10 +41,10 @@ export const application_matching = {
       this.$ac_lobby.perform("matching_search", {matching_rate_threshold: this.matching_rate_threshold})
     },
     // マッチング不成立だったりでしょっちゅう呼ばれる
-    matching_list_broadcasted(params) {
-      this.matching_list_hash = params.matching_list_hash
-      if (params.type === "add") {
-        if (params.add_user_id === this.app.current_user.id) {
+    matching_users_broadcasted(params) {
+      this.matching_users_hash = params.matching_users_hash
+      if (params.trigger === "add") {
+        if (params.user_id === this.app.current_user.id) {
           // 自分が開始したので自分に通知しても意味がない
         } else {
           this.sound_play("bell1")

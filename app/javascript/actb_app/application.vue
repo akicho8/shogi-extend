@@ -98,7 +98,7 @@ export default {
 
       school_user_ids:    null, // オンラインのユーザーIDs
       room_user_ids:      null, // 対戦中のユーザーIDs
-      matching_list_hash: null, // 対戦待ちの人のIDを列挙している
+      matching_users_hash: null, // 対戦待ちの人のIDを列挙している
 
       // チャット用
       lobby_messages:     null, // メッセージ(複数)
@@ -263,8 +263,8 @@ export default {
       this.remote_fetch("PUT", this.app.info.api_path, {remote_action: "debug_matching_add_handle", exclude_user_id: this.current_user.id, rule_key: rule_key}, e => {})
     },
 
-    matching_delete_all_handle() {
-      this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "matching_delete_all_handle", exclude_user_id: this.current_user.id }, e => {})
+    matching_users_clear_handle() {
+      this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "matching_users_clear_handle", exclude_user_id: this.current_user.id }, e => {})
     },
 
     start_handle() {

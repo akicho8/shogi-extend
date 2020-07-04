@@ -16,15 +16,43 @@
 module Actb
   class Rule < ApplicationRecord
     class << self
-      # 全ルールの登録者を削除
-      def matching_delete_all
-        all.each(&:matching_delete)
+      # 全削除(トリガーなし・デバッグ用)
+      def matching_users_clear
+        if RuleInfo.any? { |e| redis.del(e.redis_key) >= 1 }
+          matching_users_broadcast
+        end
+      end
+
+      # すべてのルールから除去(トリガーあり)
+      def matching_users_delete(user)
+        RuleInfo.each { |e| e.matching_users_delete(user) }
+      end
+
+      # JS側に渡す値
+      def matching_users_hash
+        RuleInfo.inject({}) do |a, e|
+          a.merge(e.key => redis.smembers(e.redis_key).collect(&:to_i))
+        end
+      end
+
+      # 配信
+      def matching_users_broadcast(params = {})
+        bc_params = {
+          matching_users_hash: matching_users_hash,
+        }.merge(params)
+
+        ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_users_broadcasted, bc_params: bc_params)
+      end
+
+      def redis
+        Actb::BaseChannel.redis
       end
     end
 
     include StaticArModel
 
     delegate :redis_key, :time_limit_sec, to: :pure_info
+    delegate :redis, :matching_users_broadcast, to: "self.class"
 
     with_options(dependent: :destroy) do
       has_many :settings
@@ -32,30 +60,28 @@ module Actb
       has_many :battles
     end
 
-    def matching_users
-      redis.smembers(redis_key).collect { |e| User.find(e) }
-    end
-
-    def matching_ids
+    def matching_user_ids
       redis.smembers(redis_key).collect(&:to_i)
     end
 
-    def matching_member?(user)
+    def matching_users
+      matching_user_ids.collect { |e| User.find(e) }
+    end
+
+    def matching_users_include?(user)
       redis.sismember(redis_key, user.id)
     end
 
-    def matching_delete
-      if false
-        Actb::LobbyChannel.matching_list_rem(*matching_users)
-      else
-        redis.del(redis_key)
+    def matching_users_add(user)
+      if redis.sadd(redis_key, user.id) # 新規で追加できたときだけ真
+        matching_users_broadcast(trigger: :add, user_id: user.id)
       end
     end
 
-    private
-
-    def redis
-      Actb::BaseChannel.redis
+    def matching_users_delete(user)
+      if redis.srem(redis_key, user.id) # 既存のIDを削除できたときだけ真
+        matching_users_broadcast(trigger: :delete, user_id: user.id) # このトリガーは未使用
+      end
     end
   end
 end

@@ -11,15 +11,17 @@ module Actb
 
       def active_users_add(user)
         if user
-          redis.sadd(redis_key, user.id) # set.add(user.id)
-          active_users_status_broadcast
+          if redis.sadd(redis_key, user.id) # set.add(user.id)
+            active_users_status_broadcast
+          end
         end
       end
 
       def active_users_delete(user)
         if user
-          redis.srem(redis_key, user.id) # set.delete(user.id)
-          active_users_status_broadcast
+          if redis.srem(redis_key, user.id) # set.delete(user.id)
+            active_users_status_broadcast
+          end
         end
       end
 
@@ -27,8 +29,10 @@ module Actb
         User.find_each(&method(:active_users_add))
       end
 
-      def active_users_delete_all
-        redis.del(redis_key)    # set.clear
+      def active_users_clear
+        if redis.del(redis_key) >= 1   # set.clear
+          active_users_status_broadcast
+        end
       end
 
       private

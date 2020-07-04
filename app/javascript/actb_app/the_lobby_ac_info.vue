@@ -7,12 +7,12 @@
       | オンライン
       .count {{app.school_user_ids.length}}
       | 人
-    .element(v-if="app.matching_list_hash")
+    .element(v-if="app.matching_users_hash")
       | 対戦待ち
       .count
-        | {{app.matching_list_hash.marathon_rule.length}},
-        | {{app.matching_list_hash.singleton_rule.length}},
-        | {{app.matching_list_hash.hybrid_rule.length}}
+        | {{app.matching_users_hash.marathon_rule.length}},
+        | {{app.matching_users_hash.singleton_rule.length}},
+        | {{app.matching_users_hash.hybrid_rule.length}}
       | 人
     .element(v-if="app.room_user_ids != null")
       | 対戦中

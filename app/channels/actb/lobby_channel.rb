@@ -2,39 +2,13 @@ module Actb
   class LobbyChannel < BaseChannel
     MATCHING_RATE_THRESHOLD_DEFAULT = 50
 
-    delegate :matching_list_hash, :common_broadcast, to: "self.class"
-
     class << self
-      def matching_list_add(user)
-        redis_key = user.actb_setting.rule.redis_key
-        if redis.sismember(redis_key, user.id)
-          # すでに追加している
-        else
-          # 新規で追加
-          redis.sadd(redis_key, user.id)
-          common_broadcast(type: :add, add_user_id: user.id)
-        end
+      def matching_users_add(user)
+        user.actb_setting.rule.matching_users_add(user)
       end
 
-      def matching_list_rem(*user)
-        user.each do |user|
-          redis.srem(user.actb_setting.rule.redis_key, user.id)
-        end
-        common_broadcast
-      end
-
-      def common_broadcast(params = {})
-        bc_params = {
-          matching_list_hash: matching_list_hash,
-        }.merge(params)
-
-        ActionCable.server.broadcast("actb/lobby_channel", bc_action: :matching_list_broadcasted, bc_params: bc_params)
-      end
-
-      def matching_list_hash
-        RuleInfo.inject({}) do |a, e|
-          a.merge(e.key => redis.smembers(e.redis_key).collect(&:to_i))
-        end
+      def matching_users_delete(user)
+        Actb::Rule.matching_users_delete(user) # すべてのルールを対象に解除する
       end
     end
 
@@ -42,11 +16,11 @@ module Actb
 
     def subscribed
       stream_from "actb/lobby_channel"
-      common_broadcast
+      matching_users_broadcast
     end
 
     def unsubscribed
-      self.class.matching_list_rem(current_user)
+      self.class.matching_users_delete(current_user)
     end
 
     def speak(data)
@@ -85,11 +59,11 @@ module Actb
         end
       end
 
-      self.class.matching_list_add(current_user)
+      self.class.matching_users_add(current_user)
     end
 
     def matching_cancel(data)
-      self.class.matching_list_rem(current_user)
+      self.class.matching_users_delete(current_user)
     end
 
     ################################################################################
@@ -106,20 +80,12 @@ module Actb
       matching_users.reject { |e| e == current_user }
     end
 
-    def matching_users
-      rule.matching_users
-    end
-
-    def matching_ids
-      rule.matching_ids
-    end
-
-    def matching_member?(user)
-      redis.matching_member?(user)
+    def matching_users_include?(user)
+      redis.matching_users_include?(user)
     end
 
     def room_create(*users)
-      self.class.matching_list_rem(*users)
+      self.class.matching_users_delete(*users)
 
       # app/models/actb/room.rb
       Room.create!(rule: rule) do |e|
@@ -132,6 +98,7 @@ module Actb
     def rule
       current_user.actb_setting.rule
     end
+    delegate :matching_users, :matching_user_ids, to: :rule
 
     def lobby_speak(message_body)
       current_user.actb_lobby_messages.create!(body: message_body)

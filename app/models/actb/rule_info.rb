@@ -8,7 +8,7 @@ module Actb
     ]
 
     def redis_key
-      [self.class.name.demodulize.underscore, :matching_ids, key].join("/")
+      [self.class.name.demodulize.underscore, :matching_user_ids, key].join("/")
     end
   end
 end
