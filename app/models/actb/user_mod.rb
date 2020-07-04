@@ -140,11 +140,16 @@ module Actb
         actb_questions.sum(:bad_marks_count)
       end
 
-      def info
-        out = ""
-
-        out += {
+      def info_hash
+        {
+          "ID"                 => id,
           "名前"               => name,
+          "プロバイダ"         => auth_infos.collect(&:provider).join(" "),
+
+          "オンライン"         => Actb::SchoolChannel.active_users.include?(self) ? "○" : "",
+          "対戦中"             => Actb::RoomChannel.active_users.include?(self) ? "○" : "",
+          "ルール"             => actb_setting.rule.pure_info.name,
+
           "レーティング"       => rating,
           "クラス"             => skill_key,
           "最新シーズン情報ID" => actb_latest_xrecord.id,
@@ -160,8 +165,12 @@ module Actb
           "問題高評価率"       => actb_questions.average(:good_rate),
           "問題高評価数"       => actb_questions.sum(:good_marks_count),
           "問題低評価数"       => actb_questions.sum(:bad_marks_count),
-        }.to_t
+        }
+      end
 
+      def info
+        out = ""
+        out += info_hash.to_t
         out
       end
     end

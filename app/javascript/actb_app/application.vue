@@ -96,9 +96,9 @@ export default {
       sub_mode: null,
       room: null,
 
+      school_user_ids:    null, // オンラインのユーザーIDs
+      room_user_ids:      null, // 対戦中のユーザーIDs
       matching_list_hash: null, // 対戦待ちの人のIDを列挙している
-      online_user_ids:    null, // オンライン人数
-      room_user_ids:      null, // オンライン人数
 
       // チャット用
       lobby_messages:     null, // メッセージ(複数)
@@ -215,9 +215,9 @@ export default {
       this.__assert__(this.$ac_school == null, "this.$ac_school == null")
       this.$ac_school = this.ac_subscription_create({channel: "Actb::SchoolChannel"})
     },
-    online_status_broadcasted(params) {
-      if (params.online_user_ids) {
-        this.online_user_ids = params.online_user_ids
+    active_users_status_broadcasted(params) {
+      if (params.school_user_ids) {
+        this.school_user_ids = params.school_user_ids
       }
       if (params.room_user_ids) {
         this.room_user_ids = params.room_user_ids

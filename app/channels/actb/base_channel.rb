@@ -1,6 +1,6 @@
 module Actb
   class BaseChannel < ApplicationCable::Channel
-    delegate :redis, :room_user_ids, :room_user_ids_broadcast, :once_run, :already_run?, to: "self.class"
+    delegate :redis, :once_run, :already_run?, to: "self.class"
 
     class << self
       def redis
@@ -9,14 +9,6 @@ module Actb
 
       def redis_clear
         redis.flushdb
-      end
-
-      def room_user_ids
-        redis.smembers(:room_user_ids).collect(&:to_i)
-      end
-
-      def room_user_ids_broadcast
-        ActionCable.server.broadcast("actb/school_channel", bc_action: :online_status_broadcasted, bc_params: {room_user_ids: room_user_ids})
       end
 
       def once_run(key, options = {})

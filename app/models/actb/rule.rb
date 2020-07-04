@@ -16,8 +16,9 @@
 module Actb
   class Rule < ApplicationRecord
     class << self
+      # 全ルールの登録者を削除
       def matching_delete_all
-        all.each(&:matching_delete_all)
+        all.each(&:matching_delete)
       end
     end
 
@@ -43,8 +44,12 @@ module Actb
       redis.sismember(redis_key, user.id)
     end
 
-    def matching_delete_all
-      Actb::LobbyChannel.matching_list_rem(*matching_users)
+    def matching_delete
+      if false
+        Actb::LobbyChannel.matching_list_rem(*matching_users)
+      else
+        redis.del(redis_key)
+      end
     end
 
     private

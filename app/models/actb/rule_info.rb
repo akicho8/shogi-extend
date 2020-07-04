@@ -1,4 +1,3 @@
-
 module Actb
   class RuleInfo
     include ApplicationMemoryRecord

@@ -3,9 +3,9 @@
   .container.is-flex.has-text-grey.is-size-7(v-if="app.debug_summary_p")
     .element(v-if="development_p")
       | 購読{{app.ac_subscription_names}}
-    .element(v-if="app.online_user_ids != null")
+    .element(v-if="app.school_user_ids != null")
       | オンライン
-      .count {{app.online_user_ids.length}}
+      .count {{app.school_user_ids.length}}
       | 人
     .element(v-if="app.matching_list_hash")
       | 対戦待ち

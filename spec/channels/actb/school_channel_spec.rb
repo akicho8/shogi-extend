@@ -29,11 +29,11 @@ RSpec.describe Actb::SchoolChannel, type: :channel do
     end
 
     it "オンラインリストに追加" do
-      assert { subject.online_users == [user] }
+      assert { subject.active_users == [user] }
     end
 
     it "オンラインリスト通知" do
-      expect { subject }.to have_broadcasted_to("actb/school_channel").with(bc_action: "online_status_broadcasted", bc_params: { online_user_ids: [user.id], room_user_ids: []})
+      expect { subject }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: { active_user_ids: [user.id], room_user_ids: []})
     end
   end
 
@@ -43,13 +43,13 @@ RSpec.describe Actb::SchoolChannel, type: :channel do
     end
 
     it "オンラインリストから除外" do
-      assert { subscription.online_users == [user] }
+      assert { subscription.active_users == [user] }
       unsubscribe
-      assert { subscription.online_users == [] }
+      assert { subscription.active_users == [] }
     end
 
     it "オフラインリスト通知" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").with(bc_action: "online_status_broadcasted", bc_params: {online_user_ids: [], room_user_ids: []})
+      expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: {active_user_ids: [], room_user_ids: []})
     end
   end
 end

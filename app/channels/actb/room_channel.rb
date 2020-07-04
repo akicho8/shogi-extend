@@ -1,17 +1,20 @@
 module Actb
   class RoomChannel < BaseChannel
+    include ActiveUserNotifyMod
+
+    class << self
+      def redis_key
+        :room_user_ids
+      end
+    end
+
     def subscribed
       raise ArgumentError, params.inspect unless room_id
+      reject unless current_user
 
       stream_from "actb/room_channel/#{room_id}"
-
-      if current_user
-        redis.sadd(:room_user_ids, current_user.id)
-        room_user_ids_broadcast
-        debug_say "*入室しました"
-      else
-        reject
-      end
+      self.class.active_users_add(current_user)
+      debug_say "*入室しました"
 
       if once_run("actb/rooms/#{current_room.id}/first_battle_create")
         battle = current_room.battle_create_with_members!
@@ -21,10 +24,9 @@ module Actb
     end
 
     def unsubscribed
-      if current_user
-        redis.srem(:room_user_ids, current_user.id)
-        room_user_ids_broadcast
+      self.class.active_users_delete(current_user)
 
+      if current_user
         say "*退室しました"
       end
 
@@ -35,11 +37,6 @@ module Actb
           current_room.update!(end_at: Time.current)
         end
       end
-    end
-
-    # for test
-    def room_users
-      room_user_ids.collect { |e| User.find(e) }
     end
 
     private
