@@ -18,6 +18,7 @@ export const the_user_show_mod = {
         props: { ov_user_info },
         animation: "",
         onCancel: () => this.sound_play("click"),
+        canCancel: ["escape", "outside"],
         component: the_user_show,
       })
     },

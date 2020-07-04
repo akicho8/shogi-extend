@@ -1,6 +1,7 @@
 <template lang="pug">
 .the_user_show.modal-card
   .modal-card-body.box
+    .delete.is-large(@click="delete_click_handle")
     .user_container.is-flex
       figure.image.is-64x64.avatar_image
         img.is-rounded(:src="ov_user_info.avatar_path")
@@ -72,6 +73,12 @@ export default {
   created() {
     this.$gtag.event("open", {event_category: "ユーザー詳細", event_label: this.ov_user_info.name})
   },
+  methods: {
+    delete_click_handle() {
+      this.sound_play("click")
+      this.$emit("close")
+    },
+  },
   computed: {
     win_lose_circle_params() {
       return {
@@ -97,6 +104,10 @@ export default {
   .modal-card-body
     margin: 0rem 1rem
     padding: 2rem 1rem
+
+    .delete
+      top: 6px
+      left: 22px
 
     .user_container
       flex-direction: column
