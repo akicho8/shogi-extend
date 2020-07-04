@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Actb::SchoolChannel, type: :channel do
-  let_it_be(:user) { User.create! }
+  include ActbSupportMethods
 
   before do
     Actb::BaseChannel.redis.flushdb
 
-    stub_connection current_user: user
+    stub_connection current_user: user1
   end
 
   # describe "接続失敗" do
@@ -19,21 +19,18 @@ RSpec.describe Actb::SchoolChannel, type: :channel do
   # end
 
   describe "#subscribe" do
-    subject do
-      subscribe
-      subscription
-    end
-
     it "正常接続" do
-      assert { subject.confirmed? }
+      subscribe
+      assert { subscription.confirmed? }
     end
 
     it "オンラインリストに追加" do
-      assert { subject.active_users == [user] }
+      subscribe
+      assert { Actb::SchoolChannel.active_users == [user1] }
     end
 
     it "オンラインリスト通知" do
-      expect { subject }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: { active_user_ids: [user.id], room_user_ids: []})
+      expect { subscribe }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: { school_user_ids: [user1.id] })
     end
   end
 
@@ -43,19 +40,19 @@ RSpec.describe Actb::SchoolChannel, type: :channel do
     end
 
     it "オンラインリストから除外" do
-      assert { subscription.active_users == [user] }
+      assert { Actb::SchoolChannel.active_users == [user1] }
       unsubscribe
-      assert { subscription.active_users == [] }
+      assert { Actb::SchoolChannel.active_users == [] }
     end
 
     it "オフラインリスト通知" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: {active_user_ids: [], room_user_ids: []})
+      expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: { school_user_ids: [] })
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .....
-# >> 
+# >>
 # >> Finished in 0.43664 seconds (files took 2.2 seconds to load)
 # >> 5 examples, 0 failures
-# >> 
+# >>

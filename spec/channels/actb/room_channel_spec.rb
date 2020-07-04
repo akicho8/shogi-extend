@@ -21,7 +21,7 @@ RSpec.describe Actb::RoomChannel, type: :channel do
     it "接続" do
       expect { subscribe(room_id: current_room.id) }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: {room_user_ids: [user1.id]})
       assert { subscription.confirmed? }
-      assert { Actb::RoomChannel.room_users == [user1] }
+      assert { Actb::RoomChannel.active_users == [user1] }
     end
 
     it "部屋に入ると対局準備" do
@@ -35,9 +35,9 @@ RSpec.describe Actb::RoomChannel, type: :channel do
     end
 
     it "退室すると対戦中の人が減る" do
-      assert { subscription.room_users == [user1] }
+      assert { Actb::RoomChannel.active_users == [user1] }
       unsubscribe
-      assert { subscription.room_users == [] }
+      assert { Actb::RoomChannel.active_users == [] }
     end
 
     it "退室すると人数通知する" do
