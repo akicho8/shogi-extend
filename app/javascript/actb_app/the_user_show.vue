@@ -5,18 +5,18 @@
     .user_container.is-flex
       figure.image.is-64x64.avatar_image
         img.is-rounded(:src="ov_user_info.avatar_path")
-      .user_name.has-text-weight-bold
+      .user_name.has-text-weight-bold.mt-1
         | {{ov_user_info.name}}
       a.is-block.is-size-8(:href="twitter_url" :target="target_default" v-if="twitter_url")
         | @{{ov_user_info.twitter_key}}
       .rate_container.has-text-weight-bold(v-if="app.config.rating_display_p")
         | R{{ov_user_info.actb_main_xrecord.rating}}
-      .skill_key.has-text-weight-bold.has-text-primary.is-size-3.mt-2
+      .skill_key.has-text-weight-bold.has-text-danger.is-size-6
         | {{ov_user_info.actb_main_xrecord.skill_key}}
 
-      win_lose_circle(:info="win_lose_circle_params")
+      win_lose_circle.mt-1(:info="win_lose_circle_params")
 
-      nav.level.is-mobile.level_nav.part1
+      nav.level.is-mobile.level_nav.mt-3
         .level-item.has-text-centered(v-if="false")
           div
             p.heading 対戦回数
@@ -38,7 +38,7 @@
             p.heading 切断回数
             p.title {{ov_user_info.actb_main_xrecord.disconnect_count}}
 
-      nav.level.is-mobile.level_nav.part2
+      nav.level.is-mobile.level_nav.mt-2
         .level-item.has-text-centered
           div
             p.heading 投稿問題数
@@ -56,7 +56,7 @@
             p.heading 低評価数
             p.title {{ov_user_info.statistics.questions_bad_marks_total}}
 
-      .box.description.has-background-white-ter.is-shadowless.is-size-7(v-if="ov_user_info.description" v-html="auto_link(ov_user_info.description)")
+      .box.description.has-background-white-ter.is-shadowless.is-size-7.mt-4(v-if="ov_user_info.description" v-html="auto_link(ov_user_info.description)")
 </template>
 
 <script>
@@ -103,7 +103,7 @@ export default {
 .the_user_show
   .modal-card-body
     margin: 0rem 1rem
-    padding: 2rem 1rem
+    padding: 1rem 1rem
 
     .delete
       top: 6px
@@ -113,24 +113,17 @@ export default {
       flex-direction: column
       align-items: center
 
-      .avatar_image
-      .user_name
-        margin-top: 0.6rem
-      .rate_container
-        margin-top: 0rem
-      .win_lose_circle
-        margin-top: 0.6rem
+      .skill_key
+        margin-top: -0.2rem
+
       .level_nav
         margin-bottom: 0
         .heading
           width: 4rem
         .title
           font-size: $size-6
-        &.part1
-          margin-top: 1rem
-        &.part2
-          margin-top: 1rem
       .description
         white-space: pre-line
-        margin: 0 1rem
+        padding: 0.75rem
+        margin: 0 0rem
 </style>

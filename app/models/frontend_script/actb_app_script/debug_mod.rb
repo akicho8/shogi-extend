@@ -158,6 +158,17 @@ module FrontendScript
       # ユーザー詳細
       def debug_for_ov_user_info(info)
         c.sysop_login_unless_logout
+
+        e = current_user.actb_main_xrecord
+        e.win_count = 1
+        e.lose_count = 2
+        e.save!
+
+        current_user.profile.update!(description: [
+            "http://www.google.co.jp/",
+            "あああああああああああああああああああああああああああああああああああああああああああああああああああああ",
+            "@sgkinakomochi",
+          ].join("\n"))
       end
 
       # ログインしていない状態
