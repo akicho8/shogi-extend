@@ -50,6 +50,7 @@ module Actb
       rule.matching_users_add(current_user)
     end
 
+    # すべてのルールから解除する
     def matching_cancel(data)
       Actb::Rule.matching_users_delete_from_all_rules(current_user)
     end
