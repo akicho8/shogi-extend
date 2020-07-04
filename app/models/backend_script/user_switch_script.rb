@@ -1,9 +1,9 @@
 module BackendScript
-  class ActbUserSwitchScript < ::BackendScript::Base
+  class UserSwitchScript < ::BackendScript::Base
     include AtomicScript::PostRedirectMod
 
-    self.category = "actb"
-    self.script_name = "ACTB 運営ユーザー切り替え"
+    self.category = "その他"
+    self.script_name = "運営ユーザー切り替え"
 
     def form_parts
       [
