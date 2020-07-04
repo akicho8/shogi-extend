@@ -94,7 +94,7 @@ module FrontendScript
       # http://localhost:3000/script/actb-app.json?remote_action=lobby_messages_fetch
       def lobby_messages_fetch
         lobby_messages = Actb::LobbyMessage.order(:created_at).includes(:user).last(Actb::Config[:api_lobby_message_max])
-        lobby_messages = lobby_messages.as_json(only: [:body], include: {user: {only: [:id, :key, :name], methods: [:avatar_path]}})
+        lobby_messages = lobby_messages.collect(&:as_json_type8)
         { lobby_messages: lobby_messages }
       end
 

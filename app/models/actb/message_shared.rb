@@ -1,6 +1,18 @@
 module Actb
   concern :MessageShared do
     included do
+      cattr_accessor(:json_struct_type8) do
+        {
+          only: [:id, :body, :created_at],
+          include: {
+            user: {
+              only: [:id, :key, :name],
+              methods: [:avatar_path],
+            },
+          },
+        }
+      end
+
       belongs_to :user, class_name: "::User"
 
       before_validation do
@@ -32,6 +44,10 @@ module Actb
       #   validates :body, length: { maximum: columns_hash["body"].limit }
       # rescue Mysql2::Error
       # end
+    end
+
+    def as_json_type8
+      as_json(json_struct_type8)
     end
   end
 end
