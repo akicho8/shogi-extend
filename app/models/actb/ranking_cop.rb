@@ -44,7 +44,7 @@ module Actb
 
     def top_users
       @top_users ||= -> {
-        s = base_scope
+        s = current_scope
         s = s.order(Actb::SeasonXrecord.arel_table[ranking_key].desc).order(:created_at)
         s = s.limit(record_max)
         if params[:shuffle] == "true"
@@ -60,20 +60,32 @@ module Actb
     # 自分より上に何人いるかで自分の順位がわかる
     # SELECT COUNT(*)+1 as rank FROM users WHERE score > 自分のスコア
     def user_rank
-      base_scope.where(Actb::SeasonXrecord.arel_table[ranking_key].gt(user_score)).count.next
+      current_scope.where(Actb::SeasonXrecord.arel_table[ranking_key].gt(user_score)).count.next
     end
 
-    def ranking_key
-      params[:ranking_key]
-    end
+    ################################################################################
 
-    def base_scope
+    def current_scope
       s = User.all
       s = s.joins(:actb_season_xrecord)
       s = s.where(Actb::SeasonXrecord.arel_table[:season_id].eq(current_season.id)) # 指定シーズンの
-      s = s.where(Actb::SeasonXrecord.arel_table[:battle_count].gteq(1))            # 1回以上プレイした人
+      s = send("scope_for_#{ranking_key}", s)
       s
     end
+
+    def scope_for_rating(s)
+      s = s.where(Actb::SeasonXrecord.arel_table[:battle_count].gteq(1)) # 1回以上プレイした人
+    end
+
+    def scope_for_straight_win_count(s)
+      s = s.where(Actb::SeasonXrecord.arel_table[:straight_win_count].gteq(1)) # 1連勝中以上
+    end
+
+    def scope_for_straight_win_max(s)
+      s = s.where(Actb::SeasonXrecord.arel_table[:straight_win_max].gteq(1)) # 最大1連勝以上
+    end
+
+    ################################################################################
 
     def user_score
       if v = user_actb_season_xrecord
@@ -111,6 +123,10 @@ module Actb
       else
         Actb::Season.newest
       end
+    end
+
+    def ranking_key
+      params[:ranking_key]
     end
   end
 end
