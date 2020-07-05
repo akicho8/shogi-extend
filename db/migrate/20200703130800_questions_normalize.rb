@@ -6,7 +6,7 @@ class QuestionsNormalize < ActiveRecord::Migration[6.0]
           :title,
           :description,
           :hint_desc,
-          :other_author,
+          :source_author,
           :source_media_name,
         ].each do |e|
           record.send("#{e}=", ApplicationRecord.hankaku_format(record.send(e)))

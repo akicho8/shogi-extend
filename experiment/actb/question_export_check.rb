@@ -17,7 +17,7 @@ Actb.setup
 #   e.title             = "(title)"
 #   e.description       = "(description)"
 #   e.hint_desc         = "(hint_desc)"
-#   e.other_author      = "(other_author)"
+#   e.source_author      = "(source_author)"
 # end
 # 
 # Actb::Question.export_all

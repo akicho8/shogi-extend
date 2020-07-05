@@ -66,8 +66,8 @@
     //- p 難易度:{{app.current_question.difficulty_level}}
     b-taglist.is-centered
       b-tag(v-if="app.current_question.title") {{app.current_question.title}}
-      b-tag(v-if="app.current_question.other_author") {{app.current_question.other_author}}
-      b-tag(v-if="!app.current_question.other_author") {{app.current_question.user.name}}作
+      b-tag(v-if="app.current_question.source_author") {{app.current_question.source_author}}
+      b-tag(v-if="!app.current_question.source_author") {{app.current_question.user.name}}作
       b-tag(v-if="app.current_question.hint_desc") {{app.current_question.hint_desc}}
       b-tag(v-if="app.current_question.difficulty_level && app.current_question.difficulty_level >= 1")
         template(v-for="i in app.current_question.difficulty_level")

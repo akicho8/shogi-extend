@@ -645,7 +645,7 @@
 # | title               | タイトル            | string(255) |                     |              |       |
 # | description         | 説明                | string(512) |                     |              |       |
 # | hint_desc           | Hint desc           | string(255) |                     |              |       |
-# | other_author        | Other author        | string(255) |                     |              |       |
+# | source_author       | Source author       | string(255) |                     |              |       |
 # | source_media_name   | Source media name   | string(255) |                     |              |       |
 # | source_media_url    | Source media url    | string(255) |                     |              |       |
 # | source_published_on | Source published on | date        |                     |              |       |
@@ -658,6 +658,7 @@
 # | bad_marks_count     | Bad marks count     | integer(4)  | DEFAULT(0) NOT NULL |              | K     |
 # | clip_marks_count    | Clip marks count    | integer(4)  | DEFAULT(0) NOT NULL |              | L     |
 # | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |              | M     |
+# | quest_title         | Quest title         | string(255) |                     |              |       |
 # |---------------------+---------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

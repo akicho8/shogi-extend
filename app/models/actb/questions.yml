@@ -7,7 +7,7 @@
   description: いちばん簡単
   hint_desc: "(hint_desc)"
   direction_message: "金を活用せよ"
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -21,7 +21,7 @@
   title: 居玉は危険
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -35,7 +35,7 @@
   title: 美濃囲いの弱点
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -50,7 +50,7 @@
   title: 斜めに弱い
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -64,7 +64,7 @@
   title: 桂馬をうまく使う
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -79,7 +79,7 @@
   title: 棺桶美濃あるある
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -94,7 +94,7 @@
   title: 美濃囲いあるある
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -108,7 +108,7 @@
   title: 成っちゃだめ
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -122,7 +122,7 @@
   title: 銀の弱点
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -136,7 +136,7 @@
   title: 玉をひっぱり上げる
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -151,7 +151,7 @@
   title: はじまりの桂
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -166,7 +166,7 @@
   title: 致命傷になる玉の早逃げ
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:
@@ -180,7 +180,7 @@
   title: むずいよ
   description:
   hint_desc:
-  other_author:
+  source_author:
   source_media_name:
   source_media_url:
   source_published_on:

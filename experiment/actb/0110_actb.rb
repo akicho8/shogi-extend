@@ -15,8 +15,8 @@ user = User.sysop
     e.title                 = "(title)"
     e.description           = "(description)"
     e.hint_desc      = "(hint_desc)"
-    e.other_author           = "(other_author)"
-    e.other_author_link = "(other_author_link)"
+    e.source_author           = "(source_author)"
+    e.source_author_link = "(source_author_link)"
   end
 end
 Actb::Question.count           # => 3
@@ -69,7 +69,7 @@ exit
 # tp question.endpos_answers
 
 # hash = question.attributes.slice("id", "user_id", "init_sfen", "time_limit_sec")
-# hash                            # => {"id"=>7, "user_id"=>16, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1", "time_limit_sec"=>nil, "title"=>nil, "description"=>nil, "hint_desc"=>nil, "other_author"=>nil, "other_author_link"=>nil, "created_at"=>Mon, 20 Apr 2020 23:02:00 JST +09:00, "updated_at"=>Mon, 20 Apr 2020 23:02:00 JST +09:00, "o_count"=>0, "x_count"=>0}
+# hash                            # => {"id"=>7, "user_id"=>16, "init_sfen"=>"4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1", "time_limit_sec"=>nil, "title"=>nil, "description"=>nil, "hint_desc"=>nil, "source_author"=>nil, "source_author_link"=>nil, "created_at"=>Mon, 20 Apr 2020 23:02:00 JST +09:00, "updated_at"=>Mon, 20 Apr 2020 23:02:00 JST +09:00, "o_count"=>0, "x_count"=>0}
 
 # hash = question.attributes
 # hash = hash.merge(moves_answers: question.moves_answers)

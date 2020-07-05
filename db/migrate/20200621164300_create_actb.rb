@@ -179,7 +179,7 @@ class CreateActb < ActiveRecord::Migration[6.0]
         t.string :title,                   null: true,  index: false, comment: "タイトル"
         t.string :description, limit: 512, null: true,  index: false, comment: "説明"
         t.string :hint_desc,        null: true,  index: false, comment: "ヒント"
-        t.string :other_author,             null: true,  index: false, comment: "作者"
+        t.string :source_author,             null: true,  index: false, comment: "作者"
         t.string :source_media_name,        null: true,  index: false, comment: "出典メディア"
         t.string :source_media_url,         null: true,  index: false, comment: "出典URL"
         t.date :source_published_on,        null: true,  index: false, comment: "出典年月日"

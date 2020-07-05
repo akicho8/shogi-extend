@@ -15,7 +15,7 @@
           .control
             b-taglist.is_clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
               b-tag(type="is-primary")
-                template(v-if="question.other_author")
+                template(v-if="question.source_author")
                   | 投稿
                 template(v-else)
                   | 作者
@@ -70,13 +70,13 @@
             b-tag(type="is-primary") 出題
             b-tag(type="is-grey") {{question.histories_count}}回
 
-    .mt-5(v-if="question.other_author || question.source_media_name || question.source_media_url")
+    .mt-5(v-if="question.source_author || question.source_media_name || question.source_media_url")
       b-field(grouped group-multiline position="is-centered")
-        template(v-if="question.other_author")
+        template(v-if="question.source_author")
           .control
             b-taglist(attached)
               b-tag(type="is-primary") 作者
-              b-tag(type="is-grey") {{question.other_author}}
+              b-tag(type="is-grey") {{question.source_author}}
 
         template(v-if="question.source_media_name")
           .control

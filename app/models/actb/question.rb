@@ -17,7 +17,7 @@
 # | title               | タイトル            | string(255) |                     |              |       |
 # | description         | 説明                | string(512) |                     |              |       |
 # | hint_desc           | Hint desc           | string(255) |                     |              |       |
-# | other_author        | Other author        | string(255) |                     |              |       |
+# | source_author       | Source author       | string(255) |                     |              |       |
 # | source_media_name   | Source media name   | string(255) |                     |              |       |
 # | source_media_url    | Source media url    | string(255) |                     |              |       |
 # | source_published_on | Source published on | date        |                     |              |       |
@@ -30,6 +30,7 @@
 # | bad_marks_count     | Bad marks count     | integer(4)  | DEFAULT(0) NOT NULL |              | K     |
 # | clip_marks_count    | Clip marks count    | integer(4)  | DEFAULT(0) NOT NULL |              | L     |
 # | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |              | M     |
+# | quest_title         | Quest title         | string(255) |                     |              |       |
 # |---------------------+---------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -54,7 +55,7 @@ module Actb
         :folder_key          => "active",
 
         # 他者が作者
-        :other_author        => nil,
+        :source_author        => nil,
         :source_media_name   => nil,
         :source_media_url    => nil,
         :source_published_on => nil,
@@ -63,7 +64,7 @@ module Actb
       if Rails.env.development?
 
         # 他者が作者
-        default[:other_author]        = "渡瀬荘二郎"
+        default[:source_author]        = "渡瀬荘二郎"
         default[:source_media_name]   = "Wikipedia"
         default[:source_media_url]    = "https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B"
         default[:source_published_on] = "1912-03-04"
@@ -115,7 +116,7 @@ module Actb
           :hint_desc,
           :direction_message,
 
-          :other_author,
+          :source_author,
           :source_media_name,
           :source_media_url,
           :source_published_on,
@@ -171,7 +172,7 @@ module Actb
           :description,
           :hint_desc,
           :direction_message,
-          :other_author,
+          :source_author,
           :source_media_name,
           :source_media_url,
           :source_published_on,
@@ -182,7 +183,7 @@ module Actb
           :description,
           :hint_desc,
           :direction_message,
-          :other_author,
+          :source_author,
           :source_media_name,
         ])
 
@@ -255,7 +256,7 @@ module Actb
               :hint_desc,
               :direction_message,
 
-              :other_author,
+              :source_author,
               :source_media_name,
               :source_media_url,
               :source_published_on,
@@ -349,8 +350,8 @@ module Actb
             :description,
             :hint_desc,
             :direction_message,
-            :other_author,
-            :other_author_link,
+            :source_author,
+            :source_author_link,
           ],
           include: {
             user: {
@@ -409,7 +410,7 @@ module Actb
 
         a["タイトル"] = title
 
-        if other_author
+        if source_author
           a["投稿者"] = user.name
         else
           a["作者"] = user.name
@@ -438,8 +439,8 @@ module Actb
         a["コメント数"] = messages_count
 
         if true
-          if other_author
-            a["作者"] = other_author
+          if source_author
+            a["作者"] = source_author
           end
           if source_media_name
             a["出典"] = source_media_name
@@ -512,7 +513,7 @@ module Actb
                 :description,
                 :hint_desc,
                 :direction_message,
-                :other_author,
+                :source_author,
                 :source_media_name,
                 :source_media_url,
                 :source_published_on,
@@ -549,7 +550,7 @@ module Actb
                   :description,
                   :hint_desc,
                   :direction_message,
-                  :other_author,
+                  :source_author,
                   :source_media_name,
                   :source_media_url,
                   :source_published_on,

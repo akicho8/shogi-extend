@@ -29,11 +29,11 @@
   b-field(label="クエスト指示文言(仮)" label-position="on-border" message="問題と一緒に表示する文言です。解答方針やヒントを伝えたいときに記入してください。基本、空でかまいません")
     b-input(v-model="$parent.question.direction_message" placeholder="飛車を捕獲せよ！")
 
-  b-collapse.mt-5(:open="$parent.question.other_author_collapse_open_p")
+  b-collapse.mt-5(:open="$parent.question.source_author_collapse_open_p")
     button.button.is-small(slot="trigger" @click="sound_play('click')") 他者が作者の場合
     .box
       b-field(label="作者" label-position="on-border")
-        b-input(v-model="$parent.question.other_author" placeholder="初代大橋宗桂")
+        b-input(v-model="$parent.question.source_author" placeholder="初代大橋宗桂")
 
       b-field(label="出典メディア" label-position="on-border")
         b-input(v-model="$parent.question.source_media_name" placeholder="詰パラ")
