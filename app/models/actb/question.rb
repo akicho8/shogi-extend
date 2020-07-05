@@ -338,10 +338,6 @@ module Actb
       "#{init_sfen} moves #{moves_answers.first.moves_str}"
     end
 
-    def direction_message
-      "アヒル戦法で端を突破せよ！"
-    end
-
     # 出題用
     def as_json_type3
       as_json({
