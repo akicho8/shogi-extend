@@ -7,7 +7,9 @@
     //- b-button.right_top(icon-left="twitter" size="is-small" type="is-twitter") Tweet
 
     .has-text-centered
-      .question_title.has-text-weight-bold.is-size-5.mt-4 {{question.title}}
+      .question_title.is_line_break_on
+        .has-text-weight-bold.is-size-4.mt-4 {{question.title}}
+        .direction_message.is-size-6(v-if="question.direction_message") {{question.direction_message}}
 
       .mt-3
         //- https://buefy.org/documentation/tag/
