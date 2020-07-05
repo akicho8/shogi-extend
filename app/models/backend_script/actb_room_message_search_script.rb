@@ -1,0 +1,31 @@
+module BackendScript
+  class ActbRoomMessageSearchScript < ::BackendScript::Base
+    self.category = "actb"
+    self.script_name = "部屋内発言"
+
+    def script_body
+      s = Actb::RoomMessage.all
+      s = s.order(created_at: :desc)
+      s = s.where(["body NOT like ?", "*%"])
+      s = page_scope(s)
+
+      rows = s.collect(&method(:row_build))
+      out = "".html_safe
+      out << rows.to_html
+      out << basic_paginate(s)
+    end
+
+    def row_build(record)
+      {
+        "ID": record.id,
+        "名前": "#{record.user.name}(#{record.user.id})",
+        "発言": record.body,
+        "日時": record.created_at.to_s(:distance),
+      }
+    end
+
+    def default_per
+      100
+    end
+  end
+end
