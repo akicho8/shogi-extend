@@ -4,7 +4,7 @@
     img.is-rounded(:src="message.user.avatar_path" @click="app.ov_user_info_set(message.user.id)")
   .user_name.has-text-grey.is-size-7.is_clickable(@click="app.ov_user_info_set(message.user.id)")
     | {{message.user.name}}
-  .message_body.is-size-7.line_break_on
+  .message_body.is-size-7.is_line_break_on
     span(v-html="message_body" :class="{'has-text-primary': system_message_p, 'has-text-danger': debug_message_p}")
     span.diff_time_format.is-size-11.has-text-grey-light.ml-1.is_line_break_off
       | {{diff_time_format(message.created_at)}}

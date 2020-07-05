@@ -22,7 +22,7 @@
           td
             text-align: center
             vertical-align: middle
-            @extend .line_break_off
+            @extend .is_line_break_off
             &:empty
               &:after
                 content: "\03000"
@@ -76,7 +76,7 @@
 
             &.td_desc_body
               padding: 0.25em
-              @extend .line_break_on
+              @extend .is_line_break_on
               text-align: left
 
             &.td_players

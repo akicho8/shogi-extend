@@ -90,7 +90,7 @@
       win_lose_circle(:info="new_info")
 
       ////////////////////////////////////////////////////////////////////////////////
-      .ox_container.has-text-centered.line_break_on
+      .ox_container.has-text-centered.is_line_break_on
         template(v-for="judge_key in new_info.judge_keys")
           span.has-text-danger(v-if="judge_key === 'win'")
             b-icon(icon="checkbox-blank-circle" size="is-small" type="is-danger")

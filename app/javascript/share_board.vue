@@ -278,7 +278,7 @@ export default {
                 <div class="field"><b-radio v-model="new_image_view_point" native-value="black">先手<span class="desc">常に☗ (詰将棋向け)</span></b-radio></div>
                 <div class="field"><b-radio v-model="new_image_view_point" native-value="white">後手<span class="desc">常に☖ (詰将棋を攻められ視点にしたいとき)</span></b-radio></div>
                 <div class="has-text-centered"><img :src="twitter_card_preview_url" /></div>
-                <div v-if="development_p" class="line_break_on" :key="twitter_card_preview_url">{{twitter_card_preview_url}}</div>
+                <div v-if="development_p" class="is_line_break_on" :key="twitter_card_preview_url">{{twitter_card_preview_url}}</div>
               </section>
               <footer class="modal-card-foot">
                 <b-button @click="$emit('close')">キャンセル</b-button>

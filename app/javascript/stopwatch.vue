@@ -4,7 +4,7 @@
     .column.is-half
       .has-text-centered.page_title(@click.prevent="book_title_input_dialog")
         | {{book_title}}
-      .box.main_box.line_break_off.is-shadowless
+      .box.main_box.is_line_break_off.is-shadowless
         b-dropdown.options_doropdown.is-pulled-left
           b-button(slot="trigger" size="is-small" icon-left="menu")
           b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット (r)
