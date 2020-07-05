@@ -2,6 +2,10 @@ module AtomicScript
   concern :SupportMod do
     included do
       include PageMod
+
+      def default_per
+        200
+      end
     end
 
     def bold(str)
