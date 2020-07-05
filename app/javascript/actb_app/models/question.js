@@ -43,8 +43,21 @@ export class Question {
 
   // 「他者が作者」の情報が一つでも含まれている？
   get other_author_collapse_open_p() {
-    return this.other_author || this.source_media_name || this.source_media_url
+    return !!(this.other_author || this.source_media_name || this.source_media_url)
   }
+
+  //////////////////////////////////////////////////////////////////////////////// for b-datepicker
+  get date_casted_source_published_on() {
+    console.log("get", "source_published_on", this.source_published_on)
+    if (this.source_published_on) {
+      return new Date(Date.parse(this.source_published_on))
+    }
+  }
+  set date_casted_source_published_on(v) {
+    this.source_published_on = v.toLocaleDateString() // Dataオブジェクト -> "2020/1/2"
+    console.log("set", "source_published_on", this.source_published_on)
+  }
+  ////////////////////////////////////////////////////////////////////////////////
 
   // private
 
