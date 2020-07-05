@@ -10,14 +10,14 @@ module FrontendScript
       # 自分以外の誰かを指定ルールに参加させる
       def debug_matching_add_handle
         if user = User.where.not(id: params[:exclude_user_id]).first
-          Actb::LobbyChannel.matching_users_delete(user)
+          Actb::Rule.matching_users_delete_from_all_rules(user)
           if rule_key = params[:rule_key]
             rule = Actb::Rule.fetch(rule_key)
+            user.actb_setting.update!(rule: rule)
           else
             rule = current_user.actb_setting.rule
           end
-          user.actb_setting.update!(rule: rule)
-          Actb::LobbyChannel.matching_users_add(user)
+          rule.matching_users_add(user)
         end
         true
       end
