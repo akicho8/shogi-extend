@@ -5,8 +5,7 @@
   .menu_buttons
     b-button(expanded @click="app.profile_edit_handle" :disabled="!app.current_user") プロフィール編集
     b-button(expanded tag="a" :href="question_download_url" @click="sound_play('click')" :disabled="!app.current_user") 問題ダウンロード
-    b-button(expanded @click="app.menu_to('the_menu_etc')" v-if="staff_only") その他
-    b-button(expanded tag="a" href="/" @click="sound_play('click')") トップにもどる
+    b-button(expanded @click="app.menu_to('the_menu_etc')" ) その他
 </template>
 
 <script>

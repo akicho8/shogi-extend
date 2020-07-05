@@ -69,7 +69,7 @@
       b-table-column(custom-key="updated_at" field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
 
       b-table-column(custom-key="operation" label="操作")
-        template(v-if="app.current_user.id === props.row.user.id")
+        template(v-if="app.current_user.id === props.row.user.id || app.debug_force_edit_p")
           a(@click.stop="$parent.question_edit_for(props.row)") 編集
 
     template(slot="empty")

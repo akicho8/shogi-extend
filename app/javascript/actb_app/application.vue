@@ -113,6 +113,7 @@ export default {
 
       // デバッグ
       debug_summary_p: false, // ちょっとした表示
+      debug_force_edit_p: false, // 他人の問題を編集できる
       debug_read_p:    false, // 表示系(安全)
       debug_write_p:   false, // 更新系(危険)
 
@@ -132,6 +133,7 @@ export default {
     if (this.development_p) {
       if (this.staff_only) {
         this.debug_summary_p = true
+        this.debug_force_edit_p = true
         this.debug_read_p    = true
         this.debug_write_p   = true
       }

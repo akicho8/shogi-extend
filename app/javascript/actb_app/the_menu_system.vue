@@ -1,10 +1,12 @@
 <template lang="pug">
 .the_menu_system
   .primary_header
-    .header_center_title システム
+    .header_center_title システム設定
   .menu_buttons
     b-field
       b-switch(v-model="app.debug_summary_p") オンライン数の表示
+    b-field
+      b-switch(v-model="app.debug_force_edit_p") 他人の問題を編集
     b-field
       b-switch(v-model="app.debug_read_p") デバッグモード(表示系)
     b-field

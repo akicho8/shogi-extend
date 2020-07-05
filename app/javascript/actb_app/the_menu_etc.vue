@@ -4,7 +4,8 @@
     .header_center_title その他
   .menu_buttons
     b-button(expanded @click="app.menu_to('the_menu_sound')") サウンドテスト
-    b-button(expanded @click="app.menu_to('the_menu_system')") システム設定
+    b-button(expanded @click="app.menu_to('the_menu_system')" v-if="staff_only") システム設定
+    b-button(expanded tag="a" href="/" @click="sound_play('click')") トップにもどる
     b-button(expanded @click="app.menu_to('the_menu_root')") もどる
 </template>
 
