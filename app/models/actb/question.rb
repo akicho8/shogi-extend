@@ -44,7 +44,7 @@ module Actb
         :title               => nil,
         :description         => nil,
         :hint_desc           => nil,
-        :quest_title         => nil,
+        :direction_message         => nil,
         :time_limit_sec      => 10.seconds,
         :moves_answers       => [],
         :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
@@ -113,7 +113,7 @@ module Actb
           :title,
           :description,
           :hint_desc,
-          :quest_title,
+          :direction_message,
 
           :other_author,
           :source_media_name,
@@ -170,7 +170,7 @@ module Actb
           :title,
           :description,
           :hint_desc,
-          :quest_title,
+          :direction_message,
           :other_author,
           :source_media_name,
           :source_media_url,
@@ -181,7 +181,7 @@ module Actb
           :title,
           :description,
           :hint_desc,
-          :quest_title,
+          :direction_message,
           :other_author,
           :source_media_name,
         ])
@@ -253,7 +253,7 @@ module Actb
               :title,
               :description,
               :hint_desc,
-              :quest_title,
+              :direction_message,
 
               :other_author,
               :source_media_name,
@@ -333,7 +333,7 @@ module Actb
       "#{init_sfen} moves #{moves_answers.first.moves_str}"
     end
 
-    def quest_title
+    def direction_message
       "アヒル戦法で端を突破せよ！"
     end
 
@@ -348,7 +348,7 @@ module Actb
             :title,
             :description,
             :hint_desc,
-            :quest_title,
+            :direction_message,
             :other_author,
             :other_author_link,
           ],
@@ -456,7 +456,7 @@ module Actb
           a["ヒント"] = v
         end
 
-        if v = quest_title.presence
+        if v = direction_message.presence
           a["クエスト"] = v
         end
 
@@ -511,7 +511,7 @@ module Actb
                 :title,
                 :description,
                 :hint_desc,
-                :quest_title,
+                :direction_message,
                 :other_author,
                 :source_media_name,
                 :source_media_url,
@@ -548,7 +548,7 @@ module Actb
                   :title,
                   :description,
                   :hint_desc,
-                  :quest_title,
+                  :direction_message,
                   :other_author,
                   :source_media_name,
                   :source_media_url,

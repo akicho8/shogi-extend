@@ -3,8 +3,8 @@
   .question_title.has-text-weight-bold.is-size-6(v-if="title_display_p && question.title")
     | {{question.title}}
 
-  .quest_title.is-size-6(v-if="question.quest_title")
-    | {{question.quest_title}}
+  .direction_message.is-size-6(v-if="question.direction_message")
+    | {{question.direction_message}}
 
   .question_user.is-size-8.has-text-grey
     span {{question.display_author}}

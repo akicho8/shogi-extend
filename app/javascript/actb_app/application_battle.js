@@ -125,8 +125,8 @@ export const application_battle = {
 
       this.share_sfen = null
 
-      if (this.current_question.quest_title) {
-        this.say(this.current_question.quest_title)
+      if (this.current_question.direction_message) {
+        this.say(this.current_question.direction_message)
       }
     },
 
