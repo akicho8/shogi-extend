@@ -128,11 +128,24 @@ module Actb
     it "share_board_url" do
       assert { question1.share_board_url == "http://localhost:3000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l1p+1+moves+G%2A5b&image_view_point=black&title=%28title1%29&turn=0" }
     end
+
+    it "公開フォルダに移動させたタイミングで投稿通知" do
+      question1.update!(folder_key: "draft")
+      Actb::LobbyMessage.destroy_all
+
+      assert { Actb::LobbyMessage.count == 0 }
+
+      question1.update!(folder_key: "active")
+      assert { Actb::LobbyMessage.count == 1 }
+
+      question1.update!(folder_key: "draft")
+      assert { Actb::LobbyMessage.count == 1 }
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..............
-# >> 
-# >> Finished in 1.92 seconds (files took 2.17 seconds to load)
-# >> 14 examples, 0 failures
-# >> 
+# >> ...............
+# >>
+# >> Finished in 3.89 seconds (files took 2.12 seconds to load)
+# >> 15 examples, 0 failures
+# >>

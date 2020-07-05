@@ -217,8 +217,12 @@ module Actb
 
     after_create_commit do
       SlackAgent.message_send(key: "問題登録", body: [title, page_url].join(" "))
+    end
 
-      User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
+    after_commit do
+      if saved_change_to_attribute?(:folder_id) && folder_key === "active"
+        User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
+      end
     end
 
     def page_url
