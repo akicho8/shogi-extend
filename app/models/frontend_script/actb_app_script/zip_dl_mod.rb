@@ -4,6 +4,11 @@ module FrontendScript
       # http://localhost:3000/script/actb-app.zip?remote_action=question_download
       def question_download
         if request.format.zip?
+          unless current_user
+            c.head :no_content
+            return
+          end
+
           t = Time.current
 
           zip_buffer = Zip::OutputStream.write_buffer do |zos|
