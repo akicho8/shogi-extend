@@ -36,8 +36,14 @@ export class Question {
     return Math.max(...this.moves_answers.map(e => e.moves_count))
   }
 
+  // 作家名(他者が作者の場合は優先して返す)
   get display_author() {
     return this.other_author || this.user.name
+  }
+
+  // 「他者が作者」の情報が一つでも含まれている？
+  get other_author_collapse_open_p() {
+    return this.other_author || this.source_media_name || this.source_media_url
   }
 
   // private

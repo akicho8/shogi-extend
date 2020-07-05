@@ -76,9 +76,6 @@ export default {
     },
   },
   computed: {
-    other_author_collapse_open_p() {
-      return this.$parent.question.other_author || this.$parent.question.source_media_name || this.$parent.question.source_media_url
-    },
   },
 }
 </script>
