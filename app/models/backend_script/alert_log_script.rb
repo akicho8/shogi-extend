@@ -19,7 +19,7 @@ module BackendScript
     def script_body
       s = AlertLog.order(:created_at, :id).reverse_order
       if current_query
-        s = s.where(["body like %?%", current_query])
+        s = s.where(["body like ?", "%#{current_query}%"])
       end
       s = page_scope(s)
       rows = s.collect(&method(:row_build))
