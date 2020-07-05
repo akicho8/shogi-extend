@@ -365,7 +365,7 @@ CREATE TABLE `actb_questions` (
   `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'タイトル',
   `description` varchar(512) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '説明',
   `hint_desc` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'ヒント',
-  `other_author` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '作者',
+  `source_author` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '作者',
   `source_media_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '出典メディア',
   `source_media_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '出典URL',
   `source_published_on` date DEFAULT NULL COMMENT '出典年月日',
@@ -378,6 +378,7 @@ CREATE TABLE `actb_questions` (
   `bad_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '低評価数',
   `clip_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '保存された数',
   `messages_count` int(11) NOT NULL DEFAULT '0' COMMENT 'コメント数',
+  `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'クエスト指示文言またはヒント',
   PRIMARY KEY (`id`),
   KEY `index_actb_questions_on_key` (`key`),
   KEY `index_actb_questions_on_user_id` (`user_id`),
@@ -1036,6 +1037,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200701201700'),
 ('20200702112300'),
 ('20200702112302'),
-('20200703130800');
+('20200703130800'),
+('20200705093600'),
+('20200705125200');
 
 
