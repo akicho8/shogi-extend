@@ -5,7 +5,7 @@ RSpec.describe Talk do
     Timecop.return do
       talk = Talk.new(source_text: "こんにちは")
       hash = talk.as_json
-      assert { hash[:service_path] }
+      assert { hash[:mp3_path] }
     end
   end
 end

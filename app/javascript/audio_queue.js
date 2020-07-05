@@ -1,7 +1,7 @@
 // ▼音声を連続で鳴らしていくには？
 //
 //   const audio_queue = new AudioQueue()
-//   audio_queue.media_push(response.data.service_path)
+//   audio_queue.media_push(response.data.mp3_path)
 //
 // ▼なぜ「CPU対局」直リンすると挨拶が再生されないのか？
 //

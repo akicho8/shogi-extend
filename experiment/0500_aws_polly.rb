@@ -13,7 +13,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # tp resp.to_h
 
 obj = Talk.new(source_text: "あ")
-obj.service_path                # => "/system/talk/9e/f6/9ef638a57701331482ac4cc52e05795b.mp3"
+obj.mp3_path                # => "/system/talk/9e/f6/9ef638a57701331482ac4cc52e05795b.mp3"
 obj.real_path                   # => #<Pathname:/Users/ikeda/src/shogi_web/public/system/talk/9e/f6/9ef638a57701331482ac4cc52e05795b.mp3>
 # >> |-----------------+------------------------------------------------------------------------------------------|
 # >> |   output_format | mp3                                                                                      |

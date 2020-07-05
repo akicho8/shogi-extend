@@ -22,7 +22,7 @@ class Talk
     }.merge(params)
   end
 
-  def service_path
+  def mp3_path
     generate_if_not_exist
     relative_path
   end
@@ -34,7 +34,7 @@ class Talk
 
   def as_json(*)
     {
-      service_path: service_path,
+      mp3_path: mp3_path,
     }
   end
 
