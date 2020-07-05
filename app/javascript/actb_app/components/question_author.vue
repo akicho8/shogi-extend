@@ -3,7 +3,10 @@
   .question_title.has-text-weight-bold.is-size-6(v-if="title_display_p && question.title")
     | {{question.title}}
 
-  .question_user.is-size-9.has-text-grey
+  .quest_title.is-size-6(v-if="question.quest_title")
+    | {{question.quest_title}}
+
+  .question_user.is-size-8.has-text-grey
     span {{question.display_author}}
     span.is-size-11 作
 

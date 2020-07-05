@@ -124,6 +124,10 @@ export const application_battle = {
       this.x_mode = "x1_thinking"
 
       this.share_sfen = null
+
+      if (this.current_question.quest_title) {
+        this.say(this.current_question.quest_title)
+      }
     },
 
     q_turn_offset_set(turn) {
@@ -292,6 +296,7 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
     },
     wakatta_handle_broadcasted(params) {
+      this.talk_stop()          // クエストを読み上げている場合は停止する
       const mi = this.member_infos_hash[params.membership_id]
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押した側

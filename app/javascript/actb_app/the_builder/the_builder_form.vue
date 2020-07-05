@@ -26,6 +26,9 @@
   b-field(label="解説" label-position="on-border")
     b-input(v-model="$parent.question.description" size="is-small" type="textarea" rows="4")
 
+  b-field(label="クエスト指示文言(仮)" label-position="on-border" message="問題と一緒に表示する文言です。解答方針やヒントを伝えたいときに記入してください。基本、空でかまいません")
+    b-input(v-model="$parent.question.quest_title" placeholder="飛車を捕獲せよ！")
+
   b-collapse.mt-5(:open="other_author_collapse_open_p")
     button.button.is-small(slot="trigger" @click="sound_play('click')") 他者が作者の場合
     .box
@@ -50,25 +53,21 @@ export default {
   mixins: [
     support,
   ],
-  data() {
-    return {
-    }
-  },
   watch: {
-    "$parent.question.lineage.key": {
+    "question.lineage.key": {
       handler(v) {
         this.sound_play("click")
         this.say(v)
       },
     },
-    "$parent.question.folder_key": {
+    "question.folder_key": {
       handler(v) {
         const folder_info = this.$parent.FolderInfo.fetch(v)
         this.sound_play("click")
         this.say(folder_info.name)
       },
     },
-    "$parent.question.difficulty_level": {
+    "question.difficulty_level": {
       handler(v) {
         this.sound_play("click")
         this.say(v)
@@ -76,6 +75,7 @@ export default {
     },
   },
   computed: {
+    question() { this.$parent.question },
   },
 }
 </script>
@@ -87,7 +87,8 @@ export default {
   .field:not(:first-child)
     margin-top: 2.2rem
   .help
-    font-size: $size-7
+    color: $grey
+    font-size: $size-10
   .b-radio
     font-size: $size-7
   .lineage_key

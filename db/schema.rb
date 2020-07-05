@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_03_130800) do
+ActiveRecord::Schema.define(version: 2020_07_05_093600) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -258,6 +258,7 @@ ActiveRecord::Schema.define(version: 2020_07_03_130800) do
     t.integer "bad_marks_count", default: 0, null: false, comment: "低評価数"
     t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
     t.integer "messages_count", default: 0, null: false, comment: "コメント数"
+    t.string "quest_title"
     t.index ["bad_marks_count"], name: "index_actb_questions_on_bad_marks_count"
     t.index ["clip_marks_count"], name: "index_actb_questions_on_clip_marks_count"
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"

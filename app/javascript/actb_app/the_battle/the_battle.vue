@@ -11,7 +11,10 @@
   //////////////////////////////////////////////////////////////////////////////// 第○問
   template(v-if="app.sub_mode === 'deden_mode'")
     .deden_mode_container.has-text-centered.is-size-3
-      | 第{{app.question_index + 1}}問
+      .question_index
+        | 第{{app.question_index + 1}}問
+      .quest_title.mt-3(v-if="app.current_question.quest_title")
+        | {{app.current_question.quest_title}}
 
   //////////////////////////////////////////////////////////////////////////////// 時間切れ
   template(v-if="app.sub_mode === 'timeout_mode'")
