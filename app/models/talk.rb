@@ -3,7 +3,7 @@
 # Talk.new(source_text: "こんにちは")
 #
 class Talk
-  cattr_accessor(:surrogate_pair_delete_enable) { true } # 特殊文字を除去する (除去しないと AWS 側の変換が特殊文字の直前で停止してしまう)
+  cattr_accessor(:surrogate_pair_delete_enable) { true } # 特殊文字の除去 (除去しないとAWS側の変換が特殊文字の直前で停止してしまう)
 
   cattr_accessor :default_polly_params do
     {

@@ -1,12 +1,4 @@
 if (true) {
-  window.talk_sound = null
-
-  window.tab_is_active_p = () => {
-    console.log("document.hidden", document.hidden)
-    console.log("document.visibilityState", document.visibilityState)
-    return !(document.hidden || document.visibilityState === "hidden")
-  }
-
   window.url_cast = (url) => {
     if (process.env.NODE_ENV === "development") {
       return "http://localhost:3000" + url
@@ -27,53 +19,6 @@ export default {
       if (!js_global.current_user) {
         location.href = js_global.login_path
         return true
-      }
-    },
-
-    // しゃべる
-    talk(source_text, options = {}) {
-      if (!tab_is_active_p()) {
-        return
-      }
-
-      options = {talk_method: "howler", ...options}
-
-      this.silent_remote_get("/talk", {source_text: source_text}, data => {
-        // すぐに発声する場合
-        if (options.talk_method === "direct_audio") {
-          const audio = new Audio()
-          audio.src = data.service_path
-          audio.play()
-        }
-
-        // 最後に来た音声のみ発声(?)
-        if (false) {
-          if (!audio) {
-            audio = new Audio()
-          }
-          audio.src = data.service_path
-          audio.play()
-        }
-
-        // FIFO形式で順次発声
-        if (options.talk_method === "queue") {
-          audio_queue.media_push(data.service_path)
-        }
-
-        // Howler
-        if (options.talk_method === "howler") {
-          window.talk_sound = new Howl({src: data.service_path, autoplay: true, volume: options.volume || 1.0, rate: options.rate || 1.2})
-          if (options.onend) {
-            window.talk_sound.on("end", () => options.onend())
-          }
-        }
-      })
-    },
-
-    talk_stop() {
-      if (window.talk_sound) {
-        window.talk_sound.stop()
-        window.talk_sound = null
       }
     },
 
