@@ -13,8 +13,6 @@
     .deden_mode_container.has-text-centered.is-size-3
       .question_index
         | 第{{app.question_index + 1}}問
-      .direction_message.mt-3(v-if="app.current_question.direction_message")
-        | {{app.current_question.direction_message}}
 
   //////////////////////////////////////////////////////////////////////////////// 時間切れ
   template(v-if="app.sub_mode === 'timeout_mode'")
