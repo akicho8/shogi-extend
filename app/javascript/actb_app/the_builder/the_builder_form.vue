@@ -42,6 +42,7 @@
         b-datepicker(v-model="$parent.question.source_published_on" :mobile-native="false")
           :month-names="[1,2,3,4,5,6,7,8,9,10,11,12]"
           :day-names="['日','月','火','水','木','金', '土']"
+          :years-range="[-500, 100]"
 
       b-field(label="出典URL" label-position="on-border")
         b-input(v-model="$parent.question.source_media_url" type="url")
