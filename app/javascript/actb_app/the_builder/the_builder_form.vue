@@ -78,7 +78,7 @@ export default {
     },
   },
   computed: {
-    question() { this.$parent.question },
+    question() { return this.$parent.question            },
   },
 }
 </script>
