@@ -4,7 +4,7 @@ module BackendScript
     include AtomicScript::PostRedirectMod
 
     self.category = "将棋ウォーズ"
-    self.script_name = "リメイク"
+    self.script_name = "将棋ウォーズ棋譜情報タグ再構築"
 
     def form_parts
       {
