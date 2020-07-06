@@ -57,8 +57,8 @@ export const support = {
     },
 
     // ../../../node_modules/autolinker/README.md
-    auto_link(str) {
-      return Autolinker.link(str, {newWindow: false, truncate: 30, mention: "twitter"})
+    auto_link(str, options = {}) {
+      return Autolinker.link(str, {newWindow: true, truncate: 30, mention: "twitter", ...options})
     },
 
     say(str, options = {}) {
