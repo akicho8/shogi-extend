@@ -45,7 +45,12 @@ module Actb
     def top_users
       @top_users ||= -> {
         s = current_scope
-        s = s.order(Actb::SeasonXrecord.arel_table[ranking_key].desc).order(:created_at)
+
+        # 順序が重要
+        s = s.order(Actb::SeasonXrecord.arel_table[ranking_key].desc) # 勝数降順
+        s = s.order(Actb::SeasonXrecord.arel_table[:rating].desc)     # 内部レーティング降順
+        s = s.order(:created_at)                                      # 古参
+
         s = s.limit(record_max)
         if params[:shuffle] == "true"
           s = s.shuffle
