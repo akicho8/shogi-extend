@@ -36,16 +36,15 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.actb_app
-  .the_menu
-    padding: $padding_top1 0.7rem $margin_bottom
-    .menu_buttons
-      margin-top: 1rem
-      .button
-        justify-content: flex-start
-        height: 3.75rem
-        &:not(:first-child)
-          margin-top: 0.3rem // ボタンとボタンの隙間
-      .field
-        margin: 1rem 0.5rem
+.the_menu
+  padding: $padding_top1 0.7rem $margin_bottom
+  .menu_buttons
+    margin-top: 1rem
+    .button
+      justify-content: flex-start
+      height: 3.75rem
+      &:not(:first-child)
+        margin-top: 0.3rem // ボタンとボタンの隙間
+    .field
+      margin: 1rem 0.5rem
 </style>
