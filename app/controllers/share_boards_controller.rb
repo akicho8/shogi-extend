@@ -10,7 +10,7 @@
 #   app/models/share_board_mod.rb
 #
 # experiment
-#   experiment/0690_share_board.rb
+#   experiment/0850_share_board.rb
 #
 # view
 #   app/views/share_boards/show.html.slim
@@ -53,6 +53,17 @@ class ShareBoardsController < ApplicationController
     if request.format.png?
       png = current_record.to_dynamic_png(params.merge(turn: initial_turn, flip: image_flip))
       send_data png, type: Mime[:png], disposition: current_disposition, filename: "#{current_record.to_param}-#{initial_turn}.png"
+      return
+    end
+
+    # ぴよ将棋用にkifを返す
+    # http://localhost:3000/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
+    #
+    # TODO: ぴよ将棋に url=http://.../foo.kif?body=position... のように渡せればこの部分は汎用化できる
+    if request.format.kif?
+      text_body = current_record.fast_parsed_info.to_kif(no_embed_if_time_blank: true)
+      headers["Content-Type"] = current_type
+      render plain: text_body
       return
     end
   end
