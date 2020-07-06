@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_menu
+.the_pulldown_menu
   b-dropdown.dropdown_menu(position="is-bottom-left" v-if="$parent.run_mode === 'play_mode'")
     b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
     template(v-if="$parent.run_mode === 'play_mode'")
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: "the_menu",
+  name: "the_pulldown_menu",
   data() {
     return {
     }
@@ -32,4 +32,5 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
+.the_pulldown_menu
 </style>

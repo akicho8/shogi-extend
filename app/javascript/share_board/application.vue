@@ -1,14 +1,12 @@
 <template lang="pug">
 .share_board
-  a.delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
-
   div(v-if="development_p")
     div play_mode_body: {{play_mode_body}}
     div edit_mode_body: {{edit_mode_body}}
 
   .columns
     .column.sp_mobile_padding
-      the_menu
+      the_pulldown_menu
 
       .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
         .title.is-4.is-marginless
@@ -39,6 +37,7 @@
       .tweet_button_container
         .buttons.is-centered
           b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
+          a.delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
 
   .columns(v-if="development_p")
     .column
@@ -61,7 +60,7 @@ const RUN_MODE_DEFAULT = "play_mode"
 import { store }   from "./store.js"
 import { support } from "./support.js"
 
-import the_menu from "./the_menu.vue"
+import the_pulldown_menu from "./the_pulldown_menu.vue"
 
 export default {
   store,
@@ -70,7 +69,7 @@ export default {
     support,
   ],
   components: {
-    the_menu,
+    the_pulldown_menu,
   },
   props: {
     info: { required: false },
