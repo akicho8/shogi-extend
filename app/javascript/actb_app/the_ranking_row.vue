@@ -3,12 +3,12 @@
   .rank_block
     .rank.is-size-5.has-text-weight-bold.has-text-right.has-text-primary
       | {{row.rank}}
-  figure.image.is-48x48
+  figure.image.is-48x48.is_flex_shrink_0
     img.is-rounded(:src="row.user.avatar_path")
   .name_with_rating
-    .name.has-text-weight-bold
+    .name.has-text-weight-bold.is_line_break_on
       | {{row.user.name}}
-      span.ml-1.has-text-primary(v-if="app.debug_read_p") {{row.user.skill_key}}
+      span.ml-1.has-text-primary.is_line_break_off(v-if="app.debug_read_p") {{row.user.skill_key}}
     .value
       template(v-if="$parent.current_tab_info.key === 'rating' && (app.config.rating_display_p || development_p)")
         | {{row.user.actb_season_xrecord.rating}}
