@@ -1,29 +1,14 @@
 <template lang="pug">
 .share_board
+  a.delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
+
   div(v-if="development_p")
     div play_mode_body: {{play_mode_body}}
     div edit_mode_body: {{edit_mode_body}}
 
   .columns
     .column.sp_mobile_padding
-      b-dropdown.dropdown_menu(position="is-bottom-left" v-if="run_mode === 'play_mode'")
-        b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
-        template(v-if="run_mode === 'play_mode'")
-          b-dropdown-item(@click="reset_handle") 盤面リセット
-          b-dropdown-item(separator)
-          b-dropdown-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
-          b-dropdown-item(:href="kento_app_with_params_url" :target="target_default") KENTO
-          b-dropdown-item(@click="kifu_copy_handle") 棋譜コピー
-          b-dropdown-item(:href="snapshot_image_url") 局面画像の取得
-          b-dropdown-item(separator)
-          b-dropdown-item(@click="title_edit") タイトル編集
-        b-dropdown-item(@click="mode_toggle_handle")
-          template(v-if="run_mode === 'play_mode'")
-            | 局面編集
-          template(v-else)
-            | 局面編集(終了)
-        b-dropdown-item(@click="any_source_read_handle") 棋譜の読み込み
-        b-dropdown-item(@click="image_view_point_setting_handle") Twitter画像の視点
+      the_menu
 
       .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
         .title.is-4.is-marginless
@@ -54,7 +39,6 @@
       .tweet_button_container
         .buttons.is-centered
           b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
-          a.delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
 
   .columns(v-if="development_p")
     .column
@@ -74,10 +58,20 @@
 <script>
 const RUN_MODE_DEFAULT = "play_mode"
 
+import { store }   from "./store.js"
+import { support } from "./support.js"
+
+import the_menu from "./the_menu.vue"
+
 export default {
+  store,
   name: "share_board",
   mixins: [
+    support,
   ],
+  components: {
+    the_menu,
+  },
   props: {
     info: { required: false },
   },
@@ -96,6 +90,10 @@ export default {
       run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_body: null,     // 局面編集モードの局面
     }
+  },
+
+  beforeCreate() {
+    this.$store.state.app = this
   },
 
   created() {
@@ -373,8 +371,8 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./stylesheets/bulma_init.scss"
-
+@import "support.sass"
+@import "application.sass"
 .image_view_point_setting
   .desc
     color: $grey
