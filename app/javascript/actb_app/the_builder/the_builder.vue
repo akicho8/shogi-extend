@@ -217,7 +217,7 @@ export default {
       this.sound_play("click")
       this.ok_notice(`${this.question.moves_answers.length}つ目の正解を追加しました`, {onend: () => {
         if (this.question.moves_answers.length === 1) {
-          this.ok_notice(`他に正解としたい変化がある場合は続けて追加してください`)
+          this.ok_notice(`他の手順で正解がある場合は続けて追加してください`)
         }
       }})
     },
