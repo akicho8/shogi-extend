@@ -55,6 +55,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ...
 # >> 
-# >> Finished in 0.86031 seconds (files took 2.61 seconds to load)
+# >> Finished in 0.74245 seconds (files took 2.42 seconds to load)
 # >> 3 examples, 0 failures
 # >> 

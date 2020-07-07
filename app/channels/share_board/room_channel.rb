@@ -6,22 +6,11 @@ module ShareBoard
     end
 
     def sfen_share(data)
-      data = data.to_options
-      bc_params = {
-        user_code: data[:user_code],
-        sfen:      data[:sfen],
-        title:     data[:title],
-      }
-      broadcast(:sfen_share_broadcasted, bc_params)
+      broadcast(:sfen_share_broadcasted, data)
     end
 
     def title_share(data)
-      data = data.to_options
-      bc_params = {
-        user_code: data[:user_code],
-        title: data[:title],
-      }
-      broadcast(:title_share_broadcasted, bc_params)
+      broadcast(:title_share_broadcasted, data)
     end
 
     def room_code
