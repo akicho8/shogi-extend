@@ -44,6 +44,14 @@ export default {
             callbacks.disconnected()
           }
         },
+        rejected: () => {
+          console.log(`${params.channel} 接続失敗`)
+          this.debug_alert("rejected")
+          this.ac_info_update()
+          if (callbacks.rejected) {
+            callbacks.rejected()
+          }
+        },
         received: data => {
           if (callbacks.received) {
             callbacks.received(data)
