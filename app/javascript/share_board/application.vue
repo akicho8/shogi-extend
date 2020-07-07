@@ -30,7 +30,7 @@
           :flip.sync="board_flip"
           @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
           @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
-          @update:mediator_snapshot_sfen="e => { development_p && $buefy.toast.open({message: `mediator_snapshot_sfen -> ${e}`, queue:false}) }"
+          @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
           @update:turn_offset="turn_offset_set"
         )
 
@@ -121,6 +121,12 @@ export default {
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
       this.play_mode_body = v
+
+    // デバッグ用
+    mediator_snapshot_sfen_set(sfen) {
+      if (this.development_p) {
+        this.$buefy.toast.open({message: `mediator_snapshot_sfen -> ${sfen}`, queue: false})
+      }
     },
 
     // 編集モード時の局面
