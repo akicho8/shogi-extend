@@ -102,6 +102,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
 
     it do
       data = {
+        membership_id: membership1.id,
         share_sfen: "position startpos",
       }
       expect {

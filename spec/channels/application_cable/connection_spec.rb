@@ -9,7 +9,7 @@ RSpec.describe ApplicationCable::Connection, type: :channel do
     expect(connection.current_user).to eq user
   end
 
-  it "ユーザーの指定がないため接続拒否" do
+  xit "ユーザーの指定がないため接続拒否" do
     expect { connect "/x-cable" }.to have_rejected_connection
   end
 
