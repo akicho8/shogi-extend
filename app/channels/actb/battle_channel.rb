@@ -157,6 +157,7 @@ module Actb
     def play_board_share(data)
       data = data.to_options
       bc_params = {
+        membership_id: data[:membership_id],
         share_sfen: data[:share_sfen],
       }
       broadcast(:play_board_share_broadcasted, bc_params)
