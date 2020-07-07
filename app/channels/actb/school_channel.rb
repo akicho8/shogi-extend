@@ -12,6 +12,8 @@ module Actb
 
     # 接続と同時にオンラインユーザーとして登録し配信する
     def subscribed
+      return reject unless current_user
+
       stream_from "actb/school_channel"
       self.class.active_users_add(current_user)
     end

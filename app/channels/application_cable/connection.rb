@@ -21,7 +21,9 @@ module ApplicationCable
 
     def find_verified_user
       # current_user_set で cookies に入れているので取れる
-      User.find_by(id: cookies.signed[:user_id]) or reject_unauthorized_connection
+      if user_id = cookies.signed[:user_id]
+        User.find_by(id: user_id) or reject_unauthorized_connection
+      end
     end
   end
 end

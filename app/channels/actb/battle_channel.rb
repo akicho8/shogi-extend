@@ -1,6 +1,7 @@
 module Actb
   class BattleChannel < BaseChannel
     def subscribed
+      return reject unless current_user
       raise ArgumentError, params.inspect unless battle_id
 
       stream_from "actb/battle_channel/#{battle_id}"

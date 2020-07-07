@@ -3,6 +3,8 @@ module Actb
     MATCHING_RATE_THRESHOLD_DEFAULT = 50
 
     def subscribed
+      return reject unless current_user
+
       stream_from "actb/lobby_channel"
       Actb::Rule.matching_user_ids_broadcast
     end

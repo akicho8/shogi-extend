@@ -9,8 +9,8 @@ module Actb
     end
 
     def subscribed
+      return reject unless current_user
       raise ArgumentError, params.inspect unless room_id
-      reject unless current_user
 
       stream_from "actb/room_channel/#{room_id}"
       self.class.active_users_add(current_user)

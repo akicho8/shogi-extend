@@ -113,12 +113,20 @@ class ShareBoardsController < ApplicationController
 
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
-    attrs.merge({
+    attrs = attrs.merge({
         :initial_turn     => initial_turn,
         :board_flip       => board_flip,
         :image_view_point => image_view_point,
         :title            => current_title,
       })
+
+    # リアルタイム共有
+    attrs = attrs.merge({
+        :room_code => params[:room_code] || "",
+        :user_code => SecureRandom.hex,
+      })
+
+    attrs
   end
 
   def current_record

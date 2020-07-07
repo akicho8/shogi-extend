@@ -1,0 +1,41 @@
+<template lang="pug">
+<div class="modal-card the_any_source_read_modal">
+  <header class="modal-card-head">
+    <p class="modal-card-title">棋譜の読み込み</p>
+  </header>
+  <section class="modal-card-body">
+    <b-input type="textarea" v-model="any_source" ref="any_source" />
+  </section>
+  <footer class="modal-card-foot">
+    <b-button @click="submit_handle" type="is-primary">読み込む</b-button>
+  </footer>
+</div>
+</template>
+
+<script>
+export default {
+  name: "the_any_source_read_modal",
+  data() {
+    return {
+      any_source: "",
+    }
+  },
+  mounted() {
+    this.desktop_focus_to(this.$refs.any_source.$refs.textarea)
+  },
+  methods: {
+    submit_handle() {
+      this.$emit("update:any_source", this.any_source)
+    },
+  },
+}
+</script>
+
+<style lang="sass">
+@import "support.sass"
+.the_any_source_read_modal
+  .modal-card-foot
+    justify-content: flex-end
+    .button
+      font-weight: bold
+</style>
