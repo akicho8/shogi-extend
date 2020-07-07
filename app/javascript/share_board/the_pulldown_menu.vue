@@ -11,6 +11,8 @@
       b-dropdown-item(:href="$parent.snapshot_image_url") 局面画像の取得
       b-dropdown-item(separator)
       b-dropdown-item(@click="$parent.title_edit") タイトル編集
+      b-dropdown-item(@click="$parent.title_edit2") 合言葉の設定
+      b-dropdown-item(separator)
     b-dropdown-item(@click="$parent.mode_toggle_handle")
       template(v-if="$parent.run_mode === 'play_mode'")
         | 局面編集

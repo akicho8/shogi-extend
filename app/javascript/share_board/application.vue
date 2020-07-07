@@ -15,6 +15,7 @@
 
       .sp_container
         shogi_player(
+          ref="main_sp"
           :run_mode="run_mode"
           :debug_mode="debug_mode"
           :start_turn="turn_offset"
@@ -39,6 +40,9 @@
           b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
           a.delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
 
+      .battle_code.is_clickable(@click="title_edit2")
+        | {{battle_code}}
+
   .columns(v-if="development_p")
     .column
       .box
@@ -60,6 +64,8 @@ const RUN_MODE_DEFAULT = "play_mode"
 import { store }   from "./store.js"
 import { support } from "./support.js"
 
+import { application_battle       } from "./application_battle.js"
+
 import the_pulldown_menu from "./the_pulldown_menu.vue"
 
 export default {
@@ -67,6 +73,7 @@ export default {
   name: "share_board",
   mixins: [
     support,
+    application_battle,
   ],
   components: {
     the_pulldown_menu,
@@ -104,6 +111,7 @@ export default {
       this.turn_offset,
       this.current_title,
       this.image_view_point,
+      this.battle_code,
     ], () => this.url_replace())
   },
 
@@ -121,6 +129,8 @@ export default {
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
       this.play_mode_body = v
+      this.play_board_share(v)
+    },
 
     // デバッグ用
     mediator_snapshot_sfen_set(sfen) {
@@ -205,6 +215,17 @@ export default {
         cancelText: "キャンセル",
         inputAttrs: { type: "text", value: this.current_title, required: false },
         onConfirm: value => this.current_title = value,
+      })
+    },
+
+    // タイトル編集
+    title_edit2() {
+      this.$buefy.dialog.prompt({
+        message: "合言葉",
+        confirmText: "設定",
+        cancelText: "キャンセル",
+        inputAttrs: { type: "text", value: this.battle_code, required: false },
+        onConfirm: value => this.battle_code_set(value),
       })
     },
 
@@ -324,6 +345,7 @@ export default {
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
       url.searchParams.set("image_view_point", this.image_view_point)
+      url.searchParams.set("battle_code", this.battle_code)
 
       _.each(params, (v, k) => url.searchParams.set(k, v))
 

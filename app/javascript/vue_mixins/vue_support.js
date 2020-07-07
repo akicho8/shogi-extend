@@ -305,6 +305,11 @@ export default {
     simple_format(str) {
       return str.replace(/\n/g, "<br>")
     },
+
+    // sfen_parser.moves.length
+    sfen_parse(sfen) {
+      return SfenParser.parse(sfen)
+    },
   },
 
   computed: {
