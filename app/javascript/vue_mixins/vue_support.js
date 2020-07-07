@@ -96,7 +96,7 @@ export default {
       }
     },
 
-    debug_print(...args) {
+    debug_print_old(...args) {
       if (!this.development_p) { return }
 
       console.log(...args)

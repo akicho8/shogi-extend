@@ -27,7 +27,6 @@
 import { support } from "../support.js"
 import any_source_read_modal from "../components/any_source_read_modal.vue"
 import haiti_kimeru_modal from "../components/haiti_kimeru_modal.vue"
-import SfenParser from "shogi-player/src/sfen_parser.js"
 
 export default {
   name: "the_builder_haiti",
@@ -61,8 +60,7 @@ export default {
             this.remote_fetch("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
               modal_instance.close()
 
-              const sfen_parser = SfenParser.parse(e.body)
-              if (sfen_parser.moves.length === 0) { // 元BODのSFEN
+              if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN
                 this.general_ok_notice("反映しました")
                 this.kyokumen_set(e.body)
               } else {

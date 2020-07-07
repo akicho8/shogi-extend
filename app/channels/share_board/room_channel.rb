@@ -1,73 +1,36 @@
 module ShareBoard
-  class RoomChannel < BaseChannel
-    include ActiveUsersNotifyMod
-
-    class << self
-      def redis_key
-        :room_user_ids
-      end
-    end
-
+  class RoomChannel < ApplicationCable::Channel
     def subscribed
-      raise ArgumentError, params.inspect unless room_id
-      reject unless current_user
-
-      stream_from "share_board/room_channel/#{room_id}"
-      self.class.active_users_add(current_user)
-      debug_say "*入室しました"
-
-      if once_run("share_board/rooms/#{current_room.id}/first_battle_create")
-        battle = current_room.battle_create_with_members!
-        debug_say "**最初のバトル作成(id:#{battle.id})"
-        # --> app/jobs/share_board/battle_broadcast_job.rb --> battle_broadcasted --> app/javascript/share_board_app/application_room.js
-      end
+      return reject unless room_code
+      stream_from "share_board/room_channel/#{room_code}"
     end
 
-    def unsubscribed
-      self.class.active_users_delete(current_user)
-
-      if current_user
-        say "*退室しました"
-      end
-
-      # 部屋を閉じたら閉じた時間を end_at に入れておく
-      # べつに入れておく必要はないがデバッグしやすいように入れておく
-      if current_room.end_at.blank?
-        if once_run("share_board/rooms/#{current_room.id}/disconnect")
-          current_room.update!(end_at: Time.current)
-        end
-      end
+    def sfen_share(data)
+      data = data.to_options
+      bc_params = {
+        user_code: data[:user_code],
+        sfen:      data[:sfen],
+        title:     data[:title],
+      }
+      broadcast(:sfen_share_broadcasted, bc_params)
     end
 
-    private
-
-    # def battle_leave_handle2(membership)
-    #   membership.user.say(current_room, "*room_unsubscribed")
-    #   broadcast(:room_member_disconnect_broadcasted, membership_id: membership.id)
-    # end
-
-    def room_id
-      params["room_id"]
+    def title_share(data)
+      data = data.to_options
+      bc_params = {
+        user_code: data[:user_code],
+        title: data[:title],
+      }
+      broadcast(:title_share_broadcasted, bc_params)
     end
 
-    def current_room
-      Room.find(room_id)
+    def room_code
+      params["room_code"].presence
     end
 
     def broadcast(bc_action, bc_params)
       raise ArgumentError, bc_params.inspect unless bc_params.values.all?
-      ActionCable.server.broadcast("share_board/room_channel/#{room_id}", {bc_action: bc_action, bc_params: bc_params})
-    end
-
-    def say(*args)
-      return if Rails.env.test?
-      current_user.room_speak(current_room, *args)
-    end
-
-    def debug_say(*args)
-      if Config[:action_cable_debug]
-        say(*args)
-      end
+      ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
   end
 end

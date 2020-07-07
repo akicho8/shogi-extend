@@ -1,9 +1,5 @@
 <template lang="pug">
 .share_board
-  div(v-if="development_p")
-    div play_mode_body: {{play_mode_body}}
-    div edit_mode_body: {{edit_mode_body}}
-
   .columns
     .column.sp_mobile_padding
       the_pulldown_menu
@@ -19,7 +15,7 @@
           :run_mode="run_mode"
           :debug_mode="debug_mode"
           :start_turn="turn_offset"
-          :kifu_body="play_mode_body"
+          :kifu_body="current_sfen"
           :summary_show="false"
           :slider_show="true"
           :setting_button_show="development_p"
@@ -40,8 +36,8 @@
           b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
           a.delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
 
-      .battle_code.is_clickable(@click="title_edit2")
-        | {{battle_code}}
+      .room_code.is_clickable(@click="room_code_edit" v-if="false")
+        | {{room_code}}
 
   .columns(v-if="development_p")
     .column
@@ -56,6 +52,7 @@
             img(:src="twitter_card_url" width="256")
           p {{twitter_card_url}}
         pre {{JSON.stringify(record, null, 4)}}
+        debug_print
 </template>
 
 <script>
@@ -64,19 +61,23 @@ const RUN_MODE_DEFAULT = "play_mode"
 import { store }   from "./store.js"
 import { support } from "./support.js"
 
-import { application_battle       } from "./application_battle.js"
+import { application_room } from "./application_room.js"
 
-import the_pulldown_menu from "./the_pulldown_menu.vue"
+import the_pulldown_menu            from "./the_pulldown_menu.vue"
+import the_image_view_point_setting_modal from "./the_image_view_point_setting_modal.vue"
+import the_any_source_read_modal          from "./the_any_source_read_modal.vue"
 
 export default {
   store,
   name: "share_board",
   mixins: [
     support,
-    application_battle,
+    application_room,
   ],
   components: {
     the_pulldown_menu,
+    the_image_view_point_setting_modal,
+    the_any_source_read_modal,
   },
   props: {
     info: { required: false },
@@ -84,7 +85,7 @@ export default {
   data() {
     return {
       // watch して url に反映するもの
-      play_mode_body:   this.info.record.sfen_body,        // 渡している棋譜
+      current_sfen:     this.info.record.sfen_body,        // 渡している棋譜
       current_title:    this.info.record.title,            // 現在のタイトル
       turn_offset:      this.info.record.initial_turn,     // 現在の手数
       image_view_point: this.info.record.image_view_point, // Twitter画像の向き
@@ -94,32 +95,24 @@ export default {
 
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
-      edit_mode_body: null,     // 局面編集モードの局面
+      edit_mode_sfen: null,     // 局面編集モードの局面
     }
   },
-
   beforeCreate() {
     this.$store.state.app = this
   },
-
   created() {
     // どれかが変更されたらURLを更新
     this.$watch(() => [
       this.run_mode,
-      this.edit_mode_body,      // 編集モード中でもURLを変更したいため
-      this.play_mode_body,
+      this.current_sfen,
+      this.edit_mode_sfen,      // 編集モード中でもURLを変更したいため
       this.turn_offset,
       this.current_title,
       this.image_view_point,
-      this.battle_code,
+      this.room_code,
     ], () => this.url_replace())
   },
-
-  watch: {
-    current_title()    { this.sound_play("click") },
-    image_view_point() { this.sound_play("click") },
-  },
-
   methods: {
     // 現在の手数を受けとる(URLに反映する)
     turn_offset_set(v) {
@@ -128,8 +121,8 @@ export default {
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
-      this.play_mode_body = v
-      this.play_board_share(v)
+      this.current_sfen = v
+      this.sfen_share(this.current_sfen)
     },
 
     // デバッグ用
@@ -141,11 +134,11 @@ export default {
 
     // 編集モード時の局面
     // ・常に更新するが、URLにはすぐには反映しない→やっぱり反映する
-    // ・あとで play_mode_body に設定する
+    // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
     edit_mode_snapshot_sfen_set(v) {
       if (this.run_mode === "edit_mode") { // 操作モードでも呼ばれるから
-        this.edit_mode_body = v
+        this.edit_mode_sfen = v
       }
     },
 
@@ -162,7 +155,7 @@ export default {
     // 操作←→編集 切り替え
     mode_toggle_handle() {
       if (this.run_mode === "play_mode") {
-        this.$gtag.event("open", {event_category: "リレー将棋(編集)"})
+        this.$gtag.event("open", {event_category: "共有将棋盤(編集)"})
         this.run_mode = "edit_mode"
         if (true) {
           this.board_flip = false // ▲視点にしておく(お好み)
@@ -171,37 +164,17 @@ export default {
         this.run_mode = "play_mode"
 
         // 局面編集から操作モードに戻した瞬間に局面編集モードでの局面を反映しURLを更新する
-        // 局面編集モードでの変化をそのまま play_mode_body に反映しない理由は駒箱の駒が消えるため
+        // 局面編集モードでの変化をそのまま current_sfen に反映しない理由は駒箱の駒が消えるため
         // 消えるのはsfenに駒箱の情報が含まれないから
-        if (this.edit_mode_body) {
-          this.play_mode_body = this.edit_mode_body
-          this.edit_mode_body = null
+        if (this.edit_mode_sfen) {
+          this.current_sfen = this.edit_mode_sfen
+          this.edit_mode_sfen = null
         }
       }
       this.sound_play("click")
     },
 
     // private
-
-    // record_fetch(callback) {
-    //   if (this.record) {
-    //     callback()
-    //   } else {
-    //     this.record_create(callback)
-    //   }
-    // },
-    //
-    // record_create(callback) {
-    //   const params = new URLSearchParams()
-    //   params.set("body", this.play_mode_body)
-    //
-    //   this.remote_fetch("POST", this.$route.path, params, e => {
-    //     if (e.record) {
-    //       this.record = e.record
-    //       callback()
-    //     }
-    //   })
-    // },
 
     url_replace() {
       window.history.replaceState("", null, this.current_url)
@@ -210,72 +183,38 @@ export default {
     // タイトル編集
     title_edit() {
       this.$buefy.dialog.prompt({
-        message: "タイトル",
+        title: "タイトル",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: "text", value: this.current_title, required: false },
-        onConfirm: value => this.current_title = value,
+        onConfirm: value => {
+          this.current_title_set(value)
+          this.sound_play("click")
+        },
       })
     },
 
-    // タイトル編集
-    title_edit2() {
+    current_title_set(title) {
+      this.current_title = _.trim(title)
+      this.title_share(this.current_title)
+    },
+
+    room_code_edit() {
       this.$buefy.dialog.prompt({
-        message: "合言葉",
+        title: "リアルタイム共有合言葉",
+        size: "is-small",
+        message: `
+          <div class="content">
+            <ul>
+              <li>同じ合言葉を設定している人とリアルタイムに盤を共有できます</li>
+              <li>合言葉を設定したら同じ合言葉を相手に伝えてください</li>
+              <li>合言葉はURLにも付加しているのでURLをそのまま伝えてもかまいません</li>
+            </ul>
+          </div>`,
         confirmText: "設定",
         cancelText: "キャンセル",
-        inputAttrs: { type: "text", value: this.battle_code, required: false },
-        onConfirm: value => this.battle_code_set(value),
-      })
-    },
-
-    // 棋譜の読み込みタップ時の処理
-    any_source_read_handle() {
-      const modal_instance = this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
-        animation: "",
-        component: {
-          template: `
-            <div class="modal-card any_source_read_modal">
-              <header class="modal-card-head">
-                <p class="modal-card-title">棋譜の読み込み</p>
-              </header>
-              <section class="modal-card-body">
-                <b-input type="textarea" v-model="any_source" ref="any_source" />
-              </section>
-              <footer class="modal-card-foot">
-                <b-button @click="submit_handle" type="is-primary">読み込む</b-button>
-              </footer>
-            </div>
-          `,
-          data() {
-            return {
-              any_source: "",
-            }
-          },
-          mounted() {
-            this.desktop_focus_to(this.$refs.any_source.$refs.textarea)
-          },
-          methods: {
-            submit_handle() {
-              this.$emit("update:any_source", this.any_source)
-            },
-          },
-        },
-        events: {
-          "update:any_source": any_source => {
-            this.remote_fetch("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
-              if (e.body) {
-                this.general_ok_notice("正常に読み込みました")
-                this.play_mode_body = e.body
-                this.turn_offset = e.turn_max
-                this.board_flip = false
-                modal_instance.close()
-              }
-            })
-          },
-        },
+        inputAttrs: { type: "text", value: this.room_code, required: false },
+        onConfirm: value => this.room_code_set(value),
       })
     },
 
@@ -290,51 +229,36 @@ export default {
           image_view_point: this.image_view_point,
           permalink_for: this.permalink_for,
         },
-        component: {
-          template: `
-            <div class="modal-card image_view_point_setting">
-              <header class="modal-card-head">
-                <p class="modal-card-title">Twitter画像の視点</p>
-              </header>
-              <section class="modal-card-body">
-                <div class="field"><b-radio v-model="new_image_view_point" native-value="self">自分<span class="desc">1手指し継いだとき、その人の視点 (リレー将棋向け・初期値)</span></b-radio></div>
-                <div class="field"><b-radio v-model="new_image_view_point" native-value="opponent">相手<span class="desc">1手指し継いだとき、次に指す人の視点 (リレー将棋 or 詰将棋向け)</span></b-radio></div>
-                <div class="field"><b-radio v-model="new_image_view_point" native-value="black">先手<span class="desc">常に☗ (詰将棋向け)</span></b-radio></div>
-                <div class="field"><b-radio v-model="new_image_view_point" native-value="white">後手<span class="desc">常に☖ (詰将棋を攻められ視点にしたいとき)</span></b-radio></div>
-                <div class="has-text-centered"><img :src="twitter_card_preview_url" /></div>
-                <div v-if="development_p" class="is_line_break_on" :key="twitter_card_preview_url">{{twitter_card_preview_url}}</div>
-              </section>
-              <footer class="modal-card-foot">
-                <b-button @click="$emit('close')">キャンセル</b-button>
-                <b-button @click="submit_handle" class="submit_handle" type="is-primary" :disabled="!change_p">保存</b-button>
-              </footer>
-            </div>
-          `,
-          props: ["image_view_point", "permalink_for"],
-          data() {
-            return {
-              new_image_view_point: this.image_view_point,
-            }
-          },
-          methods: {
-            submit_handle() {
-              this.$emit("update:image_view_point", this.new_image_view_point)
-            },
-          },
-          computed: {
-            twitter_card_preview_url() {
-              return this.permalink_for({format: "png", image_view_point: this.new_image_view_point, disposition: "inline"})
-            },
-            change_p() {
-              return this.new_image_view_point !== this.image_view_point
-            },
-          },
-        },
+        component: the_image_view_point_setting_modal,
         events: {
           "update:image_view_point": v => {
             this.image_view_point = v
+            this.sound_play("click")
             modal_instance.close()
           }
+        },
+      })
+    },
+
+    // 棋譜の読み込みタップ時の処理
+    any_source_read_handle() {
+      const modal_instance = this.$buefy.modal.open({
+        parent: this,
+        hasModalCard: true,
+        animation: "",
+        component: the_any_source_read_modal,
+        events: {
+          "update:any_source": any_source => {
+            this.remote_fetch("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
+              if (e.body) {
+                this.general_ok_notice("正常に読み込みました")
+                this.current_sfen = e.body
+                this.turn_offset = e.turn_max
+                this.board_flip = false
+                modal_instance.close()
+              }
+            })
+          },
         },
       })
     },
@@ -345,7 +269,7 @@ export default {
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
       url.searchParams.set("image_view_point", this.image_view_point)
-      url.searchParams.set("battle_code", this.battle_code)
+      url.searchParams.set("room_code", this.room_code)
 
       _.each(params, (v, k) => url.searchParams.set(k, v))
 
@@ -362,8 +286,9 @@ export default {
 
     // 盤面のみ最初の状態に戻す
     reset_handle() {
-      this.play_mode_body = this.info.record.sfen_body        // 渡している棋譜
-      this.turn_offset    = this.info.record.initial_turn     // 現在の手数
+      this.current_sfen = this.info.record.sfen_body        // 渡している棋譜
+      this.turn_offset  = this.info.record.initial_turn     // 現在の手数
+      this.general_ok_notice("盤面を最初の状態に戻しました")
     },
   },
 
@@ -375,8 +300,8 @@ export default {
     snapshot_image_url() { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
 
     // 外部アプリ
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({path: this.current_url, sfen: this.play_mode_body, turn: this.turn_offset, flip: this.board_flip, game_name: this.current_title}) },
-    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.play_mode_body, turn: this.turn_offset, flip: this.board_flip})   },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({path: this.current_url, sfen: this.current_sfen, turn: this.turn_offset, flip: this.board_flip, game_name: this.current_title}) },
+    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.current_sfen, turn: this.turn_offset, flip: this.board_flip})   },
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -384,7 +309,7 @@ export default {
     advanced_p() { return this.turn_offset > this.info.record.initial_turn },
 
     // 常に画面上の盤面と一致している
-    current_body() { return this.edit_mode_body || this.play_mode_body },
+    current_body() { return this.edit_mode_sfen || this.current_sfen },
 
     tweet_hash_tag() {
       if (this.current_title) {
@@ -400,25 +325,6 @@ export default {
 <style lang="sass">
 @import "support.sass"
 @import "application.sass"
-.image_view_point_setting
-  .desc
-    color: $grey
-    font-size: $size-7
-    margin-left: 0.4rem
-  img
-    border-radius: 1rem
-    border: 1px solid $grey-lighter
-  .modal-card-foot
-    justify-content: flex-end
-    .button
-      font-weight: bold
-      min-width: 8rem
-
-.any_source_read_modal
-  .modal-card-foot
-    justify-content: flex-end
-    .button
-      font-weight: bold
 
 .share_board
   ////////////////////////////////////////////////////////////////////////////////

@@ -122,8 +122,8 @@ class ShareBoardsController < ApplicationController
 
     # リアルタイム共有
     attrs = attrs.merge({
-        :battle_code      => params[:battle_code] || "",
-        :user_code        => SecureRandom.hex,
+        :room_code => params[:room_code] || "",
+        :user_code => SecureRandom.hex,
       })
 
     attrs

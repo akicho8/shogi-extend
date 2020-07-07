@@ -11,8 +11,6 @@
       b-dropdown-item(:href="$parent.snapshot_image_url") 局面画像の取得
       b-dropdown-item(separator)
       b-dropdown-item(@click="$parent.title_edit") タイトル編集
-      b-dropdown-item(@click="$parent.title_edit2") 合言葉の設定
-      b-dropdown-item(separator)
     b-dropdown-item(@click="$parent.mode_toggle_handle")
       template(v-if="$parent.run_mode === 'play_mode'")
         | 局面編集
@@ -20,6 +18,11 @@
         | 局面編集(終了)
     b-dropdown-item(@click="$parent.any_source_read_handle") 棋譜の読み込み
     b-dropdown-item(@click="$parent.image_view_point_setting_handle") Twitter画像の視点
+    template(v-if="$parent.run_mode === 'play_mode'")
+      b-dropdown-item(@click="$parent.room_code_edit")
+        | リアルタイム共有合言葉
+        .has-text-danger(v-if="$parent.room_code")
+          | {{$parent.room_code}}
 </template>
 
 <script>
