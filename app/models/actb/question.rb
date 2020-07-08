@@ -235,6 +235,7 @@ module Actb
     after_commit do
       if saved_change_to_attribute?(:folder_id) && folder_key === "active"
         User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
+        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を投稿しました", body: info.to_t).deliver_later
       end
     end
 
