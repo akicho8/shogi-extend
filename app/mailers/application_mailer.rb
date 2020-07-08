@@ -7,7 +7,7 @@ class ApplicationMailer < ActionMailer::Base
   # ApplicationMailer.developper_notice.deliver_later
   # ApplicationMailer.developper_notice.deliver_now
   def developper_notice(params = {})
-    mail(fixed_format(subject: subject_decorate(params[:subject])))
+    mail(fixed_format(params.merge(subject: subject_decorate(params[:subject]))))
   end
 
   private
