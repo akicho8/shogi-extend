@@ -30,14 +30,13 @@ module Actb
         question1.messages.create!(user: user1, body: "message")
       }.to have_broadcasted_to("actb/question_channel/#{question1.id}")
 
-      assert { ActionMailer::Base.deliveries.count == 1 }
+      assert { ActionMailer::Base.deliveries.count == 2 }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> 1
 # >> .
 # >> 
-# >> Finished in 0.67118 seconds (files took 2.35 seconds to load)
+# >> Finished in 1.2 seconds (files took 2.3 seconds to load)
 # >> 1 example, 0 failures
 # >> 

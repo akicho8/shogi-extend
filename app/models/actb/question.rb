@@ -349,7 +349,11 @@ module Actb
 
     # 初期配置 + 1問目
     def main_sfen
-      "#{init_sfen} moves #{moves_answers.first.moves_str}"
+      if moves_answers.blank?
+        init_sfen
+      else
+        "#{init_sfen} moves #{moves_answers.first.moves_str}"
+      end
     end
 
     # 出題用
