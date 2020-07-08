@@ -5,6 +5,14 @@ module ShareBoard
       stream_from "share_board/room_channel/#{room_code}"
     end
 
+    def board_info_request(data)
+      broadcast(:board_info_request_broadcasted, data)
+    end
+
+    def board_info_send(data)
+      broadcast(:board_info_send_broadcasted, data)
+    end
+
     def sfen_share(data)
       broadcast(:sfen_share_broadcasted, data)
     end

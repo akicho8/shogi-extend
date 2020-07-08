@@ -61,9 +61,10 @@ const RUN_MODE_DEFAULT = "play_mode"
 import { store }   from "./store.js"
 import { support } from "./support.js"
 
-import { application_room } from "./application_room.js"
+import { application_room      } from "./application_room.js"
+import { application_room_init } from "./application_room_init.js"
 
-import the_pulldown_menu            from "./the_pulldown_menu.vue"
+import the_pulldown_menu                  from "./the_pulldown_menu.vue"
 import the_image_view_point_setting_modal from "./the_image_view_point_setting_modal.vue"
 import the_any_source_read_modal          from "./the_any_source_read_modal.vue"
 
@@ -73,6 +74,7 @@ export default {
   mixins: [
     support,
     application_room,
+    application_room_init,
   ],
   components: {
     the_pulldown_menu,

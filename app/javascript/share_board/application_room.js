@@ -31,6 +31,12 @@ export const application_room = {
           } else {
             this.general_ok_notice("合言葉を設定しました")
           }
+
+          // 合言葉を設定した瞬間に共有する場合
+          if (true) {
+            this.idol_timer_start()
+            this.board_info_request()
+          }
         },
         disconnected: () => {
           if (this.development_p) {
@@ -65,9 +71,7 @@ export const application_room = {
       if (params.user_code === this.user_code) {
         // 自分から自分へ
       } else {
-        this.current_title = params.title
-        this.current_sfen = params.sfen
-        this.turn_offset = this.sfen_parse(params.sfen).moves.length
+        this.attributes_set(params)
       }
     },
     ////////////////////////////////////////////////////////////////////////////////
@@ -80,8 +84,19 @@ export const application_room = {
       if (params.user_code === this.user_code) {
         // 自分から自分へ
       } else {
-        this.current_title = params.title
+        this.attributes_set(params)
         this.general_ok_notice("タイトルを変更しました")
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    attributes_set(params) {
+      if (params.title) {
+        this.current_title = params.title
+      }
+      if (params.sfen) {
+        this.current_sfen = params.sfen
+        this.turn_offset = this.sfen_parse(params.sfen).moves.length
       }
     },
   },
