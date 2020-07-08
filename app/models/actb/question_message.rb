@@ -27,13 +27,27 @@ module Actb
     after_create_commit do
       Actb::QuestionMessageBroadcastJob.perform_later(self)
 
-      if question.user.email.to_s.include?("@localhost")
-        # skip
-      else
-        UserMailer.question_message_created(self).deliver_later
+      # 作者に通知
+      if question.user.email_valid? || Rails.env.test?
+        UserMailer.question_owner_message(self).deliver_later
+      end
+
+      # 以前コメントした人たちにも通知
+      member_users.each do |user|
+        if user.email_valid? || Rails.env.test?
+          UserMailer.question_other_message(user, self).deliver_later
+        end
       end
 
       SlackAgent.message_send(key: "問題コメント", body: [body, question.page_url].join("\n"))
+    end
+
+    # 関係者
+    def member_users
+      users = question.message_users         # コメントした人たち
+      users = users - [user]                 # コメントした本人はコメント内容を知っているので送信しない
+      users = users - [question.user]        # 作者にはすでに送っているので送信しない
+      users = users.uniq                     # 複数通知しないように
     end
   end
 end

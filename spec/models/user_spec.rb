@@ -51,10 +51,15 @@ RSpec.describe User, type: :model do
       user.destroy!
     end
   end
+
+  it "email_valid?" do
+    assert { User.create!(email: "alice@localhost").email_valid?   == false }
+    assert { User.create!(email: "alice@example.com").email_valid? == true  }
+  end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..
+# >> ...
 # >> 
-# >> Finished in 0.66353 seconds (files took 2.22 seconds to load)
-# >> 2 examples, 0 failures
+# >> Finished in 0.77324 seconds (files took 2.12 seconds to load)
+# >> 3 examples, 0 failures
 # >> 

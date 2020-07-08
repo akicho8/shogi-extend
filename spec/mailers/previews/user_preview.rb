@@ -19,14 +19,18 @@ class UserPreview < ActionMailer::Preview
   end
 
   # alice が作った問題に bob がコメントしたとき alice にメールが飛ぶ
-  # http://0.0.0.0:3000/rails/mailers/user/question_message_created
-  def question_message_created
-    Actb::Question.destroy_all
+  # http://0.0.0.0:3000/rails/mailers/user/question_owner_message
+  def question_owner_message
+    question = Actb::Question.mock_question
+    UserMailer.question_owner_message(question.messages.first)
+  end
 
-    user1 = User.create!(name: "user1")
-    user2 = User.create!(name: "user2")
-    question = user1.actb_questions.mock_type1
-    message = question.messages.create!(user: user2, body: "message")
-    UserMailer.question_message_created(message)
+  # alice が作った問題に bob がコメントしたとき以前コメントした carol にメールが飛ぶ
+  # http://0.0.0.0:3000/rails/mailers/user/question_other_message
+  def question_other_message
+    question = Actb::Question.mock_question
+    user = question.messages.first.user
+    message = question.messages.second
+    UserMailer.question_other_message(user, message)
   end
 end

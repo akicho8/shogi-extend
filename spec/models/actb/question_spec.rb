@@ -141,11 +141,16 @@ module Actb
       question1.update!(folder_key: "draft")
       assert { Actb::LobbyMessage.count == 1 }
     end
+
+    it "message_users" do
+      question1.messages.create!(user: user1, body: "(body)")
+      assert { question1.message_users == [user1] }
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ...............
-# >>
-# >> Finished in 3.89 seconds (files took 2.12 seconds to load)
-# >> 15 examples, 0 failures
-# >>
+# >> ................
+# >> 
+# >> Finished in 3.91 seconds (files took 2.1 seconds to load)
+# >> 16 examples, 0 failures
+# >> 

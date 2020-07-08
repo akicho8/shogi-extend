@@ -20,9 +20,9 @@ class UserMailer < ApplicationMailer
   end
 
   # 問題の作者に通知
-  # UserMailer.question_message_created(Actb::QuestionMessage.first).deliver_later
-  # http://0.0.0.0:3000/rails/mailers/user/question_message_created
-  def question_message_created(message)
+  # UserMailer.question_owner_message(Actb::QuestionMessage.first).deliver_later
+  # http://0.0.0.0:3000/rails/mailers/user/question_owner_message
+  def question_owner_message(message)
     subject = "#{message.user.name}さんが「#{message.question.title}」にコメントしました"
 
     out = []
@@ -40,5 +40,21 @@ class UserMailer < ApplicationMailer
     body = out.join("\n")
 
     mail(subject: subject, to: message.question.user.email, bcc: AppConfig[:admin_email], body: body)
+  end
+
+  # 以前コメントした人に通知
+  # UserMailer.question_other_message(User.first, Actb::QuestionMessage.first).deliver_later
+  # http://0.0.0.0:3000/rails/mailers/user/question_other_message
+  def question_other_message(user, message)
+    subject = "以前コメントした「#{message.question.title}」に#{message.user.name}さんがにコメントしました"
+
+    out = []
+    out << message.body
+    out << ""
+    out << message.question.page_url
+
+    body = out.join("\n")
+
+    mail(subject: subject, to: user.email, bcc: AppConfig[:admin_email], body: body)
   end
 end

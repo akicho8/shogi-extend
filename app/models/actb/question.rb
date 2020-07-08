@@ -39,6 +39,18 @@
 
 module Actb
   class Question < ApplicationRecord
+    def self.mock_question
+      raise if Rails.env.production? || Rails.env.staging?
+
+      user1 = User.find_or_create_by!(name: "user1", email: "user1@example.com")
+      user2 = User.find_or_create_by!(name: "user2", email: "user2@example.com")
+      user3 = User.find_or_create_by!(name: "user3", email: "user3@example.com")
+      question = user1.actb_questions.mock_type1
+      question.messages.create!(user: user2, body: "user2のコメント")
+      question.messages.create!(user: user3, body: "user3のコメント")
+      question
+    end
+
     # Vueでリアクティブになるように空でもカラムは作っておくこと
     def self.default_attributes
       default = {
@@ -143,6 +155,7 @@ module Actb
 
     has_many :histories, dependent: :destroy # 出題履歴
     has_many :messages, class_name: "Actb::QuestionMessage", dependent: :destroy # コメント
+    has_many :message_users, through: :messages, source: :user                   # コメントしたユーザー(複数)
 
     scope :active_only, -> { joins(:folder).where(Folder.arel_table[:type].eq("Actb::ActiveBox")) }
 

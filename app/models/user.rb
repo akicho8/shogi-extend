@@ -217,6 +217,12 @@ class User < ApplicationRecord
         "？"
       end
     end
+
+    def email_valid?
+      if v = email.presence
+        v.exclude?("@localhost")
+      end
+    end
   end
 
   concerning :TagMethods do
