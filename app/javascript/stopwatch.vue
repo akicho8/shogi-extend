@@ -389,12 +389,10 @@ export default {
     },
 
     alive_notice() {
-      this.$http.post(this.$root.$options.post_path, {
+      this.silent_remote_fetch("POST", this.$root.$options.post_path, {
         mode: this.mode,
         summary: this.summary,
         book_title: this.book_title,
-      }).then(response => {
-      }).catch(error => {
       })
     },
 

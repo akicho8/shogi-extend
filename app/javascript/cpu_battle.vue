@@ -423,18 +423,13 @@ export default {
     },
 
     post_apply(params) {
-      this.$http.post(this.$root.$options.post_path, {
+      this.silent_remote_fetch("POST", this.$root.$options.post_path, {
         ...this.post_shared_params,
         ...params,
-      }).then(response => {
-        this.response_process(response)
-      }).catch(error => {
-        this.error_process(error)
-      })
+      }, e => this.response_process(e))
     },
 
-    response_process(response) {
-      const e = response.data
+    response_process(e) {
       if (this.mode === "playing") {
         // CPUの指し手を読み上げる
         if (e["yomiage"]) {
