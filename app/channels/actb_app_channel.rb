@@ -1,7 +1,7 @@
 # app/javascript/actb_app/application.vue
 # app/channels/actb_app_channel.rb
 # app/models/backend_script/actb_app_script.rb
-class ActbSampleChannel < ApplicationCable::Channel
+class ActbAppChannel < ApplicationCable::Channel
   def subscribed
     stream_from "actb_app_channel"
   end
