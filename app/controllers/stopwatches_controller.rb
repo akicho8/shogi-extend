@@ -1,6 +1,5 @@
 class StopwatchesController < ApplicationController
   helper_method :stopwatch_options
-  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
 
   let :stopwatch_options do
     {
