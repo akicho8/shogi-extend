@@ -15,6 +15,11 @@ export const application_room = {
         ...options,
       }
       this.room_code = _.trim(room_code)
+      if (this.room_code) {
+        this.general_ok_notice("合言葉を設定しました")
+      } else {
+        this.general_ok_notice("合言葉を削除しました")
+      }
       this.room_unsubscribe() // 内容が変更になったかもしれないのでいったん解除
       if (this.room_code) {
         this.room_setup(options)
@@ -23,20 +28,11 @@ export const application_room = {
 
     room_setup(options = {}) {
       this.room_unsubscribe()
-
       this.__assert__(this.$ac_room == null, "this.$ac_room == null")
       this.$ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: () => {
-          if (options.initial) {
-          } else {
-            this.general_ok_notice("合言葉を設定しました")
-          }
-
-          // 合言葉を設定した瞬間に共有する場合
-          if (true) {
-            this.idol_timer_start()
-            this.board_info_request()
-          }
+          this.idol_timer_start()
+          this.board_info_request()
         },
         disconnected: () => {
           if (this.development_p) {
