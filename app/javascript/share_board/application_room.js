@@ -14,12 +14,17 @@ export const application_room = {
         initial: false,
         ...options,
       }
+
       this.room_code = _.trim(room_code)
-      if (this.room_code) {
-        this.general_ok_notice("合言葉を設定しました")
-      } else {
-        this.general_ok_notice("合言葉を削除しました")
+
+      if (!options.initial) {
+        if (this.room_code) {
+          this.general_ok_notice(`合言葉を「${this.room_code}」に設定しました`)
+        } else {
+          this.general_ok_notice("合言葉を削除しました")
+        }
       }
+
       this.room_unsubscribe() // 内容が変更になったかもしれないのでいったん解除
       if (this.room_code) {
         this.room_setup(options)
