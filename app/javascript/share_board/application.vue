@@ -203,14 +203,14 @@ export default {
 
     room_code_edit() {
       this.$buefy.dialog.prompt({
-        title: "リアルタイム共有合言葉",
+        title: "リアルタイム共有",
         size: "is-small",
         message: `
           <div class="content">
             <ul>
-              <li>同じ合言葉を設定している人とリアルタイムに盤を共有できます</li>
+              <li>同じ合言葉を設定した人とリアルタイムに盤を共有できます</li>
               <li>合言葉を設定したら同じ合言葉を相手に伝えてください</li>
-              <li>合言葉はURLにも付加しているのでURLをそのまま伝えてもかまいません</li>
+              <li>合言葉はURLにも付加するので、たんにURLを伝えてもかまいません</li>
             </ul>
           </div>`,
         confirmText: "設定",
