@@ -20,7 +20,7 @@
     b-dropdown-item(@click="$parent.image_view_point_setting_handle") Twitter画像の視点
     template(v-if="$parent.run_mode === 'play_mode'")
       b-dropdown-item(@click="$parent.room_code_edit")
-        | リアルタイム共有合言葉
+        | リアルタイム共有
         .has-text-danger(v-if="$parent.room_code")
           | {{$parent.room_code}}
 </template>
