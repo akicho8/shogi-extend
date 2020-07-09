@@ -16,8 +16,6 @@
 # User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
-require "swars"
-
 module Swars
   class SearchLog < ApplicationRecord
     belongs_to :user, counter_cache: true, touch: :last_reception_at

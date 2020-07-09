@@ -12,8 +12,6 @@
 # | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
 # |------------+------------+------------+-------------+------+-------|
 
-require "tsl"
-
 module Tsl
   class League < ApplicationRecord
     class << self

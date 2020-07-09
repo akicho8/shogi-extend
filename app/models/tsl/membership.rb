@@ -23,8 +23,6 @@
 # User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
-require "tsl"
-
 module Tsl
   class Membership < ApplicationRecord
     belongs_to :league                      # 対局

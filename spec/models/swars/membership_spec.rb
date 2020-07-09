@@ -32,7 +32,7 @@
 require 'rails_helper'
 
 module Swars
-  RSpec.describe Battle::Membership, type: :model do
+  RSpec.describe Membership, type: :model do
     before do
       Swars.setup
     end

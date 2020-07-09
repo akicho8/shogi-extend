@@ -14,7 +14,7 @@ module FormBox
       end
 
       def inputs_render
-        form_parts.collect { |e| InputBuilder.input_render(e) }.join("\n").html_safe
+        form_parts.collect { |e| ::FormBox::InputBuilder.input_render(e) }.join("\n").html_safe
       end
 
       private

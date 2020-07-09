@@ -1,8 +1,10 @@
 module Actb
   module UserMod
-    concern :ClipMod do
+    module ClipMod
+      extend ActiveSupport::Concern
+
       included do
-        has_many :actb_clip_marks, class_name: "Actb::ClipMark", dependent: :destroy
+        has_many :actb_clip_marks, class_name: "::Actb::ClipMark", dependent: :destroy
       end
 
       def clip_p(question)

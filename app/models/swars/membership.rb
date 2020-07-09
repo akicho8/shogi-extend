@@ -29,8 +29,6 @@
 # User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
-require "swars"
-
 module Swars
   class Membership < ApplicationRecord
     include TagMod

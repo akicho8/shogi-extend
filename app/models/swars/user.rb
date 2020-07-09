@@ -33,8 +33,6 @@
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
-require "swars"
-
 module Swars
   class User < ApplicationRecord
     alias_attribute :key, :user_key

@@ -13,7 +13,8 @@ Bundler.require(*Rails.groups)
 module ShogiWeb
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.1
+    config.load_defaults 6.0
+    config.add_autoload_paths_to_load_path = false # $LOAD_PATH を使わず zeitwerk だけにすると速くなる
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

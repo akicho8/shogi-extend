@@ -33,6 +33,6 @@ class CpuStrategyInfo
   private
 
   def source_file
-    Pathname("#{__dir__}/#{self.class.name.underscore}/#{key}.rb")
+    Rails.root.join("lib/#{self.class.name.underscore}/#{key}.rb")
   end
 end

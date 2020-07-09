@@ -35,7 +35,6 @@
 #     :toolbody => "本文"
 #
 module FormBox
-
   class << self
     def hash_to_hidden_form_parts(hash)
       hash.collect { |k, v|

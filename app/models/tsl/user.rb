@@ -33,8 +33,6 @@
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
-require "tsl"
-
 module Tsl
   class User < ApplicationRecord
     has_many :memberships, dependent: :destroy, inverse_of: :user # 対局時の情報(複数)

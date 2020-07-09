@@ -13,8 +13,6 @@
 # | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
 # |------------+--------------------+-------------+-------------+------+-------|
 
-require "swars"
-
 module Swars
   class Grade < ApplicationRecord
     class << self

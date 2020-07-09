@@ -2,4 +2,9 @@
 require_relative 'application'
 
 # Initialize the Rails application.
-Rails.application.initialize!
+begin
+  Rails.application.initialize!
+rescue => error
+  puts error.backtrace
+  raise error
+end

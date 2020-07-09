@@ -32,7 +32,6 @@
 #--------------------------------------------------------------------------------
 
 require "matrix"
-require "swars"
 
 module Swars
   class Battle < ApplicationRecord

@@ -1,30 +1,17 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
-require "spec_helper"
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
+# Prevent database truncation if the environment is production
+abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+# Add additional requires below this line. Rails is not loaded until this point!
+################################################################################
+
 require 'test_prof/recipes/rspec/let_it_be'
+
 # require "action_cable/testing/rspec"
 # require 'sidekiq/testing/inline'
-# Add additional requires below this line. Rails is not loaded until this point!
-
-# app/models/acns2.rb などを明示的に読み込む (Ruby 2.7 ではこのあたりの対策がされているとの噂)
-Actb
-Swars
-
-if true
-  # 1. UsersController の spec で次のようになっているとき user_login 内で controller を参照する
-  # 2. このタイミングで app/controllers/swars/battles_controller.rb の親クラスの参照がおかしなる
-  # 3. "< ApplicationController" で ::Swars::ApplicationController ではなく ::ApplicationController を読まれる
-  # 4. 結果、::Swars::ApplicationController の before_action が発動しない
-  # 5. これまで ::Swars::ApplicationController に何も書いてなかったので気付かなかった
-  # 6. これは RSpec の不具合？ Ruby の仕様に起因？
-  # 7. 対応策として明示的に参照して先にロードする
-  ::Swars::ApplicationController
-  # 8. これにはまると原因を調べるのに半日かかるため念のため他のもロードしておく
-  ::ApplicationController
-  # 9. 新しい Ruby だと参照の順序がかわるらしいのでそれに期待。あとで調べて直ってたらこれは消す
-end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -41,9 +28,14 @@ end
 #
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
-# Checks for pending migrations before tests are run.
-# If you are not using ActiveRecord, you can remove this line.
-ActiveRecord::Migration.maintain_test_schema!
+# Checks for pending migrations and applies them before tests are run.
+# If you are not using ActiveRecord, you can remove these lines.
+begin
+  ActiveRecord::Migration.maintain_test_schema!
+rescue ActiveRecord::PendingMigrationError => e
+  puts e.to_s.strip
+  exit 1
+end
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

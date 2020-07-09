@@ -1,9 +1,11 @@
 module Actb
-  concern :UserMod do
+  module UserMod
+    extend ActiveSupport::Concern
+
     included do
-      include UserMod::ClipMod
-      include UserMod::VoteMod
-      include UserMod::FolderMod
+      include ClipMod
+      include VoteMod
+      include FolderMod
 
       # 対局
       has_many :actb_room_memberships, class_name: "Actb::RoomMembership", dependent: :restrict_with_exception # 対局時の情報(複数)
