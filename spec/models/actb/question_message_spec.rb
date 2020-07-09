@@ -23,20 +23,48 @@ require 'rails_helper'
 module Actb
   RSpec.describe QuestionMessage, type: :model do
     include ActbSupportMethods
+    include ActiveJob::TestHelper
 
-    it "問題に対してコメント" do
-      # /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-rails-4.0.0/lib/rspec/rails/matchers/action_cable.rb
-      expect {
-        question1.messages.create!(user: user1, body: "message")
-      }.to have_broadcasted_to("actb/question_channel/#{question1.id}")
+    it "コメントするとメール送信する" do
+      perform_enqueued_jobs do
+        question1.messages.create!(user: user2, body: "message")
+      end
+      assert { ActionMailer::Base.deliveries.count == 1 }
+      mail = ActionMailer::Base.deliveries.last
+      assert { mail.to      == ["user1@localhost"] }
+      # tp ActionMailer::Base.deliveries.collect { |e| {subject: e.subject, from: e.from, to: e.to} }
+      ActionMailer::Base.deliveries.clear
 
+      # 続けて第三者がコメント
+      perform_enqueued_jobs do
+        question1.messages.create!(user: user3, body: "message")
+      end
       assert { ActionMailer::Base.deliveries.count == 2 }
+
+      # tp ActionMailer::Base.deliveries.collect { |e| {subject: e.subject, from: e.from, to: e.to} }
+
+      mail = ActionMailer::Base.deliveries.first
+      assert { mail.to == ["user1@localhost"] }
+
+      mail = ActionMailer::Base.deliveries.second
+      assert { mail.to == ["user2@localhost"] }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
+# >> |-------------------------------------------+----------------------------+---------------------|
+# >> | subject                                   | from                       | to                  |
+# >> |-------------------------------------------+----------------------------+---------------------|
+# >> | user2さんが「(title1)」にコメントしました | ["shogi.extend@gmail.com"] | ["user1@localhost"] |
+# >> |-------------------------------------------+----------------------------+---------------------|
+# >> |-------------------------------------------------------------+----------------------------+---------------------|
+# >> | subject                                                     | from                       | to                  |
+# >> |-------------------------------------------------------------+----------------------------+---------------------|
+# >> | user3さんが「(title1)」にコメントしました                   | ["shogi.extend@gmail.com"] | ["user1@localhost"] |
+# >> | 以前コメントした「(title1)」にuser3さんがにコメントしました | ["shogi.extend@gmail.com"] | ["user2@localhost"] |
+# >> |-------------------------------------------------------------+----------------------------+---------------------|
 # >> .
 # >> 
-# >> Finished in 1.2 seconds (files took 2.3 seconds to load)
+# >> Finished in 0.77753 seconds (files took 2.15 seconds to load)
 # >> 1 example, 0 failures
 # >> 

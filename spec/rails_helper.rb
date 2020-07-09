@@ -70,6 +70,11 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.render_views
 
+  # perform_enqueued_jobs ブロックで deliver_later を即時実行できるようにする
+  # https://qiita.com/upinetree/items/41a2a8fe9e1dd7c291ab
+  # しかしこれを include した段階で have_broadcasted_to が動かなくなるので使っていない
+  # config.include ActiveJob::TestHelper
+
   # テストの中で使う便利メソッド
   config.include Module.new {
     def swars_battle_setup

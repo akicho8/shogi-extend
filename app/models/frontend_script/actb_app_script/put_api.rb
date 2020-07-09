@@ -43,7 +43,7 @@ module FrontendScript
           question = current_user.actb_questions.build
         end
         begin
-          question.together_with_params_came_from_js_update(params)
+          question.update_from_js(params[:question])
         rescue ActiveRecord::RecordInvalid => error
           return { form_error_message: error.message }
         end

@@ -49,7 +49,8 @@ Rails.application.configure do
   ################################################################################
 
   # https://qiita.com/upinetree/items/41a2a8fe9e1dd7c291ab
-  config.active_job.queue_adapter = :inline
+  # ↓これは効いてないっぽい。結局 spec で perform_enqueued_jobs ブロックを使うことで同期実行するようにしている
+  config.active_job.queue_adapter = :sidekiq
 
   # for AppConfig
   config.to_prepare do

@@ -32,7 +32,7 @@ exit
 # }.deep_symbolize_keys
 #
 # question = user.actb_questions.find_or_initialize_by(id: params[:question][:id])
-# question.together_with_params_came_from_js_update(params)
+# question.update_from_js(params)
 # question
 # question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
 

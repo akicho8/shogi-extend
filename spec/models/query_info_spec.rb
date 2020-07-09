@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QueryInfo do
   let :query_info do
-    QueryInfo.parse("foo:a foo:a foo:b,c https://example.com/")
+    QueryInfo.parse("foo:a foo:a foo:b,c https://localhost/")
   end
 
   it "lookup" do
@@ -14,6 +14,6 @@ RSpec.describe QueryInfo do
   end
 
   it "urls" do
-    assert { query_info.urls == ["https://example.com/"] }
+    assert { query_info.urls == ["https://localhost/"] }
   end
 end

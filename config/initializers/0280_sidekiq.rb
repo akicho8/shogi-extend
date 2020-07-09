@@ -83,6 +83,6 @@ end
 # end
 # Sidekiq::Logging.logger.formatter = JSTTimestampFormatter.new
 
-# if Rails.env.test?
-#   require 'sidekiq/testing/inline'
-# end
+if Rails.env.test?
+  require 'sidekiq/testing/inline'
+end

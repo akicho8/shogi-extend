@@ -42,9 +42,9 @@ module Actb
     def self.mock_question
       raise if Rails.env.production? || Rails.env.staging?
 
-      user1 = User.find_or_create_by!(name: "user1", email: "user1@example.com")
-      user2 = User.find_or_create_by!(name: "user2", email: "user2@example.com")
-      user3 = User.find_or_create_by!(name: "user3", email: "user3@example.com")
+      user1 = User.find_or_create_by!(name: "user1", email: "user1@localhost")
+      user2 = User.find_or_create_by!(name: "user2", email: "user2@localhost")
+      user3 = User.find_or_create_by!(name: "user3", email: "user3@localhost")
       question = user1.actb_questions.mock_type1
       question.messages.create!(user: user2, body: "user2のコメント")
       question.messages.create!(user: user3, body: "user3のコメント")
@@ -232,13 +232,6 @@ module Actb
       SlackAgent.message_send(key: "問題登録", body: [title, page_url].join(" "))
     end
 
-    after_commit do
-      if saved_change_to_attribute?(:folder_id) && folder_key === "active"
-        User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
-        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を投稿しました", body: info.to_t).deliver_later
-      end
-    end
-
     def page_url
       Rails.application.routes.url_helpers.url_for([:training, {only_path: false, question_id: id}])
     end
@@ -261,10 +254,19 @@ module Actb
     end
 
     # jsから来たパラメーターでまとめて更新する
-    def together_with_params_came_from_js_update(params)
-      params = params.deep_symbolize_keys
-
-      question = params[:question]
+    #
+    #   params = {
+    #     "title"            => "(title)",
+    #     "init_sfen"        => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
+    #     "moves_answers"    => [{"moves_str"=>"4c5b"}],
+    #     "time_limit_clock" => "1999-12-31T15:03:00.000Z",
+    #   }
+    #   question = user.actb_questions.build
+    #   question.update_from_js(params)
+    #   question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
+    #
+    def update_from_js(params)
+      question = params.deep_symbolize_keys
 
       ActiveRecord::Base.transaction do
         assign_attributes(question.slice(*[
@@ -290,20 +292,28 @@ module Actb
 
         save!
 
-        # 削除
-        self.moves_answer_ids = question[:moves_answers].collect { |e| e[:id] }
+        if records = question[:moves_answers]
+          # 削除
+          self.moves_answer_ids = records.collect { |e| e[:id] }
 
-        # 追加 or 更新
-        question[:moves_answers].each do |e|
-          if v = e[:id]
-            moves_answer = moves_answers.find(v)
-          else
-            moves_answer = moves_answers.build
+          # 追加 or 更新
+          records.each do |e|
+            if v = e[:id]
+              moves_answer = moves_answers.find(v)
+            else
+              moves_answer = moves_answers.build
+            end
+            moves_answer.moves_str = e[:moves_str]
+            moves_answer.end_sfen = e[:end_sfen]
+            moves_answer.save!
           end
-          moves_answer.moves_str = e[:moves_str]
-          moves_answer.end_sfen = e[:end_sfen]
-          moves_answer.save!
         end
+      end
+
+      if public_posted?
+        SlackAgent.message_send(key: "問題登録", body: [title, page_url].join(" "))
+        User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
+        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を投稿しました", body: info.to_t).deliver_later
       end
     end
 
@@ -317,6 +327,11 @@ module Actb
       if user
         self.folder = user.public_send("actb_#{key}_box")
       end
+    end
+
+    # 公開した直後か？
+    def public_posted?
+      saved_change_to_attribute?(:folder_id) && folder_key === "active"
     end
 
     def init_sfen=(sfen)

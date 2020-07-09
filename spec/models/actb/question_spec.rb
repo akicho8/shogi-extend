@@ -42,31 +42,36 @@ require 'rails_helper'
 module Actb
   RSpec.describe Question, type: :model do
     include ActbSupportMethods
+    include ActiveJob::TestHelper # for perform_enqueued_jobs
 
     it do
       assert { question1.valid? }
     end
 
-    describe "子がエラーなら親を保存しない" do
+    describe "update_from_js 保存" do
       let :params do
         {
-          question: {
-            init_sfen: "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
-            moves_answers: [{"moves_str"=>"4c5b"}],
-            time_limit_clock: "1999-12-31T15:03:00.000Z",
-          },
+          :init_sfen        => "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
+          :moves_answers    => [{"moves_str"=>"4c5b"}],
+          :time_limit_clock => "1999-12-31T15:03:00.000Z",
         }
       end
 
-      it "同じのがある" do
+      it do
         # 1つ目を作る
         question = user1.actb_questions.build
-        question.together_with_params_came_from_js_update(params)
+        perform_enqueued_jobs do
+          question.update_from_js(params)
+        end
         assert { question.persisted? }
+
+        # 開発者に通知
+        mail = ActionMailer::Base.deliveries.last
+        assert { mail.to   == ["shogi.extend@gmail.com"] }
 
         # 同じ2つ目を作る→失敗
         question = user1.actb_questions.build
-        proc { question.together_with_params_came_from_js_update(params) }.should raise_error(ActiveRecord::RecordInvalid)
+        proc { question.update_from_js(params) }.should raise_error(ActiveRecord::RecordInvalid)
         assert { question.persisted? == false }
       end
     end
@@ -135,10 +140,10 @@ module Actb
 
       assert { Actb::LobbyMessage.count == 0 }
 
-      question1.update!(folder_key: "active")
+      question1.update_from_js(folder_key: "active")
       assert { Actb::LobbyMessage.count == 1 }
 
-      question1.update!(folder_key: "draft")
+      question1.update_from_js(folder_key: "draft")
       assert { Actb::LobbyMessage.count == 1 }
     end
 
@@ -149,8 +154,28 @@ module Actb
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ................
+# >> ..........F.....
 # >> 
-# >> Finished in 3.91 seconds (files took 2.1 seconds to load)
-# >> 16 examples, 0 failures
+# >> Failures:
+# >> 
+# >>   1) Actb::Question update_from_js 保存 
+# >>      Failure/Error: moves_answer = moves_answers.build
+# >> 
+# >>      NoMethodError:
+# >>        undefined method `build' for [{:moves_str=>"4c5b"}]:Array
+# >>      # ./app/models/actb/question.rb:304:in `block (2 levels) in update_from_js'
+# >>      # ./app/models/actb/question.rb:300:in `each'
+# >>      # ./app/models/actb/question.rb:300:in `block in update_from_js'
+# >>      # ./app/models/actb/question.rb:271:in `update_from_js'
+# >>      # -:64:in `block (4 levels) in <module:Actb>'
+# >>      # -:63:in `block (3 levels) in <module:Actb>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 2.77 seconds (files took 2.29 seconds to load)
+# >> 16 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:60 # Actb::Question update_from_js 保存 
 # >> 
