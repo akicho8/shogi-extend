@@ -6,5 +6,6 @@ export default axios.create({
   timeout: 1000 * 60 * 3,      // 3min
   headers: {
     "X-Requested-With": "XMLHttpRequest",
+    "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
   },
 })
