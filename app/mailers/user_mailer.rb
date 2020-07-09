@@ -46,7 +46,7 @@ class UserMailer < ApplicationMailer
   # UserMailer.question_other_message(User.first, Actb::QuestionMessage.first).deliver_later
   # http://0.0.0.0:3000/rails/mailers/user/question_other_message
   def question_other_message(user, message)
-    subject = "以前コメントした「#{message.question.title}」に#{message.user.name}さんがにコメントしました"
+    subject = "以前コメントした「#{message.question.title}」に#{message.user.name}さんがコメントしました"
 
     out = []
     out << message.body
