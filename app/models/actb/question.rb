@@ -225,7 +225,6 @@ module Actb
 
       # validates :init_sfen # , uniqueness: { case_sensitive: true }
       # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-      # validates :display_key, inclusion: DisplayInfo.keys.collect(&:to_s)
     end
 
     after_create_commit do
