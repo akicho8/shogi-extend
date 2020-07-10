@@ -299,6 +299,15 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
     },
     wakatta_handle_broadcasted(params) {
+      // 「わかった」を押した直後に時間切れとなった場合、時間切れ表示中に wakatta_handle_broadcasted が発生し、
+      // 解答権を取得してしまう。そして数秒後、次の問題に切り替わったあたりで解答権を失う
+      // つまり、残り0.1秒で「わかった」すると次の問題を答える権利がなくなる
+      // これを防ぐために、時間切れになった瞬間、wakatta_handle_broadcasted を処理しないようにする
+      if (this.sub_mode !== "operation_mode") {
+        this.console_log("わかったを押した直後に時間切れになったためわかったを無効とする")
+        return
+      }
+
       this.talk_stop()          // クエストを読み上げている場合は停止する
       const mi = this.member_infos_hash[params.membership_id]
       if (params.membership_id === this.current_membership.id) {
