@@ -92,8 +92,16 @@ export const application_battle_timer = {
   computed: {
     ////////////////////////////////////////////////////////////////////////////////
     main_time_str() {
-      return dayjs().startOf("year").set("seconds", this.main_rest_seconds).format("m:ss")
+      return dayjs().startOf("year").set("seconds", this.main_rest_seconds).format(this.main_time_dayjs_format)
     },
+    main_time_dayjs_format() {
+      if (this.main_rest_seconds < 60) {
+        return "s"
+      } else {
+        return "m:ss"
+      }
+    },
+    // 現在の変化する残り時間
     main_rest_seconds() {
       let v = this.main_time_limit_sec - this.main_interval_count
       if (v < 0) {
@@ -101,6 +109,11 @@ export const application_battle_timer = {
       }
       return v
     },
+    // 現在の問題に設定された考慮時間
+    // 次の順番で設定値があれば優先して取得する
+    //   1. Actb::Config (config.rb)
+    //   2. ルール
+    //   3. 問題
     main_time_limit_sec() {
       let v = null
 
@@ -117,7 +130,7 @@ export const application_battle_timer = {
       return this.current_question.time_limit_sec
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////// シングルトン専用
 
     s_rest_seconds() {
       let v = this.config.s_time_limit_sec - this.s_interval_count
