@@ -95,10 +95,12 @@ before_fork do
 
     config.reaper_status_logs = true # 監視ログの表示
 
-    config.pre_term = -> (worker) {
-      puts "Worker #{worker.inspect} being killed"
-      SlackAgent.message_send(key: "puma再起動", body: worker.inspect)
-    }
+    # ↓動いているのかわからない
+    # config.pre_term = -> (worker) {
+    #   puts "Worker #{worker.inspect} being killed"
+    #   ApplicationMailer.developper_notice(subject: "再起動", body: worker.inspect).deliver_now
+    #   SlackAgent.message_send(key: "puma再起動", body: worker.inspect)
+    # }
 
   end
   PumaWorkerKiller.start
