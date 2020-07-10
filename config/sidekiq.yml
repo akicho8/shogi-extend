@@ -1,22 +1,33 @@
 ---
 # このファイルはバックグランド側しか読まない
 
-# スレッド数
+################################################################################ development
 :concurrency: 1
-
 :verbose: true
+:max_retries: 3
+
 :pidfile: tmp/pids/sidekiq.pid
 :logfile: log/sidekiq_development.log
 
+# キューは決められた名前で定義しないといけない
+# https://mikerogers.io/2019/06/06/rails-6-sidekiq-queues.html
+# https://qiita.com/west2538/items/f932978e79220b880693
+:queues:
+  - critical
+  - mailers
+  - default
+  - action_mailbox_routing
+  - action_mailbox_incineration
+  - active_storage_analysis
+  - active_storage_purge
+  - low
+
+################################################################################ staging
 staging:
-  :concurrency: 1
   :logfile: log/sidekiq_staging.log
 
+################################################################################ production
 production:
   # https://saitoxu.io/2018/03/sidekiq-introduction
   :concurrency: 15
   :logfile: log/sidekiq_production.log
-
-:queues:
-  - default
-  - mailers
