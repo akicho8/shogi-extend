@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe "リレー将棋", type: :system do
+RSpec.describe "共有将棋盤", type: :system do
   it "最初" do
     visit "/share-board"
-    expect(page).to have_content "リレー将棋"
+    expect(page).to have_content "共有将棋盤"
     doc_image
   end
 
