@@ -16,7 +16,7 @@
       :theme="app.config.sp_theme"
       :human_side_key="'none'"
     )
-    .kaitousuru_button.has-text-centered
+    .wakatta_button.has-text-centered
       b-button.has-text-weight-bold(@click="app.wakatta_handle(false)" type="is-primary" :disabled="app.current_mi.otetuki_p(app.current_question.id)") わかった
 
   template(v-if="app.x_mode === 'x2_play'")
@@ -97,7 +97,7 @@ export default {
 .the_battle_question_singleton_rule
   .tags_container
     margin-top: 0.7rem
-  .kaitousuru_button
+  .wakatta_button
     margin-top: 0.7rem
   .akirameru_button
     margin-top: 0.7rem

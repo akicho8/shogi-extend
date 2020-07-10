@@ -56,6 +56,6 @@ export default {
 .the_battle_question_marathon_rule
   .tags_container
     margin-top: 0.7rem
-  .kaitousuru_button
+  .wakatta_button
     margin-top: 0rem
 </style>
