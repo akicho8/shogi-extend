@@ -189,4 +189,4 @@ gem "holiday_jp"
 gem 'sidekiq'
 gem 'redis-namespace'
 
-gem "puma_worker_killer", "~> 0.1.1"
+gem "puma_worker_killer"

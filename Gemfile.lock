@@ -509,7 +509,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-twitter
   puma (~> 4.1)
-  puma_worker_killer (~> 0.1.1)
+  puma_worker_killer
   rack-cors
   rails (~> 6.0.2, >= 6.0.2.1)
   rails-controller-testing
