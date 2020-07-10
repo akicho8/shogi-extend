@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include CurrentUserMod
 
-  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
+  skip_before_action :verify_authenticity_token, :if => proc { request.format.json? }
 
   attr_accessor :layout_type
 
