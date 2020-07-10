@@ -92,7 +92,10 @@ export const application_battle_timer = {
   computed: {
     ////////////////////////////////////////////////////////////////////////////////
     main_time_as_string() {
-      let v = this.main_time_dayjs_format
+      let v = this.main_rest_seconds
+      if (v < 1) {
+        v = 1
+      }
       return dayjs().startOf("year").set("seconds", v).format(this.main_time_dayjs_format)
     },
     main_time_dayjs_format() {
