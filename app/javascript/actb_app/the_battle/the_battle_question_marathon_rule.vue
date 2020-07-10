@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_battle_question_marathon_rule
   .status_line2.has-text-centered.has-text-weight-bold
-    | {{app.main_time_str}}
+    | {{app.main_time_as_string}}
     template(v-if="app.debug_read_p")
       | ({{app.share_turn_offset}})
   shogi_player(

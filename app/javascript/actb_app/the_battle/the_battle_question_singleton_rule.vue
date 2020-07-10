@@ -6,7 +6,7 @@
 
   template(v-if="app.x_mode === 'x1_thinking'")
     .status_line2.has-text-centered.has-text-weight-bold
-      | {{app.main_time_str}}
+      | {{app.main_time_as_string}}
     shogi_player(
       :run_mode="'play_mode'"
       :kifu_body="app.current_question.init_sfen"
