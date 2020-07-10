@@ -20,6 +20,7 @@ module BackendScript
     def script_body
       user = User.find(params[:user_id])
       c.current_user_set(user)
+      c.redirect_to :root, toast_black: "#{user.name}に変更しました"
     end
 
     private
