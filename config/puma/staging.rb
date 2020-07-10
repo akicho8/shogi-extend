@@ -43,7 +43,7 @@ state_path "tmp/pids/puma.state"
 # the concurrency of the application would be max `threads` * `workers`.
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
-workers ENV.fetch("WEB_CONCURRENCY") { 1 }
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
 # https://techracho.bpsinc.jp/hachi8833/2017_11_13/47696
 # Use the `preload_app!` method when specifying a `workers` number.
@@ -77,3 +77,28 @@ tag "shogi_web_staging"
 # ドキュメントにはデフォルト false とあるが、実際は quiet true がデフォルトになっている
 # ログは journalctl -f -u puma で見れる
 quiet false
+
+# for puma_worker_killer gem
+# https://github.com/schneems/puma_worker_killer
+# http://nekorails.hatenablog.com/entry/2018/10/12/101011
+# https://re-engines.com/2018/08/13/rails-puma-performance-tuning/
+before_fork do
+  PumaWorkerKiller.config do |config|
+    # メモリ使用率で再起動
+    config.ram           = 512      # 512MBのメモリがあって
+    config.frequency     = 5 * 60   # 5分間ごとにチェックして
+    config.percent_usage = 0.9      # 0.9の使用量なら一番メモリ量の多いworkerを再起動
+
+    # 時間で再起動
+    config.rolling_restart_frequency = 5 * 60 # 5分毎に順番にworkerを再起動
+
+    config.reaper_status_logs = true # 監視ログの表示
+
+    config.pre_term = -> (worker) {
+      puts "Worker #{worker.inspect} being killed"
+      SlackAgent.message_send(key: "puma再起動", body: worker.inspect)
+    }
+
+  end
+  PumaWorkerKiller.start
+end

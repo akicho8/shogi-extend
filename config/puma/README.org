@@ -1,0 +1,1 @@
+* puma はデフォルトで config/puma/#{Rails.env}.rb のファイルがあれば優先的に読む

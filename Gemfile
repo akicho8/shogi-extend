@@ -188,3 +188,5 @@ gem "holiday_jp"
 # ActiveJob
 gem 'sidekiq'
 gem 'redis-namespace'
+
+gem "puma_worker_killer", "~> 0.1.1"
