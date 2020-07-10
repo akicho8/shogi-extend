@@ -32,12 +32,14 @@ application (+ store)
 | readygo_mode   | 開始前の待ち時間       |
 | deden_mode     | 問題番号表示           |
 | operation_mode | ユーザー考え中・操作中 |
+| correct_mode   | 正解「○」表示中       |
+| timeout_mode   | 時間切れ表示中         |
 |----------------+------------------------|
 
 * sub_mode が operation_mode のときの x_mode (singleton_rule 専用)
 |-------------+--------------------------------|
-| x1_thinking | 問題を見て考えている           |
-| x2_play     | わかったので自分が操作中       |
+| x1_thinking | 両者が問題を見て考えている     |
+| x2_play     | わかったので自分だけが操作中   |
 | x3_see      | 自分以外は相手の操作を見ている |
 |-------------+--------------------------------|
 

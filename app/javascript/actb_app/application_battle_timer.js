@@ -6,8 +6,8 @@ export const application_battle_timer = {
       main_interval_id: null,
       main_interval_count: null,
 
-      s_interval_id: null,
-      s_interval_count: null,
+      ops_interval_id: null,
+      ops_interval_count: null,
     }
   },
 
@@ -60,28 +60,28 @@ export const application_battle_timer = {
 
     //////////////////////////////////////////////////////////////////////////////// シングルトン専用
 
-    s_interval_start() {
-      this.s_interval_stop()
-      this.s_interval_count = 0
-      this.s_interval_id = setInterval(this.s_interval_processing, 1000)
+    ops_interval_start() {
+      this.ops_interval_stop()
+      this.ops_interval_count = 0
+      this.ops_interval_id = setInterval(this.ops_interval_processing, 1000)
     },
 
-    s_interval_stop() {
-      if (this.s_interval_id) {
-        clearInterval(this.s_interval_id)
-        this.s_interval_id = null
+    ops_interval_stop() {
+      if (this.ops_interval_id) {
+        clearInterval(this.ops_interval_id)
+        this.ops_interval_id = null
       }
     },
 
-    s_interval_restart() {
-      this.s_interval_stop()
-      this.s_interval_start()
+    ops_interval_restart() {
+      this.ops_interval_stop()
+      this.ops_interval_start()
     },
 
-    s_interval_processing() {
+    ops_interval_processing() {
       if (this.sub_mode === "operation_mode") {
-        this.s_interval_count += 1
-        if (this.s_rest_seconds === 0) {
+        this.ops_interval_count += 1
+        if (this.ops_rest_seconds === 0) {
           this.x2_play_timeout_handle()
         }
       }
@@ -136,8 +136,8 @@ export const application_battle_timer = {
 
     //////////////////////////////////////////////////////////////////////////////// シングルトン専用
 
-    s_rest_seconds() {
-      let v = this.config.s_time_limit_sec - this.s_interval_count
+    ops_rest_seconds() {
+      let v = this.config.s_time_limit_sec - this.ops_interval_count
       if (v < 0) {
         v = 0
       }
