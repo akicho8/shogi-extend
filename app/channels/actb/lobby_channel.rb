@@ -3,6 +3,7 @@ module Actb
     MATCHING_RATE_THRESHOLD_DEFAULT = 50
 
     def subscribed
+      __event_notify__(__method__)
       return reject unless current_user
 
       stream_from "actb/lobby_channel"
@@ -10,6 +11,7 @@ module Actb
     end
 
     def unsubscribed
+      __event_notify__(__method__)
       Actb::Rule.matching_users_delete_from_all_rules(current_user)
     end
 

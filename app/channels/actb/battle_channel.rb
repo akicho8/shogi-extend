@@ -1,6 +1,7 @@
 module Actb
   class BattleChannel < BaseChannel
     def subscribed
+      __event_notify__(__method__, battle_id: battle_id)
       return reject unless current_user
       raise ArgumentError, params.inspect unless battle_id
 
@@ -9,6 +10,7 @@ module Actb
 
     # バトルが正常終了していない状態で切断された場合に負け
     def unsubscribed
+      __event_notify__(__method__, battle_id: battle_id)
       if current_battle.end_at.blank?
         if once_run("actb/battles/#{current_battle.id}/disconnect")
           say "*切断しました"

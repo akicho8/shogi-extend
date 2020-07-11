@@ -1,6 +1,7 @@
 module Actb
   class QuestionChannel < BaseChannel
     def subscribed
+      __event_notify__(__method__, question_id: question_id)
       raise ArgumentError, params.inspect unless question_id
       stream_from "actb/question_channel/#{question_id}"
 
@@ -10,6 +11,7 @@ module Actb
     end
 
     def unsubscribed
+      __event_notify__(__method__, question_id: question_id)
     end
 
     def speak(data)

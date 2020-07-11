@@ -12,6 +12,7 @@ module Actb
 
     # 接続と同時にオンラインユーザーとして登録し配信する
     def subscribed
+      __event_notify__(__method__)
       return reject unless current_user
 
       stream_from "actb/school_channel"
@@ -20,6 +21,7 @@ module Actb
 
     # 切断と同時にオンラインユーザーを解除して配信する
     def unsubscribed
+      __event_notify__(__method__)
       self.class.active_users_delete(current_user)
       Actb::Rule.matching_users_delete_from_all_rules(current_user)
     end

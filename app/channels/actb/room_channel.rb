@@ -9,6 +9,7 @@ module Actb
     end
 
     def subscribed
+      __event_notify__(__method__, room_id: room_id)
       return reject unless current_user
       raise ArgumentError, params.inspect unless room_id
 
@@ -24,6 +25,7 @@ module Actb
     end
 
     def unsubscribed
+      __event_notify__(__method__, room_id: room_id)
       self.class.active_users_delete(current_user)
 
       if current_user
