@@ -1,10 +1,32 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-auth_info = AuthInfo.last
-tp auth_info
-tp auth_info.meta_info.dig("info", "description")
-pp auth_info.meta_info
+# auth_info = AuthInfo.last
+# tp auth_info
+# tp auth_info.meta_info.dig("info", "description")
+# pp auth_info.meta_info
 
-
-# ~> -:6:in `<main>': undefined method `meta_info' for nil:NilClass (NoMethodError)
+rows = []
+AuthInfo.find_each{|e|
+  p e
+  profile = e.user.profile
+  if v = e.meta_info.dig("info", "description")
+    if profile.description.blank?
+      profile.description = v
+    end
+  end
+  if e.provider == "twitter"
+    if v = e.meta_info.dig("info", "nickname")
+      if profile.twitter_key.blank?
+        profile.twitter_key = v
+      end
+    end
+  end
+  if profile.has_changes_to_save?
+    profile.changes_to_save
+    rows << e.user
+  end
+  profile.save!
+}
+tp rows
+# >> #<AuthInfo id: 1, user_id: 9, provider: "twitter", uid: "967050880603140096", meta_info: {"provider"=>"twitter", "uid"=>"967050880603140096", "info"=>{"nickname"=>"sgkinakomochi", "name"=>"きなこもち", "email"=>"pinpon.ikeda+kinakomochi@gmail.com", "location"=>"", "image"=>"http://pbs.twimg.com/profile_images/1028116534969815041/hLpk7e88_normal.jpg", "description"=>"将棋の勉強をするほど棋力が衰えていってる人。千駄ヶ谷道場2級。ウォーズ1級(降級してたけど最近復帰)。嬉野流・アヒル・かまいたち戦法をよくやる。あと将棋ウォーズ棋譜検索や、しょぼい将棋AI作ってる→ https://t.co/7FjrsqsoD3", "urls"=>{"Website"=>"https://t.co/veJjZwDq7W", "Twitter"=>"https://twitter.com/sgkinakomochi"}}, "credentials"=>{"token"=>"967050880603140096-GLv9LfM6lY6iFnzleCZYRi309D9LW0d", "secret"=>"PV1NQYTK2NxcyPHxDxGybpcDUYKqgYU66PZfv8orkU9pR"}, "extra"=>{"access_token"=>{"token"=>"967050880603140096-GLv9LfM6lY6iFnzleCZYRi309D9LW0d", "secret"=>"PV1NQYTK2NxcyPHxDxGybpcDUYKqgYU66PZfv8orkU9pR", "consumer"=>{"key"=>"Wu71PK3dBvS19dmNtakAqLMpZ", "secret"=>"BkCk8FDWfVD6INv9K3vf3NZcnQCKIGL4jiFK2qo5RASsWyMEZs", "options"=>{"signature_method"=>"HMAC-SHA1", "request_token_path"=>"/oauth/request_token", "authorize_path"=>"/oauth/authenticate", "access_token_path"=>"/oauth/access_token", "proxy"=>nil, "scheme"=>"header", "http_method"=>"post", "debug_output"=>nil, "oauth_version"=>"1.0", "site"=>"https://api.twitter.com"}, "debug_output"=>nil, "http"=>{"address"=>"api.twitter.com", "port"=>443, "local_host"=>nil, "local_port"=>nil, "curr_http_version"=>"1.1", "keep_alive_timeout"=>2, "last_communicated"=>nil, "close_on_empty_response"=>false, "socket"=>nil, "started"=>false, "open_timeout"=>30, "read_timeout"=>30, "write_timeout"=>60, "continue_timeout"=>nil, "max_retries"=>1, "debug_output"=>nil, "proxy_from_env"=>true, "proxy_uri"=>false, "proxy_address"=>nil, "proxy_port"=>nil, "proxy_user"=>nil, "proxy_pass"=>nil, "use_ssl"=>true, "ssl_context"=>{"max_proto_version"=>nil, "min_proto_version"=>769, "verify_mode"=>0, "verify_hostname"=>true, "session_new_cb"=>{}}, "ssl_session"=>{}, "sspi_enabled"=>false, "ca_file"=>nil, "ca_path"=>nil, "cert"=>nil, "cert_store"=>nil, "ciphers"=>nil, "key"=>nil, "ssl_timeout"=>nil, "ssl_version"=>nil, "min_version"=>nil, "max_version"=>nil, "verify_callback"=>nil, "verify_depth"=>nil, "verify_mode"=>0}, "http_method"=>"post", "uri"=>"https://api.twitter.com"}, "params"=>{"oauth_token"=>"967050880603140096-GLv9LfM6lY6iFnzleCZYRi309D9LW0d", "oauth_token_secret"=>"PV1NQYTK2NxcyPHxDxGybpcDUYKqgYU66PZfv8orkU9pR", "user_id"=>"967050880603140096", "screen_name"=>"sgkinakomochi"}, "response"=>{"cache-control"=>["no-cache, no-store, must-revalidate, pre-check=0, post-check=0"], "connection"=>["close"], "content-disposition"=>["attachment; filename=json.json"], "content-length"=>["960"], "content-type"=>["application/json;charset=utf-8"], "date"=>["Sat, 11 Jul 2020 09:15:13 GMT"], "expires"=>["Tue, 31 Mar 1981 05:00:00 GMT"], "last-modified"=>["Sat, 11 Jul 2020 09:15:13 GMT"], "pragma"=>["no-cache"], "server"=>["tsa_m"], "set-cookie"=>["personalization_id=\"v1_xNYChI4e+A7l5evDUQODig==\"; Max-Age=63072000; Expires=Mon, 11 Jul 2022 09:15:13 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None", "lang=ja; Path=/", "guest_id=v1%3A159445891369642233; Max-Age=63072000; Expires=Mon, 11 Jul 2022 09:15:13 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None"], "status"=>["200 OK"], "strict-transport-security"=>["max-age=631138519"], "x-access-level"=>["read"], "x-connection-hash"=>["c4ffe917f91a00dc2c390b349c963750"], "x-content-type-options"=>["nosniff"], "x-frame-options"=>["SAMEORIGIN"], "x-rate-limit-limit"=>["75"], "x-rate-limit-remaining"=>["74"], "x-rate-limit-reset"=>["1594459813"], "x-response-time"=>["118"], "x-transaction"=>["003379a600350833"], "x-twitter-response-tags"=>["BouncerExempt", "BouncerCompliant"], "x-xss-protection"=>["0"]}}, "raw_info"=>{"id"=>967050880603140096, "id_str"=>"967050880603140096", "name"=>"きなこもち", "screen_name"=>"sgkinakomochi", "location"=>"", "description"=>"将棋の勉強をするほど棋力が衰えていってる人。千駄ヶ谷道場2級。ウォーズ1級(降級してたけど最近復帰)。嬉野流・アヒル・かまいたち戦法をよくやる。あと将棋ウォーズ棋譜検索や、しょぼい将棋AI作ってる→ https://t.co/7FjrsqsoD3", "url"=>"https://t.co/veJjZwDq7W", "entities"=>{"url"=>{"urls"=>[{"url"=>"https://t.co/veJjZwDq7W", "expanded_url"=>"https://www.shogi-extend.com/", "display_url"=>"shogi-extend.com", "indices"=>[0, 23]}]}, "description"=>{"urls"=>[{"url"=>"https://t.co/7FjrsqsoD3", "expanded_url"=>"http://shogi-extend.com/", "display_url"=>"shogi-extend.com", "indices"=>[100, 123]}]}}, "protected"=>false, "followers_count"=>794, "friends_count"=>724, "listed_count"=>13, "created_at"=>"Fri Feb 23 14:57:51 +0000 2018", "favourites_count"=>5052, "utc_offset"=>nil, "time_zone"=>nil, "geo_enabled"=>false, "verified"=>false, "statuses_count"=>2278, "lang"=>nil, "contributors_enabled"=>false, "is_translator"=>false, "is_translation_enabled"=>false, "profile_background_color"=>"000000", "profile_background_image_url"=>"http://abs.twimg.com/images/themes/theme1/bg.png", "profile_background_image_url_https"=>"https://abs.twimg.com/images/themes/theme1/bg.png", "profile_background_tile"=>false, "profile_image_url"=>"http://pbs.twimg.com/profile_images/1028116534969815041/hLpk7e88_normal.jpg", "profile_image_url_https"=>"https://pbs.twimg.com/profile_images/1028116534969815041/hLpk7e88_normal.jpg", "profile_banner_url"=>"https://pbs.twimg.com/profile_banners/967050880603140096/1520602029", "profile_link_color"=>"ABB8C2", "profile_sidebar_border_color"=>"000000", "profile_sidebar_fill_color"=>"000000", "profile_text_color"=>"000000", "profile_use_background_image"=>false, "has_extended_profile"=>true, "default_profile"=>false, "default_profile_image"=>false, "following"=>false, "follow_request_sent"=>false, "notifications"=>false, "translator_type"=>"none", "suspended"=>false, "needs_phone_verification"=>false, "email"=>"pinpon.ikeda+kinakomochi@gmail.com"}}}>

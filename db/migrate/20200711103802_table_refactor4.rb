@@ -1,7 +1,25 @@
 class TableRefactor4 < ActiveRecord::Migration[6.0]
   def up
-    change_table :actb_settings do |t|
-      # t.string :session_lock_token, null: true, comment: "複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン"
-    end
+    rows = []
+    AuthInfo.find_each{|e|
+      profile = e.user.profile
+      if v = e.meta_info.dig("info", "description")
+        if profile.description.blank?
+          profile.description = v
+        end
+      end
+      if e.provider == "twitter"
+        if v = e.meta_info.dig("info", "nickname")
+          if profile.twitter_key.blank?
+            profile.twitter_key = v
+          end
+        end
+      end
+      if profile.has_changes_to_save?
+        profile.changes_to_save
+        rows << e.user
+      end
+      profile.save!
+    }
   end
 end
