@@ -8,10 +8,13 @@
   .buttons.is-centered.rule_buttons
     template(v-for="row in app.RuleInfo.values")
       template(v-if="row.display_p || development_p")
-        b-button.has-text-weight-bold(@click="app.rule_key_set_handle(row)" :type="{'is-primary': app.matching_user_ids_hash[row.key].length >= 1}" expanded)
-          | {{row.name}}
-          template(v-if="app.debug_read_p")
-            | ({{app.matching_user_ids_hash[row.key].length}})
+        b-button(@click="app.rule_key_set_handle(row)" :class="{'is_active': app.matching_user_ids_hash[row.key].length >= 0}" expanded)
+          span.has-text-weight-bold
+            | {{row.name}}
+            template(v-if="app.debug_read_p")
+              | ({{app.matching_user_ids_hash[row.key].length}})
+          .description.is-size-8.has-text-grey-light.mt-1
+            | {{row.description}}
 
 </template>
 
@@ -38,7 +41,11 @@ export default {
     margin-top: 1rem
     flex-direction: column
     .button
-      height: 3.75rem
+      height: 4.75rem
       &:not(:first-child)
         margin-top: 0.3rem // ボタンとボタンの隙間
+      &.is_active
+        border: 1px solid change_color($primary, $lightness: 70%)
+        &:hover
+          border: 1px solid change_color($primary, $lightness: 50%)
 </style>
