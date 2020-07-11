@@ -30,6 +30,32 @@ module Actb
       has_many :actb_histories, class_name: "Actb::History", dependent: :destroy
     end
 
+    concerning :BattleMethods do
+      # 二つのブラウザで同期してしまう不具合回避のための値
+      # def unique_code
+      #   SecureRandom.hex
+      # end
+
+      def as_json_type9
+        as_json({
+            only: [
+              :id,
+              :key,
+              :name,
+              :permit_tag_list,
+            ],
+            methods: [
+              :avatar_path,
+              :rating,
+              :skill_key,
+              :description,
+              :twitter_key,
+              # :unique_code,
+            ],
+          })
+      end
+    end
+
     concerning :MessageMethods do
       included do
         with_options(dependent: :destroy) do |o|

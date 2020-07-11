@@ -88,7 +88,7 @@ module FrontendScript
       info[:question_default_attributes] = Actb::Question.default_attributes
 
       if current_user
-        info[:current_user] = current_user_json
+        info[:current_user] = current_user.as_json_type9
 
         if true
           # すでにログインしている人は x-cable で unauthorized になる
@@ -130,10 +130,6 @@ module FrontendScript
       if v = current_battle_id
         Actb::Battle.find_by(id: v)
       end
-    end
-
-    def current_user_json
-      current_user.as_json(only: [:id, :key, :name, :permit_tag_list], methods: [:avatar_path, :rating, :skill_key, :description, :twitter_key])
     end
 
     def users

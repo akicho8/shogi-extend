@@ -70,7 +70,7 @@ module FrontendScript
           current_user.profile.update!(twitter_key: v)
         end
 
-        { current_user: current_user_json }
+        { current_user: current_user.as_json_type9 }
       end
 
       private
