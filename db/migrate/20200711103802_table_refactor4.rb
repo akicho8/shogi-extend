@@ -1,5 +1,7 @@
 class TableRefactor4 < ActiveRecord::Migration[6.0]
   def up
+    AuthInfo.reset_column_information
+
     rows = []
     AuthInfo.find_each{|e|
       profile = e.user.profile
