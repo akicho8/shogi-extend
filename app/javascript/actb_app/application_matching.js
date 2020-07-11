@@ -14,7 +14,7 @@ export const application_matching = {
 
       this.matching_interval_timer_clear()
       this.matching_interval_timer_count = 0
-      this.matching_interval_timer_processing()
+      this.matching_interval_timer_processing() // 初回は待つ必要がないのですぐに呼ぶ
       this.matching_interval_timer_id = setInterval(this.matching_interval_timer_processing, 1000)
     },
 
