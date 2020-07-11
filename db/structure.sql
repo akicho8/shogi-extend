@@ -549,6 +549,7 @@ CREATE TABLE `actb_settings` (
   `rule_id` bigint(20) NOT NULL COMMENT '選択ルール',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `session_lock_token` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン',
   PRIMARY KEY (`id`),
   KEY `index_actb_settings_on_user_id` (`user_id`),
   KEY `index_actb_settings_on_rule_id` (`rule_id`),
@@ -1039,6 +1040,9 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200702112302'),
 ('20200703130800'),
 ('20200705093600'),
-('20200705125200');
+('20200705125200'),
+('20200711103800'),
+('20200711103801'),
+('20200711103802');
 
 
