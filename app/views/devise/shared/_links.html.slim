@@ -24,7 +24,7 @@
                       = t('.sign_in_with_provider', provider: e.name, default: "Sign in with #{e.name}")
                       - if session.dig(:provider_remember, "provider") == e.key.to_s && false
                         = " ←"
-            - if AppConfig[:password_login_enable]
+            - if AppConfig[:simple_login_enable]
               p
                 = link_to([:direct_session], method: :post, class: "button is-large has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button") do
                   span.is-size-5

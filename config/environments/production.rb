@@ -150,7 +150,7 @@ Rails.application.configure do
         :columns_detail_show           => false,
 
         :available_providers           =>  [:twitter, :google],
-        :password_login_enable         =>  false,
+        # :simple_login_enable           =>  false,
       })
   end
 end
