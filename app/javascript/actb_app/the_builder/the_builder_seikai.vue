@@ -21,7 +21,7 @@
     b-button(@click="$parent.edit_stock_handle" :type="{'is-primary': $parent.answer_turn_offset >= 1}")
       | {{$parent.answer_turn_offset}}手目までの手順を正解とする
 
-  b-tabs.answer_tabs(v-model="$parent.answer_tab_index" position="is-centered" expanded :animated="true" v-if="$parent.question.moves_answers.length >= 1" @change="sound_play('click')")
+  b-tabs.answer_tabs(v-model="$parent.answer_tab_index" position="is-centered" expanded :animated="false" v-if="$parent.question.moves_answers.length >= 1" @change="sound_play('click')")
     template(v-for="(e, i) in $parent.question.moves_answers")
       b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
         shogi_player(
