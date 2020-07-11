@@ -175,6 +175,7 @@ export default {
     kensho_mode_handle() {
       this.mode_select("kensho_mode")
       this.exam_run_count = 0
+      this.say(this.question.direction_message)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
