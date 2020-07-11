@@ -4,7 +4,7 @@ module ApplicationCable
       return if Rails.env.production? || Rails.env.test?
 
       body = []
-      body << "[#{Time.current}]"
+      body << "[#{Time.current.to_s(:ymdhms)}]"
       if current_user
         body << "[#{current_user.id}][#{current_user.name}]"
       end
