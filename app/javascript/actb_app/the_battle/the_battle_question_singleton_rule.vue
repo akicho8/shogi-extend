@@ -4,7 +4,7 @@
     //- .status2
     //-   | {{app.share_turn_offset}}手目
 
-  template(v-if="app.x_mode === 'x1_thinking'")
+  template(v-if="app.x_mode === 'x1_think'")
     .status_line2.has-text-centered.has-text-weight-bold
       | {{app.main_time_as_string}}
     shogi_player(

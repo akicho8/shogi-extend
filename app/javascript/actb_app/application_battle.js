@@ -69,7 +69,7 @@ export const application_battle = {
       this.battle = new Battle(battle)
 
       this.mode = "battle"
-      this.sub_mode = "standby"
+      this.sub_mode = "sm1_standby"
 
       this.continue_tap_counts = {}
 
@@ -111,20 +111,20 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
 
       this.ok_notice("対戦開始")
-      this.sub_mode = "readygo_mode"
-      this.delay(this.config.readygo_mode_delay, () => this.deden_mode_trigger())
+      this.sub_mode = "sm2_readygo"
+      this.delay(this.config.readygo_delay, () => this.sm3_deden_trigger())
     },
 
-    deden_mode_trigger() {
+    sm3_deden_trigger() {
       this.sound_play("deden")
-      this.sub_mode = "deden_mode"
-      this.delay(this.config.deden_mode_delay, () => this.operation_mode_trigger())
+      this.sub_mode = "sm3_deden"
+      this.delay(this.config.deden_delay, () => this.sm4_tactic_trigger())
     },
 
-    operation_mode_trigger() {
-      this.sub_mode = "operation_mode"
+    sm4_tactic_trigger() {
+      this.sub_mode = "sm4_tactic"
 
-      this.x_mode = "x1_thinking"
+      this.x_mode = "x1_think"
 
       this.share_sfen = null
 
@@ -144,7 +144,7 @@ export const application_battle = {
     },
 
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
-      if (this.sub_mode === "operation_mode") {
+      if (this.sub_mode === "sm4_tactic") {
 
         if (this.battle.rule.key === "singleton_rule") {
           // 安全のため残り0秒になってから操作しても無効とする
@@ -211,9 +211,8 @@ export const application_battle = {
 
         this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
 
-        // correct_mode or timeout_mode
         if (params.membership_id === this.current_membership.id) {
-          this.sub_mode = `${ox_mark_info.key}_mode`
+          this.sub_mode_set_by_ox_mark_info(ox_mark_info)
           this.delay_and_owattayo_or_next_trigger(ox_mark_info)
         }
       }
@@ -221,8 +220,7 @@ export const application_battle = {
       // 正解時         → 正解したユーザーが送信者
       // タイムアウト時 → プレイマリーユーザーが送信者
       if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
-        this.sub_mode = `${ox_mark_info.key}_mode` // correct_mode or timeout_mode
-
+        this.sub_mode_set_by_ox_mark_info(ox_mark_info)
         this.seikai_user_niha_maru(mi, ox_mark_info)  // 正解時は正解したユーザーが送信者なので正解者には○
         this.ryousya_jikangire(ox_mark_info)          // タイムアウトのときは両者に時間切れ
         if (ox_mark_info.key === "correct") {        // 正解のときだけでよい。タイムアウトは両者なので通知した片方に×がでるのは変
@@ -231,6 +229,16 @@ export const application_battle = {
         if (this.leader_p) {
           this.delay_and_owattayo_or_next_trigger(ox_mark_info) // [ONCE]
         }
+      }
+    },
+
+    //// 
+    sub_mode_set_by_ox_mark_info(ox_mark_info) {
+      if (ox_mark_info.key === "correct") {
+        this.sub_mode = "sm5_correct"
+      }
+      if (ox_mark_info.key === "timeout") {
+        this.sub_mode = "sm6_timeout"
       }
     },
 
@@ -282,12 +290,12 @@ export const application_battle = {
       if (this.battle.rule.key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
           this.question_index = params.question_index // 自分だったら次に進める
-          this.deden_mode_trigger()
+          this.sm3_deden_trigger()
         }
       }
       if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
         this.question_index = params.question_index // 相手もそろって次に進める
-        this.deden_mode_trigger()
+        this.sm3_deden_trigger()
       }
     },
 
@@ -303,7 +311,7 @@ export const application_battle = {
       // 解答権を取得してしまう。そして数秒後、次の問題に切り替わったあたりで解答権を失う
       // つまり、残り0.1秒で「わかった」すると次の問題を答える権利がなくなる
       // これを防ぐために、時間切れになった瞬間、wakatta_handle_broadcasted を処理しないようにする
-      if (this.sub_mode !== "operation_mode") {
+      if (this.sub_mode !== "sm4_tactic") {
         this.console_log("わかったを押した直後に時間切れになったためわかったを無効とする")
         return
       }
@@ -357,7 +365,7 @@ export const application_battle = {
       }
 
       this.sound_play("mistake")
-      this.x_mode = "x1_thinking"
+      this.x_mode = "x1_think"
       this.ops_interval_stop()
     },
 

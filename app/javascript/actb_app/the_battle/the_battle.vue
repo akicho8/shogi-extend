@@ -9,14 +9,14 @@
       .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs
 
   //////////////////////////////////////////////////////////////////////////////// 第○問
-  template(v-if="app.sub_mode === 'deden_mode'")
-    .deden_mode_container.has-text-centered.is-size-3
+  template(v-if="app.sub_mode === 'sm3_deden'")
+    .sm3_deden_container.has-text-centered.is-size-3
       .question_index
         | 第{{app.question_index + 1}}問
 
   //////////////////////////////////////////////////////////////////////////////// 時間切れ
-  template(v-if="app.sub_mode === 'timeout_mode'")
-    .timeout_mode_container.has-text-centered.is-size-3
+  template(v-if="app.sub_mode === 'sm6_timeout'")
+    .sm6_timeout_container.has-text-centered.is-size-3
       template(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
         | 時間切れ
       template(v-if="app.battle.rule.key === 'singleton_rule'")
@@ -26,7 +26,7 @@
           | 時間切れ
 
   //////////////////////////////////////////////////////////////////////////////// 問題
-  template(v-if="app.sub_mode === 'operation_mode' || app.sub_mode === 'correct_mode'")
+  template(v-if="app.sub_mode === 'sm4_tactic' || app.sub_mode === 'sm5_correct'")
     question_author(:question="app.current_question" :title_display_p="false")
     the_battle_question_marathon_rule(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
     the_battle_question_singleton_rule(v-if="app.battle.rule.key === 'singleton_rule'")
