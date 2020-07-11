@@ -1,8 +1,9 @@
-- list = ServiceInfo.find_all(&:display_p).find_all(&:on_swars_search_p)
-- if list.present?
-  .mt-6(v-if="fetched_count === 0 && !$options.current_swars_user_key")
-    .has-text-centered-mobile
-      .title.is-6.mb-4 新サービス紹介
-    .columns.is-multiline
-      - list.each do |si|
-        = render partial: "tops/service_info", locals: { si: si }
+- if Rails.env.development? || Rails.env.test?
+  - list = ServiceInfo.find_all(&:display_p).find_all(&:on_swars_search_p)
+  - if list.present?
+    .mt-6(v-if="fetched_count === 0 && !$options.current_swars_user_key")
+      .has-text-centered-mobile
+        .title.is-6.mb-4 新サービス紹介
+      .columns.is-multiline
+        - list.each do |si|
+          = render partial: "tops/service_info", locals: { si: si }
