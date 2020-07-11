@@ -26,7 +26,7 @@
   b-field(label="解説" label-position="on-border")
     b-input(v-model="$parent.question.description" size="is-small" type="textarea" rows="4")
 
-  b-field(label="クエスト指示文言(仮)" label-position="on-border" message="問題と一緒に表示する文言です。解答方針やヒントを伝えたいときに記入してください。基本、空でかまいません")
+  b-field(label="メッセージ" label-position="on-border" message="問題と一緒に表示する文言です。最善手ではない手が解答になるときやヒントを伝えたいときに記入してください。基本、空でかまいません")
     b-input(v-model="$parent.question.direction_message" placeholder="飛車を捕獲せよ！")
 
   b-collapse.mt-5(:open="$parent.question.source_author_collapse_open_p")
