@@ -31,16 +31,10 @@ module Actb
     end
 
     concerning :CurrentUserMethods do
-      # 二つのブラウザで同期してしまう不具合回避のための値
-      # 新しく開いた瞬間にトークンが変化するので古い方には送られなくなる(受信しても無視するしかなくなる)
-      def session_lock_token
-        token = SecureRandom.hex
-        actb_setting.update!(session_lock_token: token)
-        token
-      end
-
       def session_lock_token_valid?(token)
-        actb_setting.session_lock_token === token
+        Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, actb_setting.session_lock_token, token])
+
+        actb_setting.reload.session_lock_token == token
       end
 
       def as_json_type9
@@ -57,9 +51,16 @@ module Actb
               :skill_key,
               :description,
               :twitter_key,
-              :session_lock_token,
             ],
           })
+
+        # 二つのブラウザで同期してしまう不具合回避のための値
+        # 新しく開いた瞬間にトークンが変化するので古い方には送られなくなる(受信しても無視するしかなくなる)
+        # ↑これはまずい、2連続アクセス(はてブ？などが後からGET)した場合に START できなくなる
+        token = SecureRandom.hex
+        # actb_setting.update!(session_lock_token: token)
+        attrs[:session_lock_token] = token
+
         attrs
       end
     end

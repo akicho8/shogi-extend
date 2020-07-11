@@ -56,9 +56,9 @@ export const application_matching = {
       }
     },
     // session_lock_token が無効になった
-    session_lock_token_invalid_broadcasted(params) {
+    session_lock_token_invalid_narrowcasted(params) {
       if (params.session_lock_token === this.current_user.session_lock_token) {
-        this.warning_notice("他の端末でログインしたのでキャンセルします")
+        this.session_lock_token_invalid_notify()
         this.matching_cancel_handle()
       }
     },

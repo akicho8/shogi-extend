@@ -5,7 +5,7 @@ export const the_question_show_mod = {
   methods: {
     ov_question_info_set(question_id) {
       this.sound_play("click")
-      this.remote_get(this.app.info.api_path, { remote_action: "question_single_fetch", question_id: question_id }, e => {
+      this.api_get("question_single_fetch", {question_id: question_id}, e => {
         if (e.ov_question_info) {
           const ov_question_info =  e.ov_question_info
           ov_question_info.question = new Question(ov_question_info.question)

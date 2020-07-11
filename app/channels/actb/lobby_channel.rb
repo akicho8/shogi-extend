@@ -45,7 +45,7 @@ module Actb
 
       # session_lock_token が変化していたら別のブラウザで対戦が開始されたことがわかる
       unless current_user.session_lock_token_valid?(data[:session_lock_token])
-        ActionCable.server.broadcast("actb/lobby_channel", bc_action: :session_lock_token_invalid_broadcasted, bc_params: data)
+        ActionCable.server.broadcast("actb/lobby_channel", bc_action: :session_lock_token_invalid_narrowcasted, bc_params: data)
         return
       end
 
@@ -55,6 +55,7 @@ module Actb
         gap, opponent = ordered_info
         if gap < matching_rate_threshold
           room_create([opponent, current_user]) # 元々いた人を左側に配置(どちらをリーダーにするかに影響する)
+          return
         end
       end
 

@@ -22,7 +22,7 @@ export const application_history_vote = {
         enabled: null,
       }
 
-      this.silent_remote_fetch("PUT", this.app.info.api_path, {remote_action: "vote_handle", ...params}, e => {
+      this.silent_api_put("vote_handle", params, e => {
         this.vote_talk(e)
 
         // 該当のレコードを更新
@@ -66,7 +66,7 @@ export const application_history_vote = {
         enabled: null,
       }
 
-      this.silent_remote_fetch("PUT", this.app.info.api_path, { remote_action: "clip_handle", ...params }, e => {
+      this.silent_api_put("clip_handle", params, e => {
         if (e.diff >= 1) {
           this.say("保存リストに追加しました")
         }

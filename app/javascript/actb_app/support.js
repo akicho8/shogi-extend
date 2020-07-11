@@ -71,6 +71,18 @@ export const support = {
         return true
       }
     },
+
+    api_get(command, params, block) {
+      this.remote_get(this.app.info.api_path, {remote_action: command, ...params}, block)
+    },
+
+    api_put(command, params, block) {
+      this.remote_fetch("PUT", this.app.info.api_path, {remote_action: command, ...params}, block)
+    },
+
+    silent_api_put(command, params, block) {
+      this.silent_remote_fetch("PUT", this.app.info.api_path, {remote_action: command, ...params}, block)
+    },
   },
   computed: {
     ...Vuex.mapState([

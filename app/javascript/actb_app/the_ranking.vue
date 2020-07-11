@@ -116,7 +116,7 @@ export default {
         params.take = 5
         params.shuffle = true
       }
-      this.remote_get(this.app.info.api_path, {remote_action: "ranking_fetch", ...params}, e => {
+      this.api_get("ranking_fetch", params, e => {
         this.rank_data = e.rank_data
       })
     },
@@ -130,7 +130,7 @@ export default {
     },
 
     seasons_fetch() {
-      this.remote_get(this.app.info.api_path, { remote_action: "seasons_fetch" }, e => {
+      this.api_get("seasons_fetch", {}, e => {
         if (e.seasons) {
           this.seasons = e.seasons
         }

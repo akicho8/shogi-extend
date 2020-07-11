@@ -2,26 +2,26 @@ module FrontendScript
   class ActbAppScript
     concern :PutApi do
 
+      # 更新することでマッチング結果はこちらが対象になる
+      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_set_handle -d session_lock_token=xxx http://localhost:3000/script/actb-app.json
+      def session_lock_token_set_handle
+        raise ArgumentError, params.inspect if params[:session_lock_token].blank?
+        # if current_user.actb_setting.session_lock_token
+        #   return { error_message: "" }
+        # end
+        current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
+        { status: "success" }
+      end
+
       # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_valid_handle -d session_lock_token=xxx http://localhost:3000/script/actb-app.json
       def session_lock_token_valid_handle
         raise ArgumentError, params.inspect if params[:session_lock_token].blank?
         if current_user.session_lock_token_valid?(params[:session_lock_token])
           { status: "success" }
         else
-          { status: "session_lock_token_different" }
+          { status: "session_lock_token_invalid" }
         end
       end
-
-      # 更新することでマッチング結果はこちらが対象になる
-      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_set_handle -d session_lock_token=xxx http://localhost:3000/script/actb-app.json
-      # def session_lock_token_set_handle
-      #   raise ArgumentError, params.inspect if params[:session_lock_token].blank?
-      #   # if current_user.actb_setting.session_lock_token
-      #   #   return { error_message: "" }
-      #   # end
-      #   current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
-      #   { status: "success" }
-      # end
 
       # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_reset_handle http://localhost:3000/script/actb-app.json
       # def session_lock_token_reset_handle
@@ -31,6 +31,10 @@ module FrontendScript
 
       # curl -d _method=put -d _user_id=1 -d remote_action=rule_key_set_handle -d rule_key=marathon_rule http://localhost:3000/script/actb-app.json
       def rule_key_set_handle
+        raise ArgumentError, params.inspect if params[:session_lock_token].blank?
+        unless current_user.session_lock_token_valid?(params[:session_lock_token])
+          return { status: "session_lock_token_invalid" }
+        end
         current_user.actb_setting.update!(rule: Actb::Rule.fetch(params[:rule_key]))
         { status: "success" }
       end

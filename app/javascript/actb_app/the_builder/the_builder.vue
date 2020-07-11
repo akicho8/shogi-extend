@@ -130,7 +130,7 @@ export default {
     this.mode_select("haiti_mode")
 
     // 一覧用
-    this.remote_get(this.app.info.api_path, { remote_action: "builder_form_resource_fetch" }, e => {
+    this.api_get("builder_form_resource_fetch", {}, e => {
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
 
@@ -268,7 +268,7 @@ export default {
       // https://day.js.org/docs/en/durations/diffing
       this.question.time_limit_clock_to_sec()
       const before_create_or_upate_name = this.create_or_upate_name
-      this.remote_fetch("PUT", this.app.info.api_path, {remote_action: "save_handle", question: this.question}, e => {
+      this.api_put("save_handle", {question: this.question}, e => {
         if (e.form_error_message) {
           this.warning_notice(e.form_error_message)
         }
@@ -342,7 +342,7 @@ export default {
     async_records_load() {
       console.log("async_records_load")
 
-      this.remote_get(this.app.info.api_path, { remote_action: "questions_fetch", ...this.page_info }, e => {
+      this.api_get("questions_fetch", this.page_info, e => {
         this.questions = e.questions.map(e => new Question(e))
         this.page_info = e.page_info
         this.question_counts = e.question_counts // 各フォルダごとの個数

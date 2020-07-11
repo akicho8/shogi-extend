@@ -30,7 +30,7 @@ export const application_history = {
 
       if (this.history_records && false) {
       } else {
-        this.remote_get(this.app.info.api_path, { remote_action: "history_records_fetch" }, e => {
+        this.api_get("history_records_fetch", {}, e => {
           if (e.history_records) {
             this.history_records = e.history_records.map(e => Object.assign({}, e, {question: new Question(e.question)}))
           }
@@ -43,7 +43,7 @@ export const application_history = {
 
       if (this.clip_records && false) {
       } else {
-        this.remote_get(this.app.info.api_path, { remote_action: "clip_records_fetch" }, e => {
+        this.api_get("clip_records_fetch", {}, e => {
           if (e.clip_records) {
             this.clip_records = e.clip_records.map(e => Object.assign({}, e, {question: new Question(e.question)}))
           }

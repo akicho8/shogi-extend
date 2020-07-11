@@ -139,7 +139,7 @@ export default {
       }
     }
 
-    this.remote_get(this.app.info.api_path, { remote_action: "resource_fetch" }, e => {
+    this.api_get("resource_fetch", {}, e => {
       this.RuleInfo   = RuleInfo.memory_record_reset(e.RuleInfo)
       this.OxMarkInfo = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
       this.SkillInfo = SkillInfo.memory_record_reset(e.SkillInfo)
@@ -259,17 +259,21 @@ export default {
     lobby_messages_setup() {
       this.lobby_messages = []
       this.lobby_message_body = ""
-      this.remote_get(this.app.info.api_path, { remote_action: "lobby_messages_fetch" }, e => {
+      this.api_get("lobby_messages_fetch", {}, e => {
         this.lobby_messages = e.lobby_messages
       })
     },
 
     debug_matching_add_handle(rule_key) {
-      this.remote_fetch("PUT", this.app.info.api_path, {remote_action: "debug_matching_add_handle", exclude_user_id: this.current_user.id, rule_key: rule_key}, e => {})
+      this.api_put("debug_matching_add_handle", {exclude_user_id: this.current_user.id, rule_key: rule_key}, e => {})
     },
 
     matching_users_clear_handle() {
-      this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "matching_users_clear_handle", exclude_user_id: this.current_user.id }, e => {})
+      this.api_put("matching_users_clear_handle", {exclude_user_id: this.current_user.id }, e => {})
+    },
+
+    session_lock_token_invalid_notify() {
+      this.warning_notice("別の端末で開いたため開始できません。この端末で開始するにはリロードしてください")
     },
 
     start_handle() {
@@ -292,10 +296,7 @@ export default {
         }
       }
 
-      this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "session_lock_token_valid_handle", session_lock_token: this.current_user.session_lock_token }, e => {
-        if (e.status === "session_lock_token_different") {
-          this.warning_notice("別の端末で開いたため開始できません。この端末で開始するにはリロードしてください")
-        }
+      this.api_put("session_lock_token_set_handle", {session_lock_token: this.current_user.session_lock_token}, e => {
         if (e.status === "success") {
           this.mode = "rule_select"
           this.say("ルールを選択してください")
@@ -305,8 +306,16 @@ export default {
 
     rule_key_set_handle(rule) {
       this.sound_play("click")
-      this.say(rule.name)
-      this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "rule_key_set_handle", rule_key: rule.key }, e => {
+
+      this.api_put("rule_key_set_handle", {
+        session_lock_token: this.current_user.session_lock_token,
+        rule_key: rule.key,
+      }, e => {
+        if (e.status === "session_lock_token_invalid") {
+          this.session_lock_token_invalid_notify()
+          return
+        }
+        this.say(rule.name)
         this.matching_setup()
       })
     },
