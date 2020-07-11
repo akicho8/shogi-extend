@@ -276,6 +276,22 @@ export default {
       this.sound_play("click")
       if (this.login_required2()) { return }
 
+      if (this.current_user.rating > 1500) {
+        if (this.current_user.name.match(/名無し/)) {
+          if (this.config.user_name_required) {
+            this.warning_notice("できれば名無しの棋士ではない名前を入力してください")
+            this.app.profile_edit_handle()
+            this.$nextTick(() => {
+              const el = document.querySelector("#user_name_input_field")
+              if (el) {
+                el.click()
+              }
+            })
+            return
+          }
+        }
+      }
+
       this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "session_lock_token_valid_handle", session_lock_token: this.current_user.session_lock_token }, e => {
         if (e.status === "session_lock_token_different") {
           this.warning_notice("別の端末で開いたため開始できません。この端末で開始するにはリロードしてください")

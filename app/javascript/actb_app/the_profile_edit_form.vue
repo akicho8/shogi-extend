@@ -12,7 +12,7 @@
           img.is-rounded(:src="image_source")
 
   .form_container
-    .user_name.has-text-centered.has-text-weight-bold.is_clickable(@click="name_edit_handle")
+    #user_name_input_field.user_name.has-text-centered.has-text-weight-bold.is_clickable(@click="name_edit_handle")
       | {{$parent.new_name}}
 
     b-field(label="自己紹介" label-position="on-border")

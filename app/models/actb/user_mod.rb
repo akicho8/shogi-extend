@@ -30,7 +30,7 @@ module Actb
       has_many :actb_histories, class_name: "Actb::History", dependent: :destroy
     end
 
-    concerning :BattleMethods do
+    concerning :CurrentUserMethods do
       # 二つのブラウザで同期してしまう不具合回避のための値
       # 新しく開いた瞬間にトークンが変化するので古い方には送られなくなる(受信しても無視するしかなくなる)
       def session_lock_token
