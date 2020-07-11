@@ -11,7 +11,7 @@ application (+ store)
 
 ・support はすべてに mixin
 ・builder だけは完全分離で他は分離できないので基本indexにすべてのメソッドがある
-・ライブラリではないので $paret をむしろ積極的に使っていく
+・ライブラリではないので $parent をむしろ積極的に使っていく
 
 * 重要
 
