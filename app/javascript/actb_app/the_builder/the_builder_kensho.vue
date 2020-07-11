@@ -1,5 +1,8 @@
 <template lang="pug">
 .the_builder_kensho
+  .has-text-centered(v-if="$parent.question.direction_message")
+    | {{$parent.question.direction_message}}
+
   shogi_player(
     :run_mode="'play_mode'"
     :kifu_body="$parent.question.init_sfen"
