@@ -32,9 +32,9 @@ module Actb
 
     concerning :BattleMethods do
       # 二つのブラウザで同期してしまう不具合回避のための値
-      # def unique_code
-      #   SecureRandom.hex
-      # end
+      def unique_code
+        SecureRandom.hex
+      end
 
       def as_json_type9
         as_json({
@@ -50,7 +50,7 @@ module Actb
               :skill_key,
               :description,
               :twitter_key,
-              # :unique_code,
+              :unique_code,
             ],
           })
       end
