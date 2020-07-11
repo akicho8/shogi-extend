@@ -16,7 +16,7 @@
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
   figure.image
     img.is-rounded(:src="membership.user.avatar_path")
-  .user_name.has-text-weight-bold.is-size-8
+  .user_name.has-text-weight-bold.is-size-8.is_truncate.has-text-centered
     | {{membership.user.name}}
 
   //////////////////////////////////////////////////////////////////////////////// ルール毎に異なる
@@ -81,6 +81,9 @@ export default {
   img
     width: 32px
     height: 32px
+
+  .user_name
+    width: 8rem
 
   // オーバーレイ○×
   position: relative

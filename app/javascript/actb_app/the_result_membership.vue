@@ -12,7 +12,7 @@
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
   figure.image
     img.is-rounded(:src="membership.user.avatar_path")
-  .user_name.has-text-weight-bold.mt-1
+  .user_name.has-text-weight-bold.mt-1.is_truncate.has-text-centered
     | {{membership.user.name}}
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +76,9 @@ export default {
     color: $danger
   .straight_lose_count
     color: $success
+
+  .user_name
+    width: 8rem
 
   // avatar
   img

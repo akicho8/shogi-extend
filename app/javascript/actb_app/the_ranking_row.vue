@@ -6,7 +6,7 @@
   figure.image.is-48x48.is_flex_shrink_0
     img.is-rounded(:src="row.user.avatar_path")
   .name_with_rating
-    .name.has-text-weight-bold.is_line_break_on
+    .user_name.has-text-weight-bold.is_truncate
       | {{row.user.name}}
       span.ml-1.has-text-primary.is_line_break_off(v-if="app.debug_read_p") {{row.user.skill_key}}
     .value
@@ -58,6 +58,7 @@ export default {
 
   .name_with_rating
     margin-left: 1rem
-    .name
+    .user_name
+      width: 8rem
     .rating
 </style>
