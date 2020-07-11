@@ -355,7 +355,7 @@ export const application_battle = {
       if (this.app.config.otetuki_release_p) {
         // 解答権が相手にうつる場合
       } else {
-        // 両者が御手付きしたらリーダーがタイムアウトとみなして次の問題に移行させる
+        // 両者がおてつきしたらリーダーがタイムアウトとみなして次の問題に移行させる
         if (this.otetuki_all_p) {
           if (this.leader_p) {
             this.kotae_sentaku('timeout') // [ONCE]
