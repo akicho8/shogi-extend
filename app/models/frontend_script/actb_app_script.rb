@@ -119,7 +119,9 @@ module FrontendScript
     end
 
     def put_action
-      c.render json: public_send(params[:remote_action])
+      v = public_send(params[:remote_action])
+      raise v.inspect unless v.kind_of?(Hash)
+      c.render json: v
     end
 
     def current_battle_id

@@ -35,19 +35,26 @@ module Actb
       end
     end
 
-    # from app/javascript/actb_app/the_matching_interval.js
+    # from app/javascript/actb_app/application_matching.js
     def matching_search(data)
+      __event_notify__(__method__, data)
       data = data.to_options
+      raise ArgumentError, data.inspect if data[:session_lock_token].blank?
 
-      current_user.reload # current_user.setting.rule_key を更新する
+      current_user.reload # current_user.actb_setting.* を最新にするため
+
+      # session_lock_token が変化していたら別のブラウザで対戦が開始されたことがわかる
+      unless current_user.session_lock_token_valid?(data[:session_lock_token])
+        ActionCable.server.broadcast("actb/lobby_channel", bc_action: :session_lock_token_invalid_broadcasted, bc_params: data)
+        return
+      end
 
       matching_rate_threshold = data[:matching_rate_threshold] || MATCHING_RATE_THRESHOLD_DEFAULT
 
       if ordered_info = ordered_infos.first
         gap, opponent = ordered_info
         if gap < matching_rate_threshold
-          room_create(opponent, current_user) # 元々いた人を左側に配置
-          return
+          room_create([opponent, current_user]) # 元々いた人を左側に配置(どちらをリーダーにするかに影響する)
         end
       end
 
@@ -77,11 +84,11 @@ module Actb
       redis.matching_users_include?(user)
     end
 
-    def room_create(*users)
+    def room_create(users)
       users.each { |e| Actb::Rule.matching_users_delete_from_all_rules(e) }
 
       # app/models/actb/room.rb
-      Room.create!(rule: rule) do |e|
+      room = Room.create!(rule: rule) do |e|
         users.each do |user|
           e.memberships.build(user: user)
         end

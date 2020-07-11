@@ -38,7 +38,10 @@ export const application_matching = {
     },
 
     matching_search() {
-      this.$ac_lobby.perform("matching_search", {matching_rate_threshold: this.matching_rate_threshold})
+      this.$ac_lobby.perform("matching_search", {
+        session_lock_token: this.current_user.session_lock_token,
+        matching_rate_threshold: this.matching_rate_threshold,
+      }) // --> app/channels/actb/lobby_channel.rb (matching_search)
     },
     // マッチング不成立だったりでしょっちゅう呼ばれる
     matching_user_ids_broadcasted(params) {
@@ -52,9 +55,23 @@ export const application_matching = {
         }
       }
     },
+    // session_lock_token が無効になった
+    session_lock_token_invalid_broadcasted(params) {
+      if (params.session_lock_token === this.current_user.session_lock_token) {
+        this.warning_notice("他の端末でログインしたのでキャンセルします")
+        this.matching_cancel_handle()
+      }
+    },
 
+    // マッチングが成立すると「ロビーにいる全員」に配信される
+    // そこで自分用だと判断したときだけで部屋を作る
+    // ここで問題がある
+    // ロビーをPCとスマホで開いているときPCで開始するとロビーの方まで受信して二重に部屋を開いてしまう
+    // その理由は「自分用だと判断」する方法が「ユーザーIDのみ」にしてしまっているから。
+    // そこで session_lock_token で判断するように変更する
     room_broadcasted(params) {
-      const membership = params.room.memberships.find(e => e.user.id === this.current_user.id)
+      // const membership = params.room.memberships.find(e => e.user.id === this.current_user.id)
+      const membership = params.room.memberships.find(e => e.user.actb_setting.session_lock_token === this.current_user.session_lock_token)
       if (membership) {
         this.room_setup(params.room)
       }

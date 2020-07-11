@@ -276,8 +276,15 @@ export default {
       this.sound_play("click")
       if (this.login_required2()) { return }
 
-      this.mode = "rule_select"
-      this.say("ルールを選択してください")
+      this.remote_fetch("PUT", this.app.info.api_path, { remote_action: "session_lock_token_valid_handle", session_lock_token: this.current_user.session_lock_token }, e => {
+        if (e.status === "session_lock_token_different") {
+          this.warning_notice("別の端末で開いたため開始できません。この端末で開始するにはリロードしてください")
+        }
+        if (e.status === "success") {
+          this.mode = "rule_select"
+          this.say("ルールを選択してください")
+        }
+      })
     },
 
     rule_key_set_handle(rule) {

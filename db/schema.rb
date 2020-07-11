@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_05_125200) do
+ActiveRecord::Schema.define(version: 2020_07_11_103802) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -381,6 +381,7 @@ ActiveRecord::Schema.define(version: 2020_07_05_125200) do
     t.bigint "rule_id", null: false, comment: "選択ルール"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "session_lock_token", comment: "複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン"
     t.index ["rule_id"], name: "index_actb_settings_on_rule_id"
     t.index ["user_id"], name: "index_actb_settings_on_user_id"
   end

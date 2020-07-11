@@ -69,7 +69,16 @@ module Actb
             memberships: {
               only: [:id],
               include: {
-                user: { only: [:id, :name], methods: [:avatar_path] },
+                user: {
+                  only: [:id, :name], methods: [:avatar_path],
+                  include: {
+                    actb_setting: {
+                      only: [
+                        :session_lock_token,
+                      ]
+                    },
+                  },
+                },
               },
             },
           },

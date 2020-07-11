@@ -1,10 +1,38 @@
 module FrontendScript
   class ActbAppScript
     concern :PutApi do
-      # curl -d _method=put -d remote_action=rule_key_set_handle -d rule_key=marathon_rule http://localhost:3000/script/actb-app.json
+
+      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_valid_handle -d session_lock_token=xxx http://localhost:3000/script/actb-app.json
+      def session_lock_token_valid_handle
+        raise ArgumentError, params.inspect if params[:session_lock_token].blank?
+        if current_user.session_lock_token_valid?(params[:session_lock_token])
+          { status: "success" }
+        else
+          { status: "session_lock_token_different" }
+        end
+      end
+
+      # 更新することでマッチング結果はこちらが対象になる
+      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_set_handle -d session_lock_token=xxx http://localhost:3000/script/actb-app.json
+      # def session_lock_token_set_handle
+      #   raise ArgumentError, params.inspect if params[:session_lock_token].blank?
+      #   # if current_user.actb_setting.session_lock_token
+      #   #   return { error_message: "" }
+      #   # end
+      #   current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
+      #   { status: "success" }
+      # end
+
+      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_reset_handle http://localhost:3000/script/actb-app.json
+      # def session_lock_token_reset_handle
+      #   current_user.actb_setting.update!(session_lock_token: nil)
+      #   { status: "success" }
+      # end
+
+      # curl -d _method=put -d _user_id=1 -d remote_action=rule_key_set_handle -d rule_key=marathon_rule http://localhost:3000/script/actb-app.json
       def rule_key_set_handle
         current_user.actb_setting.update!(rule: Actb::Rule.fetch(params[:rule_key]))
-        true
+        { status: "success" }
       end
 
       # 自分以外の誰かを指定ルールに参加させる
@@ -19,13 +47,13 @@ module FrontendScript
           end
           rule.matching_users_add(user)
         end
-        true
+        { status: "success" }
       end
 
       # 解散
       def matching_users_clear_handle
         Actb::Rule.matching_users_clear
-        true
+        { status: "success" }
       end
 
       def vote_handle

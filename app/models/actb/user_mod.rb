@@ -32,12 +32,19 @@ module Actb
 
     concerning :BattleMethods do
       # 二つのブラウザで同期してしまう不具合回避のための値
-      def unique_code
-        SecureRandom.hex
+      # 新しく開いた瞬間にトークンが変化するので古い方には送られなくなる(受信しても無視するしかなくなる)
+      def session_lock_token
+        token = SecureRandom.hex
+        actb_setting.update!(session_lock_token: token)
+        token
+      end
+
+      def session_lock_token_valid?(token)
+        actb_setting.session_lock_token === token
       end
 
       def as_json_type9
-        as_json({
+        attrs = as_json({
             only: [
               :id,
               :key,
@@ -50,9 +57,10 @@ module Actb
               :skill_key,
               :description,
               :twitter_key,
-              :unique_code,
+              :session_lock_token,
             ],
           })
+        attrs
       end
     end
 
