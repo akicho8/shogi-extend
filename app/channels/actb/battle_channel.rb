@@ -199,6 +199,7 @@ module Actb
       if counts.count == current_battle.users.count
         # {10 => 5, 11 => 1} なら発動して {10 => 5, 11 => 2} なら発動しない
         if counts.values.any? { |e| e == 1 }
+          __event_notify__("再戦開始")
           current_battle.onaji_heya_wo_atarasiku_tukuruyo
         end
         return
@@ -213,6 +214,7 @@ module Actb
 
     # 強制続行
     def battle_continue_force_handle(data)
+      __event_notify__("強制続行")
       current_battle.onaji_heya_wo_atarasiku_tukuruyo
     end
 

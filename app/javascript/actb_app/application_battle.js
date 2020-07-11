@@ -80,8 +80,8 @@ export const application_battle = {
       this.__assert__(this.$ac_battle == null, "this.$ac_battle == null")
       this.$ac_battle = this.ac_subscription_create({channel: "Actb::BattleChannel", battle_id: this.battle.id}, {
         connected: () => {
-          // 結果画面でスマホを閉じる→スマホ開くで再びconnectedが呼ばれるため初回だけにする
-          if (this.battle_count === 0) {
+          // 結果画面でスマホを閉じる→スマホ開くで再びconnectedが呼ばれるので注意
+          if (this.sub_mode === "sm1_standby") {
             this.start_hook()
           }
         },
