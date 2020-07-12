@@ -5,7 +5,7 @@
 module SlackAgent
   extend self
 
-  mattr_accessor(:channel_code) { "#shogi_web" }
+  mattr_accessor(:default_channel) { "#shogi_web" }
 
   def message_send(key:, body:, channel: nil, ua: nil)
     if ENV["SETUP"]
@@ -27,10 +27,12 @@ module SlackAgent
       part = "#{body} #{user_agent_part(ua)}".squish
     end
 
-    env = ""
-    if Rails.env.production? || Rails.env.staging?
-    else
-      env = "(#{Rails.env})"
+    params = {
+      channel: channel || default_channel,
+      text: "#{env}#{icon_symbol(ua)}【#{key}】#{part}",
+    }
+    if Rails.env.test?
+      return params
     end
 
     Slack::Web::Client.new.tap do |client|
@@ -51,6 +53,12 @@ module SlackAgent
   end
 
   private
+
+  def env
+    unless Rails.env.production?
+      "[#{Rails.env}]"
+    end
+  end
 
   def user_agent_part(ua)
     s = nil
