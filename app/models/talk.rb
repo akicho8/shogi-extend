@@ -101,10 +101,9 @@ class Talk
       # >> |       content_type | audio/mpeg                                          |
       # >> | request_characters | 5                                                   |
       # >> |--------------------+-----------------------------------------------------|
+      Rails.logger.info("#{__method__}: #{source_text.inspect} => #{direct_file_path}")
     end
-
-    Rails.logger.info("#{__method__}: #{source_text.inspect} => #{direct_file_path}")
-  rescue Aws::Errors::NoSuchEndpointError => error
+  rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily => error
     Rails.logger.info ["#{__FILE__}:#{__LINE__}", __method__, error].to_t
   end
 
