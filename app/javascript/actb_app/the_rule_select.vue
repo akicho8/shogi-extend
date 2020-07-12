@@ -13,7 +13,7 @@
             | {{row.name}}
             template(v-if="app.debug_read_p")
               | ({{app.matching_user_ids_hash[row.key].length}})
-          .description.is-size-8.has-text-grey-light.mt-1
+          .description.is-size-8.has-text-grey.mt-1
             | {{row.description}}
 
 </template>
