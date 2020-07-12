@@ -179,9 +179,13 @@ module Actb
         return
       end
 
-      battle.judge_final_set(target_user, judge_key, final_key)
-      battle.reload
+      if battle.practice?
+        battle.update!(end_at: Time.current)
+      else
+        battle.judge_final_set(target_user, judge_key, final_key)
+      end
 
+      battle.reload
       broadcast(:judge_final_set_broadcasted, battle: battle.as_json_type2_for_result)
       # --> app/javascript/actb_app/application.vue
     end

@@ -19,9 +19,10 @@ export const application_battle = {
   data() {
     return {
       // 共通
-      battle:            null, // 問題と memberships が入っている
-      member_infos_hash: null, // 各 membership_id はどこまで進んでいるかわかる
-      x_mode:            null, // バトル中の状態遷移
+      battle:            null,  // 問題と memberships が入っている
+      member_infos_hash: null,  // 各 membership_id はどこまで進んでいるかわかる
+      x_mode:            null,  // バトル中の状態遷移
+      practice_p:        null,  // 練習モードを選択中 (用途は matching_search に渡すためだけにすること)
 
       // シングルトン専用
       share_sfen:        null, // 自分の操作を相手に伝える棋譜
@@ -48,6 +49,7 @@ export const application_battle = {
         membership = this.current_membership
       }
 
+      this.__assert__(params.membership_id == null, "params.membership_id == null")
       params = Object.assign({}, {
         membership_id: membership.id,
       }, params)
@@ -232,7 +234,7 @@ export const application_battle = {
       }
     },
 
-    //// 
+    ////
     sub_mode_set_by_ox_mark_info(ox_mark_info) {
       if (ox_mark_info.key === "correct") {
         this.sub_mode = "sm5_correct"
@@ -376,15 +378,28 @@ export const application_battle = {
       this.result_setup(params.battle)
     },
 
-    battle_continue_handle() {
-      this.sound_play("click")
-      this.ac_battle_perform("battle_continue_handle", {membership_id: this.current_membership.id})
+    battle_continue_handle(ms_flip = false) {
+      if (ms_flip) {
+      } else {
+        // 自分のときだけ成らす
+        this.sound_play("click")
+      }
+      this.ac_battle_perform("battle_continue_handle", {ms_flip: ms_flip})
     },
     battle_continue_handle_broadcasted(params) {
       this.continue_tap_counts = params.continue_tap_counts
 
-      this.say("再戦希望")
+      if (params.membership_id === this.current_membership.id) {
+        // 自分が先に再戦希望して、それが練習モードであれば、相手の再戦希望を押してあげる
+        if (this.battle.practice) {
+          this.delay(3, () => this.battle_continue_handle(true))
+        }
+      } else {
+        // 相手から通知が来た
+      }
+
       this.$buefy.toast.open({message: "再戦希望", position: "is-top", queue: false})
+      this.say("再戦希望")
     },
 
     battle_continue_force_handle() {

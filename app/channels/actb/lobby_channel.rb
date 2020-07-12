@@ -49,6 +49,15 @@ module Actb
         return
       end
 
+      if data[:practice_p]
+        users = [User.bot, current_user]
+        if users[Actb::Config[:leader_index]].robot?
+          raise "ロボットはリーダーになれない"
+        end
+        room_create(users, practice: data[:practice_p])
+        return
+      end
+
       matching_rate_threshold = data[:matching_rate_threshold] || MATCHING_RATE_THRESHOLD_DEFAULT
 
       if ordered_info = ordered_infos.first
@@ -85,15 +94,11 @@ module Actb
       redis.matching_users_include?(user)
     end
 
-    def room_create(users)
+    def room_create(users, attributes = {})
       users.each { |e| Actb::Rule.matching_users_delete_from_all_rules(e) }
 
       # app/models/actb/room.rb
-      room = Room.create!(rule: rule) do |e|
-        users.each do |user|
-          e.memberships.build(user: user)
-        end
-      end
+      Room.create_with_members!(users, attributes.merge(rule: rule))
     end
 
     def rule

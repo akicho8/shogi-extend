@@ -29,7 +29,7 @@ module Actb
 
             # 順序に意味はない
             r.rating_add(sdiff)                  # レーティング更新
-            r.skill_add_by_rating(judge, sdiff) # ウデマエ更新(レーティングの変化度を考慮)
+            r.skill_add_by_rating(judge, sdiff)  # ウデマエ更新(レーティングの変化度を考慮)
             r.judge_set(judge)                   # 勝敗
             r.final_set(final)                   # 結果
 

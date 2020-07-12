@@ -151,6 +151,14 @@ class User < ApplicationRecord
     def race_info
       RaceInfo.fetch(race_key || :human)
     end
+
+    def robot?
+      race_info.key == :robot
+    end
+
+    def human?
+      race_info.key == :human
+    end
   end
 
   concerning :CpuBrainMethods do

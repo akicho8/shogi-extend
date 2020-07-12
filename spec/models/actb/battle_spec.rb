@@ -16,6 +16,7 @@
 # | battle_pos | Battle pos | integer(4) | NOT NULL    |      | G     |
 # | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
 # | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
+# | practice   | Practice   | boolean    |             |      |       |
 # |------------+------------+------------+-------------+------+-------|
 
 require 'rails_helper'

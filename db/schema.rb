@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_11_103802) do
+ActiveRecord::Schema.define(version: 2020_07_11_103804) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103802) do
     t.integer "battle_pos", null: false, comment: "連戦インデックス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "practice", comment: "練習バトル？"
     t.index ["battle_pos"], name: "index_actb_battles_on_battle_pos"
     t.index ["begin_at"], name: "index_actb_battles_on_begin_at"
     t.index ["end_at"], name: "index_actb_battles_on_end_at"
@@ -303,6 +304,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103802) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "battles_count", default: 0, null: false, comment: "連戦数"
+    t.boolean "practice", comment: "練習バトル？"
     t.index ["battles_count"], name: "index_actb_rooms_on_battles_count"
     t.index ["begin_at"], name: "index_actb_rooms_on_begin_at"
     t.index ["end_at"], name: "index_actb_rooms_on_end_at"

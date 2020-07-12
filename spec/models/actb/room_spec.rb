@@ -13,6 +13,7 @@
 # | created_at    | 作成日時      | datetime   | NOT NULL            |      |       |
 # | updated_at    | 更新日時      | datetime   | NOT NULL            |      |       |
 # | battles_count | Battles count | integer(4) | DEFAULT(0) NOT NULL |      | D     |
+# | practice      | Practice      | boolean    |                     |      |       |
 # |---------------+---------------+------------+---------------------+------+-------|
 
 require 'rails_helper'
@@ -21,14 +22,17 @@ module Actb
   RSpec.describe Room, type: :model do
     include ActbSupportMethods
 
-    it "バトル生成" do
-      assert { room1.battle_create_with_members!.kind_of?(Actb::Battle) }
+    it "練習モードで作成した部屋から作ったバトルは練習モードを引き継いでいる" do
+      room = Room.create_with_members!([user1, user2], practice: true)
+      battle = room.battle_create_with_members!
+      assert { battle.kind_of?(Actb::Battle) }
+      assert { battle.practice }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .
 # >> 
-# >> Finished in 0.69169 seconds (files took 2.2 seconds to load)
+# >> Finished in 1.11 seconds (files took 2.25 seconds to load)
 # >> 1 example, 0 failures
 # >> 

@@ -13,6 +13,7 @@
 # | created_at    | 作成日時      | datetime   | NOT NULL            |      |       |
 # | updated_at    | 更新日時      | datetime   | NOT NULL            |      |       |
 # | battles_count | Battles count | integer(4) | DEFAULT(0) NOT NULL |      | D     |
+# | practice      | Practice      | boolean    |                     |      |       |
 # |---------------+---------------+------------+---------------------+------+-------|
 
 # user1 = User.create!
@@ -44,6 +45,7 @@ module Actb
     before_validation do
       self.begin_at ||= Time.current
       self.rule ||= Rule.fetch(:marathon_rule)
+      self.practice ||= false
     end
 
     with_options presence: true do
@@ -64,7 +66,7 @@ module Actb
 
     def as_json_type4
       as_json({
-          only: [:id],
+          only: [:id, :practice],
           include: {
             memberships: {
               only: [:id],

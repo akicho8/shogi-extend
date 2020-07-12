@@ -22,12 +22,11 @@
 
   the_lobby_ac_info
   .title.is-4.has-text-centered 将棋トレーニングバトル
-  .buttons.is-centered
-    b-button.has-text-weight-bold(@click="app.start_handle" type="is-primary")
-      template(v-if="app.current_user")
-        | START
-      template(v-else)
-        | LOGIN
+  .buttons.is-centered.mt-5
+    b-button.has-text-weight-bold(@click="app.login_required2" type="is-primary" v-if="!app.current_user") LOGIN
+    b-button.has-text-weight-bold(@click="app.start_handle(false)" type="is-primary" v-if="app.current_user") START
+    b-button.mt-3(@click="app.start_handle(true)") 練習
+
   the_lobby_message
   the_lobby_debug(v-if="true")
 </template>
@@ -80,5 +79,7 @@ export default {
   .title
     margin-top: 4rem
   .buttons
-    margin-top: 1.5rem
+    flex-direction: column
+    .button
+      min-width: 6rem
 </style>

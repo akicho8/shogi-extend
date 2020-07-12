@@ -276,9 +276,11 @@ export default {
       this.warning_notice("別の端末で開いたため開始できません。この端末で開始するにはリロードしてください")
     },
 
-    start_handle() {
+    start_handle(practice_p) {
       this.sound_play("click")
       if (this.login_required2()) { return }
+
+      this.practice_p = practice_p
 
       if (this.current_user.rating > 1500) {
         if (this.current_user.name.match(/名無し/)) {

@@ -41,6 +41,7 @@ export const application_matching = {
       this.$ac_lobby.perform("matching_search", {
         session_lock_token: this.current_user.session_lock_token,
         matching_rate_threshold: this.matching_rate_threshold,
+        practice_p: this.practice_p,
       }) // --> app/channels/actb/lobby_channel.rb (matching_search)
     },
     // マッチング不成立だったりでしょっちゅう呼ばれる

@@ -16,6 +16,7 @@
 # | battle_pos | Battle pos | integer(4) | NOT NULL    |      | G     |
 # | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
 # | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
+# | practice   | Practice   | boolean    |             |      |       |
 # |------------+------------+------------+-------------+------+-------|
 
 # user1 = User.create!
@@ -42,6 +43,7 @@ module Actb
     before_validation do
       if room
         self.rule ||= room.rule
+        self.practice ||= room.practice
       end
 
       if parent
@@ -90,7 +92,7 @@ module Actb
     # 開始時
     def as_json_type1
       as_json({
-          only: [:id, :battle_pos],
+          only: [:id, :battle_pos, :practice],
           include: {
             rule: { only: [:key], methods: [:time_limit_sec] },
             final: { only: [:key], methods: [:name] },
@@ -117,7 +119,7 @@ module Actb
     # 結果表示時
     def as_json_type2_for_result
       as_json({
-          only: [:id, :battle_pos],
+          only: [:id, :battle_pos, :practice],
           include: {
             final: {
               only: [:key],

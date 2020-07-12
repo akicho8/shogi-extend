@@ -2,18 +2,29 @@
 .the_result
   a.delete.is-large(@click="app.yameru_handle")
 
-  .win_lose_container.has-text-centered.is-size-3.has-text-weight-bold
-    template(v-if="app.current_membership.judge.key === 'win'")
-      .has-text-danger
-        | YOU WIN !
-    template(v-if="app.current_membership.judge.key === 'lose'")
-      .has-text-success
-        | YOU LOSE !
-    template(v-if="app.current_membership.judge.key === 'draw'")
-      .has-text-info
-        | DRAW !
-  .final_container.has-text-centered.is-size-7(v-if="app.battle.final.key === 'f_disconnect'")
-    | {{app.battle.final.name}}
+  template(v-if="app.battle.practice")
+    .has-text-centered.is-size-3.has-text-weight-bold.mt-5
+      .has-text-primary
+        | 練習モード終了
+
+  template(v-if="!app.battle.practice")
+    .win_lose_container.has-text-centered.is-size-3.has-text-weight-bold.mt-5
+      template(v-if="app.battle.practice")
+        .has-text-primary
+          | 練習おわり
+      template(v-else)
+        template(v-if="app.current_membership.judge.key === 'win'")
+          .has-text-danger
+            | YOU WIN !
+        template(v-if="app.current_membership.judge.key === 'lose'")
+          .has-text-success
+            | YOU LOSE !
+        template(v-if="app.current_membership.judge.key === 'draw'")
+          .has-text-info
+            | DRAW !
+
+    .final_container.has-text-centered.is-size-7(v-if="app.battle.final.key === 'f_disconnect'")
+      | {{app.battle.final.name}}
 
   .vs_container.is-flex
     template(v-for="(membership, i) in app.ordered_memberships")
@@ -22,12 +33,13 @@
 
   .saisen_suru_container
     .buttons.is-centered
-      b-button.has-text-weight-bold(:disabled="!all_active_p" @click="app.battle_continue_handle" :type="button_push_by_self_p ? 'is-primary' : ''") 同じ相手と再戦する
+      b-button.has-text-weight-bold(:disabled="!all_active_p" @click="app.battle_continue_handle(false)" :type="button_push_by_self_p ? 'is-primary' : ''") 同じ相手と再戦する
 
   the_room_message.mt-5
 
   .box.is-shadowless(v-if="app.debug_read_p")
     .buttons.is-centered.are-small
+      b-button(@click="app.battle_continue_handle(true)") 同じ相手と再戦する(相手)
       b-button(@click="app.battle_continue_force_handle") 強制的に続行
       b-button(@click="app.battle_leave_handle(false)") 退出通知(自分)
       b-button(@click="app.battle_leave_handle(true)") 退出通知(相手)
@@ -76,9 +88,6 @@ export default {
     position: fixed
     top: 0.5rem
     left: 0.5rem
-
-  .win_lose_container
-    margin-top: 2rem
 
   .vs_container
     justify-content: center

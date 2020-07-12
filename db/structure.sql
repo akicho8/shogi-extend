@@ -87,6 +87,7 @@ CREATE TABLE `actb_battles` (
   `battle_pos` int(11) NOT NULL COMMENT '連戦インデックス',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `practice` tinyint(1) DEFAULT NULL COMMENT '練習バトル？',
   PRIMARY KEY (`id`),
   KEY `index_actb_battles_on_room_id` (`room_id`),
   KEY `index_actb_battles_on_parent_id` (`parent_id`),
@@ -445,6 +446,7 @@ CREATE TABLE `actb_rooms` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `battles_count` int(11) NOT NULL DEFAULT '0' COMMENT '連戦数',
+  `practice` tinyint(1) DEFAULT NULL COMMENT '練習バトル？',
   PRIMARY KEY (`id`),
   KEY `index_actb_rooms_on_begin_at` (`begin_at`),
   KEY `index_actb_rooms_on_end_at` (`end_at`),
@@ -1043,6 +1045,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200705125200'),
 ('20200711103800'),
 ('20200711103801'),
-('20200711103802');
+('20200711103802'),
+('20200711103803'),
+('20200711103804');
 
 
