@@ -3,9 +3,8 @@
   a.delete.is-large(@click="app.yameru_handle")
 
   template(v-if="app.battle.practice")
-    .has-text-centered.is-size-3.has-text-weight-bold.mt-5
-      .has-text-primary
-        | 練習モード終了
+    .has-text-centered.is-size-4.has-text-weight-bold.mt-5
+      | おしまい
 
   template(v-if="!app.battle.practice")
     .win_lose_container.has-text-centered.is-size-3.has-text-weight-bold.mt-5
@@ -26,7 +25,7 @@
     .final_container.has-text-centered.is-size-7(v-if="app.battle.final.key === 'f_disconnect'")
       | {{app.battle.final.name}}
 
-  .vs_container.is-flex
+  .vs_container.mt-2.is-flex
     template(v-for="(membership, i) in app.ordered_memberships")
       the_result_membership(:membership="membership")
       .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs

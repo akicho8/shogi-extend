@@ -416,7 +416,12 @@ export const application_battle = {
     result_setup(battle) {
       this.battle = new Battle(battle)
       this.mode = "result"
-      this.sound_play(this.app.current_membership.judge.key)
+      if (this.battle.practice) {
+        this.sound_play("pon")
+        this.say("おしまい")
+      } else {
+        this.sound_play(this.app.current_membership.judge.key)
+      }
     },
 
     // 部屋から退出する
