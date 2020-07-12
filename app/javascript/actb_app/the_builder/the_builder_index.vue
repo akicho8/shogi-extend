@@ -4,8 +4,17 @@
 
   .primary_header
     .header_center_title 問題一覧
+    //////////////////////////////////////////////////////////////////////////////// メニューで開くタイプ
+    b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
+      b-icon(slot="trigger" icon="menu")
+      template(v-for="e in QuestionIndexColumnInfo.values")
+        template(v-if="e.scope.includes(app.user_type)")
+          b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)")
+            b-checkbox(:value="visible_hash[e.key]" size="is-small")
+              | {{e.name}}
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle")
 
+  ////////////////////////////////////////////////////////////////////////////////
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="question_tab_index" expanded @change="question_tab_index_change_handle")
       template(v-for="tab_info in TabInfo.values")
@@ -16,13 +25,14 @@
               b-tag(rounded)
                 | {{$parent.question_counts[tab_info.key] || 0}}
 
-  b-field.visible_toggle_checkboxes(grouped group-multiline)
+  //////////////////////////////////////////////////////////////////////////////// シンプル横並び
+  b-field.visible_toggle_checkboxes(grouped group-multiline v-if="false")
     template(v-for="e in QuestionIndexColumnInfo.values")
       .control(v-if="e.scope.includes(app.user_type)")
         b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="bool => cb_input_handle(e, bool)")
           | {{e.name}}
 
-  b-table.index_table.is-size-7(
+  b-table.index_table.is-size-7.mx-2.mt-4(
     v-if="$parent.questions"
     :data="$parent.questions"
     :mobile-cards="false"
@@ -159,6 +169,15 @@ export default {
         this.say(column.name)
       }
     },
+
+    // チェックボックスをトグルする
+    cb_toggle_handle(column) {
+      this.sound_play('click')
+      this.visible_hash[column.key] = !this.visible_hash[column.key]
+      if (this.visible_hash[column.key]) {
+        this.say(column.name)
+      }
+    },
   },
   computed: {
     QuestionIndexColumnInfo() { return QuestionIndexColumnInfo },
@@ -185,11 +204,13 @@ export default {
   @extend %padding_top_for_secondary_header
   margin-bottom: $margin_bottom
 
+  .dropdown-menu
+    min-width: 0
+
   .visible_toggle_checkboxes
     margin-top: 1.5rem
     justify-content: center
   .index_table
-    margin: 0 0.4rem
     th
       font-size: $size-10
 </style>
