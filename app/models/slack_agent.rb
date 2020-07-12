@@ -35,21 +35,7 @@ module SlackAgent
       return params
     end
 
-    Slack::Web::Client.new.tap do |client|
-      args = {
-        channel: channel || channel_code,
-        text: "#{env}#{icon_symbol(ua)}【#{key}】#{part}",
-      }
-      if Rails.env.test?
-        return args
-      end
-      client.chat_postMessage(args)
-    end
-  rescue Slack::Web::Api::Errors::TooManyRequestsError, Faraday::ParsingError, Faraday::ConnectionFailed => error
-    # エラー通知はするが Slack 通知自体はなかったことにして処理を続行する
-    # Slack は最悪 HTML のエラー画面を返してくる場合があり、そのときのエラーが Faraday::ParsingError
-    Rails.logger.info ["#{__FILE__}:#{__LINE__}", __method__, error].to_t
-    ExceptionNotifier.notify_exception(error)
+    SlackChatPostMessageJob.perform_later(params)
   end
 
   private
