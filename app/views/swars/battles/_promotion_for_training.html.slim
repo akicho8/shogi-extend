@@ -1,8 +1,9 @@
 .columns.promotion_for_training
   .column.has-text-centered-mobile
-    = link_to([:training], :class => "has-background-warning-light px-3 py-3 my-2 is-inline-block has-text-centered") do
-      div.is-size-7 詰将棋の早解きで対戦！？
-      span.has-text-weight-bold 将棋トレーニングバトル！
-      div.is-size-11 自作の問題を投稿できるよ
-      div.has-text-danger.has-text-weight-bold.ml-2 NEW!
-
+    = link_to([:training], :class => "px-3 py-3 my-2 has-text-centered is-inline-flex") do
+      = image_tag(["actb1_1200x630.png", "actb2_1200x630.png", "actb3_1200x630.png"].sample)
+      .text_block.ml-4
+        p.is-size-7= ["次の1手で対戦！？", "詰将棋の早解きで対戦！？", "勉強しながら対戦！？", "一人で詰将棋は寂しい(´･_･`)"].sample
+        span.has-text-weight-bold 将棋トレーニングバトル！
+        p.is-size-11= ["自作の問題を投稿できるよ", "ランキング上位を目指そう"].sample
+        p.has-text-danger.has-text-weight-bold.ml-2 NEW!

@@ -144,11 +144,20 @@
   .card
     display: block
     border-radius: 8px
-  
+
 //////////////////////////////////////////////////////////////////////////////// 宣伝
 .promotion_for_training
   a
     border-radius: 0.5rem
-    // box-shadow: 0 0 16px rgba(0, 0, 0, 0.1)
-    border: 1px solid change_color($warning, $lightness: 70%)
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1)
+    border: 1px solid change_color($black, $lightness: 90%)
 
+    flex-direction: row
+    align-items: center
+    justify-content: center
+
+    img
+      flex-shrink: 0
+      height: 96px
+      width: 96px
+      object-fit: cover
