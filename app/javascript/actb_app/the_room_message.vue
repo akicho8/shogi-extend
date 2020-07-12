@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_room_message
+.the_room_message.mt-4
   .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_window_height}rem`}")
     template(v-for="message in app.droped_room_messages")
       message_row(:message="message")
@@ -34,7 +34,8 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_room_message
-  margin: 0.5rem $lr_sukima
+  margin-left: $lr_sukima
+  margin-right: $lr_sukima
   .messages_box
     overflow-y: scroll
   .input_field
