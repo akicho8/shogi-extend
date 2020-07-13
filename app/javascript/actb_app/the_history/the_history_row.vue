@@ -20,7 +20,7 @@
           | {{row.question.display_author}}
           span.question_user_unit.is-size-10.has-text-grey 作
         .question_description.is-size-7(v-if="row.question.description")
-          | {{row.question.description}}
+          | {{string_truncate(row.question.description)}}
       .bottom_block.is-flex
         the_history_row_vote(:row="row")
 </template>
@@ -40,6 +40,9 @@ export default {
   },
   props: {
     row:  { required: true },
+  },
+  created() {
+    // this.row.question.description = "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ"
   },
   computed: {
     board_image_url() {

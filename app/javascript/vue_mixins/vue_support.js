@@ -62,6 +62,10 @@ const isMobile = {
 
 export default {
   methods: {
+    string_truncate(str, options = {}) {
+      return _.truncate(str, {omission: "...", length: 80, ...options})
+    },
+
     defval(v, default_value) {
       if (v == null) {
         return default_value
