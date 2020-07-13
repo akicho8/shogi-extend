@@ -4,15 +4,18 @@
 
   .primary_header
     .header_center_title 問題一覧
+    ////////////////////////////////////////////////////////////////////////////////
+    b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle")
     //////////////////////////////////////////////////////////////////////////////// メニューで開くタイプ
     b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
       b-icon(slot="trigger" icon="menu")
       template(v-for="e in QuestionIndexColumnInfo.values")
         template(v-if="e.scope.includes(app.user_type)")
           b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)")
-            b-checkbox(:value="visible_hash[e.key]" size="is-small")
+            .has-text-weight-bold(v-if="visible_hash[e.key]")
               | {{e.name}}
-    b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle")
+            .has-text-grey(v-else)
+              | {{e.name}}
 
   ////////////////////////////////////////////////////////////////////////////////
   .secondary_header
