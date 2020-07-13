@@ -252,6 +252,14 @@ module Actb
       [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, image_view_point: "black"]
     end
 
+    def title_with_author
+      [title, author_saku].join(" ")
+    end
+
+    def author_saku
+      [source_author || user.name, "作"].join
+    end
+
     # jsから来たパラメーターでまとめて更新する
     #
     #   params = {

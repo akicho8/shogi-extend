@@ -58,7 +58,7 @@ module FrontendScript
       # for OGP
       if e = current_question
         c.instance_variable_set(:@ogp_params, {
-            :title       => e.title,
+            :title       => e.title_with_author,
             :description => e.description,
             :image       => e.shared_image_params,
             :creator     => e.user.twitter_key,
