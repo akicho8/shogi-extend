@@ -59,6 +59,6 @@ export default {
   .name_with_rating
     margin-left: 1rem
     .user_name
-      width: 8rem
+      width: 12rem
     .rating
 </style>
