@@ -9,7 +9,7 @@ RSpec.describe "将棋トレーニングバトル", type: :system do
   let(:user1)     { User.create!                    }
   let(:question1) { user1.actb_questions.mock_type1 }
 
-  it "トップ(ログインなし)" do
+  xit "トップ(ログインなし)" do
     visit "/training"
     expect(page).to have_content "LOGIN"
     doc_image
