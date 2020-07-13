@@ -381,7 +381,7 @@ export default {
     builder_handle() {
       if (this.mode === "builder") {
       } else {
-        if (this.login_required_warning_notice()) { return }
+        if (this.login_required2()) { return }
         this.mode = "builder"
       }
     },
@@ -396,7 +396,7 @@ export default {
     history_handle() {
       if (this.mode === "history") {
       } else {
-        if (this.login_required_warning_notice()) { return }
+        if (this.login_required2()) { return }
         this.mode = "history"
       }
     },
