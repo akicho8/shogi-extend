@@ -41,6 +41,7 @@ module Actb
     has_many :memberships, -> { order(:position) }, class_name: "RoomMembership", dependent: :destroy, inverse_of: :room
     has_many :users, through: :memberships
     belongs_to :rule
+    belongs_to :bot_user, class_name: "User", optional: true
 
     before_validation do
       self.begin_at ||= Time.current
@@ -66,7 +67,7 @@ module Actb
 
     def as_json_type4
       as_json({
-          only: [:id, :practice],
+          only: [:id, :practice, :bot_user_id],
           include: {
             memberships: {
               only: [:id],

@@ -71,6 +71,14 @@ export const application_matching = {
     // その理由は「自分用だと判断」する方法が「ユーザーIDのみ」にしてしまっているから。
     // そこで session_lock_token で判断するように変更する
     room_broadcasted(params) {
+      // 人間BOTでアクセスしているとき、練習で開始されたBOT用の配信を、人間BOTが受信してしまう
+      // 人間ボットが受信してしまったときはスキップする
+      if (params.room.bot_user_id) {
+        if (params.room.bot_user_id === this.current_user.id) {
+          return
+        }
+      }
+
       // const membership = params.room.memberships.find(e => e.user.id === this.current_user.id)
       const membership = params.room.memberships.find(e => e.user.actb_setting.session_lock_token === this.current_user.session_lock_token)
       if (membership) {

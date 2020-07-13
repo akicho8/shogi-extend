@@ -28,6 +28,9 @@ module Actb
 
       # このユーザーに出題した問題(複数)
       has_many :actb_histories, class_name: "Actb::History", dependent: :destroy
+
+      # 自分がBOTになった部屋
+      has_many :actb_bot_rooms, class_name: "Actb::Room", foreign_key: :bot_user_id, dependent: :restrict_with_exception
     end
 
     concerning :CurrentUserMethods do

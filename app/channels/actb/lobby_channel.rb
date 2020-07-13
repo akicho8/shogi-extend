@@ -50,11 +50,12 @@ module Actb
       end
 
       if data[:practice_p]
-        users = [User.bot, current_user]
+        bot_user = User.bot
+        users = [bot_user, current_user]
         if users[Actb::Config[:leader_index]].robot?
           raise "ロボットはリーダーになれない"
         end
-        room_create(users, practice: data[:practice_p])
+        room_create(users, practice: data[:practice_p], bot_user: bot_user)
         return
       end
 
