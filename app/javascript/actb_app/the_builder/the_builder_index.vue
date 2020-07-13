@@ -11,7 +11,7 @@
       b-icon(slot="trigger" icon="menu")
       template(v-for="e in QuestionIndexColumnInfo.values")
         template(v-if="e.scope.includes(app.user_type)")
-          b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)")
+          b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="e.key")
             .has-text-weight-bold(v-if="visible_hash[e.key]")
               | {{e.name}}
             .has-text-grey(v-else)
