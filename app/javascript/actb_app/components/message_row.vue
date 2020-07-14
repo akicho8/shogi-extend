@@ -2,7 +2,7 @@
 .message_row.is-flex(v-if="show_p")
   .image.is_clickable.is_flex_shrink_0
     img.is-rounded(:src="message.user.avatar_path" @click="app.ov_user_info_set(message.user.id)")
-  .user_name.has-text-grey.is-size-7.is_clickable.has-text-weight-bold.is_truncate(@click="app.ov_user_info_set(message.user.id)")
+  .user_name.has-text-grey.is-size-7.is_clickable.has-text-weight-bold(@click="app.ov_user_info_set(message.user.id)")
     | {{message.user.name}}
   .message_body.is-size-7.is_line_break_on
     span(v-html="message_body" :class="{'has-text-primary': system_message_p, 'has-text-danger': debug_message_p}")
@@ -70,7 +70,6 @@ export default {
     img
       width: 16px
   .user_name
-    max-width: 12rem
     white-space: nowrap
     margin-left: 0.5rem
   .message_body
