@@ -20,11 +20,7 @@ module FrontendScript
 
     def script_body
       if current_uesr
-        c.instance_variable_set(:@ogp_params, {
-            :title       => page_title,
-            :image       => "frontend_script/three_stage_league_script_1200x630.png",
-            :description => "",
-          })
+        ogp_params_set
 
         s = current_uesr.memberships
         s = s.joins(:league).order(Tsl::League.arel_table[:generation].asc)

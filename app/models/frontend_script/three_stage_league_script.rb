@@ -19,11 +19,7 @@ module FrontendScript
     end
 
     def script_body
-      c.instance_variable_set(:@ogp_params, {
-          :title       => page_title,
-          :image       => "#{self.class.name.underscore}_1200x630.png",
-          :description => "",
-        })
+      ogp_params_set
 
       # 最新三段リーグは表示する直前でときどきクロールする
       if current_generation == Tsl::Scraping.league_range.last

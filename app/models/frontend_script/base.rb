@@ -11,5 +11,29 @@ module FrontendScript
     def html_fetch(url, options = {})
       Rails.cache.fetch(url, options) { URI(url).read.toutf8 }
     end
+
+    def ogp_params_set(options = {})
+      options = {
+        title: visible_title,
+        image: ogp_image_web_path_presence,
+        description: "",
+      }.merge(options)
+
+      c.instance_variable_set(:@ogp_params, options)
+    end
+
+    def ogp_image_web_path
+      "#{self.class.name.underscore}_1200x630.png"
+    end
+
+    def ogp_image_inside_path
+      Rails.root.join("app/assets/images/#{ogp_image_web_path}")
+    end
+
+    def ogp_image_web_path_presence
+      if ogp_image_inside_path.exist?
+        ogp_image_web_path
+      end
+    end
   end
 end
