@@ -73,8 +73,8 @@ export const application_matching = {
     room_broadcasted(params) {
       // 人間BOTでアクセスしているとき、練習で開始されたBOT用の配信を、人間BOTが受信してしまう
       // 人間ボットが受信してしまったときはスキップする
-      if (params.room.bot_user_id) {
-        if (params.room.bot_user_id === this.current_user.id) {
+      if (params.room.bot_membership_id) {
+        if (params.room.bot_membership_id === this.current_user.id) {
           return
         }
       }

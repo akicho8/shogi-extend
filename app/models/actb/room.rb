@@ -42,6 +42,7 @@ module Actb
     has_many :users, through: :memberships
     belongs_to :rule
     belongs_to :bot_user, class_name: "User", optional: true
+    belongs_to :bot_membership, class_name: "RoomMembership", optional: true
 
     before_validation do
       self.begin_at ||= Time.current
@@ -51,6 +52,21 @@ module Actb
 
     with_options presence: true do
       validates :begin_at
+    end
+
+    after_create do
+      if bot_user
+        if memberships.collect(&:user).exclude?(bot_user)
+          raise "BOTが指定されたのにメンバーに含まれていない"
+        end
+        if memberships[Config[:leader_index]].user == bot_user
+          raise "BOTがリーダーになると進行できない"
+        end
+
+        self.bot_membership = memberships.find_by!(user_id: bot_user.id)
+        # transaction内部なのでここでの保存は UPDATE SQL が1つ走るだけ
+        save!
+      end
     end
 
     after_create_commit do
@@ -67,7 +83,7 @@ module Actb
 
     def as_json_type4
       as_json({
-          only: [:id, :practice, :bot_user_id],
+          only: [:id, :practice, :bot_user_id, :bot_membership_id],
           include: {
             memberships: {
               only: [:id],

@@ -23,7 +23,12 @@ module Actb
     include ActbSupportMethods
 
     it "練習モードで作成した部屋から作ったバトルは練習モードを引き継いでいる" do
-      room = Room.create_with_members!([user1, user2], practice: true, bot_user: User.bot)
+      bot_user = User.bot
+      room = Room.create_with_members!([bot_user, user1], practice: true, bot_user: bot_user)
+
+      assert { room.bot_membership }
+      assert { room.bot_membership == room.memberships.first }
+
       assert { room.bot_user == User.bot }
       assert { User.bot.actb_bot_rooms === [room] }
 
@@ -33,9 +38,13 @@ module Actb
     end
   end
 end
+# >> |-------------------+-----------|
+# >> | chromedriver 残骸 | ["85222"] |
+# >> |              削除 | 消えない  |
+# >> |-------------------+-----------|
 # >> Run options: exclude {:slow_spec=>true}
 # >> .
 # >> 
-# >> Finished in 1.01 seconds (files took 2.49 seconds to load)
+# >> Finished in 0.82863 seconds (files took 3.24 seconds to load)
 # >> 1 example, 0 failures
 # >> 
