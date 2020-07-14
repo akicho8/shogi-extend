@@ -43,7 +43,7 @@ module Actb
     end
 
     def start_hook(data)
-      history_update(data, :mistake)
+      history_set1(data, :mistake)
     end
 
     def wakatta_handle(data)
@@ -133,7 +133,7 @@ module Actb
 
       # 本人が送信しているので本人だけの履歴を作成
       if current_battle.rule.key == "marathon_rule"
-        history_update(data, :mistake)
+        history_set1(data, :mistake)
       end
 
       # リーダーが送信者なので対局者の両方にあらかじめ履歴を作っておく
@@ -143,8 +143,8 @@ module Actb
           return
         end
         question = Question.find(data[:question_id])
-        current_battle.memberships.each do |membership|
-          membership.user.actb_histories.find_or_initialize_by(question: question, membership: membership).update!(ox_mark: OxMark.fetch(:mistake))
+        current_battle.memberships.each do |e|
+          history_set2(question, e, :mistake)
         end
       end
 
@@ -287,12 +287,23 @@ module Actb
       Battle.find(battle_id)
     end
 
-    def history_update(data, ox_mark)
+    def history_set1(data, ox_mark)
       data = data.to_options
       question = Question.find(data[:question_id])
       membership = current_battle.memberships.find(data[:membership_id])
-      history = current_user.actb_histories.find_or_initialize_by(question: question, membership: membership)
-      history.update!(ox_mark: Actb::OxMark.fetch(ox_mark))
+      history_set2(question, membership, ox_mark)
+    end
+
+    def history_set2(question, membership, ox_mark)
+      user = membership.user
+
+      # 練習モードのBOTなら履歴は作らない
+      if current_battle.room.bot_user == user
+        return
+      end
+
+      history = user.actb_histories.find_or_initialize_by(question: question, membership: membership)
+      history.update!(ox_mark: OxMark.fetch(ox_mark))
     end
 
     def broadcast(bc_action, bc_params)
