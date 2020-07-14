@@ -60,7 +60,7 @@ module AtomicScript
     end
 
     def form_submit_button_class
-      ["button", "is-small", "is-link", *form_submit_button_color]
+      ["button", "is-small", *form_submit_button_color]
     end
 
     def form_submit_button_color
