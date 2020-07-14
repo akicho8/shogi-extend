@@ -298,7 +298,7 @@ module Actb
       user = membership.user
 
       # 練習モードのBOTなら履歴は作らない
-      if current_battle.room.bot_membership == membership
+      if current_battle.room.bot_user == user
         return
       end
 

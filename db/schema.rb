@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_11_103808) do
+ActiveRecord::Schema.define(version: 2020_07_11_103807) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -306,10 +306,8 @@ ActiveRecord::Schema.define(version: 2020_07_11_103808) do
     t.integer "battles_count", default: 0, null: false, comment: "連戦数"
     t.boolean "practice", comment: "練習バトル？"
     t.bigint "bot_user_id", comment: "練習相手"
-    t.bigint "bot_membership_id", comment: "練習相手"
     t.index ["battles_count"], name: "index_actb_rooms_on_battles_count"
     t.index ["begin_at"], name: "index_actb_rooms_on_begin_at"
-    t.index ["bot_membership_id"], name: "index_actb_rooms_on_bot_membership_id"
     t.index ["bot_user_id"], name: "index_actb_rooms_on_bot_user_id"
     t.index ["end_at"], name: "index_actb_rooms_on_end_at"
     t.index ["rule_id"], name: "index_actb_rooms_on_rule_id"
@@ -721,7 +719,6 @@ ActiveRecord::Schema.define(version: 2020_07_11_103808) do
   add_foreign_key "actb_room_memberships", "users"
   add_foreign_key "actb_room_messages", "actb_rooms", column: "room_id"
   add_foreign_key "actb_room_messages", "users"
-  add_foreign_key "actb_rooms", "actb_room_memberships", column: "bot_membership_id"
   add_foreign_key "actb_rooms", "actb_rules", column: "rule_id"
   add_foreign_key "actb_rooms", "users", column: "bot_user_id"
   add_foreign_key "actb_season_xrecords", "actb_finals", column: "final_id"
