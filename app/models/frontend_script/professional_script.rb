@@ -74,7 +74,7 @@ module FrontendScript
       rows.collect do |e|
         {}.tap do |row|
           row["指導棋士"] = h.link_to(e[:user][:name], [:swars, :battles, query: e[:user][:key]])
-          row["勝敗"] = h.tag.span(e[:judge], :class => "ox_sequense is_line_break_on is-size-7")
+          row["勝敗"] = h.tag.span(e[:judge], :class => "ox_sequense is_line_break_on")
         end
       end
     end
