@@ -2,6 +2,10 @@ module FrontendScript
   class ThreeStageLeaguePlayerScript < ::FrontendScript::Base
     self.script_name = "奨励会三段リーグ(個人別)"
 
+    def page_title
+      "#{current_user_name} シーズン別成績"
+    end
+
     def form_parts
       [
         {
@@ -16,6 +20,12 @@ module FrontendScript
 
     def script_body
       if current_uesr
+        c.instance_variable_set(:@ogp_params, {
+            :title       => page_title,
+            :image       => "frontend_script/three_stage_league_script_1200x630.png",
+            :description => "",
+          })
+
         s = current_uesr.memberships
         s = s.joins(:league).order(Tsl::League.arel_table[:generation].asc)
         s = s.includes({:user => :memberships}, :league)
@@ -64,4 +74,4 @@ module FrontendScript
   end
 end
 # ~> -:2:in `<module:FrontendScript>': uninitialized constant FrontendScript::Base (NameError)
-# ~> 	from -:1:in `<main>'
+# ~>    from -:1:in `<main>'
