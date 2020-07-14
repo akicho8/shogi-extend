@@ -50,11 +50,17 @@ module FrontendScript
       grade = Swars::Grade.find_by!(key: "十段")
       users = Swars::User.where(grade: grade).order(created_at: :desc).includes(:memberships).joins(:memberships) # joins を取るとデータがないデータも表示できる
 
+      if Rails.env.development? || Rails.env.test?
+        users = Swars::User.all
+      end
+
       rows = users.collect do |user|
         {}.tap do |row|
           name = user.key
           if user_info = user_infos_hash[user.key.downcase]
-            name = user_info["名前"].to_s.remove(/\s*\<.*?\>/)
+            if s = user_info["名前"].to_s.remove(/\s*\<.*?\>/).presence
+              name = s
+            end
           end
           row[:user] = { name: name, key: user.key }
           row[:judge] = user.memberships.joins(:battle).order(Swars::Battle.arel_table[:battled_at]).collect { |e| e.judge_info.ox_mark }.join
