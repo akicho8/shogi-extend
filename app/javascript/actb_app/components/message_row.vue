@@ -70,7 +70,7 @@ export default {
     img
       width: 16px
   .user_name
-    width: 12rem
+    max-width: 12rem
     white-space: nowrap
     margin-left: 0.5rem
   .message_body

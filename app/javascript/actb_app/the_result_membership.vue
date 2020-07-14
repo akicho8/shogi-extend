@@ -79,7 +79,7 @@ export default {
     color: $success
 
   .user_name
-    width: 12rem
+    max-width: 12rem
 
   // avatar
   img
