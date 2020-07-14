@@ -83,7 +83,7 @@ export default {
     height: 32px
 
   .user_name
-    width: 8rem
+    width: 12rem
 
   // オーバーレイ○×
   position: relative
