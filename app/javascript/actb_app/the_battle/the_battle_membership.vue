@@ -14,7 +14,7 @@
         | &nbsp;
 
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
-  figure.image
+  figure.image.mt-2
     img.is-rounded(:src="membership.user.avatar_path")
   .user_name.has-text-weight-bold.is-size-8.is_truncate.has-text-centered
     | {{membership.user.name}}
