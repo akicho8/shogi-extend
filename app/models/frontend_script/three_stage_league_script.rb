@@ -40,6 +40,7 @@ module FrontendScript
             row["名前"] = h.link_to(m.name_with_age, ThreeStageLeaguePlayerScript.script_link_path(user_name: m.user.name))
             row["勝"]   = m.win
             row["勝敗"] = [h.tag.span(m.ox_human, :class => "ox_sequense is_line_break_on is-size-7"), bold(m.result_mark)].join(" ").html_safe
+            row["在"] = m.user.memberships_count
             row[""] = h.link_to(h.tag.i(:class => "mdi mdi-account-question mr-2"), h.google_image_search_url(["将棋", m.user.name].join(" ")), target: "_blank")
           end
         end
