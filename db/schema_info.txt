@@ -466,6 +466,7 @@
 # | updated_at    | 更新日時      | datetime   | NOT NULL            |      |       |
 # | battles_count | Battles count | integer(4) | DEFAULT(0) NOT NULL |      | D     |
 # | practice      | Practice      | boolean    |                     |      |       |
+# | bot_user_id   | Bot user      | integer(8) |                     |      | E     |
 # |---------------+---------------+------------+---------------------+------+-------|
 
 # == Schema Information ==

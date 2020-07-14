@@ -447,12 +447,15 @@ CREATE TABLE `actb_rooms` (
   `updated_at` datetime(6) NOT NULL,
   `battles_count` int(11) NOT NULL DEFAULT '0' COMMENT '連戦数',
   `practice` tinyint(1) DEFAULT NULL COMMENT '練習バトル？',
+  `bot_user_id` bigint(20) DEFAULT NULL COMMENT '練習相手',
   PRIMARY KEY (`id`),
   KEY `index_actb_rooms_on_begin_at` (`begin_at`),
   KEY `index_actb_rooms_on_end_at` (`end_at`),
   KEY `index_actb_rooms_on_rule_id` (`rule_id`),
   KEY `index_actb_rooms_on_battles_count` (`battles_count`),
-  CONSTRAINT `fk_rails_4e7eff2ea3` FOREIGN KEY (`rule_id`) REFERENCES `actb_rules` (`id`)
+  KEY `index_actb_rooms_on_bot_user_id` (`bot_user_id`),
+  CONSTRAINT `fk_rails_4e7eff2ea3` FOREIGN KEY (`rule_id`) REFERENCES `actb_rules` (`id`),
+  CONSTRAINT `fk_rails_ec99663ced` FOREIGN KEY (`bot_user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actb_rules`;
@@ -1047,6 +1050,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200711103801'),
 ('20200711103802'),
 ('20200711103803'),
-('20200711103804');
+('20200711103804'),
+('20200711103807');
 
 
