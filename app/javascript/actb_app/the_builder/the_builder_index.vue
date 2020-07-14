@@ -209,6 +209,8 @@ export default {
 
   .dropdown-menu
     min-width: 0
+    a:focus
+      outline: none
 
   .visible_toggle_checkboxes
     margin-top: 1.5rem
