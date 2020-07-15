@@ -71,5 +71,3 @@ module FrontendScript
     end
   end
 end
-# ~> -:2:in `<module:FrontendScript>': uninitialized constant FrontendScript::Base (NameError)
-# ~>    from -:1:in `<main>'

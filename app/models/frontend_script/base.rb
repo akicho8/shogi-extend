@@ -47,5 +47,7 @@ module FrontendScript
         ogp_image_web_path
       end
     end
+
+    ################################################################################
   end
 end
