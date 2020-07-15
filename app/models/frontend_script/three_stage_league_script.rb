@@ -38,9 +38,12 @@ module FrontendScript
 
         rows = memberships.collect do |m|
           {}.tap do |row|
-            row["名前"] = h.link_to(m.name_with_age, ThreeStageLeaguePlayerScript.script_link_path(user_name: m.user.name))
+            row["名前"] = h.link_to(m.name_with_age, ThreeStageLeaguePlayerScript.script_link_path(user_name: m.user.name), :class => name_class(m))
             row["勝"]   = m.win
-            row["勝敗"] = [h.tag.span(m.ox_human, :class => "ox_sequense is_line_break_on"), bold(m.result_mark)].join(" ").html_safe
+            row["勝敗"] = [
+              h.tag.span(m.ox_human, :class => "ox_sequense is_line_break_on"),
+              h.tag.span(m.result_mark, :class => "has-text-danger is-size-7 has-text-weight-bold"),
+            ].join(" ").html_safe
             row["在"] = m.user.memberships_count
             row[""] = h.link_to(h.tag.i(:class => "mdi mdi-account-question mr-2"), user_name_google_image_search(m.user.name), target: "_blank")
           end
@@ -59,6 +62,14 @@ module FrontendScript
 
     def current_generation
       (params[:generation].presence || Tsl::Scraping.league_range.last).to_i
+    end
+
+    def name_class(m)
+      if v = m.result_mark
+        if v.include?("昇")
+          "has-text-weight-bold"
+        end
+      end
     end
   end
 end
