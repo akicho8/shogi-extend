@@ -12,6 +12,11 @@ module FrontendScript
       Rails.cache.fetch(url, options) { URI(url).read.toutf8 }
     end
 
+    def html_title_set(title)
+      if title.presence
+        c.instance_variable_set(:@page_title, title)
+      end
+    end
     def ogp_params_set(options = {})
       options = {
         title: visible_title,

@@ -19,6 +19,7 @@ module FrontendScript
     end
 
     def script_body
+      html_title_set(page_title)
       ogp_params_set
 
       # 最新三段リーグは表示する直前でときどきクロールする

@@ -20,6 +20,7 @@ module FrontendScript
 
     def script_body
       if current_uesr
+        html_title_set(page_title)
         ogp_params_set
 
         s = current_uesr.memberships
