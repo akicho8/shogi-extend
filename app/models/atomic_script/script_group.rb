@@ -11,7 +11,12 @@ module AtomicScript
     # 保持しているスクリプトクラスたちを返す
     # [Frontend::FooScript, Frontend::BarScript, ...]
     def bundle_scripts
-      @bundle_scripts ||= keys.collect(&method(:find))
+      @bundle_scripts ||= keys.collect(&method(:find)).sort_by { |e|
+        [
+          e.respond_to?(:category) ? e.category : "",
+          e.name,
+        ]
+      }
     end
 
     # キーからクラスへの変換
@@ -24,7 +29,7 @@ module AtomicScript
 
     # このクラス名が FooBar なら app/models/foo_bar/*_script.rb がある想定
     def keys
-      @keys ||= Pathname("app/models/#{name.underscore}").glob("[^_]*_#{name_prefix}.rb").collect { |e| e.basename(".rb").to_s.remove(/_#{name_prefix}\z/) }.sort
+      @keys ||= Pathname("app/models/#{name.underscore}").glob("[^_]*_#{name_prefix}.rb").collect { |e| e.basename(".rb").to_s.remove(/_#{name_prefix}\z/) }
     end
 
     def name_prefix
