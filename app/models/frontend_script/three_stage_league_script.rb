@@ -42,7 +42,7 @@ module FrontendScript
             row["勝"]   = m.win
             row["勝敗"] = [h.tag.span(m.ox_human, :class => "ox_sequense is_line_break_on"), bold(m.result_mark)].join(" ").html_safe
             row["在"] = m.user.memberships_count
-            row[""] = h.link_to(h.tag.i(:class => "mdi mdi-account-question mr-2"), h.google_image_search_url(["将棋", m.user.name].join(" ")), target: "_blank")
+            row[""] = h.link_to(h.tag.i(:class => "mdi mdi-account-question mr-2"), user_name_google_image_search(m.user.name), target: "_blank")
           end
         end
 

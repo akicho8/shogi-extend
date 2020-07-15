@@ -17,6 +17,13 @@ module FrontendScript
         c.instance_variable_set(:@page_title, title)
       end
     end
+
+    def user_name_google_image_search(name)
+      h.google_image_search_url([name, "将棋"].join(" "))
+    end
+
+    ################################################################################
+
     def ogp_params_set(options = {})
       options = {
         title: visible_title,

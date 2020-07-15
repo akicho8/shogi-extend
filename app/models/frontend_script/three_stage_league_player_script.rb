@@ -51,6 +51,7 @@ module FrontendScript
         out = ""
         out += h.javascript_tag(%(document.addEventListener('DOMContentLoaded', () => { new Vue({}).$mount("#app") })))
         out += %(<div id="app"><three_stage_league_player_chart :info='#{info.to_json}' /></div>)
+        out += h.link_to("画像検索", user_name_google_image_search(current_uesr.name), :class => "button is-small",  target: "_blank")
         out
       end
     end
