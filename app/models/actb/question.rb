@@ -227,10 +227,6 @@ module Actb
       # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     end
 
-    after_create_commit do
-      SlackAgent.message_send(key: "問題登録", body: [title, page_url].join(" "))
-    end
-
     def page_url
       Rails.application.routes.url_helpers.url_for([:training, {only_path: false, question_id: id}])
     end
