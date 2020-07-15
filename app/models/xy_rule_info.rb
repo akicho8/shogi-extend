@@ -214,7 +214,7 @@ class XyRuleInfo
 
     class_methods do
       def chartjs_datasets(params)
-        mysql_convert_tz_with_time_zone_validate!
+        DbCop.mysql_convert_tz_with_time_zone_validate!
 
         xy_rule_key = params[:xy_chart_rule_key]
         xy_chart_scope_info = XyChartScopeInfo.fetch(params[:xy_chart_scope_key])
@@ -232,8 +232,7 @@ class XyRuleInfo
         end
 
         names_hash = scope.group("entry_name").order("count_all DESC").having("count_all >= #{count_all_gteq}").count
-        correction_created_at = "CONVERT_TZ(created_at, 'UTC', 'Asia/Tokyo')"
-        result = scope.select("entry_name, DATE(#{correction_created_at}) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
+        result = scope.select("entry_name, DATE(#{DbCop.tz_adjust(:created_at)}) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
 
         names_hash.collect.with_index { |(name, _), i|
           palette = PaletteInfo.fetch(i.modulo(PaletteInfo.count))
@@ -268,12 +267,6 @@ class XyRuleInfo
         #     showLine: false,          # 線で繋げない
         #   }
         # },
-      end
-
-      def mysql_convert_tz_with_time_zone_validate!
-        unless ActiveRecord::Base.connection.select_all("SELECT CONVERT_TZ(now(), 'UTC', 'Asia/Tokyo')")
-          raise "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql を実行してください"
-        end
       end
     end
   end
