@@ -11,7 +11,7 @@
       b-switch(v-model="app.debug_read_p") デバッグモード(表示系)
     b-field
       b-switch(v-model="app.debug_write_p" type="is-danger") デバッグモード(破壊系)
-    b-button(expanded tag="a" href="/admin/script/user-switch") 運営ユーザー切り替え
+    b-button(expanded tag="a" href="/admin/script/actb-user-switch") 運営ユーザー切り替え
     b-button(expanded @click="app.menu_to('the_menu_etc')") もどる
 </template>
 
