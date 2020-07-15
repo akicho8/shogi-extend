@@ -56,15 +56,24 @@ module FrontendScript
       end
 
       # for OGP
-      if e = current_question
-        c.instance_variable_set(:@ogp_params, {
+      case
+      when e = current_question
+        ogp_params_set({
             :title       => e.title_with_author,
             :description => e.description,
             :image       => e.shared_image_params,
             :creator     => e.user.twitter_key,
           })
+      when e = User.find_by(id: params[:user_id])
+        ogp_params_set({
+            :card        => :summary,
+            :title       => "#{e.name}さんのプロフィール",
+            :description => "",
+            :image       => e.avatar_path,
+            :creator     => e.twitter_key,
+          })
       else
-        c.instance_variable_set(:@ogp_params, {
+        ogp_params_set({
             :title       => "将棋トレーニングバトル",
             :description => "クイズ形式で将棋の問題を解く力を競う対戦ゲームです",
             :image       => "actb2_1200x630.png",
