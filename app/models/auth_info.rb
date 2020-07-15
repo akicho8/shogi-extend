@@ -26,9 +26,9 @@ class AuthInfo < ApplicationRecord
 
   before_validation do
     if auth
-      self.provider  = auth.provider
-      self.uid       = auth.uid
-      self.meta_info = auth.as_json # as_json することで Proc オブジェクトを除外する。含まれていると allocator undefined for Proc エラーになる
+      self.provider  ||= auth.provider
+      self.uid       ||= auth.uid
+      self.meta_info ||= auth.as_json # as_json することで Proc オブジェクトを除外する。含まれていると allocator undefined for Proc エラーになる
     end
   end
 
@@ -58,6 +58,12 @@ class AuthInfo < ApplicationRecord
         end
       end
       profile.save!
+
+      if v = meta_info.dig("info", "email")
+        if user.email_invalid?
+          user.update!(email: v)
+        end
+      end
     end
   end
 

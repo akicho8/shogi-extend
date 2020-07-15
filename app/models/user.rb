@@ -231,9 +231,11 @@ class User < ApplicationRecord
         return true
       end
 
-      if v = email.presence
-        v.exclude?("@localhost")
-      end
+      !email_invalid?
+    end
+
+    def email_invalid?
+      email.blank? || email.include?("@localhost")
     end
   end
 

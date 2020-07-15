@@ -26,18 +26,30 @@ RSpec.describe AuthInfo, type: :model do
     Actb.setup
   end
 
+  let(:auth) do
+    { "info" => { "email" => "0463e0f46337064be57119cecb470458@example.com" } }
+  end
+
   it "SNS経由で登録すると通知" do
     user = User.create!
     perform_enqueued_jobs do
-      user.auth_infos.create!(provider: "twitter", uid: SecureRandom.hex)
+      user.auth_infos.create!(provider: "twitter", uid: SecureRandom.hex, auth: auth)
     end
     assert { ActionMailer::Base.deliveries.count == 1 }
+    assert { user.email == "0463e0f46337064be57119cecb470458@example.com" }
+
     # tp ActionMailer::Base.deliveries.collect { |e| {subject: e.subject, from: e.from, to: e.to} }
+  end
+
+  it "正しいメールアドレスのときはSNS連携しても更新しない" do
+    user = User.create!(email: "alice@example.com")
+    user.auth_infos.create!(provider: "twitter", uid: SecureRandom.hex, auth: auth)
+    assert { user.email == "alice@example.com" }
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .
+# >> ..
 # >> 
-# >> Finished in 0.53939 seconds (files took 2.22 seconds to load)
-# >> 1 example, 0 failures
+# >> Finished in 0.61538 seconds (files took 2.24 seconds to load)
+# >> 2 examples, 0 failures
 # >> 
