@@ -1,5 +1,6 @@
 module BackendScript
   class SidekiqConpaneScript < ::BackendScript::Base
+    self.category = "sidekiq"
     self.script_name = "Sidekiq コンパネ"
 
     def script_body

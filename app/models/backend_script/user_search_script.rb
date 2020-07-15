@@ -2,7 +2,7 @@ module BackendScript
   class UserSearchScript < ::BackendScript::Base
     include SortMod
 
-    self.category = "actb"
+    self.category = "その他"
     self.script_name = "ユーザー検索"
 
     def form_parts

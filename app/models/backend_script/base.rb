@@ -4,5 +4,15 @@ module BackendScript
     self.category = "その他"
 
     self.url_prefix = [:admin, :script]
+
+    # 土日祝日色
+    def holiday_sunday_saturday_class(t)
+      case
+      when t.sunday?, HolidayJp.holiday?(t.to_date)
+        "has-text-danger"
+      when t.saturday?
+        "has-text-info"
+      end
+    end
   end
 end

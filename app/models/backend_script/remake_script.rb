@@ -3,8 +3,8 @@ module BackendScript
   class RemakeScript < ::BackendScript::Base
     include AtomicScript::PostRedirectMod
 
-    self.category = "将棋ウォーズ"
-    self.script_name = "将棋ウォーズ棋譜情報タグ再構築"
+    self.category = "swars"
+    self.script_name = "将棋ウォーズ棋譜 タグ再構築"
 
     def form_parts
       {

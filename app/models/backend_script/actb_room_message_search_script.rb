@@ -1,7 +1,7 @@
 module BackendScript
   class ActbRoomMessageSearchScript < ::BackendScript::Base
     self.category = "actb"
-    self.script_name = "部屋内発言"
+    self.script_name = "将棋トレバト 対戦部屋 発言"
 
     def script_body
       s = Actb::RoomMessage.all
@@ -18,7 +18,7 @@ module BackendScript
     def row_build(record)
       {
         "ID": record.id,
-        "名前": "#{record.user.name}(#{record.user.id})",
+        "名前": "#{record.user.name}(ID:#{record.user.id})",
         "発言": record.body,
         "日時": record.created_at.to_s(:distance),
       }

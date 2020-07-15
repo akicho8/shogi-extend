@@ -70,8 +70,15 @@ export default {
   mixins: [
     support,
   ],
+  beforeCreate() {
+    window.history.pushState(this.$options.name, null, "")
+  },
   created() {
     this.$gtag.event("open", {event_category: "ユーザー詳細", event_label: this.ov_user_info.name})
+    window.history.replaceState("", null, this.permalink_url)
+  },
+  beforeDestroy() {
+    window.history.back()
   },
   methods: {
     delete_click_handle() {
@@ -93,6 +100,11 @@ export default {
       if (v) {
         return `https://twitter.com/${v}`
       }
+    },
+    permalink_url() {
+      const url = new URL(location)
+      url.searchParams.set("user_id", this.ov_user_info.id)
+      return url.toString()
     },
   },
 }

@@ -250,9 +250,16 @@ export default {
     },
 
     after_lobby_setup() {
-      const id = this.$route.query.question_id
+      let id = null
+
+      id = this.$route.query.question_id
       if (id) {
         this.ov_question_info_set(id)
+      }
+
+      id = this.$route.query.user_id
+      if (id) {
+        this.ov_user_info_set(id)
       }
     },
 

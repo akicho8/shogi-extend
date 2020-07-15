@@ -7,6 +7,7 @@ Time::DATE_FORMATS.update({
     battle_medium: "%-m/%-d %H:%M",      # 1/2 12:34
     battle_long: "%F %H:%M",             # 2020-01-02 12:34
     csa_ymdhms: "%Y/%m/%d %H:%M:%S",
+    ymd_j: "%Y-%m-%d %J",
 
     :ja_ad_format => proc { |t|
       t.strftime("%Y年%-m月%-d日%-H時%-M分")
@@ -32,8 +33,8 @@ Time::DATE_FORMATS.update({
       t = d.abs
       case
         # when time >= Time.current.midnight
-      # when time >= 1.days.ago
-      #   time.to_s(:battle_short)
+        # when time >= 1.days.ago
+        #   time.to_s(:battle_short)
       when t < 1.minute then "#{t.div(1.second)}秒#{suffix}"
       when t < 1.hour   then "#{t.div(1.minute)}分#{suffix}"
       when t < 1.day    then "#{t.div(1.hour)}時間#{suffix}"
@@ -86,6 +87,21 @@ Time::DATE_FORMATS.update({
     # },
     # :gmail_show_like3s  => proc {|time| " #{time.to_s(:last_access)} "},
   })
+
+# strftime("%J") で日本語の曜日表示
+#
+#   Time.prepend(WeekNameSupport)
+#   Time.current.strftime("%J") # => "土"
+#
+module WeekNameSupport
+  def strftime(format)
+    super(format.gsub(/%J/, I18n.t("date.abbr_day_names")[wday]))
+  end
+end
+
+[Time, Date, DateTime].each do |klass|
+  klass.prepend(WeekNameSupport)
+end
 
 if $0 == __FILE__
   current_time = Time.current

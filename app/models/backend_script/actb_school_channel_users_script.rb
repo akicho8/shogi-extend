@@ -1,7 +1,7 @@
 module BackendScript
   class ActbSchoolChannelUsersScript < ::BackendScript::Base
     self.category = "actb"
-    self.script_name = "ACTB オンラインユーザー情報"
+    self.script_name = "将棋トレバト オンラインユーザー"
 
     def script_body
       if Rails.env.development?

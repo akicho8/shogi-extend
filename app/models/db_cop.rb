@@ -6,6 +6,11 @@ module DbCop
       raise "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql を実行してください"
     end
   end
+
+  def tz_adjust(column)
+    "CONVERT_TZ(#{column}, 'UTC', 'Asia/Tokyo')"
+  end
+
   def foreign_key_checks_disable
     c = connection
     c.execute("SET foreign_key_checks = 0")

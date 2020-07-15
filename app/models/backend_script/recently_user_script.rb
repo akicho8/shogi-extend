@@ -1,7 +1,7 @@
 module BackendScript
   class RecentlyUserScript < ::BackendScript::Base
-    self.category = "ツール"
-    self.script_name = "直近利用ユーザー"
+    self.category = "swars"
+    self.script_name = "ウォーズ棋譜検索 直近利用ユーザー"
 
     def script_body
       records.collect do |e|
