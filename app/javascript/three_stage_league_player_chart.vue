@@ -1,8 +1,8 @@
 <template lang="pug">
 .three_stage_league_player_chart
-  .columns.is-centered.is-unselectable
+  .columns.is-unselectable
     .column.is-half
-      canvas#main_canvas(ref="main_canvas")
+      canvas#main_canvas.is_clickable(ref="main_canvas")
   template(v-if="development_p")
     | {{info}}
 </template>
