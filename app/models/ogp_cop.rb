@@ -28,7 +28,7 @@ module OgpCop
           unless val.kind_of?(String)
             val = h.url_for(val)
           end
-          val = h.image_url(val)
+          val = h.image_url(val) # image_url を通すことで http から始まるパスに変換できる
         end
         h.tag.meta(name: "#{prefix}:#{key}", content: val)
       end
