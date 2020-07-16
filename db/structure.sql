@@ -380,6 +380,7 @@ CREATE TABLE `actb_questions` (
   `clip_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '保存された数',
   `messages_count` int(11) NOT NULL DEFAULT '0' COMMENT 'コメント数',
   `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'クエスト指示文言またはヒント',
+  `source_about_id` bigint(20) DEFAULT NULL COMMENT '所在',
   PRIMARY KEY (`id`),
   KEY `index_actb_questions_on_key` (`key`),
   KEY `index_actb_questions_on_user_id` (`user_id`),
@@ -394,6 +395,8 @@ CREATE TABLE `actb_questions` (
   KEY `index_actb_questions_on_bad_marks_count` (`bad_marks_count`),
   KEY `index_actb_questions_on_clip_marks_count` (`clip_marks_count`),
   KEY `index_actb_questions_on_messages_count` (`messages_count`),
+  KEY `index_actb_questions_on_source_about_id` (`source_about_id`),
+  CONSTRAINT `fk_rails_243f259526` FOREIGN KEY (`source_about_id`) REFERENCES `actb_source_abouts` (`id`),
   CONSTRAINT `fk_rails_4c1f4628cc` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_f5a8dc663c` FOREIGN KEY (`lineage_id`) REFERENCES `actb_lineages` (`id`),
   CONSTRAINT `fk_rails_f941a04d67` FOREIGN KEY (`folder_id`) REFERENCES `actb_folders` (`id`)
@@ -574,6 +577,19 @@ CREATE TABLE `actb_skills` (
   PRIMARY KEY (`id`),
   KEY `index_actb_skills_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `actb_source_abouts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `actb_source_abouts` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_actb_source_abouts_on_position` (`position`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `active_storage_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1051,6 +1067,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200711103802'),
 ('20200711103803'),
 ('20200711103804'),
-('20200711103807');
+('20200711103807'),
+('20200711103808'),
+('20200711103809');
 
 
