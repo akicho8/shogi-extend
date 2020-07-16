@@ -31,6 +31,7 @@
 # | clip_marks_count    | Clip marks count    | integer(4)  | DEFAULT(0) NOT NULL |              | L     |
 # | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |              | M     |
 # | direction_message   | Direction message   | string(255) |                     |              |       |
+# | source_about_id     | Source about        | integer(8)  |                     |              | N     |
 # |---------------------+---------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -67,7 +68,8 @@ module Actb
         :folder_key          => "active",
 
         # 他者が作者
-        :source_author        => nil,
+        :source_about_key    => "ascertained",
+        :source_author       => nil,
         :source_media_name   => nil,
         :source_media_url    => nil,
         :source_published_on => nil,
@@ -76,7 +78,7 @@ module Actb
       if Rails.env.development?
 
         # 他者が作者
-        default[:source_author]        = "渡瀬荘二郎"
+        default[:source_author]       = "渡瀬荘二郎"
         default[:source_media_name]   = "Wikipedia"
         default[:source_media_url]    = "https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B"
         default[:source_published_on] = "1912-03-04"
@@ -110,6 +112,7 @@ module Actb
       {
         methods: [
           :folder_key,
+          :source_about_key,
         ],
         include: [
           :user,
@@ -152,6 +155,7 @@ module Actb
     belongs_to :user, class_name: "::User" # 作者
     belongs_to :folder
     belongs_to :lineage
+    belongs_to :source_about
 
     has_many :histories, dependent: :destroy # 出題履歴
     has_many :messages, class_name: "Actb::QuestionMessage", dependent: :destroy # コメント
@@ -207,6 +211,7 @@ module Actb
       self.good_rate ||= 0
 
       self.lineage ||= Lineage.fetch("詰将棋")
+      self.source_about ||= SourceAbout.fetch(:ascertained)
 
       if user
         self.folder ||= user.actb_active_box
@@ -253,7 +258,11 @@ module Actb
     end
 
     def author_saku
-      [source_author || user.name, "作"].join
+      if source_about.key == "unknown"
+        "作者不詳"
+      else
+        [source_author || user.name, "作"].join
+      end
     end
 
     # jsから来たパラメーターでまとめて更新する
@@ -279,6 +288,7 @@ module Actb
               :hint_desc,
               :direction_message,
 
+              :source_about_key,
               :source_author,
               :source_media_name,
               :source_media_url,
@@ -329,6 +339,20 @@ module Actb
     def folder_key=(key)
       if user
         self.folder = user.public_send("actb_#{key}_box")
+      end
+    end
+
+    def source_about_key
+      source_about.key
+    end
+
+    def source_about_key=(key)
+      self.source_about = SourceAbout.fetch(key)
+    end
+
+    def source_about_unknown_name
+      if source_about.key == "unknown"
+        "作者不詳"
       end
     end
 
@@ -389,6 +413,9 @@ module Actb
             :source_author,
             :source_author_link,
           ],
+          methods: [
+            :source_about_key,
+          ],
           include: {
             user: {
               only: [:id, :name, :key],
@@ -410,6 +437,9 @@ module Actb
     # 詳細用
     def as_json_type6
       as_json({
+          methods: [
+            :source_about_key,
+          ],
           include: {
             user: {
               only: [:id, :key, :name],
@@ -446,11 +476,8 @@ module Actb
 
         a["タイトル"] = title
 
-        if source_author
-          a["投稿者"] = user.name
-        else
-          a["作者"] = user.name
-        end
+        a["投稿者"] = user.name
+        a["作者"]   = source_about_unknown_name || source_author || user.name
 
         a["詳細URL"]    = page_url
         a["画像URL"]    = share_board_png_url
@@ -475,9 +502,6 @@ module Actb
         a["コメント数"] = messages_count
 
         if true
-          if source_author
-            a["作者"] = source_author
-          end
           if source_media_name
             a["出典"] = source_media_name
           end

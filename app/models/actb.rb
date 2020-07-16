@@ -13,6 +13,7 @@ module Actb
     Actb::Rule.setup(options)
     Actb::Final.setup(options)
     Actb::Skill.setup(options)
+    Actb::SourceAbout.setup(options)
     Actb::Question.setup(options)
 
     User.find_each(&:create_various_folders_if_blank)

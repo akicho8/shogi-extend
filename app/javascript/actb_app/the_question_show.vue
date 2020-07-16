@@ -16,11 +16,10 @@
         b-field(grouped group-multiline position="is-centered")
           .control
             b-taglist.is_clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
-              b-tag(type="is-primary")
-                template(v-if="question.source_author")
-                  | 投稿
-                template(v-else)
-                  | 作者
+              template(v-if="question.source_author || question.source_about_key === 'unknown'")
+                b-tag(type="is-primary") 投稿
+              template(v-if="!question.source_author")
+                b-tag(type="is-primary") 作者
               b-tag(type="is-grey") {{question.user.name}}
           .control
             b-taglist(attached)
@@ -74,11 +73,15 @@
 
     .mt-5(v-if="question.source_author || question.source_media_name || question.source_media_url")
       b-field(grouped group-multiline position="is-centered")
-        template(v-if="question.source_author")
+        template(v-if="question.source_about_key === 'unknown' || question.source_author")
           .control
             b-taglist(attached)
               b-tag(type="is-primary") 作者
-              b-tag(type="is-grey") {{question.source_author}}
+              b-tag(type="is-grey")
+                template(v-if="question.source_about_key === 'unknown'")
+                  | 不詳
+                template(v-else)
+                  | {{question.source_author}}
 
         template(v-if="question.source_media_name")
           .control

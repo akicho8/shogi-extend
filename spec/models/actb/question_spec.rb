@@ -31,6 +31,7 @@
 # | clip_marks_count    | Clip marks count    | integer(4)  | DEFAULT(0) NOT NULL |              | L     |
 # | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |              | M     |
 # | direction_message   | Direction message   | string(255) |                     |              |       |
+# | source_about_id     | Source about        | integer(8)  |                     |              | N     |
 # |---------------------+---------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -86,6 +87,14 @@ module Actb
     describe "属性" do
       it do
         assert { question1.lineage.name == "詰将棋" }
+      end
+    end
+
+    describe "所在" do
+      it do
+        question1.update!(source_about: "unknown")
+        assert { question1.source_about.name == "作者不明" }
+        assert { question1.source_about_key == "unknown"   }
       end
     end
 
@@ -154,28 +163,23 @@ module Actb
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..........F.....
+# >> .............F...
 # >> 
 # >> Failures:
 # >> 
-# >>   1) Actb::Question update_from_js 保存 
-# >>      Failure/Error: moves_answer = moves_answers.build
+# >>   1) Actb::Question 所在 
+# >>      Failure/Error: Unable to find - to read failed line
 # >> 
-# >>      NoMethodError:
-# >>        undefined method `build' for [{:moves_str=>"4c5b"}]:Array
-# >>      # ./app/models/actb/question.rb:304:in `block (2 levels) in update_from_js'
-# >>      # ./app/models/actb/question.rb:300:in `each'
-# >>      # ./app/models/actb/question.rb:300:in `block in update_from_js'
-# >>      # ./app/models/actb/question.rb:271:in `update_from_js'
-# >>      # -:64:in `block (4 levels) in <module:Actb>'
-# >>      # -:63:in `block (3 levels) in <module:Actb>'
+# >>      ActiveRecord::AssociationTypeMismatch:
+# >>        SourceAbout(#70267548412780) expected, got "unknown" which is an instance of String(#70267506679240)
+# >>      # -:95:in `block (3 levels) in <module:Actb>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
 # >> 
-# >> Finished in 2.77 seconds (files took 2.29 seconds to load)
-# >> 16 examples, 1 failure
+# >> Finished in 2.79 seconds (files took 2.15 seconds to load)
+# >> 17 examples, 1 failure
 # >> 
 # >> Failed examples:
 # >> 
-# >> rspec -:60 # Actb::Question update_from_js 保存 
+# >> rspec -:94 # Actb::Question 所在 
 # >> 

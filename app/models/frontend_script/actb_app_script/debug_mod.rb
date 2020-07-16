@@ -149,10 +149,11 @@ module FrontendScript
         question.title = "title" * 30
         question.direction_message = "direction_message" * 4
         question.assign_attributes({
-            :source_author        => "渡瀬荘二郎",
-            :source_media_name   => "Wikipedia",
-            :source_media_url    => "https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B",
-            :source_published_on => "1912-03-04",
+            :source_about_key       => "ascertained",
+            :source_author          => "渡瀬荘二郎",
+            :source_media_name      => "Wikipedia",
+            :source_media_url       => "https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B",
+            :source_published_on    => "1912-03-04",
           })
         question.save!
 

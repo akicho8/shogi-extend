@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_11_103807) do
+ActiveRecord::Schema.define(version: 2020_07_11_103809) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -260,6 +260,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103807) do
     t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
     t.integer "messages_count", default: 0, null: false, comment: "コメント数"
     t.string "direction_message", comment: "クエスト指示文言またはヒント"
+    t.bigint "source_about_id", comment: "所在"
     t.index ["bad_marks_count"], name: "index_actb_questions_on_bad_marks_count"
     t.index ["clip_marks_count"], name: "index_actb_questions_on_clip_marks_count"
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"
@@ -271,6 +272,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103807) do
     t.index ["key"], name: "index_actb_questions_on_key"
     t.index ["lineage_id"], name: "index_actb_questions_on_lineage_id"
     t.index ["messages_count"], name: "index_actb_questions_on_messages_count"
+    t.index ["source_about_id"], name: "index_actb_questions_on_source_about_id"
     t.index ["time_limit_sec"], name: "index_actb_questions_on_time_limit_sec"
     t.index ["user_id"], name: "index_actb_questions_on_user_id"
   end
@@ -396,6 +398,14 @@ ActiveRecord::Schema.define(version: 2020_07_11_103807) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["position"], name: "index_actb_skills_on_position"
+  end
+
+  create_table "actb_source_abouts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_actb_source_abouts_on_position"
   end
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -714,6 +724,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103807) do
   add_foreign_key "actb_question_messages", "users"
   add_foreign_key "actb_questions", "actb_folders", column: "folder_id"
   add_foreign_key "actb_questions", "actb_lineages", column: "lineage_id"
+  add_foreign_key "actb_questions", "actb_source_abouts", column: "source_about_id"
   add_foreign_key "actb_questions", "users"
   add_foreign_key "actb_room_memberships", "actb_rooms", column: "room_id"
   add_foreign_key "actb_room_memberships", "users"

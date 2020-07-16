@@ -17,8 +17,11 @@
         .question_title.has-text-weight-bold(v-if="row.question.title")
           | {{row.question.title}}
         .question_user.is-size-7.has-text-grey
-          | {{row.question.display_author}}
-          span.question_user_unit.is-size-10.has-text-grey 作
+          template(v-if="row.question.source_about_key === 'unknown'")
+            | 作者不詳
+          template(v-else)
+            | {{question.display_author}}
+            span.is-size-11 作
         .question_description.is-size-7(v-if="row.question.description")
           | {{string_truncate(row.question.description)}}
       .bottom_block.is-flex

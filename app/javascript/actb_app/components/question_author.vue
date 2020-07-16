@@ -7,8 +7,11 @@
     | {{question.direction_message}}
 
   .question_user.is-size-8.has-text-grey
-    span {{question.display_author}}
-    span.is-size-11 作
+    template(v-if="question.source_about_key === 'unknown'")
+      | 作者不詳
+    template(v-else)
+      | {{question.display_author}}
+      span.is-size-11 作
 
     template(v-if="question.ox_record.ox_total >= 1")
       span.has-text-grey.ml-1 正解率

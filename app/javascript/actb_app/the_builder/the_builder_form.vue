@@ -31,9 +31,12 @@
 
   b-collapse.mt-5(:open="$parent.question.source_author_collapse_open_p")
     button.button.is-small(slot="trigger" @click="sound_play('click')") 他者が作者の場合
-    .box
+    .box.py-5
+      b-field
+        b-switch(v-model="$parent.question.source_about_key" size="is-small" true-value="unknown" false-value="ascertained") 作者不詳
+
       b-field(label="作者" label-position="on-border")
-        b-input(v-model="$parent.question.source_author" placeholder="初代大橋宗桂")
+        b-input(v-model="$parent.question.source_author" placeholder="初代大橋宗桂" :disabled="$parent.question.source_about_key === 'unknown'")
 
       b-field(label="出典メディア" label-position="on-border")
         b-input(v-model="$parent.question.source_media_name" placeholder="詰パラ")
@@ -49,6 +52,10 @@
 
       b-field(label="出典URL" label-position="on-border")
         b-input(v-model="$parent.question.source_media_url" type="url")
+
+      b-field(label="出典メディア" label-position="on-border")
+        b-input(v-model="$parent.question.source_media_name" placeholder="詰パラ")
+
 </template>
 
 <script>
