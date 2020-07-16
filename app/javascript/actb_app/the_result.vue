@@ -2,13 +2,13 @@
 .the_result
   a.delete.is-large(@click="app.yameru_handle")
 
-  template(v-if="app.battle.practice")
+  template(v-if="app.room.bot_user_id")
     .has-text-centered.is-size-4.has-text-weight-bold.mt-5
       | おしまい
 
-  template(v-if="!app.battle.practice")
+  template(v-if="!app.room.bot_user_id")
     .win_lose_container.has-text-centered.is-size-3.has-text-weight-bold.mt-5
-      template(v-if="app.battle.practice")
+      template(v-if="app.room.bot_user_id")
         .has-text-primary
           | 練習おわり
       template(v-else)

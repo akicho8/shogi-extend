@@ -92,7 +92,7 @@ module Actb
     # 開始時
     def as_json_type1
       as_json({
-          only: [:id, :battle_pos, :practice],
+          only: [:id, :battle_pos],
           include: {
             rule: { only: [:key], methods: [:time_limit_sec] },
             final: { only: [:key], methods: [:name] },
@@ -119,7 +119,7 @@ module Actb
     # 結果表示時
     def as_json_type2_for_result
       as_json({
-          only: [:id, :battle_pos, :practice],
+          only: [:id, :battle_pos],
           include: {
             final: {
               only: [:key],

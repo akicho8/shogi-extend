@@ -92,9 +92,9 @@ module Actb
 
     describe "所在" do
       it do
-        question1.update!(source_about: "unknown")
-        assert { question1.source_about.name == "作者不明" }
+        question1.update!(source_about_key: "unknown") # => true
         assert { question1.source_about_key == "unknown"   }
+        assert { question1.source_about.name == "作者不詳" }
       end
     end
 
@@ -169,14 +169,11 @@ end
 # >> 
 # >>   1) Actb::Question 所在 
 # >>      Failure/Error: Unable to find - to read failed line
-# >> 
-# >>      ActiveRecord::AssociationTypeMismatch:
-# >>        SourceAbout(#70267548412780) expected, got "unknown" which is an instance of String(#70267506679240)
-# >>      # -:95:in `block (3 levels) in <module:Actb>'
+# >>      # -:96:in `block (3 levels) in <module:Actb>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
 # >> 
-# >> Finished in 2.79 seconds (files took 2.15 seconds to load)
+# >> Finished in 2.85 seconds (files took 2.19 seconds to load)
 # >> 17 examples, 1 failure
 # >> 
 # >> Failed examples:

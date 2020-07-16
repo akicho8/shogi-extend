@@ -31,7 +31,6 @@ module Actb
 
       battle = room.battle_create_with_members!
       assert { battle.kind_of?(Actb::Battle) }
-      assert { battle.practice }
     end
   end
 end

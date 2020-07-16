@@ -391,7 +391,7 @@ export const application_battle = {
 
       if (params.membership_id === this.current_membership.id) {
         // 自分が先に再戦希望して、それが練習モードであれば、相手の再戦希望を押してあげる
-        if (this.battle.practice) {
+        if (this.room.bot_user_id) {
           this.delay(3, () => this.battle_continue_handle(true))
         }
       } else {
@@ -416,7 +416,7 @@ export const application_battle = {
     result_setup(battle) {
       this.battle = new Battle(battle)
       this.mode = "result"
-      if (this.battle.practice) {
+      if (this.room.bot_user_id) {
         this.sound_play("pon")
         this.say("おしまい")
       } else {

@@ -179,7 +179,7 @@ module Actb
         return
       end
 
-      if battle.practice?
+      if battle.room.bot_user
         battle.update!(end_at: Time.current)
       else
         battle.judge_final_set(target_user, judge_key, final_key)

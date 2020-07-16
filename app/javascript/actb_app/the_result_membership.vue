@@ -20,7 +20,7 @@
     | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
 
   ////////////////////////////////////////////////////////////////////////////////
-  template(v-if="!app.battle.practice")
+  template(v-if="!app.room.bot_user_id")
     .user_rating.has-text-weight-bold(v-if="app.config.rating_display_p")
       | {{xrecord.rating}}
       span.skill_last_diff.has-text-danger(v-if="xrecord.skill_last_diff > 0")

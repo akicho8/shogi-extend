@@ -52,7 +52,7 @@ module Actb
       if data[:practice_p]
         bot_user = User.bot
         users = [bot_user, current_user]
-        room_create(users, practice: data[:practice_p], bot_user: bot_user)
+        room_create(users, bot_user: bot_user)
         return
       end
 
