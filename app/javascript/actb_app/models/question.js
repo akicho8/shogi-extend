@@ -43,13 +43,12 @@ export class Question {
 
   // 「他者が作者」の情報が一つでも含まれている？
   get source_author_collapse_open_p() {
-    return !!(true ||
-              this.source_about_key === 'unknown' ||
+    return !!(this.source_about_key === 'unknown' ||
               this.source_author                  ||
               this.source_media_name              ||
               this.source_media_url               ||
               false
-    )
+             )
   }
 
   //////////////////////////////////////////////////////////////////////////////// for b-datepicker
