@@ -8,7 +8,7 @@
   .buttons.is-centered.rule_buttons
     template(v-for="row in app.RuleInfo.values")
       template(v-if="row.display_p || development_p")
-        b-button(@click="app.rule_key_set_handle(row)" :class="{'is_active': app.matching_user_ids_hash[row.key].length >= 1}" expanded)
+        b-button(@click="app.rule_key_set_handle(row)" :class="{'is_active': app.matching_user_ids_hash[row.key].length >= 1}" expanded rounded)
           span.has-text-weight-bold
             | {{row.name}}
             template(v-if="app.debug_read_p")
