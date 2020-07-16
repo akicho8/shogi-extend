@@ -30,8 +30,9 @@
     b-input(v-model="$parent.question.direction_message" placeholder="飛車を捕獲せよ！")
 
   b-collapse.mt-5(:open="$parent.question.source_author_collapse_open_p")
-    button.button.is-small(slot="trigger" @click="sound_play('click')") 他者が作者の場合
-    .box.py-5
+    b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 他者が作者の場合
+
+    .box.py-5.mt-2
       b-field
         b-switch(v-model="$parent.question.source_about_key" size="is-small" true-value="unknown" false-value="ascertained") 作者不詳
 
