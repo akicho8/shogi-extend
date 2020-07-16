@@ -1,5 +1,7 @@
 require "./setup"
 
+# Actb::Question.find(14).owner_tag_list # => ["foo", "bar"]
+
 Actb::Question.destroy_all
 
 user = User.sysop
@@ -23,4 +25,3 @@ question.update_from_js(params)
 rescue
 end
 question.persisted?             # => false
-

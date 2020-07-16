@@ -55,6 +55,7 @@ module Actb
           :init_sfen        => "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
           :moves_answers    => [{"moves_str"=>"4c5b"}],
           :time_limit_clock => "1999-12-31T15:03:00.000Z",
+          :owner_tag_list   => ["tag1 tag2", "tag3"],
         }
       end
 
@@ -65,6 +66,7 @@ module Actb
           question.update_from_js(params)
         end
         assert { question.persisted? }
+        assert { question.owner_tag_list == ["tag1", "tag2", "tag3"] }
 
         # 開発者に通知
         mail = ActionMailer::Base.deliveries.last
@@ -163,20 +165,8 @@ module Actb
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .............F...
+# >> .................
 # >> 
-# >> Failures:
-# >> 
-# >>   1) Actb::Question 所在 
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:96:in `block (3 levels) in <module:Actb>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >> 
-# >> Finished in 2.85 seconds (files took 2.19 seconds to load)
-# >> 17 examples, 1 failure
-# >> 
-# >> Failed examples:
-# >> 
-# >> rspec -:94 # Actb::Question 所在 
+# >> Finished in 2.88 seconds (files took 2.17 seconds to load)
+# >> 17 examples, 0 failures
 # >> 

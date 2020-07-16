@@ -58,7 +58,8 @@ module Actb
         :title               => nil,
         :description         => nil,
         :hint_desc           => nil,
-        :direction_message         => nil,
+        :direction_message   => nil,
+        :owner_tag_list      => [],
         :time_limit_sec      => 10.seconds,
         :moves_answers       => [],
         :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
@@ -128,6 +129,7 @@ module Actb
           # :display_key,
           :title,
           :description,
+          :owner_tag_list,
           :hint_desc,
           :direction_message,
 
@@ -162,6 +164,9 @@ module Actb
     has_many :message_users, through: :messages, source: :user                   # コメントしたユーザー(複数)
 
     scope :active_only, -> { joins(:folder).where(Folder.arel_table[:type].eq("Actb::ActiveBox")) }
+
+    acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
+    acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
 
     with_options dependent: :destroy do
       has_many :moves_answers  # 手順一致を正解とする答え集
@@ -293,14 +298,15 @@ module Actb
               :source_media_name,
               :source_media_url,
               :source_published_on,
+              :owner_tag_list,
 
               :difficulty_level,
               :time_limit_sec,
               :folder_key,
             ]))
 
-        if question[:lineage]
-          self.lineage = Lineage.fetch(question[:lineage][:key])
+        if v = question[:lineage]
+          self.lineage = Lineage.fetch(v[:key])
         end
 
         save!
@@ -410,6 +416,7 @@ module Actb
             :description,
             :hint_desc,
             :direction_message,
+            :owner_tag_list,
             :source_author,
             :source_author_link,
           ],
@@ -521,6 +528,10 @@ module Actb
           a["クエスト"] = v
         end
 
+        if v = owner_tag_list.presence
+          a["タグ"] = v.join(", ")
+        end
+
         a["作成日時"] = created_at.to_s(:ymdhm)
         a["SFEN"] = main_sfen
 
@@ -573,6 +584,7 @@ module Actb
                 :description,
                 :hint_desc,
                 :direction_message,
+                :owner_tag_list,
                 :source_author,
                 :source_media_name,
                 :source_media_url,
@@ -580,6 +592,7 @@ module Actb
               ],
               methods: [
                 :lineage_key,
+                :source_about_key,
               ],
               include: {
                 :moves_answers => {
@@ -610,6 +623,7 @@ module Actb
                   :description,
                   :hint_desc,
                   :direction_message,
+                  :source_about_key,
                   :source_author,
                   :source_media_name,
                   :source_media_url,

@@ -29,6 +29,10 @@
   b-field(label="メッセージ" label-position="on-border" message="問題と一緒に表示します。最善手ではない手が答えのときや、ヒントを伝えたいときなどに入力してください。基本、空でかまいません")
     b-input(v-model="$parent.question.direction_message" placeholder="飛車を捕獲せよ！")
 
+  b-field(label="タグ" label-position="on-border")
+    //- https://buefy.org/documentation/taginput
+    b-taginput(v-model="$parent.question.owner_tag_list" rounded confirm-key-codes="[13, 188, 9, 32]")
+
   b-collapse.mt-5(:open="$parent.question.source_author_collapse_open_p")
     b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 他者が作者の場合
 
