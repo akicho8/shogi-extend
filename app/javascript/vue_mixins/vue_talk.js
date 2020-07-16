@@ -1,14 +1,13 @@
 window.talk_sound = null
 
-// FIXME: どうしてVueの外で定義したんだっけ？
-window.tab_is_active_p = () => {
-  console.log("document.hidden", document.hidden)
-  console.log("document.visibilityState", document.visibilityState)
-  return !(document.hidden || document.visibilityState === "hidden")
-}
-
 export default {
   methods: {
+    tab_is_active_p() {
+      console.log("document.hidden", document.hidden)
+      console.log("document.visibilityState", document.visibilityState)
+      return !(document.hidden || document.visibilityState === "hidden")
+    },
+
     talk_stop() {
       if (window.talk_sound) {
         window.talk_sound.stop()
@@ -18,7 +17,7 @@ export default {
 
     // しゃべる
     talk(source_text, options = {}) {
-      if (!tab_is_active_p()) {
+      if (!this.tab_is_active_p()) {
         return
       }
 
