@@ -52,10 +52,6 @@
 
       b-field(label="出典URL" label-position="on-border")
         b-input(v-model="$parent.question.source_media_url" type="url")
-
-      b-field(label="出典メディア" label-position="on-border")
-        b-input(v-model="$parent.question.source_media_name" placeholder="詰パラ")
-
 </template>
 
 <script>
