@@ -108,11 +108,6 @@ export default {
       this.sound_play("click")
       this.general_kifu_copy(this.$parent.question.init_sfen, {to_format: "kif"})
     },
-
-    foobar() {
-      alert(tab_is_active_p())
-    },
-
   },
 
   computed: {
