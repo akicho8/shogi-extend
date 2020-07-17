@@ -46,7 +46,7 @@ module Actb
     :hint_enable                     => false, # ヒントカラムを有効にする？
     :save_and_back_to_index          => true,  # 「保存」したら一覧に戻る？
     :difficulty_level_max            => 5,     # ★の最大数
-    :time_limit_sec_enable           => true,  # 時間制限のカラムを有効にする？
+    :time_limit_sec_enable           => false, # 時間制限のカラムを有効にする？
 
     # -------------------------------------------------------------------------------- API
     :api_questions_fetch_per         => 5,
