@@ -47,7 +47,7 @@ module Actb
     :save_and_back_to_index          => true,  # 「保存」したら一覧に戻る？
     :difficulty_level_max            => 5,     # ★の最大数
     :time_limit_sec_enable           => false, # 時間制限のカラムを有効にする？
-    :difficulty_level_enable         => true,  # 難易度カラムを表示する？
+    :difficulty_level_enable         => false, # 難易度カラムを表示する？
 
     # -------------------------------------------------------------------------------- API
     :api_questions_fetch_per         => 5,
