@@ -92,6 +92,14 @@ export default {
         this.say(v)
       },
     },
+    "$parent.question.source_about_key": {
+      handler(v) {
+        if (v === "unknown") {
+          this.say("作者不詳")
+        }
+        this.sound_play("click")
+      },
+    },
   },
   computed: {
     question() { return this.$parent.question            },
