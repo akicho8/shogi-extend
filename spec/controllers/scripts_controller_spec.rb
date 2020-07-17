@@ -32,7 +32,7 @@ RSpec.describe ScriptsController, type: :controller do
       user_login
     end
     it do
-      put :update, params: { id: "actb-app", remote_action: "profile_update", user_name: "(user_name1)", user_description: "a" * 1024 }
+      put :update, params: { id: "actb-app", remote_action: "profile_update", name: "(user_name1)", profile_description: "a" * (512 + 1) }
       retv = JSON.parse(response.body)
       assert { retv["error_message"] }
       expect(response).to have_http_status(:ok)
