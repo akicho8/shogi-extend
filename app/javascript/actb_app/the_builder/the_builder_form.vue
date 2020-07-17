@@ -6,36 +6,28 @@
   b-field(label="ヒント" label-position="on-border" v-if="app.config.hint_enable")
     b-input(v-model="$parent.question.hint_desc")
 
-  b-field.lineage_key(label="種類" custom-class="is-small" v-if="$parent.LineageInfo")
+  b-field.lineage_key(label="種類" label-position="on-border" v-if="$parent.LineageInfo")
     b-select(v-model="$parent.question.lineage.key" expanded)
       option(v-for="row in $parent.LineageInfo.values" :value="row.key") {{row.name}}
 
-  b-field(label="制限時間" label-position="on-border")
+  b-field(label="制限時間" label-position="on-border" v-if="app.config.time_limit_sec_enable")
     b-timepicker(v-model="$parent.question.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
+
+  b-field(label="解説" label-position="on-border")
+    b-input(v-model="$parent.question.description" type="textarea" rows="3")
 
   b-field(label="難易度" custom-class="is-small" v-if="app.config.difficulty_level_max >= 1")
     b-rate(v-model="$parent.question.difficulty_level" spaced :max="app.config.difficulty_level_max" :show-score="false")
 
-  b-field(label="フォルダ" custom-class="is-small" v-if="$parent.FolderInfo")
-    b-field.is-marginless
-      template(v-for="row in $parent.FolderInfo.values")
-        b-radio-button(v-model="$parent.question.folder_key" :native-value="row.key" :type="row.type")
-          b-icon(:icon="row.icon" size="is-small")
-          span {{row.name}}
-
-  b-field(label="解説" label-position="on-border")
-    b-input(v-model="$parent.question.description" size="is-small" type="textarea" rows="4")
-
-  b-field(label="メッセージ" label-position="on-border" message="問題と一緒に表示します。最善手ではない手が答えのときや、ヒントを伝えたいときなどに入力してください。基本、空でかまいません")
-    b-input(v-model="$parent.question.direction_message" placeholder="飛車を捕獲せよ！")
+  b-field(label="メッセージ" label-position="on-border" message="問題と一緒に表示します。最善手ではない手が答えのときや、ヒントを伝えたいときや、何手指して欲しいか指示したいときなどに入力してください。基本は空でかまいません")
+    b-input(v-model="$parent.question.direction_message" placeholder="3手指してください")
 
   b-field(label="タグ" label-position="on-border")
     //- https://buefy.org/documentation/taginput
     b-taginput(v-model="$parent.question.owner_tag_list" rounded confirm-key-codes="[13, 188, 9, 32]")
 
   b-collapse.mt-5(:open="$parent.question.source_author_collapse_open_p")
-    b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 他者が作者の場合
-
+    b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 作者が他者の場合
     .box.py-5.mt-2
       b-field
         b-switch(v-model="$parent.question.source_about_key" size="is-small" true-value="unknown" false-value="ascertained") 作者不詳
@@ -57,6 +49,13 @@
 
       b-field(label="出典URL" label-position="on-border")
         b-input(v-model="$parent.question.source_media_url" type="url")
+
+  b-field(label="フォルダ" custom-class="is-small" v-if="$parent.FolderInfo")
+    b-field.is-marginless
+      template(v-for="row in $parent.FolderInfo.values")
+        b-radio-button(v-model="$parent.question.folder_key" :native-value="row.key" :type="row.type")
+          b-icon(:icon="row.icon" size="is-small")
+          span {{row.name}}
 </template>
 
 <script>
@@ -105,6 +104,4 @@ export default {
     font-size: $size-10
   .b-radio
     font-size: $size-7
-  .lineage_key
-    margin-top: 1.1rem !important // 種類の上が開きすぎているのでせばめる
 </style>
