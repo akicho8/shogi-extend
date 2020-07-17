@@ -25,4 +25,8 @@ class Profile < ApplicationRecord
     self.description = description.to_s.strip
     self.twitter_key = twitter_key.to_s.strip
   end
+
+  with_options allow_blank: true do
+    validates :description, length: { maximum: 512 }
+  end
 end

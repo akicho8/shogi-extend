@@ -21,6 +21,12 @@
               template(v-if="!question.source_author")
                 b-tag(type="is-primary") 作者
               b-tag(type="is-grey") {{question.user.name}}
+
+          .control
+            b-taglist(attached)
+              b-tag(type="is-primary") 出題
+              b-tag(type="is-grey") {{question.histories_count}}回
+
           .control
             b-taglist(attached)
               b-tag(type="is-primary") 正解率
@@ -63,11 +69,6 @@
 
         .control
           b-taglist(attached)
-            b-tag(type="is-primary") 出題
-            b-tag(type="is-grey") {{question.histories_count}}回
-
-        .control
-          b-taglist(attached)
             b-tag(type="is-primary") 高評価
             b-tag(type="is-grey")
               | {{float_to_perc(question.good_rate)}} %
@@ -91,7 +92,7 @@
               b-tag(type="is-grey")
                 | {{question.source_media_name}}
                 span.ml-1(v-if="question.source_published_on")
-                  | {{question.source_published_on}}
+                  | ({{question.source_published_on}})
 
       template(v-if="question.source_media_url")
         .has-text-centered.mt-0.is-size-7

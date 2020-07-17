@@ -61,21 +61,25 @@ export default {
       this.sound_play("click")
 
       const params = {
-        user_name:        this.$parent.new_name,
-        user_description: this.$parent.new_description,
-        user_twitter_key: this.$parent.new_twitter_key,
-        croped_image:     this.$parent.croped_image,
+        name:                this.$parent.new_name,
+        profile_description: this.$parent.new_description,
+        profile_twitter_key: this.$parent.new_twitter_key,
+        croped_image:        this.$parent.croped_image,
       }
 
       this.api_put("profile_update", params, e => {
+        if (e.error_message) {
+          this.warning_notice(e.error_message)
+        }
+        if (e.user) {
+          this.app.current_user = e.user
+          this.ok_notice("保存しました")
 
-        this.app.current_user = e.current_user
+          this.$parent.var_reset()
 
-        this.ok_notice("保存しました")
-        this.$parent.var_reset()
-
-        if (this.app.config.profile_save_and_return) {
-          this.app.lobby_setup()
+          if (this.app.config.profile_save_and_return) {
+            this.app.lobby_setup()
+          }
         }
       })
     },

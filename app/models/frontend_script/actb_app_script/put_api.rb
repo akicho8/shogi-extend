@@ -84,25 +84,22 @@ module FrontendScript
 
       # curl -d _method=put -d user_name=a -d remote_action=profile_update -d _user_id=1 http://localhost:3000/script/actb-app
       def profile_update
+        user = current_user
+
         if v = params[:croped_image]
           bin = data_base64_body_to_binary(v)
           io = StringIO.new(bin)
-          current_user.avatar.attach(io: io, filename: "user_icon.png")
+          user.avatar.attach(io: io, filename: "user_icon.png")
         end
 
-        if v = params[:user_name]
-          current_user.update!(name: v)
+        user.name = params[:name]
+        user.profile.description = params[:profile_description]
+        user.profile.twitter_key = params[:profile_twitter_key]
+        if user.invalid?
+          return { error_message: user.errors.full_messages.join(" ") }
         end
-
-        if v = params[:user_description]
-          current_user.profile.update!(description: v)
-        end
-
-        if v = params[:user_twitter_key]
-          current_user.profile.update!(twitter_key: v)
-        end
-
-        { current_user: current_user.as_json_type9 }
+        user.save!
+        { user: user.as_json_type9 }
       end
 
       private

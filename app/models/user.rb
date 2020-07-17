@@ -65,6 +65,10 @@ class User < ApplicationRecord
         self.email ||= default_emal
       end
 
+      with_options allow_blank: true do
+        validates :name, length: 1..64
+      end
+
       after_create_commit do
         if Rails.env.production? || Rails.env.staging?
           SlackAgent.message_send(key: "ユーザー登録", body: attributes.slice("id", "name"))
@@ -100,7 +104,7 @@ class User < ApplicationRecord
 
   concerning :ProfileMethods do
     included do
-      has_one :profile, dependent: :destroy
+      has_one :profile, dependent: :destroy, autosave: true
       accepts_nested_attributes_for :profile
       delegate :description, :twitter_key, to: :profile
 
