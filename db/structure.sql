@@ -719,7 +719,7 @@ CREATE TABLE `profiles` (
   `user_id` bigint(20) NOT NULL COMMENT 'ユーザー',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `description` varchar(512) COLLATE utf8mb4_bin NOT NULL,
   `twitter_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_profiles_on_user_id` (`user_id`)
@@ -1069,6 +1069,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200711103804'),
 ('20200711103807'),
 ('20200711103808'),
-('20200711103809');
+('20200711103809'),
+('20200711103810');
 
 
