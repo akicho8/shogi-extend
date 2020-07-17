@@ -26,7 +26,7 @@
     //- https://buefy.org/documentation/taginput
     b-taginput(v-model="$parent.question.owner_tag_list" rounded confirm-key-codes="[13, 188, 9, 32]")
 
-  b-collapse.mt-5(:open="$parent.question.source_author_collapse_open_p")
+  b-collapse.mt-6(:open="source_author_collapse_open_p")
     b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 作者が他者の場合
     .box.py-5.mt-2
       b-field
@@ -66,6 +66,12 @@ export default {
   mixins: [
     support,
   ],
+  data() {
+    return {
+      source_author_collapse_open_p: this.$parent.question.source_author_collapse_open_p,
+    }
+  },
+
   watch: {
     "question.lineage.key": {
       handler(v) {
