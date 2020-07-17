@@ -23,11 +23,6 @@
               b-tag(type="is-grey") {{question.user.name}}
           .control
             b-taglist(attached)
-              b-tag(type="is-primary") 高評価
-              b-tag(type="is-grey")
-                | {{float_to_perc(question.good_rate)}} %
-          .control
-            b-taglist(attached)
               b-tag(type="is-primary") 正解率
               b-tag(type="is-grey")
                 template(v-if="question.ox_record.ox_total === 0")
@@ -70,6 +65,12 @@
           b-taglist(attached)
             b-tag(type="is-primary") 出題
             b-tag(type="is-grey") {{question.histories_count}}回
+
+        .control
+          b-taglist(attached)
+            b-tag(type="is-primary") 高評価
+            b-tag(type="is-grey")
+              | {{float_to_perc(question.good_rate)}} %
 
     .mt-5(v-if="question.source_author || question.source_media_name || question.source_media_url")
       b-field(grouped group-multiline position="is-centered")
