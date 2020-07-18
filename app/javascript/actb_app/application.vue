@@ -9,7 +9,7 @@
 
   the_ranking(      v-if="mode === 'ranking'")
   the_history(      v-if="mode === 'history'")
-  the_builder(      v-if="mode === 'builder'")
+  the_builder(ref="builder"      v-if="mode === 'builder'")
   the_menu(         v-if="mode === 'menu'")
 
   details(v-if="app.debug_read_p")

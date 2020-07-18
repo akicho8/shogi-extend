@@ -172,7 +172,11 @@ export default {
     edit_handle(question_id) {
       this.$emit("close")
       this.app.edit_question_id = question_id
-      this.app.builder_handle()
+      if (this.app.$refs.builder) {
+        this.app.$refs.builder.question_edit()
+      } else {
+        this.app.builder_handle()
+      }
     },
 
     delete_click_handle() {

@@ -127,7 +127,7 @@ export default {
     this.app.lobby_unsubscribe()
     this.sound_play("click")
 
-    // 一覧用
+    // 一覧用のリソース
     this.api_get("builder_form_resource_fetch", {}, e => {
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
@@ -136,11 +136,8 @@ export default {
 
       // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
       if (this.app.edit_question_id) {
-        this.api_get("question_edit_fetch", {question_id: this.app.edit_question_id}, e => {
-          this.app.edit_question_id = null
-          this.question_edit_for(new Question(e.question))
-          return
-        })
+        this.question_edit()
+        return
       }
 
       if (this.app.info.debug_scene === "builder_haiti" || this.app.info.debug_scene === "builder_form") {
@@ -153,6 +150,16 @@ export default {
   },
 
   methods: {
+    question_edit() {
+      // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
+      if (this.app.edit_question_id) {
+        this.api_get("question_edit_fetch", {question_id: this.app.edit_question_id}, e => {
+          this.app.edit_question_id = null
+          this.question_edit_for(new Question(e.question))
+        })
+      }
+    },
+
     mode_select(tab_key) {
       this.tab_index = TabInfo.fetch(tab_key).code
     },
@@ -336,6 +343,7 @@ export default {
 
     tag_search_handle(tag) {
       this.sound_play("click")
+      this.say(tag)
       this.page_info.tag = tag
       this.async_records_load()
     },
