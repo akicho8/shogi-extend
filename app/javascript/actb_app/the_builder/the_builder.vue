@@ -188,7 +188,7 @@ export default {
 
     edit_mode_snapshot_sfen(sfen) {
       if (this.question.init_sfen !== sfen) {
-        this.debug_alert(`初期配置取得 ${sfen}`)
+        this.debug_alert(`配置取得 ${sfen}`)
         this.question.init_sfen = sfen
 
         // 合わせて正解も削除する

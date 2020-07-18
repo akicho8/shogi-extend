@@ -53,7 +53,7 @@
                   | {{float_to_perc(question.ox_record.o_rate)}} %
 
     b-tabs.mt-2(v-model="tab_index" @change="tab_change_handle" expanded)
-      b-tab-item(label="初期配置")
+      b-tab-item(label="配置")
       template(v-for="(e, i) in question.moves_answers")
         b-tab-item(:label="`${i === 0 ? '解' : ''}${i + 1}`")
 

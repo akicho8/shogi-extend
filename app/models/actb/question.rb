@@ -396,7 +396,7 @@ module Actb
       end
     end
 
-    # 初期配置 + 1問目
+    # 配置 + 1問目
     def main_sfen
       if moves_answers.blank?
         init_sfen
