@@ -14,7 +14,7 @@
         //- .image.is-32x32.is_flex_shrink_0.is_clickable(@click="app.ov_user_info_set(question.user.id)")
         //-   img.is-rounded(:src="question.user.avatar_path")
         span.has-text-weight-bold.is-size-5
-          template(v-if="current_user_is_owner_p")
+          template(v-if="current_user_is_owner_p || app.debug_force_edit_p")
             a(@click="edit_handle(question.id)")
               | {{question.title}}
           template(v-else)
