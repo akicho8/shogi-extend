@@ -5,6 +5,7 @@ module FrontendScript
       # 問題一覧
       # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch
       # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch&folder_key=active
+      # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch&sort_column=lineage_key&sort_order=desc
       # app/javascript/actb_app/models/question_column_info.js
       def questions_fetch
         params[:per] ||= Actb::Config[:api_questions_fetch_per]
@@ -119,6 +120,8 @@ module FrontendScript
           when "user"
             order = User.order(columns.last => sort_order)
             s = s.joins(:user).merge(order)
+          when "lineage_key"
+            s = s.joins(:lineage).merge(Actb::Lineage.reorder(id: sort_order)) # position の order を避けるため reorder
           else
             s = sort_scope(s)
           end
