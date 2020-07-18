@@ -7,7 +7,7 @@
     //- b-button.right_top(icon-left="twitter" size="is-small" type="is-twitter") Tweet
 
     .has-text-centered
-      b-tag.mt-4(:type="question.folder.type" v-if="question.folder.key === 'draft' || question.folder.key === 'trash'")
+      b-tag.mt-5(:type="question.folder.type" v-if="question.folder.key === 'draft' || question.folder.key === 'trash'")
         | {{question.folder.name}}
 
       .question_title.is_line_break_on
