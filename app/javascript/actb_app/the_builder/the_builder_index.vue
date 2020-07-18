@@ -176,7 +176,7 @@ export default {
     // チェックボックスをトグルする
     cb_toggle_handle(column) {
       this.sound_play('click')
-      this.visible_hash[column.key] = !this.visible_hash[column.key]
+      this.$set(this.visible_hash, column.key, !this.visible_hash[column.key])
       if (this.visible_hash[column.key]) {
         this.say(column.name)
       }
