@@ -81,7 +81,7 @@
         .control
           b-taglist(attached)
             b-tag(type="is-primary-dummy") 種類
-            b-tag(type="is-grey") {{question.lineage.key}}
+            b-tag(type="is-grey") {{question.lineage_key}}
 
         .control
           b-taglist(attached)
@@ -219,7 +219,7 @@ export default {
     },
     tweet_body() {
       return [
-        `#${this.question.lineage.key}`,
+        `#${this.question.lineage_key}`,
         ...this.question.owner_tag_list.map(e => `#${e}`),
         this.permalink_url,
       ].join(" ")

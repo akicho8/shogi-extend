@@ -65,7 +65,7 @@ module Actb
         :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
 
         :difficulty_level    => 1,
-        :lineage             => { key: "詰将棋" },
+        :lineage_key         => "詰将棋",
         :folder_key          => "active",
 
         # 他者が作者
@@ -113,12 +113,12 @@ module Actb
       {
         methods: [
           :folder_key,
+          :lineage_key,
           :source_about_key,
         ],
         include: [
           :user,
           :moves_answers,
-          :lineage,
           :ox_record,
         ],
         only: [
@@ -304,11 +304,8 @@ module Actb
               :difficulty_level,
               :time_limit_sec,
               :folder_key,
+              :lineage_key,
             ]))
-
-        if v = question[:lineage]
-          self.lineage = Lineage.fetch(v[:key])
-        end
 
         save!
 
@@ -450,6 +447,7 @@ module Actb
       as_json({
           methods: [
             :source_about_key,
+            :lineage_key,
           ],
           include: {
             user: {
@@ -458,7 +456,6 @@ module Actb
             },
             ox_record: {},
             moves_answers: {},
-            lineage: { only: [:key] },
             folder: { only: [], methods: [:key, :name, :type] },
             messages: QuestionMessage.json_struct_type8,
           },

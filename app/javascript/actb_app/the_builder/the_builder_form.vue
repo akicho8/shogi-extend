@@ -7,7 +7,7 @@
     b-input(v-model="$parent.question.hint_desc")
 
   b-field.lineage_key(label="種類" label-position="on-border" v-if="$parent.LineageInfo")
-    b-select(v-model="$parent.question.lineage.key" expanded)
+    b-select(v-model="$parent.question.lineage_key" expanded)
       option(v-for="row in $parent.LineageInfo.values" :value="row.key") {{row.name}}
 
   b-field(label="制限時間" label-position="on-border" v-if="app.config.time_limit_sec_enable")
@@ -73,7 +73,7 @@ export default {
   },
 
   watch: {
-    "question.lineage.key": {
+    "question.lineage_key": {
       handler(v) {
         this.sound_play("click")
         this.say(v)
