@@ -284,6 +284,7 @@ module Actb
     #
     def update_from_js(params)
       question = params.deep_symbolize_keys
+      before_hash = current_hash
 
       ActiveRecord::Base.transaction do
         assign_attributes(question.slice(*[
@@ -332,10 +333,15 @@ module Actb
 
       # 「公開」フォルダに移動させたときに通知する
       # created_at をトリガーにすると下書きを作成したときにも通知してしまう
-      if active_folder_posted?
-        SlackAgent.message_send(key: "問題登録", body: [title, page_url].join(" "))
-        User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
+      case
+      when active_folder_posted?
+        SlackAgent.message_send(key: "問題公開", body: [title, page_url].join(" "))
         ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を投稿しました", body: info.to_t).deliver_later
+        User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
+      when folder_key === "active" && current_hash != before_hash
+        SlackAgent.message_send(key: "問題更新", body: [title, page_url].join(" "))
+        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を更新しました", body: info.to_t).deliver_later
+        User.bot.lobby_speak("*#{user.name}さんが「#{title}」を更新しました")
       end
     end
 
@@ -463,6 +469,15 @@ module Actb
     # 公開した直後か？
     def active_folder_posted?
       saved_change_to_attribute?(:folder_id) && folder_key === "active"
+    end
+
+    # 変更を検知するためのハッシュ(重要なデータだけにする)
+    def current_hash
+      ary = [
+        init_sfen,
+        *moves_answers.collect(&:moves_str),
+      ]
+      Digest::MD5.hexdigest(ary.join(":"))
     end
 
     concerning :InfoMethods do
