@@ -20,7 +20,7 @@
           template(v-if="row.question.source_about_key === 'unknown'")
             | 作者不詳
           template(v-else)
-            | {{question.display_author}}
+            | {{row.question.display_author}}
             span.is-size-11 作
         .question_description.is-size-7(v-if="row.question.description")
           | {{string_truncate(row.question.description)}}
