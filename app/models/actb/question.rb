@@ -511,9 +511,13 @@ module Actb
         a["種類"] = lineage.key
         a["フォルダ"] = folder.pure_info.name
 
-        a["制限時間"] = "#{time_limit_sec}秒"
+        if Actb::Config[:time_limit_sec_enable]
+          a["制限時間"] = "#{time_limit_sec}秒"
+        end
 
-        a["難易度"] = "★" * (difficulty_level || 0)
+        if Actb::Config[:difficulty_level_enable]
+          a["難易度"] = "★" * (difficulty_level || 0)
+        end
 
         a["出題回数"]   = histories_count
         a["正解率"]     = "%.2f %%" % (ox_record.o_rate * 100)
