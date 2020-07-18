@@ -35,6 +35,12 @@ module FrontendScript
         retv
       end
 
+      # 問題編集用
+      def question_edit_fetch
+        question = current_user.actb_questions.find(params[:question_id])
+        { question: question.as_json(Actb::Question.json_type5) }
+      end
+
       # http://localhost:3000/script/actb-app.json?remote_action=ranking_fetch&ranking_key=rating
       def ranking_fetch
         { rank_data: Actb::RankingCop.new(params.merge(current_user: current_user)) }

@@ -11,8 +11,15 @@
         | {{question.folder.name}}
 
       .question_title.is_line_break_on
-        .has-text-weight-bold.is-size-5.mt-4 {{question.title}}
-        .direction_message.is-size-6(v-if="question.direction_message") {{question.direction_message}}
+        .has-text-weight-bold.is-size-5.mt-4
+          template(v-if="current_user_is_owner_p")
+            a(@click="edit_handle(question.id)")
+              | {{question.title}}
+          template(v-else)
+            | {{question.title}}
+
+        .direction_message.is-size-6(v-if="question.direction_message")
+          | {{question.direction_message}}
 
       .mt-3
         //- https://buefy.org/documentation/tag/
@@ -156,6 +163,12 @@ export default {
   },
 
   methods: {
+    edit_handle(question_id) {
+      this.$emit("close")
+      this.app.edit_question_id = question_id
+      this.app.builder_handle()
+    },
+
     delete_click_handle() {
       this.sound_play("click")
       this.$emit("close")
@@ -204,6 +217,11 @@ export default {
 
     piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.selected_sfen, turn: -1, flip: false, game_name: this.question.title}) },
     kento_app_with_params_url()      { return this.kento_full_url({sfen: this.selected_sfen, turn: -1, flip: false})   },
+
+    // いまログインしている人はこの問題の投稿者か？
+    current_user_is_owner_p() {
+      return this.app.current_user && this.app.current_user.id === this.question.user.id
+    },
   },
 }
 </script>

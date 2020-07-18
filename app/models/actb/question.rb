@@ -108,7 +108,7 @@ module Actb
       default
     end
 
-    # 一覧用
+    # 一覧・編集用
     def self.json_type5
       {
         methods: [

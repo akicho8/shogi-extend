@@ -104,6 +104,10 @@ export default {
       lobby_messages:     null, // メッセージ(複数)
       lobby_message_body: null, // 入力中のメッセージ
 
+      // 問題編集
+      edit_question_id: null, // IDを入れて builder_handle を叩けば、そのIDの編集画面に飛ぶ
+
+      // リソース
       RuleInfo:   null,
       OxMarkInfo: null,
       SkillInfo:  null,

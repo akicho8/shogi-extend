@@ -136,6 +136,15 @@ export default {
 
       this.resource_loaded_p = true
 
+      // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
+      if (this.app.edit_question_id) {
+        this.api_get("question_edit_fetch", {question_id: this.app.edit_question_id}, e => {
+          this.app.edit_question_id = null
+          this.question_edit_for(new Question(e.question))
+          return
+        })
+      }
+
       if (this.app.info.debug_scene === "builder_haiti" || this.app.info.debug_scene === "builder_form") {
         this.builder_new_handle()
         return
@@ -315,10 +324,11 @@ export default {
         return
       }
 
+      // 最初に開くタブの決定
       if (this.question_new_record_p) {
         this.haiti_mode_handle()
       } else {
-        this.kensho_mode_handle()
+        this.form_mode_handle()
       }
     },
 
