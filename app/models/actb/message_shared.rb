@@ -49,5 +49,9 @@ module Actb
     def as_json_type8
       as_json(json_struct_type8)
     end
+
+    def unescaped_body
+      CGI.unescapeHTML(body)
+    end
   end
 end

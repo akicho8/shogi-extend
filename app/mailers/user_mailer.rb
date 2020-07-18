@@ -26,7 +26,7 @@ class UserMailer < ApplicationMailer
     subject = "#{message.user.name}さんが「#{message.question.title}」にコメントしました"
 
     out = []
-    out << message.body
+    out << message.unescaped_body
     out << ""
     out << message.question.page_url
 
@@ -49,7 +49,7 @@ class UserMailer < ApplicationMailer
     subject = "以前コメントした「#{message.question.title}」に#{message.user.name}さんがコメントしました"
 
     out = []
-    out << message.body
+    out << message.unescaped_body
     out << ""
     out << message.question.page_url
 
