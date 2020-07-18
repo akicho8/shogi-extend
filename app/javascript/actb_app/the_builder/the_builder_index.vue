@@ -17,14 +17,11 @@
       b-icon(slot="trigger" icon="menu")
       template(v-for="e in QuestionIndexColumnInfo.values")
         template(v-if="e.scope.includes(app.user_type)")
-          template(v-if="!app.config.time_limit_sec_enable && e.key === 'time_limit_sec'")
-          template(v-else-if="!app.config.difficulty_level_enable && e.key === 'difficulty_level'")
-          template(v-else)
-            b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="e.key")
-              .has-text-weight-bold(v-if="visible_hash[e.key]")
-                | {{e.name}}
-              .has-text-grey(v-else)
-                | {{e.name}}
+          b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="e.key")
+            .has-text-weight-bold(v-if="visible_hash[e.key]")
+              | {{e.name}}
+            .has-text-grey(v-else)
+              | {{e.name}}
 
   ////////////////////////////////////////////////////////////////////////////////
   .secondary_header
@@ -84,8 +81,9 @@
       b-table-column(custom-key="bad_marks_count"   field="bad_marks_count"   :label="QuestionIndexColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
 
       b-table-column(custom-key="clip_marks_count"  field="clip_marks_count"  :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
-      b-table-column(custom-key="difficulty_level"  field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level" v-if="app.config.difficulty_level_enable") {{props.row.difficulty_level}}
-      b-table-column(custom-key="time_limit_sec"    field="time_limit_sec"  :label="QuestionIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="visible_hash.time_limit_sec" v-if="app.config.time_limit_sec_enable") {{props.row.time_limit_sec}}秒
+
+      //- b-table-column(custom-key="difficulty_level"  field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
+      //- b-table-column(custom-key="time_limit_sec"    field="time_limit_sec"  :label="QuestionIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="visible_hash.time_limit_sec") {{props.row.time_limit_sec}}秒
 
       b-table-column(custom-key="lineage_key"    field="lineage_key"  :label="QuestionIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="visible_hash.lineage_key") {{props.row.lineage_key}}
 
