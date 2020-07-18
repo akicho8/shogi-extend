@@ -313,6 +313,7 @@ module Actb
 
         if records = question[:moves_answers]
           # 削除
+          # [1, 2, 3] があるとき [1, 3] をセットすることで [2] が削除される
           self.moves_answer_ids = records.collect { |e| e[:id] }
 
           # 追加 or 更新
@@ -329,7 +330,9 @@ module Actb
         end
       end
 
-      if public_posted?
+      # 「公開」フォルダに移動させたときに通知する
+      # created_at をトリガーにすると下書きを作成したときにも通知してしまう
+      if active_folder_posted?
         SlackAgent.message_send(key: "問題登録", body: [title, page_url].join(" "))
         User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
         ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を投稿しました", body: info.to_t).deliver_later
@@ -360,11 +363,6 @@ module Actb
       if source_about.key == "unknown"
         "作者不詳"
       end
-    end
-
-    # 公開した直後か？
-    def public_posted?
-      saved_change_to_attribute?(:folder_id) && folder_key === "active"
     end
 
     def init_sfen=(sfen)
@@ -458,6 +456,13 @@ module Actb
             messages: QuestionMessage.json_struct_type8,
           },
         })
+    end
+
+    private
+
+    # 公開した直後か？
+    def active_folder_posted?
+      saved_change_to_attribute?(:folder_id) && folder_key === "active"
     end
 
     concerning :InfoMethods do
@@ -560,10 +565,7 @@ module Actb
       end
     end
 
-    concerning :ImportExportMethdos do
-      included do
-      end
-
+    concerning :ImportExportMod do
       class_methods do
         def setup(options = {})
           # if Rails.env.staging? || Rails.env.production? || Rails.env.development?
