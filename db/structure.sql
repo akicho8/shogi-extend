@@ -379,7 +379,7 @@ CREATE TABLE `actb_questions` (
   `bad_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '低評価数',
   `clip_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '保存された数',
   `messages_count` int(11) NOT NULL DEFAULT '0' COMMENT 'コメント数',
-  `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'クエスト指示文言またはヒント',
+  `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'メッセージ',
   `source_about_id` bigint(20) DEFAULT NULL COMMENT '所在',
   PRIMARY KEY (`id`),
   KEY `index_actb_questions_on_key` (`key`),

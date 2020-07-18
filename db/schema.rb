@@ -259,7 +259,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103810) do
     t.integer "bad_marks_count", default: 0, null: false, comment: "低評価数"
     t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
     t.integer "messages_count", default: 0, null: false, comment: "コメント数"
-    t.string "direction_message", comment: "クエスト指示文言またはヒント"
+    t.string "direction_message", comment: "メッセージ"
     t.bigint "source_about_id", comment: "所在"
     t.index ["bad_marks_count"], name: "index_actb_questions_on_bad_marks_count"
     t.index ["clip_marks_count"], name: "index_actb_questions_on_clip_marks_count"
