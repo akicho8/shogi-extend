@@ -10,16 +10,18 @@
       b-tag.mt-5(:type="question.folder.type" v-if="question.folder.key === 'draft' || question.folder.key === 'trash'")
         | {{question.folder.name}}
 
-      .question_title.is_line_break_on
-        .has-text-weight-bold.is-size-5.mt-4
+      .question_title.is_line_break_on.is-flex.mt-4.mx-6
+        //- .image.is-32x32.is_flex_shrink_0.is_clickable(@click="app.ov_user_info_set(question.user.id)")
+        //-   img.is-rounded(:src="question.user.avatar_path")
+        span.has-text-weight-bold.is-size-5
           template(v-if="current_user_is_owner_p")
             a(@click="edit_handle(question.id)")
               | {{question.title}}
           template(v-else)
             | {{question.title}}
 
-        .direction_message.is-size-6(v-if="question.direction_message")
-          | {{question.direction_message}}
+      .direction_message.is-size-6(v-if="question.direction_message")
+        | {{question.direction_message}}
 
       .mt-3
         //- https://buefy.org/documentation/tag/
@@ -27,19 +29,23 @@
           .control
             b-taglist.is_clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
               template(v-if="question.source_author || question.source_about_key === 'unknown'")
-                b-tag(type="is-primary") 投稿
+                b-tag(type="is-primary-dummy") 投稿
               template(v-if="!question.source_author")
-                b-tag(type="is-primary") 作者
-              b-tag(type="is-grey") {{question.user.name}}
+                b-tag(type="is-primary-dummy") 作者
+              b-tag(type="is-grey")
+                .is-flex
+                  figure.image.is-16x16.is_flex_shrink_0
+                    img.is-rounded(:src="question.user.avatar_path")
+                  .ml-1 {{question.user.name}}
 
           .control
             b-taglist(attached)
-              b-tag(type="is-primary") 出題
+              b-tag(type="is-primary-dummy") 出題
               b-tag(type="is-grey") {{question.histories_count}}回
 
           .control
             b-taglist(attached)
-              b-tag(type="is-primary") 正解率
+              b-tag(type="is-primary-dummy") 正解率
               b-tag(type="is-grey")
                 template(v-if="question.ox_record.ox_total === 0")
                   | ?
@@ -74,12 +80,12 @@
       b-field(grouped group-multiline position="is-centered")
         .control
           b-taglist(attached)
-            b-tag(type="is-primary") 種類
+            b-tag(type="is-primary-dummy") 種類
             b-tag(type="is-grey") {{question.lineage.key}}
 
         .control
           b-taglist(attached)
-            b-tag(type="is-primary") 高評価
+            b-tag(type="is-primary-dummy") 高評価
             b-tag(type="is-grey")
               | {{float_to_perc(question.good_rate)}} %
 
@@ -88,7 +94,7 @@
         template(v-if="question.source_about_key === 'unknown' || question.source_author")
           .control
             b-taglist(attached)
-              b-tag(type="is-primary") 作者
+              b-tag(type="is-primary-dummy") 作者
               b-tag(type="is-grey")
                 template(v-if="question.source_about_key === 'unknown'")
                   | 不詳
@@ -98,7 +104,7 @@
         template(v-if="question.source_media_name")
           .control
             b-taglist(attached)
-              b-tag(type="is-primary") 出典
+              b-tag(type="is-primary-dummy") 出典
               b-tag(type="is-grey")
                 | {{question.source_media_name}}
                 span.ml-1(v-if="question.source_published_on")
@@ -239,10 +245,17 @@ export default {
       right: 0
 
     .question_title
-      margin: 0 3rem
+      justify-content: center
+      align-items: center
 
-    .tag
-      font-weight: bold
+    .tags
+      .tag
+        &:first-child
+          padding-right: 0rem
+          font-weight: bold
+          color: $grey
+        &:not(:first-child)
+          padding-left: 0.25rem
 
     .tab-content
       padding: 0

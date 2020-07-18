@@ -146,8 +146,8 @@ module FrontendScript
         c.sysop_login_unless_logout
 
         question = Actb::Question.first
-        question.title = "title" * 30
-        question.direction_message = "direction_message" * 4
+        question.title = "始まりの金" * 10
+        question.direction_message = "3手指してください" * 10
         question.assign_attributes({
             :source_about_key       => "ascertained",
             :source_author          => "渡瀬荘二郎",
