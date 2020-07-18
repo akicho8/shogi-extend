@@ -218,7 +218,11 @@ export default {
       return url.toString()
     },
     tweet_body() {
-      return [`#${this.question.lineage.key}`, this.permalink_url].join(" ")
+      return [
+        `#${this.question.lineage.key}`,
+        ...this.question.owner_tag_list.map(e => `#${e}`),
+        this.permalink_url,
+      ].join(" ")
     },
 
     piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.selected_sfen, turn: -1, flip: false, game_name: this.question.title}) },
