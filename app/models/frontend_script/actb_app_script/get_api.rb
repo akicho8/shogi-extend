@@ -25,6 +25,9 @@ module FrontendScript
             end
           end
         end
+        if v = params[:tag].presence
+          s = s.tagged_with(v)
+        end
         s = page_scope(s)       # page_mod.rb
         s = sort_scope_for_questions(s)
 
@@ -32,7 +35,7 @@ module FrontendScript
         retv[:questions]       = s.as_json(Actb::Question.json_type5)
         retv[:question_counts] = current_user.actb_questions.group(:folder_id).count.transform_keys { |e| Actb::Folder.find(e).key }
         retv[:question_counts].update(all: Actb::Question.active_only.count)
-        retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key]}
+        retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key], tag: params[:tag]}
         retv
       end
 

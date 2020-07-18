@@ -105,6 +105,7 @@ export default {
         sort_order_default: null,
         //
         folder_key:         null,
+        tag:                null,
       },
 
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
@@ -333,6 +334,12 @@ export default {
       this.builder_index_handle()
     },
 
+    tag_search_handle(tag) {
+      this.sound_play("click")
+      this.page_info.tag = tag
+      this.async_records_load()
+    },
+
     page_change_handle(page) {
       this.page_info.page = page
       this.async_records_load()
@@ -350,8 +357,6 @@ export default {
     },
 
     async_records_load() {
-      console.log("async_records_load")
-
       this.api_get("questions_fetch", this.page_info, e => {
         this.questions = e.questions.map(e => new Question(e))
         this.page_info = e.page_info
