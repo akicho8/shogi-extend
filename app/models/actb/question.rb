@@ -525,7 +525,7 @@ module Actb
         end
 
         if v = direction_message.presence
-          a["クエスト"] = v
+          a["メッセージ"] = v
         end
 
         if v = owner_tag_list.presence
