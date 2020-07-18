@@ -126,9 +126,6 @@ export default {
     this.app.lobby_unsubscribe()
     this.sound_play("click")
 
-    // 作成画面でのデフォルト
-    this.mode_select("haiti_mode")
-
     // 一覧用
     this.api_get("builder_form_resource_fetch", {}, e => {
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)

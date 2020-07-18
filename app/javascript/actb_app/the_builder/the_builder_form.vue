@@ -24,7 +24,7 @@
 
   b-field(label="タグ" label-position="on-border")
     //- https://buefy.org/documentation/taginput
-    b-taginput(v-model="$parent.question.owner_tag_list" rounded confirm-key-codes="[13, 188, 9, 32]")
+    b-taginput(v-model="$parent.question.owner_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
 
   b-collapse.mt-6(:open="source_author_collapse_open_p")
     b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 作者が他者の場合
