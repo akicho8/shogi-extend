@@ -40,8 +40,9 @@ module FrontendScript
       end
 
       # 問題編集用
+      # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
       def question_edit_fetch
-        question = current_user.actb_questions.find(params[:question_id])
+        question = Actb::Question.find(params[:question_id])
         { question: question.as_json(Actb::Question.json_type5) }
       end
 
