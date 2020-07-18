@@ -7,6 +7,9 @@
     //- b-button.right_top(icon-left="twitter" size="is-small" type="is-twitter") Tweet
 
     .has-text-centered
+      b-tag.mt-4(:type="question.folder.type" v-if="question.folder.key === 'draft' || question.folder.key === 'trash'")
+        | {{question.folder.name}}
+
       .question_title.is_line_break_on
         .has-text-weight-bold.is-size-5.mt-4 {{question.title}}
         .direction_message.is-size-6(v-if="question.direction_message") {{question.direction_message}}

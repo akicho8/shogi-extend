@@ -459,6 +459,7 @@ module Actb
             ox_record: {},
             moves_answers: {},
             lineage: { only: [:key] },
+            folder: { only: [], methods: [:key, :name, :type] },
             messages: QuestionMessage.json_struct_type8,
           },
         })

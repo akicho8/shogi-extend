@@ -19,11 +19,13 @@
 
 module Actb
   class Folder < ApplicationRecord
-    belongs_to :user
+    belongs_to :user # FIXME: 設計ミス。ユーザー毎のフォルダを持つ必要がない
 
     has_many :questions, dependent: :destroy
 
-    def name
+    delegate :name, :type, to: :pure_info
+
+    def owner_with_name
       "#{user.name}の#{self.class.model_name.human}"
     end
 
