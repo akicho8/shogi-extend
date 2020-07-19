@@ -47,7 +47,7 @@
     :mobile-cards="false"
     hoverable
     :narrowed="false"
-    @click="row => app.ov_question_info_set(row.id)"
+    @click="row => false && app.ov_question_info_set(row.id)"
 
     paginated
     backend-pagination
