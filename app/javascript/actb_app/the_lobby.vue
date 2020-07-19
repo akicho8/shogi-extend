@@ -10,7 +10,7 @@
           | {{app.current_user.name}}
         span.skill_key.has-text-weight-bold.is-size-6.ml-1
           | {{app.current_user.skill_key}}
-        span.rating.has-text-weight-bold.is-size-7.ml-1(v-if="development_p")
+        span.rating.has-text-weight-bold.is-size-6.ml-1(v-if="app.config.rating_display_p || development_p")
           | {{app.current_user.rating}}
 
   debug_print(v-if="app.debug_read_p && false" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode']" oneline)
