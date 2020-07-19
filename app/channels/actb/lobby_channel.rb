@@ -74,6 +74,21 @@ module Actb
       Actb::Rule.matching_users_delete_from_all_rules(current_user)
     end
 
+    # マッチング中の人といきなり対局する
+    def yarimasu_handle(data)
+      data = data.to_options
+      raise ArgumentError if data[:session_lock_token].blank?
+
+      ids = Rule.matching_all_user_ids
+      raise unless ids.all? { |e| e.kind_of?(Integer) }
+      ids = ids - [current_user.id]
+      if id = ids.sample
+        user = User.find(id)
+        current_user.actb_setting.update!(session_lock_token: data[:session_lock_token])
+        room_create([user, current_user], rule: user.actb_setting.rule)
+      end
+    end
+
     ################################################################################
 
     def ordered_infos_debug

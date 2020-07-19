@@ -51,12 +51,11 @@ export const application_matching = {
         if (params.user_id === this.current_user.id) {
           // 自分が開始したので自分に通知しても意味がない
         } else {
-          if (!this.tab_is_active_p()) {
+          if (this.tab_is_hidden_p()) {
             this.console_log("対戦者がいましたがタブが死んでいるためスルー")
             return
           }
-          this.sound_play("bell1")
-          this.ok_notice("対戦者が待っています")
+          this.snackbar_show()
         }
       }
     },

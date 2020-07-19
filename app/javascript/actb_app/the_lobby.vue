@@ -27,7 +27,7 @@
     b-button.mt-3(@click="app.start_handle(true)") 練習
 
   the_lobby_message
-  the_lobby_debug(v-if="true")
+  the_lobby_debug
 </template>
 
 <script>

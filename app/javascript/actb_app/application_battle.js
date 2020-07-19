@@ -413,14 +413,6 @@ export const application_battle = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    rensyu_yameru_handle() {
-      this.__assert__(this.room.bot_user_id != null, "this.room.bot_user_id != null")
-      this.battle_unsubscribe()
-      this.room_unsubscribe()
-      this.mode = "lobby"
-      this.sound_play("click")
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     result_setup(battle) {

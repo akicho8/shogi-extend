@@ -241,11 +241,23 @@ export default {
       this.mode = "profile_edit"
     },
 
-    lobby_setup() {
+    // 練習モードを止める
+    rensyu_yameru_handle() {
+      this.__assert__(this.room.bot_user_id != null, "this.room.bot_user_id != null")
+      this.lobby_setup_before()
+      this.sound_play("click")
+    },
+
+    lobby_setup_before() {
       this.battle_unsubscribe()
       this.room_unsubscribe()
 
       this.mode = "lobby"
+      this.room = null          // 対戦中ではないことを判定するため消しておく
+    },
+
+    lobby_setup() {
+      this.lobby_setup_before()
 
       this.lobby_messages_setup()
 
@@ -360,8 +372,35 @@ export default {
       this.mode = "rule_select"
     },
 
-    arawareta_handle() {
-      // this.$ac_lobby.perform("matching_cancel")
+    yarimasu_handle() {
+      this.$ac_lobby.perform("yarimasu_handle", {
+        session_lock_token: this.current_user.session_lock_token,
+      }) // --> app/channels/actb/lobby_channel.rb (yarimasu_handle)
+    },
+
+    snackbar_show() {
+      this.sound_play("bell1")
+
+      let message = null
+      if (this.room) {
+        message = "挑戦者現る！ 練習をキャンセルして対戦しますか？"
+      } else {
+        message = "挑戦者現る！ 対戦しますか？"
+      }
+
+      this.say(message)
+      this.$buefy.snackbar.open({
+        duration: 10 * 1000,
+        message: message,
+        type: "is-success",
+        position: "is-bottom",
+        actionText: "対戦する",
+        queue: false,
+        onAction: () => {
+          this.sound_play("click")
+          this.yarimasu_handle()
+        }
+      })
     },
 
     ////////////////////////////////////////////////////////////////////////////////

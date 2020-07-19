@@ -17,6 +17,8 @@ export const application_room = {
     },
 
     room_setup(room) {
+      this.room_unsubscribe()   // BOTと対戦中 yarimasu_handle 経由で room_setup が呼ばれる場合もあるため必要
+
       this.room = new Room(room)
 
       if (this.room.bot_user_id) {

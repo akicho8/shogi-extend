@@ -28,6 +28,11 @@ module Actb
         find_each { |e| e.matching_users_delete(user) }
       end
 
+      # マッチング中のユーザーIDs
+      def matching_all_user_ids
+        all.flat_map(&:matching_user_ids)
+      end
+
       # JS側に渡す値
       def matching_user_ids_hash
         RuleInfo.inject({}) do |a, e|
