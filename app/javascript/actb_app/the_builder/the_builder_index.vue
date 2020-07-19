@@ -65,7 +65,7 @@
 
     template(slot-scope="props")
       b-table-column(custom-key="id"                field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
-      b-table-column(custom-key="user_id"           field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id")
+      b-table-column(custom-key="user_id"           field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id && question_current_tab_info.user_id_column_show_p")
         a(@click.stop="app.ov_user_info_set(props.row.user.id)")
           | {{props.row.user.name}}
       b-table-column(custom-key="title"             field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
@@ -122,10 +122,10 @@ import MemoryRecord from 'js-memory-record'
 class TabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "all",    name: "全体",   },
-      { key: "active", name: "公開",   },
-      { key: "draft",  name: "下書き", },
-      { key: "trash",  name: "ゴミ箱", },
+      { key: "all",    name: "全体",   user_id_column_show_p: true,  },
+      { key: "active", name: "公開",   user_id_column_show_p: false, },
+      { key: "draft",  name: "下書き", user_id_column_show_p: false, },
+      { key: "trash",  name: "ゴミ箱", user_id_column_show_p: false, },
     ]
   }
 
