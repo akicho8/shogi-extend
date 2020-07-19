@@ -93,10 +93,8 @@ module Actb
     end
 
     def room_create(users, attributes = {})
-      users.each { |e| Actb::Rule.matching_users_delete_from_all_rules(e) }
-
       # app/models/actb/room.rb
-      Room.create_with_members!(users, attributes.merge(rule: rule))
+      Room.create_with_members!(users, {rule: rule}.merge(attributes))
     end
 
     def rule

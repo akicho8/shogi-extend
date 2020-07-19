@@ -15,7 +15,8 @@
               | ({{app.matching_user_ids_hash[row.key].length}})
           .description.is-size-8.has-text-grey.mt-1
             | {{row.description}}
-
+          .has-text-primary(v-if="app.matching_user_ids_hash[row.key].length >= 1")
+            b-icon(icon="account")
 </template>
 
 <script>
@@ -45,7 +46,11 @@ export default {
       &:not(:first-child)
         margin-top: 0.3rem // ボタンとボタンの隙間
       &.is_active
-        border: 1px solid change_color($primary, $lightness: 70%)
+        border-color: change_color($primary, $lightness: 70%)
         &:hover
-          border: 1px solid change_color($primary, $lightness: 50%)
+          border-color: change_color($primary, $lightness: 50%)
+      .icon
+        position: absolute
+        top: 0.35rem
+        left: 0.9rem
 </style>

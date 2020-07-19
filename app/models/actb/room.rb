@@ -29,6 +29,7 @@ module Actb
   class Room < ApplicationRecord
     class << self
       def create_with_members!(users, attributes = {})
+        users.each { |e| Rule.matching_users_delete_from_all_rules(e) }
         create!(attributes) do |e|
           users.each do |user|
             e.memberships.build(user: user)
@@ -88,7 +89,7 @@ module Actb
                   include: {
                     actb_setting: {
                       only: [
-                        :session_lock_token,
+                        :session_lock_token, # 別ブラウザでアクセスした自分が受けとらないようにする
                       ]
                     },
                   },
