@@ -9,10 +9,11 @@
         | {{ov_user_info.name}}
       a.is-block.is-size-8(:href="twitter_url" :target="target_default" v-if="twitter_url")
         | @{{ov_user_info.twitter_key}}
-      .rate_container.has-text-weight-bold(v-if="app.config.rating_display_p")
-        | R{{ov_user_info.actb_main_xrecord.rating}}
-      .skill_key.has-text-weight-bold.has-text-danger.is-size-6
-        | {{ov_user_info.actb_main_xrecord.skill_key}}
+      .skill_key.has-text-weight-bold.is-size-6.mt-1
+        span.has-text-danger
+          | {{ov_user_info.actb_main_xrecord.skill_key}}
+        span.has-text-danger.ml-1(v-if="app.config.rating_display_p")
+          | {{ov_user_info.actb_main_xrecord.rating}}
 
       win_lose_circle.mt-1(:info="win_lose_circle_params")
 
