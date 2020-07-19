@@ -10,7 +10,7 @@
         | &nbsp;
 
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
-  figure.image.is-32x32.avatar_image
+  figure.image.is-96x96.avatar_image
     img.is-rounded(:src="membership.user.avatar_path")
   .user_name.has-text-weight-bold.mt-1.is_truncate.has-text-centered
     | {{membership.user.name}}
