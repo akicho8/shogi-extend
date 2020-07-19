@@ -26,7 +26,7 @@ module Actb
 
     # シングルトンモード
     :otetuki_release_p               => false, # おてつき解除可能か？
-    :s_time_limit_sec                => 4,     # 1手は○秒以内に操作しないとタイムアウトになる
+    :s_time_limit_sec                => 5,     # 1手は○秒以内に操作しないとタイムアウトになる
     :time_limit_sec                  => nil,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
     :turn_limit_lazy_count           => 4,     # 3手詰なら○手足した手数まで操作できる
 
