@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_result
-  a.delete.is-large(@click="app.yameru_handle")
+  a.delete.is-large.is_top_left_fixed(@click="app.yameru_handle")
 
   template(v-if="app.room.bot_user_id")
     .has-text-centered.is-size-4.has-text-weight-bold.mt-5
@@ -83,11 +83,6 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_result
-  .delete
-    position: fixed
-    top: 0.5rem
-    left: 0.5rem
-
   .vs_container
     justify-content: center
     align-items: center

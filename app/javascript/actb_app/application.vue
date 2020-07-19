@@ -360,6 +360,10 @@ export default {
       this.mode = "rule_select"
     },
 
+    arawareta_handle() {
+      // this.$ac_lobby.perform("matching_cancel")
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // メニュー内の切り替え

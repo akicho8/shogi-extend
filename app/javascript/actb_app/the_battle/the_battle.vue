@@ -2,6 +2,8 @@
 .the_battle
   debug_print(v-if="app.debug_read_p" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.battle.best_questions.length']" oneline)
 
+  a.delete.is-large.is_top_left_fixed(@click="app.rensyu_yameru_handle" v-if="app.room.bot_user_id")
+
   //////////////////////////////////////////////////////////////////////////////// ○vs○
   .vs_container.is-flex
     template(v-for="(membership, i) in app.ordered_memberships")
@@ -51,6 +53,8 @@
         .buttons.is-centered.are-small
           b-button(@click="app.battle_unsubscribe") 切断(自分)
           b-button(@click="app.member_disconnect_handle(true)") 切断(相手)
+        .buttons.is-centered.are-small
+          b-button(@click="app.arawareta_handle") 挑戦者発見
 </template>
 
 <script>

@@ -17,9 +17,14 @@ export const application_room = {
     },
 
     room_setup(room) {
-      this.lobby_unsubscribe()
-
       this.room = new Room(room)
+
+      if (this.room.bot_user_id) {
+        // 練習戦なのでロビーと繋げたままにしておく
+      } else {
+        // 対人戦なのでロビーの接続を切る
+        this.lobby_unsubscribe()
+      }
 
       this.battle_count = 0
 

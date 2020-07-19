@@ -11,8 +11,11 @@ export default {
   methods: {
     ac_info_update() {
       console.log("AC有効", this.ac_info().map(e => e.channel).join(" "))
+
+      // FIXME: 全然リアクティブになってない
       this.ac_subscriptions_count = this.ac_subscriptions_count_get()
       this.ac_subscription_names = this.ac_info().map(e => e.channel.replace(/.*::/, "").replace(/channel/i, ""))
+      this.$forceUpdate()
     },
 
     ac_subscriptions_count_get() {
