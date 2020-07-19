@@ -43,6 +43,7 @@ export default {
       if (this.mark_level >= 1) {
         s = s.replace(this.system_regexp, "")
       }
+      s = s.replace(/#(\d+)/, '<a href="/training?question_id=$1">#$1</a>')
       return s
     },
 
