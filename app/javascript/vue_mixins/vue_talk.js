@@ -3,9 +3,12 @@ window.talk_sound = null
 export default {
   methods: {
     tab_is_active_p() {
-      console.log("document.hidden", document.hidden)
-      console.log("document.visibilityState", document.visibilityState)
-      return !(document.hidden || document.visibilityState === "hidden")
+      return !this.tab_is_active_p()
+    },
+
+    tab_is_hidden_p() {
+      console.log("[hidden, visibilityState]", [document.hidden, document.visibilityState])
+      return document.hidden || document.visibilityState === "hidden"
     },
 
     talk_stop() {
@@ -17,7 +20,7 @@ export default {
 
     // しゃべる
     talk(source_text, options = {}) {
-      if (!this.tab_is_active_p()) {
+      if (this.tab_is_hidden_p()) {
         return
       }
 
