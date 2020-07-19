@@ -12,7 +12,7 @@ export const the_user_show_mod = {
     },
 
     ov_user_show_modal(ov_user_info) {
-      const modal_instance = this.$buefy.modal.open({
+      this.$ov_user_modal = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         props: { ov_user_info },
@@ -21,6 +21,13 @@ export const the_user_show_mod = {
         canCancel: ["escape", "outside"],
         component: the_user_show,
       })
+    },
+
+    ov_user_modal_close() {
+      if (this.$ov_user_modal) {
+        this.$ov_user_modal.close()
+        this.$ov_user_modal = null
+      }
     },
   },
 }

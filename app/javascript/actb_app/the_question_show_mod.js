@@ -16,7 +16,7 @@ export const the_question_show_mod = {
     },
 
     ov_question_show_modal(ov_question_info) {
-      const modal_instance = this.$buefy.modal.open({
+      this.$ov_question_modal = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         props: { ov_question_info },
@@ -26,6 +26,13 @@ export const the_question_show_mod = {
         canCancel: ["escape", "outside"],
         component: the_question_show,
       })
+    },
+
+    ov_question_modal_close() {
+      if (this.$ov_question_modal) {
+        this.$ov_question_modal.close()
+        this.$ov_question_modal = null
+      }
     },
   },
 }
