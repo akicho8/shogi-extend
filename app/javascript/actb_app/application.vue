@@ -9,7 +9,7 @@
 
   the_ranking(      v-if="mode === 'ranking'")
   the_history(      v-if="mode === 'history'")
-  the_builder(ref="builder"      v-if="mode === 'builder'")
+  the_builder(      v-if="mode === 'builder'" ref="builder")
   the_menu(         v-if="mode === 'menu'")
 
   details(v-if="app.debug_read_p")
@@ -375,7 +375,7 @@ export default {
     yarimasu_handle() {
       this.$ac_lobby.perform("yarimasu_handle", {
         session_lock_token: this.current_user.session_lock_token,
-      }) // --> app/channels/actb/lobby_channel.rb (yarimasu_handle)
+      }) // --> app/channels/actb/lobby_channel.rb (yarimasu_handle) --> room_setup
     },
 
     snackbar_show() {
