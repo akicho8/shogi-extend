@@ -11,7 +11,7 @@
             strong.is_clickable(@click="app.ov_user_info_set(message.user.id)")
               | {{message.user.name}}
             br
-            span(v-html="simple_format(auto_link(message.body))")
+            span(v-html="message_decorate(message.body)")
             br
             template(v-if="false")
               small

@@ -56,10 +56,25 @@ export const support = {
       return _.reduce(v, (a, e) => ({...a, [e.key]: e.visible}), {})
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
+    message_decorate(str) {
+      str = this.auto_link(str)
+      str = this.simple_format(str)
+      str = this.number_replace_to_question_link(str)
+      return str
+    },
+
     // ../../../node_modules/autolinker/README.md
     auto_link(str, options = {}) {
       return Autolinker.link(str, {newWindow: true, truncate: 30, mention: "twitter", ...options})
     },
+
+    number_replace_to_question_link(s) {
+      return s.replace(/#(\d+)/, '<a href="/training?question_id=$1">#$1</a>')
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     say(str, options = {}) {
       this.talk(str, {rate: 1.5, ...options})
@@ -83,6 +98,7 @@ export const support = {
     silent_api_put(command, params, block) {
       this.silent_remote_fetch("PUT", this.app.info.api_path, {remote_action: command, ...params}, block)
     },
+
   },
   computed: {
     ...Vuex.mapState([
