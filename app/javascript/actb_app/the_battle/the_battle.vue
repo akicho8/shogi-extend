@@ -75,9 +75,6 @@ export default {
     the_battle_question_singleton_rule,
     question_author,
   },
-  created() {
-    this.app.lobby_unsubscribe()
-  },
 }
 </script>
 
