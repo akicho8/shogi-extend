@@ -69,7 +69,8 @@
         a(@click.stop="app.ov_user_info_set(props.row.user.id)")
           | {{props.row.user.name}}
       b-table-column(custom-key="title"             field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
-        a {{props.row.title}}
+        a(@click.stop="app.ov_question_info_set(props.row.id)")
+          | {{props.row.title}}
       b-table-column(custom-key="histories_count"   field="histories_count"   :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
       b-table-column(custom-key="ox_record.o_rate"  field="ox_record.o_rate"  :label="QuestionIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc(props.row.ox_record.o_rate)}} %
       b-table-column(custom-key="ox_record.o_count" field="ox_record.o_count" :label="QuestionIndexColumnInfo.fetch('o_count').short_name" sortable numeric :visible="visible_hash.o_count") {{props.row.ox_record.o_count}}
