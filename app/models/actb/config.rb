@@ -3,7 +3,7 @@ module Actb
     :actb_display_p              => true,
 
     # -------------------------------------------------------------------------------- 共通
-    :rating_display_p                => false, # 内部レーティングを表示する？
+    :rating_display_p                => true, # 内部レーティングを表示する？
     :action_cable_debug              => true,  # ActionCable関連デバッグモード
     :user_name_required              => true,  # 「名無し」であれば名前を入力してもらう
 
