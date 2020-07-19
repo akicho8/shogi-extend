@@ -115,6 +115,9 @@ export default {
       // メニュー用
       menu_component: null,
 
+      // 引数に画面遷移の指定があるとき何度も遷移してしまうのを伏せぐため
+      redirect_counter: 0,
+
       // デバッグ
       debug_summary_p: false, // ちょっとした表示
       debug_force_edit_p: false, // 他人の問題を編集できる
@@ -254,6 +257,10 @@ export default {
     },
 
     after_lobby_setup() {
+      if (this.redirect_counter >= 1) {
+        return
+      }
+
       let id = null
 
       id = this.$route.query.question_id
@@ -265,6 +272,8 @@ export default {
       if (id) {
         this.ov_user_info_set(id)
       }
+
+      this.redirect_counter += 1
     },
 
     lobby_messages_setup() {
