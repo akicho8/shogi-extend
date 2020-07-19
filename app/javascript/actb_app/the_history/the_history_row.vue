@@ -10,7 +10,7 @@
 
     img.board(:src="board_image_url")
 
-    figure.image.is-16x16.is_flex_shrink_0(@click.stop="app.ov_user_info_set(row.question.user.id)")
+    figure.image.is-16x16.avatar_image(@click.stop="app.ov_user_info_set(row.question.user.id)")
       img.is-rounded(:src="row.question.user.avatar_path")
     .question_block.is-flex
       .uegawa

@@ -11,8 +11,6 @@
         | {{question.folder.name}}
 
       .question_title.is_line_break_on.is-flex.mt-4.mx-6
-        //- .image.is-32x32.is_flex_shrink_0.is_clickable(@click="app.ov_user_info_set(question.user.id)")
-        //-   img.is-rounded(:src="question.user.avatar_path")
         span.has-text-weight-bold.is-size-5
           template(v-if="current_user_is_owner_p || app.debug_force_edit_p")
             a(@click="edit_handle(question.id)")
@@ -34,7 +32,7 @@
                 b-tag(type="is-primary-dummy") 作者
               b-tag(type="is-grey")
                 .is-flex
-                  figure.image.is-16x16.is_flex_shrink_0
+                  figure.image.is-16x16.avatar_image
                     img.is-rounded(:src="question.user.avatar_path")
                   .ml-1 {{question.user.name}}
 

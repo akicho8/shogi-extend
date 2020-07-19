@@ -14,7 +14,7 @@
         | &nbsp;
 
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
-  figure.image.mt-2
+  figure.image.mt-2.is-32x32.avatar_image
     img.is-rounded(:src="membership.user.avatar_path")
   .user_name.has-text-weight-bold.is-size-8.is_truncate.has-text-centered
     | {{membership.user.name}}
@@ -76,11 +76,6 @@ export default {
       color: $danger
     .straight_lose_count
       color: $success
-
-  // avatar
-  img
-    width: 32px
-    height: 32px
 
   .user_name
     width: 12rem

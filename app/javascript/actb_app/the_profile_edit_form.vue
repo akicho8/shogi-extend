@@ -8,7 +8,7 @@
   .image_container.is-flex
     b-field
       b-upload(@input="user_icon_upload_handle" @click.native="sound_play('click')")
-        .image.is_clickable
+        figure.image.is_clickable.avatar_path
           img.is-rounded(:src="image_source")
 
   .form_container

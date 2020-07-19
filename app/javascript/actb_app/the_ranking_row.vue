@@ -3,7 +3,7 @@
   .rank_block
     .rank.is-size-5.has-text-weight-bold.has-text-right.has-text-primary
       | {{row.rank}}
-  figure.image.is-48x48.is_flex_shrink_0
+  figure.image.is-48x48.avatar_path
     img.is-rounded(:src="row.user.avatar_path")
   .name_with_rating
     .user_name.has-text-weight-bold.is_truncate

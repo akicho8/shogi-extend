@@ -10,7 +10,7 @@
         | &nbsp;
 
   //////////////////////////////////////////////////////////////////////////////// アバターと名前
-  figure.image
+  figure.image.is-32x32.avatar_image
     img.is-rounded(:src="membership.user.avatar_path")
   .user_name.has-text-weight-bold.mt-1.is_truncate.has-text-centered
     | {{membership.user.name}}
@@ -80,11 +80,6 @@ export default {
 
   .user_name
     max-width: 12rem
-
-  // avatar
-  img
-    width: 32px
-    height: 32px
 
   .skill_last_diff
     margin-left: 0.1rem

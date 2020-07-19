@@ -1,6 +1,6 @@
 <template lang="pug">
 .message_row.is-flex(v-if="show_p")
-  .image.is_clickable.is_flex_shrink_0
+  .image.is_clickable.is-16x16.avatar_image
     img.is-rounded(:src="message.user.avatar_path" @click="app.ov_user_info_set(message.user.id)")
   .user_name.has-text-grey.is-size-7.is_clickable.has-text-weight-bold(@click="app.ov_user_info_set(message.user.id)")
     | {{message.user.name}}
@@ -66,9 +66,6 @@ export default {
   margin-top: 0.2rem
   align-items: flex-start
 
-  .image
-    img
-      width: 16px
   .user_name
     white-space: nowrap
     margin-left: 0.5rem

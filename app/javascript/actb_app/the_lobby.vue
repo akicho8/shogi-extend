@@ -3,7 +3,7 @@
   the_footer
   .primary_header
     .header_item.ljust.user_info_block.is-flex.is_clickable(v-if="app.current_user" @click="app.ov_user_info_set(app.current_user.id)")
-      .image
+      figure.image.avatar_image
         img.is-rounded(:src="app.current_user.avatar_path")
       .name_with_rating
         span.name.has-text-weight-bold.is-size-6
