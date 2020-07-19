@@ -32,19 +32,41 @@ module Actb
     end
 
     validate do
-      if errors.blank?
+      # 不正な手がないことを確認
+      if errors.empty?
         if will_save_change_to_attribute?(:moves_str) && moves_str
-          # 親の init_sfen + 自分の moves_str で重複がないことを確認する
-          # TODO: self.class.joins(:question).where(Question.arel_table[:init_sfen].eq(init_sfen)) とした方がいいかも
+          begin
+            parsed_info
+          rescue Bioshogi::BioshogiError => error
+            errors.add(:base, error.message.lines.first.strip)
+          end
+        end
+      end
+
+      # 同じ組み合わせがないことを確認
+      if errors.empty?
+        if will_save_change_to_attribute?(:moves_str) && moves_str
+          # 自分の所属する配置を除いて、配置が同じ問題IDsを取得
           s = Question.where(init_sfen: question.read_attribute(:init_sfen))
           if persisted?
             s = s.where.not(id: question.id_in_database)
           end
+          # さらに手順まで同じのものがあるか？
           if self.class.where(question_id: s.ids).find_by(moves_str: moves_str)
             errors.add(:base, "配置と正解手順の組み合わせが既出の問題と重複しています")
           end
         end
       end
+    end
+
+    private
+
+    def sfen
+      "#{question.init_sfen} moves #{moves_str}"
+    end
+
+    def parsed_info
+      Bioshogi::Parser.parse(sfen)
     end
   end
 end
