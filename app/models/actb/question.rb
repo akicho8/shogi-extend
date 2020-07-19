@@ -237,8 +237,8 @@ module Actb
       # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     end
 
-    def page_url
-      Rails.application.routes.url_helpers.url_for([:training, {only_path: false, question_id: id}])
+    def page_url(options = {})
+      Rails.application.routes.url_helpers.url_for([:training, {only_path: false, question_id: id}.merge(options)])
     end
 
     def share_board_png_url
@@ -284,7 +284,7 @@ module Actb
     #
     def update_from_js(params)
       question = params.deep_symbolize_keys
-      before_hash = current_hash
+      @save_before_hash = current_hash
 
       ActiveRecord::Base.transaction do
         assign_attributes(question.slice(*[
@@ -330,15 +330,10 @@ module Actb
 
       # 「公開」フォルダに移動させたときに通知する
       # created_at をトリガーにすると下書きを作成したときにも通知してしまう
-      case
-      when active_folder_posted?
-        SlackAgent.message_send(key: "問題公開", body: [title, page_url].join(" "))
-        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を投稿しました", body: info.to_t).deliver_later
-        User.bot.lobby_speak("*#{user.name}さんが「#{title}」を投稿しました")
-      when folder_key === "active" && current_hash != before_hash
-        SlackAgent.message_send(key: "問題更新", body: [title, page_url].join(" "))
-        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を更新しました", body: info.to_t).deliver_later
-        User.bot.lobby_speak("*#{user.name}さんが「#{title}」を更新しました")
+      if state = saved_after_state
+        SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
+        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
+        User.bot.lobby_speak("#{user.name}さんが#{linked_title}を#{state}しました")
       end
     end
 
@@ -462,7 +457,21 @@ module Actb
         })
     end
 
+    def linked_title(options = {})
+      ApplicationController.helpers.link_to(title, page_url(only_path: true))
+    end
+
     private
+
+    # 保存直後の状態
+    def saved_after_state
+      case
+      when active_folder_posted?
+        "投稿"
+      when folder_key === "active" && current_hash != @save_before_hash
+        "更新"
+      end
+    end
 
     # 公開した直後か？
     def active_folder_posted?
