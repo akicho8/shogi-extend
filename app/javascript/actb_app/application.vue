@@ -314,10 +314,10 @@ export default {
 
       this.practice_p = practice_p
 
-      if (this.current_user.rating > 1500) {
+      if (this.current_user.rating > 1500 || true) {
         if (this.current_user.name.match(/名無し|名なし/)) {
           if (this.config.user_name_required) {
-            this.warning_notice("できれば名無しの棋士ではない名前を入力してください")
+            this.warning_notice("名無しではない名前を入力してください")
             this.app.profile_edit_handle()
             this.$nextTick(() => {
               const el = document.querySelector("#user_name_input_field")
