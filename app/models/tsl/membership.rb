@@ -54,6 +54,9 @@ module Tsl
       if age
         s += "(#{age})"
       end
+      if user.break_through?
+        s += " ★"
+      end
       s
     end
 
