@@ -40,7 +40,7 @@ export default {
   .messages_box
     height: 42.5vh
     +desktop
-      height: 66vh
+      height: 62vh
     padding: 0.5rem
     overflow-y: scroll
   .input_field
