@@ -393,7 +393,7 @@ export default {
         duration: 10 * 1000,
         message: message,
         type: "is-success",
-        position: "is-bottom",
+        position: "is-bottom-left",
         actionText: "対戦する",
         queue: false,
         onAction: () => {
