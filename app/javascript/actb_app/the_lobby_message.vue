@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_lobby_message
-  .messages_box(ref="messages_box" :style="{height: `${app.config.lobby_messages_window_height}rem`}")
+  .messages_box(ref="messages_box")
     .message_line(v-for="message in app.lobby_messages")
       message_row(:message="message")
   b-field.input_field
@@ -35,9 +35,12 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_lobby_message
-  margin-top: 2rem
+  margin-top: 1rem
   padding: 0 0.5rem
   .messages_box
+    height: 42.5vh
+    +desktop
+      height: 66vh
     padding: 0.5rem
     overflow-y: scroll
   .input_field

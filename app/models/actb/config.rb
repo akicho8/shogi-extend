@@ -31,7 +31,6 @@ module Actb
     :turn_limit_lazy_count           => 4,     # 3手詰なら○手足した手数まで操作できる
 
     # -------------------------------------------------------------------------------- チャット
-    :lobby_messages_window_height    => 12,   # ロビーでの表示行数
     :room_messages_window_height     => 10,   # 部屋での表示行数
     :question_messages_window_height => 5,    # 問題での表示行数(未使用)
 
