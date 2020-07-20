@@ -21,10 +21,10 @@
   //- router-view
 
   the_lobby_ac_info
-  .title.is-4.has-text-centered 将棋トレーニングバトル
-  .buttons.is-centered.mt-5
+  .title.is-4.has-text-centered.mb-1 将棋トレーニングバトル
+  .buttons.is-centered.mt-4
     b-button.has-text-weight-bold(@click="app.start_handle(false)" type="is-primary") START
-    b-button.mt-3(@click="app.start_handle(true)") 練習
+    b-button(@click="app.start_handle(true)") 練習
 
   the_lobby_message
   the_lobby_debug
@@ -76,9 +76,9 @@ export default {
         .rating
 
   .title
-    margin-top: 4rem
+    margin-top: 2rem
   .buttons
-    flex-direction: column
+    // flex-direction: column
     .button
-      min-width: 6rem
+      min-width: 7rem
 </style>
