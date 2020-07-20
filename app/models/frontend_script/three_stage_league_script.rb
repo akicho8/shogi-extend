@@ -44,7 +44,7 @@ module FrontendScript
               h.tag.span(m.ox_human, :class => "ox_sequense is_line_break_on"),
               h.tag.span(m.result_mark, :class => "has-text-danger is-size-7 has-text-weight-bold"),
             ].join(" ").html_safe
-            row["在"] = m.user.memberships_count
+            row["在"] = [m.user.seat_count(league.generation), m.user.memberships_count].join(" / ")
             row[""] = h.link_to(h.tag.i(:class => "mdi mdi-account-question mr-2"), user_name_google_image_search(m.user.name), target: "_blank")
           end
         end
