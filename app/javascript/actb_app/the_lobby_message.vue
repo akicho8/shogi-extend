@@ -1,6 +1,7 @@
 <template lang="pug">
 .the_lobby_message
-  .messages_box(ref="messages_box" :style="{height: `${app.config.lobby_messages_window_height}rem`}")
+  | {{height}}
+  .messages_box(ref="messages_box" :style="{height: height ? `${height * 0.5}px` : 'auto'}")
     .message_line(v-for="message in app.lobby_messages")
       message_row(:message="message")
   b-field.input_field
@@ -14,6 +15,8 @@
 import { support } from "./support.js"
 import message_row from "./components/message_row.vue"
 
+const innerHeight = require('ios-inner-height')
+
 export default {
   name: "the_lobby",
   components: {
@@ -22,6 +25,11 @@ export default {
   mixins: [
     support,
   ],
+  data() {
+    return {
+      height: null
+    };
+  },
   watch: {
     "app.lobby_messages": {
       handler() {
@@ -29,13 +37,25 @@ export default {
       },
     },
   },
+  methods: {
+    adjustHeight() {
+      this.height = innerHeight()
+    }
+  },
+  mounted() {
+    this.adjustHeight()
+    window.addEventListener("resize", this.adjustHeight)
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.adjustHeight)
+  },
 }
 </script>
 
 <style lang="sass">
 @import "support.sass"
 .the_lobby_message
-  margin-top: 2rem
+  margin-top: 1rem
   padding: 0 0.5rem
   .messages_box
     padding: 0.5rem
