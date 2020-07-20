@@ -232,6 +232,7 @@ module Actb
 
     with_options allow_blank: true do
       validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
+      validates :description, length: { maximum: 512 }
 
       # validates :init_sfen # , uniqueness: { case_sensitive: true }
       # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
