@@ -68,10 +68,12 @@ module Actb
         end
         assert { question.persisted? }
         assert { question.owner_tag_list == ["tag1", "tag2", "tag3"] }
+        assert { question.turn_max == 1 }
 
         # 開発者に通知
         mail = ActionMailer::Base.deliveries.last
         assert { mail.to   == ["shogi.extend@gmail.com"] }
+        assert { mail.subject.include?("投稿しました") }
 
         # 同じ2つ目を作る→失敗
         question = user1.actb_questions.build

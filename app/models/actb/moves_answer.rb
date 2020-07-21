@@ -17,7 +17,7 @@
 
 module Actb
   class MovesAnswer < ApplicationRecord
-    belongs_to :question, counter_cache: true
+    belongs_to :question, counter_cache: true, touch: true
 
     before_validation do
       if will_save_change_to_attribute?(:moves_str) && v = moves_str.presence
@@ -61,7 +61,7 @@ module Actb
 
     after_save_commit do
       if saved_change_to_attribute?(:moves_count)
-        question.update!(turn_max: question.moves_answers.maximum("moves_count"))
+        question.update_column(:turn_max, question.moves_answers.maximum("moves_count"))
       end
     end
 
