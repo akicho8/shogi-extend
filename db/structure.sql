@@ -381,6 +381,7 @@ CREATE TABLE `actb_questions` (
   `messages_count` int(11) NOT NULL DEFAULT '0' COMMENT 'コメント数',
   `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'メッセージ',
   `source_about_id` bigint(20) DEFAULT NULL COMMENT '所在',
+  `turn_max` int(11) DEFAULT NULL COMMENT '最大手数',
   PRIMARY KEY (`id`),
   KEY `index_actb_questions_on_key` (`key`),
   KEY `index_actb_questions_on_user_id` (`user_id`),
@@ -396,6 +397,7 @@ CREATE TABLE `actb_questions` (
   KEY `index_actb_questions_on_clip_marks_count` (`clip_marks_count`),
   KEY `index_actb_questions_on_messages_count` (`messages_count`),
   KEY `index_actb_questions_on_source_about_id` (`source_about_id`),
+  KEY `index_actb_questions_on_turn_max` (`turn_max`),
   CONSTRAINT `fk_rails_243f259526` FOREIGN KEY (`source_about_id`) REFERENCES `actb_source_abouts` (`id`),
   CONSTRAINT `fk_rails_4c1f4628cc` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_f5a8dc663c` FOREIGN KEY (`lineage_id`) REFERENCES `actb_lineages` (`id`),
@@ -1070,6 +1072,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200711103807'),
 ('20200711103808'),
 ('20200711103809'),
-('20200711103810');
+('20200711103810'),
+('20200711103811');
 
 

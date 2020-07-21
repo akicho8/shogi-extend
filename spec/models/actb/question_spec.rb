@@ -32,6 +32,7 @@
 # | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |              | M     |
 # | direction_message   | Direction message   | string(255) |                     |              |       |
 # | source_about_id     | Source about        | integer(8)  |                     |              | N     |
+# | turn_max            | 手数                | integer(4)  |                     |              | O     |
 # |---------------------+---------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -76,6 +77,7 @@ module Actb
         question = user1.actb_questions.build
         proc { question.update_from_js(params) }.should raise_error(ActiveRecord::RecordInvalid)
         assert { question.persisted? == false }
+        assert { question.turn_max == nil }
       end
     end
 
@@ -172,7 +174,7 @@ module Actb
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .................
-# >> 
+# >>
 # >> Finished in 2.88 seconds (files took 2.17 seconds to load)
 # >> 17 examples, 0 failures
-# >> 
+# >>
