@@ -87,6 +87,7 @@
       //- b-table-column(custom-key="time_limit_sec"    field="time_limit_sec"  :label="QuestionIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="visible_hash.time_limit_sec") {{props.row.time_limit_sec}}秒
 
       b-table-column(custom-key="lineage_key"    field="lineage_key"  :label="QuestionIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="visible_hash.lineage_key") {{props.row.lineage_key}}
+      b-table-column(custom-key="turn_max"  field="turn_max"  :label="QuestionIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="visible_hash.turn_max")      {{props.row.turn_max}}
 
       b-table-column(custom-key="owner_tag_list"    field="owner_tag_list"  :label="QuestionIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="visible_hash.owner_tag_list")
         b-taglist

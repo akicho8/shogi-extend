@@ -132,6 +132,7 @@ module Actb
           :owner_tag_list,
           :hint_desc,
           :direction_message,
+          :turn_max,
 
           :source_author,
           :source_media_name,

@@ -59,6 +59,12 @@ module Actb
       end
     end
 
+    after_save do
+      if saved_change_to_attribute?(:moves_count)
+        question.update!(turn_max: question.moves_answers.maximum("moves_count"))
+      end
+    end
+
     private
 
     def sfen

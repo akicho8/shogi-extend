@@ -162,6 +162,12 @@ module Actb
       question1.messages.create!(user: user1, body: "(body)")
       assert { question1.message_users == [user1] }
     end
+
+    it "turn_max" do
+      assert { question1.turn_max == 1 }
+      question1.moves_answers.create!("moves_str" => "4c5b 4c4b 4c5b")
+      assert { question1.turn_max == 3 }
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
