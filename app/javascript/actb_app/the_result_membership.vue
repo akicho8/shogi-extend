@@ -22,7 +22,7 @@
   ////////////////////////////////////////////////////////////////////////////////
   template(v-if="!app.room.bot_user_id")
     .user_rating.has-text-weight-bold(v-if="app.config.rating_display_p")
-      | {{xrecord.rating}}
+      | {{rating_format(xrecord.rating)}}
       span.skill_last_diff.has-text-danger(v-if="xrecord.skill_last_diff > 0")
         | (+{{xrecord.skill_last_diff}})
       span.skill_last_diff.has-text-success(v-if="xrecord.skill_last_diff < 0")

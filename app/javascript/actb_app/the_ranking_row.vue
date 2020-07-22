@@ -11,7 +11,7 @@
       span.ml-1.has-text-primary.is_line_break_off(v-if="app.debug_read_p") {{row.user.skill_key}}
     .value
       template(v-if="$parent.current_tab_info.key === 'rating' && (app.config.rating_display_p || development_p)")
-        | {{row.user.actb_season_xrecord.rating}}
+        | {{rating_format(row.user.actb_season_xrecord.rating)}}
       template(v-if="$parent.current_tab_info.key === 'straight_win_count'")
         | {{row.user.actb_season_xrecord.straight_win_count}}
       template(v-if="$parent.current_tab_info.key === 'straight_win_max'")

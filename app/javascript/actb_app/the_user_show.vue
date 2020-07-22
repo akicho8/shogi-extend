@@ -13,7 +13,7 @@
         span.has-text-danger
           | {{ov_user_info.actb_main_xrecord.skill_key}}
         span.has-text-danger.ml-1(v-if="app.config.rating_display_p")
-          | {{ov_user_info.actb_main_xrecord.rating}}
+          | {{rating_format(ov_user_info.actb_main_xrecord.rating)}}
 
       win_lose_circle.mt-1(:info="win_lose_circle_params")
 
