@@ -31,11 +31,32 @@ RSpec.describe ScriptsController, type: :controller do
     before do
       user_login
     end
-    it do
-      put :update, params: { id: "actb-app", remote_action: "profile_update", name: "(user_name1)", profile_description: "a" * (512 + 1) }
-      retv = JSON.parse(response.body)
-      assert { retv["error_message"] }
-      expect(response).to have_http_status(:ok)
+
+    describe "profile_update" do
+      it do
+        put :update, params: { id: "actb-app", remote_action: "profile_update", name: "(user_name1)", profile_description: "a" * (512 + 1) }
+        expect(response).to have_http_status(:ok)
+        retv = JSON.parse(response.body)
+        assert { retv["error_message"] }
+      end
+    end
+
+    describe "yarimasu_handle" do
+      def test1
+        put :update, params: { id: "actb-app", remote_action: "yarimasu_handle", session_lock_token: SecureRandom.hex }
+        expect(response).to have_http_status(:ok)
+        hash = JSON.parse(response.body)
+        hash["status"]
+      end
+
+      it "相手がもういない" do
+        assert { test1 == "not_have_any_opponent" }
+      end
+
+      it "マッチングした" do
+        Actb::Rule[:marathon_rule].matching_users_add(user1)
+        assert { test1 == "success" }
+      end
     end
   end
 end

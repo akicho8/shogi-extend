@@ -373,9 +373,16 @@ export default {
     },
 
     yarimasu_handle() {
-      this.$ac_lobby.perform("yarimasu_handle", {
-        session_lock_token: this.current_user.session_lock_token,
-      }) // --> app/channels/actb/lobby_channel.rb (yarimasu_handle) --> room_setup
+      // --> app/models/frontend_script/actb_app_script/put_api.rb
+      this.api_put("yarimasu_handle", {session_lock_token: this.current_user.session_lock_token}, e => {
+        this.debug_alert(e.status)
+        if (e.status === "success") {
+          this.ok_notice("マッチング成功！")
+        }
+        if (e.status === "not_have_any_opponent") {
+          this.warning_notice("相手がすでに対人戦を開始したか抜けてしまったようです。残念！")
+        }
+      })
     },
 
     snackbar_show() {
@@ -389,6 +396,7 @@ export default {
       }
 
       this.say(message)
+
       this.$buefy.snackbar.open({
         duration: 10 * 1000,
         message: message,

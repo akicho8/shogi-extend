@@ -60,6 +60,23 @@ module FrontendScript
         { status: "success" }
       end
 
+      # マッチング中の人といきなり対局する
+      def yarimasu_handle
+        raise if params[:session_lock_token].blank?
+
+        ids = Actb::Rule.matching_all_user_ids
+        raise if ids.any? { |e| !e.kind_of?(Integer) }
+        ids = ids - [current_user.id]
+        if ids.empty?
+          return { status: "not_have_any_opponent" }
+        end
+        id = ids.sample
+        user = User.find(id)
+        current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
+        Actb::Room.create_with_members!([user, current_user], rule: user.actb_setting.rule)
+        { status: "success" }
+      end
+
       def vote_handle
         current_user.vote_handle(params)
       end
