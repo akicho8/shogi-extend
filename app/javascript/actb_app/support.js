@@ -22,10 +22,10 @@ export const support = {
       this.say(message_body, options)
     },
 
-    warning_notice(message_body) {
+    warning_notice(message_body, options = {}) {
       this.sound_play("x")
       this.$buefy.toast.open({message: message_body, position: "is-bottom", type: "is-warning", queue: false})
-      this.say(message_body)
+      this.say(message_body, options)
     },
 
     main_nav_set(display_p) {
@@ -91,6 +91,10 @@ export const support = {
 
     api_get(command, params, block) {
       this.remote_get(this.app.info.api_path, {remote_action: command, ...params}, block)
+    },
+
+    silent_api_get(command, params, block) {
+      this.silent_remote_get(this.app.info.api_path, {remote_action: command, ...params}, block)
     },
 
     api_put(command, params, block) {

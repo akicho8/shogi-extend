@@ -109,6 +109,11 @@ module FrontendScript
         { lobby_messages: lobby_messages }
       end
 
+      # http://localhost:3000/script/actb-app.json?remote_action=revision_fetch
+      def revision_fetch
+        { revision: Actb::Config[:revision] }
+      end
+
       private
 
       def sort_scope_for_questions(s)

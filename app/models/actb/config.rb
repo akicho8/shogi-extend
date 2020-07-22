@@ -1,6 +1,7 @@
 module Actb
   Config = {
-    :actb_display_p              => true,
+    :revision                        => 1,
+    :actb_display_p                  => true,
 
     # -------------------------------------------------------------------------------- 共通
     :rating_display_p                => true, # 内部レーティングを表示する？

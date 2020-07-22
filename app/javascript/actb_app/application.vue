@@ -191,6 +191,16 @@ export default {
       }
     },
 
+    revision_validate() {
+      this.silent_api_get("revision_fetch", {}, e => {
+        if (this.app.config.revision === e.revision) {
+          this.debug_alert(`revision: ${this.app.config.revision} OK`)
+        } else {
+          this.ok_notice("新しいプログラムがあるので更新します", {onend: () => location.reload(true)})
+        }
+      })
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // // lobbyに接続した瞬間に送られてくる
@@ -258,6 +268,7 @@ export default {
 
     lobby_setup() {
       this.lobby_setup_before()
+      this.revision_validate()
 
       this.lobby_messages_setup()
 
@@ -309,6 +320,7 @@ export default {
     },
 
     start_handle(practice_p) {
+      this.revision_validate()
       this.sound_play("click")
       if (this.login_required2()) { return }
 
@@ -450,6 +462,7 @@ export default {
     },
 
     builder_handle() {
+      this.revision_validate()
       if (this.mode === "builder") {
       } else {
         if (this.login_required2()) { return }
