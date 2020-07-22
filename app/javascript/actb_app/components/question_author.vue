@@ -6,15 +6,15 @@
   .direction_message.is-size-6(v-if="question.direction_message")
     | {{question.direction_message}}
 
-  .question_user.is-size-8.has-text-grey
-    template(v-if="question.source_about_key === 'unknown'")
-      | 作者不詳
-    template(v-else)
-      | {{question.display_author}}
-      span.is-size-11 作
+  .question_user.has-text-weight-bold
+    b-tag(size="is-medium")
+      template(v-if="question.source_about_key === 'unknown'")
+        | 作者不詳
+      template(v-else)
+        | {{question.display_author}}作
 
-    template(v-if="question.ox_record.ox_total >= 1")
-      span.has-text-grey.ml-1 正解率
+    b-tag.ml-1(v-if="question.ox_record.ox_total >= 1" size="is-medium")
+      | 正解率
       span {{float_to_perc(question.ox_record.o_rate)}}%
 </template>
 
