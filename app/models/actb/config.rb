@@ -31,8 +31,9 @@ module Actb
     :turn_limit_lazy_count           => 4,     # 3手詰なら○手足した手数まで操作できる
 
     # -------------------------------------------------------------------------------- チャット
-    :room_messages_window_height     => 10,   # 部屋での表示行数
-    :question_messages_window_height => 5,    # 問題での表示行数(未使用)
+    :room_messages_display_p         => true,  # 部屋でのチャット表示
+    :room_messages_window_height     => 10,    # 部屋での表示行数
+    :question_messages_window_height => 5,     # 問題での表示行数(未使用)
 
     :room_message_drop_lines         => 20,   # 部屋での表示行数(データ)
     # -------------------------------------------------------------------------------- プロフィール編集画面
@@ -57,6 +58,7 @@ module Actb
 
   if Rails.env.staging? || Rails.env.production?
     Config.update({
+        :room_messages_display_p       => false, # 部屋でのチャット表示
         # :actb_display_p               => false, # リンクを表示する？
         :matching_pow_base            => 6,     # gap < 2**(○+カウンター) ならマッチングする
         :matching_interval_second     => 4,     # カウンターをインクリメントする間隔(秒)

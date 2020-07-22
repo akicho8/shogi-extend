@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_room_message.mt-4
+.the_room_message.mt-4(v-if="app.config.room_messages_display_p")
   .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_window_height}rem`}")
     template(v-for="message in app.droped_room_messages")
       message_row(:message="message")
