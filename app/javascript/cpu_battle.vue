@@ -23,9 +23,9 @@
                     | 1手指す
                   b-button(@click="retract_a_move")
                     | 待った
-                  b-button(@click="judge_dialog_display({judge_key: 'win'})")
+                  b-button(@click="judge_dialog_display({judge_key: 'win', message: 'かち'})")
                     | win
-                  b-button(@click="judge_dialog_display({judge_key: 'lose'})")
+                  b-button(@click="judge_dialog_display({judge_key: 'lose', message: 'まけ'})")
                     | lose
 
       .has-text-centered
@@ -510,11 +510,6 @@ export default {
           })
         }
       }
-    },
-
-    error_process(error) {
-      console.table([error.response])
-      this.$buefy.toast.open({message: error.message, position: "is-bottom", type: "is-danger"})
     },
   },
 }

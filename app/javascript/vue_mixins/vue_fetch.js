@@ -34,11 +34,6 @@ export default {
         loading.close()
       }
 
-      // TODO: これは不要かもしれない。どこからも使ってなかったら消すこと
-      if (response.data.message) {
-        this.$buefy.toast.open({message: response.data.message})
-      }
-
       // 本当はここでは呼びたくない
       // Rails側で render json: as_bs_error(error), status: 500 のようにしても
       // json は無視して 500 用のHTMLを error.response.data に格納してしまう
