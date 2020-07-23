@@ -41,6 +41,9 @@
 
 module Actb
   class Question < ApplicationRecord
+    include ImportExportMod
+    include InfoMod
+
     def self.mock_question
       raise if Rails.env.production? || Rails.env.staging?
 
@@ -213,6 +216,11 @@ module Actb
 
       if Rails.env.test?
         self.title ||= "(title#{self.class.count.next})"
+      end
+
+      if source_author.to_s.match(/不詳|不明/)
+        self.source_author = nil
+        self.source_about_key = :unknown
       end
 
       self.good_rate ||= 0
@@ -490,95 +498,6 @@ module Actb
       Digest::MD5.hexdigest(ary.join(":"))
     end
 
-    concerning :InfoMethods do
-      def parsed_info
-        @parsed_info ||= Bioshogi::Parser.parse(main_sfen)
-      end
-
-      def to_kif
-        str = parsed_info.to_kif
-
-        str = str.gsub(/^.*の備考.*\n/, "")
-        str = str.gsub(/^まで.*\n/, "")
-
-        info.collect { |k, v| "#{k}：#{v}\n" }.join + str
-      end
-
-      def to_oneline_ki2
-        parsed_info.mediator.to_ki2_a.join(" ")
-      end
-
-      def info
-        a = {}
-
-        a["タイトル"] = title
-
-        a["投稿者"] = user.name
-        a["作者"]   = source_about_unknown_name || source_author || user.name
-
-        a["詳細URL"]    = page_url
-        a["画像URL"]    = share_board_png_url
-        a["共有将棋盤"] = share_board_url
-
-        a["種類"] = lineage.key
-        a["フォルダ"] = folder.pure_info.name
-
-        if Actb::Config[:time_limit_sec_enable]
-          a["制限時間"] = "#{time_limit_sec}秒"
-        end
-
-        if Actb::Config[:difficulty_level_enable]
-          a["難易度"] = "★" * (difficulty_level || 0)
-        end
-
-        a["出題回数"]   = histories_count
-        a["正解率"]     = "%.2f %%" % (ox_record.o_rate * 100)
-        a["正解数"]     = ox_record.o_count
-        a["誤答数"]     = ox_record.x_count
-
-        a["高評価率"]   = "%.2f %%" % (good_rate * 100)
-        a["高評価数"]   = good_marks_count
-        a["低評価数"]   = bad_marks_count
-
-        a["コメント数"] = messages_count
-
-        if true
-          if source_media_name
-            a["出典"] = source_media_name
-          end
-          if source_published_on
-            a["出典年月日"] = source_published_on
-          end
-          if source_media_url
-            a["出典URL"] = source_media_url
-          end
-        end
-
-        if v = hint_desc.presence
-          a["ヒント"] = v
-        end
-
-        if v = direction_message.presence
-          a["メッセージ"] = v
-        end
-
-        if v = owner_tag_list.presence
-          a["タグ"] = v.join(", ")
-        end
-
-        a["作成日時"] = created_at.to_s(:ymdhm)
-        a["SFEN"] = main_sfen
-
-        if v = description.presence
-          a["解説"] = v.squish
-        end
-
-        a["人間向けの解答"] = to_oneline_ki2
-
-        a
-      end
-    end
-
     concerning :OxRecordtMethdos do
       included do
         has_one :ox_record, dependent: :destroy # 正解率
@@ -591,96 +510,6 @@ module Actb
       def ox_add(column)
         ox_record[column] += 1
         ox_record.save!
-      end
-    end
-
-    concerning :ImportExportMod do
-      class_methods do
-        def setup(options = {})
-          # if Rails.env.staging? || Rails.env.production? || Rails.env.development?
-          #   unless exists?
-          #     import_all
-          #   end
-          # end
-        end
-
-        def export_all
-          json = all.as_json({
-              only: [
-                :key,
-                :init_sfen,
-                :time_limit_sec,
-                :difficulty_level,
-                :title,
-                :description,
-                :hint_desc,
-                :direction_message,
-                :owner_tag_list,
-                :source_author,
-                :source_media_name,
-                :source_media_url,
-                :source_published_on,
-              ],
-              methods: [
-                :lineage_key,
-                :source_about_key,
-              ],
-              include: {
-                :moves_answers => {
-                  only: [
-                    :moves_str,
-                  ],
-                },
-              },
-            })
-
-          body = json.to_yaml(line_width: -1)
-
-          file = Rails.root.join("app/models/actb/#{name.demodulize.underscore.pluralize}.yml")
-          FileUtils.mkdir_p(file.expand_path.dirname)
-          file.write(body)
-          puts "write: #{file} (#{count})"
-        end
-
-        def import_all(user = User.sysop)
-          persistent_records.each do |e|
-            record = user.actb_questions.find_or_initialize_by(key: e[:key])
-            record.update!(e.slice(*[
-                  :lineage_key,
-                  :init_sfen,
-                  :time_limit_sec,
-                  :difficulty_level,
-                  :title,
-                  :description,
-                  :hint_desc,
-                  :direction_message,
-                  :source_about_key,
-                  :source_author,
-                  :source_media_name,
-                  :source_media_url,
-                  :source_published_on,
-                ]))
-            record.moves_answers.clear
-            e[:moves_answers].each do |e|
-              record.moves_answers.create!(moves_str: e[:moves_str])
-            end
-          end
-        end
-
-        private
-
-        def persistent_file
-          Rails.root.join("app/models/actb/#{name.demodulize.underscore.pluralize}.yml")
-        end
-
-        def persistent_records
-          body = []
-          if persistent_file.exist?
-            body = YAML.load(persistent_file.read)
-            puts "load: #{persistent_file} (#{body.count})"
-          end
-          body.collect(&:deep_symbolize_keys)
-        end
       end
     end
   end
