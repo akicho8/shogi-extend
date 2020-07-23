@@ -51,8 +51,8 @@ class Talk
     params[:source_text].to_s
   end
 
-  def normalized_source_text
-    @normalized_source_text ||= -> {
+  def normalized_text
+    @normalized_text ||= -> {
       s = source_text
       if pictorial_chars_delete_enable
         s = s.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
@@ -75,7 +75,7 @@ class Talk
   end
 
   def unique_key_source_string
-    [polly_params[:voice_id], polly_params[:sample_rate], normalized_source_text].join(":")
+    [polly_params[:voice_id], polly_params[:sample_rate], normalized_text].join(":")
   end
 
   def generate_if_not_exist
@@ -90,7 +90,7 @@ class Talk
   end
 
   def force_generate
-    params = polly_params.merge(text: normalized_source_text, response_target: direct_file_path.to_s)
+    params = polly_params.merge(text: normalized_text, response_target: direct_file_path.to_s)
     direct_file_path.dirname.mkpath
     resp = client.synthesize_speech(params)
 
