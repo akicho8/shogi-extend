@@ -45,6 +45,10 @@ class Talk
     }
   end
 
+  def cache_delete
+    FileUtils.rm_f(direct_file_path)
+  end
+
   private
 
   def source_text
@@ -76,10 +80,6 @@ class Talk
 
   def unique_key_source_string
     [polly_params[:voice_id], polly_params[:sample_rate], source_text].join(":")
-  end
-
-  def cache_delete
-    FileUtils.rm_f(direct_file_path)
   end
 
   def generate_if_not_exist
