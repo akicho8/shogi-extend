@@ -13,7 +13,7 @@
       template(v-else)
         | {{question.display_author}}作
 
-    b-tag.ml-1(v-if="question.ox_record.ox_total >= 1" size="is-medium")
+    b-tag.ml-1(v-if="question.ox_record.ox_total >= 1")
       | 正解率
       span {{float_to_perc(question.ox_record.o_rate)}}%
 </template>
