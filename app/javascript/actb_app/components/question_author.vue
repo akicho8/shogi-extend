@@ -7,7 +7,7 @@
     | {{question.direction_message}}
 
   .question_user.has-text-weight-bold
-    b-tag(size="is-medium")
+    b-tag
       template(v-if="question.source_about_key === 'unknown'")
         | 作者不詳
       template(v-else)
