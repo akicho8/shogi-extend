@@ -1,15 +1,11 @@
 <template lang="pug">
-<div class="modal-card the_any_source_read_modal">
-  <header class="modal-card-head">
-    <p class="modal-card-title">棋譜の読み込み</p>
-  </header>
-  <section class="modal-card-body">
-    <b-input type="textarea" v-model="any_source" ref="any_source" />
-  </section>
-  <footer class="modal-card-foot">
-    <b-button @click="submit_handle" type="is-primary">読み込む</b-button>
-  </footer>
-</div>
+.modal-card.the_any_source_read_modal
+  header.modal-card-head
+    p.modal-card-title 棋譜の読み込み
+  section.modal-card-body
+    b-input(type="textarea" v-model="any_source" ref="any_source")
+  footer.modal-card-foot
+    b-button(@click="submit_handle" type="is-primary") 読み込む
 </template>
 
 <script>
