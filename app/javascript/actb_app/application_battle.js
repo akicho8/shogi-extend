@@ -428,11 +428,12 @@ export const application_battle = {
 
     // 部屋から退出する
     yameru_handle() {
+      this.sound_play("click")
       this.battle_leave_handle()    // 「退出しました」発言が中で行われる
       if (this.room.bot_user_id) {
         this.lobby_setup_without_cable()
       } else {
-        this.lobby_handle()
+        this.lobby_setup()
       }
     },
 
