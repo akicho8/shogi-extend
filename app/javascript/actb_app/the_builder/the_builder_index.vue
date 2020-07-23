@@ -81,7 +81,7 @@
       b-table-column(custom-key="good_marks_count"  field="good_marks_count"  :label="QuestionIndexColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
       b-table-column(custom-key="bad_marks_count"   field="bad_marks_count"   :label="QuestionIndexColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
 
-      b-table-column(custom-key="clip_marks_count"  field="clip_marks_count"  :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
+      //- b-table-column(custom-key="clip_marks_count"  field="clip_marks_count"  :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
 
       //- b-table-column(custom-key="difficulty_level"  field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
       //- b-table-column(custom-key="time_limit_sec"    field="time_limit_sec"  :label="QuestionIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="visible_hash.time_limit_sec") {{props.row.time_limit_sec}}秒

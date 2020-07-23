@@ -17,7 +17,7 @@ export class QuestionIndexColumnInfo extends MemoryRecord {
       { key: "good_marks_count", name: "高評価",     short_name: "高評",     visible: false, scope: ["admin", "general"],          },
       { key: "bad_marks_count",  name: "低評価",     short_name: "低評",     visible: false, scope: ["admin", "general"],          },
 
-      { key: "clip_marks_count", name: "被保存",     short_name: "被保",     visible: false, scope: ["admin", "general"],          },
+      // { key: "clip_marks_count", name: "被保存",     short_name: "被保",     visible: false, scope: ["admin", "general"],          },
       // { key: "difficulty_level", name: "難易度",     short_name: "難度",     visible: false, scope: ["admin", "general"],          },
       // { key: "time_limit_sec",   name: "制限時間",   short_name: "時間",     visible: false, scope: ["admin", "general"],          },
       { key: "lineage_key",      name: "種類",       short_name: "種類",     visible: false, scope: ["admin", "general"],          },
