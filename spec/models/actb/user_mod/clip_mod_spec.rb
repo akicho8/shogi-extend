@@ -5,15 +5,15 @@ module Actb
     include ActbSupportMethods
 
     describe "保存リストに追加・解除" do
-      def test
+      def test1
         user1.clip_handle(question_id: question1.id)
         question1.reload
         question1.clip_marks_count
       end
 
       it do
-        assert { test == 1 }
-        assert { test == 0 }
+        assert { test1 == 1 }
+        assert { test1 == 0 }
       end
 
       it "json" do
