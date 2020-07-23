@@ -75,7 +75,7 @@ class Talk
   end
 
   def unique_key_source_string
-    [polly_params[:voice_id], polly_params[:sample_rate], normalized_text].join(":")
+    [polly_params[:voice_id], polly_params[:sample_rate], source_text].join(":")
   end
 
   def generate_if_not_exist
