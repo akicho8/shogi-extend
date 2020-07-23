@@ -11,7 +11,6 @@ class Talk
   end
 
   cattr_accessor :default_polly_params do
-
     {
       output_format: "mp3",
       sample_rate: "16000",
@@ -26,6 +25,7 @@ class Talk
   def initialize(params = {})
     @params = {
       polly_params: {},
+      cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test?,
     }.merge(params)
   end
 
@@ -78,12 +78,13 @@ class Talk
     [polly_params[:voice_id], polly_params[:sample_rate], source_text].join(":")
   end
 
+  def cache_delete
+    FileUtils.rm_f(direct_file_path)
+  end
+
   def generate_if_not_exist
-    if direct_file_path.exist?
-      if Rails.env.production? || Rails.env.staging? || Rails.env.test?
-        # すでにファイルが生成されている場合はパスする
-        return
-      end
+    if params[:cache_enable] && direct_file_path.exist?
+      return
     end
 
     force_generate
