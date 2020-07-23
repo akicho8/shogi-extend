@@ -257,21 +257,21 @@ export default {
     // 練習モードを止める
     rensyu_yameru_handle() {
       this.__assert__(this.room.bot_user_id != null, "this.room.bot_user_id != null")
-      this.lobby_setup_before()
+      this.lobby_setup_without_cable()
       this.sound_play("click")
     },
 
-    lobby_setup_before() {
+    lobby_setup_without_cable() {
       this.battle_unsubscribe()
       this.room_unsubscribe()
 
       this.mode = "lobby"
       this.room = null          // 対戦中ではないことを判定するため消しておく
+      this.revision_safe()
     },
 
     lobby_setup() {
-      this.lobby_setup_before()
-      this.revision_safe()
+      this.lobby_setup_without_cable()
 
       this.lobby_messages_setup()
 
