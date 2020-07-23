@@ -238,4 +238,6 @@ export default {
 
   .tags
     flex-wrap: nowrap
+    .tag
+      height: auto
 </style>
