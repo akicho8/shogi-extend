@@ -3,7 +3,7 @@
 # Talk.new(source_text: "こんにちは")
 #
 class Talk
-  cattr_accessor(:surrogate_pair_delete_enable) { true } # 特殊文字の除去 (除去しないとAWS側の変換が特殊文字の直前で停止してしまう)
+  cattr_accessor(:pictorial_chars_delete_enable) { true } # 特殊文字の除去 (除去しないとAWS側の変換が特殊文字の直前で停止してしまう)
 
   cattr_accessor :default_polly_params do
     {
@@ -13,7 +13,6 @@ class Talk
     }
   end
 
-  attr_accessor :source_text
   attr_accessor :params
 
   def initialize(params = {})
@@ -44,12 +43,14 @@ class Talk
     params[:source_text].to_s
   end
 
-  def surrogate_pair_deleted_text
-    if surrogate_pair_delete_enable
-      source_text.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
-    else
-      source_text
-    end
+  def normalized_source_text
+    @normalized_source_text ||= -> {
+      s = source_text
+      if pictorial_chars_delete_enable
+        s = s.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
+      end
+      s
+    }.call
   end
 
   def direct_file_path
@@ -61,10 +62,10 @@ class Talk
   end
 
   def unique_key
-    @unique_key ||= Digest::MD5.hexdigest(unique_source_value)
+    @unique_key ||= Digest::MD5.hexdigest(unique_key_source_string)
   end
 
-  def unique_source_value
+  def unique_key_source_string
     [polly_params[:voice_id], polly_params[:sample_rate], source_text].join(":")
   end
 
@@ -80,7 +81,7 @@ class Talk
   end
 
   def force_generate
-    params = polly_params.merge(text: surrogate_pair_deleted_text, response_target: direct_file_path.to_s)
+    params = polly_params.merge(text: normalized_source_text, response_target: direct_file_path.to_s)
     direct_file_path.dirname.mkpath
     resp = client.synthesize_speech(params)
 
