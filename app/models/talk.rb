@@ -3,15 +3,23 @@
 # Talk.new(source_text: "こんにちは")
 #
 class Talk
-  cattr_accessor(:pictorial_chars_delete_enable) { true } # 特殊文字の除去 (除去しないとAWS側の変換が特殊文字の直前で停止してしまう)
+  cattr_accessor :replace_table do
+    {
+      "手" => "て",
+      "指" => "さ",
+    }
+  end
 
   cattr_accessor :default_polly_params do
+
     {
       output_format: "mp3",
       sample_rate: "16000",
       text_type: "text",
     }
   end
+
+  cattr_accessor(:pictorial_chars_delete_enable) { true } # 特殊文字の除去 (除去しないとAWS側の変換が特殊文字の直前で停止してしまう)
 
   attr_accessor :params
 
@@ -49,6 +57,7 @@ class Talk
       if pictorial_chars_delete_enable
         s = s.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
       end
+      s = s.gsub(/#{replace_table.keys.join("|")}/o, replace_table)
       s
     }.call
   end
