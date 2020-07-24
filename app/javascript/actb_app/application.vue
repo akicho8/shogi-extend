@@ -94,7 +94,6 @@ export default {
 
       mode: null,
       sub_mode: null,
-      room: null,
 
       school_user_ids:        null, // オンラインのユーザーIDs
       room_user_ids:          null, // 対戦中のユーザーIDs
@@ -310,12 +309,12 @@ export default {
       })
     },
 
-    debug_matching_add_handle(rule_key) {
-      this.api_put("debug_matching_add_handle", {exclude_user_id: this.current_user.id, rule_key: rule_key}, e => {})
+    debug_matching_add_handle(rule) {
+      this.api_put("debug_matching_add_handle", {exclude_user_id: this.current_user.id, rule_key: rule.key}, e => {})
     },
 
     matching_users_clear_handle() {
-      this.api_put("matching_users_clear_handle", {exclude_user_id: this.current_user.id }, e => {})
+      this.api_put("matching_users_clear_handle", {exclude_user_id: this.current_user.id}, e => {})
     },
 
     session_lock_token_invalid_notify() {
@@ -364,6 +363,7 @@ export default {
           this.session_lock_token_invalid_notify()
           return
         }
+        this.__assert__(rule.name, "rule.name")
         this.say(rule.name)
         this.matching_setup()
       })

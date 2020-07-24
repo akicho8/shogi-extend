@@ -24,7 +24,7 @@ module Actb
     belongs_to :rule
 
     before_validation do
-      self.rule ||= Rule.fetch(:marathon_rule)
+      self.rule ||= Rule.fetch(RuleInfo.default_key)
     end
   end
 end

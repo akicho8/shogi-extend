@@ -47,7 +47,7 @@ module Actb
 
     before_validation do
       self.begin_at ||= Time.current
-      self.rule ||= Rule.fetch(:marathon_rule)
+      self.rule ||= Rule.fetch(RuleInfo.default_key)
       self.practice ||= false
     end
 
@@ -81,6 +81,7 @@ module Actb
       as_json({
           only: [:id, :practice, :bot_user_id],
           include: {
+            rule: { only: [:key], methods: [:strategy_key] },
             memberships: {
               only: [:id],
               include: {

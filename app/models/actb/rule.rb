@@ -56,7 +56,7 @@ module Actb
 
     include StaticArModel
 
-    delegate :redis_key, :time_limit_sec, to: :pure_info
+    delegate :redis_key, :strategy_key, :time_limit_sec, to: :pure_info
     delegate :redis, :matching_user_ids_broadcast, to: "self.class"
 
     with_options(dependent: :destroy) do

@@ -3,6 +3,8 @@ import { Room } from "./models/room.js"
 export const application_room = {
   data() {
     return {
+      room: null,               // バトル部屋情報
+
       // チャット用
       room_messages: null, // メッセージ(複数)
       room_message_body:  null, // 入力中のメッセージ
@@ -94,6 +96,9 @@ export const application_room = {
   computed: {
     droped_room_messages() {
       return _.takeRight(this.room_messages, this.config.room_message_drop_lines)
+    },
+    current_strategy_key() {
+      return this.room.rule.strategy_key
     },
   },
 }

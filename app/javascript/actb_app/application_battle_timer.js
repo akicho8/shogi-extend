@@ -26,7 +26,7 @@ export const application_battle_timer = {
     },
 
     main_interval_processing() {
-      if (this.battle.rule.key === "marathon_rule") {
+      if (this.current_strategy_key === "marathon_rule") {
         if (this.sub_mode === "sm4_tactic") {
           this.main_interval_count += 1
           if (this.main_rest_seconds === 0) {
@@ -34,7 +34,7 @@ export const application_battle_timer = {
           }
         }
       }
-      if (this.battle.rule.key === "singleton_rule") {
+      if (this.current_strategy_key === "singleton_rule") {
         if (this.sub_mode === "sm4_tactic") {
           if (this.x_mode === "x1_think") {
             this.main_interval_count += 1
@@ -46,7 +46,7 @@ export const application_battle_timer = {
           }
         }
       }
-      if (this.battle.rule.key === "hybrid_rule") {
+      if (this.current_strategy_key === "hybrid_rule") {
         if (this.sub_mode === "sm4_tactic") {
           this.main_interval_count += 1
           if (this.main_rest_seconds === 0) {

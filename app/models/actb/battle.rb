@@ -56,7 +56,7 @@ module Actb
       end
 
       self.begin_at ||= Time.current
-      self.rule ||= Rule.fetch(:marathon_rule)
+      self.rule ||= Rule.fetch(RuleInfo.default_key)
       self.battle_pos ||= 0
     end
 
@@ -94,7 +94,7 @@ module Actb
       as_json({
           only: [:id, :battle_pos],
           include: {
-            rule: { only: [:key], methods: [:time_limit_sec] },
+            rule: { only: [:key], methods: [:strategy_key, :time_limit_sec] },
             final: { only: [:key], methods: [:name] },
             room: {},
             memberships: {
@@ -124,9 +124,6 @@ module Actb
             final: {
               only: [:key],
               methods: [:name, :lose_side]
-            },
-            rule: {
-              only: [:id, :key, :name]
             },
             memberships: {
               only: [:id, :straight_win_count, :straight_lose_count],

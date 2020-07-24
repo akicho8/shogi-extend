@@ -19,9 +19,9 @@
   //////////////////////////////////////////////////////////////////////////////// 時間切れ
   template(v-if="app.sub_mode === 'sm6_timeout'")
     .sm6_timeout_container.has-text-centered.is-size-3
-      template(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
+      template(v-if="app.current_strategy_key === 'marathon_rule' || app.current_strategy_key === 'hybrid_rule'")
         | 時間切れ
-      template(v-if="app.battle.rule.key === 'singleton_rule'")
+      template(v-if="app.current_strategy_key === 'singleton_rule'")
         template(v-if="app.otetuki_all_p")
           | 両者不正解
         template(v-else)
@@ -30,8 +30,8 @@
   //////////////////////////////////////////////////////////////////////////////// 問題
   template(v-if="app.sub_mode === 'sm4_tactic' || app.sub_mode === 'sm5_correct'")
     question_author(:question="app.current_question" :title_display_p="false")
-    the_battle_question_marathon_rule(v-if="app.battle.rule.key === 'marathon_rule' || app.battle.rule.key === 'hybrid_rule'")
-    the_battle_question_singleton_rule(v-if="app.battle.rule.key === 'singleton_rule'")
+    the_battle_question_marathon_rule(v-if="app.current_strategy_key === 'marathon_rule' || app.current_strategy_key === 'hybrid_rule'")
+    the_battle_question_singleton_rule(v-if="app.current_strategy_key === 'singleton_rule'")
     the_room_message
 
   //////////////////////////////////////////////////////////////////////////////// シミュレータ

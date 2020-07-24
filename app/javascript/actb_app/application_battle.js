@@ -148,7 +148,7 @@ export const application_battle = {
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
       if (this.sub_mode === "sm4_tactic") {
 
-        if (this.battle.rule.key === "singleton_rule") {
+        if (this.current_strategy_key === "singleton_rule") {
           // 安全のため残り0秒になってから操作しても無効とする
           if (this.ops_rest_seconds === 0) {
             return
@@ -204,7 +204,7 @@ export const application_battle = {
       // 効果音
       this.sound_play(ox_mark_info.sound_key)
 
-      if (this.battle.rule.key === "marathon_rule") {
+      if (this.current_strategy_key === "marathon_rule") {
         this.seikai_user_niha_maru(mi, ox_mark_info) // 正解時は正解したユーザーが送信者なので正解者には○
 
         if (ox_mark_info.key === "timeout") {
@@ -221,7 +221,7 @@ export const application_battle = {
 
       // 正解時         → 正解したユーザーが送信者
       // タイムアウト時 → プレイマリーユーザーが送信者
-      if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
+      if (this.current_strategy_key === "singleton_rule" || this.current_strategy_key === "hybrid_rule") {
         this.sub_mode_set_by_ox_mark_info(ox_mark_info)
         this.seikai_user_niha_maru(mi, ox_mark_info)  // 正解時は正解したユーザーが送信者なので正解者には○
         this.ryousya_jikangire(ox_mark_info)          // タイムアウトのときは両者に時間切れ
@@ -289,13 +289,13 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
     },
     next_trigger_broadcasted(params) {
-      if (this.battle.rule.key === "marathon_rule") {
+      if (this.current_strategy_key === "marathon_rule") {
         if (params.membership_id === this.current_membership.id) {
           this.question_index = params.question_index // 自分だったら次に進める
           this.sm3_deden_trigger()
         }
       }
-      if (this.battle.rule.key === "singleton_rule" || this.battle.rule.key === "hybrid_rule") {
+      if (this.current_strategy_key === "singleton_rule" || this.current_strategy_key === "hybrid_rule") {
         this.question_index = params.question_index // 相手もそろって次に進める
         this.sm3_deden_trigger()
       }
