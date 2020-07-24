@@ -1,6 +1,8 @@
 module Actb
   concern :MessageShared do
     included do
+      cattr_accessor(:body_max_length) { 512 }
+
       cattr_accessor(:json_struct_type8) do
         {
           only: [:id, :body, :created_at],
@@ -17,14 +19,15 @@ module Actb
 
       before_validation do
         if will_save_change_to_attribute?(:body) && body.present?
-          self.body = body.gsub(/\R{3,}/, "\n\n")
+          self.body = double_blank_lines_to_one_line(body)
           self.body = body.strip
-          self.body = Loofah.fragment(body).scrub!(:escape).to_s
-        end
+          self.body = script_tag_escape(body)
 
-        # ちょんぎる
-        if will_save_change_to_attribute?(:body) && body
-          self.body = body.to_s.first(self.class.columns_hash["body"].limit)
+          # 先頭が "*" で始まるデバッグ用のメッセージはエラーになると困るのでちょんぎる
+          # としようと思ったけどいろいろ面倒なので常にちょんぎることにする
+          if true || body.start_with?("*")
+            self.body = body.first(body_max_length)
+          end
         end
       end
 
@@ -32,18 +35,9 @@ module Actb
         validates :body
       end
 
-      begin
-        if table_exists?
-          validates :body, length: { maximum: columns_hash["body"].limit }
-        end
-      rescue ActiveRecord::StatementInvalid => error
-        p ["#{__FILE__}:#{__LINE__}", __method__, error]
+      with_options allow_blank: true do |o|
+        o.validates :body, length: { maximum: body_max_length }
       end
-
-      # begin
-      #   validates :body, length: { maximum: columns_hash["body"].limit }
-      # rescue Mysql2::Error
-      # end
     end
 
     def as_json_type8

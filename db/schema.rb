@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_11_103812) do
+ActiveRecord::Schema.define(version: 2020_07_11_103813) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103812) do
 
   create_table "actb_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "対戦者"
-    t.string "body", limit: 140, null: false, comment: "発言"
+    t.string "body", limit: 512, null: false, comment: "発言"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_actb_lobby_messages_on_user_id"
@@ -228,7 +228,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103812) do
   create_table "actb_question_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "発言者"
     t.bigint "question_id", null: false, comment: "問題"
-    t.string "body", limit: 140, null: false, comment: "発言"
+    t.string "body", limit: 512, null: false, comment: "発言"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_actb_question_messages_on_question_id"
@@ -294,7 +294,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103812) do
   create_table "actb_room_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "対戦者"
     t.bigint "room_id", null: false, comment: "対戦部屋"
-    t.string "body", limit: 140, null: false, comment: "発言"
+    t.string "body", limit: 512, null: false, comment: "発言"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_actb_room_messages_on_room_id"

@@ -197,6 +197,15 @@ module Actb
         end
       end
 
+      normalize_zenkaku_to_hankaku(*[
+          :title,
+          :description,
+          :hint_desc,
+          :direction_message,
+          :source_author,
+          :source_media_name,
+        ])
+
       normalize_blank_to_nil(*[
           :title,
           :description,
@@ -206,15 +215,6 @@ module Actb
           :source_media_name,
           :source_media_url,
           :source_published_on,
-        ])
-
-      normalize_zenkaku_to_hankaku(*[
-          :title,
-          :description,
-          :hint_desc,
-          :direction_message,
-          :source_author,
-          :source_media_name,
         ])
 
       if Rails.env.test?
