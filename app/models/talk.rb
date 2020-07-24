@@ -5,8 +5,7 @@
 class Talk
   cattr_accessor :replace_table do
     {
-      "手" => "て",
-      "指" => "さ",
+      # "手指" => "てさ",
     }
   end
 
