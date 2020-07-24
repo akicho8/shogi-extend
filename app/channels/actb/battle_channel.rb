@@ -78,7 +78,7 @@ module Actb
       op_membership = (current_battle.memberships - [my_membership]).first    # 対戦相手
 
       # 基本個人プレイで同期してない
-      if current_strategy_key == "marathon_rule"
+      if current_strategy_key == "sy_marathon"
         raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         raise ArgumentError, data.inspect unless my_membership.user == current_user
         current_user.actb_histories.find_or_initialize_by(question: question, membership: my_membership).update!(ox_mark: ox_mark)
@@ -87,7 +87,7 @@ module Actb
 
       # 正解時         → 正解したユーザーが送信者
       # タイムアウト時 → 両方が送信者
-      if current_strategy_key == "singleton_rule" || current_strategy_key == "hybrid_rule"
+      if current_strategy_key == "sy_singleton" || current_strategy_key == "sy_hybrid"
         raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         if ox_mark.key == "correct"
           my_membership.user.actb_histories.find_or_initialize_by(membership: my_membership, question: question).update!(ox_mark: ox_mark)
@@ -132,12 +132,12 @@ module Actb
       data = data.to_options
 
       # 本人が送信しているので本人だけの履歴を作成
-      if current_strategy_key == "marathon_rule"
+      if current_strategy_key == "sy_marathon"
         history_set1(data, :mistake)
       end
 
       # リーダーが送信者なので対局者の両方にあらかじめ履歴を作っておく
-      if current_strategy_key == "singleton_rule" || current_strategy_key == "hybrid_rule"
+      if current_strategy_key == "sy_singleton" || current_strategy_key == "sy_hybrid"
         if already_run?([:next_trigger, already_run_key, data[:question_id]], expires_in: 1.minute)
           debug_say "**skip next_trigger"
           return
@@ -229,7 +229,7 @@ module Actb
     def owattayo(data)
       data = data.to_options
 
-      if current_strategy_key == "singleton_rule" || current_strategy_key == "hybrid_rule"
+      if current_strategy_key == "sy_singleton" || current_strategy_key == "sy_hybrid"
         # 2回目の実行はキャンセル
         if already_run?([:owattayo, already_run_key], expires_in: 1.minute)
           debug_say "**skip owattayo"

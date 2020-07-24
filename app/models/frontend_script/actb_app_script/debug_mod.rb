@@ -13,9 +13,9 @@ module FrontendScript
                 "ロビー"                       => nil,
                 "プロフィール編集"             => :profile_edit,
                 "プロフィール画像アップロード" => :profile_edit_image_crop,
-                "対戦(マラソン)"               => :battle_marathon_rule,
-                "対戦(シングルトン)"           => :battle_singleton_rule,
-                "対戦(ハイブリッド)"           => :battle_hybrid_rule,
+                "対戦(マラソン)"               => :battle_sy_marathon,
+                "対戦(シングルトン)"           => :battle_sy_singleton,
+                "対戦(ハイブリッド)"           => :battle_sy_hybrid,
                 "結果"                         => :result,
 
                 "問題作成(一覧)"               => :builder,
@@ -64,7 +64,7 @@ module FrontendScript
       end
 
       # 対戦(マラソン)
-      def debug_for_battle_marathon_rule(info)
+      def debug_for_battle_sy_marathon(info)
         c.sysop_login_unless_logout
 
         rule_key = current_debug_scene.to_s.remove("battle_")
@@ -78,13 +78,13 @@ module FrontendScript
       end
 
       # 対戦(シングルトン)
-      def debug_for_battle_singleton_rule(info)
-        debug_for_battle_marathon_rule(info)
+      def debug_for_battle_sy_singleton(info)
+        debug_for_battle_sy_marathon(info)
       end
 
       # 対戦(ハイブリッド)
-      def debug_for_battle_hybrid_rule(info)
-        debug_for_battle_marathon_rule(info)
+      def debug_for_battle_sy_hybrid(info)
+        debug_for_battle_sy_marathon(info)
       end
 
       # 結果

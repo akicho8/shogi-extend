@@ -49,7 +49,7 @@ module Actb
     describe "#judge_final_set" do
       def test(judge_key)
         users = 2.times.collect { User.create! }
-        room = Actb::Room.create_with_members!(users, rule: Actb::Rule.fetch(:marathon_rule))
+        room = Actb::Room.create_with_members!(users, rule: Actb::Rule.fetch(:sy_marathon))
         battle = room.battle_create_with_members!
         battle.judge_final_set(battle.users[0], judge_key, :f_success)
         battle.reload.memberships.flat_map do |e|

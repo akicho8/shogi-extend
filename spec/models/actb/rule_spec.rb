@@ -20,7 +20,7 @@ module Actb
     include ActbSupportMethods
 
     it do
-      Actb::Rule.all.collect(&:key) # => ["marathon_rule", "singleton_rule", "hybrid_rule"]
+      Actb::Rule.all.collect(&:key) # => ["sy_marathon", "sy_singleton", "sy_hybrid"]
       assert { Rule.all.count >= 1 }
     end
   end

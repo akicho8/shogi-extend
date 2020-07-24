@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_battle_question_singleton_rule
+.the_battle_question_sy_singleton
   .has-text-centered
     //- .status2
     //-   | {{app.share_turn_offset}}手目
@@ -78,7 +78,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_battle_question_singleton_rule",
+  name: "the_battle_question_sy_singleton",
   mixins: [
     support,
   ],
@@ -94,7 +94,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_battle_question_singleton_rule
+.the_battle_question_sy_singleton
   .tags_container
     margin-top: 0.7rem
   .wakatta_button

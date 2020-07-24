@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_battle_question_marathon_rule
+.the_battle_question_sy_marathon
   .status_line2.has-text-centered.has-text-weight-bold
     | {{app.main_time_as_string}}
     template(v-if="app.debug_read_p")
@@ -38,7 +38,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_battle_question_marathon_rule",
+  name: "the_battle_question_sy_marathon",
   mixins: [
     support,
   ],
@@ -53,7 +53,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_battle_question_marathon_rule
+.the_battle_question_sy_marathon
   .tags_container
     margin-top: 0.7rem
   .wakatta_button

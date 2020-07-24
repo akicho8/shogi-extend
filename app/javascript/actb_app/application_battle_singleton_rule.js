@@ -1,2 +1,2 @@
-export const application_battle_singleton_rule = {
+export const application_battle_sy_singleton = {
 }

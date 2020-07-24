@@ -10,7 +10,7 @@ Actb.setup
 
 Actb::Lineage.all.collect(&:key)                 # => ["詰将棋", "実戦詰め筋", "手筋", "必死", "必死逃れ", "定跡", "秘密"]
 Actb::Judge.all.collect(&:key)                   # => ["win", "lose", "draw", "pending"]
-Actb::Rule.all.collect(&:key)                    # => ["marathon_rule", "singleton_rule", "hybrid_rule"]
+Actb::Rule.all.collect(&:key)                    # => ["sy_marathon", "sy_singleton", "sy_hybrid"]
 Actb::Final.all.collect(&:key)                   # => ["f_give_up", "f_disconnect", "f_success", "f_draw", "f_pending"]
 
 10.times do

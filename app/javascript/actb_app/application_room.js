@@ -50,7 +50,7 @@ export const application_room = {
     // app/jobs/actb/battle_broadcast_job.rb broadcast
     // ↓
     battle_broadcasted(params) {
-      if (this.info.debug_scene === "battle_marathon_rule" || this.info.debug_scene === "battle_singleton_rule" || this.info.debug_scene === "battle_hybrid_rule") {
+      if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
         this.battle_setup(this.info.battle)
         return
       }

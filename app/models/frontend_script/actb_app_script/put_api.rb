@@ -29,7 +29,7 @@ module FrontendScript
       #   { status: "success" }
       # end
 
-      # curl -d _method=put -d _user_id=1 -d remote_action=rule_key_set_handle -d rule_key=marathon_rule http://localhost:3000/script/actb-app.json
+      # curl -d _method=put -d _user_id=1 -d remote_action=rule_key_set_handle -d rule_key=sy_marathon http://localhost:3000/script/actb-app.json
       def rule_key_set_handle
         raise ArgumentError, params.inspect if params[:session_lock_token].blank?
         unless current_user.session_lock_token_valid?(params[:session_lock_token])

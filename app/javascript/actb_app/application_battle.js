@@ -4,17 +4,17 @@ import { MemberInfo } from "./models/member_info.js"
 
 import { application_battle_timer } from "./application_battle_timer.js"
 
-import { application_battle_marathon_rule  } from "./application_battle_marathon_rule.js"
-import { application_battle_singleton_rule } from "./application_battle_singleton_rule.js"
-import { application_battle_hybrid_rule    } from "./application_battle_hybrid_rule.js"
+import { application_battle_sy_marathon  } from "./application_battle_sy_marathon.js"
+import { application_battle_sy_singleton } from "./application_battle_sy_singleton.js"
+import { application_battle_sy_hybrid    } from "./application_battle_sy_hybrid.js"
 
 export const application_battle = {
   mixins: [
     application_battle_timer,
 
-    application_battle_marathon_rule,
-    application_battle_singleton_rule,
-    application_battle_hybrid_rule,
+    application_battle_sy_marathon,
+    application_battle_sy_singleton,
+    application_battle_sy_hybrid,
   ],
   data() {
     return {
@@ -148,7 +148,7 @@ export const application_battle = {
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
       if (this.sub_mode === "sm4_tactic") {
 
-        if (this.current_strategy_key === "singleton_rule") {
+        if (this.current_strategy_key === "sy_singleton") {
           // 安全のため残り0秒になってから操作しても無効とする
           if (this.ops_rest_seconds === 0) {
             return
@@ -204,7 +204,7 @@ export const application_battle = {
       // 効果音
       this.sound_play(ox_mark_info.sound_key)
 
-      if (this.current_strategy_key === "marathon_rule") {
+      if (this.current_strategy_key === "sy_marathon") {
         this.seikai_user_niha_maru(mi, ox_mark_info) // 正解時は正解したユーザーが送信者なので正解者には○
 
         if (ox_mark_info.key === "timeout") {
@@ -221,7 +221,7 @@ export const application_battle = {
 
       // 正解時         → 正解したユーザーが送信者
       // タイムアウト時 → プレイマリーユーザーが送信者
-      if (this.current_strategy_key === "singleton_rule" || this.current_strategy_key === "hybrid_rule") {
+      if (this.current_strategy_key === "sy_singleton" || this.current_strategy_key === "sy_hybrid") {
         this.sub_mode_set_by_ox_mark_info(ox_mark_info)
         this.seikai_user_niha_maru(mi, ox_mark_info)  // 正解時は正解したユーザーが送信者なので正解者には○
         this.ryousya_jikangire(ox_mark_info)          // タイムアウトのときは両者に時間切れ
@@ -280,7 +280,7 @@ export const application_battle = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // singleton_rule ではリーダーだけが呼ぶ
+    // sy_singleton ではリーダーだけが呼ぶ
     // 両者が呼ぶようにするとまずい。わずかな時間差で呼ばれたとき問題が2度インクリメントされてしまう
     next_trigger() {
       this.ac_battle_perform("next_trigger", {
@@ -289,13 +289,13 @@ export const application_battle = {
       }) // --> app/channels/actb/battle_channel.rb
     },
     next_trigger_broadcasted(params) {
-      if (this.current_strategy_key === "marathon_rule") {
+      if (this.current_strategy_key === "sy_marathon") {
         if (params.membership_id === this.current_membership.id) {
           this.question_index = params.question_index // 自分だったら次に進める
           this.sm3_deden_trigger()
         }
       }
-      if (this.current_strategy_key === "singleton_rule" || this.current_strategy_key === "hybrid_rule") {
+      if (this.current_strategy_key === "sy_singleton" || this.current_strategy_key === "sy_hybrid") {
         this.question_index = params.question_index // 相手もそろって次に進める
         this.sm3_deden_trigger()
       }
@@ -347,7 +347,7 @@ export const application_battle = {
         question_id: this.current_question.id,
       }) // --> app/channels/actb/battle_channel.rb
     },
-    // singleton_rule での操作中の時間切れは不正解相当
+    // sy_singleton での操作中の時間切れは不正解相当
     x2_play_timeout_handle_broadcasted(params) {
       const mi = this.member_infos_hash[params.membership_id]
       mi.ox_list.push("mistake")

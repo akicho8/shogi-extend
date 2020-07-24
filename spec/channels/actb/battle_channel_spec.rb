@@ -15,7 +15,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
   end
 
   let_it_be(:current_room) do
-    Actb::Room.create_with_members!([user1, user2], rule: Actb::Rule.fetch(:marathon_rule))
+    Actb::Room.create_with_members!([user1, user2], rule: Actb::Rule.fetch(:sy_marathon))
   end
 
   let_it_be(:current_battle) do
