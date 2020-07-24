@@ -396,7 +396,7 @@ export default {
             this.ok_notice("マッチング成功！")
           }
           if (e.status === "not_have_any_opponent") {
-            this.warning_notice("相手がすでに対人戦を開始したか抜けてしまったようです。残念！")
+            this.warning_notice("相手がすでに対人戦を開始したか抜けてしまいました")
           }
         })
       })
