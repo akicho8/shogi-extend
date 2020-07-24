@@ -415,7 +415,7 @@ export default {
       this.say(message)
 
       this.$buefy.snackbar.open({
-        duration: 10 * 1000,
+        duration: 15 * 1000,
         message: message,
         type: "is-success",
         position: "is-bottom-left",
