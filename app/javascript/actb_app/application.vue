@@ -523,6 +523,11 @@ export default {
         }
       }
     },
+
+    // マッチング中のユーザー数
+    matching_user_count() {
+      return _.sumBy(Object.values(this.matching_user_ids_hash || {}), a => a.length) // sum { |k, v| v.size }
+    },
   },
 }
 </script>
