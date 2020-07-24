@@ -12,9 +12,9 @@ class Talk
 
   cattr_accessor :default_polly_params do
     {
-      output_format: "mp3",
-      sample_rate: "16000",
-      text_type: "text",
+      :output_format => "mp3",
+      :sample_rate   => "16000",
+      :text_type     => "text",
     }
   end
 
