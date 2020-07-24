@@ -24,15 +24,9 @@ module Actb
       self.o_count  ||= 0
       self.x_count  ||= 0
       self.ox_total ||= 0
-      self.o_rate   ||= 0
 
       if will_save_change_to_attribute?(:o_count) || will_save_change_to_attribute?(:x_count)
-        if o_count && x_count
-          self.ox_total = o_count + x_count
-          if ox_total.positive?
-            self.o_rate = o_count.fdiv(ox_total)
-          end
-        end
+        o_rate_set
       end
     end
 
@@ -40,11 +34,22 @@ module Actb
       validates :o_count
       validates :x_count
       validates :ox_total
-      validates :o_rate
     end
 
     with_options allow_blank: true do
       validates :question_id, uniqueness: true
+    end
+
+    def o_rate_set
+      self.o_rate = nil
+      self.ox_total = nil
+
+      if o_count && x_count
+        self.ox_total = o_count + x_count
+        if ox_total.positive?
+          self.o_rate = o_count.fdiv(ox_total)
+        end
+      end
     end
   end
 end

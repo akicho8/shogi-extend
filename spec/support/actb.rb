@@ -15,7 +15,7 @@ module ActbSupportMethods
     end
 
     let(:room1) do
-      Actb::Room.create_with_members!([user1, user2], rule: Actb::Rule.fetch(:sy_marathon))
+      Actb::Room.create_with_members!([user1, user2])
     end
 
     let(:battle1) do

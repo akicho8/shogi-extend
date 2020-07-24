@@ -126,7 +126,7 @@ export const application_battle_timer = {
         return v
       }
 
-      v = this.battle.rule.time_limit_sec
+      v = this.current_rule_info.time_limit_sec
       if (v != null) {
         return v
       }
@@ -137,7 +137,7 @@ export const application_battle_timer = {
     //////////////////////////////////////////////////////////////////////////////// シングルトン専用
 
     ops_rest_seconds() {
-      let v = this.config.s_time_limit_sec - this.ops_interval_count
+      let v = this.current_rule_info.controll_limit_sec - this.ops_interval_count
       if (v < 0) {
         v = 0
       }

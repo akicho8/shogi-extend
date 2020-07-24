@@ -81,7 +81,7 @@ module Actb
       as_json({
           only: [:id, :practice, :bot_user_id],
           include: {
-            rule: { only: [:key], methods: [:strategy_key] },
+            rule: { only: [:key] },
             memberships: {
               only: [:id],
               include: {

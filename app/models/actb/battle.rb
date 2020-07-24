@@ -94,7 +94,7 @@ module Actb
       as_json({
           only: [:id, :battle_pos],
           include: {
-            rule: { only: [:key], methods: [:strategy_key, :time_limit_sec] },
+            # rule: { only: [:key], methods: [:strategy_key, :time_limit_sec, :b_score_max_for_win] },
             final: { only: [:key], methods: [:name] },
             room: {},
             memberships: {

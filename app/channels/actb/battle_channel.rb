@@ -78,7 +78,7 @@ module Actb
       op_membership = (current_battle.memberships - [my_membership]).first    # 対戦相手
 
       # 基本個人プレイで同期してない
-      if current_strategy_key == "sy_marathon"
+      if current_strategy_key == :sy_marathon
         raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         raise ArgumentError, data.inspect unless my_membership.user == current_user
         current_user.actb_histories.find_or_initialize_by(question: question, membership: my_membership).update!(ox_mark: ox_mark)
@@ -87,7 +87,7 @@ module Actb
 
       # 正解時         → 正解したユーザーが送信者
       # タイムアウト時 → 両方が送信者
-      if current_strategy_key == "sy_singleton" || current_strategy_key == "sy_hybrid"
+      if current_strategy_key == :sy_singleton || current_strategy_key == :sy_hybrid
         raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         if ox_mark.key == "correct"
           my_membership.user.actb_histories.find_or_initialize_by(membership: my_membership, question: question).update!(ox_mark: ox_mark)
@@ -132,12 +132,12 @@ module Actb
       data = data.to_options
 
       # 本人が送信しているので本人だけの履歴を作成
-      if current_strategy_key == "sy_marathon"
+      if current_strategy_key == :sy_marathon
         history_set1(data, :mistake)
       end
 
       # リーダーが送信者なので対局者の両方にあらかじめ履歴を作っておく
-      if current_strategy_key == "sy_singleton" || current_strategy_key == "sy_hybrid"
+      if current_strategy_key == :sy_singleton || current_strategy_key == :sy_hybrid
         if already_run?([:next_trigger, already_run_key, data[:question_id]], expires_in: 1.minute)
           debug_say "**skip next_trigger"
           return
@@ -229,7 +229,7 @@ module Actb
     def owattayo(data)
       data = data.to_options
 
-      if current_strategy_key == "sy_singleton" || current_strategy_key == "sy_hybrid"
+      if current_strategy_key == :sy_singleton || current_strategy_key == :sy_hybrid
         # 2回目の実行はキャンセル
         if already_run?([:owattayo, already_run_key], expires_in: 1.minute)
           debug_say "**skip owattayo"
@@ -239,7 +239,7 @@ module Actb
 
       # 両方5点とってなければ引き分け
       b_scores = current_battle.memberships.collect { |e| data[:member_infos_hash][e.id.to_s]["b_score"] }
-      if b_scores.max < Actb::Config[:b_score_max_for_win]
+      if b_scores.max < current_rule_info.b_score_max_for_win
         judge_final_set(nil, :draw, :f_draw)
         return
       end
@@ -345,7 +345,11 @@ module Actb
     end
 
     def current_strategy_key
-      current_battle.room.rule.strategy_key
+      current_rule_info.strategy_key
+    end
+
+    def current_rule_info
+      current_battle.room.rule.pure_info
     end
   end
 end

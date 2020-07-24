@@ -496,10 +496,12 @@ export const application_battle = {
     b_score_max() {
       return _.max(_.map(this.member_infos_hash, (e, membership_id) => e.b_score))
     },
-
+    b_score_max_for_win() {
+      return this.current_rule_info.b_score_max_for_win
+    },
     // バトル終了条件
     battle_end_p() {
-      return this.b_score_max >= this.app.config.b_score_max_for_win
+      return this.b_score_max >= this.b_score_max_for_win
     },
 
     //////////////////////////////////////////////////////////////////////////////// 両方誤答した？

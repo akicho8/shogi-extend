@@ -226,7 +226,7 @@ module Actb
         self.source_about_key = :unknown
       end
 
-      self.good_rate ||= 0
+      self.good_rate ||= nil
 
       self.lineage ||= Lineage.fetch("詰将棋")
       self.source_about ||= SourceAbout.fetch(:ascertained)
@@ -401,8 +401,10 @@ module Actb
       d = good_marks_count + bad_marks_count
       if d.positive?
         self.good_rate = good_marks_count.fdiv(d)
-        save!
+      else
+        self.good_rate = nil
       end
+      save!(touch: false)
     end
 
     # 配置 + 1問目

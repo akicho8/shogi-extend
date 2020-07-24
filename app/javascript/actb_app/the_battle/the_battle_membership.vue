@@ -21,7 +21,7 @@
 
   //////////////////////////////////////////////////////////////////////////////// ルール毎に異なる
   .question_progress.is-size-7.has-text-weight-bold
-    | {{mi.b_score}} / {{app.config.b_score_max_for_win}}
+    | {{mi.b_score}} / {{app.b_score_max_for_win}}
   .question_progress_detail(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid' || app.debug_read_p")
     template(v-if="droped_ox_list.length === 0")
       | &nbsp;

@@ -30,6 +30,11 @@ module StaticArModel
         return key
       end
       find_by!(key: key)
+    rescue ActiveRecord::RecordNotFound => error
+      if Rails.env.test? || Rails.env.development?
+        raise ArgumentError, "#{name}.fetch(#{key.inspect})\nkeys: #{pluck(:key).inspect}"
+      end
+      raise error
     end
 
     def fetch_if(key)

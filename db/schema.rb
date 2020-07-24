@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_11_103813) do
+ActiveRecord::Schema.define(version: 2020_07_11_103814) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103813) do
     t.integer "o_count", null: false, comment: "正解数"
     t.integer "x_count", null: false, comment: "不正解数"
     t.integer "ox_total", null: false, comment: "出題数"
-    t.float "o_rate", null: false, comment: "高評価率"
+    t.float "o_rate", comment: "高評価率"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["o_count"], name: "index_actb_ox_records_on_o_count"
@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_103813) do
     t.date "source_published_on", comment: "出典年月日"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.float "good_rate", null: false, comment: "高評価率"
+    t.float "good_rate", comment: "高評価率"
     t.integer "moves_answers_count", default: 0, null: false, comment: "解答数"
     t.integer "histories_count", default: 0, null: false, comment: "履歴数(出題数とは異なる)"
     t.integer "good_marks_count", default: 0, null: false, comment: "高評価数"

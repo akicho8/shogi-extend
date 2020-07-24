@@ -18,8 +18,6 @@ module Actb
     # 共通
     :leader_index                    => 1,        # シングルトンとハイブリッドルールのときの memberships のインデックス○をリーダーにする。:0 =>左側 1:右側
     :self_is_left_side_p             => false,    # 自分を左に表示
-    :best_questions_limit            => 30,       # 準備する問題数でこれが尽きたら引き分け
-    :b_score_max_for_win             => 3,        # ○問正解先取で勝ち
     :ox_status_line_take_n           => 8,        # 上の○×行は最新何個表示する？
     :readygo_delay                   => 2.2,      # 「対戦開始！」の待ち
     :deden_delay                     => 0.8,      # 「デデン」の待ち
@@ -27,7 +25,6 @@ module Actb
 
     # シングルトンモード
     :otetuki_release_p               => false, # おてつき解除可能か？
-    :s_time_limit_sec                => 5,     # 1手は○秒以内に操作しないとタイムアウトになる
     :time_limit_sec                  => nil,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
     :turn_limit_lazy_count           => 4,     # 3手詰なら○手足した手数まで操作できる
 
@@ -59,7 +56,6 @@ module Actb
 
   if Rails.env.staging? || Rails.env.production?
     Config.update({
-        :b_score_max_for_win         => 5,     # ○問正解先取で勝ち
         :room_messages_display_p     => false, # 部屋でのチャット表示
         :matching_pow_base           => 6,     # gap < 2**(○+カウンター) ならマッチングする
         :matching_interval_second    => 4,     # カウンターをインクリメントする間隔(秒)

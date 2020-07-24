@@ -97,8 +97,13 @@ export const application_room = {
     droped_room_messages() {
       return _.takeRight(this.room_messages, this.config.room_message_drop_lines)
     },
+    // 現在のルール
+    current_rule_info() {
+      return this.RuleInfo.fetch(this.room.rule.key)
+    },
+    // 現在の戦略(sy_marathon など)
     current_strategy_key() {
-      return this.room.rule.strategy_key
+      return this.current_rule_info.strategy_key
     },
   },
 }
