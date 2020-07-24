@@ -4,9 +4,9 @@
 #
 class Talk
   cattr_accessor :replace_table do
-    {
-      # "手指" => "てさ",
-    }
+    # {
+    #   "手指" => "てさ",
+    # }
   end
 
   cattr_accessor :default_polly_params do
@@ -60,7 +60,9 @@ class Talk
       if pictorial_chars_delete_enable
         s = s.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
       end
-      s = s.gsub(/#{replace_table.keys.join("|")}/o, replace_table)
+      if replace_table
+        s = s.gsub(/#{replace_table.keys.join("|")}/o, replace_table)
+      end
       s
     }.call
   end
@@ -92,29 +94,32 @@ class Talk
   def force_generate
     params = polly_params.merge(text: normalized_text, response_target: direct_file_path.to_s)
     direct_file_path.dirname.mkpath
-    resp = client.synthesize_speech(params)
 
-    # ドトールで実行すると client.synthesize_speech のタイミングで
-    # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
-    # のエラーになることがある
-
-    if Rails.env.production? || Rails.env.staging?
-    else
+    if Rails.env.development? || Rails.env.test?
       Rails.logger.debug(params.to_t)
-      Rails.logger.debug(resp.to_h.to_t)
       # >> |-------------+----------------------------------------|
       # >> |      region | us-west-2                              |
       # >> | credentials | #<Aws::Credentials:0x00007fdb7bc7ba10> |
       # >> |-------------+----------------------------------------|
-      # >> |--------------------+-----------------------------------------------------|
-      # >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007fdb7ba74cf8> |
-      # >> |       content_type | audio/mpeg                                          |
-      # >> | request_characters | 5                                                   |
-      # >> |--------------------+-----------------------------------------------------|
-      Rails.logger.info("#{__method__}: #{source_text.inspect} => #{direct_file_path}")
     end
-  rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily => error
-    Rails.logger.info ["#{__FILE__}:#{__LINE__}", __method__, error].to_t
+
+    begin
+      resp = client.synthesize_speech(params)
+      # ドトールで実行すると client.synthesize_speech のタイミングで
+      # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
+      # のエラーになることがある
+      if Rails.env.development? || Rails.env.test?
+        Rails.logger.debug(resp.to_h.to_t)
+        # >> |--------------------+-----------------------------------------------------|
+        # >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007fdb7ba74cf8> |
+        # >> |       content_type | audio/mpeg                                          |
+        # >> | request_characters | 5                                                   |
+        # >> |--------------------+-----------------------------------------------------|
+        Rails.logger.info("#{__method__}: #{source_text.inspect} => #{direct_file_path}")
+      end
+    rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily => error
+      Rails.logger.info ["#{__FILE__}:#{__LINE__}", __method__, error].to_t
+    end
   end
 
   def polly_params
