@@ -20,9 +20,8 @@ module StaticArModel
   class_methods do
     def setup(options = {})
       pure_class.each do |e|
-        unless find_by(key: e.key)
-          create!(key: e.key)
-        end
+        record = find_by(key: e.key) || create!(key: e.key)
+        record.move_to_bottom
       end
     end
 
