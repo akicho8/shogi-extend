@@ -14,7 +14,7 @@ module Actb
         generator = BestQuestionsGenerator.new(battle: battle1)
         # puts generator.db_scope.to_sql
         # tp generator.generate
-        assert { generator.generate.size >= 1 }
+        assert { generator.generate }
       end
     end
   end

@@ -23,7 +23,7 @@
 # | source_published_on | Source published on | date        |                     |      |       |
 # | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
 # | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
-# | good_rate           | Good rate           | float(24)   | NOT NULL            |      | H     |
+# | good_rate           | Good rate           | float(24)   |                     |      | H     |
 # | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | histories_count     | Histories count     | integer(4)  | DEFAULT(0) NOT NULL |      | I     |
 # | good_marks_count    | Good marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | J     |

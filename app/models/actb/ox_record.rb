@@ -11,7 +11,7 @@
 # | o_count     | O count  | integer(4) | NOT NULL    |      | B     |
 # | x_count     | X count  | integer(4) | NOT NULL    |      | C     |
 # | ox_total    | Ox total | integer(4) | NOT NULL    |      | D     |
-# | o_rate      | O rate   | float(24)  | NOT NULL    |      | E     |
+# | o_rate      | O rate   | float(24)  |             |      | E     |
 # | created_at  | 作成日時 | datetime   | NOT NULL    |      |       |
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |      |       |
 # |-------------+----------+------------+-------------+------+-------|

@@ -25,11 +25,13 @@ module Actb::Question::InfoMod
     end
 
     a["出題回数"]   = histories_count
-    a["正解率"]     = "%.2f %%" % (ox_record.o_rate * 100)
+
+    a["正解率"]     = ox_record.o_rate ? ("%.2f %%" % (ox_record.o_rate * 100)) : ""
+
     a["正解数"]     = ox_record.o_count
     a["誤答数"]     = ox_record.x_count
 
-    a["高評価率"]   = "%.2f %%" % (good_rate * 100)
+    a["高評価率"]   = good_rate ? ("%.2f %%" % (good_rate * 100)) : ""
     a["高評価数"]   = good_marks_count
     a["低評価数"]   = bad_marks_count
 

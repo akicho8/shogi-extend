@@ -225,7 +225,7 @@ DROP TABLE IF EXISTS `actb_lobby_messages`;
 CREATE TABLE `actb_lobby_messages` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '対戦者',
-  `body` varchar(140) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
+  `body` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -322,7 +322,7 @@ CREATE TABLE `actb_ox_records` (
   `o_count` int(11) NOT NULL COMMENT '正解数',
   `x_count` int(11) NOT NULL COMMENT '不正解数',
   `ox_total` int(11) NOT NULL COMMENT '出題数',
-  `o_rate` float NOT NULL COMMENT '高評価率',
+  `o_rate` float DEFAULT NULL COMMENT '高評価率',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -341,7 +341,7 @@ CREATE TABLE `actb_question_messages` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '発言者',
   `question_id` bigint(20) NOT NULL COMMENT '問題',
-  `body` varchar(140) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
+  `body` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -372,7 +372,7 @@ CREATE TABLE `actb_questions` (
   `source_published_on` date DEFAULT NULL COMMENT '出典年月日',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
-  `good_rate` float NOT NULL COMMENT '高評価率',
+  `good_rate` float DEFAULT NULL COMMENT '高評価率',
   `moves_answers_count` int(11) NOT NULL DEFAULT '0' COMMENT '解答数',
   `histories_count` int(11) NOT NULL DEFAULT '0' COMMENT '履歴数(出題数とは異なる)',
   `good_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '高評価数',
@@ -430,7 +430,7 @@ CREATE TABLE `actb_room_messages` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '対戦者',
   `room_id` bigint(20) NOT NULL COMMENT '対戦部屋',
-  `body` varchar(140) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
+  `body` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -1073,6 +1073,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200711103808'),
 ('20200711103810'),
 ('20200711103811'),
-('20200711103812');
+('20200711103812'),
+('20200711103813'),
+('20200711103814');
 
 

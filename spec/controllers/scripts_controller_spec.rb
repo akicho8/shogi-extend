@@ -54,7 +54,7 @@ RSpec.describe ScriptsController, type: :controller do
       end
 
       it "マッチングした" do
-        Actb::Rule[:sy_marathon].matching_users_add(user1)
+        Actb::Rule[:marathon_rule].matching_users_add(user1)
         assert { test1 == "success" }
       end
     end

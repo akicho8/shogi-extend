@@ -15,7 +15,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
   end
 
   let_it_be(:current_room) do
-    Actb::Room.create_with_members!([user1, user2], rule: Actb::Rule.fetch(:sy_marathon))
+    Actb::Room.create_with_members!([user1, user2])
   end
 
   let_it_be(:current_battle) do
@@ -145,8 +145,8 @@ RSpec.describe Actb::BattleChannel, type: :channel do
     let(:data) {
       {
         "member_infos_hash" => {
-          membership1.id.to_s => {"ox_list" => ["correct"], "b_score" => Actb::Config[:b_score_max_for_win]},
-          membership2.id.to_s => {"ox_list" => [],          "b_score" => 0},
+          membership1.id.to_s => {"ox_list" => ["correct"], "b_score" => 99},
+          membership2.id.to_s => {"ox_list" => [],          "b_score" =>  0},
         }
       }
     }

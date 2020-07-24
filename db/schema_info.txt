@@ -362,7 +362,7 @@
 # | id         | ID       | integer(8)  | NOT NULL PK |              |       |
 # | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id | A     |
 # | room_id    | Room     | integer(8)  | NOT NULL    |              | B     |
-# | body       | 内容     | string(140) | NOT NULL    |              |       |
+# | body       | 内容     | string(512) | NOT NULL    |              |       |
 # | created_at | 作成日時 | datetime    | NOT NULL    |              |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |              |       |
 # |------------+----------+-------------+-------------+--------------+-------|
@@ -522,7 +522,7 @@
 # |------------+----------+-------------+-------------+--------------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |              |       |
 # | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id | A     |
-# | body       | 内容     | string(140) | NOT NULL    |              |       |
+# | body       | 内容     | string(512) | NOT NULL    |              |       |
 # | created_at | 作成日時 | datetime    | NOT NULL    |              |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |              |       |
 # |------------+----------+-------------+-------------+--------------+-------|
@@ -668,7 +668,7 @@
 # | source_published_on | Source published on | date        |                     |      |       |
 # | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
 # | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
-# | good_rate           | Good rate           | float(24)   | NOT NULL            |      | H     |
+# | good_rate           | Good rate           | float(24)   |                     |      | H     |
 # | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | histories_count     | Histories count     | integer(4)  | DEFAULT(0) NOT NULL |      | I     |
 # | good_marks_count    | Good marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | J     |
@@ -718,7 +718,7 @@
 # | o_count     | O count  | integer(4) | NOT NULL    |      | B     |
 # | x_count     | X count  | integer(4) | NOT NULL    |      | C     |
 # | ox_total    | Ox total | integer(4) | NOT NULL    |      | D     |
-# | o_rate      | O rate   | float(24)  | NOT NULL    |      | E     |
+# | o_rate      | O rate   | float(24)  |             |      | E     |
 # | created_at  | 作成日時 | datetime   | NOT NULL    |      |       |
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |      |       |
 # |-------------+----------+------------+-------------+------+-------|
@@ -788,7 +788,7 @@
 # | id          | ID       | integer(8)  | NOT NULL PK |              |       |
 # | user_id     | User     | integer(8)  | NOT NULL    | => ::User#id | A     |
 # | question_id | Question | integer(8)  | NOT NULL    |              | B     |
-# | body        | 内容     | string(140) | NOT NULL    |              |       |
+# | body        | 内容     | string(512) | NOT NULL    |              |       |
 # | created_at  | 作成日時 | datetime    | NOT NULL    |              |       |
 # | updated_at  | 更新日時 | datetime    | NOT NULL    |              |       |
 # |-------------+----------+-------------+-------------+--------------+-------|
