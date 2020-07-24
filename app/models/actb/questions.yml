@@ -3,7 +3,7 @@
   init_sfen: position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1
   time_limit_sec: 60
   difficulty_level: 1
-  title: はじまりの金
+  title: 始まりの金
   description: いちばん簡単
   hint_desc: "(hint_desc)"
   direction_message: "金を活用せよ"
@@ -148,7 +148,7 @@
   init_sfen: position sfen 3gkg3/9/4+B4/9/9/9/9/9/9 b N2rbg4s3n4l18p 1
   time_limit_sec: 60
   difficulty_level: 1
-  title: はじまりの桂
+  title: 始まりの桂
   description:
   hint_desc:
   source_author:
@@ -173,19 +173,3 @@
   lineage_key: 詰将棋
   moves_answers:
   - moves_str: N*7d
-- key: c4dc5ed464b323fc75d0d872171514ee
-  init_sfen: position sfen lns3+P2/4k4/ppppp1p2/9/5P3/9/9/9/9 b B2GSN2rb2g2s2n3l10p 1
-  time_limit_sec: 180
-  difficulty_level: 4
-  title: むずいよ
-  description:
-  hint_desc:
-  source_author:
-  source_media_name:
-  source_media_url:
-  source_published_on:
-  lineage_key: 詰将棋
-  moves_answers:
-  - moves_str: N*6d 6c6d B*4a 5b6a S*6b 6a7b G*6c 7b8b 6b7a 8b7a G*7b
-  - moves_str: N*6d 6c6d B*4a 5b6a S*6b 7a6b G*5b 6a7a 5b6b 7a6b S*6c 6b7a G*7b
-  - moves_str: N*6d 6c6d B*4a 5b6a S*6b 7a6b G*5b 6a7a 5b6b 7a6b S*6c 6b6a G*6b
