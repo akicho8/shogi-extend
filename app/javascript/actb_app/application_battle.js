@@ -358,7 +358,7 @@ export const application_battle = {
         // 解答権が相手にうつる場合
       } else {
         // 両者がおてつきしたらリーダーがタイムアウトとみなして次の問題に移行させる
-        if (this.otetuki_all_p) {
+        if (this.otetuki_all_p || this.room.bot_user_id) {
           if (this.leader_p) {
             this.kotae_sentaku('timeout') // [ONCE]
           }
