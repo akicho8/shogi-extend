@@ -21,6 +21,7 @@ export class QuestionIndexColumnInfo extends MemoryRecord {
       // { key: "clip_marks_count", name: "被保存",     short_name: "被保",     visible: false, scope: ["admin", "general"],          },
       // { key: "difficulty_level", name: "難易度",     short_name: "難度",     visible: false, scope: ["admin", "general"],          },
       // { key: "time_limit_sec",   name: "制限時間",   short_name: "時間",     visible: false, scope: ["admin", "general"],          },
+      { key: "moves_answers_count",   name: "解何通",       short_name: "解通",   visible: false, scope: ["admin", "general"],          },
       { key: "lineage_key",      name: "種類",       short_name: "種類",     visible: false, scope: ["admin", "general"],          },
       { key: "turn_max",         name: "手数",       short_name: "手数",     visible: false, scope: ["admin", "general"],          },
       { key: "owner_tag_list",   name: "タグ",       short_name: "タグ",     visible: false, scope: ["admin", "general"],          },
