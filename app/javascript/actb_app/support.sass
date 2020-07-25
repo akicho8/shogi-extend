@@ -1,3 +1,5 @@
+// 変数専用
+
 @import "../stylesheets/bulma_init.scss"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -24,27 +26,6 @@ $size-14: 0.40rem
 $size-15: 0.35rem
 $size-16: 0.30rem
 $size-17: 0.25rem
-
-.is-size-8
-  font-size: $size-8
-.is-size-9
-  font-size: $size-9
-.is-size-10
-  font-size: $size-10
-.is-size-11
-  font-size: $size-11
-.is-size-12
-  font-size: $size-12
-.is-size-13
-  font-size: $size-13
-.is-size-14
-  font-size: $size-14
-.is-size-15
-  font-size: $size-15
-.is-size-16
-  font-size: $size-16
-.is-size-17
-  font-size: $size-17
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -79,12 +60,8 @@ $size-17: 0.25rem
     display: inline-block       // block にしないと min-width は効かない
     min-width: 1.5rem           // 0 と 1 のフォントの差でグラグラするのを防ぐ
 
-.avatar_image
-  flex-shrink: 0
-  img
-    height: inherit
-
-.is_top_left_fixed
-  position: fixed
-  top: 0.5rem
-  left: 0.5rem
+////////////////////////////////////////////////////////////////////////////////
+// ここで css を定義してはいけない
+// import しているすべてで同じ定義が定義されてしまう
+// application.sass で定義すること
+////////////////////////////////////////////////////////////////////////////////
