@@ -430,7 +430,7 @@ module Actb
             :direction_message,
             :owner_tag_list,
             :source_author,
-            :source_author_link,
+            :source_media_url,
           ],
           methods: [
             :source_about_key,
