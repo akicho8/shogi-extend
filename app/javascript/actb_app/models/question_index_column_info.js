@@ -4,7 +4,8 @@ export class QuestionIndexColumnInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "id",               name: "ID",         short_name: "ID",       visible: false, scope: ["admin", "general"],          },
-      { key: "user_id",          name: "作成者",     short_name: "作成者",   visible: false, scope: ["admin", "general"],          },
+      { key: "user_id",          name: "投稿者",     short_name: "投稿者",   visible: false, scope: ["admin", "general"],          },
+      { key: "source_author",    name: "作者",       short_name: "作者",     visible: false, scope: ["admin", "general"],          },
 
       { key: "title",            name: "タイトル",   short_name: "タイトル", visible: true,  scope: ["admin", "general"],          },
       { key: "histories_count",  name: "出題数",     short_name: "出題",     visible: false, scope: ["admin", "general"],          },

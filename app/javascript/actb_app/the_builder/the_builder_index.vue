@@ -68,6 +68,23 @@
       b-table-column(custom-key="user_id"           field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id")
         a(@click.stop="app.ov_user_info_set(props.row.user.id)")
           | {{props.row.user.name}}
+
+      b-table-column(custom-key="source_author"     field="source_author"     :label="QuestionIndexColumnInfo.fetch('source_author').short_name"       sortable         :visible="visible_hash.source_author")
+
+        template(v-if="props.row.source_about_key === 'unknown'")
+          | 不詳
+        template(v-else-if="props.row.source_author")
+          span.has-text-weight-bold
+            template(v-if="props.row.source_media_url")
+              a(:href="props.row.source_media_url" target="_blank")
+                | {{props.row.source_author}}
+                b-icon(icon="link" size="is-small")
+            template(v-else)
+              | {{props.row.source_author}}
+        template(v-else)
+          a(@click.stop="app.ov_user_info_set(props.row.user.id)")
+            | {{props.row.user.name}}
+
       b-table-column(custom-key="title"             field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
         a(@click.stop="app.ov_question_info_set(props.row.id)")
           | {{props.row.title}}
