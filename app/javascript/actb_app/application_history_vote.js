@@ -14,6 +14,13 @@ export const application_history_vote = {
     vote_handle(history, vote_key, enabled) {
       if (this.login_required_warning_notice()) { return }
 
+      if (this.current_user) {
+        if (history.question.user.id === this.current_user.id) {
+          this.warning_notice("自分が投稿した問題です")
+          return
+        }
+      }
+
       this.sound_play("click")
 
       const params = {
