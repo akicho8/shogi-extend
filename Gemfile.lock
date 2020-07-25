@@ -185,7 +185,7 @@ GEM
     html_format (0.0.9)
       actionpack
       activesupport
-    i18n (1.8.4)
+    i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     image_processing (1.10.3)
       mini_magick (>= 4.9.5, < 5)
