@@ -17,7 +17,7 @@ module Actb
 
       # このユーザーが作成した問題(複数)
       has_many :actb_questions, class_name: "Actb::Question", dependent: :destroy do
-        def mock_type1
+        def create_mock1
           create! do |e|
             e.title = "(title#{Actb::Question.count.next})"
             e.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{Actb::Question.count.next}p 1"

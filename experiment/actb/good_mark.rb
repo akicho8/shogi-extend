@@ -5,7 +5,7 @@ Actb::Question.destroy_all
 user1 = User.create!
 user2 = User.create!
 
-question1 = user1.actb_questions.mock_type1
+question1 = user1.actb_questions.create_mock1
 user2.actb_good_marks.create!(question: question1)
 
 user2.actb_good_marks.count     # => 1

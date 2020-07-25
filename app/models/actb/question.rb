@@ -53,7 +53,7 @@ module Actb
       user1 = User.find_or_create_by!(name: "user1", email: "user1@localhost")
       user2 = User.find_or_create_by!(name: "user2", email: "user2@localhost")
       user3 = User.find_or_create_by!(name: "user3", email: "user3@localhost")
-      question = user1.actb_questions.mock_type1
+      question = user1.actb_questions.create_mock1
       question.messages.create!(user: user2, body: "user2のコメント")
       question.messages.create!(user: user3, body: "user3のコメント")
       question
