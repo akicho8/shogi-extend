@@ -16,7 +16,7 @@ module Actb
 
       # DBから取得
       raise unless rule_info.best_questions_limit
-      s = s.limit(rule_info.best_questions_limit)
+      s = s.limit(rule_info.best_questions_limit).to_a
 
       ################################################################################ 取得後
 
