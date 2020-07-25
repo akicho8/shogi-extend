@@ -47,6 +47,12 @@ module Actb
     include ImportExportMod
     include InfoMod
 
+    def self.good_bad_click_by_owner_reject_all
+      p [GoodMark.count, BadMark.count]
+      find_each(&:good_bad_click_by_owner_reject)
+      p [GoodMark.count, BadMark.count]
+    end
+
     def self.mock_question
       raise if Rails.env.production? || Rails.env.staging?
 
@@ -475,6 +481,12 @@ module Actb
 
     def linked_title(options = {})
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
+    end
+
+    # 自演評価の無効化
+    def good_bad_click_by_owner_reject
+      good_marks.where(user: user).destroy_all
+      bad_marks.where(user: user).destroy_all
     end
 
     private
