@@ -41,8 +41,11 @@
               span.mx-1 {{question.histories_count}}
               | 回
 
-          .control(v-if="question.ox_record.o_rate != null")
-            b-tag 正解率{{float_to_perc(question.ox_record.o_rate)}}%
+          .control
+            b-tag
+              | 正解率
+              span.mx-1 {{float_to_perc(question.ox_record.o_rate || 0)}}
+              | %
 
     b-tabs.mt-2(v-model="tab_index" @change="tab_change_handle" expanded)
       b-tab-item(label="配置")
