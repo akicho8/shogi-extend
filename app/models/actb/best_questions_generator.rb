@@ -71,6 +71,8 @@ module Actb
         s = s.joins(:ox_record).order(o_rate: :desc)
       when :random
         s = s.order("rand()")
+      when :latest
+        s = s.order(created_at: :desc)
       else
         raise ArgumentError, rule_info.pre_order.inspect
       end
