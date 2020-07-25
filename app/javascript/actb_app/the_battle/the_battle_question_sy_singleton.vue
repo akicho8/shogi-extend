@@ -39,8 +39,8 @@
       @update:turn_offset="app.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
-    .akirameru_button.has-text-centered(:class="{'is-invisible': !development_p}")
-      b-button.has-text-weight-bold(@click="app.x2_play_timeout_handle(false)") あきらめる
+    .akirameru_button.has-text-centered
+      b-button(@click="app.x2_play_timeout_handle(false)") あきらめる
 
   template(v-if="app.x_mode === 'x3_see'")
     .status_line2.has-text-centered.has-text-weight-bold
