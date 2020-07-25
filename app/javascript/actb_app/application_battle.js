@@ -185,6 +185,18 @@ export const application_battle = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    skip_handle(ms_flip = false) {
+      // this.ac_battle_perform("kotae_sentaku", {
+      //   ms_flip: ms_flip,
+      //   question_id: this.current_question.id,
+      //   question_index: this.question_index,
+      //   ox_mark_key: ox_mark_key,
+      // }) // --> app/channels/actb/battle_channel.rb
+
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     // 正解または不正解
     // ここにくるのは correct と timeout しかない
     kotae_sentaku(ox_mark_key, ms_flip = false) {
@@ -353,6 +365,10 @@ export const application_battle = {
       mi.ox_list.push("mistake")
       mi.score_add(-1)
       mi.otetuki_on(params.question_id)
+
+      if (params.membership_id === this.current_membership.id) {
+      } else {
+      }
 
       if (this.app.config.otetuki_release_p) {
         // 解答権が相手にうつる場合

@@ -18,6 +18,7 @@
     )
     .wakatta_button.has-text-centered
       b-button.has-text-weight-bold(@click="app.wakatta_handle(false)" type="is-primary" :disabled="app.current_mi.otetuki_p(app.current_question.id)") わかった
+      b-button.has-text-weight-bold(@click="app.skip_handle(false)" v-if="false") SKIP
 
   template(v-if="app.x_mode === 'x2_play'")
     .status_line2.has-text-centered.has-text-weight-bold
