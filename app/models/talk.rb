@@ -48,12 +48,6 @@ class Talk
     FileUtils.rm_f(direct_file_path)
   end
 
-  private
-
-  def source_text
-    params[:source_text].to_s
-  end
-
   def normalized_text
     @normalized_text ||= -> {
       s = source_text
@@ -63,8 +57,23 @@ class Talk
       if replace_table
         s = s.gsub(/#{replace_table.keys.join("|")}/o, replace_table)
       end
+      s = Loofah.fragment(s).scrub!(:whitewash).to_text # タグを除去。副作用で > が &gt; になったり改行が入る
+      s = s.remove(/&\w+;/)                             # エスケープされたタグを除去する
+
+      # 読み上げには関係ないが綺麗にしておく
+      if true
+        s = s.gsub(/\p{Space}+/, " ")                   # to_text で埋められた改行を取る
+        s = s.strip
+      end
+
       s
     }.call
+  end
+
+  private
+
+  def source_text
+    params[:source_text].to_s
   end
 
   def direct_file_path
@@ -97,10 +106,6 @@ class Talk
 
     if Rails.env.development? || Rails.env.test?
       Rails.logger.debug(params.to_t)
-      # >> |-------------+----------------------------------------|
-      # >> |      region | us-west-2                              |
-      # >> | credentials | #<Aws::Credentials:0x00007fdb7bc7ba10> |
-      # >> |-------------+----------------------------------------|
     end
 
     begin
@@ -110,11 +115,6 @@ class Talk
       # のエラーになることがある
       if Rails.env.development? || Rails.env.test?
         Rails.logger.debug(resp.to_h.to_t)
-        # >> |--------------------+-----------------------------------------------------|
-        # >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007fdb7ba74cf8> |
-        # >> |       content_type | audio/mpeg                                          |
-        # >> | request_characters | 5                                                   |
-        # >> |--------------------+-----------------------------------------------------|
         Rails.logger.info("#{__method__}: #{source_text.inspect} => #{direct_file_path}")
       end
     rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily => error
