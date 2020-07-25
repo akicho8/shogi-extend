@@ -26,9 +26,14 @@ module Actb
       end
 
       # 最近投稿されたN個だけランダムに最初の方に登場させる
-      if n = rule_info.atarasiinosaki
-        ary = s.sort_by(&:created_at).last(n)
-        ary.shuffle.each do |e|
+      # Nは○問先取値に大きく依存しているので率を指定する
+      # 20問DBから取得して、10問先取で勝ちで、この値が 0.3 なら
+      # 10*0.3 の3問を、新しい順にした20問なかから取得して
+      # ランダムに先頭の方に移動する
+      if v = rule_info.latest_move_to_top_rate
+        n = (rule_info.b_score_max_for_win * v).round # n = 移動させるか個数
+        ary = s.sort_by(&:created_at).last(n)         # 取得済みの20問のなかから最新n件を取得
+        ary.shuffle.each do |e|                       # ランダムに前方に移動
           s = [e] + (s - [e])
         end
       end
@@ -66,15 +71,17 @@ module Actb
       end
 
       # 取得するまえに順番をどうするか
-      case rule_info.pre_order
+      case rule_info.select_order
       when :o_rate_desc
         s = s.joins(:ox_record).order(o_rate: :desc)
       when :random
         s = s.order("rand()")
       when :latest
         s = s.order(created_at: :desc)
+      when :good
+        s = s.order("IFNULL(good_rate, 0)" => :desc)
       else
-        raise ArgumentError, rule_info.pre_order.inspect
+        raise ArgumentError, rule_info.select_order.inspect
       end
 
       s
