@@ -65,26 +65,17 @@ module FrontendScript
 
       # 対戦(マラソン)
       def debug_for_battle_sy_marathon(info)
-        c.sysop_login_unless_logout
-
-        rule_key = current_debug_scene.to_s.remove("battle_")
-        rule = Actb::Rule.fetch(rule_key)
-
-        room = Actb::Room.create_with_members!(users, rule: rule)
-        battle = room.battle_create_with_members!
-
-        info[:room] = room.as_json_type4
-        info[:battle] = battle.as_json_type1
+        debug_for_battle_sy(info, :marathon_rule)
       end
 
       # 対戦(シングルトン)
       def debug_for_battle_sy_singleton(info)
-        debug_for_battle_sy_marathon(info)
+        debug_for_battle_sy(info, :singleton_rule)
       end
 
       # 対戦(ハイブリッド)
       def debug_for_battle_sy_hybrid(info)
-        debug_for_battle_sy_marathon(info)
+        debug_for_battle_sy(info, :hybrid_rule)
       end
 
       # 結果
@@ -179,6 +170,20 @@ module FrontendScript
       # ログインしていない状態
       def debug_for_no_login_lobby(info)
         info.delete(:current_user)
+      end
+
+      ################################################################################
+
+      def debug_for_battle_sy(info, rule_key)
+        c.sysop_login_unless_logout
+
+        rule = Actb::Rule.fetch(rule_key)
+
+        room = Actb::Room.create_with_members!(users, rule: rule)
+        battle = room.battle_create_with_members!
+
+        info[:room] = room.as_json_type4
+        info[:battle] = battle.as_json_type1
       end
     end
   end
