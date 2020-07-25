@@ -25,30 +25,24 @@
         //- https://buefy.org/documentation/tag/
         b-field(grouped group-multiline position="is-centered")
           .control
-            b-taglist.is_clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
-              template(v-if="question.source_author || question.source_about_key === 'unknown'")
-                b-tag(type="is-primary-dummy") 投稿
-              template(v-if="!question.source_author")
-                b-tag(type="is-primary-dummy") 作者
-              b-tag(type="is-grey")
-                .is-flex
-                  figure.image.is-16x16.avatar_image
-                    img.is-rounded(:src="question.user.avatar_path")
-                  .ml-1 {{question.user.name}}
-
-          .control
-            b-taglist(attached)
-              b-tag(type="is-primary-dummy") 出題
-              b-tag(type="is-grey") {{question.histories_count}}回
-
-          .control
-            b-taglist(attached)
-              b-tag(type="is-primary-dummy") 正解率
-              b-tag(type="is-grey")
-                template(v-if="question.ox_record.ox_total === 0")
-                  | ?
+            b-tag.is_clickable(attached @click="app.ov_user_info_set(question.user.id)")
+              .is-flex
+                template(v-if="question.source_author || question.source_about_key === 'unknown'")
+                  | 投稿
                 template(v-else)
-                  | {{float_to_perc(question.ox_record.o_rate)}} %
+                  | 作者
+                .image.is-16x16.avatar_image.ml-1
+                  img.is-rounded(:src="question.user.avatar_path")
+                .ml-1 {{question.user.name}}
+
+          .control
+            b-tag
+              | 出題
+              span.mx-1 {{question.histories_count}}
+              | 回
+
+          .control(v-if="question.ox_record.o_rate != null")
+            b-tag 正解率{{float_to_perc(question.ox_record.o_rate)}}%
 
     b-tabs.mt-2(v-model="tab_index" @change="tab_change_handle" expanded)
       b-tab-item(label="配置")
@@ -77,23 +71,23 @@
     .mt-6
       b-field(grouped group-multiline position="is-centered")
         .control
-          b-taglist(attached)
-            b-tag(type="is-primary-dummy") 種類
-            b-tag(type="is-grey") {{question.lineage_key}}
+          b-tag
+            | 種類
+            span.ml-1 {{question.lineage_key}}
 
         .control
-          b-taglist(attached)
-            b-tag(type="is-primary-dummy") 高評価
-            b-tag(type="is-grey")
-              | {{float_to_perc(question.good_rate)}} %
+          b-tag
+            | 高評価
+            span.mx-1 {{float_to_perc(question.good_rate)}}
+            | %
 
     .mt-5(v-if="question.source_author || question.source_media_name || question.source_media_url")
       b-field(grouped group-multiline position="is-centered")
         template(v-if="question.source_about_key === 'unknown' || question.source_author")
           .control
-            b-taglist(attached)
-              b-tag(type="is-primary-dummy") 作者
-              b-tag(type="is-grey")
+            b-tag
+              | 作者
+              span.ml-1
                 template(v-if="question.source_about_key === 'unknown'")
                   | 不詳
                 template(v-else)
@@ -101,16 +95,20 @@
 
         template(v-if="question.source_media_name")
           .control
-            b-taglist(attached)
-              b-tag(type="is-primary-dummy") 出典
-              b-tag(type="is-grey")
-                | {{question.source_media_name}}
-                span.ml-1(v-if="question.source_published_on")
-                  | ({{question.source_published_on}})
+            b-tag
+              | 出典
+              span.ml-1 {{question.source_media_name}}
+              span.ml-1(v-if="question.source_published_on")
+                | ({{question.source_published_on}})
 
       template(v-if="question.source_media_url")
         .has-text-centered.mt-0.is-size-7
           span(v-html="auto_link(question.source_media_url)")
+
+      template(v-if="question.owner_tag_list.length >= 1")
+        b-taglist.is-centered.mt-6
+          template(v-for="tag in question.owner_tag_list")
+            b-tag {{tag}}
 
     .buttons.is-centered.are-small.mt-6
       piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
@@ -255,13 +253,22 @@ export default {
       align-items: center
 
     .tags
-      .tag
-        &:first-child
-          padding-right: 0rem
-          font-weight: bold
-          color: $grey
-        &:not(:first-child)
-          padding-left: 0.25rem
+      // .tag
+      //   &:first-child
+      //     padding-right: 0rem
+      //     font-weight: bold
+      //     color: $grey
+      //   &:not(:first-child)
+      //     padding-left: 0.25rem
+
+    // .avatar_image
+    //   img
+    //     vertical-align: bottom
+
+    .author_name
+      flex-direction: row
+      justify-content: center
+      align-items: center
 
     .tab-content
       padding: 0
