@@ -79,7 +79,7 @@ module Actb
       when :latest
         s = s.order(created_at: :desc)
       when :good
-        s = s.order("IFNULL(good_rate, 0)" => :desc)
+        s = s.order(Arel.sql("IFNULL(good_rate, 0) desc"))
       else
         raise ArgumentError, rule_info.select_order.inspect
       end
