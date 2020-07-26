@@ -44,6 +44,7 @@
 
 module Actb
   class Question < ApplicationRecord
+    include FolderMod
     include ImportExportMod
     include InfoMod
 
@@ -169,15 +170,12 @@ module Actb
     end
 
     belongs_to :user, class_name: "::User" # 作者
-    belongs_to :folder
     belongs_to :lineage
     belongs_to :source_about
 
     has_many :histories, dependent: :destroy # 出題履歴
     has_many :messages, class_name: "Actb::QuestionMessage", dependent: :destroy # コメント
     has_many :message_users, through: :messages, source: :user                   # コメントしたユーザー(複数)
-
-    scope :active_only, -> { joins(:folder).where(Folder.arel_table[:type].eq("Actb::ActiveBox")) }
 
     acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
     acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
@@ -236,10 +234,6 @@ module Actb
 
       self.lineage ||= Lineage.fetch("詰将棋")
       self.source_about ||= SourceAbout.fetch(:ascertained)
-
-      if user
-        self.folder ||= user.actb_active_box
-      end
 
       self.key ||= SecureRandom.hex
     end
@@ -354,18 +348,6 @@ module Actb
         SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
         ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
         User.bot.lobby_speak("#{user.name}さんが#{linked_title}を#{state}しました")
-      end
-    end
-
-    def folder_key
-      if folder
-        self.folder.class.name.demodulize.underscore.remove("_box")
-      end
-    end
-
-    def folder_key=(key)
-      if user
-        self.folder = user.public_send("actb_#{key}_box")
       end
     end
 

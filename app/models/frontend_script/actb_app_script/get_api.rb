@@ -1,7 +1,16 @@
 module FrontendScript
   class ActbAppScript
-
     concern :GetApi do
+      concerning :SortMod do
+        included do
+          include ::SortMod
+        end
+
+        def sort_column_default
+          :updated_at
+        end
+      end
+
       # 問題一覧
       # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch
       # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch&folder_key=active
@@ -13,13 +22,11 @@ module FrontendScript
         s = Actb::Question.all
         if v = params[:folder_key]
           if v == "all"
-            # 全体
-            s = s.active_only
+            s = s.folder_eq(:active)
           else
             if current_user
               s = s.where(user: current_user)
-              # OPTIMIZE: folder_id を最初に特定して join せずにひくと速くなるはず
-              s = s.joins(:folder).where(Actb::Folder.arel_table[:type].eq("actb/#{v}_box".classify))
+              s = s.folder_eq(v)
             else
               s = s.none
             end

@@ -158,15 +158,5 @@ module FrontendScript
         end
       end
     end
-
-    concerning :SortMod do
-      included do
-        include ::SortMod
-      end
-
-      def sort_column_default
-        :updated_at
-      end
-    end
   end
 end
