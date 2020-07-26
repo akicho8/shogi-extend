@@ -54,6 +54,18 @@ module Actb
       p [GoodMark.count, BadMark.count]
     end
 
+    # rails r 'Actb::Question.tag_normalize_all; tp Actb::Question'
+    def self.tag_normalize_all
+      find_each do |e|
+        e.owner_tag_list = e.owner_tag_list.collect { |s|
+          s = hankaku_format(s)
+          s = s.gsub(/\A(\d+)手詰め\z/, '\1手詰')
+          s
+        }.uniq
+        e.save!(validate: false, touch: false)
+      end
+    end
+
     def self.mock_question
       raise if Rails.env.production? || Rails.env.staging?
 
