@@ -21,8 +21,13 @@ module Actb
       ################################################################################ 取得後
 
       # まぜる(DBから取得の際に何かの順序に依存していた場合など)
-      if rule_info.after_order == :shuffle
+      case rule_info.after_order
+      when :shuffle
         s = s.shuffle
+        # when :turn_max_asc
+        #   s = s.sort_by(&:turn_max)
+        # when :o_rate_asc
+        #   s = s.sort_by { |e| e.o_rate || 0 }
       end
 
       # 最近投稿されたN個だけランダムに最初の方に登場させる
@@ -30,7 +35,7 @@ module Actb
       # 20問DBから取得して、10問先取で勝ちで、この値が 0.3 なら
       # 10*0.3 の3問を、新しい順にした20問なかから取得して
       # ランダムに先頭の方に移動する
-      if v = rule_info.latest_move_to_top_rate
+      if v = rule_info.latest_move_to_top
         n = (rule_info.b_score_max_for_win * v).round # n = 移動させるか個数
         ary = s.sort_by(&:created_at).last(n)         # 取得済みの20問のなかから最新n件を取得
         ary.shuffle.each do |e|                       # ランダムに前方に移動
