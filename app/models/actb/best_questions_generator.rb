@@ -71,7 +71,7 @@ module Actb
       end
 
       # 指定の種類(複数指定可)
-      if v = Array(rule_info.lineage_keys).presence
+      if v = Array(rule_info.lineage_keys_any).presence
         s = s.where(lineage: v.collect { |e| Lineage.fetch(e) })
       end
 
