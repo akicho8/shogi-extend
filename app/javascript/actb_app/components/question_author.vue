@@ -15,7 +15,8 @@
 
     b-tag.ml-1(v-if="question.ox_record.ox_total >= 1")
       | 正解率
-      span {{float_to_perc(question.ox_record.o_rate)}}%
+      span.mx-1 {{float_to_perc(question.ox_record.o_rate)}}
+      | %
 </template>
 
 <script>
