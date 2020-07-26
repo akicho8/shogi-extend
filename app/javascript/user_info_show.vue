@@ -5,7 +5,7 @@
   //-   .modal-card-title {{membership.user.key}}
   .modal-card-body
     // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
-    .delete.is-large(@click="delete_click_handle")
+    .delete.page_delete.is-large(@click="delete_click_handle")
 
     b-dropdown.top_right_menu(position="is-bottom-left")
       b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")

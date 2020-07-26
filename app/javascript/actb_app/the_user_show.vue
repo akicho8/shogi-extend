@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_user_show.modal-card
   .modal-card-body.box
-    .delete.is-large(@click="delete_click_handle")
+    .delete.page_delete.is-large(@click="delete_click_handle")
     .user_container.is-flex
       figure.image.is-64x64.avatar_image
         img.is-rounded(:src="ov_user_info.avatar_path")

@@ -34,7 +34,7 @@
       .tweet_button_container
         .buttons.is-centered
           b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
-          a.delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
+          a.delete.page_delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
 
       .room_code.is_clickable(@click="room_code_edit" v-if="false")
         | {{room_code}}

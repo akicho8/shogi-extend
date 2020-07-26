@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_result
-  a.delete.is-large.is_top_left_fixed(@click="app.yameru_handle")
+  a.delete.page_delete.is-large.is_top_left_fixed(@click="app.yameru_handle")
 
   template(v-if="app.room.bot_user_id")
     .has-text-centered.is-size-4.has-text-weight-bold.mt-5

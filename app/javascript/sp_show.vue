@@ -4,7 +4,7 @@
   .sp_show.modal-card.is-shogi-player-modal-card
     .modal-card-body
       // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
-      .delete.is-large(@click="delete_click_handle")
+      .delete.page_delete.is-large(@click="delete_click_handle")
 
       template(v-if="record.title")
         .is-size-7.has-text-centered
