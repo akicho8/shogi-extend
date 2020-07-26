@@ -5,9 +5,11 @@ module BackendScript
     self.visibility_hidden = true
 
     def script_body
-      user = User.find_by!(key: params[:user_key])
-      c.current_user_set(user)
-      c.redirect_to params[:redirect_to]
+      if params[:user_key]
+        user = User.find_by!(key: params[:user_key])
+        c.current_user_set(user)
+        c.redirect_to params[:redirect_to]
+      end
     end
   end
 end
