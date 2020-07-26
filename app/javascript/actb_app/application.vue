@@ -328,10 +328,21 @@ export default {
 
       this.practice_p = practice_p
 
+      this.handle_name_required()
+
+      this.api_put("session_lock_token_set_handle", {session_lock_token: this.current_user.session_lock_token}, e => {
+        if (e.status === "success") {
+          this.mode = "rule_select"
+          this.say("ルールを選択してください")
+        }
+      })
+    },
+
+    handle_name_required() {
       if (this.current_user.rating > 1500 || true) {
-        if (this.current_user.name.match(/名無し|名なし/)) {
+        if (this.current_user.name.match(/名無し|名なし|ななし|棋士\d+号/)) {
           if (this.config.user_name_required) {
-            this.warning_notice("名無しではない名前を入力してください")
+            this.warning_notice("ハンドルネームを入力してください")
             this.app.profile_edit_handle()
             this.$nextTick(() => {
               const el = document.querySelector("#user_name_input_field")
@@ -343,13 +354,6 @@ export default {
           }
         }
       }
-
-      this.api_put("session_lock_token_set_handle", {session_lock_token: this.current_user.session_lock_token}, e => {
-        if (e.status === "success") {
-          this.mode = "rule_select"
-          this.say("ルールを選択してください")
-        }
-      })
     },
 
     rule_key_set_handle(rule) {
