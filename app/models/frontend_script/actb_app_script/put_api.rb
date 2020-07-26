@@ -119,6 +119,23 @@ module FrontendScript
         { user: user.as_json_type9 }
       end
 
+      def append_tag_list_input_handle
+        question = Actb::Question.find(params[:question_id])
+        before_tags = question.owner_tag_list
+        question.owner_tag_list = question.owner_tag_list + params[:append_tag_list]
+        question.save!
+
+        if current_user
+          diff_tags = question.owner_tag_list - before_tags
+          if diff_tags.present?
+            str = diff_tags.collect { |e| h.tag.b(e) }.join("と")
+            User.bot.lobby_speak("#{current_user.name}さんが#{question.linked_title}にタグ#{str}を追加しました")
+          end
+        end
+
+        { owner_tag_list: question.owner_tag_list }
+      end
+
       private
 
       # from app/javascript/actb_app/the_profile_edit_form.vue profile_update_handle

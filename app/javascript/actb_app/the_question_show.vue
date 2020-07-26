@@ -113,6 +113,12 @@
           template(v-for="tag in question.owner_tag_list")
             b-tag {{tag}}
 
+      //- .columns.is-centered
+      //-   .column.is-half
+      b-field.is-paddingless.mx-3.append_tag_list_field(label="追加タグ" label-position="on-border")
+        //- https://buefy.org/documentation/taginput
+        b-taginput(v-model="append_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]" @input="append_tag_list_input_handle" :disabled="!app.current_user")
+
     .buttons.is-centered.are-small.mt-6
       piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
       kento_button(tag="a" :href="kento_app_with_params_url" :target="target_default")
@@ -151,6 +157,7 @@ export default {
     return {
       tab_index: 0,
       new_ov_question_info: this.ov_question_info,
+      append_tag_list: [],
     }
   },
 
@@ -202,6 +209,18 @@ export default {
     kifu_copy_handle() {
       this.sound_play("click")
       this.general_kifu_copy(this.selected_sfen, {to_format: "kif"})
+    },
+
+    append_tag_list_input_handle(append_tag_list) {
+      this.debug_alert(append_tag_list)
+      const params = {
+        question_id: this.question.id,
+        append_tag_list: append_tag_list,
+      }
+      this.silent_api_put("append_tag_list_input_handle", params, e => {
+        this.debug_alert(e.owner_tag_list)
+        this.new_ov_question_info.question.owner_tag_list = e.owner_tag_list
+      })
     },
   },
   computed: {
@@ -288,6 +307,8 @@ export default {
             margin-left: 1.5rem
           &.clip
             margin-left: 2rem
+
+    .append_tag_list_field
 
     .question_description
       white-space: pre-line

@@ -139,6 +139,7 @@ module FrontendScript
         question = Actb::Question.first
         question.title = "始まりの金" * 10
         question.direction_message = "3手指してください" * 10
+        question.owner_tag_list = ["タグ1", "タグ2"]
         question.assign_attributes({
             :source_about_key       => "ascertained",
             :source_author          => "渡瀬荘二郎",
