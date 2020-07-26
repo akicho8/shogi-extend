@@ -21,6 +21,11 @@ export const application_history_vote = {
         }
       }
 
+      if (!this.app.regular_p) {
+        this.warning_notice("投票の権利がありません")
+        return
+      }
+
       this.sound_play("click")
 
       const params = {

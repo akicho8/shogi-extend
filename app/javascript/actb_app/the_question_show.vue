@@ -117,7 +117,7 @@
       //-   .column.is-half
       b-field.is-paddingless.mx-3.append_tag_list_field(label="追加タグ" label-position="on-border")
         //- https://buefy.org/documentation/taginput
-        b-taginput(v-model="append_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]" @input="append_tag_list_input_handle" :disabled="!app.current_user")
+        b-taginput(v-model="append_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]" @input="append_tag_list_input_handle" :disabled="!app.regular_p")
 
     .buttons.is-centered.are-small.mt-6
       piyo_shogi_button(:href="piyo_shogi_app_with_params_url")

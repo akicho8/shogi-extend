@@ -35,8 +35,6 @@ module Actb
 
     concerning :CurrentUserMethods do
       def session_lock_token_valid?(token)
-        Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, actb_setting.session_lock_token, token])
-
         actb_setting.reload.session_lock_token == token
       end
 
@@ -54,6 +52,7 @@ module Actb
               :skill_key,
               :description,
               :twitter_key,
+              :regular_p,
             ],
           })
 
@@ -65,6 +64,11 @@ module Actb
         attrs[:session_lock_token] = token
 
         attrs
+      end
+
+      # レギュラー条件
+      def regular_p
+        actb_room_memberships.count >= 1 || actb_questions.active_only.count >= 1
       end
     end
 
