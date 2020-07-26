@@ -4,8 +4,8 @@ module Actb::Question::FolderMod
   included do
     belongs_to :folder
 
-    scope :active_only, -> { folder_only(:active) }
-    scope :folder_eq, -> type { joins(:folder).where(Folder.arel_table[:type].eq("Actb::#{FolderInfo.fetch(type).key.to_s.classify}Box")) }
+    scope :active_only, -> { folder_eq(:active) }
+    scope :folder_eq, -> type { joins(:folder).where(Actb::Folder.arel_table[:type].eq("Actb::#{Actb::FolderInfo.fetch(type).key.to_s.classify}Box")) }
 
     before_validation do
       if user
