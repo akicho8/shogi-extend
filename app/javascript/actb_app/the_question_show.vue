@@ -108,16 +108,13 @@
         .has-text-centered.mt-0.is-size-7
           span(v-html="auto_link(question.source_media_url)")
 
-      template(v-if="question.owner_tag_list.length >= 1")
-        b-taglist.is-centered.mt-6
+      .mt-6
+        b-taglist.is-centered(v-if="question.owner_tag_list.length >= 1")
           template(v-for="tag in question.owner_tag_list")
             b-tag {{tag}}
-
-      //- .columns.is-centered
-      //-   .column.is-half
-      b-field.is-paddingless.mx-3.append_tag_list_field(label="追加タグ" label-position="on-border")
-        //- https://buefy.org/documentation/taginput
-        b-taginput(v-model="append_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]" @input="append_tag_list_input_handle" :disabled="!app.regular_p")
+        b-field.is-paddingless.mx-3.append_tag_list_field.mt-3(label="追加タグ" label-position="on-border")
+          //- https://buefy.org/documentation/taginput
+          b-taginput(v-model="append_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]" @input="append_tag_list_input_handle" :disabled="!app.regular_p")
 
     .buttons.is-centered.are-small.mt-6
       piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
