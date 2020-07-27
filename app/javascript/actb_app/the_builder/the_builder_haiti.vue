@@ -43,6 +43,7 @@ export default {
   created() {
     // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
     this.new_kifu_body = this.$parent.question.init_sfen
+    this.piece_box_piece_couns_adjust()
   },
 
   methods: {
@@ -101,12 +102,18 @@ export default {
     // 直接更新すればいい
     kyokumen_set(str) {
       this.$refs.main_sp.api_sfen_or_kif_set(str)
+      this.piece_box_piece_couns_adjust()
     },
 
     // 棋譜コピー
     kifu_copy_handle() {
       this.sound_play("click")
       this.general_kifu_copy(this.$parent.question.init_sfen, {to_format: "kif"})
+    },
+
+    // 駒箱に足りない駒を補充
+    piece_box_piece_couns_adjust() {
+      this.$nextTick(() => this.$refs.main_sp.mediator.piece_box_piece_couns_adjust())
     },
   },
 
