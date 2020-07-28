@@ -109,39 +109,11 @@ export const application_battle_timer = {
     },
     // 現在の変化する残り時間
     main_rest_seconds() {
-      let v = (this.main_time_limit_sec * this.time_mag) - this.main_interval_count
+      let v = (this.current_rule_info.time_limit_sec * this.time_mag) - this.main_interval_count
       if (v < 0) {
         v = 0
       }
       return v
-    },
-    // 現在の問題に設定された考慮時間
-    // 次の順番で設定値があれば優先して取得する
-    //   1. Actb::Config (config.rb)
-    //   2. ルール
-    //   3. 問題
-    main_time_limit_sec() {
-      let v = null
-
-      v = this.app.config.time_limit_sec
-      if (v != null) {
-        return v
-      }
-
-      v = this.current_rule_info.time_limit_sec
-      if (v != null) {
-        return v
-      }
-
-      return this.current_question.time_limit_sec
-    },
-
-    time_mag() {
-      if (this.room.bot_user_id) {
-        return PRACTICE_MODE_MAGNIFICATION
-      } else {
-        return 1
-      }
     },
 
     //////////////////////////////////////////////////////////////////////////////// シングルトン専用
@@ -152,6 +124,16 @@ export const application_battle_timer = {
         v = 0
       }
       return v
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// 時間の倍率
+
+    time_mag() {
+      if (this.room.bot_user_id) {
+        return PRACTICE_MODE_MAGNIFICATION
+      } else {
+        return 1
+      }
     },
   },
 }

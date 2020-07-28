@@ -25,7 +25,6 @@ module Actb
 
     # シングルトンモード
     :otetuki_release_p               => false, # おてつき解除可能か？
-    :time_limit_sec                  => nil,   # 解く時間 nil 以外ならそれに設定(productionならnilにすること)
     :turn_limit_lazy_count           => 4,     # 3手詰なら○手足した手数まで操作できる
 
     # -------------------------------------------------------------------------------- バトル部屋チャット
@@ -59,7 +58,6 @@ module Actb
         :room_messages_display_p     => false, # 部屋でのチャット表示
         :matching_pow_base           => 6,     # gap < 2**(○+カウンター) ならマッチングする
         :matching_interval_second    => 4,     # カウンターをインクリメントする間隔(秒)
-        :time_limit_sec              => nil,   # 解く時間 nil:問題に設定した時間 整数値:一律この値に設定
         :room_messages_window_height => 5,     # 部屋での表示行数
         :matching_forgo_second       => 60*5,  # ○秒たったらマッチングを諦める(nullなら無限)
         :action_cable_debug          => false, # ActionCable関連デバッグモード
