@@ -61,6 +61,9 @@
     :default-sort-direction="$parent.page_info.sort_order_default"
     :default-sort="[$parent.page_info.sort_column, $parent.page_info.sort_order]"
     @sort="$parent.sort_handle"
+
+    detailed
+    detail-key="id"
     )
 
     template(slot-scope="props")
@@ -104,7 +107,6 @@
       //- b-table-column(custom-key="difficulty_level"  field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
       //- b-table-column(custom-key="time_limit_sec"    field="time_limit_sec"  :label="QuestionIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="visible_hash.time_limit_sec") {{props.row.time_limit_sec}}秒
 
-
       b-table-column(custom-key="lineage_key"    field="lineage_key"  :label="QuestionIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="visible_hash.lineage_key") {{props.row.lineage_key}}
       b-table-column(custom-key="turn_max"  field="turn_max"  :label="QuestionIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="visible_hash.turn_max")      {{props.row.turn_max}}
       b-table-column(custom-key="moves_answers_count" field="moves_answers_count" :label="QuestionIndexColumnInfo.fetch('moves_answers_count').short_name" sortable numeric :visible="visible_hash.moves_answers_count") {{props.row.moves_answers_count}}
@@ -128,6 +130,37 @@
             b-icon(icon="emoticon-sad" size="is-large")
           p
             | ひとつもありません
+
+    template(slot="detail" slot-scope="props")
+      <article class="media">
+        <figure class="media-left">
+          //- <p class="image is-64x64">
+          //-   <img src="/static/img/placeholder-128x128.png">
+          //- </p>
+
+          shogi_player(
+            :run_mode="'view_mode'"
+            :kifu_body="props.row.init_sfen"
+            :start_turn="0"
+            :summary_show="false"
+            :slider_show="false"
+            :controller_show="false"
+            :setting_button_show="false"
+            :theme="'simple'"
+            :size="'default'"
+            :sound_effect="false"
+            :operation_disable="true"
+            )
+
+        </figure>
+        .media-content
+          .content
+            //- template(v-if="props.row.direction_message && false")
+            //-   p {{props.row.direction_message}}
+            template(v-if="props.row.description")
+              p.is_line_break_on.is-hidden-mobile {{props.row.description}}
+      </article>
+
 </template>
 
 <script>
@@ -255,6 +288,19 @@ export default {
   .index_table
     th
       font-size: $size-10
+    td.chevron-cell
+      width: 0
+      padding-left: 0
+      padding-right: 0
+      .icon
+        height: auto
+        .mdi:before
+          font-size: 12px ! important
+
+    +mobile
+      .detail
+        td, .detail-container
+          padding: 0
 
   .tags
     flex-wrap: nowrap
