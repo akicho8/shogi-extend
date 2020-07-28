@@ -2,6 +2,12 @@ import the_user_show from "./the_user_show.vue"
 
 export const the_user_show_mod = {
   methods: {
+    ov_user_url(id) {
+      const url = new URL(location)
+      url.searchParams.set("user_id", id)
+      return url.toString()
+    },
+
     ov_user_info_set(user_id) {
       this.sound_play("click")
       this.api_get("user_single_fetch", {user_id: user_id}, e => {

@@ -70,7 +70,7 @@
     template(slot-scope="props")
       b-table-column(custom-key="id"                field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
       b-table-column(custom-key="user_id"           field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id")
-        a(@click.stop="app.ov_user_info_set(props.row.user.id)")
+        a(@click.stop="app.ov_user_info_set(props.row.user.id)" :href="app.ov_user_url(props.row.user.id)")
           | {{props.row.user.name}}
 
       b-table-column(custom-key="source_author"     field="source_author"     :label="QuestionIndexColumnInfo.fetch('source_author').short_name"       sortable         :visible="visible_hash.source_author")
@@ -86,11 +86,11 @@
             template(v-else)
               | {{props.row.source_author}}
         template(v-else)
-          a(@click.stop="app.ov_user_info_set(props.row.user.id)")
+          a(@click.prevent.stop="app.ov_user_info_set(props.row.user.id)" :href="app.ov_user_url(props.row.user.id)")
             | {{props.row.user.name}}
 
       b-table-column(custom-key="title"             field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
-        a(@click.stop="app.ov_question_info_set(props.row.id)")
+        a(@click.prevent.stop="app.ov_question_info_set(props.row.id)" :href="app.ov_question_url(props.row.id)")
           | {{string_truncate(props.row.title, {length: 20})}}
 
       b-table-column(custom-key="histories_count"   field="histories_count"   :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}

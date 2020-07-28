@@ -103,9 +103,7 @@ export default {
       }
     },
     permalink_url() {
-      const url = new URL(location)
-      url.searchParams.set("user_id", this.ov_user_info.id)
-      return url.toString()
+      return this.app.ov_user_url(this.ov_user_info.id)
     },
   },
 }

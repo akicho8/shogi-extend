@@ -3,6 +3,12 @@ import { Question } from "./models/question.js"
 
 export const the_question_show_mod = {
   methods: {
+    ov_question_url(id) {
+      const url = new URL(location)
+      url.searchParams.set("question_id", id)
+      return url.toString()
+    },
+
     ov_question_info_set(question_id) {
       this.sound_play("click")
       this.api_get("question_single_fetch", {question_id: question_id}, e => {

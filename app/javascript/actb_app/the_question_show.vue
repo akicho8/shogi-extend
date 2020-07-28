@@ -232,9 +232,7 @@ export default {
       return this.new_ov_question_info.question
     },
     permalink_url() {
-      const url = new URL(location)
-      url.searchParams.set("question_id", this.question.id)
-      return url.toString()
+      return this.app.ov_question_url(this.question.id)
     },
     tweet_body() {
       return [
