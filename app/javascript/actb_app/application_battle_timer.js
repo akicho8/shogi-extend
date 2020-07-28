@@ -1,5 +1,7 @@
 import dayjs from "dayjs"
 
+const PRACTICE_MODE_MAGNIFICATION = 3
+
 export const application_battle_timer = {
   data() {
     return {
@@ -107,7 +109,7 @@ export const application_battle_timer = {
     },
     // 現在の変化する残り時間
     main_rest_seconds() {
-      let v = this.main_time_limit_sec - this.main_interval_count
+      let v = (this.main_time_limit_sec * this.time_mag) - this.main_interval_count
       if (v < 0) {
         v = 0
       }
@@ -134,10 +136,18 @@ export const application_battle_timer = {
       return this.current_question.time_limit_sec
     },
 
+    time_mag() {
+      if (this.room.bot_user_id) {
+        return PRACTICE_MODE_MAGNIFICATION
+      } else {
+        return 1
+      }
+    },
+
     //////////////////////////////////////////////////////////////////////////////// シングルトン専用
 
     ops_rest_seconds() {
-      let v = this.current_rule_info.controll_limit_sec - this.ops_interval_count
+      let v = (this.current_rule_info.controll_limit_sec * this.time_mag) - this.ops_interval_count
       if (v < 0) {
         v = 0
       }
