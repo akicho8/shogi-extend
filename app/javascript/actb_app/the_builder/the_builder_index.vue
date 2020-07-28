@@ -64,6 +64,7 @@
 
     detailed
     detail-key="id"
+    :opened-detailed="detailed_ids"
     )
 
     template(slot-scope="props")
@@ -132,12 +133,11 @@
             | ひとつもありません
 
     template(slot="detail" slot-scope="props")
-      <article class="media">
-        <figure class="media-left">
+      article.media
+        figure.media-left
           //- <p class="image is-64x64">
           //-   <img src="/static/img/placeholder-128x128.png">
           //- </p>
-
           shogi_player(
             :run_mode="'view_mode'"
             :kifu_body="props.row.init_sfen"
@@ -151,16 +151,22 @@
             :sound_effect="false"
             :operation_disable="true"
             )
-
-        </figure>
         .media-content
           .content
             //- template(v-if="props.row.direction_message && false")
             //-   p {{props.row.direction_message}}
             template(v-if="props.row.description")
               p.is_line_break_on.is-hidden-mobile {{props.row.description}}
-      </article>
 
+  .has-text-right.has-text-centered-mobile
+    .buttons.is-inline-block.mx-2
+      b-button(@click="detail_close_handle" icon-left="chevron-up")
+      b-button(@click="detail_open_handle" icon-left="chevron-down")
+
+  //- .columns
+  //- .buttons.is-inlien-block
+  //-   b-button(@click="detail_open_handle") 開く
+  //-   b-button(@click="detail_close_handle") 閉じる
 </template>
 
 <script>
@@ -202,6 +208,7 @@ export default {
     return {
       question_tab_index: null,
       visible_hash: null, //  { xxx: true, yyy: false } 形式
+      detailed_ids: [],
     }
   },
   created() {
@@ -250,6 +257,16 @@ export default {
         this.say(column.name)
       }
     },
+
+    //////////////////////////////////////////////////////////////////////////////// details
+    detail_open_handle() {
+      this.sound_play('click')
+      this.detailed_ids = this.$parent.questions.map(e => e.id)
+    },
+    detail_close_handle() {
+      this.sound_play('click')
+      this.detailed_ids = []
+    },
   },
   computed: {
     QuestionIndexColumnInfo() { return QuestionIndexColumnInfo },
@@ -266,6 +283,8 @@ export default {
         visible_hash: this.as_visible_hash(QuestionIndexColumnInfo.values),
       }
     },
+
+    //////////////////////////////////////////////////////////////////////////////// details
   },
 }
 </script>
@@ -288,22 +307,27 @@ export default {
   .index_table
     th
       font-size: $size-10
-    td.chevron-cell
-      width: 0
-      padding-left: 0
-      padding-right: 0
-      .icon
-        height: auto
-        .mdi:before
-          font-size: 12px ! important
 
+    td
+      // details アイコンが大きすぎる対策
+      &.chevron-cell
+        width: 0
+        padding-left: 0
+        padding-right: 0
+        .icon
+          height: auto
+          .mdi:before
+            font-size: 12px ! important
+
+      .tags
+        flex-wrap: nowrap
+        .tag
+          // 行が上下が広がってしまうのを防ぐ
+          height: auto
+
+    // モバイルでは shogi_player を横幅最大にしたいので横のパディングを取る
     +mobile
       .detail
         td, .detail-container
           padding: 0
-
-  .tags
-    flex-wrap: nowrap
-    .tag
-      height: auto
 </style>
