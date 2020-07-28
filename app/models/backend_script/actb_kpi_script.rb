@@ -1,9 +1,9 @@
 module BackendScript
-  class ActbSummaryScript < ::BackendScript::Base
+  class ActbKpiScript < ::BackendScript::Base
     include SortMod
 
     self.category = "actb"
-    self.script_name = "将棋トレバト サマリー"
+    self.script_name = "将棋トレバト KPI"
 
     def script_body
       # 日別のユニーク対戦者数を求める
@@ -68,13 +68,13 @@ module BackendScript
       current_length.times.collect do |i|
         date = now - i
         row = {}
-        row["日付"]            = h.tag.span(date.to_time.to_s(:ymd_j), :class => holiday_sunday_saturday_class(date))
-        row["流入"]            = user_hash[date]&.count_all
-        row["対人戦回数"]      = room_hash[date]&.human_battle_count
-        row["練習戦回数"]      = room_hash[date]&.bot_battle_count
-        row["対戦者数(U)"]     = member_hash[date]&.unique_user_id_count
-        row["問題作成数"]      = question_hash[date]&.count_all
-        row["問題作成者数(U)"] = question_hash[date]&.unique_user_id_count
+        row["日付"]        = h.tag.span(date.to_time.to_s(:ymd_j), :class => holiday_sunday_saturday_class(date))
+        row["流入"]        = user_hash[date]&.count_all
+        row["対人戦回数"]  = room_hash[date]&.human_battle_count
+        row["練習戦回数"]  = room_hash[date]&.bot_battle_count
+        row["対戦DAU"]     = member_hash[date]&.unique_user_id_count
+        row["問題作成数"]  = question_hash[date]&.count_all
+        row["問題作成DAU"] = question_hash[date]&.unique_user_id_count
         row
       end
     end
