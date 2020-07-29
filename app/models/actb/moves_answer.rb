@@ -36,7 +36,7 @@ module Actb
       if errors.empty?
         if will_save_change_to_attribute?(:moves_str) && moves_str
           begin
-            parsed_info
+            Converter.parse(sfen)
           rescue Bioshogi::BioshogiError => error
             errors.add(:base, error.message.lines.first.strip)
           end
@@ -59,6 +59,15 @@ module Actb
       end
     end
 
+    after_validation do
+      if errors.empty?
+        if will_save_change_to_attribute?(:moves_str) && moves_str.present?
+          str = Converter.sfen_to_ki2_str(sfen)
+          self.moves_human_str = str.truncate(255, omission: "...")
+        end
+      end
+    end
+
     after_save_commit do
       if saved_change_to_attribute?(:moves_count)
         question.update_column(:turn_max, question.moves_answers.maximum("moves_count"))
@@ -69,10 +78,6 @@ module Actb
 
     def sfen
       "#{question.init_sfen} moves #{moves_str}"
-    end
-
-    def parsed_info
-      Bioshogi::Parser.parse(sfen)
     end
   end
 end

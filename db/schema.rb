@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_112100) do
+ActiveRecord::Schema.define(version: 2020_07_25_112102) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 2020_07_25_112100) do
     t.string "end_sfen", comment: "最後の局面"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "moves_human_str", comment: "人間向け指し手"
     t.index ["moves_count"], name: "index_actb_moves_answers_on_moves_count"
     t.index ["question_id"], name: "index_actb_moves_answers_on_question_id"
   end

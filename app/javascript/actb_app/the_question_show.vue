@@ -68,6 +68,11 @@
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
         )
 
+    .has-text-centered.mt-1(v-if="tab_index >= 1")
+      b-tag(size="is-small")
+        span.is_line_break_on
+          | {{question.moves_answers[tab_index - 1].moves_human_str}}
+
     .vote_container.is-flex.mt-4
       the_history_row_vote(:row="new_ov_question_info")
 
@@ -293,6 +298,8 @@ export default {
     .sp_container
       margin-top: 1.5rem
 
+    .moves_human_str
+      
     .vote_container
       justify-content: center
 

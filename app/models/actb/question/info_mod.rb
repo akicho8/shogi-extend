@@ -69,27 +69,19 @@ module Actb::Question::InfoMod
       a["解説"] = v.squish
     end
 
-    a["人間向けの解答"] = to_s_human_answer
+    if moves_answer = moves_answers.first
+      a["人間向けの解答"] = moves_answer.moves_human_str
+    end
 
     a
   end
 
   def to_kif
-    str = parsed_info.to_kif
+    str = Actb::Converter.sfen_to_kif_str(main_sfen)
 
     str = str.gsub(/^.*の備考.*\n/, "")
     str = str.gsub(/^まで.*\n/, "")
 
     info.collect { |k, v| "#{k}：#{v}\n" }.join + str
-  end
-
-  private
-
-  def parsed_info
-    @parsed_info ||= Bioshogi::Parser.parse(main_sfen)
-  end
-
-  def to_s_human_answer
-    parsed_info.mediator.to_ki2_a.join(" ")
   end
 end

@@ -69,6 +69,7 @@ module Actb
         perform_enqueued_jobs do
           question.update_from_js(params)
         end
+
         assert { question.persisted? }
         assert { question.owner_tag_list == ["tag1", "tag2", "tag3"] }
         assert { question.turn_max == 1 }
@@ -172,14 +173,50 @@ module Actb
 
     it "turn_max" do
       assert { question1.turn_max == 1 }
-      question1.moves_answers.create!("moves_str" => "4c5b 4c4b 4c5b")
-      assert { question1.turn_max == 3 }
+      question1.moves_answers.create!("moves_str" => "G*5b 5a5b")
+      assert { question1.turn_max == 2 }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .................
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ["/Users/ikeda/src/shogi_web/app/models/actb/question/info_mod.rb:80", :to_kif, "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"]
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b 5a5b"
+# >> .."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
+# >> .
 # >>
-# >> Finished in 2.88 seconds (files took 2.17 seconds to load)
-# >> 17 examples, 0 failures
+# >> Finished in 3.64 seconds (files took 2.2 seconds to load)
+# >> 18 examples, 0 failures
 # >>

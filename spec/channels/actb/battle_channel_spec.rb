@@ -23,7 +23,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
   end
 
   let_it_be(:question) do
-    user1.actb_questions.create!
+    user1.actb_questions.create_mock1
   end
 
   def membership1

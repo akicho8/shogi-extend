@@ -206,13 +206,6 @@ module Actb
     # end
 
     before_validation do
-      if Rails.env.test?
-        self.init_sfen ||= "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{Question.count.next}p 1"
-        if moves_answers.empty?
-          moves_answers.build(moves_str: "G*5b")
-        end
-      end
-
       normalize_zenkaku_to_hankaku(*[
           :title,
           :description,
@@ -296,6 +289,15 @@ module Actb
       end
     end
 
+    def mock_attrs_set
+      if Rails.env.test?
+        self.init_sfen ||= "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{Question.count.next}p 1"
+        if moves_answers.empty?
+          moves_answers.build(moves_str: "G*5b")
+        end
+      end
+    end
+
     # jsから来たパラメーターでまとめて更新する
     #
     #   params = {
@@ -313,7 +315,7 @@ module Actb
       @save_before_hash = current_hash
 
       ActiveRecord::Base.transaction do
-        assign_attributes(question.slice(*[
+        attrs = question.slice(*[
               :init_sfen,
               :title,
               :description,
@@ -331,11 +333,14 @@ module Actb
               :time_limit_sec,
               :folder_key,
               :lineage_key,
-            ]))
+            ])
+
+        assign_attributes(attrs)
 
         save!
 
         if records = question[:moves_answers]
+
           # 削除
           # [1, 2, 3] があるとき [1, 3] をセットすることで [2] が削除される
           self.moves_answer_ids = records.collect { |e| e[:id] }
@@ -347,6 +352,7 @@ module Actb
             else
               moves_answer = moves_answers.build
             end
+
             moves_answer.moves_str = e[:moves_str]
             moves_answer.end_sfen = e[:end_sfen]
             moves_answer.save!
