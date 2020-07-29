@@ -18,6 +18,20 @@
       win_lose_circle.mt-1(:info="win_lose_circle_params")
 
       nav.level.is-mobile.level_nav.mt-3
+        .level-item.has-text-centered
+          div
+            p.heading 正解数
+            p.title {{ov_user_info.statistics.total_o_count}}
+        .level-item.has-text-centered
+          div
+            p.heading 正解率
+            p.title {{float_to_perc(total_o_rate)}} %
+        .level-item.has-text-centered
+          div
+            p.heading 不正解数
+            p.title {{ov_user_info.statistics.total_x_count}}
+
+      nav.level.is-mobile.level_nav.mt-3
         .level-item.has-text-centered(v-if="false")
           div
             p.heading 対戦回数
@@ -104,6 +118,15 @@ export default {
     },
     permalink_url() {
       return this.app.ov_user_url(this.ov_user_info.id)
+    },
+    total_o_rate() {
+      const o = this.ov_user_info.statistics.total_o_count
+      const x = this.ov_user_info.statistics.total_x_count
+      if ((o + x) === 0) {
+        return 0
+      } else {
+        return o / (o + x)
+      }
     },
   },
 }

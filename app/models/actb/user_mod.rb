@@ -38,6 +38,7 @@ module Actb
         actb_setting.reload.session_lock_token == token
       end
 
+      # for current_user, profile
       def as_json_type9
         attrs = as_json({
             only: [
@@ -165,6 +166,8 @@ module Actb
           :questions_good_rate_average,
           :questions_good_marks_total,
           :questions_bad_marks_total,
+          :total_o_count,
+          :total_x_count,
         ].inject({}) {|a, e| a.merge(e => public_send(e)) }
       end
 
@@ -182,6 +185,14 @@ module Actb
 
       def questions_bad_marks_total
         actb_questions.sum(:bad_marks_count)
+      end
+
+      def total_o_count
+        actb_histories.where(ox_mark: Actb::OxMark.fetch(:correct)).count
+      end
+
+      def total_x_count
+        actb_histories.where(ox_mark: Actb::OxMark.fetch(:mistake)).count
       end
 
       def info_hash
@@ -219,6 +230,7 @@ module Actb
       end
     end
 
+    # ユーザー詳細
     def as_json_type7
       as_json({
           only: [
