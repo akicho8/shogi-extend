@@ -487,17 +487,18 @@
 #
 # Moves answer (actb_moves_answers as Actb::MovesAnswer)
 #
-# |-------------+-------------+-------------+-------------+------+-------|
-# | name        | desc        | type        | opts        | refs | index |
-# |-------------+-------------+-------------+-------------+------+-------|
-# | id          | ID          | integer(8)  | NOT NULL PK |      |       |
-# | question_id | Question    | integer(8)  | NOT NULL    |      | A     |
-# | moves_count | Moves count | integer(4)  | NOT NULL    |      | B     |
-# | moves_str   | Moves str   | string(255) | NOT NULL    |      |       |
-# | end_sfen    | End sfen    | string(255) |             |      |       |
-# | created_at  | 作成日時    | datetime    | NOT NULL    |      |       |
-# | updated_at  | 更新日時    | datetime    | NOT NULL    |      |       |
-# |-------------+-------------+-------------+-------------+------+-------|
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | name            | desc            | type        | opts        | refs | index |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
+# | question_id     | Question        | integer(8)  | NOT NULL    |      | A     |
+# | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
+# | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
+# | end_sfen        | End sfen        | string(255) |             |      |       |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# | moves_human_str | Moves human str | string(255) |             |      |       |
+# |-----------------+-----------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -681,7 +682,6 @@
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Actb::Question モデルに belongs_to :folder を追加してください
 # [Warning: Need to add relation] Actb::Question モデルに belongs_to :lineage を追加してください
 # [Warning: Need to add relation] Actb::Question モデルに belongs_to :source_about を追加してください
 # [Warning: Need to add relation] Actb::Question モデルに belongs_to :user を追加してください

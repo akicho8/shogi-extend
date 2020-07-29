@@ -293,6 +293,7 @@ CREATE TABLE `actb_moves_answers` (
   `end_sfen` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '最後の局面',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `moves_human_str` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '人間向け指し手',
   PRIMARY KEY (`id`),
   KEY `index_actb_moves_answers_on_question_id` (`question_id`),
   KEY `index_actb_moves_answers_on_moves_count` (`moves_count`),
@@ -1075,6 +1076,10 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200711103811'),
 ('20200711103812'),
 ('20200711103813'),
-('20200711103814');
+('20200711103814'),
+('20200725112100'),
+('20200725112102'),
+('20200725112103'),
+('20200725112104');
 
 
