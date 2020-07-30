@@ -367,8 +367,11 @@ export default {
           this.session_lock_token_invalid_notify()
           return
         }
-        this.__assert__(rule.name, "rule.name")
-        this.say(rule.name)
+        // ルール名を読み上げる場合
+        if (false) {
+          this.__assert__(rule.name, "rule.name")
+          this.say(rule.name)
+        }
         this.matching_setup()
       })
     },
