@@ -505,22 +505,6 @@ ActiveRecord::Schema.define(version: 2020_07_25_112105) do
     t.index ["user_id"], name: "index_free_battles_on_user_id"
   end
 
-  create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "to_user_id", comment: "送信先"
-    t.bigint "from_user_id", null: false, comment: "送信元"
-    t.bigint "question_id", null: false, comment: "問題"
-    t.bigint "question_message_id", null: false, comment: "問題コメ"
-    t.string "title", limit: 256, null: false, comment: "タイトル"
-    t.string "body", limit: 512, null: false, comment: "本文"
-    t.datetime "opened_at", null: false, comment: "開封日時"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["from_user_id"], name: "index_notifications_on_from_user_id"
-    t.index ["question_id"], name: "index_notifications_on_question_id"
-    t.index ["question_message_id"], name: "index_notifications_on_question_message_id"
-    t.index ["to_user_id"], name: "index_notifications_on_to_user_id"
-  end
-
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.datetime "created_at", null: false
@@ -779,8 +763,4 @@ ActiveRecord::Schema.define(version: 2020_07_25_112105) do
   add_foreign_key "actb_settings", "actb_rules", column: "rule_id"
   add_foreign_key "actb_settings", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "notifications", "actb_question_messages", column: "question_message_id"
-  add_foreign_key "notifications", "actb_questions", column: "question_id"
-  add_foreign_key "notifications", "users", column: "from_user_id"
-  add_foreign_key "notifications", "users", column: "to_user_id"
 end

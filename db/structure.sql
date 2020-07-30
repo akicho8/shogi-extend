@@ -300,6 +300,31 @@ CREATE TABLE `actb_moves_answers` (
   CONSTRAINT `fk_rails_a356510439` FOREIGN KEY (`question_id`) REFERENCES `actb_questions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `actb_notifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `actb_notifications` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `to_user_id` bigint(20) NOT NULL COMMENT '送信先',
+  `from_user_id` bigint(20) DEFAULT NULL COMMENT '送信元',
+  `question_id` bigint(20) DEFAULT NULL COMMENT '問題',
+  `question_message_id` bigint(20) DEFAULT NULL COMMENT '問題コメ',
+  `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'タイトル',
+  `body` varchar(512) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本文',
+  `opened_at` datetime DEFAULT NULL COMMENT '開封日時',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_actb_notifications_on_to_user_id` (`to_user_id`),
+  KEY `index_actb_notifications_on_from_user_id` (`from_user_id`),
+  KEY `index_actb_notifications_on_question_id` (`question_id`),
+  KEY `index_actb_notifications_on_question_message_id` (`question_message_id`),
+  CONSTRAINT `fk_rails_33b11979d7` FOREIGN KEY (`to_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_7bced87fe6` FOREIGN KEY (`question_message_id`) REFERENCES `actb_question_messages` (`id`),
+  CONSTRAINT `fk_rails_90c9d8313f` FOREIGN KEY (`question_id`) REFERENCES `actb_questions` (`id`),
+  CONSTRAINT `fk_rails_cc1fb843a3` FOREIGN KEY (`from_user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actb_ox_marks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1080,6 +1105,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200725112100'),
 ('20200725112102'),
 ('20200725112103'),
-('20200725112104');
+('20200725112104'),
+('20200725112105');
 
 
