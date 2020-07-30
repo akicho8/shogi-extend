@@ -53,12 +53,16 @@ RSpec.describe User, type: :model do
   end
 
   xit "email_valid?" do
-    assert { User.create!(email: "alice@localhost").email_valid?   == false }
+    assert { User.create!(email: "alice@localhost").email_valid? == false }
     assert { User.create!(email: "alice@localhost").email_valid? == true  }
+  end
+
+  it "info" do
+    assert { User.create!.info }
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .*.
+# >> .*..
 # >> 
 # >> Pending: (Failures listed here are expected and do not affect your suite's status)
 # >> 
@@ -66,6 +70,6 @@ end
 # >>      # Temporarily skipped with xit
 # >>      # -:55
 # >> 
-# >> Finished in 0.99722 seconds (files took 8.87 seconds to load)
-# >> 3 examples, 0 failures, 1 pending
+# >> Finished in 1.55 seconds (files took 2.16 seconds to load)
+# >> 4 examples, 0 failures, 1 pending
 # >> 
