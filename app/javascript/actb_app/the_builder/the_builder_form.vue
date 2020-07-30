@@ -19,7 +19,7 @@
   b-field(label="難易度" custom-class="is-small" v-if="app.config.difficulty_level_enable")
     b-rate(v-model="$parent.question.difficulty_level" spaced :max="app.config.difficulty_level_max" :show-score="false")
 
-  b-field(label="メッセージ" label-position="on-border" message="問題と一緒に表示します。最善手ではない手が答えのときや、ヒントを伝えたいときや、何手指して欲しいか指示したいときなどに入力してください。基本は空でかまいません")
+  b-field(label="メッセージ" label-position="on-border" message="問題と一緒に表示する文言です。何手指してほしいかや、ヒントを伝えたいときだけ入力してください。基本未入力でかまいません")
     b-input(v-model="$parent.question.direction_message" placeholder="3手指してください")
 
   b-field(label="タグ" label-position="on-border")
