@@ -200,6 +200,8 @@ module Actb
           "ID"                 => id,
           "名前"               => name,
           "プロバイダ"         => auth_infos.collect(&:provider).join(" "),
+          "Twitter"            => twitter_key,
+          "メールアドレス"     => email,
 
           "オンライン"         => Actb::SchoolChannel.active_users.include?(self) ? "○" : "",
           "対戦中"             => Actb::RoomChannel.active_users.include?(self) ? "○" : "",
@@ -220,6 +222,9 @@ module Actb
           "問題高評価率"       => actb_questions.average(:good_rate),
           "問題高評価数"       => actb_questions.sum(:good_marks_count),
           "問題低評価数"       => actb_questions.sum(:bad_marks_count),
+
+          "問題正解数"         => total_o_count,
+          "問題不正解数"       => total_x_count,
         }
       end
 
