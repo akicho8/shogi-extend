@@ -116,6 +116,17 @@ module FrontendScript
         { lobby_messages: lobby_messages }
       end
 
+      # http://localhost:3000/script/actb-app.json?remote_action=notifications_fetch
+      def notifications_fetch
+        size = 10
+        notifications = current_user.received_notifications.where(opened_at: nil).order(created_at: :desc)
+        if notifications.empty?
+          # notifications = current_user.received_notifications.order(created_at: :desc).limit(size)
+        end
+        notifications = notifications.collect(&:as_json_type11)
+        { notifications: notifications }
+      end
+
       # http://localhost:3000/script/actb-app.json?remote_action=revision_fetch
       def revision_fetch
         { revision: Actb::Config[:revision] }

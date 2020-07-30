@@ -136,6 +136,13 @@ module FrontendScript
         { owner_tag_list: question.owner_tag_list }
       end
 
+      def yomimasita_handle
+        current_user.received_notifications.find(params[:midoku_ids]).each do |e|
+          e.update!(opened_at: Time.current)
+        end
+        { status: "success" }
+      end
+
       private
 
       # from app/javascript/actb_app/the_profile_edit_form.vue profile_update_handle

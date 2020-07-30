@@ -31,6 +31,12 @@ module Actb
 
       # 自分がBOTになった部屋
       has_many :actb_bot_rooms, class_name: "Actb::Room", foreign_key: :bot_user_id, dependent: :restrict_with_exception
+
+      # 通知
+      with_options(class_name: "Actb::Notification", dependent: :restrict_with_exception) do
+        has_many :send_notifications,     foreign_key: :from_user_id # 自分が送信
+        has_many :received_notifications, foreign_key: :to_user_id   # 自分が受信
+      end
     end
 
     concerning :CurrentUserMethods do

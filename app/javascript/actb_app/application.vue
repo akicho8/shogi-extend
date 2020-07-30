@@ -48,6 +48,7 @@ import { application_battle       } from "./application_battle.js"
 import { application_matching     } from "./application_matching.js"
 import { application_history      } from "./application_history.js"
 import { application_history_vote } from "./application_history_vote.js"
+import { application_notification } from "./application_notification.js"
 import { config                   } from "./config.js"
 import { RuleInfo                 } from "./models/rule_info.js"
 import { OxMarkInfo               } from "./models/ox_mark_info.js"
@@ -67,6 +68,7 @@ export default {
     application_battle,
     application_matching,
     application_history_vote,
+    application_notification,
 
     application_history,
   ],
@@ -273,6 +275,7 @@ export default {
       this.lobby_setup_without_cable()
 
       this.lobby_messages_setup()
+      this.notifications_setup()
 
       this.debug_alert("lobby_setup")
       this.__assert__(this.$ac_lobby == null, "this.$ac_lobby == null")
