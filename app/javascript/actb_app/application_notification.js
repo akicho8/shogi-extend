@@ -11,10 +11,12 @@ export const application_notification = {
 
   methods: {
     notifications_setup() {
-      this.api_get("notifications_fetch", {}, e => {
-        this.notifications = e.notifications
-        this.midoku_count = this.midoku_ids.length
-      })
+      if (this.current_user) {
+        this.api_get("notifications_fetch", {}, e => {
+          this.notifications = e.notifications
+          this.midoku_count = this.midoku_ids.length
+        })
+      }
     },
 
     yomimasita_handle() {

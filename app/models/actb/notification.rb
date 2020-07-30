@@ -1,3 +1,23 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Notification (actb_notifications as Actb::Notification)
+#
+# |---------------------+------------------+-------------+-------------+------+-------|
+# | name                | desc             | type        | opts        | refs | index |
+# |---------------------+------------------+-------------+-------------+------+-------|
+# | id                  | ID               | integer(8)  | NOT NULL PK |      |       |
+# | to_user_id          | To user          | integer(8)  | NOT NULL    |      | A     |
+# | from_user_id        | From user        | integer(8)  |             |      | B     |
+# | question_id         | Question         | integer(8)  |             |      | C     |
+# | question_message_id | Question message | integer(8)  |             |      | D     |
+# | title               | タイトル         | string(255) |             |      |       |
+# | body                | 内容             | string(512) |             |      |       |
+# | opened_at           | Opened at        | datetime    |             |      |       |
+# | created_at          | 作成日時         | datetime    | NOT NULL    |      |       |
+# | updated_at          | 更新日時         | datetime    | NOT NULL    |      |       |
+# |---------------------+------------------+-------------+-------------+------+-------|
+
 # create_table :actb_notifications, force: true do |t|
 #   # t.string :key,                                                                  null: false, index: true
 #   t.belongs_to :to_user,          foreign_key: {to_table: :users},                  null: true,  comment: "送信先"
