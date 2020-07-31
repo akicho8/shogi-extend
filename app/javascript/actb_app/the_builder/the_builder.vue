@@ -223,6 +223,14 @@ export default {
         return
       }
 
+      {
+        const limit = this.app.config.turm_max_limit
+        if (limit && moves.length > limit) {
+          this.warning_notice(`${this.app.config.turm_max_limit}手以内にしてください`)
+          return
+        }
+      }
+
       if (this.question.moves_valid_p(moves)) {
         this.warning_notice("すでに同じ正解があります")
         return

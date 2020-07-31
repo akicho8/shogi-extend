@@ -2,6 +2,7 @@ module Actb
   Config = {
     :revision                        => 10,
     :actb_display_p                  => true,
+    :use_limit_ids                   => [],   # 利用制限
 
     # -------------------------------------------------------------------------------- 共通
     :rating_display_p                => true, # 内部レーティングを表示する？
@@ -45,6 +46,7 @@ module Actb
     :difficulty_level_max            => 5,     # ★の最大数
     :time_limit_sec_enable           => false, # 時間制限のカラムを有効にする？
     :difficulty_level_enable         => false, # 難易度カラムを表示する？
+    :turm_max_limit                  => 3,     # 手数制限
 
     # -------------------------------------------------------------------------------- API
     :api_questions_fetch_per         => 5,  # 問題一覧での1ページあたりの表示件数
@@ -63,6 +65,13 @@ module Actb
         :action_cable_debug          => false, # ActionCable関連デバッグモード
         :api_questions_fetch_per     => 50,    # 問題一覧での1ページあたりの表示件数
         :self_is_left_side_p         => true,  # 自分を左に表示
+        :turm_max_limit              => 7,     # 手数制限
+      })
+  end
+
+  if Rails.env.production?
+    Config.update({
+        :use_limit_ids => [],   # 利用制限
       })
   end
 end
