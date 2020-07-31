@@ -8,11 +8,11 @@ module Actb
       include FolderMod
 
       # 対局
-      has_many :actb_room_memberships, class_name: "Actb::RoomMembership", dependent: :restrict_with_exception # 対局時の情報(複数)
+      has_many :actb_room_memberships, class_name: "Actb::RoomMembership", dependent: :destroy # 対局時の情報(複数)
       has_many :actb_rooms, class_name: "Actb::Room", through: :actb_room_memberships                       # 対局(複数)
 
       # 対局
-      has_many :actb_battle_memberships, class_name: "Actb::BattleMembership", dependent: :restrict_with_exception # 対局時の情報(複数)
+      has_many :actb_battle_memberships, class_name: "Actb::BattleMembership", dependent: :destroy # 対局時の情報(複数)
       has_many :actb_battles, class_name: "Actb::Battle", through: :actb_battle_memberships                       # 対局(複数)
 
       # このユーザーが作成した問題(複数)
@@ -30,10 +30,10 @@ module Actb
       has_many :actb_histories, class_name: "Actb::History", dependent: :destroy
 
       # 自分がBOTになった部屋
-      has_many :actb_bot_rooms, class_name: "Actb::Room", foreign_key: :bot_user_id, dependent: :restrict_with_exception
+      has_many :actb_bot_rooms, class_name: "Actb::Room", foreign_key: :bot_user_id, dependent: :destroy
 
       # 通知
-      with_options(class_name: "Actb::Notification", dependent: :restrict_with_exception) do
+      with_options(class_name: "Actb::Notification", dependent: :destroy) do
         has_many :send_notifications,     foreign_key: :from_user_id # 自分が送信
         has_many :received_notifications, foreign_key: :to_user_id   # 自分が受信
       end
@@ -81,9 +81,9 @@ module Actb
 
     concerning :MessageMethods do
       included do
-        with_options(dependent: :destroy) do |o|
-          has_many :actb_room_messages, class_name: "Actb::RoomMessage"
-          has_many :actb_lobby_messages, class_name: "Actb::LobbyMessage"
+        with_options dependent: :destroy do |o|
+          has_many :actb_room_messages,     class_name: "Actb::RoomMessage"
+          has_many :actb_lobby_messages,    class_name: "Actb::LobbyMessage"
           has_many :actb_question_messages, class_name: "Actb::QuestionMessage"
         end
       end
