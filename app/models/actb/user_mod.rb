@@ -81,7 +81,7 @@ module Actb
 
     concerning :MessageMethods do
       included do
-        with_options dependent: :destroy do |o|
+        with_options dependent: :destroy do
           has_many :actb_room_messages,     class_name: "Actb::RoomMessage"
           has_many :actb_lobby_messages,    class_name: "Actb::LobbyMessage"
           has_many :actb_question_messages, class_name: "Actb::QuestionMessage"
