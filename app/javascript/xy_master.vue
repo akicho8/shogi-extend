@@ -110,7 +110,7 @@
                 b-table-column(field="rank" label="順位" sortable centered :width="1")
                   | {{props.row.rank}}
                 b-table-column(field="entry_name" label="名前" sortable)
-                  | {{props.row.entry_name || '？？？'}}
+                  | {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
                 b-table-column(field="spent_sec" label="タイム" sortable)
                   | {{time_format_from_msec(props.row.spent_sec)}}
                 b-table-column(field="created_at" label="日付" sortable :visible="curent_scope.date_visible")
