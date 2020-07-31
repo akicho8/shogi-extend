@@ -55,7 +55,9 @@ module Actb
           end
           # その上で手順まで同じのものがあるか？
           question_ids = self.class.where(question: s).where(moves_str: moves_str).group(:question_id).count
-          errors.add(:base, "配置と正解手順の組み合わせが既出の問題(#{question_ids.keys.join(', ')})と重複しています")
+          if question_ids.present?
+            errors.add(:base, "配置と正解手順の組み合わせが既出の問題(#{question_ids.keys.join(', ')})と重複しています")
+          end
         end
       end
     end
