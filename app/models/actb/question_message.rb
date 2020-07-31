@@ -27,16 +27,18 @@ module Actb
     after_create_commit do
       Actb::QuestionMessageBroadcastJob.perform_later(self)
 
+      # 作者に通知
       if true
-        # 作者に通知
-        if question.user.email_valid? || Rails.env.test?
-          UserMailer.question_owner_message(self).deliver_later
+        if question.user != user
+          if question.user.email_valid? || Rails.env.test?
+            UserMailer.question_owner_message(self).deliver_later
+          end
+          question.user.received_notifications.create!(question_message: self)
         end
-        question.user.received_notifications.create!(question_message: self)
       end
 
+      # 以前コメントした人たちにも通知
       if true
-        # 以前コメントした人たちにも通知
         member_users.each do |user|
           if user.email_valid? || Rails.env.test?
             UserMailer.question_other_message(user, self).deliver_later
