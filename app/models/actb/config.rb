@@ -2,7 +2,7 @@ module Actb
   Config = {
     :revision                        => 10,
     :actb_display_p                  => true,
-    :use_limit_ids                   => [],   # 利用制限
+    :use_limit_user_ids => [],   # 利用制限
 
     # -------------------------------------------------------------------------------- 共通
     :rating_display_p                => true, # 内部レーティングを表示する？
@@ -71,7 +71,7 @@ module Actb
 
   if Rails.env.production?
     Config.update({
-        :use_limit_ids => [],   # 利用制限
+        :use_limit_user_ids => [1002, 203, 839],   # 利用制限
       })
   end
 end

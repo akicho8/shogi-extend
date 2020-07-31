@@ -547,6 +547,16 @@ export default {
     regular_p() {
       return this.current_user && this.current_user.regular_p
     },
+
+    // ロビーのチャットを使えるか？
+    lobby_messages_show_p() {
+      if (this.current_user) {
+        if (this.app.config.use_limit_user_ids.includes(this.current_user.id)) {
+          return false
+        }
+      }
+      return true
+    },
   },
 }
 </script>
