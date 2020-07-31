@@ -2,9 +2,9 @@ module Actb
   module UserMod
     concern :VoteMod do
       included do
-        with_options(dependent: :destroy) do
+        with_options dependent: :destroy do
           has_many :actb_good_marks, class_name: "Actb::GoodMark"
-          has_many :actb_bad_marks, class_name: "Actb::BadMark"
+          has_many :actb_bad_marks,  class_name: "Actb::BadMark"
         end
       end
 

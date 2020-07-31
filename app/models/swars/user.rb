@@ -37,7 +37,7 @@ module Swars
   class User < ApplicationRecord
     alias_attribute :key, :user_key
 
-    has_many :memberships, dependent: :restrict_with_exception # 対局時の情報(複数)
+    has_many :memberships, dependent: :destroy # 対局時の情報(複数)
     has_many :battles, through: :memberships   # 対局(複数)
 
     has_many :op_memberships, class_name: "Membership", foreign_key: "op_user_id", dependent: :destroy # (対戦相手の)対局時の情報(複数)

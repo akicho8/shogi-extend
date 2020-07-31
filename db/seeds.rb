@@ -1,4 +1,5 @@
 ENV["SLACK_AGENT_DISABLE"] = "1"
+ENV["INSIDE_DB_SEEDS_TASK"] = "1"
 
 [
   Actb,

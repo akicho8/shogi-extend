@@ -59,7 +59,7 @@ module Actb
     delegate :redis_key, to: :pure_info
     delegate :redis, :matching_user_ids_broadcast, to: "self.class"
 
-    with_options(dependent: :destroy) do
+    with_options dependent: :destroy do
       has_many :settings
       has_many :rooms
       has_many :battles

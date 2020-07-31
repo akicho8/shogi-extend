@@ -127,7 +127,7 @@ module Actb
     concerning :SeasonXrecordMod do
       included do
         # プロフィール
-        with_options(class_name: "Actb::SeasonXrecord", dependent: :destroy) do
+        with_options class_name: "Actb::SeasonXrecord", dependent: :destroy do
           has_one :actb_season_xrecord, -> { newest_order }
           has_many :actb_season_xrecords
         end

@@ -25,7 +25,7 @@ module Actb
       Actb::BaseChannel.redis_clear
     end
 
-    if Rails.env.staging? || Rails.env.production? || Rails.env.development?
+    if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
       unless Actb::Question.exists?
         Actb::Question.import_all
       end
@@ -34,30 +34,85 @@ module Actb
 
   def models
     [
-      Question, QuestionMessage,
-      Room, RoomMembership, RoomMessage,
-      Battle, BattleMembership,
+      Question,
+      MovesAnswer,
+      Folder,
+      Lineage,
+      Room,
+      RoomMembership,
+      Battle,
+      BattleMembership,
       Season,
       SeasonXrecord,
       MainXrecord,
       Setting,
-      GoodMark, BadMark, ClipMark,
-      Folder,
-      Lineage, Judge, Rule, Skill,
+      GoodMark,
+      BadMark,
+      ClipMark,
+      Judge,
+      Rule,
+      Skill,
+      QuestionMessage,
       LobbyMessage,
+      RoomMessage,
     ]
   end
 
   def destroy_all
     models.each do |e|
       e.destroy_all
-      # e.delete_all
     end
   end
 
   def info
     [User, *models].collect { |e|
-      { model: e, count: e.count, "最終ID" => e.order(:id).last&.id }
+      { model: e.name, count: e.count, "最終ID" => e.order(:id).last&.id }
     }
+  end
+
+  # rails r 'user = User.create!; tp Actb.count_diff { user.destroy! }'
+  # >> |------------------------+--------+-------+------|
+  # >> | model                  | before | after | diff |
+  # >> |------------------------+--------+-------+------|
+  # >> | Actb::Folder           |      6 |     3 |   -3 |
+  # >> | Actb::Question         |      1 |     0 |   -1 |
+  # >> | Actb::MovesAnswer      |      1 |     0 |   -1 |
+  # >> | User                   |      2 |     1 |   -1 |
+  # >> | Actb::RoomMembership   |      2 |     1 |   -1 |
+  # >> | Actb::BattleMembership |      2 |     1 |   -1 |
+  # >> | Actb::SeasonXrecord    |      2 |     1 |   -1 |
+  # >> | Actb::MainXrecord      |      2 |     1 |   -1 |
+  # >> | Actb::Setting          |      2 |     1 |   -1 |
+  # >> | Actb::GoodMark         |      1 |     0 |   -1 |
+  # >> | Actb::BadMark          |      1 |     0 |   -1 |
+  # >> | Actb::ClipMark         |      1 |     0 |   -1 |
+  # >> | Actb::QuestionMessage  |      1 |     0 |   -1 |
+  # >> | Actb::Rule             |     12 |    12 |    0 |
+  # >> | Actb::Room             |      1 |     1 |    0 |
+  # >> | Actb::Skill            |     21 |    21 |    0 |
+  # >> | Actb::Battle           |      1 |     1 |    0 |
+  # >> | Actb::RoomMessage      |      0 |     0 |    0 |
+  # >> | Actb::Season           |      1 |     1 |    0 |
+  # >> | Actb::LobbyMessage     |      1 |     1 |    0 |
+  # >> | Actb::Judge            |      4 |     4 |    0 |
+  # >> | Actb::Lineage          |      8 |     8 |    0 |
+  # >> |------------------------+--------+-------+------|
+  def count_diff(options = {})
+    list = [User, *models]
+    before = Vector[*list.collect(&:count)]
+    yield
+    after = Vector[*list.collect(&:count)]
+    diff = after - before
+
+    records = list.collect.with_index do |model, i|
+      {
+        model: model.name,
+        before: before[i],
+        after: after[i],
+        diff: diff[i],
+      }
+    end
+
+    records.sort_by { |e| e[:diff] }
   end
 end
