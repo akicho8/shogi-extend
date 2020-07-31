@@ -221,6 +221,10 @@ export default {
       this.$ac_lobby.perform("speak", {message_body: message_body})
     },
     lobby_speak_broadcasted(params) {
+      if (this.app.current_user && this.app.current_user.mute_user_ids.includes(params.message.user.id)) {
+        this.debug_alert(`skip: ${params.message.body}`)
+        return
+      }
       this.lobby_speak_broadcasted_shared_process(params)
       this.lobby_messages.push(params.message)
     },

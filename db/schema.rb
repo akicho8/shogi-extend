@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_112105) do
+ActiveRecord::Schema.define(version: 2020_07_25_112106) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -505,6 +505,16 @@ ActiveRecord::Schema.define(version: 2020_07_25_112105) do
     t.index ["user_id"], name: "index_free_battles_on_user_id"
   end
 
+  create_table "mute_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "オーナー"
+    t.bigint "target_user_id", null: false, comment: "対象"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["target_user_id"], name: "index_mute_infos_on_target_user_id"
+    t.index ["user_id", "target_user_id"], name: "index_mute_infos_on_user_id_and_target_user_id", unique: true
+    t.index ["user_id"], name: "index_mute_infos_on_user_id"
+  end
+
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.datetime "created_at", null: false
@@ -763,4 +773,6 @@ ActiveRecord::Schema.define(version: 2020_07_25_112105) do
   add_foreign_key "actb_settings", "actb_rules", column: "rule_id"
   add_foreign_key "actb_settings", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "mute_infos", "users"
+  add_foreign_key "mute_infos", "users", column: "target_user_id"
 end

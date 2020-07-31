@@ -66,6 +66,7 @@ module AtomicScript
       @params[:_restore_key].present?
     end
 
+    # Cookie が溢れるときは rails dev:cache で ON にする
     def store_to_cookie_flash?
       Rails.cache.kind_of?(ActiveSupport::Cache::NullStore)
     end

@@ -60,6 +60,7 @@ module Actb
               :description,
               :twitter_key,
               :regular_p,
+              :mute_user_ids,
             ],
           })
 

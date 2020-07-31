@@ -27,6 +27,10 @@ export default {
       // if (this.debug_message_p && !this.app.debug_read_p) {
       //   return false
       // }
+      if (this.app.current_user && this.app.current_user.mute_user_ids.includes(this.message.user.id)) {
+        return false
+      }
+
       return true
     },
 

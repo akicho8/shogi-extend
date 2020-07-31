@@ -248,4 +248,14 @@ class User < ApplicationRecord
       acts_as_taggable_on :permit_tags
     end
   end
+
+  # rails r "User.sysop.mute_infos.create!(target_user: User.bot); tp MuteInfo; tp User.sysop.mute_users"
+  # rails r "User.sysop.mute_users << User.bot; tp MuteInfo; tp User.sysop.mute_users; tp User.sysop.mute_user_ids"
+  # rails r "User.sysop.mute_users.destroy(User.bot); tp MuteInfo"
+  concerning :MuteInfoMod do
+    included do
+      has_many :mute_infos, dependent: :destroy
+      has_many :mute_users, through: :mute_infos, source: :target_user
+    end
+  end
 end
