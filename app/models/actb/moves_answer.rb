@@ -47,15 +47,15 @@ module Actb
       # 同じ組み合わせがないことを確認
       if errors.empty?
         if will_save_change_to_attribute?(:moves_str) && moves_str
-          # 自分の所属する配置を除いて、配置が同じ問題IDsを取得
-          s = Question.where(init_sfen: question.read_attribute(:init_sfen))
+          # 配置が同じ問題たちを取得
+          s = Question.active_only.where(init_sfen: question.read_attribute(:init_sfen))
           if persisted?
+            # ただし自分の所属する配置を除く
             s = s.where.not(id: question.id_in_database)
           end
-          # さらに手順まで同じのものがあるか？
-          if self.class.where(question_id: s.ids).find_by(moves_str: moves_str)
-            errors.add(:base, "配置と正解手順の組み合わせが既出の問題と重複しています")
-          end
+          # その上で手順まで同じのものがあるか？
+          question_ids = self.class.where(question: s).where(moves_str: moves_str).group(:question_id).count
+          errors.add(:base, "配置と正解手順の組み合わせが既出の問題(#{question_ids.keys.join(', ')})と重複しています")
         end
       end
     end

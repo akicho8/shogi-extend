@@ -62,7 +62,7 @@ module Actb
         }
       end
 
-      it do
+      it "works" do
         # 1つ目を作る
         question = user1.actb_questions.build
         perform_enqueued_jobs do
