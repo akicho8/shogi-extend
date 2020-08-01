@@ -2,7 +2,6 @@ module Actb
   Config = {
     :revision                        => 10,
     :actb_display_p                  => true,
-    :use_limit_user_ids => [],   # 利用制限
 
     # -------------------------------------------------------------------------------- 共通
     :rating_display_p                => true, # 内部レーティングを表示する？
@@ -66,12 +65,6 @@ module Actb
         :api_questions_fetch_per     => 50,    # 問題一覧での1ページあたりの表示件数
         :self_is_left_side_p         => true,  # 自分を左に表示
         :turm_max_limit              => 7,     # 手数制限
-      })
-  end
-
-  if Rails.env.production?
-    Config.update({
-        :use_limit_user_ids => [1002, 203, 839],   # 利用制限
       })
   end
 end
