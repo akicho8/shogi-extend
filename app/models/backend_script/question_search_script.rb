@@ -14,6 +14,13 @@ module BackendScript
           :type    => :string,
           :default => current_query,
         },
+        {
+          :label   => "フォルダ",
+          :key     => :folder_key,
+          :elems   => Actb::FolderInfo.inject({"指定なし" => ""}) { |a, e| a.merge(e.name => e.key) },
+          :type    => :radio,
+          :default => current_folder_key,
+        },
       ]
     end
 
@@ -24,6 +31,9 @@ module BackendScript
       end
       if v = current_query
         s = s.where(["title like ?", "%#{v}%"])
+      end
+      if v = current_folder_key
+        s = s.folder_eq(v)
       end
       s = sort_scope(s)
       s = page_scope(s)
@@ -58,6 +68,10 @@ module BackendScript
 
     def current_query
       params[:query].to_s.strip.presence
+    end
+
+    def current_folder_key
+      params[:folder_key].presence
     end
   end
 end
