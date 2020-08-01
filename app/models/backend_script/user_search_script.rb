@@ -34,17 +34,17 @@ module BackendScript
       s = page_scope(s)
       rows = s.collect(&method(:row_build))
 
-      if rows.one?
-        return rows.first
-      end
-
       out = "".html_safe
       out << rows.to_html
       out << basic_paginate(s)
     end
 
     def row_build(user)
-      user.info_hash
+      row = user.info_hash
+      row.merge("操作" => [
+          h.link_to("ミュート", UserMuteScript.script_link_path(target_user_ids: user.id)),
+          h.link_to("削除", UserDestroyScript.script_link_path(target_user_ids: user.id)),
+        ].join(" ").html_safe)
     end
 
     def current_query

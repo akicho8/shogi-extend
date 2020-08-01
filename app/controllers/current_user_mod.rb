@@ -52,6 +52,17 @@ module CurrentUserMod
       user = nil
       user ||= User.find_by(id: id)
       user ||= current_xuser    # from devise
+
+      if user
+        # rails r "p User.first.cache_key"
+        Rails.cache.fetch("#{user.cache_key}/update_tracked_fields!", expires_in: 1.hour) do
+          user.update_tracked_fields!(request)
+          user.user_agent = request.user_agent.to_s
+          true
+        end
+      end
+
+      user
     end
   end
 

@@ -232,6 +232,12 @@ module Actb
 
           "問題正解数"         => total_o_count,
           "問題不正解数"       => total_x_count,
+
+          "タグ"               => permit_tag_list,
+          "ログイン回数"       => sign_in_count,
+          "最終ログイン日時"   => current_sign_in_at&.to_s(:distance),
+          "IP"                 => current_sign_in_ip,
+          "UA"                 => user_agent,
         }
       end
 
