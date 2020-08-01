@@ -136,8 +136,8 @@ module FrontendScript
         { owner_tag_list: question.owner_tag_list }
       end
 
-      def yomimasita_handle
-        current_user.received_notifications.find(params[:midoku_ids]).each do |e|
+      def notification_opened_handle
+        current_user.notifications.find(params[:notification_unopen_ids]).each do |e|
           e.update!(opened_at: Time.current)
         end
         { status: "success" }

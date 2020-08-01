@@ -5,56 +5,59 @@ export const application_notification = {
     return {
       // 通知用
       notifications: [], // 通知(複数)
-      midoku_count: 0,
+      unopen_count: 0,
     }
   },
 
   methods: {
-    notifications_setup() {
+    // 通知取得
+    notification_setup() {
       if (this.current_user) {
         this.api_get("notifications_fetch", {}, e => {
           this.notifications = e.notifications
-          this.midoku_count = this.midoku_ids.length
+          this.unopen_count = this.notification_unopen_ids.length
         })
       }
     },
 
-    yomimasita_handle() {
-      if (this.midoku_ids.length >= 1) {
-        this.silent_api_put("yomimasita_handle", {midoku_ids: this.midoku_ids}, e => {
-          this.midoku_count = 0
+    // (N)を押したので未読を空にする
+    notification_opened_handle() {
+      if (this.notification_unopen_ids.length >= 1) {
+        this.silent_api_put("notification_opened_handle", {notification_unopen_ids: this.notification_unopen_ids}, e => {
+          this.unopen_count = 0
         })
       }
     },
 
+    // 通知を受信
     notification_singlecasted(params) {
       const notification = params.notification
       if (this.current_user) {
-        // debugger
-        if (notification.to_user.id !== this.current_user.id) {
-          this.debug_alert("他の人に届いたのは無視")
+        if (notification.user.id !== this.current_user.id) {
+          this.debug_alert("他人に届いたのは無視(自分に届く場合もある)")
           return
         }
-        const m = notification.question_message
-        let message = null
-          if (m.question.user.id === this.current_user.id) {
-            message = `${m.user.name}さんが${m.question.title}にコメントしました`
-          } else {
-            message = `以前コメントした${m.question.title}に${m.user.name}さんがコメントしました`
-          }
-        this.ok_notice(message)
+        this.ok_notice(this.notification_to_s(notification))
         this.notifications = [notification, ...this.notifications]
-        this.midoku_count += 1
+        this.unopen_count += 1
       }
     },
 
-    midoku_ids_get() {
-      return this.notifications.filter(e => !e.opened_at).map(e => e.id)
+    // 通知を実際の文字列に変換
+    notification_to_s(notification) {
+      const m = notification.question_message
+      this.__assert__(this.current_user, "this.current_user")
+      if (m.question.user.id === this.current_user.id) {
+        return `${m.user.name}さんが${m.question.title}にコメントしました`
+      } else {
+        return `以前コメントした${m.question.title}に${m.user.name}さんがコメントしました`
+      }
     },
   },
 
   computed: {
-    midoku_ids() {
+    // 通知の未読IDs
+    notification_unopen_ids() {
       return this.notifications.filter(e => !e.opened_at).map(e => e.id)
     },
   },

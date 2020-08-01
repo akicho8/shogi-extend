@@ -14,6 +14,14 @@ module ActbSupportMethods
       user1.actb_questions.create_mock1
     end
 
+    let(:question_message1) do
+      question1.messages.create!(user: user2, body: "(body)")
+    end
+
+    let(:notification1) do
+      user1.notifications.create!(question_message: question_message1)
+    end
+
     let(:room1) do
       Actb::Room.create_with_members!([user1, user2])
     end

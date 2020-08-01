@@ -33,7 +33,7 @@ module Actb
           if question.user.email_valid? || Rails.env.test?
             UserMailer.question_owner_message(self).deliver_later
           end
-          question.user.received_notifications.create!(question_message: self)
+          question.user.notifications.create!(question_message: self)
         end
       end
 
@@ -43,7 +43,7 @@ module Actb
           if user.email_valid? || Rails.env.test?
             UserMailer.question_other_message(user, self).deliver_later
           end
-          user.received_notifications.create!(question_message: self)
+          user.notifications.create!(question_message: self)
         end
       end
 

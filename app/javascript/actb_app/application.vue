@@ -279,7 +279,7 @@ export default {
       this.lobby_setup_without_cable()
 
       this.lobby_messages_setup()
-      this.notifications_setup()
+      this.notification_setup()
 
       this.debug_alert("lobby_setup")
       this.__assert__(this.$ac_lobby == null, "this.$ac_lobby == null")

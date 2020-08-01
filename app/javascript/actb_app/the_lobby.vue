@@ -16,14 +16,15 @@
 
     //////////////////////////////////////////////////////////////////////////////// 通知
     b-dropdown.header_item.rjust(position="is-bottom-left" v-if="app.current_user && app.notifications.length >= 1")
-      b-tag.mr-3.has-text-weight-bold.is-flex(rounded slot="trigger" @click.native="app.yomimasita_handle")
-        | {{app.midoku_count}}
+      b-tag.mr-3.has-text-weight-bold.is-flex(rounded slot="trigger" @click.native="app.notification_opened_handle")
+        | {{app.unopen_count}}
       template(v-for="row in app.notifications")
         b-dropdown-item(@click="app.ov_question_info_set(row.question_message.question.id)")
-          template(v-if="row.question_message.question.user.id === app.current_user.id")
-            | {{row.question_message.user.name}}さんが{{row.question_message.question.title}}にコメントしました
-          template(v-else)
-            | 以前コメントした{{row.question_message.question.title}}に{{row.question_message.user.name}}さんがコメントしました
+          span.is_line_break_on
+            | {{app.notification_to_s(row)}}
+          span.is-size-7.has-text-grey-light.is_line_break_off.ml-1
+            | {{diff_time_format(row.question_message.created_at)}}
+
     ////////////////////////////////////////////////////////////////////////////////
 
   debug_print(v-if="app.debug_read_p && false" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode']" oneline)

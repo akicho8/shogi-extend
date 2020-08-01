@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_112106) do
+ActiveRecord::Schema.define(version: 2020_07_25_112108) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -203,19 +203,13 @@ ActiveRecord::Schema.define(version: 2020_07_25_112106) do
   end
 
   create_table "actb_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "to_user_id", null: false, comment: "送信先"
-    t.bigint "from_user_id", comment: "送信元"
-    t.bigint "question_id", comment: "問題"
+    t.bigint "user_id", null: false
     t.bigint "question_message_id", comment: "問題コメ"
-    t.string "title", comment: "タイトル"
-    t.string "body", limit: 512, comment: "本文"
     t.datetime "opened_at", comment: "開封日時"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["from_user_id"], name: "index_actb_notifications_on_from_user_id"
-    t.index ["question_id"], name: "index_actb_notifications_on_question_id"
     t.index ["question_message_id"], name: "index_actb_notifications_on_question_message_id"
-    t.index ["to_user_id"], name: "index_actb_notifications_on_to_user_id"
+    t.index ["user_id"], name: "index_actb_notifications_on_user_id"
   end
 
   create_table "actb_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -749,9 +743,7 @@ ActiveRecord::Schema.define(version: 2020_07_25_112106) do
   add_foreign_key "actb_main_xrecords", "users"
   add_foreign_key "actb_moves_answers", "actb_questions", column: "question_id"
   add_foreign_key "actb_notifications", "actb_question_messages", column: "question_message_id"
-  add_foreign_key "actb_notifications", "actb_questions", column: "question_id"
-  add_foreign_key "actb_notifications", "users", column: "from_user_id"
-  add_foreign_key "actb_notifications", "users", column: "to_user_id"
+  add_foreign_key "actb_notifications", "users"
   add_foreign_key "actb_ox_records", "actb_questions", column: "question_id"
   add_foreign_key "actb_question_messages", "actb_questions", column: "question_id"
   add_foreign_key "actb_question_messages", "users"
