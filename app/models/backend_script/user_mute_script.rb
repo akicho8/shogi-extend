@@ -1,24 +1,24 @@
 module BackendScript
-  class MuteUserScript < ::BackendScript::Base
+  class UserMuteScript < ::BackendScript::Base
     include AtomicScript::PostRedirectMod
 
     self.category = "actb"
-    self.script_name = "将棋トレバト ミュート"
+    self.script_name = "ユーザーミュート"
 
     def form_parts
       [
         {
-          :label   => "対象ユーザー",
-          :key     => :target_ids,
+          :label   => "対象ユーザーIDs",
+          :key     => :target_user_ids,
           :type    => :string,
-          :default => current_target_ids,
+          :default => current_target_user_ids,
         },
       ]
     end
 
     def script_body
       if h.current_user
-        current_targets.each do |target|
+        current_target_users.each do |target|
           if h.current_user.mute_users.include?(target)
             h.current_user.mute_users.destroy(target)
           else
@@ -31,12 +31,12 @@ module BackendScript
 
     private
 
-    def current_target_ids
-      params[:target_ids].to_s.scan(/\d+/).collect(&:to_i)
+    def current_target_user_ids
+      params[:target_user_ids].to_s.scan(/\d+/).collect(&:to_i)
     end
 
-    def current_targets
-      if v = current_target_ids
+    def current_target_users
+      if v = current_target_user_ids
         User.find(v)
       end
     end
