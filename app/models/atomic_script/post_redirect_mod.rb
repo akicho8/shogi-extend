@@ -35,7 +35,7 @@ module AtomicScript
     end
 
     def buttun_name
-      "本当に実行する"
+      "実行"
     end
 
     def form_submit_button_color

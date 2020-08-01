@@ -1,7 +1,7 @@
 module BackendScript
-  class ActbDirectUserSwitchScript < ::BackendScript::Base
-    self.category = "actb"
-    self.script_name = "将棋トレバト 運営切り替え (直接)"
+  class UserSwitchDirectScript < ::BackendScript::Base
+    self.category = "ユーザー"
+    self.script_name = "運営切り替え (直接)"
     self.visibility_hidden = true
 
     def script_body

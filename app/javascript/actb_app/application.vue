@@ -139,7 +139,7 @@ export default {
 
   created() {
     if (this.development_p) {
-      if (this.staff_only) {
+      if (this.permit_staff_p) {
         this.debug_summary_p = true
         this.debug_force_edit_p = true
         this.debug_read_p    = true
@@ -546,16 +546,6 @@ export default {
     // ある程度使ってくれているユーザーか？
     regular_p() {
       return this.current_user && this.current_user.regular_p
-    },
-
-    // ロビーのチャットを使えるか？
-    lobby_messages_show_p() {
-      if (this.current_user) {
-        if (this.app.config.use_limit_user_ids.includes(this.current_user.id)) {
-          return false
-        }
-      }
-      return true
     },
   },
 }

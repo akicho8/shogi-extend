@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_lobby_message(v-if="app.lobby_messages_show_p")
+.the_lobby_message(v-if="permit_lobby_message_p")
   .messages_box(ref="messages_box")
     .message_line(v-for="message in app.lobby_messages")
       message_row(:message="message")

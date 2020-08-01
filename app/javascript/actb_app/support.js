@@ -110,6 +110,23 @@ export const support = {
     rating_format(rating) {
       return Math.trunc(rating)
     },
+
+    //////////////////////////////////////////////////////////////////////////////// private
+
+    permit_enable_type(tag) {
+      if (this.app.current_user) {
+        return this.app.current_user.permit_tag_list.includes(tag)
+      }
+    },
+
+    permit_hidden_type(tag) {
+      if (this.app.current_user) {
+        if (this.app.current_user.permit_tag_list.includes(tag)) {
+          return false
+        }
+      }
+      return true
+    },
   },
   computed: {
     ...Vuex.mapState([
@@ -122,10 +139,8 @@ export const support = {
     //   'fooKey',
     // ]),
 
-    staff_only() {
-      if (this.app.current_user) {
-        return this.app.current_user.permit_tag_list.includes("staff")
-      }
-    },
+    permit_staff_p()         { return this.permit_enable_type("staff")                },
+    permit_lobby_message_p() { return this.permit_hidden_type("lobby_message_hidden") },
+    permit_question_new_p()  { return this.permit_hidden_type("question_new_hidden")  },
   },
 }

@@ -41,6 +41,7 @@ module BackendScript
 
     def row_build(user)
       row = user.info_hash
+      row["ID"] = user_id_link(user)
       row.merge("操作" => [
           h.link_to("ミュート", UserMuteScript.script_link_path(target_user_ids: user.id)),
           h.link_to("削除", UserDestroyScript.script_link_path(target_user_ids: user.id)),
