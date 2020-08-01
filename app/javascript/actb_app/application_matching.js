@@ -55,7 +55,7 @@ export const application_matching = {
             this.console_log("対戦者がいましたがタブが死んでいるためスルー")
             return
           }
-          this.snackbar_show()
+          this.new_challenger_snackbar(params.rule.name)
         }
       }
     },

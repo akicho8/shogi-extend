@@ -416,14 +416,14 @@ export default {
       })
     },
 
-    snackbar_show() {
+    new_challenger_snackbar(rule_name) {
       this.sound_play("bell1")
 
-      let message = null
+      let message = `${rule_name}に挑戦者現る！<br>`
       if (this.room) {
-        message = "挑戦者現る！ 練習をキャンセルして対戦しますか？"
+        message += `練習をキャンセルして対戦しますか？`
       } else {
-        message = "挑戦者現る！ 対戦しますか？"
+        message += `対戦しますか？`
       }
 
       this.say(message)

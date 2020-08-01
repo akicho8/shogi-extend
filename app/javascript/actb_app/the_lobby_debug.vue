@@ -5,7 +5,7 @@
       b-button(@click="app.debug_matching_add_handle(row)") 自分以外を{{row.name}}に参加させる
     b-button(@click="app.matching_users_clear_handle") 全員解散
     b-button(@click="app.yarimasu_handle") マッチングの人と直接対戦する
-    b-button(@click="app.snackbar_show") マッチングを開始した人がいる通知
+    b-button(@click="app.new_challenger_snackbar('ルール1')") マッチングを開始した人がいる通知
 </template>
 
 <script>

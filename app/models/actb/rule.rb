@@ -79,7 +79,7 @@ module Actb
 
     def matching_users_add(user)
       if redis.sadd(redis_key, user.id) # 新規で追加できたときだけ真
-        matching_user_ids_broadcast(trigger: :add, user_id: user.id)
+        matching_user_ids_broadcast(trigger: :add, rule: {name: name}, user_id: user.id)
       end
     end
 
