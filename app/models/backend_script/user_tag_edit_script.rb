@@ -1,7 +1,7 @@
 module BackendScript
   class UserTagEditScript < ::BackendScript::Base
     include AtomicScript::PostRedirectMod
-    include TargeUserMethods
+    include TargeUsersMethods
 
     self.category = "その他"
     self.script_name = "ユーザータグ編集"
@@ -32,7 +32,7 @@ module BackendScript
         user.save!
 
         {
-          "ID"   => user_id_link(user),
+          "ID"   => user_link_to(user.id, user),
           "名前" => user.name,
           "タグ" => user.permit_tag_list.join(" "),
         }

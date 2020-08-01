@@ -4,6 +4,7 @@ module Actb::Question::InfoMod
   def info
     a = {}
 
+    a["ID"]   = id
     a["タイトル"]   = title
 
     a["投稿者"]     = user.name
@@ -37,41 +38,17 @@ module Actb::Question::InfoMod
 
     a["コメント数"] = messages_count
 
-    if true
-      if source_media_name
-        a["出典"] = source_media_name
-      end
-      if source_published_on
-        a["出典年月日"] = source_published_on
-      end
-      if source_media_url
-        a["出典URL"] = source_media_url
-      end
-    end
+    a["出典"] = source_media_name
+    a["出典年月日"] = source_published_on
+    a["出典URL"] = source_media_url
 
-    if v = hint_desc.presence
-      a["ヒント"] = v
-    end
-
-    if v = direction_message.presence
-      a["メッセージ"] = v
-    end
-
-    if v = owner_tag_list.presence
-      a["タグ"] = v.join(", ")
-    end
-
+    a["ヒント"] = hint_desc.presence
+    a["メッセージ"] = direction_message.presence
+    a["タグ"] = owner_tag_list.join(", ")
     a["作成日時"] = created_at.to_s(:ymdhm)
-
     a["SFEN"] = main_sfen
-
-    if v = description.presence
-      a["解説"] = v.squish
-    end
-
-    if moves_answer = moves_answers.first
-      a["人間向けの解答"] = moves_answer.moves_human_str
-    end
+    a["解説"] = description.presence.to_s.squish
+    a["人間向けの解答"] = moves_answers.first&.moves_human_str
 
     a
   end

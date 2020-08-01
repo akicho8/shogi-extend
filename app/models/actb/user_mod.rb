@@ -202,7 +202,7 @@ module Actb
         actb_histories.where(ox_mark: Actb::OxMark.fetch(:mistake)).count
       end
 
-      def info_hash
+      def info
         {
           "ID"                 => id,
           "名前"               => name,
@@ -239,12 +239,6 @@ module Actb
           "IP"                 => current_sign_in_ip,
           "UA"                 => user_agent,
         }
-      end
-
-      def info
-        out = ""
-        out += info_hash.to_t
-        out
       end
     end
 

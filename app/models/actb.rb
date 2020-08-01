@@ -113,6 +113,10 @@ module Actb
       }
     end
 
+    if options[:change_only]
+      records = records.reject { |e| e[:diff].zero? }
+    end
+
     records.sort_by { |e| e[:diff] }
   end
 end

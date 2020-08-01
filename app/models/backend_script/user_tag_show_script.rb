@@ -9,7 +9,7 @@ module BackendScript
       users = User.tagged_with(names, any: true, on: :permit_tags)
       users.collect do |user|
         {
-          "ID"   => user_id_link(user),
+          "ID"   => user_link_to(user.id, user),
           "名前" => user.name,
           "タグ" => user.permit_tag_list.join(" "),
         }

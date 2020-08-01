@@ -1,7 +1,7 @@
 module BackendScript
   class UserMuteScript < ::BackendScript::Base
     include AtomicScript::PostRedirectMod
-    include TargeUserMethods
+    include TargeUsersMethods
 
     self.category = "actb"
     self.script_name = "ユーザーミュート(current_userに登録)"
