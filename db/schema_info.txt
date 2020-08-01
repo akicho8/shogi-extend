@@ -115,6 +115,24 @@
 
 # == Schema Information ==
 #
+# Mute info (mute_infos as MuteInfo)
+#
+# |----------------+-------------+------------+-------------+------------+-------|
+# | name           | desc        | type       | opts        | refs       | index |
+# |----------------+-------------+------------+-------------+------------+-------|
+# | id             | ID          | integer(8) | NOT NULL PK |            |       |
+# | user_id        | User        | integer(8) | NOT NULL    | => User#id | A! B  |
+# | target_user_id | Target user | integer(8) | NOT NULL    |            | A! C  |
+# | created_at     | 作成日時    | datetime   | NOT NULL    |            |       |
+# | updated_at     | 更新日時    | datetime   | NOT NULL    |            |       |
+# |----------------+-------------+------------+-------------+------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_many :actb_room_messages
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
 # Membership (tsl_memberships as Tsl::Membership)
 #
 # |------------+------------+-------------+-------------+------------+-------|
@@ -727,20 +745,20 @@
 #
 # Notification (actb_notifications as Actb::Notification)
 #
-# |---------------------+------------------+-------------+-------------+------+-------|
-# | name                | desc             | type        | opts        | refs | index |
-# |---------------------+------------------+-------------+-------------+------+-------|
-# | id                  | ID               | integer(8)  | NOT NULL PK |      |       |
-# | to_user_id          | To user          | integer(8)  | NOT NULL    |      | A     |
-# | from_user_id        | From user        | integer(8)  |             |      | B     |
-# | question_id         | Question         | integer(8)  |             |      | C     |
-# | question_message_id | Question message | integer(8)  |             |      | D     |
-# | title               | タイトル         | string(255) |             |      |       |
-# | body                | 内容             | string(512) |             |      |       |
-# | opened_at           | Opened at        | datetime    |             |      |       |
-# | created_at          | 作成日時         | datetime    | NOT NULL    |      |       |
-# | updated_at          | 更新日時         | datetime    | NOT NULL    |      |       |
-# |---------------------+------------------+-------------+-------------+------+-------|
+# |---------------------+------------------+------------+-------------+--------------+-------|
+# | name                | desc             | type       | opts        | refs         | index |
+# |---------------------+------------------+------------+-------------+--------------+-------|
+# | id                  | ID               | integer(8) | NOT NULL PK |              |       |
+# | question_message_id | Question message | integer(8) | NOT NULL    |              | A     |
+# | user_id             | User             | integer(8) | NOT NULL    | => ::User#id | B     |
+# | opened_at           | Opened at        | datetime   |             |              |       |
+# | created_at          | 作成日時         | datetime   | NOT NULL    |              |       |
+# | updated_at          | 更新日時         | datetime   | NOT NULL    |              |       |
+# |---------------------+------------------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_many :actb_room_messages
+#--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #

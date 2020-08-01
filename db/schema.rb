@@ -203,8 +203,8 @@ ActiveRecord::Schema.define(version: 2020_07_25_112108) do
   end
 
   create_table "actb_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "question_message_id", comment: "問題コメ"
+    t.bigint "question_message_id", null: false, comment: "問題コメント"
+    t.bigint "user_id", null: false, comment: "通知先"
     t.datetime "opened_at", comment: "開封日時"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

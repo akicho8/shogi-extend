@@ -305,24 +305,16 @@ DROP TABLE IF EXISTS `actb_notifications`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `actb_notifications` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `to_user_id` bigint(20) NOT NULL COMMENT '送信先',
-  `from_user_id` bigint(20) DEFAULT NULL COMMENT '送信元',
-  `question_id` bigint(20) DEFAULT NULL COMMENT '問題',
-  `question_message_id` bigint(20) DEFAULT NULL COMMENT '問題コメ',
-  `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'タイトル',
-  `body` varchar(512) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本文',
+  `question_message_id` bigint(20) NOT NULL COMMENT '問題コメント',
+  `user_id` bigint(20) NOT NULL COMMENT '通知先',
   `opened_at` datetime DEFAULT NULL COMMENT '開封日時',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_actb_notifications_on_to_user_id` (`to_user_id`),
-  KEY `index_actb_notifications_on_from_user_id` (`from_user_id`),
-  KEY `index_actb_notifications_on_question_id` (`question_id`),
   KEY `index_actb_notifications_on_question_message_id` (`question_message_id`),
-  CONSTRAINT `fk_rails_33b11979d7` FOREIGN KEY (`to_user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `fk_rails_7bced87fe6` FOREIGN KEY (`question_message_id`) REFERENCES `actb_question_messages` (`id`),
-  CONSTRAINT `fk_rails_90c9d8313f` FOREIGN KEY (`question_id`) REFERENCES `actb_questions` (`id`),
-  CONSTRAINT `fk_rails_cc1fb843a3` FOREIGN KEY (`from_user_id`) REFERENCES `users` (`id`)
+  KEY `index_actb_notifications_on_user_id` (`user_id`),
+  CONSTRAINT `fk_rails_35cb18483c` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_7bced87fe6` FOREIGN KEY (`question_message_id`) REFERENCES `actb_question_messages` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actb_ox_marks`;
@@ -739,6 +731,23 @@ CREATE TABLE `free_battles` (
   KEY `index_free_battles_on_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `mute_infos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mute_infos` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT 'オーナー',
+  `target_user_id` bigint(20) NOT NULL COMMENT '対象',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_mute_infos_on_user_id_and_target_user_id` (`user_id`,`target_user_id`),
+  KEY `index_mute_infos_on_user_id` (`user_id`),
+  KEY `index_mute_infos_on_target_user_id` (`target_user_id`),
+  CONSTRAINT `fk_rails_1f6612f566` FOREIGN KEY (`target_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_dc31a836d4` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `profiles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1106,6 +1115,9 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200725112102'),
 ('20200725112103'),
 ('20200725112104'),
-('20200725112105');
+('20200725112105'),
+('20200725112106'),
+('20200725112107'),
+('20200725112108');
 
 

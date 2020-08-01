@@ -1,3 +1,23 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Notification (actb_notifications as Actb::Notification)
+#
+# |---------------------+------------------+------------+-------------+--------------+-------|
+# | name                | desc             | type       | opts        | refs         | index |
+# |---------------------+------------------+------------+-------------+--------------+-------|
+# | id                  | ID               | integer(8) | NOT NULL PK |              |       |
+# | question_message_id | Question message | integer(8) | NOT NULL    |              | A     |
+# | user_id             | User             | integer(8) | NOT NULL    | => ::User#id | B     |
+# | opened_at           | Opened at        | datetime   |             |              |       |
+# | created_at          | 作成日時         | datetime   | NOT NULL    |              |       |
+# | updated_at          | 更新日時         | datetime   | NOT NULL    |              |       |
+# |---------------------+------------------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_many :actb_room_messages
+#--------------------------------------------------------------------------------
+
 # 問題にコメントしたときの通知
 module Actb
   # rails r "tp User.first.notifications.create!(question_message: Actb::QuestionMessage.first)"
