@@ -243,6 +243,13 @@ class User < ApplicationRecord
     end
   end
 
+  concerning :XyRerordMethods do
+    included do
+      # rails r "tp User.first.xy_records"
+      has_many :xy_records, dependent: :destroy
+    end
+  end
+
   concerning :TagMethods do
     included do
       acts_as_taggable_on :permit_tags
