@@ -19,8 +19,8 @@
 # |---------------+------------+------------+-------------+------------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Actb::BattleMembership.has_many :histories, foreign_key: :membership_id
 # User.has_many :actb_room_messages
-# 【警告:リレーション欠如】Actb::BattleMembershipモデルで has_many :actb/histories されていません
 #--------------------------------------------------------------------------------
 
 module Actb
