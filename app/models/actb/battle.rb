@@ -36,6 +36,7 @@ module Actb
     belongs_to :rule
 
     # has_many :messages, class_name: "RoomMessage", dependent: :destroy
+    has_many :histories, dependent: :destroy
     has_many :memberships, -> { order(:position) }, class_name: "BattleMembership", dependent: :destroy, inverse_of: :battle
     has_many :users, through: :memberships
     belongs_to :parent, class_name: "Battle", optional: true # 連戦したときの前の部屋
