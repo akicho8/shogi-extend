@@ -2,33 +2,34 @@
   .column
     = render 'devise/shared/links'
 
-    .card
-      .card-content
-        .title.is-4
-          | とても面倒なログイン
-        = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f|
-          .field
-            .control.has-icons-left.has-icons-right
-              = f.email_field(:email, autofocus: false, class: 'input', placeholder: "メールアドレス")
-              span.icon.is-small.is-left
-                i.fas.fa-envelope
+    - if AppConfig[:id_pw_login]
+      .card
+        .card-content
+          .title.is-4
+            | とても面倒なログイン
+          = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f|
+            .field
+              .control.has-icons-left.has-icons-right
+                = f.email_field(:email, autofocus: false, class: 'input', placeholder: "メールアドレス")
+                span.icon.is-small.is-left
+                  i.fas.fa-envelope
 
-          .field
-            .control.has-icons-left
-              = f.password_field :password, autocomplete: 'off', class: 'input', placeholder: "パスワード"
-              span.icon.is-small.is-left
-                i.fas.fa-lock
+            .field
+              .control.has-icons-left
+                = f.password_field :password, autocomplete: 'off', class: 'input', placeholder: "パスワード"
+                span.icon.is-small.is-left
+                  i.fas.fa-lock
 
-          - if devise_mapping.rememberable?
+            - if devise_mapping.rememberable?
+              .field
+                .control
+                  .checkbox
+                    = f.label :remember_me do
+                      = f.check_box :remember_me
+                      =<> t('.remember_me', default: 'Remember me')
+
             .field
               .control
-                .checkbox
-                  = f.label :remember_me do
-                    = f.check_box :remember_me
-                    =<> t('.remember_me', default: 'Remember me')
+                = f.submit t('.sign_in', default: 'Sign in'), class: 'button is-primary'
 
-          .field
-            .control
-              = f.submit t('.sign_in', default: 'Sign in'), class: 'button is-primary'
-
-        br
+          br
