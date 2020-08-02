@@ -238,7 +238,12 @@ module Actb
 
       self.good_rate ||= nil
 
-      self.lineage ||= Lineage.fetch("詰将棋")
+      if Rails.env.test?
+        self.lineage_key ||= "手筋"
+      end
+
+      self.lineage_key ||= "詰将棋"
+
       self.source_about ||= SourceAbout.fetch(:ascertained)
 
       self.key ||= SecureRandom.hex

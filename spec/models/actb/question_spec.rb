@@ -95,7 +95,7 @@ module Actb
 
     describe "属性" do
       it do
-        assert { question1.lineage.name == "詰将棋" }
+        assert { question1.lineage.name }
       end
     end
 

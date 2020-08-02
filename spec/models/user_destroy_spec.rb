@@ -39,7 +39,7 @@ RSpec.describe User, type: :model do
 | Actb::Room             |      1 |     1 |    0 |
 | Actb::Judge            |      4 |     4 |    0 |
 | Actb::Battle           |      1 |     1 |    0 |
-| Actb::Rule             |     12 |    12 |    0 |
+| Actb::Rule             |     13 |    13 |    0 |
 | Actb::Season           |      1 |     1 |    0 |
 | Actb::Skill            |     21 |    21 |    0 |
 | Actb::Lineage          |      8 |     8 |    0 |
@@ -47,8 +47,47 @@ RSpec.describe User, type: :model do
 EOT
   end
 end
-# >> .
-# >>
-# >> Finished in 1.73 seconds (files took 2.3 seconds to load)
-# >> 1 example, 0 failures
-# >>
+# >> Run options: exclude {:slow_spec=>true}
+# >> |------------------------+--------+-------+------|
+# >> | model                  | before | after | diff |
+# >> |------------------------+--------+-------+------|
+# >> | Actb::Folder           |      6 |     3 |   -3 |
+# >> | Actb::Question         |      1 |     0 |   -1 |
+# >> | Actb::MovesAnswer      |      1 |     0 |   -1 |
+# >> | User                   |      2 |     1 |   -1 |
+# >> | Actb::SeasonXrecord    |      2 |     1 |   -1 |
+# >> | Actb::MainXrecord      |      2 |     1 |   -1 |
+# >> | Actb::Setting          |      2 |     1 |   -1 |
+# >> | Actb::GoodMark         |      1 |     0 |   -1 |
+# >> | Actb::BadMark          |      1 |     0 |   -1 |
+# >> | Actb::ClipMark         |      1 |     0 |   -1 |
+# >> | Actb::QuestionMessage  |      1 |     0 |   -1 |
+# >> | Actb::LobbyMessage     |      1 |     0 |   -1 |
+# >> | Actb::RoomMembership   |      2 |     1 |   -1 |
+# >> | Actb::BattleMembership |      2 |     1 |   -1 |
+# >> | Actb::RoomMessage      |      0 |     0 |    0 |
+# >> | Actb::Room             |      1 |     1 |    0 |
+# >> | Actb::Judge            |      4 |     4 |    0 |
+# >> | Actb::Battle           |      1 |     1 |    0 |
+# >> | Actb::Rule             |     13 |    13 |    0 |
+# >> | Actb::Season           |      1 |     1 |    0 |
+# >> | Actb::Skill            |     21 |    21 |    0 |
+# >> | Actb::Lineage          |      8 |     8 |    0 |
+# >> |------------------------+--------+-------+------|
+# >> F
+# >> 
+# >> Failures:
+# >> 
+# >>   1) User works
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:20:in `block (2 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 1.84 seconds (files took 2.32 seconds to load)
+# >> 1 example, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:6 # User works
+# >> 
