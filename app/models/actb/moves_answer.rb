@@ -106,9 +106,25 @@ module Actb
         end
       end
 
+      # 「玉方持駒限定の似非詰将棋」なら持駒が不足していることを確認する
+      if errors.empty?
+        if (will_save_change_to_attribute?(:moves_str) || true) && moves_str
+          if question.lineage.pure_info.mochigomagentei
+            info = Converter.parse(sfen)
+            piece_box = info.mediator.not_enough_piece_box # 足りない駒が入っている箱
+            if (piece_box[:king] || 0) == 1                # 玉の数が1個残っている場合は削除する
+              piece_box.add(king: -1)
+            end
+            if piece_box.values.all?(&:zero?)
+              errors.add(:base, "玉方の持駒が限定されていません")
+            end
+          end
+        end
+      end
+
       # 「詰将棋」か「玉方持駒限定の似非詰将棋」か「実戦詰め筋」なら詰んでいることを確認
       if errors.empty?
-        if will_save_change_to_attribute?(:moves_str) && moves_str
+        if (will_save_change_to_attribute?(:moves_str) || true) && moves_str
           if question.lineage.pure_info.mate_validate_on
             if question.mate_skip?
               # 「最後は無駄合」なのでチェックしない
