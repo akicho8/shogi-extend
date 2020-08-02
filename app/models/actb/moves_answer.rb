@@ -35,7 +35,7 @@ module Actb
     validate do
       # 不正な手がないことを確認
       if errors.empty?
-        if will_save_change_to_attribute?(:moves_str) && moves_str
+        if (will_save_change_to_attribute?(:moves_str) || true) && moves_str
           begin
             Converter.parse(sfen)
           rescue Bioshogi::BioshogiError => error
@@ -46,7 +46,7 @@ module Actb
 
       # 同じ組み合わせがないことを確認
       if errors.empty?
-        if will_save_change_to_attribute?(:moves_str) && moves_str
+        if (will_save_change_to_attribute?(:moves_str) || true) && moves_str
           # 配置が同じ問題たちを取得
           s = Question.active_only.where(init_sfen: question.read_attribute(:init_sfen))
           if persisted?
@@ -63,7 +63,7 @@ module Actb
 
       # 「詰将棋」なら先手の駒が余っていないことを確認する
       if errors.empty?
-        if will_save_change_to_attribute?(:moves_str) && moves_str
+        if (will_save_change_to_attribute?(:moves_str) || true) && moves_str
           if question.lineage.pure_info.black_piece_zero_check_on
             info = Converter.parse(sfen)
             if info.mediator.opponent_player.piece_box.empty?
@@ -77,12 +77,12 @@ module Actb
 
       # 「詰将棋」なら持駒が不足していないことを確認
       if errors.empty?
-        if will_save_change_to_attribute?(:moves_str) && moves_str
+        if (will_save_change_to_attribute?(:moves_str) || true) && moves_str
           if question.lineage.pure_info.piece_counts_check_on
             info = Converter.parse(sfen)
             piece_box = info.mediator.not_enough_piece_box # 足りない駒が入っている箱
             if (piece_box[:king] || 0) == 1                # 玉の数が1個残っている場合は削除する
-              piece_box.safe_add(king: -1)
+              piece_box.add(king: -1)
             end
             if piece_box.values.any?(&:nonzero?)
               message = piece_box.collect { |key, count|
