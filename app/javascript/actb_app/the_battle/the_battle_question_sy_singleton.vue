@@ -16,7 +16,7 @@
       :theme="app.config.sp_theme"
       :human_side_key="'none'"
     )
-    .wakatta_button.has-text-centered
+    .wakatta_button.has-text-centered.mt-3
       b-button.has-text-weight-bold(@click="app.wakatta_handle(false)" type="is-primary" :disabled="app.current_mi.otetuki_p(app.current_question.id)") わかった
       b-button.has-text-weight-bold(@click="app.skip_handle(false)" v-if="false") SKIP
 
@@ -40,7 +40,7 @@
       @update:turn_offset="app.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
-    .akirameru_button.has-text-centered
+    .mt-3.has-text-centered
       b-button(@click="app.x2_play_timeout_handle(false)") あきらめる
 
   template(v-if="app.x_mode === 'x3_see'")
@@ -60,10 +60,10 @@
       :theme="app.config.sp_theme"
       @update:turn_offset="v => app.share_turn_offset = v"
     )
-    .akirameru_button
+    .mt-3.has-text-centered
       b-button.is-invisible
 
-  .has-text-centered.tags_container(v-if="app.debug_read_p")
+  .has-text-centered.mt-3(v-if="app.debug_read_p")
     //- p 難易度:{{app.current_question.difficulty_level}}
     b-taglist.is-centered
       b-tag(v-if="app.current_question.title") {{app.current_question.title}}
@@ -96,10 +96,4 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .the_battle_question_sy_singleton
-  .tags_container
-    margin-top: 0.7rem
-  .wakatta_button
-    margin-top: 0.7rem
-  .akirameru_button
-    margin-top: 0.7rem
 </style>

@@ -27,6 +27,9 @@ module Actb
     :otetuki_release_p               => false, # おてつき解除可能か？
     :turn_limit_lazy_count           => 4,     # 3手詰なら○手足した手数まで操作できる
 
+    # マラソンモード
+    :akirameru_deru_jikan            => 1,     # 「あきらめる」がでるまでの秒数
+
     # -------------------------------------------------------------------------------- バトル部屋チャット
     :room_messages_display_p         => true,  # 部屋でのチャット表示
     :room_messages_window_height     => 10,    # 部屋での表示行数
@@ -65,6 +68,7 @@ module Actb
         :api_questions_fetch_per     => 50,    # 問題一覧での1ページあたりの表示件数
         :self_is_left_side_p         => true,  # 自分を左に表示
         :turm_max_limit              => 7,     # 手数制限
+        :akirameru_deru_jikan        => 15,    # 「あきらめる」がでるまでの秒数
       })
   end
 end

@@ -21,8 +21,10 @@
     @update:turn_offset="v => app.share_turn_offset = v"
     @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
   )
+  .has-text-centered.mt-3
+    b-button(@click="app.kotae_sentaku('timeout')" :disabled="app.main_interval_count < app.config.akirameru_deru_jikan") あきらめる
 
-  .has-text-centered.tags_container(v-if="app.debug_read_p")
+  .has-text-centered.mt-3(v-if="app.debug_read_p")
     //- p 難易度:{{app.current_question.difficulty_level}}
     b-taglist.is-centered
       b-tag(v-if="app.current_question.title") {{app.current_question.title}}
@@ -54,8 +56,4 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .the_battle_question_sy_marathon
-  .tags_container
-    margin-top: 0.7rem
-  .wakatta_button
-    margin-top: 0rem
 </style>
