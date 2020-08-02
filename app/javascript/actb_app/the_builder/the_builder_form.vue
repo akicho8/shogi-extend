@@ -26,6 +26,9 @@
     //- https://buefy.org/documentation/taginput
     b-taginput(v-model="$parent.question.owner_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
 
+  b-field(v-if="lineage_info.mate_validate_on")
+    b-switch(v-model="$parent.question.mate_skip" size="is-small") 最後は無駄合い (なので詰みチェックしない)
+
   b-collapse.mt-6(:open="source_author_collapse_open_p")
     b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 作者が他者の場合
     .box.py-5.mt-2
@@ -79,6 +82,12 @@ export default {
         this.say(v)
       },
     },
+    "question.mate_skip": {
+      handler(v) {
+        this.sound_play("click")
+        this.say(v)
+      },
+    },
     "question.folder_key": {
       handler(v) {
         const folder_info = this.$parent.FolderInfo.fetch(v)
@@ -102,7 +111,8 @@ export default {
     },
   },
   computed: {
-    question() { return this.$parent.question            },
+    question()     { return this.$parent.question                                     },
+    lineage_info() { return this.$parent.LineageInfo.fetch(this.question.lineage_key) },
   },
 }
 </script>

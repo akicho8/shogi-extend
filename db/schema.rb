@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_112108) do
+ActiveRecord::Schema.define(version: 2020_07_25_112110) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -273,6 +273,7 @@ ActiveRecord::Schema.define(version: 2020_07_25_112108) do
     t.string "direction_message", comment: "メッセージ"
     t.bigint "source_about_id", comment: "所在"
     t.integer "turn_max", comment: "最大手数"
+    t.boolean "mate_skip", comment: "詰みチェックをスキップする"
     t.index ["bad_marks_count"], name: "index_actb_questions_on_bad_marks_count"
     t.index ["clip_marks_count"], name: "index_actb_questions_on_clip_marks_count"
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"

@@ -104,7 +104,7 @@ module FrontendScript
       # http://localhost:3000/script/actb-app.json?remote_action=builder_form_resource_fetch
       def builder_form_resource_fetch
         {
-          LineageInfo: Actb::LineageInfo.as_json(only: [:key, :name, :type]),
+          LineageInfo: Actb::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on]),
           FolderInfo:  Actb::FolderInfo.as_json(only: [:key, :name, :icon, :type]),
         }
       end

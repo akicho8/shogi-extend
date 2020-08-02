@@ -88,6 +88,7 @@ module Actb
         :time_limit_sec      => 10.seconds,
         :moves_answers       => [],
         :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
+        :mate_skip           => false,
 
         :difficulty_level    => 1,
         :lineage_key         => "詰将棋",
@@ -158,6 +159,7 @@ module Actb
           :hint_desc,
           :direction_message,
           :turn_max,
+          :mate_skip,
 
           :source_author,
           :source_media_name,
@@ -240,6 +242,13 @@ module Actb
       self.source_about ||= SourceAbout.fetch(:ascertained)
 
       self.key ||= SecureRandom.hex
+
+      if lineage.pure_info.mate_validate_on
+        self.mate_skip ||= false
+      else
+        # 手筋などのときは詰みチェックをニュートラルにしとく
+        self.mate_skip = nil
+      end
     end
 
     with_options presence: true do
@@ -320,6 +329,7 @@ module Actb
               :description,
               :hint_desc,
               :direction_message,
+              :mate_skip,
 
               :source_about_key,
               :source_author,
@@ -433,6 +443,7 @@ module Actb
             :description,
             :hint_desc,
             :direction_message,
+            :mate_skip,
             :owner_tag_list,
             :source_author,
             :source_media_url,
