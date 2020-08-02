@@ -60,6 +60,20 @@ module Actb
           end
         end
       end
+
+      # 「詰将棋」なら先手の駒が余っていないことを確認する
+      if errors.empty?
+        if will_save_change_to_attribute?(:moves_str) && moves_str
+          if question.lineage.pure_info.black_piece_zero_check_on
+            info = Converter.parse(sfen)
+            if info.mediator.opponent_player.piece_box.empty?
+              # 攻め手の持駒は空なのでOK
+            else
+              errors.add(:base, "攻め方の持駒が残っています。持駒が残る場合は「実戦詰め筋」とかにしてください")
+            end
+          end
+        end
+      end
     end
 
     after_validation do
