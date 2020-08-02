@@ -220,6 +220,7 @@ export const application_battle = {
         this.seikai_user_niha_maru(mi, ox_mark_info) // 正解時は正解したユーザーが送信者なので正解者には○
 
         if (ox_mark_info.key === "timeout") {
+          mi.score_add(-1)
           mi.ox_list.push("timeout")
         }
 
