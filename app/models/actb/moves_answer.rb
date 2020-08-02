@@ -74,6 +74,37 @@ module Actb
           end
         end
       end
+
+      # 「詰将棋」なら持駒が不足していないことを確認
+      if errors.empty?
+        if will_save_change_to_attribute?(:moves_str) && moves_str
+          if question.lineage.pure_info.piece_counts_check_on
+            info = Converter.parse(sfen)
+            piece_box = info.mediator.not_enough_piece_box # 足りない駒が入っている箱
+            if (piece_box[:king] || 0) == 1                # 玉の数が1個残っている場合は削除する
+              piece_box.safe_add(king: -1)
+            end
+            if piece_box.values.any?(&:nonzero?)
+              message = piece_box.collect { |key, count|
+                if count.nonzero?
+                  piece = Bioshogi::Piece.fetch(key)
+                  ary = []
+                  ary << "#{piece.name}が#{count.abs}つ"
+                  if count.negative?
+                    ary << "多い"
+                  end
+                  if count.positive?
+                    ary << "少ない"
+                  end
+                  ary.join
+                end
+              }.compact.join("のと")
+
+              errors.add(:base, "駒の数が変です。正確には#{message}です。玉方の持駒を限定している詰将棋は「玉方持駒限定の似非詰将棋」にしといてください")
+            end
+          end
+        end
+      end
     end
 
     after_validation do
