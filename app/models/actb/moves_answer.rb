@@ -105,6 +105,24 @@ module Actb
           end
         end
       end
+
+      # 「詰将棋」か「玉方持駒限定の似非詰将棋」か「実戦詰め筋」なら詰んでいることを確認
+      if errors.empty?
+        if will_save_change_to_attribute?(:moves_str) && moves_str
+          if question.lineage.pure_info.mate_validate_on
+            if question.mate_skip?
+              # 「最後は無駄合」なのでチェックしない
+            else
+              info = Converter.parse(sfen)
+              if info.mediator.current_player.my_mate?
+                # 詰んでいる
+              else
+                errors.add(:base, "局面が難しすぎます。無駄合いの場合は「最後は無駄合い」に ON にしといてください。詰みチェックしなくなります")
+              end
+            end
+          end
+        end
+      end
     end
 
     after_validation do
