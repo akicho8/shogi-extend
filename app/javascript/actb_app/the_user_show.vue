@@ -24,12 +24,12 @@
             p.title {{ov_user_info.statistics.total_o_count}}
         .level-item.has-text-centered
           div
-            p.heading 正解率
-            p.title {{float_to_perc(total_o_rate)}} %
-        .level-item.has-text-centered
-          div
             p.heading 不正解数
             p.title {{ov_user_info.statistics.total_x_count}}
+        .level-item.has-text-centered
+          div
+            p.heading 正解率
+            p.title {{float_to_perc(total_o_rate)}} %
 
       nav.level.is-mobile.level_nav.mt-3
         .level-item.has-text-centered(v-if="false")
@@ -60,16 +60,16 @@
             p.title {{ov_user_info.statistics.active_questions_count}}
         .level-item.has-text-centered
           div
-            p.heading 高評価率
-            p.title {{float_to_perc(ov_user_info.statistics.questions_good_rate_average)}} %
-        .level-item.has-text-centered
-          div
             p.heading 高評価数
             p.title {{ov_user_info.statistics.questions_good_marks_total}}
         .level-item.has-text-centered
           div
             p.heading 低評価数
             p.title {{ov_user_info.statistics.questions_bad_marks_total}}
+        .level-item.has-text-centered
+          div
+            p.heading 高評価率
+            p.title {{float_to_perc(ov_user_info.statistics.questions_good_rate_average)}} %
 
       .box.description.has-background-white-ter.is-shadowless.is-size-7.mt-4(v-if="ov_user_info.description" v-html="auto_link(ov_user_info.description)")
 </template>
