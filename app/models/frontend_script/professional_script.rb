@@ -42,7 +42,7 @@ require "open-uri"
 
 module FrontendScript
   class ProfessionalScript < ::FrontendScript::Base
-    self.script_name = "指導対局"
+    self.script_name = "将棋ウォーズ十段の成績"
 
     def script_body
       user_infos_hash = user_infos_fetch.inject({}) { |a, e| a.merge(e[:key].downcase => e) }
