@@ -6,7 +6,7 @@
     shogi_player(
       :run_mode="'view_mode'"
       :kifu_body="yomikonda_sfen"
-      :start_turn="-1"
+      :start_turn="start_turn"
       :key_event_capture="false"
       :slider_show="true"
       :controller_show="true"
@@ -30,12 +30,16 @@ export default {
     support,
   ],
   props: {
-    yomikonda_sfen: { type: String, required: true, },
+    yomikonda_sfen: { type: String, required: true,              },
+    start_turn:     { type: Number, required: true, default: -1, },
   },
   data() {
     return {
       kyokumen_kimeta_sfen: null,
     }
+  },
+  created() {
+    this.debug_alert(`start_turn: ${this.start_turn}`)
   },
   methods: {
     mediator_snapshot_sfen_set(sfen) {
