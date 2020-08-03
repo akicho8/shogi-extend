@@ -285,10 +285,10 @@ export default {
       this.__assert__(this.$ac_lobby == null, "this.$ac_lobby == null")
       this.$ac_lobby = this.ac_subscription_create({channel: "Actb::LobbyChannel"})
 
-      this.after_lobby_setup()
+      this.ov_redirect_onece()
     },
 
-    after_lobby_setup() {
+    ov_redirect_onece() {
       if (this.redirect_counter >= 1) {
         return
       }
