@@ -480,6 +480,7 @@ export default {
       this.ac_unsubscribe("$ac_lobby")
     },
 
+    // 問題一覧「+」
     builder_handle() {
       this.revision_safe()
       if (this.mode === "builder") {
