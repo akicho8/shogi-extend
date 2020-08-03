@@ -11,7 +11,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 詰将棋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: G*5b
 - key: a022f1d45ccd3460f6da8008843269e4
@@ -39,7 +39,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 詰将棋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: N*7d 8b9b G*8b
   - moves_str: N*7d 8b7a G*8b
@@ -54,7 +54,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 詰将棋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: N*2c
 - key: cbd6adcc26c6ae176a04a92450f2cf27
@@ -68,7 +68,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 詰将棋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: N*2c 1a2a G*3a
   - moves_str: N*2c 2b2c G*1b
@@ -83,7 +83,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 実戦詰め筋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b7c
   - moves_str: S*7a 8b7a G*6b 7a8b 6b7b 8b9b 7b8b
@@ -98,7 +98,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 実戦詰め筋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: B*7a 8b9b P*9c 8a9c G*8b
 - key: 0dcbb33d060d3507dc29f46f23f82643
@@ -112,7 +112,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 詰将棋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: L*9c 8a9c 8b8a
 - key: b0538a0efd2a8ee173d6fd11160fcf4f
@@ -126,7 +126,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 詰将棋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: L*2b 3a2b G*3b
 - key: cba9132a42f676ae206d3017b848b764
@@ -140,7 +140,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 詰将棋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: G*2b 2a2b N*3d 2b2a G*2b
   - moves_str: G*2b 2a2b N*3d 2b1b G*2b
@@ -155,7 +155,7 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 詰将棋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: N*4c
   - moves_str: N*6c
@@ -170,6 +170,6 @@
   source_media_name:
   source_media_url:
   source_published_on:
-  lineage_key: 詰将棋
+  lineage_key: 手筋
   moves_answers:
   - moves_str: N*7d
