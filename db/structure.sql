@@ -400,6 +400,7 @@ CREATE TABLE `actb_questions` (
   `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'メッセージ',
   `source_about_id` bigint(20) DEFAULT NULL COMMENT '所在',
   `turn_max` int(11) DEFAULT NULL COMMENT '最大手数',
+  `mate_skip` tinyint(1) DEFAULT NULL COMMENT '詰みチェックをスキップする',
   PRIMARY KEY (`id`),
   KEY `index_actb_questions_on_key` (`key`),
   KEY `index_actb_questions_on_user_id` (`user_id`),
@@ -1118,6 +1119,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200725112105'),
 ('20200725112106'),
 ('20200725112107'),
-('20200725112108');
+('20200725112108'),
+('20200725112109'),
+('20200725112110');
 
 

@@ -1,3 +1,21 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Moves answer (actb_moves_answers as Actb::MovesAnswer)
+#
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | name            | desc            | type        | opts        | refs | index |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
+# | question_id     | Question        | integer(8)  | NOT NULL    |      | A     |
+# | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
+# | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
+# | end_sfen        | End sfen        | string(255) |             |      |       |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# | moves_human_str | Moves human str | string(255) |             |      |       |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+
 require 'rails_helper'
 
 module Actb
