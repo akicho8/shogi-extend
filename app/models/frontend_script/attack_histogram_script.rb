@@ -4,6 +4,8 @@ module FrontendScript
     self.visibility_hidden = true
 
     def script_body
+      ogp_params_set
+
       counts_hash = Rails.cache.fetch(self.class.name, :expires_in => 1.days) do
         # DBに入っているものを取得
         tags = Swars::Membership.tag_counts_on("#{tactic_key}_tags")

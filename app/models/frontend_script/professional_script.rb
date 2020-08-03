@@ -45,6 +45,8 @@ module FrontendScript
     self.script_name = "将棋ウォーズ十段の成績"
 
     def script_body
+      ogp_params_set
+
       user_infos_hash = user_infos_fetch.inject({}) { |a, e| a.merge(e[:key].downcase => e) }
 
       grade = Swars::Grade.find_by!(key: "十段")

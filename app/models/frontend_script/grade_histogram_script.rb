@@ -1,8 +1,10 @@
 module FrontendScript
   class GradeHistogramScript < ::FrontendScript::Base
-    self.script_name = "段級位ヒストグラム"
+    self.script_name = "将棋ウォーズ段級位分布"
 
     def script_body
+      ogp_params_set
+
       counts_hash = Rails.cache.fetch(self.class.name, :expires_in => 1.days) do
         Swars::User.group(:grade).count.inject({}) { |a, (e, count)| a.merge(e.name => count) }
       end

@@ -3,6 +3,8 @@ module FrontendScript
     self.script_name = "将棋ウォーズ急上昇者"
 
     def script_body
+      ogp_params_set
+
       rows = user_keys.collect do |key|
         row = {}
 

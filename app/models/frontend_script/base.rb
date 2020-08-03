@@ -28,6 +28,7 @@ module FrontendScript
       options = {
         title: visible_title,
         image: ogp_image_web_path_presence,
+        card: ogp_image_inside_path.exist? ? :summary_large_image : :summary,
         description: "",
       }.merge(options)
 
