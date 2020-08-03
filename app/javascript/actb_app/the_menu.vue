@@ -11,7 +11,7 @@ import { background_grey } from "./background_grey.js"
 import the_menu_root from "./the_menu_root.vue"
 import the_menu_etc from "./the_menu_etc.vue"
 import the_menu_sound from "./the_menu_sound.vue"
-import the_menu_system from "./the_menu_system.vue"
+import the_menu_debug from "./the_menu_debug.vue"
 import the_footer from "./the_footer.vue"
 
 export default {
@@ -24,7 +24,7 @@ export default {
     the_menu_root,
     the_menu_etc,
     the_menu_sound,
-    the_menu_system,
+    the_menu_debug,
     the_footer,
   },
   created() {

@@ -3,8 +3,8 @@
   .primary_header
     .header_center_title その他
   .menu_buttons
+    b-button(expanded @click="app.menu_to('the_menu_debug')" type="is-danger" v-if="permit_staff_p") デバッグモード
     b-button(expanded @click="app.menu_to('the_menu_sound')") サウンドテスト
-    b-button(expanded @click="app.menu_to('the_menu_system')" v-if="permit_staff_p") システム設定
     b-button(expanded tag="a" href="/" @click="sound_play('click')") TOP
     b-button(expanded @click="app.menu_to('the_menu_root')") もどる
 </template>
