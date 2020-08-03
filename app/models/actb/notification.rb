@@ -34,6 +34,9 @@ module Actb
       as_json({
           only: [:id, :opened_at],
           include: {
+            user: {
+              only: [:id],
+            },
             question_message: {
               only: [:body, :created_at],
               include: {

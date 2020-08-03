@@ -33,6 +33,7 @@ export const application_notification = {
     notification_singlecasted(params) {
       const notification = params.notification
       if (this.current_user) {
+        this.__assert__(notification.user, "notification.user")
         if (notification.user.id !== this.current_user.id) {
           this.debug_alert("他人に届いたのは無視(自分に届く場合もある)")
           return
