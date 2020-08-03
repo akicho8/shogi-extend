@@ -283,14 +283,12 @@ export default {
 
       this.debug_alert("lobby_setup")
       this.__assert__(this.$ac_lobby == null, "this.$ac_lobby == null")
-      this.$ac_lobby = this.ac_subscription_create({channel: "Actb::LobbyChannel"}, {
-        connected: () => {
-          this.ov_change_onece()
-        },
-      })
+      this.$ac_lobby = this.ac_subscription_create({channel: "Actb::LobbyChannel"})
+
+      this.after_lobby_setup()
     },
 
-    ov_change_onece() {
+    after_lobby_setup() {
       if (this.redirect_counter >= 1) {
         return
       }
