@@ -59,6 +59,7 @@ module FrontendScript
       case
       when e = current_question
         ogp_params_set({
+            :card        => :summary_large_image,
             :title       => e.title_with_author,
             :description => e.description,
             :image       => e.shared_image_params,
