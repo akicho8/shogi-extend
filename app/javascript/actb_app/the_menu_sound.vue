@@ -14,8 +14,9 @@
     b-button(expanded @click="sound_play('draw')")    引き分け
     b-button(expanded @click="sound_play('pishi')")   駒音
     b-button(expanded @click="sound_play('bell1')")   挑戦者現る
-    b-button(expanded @click="sound_play('bell2')")   ベル2
-    b-button(expanded @click="sound_play('pon')")     ぽん
+    b-button(expanded @click="sound_play('bell2')")   ベル2 (未使用)
+    b-button(expanded @click="sound_play('pon')")     ぽん (練習終了)
+    b-button(expanded @click="sound_play('notify')")  コメント通知
     b-button(expanded @click="voice_exercise")        発声練習
     b-button(expanded @click="app.menu_to('the_menu_etc')") もどる
 </template>

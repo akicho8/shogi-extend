@@ -37,6 +37,7 @@ export const application_notification = {
           this.debug_alert("他人に届いたのは無視(自分に届く場合もある)")
           return
         }
+        this.sound_play("notify")
         this.ok_notice(this.notification_to_s(notification))
         this.notifications = [notification, ...this.notifications]
         this.unopen_count += 1
