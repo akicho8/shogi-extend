@@ -16,6 +16,7 @@
 # |------------+------------+-------------+-------------+------+-------|
 
 module Actb
+  # rails r "Actb::Season.create!; tp Actb::Season"
   class Season < ApplicationRecord
     has_many :xrecords, class_name: "Actb::SeasonXrecord", dependent: :destroy
 

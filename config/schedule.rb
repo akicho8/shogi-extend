@@ -35,8 +35,9 @@ every("0 3 * * 6")  { command "sudo certbot renew"             }
 every("15 4 * * *") { command "sudo systemctl restart sidekiq" }
 
 if @environment == "production"
-  every("30 4 * * *") { command %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction --result-file /var/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql shogi_web_production) }
-  every("45 4 * * *") { command %(ruby -r fileutils -e 'files = Dir["/var/backup/*.sql"].sort; FileUtils.rm(files - files.last(10))') }
+  every("30 4 * * *")   { command %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction --result-file /var/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql shogi_web_production) }
+  every("45 4 * * *")   { command %(ruby -r fileutils -e 'files = Dir["/var/backup/*.sql"].sort; FileUtils.rm(files - files.last(10))') }
+  every("0  0 1 * *")   { runner %(Actb::Season.create!) }
   # every("31 9 * * *") do
   #   command "sudo certbot renew --force-renew"
   # end
