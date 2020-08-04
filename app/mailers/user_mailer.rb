@@ -11,12 +11,13 @@ class UserMailer < ApplicationMailer
 
     attrs[:provider] = user.provider_name
     attrs[:user_agent] = user.user_agent
+    attrs[:twitter_key] = user.twitter_key
 
     out = []
-    out << attrs.to_t
+    out << attrs.collect { |key, val| "#{key}: #{val}" }
     body = out.join("\n")
 
-    mail(fixed_format(subject: subject_decorate("#{user.name}さんが#{user.provider_name}で登録されました"), body: body))
+    mail(subject: subject_decorate("#{user.name}さんが#{user.provider_name}で登録されました"), body: body)
   end
 
   # 問題の作者に通知
