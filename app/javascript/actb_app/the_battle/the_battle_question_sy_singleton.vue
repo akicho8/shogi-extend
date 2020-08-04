@@ -13,8 +13,8 @@
       :flip="flip_if_white(app.current_question.init_sfen)"
       :summary_show="false"
       :setting_button_show="false"
-      :size="'default'"
       :theme="app.config.sp_theme"
+      :size="app.config.sp_size"
       :human_side_key="'none'"
     )
     .wakatta_button.has-text-centered.mt-3
@@ -33,12 +33,12 @@
       :flip="flip_if_white(app.current_question.init_sfen)"
       :summary_show="false"
       :setting_button_show="false"
-      :size="'default'"
       :sound_effect="true"
       :volume="0.5"
       :human_side_key="'both'"
       :controller_show="false"
       :theme="app.config.sp_theme"
+      :size="app.config.sp_size"
       @update:turn_offset="app.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
@@ -55,12 +55,12 @@
       :start_turn="-1"
       :summary_show="false"
       :setting_button_show="false"
-      :size="'default'"
       :sound_effect="false"
       :volume="0.5"
       :human_side_key="'none'"
       :controller_show="false"
       :theme="app.config.sp_theme"
+      :size="app.config.sp_size"
       @update:turn_offset="v => app.share_turn_offset = v"
     )
     .mt-3.has-text-centered

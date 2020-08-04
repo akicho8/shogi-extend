@@ -21,7 +21,8 @@ module Actb
     :ox_status_line_take_n           => 8,        # 上の○×行は最新何個表示する？
     :readygo_delay                   => 2.2,      # 「対戦開始！」の待ち
     :deden_delay                     => 0.8,      # 「デデン」の待ち
-    :sp_theme                        => "simple", # 将棋盤のタイプ
+    :sp_theme                        => "real",   # 将棋盤のタイプ
+    :sp_size                         => "medium", # 将棋盤の大きさ
 
     # シングルトンモード
     :otetuki_release_p               => false, # おてつき解除可能か？
@@ -69,6 +70,7 @@ module Actb
         :self_is_left_side_p         => true,  # 自分を左に表示
         :turm_max_limit              => 9,     # 手数制限
         :akirameru_deru_jikan        => 15,    # 「あきらめる」がでるまでの秒数
+        :sp_theme                    => "simple", # 将棋盤のタイプ
       })
   end
 end
