@@ -23,7 +23,7 @@
             | {{row.question.display_author}}
             span.is-size-11 作
         .question_description.is-size-7(v-if="row.question.description")
-          | {{string_truncate(row.question.description)}}
+          | {{string_truncate(row.question.description, {length: 18*2})}}
       .bottom_block.is-flex
         the_history_row_vote(:row="row")
 </template>
