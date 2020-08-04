@@ -31,16 +31,12 @@ every("5 3 * * *") do
   ].join(";")
 end
 
-every("0 3 * * 6")  { command "sudo certbot renew"             }
 every("15 4 * * *") { command "sudo systemctl restart sidekiq" }
 
 if @environment == "production"
   every("30 4 * * *") { command %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction --result-file /var/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql shogi_web_production) }
   every("45 4 * * *") { command %(ruby -r fileutils -e 'files = Dir["/var/backup/*.sql"].sort; FileUtils.rm(files - files.last(10))') }
   every("0 0 1 * *")  { runner %(Actb::Season.create!) }
-  # every("31 9 * * *") do
-  #   command "sudo certbot renew --force-renew"
-  # end
 end
 
 # every("30 6 * * *")   { runner "Swars::Battle.import(:expert_import, sleep: 5)"                                                                  }
@@ -48,3 +44,19 @@ end
 # every("30 5 * * *")    { runner "Swars::Battle.import(:remake)"                                                                                   }
 # every("0 */3 * * *")  { runner "General::Battle.import(:all_import, sample: 100)"                                                                }
 # every("0 6 * * *")    { runner "General::Battle.import(:old_record_destroy)"                                                                     }
+
+################################################################################ 証明書更新
+#
+# 時間を無視して取得するテストをするときは --dry-run をつける
+#
+if @environment == "production"
+  every("30 2 * * *") do
+    command %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d www.shogi-extend.com)
+    command %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d     shogi-extend.com)
+  end
+end
+if @environment == "staging"
+  every("30 2 * * *") do
+    command %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d shogi-flow.xyz)
+  end
+end
