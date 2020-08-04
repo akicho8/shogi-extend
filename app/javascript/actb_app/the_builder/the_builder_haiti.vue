@@ -15,12 +15,27 @@
     ref="main_sp"
     )
   .footer_buttons
+    .buttons.has-addons.is-centered.are-small.mt-3
+      b-button(@click="$refs.main_sp.mediator.shuffle_apply(3)") 3
+      b-button(@click="$refs.main_sp.mediator.shuffle_apply(4)") 4
+      b-button(@click="$refs.main_sp.mediator.shuffle_apply(5)") 5
+      b-button(@click="$refs.main_sp.mediator.shuffle_apply(6)") 6
+      .ml-1
+      b-button(icon-left="arrow-left"  @click="$refs.main_sp.mediator.slide_xy(-1, 0)")
+      b-button(icon-left="arrow-down"  @click="$refs.main_sp.mediator.slide_xy(0, 1)")
+      b-button(icon-left="arrow-up"    @click="$refs.main_sp.mediator.slide_xy(0, -1)")
+      b-button(icon-left="arrow-right" @click="$refs.main_sp.mediator.slide_xy(1, 0)")
+      .ml-1
+      b-button(@click="$refs.main_sp.mediator.king_formation_auto_set()") 置
+      b-button(@click="$refs.main_sp.mediator.king_formation_auto_unset()") 収
+
     .buttons.is-centered.are-small.is-marginless.mt-3
       piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
       kento_button(tag="a" :href="kento_app_with_params_url" target="_blank")
       kif_copy_button(@click="kifu_copy_handle") コピー
     .buttons.is-centered.are-small.is-marginless.mt-3
       b-button(@click="any_source_read_handle") 棋譜の読み込み
+
 </template>
 
 <script>
