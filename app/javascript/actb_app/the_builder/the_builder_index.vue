@@ -141,6 +141,7 @@
           shogi_player(
             :run_mode="'view_mode'"
             :kifu_body="props.row.init_sfen"
+            :flip="flip_if_white(props.row.init_sfen)"
             :start_turn="0"
             :summary_show="false"
             :slider_show="false"

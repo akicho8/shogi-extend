@@ -126,7 +126,7 @@ export default {
     // こういうときは引数を渡して変化したかどうかとかそんなまわりくどいことはせずに
     // 直接更新すればいい
     kyokumen_set(str) {
-      this.$refs.main_sp.api_sfen_or_kif_set(str)
+      this.new_kifu_body = str
       this.piece_box_piece_couns_adjust()
     },
 

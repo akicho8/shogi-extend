@@ -6,6 +6,7 @@
   shogi_player(
     :run_mode="'play_mode'"
     :kifu_body="$parent.question.init_sfen"
+    :flip="flip_if_white($parent.question.init_sfen)"
     :start_turn="0"
     :slider_show="true"
     :controller_show="true"

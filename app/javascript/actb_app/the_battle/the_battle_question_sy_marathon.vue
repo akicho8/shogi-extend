@@ -9,6 +9,7 @@
     ref="main_sp"
     :run_mode="'play_mode'"
     :kifu_body="app.current_question.init_sfen"
+    :flip="flip_if_white(app.current_question.init_sfen)"
     :summary_show="false"
     :setting_button_show="false"
     :size="'default'"
