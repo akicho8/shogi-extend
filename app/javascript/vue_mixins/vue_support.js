@@ -318,9 +318,9 @@ export default {
 
     // 後手から始まるか？
     flip_if_white(sfen) {
-      return false
-      // const info = this.sfen_parse(sfen)
-      // return info.location_base.key === "white"
+      // return false
+      const info = this.sfen_parse(sfen)
+      return info.location_base.key === "white"
     },
   },
 
