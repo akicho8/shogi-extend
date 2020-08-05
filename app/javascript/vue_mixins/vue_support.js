@@ -3,13 +3,6 @@
 import Bowser from "bowser"
 import qs from "qs"
 
-import dayjs from "dayjs"
-import "dayjs/locale/ja.js"
-dayjs.locale('ja')
-
-const relativeTime = require('dayjs/plugin/relativeTime')
-dayjs.extend(relativeTime)
-
 import SfenParser from "shogi-player/src/sfen_parser.js"
 
 // import { isMobile } from "buefy/src/utils/helpers.js"
@@ -121,10 +114,6 @@ export default {
       return this.location_url_without_hash().replace(window.location.search, "")
     },
 
-    dayjs_format(time, format) {
-      return dayjs(time).format(format)
-    },
-
     // // 他のウィンドウで開く
     // url_open(url) {
     //   // this.process_now()
@@ -232,47 +221,6 @@ export default {
       if (path.match(/^http/)) {
         alert(`すでにフルURL化されている : ${path}`)
       }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    row_time_format(t) {
-      const date = dayjs(t)
-      const diff_day = dayjs().diff(date, "day")
-      const diff_year = dayjs().diff(date, "year")
-      if (diff_day < 1) {
-        return date.format("HH:mm")
-      }
-      if (diff_year < 1) {
-        return date.format("M/D HH:mm")
-      }
-      return date.format("YYYY-MM-DD")
-    },
-
-    // 「N分前」形式
-    diff_time_format(t) {
-      return dayjs(t).fromNow()
-    },
-
-    date_to_custom_format(t) {
-      return dayjs(t).format(this.md_or_yyyymmdd_format(t))
-    },
-
-    md_or_yyyymmdd_format(t) {
-      const date = dayjs(t)
-      if (date.year() === dayjs().year()) {
-        return "M / D"
-      } else {
-        return "YYYY-MM-DD"
-      }
-    },
-
-    date_to_ymd(t) {
-      return dayjs(t).format("YYYY-MM-DD")
-    },
-
-    date_to_wday(t) {
-      return dayjs(t).format("ddd")
     },
 
     ////////////////////////////////////////////////////////////////////////////////
