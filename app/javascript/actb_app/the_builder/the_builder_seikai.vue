@@ -28,7 +28,7 @@
         shogi_player(
           :run_mode="'view_mode'"
           :kifu_body="$parent.full_sfen_build(e)"
-          :flip="flip_if_white(e.question.init_sfen)"
+          :flip="flip_if_white($parent.question.init_sfen)"
           :start_turn="-1"
           :debug_mode="false"
           :key_event_capture="false"
