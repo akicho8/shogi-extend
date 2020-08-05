@@ -26,13 +26,15 @@
       b-button(icon-left="arrow-up"    @click="$refs.main_sp.mediator.slide_xy(0, -1)")
       b-button(icon-left="arrow-right" @click="$refs.main_sp.mediator.slide_xy(1, 0)")
       .ml-1
-      b-button(@click="$refs.main_sp.mediator.king_formation_auto_set()") 置
+      b-button(@click="$refs.main_sp.mediator.king_formation_auto_set()") 玉
       b-button(@click="$refs.main_sp.mediator.king_formation_auto_unset()") 収
 
     .buttons.is-centered.are-small.is-marginless.mt-3
       piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
       kento_button(tag="a" :href="kento_app_with_params_url" target="_blank")
       kif_copy_button(@click="kifu_copy_handle") コピー
+      b-button(tag="a" href="http://www.kukiminsho.com/tdb/searches/" target="_blank" size="is-small") 検
+
     .buttons.is-centered.are-small.is-marginless.mt-3
       b-button(@click="any_source_read_handle") 棋譜の読み込み
 
