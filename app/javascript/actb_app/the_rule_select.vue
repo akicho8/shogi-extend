@@ -7,14 +7,25 @@
 
   .buttons.is-centered.rule_buttons
     template(v-for="row in app.RuleInfo.values")
-      template(v-if="row.display_p || development_p")
-        b-button(@click="app.rule_key_set_handle(row)" :class="{'is_active': app.matching_user_ids_hash[row.key].length >= 1}" expanded)
+      template(v-if="row.time_active_p || app.practice_p || development_p")
+        b-button(@click="app.rule_key_set_handle(row)" :class="{'is_active': app.matching_user_ids_hash[row.key].length >= 1}" expanded :disabled="app.config.rule_time_enable && !app.practice_p && !row.time_active_p")
           span.has-text-weight-bold
             | {{row.name}}
             template(v-if="app.debug_read_p")
-              | ({{app.matching_user_ids_hash[row.key].length}})
+              | (待:{{app.matching_user_ids_hash[row.key].length}})
+            template(v-if="app.config.rule_time_enable && row.time_active_p")
+              | ★
           .description.is-size-8.has-text-grey.mt-1
             | {{row.description}}
+          .time_ranges.is-size-8.has-text-grey.mt-1.has-text-weight-bold(v-if="app.config.rule_time_enable")
+            template(v-for="range in row.normalized_time_ranges")
+              span.mx-1
+                template(v-if="app.RuleInfo.time_active_p(range)")
+                  span.has-text-danger
+                    | {{range.beg.format("HH:mm")}}〜{{range.end.format("HH:mm")}}
+                template(v-else)
+                  span
+                    | {{range.beg.format("HH:mm")}}〜{{range.end.format("HH:mm")}}
           .has-text-primary(v-if="app.matching_user_ids_hash[row.key].length >= 1")
             b-icon(icon="account")
 </template>

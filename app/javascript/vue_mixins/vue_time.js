@@ -4,9 +4,9 @@ import dayjs from "dayjs"
 import "dayjs/locale/ja.js"
 dayjs.locale('ja')
 
-// https://github.com/iamkun/dayjs/blob/master/docs/ja/Plugin.md#isbetween
-import isBetween from 'dayjs/plugin/isBetween'
-dayjs.extend(isBetween)
+// // https://github.com/iamkun/dayjs/blob/master/docs/ja/Plugin.md#isbetween
+// import isBetween from 'dayjs/plugin/isBetween'
+// dayjs.extend(isBetween)
 
 // https://github.com/iamkun/dayjs/blob/master/docs/ja/Plugin.md#relativetime
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -14,6 +14,12 @@ dayjs.extend(relativeTime)
 
 export default {
   methods: {
+    // debug console 用
+    // GVI.dayjs()
+    dayjs(...args) {
+      return dayjs(...args)
+    },
+
     dayjs_format(time, format) {
       return dayjs(time).format(format)
     },
