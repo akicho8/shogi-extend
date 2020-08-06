@@ -42,9 +42,9 @@ export default {
   margin-top: 1rem
   padding: 0 0.5rem
   .messages_box
-    height: 42.5vh
+    height: 32.5vh
     +desktop
-      height: 62vh
+      height: 52vh
     padding: 0.5rem
     overflow-y: scroll
 

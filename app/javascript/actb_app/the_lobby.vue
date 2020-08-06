@@ -37,10 +37,12 @@
   the_lobby_ac_info
   .title.is-4.has-text-centered.mb-1 将棋トレーニングバトル
   .buttons.is-centered.mt-4.is-marginless
-    b-button.has-text-weight-bold.is_start_button(@click="app.start_handle(false)" :type="{'is-primary': app.battle_time_active_p}" size="is-large")
-      | 対人戦<br>
-      | {{app.config.battle_time_range.beg}} 〜
-      | {{app.config.battle_time_range.end}}
+    b-button.has-text-weight-bold.is_start_button(@click="app.start_handle(false)" :type="{'is-primary': app.battle_time_active_p}")
+      | 対人戦
+      template(v-if="app.config.rule_time_enable")
+        | <br>
+        | {{app.config.battle_time_range.beg}} 〜
+        | {{app.config.battle_time_range.end}}
   .buttons.is-centered.mt-2
     b-button.has-text-weight-bold(@click="app.start_handle(true)" size="is-small") 練習
 

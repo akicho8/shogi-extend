@@ -334,17 +334,15 @@ export default {
       this.sound_play("click")
       this.revision_safe()
 
-      if (practice_p) {
-        if (this.battle_time_active_p) {
-          this.warning_notice("対人戦が有効なときは練習できません")
-          if (!this.development_p) {
+      if (this.app.config.rule_time_enable) {
+        if (practice_p) {
+          if (this.battle_time_active_p) {
+            this.warning_notice("対人戦が有効なときは練習できません")
             return
           }
-        }
-      } else {
-        if (!this.battle_time_active_p) {
-          this.warning_notice("開催時間におこしください。それまでは練習をどうぞ")
-          if (!this.development_p) {
+        } else {
+          if (!this.battle_time_active_p) {
+            this.warning_notice("開催時間におこしください。それまでは練習をどうぞ")
             return
           }
         }
@@ -568,6 +566,11 @@ export default {
 
     // 開催期間中か？
     battle_time_active_p() {
+      // 時間が有効でなければ常に開催中
+      if (!this.app.config.rule_time_enable) {
+        return true
+      }
+
       return this.RuleInfo.time_range_active_p(this.app.config.battle_time_range)
     },
   },
