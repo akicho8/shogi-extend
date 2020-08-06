@@ -24,27 +24,28 @@
       .mt-3
         //- https://buefy.org/documentation/tag/
         b-field(grouped group-multiline position="is-centered")
-          .control.is-size-7.is_clickable(@click.native="app.ov_user_info_set(question.user.id)")
-            .is-flex
-              span.has-text-grey
+          .control
+            b-tag.is_clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
+              .is-flex
                 template(v-if="question.source_author || question.source_about_key === 'unknown'")
                   | 投稿
                 template(v-else)
                   | 作者
-              .image.is-16x16.avatar_image.ml-1
-                img.is-rounded(:src="question.user.avatar_path")
-              .ml-1.has-text-weight-bold
-                | {{question.user.name}}
+                .image.is-16x16.avatar_image.ml-1
+                  img.is-rounded(:src="question.user.avatar_path")
+                .ml-1 {{question.user.name}}
 
-          .control.is-size-7
-            span.has-text-grey 出題
-            span.has-text-weight-bold.mx-1 {{question.histories_count}}
-            span.has-text-grey 回
+          .control
+            b-tag
+              | 出題
+              span.mx-1 {{question.histories_count}}
+              | 回
 
-          .control.is-size-7
-            span.has-text-grey 正解率
-            span.has-text-weight-bold.mx-1 {{float_to_perc(question.ox_record.o_rate || 0)}}
-            span.has-text-grey %
+          .control
+            b-tag
+              | 正解率
+              span.mx-1 {{float_to_perc(question.ox_record.o_rate || 0)}}
+              | %
 
     b-tabs.mt-2(v-model="tab_index" @change="tab_change_handle" expanded)
       b-tab-item(label="配置")
@@ -78,11 +79,12 @@
 
     .mt-6
       b-field(grouped group-multiline position="is-centered")
-        .control.is-size-7
-          span.has-text-grey 種類
-          span.has-text-weight-bold.ml-1 {{question.lineage_key}}
+        .control
+          b-tag
+            | 種類
+            span.ml-1 {{question.lineage_key}}
 
-        .control.is-size-7
+        .control
           b-tag
             | 高評価
             span.mx-1 {{float_to_perc(question.good_rate)}}
@@ -91,7 +93,7 @@
     .mt-5(v-if="question.source_author || question.source_media_name || question.source_media_url")
       b-field(grouped group-multiline position="is-centered")
         template(v-if="question.source_about_key === 'unknown' || question.source_author")
-          .control.is-size-7
+          .control
             b-tag
               | 作者
               span.ml-1
@@ -101,7 +103,7 @@
                   | {{question.source_author}}
 
         template(v-if="question.source_media_name")
-          .control.is-size-7
+          .control
             b-tag
               | 出典
               span.ml-1 {{question.source_media_name}}
