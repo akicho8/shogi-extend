@@ -33,7 +33,7 @@
       piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
       kento_button(tag="a" :href="kento_app_with_params_url" target="_blank")
       kif_copy_button(@click="kifu_copy_handle") コピー
-      b-button(tag="a" href="http://www.kukiminsho.com/tdb/searches/" target="_blank" size="is-small") 検
+      b-button(tag="a" href="http://www.kukiminsho.com/tdb/searches/" target="_blank" size="is-small") 同
 
     .buttons.is-centered.are-small.is-marginless.mt-3
       b-button(@click="any_source_read_handle") 棋譜の読み込み
