@@ -337,12 +337,16 @@ export default {
       if (practice_p) {
         if (this.battle_time_active_p) {
           this.warning_notice("対人戦が有効なときは練習できません")
-          return
+          if (!this.development_p) {
+            return
+          }
         }
       } else {
         if (!this.battle_time_active_p) {
           this.warning_notice("開催時間におこしください。それまでは練習をどうぞ")
-          return
+          if (!this.development_p) {
+            return
+          }
         }
       }
 

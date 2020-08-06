@@ -7,7 +7,7 @@
 
   .buttons.is-centered.rule_buttons
     template(v-for="row in app.RuleInfo.values")
-      template(v-if="row.time_range_active_p || app.practice_p || development_p")
+      template(v-if="rule_display_p(row)")
         b-button(@click="app.rule_key_set_handle(row)" :class="{'is_active': app.matching_user_ids_hash[row.key].length >= 1}" expanded)
           //- :disabled="app.config.rule_time_enable && !app.practice_p && !row.time_range_active_p"
           span.has-text-weight-bold
@@ -41,6 +41,23 @@ export default {
     support,
     background_grey,
   ],
+  methods: {
+    rule_display_p(row) {
+      if (this.development_p) {
+        // return true
+      }
+      if (!this.app.practice_p) {
+        if (row.practice_only) {
+          return false
+        }
+      }
+      if (!row.display_p) {
+        return false
+      }
+
+      return true
+    },
+  },
 }
 </script>
 

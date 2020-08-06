@@ -8,7 +8,7 @@ module Actb
     :action_cable_debug              => true, # ActionCable関連デバッグモード
     :user_name_required              => true, # 「名無し」であれば名前を入力してもらう
     :rule_time_enable                => true, # ルールの開催期間制限
-    :battle_time_range               => { beg: "23:00", end: "23:15" },
+    :battle_time_range               => { :beg => "00:00", :end => "23:55" },
 
     # -------------------------------------------------------------------------------- マッチング
     :matching_gap_base               => 7,  # ○**カウンター
@@ -73,6 +73,12 @@ module Actb
         :turm_max_limit              => 9,     # 手数制限
         :akirameru_deru_jikan        => 15,    # 「あきらめる」がでるまでの秒数
         :sp_theme                    => "simple", # 将棋盤のタイプ
+      })
+  end
+
+  if Rails.env.production?
+    Config.update({
+        :battle_time_range           => { :beg => "23:00", :end => "23:15" },
       })
   end
 end
