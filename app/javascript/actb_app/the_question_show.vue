@@ -33,18 +33,18 @@
                   | 作者
                 .image.is-16x16.avatar_image.ml-1
                   img.is-rounded(:src="question.user.avatar_path")
-                .ml-1 {{question.user.name}}
+                .has-text-weight-bold.ml-1 {{question.user.name}}
 
           .control
             b-tag
               | 出題
-              span.mx-1 {{question.histories_count}}
+              span.has-text-weight-bold.mx-1 {{question.histories_count}}
               | 回
 
           .control
             b-tag
               | 正解率
-              span.mx-1 {{float_to_perc(question.ox_record.o_rate || 0)}}
+              span.has-text-weight-bold.mx-1 {{float_to_perc(question.ox_record.o_rate || 0)}}
               | %
 
     b-tabs.mt-2(v-model="tab_index" @change="tab_change_handle" expanded)
@@ -82,12 +82,12 @@
         .control
           b-tag
             | 種類
-            span.ml-1 {{question.lineage_key}}
+            span.has-text-weight-bold.ml-1 {{question.lineage_key}}
 
         .control
           b-tag
             | 高評価
-            span.mx-1 {{float_to_perc(question.good_rate)}}
+            span.has-text-weight-bold.mx-1 {{float_to_perc(question.good_rate)}}
             | %
 
     .mt-5(v-if="question.source_author || question.source_media_name || question.source_media_url")
@@ -96,7 +96,7 @@
           .control
             b-tag
               | 作者
-              span.ml-1
+              span.has-text-weight-bold.ml-1
                 template(v-if="question.source_about_key === 'unknown'")
                   | 不詳
                 template(v-else)
@@ -106,9 +106,9 @@
           .control
             b-tag
               | 出典
-              span.ml-1 {{question.source_media_name}}
-              span.ml-1(v-if="question.source_published_on")
-                | ({{question.source_published_on}})
+              span.has-text-weight-bold
+                span.ml-1 {{question.source_media_name}}
+                span.ml-1(v-if="question.source_published_on") ({{question.source_published_on}})
 
       template(v-if="question.source_media_url")
         .has-text-centered.mt-0.is-size-7
