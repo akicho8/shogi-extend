@@ -8,13 +8,14 @@ module Actb
     :action_cable_debug              => true, # ActionCable関連デバッグモード
     :user_name_required              => true, # 「名無し」であれば名前を入力してもらう
     :rule_time_enable                => false, # ルールの開催期間制限
-    :battle_time_range               => { :beg => "00:00", :end => "23:55" },
+    :battle_time_ranges              => [{:beg => "00:00", :end => "23:00" }, {:beg => "23:00", :end => "23:55" }],
 
     # -------------------------------------------------------------------------------- マッチング
     :matching_gap_base               => 7,  # ○**カウンター
     :matching_pow_base               => 50, # gap < 2**(○+カウンター) ならマッチングする
     :matching_interval_second        => 3,  # カウンターをインクリメントする間隔(秒)
     :matching_forgo_second           => 10, # ○秒たったらマッチングを諦める(nullなら無限)
+    :matching_cancel_possible_second => 2,  # ○秒たったらマッチングを諦めることができる(nullなら諦めることができない)
 
     # -------------------------------------------------------------------------------- バトル中の設定
     # 共通
@@ -62,24 +63,23 @@ module Actb
 
   if Rails.env.staging? || Rails.env.production?
     Config.update({
-        :room_messages_display_p     => false, # 部屋でのチャット表示
-        :matching_pow_base           => 6,     # gap < 2**(○+カウンター) ならマッチングする
-        :matching_interval_second    => 4,     # カウンターをインクリメントする間隔(秒)
-        :room_messages_window_height => 5,     # 部屋での表示行数
-        :matching_forgo_second       => 60*5,  # ○秒たったらマッチングを諦める(nullなら無限)
-        :action_cable_debug          => false, # ActionCable関連デバッグモード
-        :api_questions_fetch_per     => 50,    # 問題一覧での1ページあたりの表示件数
-        :self_is_left_side_p         => true,  # 自分を左に表示
-        :turm_max_limit              => 9,     # 手数制限
-        :akirameru_deru_jikan        => 15,    # 「あきらめる」がでるまでの秒数
-        :sp_theme                    => "simple", # 将棋盤のタイプ
-      })
-  end
-
-  if Rails.env.production?
-    Config.update({
-        :battle_time_range           => { :beg => "23:00", :end => "23:15" },
-        :rule_time_enable            => true, # ルールの開催期間制限
+        :room_messages_display_p         => false,    # 部屋でのチャット表示
+        :matching_pow_base               => 6,        # gap < 2**(○+カウンター) ならマッチングする
+        :matching_interval_second        => 4,        # カウンターをインクリメントする間隔(秒)
+        :room_messages_window_height     => 5,        # 部屋での表示行数
+        :matching_forgo_second           => 60*5,     # ○秒たったらマッチングを諦める(nullなら無限)
+        :matching_cancel_possible_second => 10,       # ○秒たったらマッチングを諦めることができる
+        :action_cable_debug              => false,    # ActionCable関連デバッグモード
+        :api_questions_fetch_per         => 50,       # 問題一覧での1ページあたりの表示件数
+        :self_is_left_side_p             => true,     # 自分を左に表示
+        :turm_max_limit                  => 9,        # 手数制限
+        :akirameru_deru_jikan            => 15,       # 「あきらめる」がでるまでの秒数
+        :sp_theme                        => "simple", # 将棋盤のタイプ
+        :rule_time_enable                => true,     # ルールの開催期間制限
+        :battle_time_ranges              => [
+          # { :beg => "12:45", :end => "13:00" },
+          { :beg => "23:00", :end => "23:15" },
+        ],
       })
   end
 end

@@ -571,7 +571,7 @@ export default {
         return true
       }
 
-      return this.RuleInfo.time_range_active_p(this.app.config.battle_time_range)
+      return this.RuleInfo.time_ranges_active_p(this.app.config.battle_time_ranges)
     },
   },
 }

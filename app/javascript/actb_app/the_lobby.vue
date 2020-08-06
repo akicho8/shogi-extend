@@ -41,8 +41,8 @@
       | 対人戦
       template(v-if="app.config.rule_time_enable")
         | <br>
-        | {{app.config.battle_time_range.beg}} 〜
-        | {{app.config.battle_time_range.end}}
+        template(v-for="e in app.config.battle_time_ranges")
+          .is-size-7 {{e.beg}} - {{e.end}}
   .buttons.is-centered.mt-2
     b-button.has-text-weight-bold(@click="app.start_handle(true)" size="is-small") 練習
 

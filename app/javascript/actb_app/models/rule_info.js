@@ -21,6 +21,10 @@ export class RuleInfo extends MemoryRecord {
     return dayjs().isBetween(beg, end, null, "[)") // (beg...end).cover?(now)
   }
 
+  static time_ranges_active_p(list) {
+    return list.some(e => this.time_range_active_p(e))
+  }
+
   // // 今日の時間帯に調整した範囲を返す
   // // おわりが 25:00 の場合は昨日からの換算とする
   // static beg_end_to_objects(e) {
