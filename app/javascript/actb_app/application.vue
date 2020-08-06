@@ -329,9 +329,22 @@ export default {
     },
 
     start_handle(practice_p) {
-      this.revision_safe()
-      this.sound_play("click")
       if (this.login_required2()) { return }
+
+      this.sound_play("click")
+      this.revision_safe()
+
+      if (practice_p) {
+        if (this.battle_time_active_p) {
+          this.warning_notice("対人戦が有効なときは練習できません")
+          return
+        }
+      } else {
+        if (!this.battle_time_active_p) {
+          this.warning_notice("開催時間におこしください。それまでは練習をどうぞ")
+          return
+        }
+      }
 
       this.practice_p = practice_p
 
@@ -547,6 +560,11 @@ export default {
     // ある程度使ってくれているユーザーか？
     regular_p() {
       return this.current_user && this.current_user.regular_p
+    },
+
+    // 開催期間中か？
+    battle_time_active_p() {
+      return this.RuleInfo.time_range_active_p(this.app.config.battle_time_range)
     },
   },
 }

@@ -7,7 +7,8 @@ module Actb
     :rating_display_p                => true, # 内部レーティングを表示する？
     :action_cable_debug              => true, # ActionCable関連デバッグモード
     :user_name_required              => true, # 「名無し」であれば名前を入力してもらう
-    :rule_time_enable                => false, # ルールの開催期間制限
+    :rule_time_enable                => true, # ルールの開催期間制限
+    :battle_time_range               => { beg: "23:00", end: "23:15" },
 
     # -------------------------------------------------------------------------------- マッチング
     :matching_gap_base               => 7,  # ○**カウンター

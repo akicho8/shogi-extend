@@ -41,7 +41,7 @@ module Actb
               :b_score_max_for_win,  # 指定ポイント取得で勝ちとする
             ],
             methods: [
-              :js_time_ranges,        # 有効な時間
+              # :js_time_ranges,        # 有効な時間
               :raw_time_ranges,
             ],
           })
@@ -56,20 +56,20 @@ module Actb
       super
     end
 
-    def time_ranges2
-      (time_ranges || []).collect { |range|
-        raise ArgumentError, range.inspect unless range.exclude_end?
-        a = Time.zone.parse(range.begin)
-        b = Time.zone.parse(range.end)
-        a...b
-      }
-    end
+    # def time_ranges2
+    #   (time_ranges || []).collect { |range|
+    #     raise ArgumentError, range.inspect unless range.exclude_end?
+    #     a = Time.zone.parse(range.begin)
+    #     b = Time.zone.parse(range.end)
+    #     a...b
+    #   }
+    # end
 
-    def js_time_ranges
-      time_ranges2.collect { |range|
-        { beg: range.begin, end: range.end }
-      }
-    end
+    # def js_time_ranges
+    #   time_ranges2.collect { |range|
+    #     { beg: range.begin, end: range.end }
+    #   }
+    # end
 
     def raw_time_ranges
       Array(time_ranges).collect { |range|
