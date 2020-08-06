@@ -129,6 +129,12 @@ class User < ApplicationRecord
         profile || create_profile
       end
     end
+
+    def twitter_url
+      if v = twitter_key.presence
+        "https://twitter.com/#{v}"
+      end
+    end
   end
 
   concerning :SysopMethods do

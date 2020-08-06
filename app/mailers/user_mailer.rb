@@ -11,7 +11,7 @@ class UserMailer < ApplicationMailer
 
     attrs[:provider] = user.provider_name
     attrs[:user_agent] = user.user_agent
-    attrs[:twitter_key] = user.twitter_key
+    attrs[:twitter_url] = user.twitter_url
 
     out = []
     out << attrs.collect { |key, val| "#{key}: #{val}" }
