@@ -140,17 +140,17 @@ export default {
   created() {
     if (this.development_p) {
       if (this.permit_staff_p) {
-        this.debug_summary_p = true
+        this.debug_summary_p    = true
         this.debug_force_edit_p = true
-        this.debug_read_p    = true
-        this.debug_write_p   = true
+        this.debug_read_p       = true
+        this.debug_write_p      = true
       }
     }
 
     this.api_get("resource_fetch", {}, e => {
       this.RuleInfo   = RuleInfo.memory_record_reset(e.RuleInfo)
       this.OxMarkInfo = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
-      this.SkillInfo = SkillInfo.memory_record_reset(e.SkillInfo)
+      this.SkillInfo  = SkillInfo.memory_record_reset(e.SkillInfo)
       this.app_setup()
     })
   },
