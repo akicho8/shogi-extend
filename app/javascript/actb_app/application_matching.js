@@ -95,6 +95,15 @@ export const application_matching = {
     matching_trigger_p()         { return (this.matching_interval_timer_count % this.app.config.matching_interval_second) === 0                                    },
     matching_rate_threshold()    { return Math.round(Math.pow(this.app.config.matching_gap_base, this.app.config.matching_pow_base + this.matching_trigger_count)) },
     matching_forgo_p()           { return this.app.config.matching_forgo_second && (this.matching_interval_timer_count >= this.app.config.matching_forgo_second)   },
-    matching_cancel_possible_p() { return this.app.config.matching_cancel_possible_second && this.app.matching_interval_timer_count >= this.app.config.matching_cancel_possible_second }
+
+    matching_cancel_possible_p() {
+      if (this.app.config.rule_time_enable) {
+        const v = this.app.config.matching_cancel_possible_second
+        if (v) {
+          return this.app.matching_interval_timer_count >= v
+        }
+      }
+      return true
+    }
   },
 }

@@ -4,11 +4,11 @@ module Actb
     :actb_display_p                  => true,
 
     # -------------------------------------------------------------------------------- 共通
+    :rule_time_enable                => false, # ルールの開催期間制限
+    :battle_time_ranges              => [{:beg => "00:00", :end => "23:00" }, {:beg => "23:00", :end => "23:55" }],
     :rating_display_p                => true, # 内部レーティングを表示する？
     :action_cable_debug              => true, # ActionCable関連デバッグモード
     :user_name_required              => true, # 「名無し」であれば名前を入力してもらう
-    :rule_time_enable                => false, # ルールの開催期間制限
-    :battle_time_ranges              => [{:beg => "00:00", :end => "23:00" }, {:beg => "23:00", :end => "23:55" }],
 
     # -------------------------------------------------------------------------------- マッチング
     :matching_gap_base               => 7,  # ○**カウンター
@@ -68,7 +68,7 @@ module Actb
         :matching_interval_second        => 4,        # カウンターをインクリメントする間隔(秒)
         :room_messages_window_height     => 5,        # 部屋での表示行数
         :matching_forgo_second           => 60*5,     # ○秒たったらマッチングを諦める(nullなら無限)
-        :matching_cancel_possible_second => 10,       # ○秒たったらマッチングを諦めることができる
+        :matching_cancel_possible_second => 30,       # ○秒たったらマッチングを諦めることができる
         :action_cable_debug              => false,    # ActionCable関連デバッグモード
         :api_questions_fetch_per         => 50,       # 問題一覧での1ページあたりの表示件数
         :self_is_left_side_p             => true,     # 自分を左に表示
