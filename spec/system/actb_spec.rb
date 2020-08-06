@@ -17,7 +17,7 @@ RSpec.describe "将棋トレーニングバトル", type: :system do
 
   it "トップ(ログインあり)" do
     visit "/training?_user_id=#{user1.id}"
-    expect(page).to have_content "START"
+    expect(page).to have_content "対人戦"
     doc_image
   end
 
