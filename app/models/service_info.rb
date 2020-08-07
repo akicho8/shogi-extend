@@ -21,7 +21,7 @@ class ServiceInfo
       display_p: Actb::Config[:actb_display_p],
       link_path: [:training],
       title: "将棋トレーニングバトル！",
-      new_p: true,
+      new_p: false,
       image_source: [
         "actb1_1200x630.png",
         "actb2_1200x630.png",
@@ -29,9 +29,10 @@ class ServiceInfo
       ],
       description: "早押しクイズ形式で将棋の問題を解く力を競う対戦ゲームです",
       feature_items: [
-        "対戦→見直し→対戦のサイクルで棋力アップ(？)",
-        "ランキング上位をめざそう",
-        "アヒル戦法の問題集もあるよ",
+        "棋力アップしません",
+        # "対戦→見直し→対戦のサイクルで棋力アップ(？)",
+        "ランキング上位をめざす必要はありません",
+        "アヒル戦法の誰得問題集があります",
       ],
     },
     {

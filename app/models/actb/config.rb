@@ -2,6 +2,7 @@ module Actb
   Config = {
     :revision                        => 16,
     :actb_display_p                  => true,
+    :promotion_for_training          => true,
 
     # -------------------------------------------------------------------------------- 共通
     :rule_time_enable                => false, # ルールの開催期間制限
