@@ -74,7 +74,7 @@ module Actb
         :self_is_left_side_p             => true,     # 自分を左に表示
         :turm_max_limit                  => 9,        # 手数制限
         :akirameru_deru_jikan            => 15,       # 「あきらめる」がでるまでの秒数
-        :sp_theme                        => "simple", # 将棋盤のタイプ
+        :sp_theme                        => "real",   # 将棋盤のタイプ
         :rule_time_enable                => true,     # ルールの開催期間制限
         :battle_time_ranges              => [
           # { :beg => "12:45", :end => "13:00" },
