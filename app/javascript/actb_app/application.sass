@@ -29,14 +29,14 @@
     position: fixed
     top: 0.5rem
     left: 0.5rem
-    
+
   .primary_header
     @extend %fixed_header
     // b-pulldown を発動したとき .secondary_header の上に来るようにするため 2 にする
     // しかし b-field が 5 なので 6 にする
     // しかし b-field が 5 だと secondary_header より上になるため secondary_header を 6 にすると相対的にこちらは 7 になる
     z-index: 7
-    
+
     background-color: $primary
     color: $white
 
@@ -49,16 +49,16 @@
       &.ljust
         left: 0%
       height: 100%
-      
+
       &.with_icon
         padding: 0 1.6rem
       &.with_text
         padding: 0 0.8rem
-      
+
       display: flex
       justify-content: center
       align-items: center
-      
+
       &.disabled
         cursor: auto
         opacity: 0.5
