@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_room_emotion.footer_nav.is-flex
+.the_room_emotion.footer_nav.is-flex(v-if="!app.room.bot_user_id || development_p")
   //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '🥺', say: 'ぴえん'})") 🥺
   //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '❗❓', say: ''})") ❗❓
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '❗', say: 'びっくり'})") ❗
