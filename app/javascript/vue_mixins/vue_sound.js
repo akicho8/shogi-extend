@@ -3,6 +3,8 @@ import mp3_x        from "../sound_effect/oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
 import mp3_start    from "../sound_effect/oto_logic/Quiz-Question03-1.mp3"
 import mp3_lose     from "../sound_effect/oto_logic/Onmtp-Ding05-1.mp3"
 import mp3_click    from "../sound_effect/oto_logic/Onmtp-Click02-1.mp3"
+import mp3_spon     from "../sound_effect/oto_logic/Onmtp-Pop01-4.mp3"
+
 import mp3_shine    from "../sound_effect/air_labo/eye-shine1.mp3"
 import mp3_stupid   from "../sound_effect/air_labo/stupid4.mp3"
 import mp3_notify   from "../sound_effect/soundeffect_lab/decision29.mp3"
@@ -44,6 +46,7 @@ const SoundPresets = {
   bell2:    { file: mp3_bell2,    volume: 0.3,  },
   pon:      { file: mp3_pon,      volume: 0.5,  },
   notify:   { file: mp3_notify,   volume: 0.5,  },
+  spon:     { file: mp3_spon,     volume: 0.5,  },
 }
 
 export default {

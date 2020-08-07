@@ -18,6 +18,7 @@
     b-button(expanded @click="sound_play('pon')")     ぽん (練習終了)
     b-button(expanded @click="sound_play('notify')")  コメント通知
     b-button(expanded @click="voice_exercise")        発声練習
+    b-button(expanded @click="sound_play('spon')")    エモーション
     b-button(expanded @click="app.menu_to('the_menu_etc')") もどる
 </template>
 
