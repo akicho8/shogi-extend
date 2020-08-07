@@ -6,16 +6,18 @@
   .direction_message.is-size-6(v-if="question.direction_message")
     | {{question.direction_message}}
 
-  .question_user.has-text-weight-bold
-    b-tag
+  .question_user
+    b-tag.mx-1
       template(v-if="question.source_about_key === 'unknown'")
         | 作者不詳
       template(v-else)
-        | {{question.display_author}}作
+        span.has-text-weight-bold
+          | {{question.display_author}}
+        | 作
 
-    b-tag.ml-1(v-if="question.ox_record.ox_total >= 1")
+    b-tag.mx-1(v-if="question.ox_record.ox_total >= 1")
       | 正解率
-      span.mx-1 {{float_to_perc(question.ox_record.o_rate)}}
+      span.has-text-weight-bold.mx-1 {{float_to_perc(question.ox_record.o_rate)}}
       | %
 </template>
 
