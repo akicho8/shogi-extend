@@ -20,7 +20,7 @@ class ServiceInfo
       on_swars_search_p: true,
       display_p: Actb::Config[:actb_display_p],
       link_path: [:training],
-      title: "将棋トレーニングバトル",
+      title: "将棋トレーニングバトル！",
       new_p: true,
       image_source: [
         "actb1_1200x630.png",

@@ -35,7 +35,7 @@
   //- router-view
 
   the_lobby_ac_info
-  .title.is-4.has-text-centered.mb-1 将棋トレーニングバトル
+  .title.is-4.has-text-centered.mb-1 将棋トレーニングバトル！
   .buttons.is-centered.mt-4.is-marginless
     b-button.has-text-weight-bold.is_start_button(@click="app.start_handle(false)" :type="{'is-primary': app.battle_time_active_p}")
       | 対人戦

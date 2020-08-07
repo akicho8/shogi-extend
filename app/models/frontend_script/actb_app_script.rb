@@ -1,4 +1,4 @@
-# 将棋トレーニングバトル
+# 将棋トレーニングバトル！
 #
 # entry
 #   app/models/frontend_script/actb_app_script.rb
@@ -39,7 +39,7 @@ module FrontendScript
 
     include DebugMod
 
-    self.script_name = "将棋トレーニングバトル"
+    self.script_name = "将棋トレーニングバトル！"
     self.page_title = ""
     self.form_position = :bottom
     self.column_wrapper_enable = false
@@ -75,7 +75,7 @@ module FrontendScript
           })
       else
         ogp_params_set({
-            :title       => "将棋トレーニングバトル",
+            :title       => "将棋トレーニングバトル！",
             :description => "クイズ形式で将棋の問題を解く力を競う対戦ゲームです",
             :image       => "actb2_1200x630.png",
           })
