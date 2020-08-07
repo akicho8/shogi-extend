@@ -92,8 +92,55 @@ export const application_room = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
+
+    ac_room_perform(action, params = {}) {
+      let membership = null
+
+      if (params.ms_flip) {
+        this.__assert__(typeof params.ms_flip === "boolean")
+      }
+
+      if (params.ms_flip) {
+        membership = this.room_op_membership
+      } else {
+        membership = this.room_my_membership
+      }
+
+      params = Object.assign({}, {
+        membership_id: membership.id,
+      }, params)
+
+      this.$ac_room.perform(action, params) // --> app/channels/actb/room_channel.rb
+    },
+
+    emotion_handle(params) {
+      this.ac_room_perform("emotion_handle", params) // --> app/channels/actb/room_channel.rb
+    },
+    emotion_handle_broadcasted(params) {
+      if (params.membership_id === this.room_my_membership.id) {
+        this.debug_alert("自分")
+      } else {
+        this.debug_alert("相手")
+      }
+      if (params.plain) {
+        this.$buefy.toast.open({message: params.plain, position: "is-top", queue: false, type: params.type, duration: 1000 * 1})
+        this.say(params.say || params.plain)
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
+    room_my_membership() {
+      const v = this.room.memberships.find(e => e.user.id === this.current_user.id)
+      this.__assert__(v, "room_my_membership is blank")
+      return v
+    },
+    room_op_membership() {
+      const v = this.room.memberships.find(e => e.user.id !== this.current_user.id)
+      this.__assert__(v, "room_op_membership is blank")
+      return v
+    },
     droped_room_messages() {
       return _.takeRight(this.room_messages, this.config.room_message_drop_lines)
     },

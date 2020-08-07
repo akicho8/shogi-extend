@@ -33,6 +33,7 @@
     the_battle_question_sy_marathon(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid'")
     the_battle_question_sy_singleton(v-if="app.current_strategy_key === 'sy_singleton'")
     the_room_message
+    the_room_emotion
 
   //////////////////////////////////////////////////////////////////////////////// シミュレータ
 
@@ -63,6 +64,7 @@ import { support } from "../support.js"
 import dayjs from "dayjs"
 
 import the_room_message                   from "../the_room_message.vue"
+import the_room_emotion                   from "../the_room_emotion.vue"
 import the_battle_membership              from "./the_battle_membership.vue"
 import the_battle_question_sy_marathon  from "./the_battle_question_sy_marathon.vue"
 import the_battle_question_sy_singleton from "./the_battle_question_sy_singleton.vue"
@@ -74,6 +76,7 @@ export default {
     support,
   ],
   components: {
+    the_room_emotion,
     the_room_message,
     the_battle_membership,
     the_battle_question_sy_marathon,

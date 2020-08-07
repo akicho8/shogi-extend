@@ -41,6 +41,10 @@ module Actb
       end
     end
 
+    def emotion_handle(data)
+      broadcast(:emotion_handle_broadcasted, data)
+    end
+
     private
 
     # def battle_leave_handle2(membership)

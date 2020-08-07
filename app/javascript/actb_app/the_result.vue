@@ -55,12 +55,14 @@ import { support } from "./support.js"
 
 import the_result_membership from "./the_result_membership.vue"
 import the_room_message      from "./the_room_message.vue"
+import the_room_emotion      from "./the_room_emotion.vue"
 
 export default {
   mixins: [
     support,
   ],
   components: {
+    the_room_emotion,
     the_room_message,
     the_result_membership,
   },
