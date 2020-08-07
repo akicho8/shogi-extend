@@ -25,7 +25,7 @@ module Actb
     :readygo_delay                   => 2.2,      # 「対戦開始！」の待ち
     :deden_delay                     => 0.8,      # 「デデン」の待ち
     :sp_theme                        => "real",   # 将棋盤のタイプ
-    :sp_size                         => "medium", # 将棋盤の大きさ
+    :sp_size                         => "large",  # 将棋盤の大きさ
 
     # シングルトンモード
     :otetuki_release_p               => false, # おてつき解除可能か？
