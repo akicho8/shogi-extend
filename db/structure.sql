@@ -567,7 +567,7 @@ CREATE TABLE `actb_seasons` (
   KEY `index_actb_seasons_on_generation` (`generation`),
   KEY `index_actb_seasons_on_begin_at` (`begin_at`),
   KEY `index_actb_seasons_on_end_at` (`end_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actb_settings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1121,6 +1121,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200725112107'),
 ('20200725112108'),
 ('20200725112109'),
-('20200725112110');
+('20200725112110'),
+('20200725112111');
 
 
