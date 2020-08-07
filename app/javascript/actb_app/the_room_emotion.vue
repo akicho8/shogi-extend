@@ -8,6 +8,9 @@
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '🍣', say: 'どーぞ'})") 🍣
   //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '🍰', say: 'どーぞ'})") 🍰
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '❓', say: 'わからん？'})") ❓
+  .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '対よろ', say: 'よろしく'})") よ
+  .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '対あり', say: 'ありがとうございました'})") あ
+  .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '相手の指し手は自分で操作するらしいよ', say: '相手の指し手は自分で操作するらしいよ。わかりにくいシステムですね、まったく'})") 教
   //- b-icon.item(icon="thumb-up" @click.stop.native="app.emotion_handle({type: 'is-light', plain: 'いいね'})")
 </template>
 

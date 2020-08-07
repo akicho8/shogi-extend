@@ -123,7 +123,8 @@ export const application_room = {
         this.debug_alert("相手")
       }
       if (params.plain) {
-        this.$buefy.toast.open({message: params.plain, position: "is-top", queue: false, type: params.type, duration: 1000 * 1})
+        this.sound_play("spon")
+        this.$buefy.toast.open({message: params.plain, position: "is-top", queue: false, type: params.type, duration: 1000 * 2})
         this.say(params.say || params.plain)
       }
     },
