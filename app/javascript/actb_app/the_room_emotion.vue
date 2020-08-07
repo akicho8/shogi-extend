@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_room_emotion.footer_nav.is-flex(v-if="!app.room.bot_user_id || development_p")
+.the_room_emotion.footer_nav.is-flex(v-if="!app.room.bot_user_id || development_p || true")
   //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '🥺', say: 'ぴえん'})") 🥺
   //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '❗❓', say: ''})") ❗❓
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '❗', say: 'びっくり'})") ❗
@@ -10,7 +10,7 @@
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '❓', say: 'わからん？'})") ❓
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '対よろ', say: 'よろしく'})") よ
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '対あり', say: 'ありがとうございました'})") あ
-  .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '相手の指し手は自分で操作するらしいよ', say: '相手の指し手は自分で操作するらしいよ。わかりにくいシステムですね、まったく'})") 教
+  .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '相手の指し手は自分で操作するらしいよ', say: '相手の指し手は自分で操作するらしいよ。わかりにくいシステムですね'})") 教
   //- b-icon.item(icon="thumb-up" @click.stop.native="app.emotion_handle({type: 'is-light', plain: 'いいね'})")
 </template>
 
