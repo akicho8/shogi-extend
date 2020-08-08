@@ -35,16 +35,15 @@
   //- router-view
 
   the_lobby_ac_info
-  .title.is-4.has-text-centered.mb-1 将棋トレーニングバトル！
-  .buttons.is-centered.mt-4.is-marginless
-    b-button.has-text-weight-bold.is_start_button(@click="app.start_handle(false)" :type="{'is-primary': app.battle_time_active_p}")
+  .title.is-5.has-text-centered.mb-1 将棋トレーニングバトル！
+
+  .buttons.is-centered.mt-4.is-marginless.are-large.start_buttons
+    b-button.has-text-weight-bold(@click="app.start_handle(false)" :type="{'is-primary': app.battle_time_active_p}")
       | 対人戦
       template(v-if="app.config.rule_time_enable")
-        | <br>
         template(v-for="e in app.config.battle_time_ranges")
           .is-size-7 {{e.beg}} - {{e.end}}
-  .buttons.is-centered.mt-2
-    b-button.has-text-weight-bold(@click="app.start_handle(true)" size="is-small") 練習
+    b-button.has-text-weight-bold(@click="app.start_handle(true)") 練習
 
   the_lobby_message
   the_lobby_debug
@@ -95,10 +94,8 @@ export default {
 
   .title
     margin-top: 2rem
-  .buttons
-    // flex-direction: column
+  .start_buttons
     .button
-      // min-width: 16rem
-      &.is_start_button
-        height: unset
+      min-width: 10rem
+      min-height: 6rem
 </style>
