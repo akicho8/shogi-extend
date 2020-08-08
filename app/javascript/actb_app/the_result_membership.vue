@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_result_membership.is-flex
   //////////////////////////////////////////////////////////////////////////////// ○連勝
-  .straight_win_straight_lose.is-size-8.has-text-weight-bold
+  .straight_win_straight_lose.is-size-8.has-text-weight-bold(v-if="!app.room.bot_user_id")
     template(v-if="xrecord.straight_win_count >= 1")
       .straight_win_count {{xrecord.straight_win_count}}連勝中！
     template(v-else-if="xrecord.straight_lose_count >= 1")
