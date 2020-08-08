@@ -3,6 +3,7 @@
   debug_print(v-if="app.debug_read_p" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.battle.best_questions.length']" oneline)
 
   a.delete.page_delete.is-large.is_top_left_fixed(@click="app.rensyu_yameru_handle" v-if="app.room.bot_user_id")
+  the_room_emotion
 
   //////////////////////////////////////////////////////////////////////////////// ○vs○
   .vs_container.is-flex
@@ -33,7 +34,6 @@
     the_battle_question_sy_marathon(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid'")
     the_battle_question_sy_singleton(v-if="app.current_strategy_key === 'sy_singleton'")
     the_room_message
-    the_room_emotion
 
   //////////////////////////////////////////////////////////////////////////////// シミュレータ
 
