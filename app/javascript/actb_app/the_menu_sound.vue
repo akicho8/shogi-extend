@@ -17,8 +17,8 @@
     b-button(expanded @click="sound_play('bell2')")   ベル2 (未使用)
     b-button(expanded @click="sound_play('pon')")     ぽん (練習終了)
     b-button(expanded @click="sound_play('notify')")  コメント通知
-    b-button(expanded @click="voice_exercise")        発声練習
     b-button(expanded @click="sound_play('spon')")    エモーション
+    b-button(expanded @click="voice_exercise")        発声練習
     b-button(expanded @click="app.menu_to('the_menu_etc')") もどる
 </template>
 
@@ -38,9 +38,7 @@ export default {
   computed: {
     sentence_list() {
       return [
-        "カッパ クッパ 食った",
-        "裏庭には、二羽、鶏がいる",
-        "ブタがブタをぶったらぶたれたブタがぶったブタをぶった。ぶったブタとぶたれたブタがぶっ倒れた",
+        "ブタがぶっ倒れた",
       ]
     },
   },

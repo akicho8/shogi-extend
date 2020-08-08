@@ -46,7 +46,7 @@ const SoundPresets = {
   bell2:    { file: mp3_bell2,    volume: 0.3,  },
   pon:      { file: mp3_pon,      volume: 0.5,  },
   notify:   { file: mp3_notify,   volume: 0.5,  },
-  spon:     { file: mp3_spon,     volume: 0.5,  },
+  spon:     { file: mp3_spon,     volume: 0.7,  },
 }
 
 export default {
