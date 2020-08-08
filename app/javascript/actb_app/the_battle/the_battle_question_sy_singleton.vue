@@ -10,7 +10,7 @@
     shogi_player(
       :run_mode="'play_mode'"
       :kifu_body="app.current_question.init_sfen"
-      :flip="flip_if_white(app.current_question.init_sfen)"
+      :flip_if_white="true"
       :summary_show="false"
       :setting_button_show="false"
       :theme="app.config.sp_theme"
@@ -30,7 +30,7 @@
       :key="`quest_${app.question_index}`"
       :run_mode="'play_mode'"
       :kifu_body="app.current_question.init_sfen"
-      :flip="flip_if_white(app.current_question.init_sfen)"
+      :flip_if_white="true"
       :summary_show="false"
       :setting_button_show="false"
       :sound_effect="true"
@@ -51,7 +51,7 @@
     shogi_player(
       :run_mode="'play_mode'"
       :kifu_body="app.share_sfen"
-      :flip="flip_if_white(app.share_sfen)"
+      :flip_if_white="true"
       :start_turn="-1"
       :summary_show="false"
       :setting_button_show="false"

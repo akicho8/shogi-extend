@@ -56,7 +56,7 @@
       shogi_player(
         :run_mode="'play_mode'"
         :kifu_body="selected_sfen"
-        :flip="flip_if_white(selected_sfen)"
+        :flip_if_white="true"
         :start_turn="-1"
         :key_event_capture="false"
         :slider_show="true"

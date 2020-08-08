@@ -3,7 +3,7 @@
   shogi_player(
     :run_mode="'play_mode'"
     :kifu_body="$parent.question.init_sfen"
-    :flip="flip_if_white($parent.question.init_sfen)"
+    :flip_if_white="true"
     :start_turn="0"
     :key_event_capture="false"
     :slider_show="true"
@@ -28,7 +28,7 @@
         shogi_player(
           :run_mode="'view_mode'"
           :kifu_body="$parent.full_sfen_build(e)"
-          :flip="flip_if_white($parent.question.init_sfen)"
+          :flip_if_white="true"
           :start_turn="-1"
           :debug_mode="false"
           :key_event_capture="false"
