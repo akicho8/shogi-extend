@@ -10,6 +10,7 @@ export const application_battle_timer = {
 
       ops_interval_id: null,
       ops_interval_count: null,
+      ops_interval_count2: null,
     }
   },
 
@@ -62,6 +63,13 @@ export const application_battle_timer = {
 
     //////////////////////////////////////////////////////////////////////////////// シングルトン専用
 
+    // 最初に「わかった」したときだけのタイマー
+    ops_interval_start_onece() {
+      this.ops_interval_start()
+      this.ops_interval_count2 = 0
+    },
+
+    // 操作するたびに繰替えされるタイマー
     ops_interval_start() {
       this.ops_interval_stop()
       this.ops_interval_count = 0
@@ -83,6 +91,7 @@ export const application_battle_timer = {
     ops_interval_processing() {
       if (this.sub_mode === "sm4_tactic") {
         this.ops_interval_count += 1
+        this.ops_interval_count2 += 1
         if (this.ops_rest_seconds === 0) {
           this.x2_play_timeout_handle()
         }

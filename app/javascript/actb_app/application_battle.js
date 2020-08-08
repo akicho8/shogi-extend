@@ -336,7 +336,7 @@ export const application_battle = {
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押した側
         this.x_mode = "x2_play"
-        this.ops_interval_start()
+        this.ops_interval_start_onece()
         this.sound_play("poon")
       } else {
         // 解答ボタンを押さなかった側

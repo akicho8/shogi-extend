@@ -1,6 +1,8 @@
 <template lang="pug">
 .the_battle_question_sy_singleton
   .has-text-centered
+    | {{app.ops_interval_count2}}
+
     //- .status2
     //-   | {{app.share_turn_offset}}手目
 
@@ -18,7 +20,7 @@
       :human_side_key="'none'"
     )
     .wakatta_button.has-text-centered.mt-3
-      b-button.has-text-weight-bold(@click="app.wakatta_handle(false)" type="is-primary" :disabled="app.current_mi.otetuki_p(app.current_question.id)") わかった
+      b-button.has-text-weight-bold(@click="app.wakatta_handle(false)" type="is-primary" size="is-large" :disabled="app.current_mi.otetuki_p(app.current_question.id)") わかった
       b-button.has-text-weight-bold(@click="app.skip_handle(false)" v-if="false") SKIP
 
   template(v-if="app.x_mode === 'x2_play'")
@@ -43,7 +45,7 @@
       @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
     )
     .mt-3.has-text-centered
-      b-button(@click="app.x2_play_timeout_handle(false)") あきらめる
+      b-button(@click="app.x2_play_timeout_handle(false)" size="is-large" :disabled="app.ops_interval_count2 < app.config.akirameru_deru_jikan2") あきらめる
 
   template(v-if="app.x_mode === 'x3_see'")
     .status_line2.has-text-centered.has-text-weight-bold
