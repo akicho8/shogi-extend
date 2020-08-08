@@ -48,18 +48,31 @@ module Actb
 
     describe "#judge_final_set" do
       def test(judge_key)
-        users = 2.times.collect { User.create! }
+        users = 2.times.collect {
+          user = User.create!
+          user.actb_main_xrecord.skill_add(100)
+          user.actb_main_xrecord.save!
+          user
+        }
         room = Actb::Room.create_with_members!(users)
         battle = room.battle_create_with_members!
         battle.judge_final_set(battle.users[0], judge_key, :f_success)
+
         battle.reload.memberships.flat_map do |e|
-          [e.judge_info.key, e.user.rating, e.user.skill.key, e.user.skill_point]
+          [
+            e.judge_info.key,
+            e.user.rating,
+            e.user.skill.key,
+            e.user.skill_point,
+            e.user.actb_main_xrecord.skill_last_diff,
+          ]
         end
       end
 
       it "勝ち負け" do
-        assert { test(:win)  == [:win,  1516, "C-", 20, :lose, 1484, "C-",  0] }
-        assert { test(:lose) == [:lose, 1484, "C-",  0, :win,  1516, "C-", 20] }
+        assert { test(:win)  == [:win,  1516.0, "C",  19.0,  19.0, :lose, 1484.0, "C-", 90.0, -10.0] }
+        assert { test(:lose) == [:lose, 1484.0, "C-", 90.0, -10.0,  :win, 1516.0, "C",  19.0,  19.0] }
+        assert { test(:draw) == [:draw, 1500.0, "C",   0.0,   0.0, :draw, 1500.0, "C",   0.0,   0.0] }
       end
     end
   end
@@ -67,6 +80,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ....
 # >> 
-# >> Finished in 1.9 seconds (files took 2.93 seconds to load)
+# >> Finished in 2.84 seconds (files took 2.25 seconds to load)
 # >> 4 examples, 0 failures
 # >> 

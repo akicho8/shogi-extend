@@ -178,6 +178,9 @@ module Actb
             p "#{diff} * #{base} / 16.0 --> #{point}"
           end
           skill_add(point)
+        else
+          # 引き分けのときは前回の差分を 0 にする
+          skill_add(0)
         end
       end
 

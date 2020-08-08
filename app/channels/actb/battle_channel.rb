@@ -180,6 +180,7 @@ module Actb
         return
       end
 
+      # 練習の場合は勝ち負けを更新しない
       if battle.room.bot_user
         battle.update!(end_at: Time.current)
       else
