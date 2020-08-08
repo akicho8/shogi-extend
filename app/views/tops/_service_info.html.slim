@@ -10,7 +10,7 @@
             | NEW!
 
       - if si.description
-        p= si.description
+        p== si.description
       - if si.feature_items.present?
         ul.is-size-7
           - si.feature_items.each do |e|

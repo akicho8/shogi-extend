@@ -1,13 +1,14 @@
 - if Actb::Config[:promotion_for_training] || Rails.env.development?
   .columns.promotion_for_training
     .column.has-text-centered-mobile
-      = link_to([:training], :class => "px-3 py-3 my-2 has-text-centered is-inline-flex") do
+      = link_to([:training], :class => "box px-3 py-3 my-2 has-text-centered is-inline-flex") do
         = image_tag(["actb1_1200x630.png", "actb2_1200x630.png", "actb3_1200x630.png"].sample)
         .text_block.ml-4
+          p.has-text-danger.has-text-weight-bold.is-size-7 NEW!
           / p.is-size-7= ["誰かさんと切磋琢磨", "自然と棋力アップ！？", "クイズ形式で対戦！？", "勉強しながら対戦！？", "一人で勉強は寂しい(´･_･`)"].sample
-          p.is-size-7= ["完全にオワコン", "サ終間近", "どっちかっていうと問題作る方がおもろい", "何かが足りない (と言われている)", "いろいろ足りない", "AI不在"].sample
+          / p.is-size-7= ["完全にオワコン", "サ終間近", "どっちかっていうと問題作る方がおもろい", "何かが足りない (と言われている)", "いろいろ足りない", "AI不在"].sample
+          / p.is-size-7= ["問題作る方がおもろい", "何かが足りない (と言われている)", "いろいろ足りない", "AI不在"].sample
           / p.is-size-7= ["23:00〜23:15まで"].sample
           span.has-text-weight-bold 将棋トレーニングバトル！
           / p.is-size-11= ["自作の問題を投稿できるよ", "ランキング上位を目指そう", "簡単な問題募集中"].sample
-          p.is-size-7.mt-1= ["対戦は 23:00〜23:15 の間だけ"].sample
-          / p.has-text-danger.has-text-weight-bold.is-size-7.mt-1 NEW!
+          p.is-size-7.mt-1= ["対戦 23:00〜23:15"].sample
