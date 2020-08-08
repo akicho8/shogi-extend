@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_result
-  a.delete.page_delete.is-large.is_top_left_fixed(@click="app.yameru_handle")
+  a.delete.page_delete.is-large.is_top_left_fixed(@click="app.room_leave_handle")
   the_room_emotion
 
   template(v-if="app.room.bot_user_id")
@@ -31,9 +31,9 @@
       the_result_membership(:membership="membership")
       .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs
 
-  .saisen_suru_container
+  .saisen_suru_container.mt-4
     .buttons.is-centered
-      b-button.has-text-weight-bold(:disabled="!all_active_p" @click="app.battle_continue_handle(false)" :type="button_push_by_self_p ? 'is-primary' : ''") 同じ相手と再戦する
+      b-button.has-text-weight-bold(:disabled="!all_active_p" @click="app.battle_continue_handle(false)" :type="button_push_by_self_p ? 'is-primary' : ''" type="is-large") 再戦
 
   the_room_message.mt-5
 
@@ -92,11 +92,10 @@ export default {
 
   // 続ける
   .saisen_suru_container
-    margin-top: 1rem
     .buttons
       flex-direction: column
       .button
-        min-width: 12rem
+        // min-width: 12rem
         &:not(:first-child)
           margin-top: 0.75rem
 </style>
