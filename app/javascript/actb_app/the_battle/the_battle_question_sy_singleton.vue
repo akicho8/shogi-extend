@@ -1,10 +1,8 @@
 <template lang="pug">
 .the_battle_question_sy_singleton
-  .has-text-centered
-    | {{app.ops_interval_total}}
-
-    //- .status2
-    //-   | {{app.share_turn_offset}}手目
+  //- .has-text-centered
+  //-   //- .status2
+  //-   //-   | {{app.share_turn_offset}}手目
 
   template(v-if="app.x_mode === 'x1_think'")
     .status_line2.has-text-centered.has-text-weight-bold
