@@ -136,6 +136,10 @@ export default {
       location.href = url
     },
 
+    sp_turn_slider_auto_focus() {
+      this.desktop_focus_to(this.$el.querySelector(".turn_slider"))
+    },
+
     // モバイルでないときだけ elem にフォーカスする
     // なぜか $nextTick ではフォーカスされない場合があるため setTimeout に変更
     desktop_focus_to(elem) {
@@ -146,12 +150,11 @@ export default {
 
     // $nextTick ではフォーカスされない場合があるため setTimeout にしている
     // それでも 2msec だと効かない場合もあるため 0.1 秒待つようにしている
+    // が、1 でも効いた。
     focus_to(elem) {
-      setTimeout(() => {
-        if (elem) {
-          elem.focus()
-        }
-      }, 1000 * 0.1)
+      if (elem) {
+        setTimeout(() => elem.focus(), 1)
+      }
     },
 
     legacy_url_build(url, params) {
