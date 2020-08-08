@@ -28,8 +28,7 @@
       span.skill_last_diff.has-text-success(v-if="xrecord.skill_last_diff < 0")
         | ({{rating_format(xrecord.skill_last_diff)}})
 
-  .progress_container.mt-1
-    the_result_membership_progress(:xrecord="xrecord")
+  the_result_membership_progress(:xrecord="xrecord")
 
   .battle_continue_container.has-text-weight-bold.mt-1
     b-tag(type="is-warning" v-if="app.continue_tap_counts[membership.id]") 再戦希望
@@ -83,9 +82,6 @@ export default {
 
   .skill_last_diff
     margin-left: 0.1rem
-
-  .progress_container
-    width: 8rem
 
   .battle_continue_container
     min-height: 1.75rem
