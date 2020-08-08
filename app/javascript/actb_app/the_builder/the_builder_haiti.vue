@@ -140,7 +140,7 @@ export default {
 
     // 駒箱に足りない駒を補充
     piece_box_piece_couns_adjust() {
-      this.$nextTick(() => this.$refs.main_sp.mediator.piece_box_piece_couns_adjust())
+      // this.$nextTick(() => this.$refs.main_sp.mediator.piece_box_piece_couns_adjust())
     },
 
   },
