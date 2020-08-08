@@ -5,12 +5,14 @@ const PRACTICE_MODE_MAGNIFICATION = 3
 export const application_battle_timer = {
   data() {
     return {
+      // 共通
       main_interval_id: null,
       main_interval_count: null,
 
+      // シングルトン専用
       ops_interval_id: null,
-      ops_interval_count: null,
-      ops_interval_count2: null,
+      ops_interval_count: null,  // 1手指してからの秒数
+      ops_interval_total: null, // 「わかった」してからのトータル秒数(かなり誤差あり)
     }
   },
 
@@ -66,7 +68,7 @@ export const application_battle_timer = {
     // 最初に「わかった」したときだけのタイマー
     ops_interval_start_onece() {
       this.ops_interval_start()
-      this.ops_interval_count2 = 0
+      this.ops_interval_total = 0
     },
 
     // 操作するたびに繰替えされるタイマー
@@ -91,7 +93,7 @@ export const application_battle_timer = {
     ops_interval_processing() {
       if (this.sub_mode === "sm4_tactic") {
         this.ops_interval_count += 1
-        this.ops_interval_count2 += 1
+        this.ops_interval_total += 1
         if (this.ops_rest_seconds === 0) {
           this.x2_play_timeout_handle()
         }

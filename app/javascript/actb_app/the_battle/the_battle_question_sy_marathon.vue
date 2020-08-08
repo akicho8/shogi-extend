@@ -23,7 +23,7 @@
     @update:play_mode_advanced_full_moves_sfen="app.play_mode_advanced_full_moves_sfen_set"
   )
   .has-text-centered.mt-3
-    b-button(@click="app.kotae_sentaku('timeout')" :disabled="app.main_interval_count < app.config.akirameru_deru_jikan") あきらめる
+    b-button(@click="app.kotae_sentaku('timeout')" :disabled="app.main_interval_count < app.config.marathon_giveup_effective_seconds") あきらめる
 
   .has-text-centered.mt-3(v-if="app.debug_read_p")
     //- p 難易度:{{app.current_question.difficulty_level}}

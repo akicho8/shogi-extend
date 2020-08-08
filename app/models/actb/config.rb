@@ -31,10 +31,10 @@ module Actb
     # シングルトンモード
     :otetuki_release_p               => false, # おてつき解除可能か？
     :turn_limit_lazy_count           => 4,     # 3手詰なら○手足した手数まで操作できる
-    :akirameru_deru_jikan2           => 1,     # 「あきらめる」がでるまでの秒数(シングルトン)
+    :singleton_giveup_effective_seconds           => 1,     # 「あきらめる」がでるまでの秒数(シングルトン)
 
     # マラソンモード
-    :akirameru_deru_jikan            => 1,     # 「あきらめる」がでるまでの秒数(マラソン)
+    :marathon_giveup_effective_seconds            => 1,     # 「あきらめる」がでるまでの秒数(マラソン)
 
     # -------------------------------------------------------------------------------- バトル部屋チャット
     :room_messages_display_p         => true,  # 部屋でのチャット表示
@@ -75,8 +75,8 @@ module Actb
         :api_questions_fetch_per         => 50,       # 問題一覧での1ページあたりの表示件数
         :self_is_left_side_p             => true,     # 自分を左に表示
         :turm_max_limit                  => 9,        # 手数制限
-        :akirameru_deru_jikan2           => 3,        # 「あきらめる」がでるまでの秒数(シングルトン)
-        :akirameru_deru_jikan            => 15,       # 「あきらめる」がでるまでの秒数(マラソン)
+        :singleton_giveup_effective_seconds           => 3,        # 「あきらめる」がでるまでの秒数(シングルトン)
+        :marathon_giveup_effective_seconds            => 15,       # 「あきらめる」がでるまでの秒数(マラソン)
         :sp_theme                        => "real",   # 将棋盤のタイプ
         :rule_time_enable                => true,     # ルールの開催期間制限
         :battle_time_ranges              => [
