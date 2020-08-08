@@ -21,7 +21,7 @@ class ServiceInfo
       display_p: Actb::Config[:actb_display_p],
       link_path: [:training],
       title: "将棋トレーニングバトル！",
-      new_p: false,
+      new_p: true,
       image_source: [
         "actb1_1200x630.png",
         "actb2_1200x630.png",
