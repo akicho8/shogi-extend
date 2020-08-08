@@ -300,7 +300,7 @@ export default {
       margin-top: 1.5rem
 
     .moves_human_str
-      
+
     .vote_container
       justify-content: center
 
