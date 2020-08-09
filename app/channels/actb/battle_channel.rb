@@ -44,7 +44,7 @@ module Actb
 
     # 最初の問題のときだけ
     def start_hook(data)
-      history_set_by_data(data, :mistake)
+      # history_set_by_data(data, :mistake)
     end
 
     def wakatta_handle(data)
@@ -71,28 +71,31 @@ module Actb
       broadcast(:x2_play_timeout_handle_broadcasted, bc_params)
     end
 
+    # 答え選択
     def kotae_sentaku(data)
       data = data.to_options
-      ox_mark = Actb::OxMark.fetch(data[:ox_mark_key])
-      question = Question.find(data[:question_id])
-      my_membership = current_battle.memberships.find(data[:membership_id]) # 当事者
-      op_membership = (current_battle.memberships - [my_membership]).first    # 対戦相手
+
+      question = Question.find(data[:question_id])                          # 問題
+      ox_mark = Actb::OxMark.fetch(data[:ox_mark_key])                      # 結果
+      my_membership = current_battle.memberships.find(data[:membership_id]) # 自分
+      op_membership = (current_battle.memberships - [my_membership]).first  # 相手
+
+      # mistake は来ない
+      raise ArgumentError, data.inspect if ox_mark.key == "mistake"
 
       # 基本個人プレイで同期してない
       if current_strategy_key == :sy_marathon
-        raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         raise ArgumentError, data.inspect unless my_membership.user == current_user
-        history_set(question, my_membership, ox_mark)
+        history_create(question, my_membership, ox_mark)
         question.ox_add(ox_mark.pure_info.question_counter_column)
       end
 
       # 正解時         → 正解したユーザーが送信者
       # タイムアウト時 → 両方が送信者
       if current_strategy_key == :sy_singleton || current_strategy_key == :sy_hybrid
-        raise ArgumentError, data.inspect if ox_mark.key == "mistake"
         if ox_mark.key == "correct"
-          history_set(question, my_membership, ox_mark)
-          history_set(question, op_membership, :mistake)
+          history_create(question, my_membership, ox_mark)
+          history_create(question, op_membership, :mistake)
           question.ox_add(:o_count) # 片方が正解なら1回分の正解として、もう片方の不正解はカウントしない
         end
         if ox_mark.key == "timeout"
@@ -102,12 +105,13 @@ module Actb
             return
           end
           current_battle.memberships.each do |membership|
-            history_set(question, membership, ox_mark)
+            history_create(question, membership, ox_mark)
           end
           question.ox_add(:x_count) # 2人分時間切れしたとき1回分の不正解とする
         end
       end
 
+      # FIXME: 作らずにそのまま返す
       bc_params = {
         membership_id:  data[:membership_id],  # 誰が
         question_index: data[:question_index], # どこまで進めたか
@@ -134,7 +138,7 @@ module Actb
 
       # 本人が送信しているので本人だけの履歴を作成
       if current_strategy_key == :sy_marathon
-        history_set_by_data(data, :mistake)
+        # history_set_by_data(data, :mistake)
       end
 
       # リーダーが送信者なので対局者の両方にあらかじめ履歴を作っておく
@@ -145,7 +149,7 @@ module Actb
         end
         question = Question.find(data[:question_id])
         current_battle.memberships.each do |e|
-          history_set(question, e, :mistake)
+          # history_create(question, e, :mistake)
         end
       end
 
@@ -281,25 +285,24 @@ module Actb
       broadcast(:battle_leave_handle_broadcasted, membership_id: data[:membership_id])
     end
 
+    private
+
     ################################################################################
 
-    def history_set_by_data(data, ox_mark)
-      data = data.to_options
-      question = Question.find(data[:question_id])
-      membership = current_battle.memberships.find(data[:membership_id])
-      history_set(question, membership, ox_mark)
-    end
+    # def history_set_by_data(data, ox_mark)
+    #   data = data.to_options
+    #   question = Question.find(data[:question_id])
+    #   membership = current_battle.memberships.find(data[:membership_id])
+    #   history_create(question, membership, ox_mark)
+    # end
 
-    def history_set(question, membership, ox_mark)
+    def history_create(question, membership, ox_mark)
       user = membership.user
-
-      # 練習モードのBOTなら履歴は作らない
       if current_battle.room.bot_user == user
-        return
+        # 練習モードのBOTなら履歴は作らない
+      else
+        user.actb_histories.create!(question: question, membership: membership, ox_mark: OxMark.fetch(ox_mark))
       end
-
-      history = user.actb_histories.find_or_initialize_by(question: question, membership: membership)
-      history.update!(ox_mark: OxMark.fetch(ox_mark))
     end
 
     ################################################################################
