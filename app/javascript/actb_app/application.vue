@@ -236,8 +236,11 @@ export default {
       const message = params.message
       if (/^\*/.test(message.body)) {
       } else {
-        this.say(message.body)
-        this.$buefy.toast.open({message: `${message.user.name}: ${message.body}`, position: "is-top", queue: false})
+        const plain_text = this.strip_tags(message.body)
+        if (plain_text) {
+          this.say(plain_text)
+          this.$buefy.toast.open({message: `${message.user.name}: ${plain_text}`, position: "is-top", queue: false})
+        }
       }
     },
 
