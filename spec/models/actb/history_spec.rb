@@ -34,13 +34,13 @@ module Actb
       history = user1.actb_histories.create!(question: question1, membership: membership, ox_mark: Actb::OxMark.fetch(:correct))
       assert { history }
       assert { history.rating }
-      # tp history
+      assert { User.bot.actb_lobby_messages.last.body.match?(/user1.*さん.*本日1問.*解きました/) }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .
 # >> 
-# >> Finished in 0.79877 seconds (files took 2.22 seconds to load)
+# >> Finished in 1.63 seconds (files took 2.23 seconds to load)
 # >> 1 example, 0 failures
 # >> 

@@ -36,19 +36,22 @@ module Actb
     end
 
     validate do
-      if moves_str.present?
-        [
-          :validate1_leagal_hands,         # 合法手のみで構成されている
-          :validate2_uniq_with_parent,     # 同じ組み合わせがない
-          :validate3_piece_box_is_empty,   # 「詰将棋」なら先手の駒が空
-          :validate4_all_piece_exists,     # 「詰将棋」なら玉方持駒限定になっていない
-          :validate5_all_piece_not_exists, # 「玉方持駒限定の似非詰将棋」なら持駒が不足している
-          :validate6_mate,                 # 「詰将棋」「玉方持駒限定の似非詰将棋」「実戦詰め筋」なら最後は詰んでいる
-        ].each do |e|
-          if errors.present?
-            break
+      if question.moves_answer_validate_skip
+      else
+        if moves_str.present?
+          [
+            :validate1_leagal_hands,         # 合法手のみで構成されている
+            :validate2_uniq_with_parent,     # 同じ組み合わせがない
+            :validate3_piece_box_is_empty,   # 「詰将棋」なら先手の駒が空
+            :validate4_all_piece_exists,     # 「詰将棋」なら玉方持駒限定になっていない
+            :validate5_all_piece_not_exists, # 「玉方持駒限定の似非詰将棋」なら持駒が不足している
+            :validate6_mate,                 # 「詰将棋」「玉方持駒限定の似非詰将棋」「実戦詰め筋」なら最後は詰んでいる
+          ].each do |e|
+            if errors.present?
+              break
+            end
+            public_send(e)
           end
-          public_send(e)
         end
       end
     end

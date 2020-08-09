@@ -183,6 +183,8 @@ module Actb
       }
     end
 
+    attribute :moves_answer_validate_skip
+
     belongs_to :user, class_name: "::User" # 作者
     belongs_to :lineage
     belongs_to :source_about

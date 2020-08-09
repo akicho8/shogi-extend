@@ -17,10 +17,13 @@ module Actb
 
       # このユーザーが作成した問題(複数)
       has_many :actb_questions, class_name: "Actb::Question", dependent: :destroy do
-        def create_mock1
-          create! do |e|
-            e.title = "(title#{Actb::Question.count.next})"
-            e.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{Actb::Question.count.next}p 1"
+        def create_mock1(attrs = {})
+          create!(attrs) do |e|
+            if e.moves_answer_validate_skip.nil?
+              e.moves_answer_validate_skip = true
+            end
+            e.title ||= SecureRandom.hex
+            e.init_sfen ||= "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
             e.moves_answers.build(moves_str: "G*5b")
           end
         end
@@ -34,6 +37,14 @@ module Actb
 
       # 通知
       has_many :notifications, class_name: "Actb::Notification", dependent: :destroy # 自分が受信
+    end
+
+    def page_url(options = {})
+      Rails.application.routes.url_helpers.url_for([:training, {only_path: false, user_id: id}.merge(options)])
+    end
+
+    def linked_name(options = {})
+      ApplicationController.helpers.link_to(name, page_url(only_path: true))
     end
 
     concerning :CurrentUserMethods do
@@ -86,14 +97,17 @@ module Actb
         end
       end
 
+      # rails r 'User.sysop.lobby_speak(Time.current)'
       def lobby_speak(message_body, options = {})
         actb_lobby_messages.create!({body: message_body}.merge(options))
       end
 
+      # rails r 'User.sysop.room_speak(Actb::Room.first, Time.current)'
       def room_speak(room, message_body, options = {})
         actb_room_messages.create!({room: room, body: message_body}.merge(options))
       end
 
+      # rails r 'User.sysop.question_speak(Actb::Question.first, Time.current)'
       def question_speak(question, message_body, options = {})
         actb_question_messages.create!({question: question, body: message_body}.merge(options))
       end
@@ -192,11 +206,27 @@ module Actb
       end
 
       def total_o_count
-        actb_histories.where(ox_mark: Actb::OxMark.fetch(:correct)).count
+        actb_histories.ox_mark_eq(:correct).count
       end
 
       def total_x_count
-        actb_histories.where(ox_mark: Actb::OxMark.fetch(:mistake)).count
+        actb_histories.ox_mark_eq(:mistake).count
+      end
+
+      def today_total_o_count
+        actb_histories.today_only.ox_mark_eq(:correct).count
+      end
+
+      def today_total_x_count
+        actb_histories.today_only.ox_mark_eq(:mistake).count
+      end
+
+      def today_total_o_ucount
+        actb_histories.today_only.ox_mark_eq(:correct).distinct.count(:question_id)
+      end
+
+      def today_total_x_ucount
+        actb_histories.today_only.ox_mark_eq(:mistake).distinct.count(:question_id)
       end
 
       def info
@@ -229,6 +259,12 @@ module Actb
 
           "問題正解数"         => total_o_count,
           "問題不正解数"       => total_x_count,
+
+          "問題正解数(本日)"   => today_total_o_count,
+          "問題不正解数(本日)" => today_total_x_count,
+
+          "ユニーク問題正解数(本日)"   => today_total_o_ucount,
+          "ユニーク問題不正解数(本日)" => today_total_x_ucount,
 
           "タグ"               => permit_tag_list,
           "ログイン回数"       => sign_in_count,

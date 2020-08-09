@@ -6,6 +6,10 @@ module Actb
   end
 
   def setup(options = {})
+    if options[:force]
+      destroy_all
+    end
+
     Actb::OxMark.setup(options)
     Actb::Season.setup(options)
     Actb::Lineage.setup(options)
