@@ -18,7 +18,7 @@
       :human_side_key="'none'"
     )
     .wakatta_button.has-text-centered.mt-3
-      b-button.has-text-weight-bold(@click="app.wakatta_handle(false)" type="is-primary" size="is-large" :disabled="app.current_mi.otetuki_p(app.current_question.id)") わかった
+      b-button.has-text-weight-bold(@click="app.answer_button_push_handle(false)" type="is-primary" size="is-large" :disabled="app.current_mi.otetuki_p(app.current_question.id)") わかった
       b-button.has-text-weight-bold(@click="app.skip_handle(false)" v-if="false") SKIP
 
   template(v-if="app.x_mode === 'x2_play'")

@@ -315,29 +315,29 @@ export const application_battle = {
     },
 
     // 早押しボタンを押した(解答権はまだない)
-    wakatta_handle(ms_flip = false) {
-      this.ac_battle_perform("wakatta_handle", {
+    answer_button_push_handle(ms_flip = false) {
+      this.ac_battle_perform("answer_button_push_handle", {
         ms_flip: ms_flip,
         question_id: this.current_question.id,
       }) // --> app/channels/actb/battle_channel.rb
     },
-    wakatta_handle_broadcasted(params) {
-      // 「わかった」を押した直後に時間切れとなった場合、時間切れ表示中に wakatta_handle_broadcasted が発生し、
+    answer_button_push_handle_broadcasted(params) {
+      // 「わかった」を押した直後に時間切れとなった場合、時間切れ表示中に answer_button_push_handle_broadcasted が発生し、
       // 解答権を取得してしまう。そして数秒後、次の問題に切り替わったあたりで解答権を失う
       // つまり、残り0.1秒で「わかった」すると次の問題を答える権利がなくなる
-      // これを防ぐために、時間切れになった瞬間、wakatta_handle_broadcasted を処理しないようにする
+      // これを防ぐために、時間切れになった瞬間、answer_button_push_handle_broadcasted を処理しないようにする
       if (this.sub_mode !== "sm4_tactic") {
         this.console_log("わかったを押した直後に時間切れになったためわかったを無効とする")
         return
       }
 
       this.talk_stop()          // クエストを読み上げている場合は停止する
+      this.sound_play("poon")
       const mi = this.member_infos_hash[params.membership_id]
       if (params.membership_id === this.current_membership.id) {
         // 先に解答ボタンを押した側
         this.x_mode = "x2_play"
         this.ops_interval_start_onece()
-        this.sound_play("poon")
       } else {
         // 解答ボタンを押さなかった側
         // 元々誤答していたら解答権利復活させる
@@ -349,7 +349,6 @@ export const application_battle = {
         this.x_mode = "x3_see"
         this.share_sfen = this.current_question.init_sfen // 初期状態にしておく
         this.share_turn_offset = 0             // 相手が操作中(○手目)の部分を0に戻す
-        this.sound_play("poon")
       }
     },
 
@@ -427,8 +426,6 @@ export const application_battle = {
     member_disconnect_handle(ms_flip = false) {
       this.ac_battle_perform("member_disconnect_handle", {ms_flip: ms_flip})
     },
-
-    ////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////////////////////
 

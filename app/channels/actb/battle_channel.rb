@@ -48,7 +48,8 @@ module Actb
     end
 
     # 「わかった」
-    # 先に押した方が解答権を得る
+    # 両者から呼ばれる
+    # 先に押した方だけ解答権を得る
     def answer_button_push_handle(data)
       data = data.to_options
       key = answer_button_push_key(data)
@@ -59,14 +60,13 @@ module Actb
       end
     end
 
+    # 「わかった」のあと操作中に時間切れ
+    # 解答権のある方からのみ呼ばれる
+    # 再び「わかった」できるようにする
     def x2_play_timeout_handle(data)
       data = data.to_options
       redis.del(answer_button_push_key(data))
-      bc_params = {
-        :membership_id => data[:membership_id],
-        :question_id   => data[:question_id],
-      }
-      broadcast(:x2_play_timeout_handle_broadcasted, bc_params)
+      broadcast(:x2_play_timeout_handle_broadcasted, data)
     end
 
     # 答え選択
@@ -116,16 +116,6 @@ module Actb
         question_id:    data[:question_id],    # これいらんけど、そのまま渡しとく
         ox_mark_key:    data[:ox_mark_key],
       }
-
-      # 一応保存しておく(あとで取るかもしれない)
-      # current_battle.memberships.find(data[:membership_id]).update!(question_index: data[:question_index])
-
-      # # 問題の解答数を上げる
-      # if data[:ox_mark_key] == "correct"
-      #   Question.find(data[:question_id]).increment!(:o_count)
-      # else
-      #   Question.find(data[:question_id]).increment!(:x_count)
-      # end
 
       broadcast(:kotae_sentaku_broadcasted, bc_params)
     end
@@ -310,8 +300,8 @@ module Actb
       ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", {bc_action: bc_action, bc_params: bc_params})
     end
 
-    def early_press_key(data)
-      [:early_press, current_battle.id, data[:question_id]].join("/")
+    def answer_button_push_key(data)
+      [:answer_button_push, current_battle.id, data[:question_id]].join("/")
     end
 
     # counts[membership_id] += 1

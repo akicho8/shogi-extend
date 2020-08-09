@@ -44,11 +44,11 @@
           b-button(@click="app.kotae_sentaku('correct')") O
           b-button(@click="app.kotae_sentaku('timeout')") X (タイムアウト)
         .buttons.is-centered.are-small
-          b-button(@click="app.wakatta_handle(false)") わかった(自分)
+          b-button(@click="app.answer_button_push_handle(false)") わかった(自分)
           b-button(@click="app.kotae_sentaku('correct')") 正解(自分)
           b-button(@click="app.x2_play_timeout_handle(false)") 駒操作中タイムアウト(自分)
         .buttons.is-centered.are-small
-          b-button(@click="app.wakatta_handle(true)") わかった(相手)
+          b-button(@click="app.answer_button_push_handle(true)") わかった(相手)
           b-button(@click="app.kotae_sentaku('correct', true)") 正解(相手)
           b-button(@click="app.x2_play_timeout_handle(true)") 駒操作中タイムアウト(相手)
         .buttons.is-centered.are-small
