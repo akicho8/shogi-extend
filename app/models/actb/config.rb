@@ -85,4 +85,14 @@ module Actb
         ],
       })
   end
+
+  if Rails.env.staging?
+    Config.update({
+        :lobby_clock_restrict_ranges              => [
+          # { :beg => "12:45", :end => "13:00" },
+          { :beg => "16:00", :end => "16:01" },
+          { :beg => "23:00", :end => "23:15" },
+        ],
+      })
+  end
 end
