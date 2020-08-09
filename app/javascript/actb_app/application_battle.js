@@ -54,6 +54,8 @@ export const application_battle = {
         membership_id: membership.id,
       }, params)
 
+      delete params.ms_flip
+
       this.debug_say(`**→ [${membership.user.name}][${action}] ` + JSON.stringify(params))
 
       this.$ac_battle.perform(action, params) // --> app/channels/actb/battle_channel.rb

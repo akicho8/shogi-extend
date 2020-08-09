@@ -110,6 +110,8 @@ export const application_room = {
         membership_id: membership.id,
       }, params)
 
+      delete params.ms_flip
+
       this.$ac_room.perform(action, params) // --> app/channels/actb/room_channel.rb
     },
 
