@@ -28,10 +28,11 @@ module Actb
     include ClipMark::ShareWithHistoryMethods # belongs_to user and question
 
     cattr_accessor(:notice_trigger_counts) do
-      if Rails.env.development? || Rails.env.test?
+      case
+      when Rails.env.development? || Rails.env.test? || Rails.env.staging?
         [1, 5, 10]
       else
-        [50, 100, 200]
+        [10, 25, 50, 100, 200, 300, 400, 500]
       end
     end
 

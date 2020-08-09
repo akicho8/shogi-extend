@@ -296,7 +296,9 @@ module Actb
     ################################################################################
 
     def broadcast(bc_action, bc_params)
-      raise ArgumentError, bc_params.inspect unless bc_params.values.all?
+      if bc_params.values.any? { |e| e.nil? }
+        raise ArgumentError, bc_params.inspect
+      end
       ActionCable.server.broadcast("actb/battle_channel/#{battle_id}", {bc_action: bc_action, bc_params: bc_params})
     end
 
