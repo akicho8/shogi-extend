@@ -129,7 +129,7 @@ module Actb
     end
 
     it "main_sfen" do
-      assert { question1.main_sfen == "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b" }
+      assert { question1.main_sfen == "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1 moves G*5b" }
     end
 
     it "info" do
@@ -146,11 +146,11 @@ module Actb
     end
 
     it "share_board_png_url" do
-      assert { question1.share_board_png_url == "http://localhost:3000/share-board.png?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l1p+1+moves+G%2A5b&image_view_point=black&turn=0" }
+      assert { question1.share_board_png_url == "http://localhost:3000/share-board.png?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&image_view_point=black&turn=0" }
     end
 
     it "share_board_url" do
-      assert { question1.share_board_url == "http://localhost:3000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l1p+1+moves+G%2A5b&image_view_point=black&title=%28title1%29&turn=0" }
+      assert { question1.share_board_url == "http://localhost:3000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&image_view_point=black&title=#{question1.title}&turn=0" }
     end
 
     it "公開フォルダに移動させたタイミングで投稿通知" do

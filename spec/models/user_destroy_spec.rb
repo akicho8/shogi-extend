@@ -21,18 +21,18 @@ RSpec.describe User, type: :model do
 |------------------------+--------+-------+------|
 | model                  | before | after | diff |
 |------------------------+--------+-------+------|
-| Actb::Folder           |      6 |     3 |   -3 |
+| Actb::Folder           |      9 |     6 |   -3 |
 | Actb::Question         |      1 |     0 |   -1 |
 | Actb::MovesAnswer      |      1 |     0 |   -1 |
-| User                   |      2 |     1 |   -1 |
-| Actb::SeasonXrecord    |      2 |     1 |   -1 |
-| Actb::MainXrecord      |      2 |     1 |   -1 |
-| Actb::Setting          |      2 |     1 |   -1 |
+| User                   |      3 |     2 |   -1 |
+| Actb::SeasonXrecord    |      3 |     2 |   -1 |
+| Actb::MainXrecord      |      3 |     2 |   -1 |
+| Actb::Setting          |      3 |     2 |   -1 |
 | Actb::GoodMark         |      1 |     0 |   -1 |
 | Actb::BadMark          |      1 |     0 |   -1 |
 | Actb::ClipMark         |      1 |     0 |   -1 |
 | Actb::QuestionMessage  |      1 |     0 |   -1 |
-| Actb::LobbyMessage     |      1 |     0 |   -1 |
+| Actb::LobbyMessage     |      2 |     1 |   -1 |
 | Actb::RoomMembership   |      2 |     1 |   -1 |
 | Actb::BattleMembership |      2 |     1 |   -1 |
 | Actb::RoomMessage      |      0 |     0 |    0 |
@@ -51,18 +51,18 @@ end
 # >> |------------------------+--------+-------+------|
 # >> | model                  | before | after | diff |
 # >> |------------------------+--------+-------+------|
-# >> | Actb::Folder           |      6 |     3 |   -3 |
+# >> | Actb::Folder           |      9 |     6 |   -3 |
 # >> | Actb::Question         |      1 |     0 |   -1 |
 # >> | Actb::MovesAnswer      |      1 |     0 |   -1 |
-# >> | User                   |      2 |     1 |   -1 |
-# >> | Actb::SeasonXrecord    |      2 |     1 |   -1 |
-# >> | Actb::MainXrecord      |      2 |     1 |   -1 |
-# >> | Actb::Setting          |      2 |     1 |   -1 |
+# >> | User                   |      3 |     2 |   -1 |
+# >> | Actb::SeasonXrecord    |      3 |     2 |   -1 |
+# >> | Actb::MainXrecord      |      3 |     2 |   -1 |
+# >> | Actb::Setting          |      3 |     2 |   -1 |
 # >> | Actb::GoodMark         |      1 |     0 |   -1 |
 # >> | Actb::BadMark          |      1 |     0 |   -1 |
 # >> | Actb::ClipMark         |      1 |     0 |   -1 |
 # >> | Actb::QuestionMessage  |      1 |     0 |   -1 |
-# >> | Actb::LobbyMessage     |      1 |     0 |   -1 |
+# >> | Actb::LobbyMessage     |      2 |     1 |   -1 |
 # >> | Actb::RoomMembership   |      2 |     1 |   -1 |
 # >> | Actb::BattleMembership |      2 |     1 |   -1 |
 # >> | Actb::RoomMessage      |      0 |     0 |    0 |
@@ -84,7 +84,7 @@ end
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
 # >> 
-# >> Finished in 1.84 seconds (files took 2.32 seconds to load)
+# >> Finished in 1.74 seconds (files took 2.33 seconds to load)
 # >> 1 example, 1 failure
 # >> 
 # >> Failed examples:
