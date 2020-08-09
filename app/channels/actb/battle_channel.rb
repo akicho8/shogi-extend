@@ -47,23 +47,21 @@ module Actb
       # history_set_by_data(data, :mistake)
     end
 
-    def wakatta_handle(data)
+    # 「わかった」
+    # 先に押した方が解答権を得る
+    def answer_button_push_handle(data)
       data = data.to_options
-      key = early_press_key(data)
-      early_press_counter = redis.incr(key)
+      key = answer_button_push_key(data)
+      counter = redis.incr(key)
       redis.expire(key, 60)
-      if early_press_counter === 1
-        bc_params = {
-          :membership_id => data[:membership_id],
-          :question_id   => data[:question_id],
-        }
-        broadcast(:wakatta_handle_broadcasted, bc_params)
+      if counter == 1
+        broadcast(:answer_button_push_handle_broadcasted, data)
       end
     end
 
     def x2_play_timeout_handle(data)
       data = data.to_options
-      redis.del(early_press_key(data))
+      redis.del(answer_button_push_key(data))
       bc_params = {
         :membership_id => data[:membership_id],
         :question_id   => data[:question_id],
