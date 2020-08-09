@@ -61,7 +61,7 @@ module FrontendScript
       end
 
       # マッチング中の人といきなり対局する
-      def yarimasu_handle
+      def battle_request_accept_handle
         raise if params[:session_lock_token].blank?
 
         ids = Actb::Rule.matching_all_user_ids

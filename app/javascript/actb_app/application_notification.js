@@ -3,9 +3,8 @@ export const application_notification = {
   ],
   data() {
     return {
-      // 通知用
       notifications: [], // 通知(複数)
-      unopen_count: 0,
+      unopen_count: 0,   // 未読数
     }
   },
 
@@ -20,7 +19,7 @@ export const application_notification = {
       }
     },
 
-    // (N)を押したので未読を空にする
+    // 未読の数字をタップしたとき既読にする
     notification_opened_handle() {
       if (this.notification_unopen_ids.length >= 1) {
         this.silent_api_put("notification_opened_handle", {notification_unopen_ids: this.notification_unopen_ids}, e => {

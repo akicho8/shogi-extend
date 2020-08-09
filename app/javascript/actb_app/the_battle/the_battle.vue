@@ -55,8 +55,8 @@
           b-button(@click="app.battle_unsubscribe") 切断(自分)
           b-button(@click="app.member_disconnect_handle(true)") 切断(相手)
         .buttons.is-centered.are-small
-          b-button(@click="app.yarimasu_handle") マッチングの人と対戦する
-          b-button(@click="app.yarimasu_handle") 挑戦者発見
+          b-button(@click="app.battle_request_accept_handle") マッチングの人と対戦する
+          b-button(@click="app.battle_request_accept_handle") 挑戦者発見
 </template>
 
 <script>

@@ -41,9 +41,9 @@ RSpec.describe ScriptsController, type: :controller do
       end
     end
 
-    describe "yarimasu_handle" do
+    describe "battle_request_accept_handle" do
       def test1
-        put :update, params: { id: "actb-app", remote_action: "yarimasu_handle", session_lock_token: SecureRandom.hex }
+        put :update, params: { id: "actb-app", remote_action: "battle_request_accept_handle", session_lock_token: SecureRandom.hex }
         expect(response).to have_http_status(:ok)
         hash = JSON.parse(response.body)
         hash["status"]

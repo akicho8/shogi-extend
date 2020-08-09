@@ -422,10 +422,10 @@ export default {
       this.mode = "rule_select"
     },
 
-    yarimasu_handle() {
+    battle_request_accept_handle() {
       this.revision_safe(() => {
         // --> app/models/frontend_script/actb_app_script/put_api.rb
-        this.api_put("yarimasu_handle", {session_lock_token: this.current_user.session_lock_token}, e => {
+        this.api_put("battle_request_accept_handle", {session_lock_token: this.current_user.session_lock_token}, e => {
           this.debug_alert(e.status)
           if (e.status === "success") {
             this.ok_notice("マッチング成功！")
@@ -458,7 +458,7 @@ export default {
         queue: false,
         onAction: () => {
           this.sound_play("click")
-          this.yarimasu_handle()
+          this.battle_request_accept_handle()
         }
       })
     },

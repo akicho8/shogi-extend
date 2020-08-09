@@ -3,11 +3,11 @@ import { Room } from "./models/room.js"
 export const application_room = {
   data() {
     return {
-      room: null,               // バトル部屋情報
+      room: null,              // バトル部屋情報
 
       // チャット用
-      room_messages: null, // メッセージ(複数)
-      room_message_body:  null, // 入力中のメッセージ
+      room_messages:     null, // メッセージ(複数)
+      room_message_body: null, // 入力中のメッセージ
     }
   },
 
@@ -22,7 +22,7 @@ export const application_room = {
       this.ov_user_modal_close()     // 問題を見ているときかもしれないので閉じる
       this.ov_question_modal_close() // 問題を見ているときかもしれないので閉じる
 
-      this.room_unsubscribe()   // BOTと対戦中 yarimasu_handle 経由で room_setup が呼ばれる場合もあるため必要
+      this.room_unsubscribe()        // BOTと対戦中 battle_request_accept_handle 経由で room_setup が呼ばれる場合もあるため必要
 
       this.room = new Room(room)
 
