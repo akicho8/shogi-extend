@@ -97,7 +97,7 @@ export const application_matching = {
     matching_forgo_p()           { return this.app.config.matching_forgo_second && (this.matching_interval_timer_count >= this.app.config.matching_forgo_second)   },
 
     matching_cancel_possible_p() {
-      if (this.app.config.rule_time_enable) {
+      if (this.app.config.lobby_clock_restrict_p) {
         const v = this.app.config.matching_cancel_possible_second
         if (v) {
           return this.app.matching_interval_timer_count >= v

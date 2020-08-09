@@ -44,6 +44,7 @@ import the_menu          from "./the_menu.vue"
 
 // Mixins
 import { application_room         } from "./application_room.js"
+import { application_lobby_clock  } from "./application_lobby_clock.js"
 import { application_battle       } from "./application_battle.js"
 import { application_matching     } from "./application_matching.js"
 import { application_history      } from "./application_history.js"
@@ -52,7 +53,7 @@ import { application_notification } from "./application_notification.js"
 import { config                   } from "./config.js"
 import { RuleInfo                 } from "./models/rule_info.js"
 import { OxMarkInfo               } from "./models/ox_mark_info.js"
-import { SkillInfo               } from "./models/skill_info.js"
+import { SkillInfo                } from "./models/skill_info.js"
 
 export default {
   store,
@@ -65,6 +66,7 @@ export default {
     the_user_show_mod,
 
     application_room,
+    application_lobby_clock,
     application_battle,
     application_matching,
     application_history_vote,
@@ -284,6 +286,7 @@ export default {
       this.debug_alert("lobby_setup")
       this.__assert__(this.$ac_lobby == null, "this.$ac_lobby == null")
       this.$ac_lobby = this.ac_subscription_create({channel: "Actb::LobbyChannel"})
+      this.lrt_start()
 
       this.ov_redirect_onece()
     },
@@ -334,14 +337,14 @@ export default {
       this.sound_play("click")
       this.revision_safe()
 
-      if (this.app.config.rule_time_enable) {
+      if (this.app.config.lobby_clock_restrict_p) {
         if (practice_p) {
-          if (this.battle_time_active_p) {
+          if (this.lobby_clock_mode === "active") {
             this.warning_notice("対人戦が有効なときは練習できません")
             return
           }
         } else {
-          if (!this.battle_time_active_p) {
+          if (this.lobby_clock_mode === "inactive") {
             this.warning_notice("開催時間におこしください。それまでは練習をどうぞ")
             return
           }
@@ -493,6 +496,7 @@ export default {
 
     lobby_unsubscribe() {
       this.ac_unsubscribe("$ac_lobby")
+      this.lrt_stop()
     },
 
     // 問題一覧「+」
@@ -562,16 +566,6 @@ export default {
     // ある程度使ってくれているユーザーか？
     regular_p() {
       return this.current_user && this.current_user.regular_p
-    },
-
-    // 開催期間中か？
-    battle_time_active_p() {
-      // 時間が有効でなければ常に開催中
-      if (!this.app.config.rule_time_enable) {
-        return true
-      }
-
-      return this.RuleInfo.time_ranges_active_p(this.app.config.battle_time_ranges)
     },
   },
 }

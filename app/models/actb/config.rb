@@ -5,8 +5,8 @@ module Actb
     :promotion_for_training          => true,
 
     # -------------------------------------------------------------------------------- 共通
-    :rule_time_enable                => false, # ルールの開催期間制限
-    :battle_time_ranges              => [{:beg => "00:00", :end => "23:00" }, {:beg => "23:00", :end => "23:55" }],
+    :lobby_clock_restrict_p          => false, # ルールの開催期間制限
+    :lobby_clock_restrict_ranges     => [{:beg => "15:14:00", :end => "15:14:05" }, {:beg => "23:00", :end => "23:55" }],
     :rating_display_p                => true, # 内部レーティングを表示する？
     :action_cable_debug              => true, # ActionCable関連デバッグモード
     :user_name_required              => true, # 「名無し」であれば名前を入力してもらう
@@ -78,8 +78,8 @@ module Actb
         :singleton_giveup_effective_seconds           => 3,        # 「あきらめる」がでるまでの秒数(シングルトン)
         :marathon_giveup_effective_seconds            => 15,       # 「あきらめる」がでるまでの秒数(マラソン)
         :sp_theme                        => "real",   # 将棋盤のタイプ
-        :rule_time_enable                => true,     # ルールの開催期間制限
-        :battle_time_ranges              => [
+        :lobby_clock_restrict_p                => true,     # ルールの開催期間制限
+        :lobby_clock_restrict_ranges              => [
           # { :beg => "12:45", :end => "13:00" },
           { :beg => "23:00", :end => "23:15" },
         ],

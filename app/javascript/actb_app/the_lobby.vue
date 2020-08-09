@@ -38,10 +38,10 @@
   .title.is-5.has-text-centered.mb-1 将棋トレーニングバトル！
 
   .buttons.is-centered.mt-4.is-marginless.are-large.start_buttons
-    b-button.has-text-weight-bold(@click="app.start_handle(false)" :type="{'is-primary': app.battle_time_active_p}")
+    b-button.has-text-weight-bold(@click="app.start_handle(false)" :type="{'is-primary': app.lobby_clock_mode === 'active'}")
       | 対人戦
-      template(v-if="app.config.rule_time_enable")
-        template(v-for="e in app.config.battle_time_ranges")
+      template(v-if="app.config.lobby_clock_restrict_p")
+        template(v-for="e in app.config.lobby_clock_restrict_ranges")
           .is-size-7 {{e.beg}} - {{e.end}}
     b-button.has-text-weight-bold(@click="app.start_handle(true)") 練習
 

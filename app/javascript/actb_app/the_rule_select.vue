@@ -9,16 +9,16 @@
     template(v-for="row in app.RuleInfo.values")
       template(v-if="rule_display_p(row)")
         b-button(@click="app.rule_key_set_handle(row)" :class="{'is_active': app.matching_user_ids_hash[row.key].length >= 1}" expanded)
-          //- :disabled="app.config.rule_time_enable && !app.practice_p && !row.time_range_active_p"
+          //- :disabled="app.config.lobby_clock_restrict_p && !app.practice_p && !row.time_range_active_p"
           span.has-text-weight-bold
             | {{row.name}}
             template(v-if="app.debug_read_p")
               | (待:{{app.matching_user_ids_hash[row.key].length}})
-            //- template(v-if="app.config.rule_time_enable && row.time_range_active_p")
+            //- template(v-if="app.config.lobby_clock_restrict_p && row.time_range_active_p")
             //-   | ★
           .description.is-size-8.has-text-grey.mt-1
             | {{row.description}}
-          //- .time_ranges.is-size-8.has-text-grey.mt-1.has-text-weight-bold(v-if="app.config.rule_time_enable")
+          //- .time_ranges.is-size-8.has-text-grey.mt-1.has-text-weight-bold(v-if="app.config.lobby_clock_restrict_p")
           //-   template(v-for="range in row.raw_time_ranges")
           //-     span.mx-1
           //-       template(v-if="app.RuleInfo.time_range_active_p(range)")

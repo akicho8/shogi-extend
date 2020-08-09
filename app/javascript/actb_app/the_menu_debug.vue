@@ -12,7 +12,7 @@
     b-field
       b-switch(v-model="app.debug_write_p" type="is-danger") 破壊系を有効化
     b-field
-      b-switch(v-model="app.config.rule_time_enable" type="is-danger") バトル開催時間制限
+      b-switch(v-model="app.config.lobby_clock_restrict_p" type="is-danger") バトル開催時間制限
 
     b-button(expanded tag="a" href="/admin/script/user-switch") 運営ユーザー切り替え
     b-button(expanded tag="a" href="/admin/script/user_switch_direct?user_key=sysop&redirect_to=/training") → 運営
