@@ -64,7 +64,7 @@ export const application_lobby_clock = {
 
       if (this.lobby_clock_mode === "inactive") {
         if (this.lobby_clock_mode_count === 0) {
-          this.ok_notice("バトルの時間はおわりです")
+          this.ok_notice("バトルの時間はおわりです。参加ありがとうございました")
         }
       }
 
