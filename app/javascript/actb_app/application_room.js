@@ -22,7 +22,7 @@ export const application_room = {
       this.ov_user_modal_close()     // 問題を見ているときかもしれないので閉じる
       this.ov_question_modal_close() // 問題を見ているときかもしれないので閉じる
 
-      this.room_unsubscribe()        // BOTと対戦中 battle_request_accept_handle 経由で room_setup が呼ばれる場合もあるため必要
+      this.room_unsubscribe()        // BOTと対戦中 new_challenge_accept_handle 経由で room_setup が呼ばれる場合もあるため必要
 
       this.room = new Room(room)
 

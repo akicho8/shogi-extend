@@ -329,7 +329,7 @@ export const application_battle = {
       // つまり、残り0.1秒で「わかった」すると次の問題を答える権利がなくなる
       // これを防ぐために、時間切れになった瞬間、answer_button_push_handle_broadcasted を処理しないようにする
       if (this.sub_mode !== "sm4_tactic") {
-        this.console_log("わかったを押した直後に時間切れになったためわかったを無効とする")
+        this.clog("わかったを押した直後に時間切れになったためわかったを無効とする")
         return
       }
 

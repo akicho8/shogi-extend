@@ -250,7 +250,7 @@ const CHART_CONFIG_DEFAULT = {
     //
     //   const chart_instance = this
     //   const __vm__ = chart_instance.config.__vm__
-    //   __vm__.console_log("onHover", "chart_elements.length", chart_elements.length)
+    //   __vm__.clog("onHover", "chart_elements.length", chart_elements.length)
     //
     //   if (chart_elements.length >= 1) {
     //     const chart_element = chart_elements[0]
@@ -264,7 +264,7 @@ const CHART_CONFIG_DEFAULT = {
     onClick(event, chart_elements) {
       const chart_instance = this
       const __vm__ = chart_instance.config.__vm__
-      __vm__.console_log("onClick", "chart_elements.length", chart_elements.length)
+      __vm__.clog("onClick", "chart_elements.length", chart_elements.length)
       let xy_info = null
 
       // 点にホバーできている状態でクリックしたらその点を使う

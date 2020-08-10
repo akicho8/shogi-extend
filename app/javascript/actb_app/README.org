@@ -103,7 +103,7 @@
 * BOTとの対戦中に通知が来て対人戦が始められる仕組み
 
   - BOTとの対戦中はロビーとの接続を維持する
-  - 通知があったとき Lobby が有効なら confirm を出して OK なら battle_request_accept_handle を呼ぶ
+  - 通知があったとき Lobby が有効なら confirm を出して OK なら new_challenge_accept_handle を呼ぶ
 
   |--------+-------+------+--------+---------------------------------------------------------|
   |        | Lobby | Room | Battle |                                                         |

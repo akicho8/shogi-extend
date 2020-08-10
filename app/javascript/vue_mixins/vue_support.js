@@ -89,17 +89,17 @@ export default {
     },
 
     debug_alert(message) {
-      if (!this.development_p) { return }
-
-      if (message) {
-        this.$buefy.toast.open({message: message.toString(), position: "is-bottom", type: "is-danger", duration: 1000 * 1.0, queue: false})
+      if (this.development_p) {
+        if (message) {
+          this.$buefy.toast.open({message: message.toString(), position: "is-bottom", type: "is-danger", duration: 1000 * 1.0, queue: false})
+        }
       }
     },
 
-    console_log(...args) {
-      if (!this.development_p) { return }
-
-      console.log(...args)
+    clog(...args) {
+      if (this.development_p) {
+        console.log(...args)
+      }
     },
 
     // #以降を除いた現在のパス

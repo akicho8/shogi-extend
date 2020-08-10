@@ -47,15 +47,17 @@ export const application_matching = {
     // マッチング不成立だったりでしょっちゅう呼ばれる
     matching_user_ids_broadcasted(params) {
       this.matching_user_ids_hash = params.matching_user_ids_hash
+
+      // 初回のみ実行
       if (params.trigger === "add") {
         if (params.user_id === this.current_user.id) {
-          // 自分が開始したので自分に通知しても意味がない
+          this.clog("自分が開始した通知が自分に届いた")
         } else {
           if (this.tab_is_hidden_p()) {
-            this.console_log("対戦者がいましたがタブが死んでいるためスルー")
-            return
+            this.clog("他の人に届いたけどタブがアクティブになっていないため通知しない")
+          } else {
+            this.new_challenge_notify(params.rule.key)
           }
-          this.new_challenger_snackbar(params.rule.name)
         }
       }
     },

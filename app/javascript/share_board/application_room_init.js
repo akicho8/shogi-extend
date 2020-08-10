@@ -30,9 +30,9 @@ export const application_room_init = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     board_info_request_broadcasted(params) {
-      this.console_log(`${params.user_code} が欲しいと言っている`)
+      this.clog(`${params.user_code} が欲しいと言っている`)
       if (params.user_code === this.user_code) {
-        this.console_log(`自分から自分へ`)
+        this.clog(`自分から自分へ`)
       } else {
         this.board_info_send(params.user_code)
       }
@@ -40,7 +40,7 @@ export const application_room_init = {
 
     // 盤面の情報を送って欲しい人がいるので送ってあげる
     board_info_send(to_user) {
-      this.console_log(`${to_user} に送る`)
+      this.clog(`${to_user} に送る`)
       this.ac_room_perform("board_info_send", {
         to_user: to_user,         // 送り先
         sfen: this.current_sfen,
@@ -50,18 +50,18 @@ export const application_room_init = {
     },
     board_info_send_broadcasted(params) {
       if (params.user_code === this.user_code) {
-        this.console_log(`自分から自分へ`)
+        this.clog(`自分から自分へ`)
       } else {
-        this.console_log(`${params.user_code} が ${params.to_user} に ${params.sfen} を送信したものを ${this.user_code} が受信`)
+        this.clog(`${params.user_code} が ${params.to_user} に ${params.sfen} を送信したものを ${this.user_code} が受信`)
         if (params.to_user === this.user_code) {
-          this.console_log(`リクエストした情報を送ってもらった`)
-          this.console_log(`リビジョン比較: 相手(${params.revision}) > 自分(${this.$revision}) --> ${params.revision > this.$revision}`)
+          this.clog(`リクエストした情報を送ってもらった`)
+          this.clog(`リビジョン比較: 相手(${params.revision}) > 自分(${this.$revision}) --> ${params.revision > this.$revision}`)
           if (params.revision > this.$revision) {
-            this.console_log(`自分より古参の情報なので反映する`)
+            this.clog(`自分より古参の情報なので反映する`)
             this.$revision = params.revision
             this.attributes_set(params)
           } else {
-            this.console_log(`自分より新参の情報なので反映しない`)
+            this.clog(`自分より新参の情報なので反映しない`)
           }
         }
       }

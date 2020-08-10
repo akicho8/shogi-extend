@@ -43,17 +43,18 @@ import the_history       from "./the_history/the_history.vue"
 import the_menu          from "./the_menu.vue"
 
 // Mixins
-import { application_room         } from "./application_room.js"
-import { application_lobby_clock  } from "./application_lobby_clock.js"
-import { application_battle       } from "./application_battle.js"
-import { application_matching     } from "./application_matching.js"
-import { application_history      } from "./application_history.js"
-import { application_history_vote } from "./application_history_vote.js"
-import { application_notification } from "./application_notification.js"
-import { config                   } from "./config.js"
-import { RuleInfo                 } from "./models/rule_info.js"
-import { OxMarkInfo               } from "./models/ox_mark_info.js"
-import { SkillInfo                } from "./models/skill_info.js"
+import { application_room              } from "./application_room.js"
+import { application_lobby_clock       } from "./application_lobby_clock.js"
+import { application_battle            } from "./application_battle.js"
+import { application_matching          } from "./application_matching.js"
+import { application_history           } from "./application_history.js"
+import { application_history_vote      } from "./application_history_vote.js"
+import { application_notification      } from "./application_notification.js"
+import { application_new_challenge } from "./application_new_challenge.js"
+import { config                        } from "./config.js"
+import { RuleInfo                      } from "./models/rule_info.js"
+import { OxMarkInfo                    } from "./models/ox_mark_info.js"
+import { SkillInfo                     } from "./models/skill_info.js"
 
 export default {
   store,
@@ -71,6 +72,7 @@ export default {
     application_matching,
     application_history_vote,
     application_notification,
+    application_new_challenge,
 
     application_history,
   ],
@@ -422,47 +424,6 @@ export default {
       this.mode = "rule_select"
     },
 
-    // マッチング通知をロビーで気づいて挑戦する
-    battle_request_accept_handle() {
-      this.revision_safe(() => {
-        // --> app/models/frontend_script/actb_app_script/put_api.rb
-        this.api_put("battle_request_accept_handle", {session_lock_token: this.current_user.session_lock_token}, e => {
-          this.debug_alert(e.status)
-          if (e.status === "success") {
-            this.ok_notice("マッチング成功！")
-          }
-          if (e.status === "opponent_missing") {
-            this.warning_notice("相手がすでに対人戦を開始したか抜けてしまいました")
-          }
-        })
-      })
-    },
-
-    new_challenger_snackbar(rule_name) {
-      this.sound_play("bell1")
-
-      let message = `${rule_name}に挑戦者現る！<br>`
-      if (this.room) {
-        message += `練習をキャンセルして対戦しますか？`
-      } else {
-        message += `対戦しますか？`
-      }
-
-      this.say(message)
-
-      this.$buefy.snackbar.open({
-        duration: 15 * 1000,
-        message: message,
-        type: "is-success",
-        position: "is-bottom-left",
-        actionText: "対戦する",
-        queue: false,
-        onAction: () => {
-          this.sound_play("click")
-          this.battle_request_accept_handle()
-        }
-      })
-    },
 
     ////////////////////////////////////////////////////////////////////////////////
 

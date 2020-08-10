@@ -19,7 +19,7 @@ RSpec.describe ScriptsController, type: :controller do
 
     describe "マッチング開始通知にロビーにいる人が気づいて挑戦を受け入れた" do
       def test1
-        put :update, params: { id: "actb-app", remote_action: "battle_request_accept_handle", session_lock_token: SecureRandom.hex }
+        put :update, params: { id: "actb-app", remote_action: "new_challenge_accept_handle", session_lock_token: SecureRandom.hex }
         expect(response).to have_http_status(:ok)
         hash = JSON.parse(response.body)
         hash["status"]
