@@ -7,7 +7,7 @@
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '❗', say: 'びっくり'})") ❗
   //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '🍣', say: 'どーぞ'})") 🍣
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: 'むずい', say: 'むずい'})") 難
-  .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: 'かんたん', say: 'かんたん'})") 簡
+  //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: 'かんたん', say: 'かんたん'})") 簡
   //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '🍰', say: 'どーぞ'})") 🍰
   //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '❓', say: 'わからん'})") ❓
   .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', plain: '対よろ', say: 'よろしく'})") よ
