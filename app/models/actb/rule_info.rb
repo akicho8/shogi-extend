@@ -50,7 +50,13 @@ module Actb
     end
 
     def display_p
-      if development_only && !Rails.env.development?
+      if development_only
+        if Rails.env.development?
+          return true
+        end
+        if Rails.env.staging?
+          return true
+        end
         return false
       end
 
