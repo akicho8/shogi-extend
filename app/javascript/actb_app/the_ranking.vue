@@ -116,6 +116,7 @@ export default {
         params.take = 5
         params.shuffle = true
       }
+      this.rank_data = null
       this.api_get("ranking_fetch", params, e => {
         this.rank_data = e.rank_data
       })
