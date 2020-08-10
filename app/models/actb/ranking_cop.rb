@@ -27,7 +27,7 @@ module Actb
       retv[:ranking_key] = ranking_key
       if current_user
         # ランクインしているか？
-        retv[:user_rank_in] = top_users.any? { |e| e == current_user }
+        retv[:user_rank_in] = top_users.include?(current_user)
 
         # ランクインしているどうかに関係なく、どっちみち表示するので、1回でもプレイしていたら情報取得
         if user_actb_season_xrecord
