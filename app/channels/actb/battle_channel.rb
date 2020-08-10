@@ -52,10 +52,7 @@ module Actb
     # 先に押した方だけ解答権を得る
     def answer_button_push_handle(data)
       data = data.to_options
-      key = answer_button_push_key(data)
-      counter = redis.incr(key)
-      redis.expire(key, 60)
-      if counter == 1
+      if once_run(answer_button_push_key(data), expires_in: 1.minute)
         broadcast(:answer_button_push_handle_broadcasted, data)
       end
     end
