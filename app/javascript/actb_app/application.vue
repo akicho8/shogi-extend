@@ -341,6 +341,7 @@ export default {
 
       this.sound_play("click")
       this.revision_safe()
+      this.new_challenge_snackbar_clear() // 挑戦者登場の snackbar を消去
 
       if (this.app.config.lobby_clock_restrict_p) {
         if (practice_p) {
@@ -423,7 +424,6 @@ export default {
 
       this.mode = "rule_select"
     },
-
 
     ////////////////////////////////////////////////////////////////////////////////
 

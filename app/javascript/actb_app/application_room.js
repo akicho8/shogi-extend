@@ -24,6 +24,8 @@ export const application_room = {
 
       this.room_unsubscribe()        // BOTと対戦中 new_challenge_accept_handle 経由で room_setup が呼ばれる場合もあるため必要
 
+      this.new_challenge_snackbar_clear() // 挑戦者登場の snackbar を消去
+
       this.room = new Room(room)
 
       if (this.room.bot_user_id) {

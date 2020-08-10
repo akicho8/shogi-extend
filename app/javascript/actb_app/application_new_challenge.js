@@ -1,4 +1,10 @@
 export const application_new_challenge = {
+  data() {
+    return {
+      snackbar_instances: [],
+    }
+  },
+
   methods: {
     // ブロードキャストされた内容から通知してよいか判断する
     new_challenge_facade(params) {
@@ -46,7 +52,7 @@ export const application_new_challenge = {
       const message = this.new_challenge_message(params)
       this.say("挑戦者現る。対戦しますか？")
 
-      this.$buefy.snackbar.open({
+      const snackbar_instance = this.$buefy.snackbar.open({
         duration: params.duration || 8 * 1000,
         message: message,
         type: "is-success",
@@ -58,6 +64,14 @@ export const application_new_challenge = {
           this.new_challenge_accept_handle(params)
         }
       })
+
+      this.snackbar_instances.push(snackbar_instance)
+    },
+
+    // すべて消す
+    new_challenge_snackbar_clear() {
+      this.snackbar_instances.forEach(e => e.close())
+      this.snackbar_instances.clear()
     },
 
     // 挑戦者通知→対戦する
