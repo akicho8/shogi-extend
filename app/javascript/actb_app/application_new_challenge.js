@@ -71,7 +71,7 @@ export const application_new_challenge = {
     // すべて消す
     new_challenge_snackbar_clear() {
       this.snackbar_instances.forEach(e => e.close())
-      this.snackbar_instances.clear()
+      this.snackbar_instances = []
     },
 
     // 挑戦者通知→対戦する
