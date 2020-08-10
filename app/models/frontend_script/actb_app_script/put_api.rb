@@ -60,22 +60,55 @@ module FrontendScript
         { status: "success" }
       end
 
-      # マッチング中の人といきなり対局する
+      # マッチング中の人と対局する
+      #
+      # js側から送信されるもの
+      #   user_id: params.user.id,
+      #   rule_key: params.rule_key,
+      #   session_lock_token: this.current_user.session_lock_token, // マッチング通知を自分だけに行うための識別子を送る
       def new_challenge_accept_handle
-        raise if params[:session_lock_token].blank?
+        raise ArgumentError if params[:session_lock_token].blank?
+        raise ArgumentError if params[:user_id].blank?
+        raise ArgumentError if params[:rule_key].blank?
 
-        ids = Actb::Rule.matching_all_user_ids
-        raise if ids.any? { |e| !e.kind_of?(Integer) }
-        ids = ids - [current_user.id]
-        if ids.empty?
-          return { status: "opponent_missing" }
+        user = User.find(params[:user_id])
+        rule = Actb::Rule.fetch(params[:rule_key])
+
+        unless rule.matching_users_include?(user)
+          return { status: "opponent_missing", message: "相手はすでに対戦を開始したか別のルールに変更したか抜けてしまったようです" }
         end
-        id = ids.sample
-        user = User.find(id)
-        current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
-        Actb::Room.create_with_members!([user, current_user], rule: user.actb_setting.rule)
-        { status: "success" }
+
+        key = [:new_challenge_accept_handle, rule.key, user.id].join("/")
+        if Actb::BaseChannel.once_run(key, expires_in: 1.minute)
+          current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
+          Actb::Room.create_with_members!([user, current_user], rule: rule)
+          { status: "success", message: "マッチング成功！" }
+        else
+          { status: "opponent_missing", message: "僅差で押し負けました" }
+        end
       end
+
+      # # マッチング中の誰かと対局する場合
+      # #
+      # # js側から送信されるもの
+      # #   user_id: params.user.id,
+      # #   rule_key: params.rule_key,
+      # #   session_lock_token: this.current_user.session_lock_token, // マッチング通知を自分だけに行うための識別子を送る
+      # def new_challenge_accept_handle2
+      #   raise ArgumentError if params[:session_lock_token].blank?
+      #
+      #   ids = Actb::Rule.matching_all_user_ids
+      #   raise if ids.any? { |e| !e.kind_of?(Integer) }
+      #   ids = ids - [current_user.id]
+      #   if ids.empty?
+      #     return { status: "opponent_missing" }
+      #   end
+      #   id = ids.sample
+      #   user = User.find(id)
+      #   current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
+      #   Actb::Room.create_with_members!([user, current_user], rule: user.actb_setting.rule)
+      #   { status: "success" }
+      # end
 
       def vote_handle
         current_user.vote_handle(params)

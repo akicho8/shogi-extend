@@ -15,7 +15,7 @@ import mp3_pipopipo from "../sound_effect/soundeffect_lab/pipopipo.mp3"
 import mp3_win      from "../sound_effect/soundeffect_lab/kansei.mp3"
 import mp3_bubuu    from "../sound_effect/soundeffect_lab/bubuu.mp3"
 import mp3_draw     from "../sound_effect/soundeffect_lab/stupid5.mp3"
-import mp3_bell1    from "../sound_effect/soundeffect_lab/decision5.mp3"
+import mp3_new_challenge    from "../sound_effect/soundeffect_lab/decision5.mp3"
 import mp3_bell2    from "../sound_effect/soundeffect_lab/decision26.mp3"
 import mp3_pon      from "../sound_effect/soundeffect_lab/kotsudumi1.mp3"
 
@@ -42,7 +42,7 @@ const SoundPresets = {
   mistake:  { file: mp3_x,        volume: 0.2,  },
   timeout:  { file: mp3_bubuu,    volume: 0.2,  },
   draw:     { file: mp3_draw,     volume: 0.3,  },
-  bell1:    { file: mp3_bell1,    volume: 0.3,  },
+  new_challenge:    { file: mp3_new_challenge,    volume: 0.3,  },
   bell2:    { file: mp3_bell2,    volume: 0.3,  },
   pon:      { file: mp3_pon,      volume: 0.5,  },
   notify:   { file: mp3_notify,   volume: 0.5,  },

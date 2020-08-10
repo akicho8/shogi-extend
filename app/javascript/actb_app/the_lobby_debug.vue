@@ -4,8 +4,8 @@
     template(v-for="row in app.RuleInfo.values")
       b-button(@click="app.debug_matching_add_handle(row)") 自分以外を{{row.name}}に参加させる
     b-button(@click="app.matching_users_clear_handle") 全員解散
-    b-button(@click="app.new_challenge_accept_handle") マッチングの人と直接対戦する
-    b-button(@click="app.new_challenge_notify('ルール1')") マッチングを開始した人がいる通知
+    b-button(@click="app.new_challenge_accept_handle({rule_key: 'test_rule', user: {id:1,name:'user1'}})") マッチングの人と直接対戦する
+    b-button(@click="app.new_challenge_notify({rule_key: 'test_rule', user: {id:1,name:'user1'}, duration: 1000*60*60})") マッチングを開始した人がいる通知
 </template>
 
 <script>
@@ -22,4 +22,6 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .the_lobby_debug
+  .image
+    img
 </style>

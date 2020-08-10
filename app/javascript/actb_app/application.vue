@@ -289,7 +289,7 @@ export default {
       this.notification_setup()
 
       this.debug_alert("lobby_setup")
-      this.__assert__(this.$ac_lobby == null, "this.$ac_lobby == null")
+      this.__assert__(this.$ac_lobby == null, "ロビーが解放されてないのに再び接続しようとしている")
       this.$ac_lobby = this.ac_subscription_create({channel: "Actb::LobbyChannel"})
       this.lrt_start()
 

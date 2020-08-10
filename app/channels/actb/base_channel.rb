@@ -11,6 +11,9 @@ module Actb
         redis.flushdb
       end
 
+      # if Actb::BaseChannel.once_run("shared key", expires_in: 1.minute)
+      #   ...
+      # end
       def once_run(key, options = {})
         raise ArgumentError unless key
 

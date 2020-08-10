@@ -47,19 +47,7 @@ export const application_matching = {
     // マッチング不成立だったりでしょっちゅう呼ばれる
     matching_user_ids_broadcasted(params) {
       this.matching_user_ids_hash = params.matching_user_ids_hash
-
-      // 初回のみ実行
-      if (params.trigger === "add") {
-        if (params.user_id === this.current_user.id) {
-          this.clog("自分が開始した通知が自分に届いた")
-        } else {
-          if (this.tab_is_hidden_p()) {
-            this.clog("他の人に届いたけどタブがアクティブになっていないため通知しない")
-          } else {
-            this.new_challenge_notify(params.rule.key)
-          }
-        }
-      }
+      this.new_challenge_facade(params) // 通知関連は委譲
     },
     // session_lock_token が無効になった
     session_lock_token_invalid_narrowcasted(params) {

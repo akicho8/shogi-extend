@@ -13,6 +13,12 @@
 # | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
 # |------------+--------------------+-------------+-------------+------+-------|
 
+# matching_user_ids
+# matching_users
+# matching_users_include?(user)
+# matching_users_add(user)
+# matching_users_delete(user)
+
 module Actb
   class Rule < ApplicationRecord
     class << self
@@ -66,7 +72,7 @@ module Actb
     end
 
     def matching_user_ids
-      redis.smembers(redis_key).collect(&:to_i)
+      redis.smembers(redis_key).collect(&:to_i) # to_i 重要
     end
 
     def matching_users
@@ -79,7 +85,16 @@ module Actb
 
     def matching_users_add(user)
       if redis.sadd(redis_key, user.id) # 新規で追加できたときだけ真
-        matching_user_ids_broadcast(trigger: :add, rule: {name: name}, user_id: user.id)
+        matching_user_ids_broadcast({
+            :trigger  => :add,
+            :rule_key => key,
+            :user => {
+              :id          => user.id,
+              :name        => user.name,
+              :avatar_path => user.avatar_path,
+            },
+          })
+        true
       end
     end
 
@@ -88,6 +103,7 @@ module Actb
       if user
         if redis.srem(redis_key, user.id) # 既存のIDを削除できたときだけ真
           matching_user_ids_broadcast(trigger: :delete, user_id: user.id) # このトリガーは未使用
+          true
         end
       end
     end

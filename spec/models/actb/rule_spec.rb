@@ -19,15 +19,33 @@ module Actb
   RSpec.describe Rule, type: :model do
     include ActbSupportMethods
 
-    it do
-      Actb::Rule.all.collect(&:key) # => ["sy_marathon", "sy_singleton", "sy_hybrid"]
+    it "class_methods" do
+      Actb::Rule.all.collect(&:key) # => ["test_rule", "good_rule", "good_marathon_rule", "beginner_rule", "normal_rule", "pro_rule", "latest_rule", "technical_rule", "singleton_rule", "marathon_rule", "hybrid_rule", "classic_only_rule", "ahiru_only_rule"]
       assert { Rule.all.count >= 1 }
+    end
+
+    it "works" do
+      rule = Actb::Rule.first
+
+      rule.matching_users_add(user1)      # => true
+      rule.matching_user_ids              # => [10]
+      rule.matching_users_include?(user1) # => true
+      rule.matching_users                 # => [#<User id: 10, key: "47f3f8e88a29e5223e7b63c2fd0810c6", name: "user1", cpu_brain_key: nil, user_agent: "", race_key: "human", created_at: "1999-12-31 15:00:00", updated_at: "1999-12-31 15:00:00", email: "user1@localhost", permit_tag_list: nil>]
+      rule.matching_users_delete(user1)   # => true
+      rule.matching_users                 # => []
+
+      assert { rule.matching_users_add(user1)      == true       }
+      assert { rule.matching_user_ids              == [user1.id] }
+      assert { rule.matching_users_include?(user1) == true       }
+      assert { rule.matching_users                 == [user1]    }
+      assert { rule.matching_users_delete(user1)   == true       }
+      assert { rule.matching_users                 == []         }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .
-# >>
-# >> Finished in 0.32605 seconds (files took 2.15 seconds to load)
-# >> 1 example, 0 failures
-# >>
+# >> ..
+# >> 
+# >> Finished in 1.44 seconds (files took 2.83 seconds to load)
+# >> 2 examples, 0 failures
+# >> 
