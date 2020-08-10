@@ -79,7 +79,7 @@ module FrontendScript
         end
 
         key = [:new_challenge_accept_handle, rule.key, user.id].join("/")
-        if Actb::BaseChannel.once_run(key, expires_in: 1.minute)
+        if Actb::BaseChannel.once_run(key, expires_in: 3.seconds)
           current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
           Actb::Room.create_with_members!([user, current_user], rule: rule)
           { status: "success", message: "マッチング成功！" }
