@@ -18,9 +18,7 @@ battle = Actb::Battle.create! do |e|
   e.memberships.build(user: user2)
 end
 
-membership = battle.memberships.first
-
-history = user.actb_histories.create!(membership: membership, question: question, ox_mark: Actb::OxMark.fetch(:correct))
+history = user.actb_histories.create!(question: question, ox_mark: Actb::OxMark.fetch(:correct))
 tp history
 
 # ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.2.2/lib/active_record/validations.rb:81:in `raise_validation_error': Moves answersが正しくありません (ActiveRecord::RecordInvalid)

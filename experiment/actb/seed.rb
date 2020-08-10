@@ -97,13 +97,13 @@ battle.best_questions             # => [{"id"=>6, "init_sfen"=>"position sfen ln
 # 最初の問題に2度解答する
 # 2.times do
 #   question = Actb::Question.first
-#   user1.actb_histories.create!(membership: membership, question: question, ox_mark: Actb::OxMark.fetch(:correct))
+#   user1.actb_histories.create!(question: question, ox_mark: Actb::OxMark.fetch(:correct))
 # end
 
 # # すべての問題に解答する
 Actb::Question.all.each.with_index do |question, i|
   ox_mark_key = Actb::OxMarkInfo[i.modulo(Actb::OxMarkInfo.count)].key
-  user1.actb_histories.create!(membership: membership, question: question, ox_mark: Actb::OxMark.fetch(ox_mark_key))
+  user1.actb_histories.create!(question: question, ox_mark: Actb::OxMark.fetch(ox_mark_key))
 end
 
 # tp Actb::Season.all

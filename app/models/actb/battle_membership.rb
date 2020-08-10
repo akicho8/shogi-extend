@@ -24,7 +24,6 @@ module Actb
     belongs_to :user, class_name: "::User"
     belongs_to :battle, inverse_of: :memberships
     belongs_to :judge
-    has_many :histories, foreign_key: :membership_id, dependent: :destroy
 
     acts_as_list top_of_list: 0, scope: :battle
 

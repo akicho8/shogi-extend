@@ -41,27 +41,7 @@ module Actb
 
     belongs_to :ox_mark
 
-    # この3つは使ってない？
-    # → user, question, membership で find するため membership は必要
-    # room, battle はなくてもいい
-    belongs_to :room
-    belongs_to :battle
-    belongs_to :membership, class_name: "Actb::BattleMembership"
-
     before_validation do
-      if membership
-        self.battle ||= membership.battle
-      end
-
-      if battle
-        self.room ||= battle.room
-      end
-
-      # 調査用
-      if user
-        self.rating ||= user.rating
-      end
-
       self.ox_mark ||= OxMark.fetch(:mistake)
     end
 

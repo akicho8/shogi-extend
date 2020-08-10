@@ -72,8 +72,10 @@ module Actb
 
       question = Question.find(data[:question_id])                          # 問題
       ox_mark = Actb::OxMark.fetch(data[:ox_mark_key])                      # 結果
-      my_membership = current_battle.memberships.find(data[:membership_id]) # 自分
+      my_membership = current_battle.memberships.find(data[:membership_id]) # 当事者
       op_membership = (current_battle.memberships - [my_membership]).first  # 相手
+      my_user = my_membership.user
+      op_user = op_membership.user
 
       # mistake は来ない
       raise ArgumentError, data.inspect if ox_mark.key == "mistake"
@@ -81,7 +83,7 @@ module Actb
       # 基本個人プレイで同期してない
       if current_strategy_key == :sy_marathon
         raise ArgumentError, data.inspect unless my_membership.user == current_user
-        history_create(question, my_membership, ox_mark)
+        history_create(my_user, question, ox_mark)
         question.ox_add(ox_mark.pure_info.question_counter_column)
       end
 
@@ -89,8 +91,8 @@ module Actb
       # タイムアウト時 → 両方が送信者
       if current_strategy_key == :sy_singleton || current_strategy_key == :sy_hybrid
         if ox_mark.key == "correct"
-          history_create(question, my_membership, ox_mark)
-          history_create(question, op_membership, :mistake)
+          history_create(my_user, question, ox_mark)
+          history_create(op_user, question, :mistake)
           question.ox_add(:o_count) # 片方が正解なら1回分の正解として、もう片方の不正解はカウントしない
         end
         if ox_mark.key == "timeout"
@@ -99,8 +101,8 @@ module Actb
             debug_say "**skip kotae_sentaku"
             return
           end
-          current_battle.memberships.each do |membership|
-            history_create(question, membership, ox_mark)
+          current_battle.users.each do |user|
+            history_create(user, question, ox_mark)
           end
           question.ox_add(:x_count) # 2人分時間切れしたとき1回分の不正解とする
         end
@@ -234,12 +236,11 @@ module Actb
 
     private
 
-    def history_create(question, membership, ox_mark)
-      user = membership.user
+    def history_create(user, question, ox_mark)
       if current_battle.room.bot_user == user
         # 練習モードのBOTなら履歴は作らない
       else
-        user.actb_histories.create!(question: question, membership: membership, ox_mark: OxMark.fetch(ox_mark))
+        user.actb_histories.create!(question: question, ox_mark: OxMark.fetch(ox_mark))
       end
     end
 

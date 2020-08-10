@@ -31,9 +31,8 @@ module Actb
 
     it "解答" do
       membership = battle1.memberships.first
-      history = user1.actb_histories.create!(question: question1, membership: membership, ox_mark: Actb::OxMark.fetch(:correct))
+      history = user1.actb_histories.create!(question: question1, ox_mark: Actb::OxMark.fetch(:correct))
       assert { history }
-      assert { history.rating }
       assert { User.bot.actb_lobby_messages.last.body.match?(/user1.*さん.*本日1問.*解きました/) }
     end
   end

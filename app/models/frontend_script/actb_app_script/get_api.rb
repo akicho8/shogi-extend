@@ -66,7 +66,7 @@ module FrontendScript
       # http://localhost:3000/script/actb-app.json?remote_action=history_records_fetch
       def history_records_fetch
         s = current_user.actb_histories.order(created_at: :desc).limit(Actb::Config[:api_history_fetch_max])
-        { history_records: s.as_json(only: [:id], include: {:battle => {}, :membership => {}, :question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ox_mark => {only: :key}}, methods: [:good_p, :bad_p, :clip_p]) }
+        { history_records: s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ox_mark => {only: :key}}, methods: [:good_p, :bad_p, :clip_p]) }
       end
 
       # http://localhost:3000/script/actb-app.json?remote_action=clip_records_fetch

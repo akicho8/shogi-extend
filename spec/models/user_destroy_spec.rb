@@ -8,8 +8,7 @@ RSpec.describe User, type: :model do
     question = user1.actb_questions.create_mock1
     room = Actb::Room.create_with_members!([user1, user2])
     battle = room.battle_create_with_members!
-    membership = battle.memberships.first
-    membership.user.actb_histories.create!(membership: membership, question: question, ox_mark: Actb::OxMark.fetch(:correct))
+    user1.actb_histories.create!(question: question, ox_mark: Actb::OxMark.fetch(:correct))
     user1.actb_good_marks.create!(question: question)
     user1.actb_bad_marks.create!(question: question)
     user1.actb_clip_marks.create!(question: question)
