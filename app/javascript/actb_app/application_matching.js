@@ -25,19 +25,23 @@ export const application_matching = {
       }
     },
 
+    // ロビーから切断されたあともタイマーの関係で一瞬呼ばれるので mode のチェックを追加
     matching_interval_timer_processing() {
-      if (this.matching_forgo_p) {
-        this.matching_cancel_handle()
-        this.warning_notice("対戦相手が見つかりません")
-        return
+      if (this.mode === "matching") {
+        if (this.matching_forgo_p) {
+          this.matching_cancel_handle()
+          this.warning_notice("対戦相手が見つかりません")
+          return
+        }
+        if (this.matching_trigger_p) {
+          this.matching_search()
+        }
+        this.matching_interval_timer_count += 1
       }
-      if (this.matching_trigger_p) {
-        this.matching_search()
-      }
-      this.matching_interval_timer_count += 1
     },
 
     matching_search() {
+      this.__assert__(this.$ac_lobby, "ロビーに接続できていない")
       this.$ac_lobby.perform("matching_search", {
         session_lock_token: this.current_user.session_lock_token,
         matching_rate_threshold: this.matching_rate_threshold,
