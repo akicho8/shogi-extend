@@ -106,54 +106,29 @@ module Actb
         end
       end
 
-      # FIXME: 作らずにそのまま返す
-      bc_params = {
-        membership_id:  data[:membership_id],  # 誰が
-        question_index: data[:question_index], # どこまで進めたか
-        question_id:    data[:question_id],    # これいらんけど、そのまま渡しとく
-        ox_mark_key:    data[:ox_mark_key],
-      }
-
-      broadcast(:kotae_sentaku_broadcasted, bc_params)
+      broadcast(:kotae_sentaku_broadcasted, data)
     end
 
     # 次に進む
     def next_trigger(data)
       data = data.to_options
 
-      # 本人が送信しているので本人だけの履歴を作成
       if current_strategy_key == :sy_marathon
-        # history_set_by_data(data, :mistake)
+        broadcast(:next_trigger_broadcasted, data)
       end
 
-      # リーダーが送信者なので対局者の両方にあらかじめ履歴を作っておく
       if current_strategy_key == :sy_singleton || current_strategy_key == :sy_hybrid
-        if already_run?([:next_trigger, already_run_key, data[:question_id]], expires_in: 1.minute)
-          debug_say "**skip next_trigger"
-          return
-        end
-        question = Question.find(data[:question_id])
-        current_battle.memberships.each do |e|
-          # history_create(question, e, :mistake)
+        key = [:next_trigger, already_run_key, data[:question_id]]
+        if once_run(key, expires_in: 1.minute)
+          broadcast(:next_trigger_broadcasted, data)
         end
       end
-
-      bc_params = {
-        membership_id:  data[:membership_id],
-        question_index: data[:question_index],
-        question_id:    data[:question_id],
-      }
-      broadcast(:next_trigger_broadcasted, bc_params)
     end
 
     # 盤面を共有する
     def play_board_share(data)
       data = data.to_options
-      bc_params = {
-        membership_id: data[:membership_id],
-        share_sfen: data[:share_sfen],
-      }
-      broadcast(:play_board_share_broadcasted, bc_params)
+      broadcast(:play_board_share_broadcasted, data)
     end
 
     # <-- app/javascript/actb_app/application.vue
@@ -184,9 +159,6 @@ module Actb
     # 再戦希望
     def battle_continue_handle(data)
       data = data.to_options
-      bc_params = {
-        membership_id: data[:membership_id],
-      }
 
       counts = counter_increment(data[:membership_id])
 
@@ -195,35 +167,32 @@ module Actb
         # {10 => 5, 11 => 1} なら発動して {10 => 5, 11 => 2} なら発動しない
         if counts.values.any? { |e| e == 1 }
           __event_notify__("再戦開始")
-          current_battle.onaji_heya_wo_atarasiku_tukuruyo
+          current_battle.battle_chain_create
         end
         return
       end
 
-      bc_params = {
-        membership_id: data[:membership_id],
-        continue_tap_counts: counts,
-      }
-      broadcast(:battle_continue_handle_broadcasted, bc_params)
+      data = data.merge(continue_tap_counts: counts)
+      broadcast(:battle_continue_handle_broadcasted, data)
     end
 
     # 強制続行
     def battle_continue_force_handle(data)
       __event_notify__("強制続行")
-      current_battle.onaji_heya_wo_atarasiku_tukuruyo
+      current_battle.battle_chain_create
     end
 
     # data["member_infos_hash"] = {
     #   "15" => {"ox_list"=>["correct"], "b_score"=>1},
     #   "16" => {"ox_list"=>[],          "b_score"=>0},
     # }
-    def owattayo(data)
+    def judgement_run(data)
       data = data.to_options
 
       if current_strategy_key == :sy_singleton || current_strategy_key == :sy_hybrid
         # 2回目の実行はキャンセル
-        if already_run?([:owattayo, already_run_key], expires_in: 1.minute)
-          debug_say "**skip owattayo"
+        if already_run?([:judgement_run, already_run_key], expires_in: 1.minute)
+          debug_say "**skip judgement_run"
           return
         end
       end
@@ -260,26 +229,10 @@ module Actb
     # data[:membership_id] が退出する
     def battle_leave_handle(data)
       data = data.to_options
-
-      # 単に発言させるためだけ
-      if Config[:action_cable_debug]
-        membership = Actb::BattleMembership.find(data[:membership_id])
-        membership.room_speak("*退室します")
-      end
-
-      broadcast(:battle_leave_handle_broadcasted, membership_id: data[:membership_id])
+      broadcast(:battle_leave_handle_broadcasted, data)
     end
 
     private
-
-    ################################################################################
-
-    # def history_set_by_data(data, ox_mark)
-    #   data = data.to_options
-    #   question = Question.find(data[:question_id])
-    #   membership = current_battle.memberships.find(data[:membership_id])
-    #   history_create(question, membership, ox_mark)
-    # end
 
     def history_create(question, membership, ox_mark)
       user = membership.user

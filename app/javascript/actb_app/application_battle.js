@@ -230,7 +230,7 @@ export const application_battle = {
 
         if (params.membership_id === this.current_membership.id) {
           this.sub_mode_set_by_ox_mark_info(ox_mark_info)
-          this.delay_and_owattayo_or_next_trigger(ox_mark_info)
+          this.delay_and_judgement_run_or_next_trigger(ox_mark_info)
         }
       }
 
@@ -244,7 +244,7 @@ export const application_battle = {
           this.itteijikan_maru_hyouji(mi, ox_mark_info) // なくてもいいけど○を一定時間表示
         }
         if (this.leader_p) {
-          this.delay_and_owattayo_or_next_trigger(ox_mark_info) // [ONCE]
+          this.delay_and_judgement_run_or_next_trigger(ox_mark_info) // [ONCE]
         }
       }
     },
@@ -283,10 +283,10 @@ export const application_battle = {
       })
     },
 
-    delay_and_owattayo_or_next_trigger(ox_mark_info) {
+    delay_and_judgement_run_or_next_trigger(ox_mark_info) {
       this.delay(ox_mark_info.delay_second, () => {
         if (this.battle_end_p || this.next_question_empty_p) {
-          this.ac_battle_perform("owattayo", {member_infos_hash: this.member_infos_hash}) // --> app/channels/actb/battle_channel.rb
+          this.ac_battle_perform("judgement_run", {member_infos_hash: this.member_infos_hash}) // --> app/channels/actb/battle_channel.rb
         } else {
           this.next_trigger()
         }
@@ -442,16 +442,20 @@ export const application_battle = {
       }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     // 部屋から退出する
     room_leave_handle() {
       this.sound_play("click")
-      this.battle_leave_handle()    // 「退出しました」発言が中で行われる
+      this.battle_leave_handle()
       if (this.room.bot_user_id) {
         this.lobby_setup_without_cable()
       } else {
         this.lobby_setup()
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     // 退出通知
     battle_leave_handle(ms_flip = false) {

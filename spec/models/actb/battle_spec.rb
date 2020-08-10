@@ -31,7 +31,7 @@ module Actb
     end
 
     it "続きのバトル作成" do
-      new_battle = battle1.onaji_heya_wo_atarasiku_tukuruyo
+      new_battle = battle1.battle_chain_create
       assert { new_battle.kind_of?(Actb::Battle) }
       assert { new_battle.battle_pos == 1 }
     end

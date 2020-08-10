@@ -86,7 +86,7 @@ battle                          # => #<Actb::Battle id: 1, room_id: 1, parent_id
 battle.users.count                # => 2
 battle.battle_pos               # => 0
 
-battle2 = battle.onaji_heya_wo_atarasiku_tukuruyo # => #<Actb::Battle id: 2, room_id: 1, parent_id: 1, rule_id: 1, final_id: 5, begin_at: "2020-07-03 12:06:35", end_at: nil, battle_pos: 1, created_at: "2020-07-03 12:06:35", updated_at: "2020-07-03 12:06:35">
+battle2 = battle.battle_chain_create # => #<Actb::Battle id: 2, room_id: 1, parent_id: 1, rule_id: 1, final_id: 5, begin_at: "2020-07-03 12:06:35", end_at: nil, battle_pos: 1, created_at: "2020-07-03 12:06:35", updated_at: "2020-07-03 12:06:35">
 battle2.battle_pos                            # => 1
 
 membership = battle.memberships.first

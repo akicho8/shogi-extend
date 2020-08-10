@@ -78,7 +78,7 @@ module Actb
       final.pure_info
     end
 
-    def onaji_heya_wo_atarasiku_tukuruyo
+    def battle_chain_create
       room.battle_create_with_members!(parent: self) # --> app/jobs/actb/battle_broadcast_job.rb
     end
 

@@ -137,7 +137,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
     end
   end
 
-  describe "#owattayo" do
+  describe "#judgement_run" do
     before do
       subscribe(battle_id: current_battle.id)
     end
@@ -153,12 +153,12 @@ RSpec.describe Actb::BattleChannel, type: :channel do
 
     it "結果画面へ" do
       expect {
-        subscription.owattayo(data)
+        subscription.judgement_run(data)
       }.to have_broadcasted_to("actb/battle_channel/#{current_battle.id}")
     end
 
     it "結果" do
-      subscription.owattayo(data)
+      subscription.judgement_run(data)
       current_battle.reload
 
       assert { current_battle.end_at  }
