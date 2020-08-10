@@ -416,12 +416,13 @@ export default {
 
       this.app.matching_interval_timer_clear()
 
-      this.__assert__(this.$ac_lobby, "this.$ac_lobby")
+      this.__assert__(this.$ac_lobby, "ロビーの接続切れ")
       this.$ac_lobby.perform("matching_cancel")
 
       this.mode = "rule_select"
     },
 
+    // マッチング通知をロビーで気づいて挑戦する
     battle_request_accept_handle() {
       this.revision_safe(() => {
         // --> app/models/frontend_script/actb_app_script/put_api.rb
@@ -430,7 +431,7 @@ export default {
           if (e.status === "success") {
             this.ok_notice("マッチング成功！")
           }
-          if (e.status === "not_have_any_opponent") {
+          if (e.status === "opponent_missing") {
             this.warning_notice("相手がすでに対人戦を開始したか抜けてしまいました")
           }
         })

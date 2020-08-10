@@ -68,7 +68,7 @@ module FrontendScript
         raise if ids.any? { |e| !e.kind_of?(Integer) }
         ids = ids - [current_user.id]
         if ids.empty?
-          return { status: "not_have_any_opponent" }
+          return { status: "opponent_missing" }
         end
         id = ids.sample
         user = User.find(id)
