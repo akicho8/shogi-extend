@@ -1,6 +1,6 @@
 module Actb
   Config = {
-    :revision                        => 20,
+    :revision                        => 21,
     :actb_display_p                  => true,
     :promotion_for_training          => true,
 
