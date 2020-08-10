@@ -26,6 +26,8 @@ export const application_room = {
 
       this.new_challenge_snackbar_clear() // 挑戦者登場の snackbar を消去
 
+      this.matching_interval_timer_clear() // マッチングの処理を止める
+
       this.room = new Room(room)
 
       if (this.room.bot_user_id) {
