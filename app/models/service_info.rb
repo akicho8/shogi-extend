@@ -23,9 +23,9 @@ class ServiceInfo
       title: "将棋トレーニングバトル！",
       new_p: true,
       image_source: [
-        "actb1_1200x630.png",
-        "actb2_1200x630.png",
-        "actb3_1200x630.png",
+        "frontend_script/actb_app_script1_1200x630.png",
+        "frontend_script/actb_app_script2_1200x630.png",
+        "frontend_script/actb_app_script3_1200x630.png",
       ],
       description: "将棋の問題を解く力を競う対戦ゲーム",
       feature_items: [

@@ -27,25 +27,18 @@ module FrontendScript
     def ogp_params_set(options = {})
       options = {
         title: visible_title,
-        image: ogp_image_web_path_presence,
-        card: ogp_image_inside_path.exist? ? :summary_large_image : :summary,
+        image: ogp_image_inside_path,
+        card: ogp_image_inside_path ? :summary_large_image : :summary,
         description: "",
       }.merge(options)
 
       c.instance_variable_set(:@ogp_params, options)
     end
 
-    def ogp_image_web_path
-      "#{self.class.name.underscore}_1200x630.png"
-    end
-
     def ogp_image_inside_path
-      Rails.root.join("app/assets/images/#{ogp_image_web_path}")
-    end
-
-    def ogp_image_web_path_presence
-      if ogp_image_inside_path.exist?
-        ogp_image_web_path
+      dir = Rails.root.join("app/assets/images")
+      if e = dir.glob("#{self.class.name.underscore}*.png").sample
+        e.relative_path_from(dir).to_s
       end
     end
 
