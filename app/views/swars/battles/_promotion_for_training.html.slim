@@ -2,7 +2,13 @@
   .columns.promotion_for_training
     .column.has-text-centered-mobile
       = link_to([:training], :class => "box px-3 py-3 my-2 has-text-centered is-inline-flex") do
-        = image_tag(["actb1_1200x630.png", "actb2_1200x630.png", "actb3_1200x630.png"].sample)
+        ruby:
+          images = [
+            "frontend_script/actb_app_script1_1200x630.png",
+            "frontend_script/actb_app_script2_1200x630.png",
+            "frontend_script/actb_app_script3_1200x630.png",
+          ]
+        = image_tag(images.sample)
         .text_block.ml-4
           p.has-text-danger.has-text-weight-bold.is-size-7 NEW!
           / p.is-size-7= ["誰かさんと切磋琢磨", "自然と棋力アップ！？", "クイズ形式で対戦！？", "勉強しながら対戦！？", "一人で勉強は寂しい(´･_･`)"].sample
