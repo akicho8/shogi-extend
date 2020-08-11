@@ -23,7 +23,7 @@ class KentoUrlInfo
       parts += ["startpos"]
     end
 
-    if branch_from && branch
+    if branch_from && branch && moves
       m = moves.take(branch_from) + branch
     else
       m = moves
@@ -34,6 +34,15 @@ class KentoUrlInfo
     end
 
     parts.join(" ")
+  end
+
+  def info
+    [
+      :initpos,
+      :branch_from,
+      :branch,
+      :moves,
+    ].inject({}) {|a, e| a.merge(e => send(e)) }
   end
 
   private
