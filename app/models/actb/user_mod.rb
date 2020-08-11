@@ -39,12 +39,41 @@ module Actb
       has_many :notifications, class_name: "Actb::Notification", dependent: :destroy # 自分が受信
     end
 
-    def page_url(options = {})
-      Rails.application.routes.url_helpers.url_for([:training, {only_path: false, user_id: id}.merge(options)])
+    concerning :OtherMethods do
+      def page_url(options = {})
+        Rails.application.routes.url_helpers.url_for([:training, {only_path: false, user_id: id}.merge(options)])
+      end
+
+      def linked_name(options = {})
+        ApplicationController.helpers.link_to(name, page_url(only_path: true))
+      end
     end
 
-    def linked_name(options = {})
-      ApplicationController.helpers.link_to(name, page_url(only_path: true))
+    concerning :OUcountNotifyMod do
+      # rails r "tp User.first.o_ucount_notify"
+      def o_ucount_notify
+        User.bot.lobby_speak("#{linked_name}さんが本日#{today_total_o_ucount}問解きました")
+      end
+
+      # rails dev:cache
+      # rails r "tp User.first.o_ucount_notify_once"
+      def o_ucount_notify_once
+        Rails.cache.fetch(o_ucount_notify_key, expires_in: 1.days) do
+          o_ucount_notify
+          true
+        end
+      end
+
+      # rails r "tp User.first.o_ucount_notify_key"
+      def o_ucount_notify_key
+        [
+          self.class.name,
+          __method__,
+          id,
+          Time.current.strftime("%y%m%d"),
+          today_total_o_ucount,
+        ].join("/")
+      end
     end
 
     concerning :CurrentUserMethods do

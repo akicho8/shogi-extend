@@ -65,13 +65,16 @@ module Actb
       self.ox_mark ||= OxMark.fetch(:mistake)
     end
 
-    after_save_commit do
-      if saved_change_to_attribute?(:ox_mark_id) && ox_mark.key == "correct"
-        count = user.today_total_o_ucount
-        notice_trigger_counts.each do |e|
-          if count == e
-            User.bot.lobby_speak("#{user.linked_name}さんが本日#{count}問解きました")
-            break
+    concerning :OUcountNotifyMod  do
+      included do
+        after_save_commit do
+          if saved_change_to_attribute?(:ox_mark_id) && ox_mark.key == "correct"
+            count = user.today_total_o_ucount
+            if v = notice_trigger_counts.bsearch { |e| e >= count }
+              if count == v
+                user.o_ucount_notify_once
+              end
+            end
           end
         end
       end
