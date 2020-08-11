@@ -74,7 +74,7 @@ module Actb
         :action_cable_debug              => false,    # ActionCable関連デバッグモード
         :api_questions_fetch_per         => 50,       # 問題一覧での1ページあたりの表示件数
         :self_is_left_side_p             => true,     # 自分を左に表示
-        :turm_max_limit                  => 9,        # 手数制限
+        :turm_max_limit                  => 13,       # 手数制限
         :singleton_giveup_effective_seconds           => 3,        # 「あきらめる」がでるまでの秒数(シングルトン)
         :marathon_giveup_effective_seconds            => 15,       # 「あきらめる」がでるまでの秒数(マラソン)
         :sp_theme                        => "real",   # 将棋盤のタイプ
