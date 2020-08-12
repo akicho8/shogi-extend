@@ -1,0 +1,98 @@
+- ogp_params_set(title: "将棋ウォーズプレイヤー情報", description: "よく使う戦法の勝率などがわかります", image: "swars_player_infos_index.png", url: full_url_for([:swars, :player_infos]))
+
+- content_for :head do
+  = javascript_pack_tag("swars_player_info_app")
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new SwarsPlayerInfoApp(#{js_swars_player_info_app_params.to_json.html_safe}).$mount("#swars_player_info_app") })
+
+#swars_player_info_app
+  .title.is-2
+    = "将棋ウォーズプレイヤー情報"
+
+  .columns
+    .column
+      = form_with(url: [:swars, :player_infos], method: :get, skip_enforcing_utf8: true, html: {"@submit" => "form_submited"}) do |form|
+        .field.has-addons
+          .control.is-expanded
+            = form.search_field(:user_key, class: "input", value: current_swars_user_key, placeholder: "ウォーズのIDを入力してください", list: "search_field_query_completion", autofocus: current_swars_user_key.blank?)
+            = tag.datalist(id: "search_field_query_completion") do
+              - Swars::User.search_form_datalist.each do |e|
+                = tag.option(value: e)
+          .control
+            = form.button(icon_tag(:magnify), name: nil, class: "button is-info", data: {disable_with: "検索中"})
+
+  / template(v-if="submited")
+  /   .columns
+  /     .column
+  /       .message.is-primary
+  /         .message-body
+  /           | 1分ぐらいかかる場合があるので気長にお待ちください
+
+  - if current_swars_user
+    small
+      .columns
+        .column
+          - stat = current_swars_user.secret_summary
+          .field
+            .title.is-4 作法
+            - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
+            == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
+
+        .column
+          - stat = current_swars_user.basic_summary
+          .field
+            .title.is-4 戦績
+            - v = stat.to_html(table_class: "table is-fullwidth is-narrow")
+            == highlight(v, "*", sanitize: false, highlighter: '<span class="has-text-danger">\1</span> ')
+
+        - if false
+          - Bioshogi::TacticInfo.each do |tactic_info|
+            .column
+              = render partial: "tactic_info_block", locals: { key: tactic_info.key }
+        - else
+          .column
+            = render partial: "tactic_info_block", locals: { key: :attack    }
+          .column
+            = render partial: "tactic_info_block", locals: { key: :defense   }
+          .column
+            = render partial: "tactic_info_block", locals: { key: :technique }
+            = render partial: "tactic_info_block", locals: { key: :note      }
+
+      hr
+
+      .columns
+        .column
+          canvas(ref="rule_canvas")
+        .column
+          canvas(ref="faction_canvas")
+        .column
+          canvas(ref="combination_canvas")
+
+      hr
+
+      .columns
+        - Swars::ChartTagInfo.each do |e|
+          .column
+            canvas(ref=e.canvas_id)
+
+      .columns
+        - attack_chart_params_list.each do |e|
+          .column
+            canvas(ref=e[:canvas_id])
+
+      .columns
+        - defense_chart_params_list.each do |e|
+          .column
+            canvas(ref=e[:canvas_id])
+
+      hr
+
+      .columns
+        - js_swars_player_info_app_params[:time_chart_params_list].each do |e|
+          .column
+            canvas(ref=e[:canvas_id])
+
+      - if Rails.env.development?
+        .columns
+          .column
+            == debug js_swars_player_info_app_params.as_json
