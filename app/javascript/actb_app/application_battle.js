@@ -81,6 +81,11 @@ export const application_battle = {
 
       this.question_index = 0
 
+      if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
+        this.start_hook()
+        return
+      }
+
       this.__assert__(this.$ac_battle == null, "this.$ac_battle == null")
       this.$ac_battle = this.ac_subscription_create({channel: "Actb::BattleChannel", battle_id: this.battle.id}, {
         connected: () => {
@@ -109,10 +114,13 @@ export const application_battle = {
 
       this.debug_alert("battle 接続")
 
-      this.ac_battle_perform("start_hook", { // 自分の最初の問題の履歴を作るだけ
-        question_id: this.current_question.id,
-        question_index: this.question_index,
-      }) // --> app/channels/actb/battle_channel.rb
+      if (this.info.debug_scene) {
+      } else {
+        this.ac_battle_perform("start_hook", { // 自分の最初の問題の履歴を作るだけ
+          question_id: this.current_question.id,
+          question_index: this.question_index,
+        }) // --> app/channels/actb/battle_channel.rb
+      }
 
       this.ok_notice("対戦開始")
       this.sub_mode = "sm2_readygo"

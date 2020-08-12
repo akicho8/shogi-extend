@@ -41,6 +41,11 @@ export const application_room = {
 
       this.room_speak_init()
 
+      if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
+        this.battle_setup(this.info.battle)
+        return
+      }
+
       this.__assert__(this.$ac_room == null, "this.$ac_room == null")
       this.$ac_room = this.ac_subscription_create({channel: "Actb::RoomChannel", room_id: this.room.id})
     },
