@@ -151,6 +151,10 @@ module FrontendScript
         end
         user.save!
 
+        if user.saved_changes?
+          ApplicationMailer.developper_notice(subject: "#{user.name}さんがプロフィール更新", body: user.info.to_t).deliver_later
+        end
+
         { user: user.as_json_type9 }
       end
 
