@@ -87,16 +87,6 @@ module Swars
       "#{user_key} #{grade.name}"
     end
 
-    concerning :SummaryMethods do
-      included do
-        delegate :basic_summary, :secret_summary, :tactic_summary_for, to: :summary_info
-      end
-
-      def summary_info
-        @summary_info ||= SummaryInfo.new(self)
-      end
-    end
-
     concerning :UserInfoMod do
       def user_info(params = {})
         UserInfo.new(self, params)
