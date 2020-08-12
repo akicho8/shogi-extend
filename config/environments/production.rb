@@ -149,7 +149,7 @@ Rails.application.configure do
         :xy_master_custom_mode         => false,
         :columns_detail_show           => false,
 
-        :available_providers           => [:twitter],
+        :available_providers           => [:twitter, :google],
         :nanasi_login                  => false,
         :id_pw_login                   => false,
       })
