@@ -1,4 +1,4 @@
-class ChoreTask13 < ActiveRecord::Migration[6.0]
+class ChoreTask14 < ActiveRecord::Migration[6.0]
   def up
     User.reset_column_information
     unless User.column_names.include?("name_input_at")
