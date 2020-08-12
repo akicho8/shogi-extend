@@ -61,6 +61,7 @@
 
 <script>
 import { support } from "../support.js"
+import { up_down_scroll_disable } from "../up_down_scroll_disable.js"
 import dayjs from "dayjs"
 
 import the_room_message                   from "../the_room_message.vue"
@@ -74,6 +75,7 @@ export default {
   name: "the_battle",
   mixins: [
     support,
+    up_down_scroll_disable,
   ],
   components: {
     the_room_emotion,
@@ -88,6 +90,12 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
+
+// PCではスクロールしても問題ないので入れない
+// html
+//   &.production
+//     overflow: hidden
+
 .the_battle
   .vs_container
     justify-content: center
