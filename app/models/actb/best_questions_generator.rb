@@ -94,16 +94,8 @@ module Actb
 
     private
 
-    def battle
-      params[:battle]
-    end
-
-    def room
-      params[:battle].room
-    end
-
     def rule_info
-      room.rule.pure_info
+      params[:rule_info]
     end
   end
 end

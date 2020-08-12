@@ -71,7 +71,7 @@ module Actb
 
     # 出題
     def best_questions
-      BestQuestionsGenerator.new(battle: self).generate
+      BestQuestionsGenerator.new(rule_info: room.rule.pure_info).generate
     end
 
     def final_info
