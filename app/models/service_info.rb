@@ -25,7 +25,7 @@ class ServiceInfo
       image_source: [
         "frontend_script/actb_app_script1_1200x630.png",
         "frontend_script/actb_app_script2_1200x630.png",
-        "frontend_script/actb_app_script3_1200x630.png",
+        # "frontend_script/actb_app_script3_1200x630.png",
       ],
       description: "将棋の問題を解く力を競う対戦ゲーム",
       feature_items: [
