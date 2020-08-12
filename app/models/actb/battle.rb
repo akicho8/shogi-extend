@@ -69,9 +69,8 @@ module Actb
       Actb::BattleBroadcastJob.perform_later(self)
     end
 
-    # 出題
     def best_questions
-      BestQuestionsGenerator.new(rule_info: room.rule.pure_info).generate
+      room.rule.pure_info.generate
     end
 
     def final_info
