@@ -69,7 +69,10 @@ export default {
   align-items: center
 
   // 左右大きさがぶれないように大きさを共通にする
-  min-width: 12rem
+  // ここが大きすぎるとPCでは問題なくてもスマホで画面が左右に揺れる
+  width: 10rem
+  .user_name
+    width: 7rem
 
   .straight_win_straight_lose
     .straight_win_count
@@ -77,8 +80,6 @@ export default {
     .straight_lose_count
       color: $success
 
-  .user_name
-    width: 12rem
 
   // オーバーレイ○×
   position: relative

@@ -9,7 +9,7 @@
   .vs_container.is-flex
     template(v-for="(membership, i) in app.ordered_memberships")
       the_battle_membership(:membership="membership" :key="membership.id")
-      .is-1.has-text-weight-bold.is-size-4.has-text-grey-light(v-if="i === 0") vs
+      .is-1.has-text-weight-bold.is-size-4.has-text-grey-light.mx-1(v-if="i === 0") vs
 
   //////////////////////////////////////////////////////////////////////////////// 第○問
   template(v-if="app.sub_mode === 'sm3_deden'")
