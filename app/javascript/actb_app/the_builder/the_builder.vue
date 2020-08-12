@@ -353,6 +353,7 @@ export default {
       this.sound_play("click")
       this.say(tag)
       this.page_info.tag = tag
+      this.page_info.page = 1
       this.async_records_load()
     },
 
