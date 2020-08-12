@@ -89,6 +89,7 @@ module Actb
               :key,
               :name,
               :permit_tag_list,
+              :name_input_at,
             ],
             methods: [
               :avatar_path,

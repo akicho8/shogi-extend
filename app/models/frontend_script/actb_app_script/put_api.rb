@@ -143,12 +143,14 @@ module FrontendScript
         end
 
         user.name = params[:name]
+        user.name_input_at ||= Time.current
         user.profile.description = params[:profile_description]
         user.profile.twitter_key = params[:profile_twitter_key]
         if user.invalid?
           return { error_message: user.errors.full_messages.join(" ") }
         end
         user.save!
+
         { user: user.as_json_type9 }
       end
 
