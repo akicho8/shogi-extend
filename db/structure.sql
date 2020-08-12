@@ -173,23 +173,13 @@ CREATE TABLE `actb_histories` (
   `question_id` bigint(20) NOT NULL COMMENT '出題',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
-  `room_id` bigint(20) NOT NULL COMMENT '部屋',
-  `battle_id` bigint(20) NOT NULL COMMENT '対戦',
-  `membership_id` bigint(20) NOT NULL COMMENT '自分と相手',
   `ox_mark_id` bigint(20) NOT NULL COMMENT '解答',
-  `rating` float NOT NULL COMMENT 'レーティング',
   PRIMARY KEY (`id`),
   KEY `index_actb_histories_on_user_id` (`user_id`),
   KEY `index_actb_histories_on_question_id` (`question_id`),
-  KEY `index_actb_histories_on_room_id` (`room_id`),
-  KEY `index_actb_histories_on_battle_id` (`battle_id`),
-  KEY `index_actb_histories_on_membership_id` (`membership_id`),
   KEY `index_actb_histories_on_ox_mark_id` (`ox_mark_id`),
-  CONSTRAINT `fk_rails_09aa60b90e` FOREIGN KEY (`room_id`) REFERENCES `actb_rooms` (`id`),
   CONSTRAINT `fk_rails_2856700a8b` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_4edf53cdf7` FOREIGN KEY (`question_id`) REFERENCES `actb_questions` (`id`),
-  CONSTRAINT `fk_rails_d32acaab69` FOREIGN KEY (`membership_id`) REFERENCES `actb_battle_memberships` (`id`),
-  CONSTRAINT `fk_rails_ebf78875f8` FOREIGN KEY (`battle_id`) REFERENCES `actb_battles` (`id`),
   CONSTRAINT `fk_rails_ed732ff51a` FOREIGN KEY (`ox_mark_id`) REFERENCES `actb_ox_marks` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1122,6 +1112,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200725112108'),
 ('20200725112109'),
 ('20200725112110'),
-('20200725112111');
+('20200725112111'),
+('20200725112112'),
+('20200725112113');
 
 
