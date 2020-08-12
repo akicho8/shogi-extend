@@ -44,11 +44,12 @@ export default {
 
     name_edit_handle() {
       this.sound_play("click")
+
       this.$buefy.dialog.prompt({
         message: "名前",
         confirmText: "更新",
         cancelText: "キャンセル",
-        inputAttrs: { type: 'text', value: this.$parent.new_name, required: true },
+        inputAttrs: { type: 'text', value: this.default_name, required: true },
         onCancel: value => this.sound_play("click"),
         onConfirm: value => {
           this.sound_play("click")
@@ -88,6 +89,15 @@ export default {
   computed: {
     image_source() {
       return this.$parent.croped_image || this.app.current_user.avatar_path
+    },
+
+    // ちゃんとした名前の入っていない人の初期値は空にする
+    default_name() {
+      if (this.app.current_user.name_input_at) {
+        return this.$parent.new_name
+      } else {
+        return ""
+      }
     },
   },
 }
