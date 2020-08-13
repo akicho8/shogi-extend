@@ -36,12 +36,20 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # 復元できないときは新規ユーザーを作成する
     # Google の場合なぜか auth.info.name にメールアドレスが入っている
     unless user
-      user = User.create({
-          :name       => local_part_of_email(auth.info.name.presence || auth.info.nickname.presence),
-          :email      => auth.info.email,
-          :avatar     => {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"},
-          :user_agent => request.user_agent,
-        })
+      user = User.create do |e|
+        e.email      = auth.info.email
+        e.avatar     = {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"}
+        e.user_agent = request.user_agent
+
+        # Googleの場合 auth.info.name にメールアドレスを入れてきやがるためおかしなことになる
+        # しかも名前がどこにもない。だから @ の前を仮の名前をとして入れて name_input_at は nil のままにしておく
+        if email_format?
+          e.name = name_extract_from_email
+        else
+          e.name = user_name
+          e.name_input_at = Time.current
+        end
+      end
     end
 
     # ユーザーに認証情報が含まれていなければ追加する
@@ -97,6 +105,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     request.env["omniauth.auth"]
   end
 
+  def user_name
+    auth.info.name.presence || auth.info.nickname.presence
+  end
+
   def current_auth_info
     AuthInfo.find_by(provider: auth.provider, uid: auth.uid)
   end
@@ -111,15 +123,17 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   # メールアドレスなら@の前を取得
   #  "alice@localhost" --> "alice"
-  #  "alice"           --> "alice"
-  def local_part_of_email(str)
-    a = Mail::Address.new(str)
+  def name_extract_from_email
+    Mail::Address.new(user_name).local
+  end
+
+  # str はメールアドレスか？
+  def email_format?
+    a = Mail::Address.new(user_name)
     if a.domain
       a.local
-    else
-      str
     end
   rescue Mail::Field::IncompleteParseError
-    str
+    false
   end
 end

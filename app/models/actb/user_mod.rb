@@ -272,6 +272,7 @@ module Actb
         {
           "ID"                 => id,
           "名前"               => name,
+          "名前確定日時"       => name_input_at&.to_s(:distance),
           "メールアドレス"     => email,
           "プロバイダ"         => auth_infos.collect(&:provider).join(" "),
           "Twitterアカウント"  => twitter_key,
