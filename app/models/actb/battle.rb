@@ -70,7 +70,7 @@ module Actb
     end
 
     def best_questions
-      room.rule.pure_info.generate(users)
+      Qgenerator.new(rule_info: room.rule.pure_info, users: users, fill: true).generate.collect(&:as_json_type3)
     end
 
     def final_info
