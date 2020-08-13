@@ -259,17 +259,32 @@ module Actb
         actb_histories.today_only.ox_mark_eq(:mistake).distinct.count(:question_id)
       end
 
+      def ua
+        @ua ||= UserAgent.parse(user_agent.to_s)
+      end
+
+      def ua_info
+        [ua.mobile? ? "(Mobile)" : "(PC)", ua.platform, ua.os, ua.browser, ua.version].compact.join(" ")
+      end
+
+      # rails r "tp User.first.info"
       def info
         {
           "ID"                 => id,
           "名前"               => name,
-          "プロバイダ"         => auth_infos.collect(&:provider).join(" "),
-          "Twitter"            => twitter_key,
           "メールアドレス"     => email,
+          "プロバイダ"         => auth_infos.collect(&:provider).join(" "),
+          "Twitterアカウント"  => twitter_key,
+          "ログイン回数"       => sign_in_count,
+          "最終ログイン日時"   => current_sign_in_at&.to_s(:distance),
+          "登録日時"           => created_at&.to_s(:distance),
+          "IP"                 => current_sign_in_ip,
+          "USER_AGENT"         => ua_info,
+          "タグ"               => permit_tag_list,
 
           "オンライン"         => Actb::SchoolChannel.active_users.include?(self) ? "○" : "",
           "対戦中"             => Actb::RoomChannel.active_users.include?(self) ? "○" : "",
-          "ルール"             => actb_setting.rule.pure_info.name,
+          "最終選択ルール"     => actb_setting.rule.pure_info.name,
 
           "レーティング"       => rating,
           "クラス"             => skill_key,
@@ -295,12 +310,6 @@ module Actb
 
           "ユニーク問題正解数(本日)"   => today_total_o_ucount,
           "ユニーク問題不正解数(本日)" => today_total_x_ucount,
-
-          "タグ"               => permit_tag_list,
-          "ログイン回数"       => sign_in_count,
-          "最終ログイン日時"   => current_sign_in_at&.to_s(:distance),
-          "IP"                 => current_sign_in_ip,
-          "UA"                 => user_agent,
         }
       end
     end
