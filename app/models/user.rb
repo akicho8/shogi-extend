@@ -245,12 +245,8 @@ class User < ApplicationRecord
       devise :omniauthable, omniauth_providers: [:google, :twitter, :github]
     end
 
-    def provider_name
-      if auth_info = auth_infos.first
-        auth_info.provider
-      else
-        "？"
-      end
+    def provider_names
+      auth_infos.collect(&:provider)
     end
 
     def email_valid?

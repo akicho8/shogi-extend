@@ -9,15 +9,15 @@ class UserMailer < ApplicationMailer
       :email => user.email,
     }
 
-    attrs[:provider] = user.provider_name
-    attrs[:user_agent] = user.user_agent
+    attrs[:provider_names] = user.provider_names
+    attrs[:ua_info] = user.ua_info
     attrs[:twitter_url] = user.twitter_url
 
     out = []
     out << attrs.collect { |key, val| "#{key}: #{val}" }
     body = out.join("\n")
 
-    mail(subject: subject_decorate("#{user.name}さんが#{user.provider_name}で登録されました"), body: body)
+    mail(subject: subject_decorate("#{user.name}さんが#{user.provider_names.join(" or ")}で登録されました"), body: body)
   end
 
   # 問題の作者に通知
