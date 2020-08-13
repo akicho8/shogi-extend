@@ -151,8 +151,11 @@ module FrontendScript
         end
         user.save!
 
-        if user.saved_changes?
-          ApplicationMailer.developper_notice(subject: "#{user.name}さんがプロフィール更新", body: user.info.to_t).deliver_later
+        if user.saved_change_to_attribute?(:name_input_at)
+          if v = user.saved_change_to_attribute(:name)
+            pair = v.join("→")
+            ApplicationMailer.developper_notice(subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
+          end
         end
 
         { user: user.as_json_type9 }

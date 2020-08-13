@@ -5,11 +5,20 @@ RSpec.describe ScriptsController, type: :controller do
     include ActbSupportMethods
 
     before do
-      user_login
+      @current_user = user_login
     end
 
     describe "プロフィールの更新" do
+      it "名前を入力してもらう" do
+        @current_user.update!(name_input_at: nil)
+        put :update, params: { id: "actb-app", remote_action: "profile_update", name: "(user_name1)" }
+        expect(response).to have_http_status(:ok)
+        @current_user.reload
+        assert { @current_user.name_input_at }
+      end
       it do
+        @current_user.update!(name_input_at: nil)
+
         put :update, params: { id: "actb-app", remote_action: "profile_update", name: "(user_name1)", profile_description: "a" * (512 + 1) }
         expect(response).to have_http_status(:ok)
         retv = JSON.parse(response.body)
@@ -42,3 +51,10 @@ RSpec.describe ScriptsController, type: :controller do
     end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> 【名前確定】名無しの棋士1号→(user_name1)
+# >> ....
+# >> 
+# >> Finished in 2.01 seconds (files took 2.61 seconds to load)
+# >> 4 examples, 0 failures
+# >> 
