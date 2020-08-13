@@ -372,7 +372,7 @@ export default {
       if (this.config.user_name_required) {
         if (this.current_user) {
           if (!this.current_user.name_input_at) {
-            this.warning_notice("ちゃんとした名前を入力してください")
+            this.warning_notice("名前を入力してください")
             this.app.profile_edit_handle()
             this.$nextTick(() => {
               const el = document.querySelector("#user_name_input_field")

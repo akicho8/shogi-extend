@@ -70,7 +70,7 @@ module Actb
     end
 
     def best_questions
-      room.rule.pure_info.generate
+      room.rule.pure_info.generate(users)
     end
 
     def final_info
@@ -156,5 +156,3 @@ module Actb
     end
   end
 end
-# ~> -:32:in `<module:Actb>': uninitialized constant Actb::ApplicationRecord (NameError)
-# ~>    from -:31:in `<main>'

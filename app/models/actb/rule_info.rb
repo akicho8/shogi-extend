@@ -136,7 +136,7 @@ module Actb
       s
     end
 
-    def generate
+    def generate(users)
       s = db_scope
 
       # DBから取得
