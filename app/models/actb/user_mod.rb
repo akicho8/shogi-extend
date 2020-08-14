@@ -104,6 +104,7 @@ module Actb
               :twitter_key,
               :regular_p,
               :mute_user_ids,
+              :created_after_days,
             ],
           })
 
@@ -120,6 +121,12 @@ module Actb
       # レギュラー条件
       def regular_p
         actb_room_memberships.count >= 1 || actb_questions.active_only.count >= 1
+      end
+
+      # アカウントを作ってからの日数
+      # rails r "p User.first.created_after_days"
+      def created_after_days
+        ((Time.current - created_at) / 1.days).to_i
       end
     end
 

@@ -43,18 +43,19 @@ import the_history       from "./the_history/the_history.vue"
 import the_menu          from "./the_menu.vue"
 
 // Mixins
-import { application_room              } from "./application_room.js"
-import { application_lobby_clock       } from "./application_lobby_clock.js"
-import { application_battle            } from "./application_battle.js"
-import { application_matching          } from "./application_matching.js"
-import { application_history           } from "./application_history.js"
-import { application_history_vote      } from "./application_history_vote.js"
-import { application_notification      } from "./application_notification.js"
+import { application_room          } from "./application_room.js"
+import { application_lobby_clock   } from "./application_lobby_clock.js"
+import { application_lobby_message   } from "./application_lobby_message.js"
+import { application_battle        } from "./application_battle.js"
+import { application_matching      } from "./application_matching.js"
+import { application_history       } from "./application_history.js"
+import { application_history_vote  } from "./application_history_vote.js"
+import { application_notification  } from "./application_notification.js"
 import { application_new_challenge } from "./application_new_challenge.js"
-import { config                        } from "./config.js"
-import { RuleInfo                      } from "./models/rule_info.js"
-import { OxMarkInfo                    } from "./models/ox_mark_info.js"
-import { SkillInfo                     } from "./models/skill_info.js"
+import { config                    } from "./config.js"
+import { RuleInfo                  } from "./models/rule_info.js"
+import { OxMarkInfo                } from "./models/ox_mark_info.js"
+import { SkillInfo                 } from "./models/skill_info.js"
 
 export default {
   store,
@@ -68,6 +69,7 @@ export default {
 
     application_room,
     application_lobby_clock,
+    application_lobby_message,
     application_battle,
     application_matching,
     application_history_vote,
@@ -104,10 +106,6 @@ export default {
       school_user_ids:        null, // オンラインのユーザーIDs
       room_user_ids:          null, // 対戦中のユーザーIDs
       matching_user_ids_hash: null, // 対戦待ちユーザーIDsのハッシュでルール名がキー
-
-      // チャット用
-      lobby_messages:     null, // メッセージ(複数)
-      lobby_message_body: null, // 入力中のメッセージ
 
       // 問題編集
       edit_question_id: null, // IDを入れて builder_handle を叩けば、そのIDの編集画面に飛ぶ
@@ -207,43 +205,6 @@ export default {
           this.ok_notice("新しいプログラムがあるので更新します", {onend: () => location.reload(true)})
         }
       })
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // // lobbyに接続した瞬間に送られてくる
-    // lobby_messages_broadcasted(params) {
-    //   this.lobby_messages = params.messages
-    // },
-
-    lobby_speak_handle() {
-      this.lobby_speak(this.lobby_message_body)
-      this.lobby_message_body = ""
-    },
-
-    lobby_speak(message_body) {
-      this.$ac_lobby.perform("speak", {message_body: message_body})
-    },
-    lobby_speak_broadcasted(params) {
-      if (this.app.current_user && this.app.current_user.mute_user_ids.includes(params.message.user.id)) {
-        this.debug_alert(`skip: ${params.message.body}`)
-        return
-      }
-      this.lobby_speak_broadcasted_shared_process(params)
-      this.lobby_messages.push(params.message)
-    },
-
-    // room_speak_broadcasted と共有
-    lobby_speak_broadcasted_shared_process(params) {
-      const message = params.message
-      if (/^\*/.test(message.body)) {
-      } else {
-        const plain_text = this.strip_tags(message.body)
-        if (plain_text) {
-          this.say(plain_text)
-          this.$buefy.toast.open({message: `${message.user.name}: ${plain_text}`, position: "is-top", queue: false})
-        }
-      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////

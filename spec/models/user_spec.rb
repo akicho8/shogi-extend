@@ -60,9 +60,13 @@ RSpec.describe User, type: :model do
   it "info" do
     assert { User.create!.info }
   end
+
+  it "created_after_days" do
+    assert { User.create!.created_after_days === 0 }
+  end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .*..
+# >> .*...
 # >> 
 # >> Pending: (Failures listed here are expected and do not affect your suite's status)
 # >> 
@@ -70,6 +74,6 @@ end
 # >>      # Temporarily skipped with xit
 # >>      # -:55
 # >> 
-# >> Finished in 1.55 seconds (files took 2.16 seconds to load)
-# >> 4 examples, 0 failures, 1 pending
+# >> Finished in 1.68 seconds (files took 4.91 seconds to load)
+# >> 5 examples, 0 failures, 1 pending
 # >> 
