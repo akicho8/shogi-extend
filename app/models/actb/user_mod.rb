@@ -50,6 +50,11 @@ module Actb
     end
 
     concerning :OUcountNotifyMod do
+      # rails r "tp User.first.straight_win_count_notify"
+      def straight_win_count_notify
+        User.bot.lobby_speak("#{linked_name}さんが#{actb_season_xrecord.straight_win_count}連勝しました")
+      end
+
       # rails r "tp User.first.o_ucount_notify"
       def o_ucount_notify
         User.bot.lobby_speak("#{linked_name}さんが本日#{today_total_o_ucount}問解きました")

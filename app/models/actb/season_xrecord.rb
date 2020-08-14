@@ -53,6 +53,19 @@ module Actb
       validates :user_id, uniqueness: { scope: :season_id }
     end
 
+    # 連勝通知
+    # rails r "User.first.actb_latest_xrecord.judge_set(Judge.fetch(:win))"
+    STRAIGHT_WIN_COUNT_SEGMENTS = 5
+    after_save_commit do
+      if saved_change_to_attribute?(:straight_win_count)
+        if straight_win_count >= 1
+          if straight_win_count.modulo(STRAIGHT_WIN_COUNT_SEGMENTS).zero?
+            user.straight_win_count_notify
+          end
+        end
+      end
+    end
+
     def rating_default
       # 毎回 1500 から開始
       # レーティングは表示させないのでこれでよい
