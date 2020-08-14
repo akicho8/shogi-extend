@@ -49,12 +49,20 @@ RSpec.describe ScriptsController, type: :controller do
         assert { test1 == "success" }
       end
     end
+
+    describe "zip_dl_count_fetch" do
+      it "works" do
+        @current_user.actb_questions.create_mock1
+        get :show, params: { id: "actb-app", remote_action: "zip_dl_count_fetch", format: "json" }
+        expect(response).to have_http_status(:ok)
+        assert { JSON.parse(response.body) == {"count" => 1} }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> 【名前確定】名無しの棋士1号→(user_name1)
-# >> ....
+# >> .....
 # >> 
-# >> Finished in 2.01 seconds (files took 2.61 seconds to load)
-# >> 4 examples, 0 failures
+# >> Finished in 2.05 seconds (files took 2.33 seconds to load)
+# >> 5 examples, 0 failures
 # >> 

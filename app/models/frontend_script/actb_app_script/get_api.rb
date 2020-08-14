@@ -135,6 +135,16 @@ module FrontendScript
         { revision: Actb::Config[:revision] }
       end
 
+      # 作成した問題数を返す
+      # http://localhost:3000/script/actb-app.json?remote_action=zip_dl_count_fetch
+      def zip_dl_count_fetch
+        count = 0
+        if current_user
+          count = zip_scope.count
+        end
+        { count: count }
+      end
+
       private
 
       def sort_scope_for_questions(s)

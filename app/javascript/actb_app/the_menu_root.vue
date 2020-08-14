@@ -4,7 +4,8 @@
     .header_center_title メニュー
   .menu_buttons
     b-button(expanded @click="app.profile_edit_handle" :disabled="!app.current_user") プロフィール編集
-    b-button(expanded tag="a" :href="question_download_url" @click="sound_play('click')" :disabled="!app.current_user") 問題ダウンロード
+    b-button(expanded tag="a" :href="question_download_url" @click="sound_play('click')" :disabled="!app.current_user" v-if="development_p") 問題ダウンロード(直接)
+    b-button(expanded @click="zip_dl_count_fetch" :disabled="!app.current_user") 問題ダウンロード
     b-button(expanded @click="app.menu_to('the_menu_etc')" ) その他
 </template>
 
@@ -16,6 +17,18 @@ export default {
   mixins: [
     support,
   ],
+  methods: {
+    zip_dl_count_fetch() {
+      this.api_get("zip_dl_count_fetch", {}, e => {
+        if (e.count === 0) {
+          this.warning_notice("まだ問題を投稿しとらん")
+          return
+        }
+        this.ok_notice(`${e.count}件の問題が入ったZIPファイルをダウンロードしました`)
+        location.href = this.question_download_url
+      })
+    },
+  },
   computed: {
     question_download_url() {
       const url = new URL(location)
