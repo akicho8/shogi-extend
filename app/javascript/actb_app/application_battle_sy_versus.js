@@ -46,5 +46,16 @@ export const application_battle_sy_versus = {
         // this.sound_play("pishi") // shogi-player で音が鳴らないのでここで鳴らす
       }
     },
+
+    vs_func_toryo_handle(ms_flip = false) {
+      this.ac_battle_perform("vs_func_toryo_handle", {ms_flip: ms_flip})
+    },
+    vs_func_toryo_handle_broadcasted(params) {
+      if (params.membership_id === this.current_membership.id) {
+      } else {
+      }
+    },
+  },
+  computed: {
   },
 }

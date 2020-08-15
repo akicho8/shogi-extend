@@ -13,6 +13,9 @@
     :volume="0.5"
     @update:play_mode_advanced_full_moves_sfen="app.vs_func_play_mode_advanced_full_moves_sfen_set"
   )
+  .buttons.is-centered.are-small.mt-3
+    b-button.has-text-weight-bold(@click="app.vs_func_toryo_handle(false)") 投了
+    b-button.has-text-weight-bold(@click="app.vs_func_toryo_handle(true)" v-if="development_p") 相手投了
 </template>
 
 <script>

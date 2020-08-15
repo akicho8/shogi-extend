@@ -45,9 +45,9 @@ module Actb
     end
 
     # 最初の問題のときだけ
-    def start_hook(data)
-      # history_set_by_data(data, :mistake)
-    end
+    # def start_hook(data)
+    #   # history_set_by_data(data, :mistake)
+    # end
 
     # 「わかった」
     # 両者から呼ばれる
