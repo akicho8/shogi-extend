@@ -13,7 +13,7 @@ class ChoreTask15 < ActiveRecord::Migration[6.0]
       t.belongs_to :category, foreign_key: { to_table: :actb_emotion_categories }, null: false
       t.string :name,                                                              null: false
       t.string :message,                                                           null: false
-      t.string :say,                                                               null: false
+      t.string :voice,                                                               null: false
       t.timestamps
     end
 

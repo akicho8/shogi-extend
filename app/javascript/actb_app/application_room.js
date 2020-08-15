@@ -41,7 +41,7 @@ export const application_room = {
 
       this.room_speak_init()
 
-      if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
+      if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
         this.battle_setup(this.info.battle)
         return
       }
@@ -59,12 +59,12 @@ export const application_room = {
     // app/jobs/actb/battle_broadcast_job.rb broadcast
     // ↓
     battle_broadcasted(params) {
-      if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
+      if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
         this.battle_setup(this.info.battle)
         return
       }
 
-      if (this.info.debug_scene === "result") {
+      if (this.info.warp_to === "result") {
         this.battle_setup(this.info.battle)
         return
       }

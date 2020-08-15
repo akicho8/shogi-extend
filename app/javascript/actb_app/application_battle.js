@@ -83,7 +83,7 @@ export const application_battle = {
 
       this.question_index = 0
 
-      if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
+      if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
         this.start_hook()
         return
       }
@@ -107,7 +107,7 @@ export const application_battle = {
     start_hook() {
       this.battle_count += 1
 
-      if (this.info.debug_scene === "result") {
+      if (this.info.warp_to === "result") {
         this.result_setup(this.info.battle)
         return
       }
@@ -118,7 +118,7 @@ export const application_battle = {
 
       this.debug_alert("battle 接続")
 
-      // if (this.info.debug_scene) {
+      // if (this.info.warp_to) {
       // } else {
       //   this.ac_battle_perform("start_hook", { // 自分の最初の問題の履歴を作るだけ
       //     question_id: this.current_question.id,

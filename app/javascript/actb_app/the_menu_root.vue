@@ -4,6 +4,7 @@
     .header_center_title メニュー
   .menu_buttons
     b-button(expanded @click="app.profile_edit_handle" :disabled="!app.current_user") プロフィール編集
+    b-button(expanded @click="app.emotion_root_handle" :disabled="!app.current_user") エモーション編集
     b-button(expanded tag="a" :href="question_download_url" @click="sound_play('click')" :disabled="!app.current_user" v-if="development_p") 問題ダウンロード(直接)
     b-button(expanded @click="zip_dl_count_fetch" :disabled="!app.current_user") 問題ダウンロード
     b-button(expanded @click="app.menu_to('the_menu_etc')" ) その他

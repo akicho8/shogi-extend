@@ -6,11 +6,13 @@ module FrontendScript
           [
             {
               :label   => "画面",
-              :key     => :debug_scene,
+              :key     => :warp_to,
               :type    => :select,
-              :default => current_debug_scene,
+              :default => current_warp_to,
               :elems   => {
                 "ロビー"                       => nil,
+                "エモーション編集 一覧"        => :emotion_root_index,
+                "エモーション編集 編集"        => :emotion_root_edit,
                 "プロフィール編集"             => :profile_edit,
                 "プロフィール画像アップロード" => :profile_edit_image_crop,
                 "対戦(マラソン)"               => :battle_sy_marathon,
@@ -34,16 +36,16 @@ module FrontendScript
         end
       end
 
-      def current_debug_scene
-        if v = params[:debug_scene].presence
+      def current_warp_to
+        if v = params[:warp_to].presence
           v.to_sym
         end
       end
 
-      def debug_scene_params_set(info)
-        if current_debug_scene
-          info[:debug_scene] = current_debug_scene
-          send("debug_for_#{current_debug_scene}", info)
+      def warp_to_params_set(info)
+        if current_warp_to
+          info[:warp_to] = current_warp_to
+          send("debug_for_#{current_warp_to}", info)
         end
       end
 
@@ -51,6 +53,14 @@ module FrontendScript
 
       # ログインしている状態でロビー
       def debug_for_login_lobby(info)
+        c.sysop_login_unless_logout
+      end
+
+      # エモーション編集
+      def debug_for_emotion_root_index(info)
+        c.sysop_login_unless_logout
+      end
+      def debug_for_emotion_root_edit(info)
         c.sysop_login_unless_logout
       end
 

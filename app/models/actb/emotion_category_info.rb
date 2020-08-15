@@ -7,8 +7,12 @@ module Actb
   class EmotionCategoryInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :question, name: "問題", },
-      { key: :versus,   name: "対局", },
+      { key: :question, name: "問題",   type: "is-primary", },
+      { key: :versus,   name: "対局",   type: "is-primary", },
+      { key: :trash,    name: "ゴミ箱", type: "is-danger",  },
     ]
   end
 end
+# ~> -:8:in `<class:EmotionCategoryInfo>': uninitialized constant Actb::EmotionCategoryInfo::ApplicationMemoryRecord (NameError)
+# ~> 	from -:7:in `<module:Actb>'
+# ~> 	from -:3:in `<main>'

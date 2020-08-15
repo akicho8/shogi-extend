@@ -86,16 +86,25 @@ module Actb
         actb_setting.reload.session_lock_token == token
       end
 
-      # for current_user, profile
-      # rails r "tp User.first.as_json_type9"
-      # rails r "tp Actb::EmotionInfo"
-      def as_json_type9
-        if emotions.blank?
+      # rails r "tp User.first.emotions_setup(reset: true)"
+      def emotions_setup(options = {})
+        if options[:reset]
+          emotions.destroy_all
+        end
+        if emotions.empty?
           EmotionInfo.each do |e|
             category = EmotionCategory.fetch(e.category_key)
-            emotions.create!(category: category, name: e.name,  message: e.message, say: e.say)
+            emotions.create!(category: category, name: e.name,  message: e.message, voice: e.voice)
           end
         end
+      end
+
+      # for current_user, profile
+      # rails r "tp User.first.emotions.destroy_all"
+      # rails r "tp User.first.as_json_type9"
+      # rails r "tp Actb::EmotionInfo.as_json"
+      def as_json_type9
+        emotions_setup
 
         attrs = as_json({
             only: [
@@ -107,12 +116,8 @@ module Actb
             ],
             include: {
               emotions: {
-                only: [:id, :name, :message, :say],
-                include: {
-                  category: {
-                    only: [:key],
-                  },
-                },
+                only: [:id, :name, :message, :voice],
+                methods: [:category_key],
               },
             },
             methods: [

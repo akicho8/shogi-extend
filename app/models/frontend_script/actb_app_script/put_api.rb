@@ -118,7 +118,7 @@ module FrontendScript
         current_user.clip_handle(params)
       end
 
-      def save_handle
+      def question_save_handle
         if id = params[:question][:id]
           question = Actb::Question.find(id)
         else
@@ -130,6 +130,20 @@ module FrontendScript
           return { form_error_message: error.message }
         end
         { question: question.as_json(Actb::Question.json_type5) }
+      end
+
+      def emotion_save_handle
+        if id = params[:emotion][:id]
+          emotion = current_user.emotions.find(id)
+        else
+          emotion = current_user.emotions.build
+        end
+        begin
+          emotion.update_from_js(params[:emotion])
+        rescue ActiveRecord::RecordInvalid => error
+          return { form_error_message: error.message }
+        end
+        { emotion: emotion.as_json(only: [:id, :name, :message, :voice], methods: [:category_key]) }
       end
 
       # curl -d _method=put -d user_name=a -d remote_action=profile_update -d _user_id=1 http://localhost:3000/script/actb-app

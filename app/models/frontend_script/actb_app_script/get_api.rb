@@ -99,6 +99,7 @@ module FrontendScript
           OxMarkInfo: Actb::OxMarkInfo.as_json(only: [:key, :name, :score, :sound_key, :delay_second]),
           SkillInfo: Actb::SkillInfo.as_json(only: [:key, :name]),
           EmotionInfo: Actb::EmotionInfo.as_json, # 元に戻す用
+          EmotionCategoryInfo: Actb::EmotionCategoryInfo.as_json,
         }
       end
 

@@ -38,7 +38,7 @@ export default {
   created() {
     this.var_reset()
 
-    if (this.app.info.debug_scene === "profile_edit_image_crop") {
+    if (this.app.info.warp_to === "profile_edit_image_crop") {
       this.p_mode = "the_profile_edit_image_crop"
     }
   },
