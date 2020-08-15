@@ -1,5 +1,7 @@
 module Actb
   class BattleChannel < BaseChannel
+    include BattleChannelVersusMod
+
     def subscribed
       __event_notify__(__method__, battle_id: battle_id)
       return reject unless current_user

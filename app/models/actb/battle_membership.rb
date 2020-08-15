@@ -94,5 +94,10 @@ module Actb
     def room_speak(message_body, options = {})
       user.room_speak(battle.room, message_body, options)
     end
+
+    # rails r "p Actb::Battle.first.memberships.first.location_key"
+    def location_key
+      Bioshogi::Location.fetch(position).key
+    end
   end
 end

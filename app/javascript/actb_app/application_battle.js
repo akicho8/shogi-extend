@@ -7,6 +7,7 @@ import { application_battle_timer } from "./application_battle_timer.js"
 import { application_battle_sy_marathon  } from "./application_battle_sy_marathon.js"
 import { application_battle_sy_singleton } from "./application_battle_sy_singleton.js"
 import { application_battle_sy_hybrid    } from "./application_battle_sy_hybrid.js"
+import { application_battle_sy_versus    } from "./application_battle_sy_versus.js"
 
 export const application_battle = {
   mixins: [
@@ -15,6 +16,7 @@ export const application_battle = {
     application_battle_sy_marathon,
     application_battle_sy_singleton,
     application_battle_sy_hybrid,
+    application_battle_sy_versus,
   ],
   data() {
     return {
