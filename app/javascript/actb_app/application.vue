@@ -57,6 +57,7 @@ import { config                    } from "./config.js"
 import { RuleInfo                  } from "./models/rule_info.js"
 import { OxMarkInfo                } from "./models/ox_mark_info.js"
 import { SkillInfo                 } from "./models/skill_info.js"
+import { EmotionInfo               } from "./models/emotion_info.js"
 
 export default {
   store,
@@ -116,6 +117,7 @@ export default {
       RuleInfo:   null,
       OxMarkInfo: null,
       SkillInfo:  null,
+      EmotionInfo: null,
 
       // メニュー用
       menu_component: null,
@@ -152,9 +154,10 @@ export default {
     }
 
     this.api_get("resource_fetch", {}, e => {
-      this.RuleInfo   = RuleInfo.memory_record_reset(e.RuleInfo)
-      this.OxMarkInfo = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
-      this.SkillInfo  = SkillInfo.memory_record_reset(e.SkillInfo)
+      this.RuleInfo    = RuleInfo.memory_record_reset(e.RuleInfo)
+      this.OxMarkInfo  = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
+      this.SkillInfo   = SkillInfo.memory_record_reset(e.SkillInfo)
+      this.EmotionInfo = EmotionInfo.memory_record_reset(e.EmotionInfo)
       this.app_setup()
     })
   },

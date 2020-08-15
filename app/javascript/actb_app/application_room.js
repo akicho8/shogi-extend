@@ -148,7 +148,7 @@ export const application_room = {
     current_strategy_key() {
       return this.current_rule_info.strategy_key
     },
-    quiz_mode_p() {
+    question_mode_p() {
       return false ||
         this.current_strategy_key === 'sy_marathon'  ||
         this.current_strategy_key === 'sy_singleton' ||

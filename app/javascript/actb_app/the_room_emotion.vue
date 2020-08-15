@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_room_emotion.footer_nav.is-flex.is-unselectable
-  template(v-if="app.quiz_mode_p")
+  template(v-if="app.question_mode_p")
     //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', message: '🥺', say: 'ぴえん'})") 🥺
     //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', message: '❗❓', say: ''})") ❗❓
     .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', message: '👍', say: 'すごい！'})") 👍

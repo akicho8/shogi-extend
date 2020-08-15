@@ -87,7 +87,16 @@ module Actb
       end
 
       # for current_user, profile
+      # rails r "tp User.first.as_json_type9"
+      # rails r "tp Actb::EmotionInfo"
       def as_json_type9
+        if emotions.blank?
+          EmotionInfo.each do |e|
+            category = EmotionCategory.fetch(e.category_key)
+            emotions.create!(category: category, name: e.name,  message: e.message, say: e.say)
+          end
+        end
+
         attrs = as_json({
             only: [
               :id,
@@ -96,6 +105,16 @@ module Actb
               :permit_tag_list,
               :name_input_at,
             ],
+            include: {
+              emotions: {
+                only: [:id, :name, :message, :say],
+                include: {
+                  category: {
+                    only: [:key],
+                  },
+                },
+              },
+            },
             methods: [
               :avatar_path,
               :rating,
@@ -216,6 +235,13 @@ module Actb
 
       def create_actb_setting_if_blank
         actb_setting || create_actb_setting!
+      end
+    end
+
+    concerning :EmotionMod do
+      included do
+        # rails r "tp User.first.emotions"
+        has_many :emotions, class_name: "Actb::Emotion", dependent: :destroy
       end
     end
 
