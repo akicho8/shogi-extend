@@ -44,6 +44,7 @@ import the_menu          from "./the_menu.vue"
 
 // Mixins
 import { application_room          } from "./application_room.js"
+import { application_emotion          } from "./application_emotion.js"
 import { application_lobby_clock   } from "./application_lobby_clock.js"
 import { application_lobby_message   } from "./application_lobby_message.js"
 import { application_battle        } from "./application_battle.js"
@@ -68,6 +69,7 @@ export default {
     the_user_show_mod,
 
     application_room,
+    application_emotion,
     application_lobby_clock,
     application_lobby_message,
     application_battle,
