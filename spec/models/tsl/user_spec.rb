@@ -31,6 +31,7 @@
 # | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
+# | name_input_at          | Name input at              | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
 require 'rails_helper'

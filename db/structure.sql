@@ -991,6 +991,7 @@ CREATE TABLE `users` (
   `failed_attempts` int(11) NOT NULL DEFAULT '0',
   `unlock_token` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `locked_at` datetime DEFAULT NULL,
+  `name_input_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_key` (`key`),
   UNIQUE KEY `index_users_on_email` (`email`),
@@ -1114,6 +1115,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200725112110'),
 ('20200725112111'),
 ('20200725112112'),
-('20200725112113');
+('20200725112114');
 
 

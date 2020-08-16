@@ -58,9 +58,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       begin
         if user && user.valid?
+          SlackAgent.message_send(key: "auth.info.image", body: auth.info.image)
           if auth.info.image
             user.avatar = {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"}
             user.save
+          else
+            SlackAgent.message_send(key: "auth.info.image is blank")
           end
         end
       rescue => error
