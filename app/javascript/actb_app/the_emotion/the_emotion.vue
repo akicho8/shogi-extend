@@ -52,27 +52,23 @@ export default {
     tab_select(key) {
       this.tab_index = this.app.EmotionFolderInfo.fetch(key).code
     },
-
     slap_handle(emotion) {
       this.app.emotion_call(emotion)
     },
-
     edit_handle(emotion) {
       this.__assert__(emotion, "emotion")
       this.current_record = emotion
       this.current_component = "the_emotion_edit"
     },
-
     new_handle() {
       this.edit_handle(this.default_attributes_clone())
     },
-
     default_attributes_clone() {
       return Object.assign({}, this.default_attributes)
     },
   },
   computed: {
-    current_record_folder_info() {
+    current_folder() {
       return this.app.EmotionFolderInfo.fetch(this.tab_index)
     },
     default_attributes() {
@@ -80,7 +76,7 @@ export default {
         name: "",
         message: "",
         voice: "",
-        folder_key: this.current_record_folder_info.key,
+        folder_key: this.current_folder.key,
       }
     },
   },

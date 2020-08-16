@@ -4,7 +4,7 @@
     .header_center_title エモーション一覧
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.new_handle")
   .secondary_header
-    b-tabs.tabs_in_secondary(v-model="$parent.tab_index" expanded @change="emotion_tab_change_handle")
+    b-tabs.tabs_in_secondary(v-model="$parent.tab_index" expanded @change="tab_change_hook")
       template(v-for="e in app.EmotionFolderInfo.values")
         b-tab-item(:label="e.name")
 
@@ -25,8 +25,8 @@
       b-table-column(custom-key="operation" label="")
         a.mx-1(@click.stop="$parent.slap_handle(props.row)" v-if="development_p") 再生
         a.mx-1(@click.stop="$parent.edit_handle(props.row)") 編集
-        a.mx-1(@click.stop="emotion_move_to_handle(props.row, 'higher')") ▲
-        a.mx-1(@click.stop="emotion_move_to_handle(props.row, 'lower')") ▼
+        a.mx-1(@click.stop="move_to_handle(props.row, 'higher')") ▲
+        a.mx-1(@click.stop="move_to_handle(props.row, 'lower')") ▼
 </template>
 
 <script>
@@ -42,22 +42,22 @@ export default {
     }
   },
   created() {
-    this.emotion_tab_change_handle()
+    this.tab_change_hook()
   },
   methods: {
-    emotion_tab_change_handle() {
+    tab_change_hook() {
       this.sound_play("click")
-      this[`emotion_folder_${this.$parent.current_record_folder_info.key}_hook`]()
+      this[`tab_change_hook_for_${this.$parent.current_folder.key}`]()
     },
     //////////////////////////////////////////////////////////////////////////////// タブ切り替え時に実行したい内容
-    emotion_folder_question_hook() {
+    tab_change_hook_for_question() {
     },
-    emotion_folder_versus_hook() {
+    tab_change_hook_for_versus() {
     },
-    emotion_folder_trash_hook() {
+    tab_change_hook_for_trash() {
     },
     ////////////////////////////////////////////////////////////////////////////////
-    emotion_move_to_handle(emotion, move_to) {
+    move_to_handle(emotion, move_to) {
       this.silent_api_put("emotion_move_to_handle", {emotion_id: emotion.id, move_to: move_to}, e => {
         this.$set(this.app.current_user, "emotions", e.emotions)
         this.sound_play("click")
@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     current_records() {
-      return this.app.current_user.emotions.filter(e => e.folder_key === this.$parent.current_record_folder_info.key)
+      return this.app.current_user.emotions.filter(e => e.folder_key === this.$parent.current_folder.key)
     },
   },
 }
