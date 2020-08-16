@@ -6,7 +6,12 @@
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="$parent.tab_index" expanded @change="tab_change_hook")
       template(v-for="e in app.EmotionFolderInfo.values")
-        b-tab-item(:label="e.name")
+        b-tab-item
+          template(slot="header")
+            span
+              | {{e.name}}
+              b-tag(rounded)
+                | {{folder_records(e).length}}
 
   b-table.is-size-7.mx-2.mt-4(
     v-if="current_records.length >= 1"
@@ -64,10 +69,13 @@ export default {
         this.ok_notice(`並び替えました`)
       })
     },
+    folder_records(folder) {
+      return this.app.current_user.emotions.filter(e => e.folder_key === folder.key)
+    },
   },
   computed: {
     current_records() {
-      return this.app.current_user.emotions.filter(e => e.folder_key === this.$parent.current_folder.key)
+      return this.folder_records(this.$parent.current_folder)
     },
   },
 }
