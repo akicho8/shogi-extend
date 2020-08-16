@@ -7,7 +7,7 @@
     .header_item.with_text.rjust.has-text-weight-bold.is_clickable(@click="save_handle")
       | {{create_or_upate_name}}
 
-  .mx-4.mt-5
+  .mx-5.mt-6
     b-field(label="鍵" label-position="on-border")
       b-input(v-model.trim="$parent.current_record.name")
     b-field(label="伝" label-position="on-border")
@@ -19,7 +19,7 @@
         template(v-for="row in app.EmotionFolderInfo.values")
           b-radio-button(v-model="$parent.current_record.folder_key" :native-value="row.key" :type="row.type" size="is-small") {{row.name}}
     b-field
-      b-button(@click="$parent.slap_handle($parent.current_record)" expanded) 再生
+      b-button(icon-left="play" @click="$parent.slap_handle($parent.current_record)" expanded)
 </template>
 
 <script>
@@ -79,7 +79,7 @@ export default {
 .the_emotion_edit
   @extend %padding_top_for_primary_header
   .field:not(:first-child)
-    margin-top: 1.5rem
+    margin-top: 2rem
   // .help
   //   color: $grey
   //   font-size: $size-10
