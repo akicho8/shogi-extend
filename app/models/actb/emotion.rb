@@ -2,8 +2,27 @@
 
 module Actb
   class Emotion < ApplicationRecord
+    class << self
+      def json_type13
+        {
+          only: [
+            :id,
+            :name,
+            :message,
+            :voice,
+          ],
+          methods: [
+            :folder_key,
+          ],
+        }
+      end
+    end
+
     belongs_to :user, class_name: "::User"
     belongs_to :folder, class_name: "Actb::EmotionFolder"
+
+    acts_as_list top_of_list: 0, scope: [:folder_id, :user_id]
+    default_scope { order(:position) }
 
     before_validation on: :create do
       if Rails.env.test?

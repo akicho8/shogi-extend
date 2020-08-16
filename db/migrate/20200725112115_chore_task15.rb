@@ -14,6 +14,7 @@ class ChoreTask15 < ActiveRecord::Migration[6.0]
       t.string :name,                                                         null: false, comment: "トリガー名"
       t.string :message,                                                      null: false, comment: "表示用伝言"
       t.string :voice,                                                        null: false, comment: "発声用文言"
+      t.integer :position, null: false, index: true
       t.timestamps
     end
 

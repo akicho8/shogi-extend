@@ -115,10 +115,7 @@ module Actb
               :name_input_at,
             ],
             include: {
-              emotions: {
-                only: [:id, :name, :message, :voice],
-                methods: [:folder_key],
-              },
+              emotions: Actb::Emotion.json_type13,
             },
             methods: [
               :avatar_path,
