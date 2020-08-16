@@ -143,7 +143,7 @@ module FrontendScript
         rescue ActiveRecord::RecordInvalid => error
           return { form_error_message: error.message }
         end
-        { emotion: emotion.as_json(Actb::Emotion.json_type13) }
+        { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
       end
 
       def emotion_move_to_handle

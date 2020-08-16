@@ -24,9 +24,9 @@ export default {
   },
   data() {
     return {
-      current_emotion:            null, // 編集中のレコード
-      current_component:          null, // コンポーネント切り替え用
-      emotion_folder_tab_index: null, // 一覧での現在のタブ
+      current_record:   null, // 編集中のレコード
+      current_component: null, // コンポーネント切り替え用
+      tab_index:         null, // 一覧での現在のタブ
     }
   },
 
@@ -34,14 +34,14 @@ export default {
     this.sound_play("click")
 
     const key = this.app.EmotionFolderInfo.fetch(0).key
-    this.emotion_mode_select(key)
+    this.tab_select(key)
 
     if (this.app.info.warp_to) {
       if (this.app.info.warp_to === "emotion_index") {
         this.current_component = "the_emotion_index"
       }
       if (this.app.info.warp_to === "emotion_edit") {
-        this.emotion_edit_handle(this.app.current_user.emotions[0])
+        this.edit_handle(this.app.current_user.emotions[0])
       }
       return
     }
@@ -49,18 +49,39 @@ export default {
     this.current_component = "the_emotion_index"
   },
   methods: {
-    emotion_mode_select(key) {
-      this.emotion_folder_tab_index = this.app.EmotionFolderInfo.fetch(key).code
+    tab_select(key) {
+      this.tab_index = this.app.EmotionFolderInfo.fetch(key).code
     },
 
-    emotion_test_handle(emotion) {
+    slap_handle(emotion) {
       this.app.emotion_call(emotion)
     },
 
-    emotion_edit_handle(emotion) {
+    edit_handle(emotion) {
       this.__assert__(emotion, "emotion")
-      this.current_emotion = emotion
+      this.current_record = emotion
       this.current_component = "the_emotion_edit"
+    },
+
+    new_handle() {
+      this.edit_handle(this.default_attributes_clone())
+    },
+
+    default_attributes_clone() {
+      return Object.assign({}, this.default_attributes)
+    },
+  },
+  computed: {
+    current_record_folder_info() {
+      return this.app.EmotionFolderInfo.fetch(this.tab_index)
+    },
+    default_attributes() {
+      return {
+        name: "",
+        message: "",
+        voice: "",
+        folder_key: this.current_record_folder_info.key,
+      }
     },
   },
 }

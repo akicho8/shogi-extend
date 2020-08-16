@@ -24,7 +24,7 @@ module Actb
     acts_as_list top_of_list: 0, scope: [:folder_id, :user_id]
     default_scope { order(:position) }
 
-    before_validation on: :create do
+    before_validation do
       if Rails.env.test?
         self.name    ||= "(name)"
         self.message ||= "(message)"
@@ -40,11 +40,9 @@ module Actb
       validates :name
     end
 
-    # with_options allow_blank: true, uniqueness: { scope: [:user_id, :folder_id] } do
-    #   validates :name
-    #   # validates :message
-    #   # validates :voice
-    # end
+    with_options allow_blank: true, uniqueness: { scope: [:user_id, :folder_id, :message, :voice], message: "とか同じのがすでにあります" } do
+      validates :name
+    end
 
     def folder_key
       if folder
@@ -56,28 +54,8 @@ module Actb
       self.folder = EmotionFolder.fetch_if(key)
     end
 
-    # jsから来たパラメーターでまとめて更新する
-    #
-    #   params = {
-    #     "title"            => "(title)",
-    #     "init_sfen"        => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
-    #     "moves_answers"    => [{"moves_str"=>"4c5b"}],
-    #     "time_limit_clock" => "1999-12-31T15:03:00.000Z",
-    #   }
-    #   question = user.actb_questions.build
-    #   question.update_from_js(params)
-    #   question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
-    #
     def update_from_js(params)
-      params = params.deep_symbolize_keys
-      attrs = params.slice(*[
-          :name,
-          :message,
-          :voice,
-          :folder_key,
-        ])
-      assign_attributes(attrs)
-      save!
+      update!(params.slice(:id, :name, :message, :voice, :folder_key))
     end
   end
 end

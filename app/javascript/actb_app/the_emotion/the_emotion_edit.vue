@@ -1,25 +1,25 @@
 <template lang="pug">
 .the_emotion_edit
   .primary_header
-    .header_item.with_text.ljust(@click="back_handle") キャンセル
+    .header_item.with_text.ljust(@click="cancel_handle") キャンセル
     .header_center_title
       | エモーション編集
-    .header_item.with_text.rjust.has-text-weight-bold.is_clickable(@click="emotion_save_handle")
+    .header_item.with_text.rjust.has-text-weight-bold.is_clickable(@click="save_handle")
       | {{create_or_upate_name}}
 
   .mx-4.mt-5
     b-field(label="鍵" label-position="on-border")
-      b-input(v-model.trim="$parent.current_emotion.name")
+      b-input(v-model.trim="$parent.current_record.name")
     b-field(label="伝" label-position="on-border")
-      b-input(v-model.trim="$parent.current_emotion.message")
+      b-input(v-model.trim="$parent.current_record.message")
     b-field(label="声" label-position="on-border")
-      b-input(v-model.trim="$parent.current_emotion.voice")
+      b-input(v-model.trim="$parent.current_record.voice")
     b-field(label="フォルダ" custom-class="is-small")
       b-field.is-marginless
         template(v-for="row in app.EmotionFolderInfo.values")
-          b-radio-button(v-model="$parent.current_emotion.folder_key" :native-value="row.key" :type="row.type" size="is-small") {{row.name}}
+          b-radio-button(v-model="$parent.current_record.folder_key" :native-value="row.key" :type="row.type" size="is-small") {{row.name}}
     b-field
-      b-button(@click="$parent.emotion_test_handle($parent.current_emotion)" expanded) 再生
+      b-button(@click="$parent.slap_handle($parent.current_record)" expanded) 再生
 </template>
 
 <script>
@@ -30,27 +30,26 @@ export default {
   mixins: [
     support,
   ],
-  data() {
-    return {
-    }
-  },
-  created() {
-  },
   methods: {
-    emotion_save_handle() {
-      if (!this.$parent.current_emotion.name) {
-        this.warning_notice("トリガーを入力してください")
+    save_handle() {
+      if (this.$parent.current_record.name) {
+      } else {
+        this.warning_notice("鍵を入力してください")
+        return
+      }
+      if (this.$parent.current_record.message || this.$parent.current_record.voice) {
+      } else {
+        this.warning_notice("伝か声を入力してください")
         return
       }
 
       const before_create_or_upate_name = this.create_or_upate_name
-      this.api_put("emotion_save_handle", {emotion: this.$parent.current_emotion}, e => {
+      this.api_put("emotion_save_handle", {emotion: this.$parent.current_record}, e => {
         if (e.form_error_message) {
           this.warning_notice(e.form_error_message)
         }
-        if (e.emotion) {
-          this.$parent.current_emotion = e.emotion
-
+        if (e.emotions) {
+          this.$set(this.app.current_user, "emotions", e.emotions)
           this.sound_play("click")
           this.ok_notice(`${before_create_or_upate_name}しました`)
 
@@ -58,13 +57,14 @@ export default {
         }
       })
     },
-    back_handle() {
+
+    cancel_handle() {
       this.$parent.current_component = "the_emotion_index"
     },
   },
   computed: {
     create_or_upate_name() {
-      if (this.$parent.current_emotion.id) {
+      if (this.$parent.current_record.id) {
         return "更新"
       } else {
         return "保存"
