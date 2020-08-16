@@ -4,7 +4,7 @@
     .header_center_title エモーション一覧
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.new_handle")
   .secondary_header
-    b-tabs.tabs_in_secondary(v-model="$parent.tab_index" expanded @change="tab_change_hook")
+    b-tabs.tabs_in_secondary(v-model="$parent.current_tabpos" expanded @change="tab_change_hook")
       template(v-for="e in app.EmotionFolderInfo.values")
         b-tab-item
           template(slot="header")
@@ -42,14 +42,11 @@ export default {
   mixins: [
     support,
   ],
-  data() {
-    return {
-    }
-  },
   created() {
     this.tab_change_hook()
   },
   methods: {
+    // タブが変更されたときの処理
     tab_change_hook() {
       this.sound_play("click")
       const func = this[`tab_change_hook_for_${this.$parent.current_folder.key}`]
@@ -57,13 +54,14 @@ export default {
         func()
       }
     },
-    move_to_handle(emotion, move_to) {
-      this.silent_api_put("emotion_move_to_handle", {emotion_id: emotion.id, move_to: move_to}, e => {
+    // 上下並び替え
+    move_to_handle(record, move_to) {
+      this.api_put("emotion_move_to_handle", {emotion_id: record.id, move_to: move_to}, e => {
         this.$set(this.app.current_user, "emotions", e.emotions)
         this.sound_play("click")
-        this.ok_notice(`並び替えました`)
       })
     },
+    // 指定フォルダに入っているレコード(複数)を返す
     folder_records(folder) {
       return this.app.current_user.emotions.filter(e => e.folder_key === folder.key)
     },
@@ -81,5 +79,5 @@ export default {
 .the_emotion_index
   @extend %padding_top_for_secondary_header
   .is_truncate
-    width: 7rem
+    max-width: 7rem
 </style>
