@@ -1,10 +1,10 @@
 <template lang="pug">
 .the_builder_form
   b-field(label="タイトル" label-position="on-border")
-    b-input(v-model="$parent.question.title" required)
+    b-input(v-model.trim="$parent.question.title" required)
 
   b-field(label="ヒント" label-position="on-border" v-if="app.config.hint_enable")
-    b-input(v-model="$parent.question.hint_desc")
+    b-input(v-model.trim="$parent.question.hint_desc")
 
   b-field.lineage_key(label="種類" label-position="on-border" v-if="$parent.LineageInfo")
     b-select(v-model="$parent.question.lineage_key" expanded)
@@ -14,13 +14,13 @@
     b-timepicker(v-model="$parent.question.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
 
   b-field(label="解説" label-position="on-border")
-    b-input(v-model="$parent.question.description" type="textarea" rows="3")
+    b-input(v-model.trim="$parent.question.description" type="textarea" rows="3")
 
   b-field(label="難易度" custom-class="is-small" v-if="app.config.difficulty_level_enable")
     b-rate(v-model="$parent.question.difficulty_level" spaced :max="app.config.difficulty_level_max" :show-score="false")
 
   b-field(label="メッセージ" label-position="on-border" message="問題と一緒に表示する文言です。何手指してほしいかや、ヒントを伝えたいときだけ入力してください。基本未入力でかまいません")
-    b-input(v-model="$parent.question.direction_message" placeholder="3手指してください")
+    b-input(v-model.trim="$parent.question.direction_message" placeholder="3手指してください")
 
   b-field(label="タグ" label-position="on-border")
     //- https://buefy.org/documentation/taginput
@@ -36,10 +36,10 @@
         b-switch(v-model="$parent.question.source_about_key" size="is-small" true-value="unknown" false-value="ascertained") 作者不詳
 
       b-field(label="作者" label-position="on-border")
-        b-input(v-model="$parent.question.source_author" placeholder="初代大橋宗桂" :disabled="$parent.question.source_about_key === 'unknown'")
+        b-input(v-model.trim="$parent.question.source_author" placeholder="初代大橋宗桂" :disabled="$parent.question.source_about_key === 'unknown'")
 
       b-field(label="出典メディア" label-position="on-border")
-        b-input(v-model="$parent.question.source_media_name" placeholder="詰パラ")
+        b-input(v-model.trim="$parent.question.source_media_name" placeholder="詰パラ")
 
       b-field(label="出典年月日" label-position="on-border")
         b-datepicker(
@@ -51,7 +51,7 @@
         )
 
       b-field(label="出典URL" label-position="on-border")
-        b-input(v-model="$parent.question.source_media_url" type="url")
+        b-input(v-model.trim="$parent.question.source_media_url" type="url")
 
   b-field(label="フォルダ" custom-class="is-small" v-if="$parent.FolderInfo")
     b-field.is-marginless
