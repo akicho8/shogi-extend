@@ -60,7 +60,7 @@ import { RuleInfo                  } from "./models/rule_info.js"
 import { OxMarkInfo                } from "./models/ox_mark_info.js"
 import { SkillInfo                 } from "./models/skill_info.js"
 import { EmotionInfo               } from "./models/emotion_info.js"
-import { EmotionCategoryInfo       } from "./models/emotion_category_info.js"
+import { EmotionFolderInfo       } from "./models/emotion_folder_info.js"
 
 export default {
   store,
@@ -122,7 +122,7 @@ export default {
       OxMarkInfo: null,
       SkillInfo:  null,
       EmotionInfo: null,
-      EmotionCategoryInfo: null,
+      EmotionFolderInfo: null,
 
       // メニュー用
       menu_component: null,
@@ -163,7 +163,7 @@ export default {
       this.OxMarkInfo          = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
       this.SkillInfo           = SkillInfo.memory_record_reset(e.SkillInfo)
       this.EmotionInfo         = EmotionInfo.memory_record_reset(e.EmotionInfo)
-      this.EmotionCategoryInfo = EmotionCategoryInfo.memory_record_reset(e.EmotionCategoryInfo)
+      this.EmotionFolderInfo = EmotionFolderInfo.memory_record_reset(e.EmotionFolderInfo)
       this.app_setup()
     })
   },

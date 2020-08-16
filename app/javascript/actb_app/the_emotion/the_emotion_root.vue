@@ -26,7 +26,7 @@ export default {
     return {
       current_emotion:            null, // 編集中のレコード
       current_component:          null, // コンポーネント切り替え用
-      emotion_category_tab_index: null, // 一覧での現在のタブ
+      emotion_folder_tab_index: null, // 一覧での現在のタブ
     }
   },
 
@@ -34,7 +34,7 @@ export default {
     this.sound_play("click")
     this.app.lobby_unsubscribe()
 
-    const key = this.app.EmotionCategoryInfo.fetch(0).key
+    const key = this.app.EmotionFolderInfo.fetch(0).key
     this.emotion_mode_select(key)
 
     if (this.app.info.warp_to) {
@@ -51,7 +51,11 @@ export default {
   },
   methods: {
     emotion_mode_select(key) {
-      this.emotion_category_tab_index = this.app.EmotionCategoryInfo.fetch(key).code
+      this.emotion_folder_tab_index = this.app.EmotionFolderInfo.fetch(key).code
+    },
+
+    emotion_test_handle(emotion) {
+      this.app.emotion_call(emotion)
     },
 
     emotion_edit_handle(emotion) {

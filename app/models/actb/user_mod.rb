@@ -93,8 +93,8 @@ module Actb
         end
         if emotions.empty?
           EmotionInfo.each do |e|
-            category = EmotionCategory.fetch(e.category_key)
-            emotions.create!(category: category, name: e.name,  message: e.message, voice: e.voice)
+            folder = EmotionFolder.fetch(e.folder_key)
+            emotions.create!(folder: folder, name: e.name,  message: e.message, voice: e.voice)
           end
         end
       end
@@ -117,7 +117,7 @@ module Actb
             include: {
               emotions: {
                 only: [:id, :name, :message, :voice],
-                methods: [:category_key],
+                methods: [:folder_key],
               },
             },
             methods: [

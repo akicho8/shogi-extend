@@ -14,7 +14,7 @@ module Actb
       Actb::OxMark,
       Actb::Season,
       Actb::Lineage,
-      Actb::EmotionCategory,
+      Actb::EmotionFolder,
       Actb::Judge,
       Actb::Rule,
       Actb::Final,

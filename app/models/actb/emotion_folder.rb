@@ -14,8 +14,8 @@
 # |------------+--------------------+-------------+-------------+------+-------|
 
 module Actb
-  # rails r "tp Actb::EmotionCategory"
-  class EmotionCategory < ApplicationRecord
+  # rails r "tp Actb::EmotionFolder"
+  class EmotionFolder < ApplicationRecord
     include StaticArModel
 
     has_many :emotions, dependent: :destroy

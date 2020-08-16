@@ -16,8 +16,8 @@
       b-input(v-model.trim="$parent.current_emotion.voice")
     b-field(label="フォルダ" custom-class="is-small")
       b-field.is-marginless
-        template(v-for="row in app.EmotionCategoryInfo.values")
-          b-radio-button(v-model="$parent.current_emotion.category_key" :native-value="row.key" :type="row.type" size="is-small") {{row.name}}
+        template(v-for="row in app.EmotionFolderInfo.values")
+          b-radio-button(v-model="$parent.current_emotion.folder_key" :native-value="row.key" :type="row.type" size="is-small") {{row.name}}
     b-field
       b-button(@click="$parent.emotion_test_handle($parent.current_emotion)" expanded) 再生
 </template>

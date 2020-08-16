@@ -143,7 +143,7 @@ module FrontendScript
         rescue ActiveRecord::RecordInvalid => error
           return { form_error_message: error.message }
         end
-        { emotion: emotion.as_json(only: [:id, :name, :message, :voice], methods: [:category_key]) }
+        { emotion: emotion.as_json(only: [:id, :name, :message, :voice], methods: [:folder_key]) }
       end
 
       # curl -d _method=put -d user_name=a -d remote_action=profile_update -d _user_id=1 http://localhost:3000/script/actb-app
