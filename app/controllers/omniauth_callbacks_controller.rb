@@ -38,25 +38,33 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     unless user
       SlackAgent.message_send(key: "omniauth", body: auth.as_json) # デバッグ用
 
-      user = User.create do |e|
-        e.email      = auth.info.email
-        e.user_agent = request.user_agent
+      begin
+        user = User.create do |e|
+          e.email      = auth.info.email
+          e.user_agent = request.user_agent
 
-        # Googleの場合 auth.info.name にメールアドレスを入れてきやがるためおかしなことになる
-        # しかも名前がどこにもない。だから @ の前を仮の名前をとして入れて name_input_at は nil のままにしておく
-        if email_format?
-          e.name = name_extract_from_email
-        else
-          e.name = user_name
-          e.name_input_at = Time.current
+          # Googleの場合 auth.info.name にメールアドレスを入れてきやがるためおかしなことになる
+          # しかも名前がどこにもない。だから @ の前を仮の名前をとして入れて name_input_at は nil のままにしておく
+          if email_format?
+            e.name = name_extract_from_email
+          else
+            e.name = user_name
+            e.name_input_at = Time.current
+          end
         end
+      rescue => error
+        SlackAgent.message_send(key: "omniauth error", body: error.inspect)
       end
 
-      if user && user.valid?
-        if auth.info.image
-          user.avatar = {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"}
-          user.save
+      begin
+        if user && user.valid?
+          if auth.info.image
+            user.avatar = {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"}
+            user.save
+          end
         end
+      rescue => error
+        SlackAgent.message_send(key: "omniauth error", body: error.inspect)
       end
     end
 
