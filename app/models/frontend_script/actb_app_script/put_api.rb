@@ -156,6 +156,11 @@ module FrontendScript
         { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
       end
 
+      def emotions_reset_handle
+        current_user.emotions_setup(reset: true)
+        { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
+      end
+
       # curl -d _method=put -d user_name=a -d remote_action=profile_update -d _user_id=1 http://localhost:3000/script/actb-app
       def profile_update
         user = current_user

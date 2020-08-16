@@ -37,6 +37,10 @@
         a.mx-1(@click.stop="$parent.edit_handle(props.row)") 編集
         a.mx-1(@click.stop="move_to_handle(props.row, 'lower')") ▼
         a.mx-1(@click.stop="move_to_handle(props.row, 'higher')") ▲
+
+  .buttons
+    b-button(@click="reset_handle" type="is-text" size="is-small") RESET
+
 </template>
 
 <script>
@@ -78,6 +82,26 @@ export default {
     // 指定フォルダに入っているレコード(複数)を返す
     folder_records(folder) {
       return this.app.current_user.emotions.filter(e => e.folder_key === folder.key)
+    },
+    // 初期値に戻す
+    reset_handle() {
+      this.$buefy.dialog.confirm({
+        title: "リセット",
+        message: `初期値に戻します。既存のエモーションはいったんすべて消えますが、本当によろしいですか？`,
+        confirmText: "リセットする",
+        // canCancel: ["outside", "escape"],
+        cancelText: "キャンセル",
+        type: "is-danger",
+        hasIcon: true,
+        trapFocus: true,
+        onConfirm: () => {
+          this.api_put("emotions_reset_handle", {}, e => {
+            this.$set(this.app.current_user, "emotions", e.emotions)
+            this.sound_play("click")
+          })
+        },
+        onCancel:  () => { this.ok_notice("キャンセルしました") },
+      })
     },
 
     ////////////////////////////////////////////////////////////////////////////////
