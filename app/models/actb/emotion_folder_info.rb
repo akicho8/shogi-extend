@@ -7,9 +7,9 @@ module Actb
   class EmotionFolderInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :question, name: "問題",   type: "is-primary", },
-      { key: :versus,   name: "対局",   type: "is-primary", },
-      { key: :trash,    name: "ゴミ箱", type: "is-danger",  },
+      { key: :question, name: "問題",     type: "is-primary", },
+      { key: :versus,   name: "対局",     type: "is-primary", },
+      { key: :trash,    name: "ゴミ箱",   type: "is-danger",  },
     ]
   end
 end

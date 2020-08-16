@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_emotion_index
   .primary_header
-    .header_center_title エモーション編集
+    .header_center_title エモーション一覧
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="$parent.emotion_folder_tab_index" expanded @change="emotion_tab_change_handle")
       template(v-for="e in app.EmotionFolderInfo.values")
