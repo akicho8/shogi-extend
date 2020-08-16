@@ -30,8 +30,8 @@
       b-table-column(custom-key="operation" label="")
         a.mx-1(@click.stop="$parent.play_handle(props.row)" v-if="development_p") 再生
         a.mx-1(@click.stop="$parent.edit_handle(props.row)") 編集
-        a.mx-1(@click.stop="move_to_handle(props.row, 'higher')") ▲
         a.mx-1(@click.stop="move_to_handle(props.row, 'lower')") ▼
+        a.mx-1(@click.stop="move_to_handle(props.row, 'higher')") ▲
 </template>
 
 <script>
