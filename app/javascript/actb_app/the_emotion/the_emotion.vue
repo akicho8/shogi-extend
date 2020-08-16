@@ -9,8 +9,8 @@
 import { support } from "../support.js"
 import the_footer from "../the_footer.vue"
 
-import the_emotion_index from "./app_index.vue"
-import the_emotion_edit from "./app_edit.vue"
+import the_emotion_index from "./the_emotion_index.vue"
+import the_emotion_edit from "./the_emotion_edit.vue"
 
 export default {
   name: "the_emotion",
