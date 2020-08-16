@@ -147,7 +147,12 @@ module FrontendScript
       end
 
       def emotion_move_to_handle
-        current_user.emotions.find(params[:emotion_id]).public_send("move_#{params[:move_to]}")
+        current_user.emotions.find(params[:record_id]).public_send("move_#{params[:move_to]}")
+        { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
+      end
+
+      def emotion_insert_at_handle
+        current_user.emotions.find(params[:record_id]).insert_at(params[:insert_at])
         { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
       end
 

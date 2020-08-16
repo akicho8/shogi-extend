@@ -18,6 +18,11 @@
     :data="current_records"
     :mobile-cards="false"
     hoverable
+    draggable
+    @dragstart="dragstart"
+    @drop="drop"
+    @dragover="dragover"
+    @dragleave="dragleave"
     @click="row => $parent.play_handle(row)"
     )
     template(slot-scope="props")
@@ -42,6 +47,15 @@ export default {
   mixins: [
     support,
   ],
+  data() {
+    return {
+      ////////////////////////////////////////////////////////////////////////////////
+      // https://buefy.org/documentation/table#draggable-rows
+      dragging_row: null,
+      dragging_row_index: null,
+    }
+  },
+
   created() {
     this.tab_change_hook()
   },
@@ -56,7 +70,7 @@ export default {
     },
     // 上下並び替え
     move_to_handle(record, move_to) {
-      this.api_put("emotion_move_to_handle", {emotion_id: record.id, move_to: move_to}, e => {
+      this.api_put("emotion_move_to_handle", {record_id: record.id, move_to: move_to}, e => {
         this.$set(this.app.current_user, "emotions", e.emotions)
         this.sound_play("click")
       })
@@ -65,6 +79,36 @@ export default {
     folder_records(folder) {
       return this.app.current_user.emotions.filter(e => e.folder_key === folder.key)
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // https://buefy.org/documentation/table#draggable-rows
+    dragstart(payload) {
+      this.dragging_row = payload.row
+      this.dragging_row_index = payload.index
+      payload.event.dataTransfer.effectAllowed = 'copy'
+    },
+    dragover(payload) {
+      payload.event.dataTransfer.dropEffect = 'copy'
+      payload.event.target.closest('tr').classList.add('is-selected')
+      payload.event.preventDefault()
+    },
+    dragleave(payload) {
+      payload.event.target.closest('tr').classList.remove('is-selected')
+      payload.event.preventDefault()
+    },
+    drop(payload) {
+      payload.event.target.closest('tr').classList.remove('is-selected')
+      const dropped_on_row_index = payload.index
+      if (this.development_p) {
+        this.$buefy.toast.open(`Moved ${this.dragging_row.name} from row ${this.dragging_row_index + 1} to ${dropped_on_row_index + 1}`)
+      }
+      this.api_put("emotion_insert_at_handle", {record_id: this.dragging_row.id, insert_at: dropped_on_row_index}, e => {
+        this.$set(this.app.current_user, "emotions", e.emotions)
+        // this.sound_play("click")
+      })
+    },
+    ////////////////////////////////////////////////////////////////////////////////
+
   },
   computed: {
     current_records() {
