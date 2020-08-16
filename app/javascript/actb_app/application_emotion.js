@@ -13,9 +13,9 @@ export const application_emotion = {
       } else {
         this.debug_alert("相手")
       }
-      this.emotion_call(params)
+      this.emotion_play(params)
     },
-    emotion_call(params) {
+    emotion_play(params) {
       if (params.message || params.voice) {
         this.sound_play("spon")
         if (params.message) {

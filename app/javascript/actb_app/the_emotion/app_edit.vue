@@ -19,7 +19,7 @@
         template(v-for="row in app.EmotionFolderInfo.values")
           b-radio-button(v-model="$parent.current_record.folder_key" :native-value="row.key" :type="row.type" size="is-small") {{row.name}}
     b-field
-      b-button(icon-left="play" @click="$parent.slap_handle($parent.current_record)" expanded)
+      b-button(icon-left="play" @click="$parent.play_handle($parent.current_record)" expanded)
 </template>
 
 <script>

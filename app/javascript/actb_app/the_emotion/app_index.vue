@@ -18,17 +18,17 @@
     :data="current_records"
     :mobile-cards="false"
     hoverable
-    @click="row => $parent.slap_handle(row)"
+    @click="row => $parent.play_handle(row)"
     )
     template(slot-scope="props")
-      b-table-column.is_clickable(custom-key="name" field="name" label="鍵" @click.native.stop="$parent.slap_handle(props.row)")
+      b-table-column.is_clickable(custom-key="name" field="name" label="鍵" @click.native.stop="$parent.play_handle(props.row)")
         | {{props.row.name}}
       b-table-column(custom-key="message" field="message" label="伝")
         .is_truncate {{props.row.message}}
       b-table-column(custom-key="voice" field="voice" label="声")
         .is_truncate {{props.row.voice}}
       b-table-column(custom-key="operation" label="")
-        a.mx-1(@click.stop="$parent.slap_handle(props.row)" v-if="development_p") 再生
+        a.mx-1(@click.stop="$parent.play_handle(props.row)" v-if="development_p") 再生
         a.mx-1(@click.stop="$parent.edit_handle(props.row)") 編集
         a.mx-1(@click.stop="move_to_handle(props.row, 'higher')") ▲
         a.mx-1(@click.stop="move_to_handle(props.row, 'lower')") ▼
@@ -52,16 +52,11 @@ export default {
   methods: {
     tab_change_hook() {
       this.sound_play("click")
-      this[`tab_change_hook_for_${this.$parent.current_folder.key}`]()
+      const func = this[`tab_change_hook_for_${this.$parent.current_folder.key}`]
+      if (func) {
+        func()
+      }
     },
-    //////////////////////////////////////////////////////////////////////////////// タブ切り替え時に実行したい内容
-    tab_change_hook_for_question() {
-    },
-    tab_change_hook_for_versus() {
-    },
-    tab_change_hook_for_trash() {
-    },
-    ////////////////////////////////////////////////////////////////////////////////
     move_to_handle(emotion, move_to) {
       this.silent_api_put("emotion_move_to_handle", {emotion_id: emotion.id, move_to: move_to}, e => {
         this.$set(this.app.current_user, "emotions", e.emotions)

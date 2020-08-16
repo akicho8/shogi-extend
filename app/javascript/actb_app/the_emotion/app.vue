@@ -9,8 +9,8 @@
 import { support } from "../support.js"
 import the_footer from "../the_footer.vue"
 
-import the_emotion_index from "./the_emotion_index.vue"
-import the_emotion_edit from "./the_emotion_edit.vue"
+import the_emotion_index from "./app_index.vue"
+import the_emotion_edit from "./app_edit.vue"
 
 export default {
   name: "the_emotion",
@@ -52,12 +52,12 @@ export default {
     tab_select(key) {
       this.tab_index = this.app.EmotionFolderInfo.fetch(key).code
     },
-    slap_handle(emotion) {
-      this.app.emotion_call(emotion)
+    play_handle(record) {
+      this.app.emotion_play(record)
     },
-    edit_handle(emotion) {
-      this.__assert__(emotion, "emotion")
-      this.current_record = emotion
+    edit_handle(record) {
+      this.__assert__(record, "record")
+      this.current_record = record
       this.current_component = "the_emotion_edit"
     },
     new_handle() {
