@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_emotion_root_edit
+.the_emotion_edit
   .primary_header
     .header_item.with_text.ljust(@click="back_handle") キャンセル
     .header_center_title
@@ -26,7 +26,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_emotion_root_edit",
+  name: "the_emotion_edit",
   mixins: [
     support,
   ],
@@ -54,12 +54,12 @@ export default {
           this.sound_play("click")
           this.ok_notice(`${before_create_or_upate_name}しました`)
 
-          this.$parent.current_component = "the_emotion_root_index"
+          this.$parent.current_component = "the_emotion_index"
         }
       })
     },
     back_handle() {
-      this.$parent.current_component = "the_emotion_root_index"
+      this.$parent.current_component = "the_emotion_index"
     },
   },
   computed: {
@@ -76,7 +76,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_emotion_root_edit
+.the_emotion_edit
   @extend %padding_top_for_primary_header
   .field:not(:first-child)
     margin-top: 1.5rem

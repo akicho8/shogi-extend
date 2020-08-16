@@ -1,7 +1,7 @@
 <template lang="pug">
 .actb_app(:class="mode")
   the_profile_edit( v-if="mode === 'profile_edit'")
-  the_emotion_root(v-if="mode === 'emotion_root'")
+  the_emotion(v-if="mode === 'emotion'")
   the_lobby(        v-if="mode === 'lobby'")
   the_rule_select(  v-if="mode === 'rule_select'")
   the_matching(     v-if="mode === 'matching'")
@@ -35,7 +35,7 @@ import the_user_show     from "./the_user_show.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_rule_select   from "./the_rule_select.vue"
 import the_profile_edit  from "./the_profile_edit.vue"
-import the_emotion_root  from "./the_emotion/the_emotion_root.vue"
+import the_emotion  from "./the_emotion/the_emotion.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle        from "./the_battle/the_battle.vue"
 import the_result        from "./the_result.vue"
@@ -90,7 +90,7 @@ export default {
     the_lobby,
     the_rule_select,
     the_profile_edit,
-    the_emotion_root,
+    the_emotion,
     the_matching,
     the_battle,
     the_result,
@@ -176,8 +176,8 @@ export default {
         if (this.info.warp_to === "profile_edit" || this.info.warp_to === "profile_edit_image_crop") {
           this.profile_edit_setup()
         }
-        if (this.info.warp_to === "emotion_root_index" || this.info.warp_to === "emotion_root_edit") {
-          this.emotion_root_setup()
+        if (this.info.warp_to === "emotion_index" || this.info.warp_to === "emotion_edit") {
+          this.emotion_setup()
         }
         if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
           this.room_setup(this.info.room)
@@ -241,9 +241,9 @@ export default {
       this.mode = "profile_edit"
     },
 
-    emotion_root_setup() {
+    emotion_setup() {
       this.lobby_unsubscribe()
-      this.mode = "emotion_root"
+      this.mode = "emotion"
     },
 
     // 練習モードを止める
@@ -430,11 +430,11 @@ export default {
       }
     },
 
-    emotion_root_handle() {
-      if (this.mode === "emotion_root") {
+    emotion_index_handle() {
+      if (this.mode === "emotion") {
       } else {
         this.sound_play("click")
-        this.emotion_root_setup()
+        this.emotion_setup()
       }
     },
 

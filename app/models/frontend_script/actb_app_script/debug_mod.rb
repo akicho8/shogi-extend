@@ -11,8 +11,8 @@ module FrontendScript
               :default => current_warp_to,
               :elems   => {
                 "ロビー"                       => nil,
-                "エモーション編集 一覧"        => :emotion_root_index,
-                "エモーション編集 編集"        => :emotion_root_edit,
+                "エモーション編集 一覧"        => :emotion_index,
+                "エモーション編集 編集"        => :emotion_edit,
                 "プロフィール編集"             => :profile_edit,
                 "プロフィール画像アップロード" => :profile_edit_image_crop,
                 "対戦(マラソン)"               => :battle_sy_marathon,
@@ -57,10 +57,10 @@ module FrontendScript
       end
 
       # エモーション編集
-      def debug_for_emotion_root_index(info)
+      def debug_for_emotion_index(info)
         c.sysop_login_unless_logout
       end
-      def debug_for_emotion_root_edit(info)
+      def debug_for_emotion_edit(info)
         c.sysop_login_unless_logout
       end
 

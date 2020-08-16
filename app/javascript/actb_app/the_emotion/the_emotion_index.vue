@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_emotion_root_index
+.the_emotion_index
   .primary_header
     .header_center_title エモーション編集
   .secondary_header
@@ -30,7 +30,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_emotion_root_index",
+  name: "the_emotion_index",
   mixins: [
     support,
   ],
@@ -67,7 +67,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_emotion_root_index
+.the_emotion_index
   @extend %padding_top_for_secondary_header
   .is_truncate
     width: 7rem
