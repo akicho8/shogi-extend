@@ -16,28 +16,27 @@
     b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
       b-icon(slot="trigger" icon="menu")
       template(v-for="e in QuestionIndexColumnInfo.values")
-        template(v-if="e.scope.includes(app.user_type)")
-          b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="e.key")
-            .has-text-weight-bold(v-if="visible_hash[e.key]")
-              | {{e.name}}
-            .has-text-grey(v-else)
-              | {{e.name}}
+        b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="e.key")
+          .has-text-weight-bold(v-if="visible_hash[e.key]")
+            | {{e.name}}
+          .has-text-grey(v-else)
+            | {{e.name}}
 
   ////////////////////////////////////////////////////////////////////////////////
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="question_tab_index" expanded @change="question_tab_index_change_handle")
       template(v-for="tab_info in TabInfo.values")
-        b-tab-item
+        b-tab-item(v-if="question_tab_available_p(tab_info)")
           template(slot="header")
             span
               | {{tab_info.name}}
               b-tag(rounded)
-                | {{$parent.question_counts[tab_info.key] || 0}}
+                | {{question_count_in_tab(tab_info)}}
 
   //////////////////////////////////////////////////////////////////////////////// シンプル横並び
   b-field.visible_toggle_checkboxes(grouped group-multiline v-if="false")
     template(v-for="e in QuestionIndexColumnInfo.values")
-      .control(v-if="e.scope.includes(app.user_type)")
+      .control
         b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="bool => cb_input_handle(e, bool)")
           | {{e.name}}
 
@@ -181,13 +180,14 @@ import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js
 
 import MemoryRecord from 'js-memory-record'
 
+// 「全体」があったりして構造が異なるのでサーバー側で定義したものを利用していない
 class TabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "all",    name: "全体",   user_id_column_show_p: true,  },
-      { key: "active", name: "公開",   user_id_column_show_p: false, },
-      { key: "draft",  name: "下書き", user_id_column_show_p: false, },
-      { key: "trash",  name: "ゴミ箱", user_id_column_show_p: false, },
+      { key: "all",    name: "全体",   hidden_if_empty: false, },
+      { key: "active", name: "公開",   hidden_if_empty: false, },
+      { key: "draft",  name: "下書き", hidden_if_empty: true,  },
+      { key: "trash",  name: "ゴミ箱", hidden_if_empty: true,  },
     ]
   }
 
@@ -240,6 +240,21 @@ export default {
       this.sound_play("click")
       this.say(this.question_current_tab_info.name)
       this.$parent.folder_change_handle(this.question_current_tab_info.key)
+    },
+
+    // このタブは表示するか？
+    // ゴミ箱など常に0なので0のときは表示しない
+    question_tab_available_p(tab_info) {
+      if (tab_info.hidden_if_empty) {
+        if (this.question_count_in_tab(tab_info) === 0) {
+          return false
+        }
+      }
+      return true
+    },
+    // このタブのレコード件数
+    question_count_in_tab(tab_info) {
+      return this.$parent.question_counts[tab_info.key] || 0
     },
 
     // チェックボックスが変更されたとき
