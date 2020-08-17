@@ -259,7 +259,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   # name が xxx なら http://localhost:3000/xusers/auth/xxx に対応する
   [
-    {key: :google,  auth_key: :google_oauth2, args: {name: "google", scope: ["email"]}}, # provider を文字列にしたいので name は文字列で指定
+    {key: :google,  auth_key: :google_oauth2, args: {name: "google", scope: ["email", "profile"]}}, # provider を文字列にしたいので name は文字列で指定
     {key: :twitter, auth_key: nil,            args: {}},
     {key: :github,  auth_key: nil,            args: {}},
   ].each do |e|
