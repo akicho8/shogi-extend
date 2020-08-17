@@ -2,7 +2,7 @@
 # | Provider | nickname        | name                      | email                    | description |
 # |----------+-----------------+---------------------------+--------------------------+-------------|
 # | Twitter  | "sgkinakomochi" | "きなこもち"              | ""                       | "..."       |
-# | Google   | nil             | "pinpon.ikeda@gmail.com"  | "pinpon.ikeda@gmail.com" | nil         |
+# | Google   | nil             | "Akira Ikeda"             | "pinpon.ikeda@gmail.com" | nil         |
 # |----------+-----------------+---------------------------+--------------------------+-------------|
 
 require "open-uri" # for URI#open
@@ -45,22 +45,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     unless user
       SlackAgent.message_send(key: "omniauth", body: auth.as_json) # デバッグ用
 
-      begin
-        user = User.create do |e|
-          e.email      = auth.info.email # Twitterの場合は email は ""
-          e.user_agent = request.user_agent
-
-          # Googleの場合 auth.info.name にメールアドレスを入れてきやがるためおかしなことになる
-          # しかも名前がどこにもない。だから @ の前を仮の名前をとして入れて name_input_at は nil のままにしておく
-          if name_is_email_format?
-            e.name = name_extract_from_email
-          else
-            e.name = user_name
-            e.name_input_at = Time.current
-          end
-        end
-      rescue => error
-        SlackAgent.message_send(key: "omniauth error", body: error.inspect)
+      user = User.create do |e|
+        e.email         = auth.info.email # Twitterの場合は空文字列
+        e.name          = user_name
+        e.name_input_at = Time.current
+        e.user_agent    = request.user_agent
       end
 
       begin
@@ -133,7 +122,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def user_name
-    auth.info.name.presence || auth.info.nickname.presence
+    auth.info.name.presence
   end
 
   def current_auth_info
@@ -146,21 +135,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def image_uri
     URI(auth.info.image)
-  end
-
-  # メールアドレスなら@の前を取得
-  #  "alice@localhost" --> "alice"
-  def name_extract_from_email
-    Mail::Address.new(user_name).local
-  end
-
-  # ユーザー名はメールアドレスか？
-  def name_is_email_format?
-    a = Mail::Address.new(user_name)
-    if a.domain
-      a.local
-    end
-  rescue Mail::Field::IncompleteParseError
-    false
   end
 end
