@@ -81,6 +81,28 @@ ActiveRecord::Schema.define(version: 2020_08_17_115320) do
     t.index ["user_id"], name: "index_actb_clip_marks_on_user_id"
   end
 
+  create_table "actb_emotion_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_actb_emotion_folders_on_position"
+  end
+
+  create_table "actb_emotions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "所有者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.string "name", null: false, comment: "トリガー名"
+    t.string "message", null: false, comment: "表示用伝言"
+    t.string "voice", null: false, comment: "発声用文言"
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["folder_id"], name: "index_actb_emotions_on_folder_id"
+    t.index ["position"], name: "index_actb_emotions_on_position"
+    t.index ["user_id"], name: "index_actb_emotions_on_user_id"
+  end
+
   create_table "actb_finals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
@@ -724,6 +746,8 @@ ActiveRecord::Schema.define(version: 2020_08_17_115320) do
   add_foreign_key "actb_battles", "actb_rules", column: "rule_id"
   add_foreign_key "actb_clip_marks", "actb_questions", column: "question_id"
   add_foreign_key "actb_clip_marks", "users"
+  add_foreign_key "actb_emotions", "actb_emotion_folders", column: "folder_id"
+  add_foreign_key "actb_emotions", "users"
   add_foreign_key "actb_folders", "users"
   add_foreign_key "actb_good_marks", "actb_questions", column: "question_id"
   add_foreign_key "actb_good_marks", "users"

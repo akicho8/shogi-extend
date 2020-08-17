@@ -3,6 +3,10 @@
   .primary_header
     .header_center_title エモーション一覧
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.new_handle")
+    b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
+      b-icon(slot="trigger" icon="menu")
+      b-dropdown-item.px-4(@click.native.stop="reset_handle") リセット
+
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="$parent.current_tabpos" expanded @change="tab_change_hook")
       template(v-for="e in app.EmotionFolderInfo.values")
@@ -37,10 +41,6 @@
         a.mx-1(@click.stop="$parent.edit_handle(props.row)") 編集
         a.mx-1(@click.stop="move_to_handle(props.row, 'lower')") ▼
         a.mx-1(@click.stop="move_to_handle(props.row, 'higher')") ▲
-
-  .buttons
-    b-button(@click="reset_handle" type="is-text" size="is-small") RESET
-
 </template>
 
 <script>
