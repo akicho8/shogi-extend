@@ -49,6 +49,22 @@ module BackendScript
         member_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
       end
 
+      # 日別の履歴数を求める
+      history_hash = {}
+      if true
+        model = Actb::History
+        s = model.all
+        s = s.where(model.arel_table[:created_at].gteq(time_begin))
+        records = s.select([
+            "DATE(#{DbCop.tz_adjust(:created_at)}) AS created_on",                          # 時間→日付変換
+            "COUNT(*) as count_all",                                                        # 履歴数
+            "COUNT(ox_mark_id = #{Actb::OxMark.fetch(:correct).id}) AS correct_count",      # 正解数
+            "COUNT(ox_mark_id != #{Actb::OxMark.fetch(:correct).id}) AS not_correct_count", # 正解以外
+          ].join(", ")).group("created_on")                                  # 日付毎
+        # 日付から一発で対応するレコードを求められるようにハッシュ化
+        history_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+      end
+
       # 日別の問題作成回数を求める
       question_hash = {}
       if true
@@ -73,6 +89,9 @@ module BackendScript
         row["対人戦回数"]  = room_hash[date]&.human_battle_count
         row["練習戦回数"]  = room_hash[date]&.bot_battle_count
         row["対戦DAU"]     = member_hash[date]&.unique_user_id_count
+        row["履歴数"]      = history_hash[date]&.count_all
+        row["正解回数"]    = history_hash[date]&.correct_count
+        row["正解以外"]    = history_hash[date]&.not_correct_count
         row["問題作成数"]  = question_hash[date]&.count_all
         row["問題作成DAU"] = question_hash[date]&.unique_user_id_count
         row
