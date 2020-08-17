@@ -28,10 +28,14 @@ every("5 3 * * *") do
     "Swars::Battle.where(:sfen_hash => nil).find_each{|e|e.save!}",
     "FreeBattle.where(:sfen_hash => nil).find_each{|e|e.save!}",
     "Tsl::League.setup",
+
+    # 常時オンライン/常時対戦中になっている人を消す
+    "Actb::SchoolChannel.active_users_clear",
+    "Actb::RoomChannel.active_users_clear",
   ].join(";")
 end
 
-every("15 4 * * *") { command "sudo systemctl restart sidekiq" }
+every("15 5 * * *") { command "sudo systemctl restart sidekiq" }
 
 if @environment == "production"
   every("30 4 * * *") { command %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction --result-file /var/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql shogi_web_production) }
