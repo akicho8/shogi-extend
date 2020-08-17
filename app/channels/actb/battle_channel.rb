@@ -240,7 +240,7 @@ module Actb
       if current_battle.room.bot_user == user
         # 練習モードのBOTなら履歴は作らない
       else
-        user.actb_histories.create!(question: question, ox_mark: OxMark.fetch(ox_mark))
+        user.actb_histories.create!(question: question, ox_mark: OxMark.fetch(ox_mark), room: current_battle.room)
       end
     end
 
