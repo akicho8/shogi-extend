@@ -12,7 +12,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
       OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new({
           :provider => 'twitter',
           :uid      => '(uid)',
-          :info     => { name: 'alice@gmail.com', image: "https://www.shogi-extend.com/foo.png", email: "alice@localhost" },
+          :info     => { name: 'alice', image: "https://www.shogi-extend.com/foo.png", email: "alice@localhost" },
         })
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter]
       get :twitter
