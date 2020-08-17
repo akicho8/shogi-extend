@@ -1,3 +1,10 @@
+# |----------+-----------------+---------------------------+--------------------------+-------------|
+# | Provider | nickname        | name                      | email                    | description |
+# |----------+-----------------+---------------------------+--------------------------+-------------|
+# | Twitter  | "sgkinakomochi" | "きなこもち"              | ""                       | "..."       |
+# | Google   | nil             | "pinpon.ikeda@gmail.com"  | "pinpon.ikeda@gmail.com" | nil         |
+# |----------+-----------------+---------------------------+--------------------------+-------------|
+
 require "open-uri" # for URI#open
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
@@ -40,12 +47,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       begin
         user = User.create do |e|
-          e.email      = auth.info.email
+          e.email      = auth.info.email # Twitterの場合は email は ""
           e.user_agent = request.user_agent
 
           # Googleの場合 auth.info.name にメールアドレスを入れてきやがるためおかしなことになる
           # しかも名前がどこにもない。だから @ の前を仮の名前をとして入れて name_input_at は nil のままにしておく
-          if email_format?
+          if name_is_email_format?
             e.name = name_extract_from_email
           else
             e.name = user_name
@@ -60,7 +67,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         if user && user.valid?
           SlackAgent.message_send(key: "auth.info.image", body: auth.info.image)
           if auth.info.image
-            user.avatar = {io: image_uri.open, filename: Pathname(image_uri.path).basename, content_type: "image/png"}
+            filename = Pathname(image_uri.path).basename.to_s
+            user.avatar = {io: image_uri.open, filename: filename, content_type: "image/png"}
             user.save
           else
             SlackAgent.message_send(key: "auth.info.image is blank")
@@ -146,8 +154,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     Mail::Address.new(user_name).local
   end
 
-  # str はメールアドレスか？
-  def email_format?
+  # ユーザー名はメールアドレスか？
+  def name_is_email_format?
     a = Mail::Address.new(user_name)
     if a.domain
       a.local
