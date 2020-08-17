@@ -25,7 +25,8 @@ module Actb
       end
 
       # 指定のユーザーをアクティブにする
-      # FIXME: 期限切れにしようとしたが SET 型だと値に対して個別にTTLを設定できない。つまり SET にするべきではなかった？
+      # 期限切れにしようとしたが SET 型だと値に対して個別にTTLを設定できない。つまり SET にするべきではなかった？→あってる
+      # が、個別揮発しないのはどうしたらいいんだろう？
       def active_users_add(user)
         if user
           if redis.sadd(redis_key, user.id) # set.add(user.id)
