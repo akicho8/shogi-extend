@@ -59,28 +59,18 @@ class User < ApplicationRecord
       scope :random_order, -> { order(Arel.sql("rand()")) }
 
       before_validation on: :create do
-        self.key ||= SecureRandom.hex
-        self.user_agent ||= ""
-
         if Rails.env.production? || Rails.env.staging?
           self.password ||= Devise.friendly_token(32)
         else
           self.password ||= "password"
         end
+      end
 
-        if race_info.key == :human
-          number = self.class.human_only.count.next
-          self.name ||= "名無しの棋士#{number}号"
-          default_emal = "#{key}@localhost"
-        end
-
-        if race_info.key == :robot
-          number = self.class.robot_only.count.next
-          self.name ||= "CPU#{number}号"
-          default_emal = "shogi.extend+cpu-#{key}@gmail.com"
-        end
-
-        self.email ||= default_emal
+      before_validation do
+        self.key ||= SecureRandom.hex
+        self.user_agent ||= ""
+        self.name = name.presence || "名無しの棋士#{self.class.human_only.count.next}号"
+        self.email = email.presence || "#{key}@localhost"
       end
 
       with_options allow_blank: true do
@@ -103,7 +93,13 @@ class User < ApplicationRecord
 
         CpuBrainInfo.each do |e|
           unless find_by(key: e.key)
-            create!(key: e.key, name: e.name, race_key: :robot, cpu_brain_key: e.key)
+            create! do |o|
+              o.key           = e.key
+              o.race_key      = :robot
+              o.cpu_brain_key = e.key
+              o.name          = "CPU#{robot_only.count.next}号"
+              o.email         = "shogi.extend+cpu-#{e.key}@gmail.com"
+            end
           end
         end
       end
