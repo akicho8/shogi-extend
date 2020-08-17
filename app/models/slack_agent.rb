@@ -35,7 +35,7 @@ module SlackAgent
       return params
     end
 
-    SlackChatPostMessageJob.perform_later(params)
+    SlackAgentMessageSendJob.perform_later(params)
   end
 
   private

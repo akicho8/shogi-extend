@@ -1,3 +1,5 @@
+# rails r "Actb::SchoolChannel.active_users_clear"
+# rails r "Actb::RoomChannel.active_users_clear"
 module Actb
   class SchoolChannel < BaseChannel
     include ActiveUsersNotifyMod

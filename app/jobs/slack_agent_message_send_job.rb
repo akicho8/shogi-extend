@@ -1,4 +1,4 @@
-class SlackChatPostMessageJob < ApplicationJob
+class SlackAgentMessageSendJob < ApplicationJob
   queue_as :default
 
   def perform(params)
