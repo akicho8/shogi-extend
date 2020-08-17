@@ -64,6 +64,12 @@ module CurrentUserMod
         end
       end
 
+      unless user
+        # ユーザー削除後にそのユーザーと同じでIDでユーザーを作ったとき、
+        # セッションに残っているユーザーIDで新しく作ったユーザーにすりかわることができるのを防ぐ
+        current_user_clear
+      end
+
       user
     end
   end
