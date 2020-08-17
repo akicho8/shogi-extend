@@ -97,7 +97,7 @@ module FrontendScript
       info[:question_default_attributes] = Actb::Question.default_attributes
 
       if current_user
-        info[:current_user] = current_user.as_json_type9
+        info[:current_user] = current_user.as_json_type9x
 
         if true
           # すでにログインしている人は x-cable で unauthorized になる
