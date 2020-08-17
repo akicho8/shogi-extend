@@ -60,7 +60,7 @@ module BackendScript
             "COUNT(*) AS count_all",                                                        # 履歴数
             "COUNT(ox_mark_id = #{Actb::OxMark.fetch(:correct).id} or NULL) AS correct_count", # o
             "COUNT(ox_mark_id = #{Actb::OxMark.fetch(:mistake).id} or NULL) AS mistake_count", # x
-            "COUNT(ox_mark_id = #{Actb::OxMark.fetch(:timeout).id} or NULL) AS timeout_count", # x
+            "COUNT(ox_mark_id = #{Actb::OxMark.fetch(:timeout).id} or NULL) AS timeout_count", # -
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
         history_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
