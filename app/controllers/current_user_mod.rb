@@ -40,6 +40,7 @@ module CurrentUserMod
   # cookies.signed[:user_id] は ActionCable の読み出し用なのでここに入れない方がいいかもしれない
   let :current_user do
     id = nil
+    user = nil
 
     if Rails.env.development? || Rails.env.test?
       id ||= params[:_user_id]
@@ -47,31 +48,29 @@ module CurrentUserMod
 
     id ||= session[:user_id]
     id ||= cookies.signed[:user_id]
-
     if id
-      user = nil
       user ||= User.find_by(id: id)
-      user ||= current_xuser    # from devise
+    end
+    user ||= current_xuser    # from devise
 
+    if user
       if request.format.html? && request.get?
-        if user
-          # rails r "p User.first.cache_key"
-          Rails.cache.fetch("#{user.cache_key}/update_tracked_fields!", expires_in: 1.hour) do
-            user.user_agent = request.user_agent.to_s
-            user.update_tracked_fields!(request)
-            true
-          end
+        # rails r "p User.first.cache_key"
+        Rails.cache.fetch("#{user.cache_key}/update_tracked_fields!", expires_in: 1.hour) do
+          user.user_agent = request.user_agent.to_s
+          user.update_tracked_fields!(request)
+          true
         end
       end
-
-      unless user
-        # ユーザー削除後にそのユーザーと同じでIDでユーザーを作ったとき、
-        # セッションに残っているユーザーIDで新しく作ったユーザーにすりかわることができるのを防ぐ
-        current_user_clear
-      end
-
-      user
     end
+
+    unless user
+      # ユーザー削除後にそのユーザーと同じでIDでユーザーを作ったとき、
+      # セッションに残っているユーザーIDで新しく作ったユーザーにすりかわることができるのを防ぐ
+      current_user_clear
+    end
+
+    user
   end
 
   def current_user_set(user)
