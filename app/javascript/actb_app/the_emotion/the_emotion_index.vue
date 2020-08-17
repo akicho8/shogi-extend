@@ -3,9 +3,11 @@
   .primary_header
     .header_center_title エモーション一覧
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.new_handle")
-    b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
+    b-dropdown.header_item.with_icon.ljust.px-3(@active-change="sound_play('click')")
       b-icon(slot="trigger" icon="menu")
-      b-dropdown-item.px-4(@click.native.stop="reset_handle") リセット
+      b-dropdown-item.px-4(@click.native.stop="reset_handle" v-if="development_p") リセット (全削除してプリセットインポート)
+      b-dropdown-item.px-4(@click.native.stop="destroy_all_handle") 全削除
+      b-dropdown-item.px-4(@click.native.stop="import_handle") プリセットインポート
 
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="$parent.current_tabpos" expanded @change="tab_change_hook")
@@ -85,22 +87,39 @@ export default {
     },
     // 初期値に戻す
     reset_handle() {
-      this.$buefy.dialog.confirm({
-        title: "リセット",
-        message: `初期値に戻します。既存のエモーションはいったんすべて消えますが、本当によろしいですか？`,
-        confirmText: "リセットする",
-        // canCancel: ["outside", "escape"],
-        cancelText: "キャンセル",
-        type: "is-danger",
-        hasIcon: true,
-        trapFocus: true,
-        onConfirm: () => {
-          this.api_put("emotions_reset_handle", {}, e => {
-            this.$set(this.app.current_user, "emotions", e.emotions)
-            this.sound_play("click")
-          })
-        },
-        onCancel:  () => { this.ok_notice("キャンセルしました") },
+      this.api_put("emotions_reset_handle", {}, e => {
+        this.$set(this.app.current_user, "emotions", e.emotions)
+        this.sound_play("click")
+      })
+
+      // this.$buefy.dialog.confirm({
+      //   title: "リセット",
+      //   message: `初期値に戻します。既存のエモーションはいったんすべて消えますが、本当によろしいですか？`,
+      //   confirmText: "リセットする",
+      //   // canCancel: ["outside", "escape"],
+      //   cancelText: "キャンセル",
+      //   type: "is-danger",
+      //   hasIcon: true,
+      //   trapFocus: true,
+      //   onConfirm: () => {
+      //     this.api_put("emotions_reset_handle", {}, e => {
+      //       this.$set(this.app.current_user, "emotions", e.emotions)
+      //       this.sound_play("click")
+      //     })
+      //   },
+      //   onCancel:  () => { this.ok_notice("キャンセルしました") },
+      // })
+    },
+    destroy_all_handle() {
+      this.api_put("emotions_destroy_all_handle", {}, e => {
+        this.$set(this.app.current_user, "emotions", e.emotions)
+        this.sound_play("click")
+      })
+    },
+    import_handle() {
+      this.api_put("emotions_import_handle", {}, e => {
+        this.$set(this.app.current_user, "emotions", e.emotions)
+        this.sound_play("click")
       })
     },
 

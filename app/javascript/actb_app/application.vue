@@ -159,10 +159,10 @@ export default {
     }
 
     this.api_get("resource_fetch", {}, e => {
-      this.RuleInfo            = RuleInfo.memory_record_reset(e.RuleInfo)
-      this.OxMarkInfo          = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
-      this.SkillInfo           = SkillInfo.memory_record_reset(e.SkillInfo)
-      this.EmotionInfo         = EmotionInfo.memory_record_reset(e.EmotionInfo)
+      this.RuleInfo          = RuleInfo.memory_record_reset(e.RuleInfo)
+      this.OxMarkInfo        = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
+      this.SkillInfo         = SkillInfo.memory_record_reset(e.SkillInfo)
+      this.EmotionInfo       = EmotionInfo.memory_record_reset(e.EmotionInfo)
       this.EmotionFolderInfo = EmotionFolderInfo.memory_record_reset(e.EmotionFolderInfo)
       this.app_setup()
     })

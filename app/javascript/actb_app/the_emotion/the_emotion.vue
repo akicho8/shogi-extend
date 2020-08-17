@@ -36,6 +36,9 @@ export default {
     this.tab_select(key)
 
     this.current_component = "the_emotion_index"
+    if (this.app.current_user.emotions.length === 0) {
+      this.ok_notice("既存のエモーションを編集するには左上のメニューからインポートしてください")
+    }
 
     if (this.app.info.warp_to) {
       if (this.app.info.warp_to === "emotion_index") {

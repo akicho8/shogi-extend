@@ -157,5 +157,12 @@ export const application_room = {
     versus_mode_p() {
       return this.current_strategy_key === 'sy_versus'
     },
+    emotion_folder_key() {
+      if (this.question_mode_p) {
+        return "question"
+      } else {
+        return "versus"
+      }
+    },
   },
 }

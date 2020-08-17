@@ -114,8 +114,6 @@ module Actb
       # rails r "tp User.first.as_json_type9"
       # rails r "tp Actb::EmotionInfo.as_json"
       def as_json_type9
-        # emotions_setup
-
         as_json({
             only: [
               :id,
