@@ -19,6 +19,6 @@
 
 module Actb
   class GoodMark < ApplicationRecord
-    include VoteMod
+    include UserQuestionRef
   end
 end

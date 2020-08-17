@@ -12,12 +12,14 @@
 # | created_at  | 作成日時 | datetime   | NOT NULL    |              |       |
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |              |       |
 # | ox_mark_id  | Ox mark  | integer(8) | NOT NULL    |              | C     |
+# | room_id     | Room     | integer(8) |             |              | D     |
 # |-------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_many :actb_room_messages
 #--------------------------------------------------------------------------------
 
+# rails r "p Actb::History.first.user"
 module Actb
   class History < ApplicationRecord
     include ClipMark::ShareWithHistoryMethods # belongs_to user and question
@@ -31,8 +33,12 @@ module Actb
       end
     end
 
-    scope :today_only, -> { where(created_at: Time.current.midnight...Time.current.midnight.tomorrow) }
-    scope :ox_mark_eq, -> ox_mark_key { where(ox_mark: OxMark.fetch(ox_mark_key)) }
+    scope :with_today, -> t = Time.current.midnight { where(created_at: t.midnight...t.midnight.tomorrow) }
+    scope :with_ox_mark, -> key { where(ox_mark: OxMark.fetch(key)) }
+    scope :with_o, -> { with_ox_mark(:correct) }
+    scope :without_o, -> { where.not(ox_mark: OxMark.fetch(:correct)) }
+
+    belongs_to :room, optional: true # 管理画面KPI用
 
     belongs_to :ox_mark
 

@@ -36,7 +36,7 @@ module Actb
     # users たちが解いた直近の問題の中のN件の問題
     def history_latest_questions
       s = Actb::History.all
-      s = s.ox_mark_eq(:correct)
+      s = s.with_o
       if v = params[:users]
         s = s.where(user: v)
       end

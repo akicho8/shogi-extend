@@ -248,27 +248,27 @@ module Actb
       end
 
       def total_o_count
-        actb_histories.ox_mark_eq(:correct).count
+        actb_histories.with_o.count
       end
 
       def total_x_count
-        actb_histories.ox_mark_eq(:mistake).count
+        actb_histories.with_ox_mark(:mistake).count
       end
 
       def today_total_o_count
-        actb_histories.today_only.ox_mark_eq(:correct).count
+        actb_histories.with_today.with_o.count
       end
 
       def today_total_x_count
-        actb_histories.today_only.ox_mark_eq(:mistake).count
+        actb_histories.with_today.with_ox_mark(:mistake).count
       end
 
       def today_total_o_ucount
-        actb_histories.today_only.ox_mark_eq(:correct).distinct.count(:question_id)
+        actb_histories.with_today.with_o.distinct.count(:question_id)
       end
 
       def today_total_x_ucount
-        actb_histories.today_only.ox_mark_eq(:mistake).distinct.count(:question_id)
+        actb_histories.with_today.with_ox_mark(:mistake).distinct.count(:question_id)
       end
 
       def ua

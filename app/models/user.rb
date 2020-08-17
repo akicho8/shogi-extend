@@ -140,6 +140,7 @@ class User < ApplicationRecord
 
   concerning :SysopMethods do
     class_methods do
+      # rails r "tp User.sysop"
       def sysop
         staff_user_factory(key: "sysop", name: "運営", email: AppConfig[:admin_email])
       end
@@ -154,8 +155,10 @@ class User < ApplicationRecord
           return user
         end
         user = create!(attributes.merge(password: Rails.application.credentials.sysop_password))
+
         user.permit_tag_list = "staff"
         user.save!
+
         user
       end
     end

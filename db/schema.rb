@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_112114) do
+ActiveRecord::Schema.define(version: 2020_08_17_115320) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -114,8 +114,10 @@ ActiveRecord::Schema.define(version: 2020_07_25_112114) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "ox_mark_id", null: false, comment: "解答"
+    t.bigint "room_id", comment: "対戦部屋"
     t.index ["ox_mark_id"], name: "index_actb_histories_on_ox_mark_id"
     t.index ["question_id"], name: "index_actb_histories_on_question_id"
+    t.index ["room_id"], name: "index_actb_histories_on_room_id"
     t.index ["user_id"], name: "index_actb_histories_on_user_id"
   end
 
@@ -727,6 +729,7 @@ ActiveRecord::Schema.define(version: 2020_07_25_112114) do
   add_foreign_key "actb_good_marks", "users"
   add_foreign_key "actb_histories", "actb_ox_marks", column: "ox_mark_id"
   add_foreign_key "actb_histories", "actb_questions", column: "question_id"
+  add_foreign_key "actb_histories", "actb_rooms", column: "room_id"
   add_foreign_key "actb_histories", "users"
   add_foreign_key "actb_lobby_messages", "users"
   add_foreign_key "actb_main_xrecords", "actb_finals", column: "final_id"

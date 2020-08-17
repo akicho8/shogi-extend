@@ -40,12 +40,17 @@ module Actb
     end
 
     has_many :battles, dependent: :destroy
-    has_many :histories, dependent: :destroy
     has_many :messages, class_name: "RoomMessage", dependent: :destroy
     has_many :memberships, -> { order(:position) }, class_name: "RoomMembership", dependent: :destroy, inverse_of: :room
     has_many :users, through: :memberships
     belongs_to :rule
     belongs_to :bot_user, class_name: "User", optional: true
+
+    has_many :histories, dependent: :destroy do
+      def without_bot
+        where.not(user: proxy_association.owner.bot_user)
+      end
+    end
 
     before_validation do
       self.begin_at ||= Time.current

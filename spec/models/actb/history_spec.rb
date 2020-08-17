@@ -12,6 +12,7 @@
 # | created_at  | 作成日時 | datetime   | NOT NULL    |              |       |
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |              |       |
 # | ox_mark_id  | Ox mark  | integer(8) | NOT NULL    |              | C     |
+# | room_id     | Room     | integer(8) |             |              | D     |
 # |-------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

@@ -21,7 +21,7 @@ module Actb
   class ClipMark < ApplicationRecord
     concerning :ShareWithHistoryMethods do
       included do
-        include VoteMod
+        include UserQuestionRef
       end
 
       def good_p
