@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_builder_haiti.mt-4
+.the_builder_edit_haiti.mt-4
   shogi_player(
     :run_mode="'edit_mode'"
     :kifu_body="new_kifu_body"
@@ -45,7 +45,7 @@ import any_source_read_modal from "../components/any_source_read_modal.vue"
 import haiti_kimeru_modal from "../components/haiti_kimeru_modal.vue"
 
 export default {
-  name: "the_builder_haiti",
+  name: "the_builder_edit_haiti",
   mixins: [
     support,
   ],
@@ -153,7 +153,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_builder_haiti
+.the_builder_edit_haiti
   .footer_buttons
     .button
       margin-bottom: 0

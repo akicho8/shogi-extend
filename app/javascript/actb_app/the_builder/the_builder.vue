@@ -34,10 +34,10 @@
               b-tag(rounded v-if="valid_count >= 1" type="is-primary") OK
 
     ////////////////////////////////////////////////////////////////////////////////
-    the_builder_haiti(  v-if="current_tab_info.key === 'haiti_mode'")
-    the_builder_seikai( v-if="current_tab_info.key === 'seikai_mode'" ref="the_builder_seikai")
-    the_builder_form(   v-if="current_tab_info.key === 'form_mode'")
-    the_builder_kensho( v-if="current_tab_info.key === 'kensho_mode'")
+    the_builder_edit_haiti(  v-if="current_tab_info.key === 'haiti_mode'")
+    the_builder_edit_seikai( v-if="current_tab_info.key === 'seikai_mode'" ref="the_builder_edit_seikai")
+    the_builder_edit_form(   v-if="current_tab_info.key === 'form_mode'")
+    the_builder_edit_kensho( v-if="current_tab_info.key === 'kensho_mode'")
 
   debug_print(v-if="app.debug_read_p")
 </template>
@@ -48,10 +48,10 @@ import dayjs from "dayjs"
 
 import { support } from "../support.js"
 import the_builder_index  from "./the_builder_index.vue"
-import the_builder_haiti  from "./the_builder_haiti.vue"
-import the_builder_seikai from "./the_builder_seikai.vue"
-import the_builder_form   from "./the_builder_form.vue"
-import the_builder_kensho from "./the_builder_kensho.vue"
+import the_builder_edit_haiti  from "./the_builder_edit_haiti.vue"
+import the_builder_edit_seikai from "./the_builder_edit_seikai.vue"
+import the_builder_edit_form   from "./the_builder_edit_form.vue"
+import the_builder_edit_kensho from "./the_builder_edit_kensho.vue"
 
 import { Question    } from "../models/question.js"
 import { LineageInfo } from '../models/lineage_info.js'
@@ -79,10 +79,10 @@ export default {
   ],
   components: {
     the_builder_index,
-    the_builder_haiti,
-    the_builder_seikai,
-    the_builder_form,
-    the_builder_kensho,
+    the_builder_edit_haiti,
+    the_builder_edit_seikai,
+    the_builder_edit_form,
+    the_builder_edit_kensho,
   },
   data() {
     return {
@@ -211,7 +211,7 @@ export default {
     },
 
     current_moves() {
-      return this.$refs.the_builder_seikai.$refs.play_sp.moves_take_turn_offset
+      return this.$refs.the_builder_edit_seikai.$refs.play_sp.moves_take_turn_offset
     },
 
     // 「この手順を正解とする」

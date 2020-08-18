@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_builder_kensho
+.the_builder_edit_kensho
   .has-text-centered(v-if="$parent.question.direction_message")
     | {{$parent.question.direction_message}}
 
@@ -23,7 +23,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_builder_kensho",
+  name: "the_builder_edit_kensho",
   mixins: [
     support,
   ],
@@ -34,6 +34,6 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_builder_kensho
+.the_builder_edit_kensho
   margin-top: 1.5rem
 </style>

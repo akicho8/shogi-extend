@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_builder_form
+.the_builder_edit_form
   b-field(label="タイトル" label-position="on-border")
     b-input(v-model.trim="$parent.question.title" required)
 
@@ -65,7 +65,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "the_builder_form",
+  name: "the_builder_edit_form",
   mixins: [
     support,
   ],
@@ -119,7 +119,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_builder_form
+.the_builder_edit_form
   margin: 2.4rem 1.0rem $margin_bottom
   .field:not(:first-child)
     margin-top: 2.2rem
