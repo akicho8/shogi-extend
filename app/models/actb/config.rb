@@ -10,6 +10,7 @@ module Actb
     :rating_display_p                => true, # 内部レーティングを表示する？
     :action_cable_debug              => true, # ActionCable関連デバッグモード
     :user_name_required              => true, # 「名無し」であれば名前を入力してもらう
+    :emotion_editable_p              => true, # エモーション編集機能有効化
 
     # -------------------------------------------------------------------------------- マッチング
     :matching_gap_base               => 7,  # ○**カウンター
@@ -78,6 +79,7 @@ module Actb
         :singleton_giveup_effective_seconds           => 3,        # 「あきらめる」がでるまでの秒数(シングルトン)
         :marathon_giveup_effective_seconds            => 15,       # 「あきらめる」がでるまでの秒数(マラソン)
         :sp_theme                        => "real",   # 将棋盤のタイプ
+        :emotion_editable_p              => false,    # エモーション編集機能有効化
         :lobby_clock_restrict_p                => true,     # ルールの開催期間制限
         :lobby_clock_restrict_ranges              => [
           # { :beg => "12:45", :end => "13:00" },
