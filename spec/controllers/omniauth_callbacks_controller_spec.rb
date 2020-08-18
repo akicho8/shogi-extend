@@ -92,6 +92,51 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
       assert { ActionMailer::Base.deliveries.last.subject == "[SHOGI-EXTEND][test] aliceさんがtwitterで登録されました" }
     end
   end
+
+  describe "GitHub" do
+    before do
+      request.env["devise.mapping"] = Devise.mappings[:xuser]
+      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
+          "provider" => 'github',
+          "uid"      => '(uid)',
+          "info"     => {
+            "nickname" => "(nickname_is_github_account)",
+            "email"    => "alice@localhost",
+            "name"     => "alice",
+            "image"    => "https://www.shogi-extend.com/foo.png",
+          },
+        })
+      request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github]
+      get :github
+    end
+
+    let(:record) { User.first }
+
+    it "名前がある" do
+      assert { record.name == "alice" }
+    end
+
+    it "プロフィール画像を登録している" do
+      assert { record.avatar }
+    end
+
+    it "メールアドレスがある" do
+      assert { record.email == "alice@localhost" }
+    end
+
+    it "ツイッターアカウント" do
+      assert { record.twitter_key.blank? }
+    end
+
+    it "どっかにリダイレクトする" do
+      expect(response).to have_http_status(:redirect)
+    end
+
+    it "メール" do
+      assert { ActionMailer::Base.deliveries.count == 1 }
+      assert { ActionMailer::Base.deliveries.last.subject == "[SHOGI-EXTEND][test] aliceさんがgithubで登録されました" }
+    end
+  end
 end
 
 # require 'rails_helper'
