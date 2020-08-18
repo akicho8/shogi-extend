@@ -42,7 +42,7 @@ import the_result        from "./the_result.vue"
 import the_builder       from "./the_builder/the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
 import the_history       from "./the_history/the_history.vue"
-import the_menu          from "./the_menu.vue"
+import the_menu          from "./the_menu/the_menu.vue"
 
 // Mixins
 import { application_room          } from "./application_room.js"
