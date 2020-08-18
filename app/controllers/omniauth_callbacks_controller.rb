@@ -8,6 +8,8 @@
 require "open-uri" # for URI#open
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_before_action :admin_login_required
+
   def google
     auth_shared_process
   end
