@@ -484,6 +484,7 @@ export default {
           this.menu_to("the_menu_root")
         }
       } else {
+        this.lobby_unsubscribe()
         this.mode = "menu"
       }
     },

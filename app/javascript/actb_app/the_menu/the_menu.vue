@@ -28,7 +28,6 @@ export default {
     the_footer,
   },
   created() {
-    this.app.lobby_unsubscribe()
     this.app.menu_to("the_menu_root")
   },
 }
