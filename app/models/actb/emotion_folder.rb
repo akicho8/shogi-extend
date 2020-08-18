@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Lineage (actb_lineages as Actb::Lineage)
+# Emotion folder (actb_emotion_folders as Actb::EmotionFolder)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
 # | name       | desc               | type        | opts        | refs | index |

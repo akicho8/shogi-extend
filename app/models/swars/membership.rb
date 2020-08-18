@@ -26,7 +26,7 @@
 #
 #- Remarks ----------------------------------------------------------------------
 # Swars::User.has_many :op_memberships, foreign_key: :op_user_id
-# User.has_many :actb_room_messages
+# User.has_one :profile
 #--------------------------------------------------------------------------------
 
 module Swars

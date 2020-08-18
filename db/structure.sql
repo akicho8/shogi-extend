@@ -119,6 +119,40 @@ CREATE TABLE `actb_clip_marks` (
   CONSTRAINT `fk_rails_e37a260859` FOREIGN KEY (`question_id`) REFERENCES `actb_questions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `actb_emotion_folders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `actb_emotion_folders` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_actb_emotion_folders_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `actb_emotions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `actb_emotions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '所有者',
+  `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
+  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'トリガー名',
+  `message` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '表示用伝言',
+  `voice` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '発声用文言',
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_actb_emotions_on_user_id` (`user_id`),
+  KEY `index_actb_emotions_on_folder_id` (`folder_id`),
+  KEY `index_actb_emotions_on_position` (`position`),
+  CONSTRAINT `fk_rails_05e576eb2e` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_4abdd94cdf` FOREIGN KEY (`folder_id`) REFERENCES `actb_emotion_folders` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actb_finals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1119,6 +1153,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200725112111'),
 ('20200725112112'),
 ('20200725112114'),
+('20200725112115'),
 ('20200817115320');
 
 

@@ -1,3 +1,27 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# エモーション (actb_emotions as Actb::Emotion)
+#
+# |------------+----------+-------------+-------------+---------------------------+-------|
+# | name       | desc     | type        | opts        | refs                      | index |
+# |------------+----------+-------------+-------------+---------------------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |                           |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id              | A     |
+# | folder_id  | Folder   | integer(8)  | NOT NULL    | => Actb::EmotionFolder#id | B     |
+# | name       | 鍵       | string(255) | NOT NULL    |                           |       |
+# | message    | 伝       | string(255) | NOT NULL    |                           |       |
+# | voice      | 声       | string(255) | NOT NULL    |                           |       |
+# | position   | 順序     | integer(4)  | NOT NULL    |                           | C     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |                           |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |                           |       |
+# |------------+----------+-------------+-------------+---------------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+# 【警告:リレーション欠如】Actb::EmotionFolderモデルで has_many :actb/emotions されていません
+#--------------------------------------------------------------------------------
+
 # -*- compile-command: "rails r 'Actb::EmotionFolder.setup; User.first.emotions_setup(reset: true);'" -*-
 
 module Actb
