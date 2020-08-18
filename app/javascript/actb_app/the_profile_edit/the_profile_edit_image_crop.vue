@@ -2,13 +2,13 @@
 .the_profile_edit_image_crop
   .primary_header
     .header_lr_text_button(@click="cancel_handle") キャンセル
-    .header_lr_text_button.has-text-weight-bold(@click="tekiyou_handle") 適用
+    .header_lr_text_button.has-text-weight-bold(@click="clop_handle") 適用
 
   .canvas_container.is-flex
     canvas(ref="my_canvas" :width="canvas_size" :height="canvas_size")
 
   .footer_nav.is-flex
-    .header_lr_text_button(@click="rorate_handle")
+    .header_lr_text_button(@click="rotate_handle")
       b-icon(icon="format-rotate-90 mdi-flip-h")
 </template>
 
@@ -21,7 +21,7 @@ const CIRCLE_OUTER_WIDTH = IMAGE_SIZE              // canvas内の円の太さ(�
 const CIRCLE_INNER_WIDTH = 2                       // canvas内の円の太さ(内)
 const ROTATE_ONE         = 360 / 4                 // 一度で回転する角度
 
-import PaletteInfo from "../../../app/javascript/palette_info.js"
+import PaletteInfo from "../../../../app/javascript/palette_info.js"
 
 // 動かすレイヤー調整
 // http://fabricjs.com/docs/fabric.Object.html#borderScaleFactor
@@ -31,14 +31,14 @@ const CONTROLLER_PARAMS = {
 
   borderScaleFactor: 3,      // 線の太さ
   cornerSize: 12,            // 角の四角の大きさ
-  cornerStyle: 'circle',     // 角の形状
+  cornerStyle: "circle",     // 角の形状
   transparentCorners: false, // 角を塗り潰す
   rotatingPointOffset: 32,   // 回転棒の長さ
   padding: 12,               // 矢印にボーダーが重なるので若干離す
 }
 
-import { support } from "./support.js"
-import { fabric } from "fabric"
+import { support } from "../support.js"
+import { fabric }  from "fabric"
 
 export default {
   name: "the_profile_edit_image_crop",
@@ -48,9 +48,9 @@ export default {
 
   data() {
     return {
-      fcanvas: null,             // fabric.Canvas インスタンス
+      fcanvas:      null, // fabric.Canvas インスタンス
       uploaded_src: null,
-      image_obj: null,
+      image_obj:    null,
     }
   },
 
@@ -58,7 +58,6 @@ export default {
     if (this.app.info.warp_to === "profile_edit_image_crop") {
       this.uploaded_src = "/foo.png"
     }
-
     this.html_background_color_set("black")
   },
 
@@ -80,7 +79,7 @@ export default {
   methods: {
     cancel_handle() {
       this.sound_play("click")
-      this.$parent.p_mode = "the_profile_edit_form"
+      this.$parent.current_component = "the_profile_edit_form"
     },
 
     canvas_setup() {
@@ -130,7 +129,8 @@ export default {
       })
     },
 
-    tekiyou_handle() {
+    // 切り抜く
+    clop_handle() {
       this.sound_play("click")
 
       // http://fabricjs.com/docs/fabric.Canvas.html#toDataURL
@@ -146,18 +146,19 @@ export default {
       // が、どうせ戻るので意味ない
       this.fcanvas.renderAll()
 
-      this.$parent.p_mode = "the_profile_edit_form"
+      this.$parent.current_component = "the_profile_edit_form"
     },
 
-    rorate_handle() {
+    // 少しずつ回転
+    rotate_handle() {
       this.sound_play("click")
       // http://fabricjs.com/docs/fabric.Object.html#rotate
-      this.image_obj.rotate(this.rorate_next())
+      this.image_obj.rotate(this.rotate_next())
       this.fcanvas.renderAll()
     },
 
     // 次の角度
-    rorate_next() {
+    rotate_next() {
       return Math.trunc((this.image_obj.angle + ROTATE_ONE) / ROTATE_ONE) * ROTATE_ONE
     },
 
@@ -165,10 +166,10 @@ export default {
     // そもそも自分で解放する必要はないのかもしれない
     fabric_free() {
       // http://fabricjs.com/docs/fabric.Canvas.html#getObjects
-      this.__assert__(this.fcanvas.getObjects().length >= 1)
+      this.__assert__(this.fcanvas.getObjects().length >= 1, "this.fcanvas.getObjects().length >= 1")
       // http://fabricjs.com/docs/fabric.StaticCanvas.html#dispose
       this.fcanvas.dispose()
-      this.__assert__(this.fcanvas.getObjects().length === 0)
+      this.__assert__(this.fcanvas.getObjects().length === 0, "this.fcanvas.getObjects().length === 0")
     },
   },
   computed: {
@@ -180,7 +181,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_profile_edit_image_crop
   @extend %padding_top_for_primary_header
   .primary_header

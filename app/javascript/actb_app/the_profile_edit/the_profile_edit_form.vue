@@ -2,16 +2,16 @@
 .the_profile_edit_form
   .primary_header
     .header_item.with_text.ljust(@click="cancel_handle") キャンセル
-    .header_item.with_text.rjust.has-text-weight-bold(@click="profile_update_handle" :class="{disabled: !$parent.changed_p}") 保存
+    .header_item.with_text.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !$parent.changed_p}") 保存
     .header_center_title プロフィール編集
 
-  .image_container.is-flex
+  .image_container.is-flex.mt-6
     b-field
-      b-upload(@input="user_icon_upload_handle" @click.native="sound_play('click')")
+      b-upload(@input="avatar_upload_handle" @click.native="sound_play('click')")
         figure.image.is_clickable.avatar_path
           img.is-rounded(:src="image_source")
 
-  .form_container
+  .form_container.mt-4
     #user_name_input_field.user_name.has-text-centered.has-text-weight-bold.is_clickable(@click="name_edit_handle")
       | {{$parent.new_name}}
 
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 
 export default {
   name: "the_profile_edit",
@@ -31,17 +31,20 @@ export default {
     support,
   ],
   methods: {
+    // キャンセル
     cancel_handle() {
       this.sound_play("click")
       this.app.lobby_setup()
     },
 
-    user_icon_upload_handle(v) {
+    // アバター画像アップロード(と同時に切り抜きモードに移動)
+    avatar_upload_handle(v) {
       this.sound_play('click')
       this.$parent.upload_file_info = v
-      this.$parent.p_mode = "the_profile_edit_image_crop"
+      this.$parent.current_component = "the_profile_edit_image_crop"
     },
 
+    // 名前編集
     name_edit_handle() {
       this.sound_play("click")
 
@@ -58,7 +61,8 @@ export default {
       })
     },
 
-    profile_update_handle() {
+    // 保存
+    save_handle() {
       this.sound_play("click")
 
       const params = {
@@ -68,7 +72,7 @@ export default {
         croped_image:        this.$parent.croped_image,
       }
 
-      this.api_put("profile_update", params, e => {
+      this.api_put("user_profile_update", params, e => {
         if (e.error_message) {
           this.warning_notice(e.error_message)
         }
@@ -91,6 +95,7 @@ export default {
       return this.$parent.croped_image || this.app.current_user.avatar_path
     },
 
+    // 名前編集の初期値
     // ちゃんとした名前の入っていない人の初期値は空にする
     default_name() {
       if (this.app.current_user.name_input_at) {
@@ -104,12 +109,11 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_profile_edit_form
   @extend %padding_top_for_primary_header
 
   .image_container
-    margin-top: 4rem
     justify-content: center
     .image
       img
@@ -117,12 +121,7 @@ export default {
         height: 80px
 
   .form_container
-    margin-top: 1rem
     justify-content: center
     .field
       margin: 1.5rem 0.5rem
-
-  .button_container
-    margin-top: 4rem
-
 </style>

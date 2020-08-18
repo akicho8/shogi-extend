@@ -174,8 +174,8 @@ module FrontendScript
         { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
       end
 
-      # curl -d _method=put -d user_name=a -d remote_action=profile_update -d _user_id=1 http://localhost:3000/script/actb-app
-      def profile_update
+      # curl -d _method=put -d user_name=a -d remote_action=user_profile_update -d _user_id=1 http://localhost:3000/script/actb-app
+      def user_profile_update
         user = current_user
 
         if v = params[:croped_image]

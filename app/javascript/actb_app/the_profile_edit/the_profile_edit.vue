@@ -1,12 +1,11 @@
 <template lang="pug">
 .the_profile_edit
-  component(:is="p_mode")
+  component(:is="current_component")
   debug_print(v-if="app.debug_read_p" :grep_v="/canvas/")
 </template>
 
 <script>
-import { support } from "./support.js"
-
+import { support }                 from "../support.js"
 import the_profile_edit_form       from "./the_profile_edit_form.vue"
 import the_profile_edit_image_crop from "./the_profile_edit_image_crop.vue"
 
@@ -22,9 +21,9 @@ export default {
   data() {
     return {
       // meta
-      unwatch_func:     null,
-      changed_p:        null,   // フォームの内容を変更した？(trueで保存ボタンが有効になる)
-      p_mode:           null,   // コンポーネント切り替え用
+      unwatch_func:      null,
+      changed_p:         null,   // フォームの内容を変更した？(trueで保存ボタンが有効になる)
+      current_component: null,   // コンポーネント切り替え用
 
       // form
       upload_file_info: null,   // inputタグでアップロードしたそのもの
@@ -39,7 +38,7 @@ export default {
     this.var_reset()
 
     if (this.app.info.warp_to === "profile_edit_image_crop") {
-      this.p_mode = "the_profile_edit_image_crop"
+      this.current_component = "the_profile_edit_image_crop"
     }
   },
 
@@ -53,9 +52,9 @@ export default {
         this.unwatch_func()
       }
 
-      this.p_mode          = "the_profile_edit_form"
-      this.changed_p       = false
-      this.croped_image    = null
+      this.current_component = "the_profile_edit_form"
+      this.changed_p         = false
+      this.croped_image      = null
 
       this.new_name        = this.app.current_user.name
       this.new_description = this.app.current_user.description
@@ -74,6 +73,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_profile_edit
 </style>

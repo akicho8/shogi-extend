@@ -11,7 +11,7 @@ RSpec.describe ScriptsController, type: :controller do
     describe "プロフィールの更新" do
       it "名前を入力してもらう" do
         @current_user.update!(name_input_at: nil)
-        put :update, params: { id: "actb-app", remote_action: "profile_update", name: "(user_name1)" }
+        put :update, params: { id: "actb-app", remote_action: "user_profile_update", name: "(user_name1)" }
         expect(response).to have_http_status(:ok)
         @current_user.reload
         assert { @current_user.name_input_at }
@@ -19,7 +19,7 @@ RSpec.describe ScriptsController, type: :controller do
       it do
         @current_user.update!(name_input_at: nil)
 
-        put :update, params: { id: "actb-app", remote_action: "profile_update", name: "(user_name1)", profile_description: "a" * (512 + 1) }
+        put :update, params: { id: "actb-app", remote_action: "user_profile_update", name: "(user_name1)", profile_description: "a" * (512 + 1) }
         expect(response).to have_http_status(:ok)
         retv = JSON.parse(response.body)
         assert { retv["error_message"] }
