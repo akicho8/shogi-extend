@@ -19,4 +19,8 @@ module UserChoreMod
       end
     end
   end
+
+  def show_path
+    Rails.application.routes.url_helpers.url_for([self, only_path: true])
+  end
 end

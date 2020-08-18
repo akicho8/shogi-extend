@@ -1,6 +1,27 @@
 module UserCoreMod
   extend ActiveSupport::Concern
 
+  class_methods do
+    def setup(options = {})
+      super
+
+      sysop
+      bot
+
+      CpuBrainInfo.each do |e|
+        unless find_by(key: e.key)
+          create! do |o|
+            o.key           = e.key
+            o.race_key      = :robot
+            o.cpu_brain_key = e.key
+            o.name          = "CPU#{robot_only.count.next}号"
+            o.email         = "shogi.extend+cpu-#{e.key}@gmail.com"
+          end
+        end
+      end
+    end
+  end
+
   included do
     scope :random_order, -> { order(Arel.sql("rand()")) }
 
@@ -28,30 +49,5 @@ module UserCoreMod
         SlackAgent.message_send(key: "ユーザー登録", body: attributes.slice("id", "name"))
       end
     end
-  end
-
-  class_methods do
-    def setup(options = {})
-      super
-
-      sysop
-      bot
-
-      CpuBrainInfo.each do |e|
-        unless find_by(key: e.key)
-          create! do |o|
-            o.key           = e.key
-            o.race_key      = :robot
-            o.cpu_brain_key = e.key
-            o.name          = "CPU#{robot_only.count.next}号"
-            o.email         = "shogi.extend+cpu-#{e.key}@gmail.com"
-          end
-        end
-      end
-    end
-  end
-
-  def show_path
-    Rails.application.routes.url_helpers.url_for([self, only_path: true])
   end
 end
