@@ -78,7 +78,7 @@ module Actb
         :singleton_giveup_effective_seconds           => 3,        # 「あきらめる」がでるまでの秒数(シングルトン)
         :marathon_giveup_effective_seconds            => 15,       # 「あきらめる」がでるまでの秒数(マラソン)
         :sp_theme                        => "real",   # 将棋盤のタイプ
-        :lobby_clock_restrict_p                => true,     # ルールの開催期間制限
+        :lobby_clock_restrict_p          => false,    # ルールの開催期間制限
         :lobby_clock_restrict_ranges              => [
           # { :beg => "12:45", :end => "13:00" },
           { :beg => "23:00", :end => "23:15" },
