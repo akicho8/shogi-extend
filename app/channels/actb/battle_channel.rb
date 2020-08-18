@@ -1,5 +1,7 @@
 module Actb
   class BattleChannel < BaseChannel
+    include BattleChannelVersusMod
+
     def subscribed
       __event_notify__(__method__, battle_id: battle_id)
       return reject unless current_user
@@ -43,9 +45,9 @@ module Actb
     end
 
     # 最初の問題のときだけ
-    def start_hook(data)
-      # history_set_by_data(data, :mistake)
-    end
+    # def start_hook(data)
+    #   # history_set_by_data(data, :mistake)
+    # end
 
     # 「わかった」
     # 両者から呼ばれる

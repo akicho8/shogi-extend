@@ -118,7 +118,7 @@ module FrontendScript
         current_user.clip_handle(params)
       end
 
-      def save_handle
+      def question_save_handle
         if id = params[:question][:id]
           question = Actb::Question.find(id)
         else
@@ -130,6 +130,48 @@ module FrontendScript
           return { form_error_message: error.message }
         end
         { question: question.as_json(Actb::Question.json_type5) }
+      end
+
+      def emotion_save_handle
+        if id = params[:emotion][:id]
+          emotion = current_user.emotions.find(id)
+        else
+          emotion = current_user.emotions.build
+        end
+        begin
+          emotion.update_from_js(params[:emotion])
+        rescue ActiveRecord::RecordInvalid => error
+          return { form_error_message: error.message }
+        end
+        { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
+      end
+
+      def emotion_move_to_handle
+        current_user.emotions.find(params[:record_id]).public_send("move_#{params[:move_to]}")
+        { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
+      end
+
+      def emotion_insert_at_handle
+        current_user.emotions.find(params[:record_id]).insert_at(params[:insert_at])
+        { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
+      end
+
+      def emotions_reset_handle
+        current_user.emotions_setup(reset: true)
+        { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
+      end
+
+      def emotions_destroy_all_handle
+        current_user.emotions.destroy_all
+        { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
+      end
+
+      def emotions_import_handle
+        Actb::EmotionInfo.each do |e|
+          folder = Actb::EmotionFolder.fetch(e.folder_key)
+          current_user.emotions.create(folder: folder, name: e.name, message: e.message, voice: e.voice)
+        end
+        { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
       end
 
       # curl -d _method=put -d user_name=a -d remote_action=profile_update -d _user_id=1 http://localhost:3000/script/actb-app

@@ -7,6 +7,7 @@ import { application_battle_timer } from "./application_battle_timer.js"
 import { application_battle_sy_marathon  } from "./application_battle_sy_marathon.js"
 import { application_battle_sy_singleton } from "./application_battle_sy_singleton.js"
 import { application_battle_sy_hybrid    } from "./application_battle_sy_hybrid.js"
+import { application_battle_sy_versus    } from "./application_battle_sy_versus.js"
 
 export const application_battle = {
   mixins: [
@@ -15,6 +16,7 @@ export const application_battle = {
     application_battle_sy_marathon,
     application_battle_sy_singleton,
     application_battle_sy_hybrid,
+    application_battle_sy_versus,
   ],
   data() {
     return {
@@ -81,7 +83,7 @@ export const application_battle = {
 
       this.question_index = 0
 
-      if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
+      if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
         this.start_hook()
         return
       }
@@ -105,26 +107,31 @@ export const application_battle = {
     start_hook() {
       this.battle_count += 1
 
-      if (this.info.debug_scene === "result") {
+      if (this.info.warp_to === "result") {
         this.result_setup(this.info.battle)
         return
       }
 
-      this.__assert__(this.battle.best_questions.length >= 1, "対戦開始しようとしたが問題集が空")
+      if (this.question_mode_p) {
+        this.__assert__(this.battle.best_questions.length >= 1, "対戦開始しようとしたが問題集が空")
+      }
 
       this.debug_alert("battle 接続")
 
-      if (this.info.debug_scene) {
-      } else {
-        this.ac_battle_perform("start_hook", { // 自分の最初の問題の履歴を作るだけ
-          question_id: this.current_question.id,
-          question_index: this.question_index,
-        }) // --> app/channels/actb/battle_channel.rb
-      }
+      // if (this.info.warp_to) {
+      // } else {
+      //   this.ac_battle_perform("start_hook", { // 自分の最初の問題の履歴を作るだけ
+      //     question_id: this.current_question.id,
+      //     question_index: this.question_index,
+      //   }) // --> app/channels/actb/battle_channel.rb
+      // }
 
       this.ok_notice("対戦開始")
-      this.sub_mode = "sm2_readygo"
-      this.delay(this.config.readygo_delay, () => this.sm3_deden_trigger())
+
+      if (this.question_mode_p) {
+        this.sub_mode = "sm2_readygo"
+        this.delay(this.config.readygo_delay, () => this.sm3_deden_trigger())
+      }
     },
 
     sm3_deden_trigger() {
@@ -401,6 +408,7 @@ export const application_battle = {
 
     // 結果画面へ
     judge_final_set_broadcasted(params) {
+      this.debug_alert("結果画面へ")
       this.result_setup(params.battle)
     },
 
@@ -498,7 +506,7 @@ export const application_battle = {
     },
     current_question() {
       const v = this.battle.best_questions[this.question_index]
-      this.__assert__(v, `[${this.question_index}]の問題が空`)
+      // this.__assert__(v, `[${this.question_index}]の問題が空`)
       return v
     },
     next_question() {

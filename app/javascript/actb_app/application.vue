@@ -1,6 +1,7 @@
 <template lang="pug">
 .actb_app(:class="mode")
   the_profile_edit( v-if="mode === 'profile_edit'")
+  the_emotion(v-if="mode === 'emotion'")
   the_lobby(        v-if="mode === 'lobby'")
   the_rule_select(  v-if="mode === 'rule_select'")
   the_matching(     v-if="mode === 'matching'")
@@ -34,16 +35,18 @@ import the_user_show     from "./the_user_show.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_rule_select   from "./the_rule_select.vue"
 import the_profile_edit  from "./the_profile_edit.vue"
+import the_emotion       from "./the_emotion/the_emotion.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle        from "./the_battle/the_battle.vue"
 import the_result        from "./the_result.vue"
 import the_builder       from "./the_builder/the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
 import the_history       from "./the_history/the_history.vue"
-import the_menu          from "./the_menu.vue"
+import the_menu          from "./the_menu/the_menu.vue"
 
 // Mixins
 import { application_room          } from "./application_room.js"
+import { application_emotion          } from "./application_emotion.js"
 import { application_lobby_clock   } from "./application_lobby_clock.js"
 import { application_lobby_message   } from "./application_lobby_message.js"
 import { application_battle        } from "./application_battle.js"
@@ -56,6 +59,8 @@ import { config                    } from "./config.js"
 import { RuleInfo                  } from "./models/rule_info.js"
 import { OxMarkInfo                } from "./models/ox_mark_info.js"
 import { SkillInfo                 } from "./models/skill_info.js"
+import { EmotionInfo               } from "./models/emotion_info.js"
+import { EmotionFolderInfo       } from "./models/emotion_folder_info.js"
 
 export default {
   store,
@@ -68,6 +73,7 @@ export default {
     the_user_show_mod,
 
     application_room,
+    application_emotion,
     application_lobby_clock,
     application_lobby_message,
     application_battle,
@@ -84,6 +90,7 @@ export default {
     the_lobby,
     the_rule_select,
     the_profile_edit,
+    the_emotion,
     the_matching,
     the_battle,
     the_result,
@@ -114,6 +121,8 @@ export default {
       RuleInfo:   null,
       OxMarkInfo: null,
       SkillInfo:  null,
+      EmotionInfo: null,
+      EmotionFolderInfo: null,
 
       // メニュー用
       menu_component: null,
@@ -150,9 +159,11 @@ export default {
     }
 
     this.api_get("resource_fetch", {}, e => {
-      this.RuleInfo   = RuleInfo.memory_record_reset(e.RuleInfo)
-      this.OxMarkInfo = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
-      this.SkillInfo  = SkillInfo.memory_record_reset(e.SkillInfo)
+      this.RuleInfo          = RuleInfo.memory_record_reset(e.RuleInfo)
+      this.OxMarkInfo        = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
+      this.SkillInfo         = SkillInfo.memory_record_reset(e.SkillInfo)
+      this.EmotionInfo       = EmotionInfo.memory_record_reset(e.EmotionInfo)
+      this.EmotionFolderInfo = EmotionFolderInfo.memory_record_reset(e.EmotionFolderInfo)
       this.app_setup()
     })
   },
@@ -161,32 +172,35 @@ export default {
     app_setup() {
       this.school_setup()
 
-      if (this.info.debug_scene) {
-        if (this.info.debug_scene === "profile_edit" || this.info.debug_scene === "profile_edit_image_crop") {
+      if (this.info.warp_to) {
+        if (this.info.warp_to === "profile_edit" || this.info.warp_to === "profile_edit_image_crop") {
           this.profile_edit_setup()
         }
-        if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
+        if (this.info.warp_to === "emotion_index" || this.info.warp_to === "emotion_edit") {
+          this.emotion_setup()
+        }
+        if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
           this.room_setup(this.info.room)
         }
-        if (this.info.debug_scene === "result") {
+        if (this.info.warp_to === "result") {
           this.room_setup(this.info.room)
         }
-        if (this.info.debug_scene === "builder" || this.info.debug_scene === "builder_haiti" || this.info.debug_scene === "builder_form") {
+        if (this.info.warp_to === "builder" || this.info.warp_to === "builder_haiti" || this.info.warp_to === "builder_form") {
           this.builder_handle()
         }
-        if (this.info.debug_scene === "ranking") {
+        if (this.info.warp_to === "ranking") {
           this.ranking_handle()
         }
-        if (this.info.debug_scene === "history") {
+        if (this.info.warp_to === "history") {
           this.history_handle()
         }
-        if (this.info.debug_scene === "ov_question_info") {
+        if (this.info.warp_to === "ov_question_info") {
           this.ov_question_info_set(this.info.question_id)
         }
-        if (this.info.debug_scene === "ov_user_info") {
+        if (this.info.warp_to === "ov_user_info") {
           this.ov_user_info_set(this.info.current_user.id)
         }
-        if (this.info.debug_scene === "login_lobby") {
+        if (this.info.warp_to === "login_lobby") {
           this.lobby_setup()
         }
       } else {
@@ -225,6 +239,11 @@ export default {
     profile_edit_setup() {
       this.lobby_unsubscribe()
       this.mode = "profile_edit"
+    },
+
+    emotion_setup() {
+      this.lobby_unsubscribe()
+      this.mode = "emotion"
     },
 
     // 練習モードを止める
@@ -411,6 +430,14 @@ export default {
       }
     },
 
+    emotion_index_handle() {
+      if (this.mode === "emotion") {
+      } else {
+        this.sound_play("click")
+        this.emotion_setup()
+      }
+    },
+
     login_required2() {
       if (!this.current_user) {
         this.url_open(this.login_path)
@@ -457,6 +484,7 @@ export default {
           this.menu_to("the_menu_root")
         }
       } else {
+        this.lobby_unsubscribe()
         this.mode = "menu"
       }
     },

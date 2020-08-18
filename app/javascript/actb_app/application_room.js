@@ -41,7 +41,7 @@ export const application_room = {
 
       this.room_speak_init()
 
-      if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
+      if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
         this.battle_setup(this.info.battle)
         return
       }
@@ -59,12 +59,12 @@ export const application_room = {
     // app/jobs/actb/battle_broadcast_job.rb broadcast
     // ↓
     battle_broadcasted(params) {
-      if (this.info.debug_scene === "battle_sy_marathon" || this.info.debug_scene === "battle_sy_singleton" || this.info.debug_scene === "battle_sy_hybrid") {
+      if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
         this.battle_setup(this.info.battle)
         return
       }
 
-      if (this.info.debug_scene === "result") {
+      if (this.info.warp_to === "result") {
         this.battle_setup(this.info.battle)
         return
       }
@@ -124,22 +124,6 @@ export const application_room = {
       this.$ac_room.perform(action, params) // --> app/channels/actb/room_channel.rb
     },
 
-    emotion_handle(params) {
-      this.ac_room_perform("emotion_handle", params) // --> app/channels/actb/room_channel.rb
-    },
-    emotion_handle_broadcasted(params) {
-      if (params.membership_id === this.room_my_membership.id) {
-        this.debug_alert("自分")
-      } else {
-        this.debug_alert("相手")
-      }
-      if (params.plain) {
-        this.sound_play("spon")
-        this.$buefy.toast.open({message: params.plain, position: "is-top", queue: false, type: params.type, duration: 1000 * 2})
-        this.say(params.say || params.plain)
-      }
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
@@ -163,6 +147,22 @@ export const application_room = {
     // 現在の戦略(sy_marathon など)
     current_strategy_key() {
       return this.current_rule_info.strategy_key
+    },
+    question_mode_p() {
+      return false ||
+        this.current_strategy_key === 'sy_marathon'  ||
+        this.current_strategy_key === 'sy_singleton' ||
+        this.current_strategy_key === 'sy_hybrid'
+    },
+    versus_mode_p() {
+      return this.current_strategy_key === 'sy_versus'
+    },
+    emotion_folder_key() {
+      if (this.question_mode_p) {
+        return "question"
+      } else {
+        return "versus"
+      }
     },
   },
 }

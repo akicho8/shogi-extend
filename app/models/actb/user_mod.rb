@@ -82,13 +82,39 @@ module Actb
     end
 
     concerning :CurrentUserMethods do
+      attr_accessor :session_lock_token
+
       def session_lock_token_valid?(token)
         actb_setting.reload.session_lock_token == token
       end
 
+      # rails r "tp User.first.emotions_setup(reset: true)"
+      def emotions_setup(options = {})
+        if options[:reset]
+          emotions.destroy_all
+        end
+        if emotions.empty?
+          EmotionInfo.each do |e|
+            folder = EmotionFolder.fetch(e.folder_key)
+            emotions.create!(folder: folder, name: e.name, message: e.message, voice: e.voice)
+          end
+        end
+      end
+
       # for current_user, profile
+      def as_json_type9x
+        # 二つのブラウザで同期してしまう不具合回避のための値
+        # 新しく開いた瞬間にトークンが変化するので古い方には送られなくなる(受信しても無視するしかなくなる)
+        # ↑これはまずい、2連続アクセス(はてブ？などが後からGET)した場合に START できなくなる
+        @session_lock_token = SecureRandom.hex
+        as_json_type9
+      end
+
+      # rails r "tp User.first.emotions.destroy_all"
+      # rails r "tp User.first.as_json_type9"
+      # rails r "tp Actb::EmotionInfo.as_json"
       def as_json_type9
-        attrs = as_json({
+        as_json({
             only: [
               :id,
               :key,
@@ -96,6 +122,9 @@ module Actb
               :permit_tag_list,
               :name_input_at,
             ],
+            include: {
+              emotions: Actb::Emotion.json_type13,
+            },
             methods: [
               :avatar_path,
               :rating,
@@ -105,17 +134,9 @@ module Actb
               :regular_p,
               :mute_user_ids,
               :created_after_days,
+              :session_lock_token,
             ],
           })
-
-        # 二つのブラウザで同期してしまう不具合回避のための値
-        # 新しく開いた瞬間にトークンが変化するので古い方には送られなくなる(受信しても無視するしかなくなる)
-        # ↑これはまずい、2連続アクセス(はてブ？などが後からGET)した場合に START できなくなる
-        token = SecureRandom.hex
-        # actb_setting.update!(session_lock_token: token)
-        attrs[:session_lock_token] = token
-
-        attrs
       end
 
       # レギュラー条件
@@ -216,6 +237,13 @@ module Actb
 
       def create_actb_setting_if_blank
         actb_setting || create_actb_setting!
+      end
+    end
+
+    concerning :EmotionMod do
+      included do
+        # rails r "tp User.first.emotions"
+        has_many :emotions, class_name: "Actb::Emotion", dependent: :destroy
       end
     end
 

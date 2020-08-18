@@ -11,8 +11,8 @@
           | {{question.title}}
         template(v-else)
           | {{question_new_record_p ? '新規' : '編集'}}
-      .header_item.with_text.rjust.has-text-weight-bold(@click="save_handle" :class="{disabled: !save_button_enabled}")
-        | {{create_or_upate_name}}
+      .header_item.with_text.rjust.has-text-weight-bold(@click="question_save_handle" :class="{disabled: !save_button_enabled}")
+        | {{save_button_name}}
 
     ////////////////////////////////////////////////////////////////////////////////
     .secondary_header
@@ -140,7 +140,7 @@ export default {
         return
       }
 
-      if (this.app.info.debug_scene === "builder_haiti" || this.app.info.debug_scene === "builder_form") {
+      if (this.app.info.warp_to === "builder_haiti" || this.app.info.warp_to === "builder_form") {
         this.builder_new_handle()
         return
       }
@@ -268,7 +268,7 @@ export default {
       this.answer_tab_index = 0
     },
 
-    save_handle() {
+    question_save_handle() {
       if (this.question.moves_answers.length === 0) {
         this.warning_notice("正解を作ってください")
         return
@@ -292,8 +292,8 @@ export default {
 
       // https://day.js.org/docs/en/durations/diffing
       this.question.time_limit_clock_to_sec()
-      const before_create_or_upate_name = this.create_or_upate_name
-      this.api_put("save_handle", {question: this.question}, e => {
+      const before_save_button_name = this.save_button_name
+      this.api_put("question_save_handle", {question: this.question}, e => {
         if (e.form_error_message) {
           this.warning_notice(e.form_error_message)
         }
@@ -301,7 +301,7 @@ export default {
           this.question = new Question(e.question)
 
           this.sound_play("click")
-          this.ok_notice(`${before_create_or_upate_name}しました`)
+          this.ok_notice(`${before_save_button_name}しました`)
 
           if (this.app.config.save_and_back_to_index) {
             this.builder_index_handle()
@@ -328,11 +328,11 @@ export default {
       this.answer_turn_offset = 0
       this.valid_count = 0
 
-      if (this.app.info.debug_scene === "builder_haiti") {
+      if (this.app.info.warp_to === "builder_haiti") {
         this.haiti_mode_handle()
         return
       }
-      if (this.app.info.debug_scene === "builder_form") {
+      if (this.app.info.warp_to === "builder_form") {
         this.form_mode_handle()
         return
       }
@@ -417,7 +417,7 @@ export default {
       return TabInfo.fetch(this.tab_index)
     },
 
-    create_or_upate_name() {
+    save_button_name() {
       if (this.question.id) {
         return "更新"
       } else {

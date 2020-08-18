@@ -99,6 +99,7 @@ module Actb
             room: {},
             memberships: {
               only: [:id],
+              methods: [:location_key],
               include: {
                 user: {
                   only: [:id, :name],

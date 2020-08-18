@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 
 export default {
   name: "the_menu_debug",
@@ -34,6 +34,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_menu_debug
 </style>

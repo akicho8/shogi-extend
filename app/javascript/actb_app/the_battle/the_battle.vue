@@ -11,29 +11,34 @@
       the_battle_membership(:membership="membership" :key="membership.id")
       .is-1.has-text-weight-bold.is-size-4.has-text-grey-light.mx-1(v-if="i === 0") vs
 
-  //////////////////////////////////////////////////////////////////////////////// 第○問
-  template(v-if="app.sub_mode === 'sm3_deden'")
-    .sm3_deden_container.has-text-centered.is-size-3
-      .question_index
-        | 第{{app.question_index + 1}}問
-
-  //////////////////////////////////////////////////////////////////////////////// 時間切れ
-  template(v-if="app.sub_mode === 'sm6_timeout'")
-    .sm6_timeout_container.has-text-centered.is-size-3
-      template(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid'")
-        | 時間切れ
-      template(v-if="app.current_strategy_key === 'sy_singleton'")
-        template(v-if="app.otetuki_all_p")
-          | 両者不正解
-        template(v-else)
-          | 時間切れ
-
-  //////////////////////////////////////////////////////////////////////////////// 問題
-  template(v-if="app.sub_mode === 'sm4_tactic' || app.sub_mode === 'sm5_correct'")
-    question_author(:question="app.current_question" :title_display_p="false")
-    the_battle_question_sy_marathon(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid'")
-    the_battle_question_sy_singleton(v-if="app.current_strategy_key === 'sy_singleton'")
+  template(v-if="app.current_strategy_key === 'sy_versus'")
+    the_battle_question_sy_versus
     the_room_message
+
+  template(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_singleton' || app.current_strategy_key === 'sy_hybrid'")
+    //////////////////////////////////////////////////////////////////////////////// 第○問
+    template(v-if="app.sub_mode === 'sm3_deden'")
+      .sm3_deden_container.has-text-centered.is-size-3
+        .question_index
+          | 第{{app.question_index + 1}}問
+
+    //////////////////////////////////////////////////////////////////////////////// 時間切れ
+    template(v-if="app.sub_mode === 'sm6_timeout'")
+      .sm6_timeout_container.has-text-centered.is-size-3
+        template(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid'")
+          | 時間切れ
+        template(v-if="app.current_strategy_key === 'sy_singleton'")
+          template(v-if="app.otetuki_all_p")
+            | 両者不正解
+          template(v-else)
+            | 時間切れ
+
+    //////////////////////////////////////////////////////////////////////////////// 問題
+    template(v-if="app.sub_mode === 'sm4_tactic' || app.sub_mode === 'sm5_correct'")
+      question_author(:question="app.current_question" :title_display_p="false")
+      the_battle_question_sy_marathon(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid'")
+      the_battle_question_sy_singleton(v-if="app.current_strategy_key === 'sy_singleton'")
+      the_room_message
 
   //////////////////////////////////////////////////////////////////////////////// シミュレータ
 
@@ -69,6 +74,7 @@ import the_room_emotion                   from "../the_room_emotion.vue"
 import the_battle_membership              from "./the_battle_membership.vue"
 import the_battle_question_sy_marathon  from "./the_battle_question_sy_marathon.vue"
 import the_battle_question_sy_singleton from "./the_battle_question_sy_singleton.vue"
+import the_battle_question_sy_versus from "./the_battle_question_sy_versus.vue"
 import question_author                from "../components/question_author.vue"
 
 export default {
@@ -83,6 +89,7 @@ export default {
     the_battle_membership,
     the_battle_question_sy_marathon,
     the_battle_question_sy_singleton,
+    the_battle_question_sy_versus,
     question_author,
   },
 }

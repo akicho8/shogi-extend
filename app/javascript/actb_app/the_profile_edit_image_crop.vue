@@ -55,7 +55,7 @@ export default {
   },
 
   created() {
-    if (this.app.info.debug_scene === "profile_edit_image_crop") {
+    if (this.app.info.warp_to === "profile_edit_image_crop") {
       this.uploaded_src = "/foo.png"
     }
 

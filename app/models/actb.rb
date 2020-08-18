@@ -10,15 +10,20 @@ module Actb
       destroy_all
     end
 
-    Actb::OxMark.setup(options)
-    Actb::Season.setup(options)
-    Actb::Lineage.setup(options)
-    Actb::Judge.setup(options)
-    Actb::Rule.setup(options)
-    Actb::Final.setup(options)
-    Actb::Skill.setup(options)
-    Actb::SourceAbout.setup(options)
-    Actb::Question.setup(options)
+    [
+      Actb::OxMark,
+      Actb::Season,
+      Actb::Lineage,
+      Actb::EmotionFolder,
+      Actb::Judge,
+      Actb::Rule,
+      Actb::Final,
+      Actb::Skill,
+      Actb::SourceAbout,
+      Actb::Question,
+    ].each do |e|
+      e.setup(options)
+    end
 
     User.find_each(&:create_various_folders_if_blank)
     User.find_each(&:create_actb_setting_if_blank)
