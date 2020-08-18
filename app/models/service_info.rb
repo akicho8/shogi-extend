@@ -17,11 +17,11 @@ class ServiceInfo
       ],
     },
     {
-      on_swars_search_p: true,
+      on_swars_search_p: false,
       display_p: Actb::Config[:actb_display_p],
       link_path: [:training],
       title: "将棋トレーニングバトル！",
-      new_p: true,
+      new_p: false,
       image_source: [
         "frontend_script/actb_app_script1_1200x630.png",
         "frontend_script/actb_app_script2_1200x630.png",
@@ -31,7 +31,9 @@ class ServiceInfo
       feature_items: [
         "詰将棋以外の問題もある",
         "自作の問題を作れる",
-        "対戦は <b>23:00 - 23:15</b> のみ",
+        "サ終間近",
+        # "自作の問題を作れる",
+        # "対戦は <b>23:00 - 23:15</b> のみ",
         # "棋力アップしません",
         # "対戦→見直し→対戦のサイクルで棋力アップ(？)",
         # "ランキング上位をめざす必要はありません",
