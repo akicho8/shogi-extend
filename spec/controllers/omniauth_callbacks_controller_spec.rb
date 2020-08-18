@@ -6,13 +6,60 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     Actb.setup
   end
 
-  describe "twitter: login" do
+  describe "Google" do
     before do
       request.env["devise.mapping"] = Devise.mappings[:xuser]
       OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new({
-          :provider => 'twitter',
-          :uid      => '(uid)',
-          :info     => { name: 'alice', image: "https://www.shogi-extend.com/foo.png", email: "alice@localhost" },
+          "provider" => "google", # これは固定値ではなくこちら側で用意したコールバックメソッド名
+          "uid"      => "(uid)",
+          "info" => {
+            "name"  => "alice", # たまに name もメールアドレスになっていることもある
+            "email" => "alice@localhost",
+            "image" => "https://www.shogi-extend.com/foo.png",
+          },
+        })
+      request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter]
+      get :google
+    end
+
+    let(:record) { User.first }
+
+    it "名前がある" do
+      assert { record.name == "alice" }
+    end
+
+    it "プロフィール画像を登録している" do
+      assert { record.avatar }
+    end
+
+    it "メールアドレスを取得している" do
+      assert { record.email == "alice@localhost" }
+    end
+
+    it "どっかにリダイレクトする" do
+      expect(response).to have_http_status(:redirect)
+    end
+
+    it "メール" do
+      assert { ActionMailer::Base.deliveries.count == 1 }
+      assert { ActionMailer::Base.deliveries.last.subject == "[SHOGI-EXTEND][test] aliceさんがgoogleで登録されました" }
+    end
+  end
+
+  describe "Twitter" do
+    before do
+      request.env["devise.mapping"] = Devise.mappings[:xuser]
+      OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new({
+          "provider" => 'twitter',
+          "uid"      => '(uid)',
+          "info"     => {
+            "nickname"    => "(nickname_is_twitter_account)",
+            "name"        => "alice",
+            "email"       => nil, # ← 注意
+            "location"    => "(location)",
+            "image"       => "https://www.shogi-extend.com/foo.png",
+            "description" => "(description)",
+          },
         })
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter]
       get :twitter
@@ -28,8 +75,12 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
       assert { record.avatar }
     end
 
-    it "メールアドレスを取得している" do
-      assert { record.email == "alice@localhost" }
+    it "メールアドレスはダミーを入れてある" do
+      assert { record.email.match?(/@localhost/) }
+    end
+
+    it "ツイッターアカウント" do
+      assert { record.twitter_key == "(nickname_is_twitter_account)" }
     end
 
     it "どっかにリダイレクトする" do
