@@ -5,14 +5,13 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support }         from "../support.js"
 import { background_grey } from "../background_grey.js"
-
-import the_menu_root  from "./the_menu_root.vue"
-import the_menu_etc   from "./the_menu_etc.vue"
-import the_menu_sound from "./the_menu_sound.vue"
-import the_menu_debug from "./the_menu_debug.vue"
-import the_footer     from "../the_footer.vue"
+import the_menu_root       from "./the_menu_root.vue"
+import the_menu_etc        from "./the_menu_etc.vue"
+import the_menu_sound      from "./the_menu_sound.vue"
+import the_menu_debug      from "./the_menu_debug.vue"
+import the_footer          from "../the_footer.vue"
 
 export default {
   name: "the_menu",

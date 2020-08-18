@@ -5,9 +5,9 @@
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.new_handle")
     b-dropdown.header_item.with_icon.ljust.px-3(@active-change="sound_play('click')")
       b-icon(slot="trigger" icon="menu")
-      b-dropdown-item.px-4(@click.native.stop="reset_handle" v-if="development_p") リセット (全削除してプリセットインポート)
-      b-dropdown-item.px-4(@click.native.stop="destroy_all_handle") 全削除
       b-dropdown-item.px-4(@click.native.stop="import_handle") プリセットインポート
+      b-dropdown-item.px-4(@click.native.stop="destroy_all_handle") 全削除
+      b-dropdown-item.px-4(@click.native.stop="reset_handle" v-if="development_p") リセット (全削除してプリセットインポート)
 
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="$parent.current_tabpos" expanded @change="tab_change_hook")
