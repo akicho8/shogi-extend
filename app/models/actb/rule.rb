@@ -60,7 +60,7 @@ module Actb
       end
     end
 
-    include StaticArModel
+    include StaticMod
 
     delegate :redis_key, to: :pure_info
     delegate :redis, :matching_user_ids_broadcast, to: "self.class"

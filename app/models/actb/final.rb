@@ -15,7 +15,7 @@
 
 module Actb
   class Final < ApplicationRecord
-    include StaticArModel
+    include StaticMod
 
     has_many :battles, dependent: :destroy
 

@@ -15,6 +15,6 @@
 
 module Actb
   class OxMark < ApplicationRecord
-    include StaticArModel
+    include StaticMod
   end
 end

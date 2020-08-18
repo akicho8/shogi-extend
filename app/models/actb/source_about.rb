@@ -15,6 +15,6 @@
 
 module Actb
   class SourceAbout < ApplicationRecord
-    include StaticArModel
+    include StaticMod
   end
 end

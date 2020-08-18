@@ -1,0 +1,57 @@
+module UserCoreMod
+  extend ActiveSupport::Concern
+
+  included do
+    scope :random_order, -> { order(Arel.sql("rand()")) }
+
+    before_validation on: :create do
+      if Rails.env.production? || Rails.env.staging?
+        self.password ||= Devise.friendly_token(32)
+      else
+        self.password ||= "password"
+      end
+    end
+
+    before_validation do
+      self.key ||= SecureRandom.hex
+      self.user_agent ||= ""
+      self.name = name.presence || "名無しの棋士#{self.class.human_only.count.next}号"
+      self.email = email.presence || "#{key}@localhost"
+    end
+
+    with_options allow_blank: true do
+      validates :name, length: 1..64
+    end
+
+    after_create_commit do
+      if Rails.env.production? || Rails.env.staging?
+        SlackAgent.message_send(key: "ユーザー登録", body: attributes.slice("id", "name"))
+      end
+    end
+  end
+
+  class_methods do
+    def setup(options = {})
+      super
+
+      sysop
+      bot
+
+      CpuBrainInfo.each do |e|
+        unless find_by(key: e.key)
+          create! do |o|
+            o.key           = e.key
+            o.race_key      = :robot
+            o.cpu_brain_key = e.key
+            o.name          = "CPU#{robot_only.count.next}号"
+            o.email         = "shogi.extend+cpu-#{e.key}@gmail.com"
+          end
+        end
+      end
+    end
+  end
+
+  def show_path
+    Rails.application.routes.url_helpers.url_for([self, only_path: true])
+  end
+end

@@ -15,7 +15,7 @@
 
 module Actb
   class Lineage < ApplicationRecord
-    include StaticArModel
+    include StaticMod
 
     has_many :questions, dependent: :destroy
   end

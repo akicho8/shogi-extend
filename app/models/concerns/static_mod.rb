@@ -1,4 +1,4 @@
-module StaticArModel
+module StaticMod
   extend ActiveSupport::Concern
   included do
     cattr_accessor(:pure_class) { "#{name}Info".constantize }

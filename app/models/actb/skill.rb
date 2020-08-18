@@ -15,6 +15,6 @@
 
 module Actb
   class Skill < ApplicationRecord
-    include StaticArModel
+    include StaticMod
   end
 end
