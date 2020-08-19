@@ -72,7 +72,7 @@ export default {
     },
     // 新規用のレコード
     default_attributes_clone() {
-      return Object.assign({}, this.default_attributes)
+      return _.cloneDeep(this.default_attributes)
     },
   },
   computed: {
