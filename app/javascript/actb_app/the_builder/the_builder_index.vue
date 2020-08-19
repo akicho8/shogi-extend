@@ -170,7 +170,7 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support } from "./support.js"
 
 import ls_support from "../../../../app/javascript/ls_support.js"
 

@@ -1,6 +1,11 @@
 import Vuex from "vuex"
+import { builder } from "./the_builder/store.js"
 
 export const store = () => new Vuex.Store({
+  modules: {
+    builder,
+  },
+
   state: {
     gvar1: "(gvar1)",
     app: null,
