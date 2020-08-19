@@ -4,9 +4,9 @@
 
   .primary_header
     .header_center_title
-      template(v-if="$parent.page_info.tag")
-        b-tag(attached closable @close="$parent.tag_search_handle(null)" rounded type="is-dark")
-          | {{$parent.page_info.tag}}
+      template(v-if="page_info.tag")
+        b-tag(attached closable @close="tag_search_handle(null)" rounded type="is-dark")
+          | {{page_info.tag}}
       template(v-else)
         | 問題一覧
 
@@ -41,8 +41,8 @@
           | {{e.name}}
 
   b-table.index_table.is-size-7.mx-2.mt-4(
-    v-if="$parent.questions"
-    :data="$parent.questions"
+    v-if="questions"
+    :data="questions"
     :mobile-cards="false"
     hoverable
     :narrowed="false"
@@ -51,14 +51,14 @@
     paginated
     backend-pagination
     pagination-simple
-    :page="$parent.page_info.page"
-    :total="$parent.page_info.total"
-    :per-page="$parent.page_info.per"
+    :page="page_info.page"
+    :total="page_info.total"
+    :per-page="page_info.per"
     @page-change="$parent.page_change_handle"
 
     backend-sorting
-    :default-sort-direction="$parent.page_info.sort_order_default"
-    :default-sort="[$parent.page_info.sort_column, $parent.page_info.sort_order]"
+    :default-sort-direction="page_info.sort_order_default"
+    :default-sort="[page_info.sort_column, page_info.sort_order]"
     @sort="$parent.sort_handle"
 
     detailed
@@ -113,7 +113,7 @@
 
       b-table-column(custom-key="owner_tag_list"    field="owner_tag_list"  :label="QuestionIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="visible_hash.owner_tag_list")
         b-taglist
-          b-tag.is_clickable(v-for="tag in props.row.owner_tag_list" @click.native.stop="$parent.tag_search_handle(tag)" rounded)
+          b-tag.is_clickable(v-for="tag in props.row.owner_tag_list" @click.native.stop="tag_search_handle(tag)" rounded)
             | {{tag}}
 
       b-table-column(custom-key="created_at"        field="created_at"        :label="QuestionIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="visible_hash.created_at")       {{row_time_format(props.row.created_at)}}
@@ -277,7 +277,7 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// details
     detail_open_handle() {
       this.sound_play('click')
-      this.detailed_ids = this.$parent.questions.map(e => e.id)
+      this.detailed_ids = this.questions.map(e => e.id)
     },
     detail_close_handle() {
       this.sound_play('click')

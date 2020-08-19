@@ -3,26 +3,26 @@ export default {
     // POST の場合 data はHashをそのまま渡せばよい
     remote_fetch(method, url, data, callback = null) {
       const loading = this.$buefy.loading.open()
-      this.$http({method: method, url: url, data: data})
+      return this.$http({method: method, url: url, data: data})
         .then(r      => this.remote_fetch_success(r, loading, callback))
         .catch(error => this.remote_fetch_error(error, loading))
     },
 
     silent_remote_fetch(method, url, data, callback = null) {
-      this.$http({method: method, url: url, data: data})
+      return this.$http({method: method, url: url, data: data})
         .then(r      => this.remote_fetch_success(r, null, callback))
         .catch(error => this.remote_fetch_error(error, null))
     },
 
     remote_get(url, params, callback = null) {
       const loading = this.$buefy.loading.open()
-      this.$http.get(url, {params: params})
+      return this.$http.get(url, {params: params})
         .then(r      => this.remote_fetch_success(r, loading, callback))
         .catch(error => this.remote_fetch_error(error, loading))
     },
 
     silent_remote_get(url, params, callback = null) {
-      this.$http.get(url, {params: params})
+      return this.$http.get(url, {params: params})
         .then(r      => this.remote_fetch_success(r, null, callback))
         .catch(error => this.remote_fetch_error(error, null))
     },
@@ -47,6 +47,8 @@ export default {
       if (callback) {
         callback(response.data)
       }
+
+      return Promise.resolve(response.data)
     },
 
     remote_fetch_error(error, loading) {
@@ -85,6 +87,8 @@ export default {
         // Something happened in setting up the request that triggered an Error
         this.error_message_dialog(error.message) // エラーコードしかわからない
       }
+
+      throw new Error('API error.')
     },
   },
 }

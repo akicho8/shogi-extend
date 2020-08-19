@@ -6,9 +6,9 @@
   b-field(label="ヒント" label-position="on-border" v-if="app.config.hint_enable")
     b-input(v-model.trim="$store.state.builder.question.hint_desc")
 
-  b-field.lineage_key(label="種類" label-position="on-border" v-if="$parent.LineageInfo")
+  b-field.lineage_key(label="種類" label-position="on-border" v-if="LineageInfo")
     b-select(v-model="$store.state.builder.question.lineage_key" expanded)
-      option(v-for="row in $parent.LineageInfo.values" :value="row.key") {{row.name}}
+      option(v-for="row in LineageInfo.values" :value="row.key") {{row.name}}
 
   b-field(label="制限時間" label-position="on-border" v-if="app.config.time_limit_sec_enable")
     b-timepicker(v-model="$store.state.builder.question.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
@@ -32,7 +32,7 @@
   b-field(label="Vuexテスト" v-if="development_p")
     b-switch(v-model="$store.state.builder.gvar2") {{gvar2}}
 
-  b-collapse.mt-6(:open="source_author_collapse_open_p")
+  b-collapse.mt-6(:open="new_open_p")
     b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 作者が他者の場合
     .box.py-5.mt-2
       b-field
@@ -56,9 +56,9 @@
       b-field(label="出典URL" label-position="on-border")
         b-input(v-model.trim="$store.state.builder.question.source_media_url" type="url")
 
-  b-field(label="フォルダ" custom-class="is-small" v-if="$parent.FolderInfo")
+  b-field(label="フォルダ" custom-class="is-small" v-if="FolderInfo")
     b-field.is-marginless
-      template(v-for="row in $parent.FolderInfo.values")
+      template(v-for="row in FolderInfo.values")
         b-radio-button(v-model="$store.state.builder.question.folder_key" :native-value="row.key" :type="row.type")
           b-icon(:icon="row.icon" size="is-small")
           span {{row.name}}
@@ -74,11 +74,11 @@ export default {
   ],
   data() {
     return {
-      source_author_collapse_open_p: null,
+      new_open_p: null,
     }
   },
   created() {
-    this.source_author_collapse_open_p = this.question.source_author_collapse_open_p
+    this.new_open_p = this.question.source_author_collapse_open_p
   },
   watch: {
     "question.lineage_key": {
@@ -95,7 +95,7 @@ export default {
     },
     "question.folder_key": {
       handler(v) {
-        const folder_info = this.$parent.FolderInfo.fetch(v)
+        const folder_info = this.FolderInfo.fetch(v)
         this.sound_play("click")
         this.say(folder_info.name)
       },
@@ -116,7 +116,7 @@ export default {
     },
   },
   computed: {
-    lineage_info() { return this.$parent.LineageInfo.fetch(this.question.lineage_key) },
+    lineage_info() { return this.LineageInfo.fetch(this.question.lineage_key) },
   },
 }
 </script>
