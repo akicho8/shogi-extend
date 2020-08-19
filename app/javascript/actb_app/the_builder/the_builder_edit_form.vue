@@ -29,6 +29,9 @@
   b-field(v-if="lineage_info.mate_validate_on")
     b-switch(v-model="$store.state.builder.question.mate_skip" size="is-small") 最後は無駄合い (なので詰みチェックしない)
 
+  b-field(label="Vuexテスト" v-if="development_p")
+    b-switch(v-model="$store.state.builder.gvar2") {{gvar2}}
+
   b-collapse.mt-6(:open="source_author_collapse_open_p")
     b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 作者が他者の場合
     .box.py-5.mt-2
@@ -71,10 +74,12 @@ export default {
   ],
   data() {
     return {
-      source_author_collapse_open_p: this.$store.state.builder.question.source_author_collapse_open_p,
+      source_author_collapse_open_p: null,
     }
   },
-
+  created() {
+    this.source_author_collapse_open_p = this.question.source_author_collapse_open_p
+  },
   watch: {
     "question.lineage_key": {
       handler(v) {

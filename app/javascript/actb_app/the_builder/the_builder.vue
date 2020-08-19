@@ -1,9 +1,5 @@
 <template lang="pug">
 .the_builder(v-if="resource_loaded_p")
-  br
-  br
-  b-switch.mt-6(v-model="$store.state.builder.gvar2") {{gvar2}}
-
   the_builder_index(v-if="!question")
 
   .the_builder_new_and_edit(v-if="question")
@@ -114,7 +110,6 @@ export default {
 
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
       tab_index:        null,
-      question:         null,
       answer_tab_index: null,   // 表示している正解タブの位置
 
       //////////////////////////////////////////////////////////////////////////////// 正解モード
@@ -326,7 +321,7 @@ export default {
       this.$gtag.event("open", {event_category: "問題編集"})
 
       this.__assert__(row instanceof Question, `問題が Question でラップされてない ${Question.name}`)
-      this.question = row
+      this.$store.state.builder.question = row
 
       this.answer_tab_index = 0 // 解答リストの一番左指す
       this.answer_turn_offset = 0

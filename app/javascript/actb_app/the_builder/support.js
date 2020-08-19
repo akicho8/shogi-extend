@@ -12,6 +12,7 @@ export const support = {
     ]),
     ...mapState("builder", [
       "question",
+      "gvar2",
     ]),
   },
 }
