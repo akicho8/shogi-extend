@@ -1,11 +1,11 @@
 <template lang="pug">
 .the_builder_edit_kensho
   .has-text-centered(v-if="question.direction_message")
-    | {{question.direction_message}}
+    | {{$store.state.builder.question.direction_message}}
 
   shogi_player(
     :run_mode="'play_mode'"
-    :kifu_body="question.init_sfen"
+    :kifu_body="$store.state.builder.question.init_sfen"
     :flip_if_white="true"
     :start_turn="0"
     :slider_show="true"
