@@ -1,8 +1,7 @@
 <template lang="pug">
 .the_room_emotion.footer_nav.is-flex.is-unselectable
   template(v-for="row in current_emotions")
-    template(v-if="row.folder_key === app.emotion_folder_key")
-      .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({message: row.message, say: row.voice})") {{row.name}}
+    .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({message: row.message, voice: row.voice})") {{row.name}}
 
   //- template(v-if="app.question_mode_p")
   //-   //- .item.is_clickable.is-size-5(@click.stop="app.emotion_handle({type: 'is-light', message: '🥺', say: 'ぴえん'})") 🥺
