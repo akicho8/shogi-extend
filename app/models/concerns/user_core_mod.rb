@@ -16,6 +16,7 @@ module UserCoreMod
             o.cpu_brain_key = e.key
             o.name          = "CPU#{robot_only.count.next}号"
             o.email         = "shogi.extend+cpu-#{e.key}@gmail.com"
+            o.confirmed_at  = Time.current
           end
         end
       end
@@ -37,7 +38,11 @@ module UserCoreMod
       self.key ||= SecureRandom.hex
       self.user_agent ||= ""
       self.name = name.presence || "名無しの棋士#{self.class.human_only.count.next}号"
-      self.email = email.presence || "#{key}@localhost"
+
+      if email.blank?
+        self.email = "#{key}@localhost"
+        self.confirmed_at ||= Time.current
+      end
     end
 
     with_options allow_blank: true do
@@ -46,7 +51,7 @@ module UserCoreMod
 
     after_create_commit do
       if Rails.env.production? || Rails.env.staging?
-        SlackAgent.message_send(key: "ユーザー登録", body: attributes.slice("id", "name"))
+        SlackAgent.message_send(key: "ユーザー登録", body: attributes.slice("id", "name", "email"))
       end
     end
   end

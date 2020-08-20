@@ -61,7 +61,9 @@ class AuthInfo < ApplicationRecord
 
       if v = meta_info.dig("info", "email")
         if user.email_invalid?
-          user.update!(email: v)
+          user.email = v
+          user.skip_reconfirmation! # email に設定した内容が unconfirmed_email に退避されるのを防ぐ
+          user.save!
         end
       end
     end

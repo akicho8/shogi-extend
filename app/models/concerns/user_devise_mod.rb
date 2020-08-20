@@ -1,11 +1,11 @@
-module UserAuthMod
+module UserDeviseMod
   extend ActiveSupport::Concern
 
   included do
     has_many :auth_infos, dependent: :destroy
     accepts_nested_attributes_for :auth_infos
 
-    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
     devise :omniauthable, omniauth_providers: [:google, :twitter, :github]
   end
 

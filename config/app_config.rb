@@ -35,5 +35,5 @@ AppConfig.deep_merge!({
     ################################################################################ login
     :available_providers =>  [:twitter, :google, :github], # SNS経由ログインできるもの
     :nanasi_login        =>  true,                         # 名無しログインの有効化
-    :id_pw_login         =>  true,                         # ID/PWログイン機能
+    :email_pw_login         =>  true,                         # ID/PWログイン機能
   })

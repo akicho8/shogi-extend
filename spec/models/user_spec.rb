@@ -37,6 +37,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  include ActiveJob::TestHelper
+
   before(:context) do
     Actb.setup
   end
@@ -53,10 +55,10 @@ RSpec.describe User, type: :model do
     end
   end
 
-  xit "email_valid?" do
-    assert { User.create!(email: "alice@localhost").email_valid? == false }
-    assert { User.create!(email: "alice@localhost").email_valid? == true  }
-  end
+  # it "email_valid?" do
+  #   assert { User.create!(email: "alice@localhost").email_valid? == false }
+  #   assert { User.create!(email: "alice@localhost").email_valid? == true  }
+  # end
 
   it "info" do
     assert { User.create!.info }
@@ -66,15 +68,3 @@ RSpec.describe User, type: :model do
     assert { User.create!.created_after_days === 0 }
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> .*...
-# >> 
-# >> Pending: (Failures listed here are expected and do not affect your suite's status)
-# >> 
-# >>   1) User email_valid?
-# >>      # Temporarily skipped with xit
-# >>      # -:55
-# >> 
-# >> Finished in 1.68 seconds (files took 4.91 seconds to load)
-# >> 5 examples, 0 failures, 1 pending
-# >> 

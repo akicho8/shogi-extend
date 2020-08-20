@@ -38,7 +38,7 @@ class User < ApplicationRecord
   include UserCoreMod
   include UserAvatarMod
   include UserProfileMod
-  include UserAuthMod
+  include UserDeviseMod
   include UserMuteMod
   include UserTagMod
   include UserRaceMod

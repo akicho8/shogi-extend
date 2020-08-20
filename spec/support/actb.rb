@@ -6,9 +6,9 @@ module ActbSupportMethods
       Actb.setup
     end
 
-    let(:user1) { User.create!(name: "user1", email: "user1@localhost") }
-    let(:user2) { User.create!(name: "user2", email: "user2@localhost") }
-    let(:user3) { User.create!(name: "user3", email: "user3@localhost") }
+    let(:user1) { User.create!(name: "user1", email: "user1@localhost", confirmed_at: Time.current) }
+    let(:user2) { User.create!(name: "user2", email: "user2@localhost", confirmed_at: Time.current) }
+    let(:user3) { User.create!(name: "user3", email: "user3@localhost", confirmed_at: Time.current) }
 
     let(:question1) do
       user1.actb_questions.create_mock1

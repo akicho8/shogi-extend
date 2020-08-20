@@ -27,7 +27,7 @@ RSpec.describe AuthInfo, type: :model do
   end
 
   let(:auth) do
-    { "info" => { "email" => "0463e0f46337064be57119cecb470458@example.com" } }
+    { "info" => { "email" => "sns@example.com" } }
   end
 
   it "SNS経由で登録すると通知" do
@@ -36,8 +36,8 @@ RSpec.describe AuthInfo, type: :model do
       user.auth_infos.create!(provider: "twitter", uid: SecureRandom.hex, auth: auth)
     end
     assert { ActionMailer::Base.deliveries.count == 1 }
-    assert { user.email == "0463e0f46337064be57119cecb470458@example.com" }
-
+    assert { user.email == "sns@example.com" }
+    assert { user.unconfirmed_email.blank? }
     # tp ActionMailer::Base.deliveries.collect { |e| {subject: e.subject, from: e.from, to: e.to} }
   end
 
@@ -50,6 +50,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ..
 # >> 
-# >> Finished in 0.61538 seconds (files took 2.24 seconds to load)
+# >> Finished in 1.46 seconds (files took 2.41 seconds to load)
 # >> 2 examples, 0 failures
 # >> 

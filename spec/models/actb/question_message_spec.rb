@@ -29,6 +29,7 @@ module Actb
       perform_enqueued_jobs do
         question1.messages.create!(user: user2, body: "message")
       end
+
       assert { ActionMailer::Base.deliveries.count == 1 }
       mail = ActionMailer::Base.deliveries.last
       assert { mail.to      == ["user1@localhost"] }
@@ -64,7 +65,7 @@ end
 # >> | 以前コメントした「(title1)」にuser3さんがにコメントしました | ["shogi.extend@gmail.com"] | ["user2@localhost"] |
 # >> |-------------------------------------------------------------+----------------------------+---------------------|
 # >> .
-# >> 
+# >>
 # >> Finished in 0.77753 seconds (files took 2.15 seconds to load)
 # >> 1 example, 0 failures
-# >> 
+# >>
