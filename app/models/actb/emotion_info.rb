@@ -17,7 +17,6 @@ module Actb
       { folder_key: :question, name: "よ",   message: "対よろ",   voice: "よろしく",               },
       { folder_key: :question, name: "あ",   message: "対あり",   voice: "ありがとうございました", },
 
-      { folder_key: :versus,   name: "僥",   message: "僥倖です",               voice: "僥倖です",               },
       { folder_key: :versus,   name: "お",   message: "おまえはもう詰んでいる", voice: "おまえはもう詰んでいる", },
       { folder_key: :versus,   name: "な",   message: "なんだと!?",             voice: "なんだと!?",             },
       { folder_key: :versus,   name: "た",   message: "ただやん",               voice: "ただやん",               },
