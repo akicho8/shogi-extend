@@ -15,7 +15,7 @@
     :size="app.config.sp_size"
     :sound_effect="true"
     :volume="0.5"
-    @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
+    @update:play_mode_advanced_moves="$parent.play_mode_advanced_moves_set"
     )
 </template>
 

@@ -11,7 +11,7 @@
         | 問題一覧
 
     ////////////////////////////////////////////////////////////////////////////////
-    b-icon.header_item.with_icon.rjust(icon="plus" @click.native="builder_new_handle" v-if="permit_question_new_p")
+    b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.builder_new_handle" v-if="permit_question_new_p")
     //////////////////////////////////////////////////////////////////////////////// メニューで開くタイプ
     b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
       b-icon(slot="trigger" icon="menu")
@@ -289,13 +289,8 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// タブ
 
-    TabInfo(state, getters) {
-      return TabInfo
-    },
-
-    question_current_tab_info(state, getters) {
-      return TabInfo.fetch(this.question_tab_index)
-    },
+    TabInfo() { return TabInfo },
+    question_current_tab_info() { return this.TabInfo.fetch(this.question_tab_index) },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
 

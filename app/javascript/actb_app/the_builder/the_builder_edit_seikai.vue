@@ -19,7 +19,7 @@
     )
 
   .buttons.is-centered.konotejunsiikai
-    b-button(@click="edit_stock_handle({moves: current_moves()})" :type="{'is-primary': answer_turn_offset >= 1}")
+    b-button(@click="$parent.edit_stock_handle" :type="{'is-primary': answer_turn_offset >= 1}")
       | {{answer_turn_offset}}手目までの手順を正解とする
 
   b-tabs.answer_tabs(v-model="$store.state.builder.answer_tab_index" position="is-centered" expanded :animated="false" v-if="question.moves_answers.length >= 1" @change="sound_play('click')")
@@ -27,7 +27,7 @@
       b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
         shogi_player(
           :run_mode="'view_mode'"
-          :kifu_body="full_sfen_build(e)"
+          :kifu_body="$parent.full_sfen_build(e)"
           :flip_if_white="true"
           :start_turn="-1"
           :debug_mode="false"
@@ -40,7 +40,7 @@
           :sound_effect="true"
           :volume="0.5"
           )
-        .delete_button.is_clickable(@click="moves_answer_delete_handle(i)")
+        .delete_button.is_clickable(@click="$parent.moves_answer_delete_handle(i)")
           b-icon(type="is-danger" icon="trash-can-outline" size="is-small")
 </template>
 
@@ -52,21 +52,7 @@ export default {
   mixins: [
     support,
   ],
-  methods: {
-    current_moves() {
-      return this.$refs.play_sp.moves_take_turn_offset
-    },
-    full_sfen_build(moves_answer_attributes) {
-      return [this.question.init_sfen, "moves", moves_answer_attributes.moves_str].join(" ")
-    },
-    moves_answer_delete_handle(index) {
-      const new_ary = this.question.moves_answers.filter((e, i) => i !== index)
-      this.$set(this.$store.state.builder.question, "moves_answers", new_ary)
-      const new_index = _.clamp(this.answer_tab_index, 0, this.question.moves_answers.length - 1)
-      this.$nextTick(() => this.$store.state.builder.answer_tab_index = new_index)
-      this.sound_play("click")
-      this.ok_notice("削除しました")
-    },
+  created() {
   },
 }
 </script>

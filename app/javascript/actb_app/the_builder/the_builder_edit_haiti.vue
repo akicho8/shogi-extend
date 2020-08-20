@@ -11,7 +11,7 @@
     :size="'default'"
     :sound_effect="false"
     :volume="0.5"
-    @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
+    @update:edit_mode_snapshot_sfen="$parent.edit_mode_snapshot_sfen"
     ref="main_sp"
     )
   .footer_buttons
