@@ -11,7 +11,7 @@
     :size="'default'"
     :sound_effect="false"
     :volume="0.5"
-    @update:edit_mode_snapshot_sfen="$parent.edit_mode_snapshot_sfen"
+    @update:edit_mode_snapshot_sfen="builder_app.edit_mode_snapshot_sfen"
     ref="main_sp"
     )
   .footer_buttons
@@ -58,7 +58,7 @@ export default {
 
   created() {
     // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
-    this.new_kifu_body = this.$parent.question.init_sfen
+    this.new_kifu_body = this.builder_app.question.init_sfen
     this.piece_box_piece_couns_adjust()
   },
 
@@ -134,7 +134,7 @@ export default {
     // 棋譜コピー
     kifu_copy_handle() {
       this.sound_play("click")
-      this.general_kifu_copy(this.$parent.question.init_sfen, {to_format: "kif"})
+      this.general_kifu_copy(this.builder_app.question.init_sfen, {to_format: "kif"})
     },
 
     // 駒箱に足りない駒を補充
@@ -145,8 +145,8 @@ export default {
   },
 
   computed: {
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.$parent.question.init_sfen, turn: 0, flip: false}) },
-    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.$parent.question.init_sfen, turn: 0, flip: false}) },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.builder_app.question.init_sfen, turn: 0, flip: false}) },
+    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.builder_app.question.init_sfen, turn: 0, flip: false}) },
   },
 }
 </script>

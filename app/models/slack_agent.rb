@@ -1,12 +1,15 @@
-# 使い方
-#
-#   SlackAgent.message_send(key: "検索", body: "xxx", ua: ua)
-#
 module SlackAgent
   extend self
 
   mattr_accessor(:default_channel) { "#shogi_web" }
 
+  # rails r "SlackAgent.error_send(Exception.new)"
+  # rails r "SlackAgent.error_send((1/0 rescue $!))"
+  def error_send(error)
+    message_send(key: "ERROR", body: ["#{error.message} (#{error.class})", error.backtrace].compact.join("\n"))
+  end
+
+  # rails r 'SlackAgent.message_send(key: "検索", body: "xxx")'
   def message_send(key:, body:, channel: nil, ua: nil)
     if ENV["SETUP"]
       return
