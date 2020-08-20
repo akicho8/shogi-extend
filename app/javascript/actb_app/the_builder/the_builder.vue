@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_builder(v-if="resource_loaded_p")
+.the_builder
   the_builder_index(v-if="!question")
 
   .the_builder_new_and_edit(v-if="question")
@@ -89,7 +89,6 @@ export default {
       //////////////////////////////////////////////////////////////////////////////// 静的情報
       LineageInfo: null,        // 問題の種類
       FolderInfo: null,         // 問題の入れ場所
-      resource_loaded_p: false, // ↑これらを読み込み終わったか？
 
       //////////////////////////////////////////////////////////////////////////////// 一覧
       questions: null,          // 一覧で表示する配列
@@ -132,8 +131,6 @@ export default {
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
     })
-
-    this.resource_loaded_p = true
 
     // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
     if (this.app.edit_question_id) {
