@@ -11,7 +11,7 @@
               p.has-text-grey.is-size-7.has-text-centered
                 = v["user_name"]
                 = "さんは以前"
-                = s.name
+                strong.mx-1 = s.name
                 = "でログインしました"
 
             - SocialMediaInfo.each do |e|
