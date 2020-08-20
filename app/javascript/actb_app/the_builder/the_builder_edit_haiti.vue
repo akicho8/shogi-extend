@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 import any_source_read_modal from "../components/any_source_read_modal.vue"
 import haiti_kimeru_modal from "../components/haiti_kimeru_modal.vue"
 

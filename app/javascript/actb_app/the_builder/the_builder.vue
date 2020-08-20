@@ -1,9 +1,5 @@
 <template lang="pug">
 .the_builder(v-if="resource_loaded_p")
-  br
-  br
-  b-switch.mt-6(v-model="$store.state.builder.gvar2") {{gvar2}}
-
   the_builder_index(v-if="!question")
 
   .the_builder_new_and_edit(v-if="question")
@@ -50,7 +46,7 @@
 import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
-import { support } from "./support.js"
+import { support } from "../support.js"
 import the_builder_index  from "./the_builder_index.vue"
 import the_builder_edit_haiti  from "./the_builder_edit_haiti.vue"
 import the_builder_edit_seikai from "./the_builder_edit_seikai.vue"
