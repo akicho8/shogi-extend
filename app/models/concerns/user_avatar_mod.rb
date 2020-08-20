@@ -18,6 +18,7 @@ module UserAvatarMod
   end
 
   # FALLBACK_ICONS_DEBUG=1 foreman s
+  # rails r "p User.first.avatar_path"
   def avatar_path
     if ENV["FALLBACK_ICONS_DEBUG"]
       return ActionController::Base.helpers.asset_path(self.class.image_files(:robot).sample)
@@ -30,7 +31,15 @@ module UserAvatarMod
     else
       list = self.class.image_files(race_info.key)
       file = list[(id || self.class.count.next).modulo(list.size)]
-      ActionController::Base.helpers.asset_path(file)
+      ActionController::Base.helpers.asset_path(file) # asset_url にしてもURLにならないのはなぜ？
     end
+  end
+
+  # rails r "p User.first.avatar_url"
+  def avatar_url
+    root = Rails.application.routes.url_helpers.url_for(:root)
+    uri = URI(root)
+    uri.path = avatar_path
+    uri.to_s
   end
 end
