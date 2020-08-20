@@ -131,7 +131,7 @@ export const support = {
   computed: {
     ...Vuex.mapState([
       "app",
-      "builder_app",
+      "bapp",
     ]),
     ...Vuex.mapGetters([
       "current_gvar1",

@@ -2,5 +2,5 @@
 
 この下は app.xxx で参照してはいけない
 完全に独立している
-なので $parent.xxx で参照する → builder_app.xxx
+なので $parent.xxx で参照する → bapp.xxx
 app.current_user などは除く

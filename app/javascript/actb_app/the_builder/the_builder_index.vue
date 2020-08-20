@@ -4,14 +4,14 @@
 
   .primary_header
     .header_center_title
-      template(v-if="builder_app.page_info.tag")
-        b-tag(attached closable @close="builder_app.tag_search_handle(null)" rounded type="is-dark")
-          | {{builder_app.page_info.tag}}
+      template(v-if="bapp.page_info.tag")
+        b-tag(attached closable @close="bapp.tag_search_handle(null)" rounded type="is-dark")
+          | {{bapp.page_info.tag}}
       template(v-else)
         | 問題一覧
 
     ////////////////////////////////////////////////////////////////////////////////
-    b-icon.header_item.with_icon.rjust(icon="plus" @click.native="builder_app.builder_new_handle" v-if="permit_question_new_p")
+    b-icon.header_item.with_icon.rjust(icon="plus" @click.native="bapp.builder_new_handle" v-if="permit_question_new_p")
     //////////////////////////////////////////////////////////////////////////////// メニューで開くタイプ
     b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
       b-icon(slot="trigger" icon="menu")
@@ -41,8 +41,8 @@
           | {{e.name}}
 
   b-table.index_table.is-size-7.mx-2.mt-4(
-    v-if="builder_app.questions"
-    :data="builder_app.questions"
+    v-if="bapp.questions"
+    :data="bapp.questions"
     :mobile-cards="false"
     hoverable
     :narrowed="false"
@@ -51,15 +51,15 @@
     paginated
     backend-pagination
     pagination-simple
-    :page="builder_app.page_info.page"
-    :total="builder_app.page_info.total"
-    :per-page="builder_app.page_info.per"
-    @page-change="builder_app.page_change_handle"
+    :page="bapp.page_info.page"
+    :total="bapp.page_info.total"
+    :per-page="bapp.page_info.per"
+    @page-change="bapp.page_change_handle"
 
     backend-sorting
-    :default-sort-direction="builder_app.page_info.sort_order_default"
-    :default-sort="[builder_app.page_info.sort_column, builder_app.page_info.sort_order]"
-    @sort="builder_app.sort_handle"
+    :default-sort-direction="bapp.page_info.sort_order_default"
+    :default-sort="[bapp.page_info.sort_column, bapp.page_info.sort_order]"
+    @sort="bapp.sort_handle"
 
     detailed
     detail-key="id"
@@ -113,7 +113,7 @@
 
       b-table-column(custom-key="owner_tag_list"    field="owner_tag_list"  :label="QuestionIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="visible_hash.owner_tag_list")
         b-taglist
-          b-tag.is_clickable(v-for="tag in props.row.owner_tag_list" @click.native.stop="builder_app.tag_search_handle(tag)" rounded)
+          b-tag.is_clickable(v-for="tag in props.row.owner_tag_list" @click.native.stop="bapp.tag_search_handle(tag)" rounded)
             | {{tag}}
 
       b-table-column(custom-key="created_at"        field="created_at"        :label="QuestionIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="visible_hash.created_at")       {{row_time_format(props.row.created_at)}}
@@ -121,7 +121,7 @@
 
       b-table-column(custom-key="operation" label="操作")
         template(v-if="app.current_user.id === props.row.user.id || app.debug_force_edit_p")
-          a(@click.stop="builder_app.question_edit_for(props.row)") 編集
+          a(@click.stop="bapp.question_edit_for(props.row)") 編集
 
     template(slot="empty")
       section.section.is-unselectable
@@ -227,7 +227,7 @@ export default {
     // 「公開」選択
     folder_active_handle() {
       this.question_mode_select("active")
-      this.builder_app.folder_change_handle("active")
+      this.bapp.folder_change_handle("active")
     },
 
     // 指定のタブを選択
@@ -239,7 +239,7 @@ export default {
     question_tab_index_change_handle() {
       this.sound_play("click")
       this.say(this.question_current_tab_info.name)
-      this.builder_app.folder_change_handle(this.question_current_tab_info.key)
+      this.bapp.folder_change_handle(this.question_current_tab_info.key)
     },
 
     // このタブは表示するか？
@@ -254,7 +254,7 @@ export default {
     },
     // このタブのレコード件数
     question_count_in_tab(tab_info) {
-      return this.builder_app.question_counts[tab_info.key] || 0
+      return this.bapp.question_counts[tab_info.key] || 0
     },
 
     // チェックボックスが変更されたとき
@@ -277,7 +277,7 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// details
     detail_open_handle() {
       this.sound_play('click')
-      this.detailed_ids = this.builder_app.questions.map(e => e.id)
+      this.detailed_ids = this.bapp.questions.map(e => e.id)
     },
     detail_close_handle() {
       this.sound_play('click')
