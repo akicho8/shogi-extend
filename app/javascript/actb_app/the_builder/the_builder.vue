@@ -123,30 +123,30 @@ export default {
     }
   },
 
-  created() {
+  async created() {
     this.app.lobby_unsubscribe()
     this.sound_play("click")
 
     // 一覧用のリソース
-    this.api_get("builder_form_resource_fetch", {}, e => {
+    await this.api_get("builder_form_resource_fetch", {}, e => {
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
-
-      this.resource_loaded_p = true
-
-      // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
-      if (this.app.edit_question_id) {
-        this.question_edit()
-        return
-      }
-
-      if (this.app.info.warp_to === "builder_haiti" || this.app.info.warp_to === "builder_form") {
-        this.builder_new_handle()
-        return
-      }
-
-      this.builder_index_handle()
     })
+
+    this.resource_loaded_p = true
+
+    // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
+    if (this.app.edit_question_id) {
+      this.question_edit()
+      return
+    }
+
+    if (this.app.info.warp_to === "builder_haiti" || this.app.info.warp_to === "builder_form") {
+      this.builder_new_handle()
+      return
+    }
+
+    this.builder_index_handle()
   },
 
   methods: {
