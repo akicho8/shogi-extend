@@ -130,13 +130,14 @@ export const support = {
   },
   computed: {
     ...Vuex.mapState([
-      'app',
+      "app",
+      "builder_app",
     ]),
     ...Vuex.mapGetters([
-      'current_gvar1',
+      "current_gvar1",
     ]),
     // ...mapState([
-    //   'fooKey',
+    //   "fooKey",
     // ]),
 
     permit_staff_p()               { return this.permit_enable_type("staff")                      },

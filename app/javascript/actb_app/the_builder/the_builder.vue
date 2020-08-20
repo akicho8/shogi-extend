@@ -123,6 +123,8 @@ export default {
   },
 
   async created() {
+    this.$store.state.builder_app = this
+
     this.app.lobby_unsubscribe()
     this.sound_play("click")
 

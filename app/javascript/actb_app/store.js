@@ -4,6 +4,7 @@ export const store = () => new Vuex.Store({
   state: {
     gvar1: "(gvar1)",
     app: null,
+    builder_app: null,
   },
 
   // 便利参照メソッドを書く
