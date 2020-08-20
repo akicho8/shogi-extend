@@ -147,7 +147,7 @@ Rails.application.routes.draw do
   end
 
   direct :staging_app do
-    "https://staging.shogi-extend.com/"
+    "https://shogi-flow.xyz/"
   end
 
   ################################################################################ scripts
