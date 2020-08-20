@@ -1,44 +1,7 @@
 <template lang="pug">
 .the_builder
   the_builder_index(v-if="!question")
-
-  .the_builder_new_and_edit(v-if="question")
-    ////////////////////////////////////////////////////////////////////////////////
-    .primary_header
-      b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="builder_index_handle")
-      .header_center_title
-        template(v-if="question.title")
-          | {{question.title}}
-        template(v-else)
-          | {{question_new_record_p ? '新規' : '編集'}}
-      .header_item.with_text.rjust.has-text-weight-bold(@click="question_save_handle" :class="{disabled: !save_button_enabled}")
-        | {{save_button_name}}
-
-    ////////////////////////////////////////////////////////////////////////////////
-    .secondary_header
-      b-tabs.tabs_in_secondary(v-model="tab_index" expanded @change="edit_tab_change_handle")
-        b-tab-item(label="配置")
-
-        b-tab-item
-          template(slot="header")
-            span
-              | 正解
-              b-tag(rounded v-if="question.moves_answers.length >= 1") {{question.moves_answers.length}}
-
-        b-tab-item(label="情報")
-
-        b-tab-item
-          template(slot="header")
-            span
-              | 検証
-              b-tag(rounded v-if="valid_count >= 1" type="is-primary") OK
-
-    ////////////////////////////////////////////////////////////////////////////////
-    the_builder_edit_haiti(  v-if="current_tab_info.key === 'haiti_mode'")
-    the_builder_edit_seikai( v-if="current_tab_info.key === 'seikai_mode'" ref="the_builder_edit_seikai")
-    the_builder_edit_form(   v-if="current_tab_info.key === 'form_mode'")
-    the_builder_edit_kensho( v-if="current_tab_info.key === 'kensho_mode'")
-
+  the_builder_edit(v-if="question")
   debug_print(v-if="app.debug_read_p")
 </template>
 
@@ -47,11 +10,9 @@ import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
 import { support } from "../support.js"
-import the_builder_index  from "./the_builder_index.vue"
-import the_builder_edit_haiti  from "./the_builder_edit_haiti.vue"
-import the_builder_edit_seikai from "./the_builder_edit_seikai.vue"
-import the_builder_edit_form   from "./the_builder_edit_form.vue"
-import the_builder_edit_kensho from "./the_builder_edit_kensho.vue"
+
+import the_builder_index from "./the_builder_index.vue"
+import the_builder_edit  from "./the_builder_edit.vue"
 
 import { Question    } from "../models/question.js"
 import { LineageInfo } from '../models/lineage_info.js'
@@ -79,10 +40,7 @@ export default {
   ],
   components: {
     the_builder_index,
-    the_builder_edit_haiti,
-    the_builder_edit_seikai,
-    the_builder_edit_form,
-    the_builder_edit_kensho,
+    the_builder_edit,
   },
   data() {
     return {
@@ -443,6 +401,6 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .the_builder
-  .the_builder_new_and_edit
+  .the_builder_edit
     @extend %padding_top_for_secondary_header
 </style>
