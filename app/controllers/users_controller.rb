@@ -37,6 +37,8 @@
 class UsersController < ApplicationController
   include ModulableCrud::All
 
+  skip_before_action :user_name_required, action: [:edit, :update]
+
   before_action only: [:index] do
     unless sysop?
       redirect_to :root, alert: "アクセス権限がありません"

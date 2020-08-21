@@ -29,6 +29,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  before_action :user_name_required
+
+  def user_name_required
+    if current_user
+      if current_user.name.blank?
+        redirect_to [:edit, current_user], notice: "名前を入力してください"
+      end
+    end
+  end
+
   # for devise
   # ログインしたあとに移動するパス
   # https://notsleeeping.com/archives/2487
