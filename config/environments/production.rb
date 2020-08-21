@@ -151,7 +151,7 @@ Rails.application.configure do
 
         :available_providers           => [:twitter, :google, :github],
         :nanasi_login                  => false,
-        :email_pw_login                   => true,
+        :email_pw_login                => false,
       })
   end
 end
