@@ -15,7 +15,7 @@
     :volume="0.5"
     @update:turn_offset="bapp.turn_offset_set"
     @update:mediator_snapshot_sfen="bapp.mediator_snapshot_sfen_set"
-    ref="play_sp"
+    ref="seikai_sp"
     )
 
   .buttons.is-centered.konotejunsiikai

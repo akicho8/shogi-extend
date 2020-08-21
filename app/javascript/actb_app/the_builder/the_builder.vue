@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_builder
   the_builder_index(v-if="!question")
-  the_builder_edit(v-if="question")
+  the_builder_edit(v-if="question" ref="the_builder_edit")
   debug_print(v-if="app.debug_read_p")
 </template>
 
@@ -167,8 +167,9 @@ export default {
       }
     },
 
+    // FIXME: イベントで受けとる
     current_moves() {
-      return this.$refs.the_builder_edit_seikai.$refs.play_sp.moves_take_turn_offset
+      return this.$refs.the_builder_edit.$refs.the_builder_edit_seikai.$refs.seikai_sp.moves_take_turn_offset
     },
 
     // 「この手順を正解とする」
@@ -352,6 +353,7 @@ export default {
     },
 
     turn_offset_set(v) {
+      this.debug_alert(v)
       this.answer_turn_offset = v
     },
 
