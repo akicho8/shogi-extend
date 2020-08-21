@@ -42,6 +42,9 @@ module UserCoreMod
       self.key ||= SecureRandom.hex
       self.user_agent ||= ""
       self.name ||= ""
+      if name.present?
+        self.name_input_at ||= Time.current
+      end
 
       if email.blank?
         self.email = "#{key}@localhost"
