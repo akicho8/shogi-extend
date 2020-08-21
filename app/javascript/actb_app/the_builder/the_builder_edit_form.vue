@@ -71,10 +71,12 @@ export default {
   ],
   data() {
     return {
-      source_author_collapse_open_p: this.bapp.question.source_author_collapse_open_p,
+      source_author_collapse_open_p: null,
     }
   },
-
+  created() {
+    this.source_author_collapse_open_p = this.bapp.question.source_author_collapse_open_p
+  },
   watch: {
     "question.lineage_key": {
       handler(v) {
