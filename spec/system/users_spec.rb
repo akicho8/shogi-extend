@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "対戦", type: :system do
+RSpec.describe "ユーザー", type: :system do
   before do
     Actb.setup
   end
@@ -18,14 +18,20 @@ RSpec.describe "対戦", type: :system do
   end
 
   it "プロフィール表示" do
-    @alice = create(:user)
-    visit "/users/#{@alice.id}"
+    alice = create(:user)
+    visit "/users/#{alice.id}"
     doc_image
   end
 
   it "プロフィール設定" do
-    @alice = create(:user)
-    visit "/users/#{@alice.id}/edit"
+    alice = create(:user)
+    visit "/users/#{alice.id}/edit"
     doc_image
+  end
+
+  it "名前がないときプロフィール設定に飛ばされる" do
+    alice = create(:user, name: "")
+    visit "/?_user_id=#{alice.id}"
+    assert { current_path == "/users/#{alice.id}/edit" }
   end
 end

@@ -35,13 +35,13 @@ module UserCoreMod
     end
 
     before_validation do
+      if Rails.env.test?
+        self.name ||= "test-user#{self.class.count.next}"
+      end
+
       self.key ||= SecureRandom.hex
       self.user_agent ||= ""
       self.name ||= ""
-
-      if Rails.env.test?
-        self.name = name.presence || "test-user#{self.class.count.next}"
-      end
 
       if email.blank?
         self.email = "#{key}@localhost"
