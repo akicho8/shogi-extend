@@ -1,7 +1,7 @@
 import the_question_show from "./the_question_show.vue"
 import { Question } from "./models/question.js"
 
-export const the_question_show_mod = {
+export const application_question_show = {
   methods: {
     ov_question_url(id) {
       const url = new URL(location)

@@ -26,9 +26,6 @@
 import { support } from "./support.js"
 import { store   } from "./store.js"
 
-import { the_question_show_mod } from "./the_question_show_mod.js"
-import { the_user_show_mod }     from "./the_user_show_mod.js"
-
 // Page Components
 import the_question_show from "./the_question_show.vue"
 import the_user_show     from "./the_user_show.vue"
@@ -55,12 +52,15 @@ import { application_history       } from "./application_history.js"
 import { application_history_vote  } from "./application_history_vote.js"
 import { application_notification  } from "./application_notification.js"
 import { application_new_challenge } from "./application_new_challenge.js"
+import { application_question_show } from "./application_question_show.js"
+import { application_user_show }     from "./application_user_show.js"
 import { config                    } from "./config.js"
 import { RuleInfo                  } from "./models/rule_info.js"
 import { OxMarkInfo                } from "./models/ox_mark_info.js"
 import { SkillInfo                 } from "./models/skill_info.js"
 import { EmotionInfo               } from "./models/emotion_info.js"
 import { EmotionFolderInfo       } from "./models/emotion_folder_info.js"
+
 
 export default {
   store,
@@ -69,8 +69,8 @@ export default {
     support,
     config,
 
-    the_question_show_mod,
-    the_user_show_mod,
+    application_question_show,
+    application_user_show,
 
     application_room,
     application_emotion,
