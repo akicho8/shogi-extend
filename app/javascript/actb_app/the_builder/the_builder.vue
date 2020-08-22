@@ -80,9 +80,11 @@ export default {
     }
   },
 
-  async created() {
+  beforeCreate() {
     this.$store.state.bapp = this
+  },
 
+  async created() {
     this.app.lobby_unsubscribe()
     this.sound_play("click")
 
