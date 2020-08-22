@@ -75,24 +75,22 @@ export const application_new_challenge = {
     },
 
     // 挑戦者通知→対戦する
-    new_challenge_accept_handle(params) {
-      this.revision_safe(() => {
-        const api_params = {
-          user_id: params.user.id,
-          rule_key: params.rule_key,
-          session_lock_token: this.current_user.session_lock_token, // マッチング通知を自分だけに行うための識別子を送る
+    async new_challenge_accept_handle(params) {
+      await this.revision_safe()
+      const api_params = {
+        user_id: params.user.id,
+        rule_key: params.rule_key,
+        session_lock_token: this.current_user.session_lock_token, // マッチング通知を自分だけに行うための識別子を送る
+      }
+      this.api_put("new_challenge_accept_handle", api_params, e => {
+        this.debug_alert(e.status)
+        if (e.status === "success") {
+          this.ok_notice(e.message)
         }
-
-        this.api_put("new_challenge_accept_handle", api_params, e => {
-          this.debug_alert(e.status)
-          if (e.status === "success") {
-            this.ok_notice(e.message)
-          }
-          if (e.status === "opponent_missing") {
-            this.warning_notice(e.message)
-          }
-        }) // --> app/models/frontend_script/actb_app_script/put_api.rb
-      })
+        if (e.status === "opponent_missing") {
+          this.warning_notice(e.message)
+        }
+      }) // --> app/models/frontend_script/actb_app_script/put_api.rb
     },
 
     // snackbar 用のメッセージ

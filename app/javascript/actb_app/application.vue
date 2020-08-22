@@ -208,13 +208,10 @@ export default {
       }
     },
 
-    revision_safe(callback = null) {
-      this.silent_api_get("revision_fetch", {}, e => {
+    revision_safe() {
+      return this.silent_api_get("revision_fetch", {}, e => {
         if (this.app.config.revision === e.revision) {
           this.debug_alert(`revision: ${this.app.config.revision} OK`)
-          if (callback) {
-            callback()
-          }
         } else {
           this.ok_notice("新しいプログラムがあるので更新します", {onend: () => location.reload(true)})
         }
@@ -321,7 +318,7 @@ export default {
       if (this.handle_name_required()) { return }
 
       this.sound_play("click")
-      this.revision_safe()
+      await this.revision_safe()
       this.new_challenge_snackbar_clear() // 挑戦者登場の snackbar を消去
 
       if (this.app.config.lobby_clock_restrict_p) {
@@ -453,9 +450,9 @@ export default {
 
     // 問題一覧「+」
     builder_handle() {
-      this.revision_safe()
       if (this.mode === "builder") {
       } else {
+        await this.revision_safe()
         if (this.login_required2()) { return }
         if (this.handle_name_required()) { return }
         this.mode = "builder"
