@@ -313,7 +313,7 @@ export default {
       this.warning_notice("別の端末で開いたため開始できません。この端末で開始するにはリロードしてください")
     },
 
-    start_handle(practice_p) {
+    async start_handle(practice_p) {
       if (this.login_required2()) { return }
       if (this.handle_name_required()) { return }
 
@@ -449,7 +449,7 @@ export default {
     },
 
     // 問題一覧「+」
-    builder_handle() {
+    async builder_handle() {
       if (this.mode === "builder") {
       } else {
         await this.reload_if_outdated()
