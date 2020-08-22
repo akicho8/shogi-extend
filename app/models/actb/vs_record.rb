@@ -3,7 +3,7 @@ module Actb
     belongs_to :battle, inverse_of: :memberships
 
     before_validation do
-      self.sfen_body ||= ""
+      self.sfen_body = sfen_body.presence || "position startpos"
     end
 
     with_options presence: true do

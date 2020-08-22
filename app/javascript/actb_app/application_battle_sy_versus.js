@@ -37,7 +37,8 @@ export const application_battle_sy_versus = {
     },
     vs_func_play_board_share_broadcasted(params) {
       if (params.membership_id === this.current_membership.id) {
-        // 自分は操作中なので何も変化させない
+        // 自分は操作中なので何も変化させない、けど変数には入れておきたい
+        this.vs_share_sfen = params.vs_share_sfen
         this.debug_alert("自分受信")
       } else {
         this.debug_alert("相手受信")
@@ -48,7 +49,7 @@ export const application_battle_sy_versus = {
     },
 
     vs_func_toryo_handle(ms_flip = false) {
-      this.ac_battle_perform("vs_func_toryo_handle", {ms_flip: ms_flip})
+      this.ac_battle_perform("vs_func_toryo_handle", {ms_flip: ms_flip, vs_share_sfen: this.vs_share_sfen})
     },
     vs_func_toryo_handle_broadcasted(params) {
       if (params.membership_id === this.current_membership.id) {
