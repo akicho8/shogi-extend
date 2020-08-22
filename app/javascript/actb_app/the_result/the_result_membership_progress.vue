@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 
 export default {
   mixins: [
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_result_membership_progress
   width: 8rem
 </style>

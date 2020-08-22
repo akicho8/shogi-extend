@@ -52,11 +52,11 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 
 import the_result_membership from "./the_result_membership.vue"
-import the_room_message      from "./the_room_message.vue"
-import the_room_emotion      from "./the_room_emotion.vue"
+import the_room_message      from "../the_room_message.vue"
+import the_room_emotion      from "../the_room_emotion.vue"
 
 export default {
   mixins: [
@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_result
   .vs_container
     justify-content: center

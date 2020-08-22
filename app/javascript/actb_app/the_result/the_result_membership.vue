@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support } from "../support.js"
 import the_result_membership_progress from "./the_result_membership_progress"
 
 export default {
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .the_result_membership
   // 縦配置
   flex-direction: column
