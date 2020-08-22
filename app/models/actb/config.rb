@@ -11,6 +11,7 @@ module Actb
     :action_cable_debug              => true, # ActionCable関連デバッグモード
     :user_name_required              => true, # 「名無し」であれば名前を入力してもらう
     :emotion_editable_p              => true, # エモーション編集機能有効化
+    :o_ucount_notify_func_p         => true, # 何問解いたか通知
 
     # -------------------------------------------------------------------------------- マッチング
     :matching_gap_base               => 7,  # ○**カウンター
@@ -80,6 +81,7 @@ module Actb
         :marathon_giveup_effective_seconds            => 15,       # 「あきらめる」がでるまでの秒数(マラソン)
         :sp_theme                        => "real",   # 将棋盤のタイプ
         :emotion_editable_p              => false,    # エモーション編集機能有効化
+        :o_ucount_notify_func_p         => false,    # 何問解いたか通知
         :lobby_clock_restrict_p          => false,    # ルールの開催期間制限
         :lobby_clock_restrict_ranges              => [
           # { :beg => "12:45", :end => "13:00" },

@@ -53,7 +53,9 @@ module Actb
             count = user.today_total_o_ucount
             if v = notice_trigger_counts.bsearch { |e| e >= count }
               if count == v
-                user.o_ucount_notify_once
+                if Actb::Config[:o_ucount_notify_func_p]
+                  user.o_ucount_notify_once
+                end
               end
             end
           end
