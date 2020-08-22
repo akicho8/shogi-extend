@@ -76,7 +76,7 @@ export const application_new_challenge = {
 
     // 挑戦者通知→対戦する
     async new_challenge_accept_handle(params) {
-      await this.revision_safe()
+      await this.reload_if_outdated()
       const api_params = {
         user_id: params.user.id,
         rule_key: params.rule_key,

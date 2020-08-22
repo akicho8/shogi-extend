@@ -208,7 +208,7 @@ export default {
       }
     },
 
-    revision_safe() {
+    reload_if_outdated() {
       return this.silent_api_get("revision_fetch", {}, e => {
         if (this.app.config.revision === e.revision) {
           this.debug_alert(`revision: ${this.app.config.revision} OK`)
@@ -256,7 +256,7 @@ export default {
 
       this.mode = "lobby"
       this.room = null          // 対戦中ではないことを判定するため消しておく
-      this.revision_safe()
+      this.reload_if_outdated()
     },
 
     lobby_setup() {
@@ -318,7 +318,7 @@ export default {
       if (this.handle_name_required()) { return }
 
       this.sound_play("click")
-      await this.revision_safe()
+      await this.reload_if_outdated()
       this.new_challenge_snackbar_clear() // 挑戦者登場の snackbar を消去
 
       if (this.app.config.lobby_clock_restrict_p) {
@@ -452,7 +452,7 @@ export default {
     builder_handle() {
       if (this.mode === "builder") {
       } else {
-        await this.revision_safe()
+        await this.reload_if_outdated()
         if (this.login_required2()) { return }
         if (this.handle_name_required()) { return }
         this.mode = "builder"
