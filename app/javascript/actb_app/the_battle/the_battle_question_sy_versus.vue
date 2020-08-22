@@ -27,11 +27,8 @@ export default {
     support,
   ],
   created() {
-    // this.app.main_interval_start()
   },
   beforeDestroy() {
-    // this.app.main_interval_clear()
-    // this.app.ops_interval_stop()
   },
   computed: {
     current_human_side_key() {
@@ -40,15 +37,9 @@ export default {
       } else {
         return this.app.current_membership.location_key
       }
-      // this.current_sfen = this.preset_info.sfen                     // 手合割に対応する盤面設定
-      // this.flip = (this.preset_info.first_location_key === "white") // 駒落ちなら反転して上手を持つ
-      // this.human_side_key = this.preset_info.first_location_key     // 人間側だけの操作にする
     },
     current_flip() {
       return this.app.current_membership.location_key === "white"
-      // this.current_sfen = this.preset_info.sfen                     // 手合割に対応する盤面設定
-      // this.flip = (this.preset_info.first_location_key === "white") // 駒落ちなら反転して上手を持つ
-      // this.human_side_key = this.preset_info.first_location_key     // 人間側だけの操作にする
     },
   },
 
