@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_115321) do
+ActiveRecord::Schema.define(version: 2020_08_17_115322) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -439,6 +439,14 @@ ActiveRecord::Schema.define(version: 2020_08_17_115321) do
     t.index ["position"], name: "index_actb_source_abouts_on_position"
   end
 
+  create_table "actb_vs_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "battle_id", null: false, comment: "対戦"
+    t.string "sfen_body", limit: 1536, null: false, comment: "棋譜"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_id"], name: "index_actb_vs_records_on_battle_id"
+  end
+
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -783,6 +791,7 @@ ActiveRecord::Schema.define(version: 2020_08_17_115321) do
   add_foreign_key "actb_season_xrecords", "users"
   add_foreign_key "actb_settings", "actb_rules", column: "rule_id"
   add_foreign_key "actb_settings", "users"
+  add_foreign_key "actb_vs_records", "actb_battles", column: "battle_id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "mute_infos", "users"
   add_foreign_key "mute_infos", "users", column: "target_user_id"

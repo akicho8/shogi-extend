@@ -41,6 +41,8 @@ module Actb
     has_many :users, through: :memberships
     belongs_to :parent, class_name: "Battle", optional: true # 連戦したときの前の部屋
 
+    has_one :vs_record, dependent: :destroy, inverse_of: :battle # 対局したときの棋譜
+
     before_validation do
       if room
         self.rule ||= room.rule
