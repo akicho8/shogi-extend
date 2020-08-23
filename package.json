@@ -49,7 +49,7 @@
     "rails-erb-loader": "^5.5.2",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
-    "shogi-player": "^0.0.212",
+    "shogi-player": "^0.0.213",
     "striptags": "^3.1.1",
     "style-loader": "^0.18.2",
     "uglifyjs-webpack-plugin": "^1.1.6",

@@ -143,7 +143,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     color (1.8)
-    concurrent-ruby (1.1.6)
+    concurrent-ruby (1.1.7)
     connection_pool (2.2.2)
     crass (1.0.6)
     database_cleaner (1.8.3)
