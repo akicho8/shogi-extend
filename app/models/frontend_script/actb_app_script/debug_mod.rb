@@ -30,6 +30,7 @@ module FrontendScript
                 "ユーザー詳細"                 => :ov_user_info,
                 "ログインしている状態"         => :login_lobby,
                 "ログインしていない状態"       => :no_login_lobby,
+                "対局時計動作確認"       => :chess_clock,
               },
             },
           ]
@@ -181,6 +182,10 @@ module FrontendScript
       # ログインしていない状態
       def debug_for_no_login_lobby(info)
         info.delete(:current_user)
+      end
+
+      def debug_for_chess_clock(info)
+        c.sysop_login_unless_logout
       end
 
       ################################################################################

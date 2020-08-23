@@ -12,6 +12,7 @@
   the_history(      v-if="mode === 'history'")
   the_builder(      v-if="mode === 'builder'" ref="builder")
   the_menu(         v-if="mode === 'menu'")
+  the_chess_clock(  v-if="mode === 'chess_clock'")
 
   details(v-if="app.debug_read_p")
     summary DEBUG
@@ -40,6 +41,7 @@ import the_builder       from "./the_builder/the_builder.vue"
 import the_ranking       from "./the_ranking.vue"
 import the_history       from "./the_history/the_history.vue"
 import the_menu          from "./the_menu/the_menu.vue"
+import the_chess_clock   from "./the_chess_clock.vue"
 
 // Mixins
 import { application_room          } from "./application_room.js"
@@ -60,7 +62,6 @@ import { OxMarkInfo                } from "./models/ox_mark_info.js"
 import { SkillInfo                 } from "./models/skill_info.js"
 import { EmotionInfo               } from "./models/emotion_info.js"
 import { EmotionFolderInfo       } from "./models/emotion_folder_info.js"
-
 
 export default {
   store,
@@ -98,6 +99,7 @@ export default {
     the_ranking,
     the_history,
     the_menu,
+    the_chess_clock,
   },
   props: {
     info: { required: true },
@@ -148,7 +150,7 @@ export default {
     this.$store.state.app = this
   },
 
-  created() {
+  async created() {
     if (this.development_p) {
       if (this.permit_staff_p) {
         this.debug_summary_p    = true
@@ -158,7 +160,7 @@ export default {
       }
     }
 
-    this.api_get("resource_fetch", {}, e => {
+    await this.api_get("resource_fetch", {}, e => {
       this.RuleInfo          = RuleInfo.memory_record_reset(e.RuleInfo)
       this.OxMarkInfo        = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
       this.SkillInfo         = SkillInfo.memory_record_reset(e.SkillInfo)
@@ -193,6 +195,9 @@ export default {
         }
         if (this.info.warp_to === "history") {
           this.history_handle()
+        }
+        if (this.info.warp_to === "chess_clock") {
+          this.chess_clock_handle()
         }
         if (this.info.warp_to === "ov_question_info") {
           this.ov_question_info_set(this.info.question_id)
@@ -483,6 +488,14 @@ export default {
       } else {
         this.lobby_unsubscribe()
         this.mode = "menu"
+      }
+    },
+
+    chess_clock_handle() {
+      if (this.mode === "chess_clock") {
+      } else {
+        this.lobby_unsubscribe()
+        this.mode = "chess_clock"
       }
     },
   },
