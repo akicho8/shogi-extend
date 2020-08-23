@@ -49,7 +49,20 @@ export const application_battle_sy_versus = {
     },
 
     vs_func_toryo_handle(ms_flip = false) {
-      this.ac_battle_perform("vs_func_toryo_handle", {ms_flip: ms_flip, vs_share_sfen: this.vs_share_sfen})
+      this.$buefy.dialog.confirm({
+        title: "投了",
+        message: `本当によろしいですか？`,
+        confirmText: "投了する",
+        cancelText: "考え直す",
+        type: "is-danger",
+        hasIcon: false,
+        trapFocus: true,
+        animation: "",
+        onConfirm: () => {
+          this.ac_battle_perform("vs_func_toryo_handle", {ms_flip: ms_flip, vs_share_sfen: this.vs_share_sfen})
+        },
+        onCancel: () => { this.debug_alert("キャンセル") },
+      })
     },
     vs_func_toryo_handle_broadcasted(params) {
       if (params.membership_id === this.current_membership.id) {
