@@ -83,7 +83,11 @@ export const application_battle = {
 
       this.question_index = 0
 
-      if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
+      if (
+        this.info.warp_to === "battle_sy_versus" ||
+        this.info.warp_to === "battle_sy_marathon" ||
+          this.info.warp_to === "battle_sy_singleton" ||
+          this.info.warp_to === "battle_sy_hybrid") {
         this.start_hook()
         return
       }
@@ -110,6 +114,10 @@ export const application_battle = {
       if (this.info.warp_to === "result") {
         this.result_setup(this.info.battle)
         return
+      }
+
+      if (this.versus_mode_p) {
+        this.vs_func_init()
       }
 
       if (this.question_mode_p) {

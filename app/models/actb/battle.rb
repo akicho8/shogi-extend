@@ -100,7 +100,7 @@ module Actb
             final: { only: [:key], methods: [:name] },
             room: {},
             memberships: {
-              only: [:id],
+              only: [:id, :position],
               methods: [:location_key],
               include: {
                 user: {
@@ -129,7 +129,7 @@ module Actb
               methods: [:name, :lose_side]
             },
             memberships: {
-              only: [:id, :straight_win_count, :straight_lose_count],
+              only: [:id, :position, :straight_win_count, :straight_lose_count],
               include: {
                 user: {
                   only: [:id, :name],

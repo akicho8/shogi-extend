@@ -81,7 +81,6 @@ export default {
     .straight_lose_count
       color: $success
 
-
   // オーバーレイ○×
   position: relative
   .maru_batu

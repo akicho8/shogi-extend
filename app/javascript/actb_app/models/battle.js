@@ -9,8 +9,7 @@ export class Battle {
       this.best_questions = []
     }
     this.best_questions = this.best_questions.map(e => new Question(e))
-
-    // this.memberships = this.memberships.map(e => new BattleMembership(e))
+    this.memberships = this.memberships.map(e => new BattleMembership(e))
   }
 
   get questions_count() {

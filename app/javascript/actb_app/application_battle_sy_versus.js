@@ -1,11 +1,23 @@
+import { ChessClock } from "./models/chess_clock.js"
+import Location from "shogi-player/src/location.js"
+
 export const application_battle_sy_versus = {
   data() {
     return {
       vs_share_sfen: "",
+      chess_clock: null,
     }
   },
 
+  created() {
+    this.chess_clock = new ChessClock()
+  },
+
   methods: {
+    vs_func_init() {
+      this.chess_clock.initial_boot_from(this.current_membership.location.code)
+    },
+
     vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
       this.debug_alert(long_sfen)
       // if (this.sub_mode === "sm4_tactic") {

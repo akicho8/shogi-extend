@@ -5,17 +5,15 @@
   a.delete.page_delete.is-large.is_top_left_fixed(@click="app.rensyu_yameru_handle" v-if="app.room.bot_user_id")
   the_room_emotion
 
-  //////////////////////////////////////////////////////////////////////////////// ○vs○
-  .vs_container.is-flex
-    template(v-for="(membership, i) in app.ordered_memberships")
-      the_battle_membership(:membership="membership" :key="membership.id")
-      .is-1.has-text-weight-bold.is-size-4.has-text-grey-light.mx-1(v-if="i === 0") vs
-
   template(v-if="app.current_strategy_key === 'sy_versus'")
     the_battle_question_sy_versus
-    the_room_message
 
+  //////////////////////////////////////////////////////////////////////////////// ○vs○
   template(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_singleton' || app.current_strategy_key === 'sy_hybrid'")
+    .vs_container.is-flex
+      template(v-for="(membership, i) in app.ordered_memberships")
+        the_battle_membership(:membership="membership" :key="membership.id")
+        .is-1.has-text-weight-bold.is-size-4.has-text-grey-light.mx-1(v-if="i === 0") vs
     //////////////////////////////////////////////////////////////////////////////// 第○問
     template(v-if="app.sub_mode === 'sm3_deden'")
       .sm3_deden_container.has-text-centered.is-size-3
