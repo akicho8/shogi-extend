@@ -181,7 +181,11 @@ export default {
         if (this.info.warp_to === "emotion_index" || this.info.warp_to === "emotion_edit") {
           this.emotion_setup()
         }
-        if (this.info.warp_to === "battle_sy_marathon" || this.info.warp_to === "battle_sy_singleton" || this.info.warp_to === "battle_sy_hybrid") {
+        if (
+          this.info.warp_to === "battle_sy_versus" ||
+          this.info.warp_to === "battle_sy_marathon" ||
+          this.info.warp_to === "battle_sy_singleton" ||
+          this.info.warp_to === "battle_sy_hybrid") {
           this.room_setup(this.info.room)
         }
         if (this.info.warp_to === "result") {

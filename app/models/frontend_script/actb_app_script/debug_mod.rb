@@ -15,6 +15,7 @@ module FrontendScript
                 "エモーション編集 編集"        => :emotion_edit,
                 "プロフィール編集"             => :profile_edit,
                 "プロフィール画像アップロード" => :profile_edit_image_crop,
+                "対局"                         => :battle_sy_versus,
                 "対戦(マラソン)"               => :battle_sy_marathon,
                 "対戦(シングルトン)"           => :battle_sy_singleton,
                 "対戦(ハイブリッド)"           => :battle_sy_hybrid,
@@ -72,6 +73,10 @@ module FrontendScript
 
       # プロフィール画像アップロード
       def debug_for_profile_edit_image_crop(info)
+      end
+
+      def debug_for_battle_sy_versus(info)
+        debug_for_battle_sy(info, :versus1_rule)
       end
 
       # 対戦(マラソン)
