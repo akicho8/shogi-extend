@@ -34,6 +34,7 @@
       b-button(@click="app.chess_clock.params.every_add_value = 5") フィッシャールール
       b-button(@click="app.chess_clock.params.every_add_value = 0") 通常ルール
       b-button(@click="app.chess_clock.reset()") RESET
+      b-button(@click="app.chess_clock.value_set(3)") 両方残り3秒
     b-message
       | 1手毎に{{app.chess_clock.params.every_add_value}}秒加算
 

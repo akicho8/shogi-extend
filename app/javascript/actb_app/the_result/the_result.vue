@@ -23,7 +23,7 @@
           .has-text-info
             | DRAW !
 
-    .final_container.has-text-centered.is-size-7(v-if="app.battle.final.key === 'f_disconnect'")
+    .final_container.has-text-centered.is-size-7(v-if="app.battle.final.key === 'f_disconnect' || app.battle.final.key === 'f_timeout'")
       | {{app.battle.final.name}}
 
   .vs_container.mt-2.is-flex

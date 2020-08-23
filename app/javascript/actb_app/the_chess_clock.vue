@@ -30,6 +30,7 @@
     b-button(@click="chess_clock.params.every_add_value = 5") フィッシャールール
     b-button(@click="chess_clock.params.every_add_value = 0") 通常ルール
     b-button(@click="chess_clock.reset()") RESET
+    b-button(@click="chess_clock.value_set(3)") 両方残り3秒
 </template>
 
 <script>

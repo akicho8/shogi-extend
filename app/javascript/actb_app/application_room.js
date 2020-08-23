@@ -47,7 +47,7 @@ export const application_room = {
           this.info.warp_to === "battle_sy_singleton" ||
           this.info.warp_to === "battle_sy_hybrid") {
         this.battle_setup(this.info.battle)
-        return
+        // return
       }
 
       this.__assert__(this.$ac_room == null, "this.$ac_room == null")
@@ -68,7 +68,7 @@ export const application_room = {
         this.info.warp_to === "battle_sy_marathon" ||
           this.info.warp_to === "battle_sy_singleton" ||
           this.info.warp_to === "battle_sy_hybrid") {
-        this.battle_setup(this.info.battle)
+        // this.battle_setup(this.info.battle)
         return
       }
 

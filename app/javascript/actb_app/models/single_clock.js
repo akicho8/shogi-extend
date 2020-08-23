@@ -1,3 +1,4 @@
+import Location from "shogi-player/src/location.js"
 import dayjs from "dayjs"
 
 export class SingleClock {
@@ -13,6 +14,12 @@ export class SingleClock {
       this.value += value
       if (this.value < 0) {
         this.value = 0
+      }
+      if (!this.base.clock_done) {
+        if (this.value === 0) {
+          this.base.clock_done = true
+          this.base.params.time_zero_callback(this)
+        }
       }
     }
   }
@@ -78,5 +85,9 @@ export class SingleClock {
 
   get standby_mode_p() {
     return this.base.turn == null
+  }
+
+  get location() {
+    return Location.fetch(this.index)
   }
 }

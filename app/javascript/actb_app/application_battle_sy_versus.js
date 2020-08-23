@@ -10,12 +10,15 @@ export const application_battle_sy_versus = {
   },
 
   created() {
-    this.chess_clock = new ChessClock()
+    this.chess_clock = new ChessClock({time_zero_callback: e => {
+      this.vs_func_time_zero_handle(e)
+    }})
   },
 
   methods: {
     vs_func_init() {
-      this.chess_clock.initial_boot_from(this.current_membership.location.code)
+      // this.chess_clock.initial_boot_from(this.current_membership.location.code)
+      this.chess_clock.initial_boot_from(0) // ▲から始まる
     },
 
     vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
@@ -33,6 +36,7 @@ export const application_battle_sy_versus = {
       //       this.ops_interval_restart()
       //     }
       //
+      this.chess_clock.single_clocks[this.current_membership.location.code].turn_end_handle()
       this.vs_func_play_board_share(long_sfen)
       //   }
       //
@@ -77,6 +81,18 @@ export const application_battle_sy_versus = {
       })
     },
     vs_func_toryo_handle_broadcasted(params) {
+      if (params.membership_id === this.current_membership.id) {
+      } else {
+      }
+    },
+
+    vs_func_time_zero_handle(single_clock, ms_flip = false) {
+      const membership = this.battle.memberships[single_clock.location.code]
+      if (membership.id === this.current_membership.id) {
+        this.ac_battle_perform("vs_func_time_zero_handle", {ms_flip: ms_flip, vs_share_sfen: this.vs_share_sfen})
+      }
+    },
+    vs_func_time_zero_handle_broadcasted(params) {
       if (params.membership_id === this.current_membership.id) {
       } else {
       }

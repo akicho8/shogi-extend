@@ -39,27 +39,26 @@ export const application_battle = {
 
   methods: {
     ac_battle_perform(action, params = {}) {
-      let membership = null
+      params = {...params}
 
-      if (params.ms_flip) {
-        this.__assert__(typeof params.ms_flip === "boolean")
+      // membership_id が空であれば自分を埋める
+      if (!params.membership_id) {
+        params.membership_id = this.current_membership.id
       }
 
-      if (params.ms_flip) {
-        membership = this.opponent_membership
-      } else {
-        membership = this.current_membership
+      // ms_flip があれば逆にする
+      if (true) {
+        if (params.ms_flip) {
+          if (params.membership_id === this.current_membership.id) {
+            params.membership_id = this.opponent_membership.id
+          } else {
+            params.membership_id = this.current_membership.id
+          }
+        }
+        delete params.ms_flip
       }
 
-      this.__assert__(params.membership_id == null, "params.membership_id == null")
-      params = Object.assign({}, {
-        membership_id: membership.id,
-      }, params)
-
-      delete params.ms_flip
-
-      this.debug_say(`**→ [${membership.user.name}][${action}] ` + JSON.stringify(params))
-
+      // this.debug_say(`**→ [${membership.user.name}][${action}] ` + JSON.stringify(params))
       this.$ac_battle.perform(action, params) // --> app/channels/actb/battle_channel.rb
     },
 
@@ -83,14 +82,14 @@ export const application_battle = {
 
       this.question_index = 0
 
-      if (
-        this.info.warp_to === "battle_sy_versus" ||
-        this.info.warp_to === "battle_sy_marathon" ||
-          this.info.warp_to === "battle_sy_singleton" ||
-          this.info.warp_to === "battle_sy_hybrid") {
-        this.start_hook()
-        return
-      }
+      // if (
+      //   this.info.warp_to === "battle_sy_versus" ||
+      //   this.info.warp_to === "battle_sy_marathon" ||
+      //     this.info.warp_to === "battle_sy_singleton" ||
+      //     this.info.warp_to === "battle_sy_hybrid") {
+      //   this.start_hook()
+      //   return
+      // }
 
       this.__assert__(this.$ac_battle == null, "this.$ac_battle == null")
       this.$ac_battle = this.ac_subscription_create({channel: "Actb::BattleChannel", battle_id: this.battle.id}, {

@@ -4,7 +4,9 @@ import Location from "shogi-player/src/location.js"
 export class ChessClock {
   constructor(params = {}) {
     this.params = {
-      every_add_value: null,    // リアクティブにするため null でも定義が必要
+      // ここらのハッシュキーはリアクティブにするため null でも定義が必要
+      every_add_value: null,
+      time_zero_callback: e => { },
       ...params,
     }
     this.reset()
@@ -18,8 +20,9 @@ export class ChessClock {
   }
 
   reset() {
-    this.turn = null
-    this.counter = 0
+    this.turn = null            // インクリメントしていく
+    this.counter = 0            // turn とは異なり手数に相当する
+    this.clock_done = false     // 片方が0になったら true になる
     this.single_clocks = Location.values.map((e, i) => new SingleClock(this, i))
     this.timer_stop()
   }
@@ -36,6 +39,10 @@ export class ChessClock {
   // 時間経過
   generation_next(value) {
     this.current.generation_next(value)
+  }
+
+  value_set(value) {
+    this.single_clocks.forEach(e => e.value = value)
   }
 
   timer_start() {

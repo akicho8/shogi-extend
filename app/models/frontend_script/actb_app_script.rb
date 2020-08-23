@@ -96,6 +96,8 @@ module FrontendScript
       info[:api_path] = h.url_for(script_link_path)
       info[:question_default_attributes] = Actb::Question.default_attributes
 
+      warp_to_params_set(info)  # current_user のデータを作ることもあるので current_user のセットの前で行うこと
+
       if current_user
         info[:current_user] = current_user.as_json_type9x
 
@@ -106,8 +108,6 @@ module FrontendScript
           c.current_user_set_for_action_cable(current_user)
         end
       end
-
-      warp_to_params_set(info)
 
       # if Rails.env.development?
       #   Actb::BaseChannel.redis_clear
