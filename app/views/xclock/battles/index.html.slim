@@ -1,0 +1,4 @@
+ul
+  - @battles.each do |battle|
+    li
+      = link_to("ROOM#{battle.id}", battle)

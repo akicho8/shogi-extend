@@ -1,0 +1,398 @@
+module Xclock
+  module UserMod
+    extend ActiveSupport::Concern
+
+    included do
+      include ClipMod
+      include VoteMod
+      include FolderMod
+
+      # 対局
+      has_many :xclock_room_memberships, class_name: "Xclock::RoomMembership", dependent: :destroy # 対局時の情報(複数)
+      has_many :xclock_rooms, class_name: "Xclock::Room", through: :xclock_room_memberships                       # 対局(複数)
+
+      # 対局
+      has_many :xclock_battle_memberships, class_name: "Xclock::BattleMembership", dependent: :destroy # 対局時の情報(複数)
+      has_many :xclock_battles, class_name: "Xclock::Battle", through: :xclock_battle_memberships                       # 対局(複数)
+
+      # このユーザーが作成した問題(複数)
+      has_many :xclock_questions, class_name: "Xclock::Question", dependent: :destroy do
+        def create_mock1(attrs = {})
+          create!(attrs) do |e|
+            if e.moves_answer_validate_skip.nil?
+              e.moves_answer_validate_skip = true
+            end
+            e.title ||= SecureRandom.hex
+            e.init_sfen ||= "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
+            e.moves_answers.build(moves_str: "G*5b")
+          end
+        end
+      end
+
+      # このユーザーに出題した問題(複数)
+      has_many :xclock_histories, class_name: "Xclock::History", dependent: :destroy
+
+      # 自分がBOTになった部屋
+      has_many :xclock_bot_rooms, class_name: "Xclock::Room", foreign_key: :bot_user_id, dependent: :destroy
+
+      # 通知
+      has_many :notifications, class_name: "Xclock::Notification", dependent: :destroy # 自分が受信
+    end
+
+    concerning :OtherMethods do
+      def page_url(options = {})
+        Rails.application.routes.url_helpers.url_for([:training, {only_path: false, user_id: id}.merge(options)])
+      end
+
+      def linked_name(options = {})
+        ApplicationController.helpers.link_to(name, page_url(only_path: true))
+      end
+    end
+
+    concerning :OUcountNotifyMod do
+      # rails r "tp User.first.straight_win_count_notify"
+      def straight_win_count_notify
+        User.bot.lobby_speak("#{linked_name}さんが#{xclock_season_xrecord.straight_win_count}連勝しました")
+      end
+
+      # rails r "tp User.first.o_ucount_notify"
+      def o_ucount_notify
+        User.bot.lobby_speak("#{linked_name}さんが本日#{today_total_o_ucount}問解きました")
+      end
+
+      # rails dev:cache
+      # rails r "tp User.first.o_ucount_notify_once"
+      def o_ucount_notify_once
+        Rails.cache.fetch(o_ucount_notify_key, expires_in: 1.days) do
+          o_ucount_notify
+          true
+        end
+      end
+
+      # rails r "tp User.first.o_ucount_notify_key"
+      def o_ucount_notify_key
+        [
+          self.class.name,
+          __method__,
+          id,
+          Time.current.strftime("%y%m%d"),
+          today_total_o_ucount,
+        ].join("/")
+      end
+    end
+
+    concerning :CurrentUserMethods do
+      attr_accessor :session_lock_token
+
+      def session_lock_token_valid?(token)
+        xclock_setting.reload.session_lock_token == token
+      end
+
+      # rails r "tp User.first.emotions_setup(reset: true)"
+      def emotions_setup(options = {})
+        if options[:reset]
+          emotions.destroy_all
+        end
+        if emotions.empty?
+          EmotionInfo.each do |e|
+            folder = EmotionFolder.fetch(e.folder_key)
+            emotions.create!(folder: folder, name: e.name, message: e.message, voice: e.voice)
+          end
+        end
+      end
+
+      # for current_user, profile
+      def as_json_type9x
+        # 二つのブラウザで同期してしまう不具合回避のための値
+        # 新しく開いた瞬間にトークンが変化するので古い方には送られなくなる(受信しても無視するしかなくなる)
+        # ↑これはまずい、2連続アクセス(はてブ？などが後からGET)した場合に START できなくなる
+        @session_lock_token = SecureRandom.hex
+        as_json_type9
+      end
+
+      # rails r "tp User.first.emotions.destroy_all"
+      # rails r "tp User.first.as_json_type9"
+      # rails r "tp Xclock::EmotionInfo.as_json"
+      def as_json_type9
+        as_json({
+            only: [
+              :id,
+              :key,
+              :name,
+              :permit_tag_list,
+              :name_input_at,
+            ],
+            include: {
+              emotions: Xclock::Emotion.json_type13,
+            },
+            methods: [
+              :avatar_path,
+              :rating,
+              :skill_key,
+              :description,
+              :twitter_key,
+              :regular_p,
+              :mute_user_ids,
+              :created_after_days,
+              :session_lock_token,
+            ],
+          })
+      end
+
+      # レギュラー条件
+      def regular_p
+        xclock_room_memberships.count >= 1 || xclock_questions.active_only.count >= 1
+      end
+
+      # アカウントを作ってからの日数
+      # rails r "p User.first.created_after_days"
+      def created_after_days
+        ((Time.current - created_at) / 1.days).to_i
+      end
+    end
+
+    concerning :MessageMethods do
+      included do
+        with_options dependent: :destroy do
+          has_many :xclock_room_messages,     class_name: "Xclock::RoomMessage"
+          has_many :xclock_lobby_messages,    class_name: "Xclock::LobbyMessage"
+          has_many :xclock_question_messages, class_name: "Xclock::QuestionMessage"
+        end
+      end
+
+      # rails r 'User.sysop.lobby_speak(Time.current)'
+      def lobby_speak(message_body, options = {})
+        xclock_lobby_messages.create!({body: message_body}.merge(options))
+      end
+
+      # rails r 'User.sysop.room_speak(Xclock::Room.first, Time.current)'
+      def room_speak(room, message_body, options = {})
+        xclock_room_messages.create!({room: room, body: message_body}.merge(options))
+      end
+
+      # rails r 'User.sysop.question_speak(Xclock::Question.first, Time.current)'
+      def question_speak(question, message_body, options = {})
+        xclock_question_messages.create!({question: question, body: message_body}.merge(options))
+      end
+    end
+
+    concerning :MainXrecordMod do
+      included do
+        has_one :xclock_main_xrecord, class_name: "Xclock::MainXrecord", dependent: :destroy
+
+        delegate :rating, :straight_win_count, :straight_win_max, :skill, :skill_key, :skill_point, to: :xclock_main_xrecord
+
+        after_create do
+          create_xclock_main_xrecord!
+        end
+      end
+
+      def create_xclock_main_xrecord_if_blank
+        xclock_main_xrecord || create_xclock_main_xrecord!
+      end
+
+      # 両方に同じ処理を行う
+      def both_xrecord_each
+        [:xclock_main_xrecord, :xclock_latest_xrecord].each do |e|
+          yield public_send(e)
+        end
+      end
+    end
+
+    concerning :SeasonXrecordMod do
+      included do
+        # プロフィール
+        with_options class_name: "Xclock::SeasonXrecord", dependent: :destroy do
+          has_one :xclock_season_xrecord, -> { newest_order }
+          has_many :xclock_season_xrecords
+        end
+
+        after_create do
+          create_xclock_season_xrecord_if_blank
+        end
+      end
+
+      def create_xclock_season_xrecord_if_blank
+        xclock_latest_xrecord
+      end
+
+      def create_xclock_main_xrecord_if_blank
+        xclock_main_xrecord || create_xclock_main_xrecord!
+      end
+
+      # 必ず存在する最新シーズンのプロフィール
+      def xclock_latest_xrecord
+        xclock_season_xrecords.find_or_create_by!(season: Season.newest)
+      end
+    end
+
+    concerning :SettingMod do
+      included do
+        has_one :xclock_setting, class_name: "Xclock::Setting", dependent: :destroy
+
+        after_create do
+          create_xclock_setting!
+        end
+      end
+
+      def create_xclock_setting_if_blank
+        xclock_setting || create_xclock_setting!
+      end
+    end
+
+    concerning :EmotionMod do
+      included do
+        # rails r "tp User.first.emotions"
+        has_many :emotions, class_name: "Xclock::Emotion", dependent: :destroy
+      end
+    end
+
+    concerning :UserInfoMethods do
+      def statistics
+        [
+          :active_questions_count,
+          :questions_good_rate_average,
+          :questions_good_marks_total,
+          :questions_bad_marks_total,
+          :total_o_count,
+          :total_x_count,
+        ].inject({}) {|a, e| a.merge(e => public_send(e)) }
+      end
+
+      def active_questions_count
+        xclock_questions.active_only.count
+      end
+
+      def questions_good_rate_average
+        xclock_questions.average(:good_rate)
+      end
+
+      def questions_good_marks_total
+        xclock_questions.sum(:good_marks_count)
+      end
+
+      def questions_bad_marks_total
+        xclock_questions.sum(:bad_marks_count)
+      end
+
+      def total_o_count
+        xclock_histories.with_o.count
+      end
+
+      def total_x_count
+        xclock_histories.with_ox_mark(:mistake).count
+      end
+
+      def today_total_o_count
+        xclock_histories.with_today.with_o.count
+      end
+
+      def today_total_x_count
+        xclock_histories.with_today.with_ox_mark(:mistake).count
+      end
+
+      def today_total_o_ucount
+        xclock_histories.with_today.with_o.distinct.count(:question_id)
+      end
+
+      def today_total_x_ucount
+        xclock_histories.with_today.with_ox_mark(:mistake).distinct.count(:question_id)
+      end
+
+      def ua
+        @ua ||= UserAgent.parse(user_agent.to_s)
+      end
+
+      def ua_info
+        [ua.mobile? ? "モバイル" : "PC", ua.platform, ua.os, ua.browser, ua.version.to_s.to_i].compact.join(" ").gsub("Windows", "Win")
+      end
+
+      # rails r "tp User.first.info"
+      def info
+        {
+          "ID"                 => id,
+          "名前"               => name,
+          "名前確定日時"       => name_input_at&.to_s(:distance),
+          "メールアドレス"     => email,
+          "プロバイダ"         => auth_infos.collect(&:provider).join(" "),
+          "Twitterアカウント"  => twitter_key,
+          "ログイン回数"       => sign_in_count,
+          "最終ログイン日時"   => current_sign_in_at&.to_s(:distance),
+          "登録日時"           => created_at&.to_s(:distance),
+          "IP"                 => current_sign_in_ip,
+          "USER_AGENT"         => ua_info,
+          "タグ"               => permit_tag_list,
+
+          "オンライン"         => Xclock::SchoolChannel.active_users.include?(self) ? "○" : "",
+          "対戦中"             => Xclock::RoomChannel.active_users.include?(self) ? "○" : "",
+          "最終選択ルール"     => xclock_setting.rule.pure_info.name,
+
+          "レーティング"       => rating,
+          "クラス"             => skill_key,
+          "最新シーズン情報ID" => xclock_latest_xrecord.id,
+          "永続的プロフ情報ID" => xclock_main_xrecord.id,
+          "部屋入室数"         => xclock_room_memberships.count,
+          "対局数"             => xclock_battle_memberships.count,
+          "問題履歴数"         => xclock_histories.count,
+          "バトル中発言数"     => xclock_room_messages.count,
+          "ロビー発言数"       => xclock_lobby_messages.count,
+          "問題コメント数"     => xclock_question_messages.count,
+
+          "作成問題数"         => xclock_questions.count,
+          "問題高評価率"       => xclock_questions.average(:good_rate),
+          "問題高評価数"       => xclock_questions.sum(:good_marks_count),
+          "問題低評価数"       => xclock_questions.sum(:bad_marks_count),
+
+          "問題正解数"         => total_o_count,
+          "問題不正解数"       => total_x_count,
+
+          "問題正解数(本日)"   => today_total_o_count,
+          "問題不正解数(本日)" => today_total_x_count,
+
+          "ユニーク問題正解数(本日)"   => today_total_o_ucount,
+          "ユニーク問題不正解数(本日)" => today_total_x_ucount,
+        }
+      end
+    end
+
+    # ユーザー詳細
+    def as_json_type7
+      as_json({
+          only: [
+            :id,
+            :key,
+            :name,
+          ],
+          methods: [
+            :avatar_path,
+            :description,
+            :twitter_key,
+            :statistics,
+          ],
+          include: {
+            xclock_main_xrecord: {
+              only: [
+                :id,
+                :straight_win_count,
+                :straight_lose_count,
+                :rating,
+                :rating_max,
+                :rating_diff,
+                :straight_win_max,
+                :straight_lose_max,
+                :disconnect_count,
+                :battle_count,
+                :win_count,
+                :lose_count,
+                :win_rate,
+                :skill_point,
+              ],
+              methods: [
+                :skill_key,
+              ],
+            },
+          },
+        })
+    end
+  end
+end
