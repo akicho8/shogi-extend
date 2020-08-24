@@ -101,6 +101,10 @@ Rails.application.routes.draw do
   match "training", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
   get "tb" => redirect(path: "/training")
 
+  ################################################################################ 対局時計
+
+  match "vs-clock", to: "scripts#show", defaults: { id: "xclock_app" }, via: :get, as: :xclock_app
+
   ################################################################################ 外部リンク
 
   direct :official_swars_battle do |battle, options = {}|

@@ -45,7 +45,7 @@ module FrontendScript
     self.column_wrapper_enable = false
 
     if Rails.env.production?
-      self.visibility_hidden = true
+      self.visibility_hidden_on_menu = true
     end
 
     delegate :current_user, to: :h
