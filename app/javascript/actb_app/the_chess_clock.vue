@@ -12,7 +12,7 @@
           p.title.is-size-1(:class="e.dom_class")
             | {{e.to_time_format}}
           p
-            b-button.mt-4(@click="e.turn_end_handle()" size="is-large" :type="e.button_type") ボタン
+            b-button.mt-4(@click="e.tap_and_auto_start_handle()" size="is-large" :type="e.button_type") ボタン
           p
             | disabled: {{e.disabled_p}}
 

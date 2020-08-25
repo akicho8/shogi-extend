@@ -1,20 +1,21 @@
 <template lang="pug">
 .the_chess_clock
-  the_footer
-  .primary_header
-    .header_center_title 対局時計
-  .level.is-mobile
-    template(v-for="(e, i) in chess_clock.single_clocks")
-      .level-item.has-text-centered
-        div
-          p.heading.is-size-1
-            | {{Location.fetch(i).name}}
-          p.title.is-size-1(:class="e.dom_class")
-            | {{e.to_time_format}}
-          p
-            b-button.mt-4(@click="e.turn_end_handle()" size="is-large" :type="e.button_type") ボタン
-          p
-            | disabled: {{e.disabled_p}}
+  .screen_container
+    .primary_header
+      .header_center_title 対局時計
+    .level.is-mobile
+      template(v-for="(e, i) in chess_clock.single_clocks")
+        .level-item.has-text-centered
+          div
+            p.heading.is-size-1
+              | {{Location.fetch(i).name}}
+            p.title.is-size-1(:class="e.dom_class")
+              | {{e.to_time_format}}
+            p
+              b-button.mt-4(@click="e.tap_and_auto_start_handle()" size="is-large" :type="e.button_type") ボタン
+            p
+              | disabled: {{e.disabled_p}}
+    the_footer
 
   b-message
     | 1手毎に{{chess_clock.params.every_add_value}}秒加算

@@ -80,69 +80,10 @@ export const support = {
       this.talk(str, {rate: 1.5, ...options})
     },
 
-    login_required_warning_notice() {
-      if (!this.app.current_user) {
-        this.warning_notice("ログインしてください")
-        return true
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    api_get(command, params, block) {
-      return this.remote_get(this.app.info.api_path, {remote_action: command, ...params}, block)
-    },
-
-    silent_api_get(command, params, block) {
-      return this.silent_remote_get(this.app.info.api_path, {remote_action: command, ...params}, block)
-    },
-
-    api_put(command, params, block) {
-      return this.remote_fetch("PUT", this.app.info.api_path, {remote_action: command, ...params}, block)
-    },
-
-    silent_api_put(command, params, block) {
-      return this.silent_remote_fetch("PUT", this.app.info.api_path, {remote_action: command, ...params}, block)
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    rating_format(rating) {
-      return Math.trunc(rating)
-    },
-
-    //////////////////////////////////////////////////////////////////////////////// private
-
-    permit_enable_type(tag) {
-      if (this.app.current_user) {
-        return this.app.current_user.permit_tag_list.includes(tag)
-      }
-    },
-
-    permit_hidden_type(tag) {
-      if (this.app.current_user) {
-        if (this.app.current_user.permit_tag_list.includes(tag)) {
-          return false
-        }
-      }
-      return true
-    },
   },
   computed: {
     ...Vuex.mapState([
       "app",
-      "bapp",
     ]),
-    ...Vuex.mapGetters([
-      "current_gvar1",
-    ]),
-    // ...mapState([
-    //   "fooKey",
-    // ]),
-
-    permit_staff_p()               { return this.permit_enable_type("staff")                      },
-    permit_lobby_message_p()       { return this.permit_hidden_type("lobby_message_hidden")       },
-    permit_lobby_message_input_p() { return this.permit_hidden_type("lobby_message_input_hidden") },
-    permit_question_new_p()        { return this.permit_hidden_type("question_new_hidden")        },
   },
 }

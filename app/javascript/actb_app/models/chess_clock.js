@@ -5,10 +5,28 @@ export class ChessClock {
   constructor(params = {}) {
     this.params = {
       // ここらのハッシュキーはリアクティブにするため null でも定義が必要
+      turn: null,
+      range_low: null,
       every_add_value: null,
-      time_zero_callback: e => { },
+      yuuyo: null,
+
+      time_zero_callback: e => {},
+      clock_switch_hook: () => {},
+      yomiage_hook: () => {},
+
+      active_value_zero_class:     "has-text-danger",
+      active_value_nonzero_class: "has-text-primary",
+      inactive_class:              "has-text-grey-light",
+
       ...params,
     }
+
+    this.timer         = null
+    this.turn          = null
+    this.counter       = null
+    this.clock_done    = null
+    this.single_clocks = null
+
     this.reset()
   }
 
@@ -20,11 +38,11 @@ export class ChessClock {
   }
 
   reset() {
-    this.turn = null            // インクリメントしていく
-    this.counter = 0            // turn とは異なり手数に相当する
-    this.clock_done = false     // 片方が0になったら true になる
-    this.single_clocks = Location.values.map((e, i) => new SingleClock(this, i))
     this.timer_stop()
+    this.turn = this.params.turn // インクリメントしていく
+    this.counter = 0             // turn とは異なり手数に相当する
+    this.clock_done = false      // 片方が0になったら true になる
+    this.single_clocks = Location.values.map((e, i) => new SingleClock(this, i))
   }
 
   // 切り替え
@@ -34,6 +52,7 @@ export class ChessClock {
     if (this.timer_active_p) {
       this.timer_restart()
     }
+    this.params.clock_switch_hook()
   }
 
   // 時間経過
@@ -43,6 +62,11 @@ export class ChessClock {
 
   value_set(value) {
     this.single_clocks.forEach(e => e.value = value)
+  }
+
+  timer_stop2() {
+    this.timer_stop()
+    this.clock_done = false
   }
 
   timer_start() {
@@ -67,8 +91,23 @@ export class ChessClock {
     return v % Location.values.length
   }
 
+  copy_1p_to_2p() {
+    const [a, b] = this.single_clocks
+    b.copy_from(a)
+  }
+
+  rule_set_all(o) {
+    o = {...o}
+    o.value = o.value || o.range_low
+    this.single_clocks.forEach(e => e.copy_from(o))
+  }
+
   get timer_active_p() {
     return !!this.timer
+  }
+
+  get standby_mode_p() {
+    return this.turn == null
   }
 
   get current() {
