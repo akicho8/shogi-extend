@@ -12,7 +12,7 @@ export class ChessClock {
 
       time_zero_callback: e => {},
       clock_switch_hook: () => {},
-      yomiage_hook: () => {},
+      second_decriment_hook: () => {},
 
       active_value_zero_class:     "has-text-danger",
       active_value_nonzero_class: "has-text-primary",
@@ -24,7 +24,7 @@ export class ChessClock {
     this.timer         = null
     this.turn          = null
     this.counter       = null
-    this.clock_done    = null
+    this.zero_arrival    = null
     this.single_clocks = null
 
     this.reset()
@@ -41,7 +41,7 @@ export class ChessClock {
     this.timer_stop()
     this.turn = this.params.turn // インクリメントしていく
     this.counter = 0             // turn とは異なり手数に相当する
-    this.clock_done = false      // 片方が0になったら true になる
+    this.zero_arrival = false      // 片方が0になったら true になる
     this.single_clocks = Location.values.map((e, i) => new SingleClock(this, i))
   }
 
@@ -60,13 +60,13 @@ export class ChessClock {
     this.current.generation_next(value)
   }
 
-  value_set(value) {
-    this.single_clocks.forEach(e => e.value = value)
+  main_second_set(main_second) {
+    this.single_clocks.forEach(e => e.main_second = main_second)
   }
 
   timer_stop2() {
     this.timer_stop()
-    this.clock_done = false
+    this.zero_arrival = false
   }
 
   timer_start() {
@@ -98,7 +98,7 @@ export class ChessClock {
 
   rule_set_all(o) {
     o = {...o}
-    o.value = o.value || o.range_low
+    o.main_second = o.main_second || o.range_low
     this.single_clocks.forEach(e => e.copy_from(o))
   }
 

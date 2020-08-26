@@ -13,7 +13,7 @@
 
             template(v-if="!chess_clock.timer")
               b-field.mt-5(label="持ち時間(分)")
-                b-numberinput(v-model="e.value_for_v_model" :min="0" :exponential="10" @click.native.stop="" :checkHtml5Validity="false")
+                b-numberinput(v-model="e.main_minute_for_vmodel" :min="0" :exponential="10" @click.native.stop="" :checkHtml5Validity="false")
               b-field.mt-5(label="1手毎加算")
                 b-numberinput(v-model="e.every_plus" :min="0" :exponential="10" @click.native.stop="")
               b-field.mt-5(label="最低持ち時間")
@@ -43,19 +43,19 @@
       b-dropdown(position="is-top-left" :class="{'is-invisible': chess_clock.timer}" @active-change="e => dropdown_active_change(e)")
         .item(slot="trigger")
           b-icon(icon="cog")
-        b-dropdown-item(@click="rule_set({value: 60*10, range_low:0,  delay_second: 0,  every_plus:0})") 将棋ウォーズ 10分
-        b-dropdown-item(@click="rule_set({value: 60*3,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋ウォーズ 3分
-        b-dropdown-item(@click="rule_set({value: null,  range_low:10, delay_second: 0,  every_plus:0})") 将棋ウォーズ 10秒
+        b-dropdown-item(@click="rule_set({main_second: 60*10, range_low:0,  delay_second: 0,  every_plus:0})") 将棋ウォーズ 10分
+        b-dropdown-item(@click="rule_set({main_second: 60*3,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋ウォーズ 3分
+        b-dropdown-item(@click="rule_set({main_second: null,  range_low:10, delay_second: 0,  every_plus:0})") 将棋ウォーズ 10秒
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({value: 60*5,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋クエスト 5分
-        b-dropdown-item(@click="rule_set({value: 60*2,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋クエスト 2分
+        b-dropdown-item(@click="rule_set({main_second: 60*5,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋クエスト 5分
+        b-dropdown-item(@click="rule_set({main_second: 60*2,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋クエスト 2分
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({value: 60*5,  range_low:0,  delay_second: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
+        b-dropdown-item(@click="rule_set({main_second: 60*5,  range_low:0,  delay_second: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({value: 60*1,  range_low:30, delay_second: 0,  every_plus:0})") 24 早指 1分切ると1手30秒
-        b-dropdown-item(@click="rule_set({value: null,  range_low:30, delay_second: 60, every_plus:0})") 24 早指2 1手30秒 猶予1分
-        b-dropdown-item(@click="rule_set({value: 60*15, range_low:60, delay_second: 0,  every_plus:0})") 24 15分 切ると1手60秒
-        b-dropdown-item(@click="rule_set({value: 60*30, range_low:60, delay_second: 0,  every_plus:0})") 24 長考 30分切ると1手60秒
+        b-dropdown-item(@click="rule_set({main_second: 60*1,  range_low:30, delay_second: 0,  every_plus:0})") 24 早指 1分切ると1手30秒
+        b-dropdown-item(@click="rule_set({main_second: null,  range_low:30, delay_second: 60, every_plus:0})") 24 早指2 1手30秒 猶予1分
+        b-dropdown-item(@click="rule_set({main_second: 60*15, range_low:60, delay_second: 0,  every_plus:0})") 24 15分 切ると1手60秒
+        b-dropdown-item(@click="rule_set({main_second: 60*30, range_low:60, delay_second: 0,  every_plus:0})") 24 長考 30分切ると1手60秒
 
       //- .item(@click="timer_handle")
       //-   b-icon(icon="timer-outline")
@@ -89,7 +89,7 @@
       b-button(@click="chess_clock.params.every_plus = 5") フィッシャールール
       b-button(@click="chess_clock.params.every_plus = 0") 通常ルール
       b-button(@click="chess_clock.reset()") RESET
-      b-button(@click="chess_clock.value_set(3)") 両方残り3秒
+      b-button(@click="chess_clock.main_second_set(3)") 両方残り3秒
     b-message
       | 1手毎に{{chess_clock.params.every_plus}}秒加算
 </template>
@@ -138,7 +138,7 @@ export default {
           onConfirm: () => { this.pause_handle() },
         })
       },
-      yomiage_hook: (v, d, r) => {
+      second_decriment_hook: (v, d, r) => {
         if (r === 0 && d >= 1) {
           this.say(`${d}分`)
         } else if (v === 10 || v === 20 || v === 30) {

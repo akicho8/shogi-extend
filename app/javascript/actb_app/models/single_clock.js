@@ -1,55 +1,59 @@
 import Location from "shogi-player/src/location.js"
 import dayjs from "dayjs"
 
+const ONE_MIN = 60
+
 export class SingleClock {
   constructor(base, index) {
-    this.base            = base
-    this.index           = index
-    // this.max             = base.params.max || 60 * 3
-    this.value           = base.params.max || 60 * 3
-    this.range_low       = base.params.range_low || 0
-    this.every_plus = base.params.every_plus || 0
-    this.delay_second           = base.params.delay_second || 0
+    this.base         = base
+    this.index        = index
+
+    this.main_second  = base.params.max || ONE_MIN * 3
+    this.delay_second = base.params.delay_second || 0
+    this.range_low    = base.params.range_low || 0
+    this.every_plus   = base.params.every_plus || 0
   }
 
   copy_from(o) {
-    this.value           = o.value
-    this.range_low       = o.range_low
-    this.every_plus = o.every_plus
-    this.delay_second           = o.delay_second
+    this.main_second  = o.main_second
+    this.delay_second = o.delay_second
+    this.range_low    = o.range_low
+    this.every_plus   = o.every_plus
   }
 
   generation_next(value) {
     if (value != null) {
-      this.value += value
-      if (this.value < 0) {
-        this.delay_second += this.value
+
+      let v = this.main_second + value
+      if (v < 0) {
+        this.delay_second += v
         if (this.delay_second < 0) {
           this.delay_second = 0
         }
-        this.value = 0
+        v = 0
       }
+      this.main_second = v
 
       if (value < 0) {
-        const v = this.value
+        const v = this.main_second
         if (v >= 1) {
-          const d = Math.trunc(v / 60)
-          const r = v % 60
-          this.base.params.yomiage_hook(v, d, r)
+          const d = Math.trunc(v / ONE_MIN)
+          const r = v % ONE_MIN
+          this.base.params.second_decriment_hook(v, d, r)
         } else {
           const v = this.delay_second
           if (v >= 1) {
-            const d = Math.trunc(v / 60)
-            const r = v % 60
-            this.base.params.yomiage_hook(v, d, r)
+            const d = Math.trunc(v / ONE_MIN)
+            const r = v % ONE_MIN
+            this.base.params.second_decriment_hook(v, d, r)
           }
         }
       }
 
-      if (!this.base.clock_done) {
+      if (!this.base.zero_arrival) {
         if (this.rest === 0) {
           if (this.base.timer) {
-            this.base.clock_done = true
+            this.base.zero_arrival = true
             this.base.params.time_zero_callback(this)
           }
         }
@@ -88,10 +92,12 @@ export class SingleClock {
   }
 
   clamp_value() {
-    if (this.value < this.range_low) {
-      this.value = this.range_low
+    if (this.main_second < this.range_low) {
+      this.main_second = this.range_low
     }
   }
+
+  //////////////////////////////////////////////////////////////////////////////// getter
 
   get button_type() {
     if (this.standby_mode_p) {
@@ -119,7 +125,7 @@ export class SingleClock {
     } else {
       if (this.active_p) {
         ary.push("sclock_active")
-        if (this.value === 0) {
+        if (this.main_second === 0) {
           ary.push(this.base.params.active_value_zero_class)
           ary.push("sclock_zero")
         } else {
@@ -136,12 +142,12 @@ export class SingleClock {
 
   get to_time_format() {
     let format = null
-    if ((this.value / 60) >= 60) {
-      format = "HH:mm:ss"
+    if ((this.main_second / ONE_MIN) >= ONE_MIN) {
+      format = "h:mm:ss"
     } else {
       format = "m:ss"
     }
-    return dayjs().startOf("year").set("seconds", this.value).format(format)
+    return dayjs().startOf("year").set("seconds", this.main_second).format(format)
   }
 
   get standby_mode_p() {
@@ -152,23 +158,27 @@ export class SingleClock {
     return Location.fetch(this.index)
   }
 
-  get value_for_v_model() {
-    return Math.trunc(this.value / 60)
+  get rest() {
+    return this.main_second + this.delay_second
   }
-  set value_for_v_model(v) {
-    this.value = Math.trunc(v * 60)
+
+  //////////////////////////////////////////////////////////////////////////////// for v-model
+
+  get main_minute_for_vmodel() {
+    return Math.trunc(this.main_second / ONE_MIN)
+  }
+
+  set main_minute_for_vmodel(v) {
+    this.main_second = Math.trunc(v * ONE_MIN)
     this.clamp_value()
   }
 
   get range_low_for_v_model() {
     return this.range_low
   }
+
   set range_low_for_v_model(v) {
     this.range_low = v
     this.clamp_value()
-  }
-
-  get rest() {
-    return this.value + this.delay_second
   }
 }
