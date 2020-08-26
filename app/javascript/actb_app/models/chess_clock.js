@@ -6,10 +6,11 @@ export class ChessClock {
     this.params = {
       // ここらのハッシュキーはリアクティブにするため null でも定義が必要
       turn: null,
-      range_low: null,
+      initial_read_sec: null,
       every_plus: null,
-      main_second: null,
-      extra_second: null,
+      initial_main_sec: null,
+      read_sec: null,
+      extra_sec: null,
 
       time_zero_callback: e => {},
       clock_switch_hook: () => {},
@@ -61,12 +62,21 @@ export class ChessClock {
     this.current.generation_next(value)
   }
 
-  main_second_set(main_second) {
-    this.single_clocks.forEach(e => e.main_second = main_second)
+  // デバッグ用
+  main_sec_set(main_sec) {
+    this.single_clocks.forEach(e => e.main_sec = main_sec)
   }
 
-  timer_stop2() {
+  play_button_handle() {
+    if (!this.timer) {
+      this.single_clocks.forEach(e => e.variable_reset())
+      this.timer_start()
+    }
+  }
+
+  stop_button_handle() {
     this.timer_stop()
+    this.single_clocks.forEach(e => e.variable_reset())
     this.zero_arrival = false
   }
 
@@ -99,8 +109,8 @@ export class ChessClock {
 
   rule_set_all(o) {
     o = {...o}
-    o.main_second = o.main_second || o.range_low
-    this.single_clocks.forEach(e => e.copy_from(o))
+    // o.read_sec = o.read_sec || o.initial_read_sec
+    this.single_clocks.forEach(e => e.rule_set_one(o))
   }
 
   get timer_active_p() {

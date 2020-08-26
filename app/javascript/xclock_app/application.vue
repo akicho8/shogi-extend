@@ -6,48 +6,59 @@
         .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
           .mark_div
           .digit_div.is-flex
-            .title.fixed_font.is_line_break_off
-              | {{e.to_time_format}}
-              span.ml-6(v-if="e.extra_second >= 1")
-                | {{e.extra_second}}
-
+            template(v-if="chess_clock.timer")
+              .title.fixed_font.is_line_break_off(v-if="e.initial_main_sec >= 1")
+                | {{e.to_time_format}}
+              .title.fixed_font.is_line_break_off
+                | {{e.read_sec}}
+              .title.fixed_font.is_line_break_off(v-if="e.extra_sec >= 1")
+                | {{e.extra_sec}}
             template(v-if="!chess_clock.timer")
-              b-field.mt-5(label="持ち時間(分)")
-                b-numberinput(v-model="e.main_minute_for_vmodel" :min="0" :exponential="10" @click.native.stop="" :checkHtml5Validity="false")
-              b-field.mt-5(label="1手ごとに加算")
-                b-numberinput(v-model="e.every_plus" :min="0" :exponential="10" @click.native.stop="")
-              b-field.mt-5(label="最低持ち時間")
-                b-numberinput(v-model="e.range_low_for_v_model" :min="0" :exponential="2" @click.native.stop="")
-              b-field.mt-5(label="猶予")
-                b-numberinput(v-model="e.extra_second" :min="0" @click.native.stop="")
+              b-field.mt-5.mx-4(label="持ち時間(分)")
+                b-numberinput(controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :exponential="10" @click.native.stop="" :checkHtml5Validity="false")
+              b-field.mt-5.mx-4(label="1手ごとに加算")
+                b-numberinput(controls-position="compact" v-model="e.every_plus" :min="0" :exponential="10" @click.native.stop="")
+              b-field.mt-5.mx-4(label="秒読み")
+                b-numberinput(controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :exponential="2" @click.native.stop="")
+              b-field.mt-5.mx-4(label="猶予")
+                b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" @click.native.stop="")
 
     .the_footer.footer_nav.is-flex
       .item(@click="copy_handle" :class="{'is-invisible': chess_clock.timer}")
         b-icon(icon="content-duplicate")
 
-      template(v-if="chess_clock.timer_active_p")
-        .item(@click="pause_handle")
-          b-icon(icon="stop")
-      template(v-else)
+      template(v-if="!chess_clock.timer")
         .item(@click="play_handle")
           b-icon(icon="play")
+      template(v-else)
+        .item(@click="stop_handle")
+          b-icon(icon="stop")
+
+      //- template(v-if="chess_clock.timer_active_p")
+      //- .item(@click="play_handle")
+      //-   b-icon(icon="play")
+      //- .item(@click="pause_handle")
+      //-   b-icon(icon="pause")
+      //- .item(@click="stop_handle")
+      //-   b-icon(icon="stop")
+      //- template(v-else)
 
       b-dropdown(position="is-top-left" :class="{'is-invisible': chess_clock.timer}" @active-change="e => dropdown_active_change(e)")
         .item(slot="trigger")
           b-icon(icon="cog")
-        b-dropdown-item(@click="rule_set({main_second: 60*10, range_low:0,  extra_second: 0,  every_plus:0})") 将棋ウォーズ 10分
-        b-dropdown-item(@click="rule_set({main_second: 60*3,  range_low:0,  extra_second: 0,  every_plus:0})") 将棋ウォーズ 3分
-        b-dropdown-item(@click="rule_set({main_second: null,  range_low:10, extra_second: 0,  every_plus:0})") 将棋ウォーズ 10秒
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*10, initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10分
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*3,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 3分
+        b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:10, initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10秒
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({main_second: 60*5,  range_low:0,  extra_second: 0,  every_plus:0})") 将棋クエスト 5分
-        b-dropdown-item(@click="rule_set({main_second: 60*2,  range_low:0,  extra_second: 0,  every_plus:0})") 将棋クエスト 2分
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 5分
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*2,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 2分
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({main_second: 60*5,  range_low:0,  extra_second: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({main_second: 60*1,  range_low:30, extra_second: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
-        b-dropdown-item(@click="rule_set({main_second: null,  range_low:30, extra_second: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
-        b-dropdown-item(@click="rule_set({main_second: 60*15, range_low:60, extra_second: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
-        b-dropdown-item(@click="rule_set({main_second: 60*30, range_low:60, extra_second: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*1,  initial_read_sec:30, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
+        b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:30, initial_extra_sec: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
 
       //- .item(@click="timer_handle")
       //-   b-icon(icon="timer-outline")
@@ -81,7 +92,7 @@
       b-button(@click="chess_clock.params.every_plus = 5") フィッシャールール
       b-button(@click="chess_clock.params.every_plus = 0") 通常ルール
       b-button(@click="chess_clock.reset()") RESET
-      b-button(@click="chess_clock.main_second_set(3)") 両方残り3秒
+      b-button(@click="chess_clock.main_sec_set(3)") 両方残り3秒
     b-message
       | 1手毎に{{chess_clock.params.every_plus}}秒加算
 </template>
@@ -130,7 +141,7 @@ export default {
           onConfirm: () => { this.pause_handle() },
         })
       },
-      second_decriment_hook: (v, d, r) => {
+      second_decriment_hook: (key, v, d, r) => {
         if (r === 0 && d >= 1) {
           this.say(`${d}分`)
         } else if (v === 10 || v === 20 || v === 30) {
@@ -146,14 +157,27 @@ export default {
   },
   methods: {
     pause_handle() {
-      this.sound_play("click")
-      this.say("ストップ")
-      this.chess_clock.timer_stop2()
+      if (this.chess_clock.timer) {
+        this.sound_play("click")
+        this.say("ポーズ")
+        this.chess_clock.timer_stop()
+      }
+    },
+    stop_handle() {
+      if (this.chess_clock.timer) {
+        this.sound_play("click")
+        this.say("ストップ")
+        this.chess_clock.stop_button_handle()
+      } else {
+      }
     },
     play_handle() {
-      this.sound_play("start")
-      this.say("対局かいし")
-      this.chess_clock.timer_start()
+      if (this.chess_clock.timer) {
+      } else {
+        this.sound_play("start")
+        this.say("対局かいし")
+        this.chess_clock.play_button_handle()
+      }
     },
     switch_handle(e) {
       if (this.chess_clock.timer_active_p) {

@@ -4,48 +4,84 @@ import dayjs from "dayjs"
 const ONE_MIN = 60
 
 export class SingleClock {
+  static time_format(v) {
+    let format = null
+    if ((v / ONE_MIN) >= ONE_MIN) {
+      format = "h:mm:ss"
+    } else {
+      format = "m:ss"
+    }
+    return dayjs().startOf("year").set("seconds", v).format(format)
+  }
+
   constructor(base, index) {
     this.base         = base
     this.index        = index
 
-    this.main_second  = base.params.main_second || ONE_MIN * 3
-    this.extra_second = base.params.extra_second || 0
-    this.range_low    = base.params.range_low || 0
+    // FIXME: params は取る
+    this.initial_main_sec  = base.params.initial_main_sec || ONE_MIN * 3
+    this.initial_extra_sec = base.params.initial_extra_sec || 0
+    this.initial_read_sec  = base.params.initial_read_sec || 0
     this.every_plus   = base.params.every_plus || 0
+
+    this.variable_reset()
+  }
+
+  variable_reset() {
+    this.main_sec  = this.initial_main_sec
+    this.extra_sec = this.initial_extra_sec
+    this.read_sec  = this.initial_read_sec
   }
 
   copy_from(o) {
-    this.main_second  = o.main_second
-    this.extra_second = o.extra_second
-    this.range_low    = o.range_low
-    this.every_plus   = o.every_plus
+    this.main_sec  = o.main_sec
+    this.read_sec  = o.read_sec
+    this.extra_sec = o.extra_sec
+
+    this.initial_read_sec  = o.initial_read_sec
+    this.initial_main_sec  = o.initial_main_sec
+    this.initial_extra_sec = o.initial_extra_sec
+    this.every_plus        = o.every_plus
+  }
+
+  rule_set_one(o) {
+    this.initial_read_sec  = o.initial_read_sec
+    this.initial_main_sec  = o.initial_main_sec
+    this.initial_extra_sec = o.initial_extra_sec
+    this.every_plus        = o.every_plus
+
+    this.variable_reset()
   }
 
   generation_next(value) {
     if (value != null) {
 
-      let v = this.main_second + value
-      if (v < 0) {
-        this.extra_second += v
-        if (this.extra_second < 0) {
-          this.extra_second = 0
+      this.main_sec += value
+      if (this.main_sec < 0) {
+        this.read_sec += this.main_sec
+        this.main_sec = 0
+        if (this.read_sec < 0) {
+          this.extra_sec += this.read_sec
+          this.read_sec = 0
+          if (this.extra_sec < 0) {
+            this.extra_sec = 0
+          }
         }
-        v = 0
       }
-      this.main_second = v
 
       if (value < 0) {
-        const v = this.main_second
+        const v = this.main_sec
         if (v >= 1) {
-          const d = Math.trunc(v / ONE_MIN)
-          const r = v % ONE_MIN
-          this.base.params.second_decriment_hook(v, d, r)
+          this.second_decriment_hook_call("main_sec", v)
         } else {
-          const v = this.extra_second
+          const v = this.read_sec
           if (v >= 1) {
-            const d = Math.trunc(v / ONE_MIN)
-            const r = v % ONE_MIN
-            this.base.params.second_decriment_hook(v, d, r)
+            this.second_decriment_hook_call("read_sec", v)
+          } else {
+            const v = this.extra_sec
+            if (v >= 1) {
+              this.second_decriment_hook_call("extra_sec", v)
+            }
           }
         }
       }
@@ -59,6 +95,12 @@ export class SingleClock {
         }
       }
     }
+  }
+
+  second_decriment_hook_call(key, v) {
+    const d = Math.trunc(v / ONE_MIN)
+    const r = v % ONE_MIN
+    this.base.params.second_decriment_hook(key, v, d, r)
   }
 
   switch_handle() {
@@ -76,7 +118,7 @@ export class SingleClock {
     if (this.active_p) {
       if (this.base.counter >= 1) {
         this.generation_next(this.every_plus)
-        this.clamp_value()
+        this.read_sec_set()
       }
       this.base.clock_switch()
     }
@@ -91,10 +133,10 @@ export class SingleClock {
     this.base.clock_switch()
   }
 
-  clamp_value() {
-    if (this.main_second < this.range_low) {
-      this.main_second = this.range_low
-    }
+  read_sec_set() {
+    // if (this.read_sec < this.initial_read_sec) {
+    this.read_sec = this.initial_read_sec
+    // }
   }
 
   //////////////////////////////////////////////////////////////////////////////// getter
@@ -125,7 +167,7 @@ export class SingleClock {
     } else {
       if (this.active_p) {
         ary.push("sclock_active")
-        if (this.main_second === 0) {
+        if (this.main_sec === 0) {
           ary.push(this.base.params.active_value_zero_class)
           ary.push("sclock_zero")
         } else {
@@ -141,13 +183,11 @@ export class SingleClock {
   }
 
   get to_time_format() {
-    let format = null
-    if ((this.main_second / ONE_MIN) >= ONE_MIN) {
-      format = "h:mm:ss"
-    } else {
-      format = "m:ss"
-    }
-    return dayjs().startOf("year").set("seconds", this.main_second).format(format)
+    return this.constructor.time_format(this.main_sec)
+  }
+
+  get to_time_format2() {
+    return this.constructor.time_format(this.read_sec)
   }
 
   get standby_mode_p() {
@@ -159,26 +199,36 @@ export class SingleClock {
   }
 
   get rest() {
-    return this.main_second + this.extra_second
+    return this.main_sec + this.read_sec + this.extra_sec
   }
 
   //////////////////////////////////////////////////////////////////////////////// for v-model
 
   get main_minute_for_vmodel() {
-    return Math.trunc(this.main_second / ONE_MIN)
+    return Math.trunc(this.initial_main_sec / ONE_MIN)
   }
 
   set main_minute_for_vmodel(v) {
-    this.main_second = Math.trunc(v * ONE_MIN)
-    this.clamp_value()
+    this.initial_main_sec = Math.trunc(v * ONE_MIN)
+    this.main_sec = this.initial_main_sec
+    // this.read_sec_set()
   }
 
-  get range_low_for_v_model() {
-    return this.range_low
+  get initial_read_sec_for_v_model() {
+    return this.initial_read_sec
   }
 
-  set range_low_for_v_model(v) {
-    this.range_low = v
-    this.clamp_value()
+  set initial_read_sec_for_v_model(v) {
+    this.initial_read_sec = v
+    this.read_sec_set()
+  }
+
+  get initial_extra_sec_for_v_model() {
+    return this.initial_extra_sec
+  }
+
+  set initial_extra_sec_for_v_model(v) {
+    this.initial_extra_sec = v
+    this.extra_sec = v
   }
 }
