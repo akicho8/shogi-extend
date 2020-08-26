@@ -8,24 +8,24 @@ export class SingleClock {
     // this.max             = base.params.max || 60 * 3
     this.value           = base.params.max || 60 * 3
     this.range_low       = base.params.range_low || 0
-    this.every_add_value = base.params.every_add_value || 0
-    this.yuuyo           = base.params.yuuyo || 0
+    this.every_plus = base.params.every_plus || 0
+    this.delay_second           = base.params.delay_second || 0
   }
 
   copy_from(o) {
     this.value           = o.value
     this.range_low       = o.range_low
-    this.every_add_value = o.every_add_value
-    this.yuuyo           = o.yuuyo
+    this.every_plus = o.every_plus
+    this.delay_second           = o.delay_second
   }
 
   generation_next(value) {
     if (value != null) {
       this.value += value
       if (this.value < 0) {
-        this.yuuyo += this.value
-        if (this.yuuyo < 0) {
-          this.yuuyo = 0
+        this.delay_second += this.value
+        if (this.delay_second < 0) {
+          this.delay_second = 0
         }
         this.value = 0
       }
@@ -37,7 +37,7 @@ export class SingleClock {
           const r = v % 60
           this.base.params.yomiage_hook(v, d, r)
         } else {
-          const v = this.yuuyo
+          const v = this.delay_second
           if (v >= 1) {
             const d = Math.trunc(v / 60)
             const r = v % 60
@@ -71,7 +71,7 @@ export class SingleClock {
     }
     if (this.active_p) {
       if (this.base.counter >= 1) {
-        this.generation_next(this.every_add_value)
+        this.generation_next(this.every_plus)
         this.clamp_value()
       }
       this.base.clock_switch()
@@ -169,6 +169,6 @@ export class SingleClock {
   }
 
   get rest() {
-    return this.value + this.yuuyo
+    return this.value + this.delay_second
   }
 }

@@ -18,7 +18,7 @@
     the_footer
 
   b-message
-    | 1手毎に{{chess_clock.params.every_add_value}}秒加算
+    | 1手毎に{{chess_clock.params.every_plus}}秒加算
 
   .buttons.are-small.is-centered
     b-button(@click="chess_clock.generation_next(-1)") -1
@@ -28,8 +28,8 @@
     b-button(@click="chess_clock.clock_switch()") 切り替え
     b-button(@click="chess_clock.timer_start()") START
     b-button(@click="chess_clock.timer_stop()") STOP
-    b-button(@click="chess_clock.params.every_add_value = 5") フィッシャールール
-    b-button(@click="chess_clock.params.every_add_value = 0") 通常ルール
+    b-button(@click="chess_clock.params.every_plus = 5") フィッシャールール
+    b-button(@click="chess_clock.params.every_plus = 0") 通常ルール
     b-button(@click="chess_clock.reset()") RESET
     b-button(@click="chess_clock.value_set(3)") 両方残り3秒
 </template>

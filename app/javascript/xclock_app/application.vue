@@ -8,18 +8,18 @@
           .digit_div.is-flex
             .title.fixed_font.is_line_break_off
               | {{e.to_time_format}}
-              span.ml-6(v-if="e.yuuyo >= 1")
-                | {{e.yuuyo}}
+              span.ml-6(v-if="e.delay_second >= 1")
+                | {{e.delay_second}}
 
             template(v-if="!chess_clock.timer")
               b-field.mt-5(label="持ち時間(分)")
-                b-numberinput(v-model="e.value_for_v_model" :min="0" :exponential="10" @click.native.stop="")
-              b-field.mt-5(label="1手毎加算(秒)")
-                b-numberinput(v-model="e.every_add_value" :min="0" :exponential="10" @click.native.stop="")
-              b-field.mt-5(label="最低持ち時間(秒)")
+                b-numberinput(v-model="e.value_for_v_model" :min="0" :exponential="10" @click.native.stop="" :checkHtml5Validity="false")
+              b-field.mt-5(label="1手毎加算")
+                b-numberinput(v-model="e.every_plus" :min="0" :exponential="10" @click.native.stop="")
+              b-field.mt-5(label="最低持ち時間")
                 b-numberinput(v-model="e.range_low_for_v_model" :min="0" :exponential="2" @click.native.stop="")
-              b-field.mt-5(label="猶予(秒)")
-                b-numberinput(v-model="e.yuuyo" :min="0" @click.native.stop="")
+              b-field.mt-5(label="猶予")
+                b-numberinput(v-model="e.delay_second" :min="0" @click.native.stop="")
 
               //- b-field.tiisame(grouped)
               //-   b-field
@@ -43,19 +43,19 @@
       b-dropdown(position="is-top-left" :class="{'is-invisible': chess_clock.timer}" @active-change="e => dropdown_active_change(e)")
         .item(slot="trigger")
           b-icon(icon="cog")
-        b-dropdown-item(@click="rule_set({value: 60*10, range_low:0,  yuuyo: 0,  every_add_value:0})") 将棋ウォーズ 10分
-        b-dropdown-item(@click="rule_set({value: 60*3,  range_low:0,  yuuyo: 0,  every_add_value:0})") 将棋ウォーズ 3分
-        b-dropdown-item(@click="rule_set({value: null,  range_low:10, yuuyo: 0,  every_add_value:0})") 将棋ウォーズ 10秒
+        b-dropdown-item(@click="rule_set({value: 60*10, range_low:0,  delay_second: 0,  every_plus:0})") 将棋ウォーズ 10分
+        b-dropdown-item(@click="rule_set({value: 60*3,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋ウォーズ 3分
+        b-dropdown-item(@click="rule_set({value: null,  range_low:10, delay_second: 0,  every_plus:0})") 将棋ウォーズ 10秒
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({value: 60*5,  range_low:0,  yuuyo: 0,  every_add_value:0})") 将棋クエスト 5分
-        b-dropdown-item(@click="rule_set({value: 60*2,  range_low:0,  yuuyo: 0,  every_add_value:0})") 将棋クエスト 2分
+        b-dropdown-item(@click="rule_set({value: 60*5,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋クエスト 5分
+        b-dropdown-item(@click="rule_set({value: 60*2,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋クエスト 2分
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({value: 60*5,  range_low:0,  yuuyo: 0,  every_add_value:5})") ABEMA フィッシャールール 5分 +5秒/手
+        b-dropdown-item(@click="rule_set({value: 60*5,  range_low:0,  delay_second: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({value: 60*1,  range_low:30, yuuyo: 0,  every_add_value:0})") 24 早指 1分切ると1手30秒
-        b-dropdown-item(@click="rule_set({value: null,  range_low:30, yuuyo: 60, every_add_value:0})") 24 早指2 1手30秒 猶予1分
-        b-dropdown-item(@click="rule_set({value: 60*15, range_low:60, yuuyo: 0,  every_add_value:0})") 24 15分 切ると1手60秒
-        b-dropdown-item(@click="rule_set({value: 60*30, range_low:60, yuuyo: 0,  every_add_value:0})") 24 長考 30分切ると1手60秒
+        b-dropdown-item(@click="rule_set({value: 60*1,  range_low:30, delay_second: 0,  every_plus:0})") 24 早指 1分切ると1手30秒
+        b-dropdown-item(@click="rule_set({value: null,  range_low:30, delay_second: 60, every_plus:0})") 24 早指2 1手30秒 猶予1分
+        b-dropdown-item(@click="rule_set({value: 60*15, range_low:60, delay_second: 0,  every_plus:0})") 24 15分 切ると1手60秒
+        b-dropdown-item(@click="rule_set({value: 60*30, range_low:60, delay_second: 0,  every_plus:0})") 24 長考 30分切ると1手60秒
 
       //- .item(@click="timer_handle")
       //-   b-icon(icon="timer-outline")
@@ -86,12 +86,12 @@
       b-button(@click="chess_clock.clock_switch()") 切り替え
       b-button(@click="chess_clock.timer_start()") START ({{chess_clock.timer}})
       b-button(@click="chess_clock.timer_stop()") STOP
-      b-button(@click="chess_clock.params.every_add_value = 5") フィッシャールール
-      b-button(@click="chess_clock.params.every_add_value = 0") 通常ルール
+      b-button(@click="chess_clock.params.every_plus = 5") フィッシャールール
+      b-button(@click="chess_clock.params.every_plus = 0") 通常ルール
       b-button(@click="chess_clock.reset()") RESET
       b-button(@click="chess_clock.value_set(3)") 両方残り3秒
     b-message
-      | 1手毎に{{chess_clock.params.every_add_value}}秒加算
+      | 1手毎に{{chess_clock.params.every_plus}}秒加算
 </template>
 
 <script>

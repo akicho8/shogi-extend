@@ -7,8 +7,8 @@ export class ChessClock {
       // ここらのハッシュキーはリアクティブにするため null でも定義が必要
       turn: null,
       range_low: null,
-      every_add_value: null,
-      yuuyo: null,
+      every_plus: null,
+      delay_second: null,
 
       time_zero_callback: e => {},
       clock_switch_hook: () => {},
