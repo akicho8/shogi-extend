@@ -14,20 +14,12 @@
             template(v-if="!chess_clock.timer")
               b-field.mt-5(label="持ち時間(分)")
                 b-numberinput(v-model="e.main_minute_for_vmodel" :min="0" :exponential="10" @click.native.stop="" :checkHtml5Validity="false")
-              b-field.mt-5(label="1手毎加算")
+              b-field.mt-5(label="1手ごとに加算")
                 b-numberinput(v-model="e.every_plus" :min="0" :exponential="10" @click.native.stop="")
               b-field.mt-5(label="最低持ち時間")
                 b-numberinput(v-model="e.range_low_for_v_model" :min="0" :exponential="2" @click.native.stop="")
               b-field.mt-5(label="猶予")
                 b-numberinput(v-model="e.delay_second" :min="0" @click.native.stop="")
-
-              //- b-field.tiisame(grouped)
-              //-   b-field
-              //-     .control.text.has-text-grey 最低持ち時間
-              //-   b-field
-              //-     b-numberinput(v-model="e.range_low" :min="0" @click.native.stop="" size="is-small" controls-position="compact")
-              //-   b-field
-              //-     .control.text.has-text-grey 秒
 
     .the_footer.footer_nav.is-flex
       .item(@click="copy_handle" :class="{'is-invisible': chess_clock.timer}")
@@ -52,10 +44,10 @@
         b-dropdown-item(:separator="true")
         b-dropdown-item(@click="rule_set({main_second: 60*5,  range_low:0,  delay_second: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({main_second: 60*1,  range_low:30, delay_second: 0,  every_plus:0})") 24 早指 1分切ると1手30秒
-        b-dropdown-item(@click="rule_set({main_second: null,  range_low:30, delay_second: 60, every_plus:0})") 24 早指2 1手30秒 猶予1分
-        b-dropdown-item(@click="rule_set({main_second: 60*15, range_low:60, delay_second: 0,  every_plus:0})") 24 15分 切ると1手60秒
-        b-dropdown-item(@click="rule_set({main_second: 60*30, range_low:60, delay_second: 0,  every_plus:0})") 24 長考 30分切ると1手60秒
+        b-dropdown-item(@click="rule_set({main_second: 60*1,  range_low:30, delay_second: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
+        b-dropdown-item(@click="rule_set({main_second: null,  range_low:30, delay_second: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
+        b-dropdown-item(@click="rule_set({main_second: 60*15, range_low:60, delay_second: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
+        b-dropdown-item(@click="rule_set({main_second: 60*30, range_low:60, delay_second: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
 
       //- .item(@click="timer_handle")
       //-   b-icon(icon="timer-outline")
