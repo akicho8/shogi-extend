@@ -8,8 +8,8 @@
           .digit_div.is-flex
             .title.fixed_font.is_line_break_off
               | {{e.to_time_format}}
-              span.ml-6(v-if="e.delay_second >= 1")
-                | {{e.delay_second}}
+              span.ml-6(v-if="e.extra_second >= 1")
+                | {{e.extra_second}}
 
             template(v-if="!chess_clock.timer")
               b-field.mt-5(label="持ち時間(分)")
@@ -19,7 +19,7 @@
               b-field.mt-5(label="最低持ち時間")
                 b-numberinput(v-model="e.range_low_for_v_model" :min="0" :exponential="2" @click.native.stop="")
               b-field.mt-5(label="猶予")
-                b-numberinput(v-model="e.delay_second" :min="0" @click.native.stop="")
+                b-numberinput(v-model="e.extra_second" :min="0" @click.native.stop="")
 
     .the_footer.footer_nav.is-flex
       .item(@click="copy_handle" :class="{'is-invisible': chess_clock.timer}")
@@ -35,19 +35,19 @@
       b-dropdown(position="is-top-left" :class="{'is-invisible': chess_clock.timer}" @active-change="e => dropdown_active_change(e)")
         .item(slot="trigger")
           b-icon(icon="cog")
-        b-dropdown-item(@click="rule_set({main_second: 60*10, range_low:0,  delay_second: 0,  every_plus:0})") 将棋ウォーズ 10分
-        b-dropdown-item(@click="rule_set({main_second: 60*3,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋ウォーズ 3分
-        b-dropdown-item(@click="rule_set({main_second: null,  range_low:10, delay_second: 0,  every_plus:0})") 将棋ウォーズ 10秒
+        b-dropdown-item(@click="rule_set({main_second: 60*10, range_low:0,  extra_second: 0,  every_plus:0})") 将棋ウォーズ 10分
+        b-dropdown-item(@click="rule_set({main_second: 60*3,  range_low:0,  extra_second: 0,  every_plus:0})") 将棋ウォーズ 3分
+        b-dropdown-item(@click="rule_set({main_second: null,  range_low:10, extra_second: 0,  every_plus:0})") 将棋ウォーズ 10秒
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({main_second: 60*5,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋クエスト 5分
-        b-dropdown-item(@click="rule_set({main_second: 60*2,  range_low:0,  delay_second: 0,  every_plus:0})") 将棋クエスト 2分
+        b-dropdown-item(@click="rule_set({main_second: 60*5,  range_low:0,  extra_second: 0,  every_plus:0})") 将棋クエスト 5分
+        b-dropdown-item(@click="rule_set({main_second: 60*2,  range_low:0,  extra_second: 0,  every_plus:0})") 将棋クエスト 2分
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({main_second: 60*5,  range_low:0,  delay_second: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
+        b-dropdown-item(@click="rule_set({main_second: 60*5,  range_low:0,  extra_second: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
         b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({main_second: 60*1,  range_low:30, delay_second: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
-        b-dropdown-item(@click="rule_set({main_second: null,  range_low:30, delay_second: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
-        b-dropdown-item(@click="rule_set({main_second: 60*15, range_low:60, delay_second: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
-        b-dropdown-item(@click="rule_set({main_second: 60*30, range_low:60, delay_second: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
+        b-dropdown-item(@click="rule_set({main_second: 60*1,  range_low:30, extra_second: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
+        b-dropdown-item(@click="rule_set({main_second: null,  range_low:30, extra_second: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
+        b-dropdown-item(@click="rule_set({main_second: 60*15, range_low:60, extra_second: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
+        b-dropdown-item(@click="rule_set({main_second: 60*30, range_low:60, extra_second: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
 
       //- .item(@click="timer_handle")
       //-   b-icon(icon="timer-outline")

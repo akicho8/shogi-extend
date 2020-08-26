@@ -8,15 +8,15 @@ export class SingleClock {
     this.base         = base
     this.index        = index
 
-    this.main_second  = base.params.max || ONE_MIN * 3
-    this.delay_second = base.params.delay_second || 0
+    this.main_second  = base.params.main_second || ONE_MIN * 3
+    this.extra_second = base.params.extra_second || 0
     this.range_low    = base.params.range_low || 0
     this.every_plus   = base.params.every_plus || 0
   }
 
   copy_from(o) {
     this.main_second  = o.main_second
-    this.delay_second = o.delay_second
+    this.extra_second = o.extra_second
     this.range_low    = o.range_low
     this.every_plus   = o.every_plus
   }
@@ -26,9 +26,9 @@ export class SingleClock {
 
       let v = this.main_second + value
       if (v < 0) {
-        this.delay_second += v
-        if (this.delay_second < 0) {
-          this.delay_second = 0
+        this.extra_second += v
+        if (this.extra_second < 0) {
+          this.extra_second = 0
         }
         v = 0
       }
@@ -41,7 +41,7 @@ export class SingleClock {
           const r = v % ONE_MIN
           this.base.params.second_decriment_hook(v, d, r)
         } else {
-          const v = this.delay_second
+          const v = this.extra_second
           if (v >= 1) {
             const d = Math.trunc(v / ONE_MIN)
             const r = v % ONE_MIN
@@ -159,7 +159,7 @@ export class SingleClock {
   }
 
   get rest() {
-    return this.main_second + this.delay_second
+    return this.main_second + this.extra_second
   }
 
   //////////////////////////////////////////////////////////////////////////////// for v-model

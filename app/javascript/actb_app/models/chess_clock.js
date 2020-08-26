@@ -8,7 +8,8 @@ export class ChessClock {
       turn: null,
       range_low: null,
       every_plus: null,
-      delay_second: null,
+      main_second: null,
+      extra_second: null,
 
       time_zero_callback: e => {},
       clock_switch_hook: () => {},
@@ -24,7 +25,7 @@ export class ChessClock {
     this.timer         = null
     this.turn          = null
     this.counter       = null
-    this.zero_arrival    = null
+    this.zero_arrival  = null
     this.single_clocks = null
 
     this.reset()
