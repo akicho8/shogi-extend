@@ -1,6 +1,7 @@
 <template lang="pug">
 .xclock_app(:class="chess_clock.standby_mode_p ? 'xclock_inactive' : 'xclock_active'")
   .screen_container.is-flex
+    b-icon.center_stop_icon.is_clickable(icon="stop" @click.native="stop_handle" v-if="chess_clock.timer")
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
         .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
@@ -30,7 +31,7 @@
               b-field.mt-5.mx-4(label="猶予")
                 b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" @click.native.stop="")
 
-    .the_footer.footer_nav.is-flex
+    .the_footer.footer_nav.is-flex(v-if="!chess_clock.timer")
       template(v-if="!chess_clock.timer")
         .item(@click="back_handle")
           b-icon(icon="arrow-left")
@@ -346,6 +347,15 @@ export default {
   .screen_container
     // 初期値(JSで上書きする)
     height: 100vh
+
+    position: relative
+    .center_stop_icon
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      margin: auto
 
     flex-direction: column
     justify-content: space-between
