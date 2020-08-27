@@ -4,17 +4,24 @@
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
         .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
-          .mark_div
-          .digit_div.is-flex
+          .current_bar
+          .digit_container.is-flex
             template(v-if="chess_clock.timer")
-              .title.fixed_font.is_line_break_off(v-if="e.initial_main_sec >= 1")
-                | {{e.to_time_format}}
-              .title.fixed_font.is_line_break_off
-                | {{e.read_sec}}
-              .title.fixed_font.is_line_break_off(v-if="e.extra_sec >= 1")
-                | {{e.extra_sec}}
+              .digit_values.my-6(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
+                .field(v-if="e.initial_main_sec >= 1")
+                  .time_label 残り時間
+                  .time_value.fixed_font.is_line_break_off
+                    | {{e.to_time_format}}
+                .field(v-if="e.initial_read_sec >= 1")
+                  .time_label 秒読み
+                  .time_value.fixed_font.is_line_break_off
+                    | {{e.read_sec}}
+                .field(v-if="e.initial_extra_sec >= 1")
+                  .time_label 猶予
+                  .time_value.fixed_font.is_line_break_off
+                    | {{e.extra_sec}}
             template(v-if="!chess_clock.timer")
-              b-field.mt-5.mx-4(label="持ち時間(分)")
+              b-field.mt-0.mx-4(label="持ち時間(分)")
                 b-numberinput(controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :exponential="10" @click.native.stop="" :checkHtml5Validity="false")
               b-field.mt-5.mx-4(label="1手ごとに加算")
                 b-numberinput(controls-position="compact" v-model="e.every_plus" :min="0" :exponential="10" @click.native.stop="")
@@ -98,11 +105,14 @@
 </template>
 
 <script>
+
 import { ChessClock } from "../actb_app//models/chess_clock.js"
 import Location from "shogi-player/src/location.js"
 
 import { support } from "./support.js"
 import { store   } from "./store.js"
+import { application_shortcut } from "./application_shortcut.js"
+import { application_resize } from "./application_resize.js"
 import the_footer from "./the_footer.vue"
 
 export default {
@@ -110,6 +120,8 @@ export default {
   name: "xclock_app",
   mixins: [
     support,
+    application_shortcut,
+    application_resize,
   ],
   components: {
     the_footer,
@@ -138,24 +150,54 @@ export default {
         this.say("時間切れ")
         this.$buefy.dialog.alert({
           message: "時間切れ",
-          onConfirm: () => { this.pause_handle() },
+          onConfirm: () => { this.stop_handle() },
         })
       },
-      second_decriment_hook: (key, v, d, r) => {
-        if (r === 0 && d >= 1) {
-          this.say(`${d}分`)
-        } else if (v === 10 || v === 20 || v === 30) {
-          this.say(`${v}秒`)
-        } else if (v <= 5) {
-          this.say(`${v}`)
+      second_decriment_hook: (key, t, m, s) => {
+        if (1 <= m && m <= 10) {
+          if (s === 0) {
+            this.say(`${m}分`)
+          }
+        }
+        if (t === 10 || t === 20 || t === 30) {
+          this.say(`${t}秒`)
+        }
+        if (t <= 5) {
+          this.say(`${t}`)
         }
       },
     })
+
+    if (this.development_p) {
+      this.rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 7文字
+      this.rule_set({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 5文字
+      this.rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0}) // 2行 7文字
+      this.rule_set({initial_main_sec: 60*60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60}) // 3行 7文字
+    }
   },
+
+  mounted() {
+    window.addEventListener("orientationchange", this.orientationchange_func)
+  },
+
   beforeDestroy() {
+    window.removeEventListener("orientationchange", this.orientationchange_func)
     this.chess_clock.timer_stop()
   },
   methods: {
+    landscape_p() {
+      let angle = screen && screen.orientation && screen.orientation.angle
+      if (angle == null) {
+        angle = window.orientation || 0
+      }
+      return (angle % 180) === 0
+    },
+    portrait_p() {
+      return !this.landscape_p()
+    },
+    orientationchange_func(e) {
+      alert(1)
+    },
     pause_handle() {
       if (this.chess_clock.timer) {
         this.sound_play("click")
@@ -175,7 +217,11 @@ export default {
       if (this.chess_clock.timer) {
       } else {
         this.sound_play("start")
-        this.say("対局かいし")
+        this.say("対局かいし", {onend: () => {
+          if (this.portrait_p()) {
+            this.say("ブラウザのタブを1つだけにしてスマホを横向きにしてください")
+          }
+        }})
         this.chess_clock.play_button_handle()
       }
     },
@@ -252,12 +298,11 @@ export default {
 <style lang="sass">
 @import "support.sass"
 @import "application.sass"
+
 .xclock_app
-  // @extend %padding_top_for_secondary_header
-  // margin-bottom: $margin_bottom
   .screen_container
+    // 初期値(JSで上書きする)
     height: 100vh
-    border: 1px solid hsla(200, 50%, 50%, 1.0)
 
     flex-direction: column
     justify-content: space-between
@@ -266,9 +311,7 @@ export default {
     .level
       height: 100%
       width: 100%
-      // border: 8px solid hsla(200, 50%, 50%, 1.0)
       .level-item
-        // border: 8px solid hsla(150, 50%, 50%, 1.0)
         flex-direction: column
         justify-content: space-between
         align-items: center
@@ -276,41 +319,66 @@ export default {
         height: 100%
         width: 50%
 
-        .mark_div
-          height: 4vh
+        .current_bar
+          height: 48px
           width: 100%
-          // background-color: darken($white, 4%)
+          @at-root
+            .is_sclock_active
+              .current_bar
+                background-color: $primary
 
-        // border: 1px solid hsla(0, 50%, 50%, 1.0)
-        .digit_div
-          // border: 8px solid hsla(64, 50%, 50%, 1.0)
+        .digit_container
           flex-direction: column
           justify-content: center
           align-items: center
 
           height: 100%
           width: 100%
-          .title
-            font-size: 10vh
-            // input
-            //   height: 25vh
-            //   font-size: 2rem
 
-        .text
-          vertical-align: middle
-          display: inline
-
-        .tiisame
-          input
-            width: 3rem
-
-        &.sclock_inactive
-          // background-color: darken($white, 0%)
-          .title
-            color: lighten($text, 40%)
-        &.sclock_active
-          .mark_div
-            background-color: $primary
+          .digit_values
+            @at-root
+              .is_sclock_inactive
+                .digit_values
+                  opacity: 0.4
+            .time_label
+              font-weight: bold
+            .time_value
+              line-height: 1
+              font-weight: bold
+              // スマホ縦持ち
+              @media (orientation: portrait)
+                font-size: 10vmin !important
+            // 1行表示
+            &.display_lines-1
+              .time_label
+                display: none   // ラベル除去
+              .time_value
+                font-size: 25vmin // 1行5文字
+                // font-size: calc(50vw / 4)
+              &.text_width-7
+                .time_value
+                  font-size: 20vmin // 1行7文字
+            // 2行表示
+            &.display_lines-2
+              .time_value
+                font-size: 25vmin // 2行5文字
+              &.text_width-7
+                .time_value
+                  font-size: 20vmin // 2行7文字
+              .time_value
+                margin-top: 1rem  // 2行表示では隙間がとれるので広めに開ける
+              .field
+                &:not(:first-child)
+                  margin-top: 3rem // 2行表示では隙間がとれるので広めに開ける
+            // 3行表示
+            &.display_lines-3
+              .time_value
+                font-size: 16vmin // 3行5,7文字
+              .time_value
+                margin-top: 0.4rem
+              .field
+                &:not(:first-child)
+                  margin-top: 3rem
 
   .the_footer
     &.footer_nav

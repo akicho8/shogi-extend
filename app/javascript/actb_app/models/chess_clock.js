@@ -16,9 +16,9 @@ export class ChessClock {
       clock_switch_hook: () => {},
       second_decriment_hook: () => {},
 
-      active_value_zero_class:     "has-text-danger",
-      active_value_nonzero_class: "has-text-primary",
-      inactive_class:              "has-text-grey-light",
+      active_value_zero_class:    "",
+      active_value_nonzero_class: "",
+      inactive_class:             "",
 
       ...params,
     }

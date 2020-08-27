@@ -70,17 +70,17 @@ export class SingleClock {
       }
 
       if (value < 0) {
-        const v = this.main_sec
-        if (v >= 1) {
-          this.second_decriment_hook_call("main_sec", v)
+        const t = this.main_sec
+        if (t >= 1) {
+          this.second_decriment_hook_call("main_sec", t)
         } else {
-          const v = this.read_sec
-          if (v >= 1) {
-            this.second_decriment_hook_call("read_sec", v)
+          const t = this.read_sec
+          if (t >= 1) {
+            this.second_decriment_hook_call("read_sec", t)
           } else {
-            const v = this.extra_sec
-            if (v >= 1) {
-              this.second_decriment_hook_call("extra_sec", v)
+            const t = this.extra_sec
+            if (t >= 1) {
+              this.second_decriment_hook_call("extra_sec", t)
             }
           }
         }
@@ -97,10 +97,10 @@ export class SingleClock {
     }
   }
 
-  second_decriment_hook_call(key, v) {
-    const d = Math.trunc(v / ONE_MIN)
-    const r = v % ONE_MIN
-    this.base.params.second_decriment_hook(key, v, d, r)
+  second_decriment_hook_call(key, t) {
+    const m = Math.trunc(t / ONE_MIN)
+    const s = t % ONE_MIN
+    this.base.params.second_decriment_hook(key, t, m, s)
   }
 
   switch_handle() {
@@ -166,7 +166,7 @@ export class SingleClock {
     if (this.standby_mode_p) {
     } else {
       if (this.active_p) {
-        ary.push("sclock_active")
+        ary.push("is_sclock_active")
         if (this.main_sec === 0) {
           ary.push(this.base.params.active_value_zero_class)
           ary.push("sclock_zero")
@@ -176,7 +176,7 @@ export class SingleClock {
         }
       } else {
         ary.push(this.base.params.inactive_class)
-        ary.push("sclock_inactive")
+        ary.push("is_sclock_inactive")
       }
     }
     return ary
@@ -200,6 +200,16 @@ export class SingleClock {
 
   get rest() {
     return this.main_sec + this.read_sec + this.extra_sec
+  }
+
+  //////////////////////////////////////////////////////////////////////////////// for style
+
+  get display_lines() {
+    return [
+      this.initial_main_sec,
+      this.initial_read_sec,
+      this.initial_extra_sec,
+    ].filter(e => (e >= 1)).length
   }
 
   //////////////////////////////////////////////////////////////////////////////// for v-model
