@@ -7,7 +7,7 @@
           .current_bar
           .digit_container.is-flex
             template(v-if="chess_clock.timer")
-              .digit_values.my-6(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
+              .digit_values(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
                 .field(v-if="e.initial_main_sec >= 1")
                   .time_label 残り時間
                   .time_value.fixed_font.is_line_break_off
@@ -31,8 +31,13 @@
                 b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" @click.native.stop="")
 
     .the_footer.footer_nav.is-flex
-      .item(@click="copy_handle" :class="{'is-invisible': chess_clock.timer}")
-        b-icon(icon="content-duplicate")
+      template(v-if="!chess_clock.timer")
+        .item(@click="back_handle")
+          b-icon(icon="arrow-left")
+
+      template(v-if="!chess_clock.timer")
+        .item(@click="copy_handle")
+          b-icon(icon="content-duplicate")
 
       template(v-if="!chess_clock.timer")
         .item(@click="play_handle")
@@ -50,22 +55,23 @@
       //-   b-icon(icon="stop")
       //- template(v-else)
 
-      b-dropdown(position="is-top-left" :class="{'is-invisible': chess_clock.timer}" @active-change="e => dropdown_active_change(e)")
-        .item(slot="trigger")
-          b-icon(icon="cog")
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*10, initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10分
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*3,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 3分
-        b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:10, initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10秒
-        b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 5分
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*2,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 2分
-        b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
-        b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*1,  initial_read_sec:30, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
-        b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:30, initial_extra_sec: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
+      template(v-if="!chess_clock.timer")
+        b-dropdown(position="is-top-left" @active-change="e => dropdown_active_change(e)" ref="foobar")
+          .item(slot="trigger")
+            b-icon(icon="cog")
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*10, initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10分
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*3,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 3分
+          b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:10, initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10秒
+          b-dropdown-item(:separator="true")
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 5分
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*2,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 2分
+          b-dropdown-item(:separator="true")
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
+          b-dropdown-item(:separator="true")
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*1,  initial_read_sec:30, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
+          b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:30, initial_extra_sec: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
 
       template(v-if="!chess_clock.timer")
         .item(@click="help_handle")
@@ -181,6 +187,8 @@ export default {
 
   mounted() {
     window.addEventListener("orientationchange", this.orientationchange_func)
+
+    // this.$refs.foobar.toggle()
   },
 
   beforeDestroy() {
@@ -199,7 +207,6 @@ export default {
       return !this.landscape_p()
     },
     orientationchange_func(e) {
-      alert(1)
     },
     pause_handle() {
       if (this.chess_clock.timer) {
@@ -234,6 +241,10 @@ export default {
       } else {
         e.set_or_tap_handle()
       }
+    },
+    back_handle() {
+      this.sound_play("click")
+      location.href = "/"
     },
     copy_handle() {
       this.sound_play("click")
@@ -398,19 +409,23 @@ export default {
                 .time_value
                   font-size: 20vmin // 2行7文字
               .time_value
-                margin-top: 1rem  // 2行表示では隙間がとれるので広めに開ける
+                margin-top: 0  // 2行表示では隙間がとれるので広めに開ける
               .field
                 &:not(:first-child)
-                  margin-top: 3rem // 2行表示では隙間がとれるので広めに開ける
+                  margin-top: 0rem // 2行表示では隙間がとれるので広めに開ける
             // 3行表示
             &.display_lines-3
+              .time_label
+                border: 1px solid blue
+                font-size: $size-7
               .time_value
-                font-size: 16vmin // 3行5,7文字
-              .time_value
-                margin-top: 0.4rem
+                border: 1px solid red
+                font-size: 12vmin // 3行5,7文字
+                margin-top: 0rem
               .field
+                border: 1px solid cyan
                 &:not(:first-child)
-                  margin-top: 3rem
+                  margin-top: 0rem
 
   .the_footer
     &.footer_nav
