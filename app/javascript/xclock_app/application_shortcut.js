@@ -26,7 +26,7 @@ export const application_shortcut = {
         e.preventDefault()
       }
 
-      if (["ShiftRight", "ControlRight", "Enter"].includes(e.code)) {
+      if (["ShiftRight", "ControlRight", "Enter", "ArrowRight"].includes(e.code)) {
         this.switch_handle(this.chess_clock.single_clocks[1])
         e.preventDefault()
       }

@@ -67,7 +67,10 @@
         b-dropdown-item(@click="rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
         b-dropdown-item(@click="rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
 
-      //- .item(@click="timer_handle")
+      template(v-if="!chess_clock.timer")
+        .item(@click="help_handle")
+          b-icon(icon="help")
+
       //-   b-icon(icon="timer-outline")
       //- .item(@click="edit_handle")
       //-   b-icon(icon="cog")
@@ -272,6 +275,35 @@ export default {
         },
       })
 
+    },
+
+    help_handle() {
+      this.sound_play("click")
+      this.talk_stop()
+      const dialog = this.$buefy.dialog.alert({
+        title: "キーボード・ショートカット",
+        message: `
+          <div class="content is-size-7">
+            <ol>
+              <li>左は <code>TAB</code> <code>CONTROL</code> <code>左SHIFT</code> <code>SPACE</code> で切り替え</li>
+              <li>右は <code>ENTER</code> <code>右SHIFT</code> <code>→</code> で切り替え</li>
+            </ol>
+          </div>`,
+        confirmText: "わかった",
+        canCancel: ["outside", "escape"],
+        type: "is-info",
+        hasIcon: true,
+        trapFocus: true,
+        onConfirm: () => { this.talk_stop() },
+        onCancel:  () => { this.talk_stop() },
+      })
+
+      //       this.say(`
+      // タップモードでは符号に対応する位置をタップします。
+      // タップじゃないモードでは駒の場所をキーボードの数字2桁で入力していきます。最初の数字を間違えたときはエスケープキーでキャンセルできます。
+      // 選択した数まで正解するまでの時間を競います。
+      // ログインしていると毎回出る名前の入力を省略できます。
+      // `, {onend: () => { dialog.close() }})
     },
 
     dropdown_active_change(e) {
