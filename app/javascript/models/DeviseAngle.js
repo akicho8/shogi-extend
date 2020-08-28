@@ -7,12 +7,12 @@ export const DeviseAngle = {
     return v
   },
 
-  // 横か？
+  // 縦か？
   portrait_p() {
     return this.value() === 0
   },
 
-  // 縦か？
+  // 横か？
   landscape_p() {
     return !this.portrait_p()
   },
