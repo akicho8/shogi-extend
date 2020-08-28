@@ -33,6 +33,10 @@ export default {
           title: '将棋トレーニングバトル',
           to: { name: 'training' },
         },
+        {
+          title: '対局時計',
+          to: { name: 'vs-clock' },
+        },
       ]
     }
   }

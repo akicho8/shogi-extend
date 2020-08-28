@@ -52,7 +52,7 @@
 
 <script>
 
-import { ChessClock   } from "../actb_app//models/chess_clock.js"
+import { ChessClock   } from "../actb_app/models/chess_clock.js"
 import { DeviseAngle  } from "../models/DeviseAngle.js"
 import { support      } from "./support.js"
 import { store        } from "./store.js"
