@@ -31,15 +31,9 @@
               b-field.mt-5.mx-4(label="猶予")
                 b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" @click.native.stop="")
 
-    .the_footer.footer_nav(:class="chess_clock.timer ? 'is-hidden' : 'is-flex'")
+    .the_footer.footer_nav.is-flex(v-if="!chess_clock.timer")
       .item(@click="back_handle")
         b-icon(icon="arrow-left")
-
-      .item(@click="copy_handle")
-        b-icon(icon="content-duplicate")
-
-      .item(@click="play_handle")
-        b-icon(icon="play")
 
       b-dropdown(position="is-top-left" @active-change="e => dropdown_active_change(e)" ref="foobar")
         .item(slot="trigger")
@@ -57,6 +51,18 @@
         b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:30, initial_extra_sec: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
         b-dropdown-item(@click="rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
         b-dropdown-item(@click="rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
+        template(v-if="development_p")
+          b-dropdown-item(:separator="true")
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 7文字
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 5文字
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0})") 2行 7文字
+          b-dropdown-item(@click="rule_set({initial_main_sec: 60*60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60})") 3行 7文字
+
+      .item(@click="play_handle")
+        b-icon(icon="play")
+
+      .item(@click="copy_handle")
+        b-icon(icon="content-duplicate")
 
       .item(@click="help_handle")
         b-icon(icon="help")
@@ -82,6 +88,7 @@
 
 import { ChessClock } from "../actb_app//models/chess_clock.js"
 import Location from "shogi-player/src/location.js"
+import { isMobile } from "../models/isMobile.js"
 
 import { support } from "./support.js"
 import { store   } from "./store.js"
@@ -270,8 +277,14 @@ export default {
         type: "is-info",
         hasIcon: true,
         trapFocus: true,
-        onConfirm: () => { this.talk_stop() },
-        onCancel:  () => { this.talk_stop() },
+        onConfirm: () => {
+          this.talk_stop()
+          this.sound_play("click")
+        },
+        onCancel: () => {
+          this.talk_stop()
+          this.sound_play("click")
+        },
       })
 
       //       this.say(`

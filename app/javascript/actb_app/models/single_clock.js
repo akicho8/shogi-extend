@@ -114,12 +114,14 @@ export class SingleClock {
   tap_and_auto_start_handle() {
     if (this.standby_mode_p) {
       this.base.initial_boot_from(this.index)
+      this.base.clock_switch()
+      return
     }
     if (this.active_p) {
-      if (this.base.counter >= 1) {
-        this.generation_next(this.every_plus)
-        this.read_sec_set()
-      }
+      // if (this.base.counter >= 1) {
+      // }
+      this.generation_next(this.every_plus)
+      this.read_sec_set()
       this.base.clock_switch()
     }
   }
