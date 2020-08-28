@@ -7,53 +7,7 @@ import SfenParser from "shogi-player/src/sfen_parser.js"
 
 const strip_tags = require('striptags')
 
-// import { isMobile } from "buefy/src/utils/helpers.js"
-// from buefy/src/utils/helpers.js
-/**
- * Mobile detection
- * https://www.abeautifulsite.net/detecting-mobile-devices-with-javascript
- */
-const isMobile = {
-  Android: function () {
-    return (
-      typeof window !== 'undefined' &&
-        window.navigator.userAgent.match(/Android/i)
-    )
-  },
-  BlackBerry: function () {
-    return (
-      typeof window !== 'undefined' &&
-        window.navigator.userAgent.match(/BlackBerry/i)
-    )
-  },
-  iOS: function () {
-    return (
-      typeof window !== 'undefined' &&
-        window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
-    )
-  },
-  Opera: function () {
-    return (
-      typeof window !== 'undefined' &&
-        window.navigator.userAgent.match(/Opera Mini/i)
-    )
-  },
-  Windows: function () {
-    return (
-      typeof window !== 'undefined' &&
-        window.navigator.userAgent.match(/IEMobile/i)
-    )
-  },
-  any: function () {
-    return (
-      isMobile.Android() ||
-        isMobile.BlackBerry() ||
-        isMobile.iOS() ||
-        isMobile.Opera() ||
-        isMobile.Windows()
-    )
-  }
-}
+import { isMobile } from "../models/isMobile.js"
 
 export default {
   methods: {
@@ -145,7 +99,8 @@ export default {
     // モバイルでないときだけ elem にフォーカスする
     // なぜか $nextTick ではフォーカスされない場合があるため setTimeout に変更
     desktop_focus_to(elem) {
-      if (this.desktop_p) {
+      if (isMobile.any()) {
+      } else {
         this.focus_to(elem)
       }
     },
@@ -283,22 +238,10 @@ export default {
       return process.env.NODE_ENV === "development"
     },
 
-    isMobile() {
-      return isMobile
-    },
-
-    mobile_p() {
-      return this.isMobile.any()
-    },
-
     // スマホなら _self の方が使いやすい
     // PCなら _blank の方が使いやすい
     target_default() {
-      return this.mobile_p ? "_self" : "_blank"
-    },
-
-    desktop_p() {
-      return !this.mobile_p
+      return isMobile.any() ? "_self" : "_blank"
     },
 
     url_prefix() {

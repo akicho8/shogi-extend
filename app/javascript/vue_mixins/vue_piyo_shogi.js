@@ -1,6 +1,8 @@
 // https://www.studiok-i.net/kifu/?sfen=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fp1pppp1pp%2F1p4p2%2F9%2F2P4P1%2FPP1PPPP1P%2F1B5R1%2FLNSGKGSNL%20b%20-%201&game_name=&sente_name
 // https://www.studiok-i.net/ps/?sfen=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fp1pppp1pp%2F1p4p2%2F9%2F2P4P1%2FPP1PPPP1P%2F1B5R1%2FLNSGKGSNL%20b%20-%201
 
+import { isMobile } from "../models/isMobile.js"
+
 export default {
   methods: {
     // app, web 自動切り替え
@@ -70,7 +72,7 @@ export default {
   computed: {
     // アプリ版「ぴよ将棋」が起動できるか？
     piyo_shogi_app_p() {
-      return this.isMobile.iOS() || this.isMobile.Android()
+      return isMobile.iOS() || isMobile.Android()
     },
 
     piyo_shogi_url_prefix() {
