@@ -52,22 +52,23 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.the_footer
-  &.footer_nav
-    border-top: 1px solid $grey-lighter
-    background-color: change_color($white-ter, $alpha: 0.96)
-    .item
-      cursor: pointer
+.actb_app
+  .the_footer
+    &.footer_nav
+      border-top: 1px solid $grey-lighter
+      background-color: change_color($white-ter, $alpha: 0.96)
+      .item
+        cursor: pointer
 
-      padding-right: 1rem
-      padding-left: 1rem
-      height: inherit
+        padding-right: 1rem
+        padding-left: 1rem
+        height: inherit
 
-      display: flex
-      justify-content: center
-      align-items: center
+        display: flex
+        justify-content: center
+        align-items: center
 
-  transition: all 0.2s ease-out
-  &.hidden_p
-    transform: translateY($footer_height)
+    transition: all 0.2s ease-out
+    &.hidden_p
+      transform: translateY($footer_height)
 </style>
