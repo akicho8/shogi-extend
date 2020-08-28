@@ -31,41 +31,7 @@
               b-field.mt-5.mx-4(label="猶予")
                 b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" @click.native.stop="")
 
-    .the_footer.footer_nav.is-flex(v-if="!chess_clock.timer")
-      .item(@click="back_handle")
-        b-icon(icon="arrow-left")
-
-      b-dropdown(position="is-top-left" @active-change="e => dropdown_active_change(e)" ref="foobar")
-        .item(slot="trigger")
-          b-icon(icon="menu")
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*10, initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10分
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*3,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 3分
-        b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:10, initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10秒
-        b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 5分
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*2,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 2分
-        b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
-        b-dropdown-item(:separator="true")
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*1,  initial_read_sec:30, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
-        b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:30, initial_extra_sec: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
-        b-dropdown-item(@click="rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
-        template(v-if="development_p")
-          b-dropdown-item(:separator="true")
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 7文字
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 5文字
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0})") 2行 7文字
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60})") 3行 7文字
-
-      .item(@click="play_handle")
-        b-icon(icon="play")
-
-      .item(@click="copy_handle")
-        b-icon(icon="content-duplicate")
-
-      .item(@click="help_handle")
-        b-icon(icon="help")
+    the_footer(ref="the_footer")
 
   .debug_container.mt-5(v-if="development_p")
     .buttons.are-small.is-centered
@@ -86,15 +52,13 @@
 
 <script>
 
-import { ChessClock } from "../actb_app//models/chess_clock.js"
-import Location from "shogi-player/src/location.js"
-import { DeviseAngle } from "../models/DeviseAngle.js"
-
-import { support } from "./support.js"
-import { store   } from "./store.js"
+import { ChessClock   } from "../actb_app//models/chess_clock.js"
+import { DeviseAngle  } from "../models/DeviseAngle.js"
+import { support      } from "./support.js"
+import { store        } from "./store.js"
 import { app_shortcut } from "./app_shortcut.js"
-import { app_resize } from "./app_resize.js"
-import the_footer from "./the_footer.vue"
+import { app_resize   } from "./app_resize.js"
+import the_footer       from "./the_footer.vue"
 
 export default {
   store,
@@ -113,14 +77,12 @@ export default {
   data() {
     return {
       chess_clock: null,
-      mode: null,
     }
   },
   beforeCreate() {
     this.$store.state.app = this
   },
   created() {
-    this.mode = "main"
     this.chess_clock = new ChessClock({
       turn: 0,
       clock_switch_hook: () => {
@@ -168,13 +130,13 @@ export default {
   },
 
   mounted() {
-    window.addEventListener("orientationchange", this.orientationchange_func)
-
-    // this.$refs.foobar.toggle()
+    if (this.development_p) {
+    } else {
+      this.$refs.the_footer.$refs.preset_menu_pull_down.toggle()
+    }
   },
 
   beforeDestroy() {
-    window.removeEventListener("orientationchange", this.orientationchange_func)
     this.chess_clock.timer_stop()
   },
   methods: {
@@ -316,7 +278,6 @@ export default {
 
   },
   computed: {
-    Location() { return Location },
   },
 }
 </script>
@@ -423,22 +384,6 @@ export default {
               .field
                 &:not(:first-child)
                   margin-top: 0rem
-
-  .the_footer
-    &.footer_nav
-      border-top: 1px solid $grey-lighter
-      background-color: change_color($white-ter, $alpha: 0.96)
-      .item
-        cursor: pointer
-
-        padding-right: 1rem
-        padding-left: 1rem
-        height: inherit
-
-        display: flex
-        justify-content: center
-        align-items: center
-
 =xray($level)
   $color: hsla((360 / 8) * $level, 50%, 50%, 1.0)
   // background-color: $color
