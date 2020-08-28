@@ -1,7 +1,7 @@
 <template lang="pug">
 .xclock_app(:class="chess_clock.standby_mode_p ? 'xclock_inactive' : 'xclock_active'")
-  .screen_container.is-flex
-    b-icon.center_stop_icon.is_clickable(icon="stop" @click.native="stop_handle" v-if="chess_clock.timer")
+  .screen_container.is-flex.is-relative
+    b-icon.stop_button.is_clickable(icon="stop" @click.native="stop_handle" v-if="chess_clock.timer")
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
         .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
@@ -31,71 +31,35 @@
               b-field.mt-5.mx-4(label="猶予")
                 b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" @click.native.stop="")
 
-    .the_footer.footer_nav.is-flex(v-if="!chess_clock.timer")
-      template(v-if="!chess_clock.timer")
-        .item(@click="back_handle")
-          b-icon(icon="arrow-left")
+    .the_footer.footer_nav(:class="chess_clock.timer ? 'is-hidden' : 'is-flex'")
+      .item(@click="back_handle")
+        b-icon(icon="arrow-left")
 
-      template(v-if="!chess_clock.timer")
-        .item(@click="copy_handle")
-          b-icon(icon="content-duplicate")
+      .item(@click="copy_handle")
+        b-icon(icon="content-duplicate")
 
-      template(v-if="!chess_clock.timer")
-        .item(@click="play_handle")
-          b-icon(icon="play")
-      template(v-else)
-        .item(@click="stop_handle")
-          b-icon(icon="stop")
+      .item(@click="play_handle")
+        b-icon(icon="play")
 
-      //- template(v-if="chess_clock.timer_active_p")
-      //- .item(@click="play_handle")
-      //-   b-icon(icon="play")
-      //- .item(@click="pause_handle")
-      //-   b-icon(icon="pause")
-      //- .item(@click="stop_handle")
-      //-   b-icon(icon="stop")
-      //- template(v-else)
+      b-dropdown(position="is-top-left" @active-change="e => dropdown_active_change(e)" ref="foobar")
+        .item(slot="trigger")
+          b-icon(icon="menu")
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*10, initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10分
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*3,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 3分
+        b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:10, initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10秒
+        b-dropdown-item(:separator="true")
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 5分
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*2,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 2分
+        b-dropdown-item(:separator="true")
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
+        b-dropdown-item(:separator="true")
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*1,  initial_read_sec:30, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
+        b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:30, initial_extra_sec: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
+        b-dropdown-item(@click="rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
 
-      template(v-if="!chess_clock.timer")
-        b-dropdown(position="is-top-left" @active-change="e => dropdown_active_change(e)" ref="foobar")
-          .item(slot="trigger")
-            b-icon(icon="cog")
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*10, initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10分
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*3,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 3分
-          b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:10, initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10秒
-          b-dropdown-item(:separator="true")
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 5分
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*2,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 2分
-          b-dropdown-item(:separator="true")
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
-          b-dropdown-item(:separator="true")
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*1,  initial_read_sec:30, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
-          b-dropdown-item(@click="rule_set({initial_main_sec: 0,     initial_read_sec:30, initial_extra_sec: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
-          b-dropdown-item(@click="rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
-
-      template(v-if="!chess_clock.timer")
-        .item(@click="help_handle")
-          b-icon(icon="help")
-
-      //-   b-icon(icon="timer-outline")
-      //- .item(@click="edit_handle")
-      //-   b-icon(icon="cog")
-
-      //- .item(@click="app.lobby_handle")
-      //-   b-icon(:icon="app.mode === 'lobby'    ? 'home'        : 'home-outline'"  :class="{'has-text-primary': app.mode === 'lobby'}")
-      //- .item(@click="app.ranking_handle")
-      //-   b-icon(:icon="app.mode === 'ranking'  ? 'crown'       : 'crown-outline'" :class="{'has-text-primary': app.mode === 'ranking'}")
-      //- .item(@click="app.history_handle")
-      //-   b-icon(:icon="app.mode === 'history'  ? 'history'     : 'history'"       :class="{'has-text-primary': app.mode === 'history'}")
-      //- .item(@click="app.builder_handle")
-      //-   b-icon(:icon="app.mode === 'builder'  ? 'plus-thick'  : 'plus'"          :class="{'has-text-primary': app.mode === 'builder'}")
-      //- .item(@click="app.menu_handle")
-      //-   b-icon(:icon="app.mode === 'menu'     ? 'menu'        : 'menu'"          :class="{'has-text-primary': app.mode === 'menu'}")
-
-      //- b-dropdown(position="is-top-left" v-if="false")
-      //-   b-button(slot="trigger" icon-left="menu" @click="sound_play('click')")
-      //-   b-dropdown-item(href="/" @click="sound_play('click')") TOP
+      .item(@click="help_handle")
+        b-icon(icon="help")
 
   .debug_container.mt-5(v-if="development_p")
     .buttons.are-small.is-centered
@@ -344,12 +308,11 @@ export default {
 @import "application.sass"
 
 .xclock_app
-  .screen_container
-    // 初期値(JSで上書きする)
-    height: 100vh
+  .screen_container // 100vw x 100vh 相当の範囲
+    height: 100vh   // 初期値(JSで上書きする)
 
-    position: relative
-    .center_stop_icon
+    // 停止ボタンを画面中央に配置
+    .stop_button
       position: absolute
       top: 0
       left: 0
@@ -357,21 +320,27 @@ export default {
       bottom: 0
       margin: auto
 
+    // .level を左右均等に配置
     flex-direction: column
     justify-content: space-between
     align-items: center
 
+    // 半分を囲むブロック(つまりフッターを含まない)
     .level
       height: 100%
       width: 100%
+
+      // 半分
       .level-item
+        height: 100%
+        width: 50%
+
+        // 文字やフォームを中央縦並び配置
         flex-direction: column
         justify-content: space-between
         align-items: center
 
-        height: 100%
-        width: 50%
-
+        // どちらがアクティブかを表すバー
         .current_bar
           height: 48px
           width: 100%
@@ -380,14 +349,17 @@ export default {
               .current_bar
                 background-color: $primary
 
+        // 時間表示(フォームも含む)
         .digit_container
+          height: 100%
+          width: 100%
+
+          // 中央縦並び
           flex-direction: column
           justify-content: center
           align-items: center
 
-          height: 100%
-          width: 100%
-
+          // 時間表示だけを囲むブロック
           .digit_values
             @at-root
               .is_sclock_inactive
@@ -426,14 +398,11 @@ export default {
             // 3行表示
             &.display_lines-3
               .time_label
-                border: 1px solid blue
                 font-size: $size-7
               .time_value
-                border: 1px solid red
                 font-size: 12vmin // 3行5,7文字
                 margin-top: 0rem
               .field
-                border: 1px solid cyan
                 &:not(:first-child)
                   margin-top: 0rem
 
@@ -451,4 +420,29 @@ export default {
         display: flex
         justify-content: center
         align-items: center
+
+=xray($level)
+  $color: hsla((360 / 8) * $level, 50%, 50%, 1.0)
+  // background-color: $color
+  border: 2px solid $color
+
+.development
+  .xclock_app
+    .screen_container
+      .level
+        +xray(0)
+        .level-item
+          +xray(1)
+          .current_bar
+          .digit_container
+            .field
+              +xray(2)
+            .digit_values
+              .time_label
+                +xray(3)
+              .time_value
+                +xray(4)
+      .the_footer
+        .item
+          +xray(5)
 </style>
