@@ -100,7 +100,7 @@ export class SingleClock {
   second_decriment_hook_call(key, t) {
     const m = Math.trunc(t / ONE_MIN)
     const s = t % ONE_MIN
-    this.base.params.second_decriment_hook(key, t, m, s)
+    this.base.params.second_decriment_hook(this, key, t, m, s)
   }
 
   switch_handle() {

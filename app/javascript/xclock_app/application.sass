@@ -1,25 +1,4 @@
 .xclock_app
-  .is-size-8
-    font-size: $size-8
-  .is-size-9
-    font-size: $size-9
-  .is-size-10
-    font-size: $size-10
-  .is-size-11
-    font-size: $size-11
-  .is-size-12
-    font-size: $size-12
-  .is-size-13
-    font-size: $size-13
-  .is-size-14
-    font-size: $size-14
-  .is-size-15
-    font-size: $size-15
-  .is-size-16
-    font-size: $size-16
-  .is-size-17
-    font-size: $size-17
-
   .avatar_image
     flex-shrink: 0
     img
@@ -100,17 +79,16 @@
   .footer_nav
     z-index: 1
 
-    // position: fixed
-    // left: 0
-    // bottom: 0
-
     height: $footer_height
     width: 100%
 
-    padding: 0 16px
+    padding: 0 8px
 
     justify-content: space-between
     align-items: center
+
+    .dropdown, .dropdown-trigger
+      height: 100%
 
     +desktop
       justify-content: center

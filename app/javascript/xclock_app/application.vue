@@ -88,7 +88,7 @@
 
 import { ChessClock } from "../actb_app//models/chess_clock.js"
 import Location from "shogi-player/src/location.js"
-import { isMobile } from "../models/isMobile.js"
+import { DeviseAngle } from "../models/DeviseAngle.js"
 
 import { support } from "./support.js"
 import { store   } from "./store.js"
@@ -134,7 +134,7 @@ export default {
           onConfirm: () => { this.stop_handle() },
         })
       },
-      second_decriment_hook: (key, t, m, s) => {
+      second_decriment_hook: (single_clock, key, t, m, s) => {
         if (1 <= m && m <= 10) {
           if (s === 0) {
             this.say(`${m}分`)
@@ -143,8 +143,18 @@ export default {
         if (t === 10 || t === 20 || t === 30) {
           this.say(`${t}秒`)
         }
+
         if (t <= 5) {
           this.say(`${t}`)
+        }
+
+        if (t <= 6 && false) {
+          const index = single_clock.index
+          setTimeout(() => {
+            if (index === single_clock.base.current_index) {
+              this.say(`${t - 1}`)
+            }
+          }, 1000 * 0.75)
         }
       },
     })
@@ -168,16 +178,6 @@ export default {
     this.chess_clock.timer_stop()
   },
   methods: {
-    landscape_p() {
-      let angle = screen && screen.orientation && screen.orientation.angle
-      if (angle == null) {
-        angle = window.orientation || 0
-      }
-      return (angle % 180) === 0
-    },
-    portrait_p() {
-      return !this.landscape_p()
-    },
     orientationchange_func(e) {
     },
     pause_handle() {
@@ -190,7 +190,7 @@ export default {
     stop_handle() {
       if (this.chess_clock.timer) {
         this.sound_play("click")
-        this.say("ストップ")
+        this.say("停止")
         this.chess_clock.stop_button_handle()
       } else {
       }
@@ -200,7 +200,7 @@ export default {
       } else {
         this.sound_play("start")
         this.say("対局かいし", {onend: () => {
-          if (this.portrait_p()) {
+          if (DeviseAngle.landscape_p()) {
             this.say("ブラウザのタブを1つだけにしてスマホを横向きにしてください")
           }
         }})
@@ -215,11 +215,12 @@ export default {
       }
     },
     back_handle() {
-      this.sound_play("click")
       location.href = "/"
     },
     copy_handle() {
       this.sound_play("click")
+
+      this.say("左の設定を右にコピーしますか？")
 
       this.$buefy.dialog.confirm({
         title: "コピー",
@@ -231,11 +232,15 @@ export default {
         trapFocus: true,
         animation: "",
         onConfirm: () => {
+          this.talk_stop()
           this.sound_play("click")
           this.chess_clock.copy_1p_to_2p()
           this.say("コピーしました")
         },
-        onCancel: () => { this.sound_play("click") },
+        onCancel: () => {
+          this.talk_stop()
+          this.sound_play("click")
+        },
       })
     },
 
