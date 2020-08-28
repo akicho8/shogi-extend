@@ -14,11 +14,11 @@ export class MobileScreen {
 
   event_add() {
     this.handle()
-    window.addEventListener("resize", this.handle)
+    window.addEventListener("resize", () => this.handle())
   }
 
   event_remove() {
-    window.removeEventListener("resize", this.handle)
+    window.removeEventListener("resize", () => this.handle())
   }
 
   // private
