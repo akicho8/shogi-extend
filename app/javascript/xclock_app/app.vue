@@ -92,8 +92,8 @@ import { DeviseAngle } from "../models/DeviseAngle.js"
 
 import { support } from "./support.js"
 import { store   } from "./store.js"
-import { application_shortcut } from "./application_shortcut.js"
-import { application_resize } from "./application_resize.js"
+import { app_shortcut } from "./app_shortcut.js"
+import { app_resize } from "./app_resize.js"
 import the_footer from "./the_footer.vue"
 
 export default {
@@ -101,8 +101,8 @@ export default {
   name: "xclock_app",
   mixins: [
     support,
-    application_shortcut,
-    application_resize,
+    app_shortcut,
+    app_resize,
   ],
   components: {
     the_footer,
@@ -323,7 +323,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-@import "application.sass"
+@import "app.sass"
 
 .xclock_app
   .screen_container // 100vw x 100vh 相当の範囲
