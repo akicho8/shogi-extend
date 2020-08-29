@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   get "health" => HealthResponder
 
-  get "talk", to: "talk#show", as: :talk
+  get "talk", to: "talk#show"
+  post "talk", to: "talk#create"
 
   devise_for :xusers, {
     class_name: "::User",
