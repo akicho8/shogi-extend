@@ -12,6 +12,14 @@ export default {
   components: {
     xclock,
   },
+  head() {
+    return {
+      title: "対局時計",
+      meta: [
+        { hid: "description", name: "description", content: "ネット対局と同じような持ち時間のプリセットが入った対局時計です" }
+      ]
+    }
+  },
   mounted() {
     // const url = "https://qiita.com/api/v2/items"
     // const response = await this.$axios.$get(url)

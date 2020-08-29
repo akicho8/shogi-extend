@@ -1,7 +1,7 @@
 {
-  "name": "front_app",
+  "name": "SHOGI-EXTEND",
   "version": "1.0.0",
-  "description": "My super-duper Nuxt.js project",
+  "description": "将棋に関連する便利サービスを提供するサイトです",
   "author": "akicho8",
   "private": true,
   "scripts": {
