@@ -24,7 +24,7 @@ export default {
         options = {talk_method: "howler", ...options}
 
         // すぐに発声する場合
-        return this.silent_remote_get("/talk", {source_text: source_text}, (data) => {
+        return this.silent_remote_get("/api/talk", {source_text: source_text}, (data) => {
           if (options.talk_method === "direct_audio") {
             const audio = new Audio()
             audio.src = data.mp3_path

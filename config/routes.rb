@@ -4,9 +4,6 @@ Rails.application.routes.draw do
 
   get "health" => HealthResponder
 
-  get "talk", to: "talk#show"
-  post "talk", to: "talk#create"
-
   devise_for :xusers, {
     class_name: "::User",
     controllers: {
@@ -165,6 +162,7 @@ Rails.application.routes.draw do
     resource :general, only: [:show] do
       match "any_source_to", via: [:get, :post]
     end
+    resource :talk, only: [:show, :create]
   end
 
   ################################################################################ admin

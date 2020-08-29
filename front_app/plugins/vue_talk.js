@@ -25,9 +25,9 @@ export default {
           source_text: source_text,
           full_url: "true",
         }
-        // return this.$axios.request({method: "get", url: "/talk", params: params}).then(({data}) => this.mp3_talk(data, options))
-        // return this.$axios.get("/talk", {params: params}).then(({data}) => this.mp3_talk(data, options))
-        return this.$axios.post("/talk", params).then(({data}) => this.mp3_talk(data, options))
+        // return this.$axios.request({method: "get", url: "/api/talk", params: params}).then(({data}) => this.mp3_talk(data, options))
+        // return this.$axios.get("/api/talk", {params: params}).then(({data}) => this.mp3_talk(data, options))
+        return this.$axios.post("/api/talk", params).then(({data}) => this.mp3_talk(data, options))
       }
     },
 
