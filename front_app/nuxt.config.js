@@ -1,6 +1,7 @@
 require('dotenv').config()
 
-export default {
+// export default {
+const config = {
   mode: 'spa',
   // mode: 'universal',
 
@@ -118,3 +119,9 @@ export default {
     },
   },
 }
+
+if (process.env.NODE_ENV === 'development') {
+  config.proxy["/api"] = "http://localhost:3000"
+}
+
+export default config
