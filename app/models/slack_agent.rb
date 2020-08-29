@@ -3,10 +3,12 @@ module SlackAgent
 
   mattr_accessor(:default_channel) { "#shogi_web" }
 
-  # rails r "SlackAgent.error_send(Exception.new)"
-  # rails r "SlackAgent.error_send((1/0 rescue $!))"
-  def error_send(error)
-    message_send(key: "ERROR", body: ["#{error.message} (#{error.class})", error.backtrace].compact.join("\n"))
+  # rails r "SlackAgent.notify_exception(Exception.new)"
+  # rails r "SlackAgent.notify_exception((1/0 rescue $!))"
+  def notify_exception(error)
+    body = ["#{error.message} (#{error.class})", error.backtrace].compact.join("\n")
+    Rails.logger.info(body)
+    message_send(key: "ERROR", body: body)
   end
 
   # rails r 'SlackAgent.message_send(key: "検索", body: "xxx")'

@@ -50,6 +50,7 @@ export default {
   */
   plugins: [
     "~/plugins/mixin_mod.js",
+    "~/plugins/axios_mod.js",
   ],
   /*
   ** Nuxt.js dev-modules
