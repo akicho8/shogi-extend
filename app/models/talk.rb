@@ -125,7 +125,7 @@ class Talk
   end
 
   def polly_params
-    default_polly_params.merge({voice_id: voice_id}, @params[:polly_params])
+    default_polly_params.merge({voice_id: voice_id}, params[:polly_params])
   end
 
   def voice_id
@@ -144,7 +144,13 @@ class Talk
     @client ||= Aws::Polly::Client.new
   end
 
+  # rails r "p Rails.application.routes.url_helpers.root_url(only_path: true)"
+  # rails r "p Rails.application.routes.url_helpers.root_url(only_path: false)"
   def root_url
-    Rails.application.routes.url_helpers.root_url(only_path: !@params[:full_url])
+    Rails.application.routes.url_helpers.root_url(only_path: !full_url?)
+  end
+
+  def full_url?
+    params[:full_url].to_s == "true"
   end
 end
