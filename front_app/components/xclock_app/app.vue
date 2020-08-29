@@ -52,8 +52,8 @@
 
 <script>
 
-import { ChessClock   } from "../actb_app/models/chess_clock.js"
-import { DeviseAngle  } from "../models/DeviseAngle.js"
+import { ChessClock   } from "../../../app/javascript/actb_app/models/chess_clock.js"
+import { DeviseAngle  } from "../../../app/javascript/models/DeviseAngle.js"
 import { support      } from "./support.js"
 import { store        } from "./store.js"
 import { app_shortcut } from "./app_shortcut.js"
@@ -70,9 +70,6 @@ export default {
   ],
   components: {
     the_footer,
-  },
-  props: {
-    info: { required: true },
   },
   data() {
     return {

@@ -1,53 +1,42 @@
-<template>
-  <section class="section">
-    <div class="columns is-mobile">
-      <card
-        title="Free"
-        icon="github-circle"
-      >
-        Open source on <a href="https://github.com/buefy/buefy">
-          GitHub
-        </a>
-      </card>
-
-      <card
-        title="Responsive"
-        icon="cellphone-link"
-      >
-        <b class="has-text-grey">
-          Every
-        </b> component is responsive
-      </card>
-
-      <card
-        title="Modern"
-        icon="alert-decagram"
-      >
-        Built with <a href="https://vuejs.org/">
-          Vue.js
-        </a> and <a href="http://bulma.io/">
-          Bulma
-        </a>
-      </card>
-
-      <card
-        title="Lightweight"
-        icon="arrange-bring-to-front"
-      >
-        No other internal dependency
-      </card>
-    </div>
-  </section>
+<template lang="pug">
+.section
+  .columns
+    .column
+      div(v-for="(item, key) of items" :key="key")
+        nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
+      b-button(type="is-primary") BUTTON
 </template>
 
 <script>
-import Card from '~/components/Card'
-
 export default {
-  name: 'HomePage',
-
-  components: {
-    Card
+  name: "index",
+  data () {
+    return {
+      items: [
+        {
+          title: 'Home',
+          icon: 'home',
+          to: { name: 'index' }
+        },
+        {
+          title: 'Inspire',
+          icon: 'lightbulb',
+          to: { name: 'inspire' }
+        },
+        {
+          title: 'privacy_policy',
+          to: { name: 'about-privacy_policy' },
+        },
+        {
+          title: '将棋トレーニングバトル',
+          to: { name: 'training' },
+        },
+        {
+          title: '対局時計',
+          to: { name: 'vs-clock' },
+        },
+      ]
+    }
   }
 }
 </script>

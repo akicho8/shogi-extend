@@ -10,7 +10,7 @@ export default {
 
   // generate: {
   //   // subFolders: false,
-  //   dir: '../public',
+  //   dir: '../public', // Railsの / を直接置き換える
   // },
 
   /*
@@ -65,6 +65,7 @@ export default {
     'nuxt-buefy',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
@@ -74,15 +75,20 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    debug: true,
     proxy: true,
-
-    baseURL: process.env.API_URL,
-    credentials: true,
+    // // baseURL: process.env.API_URL,
+    credentials: true,          // これを入れないと /talk のとき HTML が返ってきてしまう
   },
 
-  // proxy: {
-  //   '/api/': { target: 'http://localhost:3000', pathRewrite: { '^/api/': '/' } },
-  // },
+  proxy: {
+    // "/api": "http://localhost:3000",
+    // "/api": "http://localhost:3000",
+    "/talk": "http://localhost:3000",
+    // "/api": {
+    //   target: "http://localhost:3000",
+    // },
+  },
 
   /*
   ** Build configuration
