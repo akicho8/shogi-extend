@@ -54,6 +54,7 @@
 
 import { ChessClock   } from "../../../app/javascript/actb_app/models/chess_clock.js"
 import { DeviseAngle  } from "../../../app/javascript/models/DeviseAngle.js"
+import { isMobile     } from "../../../app/javascript/models/isMobile.js"
 import { support      } from "./support.js"
 import { store        } from "./store.js"
 import { app_shortcut } from "./app_shortcut.js"
@@ -154,7 +155,7 @@ export default {
       } else {
         this.sound_play("start")
         this.say("対局かいし", {onend: () => {
-          if (DeviseAngle.portrait_p()) {
+          if (isMobile.any() && DeviseAngle.portrait_p()) {
             this.say("ブラウザのタブを1つだけにしてスマホを横向きにしてください")
           }
         }})
