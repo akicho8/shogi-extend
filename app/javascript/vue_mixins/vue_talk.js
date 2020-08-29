@@ -1,4 +1,4 @@
-window.talk_sound = null
+window.howl_object = null
 
 export default {
   methods: {
@@ -12,9 +12,9 @@ export default {
     },
 
     talk_stop() {
-      if (window.talk_sound) {
-        window.talk_sound.stop()
-        window.talk_sound = null
+      if (window.howl_object) {
+        window.howl_object.stop()
+        window.howl_object = null
       }
     },
 
@@ -47,14 +47,14 @@ export default {
 
           // Howler
           if (options.talk_method === "howler") {
-            window.talk_sound = new Howl({
+            window.howl_object = new Howl({
               src: data.mp3_path,
               autoplay: true,
               volume: options.volume || 1.0,
               rate: options.rate || 1.2,
             })
             if (options.onend) {
-              window.talk_sound.on("end", () => options.onend())
+              window.howl_object.on("end", () => options.onend())
             }
           }
         })
