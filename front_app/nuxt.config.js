@@ -18,6 +18,10 @@ export default {
   */
   head: {
     title: process.env.npm_package_name || '',
+    htmlAttrs: {
+      lang: "ja",
+      class: process.env.NODE_ENV,
+    },
     meta: [
       // https://ja.nuxtjs.org/faq/duplicated-meta-tags/
       { charset: 'utf-8' },
