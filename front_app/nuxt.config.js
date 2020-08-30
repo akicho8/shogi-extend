@@ -26,6 +26,7 @@ const config = {
     titleTemplate: `%s - SHOGI-EXTEND`,
     htmlAttrs: {
       lang: "ja",
+      prefix: 'og: http://ogp.me/ns#',
       class: process.env.NODE_ENV,
     },
     meta: [
@@ -42,9 +43,9 @@ const config = {
       { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです" },
       { hid: "og:image",       property: "og:image",       content: process.env.OGP_IMAGE },
 
-      { hid: "og:card",       property: "og:card",       content: "summary" }, // summary_large_image
-      { hid: "og:site",       property: "og:site",       content: "@sgkinakomochi" },
-      { hid: "og:creator",    property: "og:creator",    content: "@sgkinakomochi" },
+      { hid: "twitter:card",       property: "twitter:card",       content: "summary" }, // summary_large_image
+      { hid: "twitter:site",       property: "twitter:site",       content: "@sgkinakomochi" },
+      { hid: "twitter:creator",    property: "twitter:creator",    content: "@sgkinakomochi" },
 
     ],
     link: [
