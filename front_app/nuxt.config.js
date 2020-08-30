@@ -1,4 +1,6 @@
-require('dotenv').config()
+// require('dotenv').config()
+// console.log(`.env.${process.env.NODE_ENV}`)
+// console.log(process.env.FOO)
 
 // export default {
 const config = {
