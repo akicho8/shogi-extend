@@ -7,7 +7,7 @@ after "deploy:updated", "front_app:upload"
 namespace :front_app do
   desc "静的エラーページのアップロード"
   task :upload do
-    Dir.chdir("front_app") { system "yarn run build" }
+    Dir.chdir("front_app") { system "nuxt build --dotenv .env.#{fetch(:stage)}" }
 
     on roles(:web) do |host|
       execute :rm, "-rf", "#{release_path}/public/s"
