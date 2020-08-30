@@ -1,13 +1,3 @@
-if (true) {
-  window.url_cast = (url) => {
-    if (process.env.NODE_ENV === "development") {
-      return "http://localhost:3000" + url
-    } else {
-      return url
-    }
-  }
-}
-
 import user_info_show from "../user_info_show.vue"
 import tactic_show from "../tactic_show.vue"
 import sp_show from "../sp_show.vue"

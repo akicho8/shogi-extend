@@ -21,14 +21,15 @@ import vue_fetch       from "./vue_fetch.js"
 Vue.mixin({
   mixins: [
     vue_application,
-    vue_talk,
     vue_support,
     vue_time,
     vue_storage,
-    vue_fetch,
     vue_clipboard,
     vue_sound,
     vue_actioncable,
     vue_piyo_shogi,
+
+    vue_fetch,
+    vue_talk,
   ],
 })

@@ -1,4 +1,6 @@
-window.howl_object = null
+if (process.client) {
+  window.howl_object = null
+}
 
 export default {
   methods: {

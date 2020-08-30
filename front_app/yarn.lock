@@ -6129,6 +6129,13 @@ js-beautify@^1.6.12:
     mkdirp "~1.0.3"
     nopt "^4.0.3"
 
+js-memory-record@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.16.tgz#476a8953bcbac07131216d0c39aff09badce29b6"
+  integrity sha512-X/8J3MLxaXoEmc/KSoX7yq+OGo2rg4ZmQe0Ds4rYxmKS7sJ9y2hW7u9HMp+ucGyXJJHv0ZfSUnVckF5grKdVOA==
+  dependencies:
+    lodash "^4.17.15"
+
 js-stringify@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/js-stringify/-/js-stringify-1.0.2.tgz#1736fddfd9724f28a3682adc6230ae7e4e9679db"

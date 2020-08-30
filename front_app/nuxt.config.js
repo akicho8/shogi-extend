@@ -1,13 +1,13 @@
 // export default {
 
 const config = {
-  mode: 'spa',
-  // mode: 'universal',
+  // mode: 'spa',
+  mode: 'universal',
   /*
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
   */
-  target: 'static',
+  target: 'server',
 
   router: {
     base: process.env.NODE_ENV === 'production' ? "/s" : "/",
@@ -72,14 +72,14 @@ const config = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    "~/plugins/mixin_mod.js",
+    "~/plugins/mixin_mod.client.js",
     "~/plugins/axios_mod.js",
   ],
   /*
   ** Auto import components
   ** See https://nuxtjs.org/api/configuration-components
   */
-  components: true,
+  components: false,
   /*
   ** Nuxt.js dev-modules
   */
@@ -125,6 +125,10 @@ const config = {
   // オーディオファイルをロードするように Webpack の設定を拡張するには？
   // https://ja.nuxtjs.org/faq/webpack-audio-files
   build: {
+    // https://ja.nuxtjs.org/api/configuration-build/#transpile
+    // transpile: ["shogi-player/src/location.js"],
+    transpile: ["shogi-player"],
+
     loaders: {
       vue: {
         transformAssetUrls: {
