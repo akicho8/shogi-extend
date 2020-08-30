@@ -27,7 +27,7 @@ export default {
         }
         // return this.$axios.request({method: "get", url: "/api/talk", params: params}).then(({data}) => this.mp3_talk(data, options))
         // return this.$axios.get("/api/talk", {params: params}).then(({data}) => this.mp3_talk(data, options))
-        return this.$axios.post("/api/talk", params).then(({data}) => this.mp3_talk(data, options))
+        return this.$axios.post("/api/talk", params, {progress: false}).then(({data}) => this.mp3_talk(data, options))
       }
     },
 
