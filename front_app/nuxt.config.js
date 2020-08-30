@@ -88,8 +88,7 @@ const config = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/dotenv-module
     // ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }],
-    If you are using a Nuxt version previous than v2.9 you have to install module as a dependency (No --dev or --save-dev flags) and also use modules section in nuxt.config.js instead of buildModules.
-    '@nuxtjs/dotenv',
+    // '@nuxtjs/dotenv',
   ],
   /*
   ** Nuxt.js modules
@@ -125,7 +124,8 @@ const config = {
   /*
   ** Build configuration
   */
-  // https://ja.nuxtjs.org/faq/webpack-audio-files/
+  // オーディオファイルをロードするように Webpack の設定を拡張するには？
+  // https://ja.nuxtjs.org/faq/webpack-audio-files
   build: {
     loaders: {
       vue: {

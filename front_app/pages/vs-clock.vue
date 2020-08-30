@@ -25,7 +25,7 @@ export default {
   mounted() {
     // alert(process.env.NUXT_ENV_ABC)
     // alert(this.$config.FOO)
-    console.log(105)
+    console.log(106)
     console.log("process.env.MESSAGE", process.env.MESSAGE)
     console.log("process.env.MY_ENV", process.env.MY_ENV)
     console.log("process.env.FOO", process.env.FOO)
