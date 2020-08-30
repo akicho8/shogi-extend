@@ -6,6 +6,11 @@
 const config = {
   mode: 'spa',
   // mode: 'universal',
+  /*
+  ** Nuxt target
+  ** See https://nuxtjs.org/api/configuration-target
+  */
+  target: 'static',
 
   router: {
     base: process.env.NODE_ENV === 'production' ? "/s" : "/",
@@ -81,6 +86,10 @@ const config = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    // Doc: https://github.com/nuxt-community/dotenv-module
+    // ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }],
+    If you are using a Nuxt version previous than v2.9 you have to install module as a dependency (No --dev or --save-dev flags) and also use modules section in nuxt.config.js instead of buildModules.
+    '@nuxtjs/dotenv',
   ],
   /*
   ** Nuxt.js modules
@@ -92,9 +101,6 @@ const config = {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    // ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }],
-    '@nuxtjs/dotenv',
   ],
   /*
   ** Axios module configuration
