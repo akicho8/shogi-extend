@@ -22,7 +22,7 @@ const config = {
   ** Headers of the page
   */
   head: {
-    title: null,
+    title: "TOP",
     titleTemplate: `%s - SHOGI-EXTEND`,
     htmlAttrs: {
       lang: "ja",
@@ -42,7 +42,7 @@ const config = {
       { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです" },
       { hid: "og:image",       property: "og:image",       content: process.env.OGP_IMAGE },
 
-      { hid: "og:card",       property: "og:card",       content: "summary_large_image" },
+      { hid: "og:card",       property: "og:card",       content: "summary" }, // summary_large_image
       { hid: "og:site",       property: "og:site",       content: "@sgkinakomochi" },
       { hid: "og:creator",    property: "og:creator",    content: "@sgkinakomochi" },
 

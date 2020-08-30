@@ -16,7 +16,8 @@ export default {
     return {
       title: "対局時計",
       meta: [
-        { hid: "description", name: "description", content: "ネット対局と同じような持ち時間のプリセットが入った対局時計です" }
+        { hid: "og:title",    property: "og:title", content: "対局時計" },
+        { hid: "description", name: "description",  content: "ネット対局と同じような持ち時間のプリセットが入った対局時計です" }
       ]
     }
   },
