@@ -5,7 +5,7 @@
   "author": "akicho8",
   "private": true,
   "scripts": {
-    "dev": "nuxt dev -p 4000 --dotenv .env.development",
+    "dev": "nuxt dev -p 4000",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
