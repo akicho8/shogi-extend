@@ -1,7 +1,3 @@
-// require('dotenv').config()
-// console.log(`.env.${process.env.NODE_ENV}`)
-// console.log(process.env.FOO)
-
 // export default {
 const config = {
   mode: 'spa',
@@ -40,10 +36,10 @@ const config = {
 
       { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
       { hid: "og:type",        property: "og:type",        content: "website" },
-      { hid: "og:url",         property: "og:url",         content: "https://example.com" },
+      { hid: "og:url",         property: "og:url",         content: process.env.SITE_URL },
       { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND" },
       { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです" },
-      { hid: "og:image",       property: "og:image",       content: "https://example.com/img/ogp/common.jpg" },
+      { hid: "og:image",       property: "og:image",       content: process.env.OGP_IMAGE },
 
       { hid: "og:card",       property: "og:card",       content: "summary_large_image" },
       { hid: "og:site",       property: "og:site",       content: "@sgkinakomochi" },
@@ -147,17 +143,19 @@ const config = {
   },
 
   // https://nuxtjs.org/guide/runtime-config
-  // 全体で共有する動的(？)な定義
   publicRuntimeConfig: {
-    FOO: "",
+    SITE_URL: "",  // 空で上書きしたのではなく process.env.SITE_URL を定義(この仕様はひどい)
   },
   // SSR側での定義で publicRuntimeConfig を上書きする
   privateRuntimeConfig: {},
 
-  // ここで定義すると vue 側に渡せるが融通が効かないため publicRuntimeConfig を使う方がよい
+  // 面倒な process.env.XXX の再定義
+  // ・ここで定義すると .vue 側で process.env.XXX で参照できる
+  // ・が、だとテンプレートで使えなかったり単なる文字列だったり process.env が空だったりでデバッグしにくい
+  // ・ので publicRuntimeConfig を使う方がよい
+  // ・どうでもいいけど NUXT_ENV_ プレフィクスをつけた環境変数は自動的にここで定義したことになる(プレフィクスはついたまま)
   env: {
-    MY_ENV: process.env.MY_ENV,
-    FOO: process.env.FOO,
+    // FOO: process.env.FOO,
   },
 }
 
