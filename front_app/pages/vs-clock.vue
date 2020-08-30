@@ -1,5 +1,7 @@
 <template lang="pug">
 .vs-clock
+  hr
+  pre {{$config}}
   xclock
 </template>
 
@@ -21,6 +23,12 @@ export default {
     }
   },
   mounted() {
+    // alert(process.env.NUXT_ENV_ABC)
+    // alert(this.$config.FOO)
+    console.log(105)
+    console.log("process.env.MESSAGE", process.env.MESSAGE)
+    console.log("process.env.MY_ENV", process.env.MY_ENV)
+    console.log("process.env.FOO", process.env.FOO)
     // const url = "https://qiita.com/api/v2/items"
     // const response = await this.$axios.$get(url)
     // console.log(response)
