@@ -1,4 +1,5 @@
 // export default {
+
 const config = {
   mode: 'spa',
   // mode: 'universal',
@@ -22,7 +23,7 @@ const config = {
   */
   head: {
     title: null,
-    titleTemplate: `%s - ${process.env.npm_package_name}`,
+    titleTemplate: `%s - SHOGI-EXTEND`,
     htmlAttrs: {
       lang: "ja",
       class: process.env.NODE_ENV,
@@ -31,7 +32,7 @@ const config = {
       // https://ja.nuxtjs.org/faq/duplicated-meta-tags/
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      { hid: 'description', name: 'description', content: "将棋に関連する便利サービスを提供するサイトです" },
       { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "") + "/x-cable" },
 
       { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
