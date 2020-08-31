@@ -18,6 +18,19 @@ class ServiceInfo
     },
     {
       display_p: true,
+      link_path: Rails.application.routes.url_helpers.vs_clock_url,
+      title: "対局時計",
+      new_p: true,
+      image_source: "vs-clock-1200x630.png",
+      description: "チェスクロックもってない人向け",
+      feature_items: [
+        "一般的なネット対局のプリセットを用意してある",
+        "PCの場合はキーボードの左のほうと右のほうをそれぞれ叩く",
+        "スマホ対応",
+      ],
+    },
+    {
+      display_p: true,
       link_path: [:xy_records],
       title: "符号の鬼",
       image_source: "xy_records_1200x630.png",
