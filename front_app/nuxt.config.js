@@ -49,7 +49,7 @@ const config = {
       // 重要なのはこの4つだけで各ページで上書きする
       { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND" },
       { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです" },
-      { hid: "og:image",       property: "og:image",       content: process.env.OGP_IMAGE },
+      { hid: "og:image",       property: "og:image",       content: process.env.OGP_SITE_URL + "/ogp/application.png" },
       { hid: "twitter:card",   property: "twitter:card",   content: "summary" }, // summary or summary_large_image
 
       { hid: "twitter:site",       property: "twitter:site",       content: "@sgkinakomochi" }, // これいるのか？
@@ -175,6 +175,7 @@ const config = {
   // https://nuxtjs.org/guide/runtime-config
   publicRuntimeConfig: {
     SITE_URL: "",  // 空で上書きしたのではなく process.env.SITE_URL を定義(この仕様はひどい)
+    OGP_SITE_URL: "",
   },
   // SSR側での定義で publicRuntimeConfig を上書きする
   privateRuntimeConfig: {},

@@ -1,7 +1,7 @@
 <template lang="pug">
 .vs-clock
   xclock
-  .box(v-if="development_p") {{ip}}
+  //- .box(v-if="development_p") {{ip}}
 </template>
 
 <script>
@@ -14,17 +14,19 @@ export default {
     xclock,
   },
 
-  async asyncData({ $axios }) {
-    const ip = await $axios.$get("http://icanhazip.com")
-    return { ip }
-  },
+  // async asyncData({ $axios }) {
+  //   const ip = await $axios.$get("http://icanhazip.com")
+  //   return { ip }
+  // },
 
   head() {
     return {
       title: "対局時計",
       meta: [
-        { hid: "og:title",    property: "og:title", content: "対局時計" },
-        { hid: "description", name: "description",  content: "ネット対局と同じような持ち時間のプリセットが入った対局時計です" }
+        { hid: "og:title",       property: "og:title",       content: "対局時計"                                                       },
+        { hid: "twitter:card",   property: "twitter:card",   content: "summary"                                                        },
+        { hid: "og:image",       property: "og:image",       content: this.$config.OGP_SITE_URL + "/ogp/vs-clock-1200x630.png"         },
+        { hid: "og:description", property: "og:description", content: "ネット対局と同じような持ち時間のプリセットが入った対局時計です" }
       ]
     }
   },
