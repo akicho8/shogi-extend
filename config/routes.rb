@@ -99,6 +99,16 @@ Rails.application.routes.draw do
   match "training", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
   get "tb" => redirect(path: "/training")
 
+  ################################################################################ Nuxt側
+
+  direct :vs_clock do |options = {}|
+    if Rails.env.development?
+      "http://localhost:4000/vs-clock"
+    else
+      "/vs-clock"
+    end
+  end
+
   ################################################################################ 外部リンク
 
   direct :official_swars_battle do |battle, options = {}|
