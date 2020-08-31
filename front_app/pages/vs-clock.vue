@@ -1,6 +1,7 @@
 <template lang="pug">
 .vs-clock
   xclock
+  .box(v-if="development_p") {{ip}}
 </template>
 
 <script>
@@ -12,6 +13,12 @@ export default {
   components: {
     xclock,
   },
+
+  async asyncData({ $axios }) {
+    const ip = await $axios.$get("http://icanhazip.com")
+    return { ip }
+  },
+
   head() {
     return {
       title: "対局時計",

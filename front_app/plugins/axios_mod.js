@@ -7,15 +7,18 @@ export default function ({ $axios, $buefy }) {
     // window.$loading = $buefy.loading.open()
     // console.log(`[axios_mod] loading=${window.$loading}`)
 
-    const el = document.querySelector('meta[name="csrf-token"]')
-    if (el) {
-      const value = el.getAttribute('content')
-      $axios.setHeader("X-CSRF-Token", value)
-      // config.headers.common['x-csrf-token'] = value
-      // alert(config.headers.common['x-csrf-token'])
-    } else {
-      // Nuxt からいきなり起動しているのでタグがない
+    if (process.client) {
+      const el = document.querySelector('meta[name="csrf-token"]')
+      if (el) {
+        const value = el.getAttribute('content')
+        $axios.setHeader("X-CSRF-Token", value)
+        // config.headers.common['x-csrf-token'] = value
+        // alert(config.headers.common['x-csrf-token'])
+      } else {
+        // Nuxt からいきなり起動しているのでタグがない
+      }
     }
+
     // config.headers.common['x-csrf-token'] = "foo"
     // config.headers.common['ABC'] = "DEF"
   })

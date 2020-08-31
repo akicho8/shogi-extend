@@ -2,6 +2,7 @@ import Vue from "vue"
 
 // import vue_mixins from "../../app/javascript/vue_mixins/vue_mixins.js"
 
+import vue_universal   from "../../app/javascript/vue_mixins/vue_universal.js"
 import vue_application from "../../app/javascript/vue_mixins/vue_application.js"
 import vue_support     from "../../app/javascript/vue_mixins/vue_support.js"
 import vue_time        from "../../app/javascript/vue_mixins/vue_time.js"
@@ -20,6 +21,7 @@ import vue_fetch       from "./vue_fetch.js"
 
 Vue.mixin({
   mixins: [
+    vue_universal,
     vue_application,
     vue_support,
     vue_time,

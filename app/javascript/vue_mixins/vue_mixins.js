@@ -1,3 +1,4 @@
+import vue_universal   from "./vue_universal.js"
 import vue_application from "./vue_application.js"
 import vue_talk        from "./vue_talk.js"
 import vue_support     from "./vue_support.js"
@@ -11,6 +12,7 @@ import vue_piyo_shogi  from "./vue_piyo_shogi.js"
 
 export default {
   mixins: [
+    vue_universal,
     vue_application,
     vue_talk,
     vue_support,

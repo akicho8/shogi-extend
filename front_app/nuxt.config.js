@@ -1,5 +1,11 @@
 // export default {
 
+if (process.client) {
+  console.log(process.client)
+  console.log(process.env.SITE_URL)
+  new Error("aa")
+}
+
 const config = {
   // mode: 'spa',
   mode: 'universal',
@@ -74,6 +80,7 @@ const config = {
   plugins: [
     "~/plugins/mixin_mod.client.js",
     "~/plugins/axios_mod.js",
+    "~/plugins/universal.js",
   ],
   /*
   ** Auto import components
@@ -106,7 +113,7 @@ const config = {
   axios: {
     debug: process.env.NODE_ENV === 'development',
     proxy: process.env.NODE_ENV === 'development',
-    // // baseURL: process.env.API_URL,
+    baseURL: process.env.SITE_URL,
     credentials: true,          // これを入れないと /talk のとき HTML が返ってきてしまう
   },
 
@@ -168,5 +175,15 @@ const config = {
 if (process.env.NODE_ENV === 'development') {
   config.proxy["/api"] = "http://localhost:3000"
 }
+
+// if (process.env.NODE_ENV === 'production') {
+//   if (process.client) {
+//     config.axios["baseURL"] =
+//   }
+// }
+
+// if (process.client) {
+//   config.axios["baseURL"] = "http://localhost:3000"
+// }
 
 export default config

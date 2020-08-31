@@ -234,10 +234,6 @@ export default {
   },
 
   computed: {
-    development_p() {
-      return process.env.NODE_ENV === "development"
-    },
-
     // スマホなら _self の方が使いやすい
     // PCなら _blank の方が使いやすい
     target_default() {
