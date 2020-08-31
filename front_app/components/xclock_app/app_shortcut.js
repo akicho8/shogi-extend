@@ -21,6 +21,10 @@ export const app_shortcut = {
         return
       }
 
+      if (this.chess_clock.zero_arrival) {
+        return
+      }
+
       if (["ShiftLeft", "ControlLeft", "Tab", "Space"].includes(e.code)) {
         this.switch_handle(this.chess_clock.single_clocks[0])
         e.preventDefault()
