@@ -44,14 +44,16 @@ const config = {
 
       { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
       { hid: "og:type",        property: "og:type",        content: "website" },
-      { hid: "og:url",         property: "og:url",         content: process.env.SITE_URL },
+      { hid: "og:url",         property: "og:url",         content: process.env.SITE_URL }, // これいるのか？
+
+      // 重要なのはこの4つだけで各ページで上書きする
       { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND" },
       { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです" },
       { hid: "og:image",       property: "og:image",       content: process.env.OGP_IMAGE },
+      { hid: "twitter:card",   property: "twitter:card",   content: "summary" }, // summary or summary_large_image
 
-      { hid: "twitter:card",       property: "twitter:card",       content: "summary" }, // summary_large_image
-      { hid: "twitter:site",       property: "twitter:site",       content: "@sgkinakomochi" },
-      { hid: "twitter:creator",    property: "twitter:creator",    content: "@sgkinakomochi" },
+      { hid: "twitter:site",       property: "twitter:site",       content: "@sgkinakomochi" }, // これいるのか？
+      { hid: "twitter:creator",    property: "twitter:creator",    content: "@sgkinakomochi" }, // これいるのか？
 
     ],
     link: [
@@ -113,7 +115,7 @@ const config = {
   axios: {
     debug: process.env.NODE_ENV === 'development',
     proxy: process.env.NODE_ENV === 'development',
-    baseURL: process.env.SITE_URL, // staging で https://shogi-flow.xyz/api/* を叩かせるため
+    baseURL: process.env.SITE_URL, // generate する staging では proxy が無効になり https://shogi-flow.xyz/api/* を叩かせる
     credentials: true,             // これを入れないと /api/talk のとき HTML が返ってきてしまう
   },
 
@@ -133,8 +135,7 @@ const config = {
   // https://ja.nuxtjs.org/faq/webpack-audio-files
   build: {
     // https://ja.nuxtjs.org/api/configuration-build/#transpile
-    // transpile: ["shogi-player/src/location.js"],
-    transpile: ["shogi-player"],
+    transpile: ["shogi-player"], // 外側にあるファイルは import 文を require に変換しないと node でパースできない
 
     loaders: {
       vue: {
