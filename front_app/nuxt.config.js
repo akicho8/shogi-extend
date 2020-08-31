@@ -136,12 +136,13 @@ const config = {
   build: {
     // https://ja.nuxtjs.org/api/configuration-build#extractcss
     extractCSS: true,           // htmlファイルにスタイルが吐かれるのを防ぐ
+    // TODO: 意味を調べる
     optimization: {
       splitChunks: {
         cacheGroups: {
           styles: {
             name: 'styles',
-            test: /\.(css|vue)$/,
+            test: /\.(sass|css|vue)$/,
             chunks: 'all',
             enforce: true,
           },
