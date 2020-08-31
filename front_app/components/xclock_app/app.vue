@@ -1,5 +1,5 @@
 <template lang="pug">
-.xclock_app(:class="chess_clock.standby_mode_p ? 'xclock_inactive' : 'xclock_active'")
+.xclock_app(:class="chess_clock.timer ? 'xclock_active' : 'xclock_inactive'")
   .screen_container.is-flex.is-relative
     b-icon.stop_button.is_clickable(icon="stop" @click.native="stop_handle" v-if="chess_clock.timer")
     .level.is-mobile.is-unselectable.is-marginless
@@ -282,6 +282,14 @@ export default {
 .xclock_app
   .screen_container // 100vw x 100vh 相当の範囲
     height: 100vh   // 初期値(JSで上書きする)
+
+    //////////////////////////////////////////////////////////////////////////////// 動作中は背景黒にする場合
+    @at-root
+      .xclock_active
+        .screen_container // & と書きたい
+          color: $white
+          background-color: $black
+    ////////////////////////////////////////////////////////////////////////////////
 
     // 停止ボタンを画面中央に配置
     .stop_button
