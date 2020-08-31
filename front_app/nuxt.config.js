@@ -113,8 +113,8 @@ const config = {
   axios: {
     debug: process.env.NODE_ENV === 'development',
     proxy: process.env.NODE_ENV === 'development',
-    baseURL: process.env.SITE_URL,
-    credentials: true,          // これを入れないと /talk のとき HTML が返ってきてしまう
+    baseURL: process.env.SITE_URL, // staging で https://shogi-flow.xyz/api/* を叩かせるため
+    credentials: true,             // これを入れないと /api/talk のとき HTML が返ってきてしまう
   },
 
   proxy: {
