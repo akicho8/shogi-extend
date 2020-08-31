@@ -1,4 +1,4 @@
-export const app_shortcut = {
+export const app_keyboard_shortcut = {
   mounted() {
     document.addEventListener("keydown", this.keydown_handle)
   },

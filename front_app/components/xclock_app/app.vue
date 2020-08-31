@@ -57,8 +57,8 @@ import { DeviseAngle  } from "../../../app/javascript/models/DeviseAngle.js"
 import { isMobile     } from "../../../app/javascript/models/isMobile.js"
 import { support      } from "./support.js"
 import { store        } from "./store.js"
-import { app_shortcut } from "./app_shortcut.js"
-import { app_resize   } from "./app_resize.js"
+import { app_keyboard_shortcut } from "./app_keyboard_shortcut.js"
+import { app_mobile_screen_adjust   } from "./app_mobile_screen_adjust.js"
 import the_footer       from "./the_footer.vue"
 
 export default {
@@ -66,8 +66,8 @@ export default {
   name: "xclock_app",
   mixins: [
     support,
-    app_shortcut,
-    app_resize,
+    app_keyboard_shortcut,
+    app_mobile_screen_adjust,
   ],
   components: {
     the_footer,
