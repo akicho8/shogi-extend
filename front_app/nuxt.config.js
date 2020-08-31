@@ -136,6 +136,18 @@ const config = {
   build: {
     // https://ja.nuxtjs.org/api/configuration-build#extractcss
     extractCSS: true,           // htmlファイルにスタイルが吐かれるのを防ぐ
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            test: /\.(css|vue)$/,
+            chunks: 'all',
+            enforce: true,
+          },
+        },
+      },
+    },
 
     // https://ja.nuxtjs.org/api/configuration-build/#transpile
     transpile: ["shogi-player"], // 外側にあるファイルは import 文を require に変換しないと node でパースできない
