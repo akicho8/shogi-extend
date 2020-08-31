@@ -199,27 +199,6 @@ export default {
       })
     },
 
-    // edit_handle() {
-    //   this.sound_play("click")
-    //   this.edit_mode_p = !this.edit_mode_p
-    // },
-    timer_handle() {
-      this.sound_play("click")
-
-      this.$buefy.dialog.prompt({
-        title: "連番生成",
-        message: "何問ありますか？",
-        confirmText: "生成",
-        cancelText: "キャンセル",
-        inputAttrs: { type: 'number', value: 3, min: 0 },
-        onConfirm: (value) => {
-          // this.generate_max = parseInt(value, 10)
-          // this.quest_text = [...Array(this.generate_max).keys()].map(i => 1 + i).join(" ")
-        },
-      })
-
-    },
-
     help_handle() {
       this.sound_play("click")
       this.talk_stop()
