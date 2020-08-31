@@ -12,12 +12,13 @@ export default {
   data () {
     return {
       items: [
-        { title: 'Home',                   to: { name: 'index'                }, },
-        { title: 'Inspire',                to: { name: 'inspire'              }, },
-        { title: 'privacy_policy',         to: { name: 'about-privacy_policy' }, },
-        { title: '対局時計',               to: { name: 'vs-clock'             }, },
-        { title: 'IP',                     to: { name: 'ip-show'              }, },
-        { title: 'async_data_test',        to: { name: 'async_data_test'      }, },
+        { title: 'Home',                     to: { name: 'index'                }, },
+        { title: 'Inspire',                  to: { name: 'inspire'              }, },
+        { title: 'privacy_policy',           to: { name: 'about-privacy_policy' }, },
+        { title: '対局時計',                 to: { name: 'vs-clock'             }, },
+        { title: 'IP',                       to: { name: 'ip-show'              }, },
+        { title: 'async_data_test',          to: { name: 'async_data_test'      }, },
+        { title: '$nuxt.isOffline チェック', to: { name: 'online_offline'      }, },
       ]
     }
   }

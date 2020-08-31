@@ -64,7 +64,7 @@ const config = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: 'hsl(348, 100%, 61%)' }, // bulma danger red color
   /*
   ** Global CSS
   */
@@ -74,7 +74,7 @@ const config = {
     // '~/assets/css/buefy.scss',
     // '~/assets/sass/application.sass',
     '../app/javascript/stylesheets/application.sass',
-    '~/assets/sass/application.sass',
+    '@/assets/sass/application.sass',
   ],
   /*
   ** Plugins to load before mounting the App
@@ -134,6 +134,9 @@ const config = {
   // オーディオファイルをロードするように Webpack の設定を拡張するには？
   // https://ja.nuxtjs.org/faq/webpack-audio-files
   build: {
+    // https://ja.nuxtjs.org/api/configuration-build#extractcss
+    extractCSS: true,           // htmlファイルにスタイルが吐かれるのを防ぐ
+
     // https://ja.nuxtjs.org/api/configuration-build/#transpile
     transpile: ["shogi-player"], // 外側にあるファイルは import 文を require に変換しないと node でパースできない
 
