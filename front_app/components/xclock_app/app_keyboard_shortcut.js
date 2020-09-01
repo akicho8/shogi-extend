@@ -10,10 +10,7 @@ export const app_keyboard_shortcut = {
   methods: {
     keydown_handle(e) {
       if (this.development_p) {
-        console.log(e.shiftKey, e.ctrlKey, e.altKey, e.metaKey)
-        console.log("e", e)
-        console.log("key", e.key)
-        console.log("code", e.code)
+        console.log(e, e.shiftKey, e.ctrlKey, e.altKey, e.metaKey, e.key, e.code)
       }
 
       const dom = document.activeElement

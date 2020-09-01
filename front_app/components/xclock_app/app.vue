@@ -1,6 +1,6 @@
 <template lang="pug">
 .xclock_app(:class="chess_clock.timer ? 'is_xclock_active' : 'is_xclock_inactive'")
-  .screen_container.is-flex.is-relative
+  .screen_container.is-flex.is-relative(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
     b-icon.stop_button.is_clickable(icon="stop" @click.native="stop_handle" v-if="chess_clock.timer")
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
@@ -48,7 +48,9 @@
       b-button(@click="chess_clock.reset()") RESET
       b-button(@click="chess_clock.main_sec_set(3)") 両方残り3秒
     b-message
-      | 1手毎に{{chess_clock.params.every_plus}}秒加算
+      p 1手毎に{{chess_clock.params.every_plus}}秒加算
+      p mouse_cursor_p: {{mouse_cursor_p}}
+
 </template>
 
 <script>
@@ -58,15 +60,18 @@ import { DeviseAngle  } from "../../../app/javascript/models/DeviseAngle.js"
 import { isMobile     } from "../../../app/javascript/models/isMobile.js"
 import { support      } from "./support.js"
 import { store        } from "./store.js"
-import { app_keyboard_shortcut } from "./app_keyboard_shortcut.js"
-import { app_mobile_screen_adjust   } from "./app_mobile_screen_adjust.js"
 import the_footer       from "./the_footer.vue"
+
+import { app_mouse_hidden         } from "./app_mouse_hidden.js"
+import { app_keyboard_shortcut    } from "./app_keyboard_shortcut.js"
+import { app_mobile_screen_adjust } from "./app_mobile_screen_adjust.js"
 
 export default {
   store,
   name: "xclock_app",
   mixins: [
     support,
+    app_mouse_hidden,
     app_keyboard_shortcut,
     app_mobile_screen_adjust,
   ],
@@ -145,6 +150,7 @@ export default {
     },
     stop_handle() {
       if (this.chess_clock.timer) {
+        this.talk_stop()
         this.sound_play("click")
         this.say("停止")
         this.chess_clock.stop_button_handle()
@@ -156,8 +162,12 @@ export default {
       } else {
         this.sound_play("start")
         this.say("対局かいし", {onend: () => {
-          if (isMobile.any() && DeviseAngle.portrait_p()) {
-            this.say("ブラウザのタブを1つだけにしてスマホを横向きにしてください")
+          if (isMobile.any()) {
+            if (DeviseAngle.portrait_p()) {
+              this.say("ブラウザのタブを1つだけにしてスマホを横向きにしてください")
+            }
+          } else {
+            this.say("キーボードの左右のシフトキーとかで、てばんを変更できます")
           }
         }})
         this.chess_clock.play_button_handle()
@@ -251,6 +261,9 @@ export default {
 
   },
   computed: {
+    mouse_cursor_hidden() {
+      return this.chess_clock.timer && !this.mouse_cursor_p
+    },
   },
 }
 </script>
@@ -262,6 +275,10 @@ export default {
 .xclock_app
   .screen_container // 100vw x 100vh 相当の範囲
     height: 100vh   // 初期値(JSで上書きする)
+
+    //////////////////////////////////////////////////////////////////////////////// カーソルを消す
+    &.mouse_cursor_hidden
+      cursor: none
 
     //////////////////////////////////////////////////////////////////////////////// 動作中は背景黒にする場合
     @at-root
