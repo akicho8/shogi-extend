@@ -1,11 +1,12 @@
 <template lang="pug">
-.xclock_app(:class="chess_clock.timer ? 'xclock_active' : 'xclock_inactive'")
+.xclock_app(:class="chess_clock.timer ? 'is_xclock_active' : 'is_xclock_inactive'")
   .screen_container.is-flex.is-relative
     b-icon.stop_button.is_clickable(icon="stop" @click.native="stop_handle" v-if="chess_clock.timer")
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
         .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
-          .current_bar
+          .acive_current_bar(v-if="e.active_p" :class="e.bar_class")
+          .inacive_current_bar(v-if="!e.active_p")
           .digit_container.is-flex
             template(v-if="chess_clock.timer")
               .digit_values(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
@@ -264,10 +265,14 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// 動作中は背景黒にする場合
     @at-root
-      .xclock_active
+      .is_xclock_active
         .screen_container // & と書きたい
           color: $white
-          background-color: $black
+          background-color: $black-ter
+          .level-item
+            &.is_sclock_inactive
+              background-color: $black
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // 停止ボタンを画面中央に配置
@@ -300,13 +305,12 @@ export default {
         align-items: center
 
         // どちらがアクティブかを表すバー
-        .current_bar
+        .acive_current_bar, .inacive_current_bar
           height: 48px
           width: 100%
-          @at-root
-            .is_sclock_active
-              .current_bar
-                background-color: $primary
+        .inacive_current_bar
+        .acive_current_bar
+          background-color: $primary
 
         // 時間表示(フォームも含む)
         .digit_container
@@ -364,6 +368,33 @@ export default {
               .field
                 &:not(:first-child)
                   margin-top: 0rem
+
+  &.is_xclock_active
+    .screen_container
+      .acive_current_bar
+        &.is_level1
+          background-color: $blue
+          &.is_blink
+            animation: bar_blink 1s ease-in-out 0.5s infinite alternate
+        &.is_level2
+          background-color: $yellow
+          &.is_blink
+            animation: bar_blink 0.5s ease-in-out 0.5s infinite alternate
+        &.is_level3
+          background-color: $red
+          &.is_blink
+            animation: bar_blink 0.5s ease-in-out 0.5s infinite alternate
+        &.is_level4
+          background-color: $red
+          &.is_blink
+            animation: bar_blink 0.25s ease-in-out 0.5s infinite alternate
+
+@keyframes bar_blink
+  0%
+    opacity: 1.0
+  100%
+    opacity: 0.25
+
 =xray($level)
   $color: hsla((360 / 8) * $level, 50%, 50%, 1.0)
   // background-color: $color
@@ -376,7 +407,6 @@ export default {
         +xray(0)
         .level-item
           +xray(1)
-          .current_bar
           .digit_container
             .field
               +xray(2)

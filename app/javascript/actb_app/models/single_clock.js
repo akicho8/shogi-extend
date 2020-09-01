@@ -184,6 +184,29 @@ export class SingleClock {
     return ary
   }
 
+  get bar_class() {
+    const ary = []
+    if (this.standby_mode_p) {
+    } else {
+      if (this.active_p) {
+        if (this.rest >= 1) {
+          ary.push("is_blink")
+        }
+        if (this.rest <= 5) {
+          ary.push("is_level4")
+        } else if (this.rest <= 10) {
+          ary.push("is_level3")
+        } else if (this.rest < 60) {
+          ary.push("is_level2")
+        } else {
+          ary.push("is_level1")
+        }
+      } else {
+      }
+    }
+    return ary
+  }
+
   get to_time_format() {
     return this.constructor.time_format(this.main_sec)
   }
