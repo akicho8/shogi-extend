@@ -10,7 +10,7 @@
           .digit_container.is-flex
             template(v-if="chess_clock.timer")
               .digit_values(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
-                .field(v-if="e.initial_main_sec >= 1")
+                .field(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1")
                   .time_label 残り時間
                   .time_value.fixed_font.is_line_break_off
                     | {{e.to_time_format}}
