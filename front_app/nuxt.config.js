@@ -96,6 +96,9 @@ const config = {
     // Doc: https://github.com/nuxt-community/dotenv-module
     // ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }],
     // '@nuxtjs/dotenv',
+
+    // https://github.com/nuxt-community/analytics-module
+    ['@nuxtjs/google-analytics', { id: 'UA-109851345-1' }],
   ],
   /*
   ** Nuxt.js modules

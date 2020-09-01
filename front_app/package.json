@@ -25,6 +25,7 @@
     "sass-loader": "^8.0.2"
   },
   "devDependencies": {
+    "@nuxtjs/google-analytics": "^2.4.0",
     "@vue/test-utils": "^1.0.5",
     "babel-jest": "^24.1.0",
     "jest": "^24.1.0",
