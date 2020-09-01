@@ -22,6 +22,11 @@ export const app_keyboard_shortcut = {
         return
       }
 
+      if (["Escape"].includes(e.code)) {
+        this.stop_handle()
+        e.preventDefault()
+      }
+
       if (["ShiftLeft", "ControlLeft", "Tab", "Space"].includes(e.code)) {
         this.switch_handle(this.chess_clock.single_clocks[0])
         e.preventDefault()
