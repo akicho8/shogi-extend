@@ -24,13 +24,13 @@
                     | {{e.extra_sec}}
             template(v-if="!chess_clock.timer")
               b-field.mt-0.mx-4(label="持ち時間(分)")
-                b-numberinput(controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :exponential="10" @click.native.stop="" :checkHtml5Validity="false")
+                b-numberinput(controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*60*24" :exponential="true" @click.native.stop="" :checkHtml5Validity="false")
               b-field.mt-5.mx-4(label="1手ごとに加算")
-                b-numberinput(controls-position="compact" v-model="e.every_plus" :min="0" :exponential="10" @click.native.stop="")
+                b-numberinput(controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
               b-field.mt-5.mx-4(label="秒読み")
-                b-numberinput(controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :exponential="2" @click.native.stop="")
+                b-numberinput(controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
               b-field.mt-5.mx-4(label="猶予")
-                b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" @click.native.stop="")
+                b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
 
     the_footer(ref="the_footer")
 
