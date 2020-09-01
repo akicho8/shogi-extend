@@ -204,12 +204,12 @@ export default {
       this.sound_play("click")
       this.talk_stop()
       const dialog = this.$buefy.dialog.alert({
-        title: "キーボード・ショートカット",
+        title: "手番切り替えショートカットキー",
         message: `
           <div class="content is-size-7">
             <ol>
-              <li>左は <code>TAB</code> <code>CONTROL</code> <code>左SHIFT</code> <code>SPACE</code> で切り替え</li>
-              <li>右は <code>ENTER</code> <code>右SHIFT</code> <code>→</code> で切り替え</li>
+              <li>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code>   <code>SPACE</code></li>
+              <li>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></li>
             </ol>
           </div>`,
         confirmText: "わかった",
