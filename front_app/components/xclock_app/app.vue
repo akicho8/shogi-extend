@@ -387,6 +387,10 @@ export default {
                 &:not(:first-child)
                   margin-top: 0rem
 
+          .b-numberinput
+            input
+              min-width: 8rem
+
   &.is_xclock_active
     .screen_container
       .acive_current_bar
