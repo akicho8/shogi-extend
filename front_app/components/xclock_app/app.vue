@@ -217,9 +217,10 @@ export default {
         title: "手番切り替えショートカットキー",
         message: `
           <div class="content is-size-7">
-            <ol>
+            <ul>
               <li>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code>   <code>SPACE</code></li>
               <li>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></li>
+              <li>終了 <code>ESC</code></li>
             </ol>
           </div>`,
         confirmText: "わかった",
