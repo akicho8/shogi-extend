@@ -272,8 +272,8 @@ export default {
 <style lang="sass">
 @import "support.sass"
 @import "app.sass"
-@import "mobile.sass"
-@import "tablet.sass"
+@import "digit_values_default.sass"
+@import "digit_values_desktop.sass"
 
 .xclock_app
   .screen_container // 100vw x 100vh 相当の範囲
