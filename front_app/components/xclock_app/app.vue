@@ -272,6 +272,8 @@ export default {
 <style lang="sass">
 @import "support.sass"
 @import "app.sass"
+@import "mobile.sass"
+@import "tablet.sass"
 
 .xclock_app
   .screen_container // 100vw x 100vh 相当の範囲
@@ -351,41 +353,10 @@ export default {
             .time_value
               line-height: 1
               font-weight: bold
-              // スマホ縦持ち
-              @media (orientation: portrait)
-                font-size: 10vmin !important
             // 1行表示
             &.display_lines-1
               .time_label
                 display: none   // ラベル除去
-              .time_value
-                font-size: 25vmin // 1行5文字
-                // font-size: calc(50vw / 4)
-              &.text_width-7
-                .time_value
-                  font-size: 20vmin // 1行7文字
-            // 2行表示
-            &.display_lines-2
-              .time_value
-                font-size: 25vmin // 2行5文字
-              &.text_width-7
-                .time_value
-                  font-size: 20vmin // 2行7文字
-              .time_value
-                margin-top: 0  // 2行表示では隙間がとれるので広めに開ける
-              .field
-                &:not(:first-child)
-                  margin-top: 0rem // 2行表示では隙間がとれるので広めに開ける
-            // 3行表示
-            &.display_lines-3
-              .time_label
-                font-size: $size-7
-              .time_value
-                font-size: 12vmin // 3行5,7文字
-                margin-top: 0rem
-              .field
-                &:not(:first-child)
-                  margin-top: 0rem
 
           .b-numberinput
             input
