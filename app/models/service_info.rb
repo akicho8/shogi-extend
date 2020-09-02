@@ -22,11 +22,11 @@ class ServiceInfo
       title: "対局時計",
       new_p: true,
       image_source: "vs-clock-1200x630.png",
-      description: "チェスクロックもってない人向け",
+      description: "チェスクロックとも言う",
       feature_items: [
-        "一般的なネット対局のプリセットを用意してある",
-        "PCの場合はキーボードの左と右のほうをそれぞれ叩く",
-        "スマホ対応",
+        "一般的なネット対局のプリセットがある",
+        "24の猶予時間やABEMAのフィッシャールールも可",
+        "PCの場合はキーボードの左と右のほうを叩く",
       ],
     },
     {
