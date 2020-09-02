@@ -246,9 +246,8 @@ export default {
       // `, {onend: () => { dialog.close() }})
     },
 
-    dropdown_active_change(e) {
-      if (e) {
-        // this.say("プリセット")
+    dropdown_active_change(on) {
+      if (on) {
         this.sound_play("click")
       } else {
         this.sound_play("click")
