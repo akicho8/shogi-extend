@@ -1,7 +1,7 @@
 module FrontendScript
   class AttackHistogramScript < ::FrontendScript::Base
     self.script_name = "戦法ヒストグラム"
-    self.visibility_hidden = true
+    self.visibility_hidden_on_menu = true
 
     def script_body
       ogp_params_set

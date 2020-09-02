@@ -7,7 +7,6 @@ nav#main_nav.navbar.is-primary.is_screen_only
       span
   #main_navar.navbar-menu
     .navbar-start
-      / ここでの is-active に意味はない
       = link_to("ウォーズ検索", [:swars, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
       = link_to("トレーニングバトル", :training, class: ["navbar-item", ("is-active" if params[:controller] == "scripts" && params[:id] == "actb_app")]) if Actb::Config[:actb_display_p]
       = link_to("棋譜変換", :adapter, class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] == "adapter")])
@@ -26,6 +25,7 @@ nav#main_nav.navbar.is-primary.is_screen_only
         span.navbar-link
           | もっと見る
         .navbar-dropdown.is-boxed
+          = link_to("対局時計", vs_clock_url, class: "navbar-item")
           = link_to("野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
           = link_to("野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] != "adapter")])
           = link_to("プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")]) if AppConfig[:player_info_function]

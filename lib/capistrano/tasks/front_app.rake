@@ -1,13 +1,13 @@
 ################################################################################ front_app
 
-# cap staging front_app:upload
+# cap staging front_app:deploy
 
-after "deploy:updated", "front_app:upload"
+after "deploy:updated", "front_app:deploy"
 
 namespace :front_app do
   desc "静的エラーページのアップロード"
-  task :upload do
-    Dir.chdir("front_app") { system "yarn run build" }
+  task :deploy do
+    Dir.chdir("front_app") { system "nuxt generate --dotenv .env.#{fetch(:stage)}" }
 
     on roles(:web) do |host|
       execute :rm, "-rf", "#{release_path}/public/s"

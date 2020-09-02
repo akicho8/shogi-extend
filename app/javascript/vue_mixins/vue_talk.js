@@ -1,4 +1,4 @@
-window.talk_sound = null
+window.howl_object = null
 
 export default {
   methods: {
@@ -12,55 +12,53 @@ export default {
     },
 
     talk_stop() {
-      if (window.talk_sound) {
-        window.talk_sound.stop()
-        window.talk_sound = null
+      if (window.howl_object) {
+        window.howl_object.stop()
+        window.howl_object = null
       }
     },
 
     // しゃべる
     talk(source_text, options = {}) {
       if (this.tab_is_hidden_p()) {
-        return
-      }
+        options = {talk_method: "howler", ...options}
 
-      options = {talk_method: "howler", ...options}
-
-      this.silent_remote_get("/talk", {source_text: source_text}, data => {
         // すぐに発声する場合
-        if (options.talk_method === "direct_audio") {
-          const audio = new Audio()
-          audio.src = data.mp3_path
-          audio.play()
-        }
-
-        // 最後に来た音声のみ発声(?)
-        if (false) {
-          if (!audio) {
-            audio = new Audio()
+        return this.silent_remote_get("/api/talk", {source_text: source_text}, (data) => {
+          if (options.talk_method === "direct_audio") {
+            const audio = new Audio()
+            audio.src = data.mp3_path
+            audio.play()
           }
-          audio.src = data.mp3_path
-          audio.play()
-        }
 
-        // FIFO形式で順次発声
-        if (options.talk_method === "queue") {
-          audio_queue.media_push(data.mp3_path)
-        }
-
-        // Howler
-        if (options.talk_method === "howler") {
-          window.talk_sound = new Howl({
-            src: data.mp3_path,
-            autoplay: true,
-            volume: options.volume || 1.0,
-            rate: options.rate || 1.2,
-          })
-          if (options.onend) {
-            window.talk_sound.on("end", () => options.onend())
+          // 最後に来た音声のみ発声(?)
+          if (false) {
+            if (!audio) {
+              audio = new Audio()
+            }
+            audio.src = data.mp3_path
+            audio.play()
           }
-        }
-      })
+
+          // FIFO形式で順次発声
+          if (options.talk_method === "queue") {
+            audio_queue.media_push(data.mp3_path)
+          }
+
+          // Howler
+          if (options.talk_method === "howler") {
+            window.howl_object = new Howl({
+              src: data.mp3_path,
+              autoplay: true,
+              volume: options.volume || 1.0,
+              rate: options.rate || 1.2,
+            })
+            if (options.onend) {
+              window.howl_object.on("end", () => options.onend())
+            }
+          }
+        })
+      }
     },
   },
 }

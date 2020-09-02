@@ -4,8 +4,6 @@ Rails.application.routes.draw do
 
   get "health" => HealthResponder
 
-  get "talk", to: "talk#show", as: :talk
-
   devise_for :xusers, {
     class_name: "::User",
     controllers: {
@@ -101,6 +99,16 @@ Rails.application.routes.draw do
   match "training", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
   get "tb" => redirect(path: "/training")
 
+  ################################################################################ Nuxt側
+
+  direct :vs_clock do |options = {}|
+    if Rails.env.development?
+      "http://localhost:4000/vs-clock"
+    else
+      "/vs-clock"
+    end
+  end
+
   ################################################################################ 外部リンク
 
   direct :official_swars_battle do |battle, options = {}|
@@ -160,6 +168,7 @@ Rails.application.routes.draw do
     resource :general, only: [:show] do
       match "any_source_to", via: [:get, :post]
     end
+    resource :talk, only: [:show, :create]
   end
 
   ################################################################################ admin

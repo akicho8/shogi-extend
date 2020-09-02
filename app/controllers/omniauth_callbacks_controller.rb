@@ -68,7 +68,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
           end
         end
       rescue => error
-        SlackAgent.error_send(error)
+        SlackAgent.notify_exception(error)
       end
     end
 

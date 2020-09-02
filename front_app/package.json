@@ -1,22 +1,23 @@
 {
-  "name": "front_app",
+  "name": "SHOGI-EXTEND",
   "version": "1.0.0",
-  "description": "My super-duper Nuxt.js project",
+  "description": "将棋に関連する便利サービスを提供するサイトです",
   "author": "akicho8",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "nuxt dev -p 4000",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "test": "jest"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/dotenv": "^1.4.0",
-    "@nuxtjs/pwa": "^3.0.0-0",
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/proxy": "^2.0.1",
+    "@nuxtjs/pwa": "^3.0.2",
+    "js-memory-record": "^0.0.16",
     "node-sass": "^4.14.1",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.14.4",
     "nuxt-buefy": "^0.3.2",
     "pug": "^3.0.0",
     "pug-loader": "^2.4.0",
@@ -24,7 +25,8 @@
     "sass-loader": "^8.0.2"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.27",
+    "@nuxtjs/google-analytics": "^2.4.0",
+    "@vue/test-utils": "^1.0.5",
     "babel-jest": "^24.1.0",
     "jest": "^24.1.0",
     "vue-jest": "^4.0.0-0"

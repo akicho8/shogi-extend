@@ -110,28 +110,30 @@ class Talk
 
     begin
       resp = client.synthesize_speech(params)
-      # ドトールで実行すると client.synthesize_speech のタイミングで
-      # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
-      # のエラーになることがある
       if Rails.env.development? || Rails.env.test?
         Rails.logger.debug(resp.to_h.to_t)
-        Rails.logger.info("#{__method__}: #{source_text.inspect} => #{direct_file_path}")
+        Rails.logger.debug({source_text: source_text,direct_file_path: direct_file_path}.to_t)
       end
     rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily => error
-      Rails.logger.info ["#{__FILE__}:#{__LINE__}", __method__, error].to_t
+      # 不安定な環境で実行すると client.synthesize_speech のタイミングで
+      # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
+      # のエラーになることがある
+      # が、よくわからんので例外に含めていない
+      SlackAgent.notify_exception(error)
     end
   end
 
   def polly_params
-    default_polly_params.merge({voice_id: voice_id}, @params[:polly_params])
+    default_polly_params.merge({voice_id: voice_id}, params[:polly_params])
   end
 
   def voice_id
     "Mizuki"                    # or Takumi
   end
 
+  # system/ だと /s/system になってしまうので / から始めるようにする
   def relative_path
-    Rails.application.routes.url_helpers.root_path + direct_file_path.relative_path_from(Rails.public_path).to_s
+    "/" + direct_file_path.relative_path_from(Rails.public_path).to_s
   end
 
   def dir_parts

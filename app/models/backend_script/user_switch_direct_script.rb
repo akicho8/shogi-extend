@@ -2,7 +2,7 @@ module BackendScript
   class UserSwitchDirectScript < ::BackendScript::Base
     self.category = "ユーザー"
     self.script_name = "運営切り替え (直接)"
-    self.visibility_hidden = true
+    self.visibility_hidden_on_menu = true
 
     def script_body
       if params[:user_key]

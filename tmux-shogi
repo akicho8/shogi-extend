@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# Google Chrome 再起動
+# osascript -e 'tell app "Google Chrome" to quit'
+# osascript -e 'tell app "Google Chrome" to activate'
+
+# いったんウインドウやプロセスをまとめて削除
+tmux kill-window -t shogi
+
+tmux new-window -n shogi
+
+tmux split-window -v -t shogi
+tmux split-window -h -t shogi.0
+tmux split-window -h -t shogi.2
+# |---+---|
+# | 0 | 1 |
+# |---+---|
+# | 2 | 3 |
+# |---+---|
+
+tmux send-keys -t shogi.0 'cd ~/src/shogi_web' C-m
+
+tmux send-keys -t shogi.1 'cd ~/src/shogi-player' C-m
+tmux send-keys -t shogi.1 'yarn start' C-m
+
+tmux send-keys -t shogi.2 'cd ~/src/shogi_web' C-m
+tmux send-keys -t shogi.2 'fs' C-m
+
+tmux send-keys -t shogi.3 'cd ~/src/shogi_web' C-m
+tmux send-keys -t shogi.3 'cd front_app; nuxt dev -H 0.0.0.0 -p 4000 -o' C-m
+
+tmux select-pane -t shogi.3
+
+sleep 5
+open http://0.0.0.0:3000
+
+# open http://0.0.0.0:4000
+# open https://bulma.io/
+# open https://buefy.org/documentation/
+# open https://ja.nuxtjs.org/guide/
+# open https://misc.0o0o.org/chartjs-doc-ja/
