@@ -386,6 +386,8 @@ export default {
           .b-numberinput
             input
               min-width: 8rem
+              +mobile
+                min-width: 5rem
 
   &.is_xclock_active
     .screen_container
