@@ -155,6 +155,7 @@ export default {
           type: "is-danger",
           hasIcon: false,
           trapFocus: true,
+          focusOn: "cancel",
           onCancel: () => {
             this.sound_play("click")
             this.chess_clock.pause_off()
