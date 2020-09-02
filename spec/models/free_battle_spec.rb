@@ -90,7 +90,7 @@ RSpec.describe FreeBattle, type: :model do
       it do
         assert { value[:title]       == "5手目"                                                      }
         assert { value[:url]         == nil                                                          }
-        assert { value[:image]       == "http://localhost:3000/x/free_battle1.png?flip=false&turn=5" }
+        assert { value[:image]       == "http://0.0.0.0:3000/x/free_battle1.png?flip=false&turn=5" }
         assert { value[:description] == nil                                                          }
       end
     end

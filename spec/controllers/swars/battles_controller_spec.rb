@@ -115,7 +115,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
 
         doc = Nokogiri::HTML.parse(response.body)
         assert { doc.at(%(meta[name="og:url"])) == nil }
-        assert { doc.at(%(meta[name="og:image"]))[:content] == "http://localhost:3000/w/devuser1-Yamada_Taro-20200101_123401.png?flip=true&turn=12" }
+        assert { doc.at(%(meta[name="og:image"]))[:content] == "http://0.0.0.0:3000/w/devuser1-Yamada_Taro-20200101_123401.png?flip=true&turn=12" }
       end
     end
 

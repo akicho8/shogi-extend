@@ -51,7 +51,7 @@ module Swars
         it do
           assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"           }
           assert { value[:url]         == nil                                                     }
-          assert { value[:image]       == "http://localhost:3000/w/battle1.png?flip=false&turn=5" }
+          assert { value[:image]       == "http://0.0.0.0:3000/w/battle1.png?flip=false&turn=5" }
           assert { value[:description] == "嬉野流 vs △３ニ飛戦法"      }
         end
         it "turnを変更できる" do
@@ -148,7 +148,7 @@ module Swars
       it do
         assert { record.kento_app_path     == "/?initpos=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&moves=7i6h.8b3b.5g5f.3c3d.6h5g#5"                            }
         assert { record.kento_app_url      == "https://www.kento-shogi.com/?initpos=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&moves=7i6h.8b3b.5g5f.3c3d.6h5g#5" }
-        assert { record.piyo_shogi_app_url == "piyoshogi://?num=5&url=http://localhost:3000/w/battle1.kif"                                                                                            }
+        assert { record.piyo_shogi_app_url == "piyoshogi://?num=5&url=http://0.0.0.0:3000/w/battle1.kif"                                                                                            }
       end
     end
   end
