@@ -1,14 +1,22 @@
 <template lang="pug">
-.xclock_app(:class="chess_clock.timer ? 'is_xclock_active' : 'is_xclock_inactive'")
+.xclock_app(:class="chess_clock.running_p ? 'is_xclock_active' : 'is_xclock_inactive'")
+  .float_debug_container(v-if="development_p")
+    div turn: {{chess_clock.turn}}
+    div running_p: {{chess_clock.running_p}}
+    div timer: {{chess_clock.timer}}
+    div counter: {{chess_clock.counter}}
+    div zero_arrival: {{chess_clock.zero_arrival}}
+
   .screen_container.is-flex.is-relative(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
-    b-icon.stop_button.is_clickable(icon="pause" @click.native="pause_handle" v-if="chess_clock.timer")
+
+    b-icon.stop_button.is_clickable(icon="pause" @click.native="pause_handle" v-if="chess_clock.running_p")
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
         .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
           .acive_current_bar(v-if="e.active_p" :class="e.bar_class")
           .inacive_current_bar(v-if="!e.active_p")
           .digit_container.is-flex
-            template(v-if="chess_clock.timer")
+            template(v-if="chess_clock.running_p")
               .digit_values(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
                 .field(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1")
                   .time_label 残り時間
@@ -22,7 +30,7 @@
                   .time_label 猶予
                   .time_value.fixed_font.is_line_break_off
                     | {{e.extra_sec}}
-            template(v-if="!chess_clock.timer")
+            template(v-if="!chess_clock.running_p")
               b-field.mt-0.mx-4(label="持ち時間(分)")
                 b-numberinput(controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @click.native.stop="" :checkHtml5Validity="false")
               b-field.mt-5.mx-4(label="1手ごとに加算")
@@ -41,7 +49,7 @@
       b-button(@click="chess_clock.generation_next(1)") +1
       b-button(@click="chess_clock.generation_next(60)") +60
       b-button(@click="chess_clock.clock_switch()") 切り替え
-      b-button(@click="chess_clock.timer_start()") START ({{chess_clock.timer}})
+      b-button(@click="chess_clock.timer_start()") START ({{chess_clock.running_p}})
       b-button(@click="chess_clock.timer_stop()") STOP
       b-button(@click="chess_clock.params.every_plus = 5") フィッシャールール
       b-button(@click="chess_clock.params.every_plus = 0") 通常ルール
@@ -142,7 +150,7 @@ export default {
   },
   methods: {
     pause_handle() {
-      if (this.chess_clock.timer) {
+      if (this.chess_clock.running_p) {
         this.talk_stop()
         this.sound_play("click")
         this.chess_clock.pause_on()
@@ -171,7 +179,7 @@ export default {
     },
 
     stop_handle() {
-      if (this.chess_clock.timer) {
+      if (this.chess_clock.running_p) {
         this.talk_stop()
         this.sound_play("click")
         this.say("停止")
@@ -180,7 +188,7 @@ export default {
     },
 
     play_handle() {
-      if (this.chess_clock.timer) {
+      if (this.chess_clock.running_p) {
       } else {
         this.sound_play("start")
         this.say(this.play_talk_message())
@@ -202,10 +210,10 @@ export default {
     },
 
     switch_handle(e) {
-      if (this.chess_clock.timer_active_p) {
-        e.tap_and_auto_start_handle()
+      if (this.chess_clock.running_p) {
+        e.simple_switch_handle()
       } else {
-        e.set_or_tap_handle()
+        e.tap_and_auto_start_handle()
       }
     },
     back_handle() {
@@ -288,7 +296,7 @@ export default {
   },
   computed: {
     mouse_cursor_hidden() {
-      return this.chess_clock.timer && !this.mouse_cursor_p
+      return this.chess_clock.running_p && !this.mouse_cursor_p
     },
   },
 }
@@ -301,6 +309,15 @@ export default {
 @import "digit_values_desktop.sass"
 
 .xclock_app
+  .float_debug_container
+    color: $white
+    position: fixed
+    top: 0
+    left: 0
+    background-color: hsla(0, 0%, 0%, 0.7)
+    padding: 1rem
+    z-index: 1
+
   .screen_container // 100vw x 100vh 相当の範囲
     height: 100vh   // 初期値(JSで上書きする)
 

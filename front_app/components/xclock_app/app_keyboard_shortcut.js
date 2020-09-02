@@ -18,26 +18,23 @@ export const app_keyboard_shortcut = {
         return
       }
 
-      // if (!this.chess_clock.pause_p) {
-      //   if (["Escape"].includes(e.code)) {
-      //     this.pause_handle()
-      //     e.preventDefault()
-      //   }
-      // }
+      // 動作中かつポーズ中は操作禁止
+      if (this.chess_clock.running_p && this.chess_clock.timer == null) {
+        return
+      }
 
-      if (!this.chess_clock.pause_p && !this.chess_clock.zero_arrival) {
-        // if (["Space"].includes(e.code)) {
-        //   this.pause_handle()
-        //   e.preventDefault()
-        // }
-        if (["ShiftLeft", "ControlLeft", "Tab"].includes(e.code)) {
-          this.switch_handle(this.chess_clock.single_clocks[0])
-          e.preventDefault()
-        }
-        if (["ShiftRight", "ControlRight", "Enter", "ArrowRight", "ArrowUp", "ArrowDown", "ArrowLeft"].includes(e.code)) {
-          this.switch_handle(this.chess_clock.single_clocks[1])
-          e.preventDefault()
-        }
+      // 時間切れになったあとは操作禁止
+      if (this.chess_clock.zero_arrival) {
+        return
+      }
+
+      if (["ShiftLeft", "ControlLeft", "Tab"].includes(e.code)) {
+        this.switch_handle(this.chess_clock.single_clocks[0])
+        e.preventDefault()
+      }
+      if (["ShiftRight", "ControlRight", "Enter", "ArrowRight", "ArrowUp", "ArrowDown", "ArrowLeft"].includes(e.code)) {
+        this.switch_handle(this.chess_clock.single_clocks[1])
+        e.preventDefault()
       }
     },
   },

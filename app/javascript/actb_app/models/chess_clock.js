@@ -5,13 +5,10 @@ export class ChessClock {
   constructor(params = {}) {
     this.params = {
       // ここらのハッシュキーはリアクティブにするため null でも定義が必要
-      turn: null,
-      initial_read_sec: null,
-      every_plus: null,
-      initial_main_sec: null,
-      read_sec: null,
-      extra_sec: null,
-      pause_p: null,
+      initial_main_sec:  null,  // 持ち時間(初期値)
+      initial_read_sec:  null,  // 秒読み(初期値)
+      initial_extra_sec: null,  // 猶予(初期値)
+      every_plus:        null,  // 1手ごと加算
 
       time_zero_callback: e => {},
       clock_switch_hook: () => {},
@@ -24,11 +21,12 @@ export class ChessClock {
       ...params,
     }
 
-    this.timer         = null
-    this.turn          = null
-    this.counter       = null
-    this.zero_arrival  = null
-    this.single_clocks = null
+    this.timer         = null   // null以外ならタイマー動作中
+    this.turn          = null   // 0 or 1:手番 null:手番が設定されていない
+    this.counter       = null   // 手数 (未使用)
+    this.zero_arrival  = null   // true:0になった
+    this.single_clocks = null   // それぞれの時計
+    this.running_p     = null   // true:動作中 false:停止中
 
     this.reset()
   }
@@ -44,16 +42,16 @@ export class ChessClock {
     this.timer_stop()
     this.turn = this.params.turn // インクリメントしていく
     this.counter = 0             // turn とは異なり手数に相当する
-    this.zero_arrival = false      // 片方が0になったら true になる
+    this.zero_arrival = false    // 片方が0になったら true になる
     this.single_clocks = Location.values.map((e, i) => new SingleClock(this, i))
-    this.pause_p = false
+    this.running_p = false
   }
 
   // 切り替え
   clock_switch() {
     this.turn += 1
     this.counter += 1
-    if (this.timer_active_p) {
+    if (this.timer) {
       this.timer_restart()
     }
     this.params.clock_switch_hook()
@@ -61,8 +59,7 @@ export class ChessClock {
 
   // 時間経過
   generation_next(value) {
-    if (this.pause_p) {
-    } else {
+    if (this.timer) {
       this.current.generation_next(value)
     }
   }
@@ -73,16 +70,21 @@ export class ChessClock {
   }
 
   play_button_handle() {
-    if (!this.timer) {
+    if (!this.running_p) {
+      this.running_p = true
+      this.counter = 0
       this.single_clocks.forEach(e => e.variable_reset())
       this.timer_start()
     }
   }
 
   stop_button_handle() {
-    this.timer_stop()
-    this.single_clocks.forEach(e => e.variable_reset())
-    this.zero_arrival = false
+    if (this.running_p) {
+      this.running_p = false
+      this.timer_stop()
+      this.single_clocks.forEach(e => e.variable_reset())
+      this.zero_arrival = false
+    }
   }
 
   timer_start() {
@@ -104,11 +106,12 @@ export class ChessClock {
   }
 
   pause_on() {
-    this.pause_p = true
+    if (this.timer)
+    this.timer_stop()
   }
 
   pause_off() {
-    this.pause_p = false
+    this.timer_start()
   }
 
   turn_wrap(v) {
@@ -121,17 +124,7 @@ export class ChessClock {
   }
 
   rule_set_all(o) {
-    o = {...o}
-    // o.read_sec = o.read_sec || o.initial_read_sec
     this.single_clocks.forEach(e => e.rule_set_one(o))
-  }
-
-  get timer_active_p() {
-    return !!this.timer
-  }
-
-  get standby_mode_p() {
-    return this.turn == null
   }
 
   get current() {

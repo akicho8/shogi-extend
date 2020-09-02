@@ -15,14 +15,14 @@ export class SingleClock {
   }
 
   constructor(base, index) {
-    this.base         = base
-    this.index        = index
+    this.base  = base
+    this.index = index
 
     // FIXME: params は取る
     this.initial_main_sec  = base.params.initial_main_sec || ONE_MIN * 3
     this.initial_extra_sec = base.params.initial_extra_sec || 0
     this.initial_read_sec  = base.params.initial_read_sec || 0
-    this.every_plus   = base.params.every_plus || 0
+    this.every_plus        = base.params.every_plus || 0
 
     this.variable_reset()
   }
@@ -104,30 +104,32 @@ export class SingleClock {
   }
 
   switch_handle() {
-    if (this.standby_mode_p) {
-      this.set_or_tap_handle()
-    } else {
+    if (this.running_p) {
       this.tap_and_auto_start_handle()
+    } else {
+      this.set_or_tap_handle()
     }
   }
 
-  tap_and_auto_start_handle() {
-    if (this.standby_mode_p) {
-      this.base.initial_boot_from(this.index)
-      this.base.clock_switch()
-      return
-    }
+  simple_switch_handle() {
     if (this.active_p) {
-      // if (this.base.counter >= 1) {
-      // }
       this.generation_next(this.every_plus)
       this.read_sec_set()
       this.base.clock_switch()
     }
   }
 
+  tap_and_auto_start_handle() {
+    if (!this.running_p) {
+      this.base.initial_boot_from(this.index)
+      this.base.clock_switch()
+      return
+    }
+    this.simple_switch_handle()
+  }
+
   set_or_tap_handle() {
-    if (this.standby_mode_p) {
+    if (!this.running_p) {
       if (this.turn == null) {
         this.base.turn = this.index
       }
@@ -144,19 +146,12 @@ export class SingleClock {
   //////////////////////////////////////////////////////////////////////////////// getter
 
   get button_type() {
-    if (this.standby_mode_p) {
+    if (!this.running_p) {
       return
     }
     if (this.active_p) {
       return "is-primary"
     }
-  }
-
-  get disabled_p() {
-    if (this.standby_mode_p) {
-      return false
-    }
-    return !this.active_p
   }
 
   get active_p() {
@@ -165,8 +160,7 @@ export class SingleClock {
 
   get dom_class() {
     const ary = []
-    if (this.standby_mode_p) {
-    } else {
+    if (this.running_p) {
       if (this.active_p) {
         ary.push("is_sclock_active")
         if (this.main_sec === 0) {
@@ -186,8 +180,7 @@ export class SingleClock {
 
   get bar_class() {
     const ary = []
-    if (this.standby_mode_p) {
-    } else {
+    if (this.running_p) {
       if (this.active_p) {
         if (this.rest >= 1) {
           ary.push("is_blink")
@@ -215,8 +208,8 @@ export class SingleClock {
     return this.constructor.time_format(this.read_sec)
   }
 
-  get standby_mode_p() {
-    return this.base.standby_mode_p
+  get running_p() {
+    return this.base.running_p
   }
 
   get location() {

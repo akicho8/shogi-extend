@@ -13,8 +13,6 @@
             | {{e.to_time_format}}
           p
             b-button.mt-4(@click="e.tap_and_auto_start_handle()" size="is-large" :type="e.button_type") ボタン
-          p
-            | disabled: {{e.disabled_p}}
 
   b-message
     | 1手毎に{{chess_clock.params.every_plus}}秒加算
