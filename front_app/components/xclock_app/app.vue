@@ -1,7 +1,7 @@
 <template lang="pug">
 .xclock_app(:class="chess_clock.timer ? 'is_xclock_active' : 'is_xclock_inactive'")
   .screen_container.is-flex.is-relative(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
-    b-icon.stop_button.is_clickable(icon="stop" @click.native="stop_handle" v-if="chess_clock.timer")
+    b-icon.stop_button.is_clickable(icon="stop" @click.native="pause_handle" v-if="chess_clock.timer")
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
         .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
@@ -143,36 +143,63 @@ export default {
   methods: {
     pause_handle() {
       if (this.chess_clock.timer) {
+        this.talk_stop()
         this.sound_play("click")
-        this.say("ポーズ")
-        this.chess_clock.timer_stop()
+        this.chess_clock.pause_on()
+
+        this.$buefy.dialog.confirm({
+          title: "ポーズ",
+          message: `終了しますか？`,
+          confirmText: "終了する",
+          cancelText: "再開する",
+          type: "is-danger",
+          hasIcon: false,
+          trapFocus: true,
+          onCancel: () => {
+            this.sound_play("click")
+            this.chess_clock.pause_off()
+            this.talk_stop()
+          },
+          onConfirm: () => {
+            this.talk_stop()
+            this.sound_play("click")
+            this.chess_clock.stop_button_handle()
+          },
+        })
       }
     },
+
     stop_handle() {
       if (this.chess_clock.timer) {
         this.talk_stop()
         this.sound_play("click")
         this.say("停止")
         this.chess_clock.stop_button_handle()
-      } else {
       }
     },
+
     play_handle() {
       if (this.chess_clock.timer) {
       } else {
         this.sound_play("start")
-        this.say("対局かいし", {onend: () => {
-          if (isMobile.any()) {
-            if (DeviseAngle.portrait_p()) {
-              this.say("ブラウザのタブを1つだけにしてスマホを横向きにしてください")
-            }
-          } else {
-            this.say("キーボードの左右のシフトキーとかで、てばんを変更できます")
-          }
-        }})
+        this.say(this.play_talk_message())
         this.chess_clock.play_button_handle()
       }
     },
+
+    play_talk_message() {
+      let s = ""
+      s += "対局かいし。"
+      if (isMobile.any()) {
+        if (DeviseAngle.portrait_p()) {
+          s += "ブラウザのタブを1つだけにしてスマホを横向きにしてください"
+        }
+      } else {
+        s += "キーボードの左右のシフトキーとかで、てばんを変更できます"
+      }
+      return s
+    },
+
     switch_handle(e) {
       if (this.chess_clock.timer_active_p) {
         e.tap_and_auto_start_handle()
@@ -196,7 +223,6 @@ export default {
         // type: "is-danger",
         hasIcon: false,
         trapFocus: true,
-        animation: "",
         onConfirm: () => {
           this.talk_stop()
           this.sound_play("click")
@@ -217,12 +243,10 @@ export default {
         title: "手番切り替えショートカットキー",
         message: `
           <div class="content is-size-7">
-            <ul>
-              <li>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code>   <code>SPACE</code></li>
-              <li>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></li>
-              <li>終了 <code>ESC</code></li>
-            </ol>
+            <p>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code>   <code>SPACE</code></p>
+            <p>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></p>
           </div>`,
+        // <li>終了 <code>ESC</code></li>
         confirmText: "わかった",
         canCancel: ["outside", "escape"],
         type: "is-info",

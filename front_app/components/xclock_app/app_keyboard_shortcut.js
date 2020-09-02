@@ -18,23 +18,22 @@ export const app_keyboard_shortcut = {
         return
       }
 
-      if (this.chess_clock.zero_arrival) {
-        return
-      }
+      // if (!this.chess_clock.pause_p) {
+      //   if (["Escape"].includes(e.code)) {
+      //     this.pause_handle()
+      //     e.preventDefault()
+      //   }
+      // }
 
-      if (["Escape"].includes(e.code)) {
-        this.stop_handle()
-        e.preventDefault()
-      }
-
-      if (["ShiftLeft", "ControlLeft", "Tab", "Space"].includes(e.code)) {
-        this.switch_handle(this.chess_clock.single_clocks[0])
-        e.preventDefault()
-      }
-
-      if (["ShiftRight", "ControlRight", "Enter", "ArrowRight", "ArrowUp", "ArrowDown", "ArrowLeft"].includes(e.code)) {
-        this.switch_handle(this.chess_clock.single_clocks[1])
-        e.preventDefault()
+      if (!this.chess_clock.zero_arrival) {
+        if (["ShiftLeft", "ControlLeft", "Tab", "Space"].includes(e.code)) {
+          this.switch_handle(this.chess_clock.single_clocks[0])
+          e.preventDefault()
+        }
+        if (["ShiftRight", "ControlRight", "Enter", "ArrowRight", "ArrowUp", "ArrowDown", "ArrowLeft"].includes(e.code)) {
+          this.switch_handle(this.chess_clock.single_clocks[1])
+          e.preventDefault()
+        }
       }
     },
   },

@@ -11,6 +11,7 @@ export class ChessClock {
       initial_main_sec: null,
       read_sec: null,
       extra_sec: null,
+      pause_p: null,
 
       time_zero_callback: e => {},
       clock_switch_hook: () => {},
@@ -45,6 +46,7 @@ export class ChessClock {
     this.counter = 0             // turn とは異なり手数に相当する
     this.zero_arrival = false      // 片方が0になったら true になる
     this.single_clocks = Location.values.map((e, i) => new SingleClock(this, i))
+    this.pause_p = false
   }
 
   // 切り替え
@@ -59,7 +61,10 @@ export class ChessClock {
 
   // 時間経過
   generation_next(value) {
-    this.current.generation_next(value)
+    if (this.pause_p) {
+    } else {
+      this.current.generation_next(value)
+    }
   }
 
   // デバッグ用
@@ -96,6 +101,14 @@ export class ChessClock {
   timer_restart() {
     this.timer_stop()
     this.timer_start()
+  }
+
+  pause_on() {
+    this.pause_p = true
+  }
+
+  pause_off() {
+    this.pause_p = false
   }
 
   turn_wrap(v) {
