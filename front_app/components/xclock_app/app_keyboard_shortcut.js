@@ -25,8 +25,12 @@ export const app_keyboard_shortcut = {
       //   }
       // }
 
-      if (!this.chess_clock.zero_arrival) {
-        if (["ShiftLeft", "ControlLeft", "Tab", "Space"].includes(e.code)) {
+      if (!this.chess_clock.pause_p && !this.chess_clock.zero_arrival) {
+        // if (["Space"].includes(e.code)) {
+        //   this.pause_handle()
+        //   e.preventDefault()
+        // }
+        if (["ShiftLeft", "ControlLeft", "Tab"].includes(e.code)) {
           this.switch_handle(this.chess_clock.single_clocks[0])
           e.preventDefault()
         }

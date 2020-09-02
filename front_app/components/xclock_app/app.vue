@@ -1,7 +1,7 @@
 <template lang="pug">
 .xclock_app(:class="chess_clock.timer ? 'is_xclock_active' : 'is_xclock_inactive'")
   .screen_container.is-flex.is-relative(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
-    b-icon.stop_button.is_clickable(icon="stop" @click.native="pause_handle" v-if="chess_clock.timer")
+    b-icon.stop_button.is_clickable(icon="pause" @click.native="pause_handle" v-if="chess_clock.timer")
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
         .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
@@ -240,12 +240,13 @@ export default {
       this.sound_play("click")
       this.talk_stop()
       const dialog = this.$buefy.dialog.alert({
-        title: "手番切り替えショートカットキー",
+        title: "ショートカットキー",
         message: `
           <div class="content is-size-7">
-            <p>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code>   <code>SPACE</code></p>
+            <p>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code></p>
             <p>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></p>
           </div>`,
+        // <p>PAUSE <code>SPACE</code></p>
         // <li>終了 <code>ESC</code></li>
         confirmText: "わかった",
         canCancel: ["outside", "escape"],
