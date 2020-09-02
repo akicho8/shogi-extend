@@ -23,23 +23,25 @@ export default function ({ $axios, $buefy }) {
     // config.headers.common['ABC'] = "DEF"
   })
 
-  $axios.onRequest(config => {
-    console.log(`[axios_mod] onRequest`)
-  })
-  $axios.onResponse(response => {
-    // if (window.$loading) { window.$loading.close(); window.$loading = null }
-    console.log(`[axios_mod] onResponse`)
-  })
-  $axios.onError(err => {
-    // if (window.$loading) { window.$loading.close(); window.$loading = null }
-    console.log(`[axios_mod] onError`)
-  })
-  $axios.onRequestError(err => {
-    // if (window.$loading) { window.$loading.close(); window.$loading = null }
-    console.log(`[axios_mod] onRequestError`)
-  })
-  $axios.onResponseError(err => {
-    // if (window.$loading) { window.$loading.close(); window.$loading = null }
-    console.log(`[axios_mod] onResponseError`)
-  })
+  if (process.env.NODE_ENV === "development") {
+    $axios.onRequest(config => {
+      console.log(`[axios_mod] onRequest`)
+    })
+    $axios.onResponse(response => {
+      // if (window.$loading) { window.$loading.close(); window.$loading = null }
+      console.log(`[axios_mod] onResponse`)
+    })
+    $axios.onError(err => {
+      // if (window.$loading) { window.$loading.close(); window.$loading = null }
+      console.log(`[axios_mod] onError`)
+    })
+    $axios.onRequestError(err => {
+      // if (window.$loading) { window.$loading.close(); window.$loading = null }
+      console.log(`[axios_mod] onRequestError`)
+    })
+    $axios.onResponseError(err => {
+      // if (window.$loading) { window.$loading.close(); window.$loading = null }
+      console.log(`[axios_mod] onResponseError`)
+    })
+  }
 }
