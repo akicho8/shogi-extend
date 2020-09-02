@@ -131,8 +131,9 @@ class Talk
     "Mizuki"                    # or Takumi
   end
 
+  # system/ だと /s/system になってしまうので / から始めるようにする
   def relative_path
-    direct_file_path.relative_path_from(Rails.public_path).to_s
+    "/" + direct_file_path.relative_path_from(Rails.public_path).to_s
   end
 
   def dir_parts
