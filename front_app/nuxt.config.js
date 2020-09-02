@@ -1,14 +1,8 @@
 // export default {
-
-if (process.client) {
-  console.log(process.client)
-  console.log(process.env.SITE_URL)
-  new Error("aa")
-}
-
 const config = {
   // mode: 'spa',
   mode: 'universal',
+
   /*
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
@@ -88,15 +82,11 @@ const config = {
   ** Auto import components
   ** See https://nuxtjs.org/api/configuration-components
   */
-  components: false,
+  components: true,
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    // ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }],
-    // '@nuxtjs/dotenv',
-
     // https://github.com/nuxt-community/analytics-module
     ['@nuxtjs/google-analytics', { id: 'UA-109851345-1' }],
   ],
@@ -123,12 +113,7 @@ const config = {
   },
 
   proxy: {
-    // "/api": "http://localhost:3000",
-    // "/api": "http://localhost:3000",
-    // "/api": "http://localhost:3000",
-    // "/api": {
-    //   target: "http://localhost:3000",
-    // },
+    // 下で設定している
   },
 
   /*
@@ -176,10 +161,12 @@ const config = {
   },
 
   // https://nuxtjs.org/guide/runtime-config
+  // 空文字列は空で設定したのではなく XXX: process.env.XXX の意味(この仕様は余計にわかりにくい)
   publicRuntimeConfig: {
-    SITE_URL: "",  // 空で上書きしたのではなく process.env.SITE_URL を定義(この仕様はひどい)
+    SITE_URL:     "",
     OGP_SITE_URL: "",
   },
+
   // SSR側での定義で publicRuntimeConfig を上書きする
   privateRuntimeConfig: {},
 
@@ -187,7 +174,8 @@ const config = {
   // ・ここで定義すると .vue 側で process.env.XXX で参照できる
   // ・が、だとテンプレートで使えなかったり単なる文字列だったり process.env が空だったりでデバッグしにくい
   // ・ので publicRuntimeConfig を使う方がよい
-  // ・どうでもいいけど NUXT_ENV_ プレフィクスをつけた環境変数は自動的にここで定義したことになる(プレフィクスはついたまま)
+  // ・NUXT_ENV_ プレフィクスをつけた環境変数は自動的にここで定義したことになる(プレフィクスはついたまま)
+  // ・だけど publicRuntimeConfig を使う方がまし
   env: {
     // FOO: process.env.FOO,
   },
@@ -195,17 +183,7 @@ const config = {
 
 if (process.env.NODE_ENV === 'development') {
   config.proxy["/api"]    = "http://0.0.0.0:3000"
-  config.proxy["/system"] = "http://0.0.0.0:3000"
+  config.proxy["/system"] = "http://0.0.0.0:3000" // for mp3
 }
-
-// if (process.env.NODE_ENV === 'production') {
-//   if (process.client) {
-//     config.axios["baseURL"] =
-//   }
-// }
-
-// if (process.client) {
-//   config.axios["baseURL"] = "http://localhost:3000"
-// }
 
 export default config
