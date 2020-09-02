@@ -25,7 +25,6 @@ export default {
       if (!this.tab_is_hidden_p()) {
         const params = {
           source_text: source_text,
-          full_url: "true",
         }
         // return this.$axios.request({method: "get", url: "/api/talk", params: params}).then(({data}) => this.mp3_talk(data, options))
         // return this.$axios.get("/api/talk", {params: params}).then(({data}) => this.mp3_talk(data, options))

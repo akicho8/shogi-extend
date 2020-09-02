@@ -25,7 +25,6 @@ class Talk
     @params = {
       polly_params: {},
       cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test?,
-      full_url: false,
     }.merge(params)
   end
 
@@ -133,7 +132,7 @@ class Talk
   end
 
   def relative_path
-    root_url + direct_file_path.relative_path_from(Rails.public_path).to_s
+    direct_file_path.relative_path_from(Rails.public_path).to_s
   end
 
   def dir_parts
@@ -142,15 +141,5 @@ class Talk
 
   def client
     @client ||= Aws::Polly::Client.new
-  end
-
-  # rails r "p Rails.application.routes.url_helpers.root_url(only_path: true)"
-  # rails r "p Rails.application.routes.url_helpers.root_url(only_path: false)"
-  def root_url
-    Rails.application.routes.url_helpers.root_url(only_path: !full_url?)
-  end
-
-  def full_url?
-    params[:full_url].to_s == "true"
   end
 end
