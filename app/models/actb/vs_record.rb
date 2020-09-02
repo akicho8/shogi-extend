@@ -1,3 +1,18 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Vs record (actb_vs_records as Actb::VsRecord)
+#
+# |------------+--------------+--------------+-------------+------+-------|
+# | name       | desc         | type         | opts        | refs | index |
+# |------------+--------------+--------------+-------------+------+-------|
+# | id         | ID           | integer(8)   | NOT NULL PK |      |       |
+# | battle_id  | Battle       | integer(8)   | NOT NULL    |      | A     |
+# | sfen_body  | SFEN形式棋譜 | string(1536) | NOT NULL    |      |       |
+# | created_at | 作成日時     | datetime     | NOT NULL    |      |       |
+# | updated_at | 更新日時     | datetime     | NOT NULL    |      |       |
+# |------------+--------------+--------------+-------------+------+-------|
+
 module Actb
   class VsRecord < ApplicationRecord
     belongs_to :battle, inverse_of: :memberships

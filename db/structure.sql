@@ -639,6 +639,20 @@ CREATE TABLE `actb_source_abouts` (
   KEY `index_actb_source_abouts_on_position` (`position`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `actb_vs_records`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `actb_vs_records` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `battle_id` bigint(20) NOT NULL COMMENT '対戦',
+  `sfen_body` varchar(1536) COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_actb_vs_records_on_battle_id` (`battle_id`),
+  CONSTRAINT `fk_rails_8ba1e4c013` FOREIGN KEY (`battle_id`) REFERENCES `actb_battles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `active_storage_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1154,6 +1168,8 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200725112112'),
 ('20200725112114'),
 ('20200725112115'),
-('20200817115320');
+('20200817115320'),
+('20200817115321'),
+('20200817115322');
 
 
