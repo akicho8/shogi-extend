@@ -8,13 +8,21 @@
     div zero_arrival: {{chess_clock.zero_arrival}}
     div mouse_cursor_p: {{mouse_cursor_p}}
 
-  .screen_container.is-flex.is-relative(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
-    b-icon.stop_button.is_clickable(icon="pause" @click.native="pause_handle" v-if="chess_clock.running_p")
+  .pause_bg(v-if="chess_clock.running_p && !chess_clock.timer")
+  .screen_container.is-flex(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
+    template(v-if="chess_clock.running_p")
+      b-icon.controll_button.pause.is_clickable(icon="pause" v-if="chess_clock.timer" @click.native="pause_handle")
+      b-icon.controll_button.resume.is_clickable(icon="play" v-if="!chess_clock.timer" @click.native="resume_handle")
+      b-icon.controll_button.stop.is_clickable(icon="stop" v-if="!chess_clock.timer" @click.native="stop_handle")
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
         .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
-          .acive_current_bar(v-if="e.active_p" :class="e.bar_class")
-          .inacive_current_bar(v-if="!e.active_p")
+          template(v-if="chess_clock.running_p")
+            .active_current_bar(:class="e.bar_class" v-if="e.active_p && chess_clock.timer")
+            .inactive_current_bar(v-else)
+          template(v-else)
+            .active_current_bar(:class="e.bar_class" v-if="e.active_p")
+            .inactive_current_bar(v-else)
           .digit_container.is-flex
             template(v-if="chess_clock.running_p")
               .digit_values(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
@@ -151,39 +159,37 @@ export default {
     this.chess_clock.timer_stop()
   },
   methods: {
+    resume_handle() {
+      this.sound_play("click")
+      this.chess_clock.pause_off()
+      this.talk_stop()
+    },
     pause_handle() {
       if (this.chess_clock.running_p) {
         this.talk_stop()
         this.sound_play("click")
         this.chess_clock.pause_on()
 
-        this.$buefy.dialog.confirm({
-          title: "ポーズ中",
-          message: `終了しますか？`,
-          confirmText: "終了",
-          cancelText: "再開",
-          type: "is-danger",
-          hasIcon: false,
-          trapFocus: true,
-          focusOn: "cancel",
-          onCancel: () => {
-            this.sound_play("click")
-            this.chess_clock.pause_off()
-            this.talk_stop()
-          },
-          onConfirm: () => {
-            this.talk_stop()
-            this.sound_play("click")
-            this.chess_clock.stop_button_handle()
-          },
-        })
+        if (false) {
+          this.$buefy.dialog.confirm({
+            title: "ポーズ中",
+            message: `終了しますか？`,
+            confirmText: "終了",
+            cancelText: "再開",
+            type: "is-danger",
+            hasIcon: false,
+            trapFocus: true,
+            focusOn: "cancel",
+            onCancel:  () => this.resume_handle(),
+            onConfirm: () => this.stop_handle(),
+          })
+        }
       }
     },
     stop_handle() {
       if (this.chess_clock.running_p) {
         this.talk_stop()
         this.sound_play("click")
-        this.say("停止")
         this.chess_clock.stop_button_handle()
       }
     },
@@ -301,6 +307,16 @@ export default {
     padding: 1rem
     z-index: 1
 
+  // ポーズのときのカバー
+  .pause_bg
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: hsla(0, 0%, 0%, 0.7)
+    z-index: 2
+
   .screen_container // 100vw x 100vh 相当の範囲
     height: 100vh   // 初期値(JSで上書きする)
 
@@ -321,13 +337,24 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 停止ボタンを画面中央に配置
-    .stop_button
-      position: absolute
+    .controll_button
+      z-index: 2
+      position: fixed
       top: 0
       left: 0
       right: 0
       bottom: 0
       margin: auto
+      padding: 1.5rem
+      border-radius: 50%
+      color: $grey-lighter
+      &.pause
+        color: $grey
+      &.resume, &.stop
+        background-color: hsla(0, 50%, 100%, 0.2)
+        background-color: change_color($primary, $alpha: 0.5)
+      &.stop
+        top: 25%
 
     // .level を左右均等に配置
     flex-direction: column
@@ -350,11 +377,10 @@ export default {
         align-items: center
 
         // どちらがアクティブかを表すバー
-        .acive_current_bar, .inacive_current_bar
+        .active_current_bar, .inactive_current_bar
           height: 48px
           width: 100%
-        .inacive_current_bar
-        .acive_current_bar
+        .active_current_bar
           background-color: $primary
 
         // 時間表示(フォームも含む)
@@ -391,7 +417,7 @@ export default {
 
   &.is_xclock_active
     .screen_container
-      .acive_current_bar
+      .active_current_bar
         &.is_level1
           background-color: $blue
           &.is_blink
