@@ -148,10 +148,10 @@ export default {
         this.chess_clock.pause_on()
 
         this.$buefy.dialog.confirm({
-          title: "ポーズ",
+          title: "ポーズ中",
           message: `終了しますか？`,
-          confirmText: "終了する",
-          cancelText: "再開する",
+          confirmText: "終了",
+          cancelText: "再開",
           type: "is-danger",
           hasIcon: false,
           trapFocus: true,
