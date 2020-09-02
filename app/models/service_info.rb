@@ -17,7 +17,7 @@ class ServiceInfo
       ],
     },
     {
-      display_p: true,
+      display_p: false,
       link_path: Rails.application.routes.url_helpers.vs_clock_url,
       title: "対局時計",
       new_p: true,
