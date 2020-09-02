@@ -44,16 +44,6 @@ export default {
   mixins: [
     support,
   ],
-  data() {
-    return {
-    }
-  },
-  mounted() {
-  },
-  beforeDestroy() {
-  },
-  methods: {
-  },
 }
 </script>
 

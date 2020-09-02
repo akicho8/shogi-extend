@@ -28,6 +28,8 @@ export class ChessClock {
     this.single_clocks = null   // それぞれの時計
     this.running_p     = null   // true:動作中 false:停止中
 
+    this.speed = 1.0
+
     this.reset()
   }
 
@@ -89,7 +91,7 @@ export class ChessClock {
 
   timer_start() {
     if (!this.timer) {
-      this.timer = setInterval(() => this.generation_next(-1), 1000)
+      this.timer = setInterval(() => this.generation_next(-1), 1000 / this.speed)
     }
   }
 

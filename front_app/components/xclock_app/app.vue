@@ -6,9 +6,9 @@
     div timer: {{chess_clock.timer}}
     div counter: {{chess_clock.counter}}
     div zero_arrival: {{chess_clock.zero_arrival}}
+    div mouse_cursor_p: {{mouse_cursor_p}}
 
   .screen_container.is-flex.is-relative(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
-
     b-icon.stop_button.is_clickable(icon="pause" @click.native="pause_handle" v-if="chess_clock.running_p")
     .level.is-mobile.is-unselectable.is-marginless
       template(v-for="(e, i) in chess_clock.single_clocks")
@@ -55,6 +55,8 @@
       b-button(@click="chess_clock.params.every_plus = 0") 通常ルール
       b-button(@click="chess_clock.reset()") RESET
       b-button(@click="chess_clock.main_sec_set(3)") 両方残り3秒
+      input(type="range" v-model.number="chess_clock.speed")
+      | スピード {{chess_clock.speed}}
     b-message
       p 1手毎に{{chess_clock.params.every_plus}}秒加算
       p mouse_cursor_p: {{mouse_cursor_p}}
@@ -66,8 +68,10 @@
 import { ChessClock   } from "../../../app/javascript/actb_app/models/chess_clock.js"
 import { DeviseAngle  } from "../../../app/javascript/models/DeviseAngle.js"
 import { isMobile     } from "../../../app/javascript/models/isMobile.js"
+
 import { support      } from "./support.js"
 import { store        } from "./store.js"
+
 import the_footer       from "./the_footer.vue"
 
 import { app_mouse_hidden         } from "./app_mouse_hidden.js"
@@ -117,11 +121,9 @@ export default {
         if (t === 10 || t === 20 || t === 30) {
           this.say(`${t}秒`)
         }
-
         if (t <= 5) {
           this.say(`${t}`)
         }
-
         if (t <= 6 && false) {
           const index = single_clock.index
           setTimeout(() => {
@@ -177,7 +179,6 @@ export default {
         })
       }
     },
-
     stop_handle() {
       if (this.chess_clock.running_p) {
         this.talk_stop()
@@ -186,7 +187,6 @@ export default {
         this.chess_clock.stop_button_handle()
       }
     },
-
     play_handle() {
       if (this.chess_clock.running_p) {
       } else {
@@ -195,7 +195,6 @@ export default {
         this.chess_clock.play_button_handle()
       }
     },
-
     play_talk_message() {
       let s = ""
       s += "対局かいし。"
@@ -208,7 +207,6 @@ export default {
       }
       return s
     },
-
     switch_handle(e) {
       if (this.chess_clock.running_p) {
         e.simple_switch_handle()
@@ -221,7 +219,6 @@ export default {
     },
     copy_handle() {
       this.sound_play("click")
-
       this.say("左の設定を右にコピーしますか？")
 
       this.$buefy.dialog.confirm({
@@ -244,7 +241,6 @@ export default {
         },
       })
     },
-
     help_handle() {
       this.sound_play("click")
       this.talk_stop()
@@ -255,8 +251,6 @@ export default {
             <p>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code></p>
             <p>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></p>
           </div>`,
-        // <p>PAUSE <code>SPACE</code></p>
-        // <li>終了 <code>ESC</code></li>
         confirmText: "わかった",
         canCancel: ["outside", "escape"],
         type: "is-info",
@@ -271,15 +265,7 @@ export default {
           this.sound_play("click")
         },
       })
-
-      //       this.say(`
-      // タップモードでは符号に対応する位置をタップします。
-      // タップじゃないモードでは駒の場所をキーボードの数字2桁で入力していきます。最初の数字を間違えたときはエスケープキーでキャンセルできます。
-      // 選択した数まで正解するまでの時間を競います。
-      // ログインしていると毎回出る名前の入力を省略できます。
-      // `, {onend: () => { dialog.close() }})
     },
-
     dropdown_active_change(on) {
       if (on) {
         this.sound_play("click")
@@ -287,16 +273,13 @@ export default {
         this.sound_play("click")
       }
     },
-
     rule_set(params) {
-      // this.sound_play("click")
       this.chess_clock.rule_set_all(params)
     },
-
   },
   computed: {
     mouse_cursor_hidden() {
-      return this.chess_clock.running_p && !this.mouse_cursor_p
+      return this.chess_clock.running_p && this.chess_clock.timer && !this.mouse_cursor_p
     },
   },
 }
@@ -314,7 +297,7 @@ export default {
     position: fixed
     top: 0
     left: 0
-    background-color: hsla(0, 0%, 0%, 0.7)
+    background-color: hsla(0, 0%, 0%, 0.6)
     padding: 1rem
     z-index: 1
 
@@ -432,7 +415,6 @@ export default {
 
 =xray($level)
   $color: hsla((360 / 8) * $level, 50%, 50%, 1.0)
-  // background-color: $color
   border: 2px solid $color
 
 .development
