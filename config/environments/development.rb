@@ -83,7 +83,7 @@ Rails.application.configure do
   end
 
   # https://qiita.com/taiteam/items/a37c60fc15c1aa5bb606
-  config.hosts << "ikeda-mac3.local"
+  config.hosts << "ikemac.local"
 
   # ################################################################################ ActionCable
   # ActionCable.server.config.disable_request_forgery_protection = true
