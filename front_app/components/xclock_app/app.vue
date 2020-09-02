@@ -8,23 +8,38 @@
     div zero_arrival: {{chess_clock.zero_arrival}}
     div mouse_cursor_p: {{mouse_cursor_p}}
 
-  .pause_bg(v-if="chess_clock.running_p && !chess_clock.timer")
-  .screen_container.is-flex(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
-    template(v-if="chess_clock.running_p")
+  //////////////////////////////////////////////////////////////////////////////// form
+  template(v-if="!chess_clock.running_p")
+    .screen_container.is-flex
+      .level.is-mobile.is-unselectable.is-marginless
+        template(v-for="(e, i) in chess_clock.single_clocks")
+          .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
+            .active_current_bar(:class="e.bar_class" v-if="e.active_p")
+            .inactive_current_bar(v-else)
+            .digit_container.is-flex
+              b-field.mt-0.mx-4(label="持ち時間(分)")
+                b-numberinput(controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @click.native.stop="" :checkHtml5Validity="false")
+              b-field.mt-5.mx-4(label="1手ごとに加算")
+                b-numberinput(controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
+              b-field.mt-5.mx-4(label="秒読み")
+                b-numberinput(controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
+              b-field.mt-5.mx-4(label="猶予")
+                b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
+      the_footer(ref="the_footer")
+
+  //////////////////////////////////////////////////////////////////////////////// 実行中
+  template(v-if="chess_clock.running_p")
+    .pause_bg(v-if="!chess_clock.timer")
+    .screen_container.is-flex(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
       b-icon.controll_button.pause.is_clickable(icon="pause" v-if="chess_clock.timer" @click.native="pause_handle")
       b-icon.controll_button.resume.is_clickable(icon="play" v-if="!chess_clock.timer" @click.native="resume_handle")
       b-icon.controll_button.stop.is_clickable(icon="stop" v-if="!chess_clock.timer" @click.native="stop_handle")
-    .level.is-mobile.is-unselectable.is-marginless
-      template(v-for="(e, i) in chess_clock.single_clocks")
-        .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
-          template(v-if="chess_clock.running_p")
+      .level.is-mobile.is-unselectable.is-marginless
+        template(v-for="(e, i) in chess_clock.single_clocks")
+          .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
             .active_current_bar(:class="e.bar_class" v-if="e.active_p && chess_clock.timer")
             .inactive_current_bar(v-else)
-          template(v-else)
-            .active_current_bar(:class="e.bar_class" v-if="e.active_p")
-            .inactive_current_bar(v-else)
-          .digit_container.is-flex
-            template(v-if="chess_clock.running_p")
+            .digit_container.is-flex
               .digit_values(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
                 .field(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1")
                   .time_label 残り時間
@@ -38,18 +53,8 @@
                   .time_label 猶予
                   .time_value.fixed_font.is_line_break_off
                     | {{e.extra_sec}}
-            template(v-if="!chess_clock.running_p")
-              b-field.mt-0.mx-4(label="持ち時間(分)")
-                b-numberinput(controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @click.native.stop="" :checkHtml5Validity="false")
-              b-field.mt-5.mx-4(label="1手ごとに加算")
-                b-numberinput(controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
-              b-field.mt-5.mx-4(label="秒読み")
-                b-numberinput(controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
-              b-field.mt-5.mx-4(label="猶予")
-                b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
 
-    the_footer(ref="the_footer")
-
+  //////////////////////////////////////////////////////////////////////////////// form
   .debug_container.mt-5(v-if="development_p")
     .buttons.are-small.is-centered
       b-button(@click="chess_clock.generation_next(-1)") -1
@@ -142,6 +147,10 @@ export default {
         }
       },
     })
+
+    // 初期値
+    this.rule_set({initial_main_sec: 60*5, initial_read_sec:0, initial_extra_sec: 0, every_plus: 5})
+
     if (this.development_p) {
       this.rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 7文字
       this.rule_set({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 5文字
@@ -285,7 +294,7 @@ export default {
   },
   computed: {
     mouse_cursor_hidden() {
-      return this.chess_clock.running_p && this.chess_clock.timer && !this.mouse_cursor_p
+      return this.chess_clock.timer && !this.mouse_cursor_p
     },
   },
 }

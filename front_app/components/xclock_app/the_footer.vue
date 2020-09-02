@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_footer.footer_nav.is-flex(v-if="!app.chess_clock.running_p")
+.the_footer.footer_nav.is-flex
   .item(@click="app.back_handle")
     b-icon(icon="arrow-left")
 
