@@ -17,13 +17,13 @@
             .active_current_bar(:class="e.bar_class" v-if="e.active_p")
             .inactive_current_bar(v-else)
             .wide_container.form.is-flex
-              b-field.mx-4(label="持ち時間(分)" custom-class="is-small" label-position="inside")
+              b-field(label="持ち時間(分)" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @click.native.stop="" :checkHtml5Validity="false")
-              b-field.mx-4(label="1手ごとに加算" custom-class="is-small" label-position="inside")
+              b-field(label="1手ごとに加算" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
-              b-field.mx-4(label="秒読み" custom-class="is-small" label-position="inside")
+              b-field(label="秒読み" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
-              b-field.mx-4(label="猶予" custom-class="is-small" label-position="inside")
+              b-field(label="猶予" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
       XclockAppFooter(ref="XclockAppFooter")
 
@@ -209,7 +209,9 @@ export default {
       s += "対局かいし。"
       if (isMobile.any()) {
         if (DeviseAngle.portrait_p()) {
-          s += "ブラウザのタブを1つだけにしてスマホを横向きにしてください"
+          s += "ブラウザのタブを1つだけにして、スマホを横向きにしてください"
+        } else {
+          s += "ブラウザのタブを1つだけにして、スマホをいったん縦持ちにしてから横持ちにすると、全画面になるはずです"
         }
       } else {
         s += "キーボードの左右のシフトキーとかで、てばんを変更できます"
@@ -417,12 +419,17 @@ export default {
           ////////////////////////////////////////////////////////////////////////////////
           &.form
             > .field
+              margin-left: 1rem
+              margin-right: 1rem
               &:not(:first-child)
+            label
+              margin-bottom: 0
             .b-numberinput
+              margin-top: 0
               input
-                min-width: 8rem
-                +mobile
-                  min-width: 5rem
+                min-width: 5rem
+                +desktop
+                  min-width: 8rem
 
   &.is_xclock_active
     .screen_container

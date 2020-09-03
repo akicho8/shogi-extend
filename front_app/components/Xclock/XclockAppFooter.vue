@@ -1,5 +1,5 @@
 <template lang="pug">
-.XclockAppFooter.footer_nav.is-flex
+.XclockAppFooter.is-flex
   .item(@click="app.back_handle")
     b-icon(icon="arrow-left")
 
@@ -52,7 +52,13 @@ export default {
 .XclockAppFooter
   z-index: 1
 
-  height: $footer_height
+  @media (orientation: landscape)
+    height: 48px
+  @media (orientation: portrait)
+    height: 64px
+  +desktop
+    height: 64px
+
   width: 100%
 
   padding: 0 8px
