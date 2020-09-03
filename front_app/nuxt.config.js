@@ -123,7 +123,8 @@ const config = {
   // https://ja.nuxtjs.org/faq/webpack-audio-files
   build: {
     // https://ja.nuxtjs.org/api/configuration-build#extractcss
-    extractCSS: true,           // htmlファイルにスタイルが吐かれるのを防ぐ
+    extractCSS: process.env.NODE_ENV === "production", // htmlファイルにスタイルが吐かれるのを防ぐ。trueにするとHMRが効かないので注意
+
     // TODO: 意味を調べる
     optimization: {
       splitChunks: {

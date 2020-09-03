@@ -16,15 +16,15 @@
           .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
             .active_current_bar(:class="e.bar_class" v-if="e.active_p")
             .inactive_current_bar(v-else)
-            .digit_container.is-flex
-              b-field.mt-0.mx-4(label="持ち時間(分)")
-                b-numberinput(controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @click.native.stop="" :checkHtml5Validity="false")
-              b-field.mt-5.mx-4(label="1手ごとに加算")
-                b-numberinput(controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
-              b-field.mt-5.mx-4(label="秒読み")
-                b-numberinput(controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
-              b-field.mt-5.mx-4(label="猶予")
-                b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
+            .wide_container.form.is-flex
+              b-field.mx-4(label="持ち時間(分)" custom-class="is-small" label-position="inside")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @click.native.stop="" :checkHtml5Validity="false")
+              b-field.mx-4(label="1手ごとに加算" custom-class="is-small" label-position="inside")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
+              b-field.mx-4(label="秒読み" custom-class="is-small" label-position="inside")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
+              b-field.mx-4(label="猶予" custom-class="is-small" label-position="inside")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
       XclockAppFooter(ref="XclockAppFooter")
 
   //////////////////////////////////////////////////////////////////////////////// 実行中
@@ -39,20 +39,19 @@
           .level-item.has-text-centered.is-marginless(@click="switch_handle(e)" :class="e.dom_class")
             .active_current_bar(:class="e.bar_class" v-if="e.active_p && chess_clock.timer")
             .inactive_current_bar(v-else)
-            .digit_container.is-flex
-              .digit_values(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
-                .field(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1")
-                  .time_label 残り時間
-                  .time_value.fixed_font.is_line_break_off
-                    | {{e.to_time_format}}
-                .field(v-if="e.initial_read_sec >= 1")
-                  .time_label 秒読み
-                  .time_value.fixed_font.is_line_break_off
-                    | {{e.read_sec}}
-                .field(v-if="e.initial_extra_sec >= 1")
-                  .time_label 猶予
-                  .time_value.fixed_font.is_line_break_off
-                    | {{e.extra_sec}}
+            .wide_container.time_fields.is-flex(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
+              .field(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1")
+                .time_label 残り時間
+                .time_value.fixed_font.is_line_break_off
+                  | {{e.to_time_format}}
+              .field(v-if="e.initial_read_sec >= 1")
+                .time_label 秒読み
+                .time_value.fixed_font.is_line_break_off
+                  | {{e.read_sec}}
+              .field(v-if="e.initial_extra_sec >= 1")
+                .time_label 猶予
+                .time_value.fixed_font.is_line_break_off
+                  | {{e.extra_sec}}
 
   //////////////////////////////////////////////////////////////////////////////// form
   .debug_container.mt-5(v-if="development_p")
@@ -298,8 +297,8 @@ export default {
 <style lang="sass">
 @import "support.sass"
 @import "app.sass"
-@import "digit_values_default.sass"
-@import "digit_values_desktop.sass"
+@import "time_fields_default.sass"
+@import "time_fields_desktop.sass"
 
 .Xclock
   .float_debug_container
@@ -358,7 +357,9 @@ export default {
         background-color: hsla(0, 50%, 100%, 0.2)
         background-color: change_color($primary, $alpha: 0.5)
       &.stop
-        top: 25%
+        top: 50%
+        +desktop
+          top: 25%
 
     // .level を左右均等に配置
     flex-direction: column
@@ -388,7 +389,7 @@ export default {
           background-color: $primary
 
         // 時間表示(フォームも含む)
-        .digit_container
+        .wide_container
           height: 100%
           width: 100%
 
@@ -398,10 +399,10 @@ export default {
           align-items: center
 
           // 時間表示だけを囲むブロック
-          .digit_values
+          &.time_fields
             @at-root
               .is_sclock_inactive
-                .digit_values
+                .time_fields
                   opacity: 0.4
             .time_label
               font-weight: bold
@@ -413,11 +414,15 @@ export default {
               .time_label
                 display: none   // ラベル除去
 
-          .b-numberinput
-            input
-              min-width: 8rem
-              +mobile
-                min-width: 5rem
+          ////////////////////////////////////////////////////////////////////////////////
+          &.form
+            > .field
+              &:not(:first-child)
+            .b-numberinput
+              input
+                min-width: 8rem
+                +mobile
+                  min-width: 5rem
 
   &.is_xclock_active
     .screen_container
@@ -456,10 +461,10 @@ export default {
         +xray(0)
         .level-item
           +xray(1)
-          .digit_container
+          .wide_container
             .field
               +xray(2)
-            .digit_values
+            .time_fields
               .time_label
                 +xray(3)
               .time_value
