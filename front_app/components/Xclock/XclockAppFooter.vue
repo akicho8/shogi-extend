@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_footer.footer_nav.is-flex
+.XclockAppFooter.footer_nav.is-flex
   .item(@click="app.back_handle")
     b-icon(icon="arrow-left")
 
@@ -40,7 +40,7 @@
 import { support } from "./support.js"
 
 export default {
-  name: "the_footer",
+  name: "XclockAppFooter",
   mixins: [
     support,
   ],
@@ -49,38 +49,37 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.xclock_app
-  .the_footer
-    z-index: 1
+.XclockAppFooter
+  z-index: 1
 
-    height: $footer_height
-    width: 100%
+  height: $footer_height
+  width: 100%
 
-    padding: 0 8px
+  padding: 0 8px
 
-    justify-content: space-between
+  justify-content: space-between
+  align-items: center
+
+  .dropdown, .dropdown-trigger
+    height: 100%
+
+  +desktop
+    justify-content: center
+    .button, .item
+      margin-left: 5rem
+      margin-right: 5rem
+
+  border-top: 1px solid $grey-lighter
+  background-color: change_color($white-ter, $alpha: 0.96)
+
+  .item
+    cursor: pointer
+
+    padding-right: 1rem
+    padding-left: 1rem
+    height: inherit
+
+    display: flex
+    justify-content: center
     align-items: center
-
-    .dropdown, .dropdown-trigger
-      height: 100%
-
-    +desktop
-      justify-content: center
-      .button, .item
-        margin-left: 5rem
-        margin-right: 5rem
-
-    border-top: 1px solid $grey-lighter
-    background-color: change_color($white-ter, $alpha: 0.96)
-
-    .item
-      cursor: pointer
-
-      padding-right: 1rem
-      padding-left: 1rem
-      height: inherit
-
-      display: flex
-      justify-content: center
-      align-items: center
 </style>

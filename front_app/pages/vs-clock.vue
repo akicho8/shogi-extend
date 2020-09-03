@@ -1,23 +1,11 @@
 <template lang="pug">
 .vs-clock
-  xclock
-  //- .box(v-if="development_p") {{ip}}
+  XclockApp
 </template>
 
 <script>
-// import xclock from "~/components/xclock.vue"
-import xclock from "~/components/xclock_app/app.vue"
-
 export default {
-  name: "xclock_app",
-  components: {
-    xclock,
-  },
-
-  // async asyncData({ $axios }) {
-  //   const ip = await $axios.$get("http://icanhazip.com")
-  //   return { ip }
-  // },
+  name: "Xclock",
 
   head() {
     return {
@@ -31,8 +19,6 @@ export default {
     }
   },
   mounted() {
-    // alert(process.env.NUXT_ENV_ABC)
-    // alert(this.$config.FOO)
     console.log("process.env.NUXT_ENV_KEY1", process.env.NUXT_ENV_KEY1)
     console.log("$config", this.$config)
     // const url = "https://qiita.com/api/v2/items"

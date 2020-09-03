@@ -3,8 +3,9 @@
   .columns.is-marginless
     .column
       Logo
-      div(v-for="(item, key) of items" :key="key")
-        nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
+      .box
+        div(v-for="(item, key) of items" :key="key")
+          nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
 </template>
 
 <script>

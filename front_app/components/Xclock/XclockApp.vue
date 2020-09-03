@@ -1,5 +1,5 @@
 <template lang="pug">
-.xclock_app(:class="chess_clock.running_p ? 'is_xclock_active' : 'is_xclock_inactive'")
+.Xclock(:class="chess_clock.running_p ? 'is_xclock_active' : 'is_xclock_inactive'")
   .float_debug_container(v-if="development_p")
     div turn: {{chess_clock.turn}}
     div running_p: {{chess_clock.running_p}}
@@ -25,7 +25,7 @@
                 b-numberinput(controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
               b-field.mt-5.mx-4(label="猶予")
                 b-numberinput(controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
-      the_footer(ref="the_footer")
+      XclockAppFooter(ref="XclockAppFooter")
 
   //////////////////////////////////////////////////////////////////////////////// 実行中
   template(v-if="chess_clock.running_p")
@@ -85,24 +85,19 @@ import { isMobile     } from "../../../app/javascript/models/isMobile.js"
 import { support      } from "./support.js"
 import { store        } from "./store.js"
 
-import the_footer       from "./the_footer.vue"
-
 import { app_mouse_hidden         } from "./app_mouse_hidden.js"
 import { app_keyboard_shortcut    } from "./app_keyboard_shortcut.js"
 import { app_mobile_screen_adjust } from "./app_mobile_screen_adjust.js"
 
 export default {
   store,
-  name: "xclock_app",
+  name: "XclockApp",
   mixins: [
     support,
     app_mouse_hidden,
     app_keyboard_shortcut,
     app_mobile_screen_adjust,
   ],
-  components: {
-    the_footer,
-  },
   data() {
     return {
       chess_clock: null,
@@ -161,7 +156,7 @@ export default {
   mounted() {
     if (this.development_p) {
     } else {
-      this.$refs.the_footer.$refs.preset_menu_pull_down.toggle()
+      this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()
     }
   },
   beforeDestroy() {
@@ -306,7 +301,7 @@ export default {
 @import "digit_values_default.sass"
 @import "digit_values_desktop.sass"
 
-.xclock_app
+.Xclock
   .float_debug_container
     color: $white
     position: fixed
@@ -455,7 +450,7 @@ export default {
   border: 2px solid $color
 
 .development
-  .xclock_app
+  .Xclock
     .screen_container
       .level
         +xray(0)
@@ -469,7 +464,7 @@ export default {
                 +xray(3)
               .time_value
                 +xray(4)
-      .the_footer
+      .XclockAppFooter
         .item
           +xray(5)
 </style>
