@@ -67,9 +67,21 @@ const config = {
     // '../app/javascript/stylesheets/bulma_init.scss',
     // '~/assets/css/buefy.scss',
     // '~/assets/sass/application.sass',
-    '../app/javascript/stylesheets/application.sass',
-    '@/assets/sass/application.sass',
+    // '../app/javascript/stylesheets/application.sass',
+    './assets/sass/application.sass',
+    // '@/assets/custom-styles.scss'
   ],
+  styleResources: {
+    sass: [
+      './assets/sass/resource.scss', // FIXME: なぜか sass の項目に *.scss のファイルを与えないと読み込まれない
+    ],
+    // scss: [
+    //   // "../app/javascript/stylesheets/bulma_init.scss",
+    //   // '~assets/vars/*.scss',
+    //   // '~assets/abstracts/_mixins.scss'
+    // ]
+  },
+
   /*
   ** Plugins to load before mounting the App
   */
@@ -100,6 +112,7 @@ const config = {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
+    '@nuxtjs/style-resources',
   ],
   /*
   ** Axios module configuration
@@ -131,7 +144,7 @@ const config = {
         cacheGroups: {
           styles: {
             name: 'styles',
-            test: /\.(sass|css|vue)$/,
+            test: /\.(scss|sass|css|vue)$/,
             chunks: 'all',
             enforce: true,
           },

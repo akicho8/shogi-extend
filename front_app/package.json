@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@nuxtjs/google-analytics": "^2.4.0",
+    "@nuxtjs/style-resources": "^1.0.0",
     "@vue/test-utils": "^1.0.5",
     "babel-jest": "^24.1.0",
     "jest": "^24.1.0",

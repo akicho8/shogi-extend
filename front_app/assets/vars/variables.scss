@@ -1,0 +1,18 @@
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/functions";
+@import "~bulma/sass/utilities/derived-variables";
+@import "~bulma/sass/utilities/mixins";
+@import "~bulma/sass/utilities/controls";
+
+// Set your brand colors
+$black: #272322;
+$white: #FFFFFF;
+
+// Update Bulma's global variables
+$family-sans-serif: "Heebo", sans-serif;
+$link: $white;
+
+// Update some of Bulma's component variables
+$body-background-color: $black;
+$body-color: $white;
+$control-border-width: 1px;
