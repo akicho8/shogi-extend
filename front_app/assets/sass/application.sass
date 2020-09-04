@@ -1,33 +1,10 @@
-// @import "../app/javascript/stylesheets/application.sass"
-// @import "bulma_init.scss"
+@import "customize.scss"
+@import "~bulma"
+@import "~buefy/src/scss/buefy"
 
-////////////////////////////////////////////////////////////////////////////////
+@import "../app/javascript/stylesheets/bulma_support"
+@import "../app/javascript/stylesheets/buefy_support"
 
-// @import "~bulma/sass/utilities/functions.sass"
-@import "./custom.scss"
-
-// // 3. カラーマップに新しいカラー変数を追加
-// $addColors: (
-//   "twitter":($twitter, $twitter-invert),
-//   "github": ($github, $github-invert),
-//   "google": ($google, $google-invert),
-//   "gold": ($gold, $gold-invert),
-//   "piyo": ($piyo, $piyo-invert),
-// );
-// $colors: map-merge($colors, $addColors);
-
-////////////////////////////////////////////////////////////////////////////////
-
-// @import "~bulma/sass/utilities/_all"
-@import "~bulma/bulma.sass"
-
-// @import "~/src/shogi_web/node_modules/bulma/bulma.sass"
-// @import "~bulma"
-// @import "~buefy/src/scss/buefy"
-
-// @import "../app/javascript/stylesheets/bulma_support"
-// @import "../app/javascript/stylesheets/buefy_support"
-// 
 // // helper的なもの
 // @import "../app/javascript/stylesheets/flex_box"
 // 
@@ -36,7 +13,7 @@
 // @import "../app/javascript/stylesheets/shogi_player"
 // 
 // // その他
-// @import "../app/javascript/stylesheets/general"
+@import "../app/javascript/stylesheets/general"
 // @import "../app/javascript/stylesheets/layout"
 // @import "../app/javascript/stylesheets/chore"
 // @import "../app/javascript/stylesheets/colosseum"

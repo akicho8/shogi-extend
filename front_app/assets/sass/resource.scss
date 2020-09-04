@@ -1,21 +1,7 @@
-$foo: blue;
+// *.vue で $primary や +mobile を使えるようにするための styleResources 用の定義
 
-@import "./custom.scss"
+// 独自の色など
+@import "customize.scss"
 
-// @import "~bulma/sass/utilities/_all.sass"
-// @import "~bulma/sass/utilities/animations.sass"
-// @import "~bulma/sass/utilities/controls.sass"
-// @import "~bulma/sass/utilities/derived-variables.sass"
-// @import "~bulma/sass/utilities/functions.sass"
-// @import "~bulma/sass/utilities/initial-variables.sass"
-// @import "~bulma/sass/utilities/mixins.sass"
-
+// +mobile など
 @import "~bulma/sass/utilities/_all";
-// | /Users/ikeda/src/shogi_web/front_app/node_modules/bulma/sass/utilities/_all.sass              | 全 import |
-// | /Users/ikeda/src/shogi_web/front_app/node_modules/bulma/sass/utilities/animations.sass        |           |
-// | /Users/ikeda/src/shogi_web/front_app/node_modules/bulma/sass/utilities/controls.sass          |           |
-// | /Users/ikeda/src/shogi_web/front_app/node_modules/bulma/sass/utilities/derived-variables.sass |           |
-// | /Users/ikeda/src/shogi_web/front_app/node_modules/bulma/sass/utilities/functions.sass         |           |
-// | /Users/ikeda/src/shogi_web/front_app/node_modules/bulma/sass/utilities/initial-variables.sass |           |
-// | /Users/ikeda/src/shogi_web/front_app/node_modules/bulma/sass/utilities/mixins.sass            |           |
-

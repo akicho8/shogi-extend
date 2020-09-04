@@ -1,0 +1,35 @@
+// 両方で読み込む
+
+@import "~bulma/sass/utilities/functions.sass"; // findColorInvert を使うため
+
+$twitter : #55acee;
+$github  : #333;
+$google  : rgb(221, 75,  57);
+$gold    : hsl(38, 80%, 60%);
+$piyo    : #f29601;
+$orange  : #ff8606;
+
+$twitter-invert : findColorInvert($twitter);
+$github-invert  : findColorInvert($github);
+$google-invert  : findColorInvert($google);
+$gold-invert    : findColorInvert($gold);
+$piyo-invert    : findColorInvert($piyo);
+$orange-invert  : findColorInvert($orange);
+
+// $custom-colors に入れておくと下のクラスが定義される
+//   .has-text-twitter
+//   a.has-text-twitter (hoverで濃くなる)
+//   .has-background-twitter
+//
+// ../node_modules/bulma/sass/utilities/functions.sass
+$custom-colors: (
+  "twitter" : ($twitter , $twitter-invert ),
+  "github"  : ($github  , $github-invert  ),
+  "google"  : ($google  , $google-invert  ),
+  "gold"    : ($gold    , $gold-invert    ),
+  "piyo"    : ($piyo    , $piyo-invert    ),
+  "orange"  : ($orange  , $orange-invert  ),
+);
+
+// 両方で定義したいもの
+@import "../app/javascript/stylesheets/_my_mixins.sass"
