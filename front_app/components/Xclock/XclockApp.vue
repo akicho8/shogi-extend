@@ -18,13 +18,13 @@
             .inactive_current_bar(v-else)
             .wide_container.form.is-flex
               b-field(label="持ち時間(分)" custom-class="is-small")
-                b-numberinput(size="is-small" controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @click.native.stop="" :checkHtml5Validity="false")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @pointerdown.native.stop="" :checkHtml5Validity="false")
               b-field(label="1手ごとに加算" custom-class="is-small")
-                b-numberinput(size="is-small" controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
               b-field(label="秒読み" custom-class="is-small")
-                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
               b-field(label="猶予" custom-class="is-small")
-                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @click.native.stop="")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
       XclockAppFooter(ref="XclockAppFooter")
 
   //////////////////////////////////////////////////////////////////////////////// 実行中
