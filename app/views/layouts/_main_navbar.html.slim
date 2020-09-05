@@ -34,7 +34,7 @@ nav#main_nav.navbar.is-primary.is_screen_only
             = link_to("局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
             = link_to("戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
           hr.navbar-divider.is-hidden-tablet
-          = link_to("プライバシーポリシー", UrlProxy.wrap("/about/privacy-policy"))
+          = link_to("プライバシーポリシー", UrlProxy.wrap("/about/privacy-policy"), class: ["navbar-item", "is-hidden-tablet"])
           = link_to("利用規約", UrlProxy.wrap("/about/terms"), class: ["navbar-item", "is-hidden-tablet"])
           = link_to("クレジット",  UrlProxy.wrap("/about/credit"), class: ["navbar-item", "is-hidden-tablet"])
           = link_to("問い合わせ", "https://twitter.com/sgkinakomochi", class: ["navbar-item", "is-hidden-tablet"])
