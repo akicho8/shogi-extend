@@ -32,6 +32,7 @@ export default {
         { title: 'クレジット',               to: { name: 'about-credit'               }, },
         { title: '対局時計',                 to: { name: 'vs-clock'                   }, },
         { title: 'ストップウォッチ',         to: { name: 'stopwatch'                  }, },
+        { title: '符号の鬼',                 to: { name: 'xy'                         }, },
       ],
       experiment_items: [
         { title: 'フルスクリーンAPIテスト',    to: { name: 'experiment-full_screen_api'   }, },

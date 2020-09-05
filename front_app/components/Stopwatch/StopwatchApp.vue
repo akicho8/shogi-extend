@@ -153,6 +153,10 @@ export default {
     }
   },
 
+  created() {
+    this.data_restore_from_url_or_storage()
+  },
+
   beforeDestroy() {
     this.interval_runner.stop()
   },

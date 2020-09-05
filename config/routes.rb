@@ -83,8 +83,6 @@ Rails.application.routes.draw do
   resource :simple_board, path: "board", only: [:show, :create]
   resource :share_board, path: "share-board", only: [:show, :create]
 
-  resources :xy_records, path: "xy", only: [:index, :create, :update]
-
   ################################################################################ 局面編集
 
   get "position-editor", to: "position_editor#show", as: :position_editor
@@ -169,6 +167,7 @@ Rails.application.routes.draw do
       match "any_source_to", via: [:get, :post]
     end
     resource :talk, only: [:show, :create]
+    resources :xy_records, path: "xy", only: [:index, :create, :update]
   end
 
   ################################################################################ admin

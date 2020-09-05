@@ -9,7 +9,6 @@ AppConfig.deep_merge!({
     :battle_index_permalink_show             =>  true,  # 固定リンクを表示するか？
     :search_form_datalist_function           =>  false, # 検索で入力したユーザー名を共有して検索候補にするか？
     :swars_tweet_function                    =>  true,  # 将棋ウォーズ棋譜詳細へのツイートできる？
-    :xy_master_custom_mode                   =>  false, # 符号の鬼の設定機能を有効にする？
     :columns_detail_show                     =>  true,  # 「開戦」の手数を表示する？
     :free_battles_pro_mode                   =>  false, # 野良棋譜にいろいろ入れる？
     :force_convert_for_twitter_image         =>  false, # 作成した画像を強制的に 1600x630 に変更する

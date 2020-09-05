@@ -196,8 +196,8 @@ const config = {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  config.proxy["/api"]    = "http://0.0.0.0:3000"
-  config.proxy["/system"] = "http://0.0.0.0:3000" // for mp3
+  config.proxy["/api"]        = "http://0.0.0.0:3000"
+  config.proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
 }
 
 export default config

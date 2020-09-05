@@ -31,7 +31,7 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: [:xy_records],
+      link_path: UrlProxy.wrap("/xy"),
       title: "符号の鬼",
       image_source: "xy_records_1200x630.png",
       description: "符号マスター養成所",

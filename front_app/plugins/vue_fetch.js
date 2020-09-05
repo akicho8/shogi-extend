@@ -29,26 +29,26 @@ export default {
 
     // private
 
-    remote_fetch_success(response, loading, callback) {
+    remote_fetch_success(data, loading, callback) {
       if (loading) {
         loading.close()
       }
 
       // 本当はここでは呼びたくない
       // Rails側で render json: as_bs_error(error), status: 500 のようにしても
-      // json は無視して 500 用のHTMLを error.response.data に格納してしまう
+      // json は無視して 500 用のHTMLを error.data に格納してしまう
       // なので catch の方では bs_error がとれない
       // だからしかたなくこちらでひっかけている
       // メリットは then の方で bs_error がとれること
-      if (response.data.bs_error) {
-        this.bs_error_message_dialog(response.data.bs_error)
+      if (data.bs_error) {
+        this.bs_error_message_dialog(data.bs_error)
       }
 
       if (callback) {
-        callback(response.data)
+        callback(data)
       }
 
-      return Promise.resolve(response.data)
+      return Promise.resolve(data)
     },
 
     remote_fetch_error(error, loading) {
