@@ -1,9 +1,9 @@
 .columns
   .column.is-one-fifth.is-hidden-mobile
     ul
-      li= link_to("プライバシー", [:about, id: "privacy_policy"], class: ["button", "is-white", ("is-active" if params[:id] == "privacy_policy")])
-      li= link_to("利用規約", [:about, id: "terms"], class: ["button", "is-white", ("is-active" if params[:id] == "terms")])
-      li= link_to("クレジット", [:about, id: "credit"], class: ["button", "is-white", ("is-active" if params[:id] == "credit")])
+      li= link_to("プライバシー", UrlProxy.wrap("/about/privacy-policy"), class: ["button", "is-white", ("is-active" if params[:id] == "privacy_policy")])
+      li= link_to("利用規約", UrlProxy.wrap("/about/terms"))
+      li= link_to("クレジット", UrlProxy.wrap("/about/credit"), class: ["button", "is-white", ("is-active" if params[:id] == "credit")])
   .column
     .content
       = controller.markdown_render

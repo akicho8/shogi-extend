@@ -18,7 +18,7 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: Rails.application.routes.url_helpers.vs_clock_url,
+      link_path: UrlProxy.wrap("/vs-clock"),
       title: "対局時計",
       new_p: true,
       image_source: "vs-clock-1200x630.png",
