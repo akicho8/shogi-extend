@@ -1,11 +1,22 @@
 <template lang="pug">
 .about
   .section
-    .columns
-      .column
-        Logo
-        nuxt
-        b-button A
+    .tabs.mb-6(v-if="false")
+      ul
+        li(v-for="(item, key) of items" :key="key" class="is-active")
+          nuxt-link(:to="item.to" exact-active-class="is-active" class="is-active") {{item.title}}
+    .tabs.mb-6
+      ul
+        li
+          //- nuxt-link(:to="{name: 'index'}") TOP
+          a(href="/") TOP
+        li(v-if="development_p")
+          nuxt-link(:to="{name: 'index'}") Home
+        template(v-for="(item, key) of items")
+          nuxt-link(:to="item.to" v-slot="{ href, route, navigate, isActive, isExactActive }")
+            li(:class="[isActive && 'is-active', isExactActive && '']")
+              a(:href="href" @click="navigate") {{item.title}}
+    nuxt
 </template>
 
 <script>
@@ -13,13 +24,15 @@ export default {
   name: "about",
   data () {
     return {
+      items: [
+        { title: "プレイバシー",   to: { name: "about-privacy-policy" }, },
+        { title: "利用規約",       to: { name: "about-terms"          }, },
+        { title: "クレジット",     to: { name: "about-credit"         }, },
+      ]
     }
-  },
-  computed: {
   },
 }
 </script>
 
 <style lang="sass">
 </style>
-
