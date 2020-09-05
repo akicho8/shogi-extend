@@ -16,7 +16,7 @@ https://www.beiz.jp/
 https://www.pakutaso.com/
 
 Paper-co | 紙のテクスチャー素材を無料でダウンロードできるサイト
-http://free-formal_sheet-texture.com/
+http://free-paper-texture.com/
 
 フリーテクスチャ素材館／畳のテクスチャ素材01
 https://free-texture.net/seamless-pattern/tatami01.html
