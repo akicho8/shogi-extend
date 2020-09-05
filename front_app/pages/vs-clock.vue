@@ -6,7 +6,6 @@
 <script>
 export default {
   name: "Xclock",
-
   head() {
     return {
       title: "対局時計",
@@ -18,19 +17,9 @@ export default {
       ],
     }
   },
-  mounted() {
-    console.log("process.env.NUXT_ENV_KEY1", process.env.NUXT_ENV_KEY1)
-    console.log("$config", this.$config)
-    // const url = "https://qiita.com/api/v2/items"
-    // const response = await this.$axios.$get(url)
-    // console.log(response)
-    // const url = "/api"
-    // const response = await this.$axios.$get(url)
-    // console.log(response)
-    // this.talk("てすと")
-  },
 }
 </script>
 
 <style lang="sass">
+.vs-clock
 </style>
