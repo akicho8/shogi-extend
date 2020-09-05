@@ -2,6 +2,9 @@
 .section
   .columns.is-marginless
     .column
+      .tabs
+        ul
+          a(href="//0.0.0.0:3000") 3000(Rails)
       Logo
       .box
         div(v-for="(item, key) of items" :key="key")
