@@ -1,5 +1,6 @@
 <template lang="pug">
-b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left' : 'is-bottom-left'")
+// td が text-align: right なため、その影響で右よりになってしまう。それを防ぐため append-to-body している
+b-dropdown.pulldown_menu(:hoverable="false" :position="in_modal_p ? 'is-top-left' : 'is-bottom-left'" append-to-body)
   b-button(slot="trigger" icon-left="menu" size="is-small")
 
   b-dropdown-item(v-if="new_permalink_url" :href="tweet_intent_url(new_permalink_url)")
