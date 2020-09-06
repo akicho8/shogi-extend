@@ -17,13 +17,15 @@
     "@nuxtjs/pwa": "^3.0.2",
     "bulma": "^0.9.0",
     "js-memory-record": "^0.0.16",
+    "lzma": "^2.3.2",
     "node-sass": "^4.14.1",
     "nuxt": "^2.14.4",
     "nuxt-buefy": "^0.3.2",
     "pug": "^3.0.0",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "url-safe-base64": "^1.1.1"
   },
   "devDependencies": {
     "@nuxtjs/google-analytics": "^2.4.0",
