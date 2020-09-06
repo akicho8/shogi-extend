@@ -72,10 +72,6 @@ export default {
     },
 
     base64_to_value(enc_base64) {
-      if (typeof window !== 'undefined') {
-        return {}
-      }
-
       let value = null
       try {
         const dec_string = atob(UrlSafeBase64.decode(enc_base64))

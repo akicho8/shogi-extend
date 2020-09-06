@@ -29,9 +29,7 @@ export default {
   methods: {
     browser_setting_load() {
       let base64 = null
-      if (typeof localStorage !== 'undefined') {
-        base64 = localStorage.getItem(this.browser_setting_storage_key)
-      }
+      base64 = localStorage.getItem(this.browser_setting_storage_key)
       let hash = {}
       if (base64) {
         hash = this.base64_to_value(base64)

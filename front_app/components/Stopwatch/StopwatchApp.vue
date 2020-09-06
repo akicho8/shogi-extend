@@ -521,7 +521,7 @@ export default {
     },
 
     data_restore_from_url_or_storage_after_hook() {
-      if ((typeof location !== 'undefined' && location.hash) || this.$route.query.restore_code) {
+      if (location.hash || this.$route.query.restore_code) {
         console.log(`ハッシュ付きのURLから復元したので綺麗なURL ${this.location_url_without_hash()} に移動する`)
         location.href = this.location_url_without_search_and_hash()
       }
@@ -621,14 +621,12 @@ export default {
   },
 
   mounted() {
-    if (typeof document !== 'undefined') {
-      if (!document.referrer) {
-        if (location.hash) {
-          if (false) {
-            this.warning_notice("履歴付きURLでブックマークされています。履歴付きURLの場合、ブックマークしたときの状態に復帰してしまいます。履歴がついてないURLをブックマークしておくと、ブラウザに保存している履歴を使って前回の状態から再開できます")
-          }
+    if (!document.referrer) {
+      if (location.hash) {
+        if (false) {
+          this.warning_notice("履歴付きURLでブックマークされています。履歴付きURLの場合、ブックマークしたときの状態に復帰してしまいます。履歴がついてないURLをブックマークしておくと、ブラウザに保存している履歴を使って前回の状態から再開できます")
         }
-    }
+      }
     }
   },
 

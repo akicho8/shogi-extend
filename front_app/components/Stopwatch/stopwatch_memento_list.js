@@ -13,9 +13,7 @@ export default {
   },
 
   created() {
-    if (typeof window !== 'undefined') {
-      this.memento_list_load()
-    }
+    this.memento_list_load()
   },
 
   methods: {
