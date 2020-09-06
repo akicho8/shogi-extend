@@ -36,9 +36,9 @@ export default {
 
       if (this.$route.query.restore_code) {
         enc_base64 = this.$route.query.restore_code
-      } else if (typeof location !== 'undefined' && location.hash) {
+      } else if (location.hash) {
         enc_base64 = location.hash.replace(/^#/, "")
-      } else if (typeof localStorage !== 'undefined') {
+      } else {
         enc_base64 = localStorage.getItem(this.ls_key)
       }
 

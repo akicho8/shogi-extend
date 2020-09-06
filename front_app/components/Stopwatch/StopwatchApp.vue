@@ -137,7 +137,6 @@
           .column
             b-field(label="モバイル用パーマリンク" custom-class="is-small" type="is-primary" message="このURLをコピペして他の端末に持っていくと同じ状態で再開できます")
               b-input(:value="permalink_url")
-
 </template>
 
 <script>
@@ -150,6 +149,7 @@ import dayjs from "dayjs"
 import stopwatch_data_retention from './stopwatch_data_retention.js'
 import stopwatch_memento_list from './stopwatch_memento_list.js'
 import stopwatch_browser_setting from './stopwatch_browser_setting.js'
+import { app_keyboard } from './app_keyboard.js'
 
 import MemoryRecord from 'js-memory-record'
 
@@ -168,6 +168,7 @@ export default {
     stopwatch_data_retention,
     stopwatch_memento_list,
     stopwatch_browser_setting,
+    app_keyboard,
   ],
   data() {
     return {
@@ -184,12 +185,6 @@ export default {
       log_modal: null,
       timeout_sec: null,
       total_timeout_min: null,
-    }
-  },
-
-  created() {
-    if (typeof document !== 'undefined') {
-      this.shortcut_key_assign()
     }
   },
 
@@ -235,61 +230,6 @@ export default {
           `,
         },
       })
-      // const rule_dialog = this.$buefy.dialog.alert({
-      //   title: "履歴",
-      //   message: message,
-      //   confirmText: "閉じる",
-      //   canCancel: ["outside", "escape"],
-      //   type: "is-info",
-      //   hasIcon: true,
-      //   onConfirm: () => { },
-      //   onCancel:  () => { },
-      // })
-    },
-
-    shortcut_key_assign() {
-      document.addEventListener("keydown", e => {
-        if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
-          return
-        }
-        if (this.input_focus_p()) {
-          return
-        }
-
-        let processed = false
-        if (e.key === "x") {
-          this.lap_handle('x')
-          processed = true
-        }
-        if (e.key === "o" || e.code === "Enter") {
-          this.lap_handle('o')
-          processed = true
-        }
-        if (e.key === "z") {
-          this.revert_handle()
-          processed = true
-        }
-        if (e.key === "r") {
-          this.rap_reset()
-          processed = true
-        }
-        if (e.key === "p" || e.key === "k" || e.code === "Space") {
-          this.pause_handle()
-          processed = true
-        }
-        if (e.key === "t") {
-          this.toggle_handle()
-          processed = true
-        }
-        if (processed) {
-          e.preventDefault()
-        }
-      }, false)
-    },
-
-    input_focus_p() {
-      const dom = document.activeElement
-      return dom.tagName === "TEXTAREA" || dom.tagName === "INPUT"
     },
 
     quest_text_clear() {
@@ -392,11 +332,11 @@ export default {
     },
 
     alive_notice() {
-      this.silent_remote_fetch("POST", this.$root.$options.post_path, {
-        mode: this.mode,
-        summary: this.summary,
-        book_title: this.book_title,
-      })
+      // this.silent_remote_fetch("POST", this.$root.$options.post_path, {
+      //   mode: this.mode,
+      //   summary: this.summary,
+      //   book_title: this.book_title,
+      // })
     },
 
     stop_if_playing() {

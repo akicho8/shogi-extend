@@ -1,6 +1,7 @@
 <template lang="pug">
-.stopwatch
-  StopwatchApp
+client-only
+  .stopwatch
+    StopwatchApp
 </template>
 
 <script>
