@@ -150,6 +150,7 @@ import stopwatch_data_retention from './stopwatch_data_retention.js'
 import stopwatch_memento_list from './stopwatch_memento_list.js'
 import stopwatch_browser_setting from './stopwatch_browser_setting.js'
 import { app_keyboard } from './app_keyboard.js'
+import { IntervalRunner } from '@/components/models/IntervalRunner.js'
 
 import MemoryRecord from 'js-memory-record'
 
@@ -177,7 +178,7 @@ export default {
       rows: null,
       quest_text: null,
       mode: "standby",
-      interval_id: null,
+      interval_runner: new IntervalRunner(this.step_next),
       format_index: 0,
       drop_seconds: null,
       generate_max: null,
@@ -189,7 +190,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.clear_interval_safe()
+    this.interval_runner.stop()
   },
 
   methods: {
@@ -311,8 +312,7 @@ export default {
 
       // this.safe_talk("スタート")
       this.mode = "playing"
-      this.clear_interval_safe()
-      this.interval_id = setInterval(this.step_next, 1000)
+      this.interval_runner.start()
       this.sound_play("start")
       this.track_next()
       this.memento_create("start")
@@ -326,7 +326,7 @@ export default {
     stop_handle() {
       // this.safe_talk("ストップ")
       this.mode = "standby"
-      this.clear_interval_safe()
+      this.interval_runner.stop()
       this.memento_create("stop")
       this.alive_notice()
     },
@@ -451,13 +451,6 @@ export default {
     rap_reset() {
       this.lap_counter = 0
       this.notice(`最後のタイムだけリセットしました`)
-    },
-
-    clear_interval_safe() {
-      if (this.interval_id) {
-        clearInterval(this.interval_id)
-        this.interval_id = null
-      }
     },
 
     step_next() {
