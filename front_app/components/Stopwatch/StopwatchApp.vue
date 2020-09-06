@@ -89,7 +89,7 @@
 
       .columns(v-if="mode === 'standby'")
         .column
-          b-button(@click="log_display") 履歴
+          b-button(@click="history_modal_show") 履歴
 
     .column
       b-tabs.result_body(type="" expanded v-model="format_index")
@@ -152,6 +152,8 @@ import stopwatch_browser_setting from './stopwatch_browser_setting.js'
 import { app_keyboard } from './app_keyboard.js'
 import { IntervalRunner } from '@/components/models/IntervalRunner.js'
 
+import HistoryModal from './HistoryModal.vue'
+
 import MemoryRecord from 'js-memory-record'
 
 class AnswerInfo extends MemoryRecord {
@@ -194,42 +196,12 @@ export default {
   },
 
   methods: {
-    log_display() {
+    history_modal_show() {
       this.log_modal = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
-        component: {
-          mounted() { },
-          template: `
-            <div class="modal-card is-size-7 StopwatchApp_log_dialog" style="width: auto">
-              <header class="modal-card-head">
-                <p class="modal-card-title">履歴</p>
-              </header>
-              <section class="modal-card-body">
-                <b-table
-                  :data="$parent.$parent.memento_list.slice().reverse()"
-                  :paginated="false"
-                  :per-page="200"
-                  :pagination-simple="true"
-                  :mobile-cards="false"
-                  @click="$parent.$parent.memento_restore"
-                  hoverable
-                  >
-                  <template slot-scope="props">
-                    <b-table-column field="time" label="日付" sortable>{{$parent.$parent.log_time_format(props.row.time)}}</b-table-column>
-                    <b-table-column field="book_title" label="タイトル" sortable>{{props.row.book_title}}</b-table-column>
-                    <b-table-column field="event" label="ｲﾍﾞﾝﾄ">{{props.row.event}}</b-table-column>
-                    <b-table-column field="track" label="問題">{{props.row.current_track}}</b-table-column>
-                    <b-table-column field="summary" label="サマリ">{{props.row.summary}}</b-table-column>
-                  </template>
-                </b-table>
-              </section>
-              <footer class="modal-card-foot">
-                <button class="button" type="button" @click="$parent.close()">閉じる</button>
-              </footer>
-            </div>
-          `,
-        },
+        props: { base: this },
+        component: HistoryModal,
       })
     },
 
@@ -941,11 +913,4 @@ export default {
       white-space: pre-wrap
       line-height: 105%
       font-size: 0.8rem
-
-.StopwatchApp_log_dialog
-  table
-    tbody
-      tr
-        &:hover
-          cursor: pointer
 </style>
