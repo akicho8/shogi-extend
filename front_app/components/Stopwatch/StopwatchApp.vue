@@ -5,7 +5,9 @@
       b-navbar-item(@click="book_title_input_dialog")
         b {{book_title}}
     template(slot="start")
-      b-navbar-dropdown(label="操作" hoverable)
+      b-navbar-dropdown(hoverable)
+        template(slot="label")
+          b-icon(icon="cog")
         b-navbar-item(@click="rap_reset") 最後のタイムだけリセット (r)
         b-navbar-item(@click="revert_handle") 1つ前に戻す (z)
         b-navbar-item(@click="toggle_handle") 最後の解答の正誤を反転する (t)
@@ -15,8 +17,11 @@
           b-switch(v-model="browser_setting.sound_silent_p")
             | ミュート (スマホ電池節約用)
     template(slot="end")
-      b-navbar-item(@click="history_modal_show" v-if="mode === 'standby'") 履歴
-      b-navbar-item(@click="keyboard_modal_show" v-if="mode === 'standby'")
+      b-navbar-item(@click="parmalink_modal_show" v-if="mode === 'standby'")
+        b-icon(icon="link")
+      b-navbar-item(@click="history_modal_show" v-if="mode === 'standby'")
+        b-icon(icon="history")
+      b-navbar-item(@click="keyboard_modal_show")
         b-icon(icon="help")
 
   .section.pt-4
@@ -32,7 +37,7 @@
                 | -
               span.current_digit(@click="lap_counter_input_dialog")
                 | {{time_format(lap_counter)}}
-            .has-text-grey-light.total_time
+            .has-text-grey-light.total_time.mt-2
               b-tooltip(label="トータル" position="is-right")
                 | {{ja_time_format(total_with_lap_seconds)}}
             .buttons.is-centered.start_or_stop
@@ -65,7 +70,7 @@
 
         .field(v-if="mode === 'standby'")
           .control
-            textarea.textarea.is-small(v-model.trim="quest_text" rows="1" placeholder="スペース区切りで並べると問題を置き換える")
+            textarea.textarea.is-small(v-model.trim="quest_text" rows="2" placeholder="スペース区切りで並べると問題を置き換える")
             a.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
             | &nbsp;
             a.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
@@ -79,12 +84,6 @@
             | &nbsp;
             a.is-link.is-size-7(@click.prevent="quest_generate") 生成
 
-        //- b-field(grouped)
-        //-   b-field(label="タイムアウト 秒" expanded)
-        //-     b-slider(size="is-small" :min="0" :max="60" :step="5" ticks :custom-formatter="v => v + '秒'" v-model="sec_val")
-        //-   b-field(label="分" expanded)
-        //-     b-slider(size="is-small" :min="0" :max="30" :step="1" ticks :custom-formatter="v => v + '分'" v-model="timeout_sec")
-        //-   b-field(label="分" expanded)
         .columns(v-if="mode === 'standby'")
           .column
             b-field(label="1問毎のタイムアウト(秒)" expanded custom-class="is-small")
@@ -104,41 +103,6 @@
         template(v-if="rows.length >= 1")
           .has-text-centered
             b-button(tag="a" :href="tweet_url" icon-left="twitter" size="is-small" type="is-info" rounded) ツイート
-
-    .columns(v-if="mode === 'standby'")
-      .column
-        .box.content.has-text-grey.is-size-7
-          b-field(label="ショートカット" custom-class="is-small")
-            table.table.is-narrow
-              tr
-                th p k Space
-                td 開始 / 停止
-              tr
-                th o Enter
-                td 正解
-              tr
-                th x
-                td 不正解
-              tr
-                th z
-                td 1つ前に戻す
-              tr
-                th r
-                td 最後のタイムだけリセット
-              tr
-                th t
-                td 最後の解答の正誤を反転する
-
-    .columns(v-if="mode === 'standby'")
-      .column
-        .box
-          .columns
-            .column
-              b-field(label="PCブックマーク用" custom-class="is-small" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンクです")
-                a.button.is-text(:href="permalink_url") {{book_title}}
-            .column
-              b-field(label="モバイル用パーマリンク" custom-class="is-small" type="is-primary" message="このURLをコピペして他の端末に持っていくと同じ状態で再開できます")
-                b-input(:value="permalink_url")
 </template>
 
 <script>
@@ -152,8 +116,10 @@ import stopwatch_data_retention from './stopwatch_data_retention.js'
 import stopwatch_memento_list from './stopwatch_memento_list.js'
 import stopwatch_browser_setting from './stopwatch_browser_setting.js'
 import { app_keyboard } from './app_keyboard.js'
+import { support } from './support.js'
 import { IntervalRunner } from '@/components/models/IntervalRunner.js'
 
+import ParmalinkModal from './ParmalinkModal.vue'
 import HistoryModal from './HistoryModal.vue'
 import KeyboardModal from './KeyboardModal.vue'
 
@@ -175,6 +141,7 @@ export default {
     stopwatch_memento_list,
     stopwatch_browser_setting,
     app_keyboard,
+    support,
   ],
   data() {
     return {
@@ -188,7 +155,6 @@ export default {
       drop_seconds: null,
       generate_max: null,
       book_title: null,
-      history_modal_instance: null,
       timeout_sec: null,
       total_timeout_min: null,
     }
@@ -225,21 +191,39 @@ export default {
       })
     },
 
+    parmalink_modal_show() {
+      this.sound_play("click")
+      this.$buefy.modal.open({
+        parent: this,
+        hasModalCard: true,
+        props: { base: this },
+        component: ParmalinkModal,
+        animation: "",
+        onCancel: () => this.sound_play("click"),
+      })
+    },
+
     history_modal_show() {
-      this.history_modal_instance = this.$buefy.modal.open({
+      this.sound_play("click")
+      this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         props: { base: this },
         component: HistoryModal,
+        animation: "",
+        onCancel: () => this.sound_play("click"),
       })
     },
 
     keyboard_modal_show() {
+      this.sound_play("click")
       this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         props: { base: this },
         component: KeyboardModal,
+        animation: "",
+        onCancel: () => this.sound_play("click"),
       })
     },
 
@@ -264,23 +248,31 @@ export default {
     },
 
     book_title_input_dialog() {
+      this.sound_play("click")
       this.$buefy.dialog.prompt({
         message: "タイトル",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'text', value: this.book_title, required: false },
-        onConfirm: value => this.book_title = value || TITLE_DEFAULT,
+        onCancel: () => this.sound_play("click"),
+        onConfirm: value => {
+          this.book_title = _.trim(value) || TITLE_DEFAULT
+          this.sound_play("click")
+        },
       })
     },
 
     quest_generate() {
+      this.sound_play("click")
       this.$buefy.dialog.prompt({
         title: "連番生成",
         message: "何問ありますか？",
         confirmText: "生成",
         cancelText: "キャンセル",
         inputAttrs: { type: 'number', value: this.generate_max, min: 0 },
+        onCancel: () => this.sound_play("click"),
         onConfirm: (value) => {
+          this.sound_play("click")
           this.generate_max = parseInt(value, 10)
           this.quest_text = [...Array(this.generate_max).keys()].map(i => 1 + i).join(" ")
         },
@@ -288,22 +280,32 @@ export default {
     },
 
     track_input_dialog() {
+      this.sound_play("click")
       this.$buefy.dialog.prompt({
         message: "問題番号",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'number', value: this.current_track, min: 1 },
-        onConfirm: (value) => this.current_track = parseInt(value, 10),
+        onCancel: () => this.sound_play("click"),
+        onConfirm: (value) => {
+          this.sound_play("click")
+          this.current_track = parseInt(value, 10)
+        },
       })
     },
 
     lap_counter_input_dialog() {
+      this.sound_play("click")
       this.$buefy.dialog.prompt({
         message: "分",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'text', value: (this.lap_counter / 60) + "" },
-        onConfirm: (value) => this.lap_counter = parseFloat(value) * 60,
+        onCancel: () => this.sound_play("click"),
+        onConfirm: (value) => {
+          this.sound_play("click")
+          this.lap_counter = parseFloat(value) * 60
+        },
       })
     },
 
@@ -320,7 +322,6 @@ export default {
         return
       }
 
-      // this.safe_talk("スタート")
       this.mode = "playing"
       this.interval_runner.start()
       this.sound_play("start")
@@ -334,7 +335,7 @@ export default {
     },
 
     stop_handle() {
-      // this.safe_talk("ストップ")
+      this.sound_play("click")
       this.mode = "standby"
       this.interval_runner.stop()
       this.memento_create("stop")
@@ -356,6 +357,7 @@ export default {
     },
 
     reset_handle() {
+      this.sound_play("click")
       this.rows = []
       this.lap_counter = 0
     },
@@ -949,6 +951,6 @@ export default {
     .tab-item
       font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", "Courier New", Consolas, monospace
       white-space: pre-wrap
-      line-height: 105%
-      font-size: 0.8rem
+      line-height: 1.25
+      font-size: $size-7
 </style>

@@ -9,7 +9,7 @@
       :per-page="200"
       :pagination-simple="true"
       :mobile-cards="false"
-      @click="base.memento_restore"
+      @click="click_handle"
       hoverable
       )
       b-table-column(v-slot="props" field="time"       label="日付" sortable) {{base.log_time_format(props.row.time)}}
@@ -18,14 +18,33 @@
       b-table-column(v-slot="props" field="track"      label="問題")          {{props.row.current_track}}
       b-table-column(v-slot="props" field="summary"    label="ｻﾏﾘ")           {{props.row.summary}}
   footer.modal-card-foot
-    button.button(type="button" @click="$emit('close')") 閉じる
+    button.button(type="button" @click="close_handle") 閉じる
 </template>
 
 <script>
+import { support } from "./support.js"
+
 export default {
   name: "HistoryModal",
+  mixins: [
+    support,
+  ],
   props: {
     base: { type: Object, required: true },
+  },
+  mounted() {
+    this.ok_notice("操作を間違えたときや以前の続きから行いたいときに過去の状態に戻れます")
+  },
+  methods: {
+    click_handle(row) {
+      this.sound_play("click")
+      this.base.memento_restore(row)
+      this.$emit("close")
+    },
+    close_handle() {
+      this.sound_play("click")
+      this.$emit("close")
+    },
   },
   computed: {
     rows() {
