@@ -1,142 +1,144 @@
 <template lang="pug">
-.StopwatchApp.section
-  .columns
-    .column.is-half
-      .has-text-centered.page_title(@click.prevent="book_title_input_dialog")
-        | {{book_title}}
-      .box.main_box.is_line_break_off.is-shadowless
-        b-dropdown.options_doropdown.is-pulled-left
-          b-button(slot="trigger" size="is-small" icon-left="menu")
-          b-dropdown-item(@click="rap_reset") 最後のタイムだけリセット (r)
-          b-dropdown-item(@click="revert_handle") 1つ前に戻す (z)
-          b-dropdown-item(@click="toggle_handle") 最後の解答の正誤を反転する (t)
-          b-dropdown-item(:separator="true")
-          b-dropdown-item(@click="reset_by_x") 不正解だけ再テスト
-          b-dropdown-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
-          b-dropdown-item(:separator="true")
-          b-dropdown-item
-            b-switch(v-model="browser_setting.sound_silent_p")
-              | ミュート (スマホ電池節約用)
-        .has-text-centered
-          .lap_time
-            span.quest_digit(@click="track_input_dialog")
-              | {{quest_name(new_quest)}}
-            span.has-text-grey-lighter
-              |
-              | -
-            span.current_digit(@click="lap_counter_input_dialog")
-              | {{time_format(lap_counter)}}
-          .has-text-grey-light.total_time
-            b-tooltip(label="トータル" position="is-right")
-              | {{ja_time_format(total_with_lap_seconds)}}
-          .buttons.is-centered.start_or_stop
-            template(v-if="mode === 'standby'")
-              button.button.is-large.is-primary.other_button(@click="start_handle")
-                b-icon(icon="play" size="is-large")
+.StopwatchApp
+  b-navbar(type="is-primary")
+    template(slot="brand")
+      b-navbar-item(@click="book_title_input_dialog")
+        b {{book_title}}
+    template(slot="start")
+      b-navbar-dropdown(label="操作" hoverable)
+        b-navbar-item(@click="rap_reset") 最後のタイムだけリセット (r)
+        b-navbar-item(@click="revert_handle") 1つ前に戻す (z)
+        b-navbar-item(@click="toggle_handle") 最後の解答の正誤を反転する (t)
+        b-navbar-item(@click="reset_by_x") 不正解だけ再テスト
+        b-navbar-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
+        b-navbar-item
+          b-switch(v-model="browser_setting.sound_silent_p")
+            | ミュート (スマホ電池節約用)
+    template(slot="end")
+      b-navbar-item(@click="history_modal_show" v-if="mode === 'standby'") 履歴
+      b-navbar-item(@click="keyboard_modal_show" v-if="mode === 'standby'")
+        b-icon(icon="help")
 
-            template(v-if="mode !== 'standby'")
-              button.button.is-large.is-danger.other_button(@click="stop_handle")
-                b-icon(icon="stop" size="is-large")
+  .section.pt-4
+    .columns
+      .column.is-half
+        .box.main_box.is_line_break_off.is-shadowless
+          .has-text-centered
+            .lap_time
+              span.quest_digit(@click="track_input_dialog")
+                | {{quest_name(new_quest)}}
+              span.has-text-grey-lighter
+                |
+                | -
+              span.current_digit(@click="lap_counter_input_dialog")
+                | {{time_format(lap_counter)}}
+            .has-text-grey-light.total_time
+              b-tooltip(label="トータル" position="is-right")
+                | {{ja_time_format(total_with_lap_seconds)}}
+            .buttons.is-centered.start_or_stop
+              template(v-if="mode === 'standby'")
+                button.button.is-large.is-primary.other_button(@click="start_handle")
+                  b-icon(icon="play" size="is-large")
 
-          template(v-if="mode === 'playing'")
-            .buttons.is-centered.ox_buttons
-              button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
-              button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
+              template(v-if="mode !== 'standby'")
+                button.button.is-large.is-danger.other_button(@click="stop_handle")
+                  b-icon(icon="stop" size="is-large")
 
-          template(v-if="mode !== 'playing'")
-            button.button.is-large.other_button(@click="reset_handle" key="reset_key" v-if="total_with_lap_seconds !== 0") リセット
+            template(v-if="mode === 'playing'")
+              .buttons.is-centered.ox_buttons
+                button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
+                button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
 
-      template(v-if="mode === 'standby'")
-        template(v-if="quest_list.length === 0 || true")
-          .field.is-small
-            label.label.is-small
-              | 問題番号
-              | &nbsp;
-              a.is-link(@click.prevent="current_track = 1")
-                | (1に設定)
-            .control
-              b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true" size="is-small")
+            template(v-if="mode !== 'playing'")
+              button.button.is-large.other_button(@click="reset_handle" key="reset_key" v-if="total_with_lap_seconds !== 0") リセット
 
-      .field(v-if="mode === 'standby'")
-        .control
-          textarea.textarea.is-small(v-model.trim="quest_text" rows="1" placeholder="スペース区切りで並べると問題を置き換える")
-          a.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
-          | &nbsp;
-          a.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
-          | &nbsp;
-          b-tooltip(label="重複をなくします" position="is-bottom")
-            a.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
-          | &nbsp;
-          a.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
-          | &nbsp;
-          a.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
-          | &nbsp;
-          a.is-link.is-size-7(@click.prevent="quest_generate") 生成
+        template(v-if="mode === 'standby'")
+          template(v-if="quest_list.length === 0 || true")
+            .field.is-small
+              label.label.is-small
+                | 問題番号
+                | &nbsp;
+                a.is-link(@click.prevent="current_track = 1")
+                  | (1に設定)
+              .control
+                b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true" size="is-small")
 
-      //- b-field(grouped)
-      //-   b-field(label="タイムアウト 秒" expanded)
-      //-     b-slider(size="is-small" :min="0" :max="60" :step="5" ticks :custom-formatter="v => v + '秒'" v-model="sec_val")
-      //-   b-field(label="分" expanded)
-      //-     b-slider(size="is-small" :min="0" :max="30" :step="1" ticks :custom-formatter="v => v + '分'" v-model="timeout_sec")
-      //-   b-field(label="分" expanded)
-      .columns(v-if="mode === 'standby'")
-        .column
-          b-field(label="1問毎のタイムアウト(秒)" expanded custom-class="is-small")
-            b-numberinput(v-model.number="timeout_sec" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
-        .column
-          b-field(label="全体の制限時間(分)" expanded custom-class="is-small")
-            b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
+        .field(v-if="mode === 'standby'")
+          .control
+            textarea.textarea.is-small(v-model.trim="quest_text" rows="1" placeholder="スペース区切りで並べると問題を置き換える")
+            a.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
+            | &nbsp;
+            a.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
+            | &nbsp;
+            b-tooltip(label="重複をなくします" position="is-bottom")
+              a.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
+            | &nbsp;
+            a.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
+            | &nbsp;
+            a.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
+            | &nbsp;
+            a.is-link.is-size-7(@click.prevent="quest_generate") 生成
 
-      .columns(v-if="mode === 'standby'")
-        .column
-          b-button(@click="history_modal_show") 履歴
-
-    .column
-      b-tabs.result_body(type="" expanded v-model="format_index")
-        template(v-for="(value, key) in format_all")
-          b-tab-item(:label="key")
-            a.is-pulled-right.clipboard_copy(@click.stop.prevent="clipboard_copy({text: value})")
-              b-icon(icon="clipboard-plus-outline")
-            | {{value}}
-
-      template(v-if="rows.length >= 1")
-        .has-text-centered
-          b-button(tag="a" :href="tweet_url" icon-left="twitter" size="is-small" type="is-info" rounded) ツイート
-
-  .columns(v-if="mode === 'standby'")
-    .column
-      .box.content.has-text-grey.is-size-7
-        b-field(label="ショートカット" custom-class="is-small")
-          table.table.is-narrow
-            tr
-              th p k Space
-              td 開始 / 停止
-            tr
-              th o Enter
-              td 正解
-            tr
-              th x
-              td 不正解
-            tr
-              th z
-              td 1つ前に戻す
-            tr
-              th r
-              td 最後のタイムだけリセット
-            tr
-              th t
-              td 最後の解答の正誤を反転する
-
-  .columns(v-if="mode === 'standby'")
-    .column
-      .box
-        .columns
+        //- b-field(grouped)
+        //-   b-field(label="タイムアウト 秒" expanded)
+        //-     b-slider(size="is-small" :min="0" :max="60" :step="5" ticks :custom-formatter="v => v + '秒'" v-model="sec_val")
+        //-   b-field(label="分" expanded)
+        //-     b-slider(size="is-small" :min="0" :max="30" :step="1" ticks :custom-formatter="v => v + '分'" v-model="timeout_sec")
+        //-   b-field(label="分" expanded)
+        .columns(v-if="mode === 'standby'")
           .column
-            b-field(label="PCブックマーク用" custom-class="is-small" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンクです")
-              a.button.is-text(:href="permalink_url") {{book_title}}
+            b-field(label="1問毎のタイムアウト(秒)" expanded custom-class="is-small")
+              b-numberinput(v-model.number="timeout_sec" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
           .column
-            b-field(label="モバイル用パーマリンク" custom-class="is-small" type="is-primary" message="このURLをコピペして他の端末に持っていくと同じ状態で再開できます")
-              b-input(:value="permalink_url")
+            b-field(label="全体の制限時間(分)" expanded custom-class="is-small")
+              b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
+
+      .column
+        b-tabs.result_body(type="" expanded v-model="format_index")
+          template(v-for="(value, key) in format_all")
+            b-tab-item(:label="key")
+              a.is-pulled-right.clipboard_copy(@click.stop.prevent="clipboard_copy({text: value})")
+                b-icon(icon="clipboard-plus-outline")
+              | {{value}}
+
+        template(v-if="rows.length >= 1")
+          .has-text-centered
+            b-button(tag="a" :href="tweet_url" icon-left="twitter" size="is-small" type="is-info" rounded) ツイート
+
+    .columns(v-if="mode === 'standby'")
+      .column
+        .box.content.has-text-grey.is-size-7
+          b-field(label="ショートカット" custom-class="is-small")
+            table.table.is-narrow
+              tr
+                th p k Space
+                td 開始 / 停止
+              tr
+                th o Enter
+                td 正解
+              tr
+                th x
+                td 不正解
+              tr
+                th z
+                td 1つ前に戻す
+              tr
+                th r
+                td 最後のタイムだけリセット
+              tr
+                th t
+                td 最後の解答の正誤を反転する
+
+    .columns(v-if="mode === 'standby'")
+      .column
+        .box
+          .columns
+            .column
+              b-field(label="PCブックマーク用" custom-class="is-small" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンクです")
+                a.button.is-text(:href="permalink_url") {{book_title}}
+            .column
+              b-field(label="モバイル用パーマリンク" custom-class="is-small" type="is-primary" message="このURLをコピペして他の端末に持っていくと同じ状態で再開できます")
+                b-input(:value="permalink_url")
 </template>
 
 <script>
@@ -153,6 +155,7 @@ import { app_keyboard } from './app_keyboard.js'
 import { IntervalRunner } from '@/components/models/IntervalRunner.js'
 
 import HistoryModal from './HistoryModal.vue'
+import KeyboardModal from './KeyboardModal.vue'
 
 import MemoryRecord from 'js-memory-record'
 
@@ -185,7 +188,7 @@ export default {
       drop_seconds: null,
       generate_max: null,
       book_title: null,
-      log_modal: null,
+      history_modal_instance: null,
       timeout_sec: null,
       total_timeout_min: null,
     }
@@ -196,12 +199,47 @@ export default {
   },
 
   methods: {
+    help_handle() {
+      this.sound_play("click")
+      this.talk_stop()
+      const dialog = this.$buefy.dialog.alert({
+        title: "ショートカットキー",
+        message: `
+          <div class="content is-size-7">
+            <p>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code></p>
+            <p>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></p>
+          </div>`,
+        confirmText: "わかった",
+        canCancel: ["outside", "escape"],
+        type: "is-info",
+        hasIcon: true,
+        trapFocus: true,
+        onConfirm: () => {
+          this.talk_stop()
+          this.sound_play("click")
+        },
+        onCancel: () => {
+          this.talk_stop()
+          this.sound_play("click")
+        },
+      })
+    },
+
     history_modal_show() {
-      this.log_modal = this.$buefy.modal.open({
+      this.history_modal_instance = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         props: { base: this },
         component: HistoryModal,
+      })
+    },
+
+    keyboard_modal_show() {
+      this.$buefy.modal.open({
+        parent: this,
+        hasModalCard: true,
+        props: { base: this },
+        component: KeyboardModal,
       })
     },
 
