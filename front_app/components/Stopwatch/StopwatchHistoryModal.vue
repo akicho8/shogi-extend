@@ -1,5 +1,5 @@
 <template lang="pug">
-.HistoryModal.modal-card.is-size-7(style="width: auto")
+.StopwatchHistoryModal.modal-card.is-size-7(style="width: auto")
   header.modal-card-head
     p.modal-card-title 履歴
   section.modal-card-body
@@ -25,7 +25,7 @@
 import { support } from "./support.js"
 
 export default {
-  name: "HistoryModal",
+  name: "StopwatchHistoryModal",
   mixins: [
     support,
   ],
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="sass">
-.HistoryModal
+.StopwatchHistoryModal
   tr:hover
     cursor: pointer
   .modal-card-foot

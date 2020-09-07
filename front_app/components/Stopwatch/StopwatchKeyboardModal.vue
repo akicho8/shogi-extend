@@ -1,5 +1,5 @@
 <template lang="pug">
-.KeyboardModal.modal-card.mx-4(style="width: auto")
+.StopwatchKeyboardModal.modal-card.mx-4(style="width: auto")
   header.modal-card-head
     p.modal-card-title キーボード操作
   section.modal-card-body
@@ -30,7 +30,7 @@
 import { support } from "./support.js"
 
 export default {
-  name: "KeyboardModal",
+  name: "StopwatchKeyboardModal",
   mixins: [
     support,
   ],
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="sass">
-.KeyboardModal
+.StopwatchKeyboardModal
   tr:hover
     cursor: pointer
   tr > *

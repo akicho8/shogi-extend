@@ -1,5 +1,5 @@
 <template lang="pug">
-.ParmalinkModal.modal-card.mx-4(style="width: auto")
+.StopwatchPermalinkModal.modal-card.mx-4(style="width: auto")
   header.modal-card-head
     p.modal-card-title パーマリンク
   section.modal-card-body.px-5.py-5
@@ -18,7 +18,7 @@
 import { support } from "./support.js"
 
 export default {
-  name: "ParmalinkModal",
+  name: "StopwatchPermalinkModal",
   mixins: [
     support,
   ],
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style lang="sass">
-.ParmalinkModal
+.StopwatchPermalinkModal
   tr:hover
     cursor: pointer
   tr > *

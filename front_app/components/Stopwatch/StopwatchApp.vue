@@ -5,7 +5,8 @@
       b-navbar-item(@click="book_title_input_dialog")
         b {{book_title}}
     template(slot="start")
-      b-navbar-dropdown(hoverable)
+    template(slot="end")
+      b-navbar-dropdown(hoverable arrowless right @click.native="sound_play('click')")
         template(slot="label")
           b-icon(icon="cog")
         b-navbar-item(@click="rap_reset") 最後のタイムだけリセット (r)
@@ -16,13 +17,16 @@
         b-navbar-item
           b-switch(v-model="browser_setting.sound_silent_p")
             | ミュート (スマホ電池節約用)
-    template(slot="end")
-      b-navbar-item(@click="parmalink_modal_show" v-if="mode === 'standby'")
-        b-icon(icon="link")
       b-navbar-item(@click="history_modal_show" v-if="mode === 'standby'")
         b-icon(icon="history")
+      b-navbar-item(@click="parmalink_modal_show" v-if="mode === 'standby'")
+        b-icon(icon="link")
       b-navbar-item(@click="keyboard_modal_show")
-        b-icon(icon="help")
+        b-icon(icon="keyboard")
+      b-navbar-dropdown(hoverable arrowless right @click.native="sound_play('click')")
+        template(slot="label")
+          b-icon(icon="menu")
+        b-navbar-item(tag="a" href="/") TOP
 
   .section.pt-4
     .columns
@@ -119,9 +123,9 @@ import { app_keyboard } from './app_keyboard.js'
 import { support } from './support.js'
 import { IntervalRunner } from '@/components/models/IntervalRunner.js'
 
-import ParmalinkModal from './ParmalinkModal.vue'
-import HistoryModal from './HistoryModal.vue'
-import KeyboardModal from './KeyboardModal.vue'
+import StopwatchPermalinkModal from './StopwatchPermalinkModal.vue'
+import StopwatchHistoryModal from './StopwatchHistoryModal.vue'
+import StopwatchKeyboardModal from './StopwatchKeyboardModal.vue'
 
 import MemoryRecord from 'js-memory-record'
 
@@ -165,39 +169,13 @@ export default {
   },
 
   methods: {
-    help_handle() {
-      this.sound_play("click")
-      this.talk_stop()
-      const dialog = this.$buefy.dialog.alert({
-        title: "ショートカットキー",
-        message: `
-          <div class="content is-size-7">
-            <p>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code></p>
-            <p>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></p>
-          </div>`,
-        confirmText: "わかった",
-        canCancel: ["outside", "escape"],
-        type: "is-info",
-        hasIcon: true,
-        trapFocus: true,
-        onConfirm: () => {
-          this.talk_stop()
-          this.sound_play("click")
-        },
-        onCancel: () => {
-          this.talk_stop()
-          this.sound_play("click")
-        },
-      })
-    },
-
     parmalink_modal_show() {
       this.sound_play("click")
       this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         props: { base: this },
-        component: ParmalinkModal,
+        component: StopwatchPermalinkModal,
         animation: "",
         onCancel: () => this.sound_play("click"),
       })
@@ -209,7 +187,7 @@ export default {
         parent: this,
         hasModalCard: true,
         props: { base: this },
-        component: HistoryModal,
+        component: StopwatchHistoryModal,
         animation: "",
         onCancel: () => this.sound_play("click"),
       })
@@ -221,7 +199,7 @@ export default {
         parent: this,
         hasModalCard: true,
         props: { base: this },
-        component: KeyboardModal,
+        component: StopwatchKeyboardModal,
         animation: "",
         onCancel: () => this.sound_play("click"),
       })
