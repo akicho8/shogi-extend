@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :foo_articles
-  resources :about, only: :show
+  # resources :about, only: :show
 
   get "health" => HealthResponder
 
