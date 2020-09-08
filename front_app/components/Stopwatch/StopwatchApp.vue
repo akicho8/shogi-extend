@@ -14,9 +14,6 @@
         b-navbar-item(@click="toggle_handle") 最後の解答の正誤を反転する (t)
         b-navbar-item(@click="reset_by_x") 不正解だけ再テスト
         b-navbar-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
-        b-navbar-item
-          b-switch(v-model="browser_setting.sound_silent_p")
-            | ミュート (スマホ電池節約用)
       b-navbar-item(@click="history_modal_show" v-if="mode === 'standby'")
         b-icon(icon="history")
       b-navbar-item(@click="parmalink_modal_show" v-if="mode === 'standby'")
@@ -72,21 +69,15 @@
               .control
                 b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true" size="is-small")
 
-        .field(v-if="mode === 'standby'")
+        .field.quest_text(v-if="mode === 'standby'")
           .control
             textarea.textarea.is-small(v-model.trim="quest_text" rows="2" placeholder="スペース区切りで並べると問題を置き換える")
-            a.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
-            | &nbsp;
-            a.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
-            | &nbsp;
-            b-tooltip(label="重複をなくします" position="is-bottom")
-              a.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
-            | &nbsp;
-            a.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
-            | &nbsp;
-            a.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
-            | &nbsp;
-            a.is-link.is-size-7(@click.prevent="quest_generate") 生成
+            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
+            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
+            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
+            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
+            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
+            a.mx-1.is-link.is-size-7(@click.prevent="quest_generate") 生成
 
         .columns(v-if="mode === 'standby'")
           .column
@@ -97,10 +88,10 @@
               b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
 
       .column
-        b-tabs.result_body(type="" expanded v-model="format_index")
+        b-tabs.result_body(expanded v-model="format_index" @input="sound_play('click')")
           template(v-for="(value, key) in format_all")
             b-tab-item(:label="key")
-              a.is-pulled-right.clipboard_copy(@click.stop.prevent="clipboard_copy({text: value})")
+              a.is-pulled-right.clipboard_copy(@click.stop.prevent="copy_handle(value)")
                 b-icon(icon="clipboard-plus-outline")
               | {{value}}
 
@@ -118,7 +109,6 @@ import dayjs from "dayjs"
 
 import stopwatch_data_retention from './stopwatch_data_retention.js'
 import stopwatch_memento_list from './stopwatch_memento_list.js'
-import stopwatch_browser_setting from './stopwatch_browser_setting.js'
 import { app_keyboard } from './app_keyboard.js'
 import { support } from './support.js'
 import { IntervalRunner } from '@/components/models/IntervalRunner.js'
@@ -143,7 +133,6 @@ export default {
   mixins: [
     stopwatch_data_retention,
     stopwatch_memento_list,
-    stopwatch_browser_setting,
     app_keyboard,
     support,
   ],
@@ -169,6 +158,11 @@ export default {
   },
 
   methods: {
+    copy_handle(text) {
+      this.sound_play("click")
+      this.clipboard_copy({text: text})
+    },
+
     parmalink_modal_show() {
       this.sound_play("click")
       this.$buefy.modal.open({
@@ -206,38 +200,28 @@ export default {
     },
 
     quest_text_clear() {
+      this.sound_play("click")
       this.quest_text = ""
     },
 
     quest_text_sort() {
+      this.sound_play("click")
       this.quest_text = _.sortBy(this.quest_list, [e => parseInt(e)]).join(" ")
     },
 
     quest_text_uniq() {
+      this.sound_play("click")
       this.quest_text = _.uniq(this.quest_list).join(" ")
     },
 
     quest_text_shuffle() {
+      this.sound_play("click")
       this.quest_text = _.shuffle(this.quest_list).join(" ")
     },
 
     quest_text_reverse() {
-      this.quest_text = _.reverse(this.quest_list.slice()).join(" ")
-    },
-
-    book_title_input_dialog() {
       this.sound_play("click")
-      this.$buefy.dialog.prompt({
-        message: "タイトル",
-        confirmText: "更新",
-        cancelText: "キャンセル",
-        inputAttrs: { type: 'text', value: this.book_title, required: false },
-        onCancel: () => this.sound_play("click"),
-        onConfirm: value => {
-          this.book_title = _.trim(value) || TITLE_DEFAULT
-          this.sound_play("click")
-        },
-      })
+      this.quest_text = _.reverse(this.quest_list.slice()).join(" ")
     },
 
     quest_generate() {
@@ -253,6 +237,21 @@ export default {
           this.sound_play("click")
           this.generate_max = parseInt(value, 10)
           this.quest_text = [...Array(this.generate_max).keys()].map(i => 1 + i).join(" ")
+        },
+      })
+    },
+
+    book_title_input_dialog() {
+      this.sound_play("click")
+      this.$buefy.dialog.prompt({
+        message: "タイトル",
+        confirmText: "更新",
+        cancelText: "キャンセル",
+        inputAttrs: { type: 'text', value: this.book_title, required: false },
+        onCancel: () => this.sound_play("click"),
+        onConfirm: value => {
+          this.book_title = _.trim(value) || TITLE_DEFAULT
+          this.sound_play("click")
         },
       })
     },
@@ -355,7 +354,7 @@ export default {
 
     notice(message) {
       this.$buefy.toast.open({message: message, position: "is-bottom"})
-      this.safe_talk(message)
+      this.talk(message)
     },
 
     warning_notice(message) {
@@ -422,7 +421,7 @@ export default {
 
     track_next() {
       if (this.last_quest_exist_p) {
-        this.safe_talk(this.quest_name(this.new_quest))
+        this.talk(this.quest_name(this.new_quest))
       } else {
         this.stop_handle()
         this.notice(`おわりました`)
@@ -552,13 +551,6 @@ export default {
         },
       })
     },
-
-    safe_talk(message, options = {}) {
-      if (this.browser_setting.sound_silent_p) {
-        return
-      }
-      this.talk(message, options)
-    },
   },
 
   watch: {
@@ -578,7 +570,7 @@ export default {
           if (this.timeout_p || this.total_timeout_p) {
             // タイムアウトのブザーと重なる場合は「?分経過」の発声をしない
           } else {
-            this.safe_talk(`${v}分経過`, {rate: 1.0})
+            this.talk(`${v}分経過`, {rate: 1.0})
           }
         }
       }
@@ -587,7 +579,7 @@ export default {
     lap_counter(v) {
       if (this.total_timeout_p) {
         const message = `${this.total_timeout_min}分たったので終了です`
-        this.safe_talk(message)
+        this.talk(message)
         this.$buefy.dialog.alert({title: "おわり", message: message, trapFocus: true})
         this.stop_handle()
       }
@@ -598,7 +590,7 @@ export default {
 
     // current_sec(v) {
     //   if (v >= 1) {
-    //     this.safe_talk(`${v}秒経過`, {rate: 1.0})
+    //     this.talk(`${v}秒経過`, {rate: 1.0})
     //   }
     // },
   },
