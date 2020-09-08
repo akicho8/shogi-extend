@@ -32,8 +32,8 @@
   .item(@click="app.copy_handle")
     b-icon(icon="content-duplicate")
 
-  .item(@click="app.help_handle")
-    b-icon(icon="help")
+  .item(@click="app.keyboard_handle")
+    b-icon(icon="keyboard")
 </template>
 
 <script>

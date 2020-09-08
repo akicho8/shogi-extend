@@ -252,7 +252,7 @@ export default {
         },
       })
     },
-    help_handle() {
+    keyboard_handle() {
       this.sound_play("click")
       this.talk_stop()
       const dialog = this.$buefy.dialog.alert({
