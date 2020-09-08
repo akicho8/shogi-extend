@@ -1,0 +1,9 @@
+#!/bin/sh
+scp nginx_default.conf s:/etc/nginx/conf.d/default.conf
+ssh s 'sudo nginx -t && sudo systemctl restart nginx'
+
+curl -sI https://shogi-flow.xyz/vs-clock             | head -1
+curl -sI https://shogi-flow.xyz/stopwatch            | head -1
+curl -sI https://shogi-flow.xyz/about/terms          | head -1
+curl -sI https://shogi-flow.xyz/about/credit         | head -1
+curl -sI https://shogi-flow.xyz/about/privacy-policy | head -1

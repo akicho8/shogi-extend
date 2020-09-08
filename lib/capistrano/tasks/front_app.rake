@@ -10,8 +10,9 @@ namespace :front_app do
     Dir.chdir("front_app") { system "nuxt generate --dotenv .env.#{fetch(:stage)}" }
 
     on roles(:web) do |host|
+      execute :rm, "-rf", "#{release_path}/public/app"
       execute :rm, "-rf", "#{release_path}/public/s"
-      upload! "front_app/dist", "#{release_path}/public/s", recursive: true
+      upload! "front_app/dist", "#{release_path}/public/app", recursive: true
       execute :ls, "-al #{release_path}/public"
     end
   end

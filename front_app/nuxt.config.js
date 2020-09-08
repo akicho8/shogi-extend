@@ -10,13 +10,13 @@ const config = {
   target: 'server',
 
   router: {
-    base: process.env.NODE_ENV === 'production' ? "/s" : "/",
+    base: process.env.NODE_ENV === 'production' ? "/app/" : "/",
   },
 
-  // generate: {
-  //   // subFolders: false,
-  //   dir: '../public', // Railsの / を直接置き換える
-  // },
+  generate: {
+    subFolders: false,  // false: xxx.html true: xxx/index.html
+    // dir: '../public', Railsの / を直接置き換える
+  },
 
   /*
   ** Headers of the page
