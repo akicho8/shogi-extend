@@ -43,7 +43,7 @@ const config = {
       // 重要なのはこの4つだけで各ページで上書きする
       { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND" },
       { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです" },
-      { hid: "og:image",       property: "og:image",       content: process.env.OGP_SITE_URL + "/ogp/application.png" },
+      { hid: "og:image",       property: "og:image",       content: process.env.OGP_BASE_URL + "/ogp/application.png" },
       { hid: "twitter:card",   property: "twitter:card",   content: "summary" }, // summary or summary_large_image
 
       { hid: "twitter:site",       property: "twitter:site",       content: "@sgkinakomochi" }, // これいるのか？
@@ -178,7 +178,7 @@ const config = {
   // 空文字列は空で設定したのではなく XXX: process.env.XXX の意味(この仕様は余計にわかりにくい)
   publicRuntimeConfig: {
     SITE_URL:     "",
-    OGP_SITE_URL: "",
+    OGP_BASE_URL: "",
   },
 
   // SSR側での定義で publicRuntimeConfig を上書きする

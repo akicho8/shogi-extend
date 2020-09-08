@@ -97,7 +97,7 @@
 
         template(v-if="rows.length >= 1")
           .has-text-centered
-            b-button(tag="a" :href="tweet_url" icon-left="twitter" size="is-small" type="is-info" rounded) ツイート
+            b-button(tag="a" :href="tweet_url" target="_blank" icon-left="twitter" size="is-small" type="is-info" rounded) ツイート
 </template>
 
 <script>
@@ -570,7 +570,7 @@ export default {
           if (this.timeout_p || this.total_timeout_p) {
             // タイムアウトのブザーと重なる場合は「?分経過」の発声をしない
           } else {
-            this.talk(`${v}分経過`, {rate: 1.0})
+            this.talk(`${v}分経過`)
           }
         }
       }

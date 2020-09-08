@@ -94,9 +94,9 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: [:stopwatch],
+      link_path: UrlProxy.wrap("/stopwatch"),
       title: "詰将棋RTA用ストップウォッチ",
-      image_source: "stopwatch_1200x630.png",
+      image_source: "ogp/stopwatch.png",
       description: "詰将棋を解く時間と正解率の計測サービス",
       feature_items: [
         "間違えた問題だけの復習が簡単",
