@@ -44,12 +44,16 @@ set :open_urls, [
   "https://www.shogi-extend.com/adapter",
   "https://www.shogi-extend.com/xy",
   "https://www.shogi-extend.com/cpu/battles",
-  "https://www.shogi-extend.com/stopwatch",
   "https://www.shogi-extend.com/x",
   "https://www.shogi-extend.com/x/new",
   "https://www.shogi-extend.com/board",
   "https://www.shogi-extend.com/script/professional",
   "https://www.shogi-extend.com/share-board",
+  "https://www.shogi-extend.com/vs-clock",
+  "https://www.shogi-extend.com/stopwatch",
+  "https://www.shogi-extend.com/about/terms",
+  "https://www.shogi-extend.com/about/credit",
+  "https://www.shogi-extend.com/about/privacy-policy",
 ]
 
 # if ENV["USE_NEW_DOMAIN"] && false
