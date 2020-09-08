@@ -15,11 +15,11 @@ RSpec.describe "その他", type: :system do
     doc_image
   end
 
-  it "ストップウォッチ" do
-    visit "/stopwatch"
-    expect(page).to have_content "Rails"
-    doc_image
-  end
+  # it "ストップウォッチ" do
+  #   visit "/stopwatch"
+  #   expect(page).to have_content "Rails"
+  #   doc_image
+  # end
 
   it "局面編集" do
     visit "/position-editor"

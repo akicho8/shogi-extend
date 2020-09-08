@@ -106,7 +106,6 @@ import custom_chart                    from "custom_chart.vue"
 import acns1_sample                    from "acns1_sample.vue"
 import actb_app                        from "actb_app/application.vue"
 import share_board                     from "share_board/application.vue"
-import stopwatch                       from "stopwatch.vue"
 import simple_board                    from "simple_board.vue"
 import xy_master                       from "xy_master.vue"
 import cpu_battle                      from "cpu_battle.vue"
@@ -154,7 +153,6 @@ Vue.mixin({
     shogi_player,
     swars_user_link_to,
     pulldown_menu,
-    stopwatch,
     simple_board,
     share_board,
     xy_master,
