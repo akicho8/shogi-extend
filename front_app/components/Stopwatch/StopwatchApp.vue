@@ -6,7 +6,7 @@
         b {{book_title}}
     template(slot="start")
     template(slot="end")
-      b-navbar-dropdown(hoverable arrowless right @click.native="sound_play('click')")
+      b-navbar-dropdown(hoverable arrowless right)
         template(slot="label")
           b-icon(icon="cog")
         b-navbar-item(@click="rap_reset") 最後のタイムだけリセット (r)
@@ -20,7 +20,7 @@
         b-icon(icon="link")
       b-navbar-item(@click="keyboard_modal_show")
         b-icon(icon="keyboard")
-      b-navbar-dropdown(hoverable arrowless right @click.native="sound_play('click')")
+      b-navbar-dropdown(hoverable arrowless right)
         template(slot="label")
           b-icon(icon="menu")
         b-navbar-item(tag="a" href="/") TOP
