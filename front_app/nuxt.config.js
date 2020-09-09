@@ -38,12 +38,12 @@ const config = {
 
       { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
       { hid: "og:type",        property: "og:type",        content: "website" },
-      { hid: "og:url",         property: "og:url",         content: process.env.SITE_URL }, // これいるのか？
+      { hid: "og:url",         property: "og:url",         content: process.env.BASE_URL }, // これいるのか？
 
       // 重要なのはこの4つだけで各ページで上書きする
       { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND" },
       { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです" },
-      { hid: "og:image",       property: "og:image",       content: process.env.OGP_BASE_URL + "/ogp/application.png" },
+      { hid: "og:image",       property: "og:image",       content: process.env.BASE_URL_OGP + "/ogp/application.png" },
       { hid: "twitter:card",   property: "twitter:card",   content: "summary" }, // summary or summary_large_image
 
       { hid: "twitter:site",       property: "twitter:site",       content: "@sgkinakomochi" }, // これいるのか？
@@ -121,7 +121,7 @@ const config = {
   axios: {
     debug: process.env.NODE_ENV === 'development',
     proxy: process.env.NODE_ENV === 'development',
-    baseURL: process.env.SITE_URL, // generate する staging では proxy が無効になり https://shogi-flow.xyz/api/* を叩かせる
+    baseURL: process.env.BASE_URL, // generate する staging では proxy が無効になり https://shogi-flow.xyz/api/* を叩かせる
     credentials: true,             // これを入れないと /api/talk のとき HTML が返ってきてしまう
   },
 
@@ -177,8 +177,8 @@ const config = {
   // https://nuxtjs.org/guide/runtime-config
   // 空文字列は空で設定したのではなく XXX: process.env.XXX の意味(この仕様は余計にわかりにくい)
   publicRuntimeConfig: {
-    SITE_URL:     "",
-    OGP_BASE_URL: "",
+    BASE_URL:     "",
+    BASE_URL_OGP: "",
   },
 
   // SSR側での定義で publicRuntimeConfig を上書きする

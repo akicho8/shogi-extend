@@ -80,6 +80,7 @@
 import { ChessClock   } from "../../../app/javascript/actb_app/models/chess_clock.js"
 import { DeviseAngle  } from "../../../app/javascript/models/DeviseAngle.js"
 import { isMobile     } from "../../../app/javascript/models/isMobile.js"
+import { FullScreen   } from "../models/FullScreen.js"
 
 import { support      } from "./support.js"
 import { store        } from "./store.js"
@@ -100,6 +101,7 @@ export default {
   data() {
     return {
       chess_clock: null,
+      full_screen: null,
     }
   },
   beforeCreate() {
@@ -157,8 +159,10 @@ export default {
     } else {
       this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()
     }
+    this.full_screen = new FullScreen()
   },
   beforeDestroy() {
+    this.full_screen.off()
     this.chess_clock.timer_stop()
   },
   methods: {
@@ -191,6 +195,7 @@ export default {
     },
     stop_handle() {
       if (this.chess_clock.running_p) {
+        this.full_screen.off()
         this.talk_stop()
         this.sound_play("click")
         this.chess_clock.stop_button_handle()
@@ -199,6 +204,7 @@ export default {
     play_handle() {
       if (this.chess_clock.running_p) {
       } else {
+        this.full_screen.on()
         this.sound_play("start")
         this.say(this.play_talk_message())
         this.chess_clock.play_button_handle()

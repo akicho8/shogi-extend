@@ -33,8 +33,6 @@ set :open_urls, [
   "https://www.shogi-extend.com/training",
   "https://www.shogi-extend.com/training?question_id=1",
   "https://www.shogi-extend.com/training?user_id=1",
-  "https://www.shogi-extend.com/admin/script/actb-summary",
-  "https://www.shogi-extend.com/admin/script/staff-switch",
   "https://www.shogi-extend.com/admin/script/actb-room",
   "https://www.shogi-extend.com/admin/script/regular-user",
   "https://www.shogi-extend.com/w",
