@@ -1,14 +1,15 @@
 <template lang="pug">
-.full_screen_api
-  .buttons
-    b-button(@click="on_handle") ON
-    b-button(@click="off_handle") OFF
-    b-button(@click="toggle_handle") トグル
-    b-button(@click="check_handle") 状態確認
-  pre
-    ul
-      li 状態:{{current_status}}
-      li この機能が使えるか？: {{enable_p()}}
+client-only
+  .full_screen_api
+    .buttons
+      b-button(@click="on_handle") ON
+      b-button(@click="off_handle") OFF
+      b-button(@click="toggle_handle") トグル
+      b-button(@click="check_handle") 状態確認
+    pre
+      ul
+        li 状態:{{current_status}}
+        li この機能が使えるか？: {{enable_p()}}
 </template>
 
 <script>
