@@ -27,9 +27,10 @@ export default {
   methods: {
     // この機能が使えるか？
     enable_p() {
-      return document.fullscreenEnabled || document.mozFullScreenEnabled || document.documentElement.webkitRequestFullScreen || document.msFullscreenEnabled
+      if (typeof document !== 'undefined') {
+        return document.fullscreenEnabled || document.mozFullScreenEnabled || document.documentElement.webkitRequestFullScreen || document.msFullscreenEnabled
+      }
     },
-
     on_handle() {
       document.documentElement.requestFullscreen()
     },
