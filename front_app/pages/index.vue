@@ -19,6 +19,7 @@ div
             nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
 </template>
 
+
 <script>
 export default {
   name: "index",
@@ -33,12 +34,13 @@ export default {
         { title: 'ストップウォッチ',         to: { name: 'stopwatch'                  }, },
       ],
       experiment_items: [
-        { title: 'フルスクリーン',           to: { name: 'experiment-full_screen'     }, },
-        { title: 'Inspire',                  to: { name: 'experiment-inspire'         }, },
-        { title: 'IP',                       to: { name: 'experiment-ip-show'         }, },
-        { title: 'async_data_test',          to: { name: 'experiment-async_data_test' }, },
-        { title: 'bulma_test',               to: { name: 'experiment-bulma_test'      }, },
-        { title: '$nuxt.isOffline チェック', to: { name: 'experiment-online_offline'  }, },
+        { title: 'フルスクリーンAPIテスト',    to: { name: 'experiment-full_screen_api'   }, },
+        { title: 'フルスクリーンモデルテスト', to: { name: 'experiment-full_screen_model' }, },
+        { title: '初期非同期外部IP確認',       to: { name: 'experiment-ip-show'           }, },
+        { title: '初期非同期読み込み',         to: { name: 'experiment-async_data_test'   }, },
+        { title: 'Bulma動作チェック',          to: { name: 'experiment-bulma_test'        }, },
+        { title: 'オンラインチェック',         to: { name: 'experiment-online_offline'    }, },
+        { title: 'Inspire',                    to: { name: 'experiment-inspire'           }, },
       ],
     }
   }

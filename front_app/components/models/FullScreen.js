@@ -2,7 +2,7 @@
 //
 // この機能が有効か？
 //
-//  Fullscreen.function_enable_p()
+//  Fullscreen.enable_p()
 //
 // 全体をフルスクリーン化するには？
 //
@@ -16,7 +16,7 @@
 //
 export class FullScreen {
   // https://blog.katsubemakito.net/html5/fullscreen
-  static function_enable_p() {
+  static enable_p() {
     return false ||
       document.fullscreenEnabled                       ||
       document.mozFullScreenEnabled                    ||
@@ -28,7 +28,7 @@ export class FullScreen {
   constructor(element = document.documentElement) {
     this.element = element
 
-    if (!this.function_enable_p()) {
+    if (!this.enable_p()) {
       console.log("FullScreen API に対応していない")
     }
 
@@ -41,7 +41,7 @@ export class FullScreen {
   }
 
   toggle() {
-    if (!this.function_enable_p()) return
+    if (!this.enable_p()) return
 
     if (this.inactive_p()) {
       this.on()
@@ -51,7 +51,7 @@ export class FullScreen {
   }
 
   on() {
-    if (!this.function_enable_p()) return
+    if (!this.enable_p()) return
 
     if (this.inactive_p()) {
       this.element.requestFullscreen()
@@ -59,7 +59,7 @@ export class FullScreen {
   }
 
   off() {
-    if (!this.function_enable_p()) return
+    if (!this.enable_p()) return
 
     if (this.active_p()) {
       if (document.exitFullscreen) {
@@ -78,7 +78,7 @@ export class FullScreen {
     return !this.active_p()
   }
 
-  function_enable_p() {
-    return this.constructor.function_enable_p()
+  enable_p() {
+    return this.constructor.enable_p()
   }
 }

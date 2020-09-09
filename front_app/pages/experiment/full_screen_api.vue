@@ -1,5 +1,5 @@
 <template lang="pug">
-.full_screen
+.full_screen_api
   .buttons
     b-button(@click="on_handle") ON
     b-button(@click="off_handle") OFF
@@ -8,12 +8,12 @@
   pre
     ul
       li 状態:{{current_status}}
-      li この機能が使えるか？: {{function_enable_p()}}
+      li この機能が使えるか？: {{enable_p()}}
 </template>
 
 <script>
 export default {
-  name: "full_screen",
+  name: "full_screen_api",
   data() {
     return {
       current_status: null,
@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     // この機能が使えるか？
-    function_enable_p() {
+    enable_p() {
       return document.fullscreenEnabled || document.mozFullScreenEnabled || document.documentElement.webkitRequestFullScreen || document.msFullscreenEnabled
     },
 
@@ -53,5 +53,5 @@ export default {
 </script>
 
 <style lang="sass">
-.full_screen
+.full_screen_api
 </style>
