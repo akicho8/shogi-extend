@@ -5,7 +5,7 @@ if (process.client) {
 export default {
   methods: {
     tab_is_active_p() {
-      return !this.tab_is_active_p()
+      return !this.tab_is_hidden_p()
     },
 
     tab_is_hidden_p() {
@@ -22,7 +22,7 @@ export default {
 
     // しゃべる
     talk(source_text, options = {}) {
-      if (!this.tab_is_hidden_p()) {
+      if (this.tab_is_active_p()) {
         const params = {
           source_text: source_text,
         }

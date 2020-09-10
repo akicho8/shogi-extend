@@ -3,7 +3,7 @@ window.howl_object = null
 export default {
   methods: {
     tab_is_active_p() {
-      return !this.tab_is_active_p()
+      return !this.tab_is_hidden_p()
     },
 
     tab_is_hidden_p() {
@@ -20,7 +20,7 @@ export default {
 
     // しゃべる
     talk(source_text, options = {}) {
-      if (this.tab_is_hidden_p()) {
+      if (this.tab_is_active_p()) {
         options = {talk_method: "howler", ...options}
 
         // すぐに発声する場合
@@ -51,7 +51,7 @@ export default {
               src: data.mp3_path,
               autoplay: true,
               volume: options.volume || 1.0,
-              rate: options.rate || 1.2,
+              rate: options.rate || 1.5,
             })
             if (options.onend) {
               window.howl_object.on("end", () => options.onend())
