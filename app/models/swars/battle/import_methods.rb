@@ -117,7 +117,7 @@ module Swars
           if Rails.env.production? || Rails.env.staging?
             3.minutes
           else
-            30.seconds
+            10.seconds
           end
         end
 
@@ -135,6 +135,8 @@ module Swars
           params = {
             verbose: Rails.env.development?,
             early_break: false, # 1ページ目で新しいものが見つからなければ終わる
+            error_capture: nil, # blockが渡されていれば呼ぶ
+            error_capture_test: false, # trueならわざと例外
           }.merge(params)
 
           keys = []
@@ -195,7 +197,18 @@ module Swars
 
           new_keys = keys - where(key: keys).pluck(:key)
           new_keys.each do |key|
-            single_battle_import(params.merge(key: key, skip_if_exist: false))
+            begin
+              if params[:error_capture_test]
+                raise Bioshogi::BioshogiError, "(test1)\n(test2)\n"
+              end
+              single_battle_import(params.merge(key: key, skip_if_exist: false))
+            rescue Bioshogi::BioshogiError => error
+              if f = params[:error_capture]
+                f.call({key: key, error: error})
+              else
+                raise error
+              end
+            end
             sleep_on(params)
           end
         end

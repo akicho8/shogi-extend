@@ -147,7 +147,16 @@ module Swars
     end
 
     def import_process(flash)
+
       if import_enable?
+        errors = []
+        import_params = {
+          :user_key           => current_swars_user_key,
+          :page_max           => import_page_max,
+          :error_capture_test => params[:error_capture_test],
+          :error_capture      => -> error { errors << error },
+        }
+
         remember_swars_user_keys_update
 
         before_count = 0
@@ -156,11 +165,11 @@ module Swars
         end
 
         if params[:force]
-          Battle.user_import(user_key: current_swars_user_key, page_max: import_page_max)
+          Battle.user_import(import_params)
           success = true
         else
           # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-          success = Battle.sometimes_user_import(user_key: current_swars_user_key, page_max: import_page_max)
+          success = Battle.sometimes_user_import(import_params)
           if !success
             # ここを有効にするには rails dev:cache してキャッシュを有効にすること
             if Rails.env.production? || Rails.env.staging?
@@ -194,6 +203,25 @@ module Swars
             else
               slack_message(key: "検索", body: "#{current_swars_user_key} #{hit_count}件")
             end
+          end
+
+          # 確認方法
+          # http://localhost:3000/w?query=devuser1&error_capture_test=true&force=true
+          if errors.present?
+            errors.each do |e|
+              body = [
+                e[:error].message.strip,
+                "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
+              ].join("\n")
+              ApplicationMailer.developper_notice(subject: "【ウォーズ棋譜不整合】#{e[:error].message.lines.first.strip}", body: body).deliver_later
+            end
+            html_text = (errors + errors).collect { |e|
+              [
+                "【棋譜の不整合】#{e[:error].message.strip}",
+                "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
+              ].collect { |e| "#{e}\n" }.join
+            }.join("\n")
+            flash[:error] = html_text.gsub(/\R/, "<br>")
           end
         end
       end

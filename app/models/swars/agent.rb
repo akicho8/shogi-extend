@@ -80,7 +80,7 @@ module Swars
           return false
         end
 
-        params[:run_remote] || (ENV["RUN_REMOTE"] == "true") || Rails.env.production? || Rails.env.staging?
+        params[:run_remote] || ENV["RUN_REMOTE"].in?(["1", "true"]) || Rails.env.production? || Rails.env.staging?
       end
 
       def mock_html(name)
@@ -101,6 +101,7 @@ module Swars
 
       def fetch
         url = url_build
+
 
         if run_remote?
           html = html_fetch(url)

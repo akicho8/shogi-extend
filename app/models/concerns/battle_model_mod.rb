@@ -78,7 +78,7 @@ module BattleModelMod
       end
     end
 
-    info.mediator
+    info.mediator               # 不整合があるとここで Bioshogi::BioshogiError を投げる
 
     self.turn_max = info.mediator.turn_info.turn_offset
     self.critical_turn = info.mediator.critical_turn
