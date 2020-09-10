@@ -61,7 +61,7 @@ module BattleControllerSharedMethods
     private
 
     def behavior_after_rescue(message)
-      redirect_to :root, danger: message
+      redirect_to [:swars, :battles], danger: message
     end
   end
 
