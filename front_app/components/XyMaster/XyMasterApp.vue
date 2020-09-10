@@ -140,6 +140,7 @@
 </template>
 
 <script>
+import _ from "lodash"
 import dayjs from "dayjs"
 import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
 import xy_master_chart_mod from './xy_master_chart_mod.js'
@@ -221,9 +222,10 @@ export default {
     document.addEventListener("keydown", this.keydown_handle, false)
   },
 
-  // mounted() {
-  //   const chart_instance = new Chart(this.$refs.chart_canvas, this.days_chart_js_options())
-  // },
+  mounted() {
+    // const chart_instance = new Chart(this.$refs.chart_canvas, this.days_chart_js_options())
+    this.$refs.main_sp.api_board_clear()
+  },
 
   watch: {
     entry_name()       { this.data_save_to_local_storage() },
@@ -384,8 +386,6 @@ export default {
     },
 
     start_handle() {
-      // this.$gtag.event("start", {event_category: "符号の鬼"})
-
       this.mode = "standby"
       this.count_down_counter = 0
       this.init_other_variables()
@@ -404,6 +404,7 @@ export default {
 
     countdown_interval_stop() {
       if (this.inteval_id) {
+
         clearInterval(this.inteval_id)
         this.inteval_id = null
       }
@@ -454,30 +455,33 @@ export default {
     },
 
     // 名前を確定してからサーバーに保存する
-    record_post() {
-      this.api_call({xy_scope_key: this.xy_scope_key, xy_record: this.post_params}, data => {
-        this.entry_name_unique = false // 「プレイヤー別順位」の解除
-        this.data_update(data)         // ランキングに反映
+    async record_post() {
+      const params = {
+        xy_scope_key: this.xy_scope_key,
+        xy_record:    this.post_params,
+      }
+      const { data } = await this.$axios.post("/api/xy", params)
+      this.entry_name_unique = false // 「プレイヤー別順位」の解除
+      this.data_update(data)         // ランキングに反映
 
-        // ランク内ならランキングのページをそのページに移動する
-        if (this.current_rank <= this.config.rank_max) {
-          this.$set(this.current_pages, this.current_rule_index, this.xy_record.rank_info[this.xy_scope_key].page)
-        }
+      // ランク内ならランキングのページをそのページに移動する
+      if (this.current_rank <= this.config.rank_max) {
+        this.$set(this.current_pages, this.current_rule_index, this.xy_record.rank_info[this.xy_scope_key].page)
+      }
 
-        // おめでとう
-        this.congrats_talk()
+      // おめでとう
+      this.congrats_talk()
 
-        // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
-        this.xy_chart_rule_key = this.xy_rule_key
-        this.xy_chart_scope_key = "chart_scope_recently"
-        this.chart_show()
-      })
+      // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
+      this.xy_chart_rule_key = this.xy_rule_key
+      this.xy_chart_scope_key = "chart_scope_recently"
+      this.chart_show()
     },
 
-    data_update(data) {
-      const xy_rule_info = XyRuleInfo.fetch(data.xy_record.xy_rule_key)
-      this.$set(this.xy_records_hash, xy_rule_info.key, data.xy_records)
-      this.xy_record = data.xy_record
+    data_update(params) {
+      const xy_rule_info = XyRuleInfo.fetch(params.xy_record.xy_rule_key)
+      this.$set(this.xy_records_params, xy_rule_info.key, params.xy_records)
+      this.xy_record = params.xy_record
     },
 
     congrats_talk() {
@@ -508,11 +512,7 @@ export default {
     },
 
     command_send(command, args = {}) {
-      this.api_call({ xy_record: { command: command, ...args } })
-    },
-
-    api_call(params, callback = nil) {
-      return this.remote_fetch("POST", "/api/xy", params, callback)
+      this.$axios.post("/api/xy", {command: command, ...args})
     },
 
     timer_stop() {

@@ -79,6 +79,7 @@ module Api
         per_page: XyRuleInfo.per_page,
         rank_max: XyRuleInfo.rank_max,
         count_all_gteq: XyRuleInfo.count_all_gteq,
+        current_user: current_user.as_json
       }
     end
 

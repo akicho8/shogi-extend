@@ -119,15 +119,15 @@ export default {
   },
 
   watch: {
-    // xy_chart_rule_key() {
-    //   this.chart_show()
-    //   this.data_save_to_local_storage()
-    // },
-    //
-    // xy_chart_scope_key() {
-    //   this.chart_show()
-    //   this.data_save_to_local_storage()
-    // },
+    xy_chart_rule_key() {
+      this.chart_show()
+      this.data_save_to_local_storage()
+    },
+    
+    xy_chart_scope_key() {
+      this.chart_show()
+      this.data_save_to_local_storage()
+    },
   },
 
   methods: {
