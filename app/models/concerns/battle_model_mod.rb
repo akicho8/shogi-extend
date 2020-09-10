@@ -64,6 +64,22 @@ module BattleModelMod
 
     info = fast_parsed_info
 
+    if ENV["INTEGRITY_VALIDATE"]
+      begin
+        info.mediator
+      rescue => error
+        p error
+        puts error
+        puts "https://shogiwars.heroz.jp/games/#{key}?locale=ja"
+        puts "--------------------------------------------------------------------------------"
+        puts kifu_body
+        puts "--------------------------------------------------------------------------------"
+        abort
+      end
+    end
+
+    info.mediator
+
     self.turn_max = info.mediator.turn_info.turn_offset
     self.critical_turn = info.mediator.critical_turn
     self.outbreak_turn = info.mediator.outbreak_turn
