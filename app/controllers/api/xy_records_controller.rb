@@ -23,8 +23,6 @@
 
 module Api
   class XyRecordsController < ::Api::ApplicationController
-    helper_method :js_index_options
-
     class << self
       def command_ranking_rebuild(params)
         XyRuleInfo.rebuild
@@ -37,7 +35,7 @@ module Api
     def index
       if request.format.json?
         if params[:config_fetch]
-          render json: js_index_options
+          render json: config_params
           return
         end
 
@@ -71,15 +69,16 @@ module Api
       render json: result_attributes
     end
 
-    def js_index_options
+    def config_params
       {
-        xy_rule_info: XyRuleInfo.as_json,
-        xy_scope_info: XyScopeInfo.as_json,
-        xy_chart_scope_info: XyChartScopeInfo.as_json,
-        per_page: XyRuleInfo.per_page,
-        rank_max: XyRuleInfo.rank_max,
-        count_all_gteq: XyRuleInfo.count_all_gteq,
-        current_user: current_user.as_json
+        :xy_rule_info        => XyRuleInfo.as_json,
+        :xy_scope_info       => XyScopeInfo.as_json,
+        :xy_chart_scope_info => XyChartScopeInfo.as_json,
+        :per_page            => XyRuleInfo.per_page,
+        :rank_max            => XyRuleInfo.rank_max,
+        :count_all_gteq      => XyRuleInfo.count_all_gteq,
+        :description         => XyRuleInfo.description,
+        :current_user        => current_user&.as_json(only: [:id, :name], methods: [:avatar_path]),
       }
     end
 

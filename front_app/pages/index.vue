@@ -41,7 +41,7 @@ export default {
         { title: '初期非同期読み込み',         to: { name: 'experiment-async_data_test'   }, },
         { title: 'Bulma動作チェック',          to: { name: 'experiment-bulma_test'        }, },
         { title: 'オンラインチェック',         to: { name: 'experiment-online_offline'    }, },
-        { title: 'Inspire',                    to: { name: 'experiment-inspire'           }, },
+        { title: 'Inspire',                    to: { name: 'inspire'                      }, },
       ],
     }
   }

@@ -1,142 +1,154 @@
 <template lang="pug">
 .XyMasterApp
-  .columns
-    .column
-      .has-text-centered
-        .buttons.is-centered
-          template(v-if="mode === 'stop' || mode === 'goal'")
-            button.button.is-primary(@click="start_handle") START
-          template(v-if="mode === 'running' || mode === 'standby'")
-            b-button(@click="restart_handle" type="is-danger") RESTART
-            b-button(@click="stop_handle") やめる
+  b-navbar(type="is-primary")
+    template(slot="brand")
+      b-navbar-item
+        b 符号の鬼
+    template(slot="start")
+    template(slot="end")
+      b-navbar-dropdown(hoverable arrowless right)
+        template(slot="label")
+          b-icon(icon="menu")
+        b-navbar-item(tag="a" href="/") TOPに戻る
 
-          template(v-if="mode === 'stop' || mode === 'goal'")
-            b-dropdown.is-pulled-left(v-model="xy_rule_key")
-              button.button(slot="trigger")
-                span {{current_rule.name}}
-                b-icon(icon="menu-down")
-              template(v-for="e in XyRuleInfo.values")
-                b-dropdown-item(:value="e.key") {{e.name}}
+  .section
+    .columns
+      .column
+        .has-text-centered
+          .buttons.is-centered
+            template(v-if="mode === 'stop' || mode === 'goal'")
+              button.button.is-primary(@click="start_handle") START
+            template(v-if="mode === 'running' || mode === 'standby'")
+              b-button(@click="restart_handle" type="is-danger") RESTART
+              b-button(@click="stop_handle") やめる
 
-            b-button(@click="rule_display" icon-right="help")
+            template(v-if="mode === 'stop' || mode === 'goal'")
+              b-dropdown.is-pulled-left(v-model="xy_rule_key")
+                button.button(slot="trigger")
+                  span {{current_rule.name}}
+                  b-icon(icon="menu-down")
+                template(v-for="e in XyRuleInfo.values")
+                  b-dropdown-item(:value="e.key") {{e.name}}
 
+              b-button(@click="rule_display" icon-right="help")
+
+            template(v-if="development_p")
+              template(v-if="mode === 'running'")
+                button.button(@click="goal_handle") ゴール
+              button.button(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
+              button.button(@click="data_restore_from_hash({})") 初期化
+              button.button(@click="storage_clear") storage_clear
+              button.button(@click="persistense_variables_init") 保存可能な変数のリセット
+              | {{current_pages}}
+
+          .level_container
+            nav.level.is-mobile
+              .level-item.has-text-centered
+                div
+                  p.heading
+                    b-icon(pack="far" icon="circle" type="is-info" size="is-small")
+                  p.title {{o_count}}
+              .level-item.has-text-centered
+                div
+                  p.heading
+                    b-icon(pack="fas" icon="times" type="is-danger" size="is-small")
+                  p.title {{x_count}}
+
+          .tap_digits_container(v-if="tap_mode")
+            .value
+              | {{kanji_human}}
+
+          .shogi_player_container
+            template(v-if="mode === 'standby'")
+              .count_down_wrap
+                .count_down
+                  | {{count_down}}
+            shogi_player(
+              ref="main_sp"
+              :kifu_body="kifu_body"
+              :summary_show="false"
+              :hidden_if_piece_stand_blank="true"
+              :setting_button_show="false"
+              :theme="'simple'"
+              :size="'default'"
+              :flip="current_rule.flip"
+              :board_piece_back_user_class="board_piece_back_user_class"
+              :overlay_navi="false"
+              :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
+            )
+
+          .time_container
+            .fixed_font.is-size-2
+              | {{time_format}}
+
+          template(v-if="mode === 'goal'")
+            .tweet_box_container
+              .box
+                .summary
+                  | {{summary}}
+                .tweet_button_container
+                  .buttons.is-centered
+                    a.button.is-info.is-rounded(:href="tweet_url")
+                      | &nbsp;
+                      b-icon(icon="twitter" size="is-small")
+                      | &nbsp;
+                      | ツイート
+
+      .column.is-4(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
+        b-field.xy_scope_info_field
+          template(v-for="e in XyScopeInfo.values")
+            b-radio-button(v-model="xy_scope_key" :native-value="e.key")
+              | {{e.name}}
+
+        b-tabs(type="" v-model="current_rule_index" expanded)
+          template(v-for="xy_rule_info in XyRuleInfo.values")
+            b-tab-item(:label="xy_rule_info.name" :value="xy_rule_info.key")
+              b-table(
+                :data="xy_records_hash[xy_rule_info.key]"
+                :paginated="true"
+                :per-page="config.per_page"
+                :current-page.sync="current_pages[current_rule_index]"
+                :pagination-simple="false"
+                :mobile-cards="false"
+                :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'"
+                :narrowed="true"
+                default-sort-direction="desc"
+                )
+                b-table-column(v-slot="props" field="rank"       label="順位"   sortable centered :width="1") {{props.row.rank}}
+                b-table-column(v-slot="props" field="entry_name" label="名前"   sortable) {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
+                b-table-column(v-slot="props" field="spent_sec"  label="タイム" sortable) {{time_format_from_msec(props.row.spent_sec)}}
+                b-table-column(v-slot="props" field="created_at" label="日付"   sortable :visible="curent_scope.date_visible") {{time_default_format(props.row.created_at)}}
+
+        .has-text-centered-mobile
+          b-switch(v-model="entry_name_unique") プレイヤー別順位
+
+    .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
+      .column
+        .columns
           template(v-if="development_p")
-            template(v-if="mode === 'running'")
-              button.button(@click="goal_handle") ゴール
-            button.button(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
-            button.button(@click="data_restore_from_hash({})") 初期化
-            button.button(@click="storage_clear") storage_clear
-            button.button(@click="persistense_variables_init") 保存可能な変数のリセット
-            | {{current_pages}}
-
-        .level_container
-          nav.level.is-mobile
-            .level-item.has-text-centered
-              div
-                p.heading
-                  b-icon(pack="far" icon="circle" type="is-info" size="is-small")
-                p.title {{o_count}}
-            .level-item.has-text-centered
-              div
-                p.heading
-                  b-icon(pack="fas" icon="times" type="is-danger" size="is-small")
-                p.title {{x_count}}
-
-        .tap_digits_container(v-if="tap_mode")
-          .value
-            | {{kanji_human}}
-
-        .shogi_player_container
-          template(v-if="mode === 'standby'")
-            .count_down_wrap
-              .count_down
-                | {{count_down}}
-          shogi_player(
-            ref="main_sp"
-            :kifu_body="kifu_body"
-            :summary_show="false"
-            :hidden_if_piece_stand_blank="true"
-            :setting_button_show="false"
-            :theme="'simple'"
-            :size="'default'"
-            :flip="current_rule.flip"
-            :board_piece_back_user_class="board_piece_back_user_class"
-            :overlay_navi="false"
-            :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
-          )
-
-        .time_container
-          .fixed_font.is-size-2
-            | {{time_format}}
-
-        template(v-if="mode === 'goal'")
-          .tweet_box_container
-            .box
-              .summary
-                | {{summary}}
-              .tweet_button_container
-                .buttons.is-centered
-                  a.button.is-info.is-rounded(:href="tweet_url")
-                    | &nbsp;
-                    b-icon(icon="twitter" size="is-small")
-                    | &nbsp;
-                    | ツイート
-
-    .column.is-4(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
-      b-field.xy_scope_info_field
-        template(v-for="e in XyScopeInfo.values")
-          b-radio-button(v-model="xy_scope_key" :native-value="e.key")
-            | {{e.name}}
-
-      b-tabs(type="" v-model="current_rule_index" expanded)
-        template(v-for="xy_rule_info in XyRuleInfo.values")
-          b-tab-item(:label="xy_rule_info.name" :value="xy_rule_info.key")
-            b-table(
-              :data="xy_records_hash[xy_rule_info.key]"
-              :paginated="true"
-              :per-page="config.per_page"
-              :current-page.sync="current_pages[current_rule_index]"
-              :pagination-simple="false"
-              :mobile-cards="false"
-              :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'"
-              :narrowed="true"
-              default-sort-direction="desc"
-              )
-              b-table-column(v-slot="props" field="rank"       label="順位"   sortable centered :width="1") {{props.row.rank}}
-              b-table-column(v-slot="props" field="entry_name" label="名前"   sortable) {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
-              b-table-column(v-slot="props" field="spent_sec"  label="タイム" sortable) {{time_format_from_msec(props.row.spent_sec)}}
-              b-table-column(v-slot="props" field="created_at" label="日付"   sortable :visible="curent_scope.date_visible") {{time_default_format(props.row.created_at)}}
-
-      .has-text-centered-mobile
-        b-switch(v-model="entry_name_unique") プレイヤー別順位
-
-  .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
-    .column
-      .columns
-        template(v-if="development_p")
+            .column
+              .has-text-centered
+                b-field.is-inline-flex
+                  b-button(@click="chart_show" size="is-small")
+                    | 更新
           .column
             .has-text-centered
               b-field.is-inline-flex
-                b-button(@click="chart_show" size="is-small")
-                  | 更新
-        .column
-          .has-text-centered
-            b-field.is-inline-flex
-              template(v-for="e in XyRuleInfo.values")
-                b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key" size="is-small")
-                  | {{e.name}}
-        .column
-          .has-text-centered
-            b-field.is-inline-flex
-              template(v-for="e in XyChartScopeInfo.values")
-                b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key" size="is-small")
-                  | {{e.name}}
-      .columns.is-centered
-        .column.is-half
-          canvas#chart_canvas(ref="chart_canvas")
-          template(v-if="config.count_all_gteq > 1")
+                template(v-for="e in XyRuleInfo.values")
+                  b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key" size="is-small")
+                    | {{e.name}}
+          .column
             .has-text-centered
-              | {{config.count_all_gteq}}回以上やるとチャートに登場します
+              b-field.is-inline-flex
+                template(v-for="e in XyChartScopeInfo.values")
+                  b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key" size="is-small")
+                    | {{e.name}}
+        .columns.is-centered
+          .column.is-half
+            canvas#chart_canvas(ref="chart_canvas")
+            template(v-if="config.count_all_gteq > 1")
+              .has-text-centered
+                | {{config.count_all_gteq}}回以上やるとチャートに登場します
 </template>
 
 <script>
