@@ -52,21 +52,21 @@ module Api
     end
 
     def create
-      if command = current_params[:command]
-        self.class.send("command_#{command}", current_params[:args] || {})
+      if command = params[:command]
+        self.class.send("command_#{command}", params[:args] || {})
         render json: { message: command }
         return
       end
 
-      @xy_record = XyRecord.create!(current_params.merge(user: current_user))
+      @xy_record = XyRecord.create!(record_params.merge(user: current_user))
       @xy_record.slack_notify
       render json: result_attributes
     end
 
     def update
-      id = current_params[:id]
+      id = record_params[:id]
       @xy_record = XyRecord.find(id)
-      @xy_record.update!(entry_name: current_params[:entry_name])
+      @xy_record.update!(entry_name: record_params[:entry_name])
       @xy_record.slack_notify
       render json: result_attributes
     end
@@ -93,7 +93,7 @@ module Api
       }
     end
 
-    def current_params
+    def record_params
       params.permit![:xy_record]
     end
   end

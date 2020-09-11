@@ -13,7 +13,7 @@ end
 desc "本番サーバーの production の DB をローカルの development にコピーする (オプション: TABLES=t1,t2,t3)"
 task :db_sync do
   Rake::Task[:production_db_backup_to_local].invoke
-  system "gzip -d db/shogi_web_production.sql.gz"
+  system "gzip -df db/shogi_web_production.sql.gz"
   system "mysql -u root shogi_web_development < db/shogi_web_production.sql"
 end
 
@@ -21,7 +21,7 @@ desc "本番サーバーの production の DB をローカルにバックアッ�
 task :production_db_backup_to_local do
   tables = (ENV["TABLES"] || "").split(",").join(" ")
   system "ssh i mysqldump -u root -i --add-drop-table shogi_web_production #{tables} --single-transaction --result-file /tmp/shogi_web_production.sql"
-  system "ssh i gzip /tmp/shogi_web_production.sql"
+  system "ssh i gzip -f /tmp/shogi_web_production.sql"
   system "scp i:/tmp/shogi_web_production.sql.gz db"
 end
 

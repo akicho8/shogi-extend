@@ -1,11 +1,9 @@
 <template lang="pug">
 .XyMasterApp
-  b-navbar(type="is-primary")
+  b-navbar(type="is-primary" v-if="mode === 'stop' || mode === 'goal'")
     template(slot="brand")
       b-navbar-item(tag="span")
         b 符号の鬼
-    template(slot="start")
-
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
         b-navbar-item(@click="goal_handle") ゴール
@@ -20,7 +18,9 @@
           img.is-rounded(:src="config.current_user.avatar_path")
       b-navbar-item(v-if="!config.current_user || development_p" @click="login_handle") ログイン
 
-      b-navbar-dropdown(hoverable arrowless right)
+      b-navbar-item(tag="a" href="/") TOPに戻る
+
+      b-navbar-dropdown(hoverable arrowless right v-if="development_p")
         template(slot="label")
           b-icon(icon="menu")
         b-navbar-item(tag="a" href="/") TOPに戻る
@@ -28,26 +28,25 @@
   .section
     .columns
       .column
+        .buttons.is-centered
+          template(v-if="mode === 'stop' || mode === 'goal'")
+            button.button.is-primary(@click="start_handle") START
+          template(v-if="mode === 'running' || mode === 'standby'")
+            b-button(@click="restart_handle" type="is-danger") RESTART
+            b-button(@click="stop_handle") やめる
+
+          template(v-if="mode === 'stop' || mode === 'goal'")
+            b-dropdown.is-pulled-left(v-model="xy_rule_key")
+              button.button(slot="trigger")
+                span {{current_rule.name}}
+                b-icon(icon="menu-down")
+              template(v-for="e in XyRuleInfo.values")
+                b-dropdown-item(:value="e.key") {{e.name}}
+
+            b-button(@click="rule_display" icon-right="help")
         .has-text-centered
-          .buttons.is-centered
-            template(v-if="mode === 'stop' || mode === 'goal'")
-              button.button.is-primary(@click="start_handle") START
-            template(v-if="mode === 'running' || mode === 'standby'")
-              b-button(@click="restart_handle" type="is-danger") RESTART
-              b-button(@click="stop_handle") やめる
-
-            template(v-if="mode === 'stop' || mode === 'goal'")
-              b-dropdown.is-pulled-left(v-model="xy_rule_key")
-                button.button(slot="trigger")
-                  span {{current_rule.name}}
-                  b-icon(icon="menu-down")
-                template(v-for="e in XyRuleInfo.values")
-                  b-dropdown-item(:value="e.key") {{e.name}}
-
-              b-button(@click="rule_display" icon-right="help")
-
-          .level_container
-            nav.level.is-mobile
+          .level_container(v-if="mode === 'goal'")
+            .level.is-mobile
               .level-item.has-text-centered
                 div
                   p.heading
@@ -162,6 +161,7 @@ import dayjs from "dayjs"
 import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
 import xy_master_chart_mod from './xy_master_chart_mod.js'
 import MemoryRecord from 'js-memory-record'
+import { app_keyboard } from './app_keyboard'
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
@@ -182,6 +182,7 @@ const TALK_RATE = 2.0
 export default {
   name: "XyMasterApp",
   mixins: [
+    app_keyboard,
     stopwatch_data_retention,
     xy_master_chart_mod,
   ],
@@ -235,8 +236,6 @@ export default {
 
     this.init_other_variables()
     this.timer_setup()
-
-    document.addEventListener("keydown", this.keydown_handle, false)
   },
 
   mounted() {
@@ -544,7 +543,7 @@ export default {
       this.$refs.main_sp.api_board_clear()
     },
 
-    keydown_handle(e) {
+    keydown_handle_core(e) {
       if (this.mode != "running") {
         return
       }
@@ -811,7 +810,7 @@ $board_color: hsl(0, 0%, 60%)
       top: -0.2rem
 
   .tap_digits_container
-    margin-top: 0.7rem
+    margin-top: 0rem
     .value
       margin: 0 auto
       background-color: hsl(0, 0%, 95%)
@@ -838,9 +837,10 @@ $board_color: hsl(0, 0%, 60%)
       .count_down
         font-size: 24rem
         color: $primary
-        -webkit-text-stroke: 4px white
+        -webkit-text-stroke: 1px $white
+        text-shadow: change_color($black, $alpha: 0.1) 0px 0px 8px
     .shogi-player
-      margin-top: 1em
+      margin-top: 1.5em
       .font_size_base
         // モバイルのときに画面幅に合わせて盤面を大きくする
         +mobile
