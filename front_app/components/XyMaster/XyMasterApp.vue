@@ -51,12 +51,12 @@
               .level-item.has-text-centered
                 div
                   p.heading
-                    b-icon(pack="far" icon="circle" type="is-info" size="is-small")
+                    b-icon(icon="checkbox-blank-circle-outline" type="is-info" size="is-small")
                   p.title {{o_count}}
               .level-item.has-text-centered
                 div
                   p.heading
-                    b-icon(pack="fas" icon="times" type="is-danger" size="is-small")
+                    b-icon(icon="close" type="is-danger" size="is-small")
                   p.title {{x_count}}
 
           .tap_digits_container(v-if="tap_mode")
@@ -812,10 +812,10 @@ $board_color: hsl(0, 0%, 60%)
       margin: 0 auto
       background-color: hsl(0, 0%, 95%)
       border-radius: 0.5rem
-      padding: 0.2rem
+      padding: 0.3rem
       width: 5rem
       font-weight: bold
-      font-size: 1.5rem
+      font-size: 1.75rem
   .shogi_player_container
     position: relative
     .count_down_wrap
