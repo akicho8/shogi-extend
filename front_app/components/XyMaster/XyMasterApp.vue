@@ -5,7 +5,21 @@
       b-navbar-item
         b 符号の鬼
     template(slot="start")
+
     template(slot="end")
+      b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
+        b-navbar-item(@click="goal_handle") ゴール
+        b-navbar-item(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
+        b-navbar-item(@click="data_restore_from_hash({})") 初期化
+        b-navbar-item(@click="storage_clear") storage_clear
+        b-navbar-item(@click="persistense_variables_init") 保存可能な変数のリセット
+        b-navbar-item current_pages:{{current_pages}}
+
+      b-navbar-item(v-if="config.current_user")
+        .image.avatar_image
+          img.is-rounded(:src="config.current_user.avatar_path")
+      b-navbar-item(v-if="!config.current_user || development_p" @click="login_handle") ログイン
+
       b-navbar-dropdown(hoverable arrowless right)
         template(slot="label")
           b-icon(icon="menu")
@@ -31,15 +45,6 @@
                   b-dropdown-item(:value="e.key") {{e.name}}
 
               b-button(@click="rule_display" icon-right="help")
-
-            template(v-if="development_p")
-              template(v-if="mode === 'running'")
-                button.button(@click="goal_handle") ゴール
-              button.button(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
-              button.button(@click="data_restore_from_hash({})") 初期化
-              button.button(@click="storage_clear") storage_clear
-              button.button(@click="persistense_variables_init") 保存可能な変数のリセット
-              | {{current_pages}}
 
           .level_container
             nav.level.is-mobile
@@ -271,8 +276,8 @@ export default {
   },
 
   methods: {
-    rule_display2() {
-      alert(1)
+    login_handle() {
+      
     },
 
     place_talk(place) {
@@ -865,4 +870,10 @@ $board_color: hsl(0, 0%, 60%)
     margin-top: 4rem
   #chart_canvas
     margin: 0 auto
+  .navbar-item
+    .avatar_image
+      img
+        max-height: none
+        width: 32px
+        height: 32px
 </style>
