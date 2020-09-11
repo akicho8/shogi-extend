@@ -37,6 +37,8 @@ Rails.application.routes.draw do
   resource :direct_session, only: [:create, :destroy]
   # end
 
+  get :login, to: "login#show"
+
   ################################################################################ 将棋ウォーズ棋譜検索
 
   namespace :swars, path: "" do
