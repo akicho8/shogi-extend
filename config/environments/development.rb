@@ -84,6 +84,7 @@ Rails.application.configure do
 
   # https://qiita.com/taiteam/items/a37c60fc15c1aa5bb606
   config.hosts << "ikemac.local"
+  config.hosts << "lvh.me"
 
   # ################################################################################ ActionCable
   # ActionCable.server.config.disable_request_forgery_protection = true
