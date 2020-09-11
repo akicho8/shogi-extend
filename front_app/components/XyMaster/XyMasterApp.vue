@@ -2,7 +2,7 @@
 .XyMasterApp
   b-navbar(type="is-primary")
     template(slot="brand")
-      b-navbar-item
+      b-navbar-item(tag="span")
         b 符号の鬼
     template(slot="start")
 
@@ -15,7 +15,7 @@
         b-navbar-item(@click="persistense_variables_init") 保存可能な変数のリセット
         b-navbar-item current_pages:{{current_pages}}
 
-      b-navbar-item(v-if="config.current_user")
+      b-navbar-item(v-if="config.current_user" tag="span")
         .image.avatar_image
           img.is-rounded(:src="config.current_user.avatar_path")
       b-navbar-item(v-if="!config.current_user || development_p" @click="login_handle") ログイン
@@ -277,7 +277,10 @@ export default {
 
   methods: {
     login_handle() {
-      
+      // location.href = this.$config.BASE_URL + "/xusers/sign_in"
+      const params = new URLSearchParams()
+      params.set("return_to", location.href)
+      location.href = this.$config.BASE_URL + `/login?${params}`
     },
 
     place_talk(place) {
