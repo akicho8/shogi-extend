@@ -44,8 +44,10 @@ module Api
           return
         end
 
-        render json: { xy_records_hash: XyRuleInfo.xy_records_hash(params) }
-        return
+        if params[:xy_records_hash_fetch]
+          render json: XyRuleInfo.xy_records_hash(params)
+          return
+        end
       end
     end
 

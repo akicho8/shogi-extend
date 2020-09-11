@@ -240,7 +240,7 @@ export default {
   },
 
   mounted() {
-    // const chart_instance = new Chart(this.$refs.chart_canvas, this.days_chart_js_options())
+    // const chart_instance = new Chart(this.$refs.chart_canvas, this.chart_options_build())
     this.$refs.main_sp.api_board_clear()
   },
 
@@ -310,9 +310,12 @@ export default {
     },
 
     xy_records_hash_update() {
-      this.remote_get("/api/xy", { xy_scope_key: this.xy_scope_key, entry_name_unique: this.entry_name_unique }, data => {
-        this.xy_records_hash = data.xy_records_hash
-      })
+      const params = {
+        xy_records_hash_fetch: true,
+        xy_scope_key: this.xy_scope_key,
+        entry_name_unique: this.entry_name_unique,
+      }
+      this.$axios.get("/api/xy", {params: params}).then(({data}) => this.xy_records_hash = data)
     },
 
     rule_display() {
@@ -452,7 +455,7 @@ export default {
     goal_handle() {
       this.mode = "goal"
       this.timer_stop()
-      this.talk("おわりました", {rate: 1.2})
+      this.talk("おわりました")
 
       if (this.fixed_handle_name) {
         this.entry_name = this.fixed_handle_name
@@ -481,6 +484,7 @@ export default {
         xy_record:    this.post_params,
       }
       const { data } = await this.$axios.post("/api/xy", params)
+
       this.entry_name_unique = false // 「プレイヤー別順位」の解除
       this.data_update(data)         // ランキングに反映
 

@@ -83,7 +83,7 @@ const CHART_CONFIG_DEFAULT = {
     hover: {
       mode: "nearest",          // 近くの点だけにマッチさせる(必須) https:www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
       // intersect: true,       // Y座標のチェックは無視する
-      // animationDuration: 400, // デフォルト400
+      // animationDuration: 0, // デフォルト400
     },
 
     tooltips: {
@@ -118,12 +118,16 @@ export default {
     }
   },
 
+  beforeDestroy() {
+    this.chart_destroy()
+  },
+
   watch: {
     xy_chart_rule_key() {
       this.chart_show()
       this.data_save_to_local_storage()
     },
-    
+
     xy_chart_scope_key() {
       this.chart_show()
       this.data_save_to_local_storage()
@@ -134,9 +138,13 @@ export default {
     chart_show() {
       if (this.xy_chart_counter == 0) {
         this.xy_chart_counter += 1
-        this.remote_get("/api/xy", { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
+        const params = {
+          xy_chart_scope_key: this.xy_chart_scope_key,
+          xy_chart_rule_key:  this.xy_chart_rule_key,
+        }
+        this.$axios.get("/api/xy", {params: params}).then(({data}) => {
           this.chart_destroy()
-          window.chart_instance = new Chart(this.$refs.chart_canvas, this.days_chart_js_options(data.chartjs_datasets))
+          window.chart_instance = new Chart(this.$refs.chart_canvas, this.chart_options_build(data.chartjs_datasets))
           this.xy_chart_counter = 0
         })
       }
@@ -149,7 +157,7 @@ export default {
       }
     },
 
-    days_chart_js_options(datasets) {
+    chart_options_build(datasets) {
       return Object.assign({}, {data: {datasets: datasets}}, CHART_CONFIG_DEFAULT)
     },
   },
