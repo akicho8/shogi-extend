@@ -1,17 +1,20 @@
 <template lang="pug">
-.XyMasterApp
+.XyMasterApp(:class="[mode, {tap_mode: tap_mode, kb_mode: !tap_mode}]")
+  b-navbar(shadow transparent fixed-bottom v-if="development_p")
+    template(slot="start")
+      b-navbar-item(@click="goal_handle") ゴール
+
   b-navbar(type="is-primary" v-if="mode === 'stop' || mode === 'goal'")
     template(slot="brand")
       b-navbar-item(tag="span")
         b 符号の鬼
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
-        b-navbar-item(@click="goal_handle") ゴール
         b-navbar-item(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
-        b-navbar-item(@click="data_restore_from_hash({})") 初期化
-        b-navbar-item(@click="storage_clear") storage_clear
+        b-navbar-item(@click="data_restore_from_hash({})") 変数の初期化
+        b-navbar-item(@click="storage_clear") ブラウザに記憶した情報の削除
         b-navbar-item(@click="persistense_variables_init") 保存可能な変数のリセット
-        b-navbar-item current_pages:{{current_pages}}
+        b-navbar-item ランキングタブの各表示ページ:{{current_pages}}
 
       b-navbar-item(v-if="config.current_user" tag="span")
         .image.avatar_image
@@ -25,18 +28,18 @@
           b-icon(icon="menu")
         b-navbar-item(tag="a" href="/") TOPに戻る
 
-  .section
+  .section(:class="mode")
     .columns
       .column
-        .buttons.is-centered
+        .buttons.is-centered.mb-0
           template(v-if="mode === 'stop' || mode === 'goal'")
             button.button.is-primary(@click="start_handle") START
           template(v-if="mode === 'running' || mode === 'standby'")
-            b-button(@click="restart_handle" type="is-danger") RESTART
-            b-button(@click="stop_handle") やめる
+            b-button.restart_button(@click="restart_handle" type="" size="" icon-left="restart")
+            a.delete.is-large(tag="a" @click="stop_handle")
 
           template(v-if="mode === 'stop' || mode === 'goal'")
-            b-dropdown.is-pulled-left(v-model="xy_rule_key")
+            b-dropdown.is-pulled-left(v-model="xy_rule_key" @input="sound_play('click')" @click.native="sound_play('click')")
               button.button(slot="trigger")
                 span {{current_rule.name}}
                 b-icon(icon="menu-down")
@@ -74,7 +77,7 @@
               :hidden_if_piece_stand_blank="true"
               :setting_button_show="false"
               :theme="'simple'"
-              :size="'default'"
+              :size="sp_size"
               :flip="current_rule.flip"
               :board_piece_back_user_class="board_piece_back_user_class"
               :overlay_navi="false"
@@ -101,10 +104,10 @@
       .column.is-4(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
         b-field.xy_scope_info_field
           template(v-for="e in XyScopeInfo.values")
-            b-radio-button(v-model="xy_scope_key" :native-value="e.key")
+            b-radio-button(v-model="xy_scope_key" :native-value="e.key" @input="sound_play('click')")
               | {{e.name}}
 
-        b-tabs(type="" v-model="current_rule_index" expanded)
+        b-tabs(v-model="current_rule_index" expanded @input="sound_play('click')")
           template(v-for="xy_rule_info in XyRuleInfo.values")
             b-tab-item(:label="xy_rule_info.name" :value="xy_rule_info.key")
               b-table(
@@ -139,13 +142,13 @@
             .has-text-centered
               b-field.is-inline-flex
                 template(v-for="e in XyRuleInfo.values")
-                  b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key" size="is-small")
+                  b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
                     | {{e.name}}
           .column
             .has-text-centered
               b-field.is-inline-flex
                 template(v-for="e in XyChartScopeInfo.values")
-                  b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key" size="is-small")
+                  b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
                     | {{e.name}}
         .columns.is-centered
           .column.is-half
@@ -162,6 +165,7 @@ import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
 import xy_master_chart_mod from './xy_master_chart_mod.js'
 import MemoryRecord from 'js-memory-record'
 import { app_keyboard } from './app_keyboard'
+import { isMobile } from "../../../app/javascript/models/isMobile.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
@@ -318,6 +322,7 @@ export default {
     },
 
     rule_display() {
+      this.sound_play("click")
       this.talk_stop()
 
       // ${xxx} で埋め込める
@@ -338,8 +343,14 @@ export default {
         type: "is-info",
         hasIcon: true,
         trapFocus: true,
-        onConfirm: () => { this.talk_stop() },
-        onCancel:  () => { this.talk_stop() },
+        onConfirm: () => {
+          this.talk_stop()
+          this.sound_play("click")
+        },
+        onCancel:  () => {
+          this.talk_stop()
+          this.sound_play("click")
+        },
       })
 
       this.talk(`
@@ -408,6 +419,7 @@ export default {
     },
 
     start_handle() {
+      this.sound_play("click")
       this.mode = "standby"
       this.count_down_counter = 0
       this.init_other_variables()
@@ -441,6 +453,7 @@ export default {
     },
 
     stop_handle() {
+      this.sound_play("click")
       this.mode = "stop"
       this.timer_stop()
       this.countdown_interval_stop()
@@ -649,6 +662,14 @@ export default {
   },
 
   computed: {
+    sp_size() {
+      if (this.mode === "standby" || this.mode === "running") {
+        if (!isMobile.any()) {
+          return "large"
+        }
+      }
+    },
+
     count_down() {
       return this.count_down_max - this.count_down_counter
     },
@@ -750,8 +771,8 @@ export default {
 
     // ログインしているとユーザー名がわかる
     fixed_handle_name() {
-      if (this.global_current_user) {
-        return this.global_current_user.name
+      if (this.config.current_user) {
+        return this.config.current_user.name
       }
     },
 
@@ -778,10 +799,10 @@ export default {
     },
 
     default_xy_rule_key() {
-      if (this.user_agent_hash.platform.type == "desktop") {
-        return "xy_rule100"
-      } else {
+      if (isMobile.any()) {
         return "xy_rule100t"
+      } else {
+        return "xy_rule100"
       }
     },
 
@@ -800,17 +821,32 @@ export default {
 $board_color: hsl(0, 0%, 60%)
 
 .XyMasterApp
-  .level_container
-    width: 10rem
-    margin: 0 auto
-    .title
-      font-size: $size-7
-      font-weight: normal
-      position: relative
-      top: -0.2rem
+  .restart_button
+    position: fixed
+    top: 0.5rem
+    right: 0.2rem
+  a.delete
+    position: fixed
+    top: 0.5rem
+    left: 0.5rem
+
+  .section
+    +mobile
+      padding: 2.0rem 0.5rem
+      &.running, &.standby
+        padding: 1.5rem 0.5rem
+
+  // .level_container
+  //   width: 10rem
+  //   margin: 0 auto
+  //   .title
+  //     font-size: $size-7
+  //     font-weight: normal
+  //     position: relative
+  //     top: -0.2rem
 
   .tap_digits_container
-    margin-top: 0rem
+    margin-top: 0.8rem
     .value
       margin: 0 auto
       background-color: hsl(0, 0%, 95%)
@@ -840,7 +876,7 @@ $board_color: hsl(0, 0%, 60%)
         -webkit-text-stroke: 1px $white
         text-shadow: change_color($black, $alpha: 0.1) 0px 0px 8px
     .shogi-player
-      margin-top: 1.5em
+      margin-top: 1.25em
       .font_size_base
         // モバイルのときに画面幅に合わせて盤面を大きくする
         +mobile
@@ -866,7 +902,7 @@ $board_color: hsl(0, 0%, 60%)
     +mobile
       justify-content: center
   .time_container
-    margin-top: 0.1rem
+    margin-top: 0.3rem
   .tweet_box_container
     margin-top: 0.75rem
   .summary
@@ -883,4 +919,9 @@ $board_color: hsl(0, 0%, 60%)
         max-height: none
         width: 32px
         height: 32px
+
+  &.running, &.standby
+    &.kb_mode
+      .shogi-player
+        margin-top: 3rem
 </style>
