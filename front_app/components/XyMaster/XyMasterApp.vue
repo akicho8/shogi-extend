@@ -228,7 +228,7 @@ export default {
       latest_rule: null, // 最後に挑戦した最新のルール
       kifu_body: "position sfen 9/9/9/9/9/9/9/9/9 b - 1",
       interval_counter: new IntervalCounter(this.countdown_callback, {early: true, interval: COUNTDOWN_INTERVAL}),
-      interval_frame: new IntervalFrame(this.countdown_callback2),
+      interval_frame: new IntervalFrame(v => this.micro_seconds += v),
     }
   },
 
@@ -588,10 +588,6 @@ export default {
 
     magic_number() {
       return dayjs().format("YYMMDDHHmm")
-    },
-
-    countdown_callback2(v) {
-      this.micro_seconds += v
     },
   },
 
