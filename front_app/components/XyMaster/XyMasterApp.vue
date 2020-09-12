@@ -163,8 +163,10 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 
-import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
 import MemoryRecord from 'js-memory-record'
+import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
+import Soldier      from "shogi-player/src/soldier.js"
+import Place        from "shogi-player/src/place.js"
 
 import { isMobile        } from "../../../app/javascript/models/isMobile.js"
 import { IntervalCounter } from '@/components/models/IntervalCounter.js'
@@ -175,9 +177,7 @@ import { app_keyboard    } from "./app_keyboard.js"
 import { app_debug       } from "./app_debug.js"
 import { app_rule_dialog } from "./app_rule_dialog.js"
 
-import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
-import Soldier      from "shogi-player/src/soldier.js"
-import Place        from "shogi-player/src/place.js"
+import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
 
 class XyRuleInfo extends MemoryRecord {}
 class XyScopeInfo extends MemoryRecord {}
@@ -191,10 +191,10 @@ const CONGRATS_LTEQ      = 10   // N位以内ならおめでとう
 export default {
   name: "XyMasterApp",
   mixins: [
+    stopwatch_data_retention,
     app_keyboard,
     app_debug,
     app_rule_dialog,
-    stopwatch_data_retention,
     app_chart,
   ],
   components: {
@@ -205,7 +205,6 @@ export default {
   },
   data() {
     return {
-      // dynamic
       mode: "stop",
       countdown_counter:  null, // カウントダウン用カウンター
       before_place:       null, // 前のセル
@@ -224,7 +223,7 @@ export default {
       current_pages:      null, // b-table のページ
       latest_rule:        null, // 最後に挑戦した最新のルール
       interval_counter: new IntervalCounter(this.countdown_callback, {early: true, interval: COUNTDOWN_INTERVAL}),
-      interval_frame: new IntervalFrame(v => this.micro_seconds += v),
+      interval_frame:   new IntervalFrame(v => this.micro_seconds += v),
     }
   },
 
