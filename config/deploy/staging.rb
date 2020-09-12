@@ -36,9 +36,15 @@ set :open_urls, [
   "https://shogi-flow.xyz/xy",
   "https://shogi-flow.xyz/cpu/battles",
   "https://shogi-flow.xyz/stopwatch",
+  "https://shogi-flow.xyz/vs-clock",
   "https://shogi-flow.xyz/x",
   "https://shogi-flow.xyz/x/new",
   "https://shogi-flow.xyz/board",
+  "https://shogi-flow.xyz/about/terms",
+  "https://shogi-flow.xyz/about/credit",
+  "https://shogi-flow.xyz/about/privacy-policy",
+  "https://shogi-flow.xyz/training",
+  "https://shogi-flow.xyz/app",
 ]
 
 append :linked_dirs, "storage"
@@ -61,3 +67,4 @@ set :open_urls, [
 
 after "deploy:published", "puma:restart"
 after "deploy:published", "sidekiq:restart"
+after "deploy:published", "nuxt:restart"

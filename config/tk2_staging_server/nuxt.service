@@ -21,8 +21,9 @@ WorkingDirectory=/var/www/shogi_web_staging/current/front_app
 # Environment="PORT=4000"
 # http://thoames.hatenadiary.jp/entry/2018/07/13/104308
 # ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec nuxt -C config/nuxt/staging.rb'
-ExecStart=/bin/bash -lc "nuxt build --dotenv .env.staging && nuxt start -p 4000 --dotenv .env.staging"
-ExecStop=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec nuxtctl -S /var/www/shogi_web_staging/current/front_app/tmp/pids/nuxt.state stop"
+# nuxt build --dotenv .env.staging
+ExecStart=/bin/bash -lc "npx nuxt start -p 4000 --dotenv .env.staging"
+# ExecStop=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec nuxtctl -S /var/www/shogi_web_staging/current/front_app/tmp/pids/nuxt.state stop"
 # /usr/local/rbenv/bin/rbenv exec bundle exec nuxtctl
 # ExecStart="/usr/local/rbenv/shims/nuxt -e staging -C config/nuxt/staging.rb"
 # ExecStart="/var/www/shogi_web_staging/current/front_app/.bin/nuxt -e staging -C config/nuxt/staging.rb"
