@@ -35,7 +35,7 @@
         .buttons.is-centered.mb-0
           template(v-if="mode === 'stop' || mode === 'goal'")
             button.button.is-primary(@click="start_handle") START
-          template(v-if="mode === 'running' || mode === 'standby'")
+          template(v-if="mode === 'run' || mode === 'ready'")
             b-button.restart_button(@click="restart_handle" type="" size="" icon-left="restart")
             a.delete.is-large(tag="a" @click="stop_handle")
 
@@ -49,7 +49,7 @@
 
             b-button(@click="rule_display" icon-right="help")
         .has-text-centered
-          .level_container(v-if="mode === 'goal'")
+          .level_container(v-if="mode === 'goal' && false")
             .level.is-mobile
               .level-item.has-text-centered
                 div
@@ -67,10 +67,10 @@
               | {{kanji_human}}
 
           .shogi_player_container
-            template(v-if="mode === 'standby'")
-              .count_down_wrap
-                .count_down
-                  | {{count_down}}
+            template(v-if="mode === 'ready'")
+              .countdown_wrap
+                .countdown
+                  | {{countdown}}
             shogi_player(
               ref="main_sp"
               :kifu_body="kifu_body"
@@ -167,7 +167,9 @@ import xy_master_chart_mod from './xy_master_chart_mod.js'
 import MemoryRecord from 'js-memory-record'
 import { app_keyboard } from './app_keyboard.js'
 import { app_debug } from './app_debug.js'
+import { app_rule_dialog } from './app_rule_dialog.js'
 import { isMobile } from "../../../app/javascript/models/isMobile.js"
+import { IntervalCounter } from '@/components/models/IntervalCounter.js'
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
@@ -183,13 +185,14 @@ class XyScopeInfo extends MemoryRecord {
 class XyChartScopeInfo extends MemoryRecord {
 }
 
-const TALK_RATE = 2.0
+const COUNTDOWN_INTERVAL = 0.5
 
 export default {
   name: "XyMasterApp",
   mixins: [
     app_keyboard,
     app_debug,
+    app_rule_dialog,
     stopwatch_data_retention,
     xy_master_chart_mod,
   ],
@@ -203,14 +206,13 @@ export default {
     return {
       // const
       board_size: 9,
-      count_down_max: 3,
-      count_down_speed: 1000 * 0.5,
+      countdown_max: 3,
       congrats_lteq: 10,
 
       // dynamic
       mode: "stop",
       inteval_id: null,
-      count_down_counter: null,
+      countdown_counter: null,
       sub_mode: null,
       before_place: null,
       current_place: null,
@@ -229,6 +231,7 @@ export default {
       current_pages: null,
       latest_rule: null, // 最後に挑戦した最新のルール
       kifu_body: "position sfen 9/9/9/9/9/9/9/9/9 b - 1",
+      interval_counter: new IntervalCounter(this.countdown_callback, {interval: COUNTDOWN_INTERVAL}),
     }
   },
 
@@ -248,8 +251,12 @@ export default {
     this.$refs.main_sp.api_board_clear()
   },
 
+  beforeDestroy() {
+    this.interval_counter.stop()
+  },
+
   watch: {
-    entry_name()       { this.data_save_to_local_storage() },
+    entry_name() { this.data_save_to_local_storage() },
 
     current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
 
@@ -280,21 +287,14 @@ export default {
   },
 
   methods: {
-    login_handle() {
-      // location.href = this.$config.BASE_URL + "/xusers/sign_in"
-      const params = new URLSearchParams()
-      params.set("return_to", location.href)
-      location.href = this.$config.BASE_URL + `/login?${params}`
-    },
-
     place_talk(place) {
       const x = this.board_size - place.x
       const y = place.y + 1
-      this.talk(`${x} ${y}`, {rate: TALK_RATE})
+      this.talk(`${x} ${y}`, {rate: 2.0})
     },
 
     board_cell_left_click_user_handle(place, event) {
-      if (this.mode === "running") {
+      if (this.mode === "run") {
         if (this.tap_mode) {
           this.input_valid(place.x, place.y)
         } else {
@@ -308,7 +308,7 @@ export default {
 
     board_piece_back_user_class(place) {
       if (!this.tap_mode) {
-        if (this.mode === "running") {
+        if (this.mode === "run") {
         }
       }
     },
@@ -320,47 +320,6 @@ export default {
         entry_name_unique: this.entry_name_unique,
       }
       return this.$axios.get("/api/xy", {params: params}).then(({data}) => this.xy_records_hash = data)
-    },
-
-    rule_display() {
-      this.sound_play("click")
-      this.talk_stop()
-
-      // ${xxx} で埋め込める
-      const rule_dialog = this.$buefy.dialog.alert({
-        title: "ルール",
-        message: `
-<div class="content is-size-7">
-<ol>
-<li>TAPモードでは符号に対応する位置をタップします</li>
-<li>TAPじゃないモードでは駒の場所をキーボードの数字2桁で入力していきます。最初の数字を間違えたときはESCキーでキャンセルできます</li>
-<li>選択した数まで正解するまでの時間を競います</li>
-<li>ログインしていると毎回出る名前の入力を省略できます</li>
-</ol>
-</div>
-`,
-        confirmText: "わかった",
-        canCancel: ["outside", "escape"],
-        type: "is-info",
-        hasIcon: true,
-        trapFocus: true,
-        onConfirm: () => {
-          this.talk_stop()
-          this.sound_play("click")
-        },
-        onCancel:  () => {
-          this.talk_stop()
-          this.sound_play("click")
-        },
-      })
-
-      this.talk(`
-タップモードでは符号に対応する位置をタップします。
-タップじゃないモードでは駒の場所をキーボードの数字2桁で入力していきます。最初の数字を間違えたときはエスケープキーでキャンセルできます。
-選択した数まで正解するまでの時間を競います。
-ログインしていると毎回出る名前の入力を省略できます。
-`, {rate: TALK_RATE, onend: () => { rule_dialog.close() }})
-
     },
 
     persistense_variables_init() {
@@ -421,32 +380,24 @@ export default {
 
     start_handle() {
       this.sound_play("click")
-      this.mode = "standby"
-      this.count_down_counter = 0
+      this.mode = "ready"
       this.init_other_variables()
       this.latest_rule = this.current_rule
       this.talk_stop()
       this.$refs.main_sp.api_flip_set(this.current_rule.flip)
-
-      this.inteval_id = setInterval(() => {
-        this.count_down_counter += 1
-        if (this.count_down === 0) {
-          this.countdown_interval_stop()
-          this.go_handle()
-        }
-      }, this.count_down_speed)
+      this.interval_counter.start()
     },
 
-    countdown_interval_stop() {
-      if (this.inteval_id) {
-
-        clearInterval(this.inteval_id)
-        this.inteval_id = null
+    countdown_callback(counter) {
+      this.countdown_counter = counter
+      if (this.countdown === 0) {
+        this.interval_counter.stop()
+        this.go_handle()
       }
     },
 
     go_handle() {
-      this.mode = "running"
+      this.mode = "run"
       this.timer_run = true
       this.place_next_set()
       this.sound_play("start")
@@ -457,7 +408,7 @@ export default {
       this.sound_play("click")
       this.mode = "stop"
       this.timer_stop()
-      this.countdown_interval_stop()
+      this.interval_counter.stop()
     },
 
     restart_handle() {
@@ -554,7 +505,7 @@ export default {
     },
 
     keydown_handle_core(e) {
-      if (this.mode != "running") {
+      if (this.mode != "run") {
         return
       }
       if (this.tap_mode) {
@@ -585,7 +536,7 @@ export default {
         this.sound_play("o")
         this.o_count++
         this.goal_check()
-        if (this.mode === "running") {
+        if (this.mode === "run") {
           this.place_next_set()
         }
       } else {
@@ -660,15 +611,15 @@ export default {
 
   computed: {
     sp_size() {
-      if (this.mode === "standby" || this.mode === "running") {
+      if (this.mode === "ready" || this.mode === "run") {
         if (!isMobile.any()) {
           return "large"
         }
       }
     },
 
-    count_down() {
-      return this.count_down_max - this.count_down_counter
+    countdown() {
+      return this.countdown_max - this.countdown_counter
     },
 
     summary() {
@@ -788,7 +739,7 @@ export default {
     },
 
     kanji_human() {
-      if (this.mode === "running") {
+      if (this.mode === "run") {
         if (this.current_place) {
           const place = Place.fetch([this.current_place.x, this.current_place.y])
           return place.kanji_human
@@ -832,7 +783,7 @@ $board_color: hsl(0, 0%, 60%)
   .section
     +mobile
       padding: 2.0rem 0.5rem
-      &.running, &.standby
+      &.run, &.ready
         padding: 1.5rem 0.5rem
 
   // .level_container
@@ -856,7 +807,7 @@ $board_color: hsl(0, 0%, 60%)
       font-size: 1.75rem
   .shogi_player_container
     position: relative
-    .count_down_wrap
+    .countdown_wrap
       z-index: 1
       position: absolute
       top: 0%
@@ -869,7 +820,7 @@ $board_color: hsl(0, 0%, 60%)
       display: flex
       justify-content: center
       align-items: center
-      .count_down
+      .countdown
         font-size: 24rem
         color: $primary
         -webkit-text-stroke: 1px $white
@@ -919,7 +870,7 @@ $board_color: hsl(0, 0%, 60%)
         width: 32px
         height: 32px
 
-  &.running, &.standby
+  &.run, &.ready
     &.kb_mode
       .shogi-player
         margin-top: 3rem

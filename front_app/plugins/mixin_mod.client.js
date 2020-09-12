@@ -15,6 +15,7 @@ import vue_piyo_shogi  from "../../app/javascript/vue_mixins/vue_piyo_shogi.js"
 // Nuxt側で独自定義したもの
 import vue_talk        from "./vue_talk.js"
 import vue_fetch       from "./vue_fetch.js"
+import vue_support_nuxt_side       from "./vue_support_nuxt_side.js"
 
 // import axios_support from "../../app/javascript/axios_support.js"
 // Vue.prototype.$http = axios_support
@@ -33,5 +34,6 @@ Vue.mixin({
 
     vue_fetch,
     vue_talk,
+    vue_support_nuxt_side,
   ],
 })

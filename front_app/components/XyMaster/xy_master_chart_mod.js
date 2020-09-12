@@ -13,7 +13,7 @@ const CHART_CONFIG_DEFAULT = {
     // maintainAspectRatio: false,
 
     animation: {
-      duration: 0,
+      duration: 0, //  アニメーションOFF
     },
 
     elements: {
