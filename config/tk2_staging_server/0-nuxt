@@ -3,6 +3,7 @@ scp nginx_default.conf s:/etc/nginx/conf.d/default.conf
 ssh s "sudo nginx -t && sudo systemctl restart nginx"
 
 scp nuxt.service s:/etc/systemd/system/
+ssh s sudo systemctl enable nuxt
 ssh s sudo systemctl daemon-reload
 ssh s sudo systemctl restart nuxt
 ssh s sudo systemctl status nuxt
