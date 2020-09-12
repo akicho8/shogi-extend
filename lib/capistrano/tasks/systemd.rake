@@ -5,7 +5,7 @@
 # | kill -TERM pid | 完全停止                             | deploy:updated の後  |
 # |----------------+--------------------------------------+----------------------|
 
-[:nginx, :puma, :sidekiq].each do |service|
+[:nginx, :puma, :sidekiq, :nuxt].each do |service|
   namespace service do
     [:start, :stop, :status, :restart, :reload].each do |command|
       desc "cap production #{service}:#{command}"
