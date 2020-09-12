@@ -56,15 +56,6 @@ tp({
     bundle_servers: fetch(:bundle_servers).collect(&:hostname).join(", "),
   })
 
-# 起動確認
-# set :my_heartbeat_urls, ["https://staging.shogi-flow.xyz/"]
-set :my_heartbeat_urls, ["https://shogi-flow.xyz/"]
-
-# 起動するURL
-set :open_urls, [
-  "https://shogi-flow.xyz/",
-]
-
 after "deploy:published", "puma:restart"
 after "deploy:published", "sidekiq:restart"
 after "deploy:published", "nuxt:restart"
