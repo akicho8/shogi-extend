@@ -168,6 +168,7 @@ import MemoryRecord from 'js-memory-record'
 
 import { isMobile        } from "../../../app/javascript/models/isMobile.js"
 import { IntervalCounter } from '@/components/models/IntervalCounter.js'
+import { IntervalFrame } from '@/components/models/IntervalFrame.js'
 
 import { app_chart       } from "./app_chart.js"
 import { app_keyboard    } from "./app_keyboard.js"
@@ -226,7 +227,8 @@ export default {
       current_pages: null,
       latest_rule: null, // 最後に挑戦した最新のルール
       kifu_body: "position sfen 9/9/9/9/9/9/9/9/9 b - 1",
-      interval_counter: new IntervalCounter(this.countdown_callback, {interval: COUNTDOWN_INTERVAL}),
+      interval_counter: new IntervalCounter(this.countdown_callback, {early: true, interval: COUNTDOWN_INTERVAL}),
+      interval_frame: new IntervalFrame(this.countdown_callback2),
     }
   },
 
@@ -238,7 +240,6 @@ export default {
     this.data_restore_from_url_or_storage()
 
     this.init_other_variables()
-    this.timer_setup()
   },
 
   mounted() {
@@ -247,6 +248,7 @@ export default {
 
   beforeDestroy() {
     this.interval_counter.stop()
+    this.interval_frame.stop()
   },
 
   watch: {
@@ -349,20 +351,8 @@ export default {
       this.current_pages = e.current_pages || {}
     },
 
-    timer_setup() {
-      let start = window.performance.now()
-      const loop = () => {
-        const now = window.performance.now()
-        if (this.timer_run) {
-          this.micro_seconds += now - start
-        }
-        start = now
-        window.requestAnimationFrame(loop)
-      }
-      loop()
-    },
-
     init_other_variables() {
+      this.countdown_counter = 0
       this.micro_seconds = 0
       this.before_place = null
       this.current_place = null
@@ -392,7 +382,7 @@ export default {
 
     go_handle() {
       this.mode = "run"
-      this.timer_run = true
+      this.interval_frame.start()
       this.place_next_set()
       this.sound_play("start")
       this.goal_check()
@@ -494,7 +484,7 @@ export default {
     },
 
     timer_stop() {
-      this.timer_run = false
+      this.interval_frame.stop()
       this.$refs.main_sp.api_board_clear()
     },
 
@@ -598,6 +588,10 @@ export default {
 
     magic_number() {
       return dayjs().format("YYMMDDHHmm")
+    },
+
+    countdown_callback2(v) {
+      this.micro_seconds += v
     },
   },
 

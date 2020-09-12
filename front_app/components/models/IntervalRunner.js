@@ -33,69 +33,25 @@
 //
 const ONE_SECOND = 1000
 
-export class IntervalRunner {
-  static id_next() {
-    // if (this.generation == null) {
-    //   this.generation = 0
-    // }
-    const v = this.generation
-    this.generation += 1
-    return v
-  }
+import { IntervalBase } from "./IntervalBase.js"
 
-  constructor(callback, params = {}) {
-    this.params = {
+export class IntervalRunner extends IntervalBase {
+  default_params() {
+    return {
+      ...super.default_params(),
       interval: 1.0,  // 1秒毎
       early: false,   // 初回をすぐに呼ぶか？
-      debug: process.env.NODE_ENV === "development",
-      ...params,
-    }
-    this.name = this.params.name || IntervalRunner.id_next()
-    this.callback = callback
-    this.id = null
-    this.debug_log("initialize")
-  }
-
-  restart() {
-    this.stop()
-    this.start()
-  }
-
-  start() {
-    if (this.id == null) {
-      if (this.params.early) {
-        this.__callback__()
-      }
-      // setInterval(this.__callback__, ...) では __callback__ のなかのスコープがインスタンスにならない
-      this.id = setInterval(() => this.__callback__(), ONE_SECOND * this.params.interval)
-      this.debug_log("start")
-    } else {
-      this.debug_log("start (skip)")
     }
   }
 
-  stop() {
-    if (this.id) {
-      this.debug_log("stop")
-      clearInterval(this.id)
-      this.id = null
-    } else {
-      this.debug_log("stop (skip)")
+  __interval_on__() {
+    if (this.params.early) {
+      this.__callback__()
     }
+    this.id = setInterval(() => this.__callback__(), ONE_SECOND * this.params.interval)
   }
 
-  // private
-
-  __callback__() {
-    this.callback()
-    this.debug_log("callback")
-  }
-
-  debug_log(str) {
-    if (this.params.debug) {
-      console.log(`[${this.constructor.name}][${this.name}][${this.id || ''}] ${str}`)
-    }
+  __interval_off__() {
+    clearInterval(this.id)
   }
 }
-
-IntervalRunner.generation = 0 // TODO: 中で定義するには？

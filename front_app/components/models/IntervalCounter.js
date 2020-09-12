@@ -26,7 +26,14 @@ export class IntervalCounter extends IntervalRunner {
   }
 
   counter_reset() {
-    this.counter = this.params.counter || 0
+    this.counter = this.params.initial
+  }
+
+  default_params() {
+    return {
+      ...super.default_params(),
+      initial: 0, // カウンター初期値
+    }
   }
 
   start() {
