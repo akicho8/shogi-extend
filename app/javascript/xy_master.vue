@@ -27,7 +27,7 @@
           template(v-if="development_p")
             template(v-if="mode === 'running'")
               button.button(@click="goal_handle") ゴール
-            button.button(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
+            button.button(@click="command_send('rebuild', {a: 1})") ランキングリビルド
             button.button(@click="data_restore_from_hash({})") 初期化
             button.button(@click="storage_clear") storage_clear
             button.button(@click="persistense_variables_init") 保存可能な変数のリセット

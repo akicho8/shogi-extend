@@ -1,8 +1,10 @@
 <template lang="pug">
 .XyMasterApp(:class="[mode, {tap_mode: tap_mode, kb_mode: !tap_mode}]")
-  b-navbar(shadow transparent fixed-bottom v-if="development_p")
+  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
+      b-navbar-item(@click="reset_all_handle") リセット
       b-navbar-item(@click="goal_handle") ゴール
+      b-navbar-item(@click="rebuild_handle") リビルド
 
   b-navbar(type="is-primary" v-if="mode === 'stop' || mode === 'goal'")
     template(slot="brand")
@@ -10,7 +12,6 @@
         b 符号の鬼
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
-        b-navbar-item(@click="command_send('ranking_rebuild', {a: 1})") ランキングリビルド
         b-navbar-item(@click="data_restore_from_hash({})") 変数の初期化
         b-navbar-item(@click="storage_clear") ブラウザに記憶した情報の削除
         b-navbar-item(@click="persistense_variables_init") 保存可能な変数のリセット
@@ -164,7 +165,8 @@ import dayjs from "dayjs"
 import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
 import xy_master_chart_mod from './xy_master_chart_mod.js'
 import MemoryRecord from 'js-memory-record'
-import { app_keyboard } from './app_keyboard'
+import { app_keyboard } from './app_keyboard.js'
+import { app_debug } from './app_debug.js'
 import { isMobile } from "../../../app/javascript/models/isMobile.js"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
@@ -187,13 +189,13 @@ export default {
   name: "XyMasterApp",
   mixins: [
     app_keyboard,
+    app_debug,
     stopwatch_data_retention,
     xy_master_chart_mod,
   ],
   components: {
     shogi_player,
   },
-
   props: {
     config: { type: Object, required: true },
   },
@@ -225,9 +227,8 @@ export default {
       xy_records_hash: null,    // 複数のルールでそれぞれにランキング情報も入っている
       xy_record: null,          // ゲームが終わたっときにランクなどが入っている
       current_pages: null,
-      saved_rule: null,
-
-      kifu_body: null,
+      latest_rule: null, // 最後に挑戦した最新のルール
+      kifu_body: "position sfen 9/9/9/9/9/9/9/9/9 b - 1",
     }
   },
 
@@ -318,7 +319,7 @@ export default {
         xy_scope_key: this.xy_scope_key,
         entry_name_unique: this.entry_name_unique,
       }
-      this.$axios.get("/api/xy", {params: params}).then(({data}) => this.xy_records_hash = data)
+      return this.$axios.get("/api/xy", {params: params}).then(({data}) => this.xy_records_hash = data)
     },
 
     rule_display() {
@@ -391,7 +392,7 @@ export default {
         this.xy_chart_rule_key = this.default_xy_rule_key
       }
 
-      this.entry_name = hash.entry_name || this.fixed_handle_name
+      this.entry_name = this.fixed_handle_name || hash.entry_name
       this.current_pages = hash.current_pages || {}
     },
 
@@ -423,7 +424,7 @@ export default {
       this.mode = "standby"
       this.count_down_counter = 0
       this.init_other_variables()
-      this.saved_rule = this.current_rule
+      this.latest_rule = this.current_rule
       this.talk_stop()
       this.$refs.main_sp.api_flip_set(this.current_rule.flip)
 
@@ -516,7 +517,7 @@ export default {
 
     data_update(params) {
       const xy_rule_info = XyRuleInfo.fetch(params.xy_record.xy_rule_key)
-      this.$set(this.xy_records_params, xy_rule_info.key, params.xy_records)
+      this.$set(this.xy_records_hash, xy_rule_info.key, params.xy_records)
       this.xy_record = params.xy_record
     },
 
@@ -545,10 +546,6 @@ export default {
         // }
         this.talk(message, {rate: 1.2})
       }
-    },
-
-    command_send(command, args = {}) {
-      this.$axios.post("/api/xy", {command: command, ...args})
     },
 
     timer_stop() {
@@ -676,7 +673,9 @@ export default {
 
     summary() {
       let out = ""
-      out += `ルール: ${this.saved_rule.name}\n`
+      if (this.latest_rule) {
+        out += `ルール: ${this.latest_rule.name}\n`
+      }
       if (this.xy_record) {
         out += `本日: ${this.xy_record.rank_info.xy_scope_today.rank}位\n`
         out += `全体: ${this.xy_record.rank_info.xy_scope_all.rank}位\n`
@@ -707,7 +706,7 @@ export default {
     },
 
     o_count_max() {
-      return this.saved_rule.o_count_max
+      return this.latest_rule.o_count_max
     },
 
     $_ls_hash() {

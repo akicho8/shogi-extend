@@ -23,12 +23,6 @@
 
 module Api
   class XyRecordsController < ::Api::ApplicationController
-    class << self
-      def command_ranking_rebuild(params)
-        XyRuleInfo.rebuild
-      end
-    end
-
     # curl http://0.0.0.0:3000/api/xy?config_fetch=true
     # curl http://0.0.0.0:3000/api/xy?xy_chart_scope_key=chart_scope_recently&xy_chart_rule_key=xy_rule100t
     # curl http://0.0.0.0:3000/api/xy?xy_scope_key=xy_scope_today&entry_name_unique=false
@@ -53,7 +47,7 @@ module Api
 
     def create
       if command = params[:command]
-        self.class.send("command_#{command}", params[:args] || {})
+        XyRuleInfo.public_send(command)
         render json: { message: command }
         return
       end

@@ -49,6 +49,13 @@ class XyRuleInfo
       each(&:aggregate)
     end
 
+    # 全削除
+    # rails r 'XyRuleInfo.reset_all'
+    def reset_all
+      XyRecord.delete_all
+      rebuild
+    end
+
     def description
       body = values.collect { |e|
         records = e.top_xy_records
