@@ -247,7 +247,6 @@ export default {
   },
 
   mounted() {
-    // const chart_instance = new Chart(this.$refs.chart_canvas, this.chart_options_build())
     this.$refs.main_sp.api_board_clear()
   },
 
