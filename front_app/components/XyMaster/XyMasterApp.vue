@@ -162,30 +162,30 @@
 <script>
 import _ from "lodash"
 import dayjs from "dayjs"
+
 import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
-import xy_master_chart_mod from './xy_master_chart_mod.js'
 import MemoryRecord from 'js-memory-record'
-import { app_keyboard } from './app_keyboard.js'
-import { app_debug } from './app_debug.js'
-import { app_rule_dialog } from './app_rule_dialog.js'
-import { isMobile } from "../../../app/javascript/models/isMobile.js"
+
+import { isMobile        } from "../../../app/javascript/models/isMobile.js"
 import { IntervalCounter } from '@/components/models/IntervalCounter.js'
 
+import { app_chart       } from "./app_chart.js"
+import { app_keyboard    } from "./app_keyboard.js"
+import { app_debug       } from "./app_debug.js"
+import { app_rule_dialog } from "./app_rule_dialog.js"
+
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
+import Soldier      from "shogi-player/src/soldier.js"
+import Place        from "shogi-player/src/place.js"
 
-import Soldier from "shogi-player/src/soldier.js"
-import Place from "shogi-player/src/place.js"
+class XyRuleInfo extends MemoryRecord {}
+class XyScopeInfo extends MemoryRecord {}
+class XyChartScopeInfo extends MemoryRecord {}
 
-class XyRuleInfo extends MemoryRecord {
-}
-
-class XyScopeInfo extends MemoryRecord {
-}
-
-class XyChartScopeInfo extends MemoryRecord {
-}
-
-const COUNTDOWN_INTERVAL = 0.5
+const COUNTDOWN_INTERVAL = 0.5  // カウントダウンはN秒毎に進む
+const COUNTDOWN_MAX      = 3    // カウントダウンはNから開始する
+const DIMENSION          = 9    // 盤面の辺サイズ
+const CONGRATS_LTEQ      = 10   // N位以内ならおめでとう
 
 export default {
   name: "XyMasterApp",
@@ -194,7 +194,7 @@ export default {
     app_debug,
     app_rule_dialog,
     stopwatch_data_retention,
-    xy_master_chart_mod,
+    app_chart,
   ],
   components: {
     shogi_player,
@@ -204,11 +204,6 @@ export default {
   },
   data() {
     return {
-      // const
-      board_size: 9,
-      countdown_max: 3,
-      congrats_lteq: 10,
-
       // dynamic
       mode: "stop",
       inteval_id: null,
@@ -287,7 +282,7 @@ export default {
 
   methods: {
     place_talk(place) {
-      const x = this.board_size - place.x
+      const x = DIMENSION - place.x
       const y = place.y + 1
       this.talk(`${x} ${y}`, {rate: 2.0})
     },
@@ -475,7 +470,7 @@ export default {
       let message = ""
       if (this.entry_name) {
         message += `${this.entry_name}さん`
-        if (this.xy_record.rank_info.xy_scope_today.rank <= this.congrats_lteq) {
+        if (this.xy_record.rank_info.xy_scope_today.rank <= CONGRATS_LTEQ) {
           message += `おめでとうございます。`
         }
         if (this.xy_record.best_update_info) {
@@ -523,7 +518,7 @@ export default {
         if (this.key_queue.length >= 2) {
           const x = parseInt(this.key_queue.shift())
           const y = parseInt(this.key_queue.shift())
-          this.input_valid(this.board_size - x, y - 1)
+          this.input_valid(DIMENSION - x, y - 1)
         }
         e.preventDefault()
         return
@@ -558,7 +553,7 @@ export default {
       if (true) {
         while (true) {
           p = {x: this.place_random(), y: this.place_random()}
-          if ((this.o_count === 0 && (this.board_size - 1 - p.x) === p.y)) {
+          if ((this.o_count === 0 && (DIMENSION - 1 - p.x) === p.y)) {
             continue
           }
           if (this.before_place) {
@@ -584,15 +579,13 @@ export default {
     },
 
     active_p(x, y) {
-      console.log(this.current_place)
-      console.log(x, y)
       if (this.current_place) {
         return _.isEqual(this.current_place, {x: x, y: y})
       }
     },
 
     place_random() {
-      return _.random(0, this.board_size - 1)
+      return _.random(0, DIMENSION - 1)
     },
 
     time_format_from_msec(v) {
@@ -618,7 +611,7 @@ export default {
     },
 
     countdown() {
-      return this.countdown_max - this.countdown_counter
+      return COUNTDOWN_MAX - this.countdown_counter
     },
 
     summary() {

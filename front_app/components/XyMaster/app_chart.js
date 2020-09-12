@@ -113,7 +113,7 @@ const CHART_CONFIG_DEFAULT = {
 
 import dayjs from "dayjs"
 
-export default {
+export const app_chart = {
   data() {
     return {
       xy_chart_rule_key: null,
