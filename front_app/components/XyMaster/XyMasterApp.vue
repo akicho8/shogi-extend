@@ -73,7 +73,7 @@
                   | {{countdown}}
             shogi_player(
               ref="main_sp"
-              :kifu_body="kifu_body"
+              :kifu_body="''"
               :summary_show="false"
               :hidden_if_piece_stand_blank="true"
               :setting_button_show="false"
@@ -122,10 +122,10 @@
                 :narrowed="true"
                 default-sort-direction="desc"
                 )
-                b-table-column(v-slot="props" field="rank"       label="順位"   sortable centered :width="1") {{props.row.rank}}
-                b-table-column(v-slot="props" field="entry_name" label="名前"   sortable) {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
-                b-table-column(v-slot="props" field="spent_sec"  label="タイム" sortable) {{time_format_from_msec(props.row.spent_sec)}}
-                b-table-column(v-slot="props" field="created_at" label="日付"   sortable :visible="curent_scope.date_visible") {{time_default_format(props.row.created_at)}}
+                b-table-column(v-slot="props" field="rank"       label="順位"  numeric centered :width="1") {{props.row.rank}}
+                b-table-column(v-slot="props" field="entry_name" label="名前"  sortable) {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
+                b-table-column(v-slot="props" field="spent_sec"  label="タイム") {{time_format_from_msec(props.row.spent_sec)}}
+                b-table-column(v-slot="props" field="created_at" label="日付" :visible="curent_scope.date_visible") {{time_default_format(props.row.created_at)}}
 
         .has-text-centered-mobile
           b-switch(v-model="entry_name_unique") プレイヤー別順位
@@ -207,26 +207,22 @@ export default {
     return {
       // dynamic
       mode: "stop",
-      inteval_id: null,
-      countdown_counter: null,
-      sub_mode: null,
-      before_place: null,
-      current_place: null,
-      o_count: null,               // 正解数
-      x_count: null,               // 不正解数
-      key_queue: null,
-      timer_run: false,
-      micro_seconds: null,
-      entry_name_unique: false,
-      xy_rule_key: null,        // ../../../app/models/xy_rule_info.rb のキー
-      xy_scope_key: null,       // ../../../app/models/xy_scope_info.rb のキー
-      entry_name: null,         // ランキングでの名前を保持しておく
+      countdown_counter:  null, // カウントダウン用カウンター
+      before_place:       null, // 前のセル
+      current_place:      null, // 今のセル
+      o_count:            null, // 正解数
+      x_count:            null, // 不正解数
+      key_queue:          null, // PCモードでの押したキー
+      micro_seconds:      null, // 経過時間
+      entry_name_unique: false, // プレイヤー別順位ON/OFF
+      xy_rule_key:        null, // ../../../app/models/xy_rule_info.rb のキー
+      xy_scope_key:       null, // ../../../app/models/xy_scope_info.rb のキー
+      entry_name:         null, // ランキングでの名前を保持しておく
       current_rule_index: null, // b-tabs 連動用
-      xy_records_hash: null,    // 複数のルールでそれぞれにランキング情報も入っている
-      xy_record: null,          // ゲームが終わたっときにランクなどが入っている
-      current_pages: null,
-      latest_rule: null, // 最後に挑戦した最新のルール
-      kifu_body: "position sfen 9/9/9/9/9/9/9/9/9 b - 1",
+      xy_records_hash:    null, // 複数のルールでそれぞれにランキング情報も入っている
+      xy_record:          null, // ゲームが終わたっときにランクなどが入っている
+      current_pages:      null, // b-table のページ
+      latest_rule:        null, // 最後に挑戦した最新のルール
       interval_counter: new IntervalCounter(this.countdown_callback, {early: true, interval: COUNTDOWN_INTERVAL}),
       interval_frame: new IntervalFrame(v => this.micro_seconds += v),
     }
