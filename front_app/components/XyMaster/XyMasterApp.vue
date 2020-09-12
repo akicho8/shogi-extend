@@ -216,9 +216,9 @@ export default {
       key_queue: null,
       timer_run: false,
       micro_seconds: null,
-      xy_scope_key: null,
       entry_name_unique: false,
-      xy_rule_key: null,
+      xy_rule_key: null,        // ../../../app/models/xy_rule_info.rb のキー
+      xy_scope_key: null,       // ../../../app/models/xy_scope_info.rb のキー
       entry_name: null,         // ランキングでの名前を保持しておく
       current_rule_index: null, // b-tabs 連動用
       xy_records_hash: null,    // 複数のルールでそれぞれにランキング情報も入っている
@@ -324,29 +324,29 @@ export default {
       this.data_restore_from_hash({})
     },
 
-    data_restore_from_hash(hash) {
-      this.xy_rule_key = hash.xy_rule_key
+    data_restore_from_hash(e) {
+      this.xy_rule_key = e.xy_rule_key
       if (!XyRuleInfo.lookup(this.xy_rule_key)) {
         this.xy_rule_key = this.default_xy_rule_key
       }
 
-      this.xy_scope_key = hash.xy_scope_key
+      this.xy_scope_key = e.xy_scope_key
       if (!XyScopeInfo.lookup(this.xy_scope_key)) {
         this.xy_scope_key = "xy_scope_today"
       }
 
-      this.xy_chart_scope_key = hash.xy_chart_scope_key
+      this.xy_chart_scope_key = e.xy_chart_scope_key
       if (!XyChartScopeInfo.lookup(this.xy_chart_scope_key)) {
         this.xy_chart_scope_key = "chart_scope_recently"
       }
 
-      this.xy_chart_rule_key = hash.xy_chart_rule_key
+      this.xy_chart_rule_key = e.xy_chart_rule_key
       if (!XyRuleInfo.lookup(this.xy_chart_rule_key)) {
         this.xy_chart_rule_key = this.default_xy_rule_key
       }
 
-      this.entry_name = this.fixed_handle_name || hash.entry_name
-      this.current_pages = hash.current_pages || {}
+      this.entry_name = this.current_user_name || e.entry_name
+      this.current_pages = e.current_pages || {}
     },
 
     timer_setup() {
@@ -415,8 +415,8 @@ export default {
       this.timer_stop()
       this.talk("おわりました")
 
-      if (this.fixed_handle_name) {
-        this.entry_name = this.fixed_handle_name
+      if (this.current_user_name) {
+        this.entry_name = this.current_user_name
         this.record_post()
       } else {
         this.$buefy.dialog.prompt({
@@ -712,7 +712,7 @@ export default {
     },
 
     // ログインしているとユーザー名がわかる
-    fixed_handle_name() {
+    current_user_name() {
       if (this.config.current_user) {
         return this.config.current_user.name
       }
