@@ -36,6 +36,5 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
 .the_pulldown_menu
 </style>

@@ -28,7 +28,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
 .the_any_source_read_modal
   .modal-card-foot
     justify-content: flex-end

@@ -11,9 +11,6 @@ class ServiceInfo
         "<b>ぴよ将棋</b>や<b>KENTO</b>と連携",
         "<b>激指</b>に転送するための棋譜コピー",
         "対戦相手の段級位毎の勝率表示",
-        # "プロ棋戦風の<b>棋譜印刷</b>",
-        # "消費時間の可視化",
-        # "指定局面の画像化やツイート",
       ],
     },
     {
@@ -33,7 +30,7 @@ class ServiceInfo
       display_p: true,
       link_path: UrlProxy.wrap("/xy"),
       title: "符号の鬼",
-      image_source: "xy_records_1200x630.png",
+      image_source: "ogp/xy.png",
       description: "符号マスター養成所",
       feature_items: [
         "タップするルールはスマホ用",
@@ -77,9 +74,9 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: [:share_board],
+      link_path: UrlProxy.wrap("/share-board"),
       title: "共有将棋盤",
-      image_source: "share_board_1200x630.png",
+      image_source: "ogp/share-board.png",
       description: "リレー将棋などを目的としたサービス",
       feature_items: [
         "SNS等での指し継ぎ",
@@ -110,7 +107,7 @@ class ServiceInfo
       display_p: true,
       link_path: UrlProxy.wrap("/cpu-battle"),
       title: "CPU対戦",
-      image_source: "cpu_battle_1200x630.png",
+      image_source: "ogp/cpu-battle.png",
       description: "自作の将棋AIと対戦",
       feature_items: [
         # "コンピュータ将棋が初めて生まれたときぐらいのアリゴリズムで動作",

@@ -34,11 +34,17 @@
 #  ・リンクは         share-board?body%3Dposition になっている
 #  ・ので不正なアドレスと認識される。Chrome では問題なし
 #
+
 class ShareBoardsController < ApplicationController
   include EncodeMod
   include ShogiErrorRescueMod
 
   def show
+    # if request.format.html?
+    #   redirect_to "/app/share-board"
+    #   return
+    # end
+
     # アクセスがあれば「上げて」消さないようにするため
     current_record.update_columns(accessed_at: Time.current)
 

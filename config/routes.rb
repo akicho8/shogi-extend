@@ -170,8 +170,8 @@ Rails.application.routes.draw do
     end
     resource :talk, only: [:show, :create]
     resources :xy_records, path: "xy", only: [:index, :create, :update]
-    
     resource :cpu_battle, only: [:show, :create]
+    resource :share_board, only: [:show, :create]
   end
 
   ################################################################################ admin

@@ -1,58 +1,64 @@
 <template lang="pug">
-.share_board
-  .columns
-    .column.sp_mobile_padding
-      the_pulldown_menu
+.ShareBoardApp
+  b-navbar(type="is-primary" centered)
+    template(slot="brand")
+      b-navbar-item.has-text-weight-bold(@click="title_edit")
+        | {{current_title}}
 
-      .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
-        .title.is-4.is-marginless
-          span.is_clickable(@click="title_edit") {{current_title}}
-        .turn_offset.has-text-weight-bold {{turn_offset}}手目
+    template(slot="end")
+      b-navbar-item(tag="a" href="/") TOP
+  .section
+    .columns
+      .column.is_shogi_player
+        the_pulldown_menu
 
-      .sp_container
-        shogi_player(
-          ref="main_sp"
-          :run_mode="run_mode"
-          :debug_mode="debug_mode"
-          :start_turn="turn_offset"
-          :kifu_body="current_sfen"
-          :summary_show="false"
-          :slider_show="true"
-          :setting_button_show="development_p"
-          :size="'large'"
-          :sound_effect="true"
-          :controller_show="true"
-          :human_side_key="'both'"
-          :theme="'real'"
-          :flip.sync="board_flip"
-          @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
-          @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
-          @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
-          @update:turn_offset="turn_offset_set"
-        )
+        .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
+          .turn_offset.has-text-weight-bold \#{{turn_offset}}
 
-      .tweet_button_container
-        .buttons.is-centered
-          b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
-          a.delete.page_delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
+        .sp_container
+          shogi_player(
+            ref="main_sp"
+            :run_mode="run_mode"
+            :debug_mode="debug_mode"
+            :start_turn="turn_offset"
+            :kifu_body="current_sfen"
+            :summary_show="false"
+            :slider_show="true"
+            :setting_button_show="development_p"
+            :size="'large'"
+            :sound_effect="true"
+            :controller_show="true"
+            :human_side_key="'both'"
+            :theme="'real'"
+            :flip.sync="board_flip"
+            @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+            @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
+            @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
+            @update:turn_offset="turn_offset_set"
+          )
 
-      .room_code.is_clickable(@click="room_code_edit" v-if="false")
-        | {{room_code}}
+        .tweet_button_container
+          .buttons.is-centered
+            b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
+            a.delete.page_delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
 
-  .columns(v-if="development_p")
-    .column
-      .box
-        .buttons
-          b-button(tag="a" :href="json_debug_url") JSON
-          b-button(tag="a" :href="twitter_card_url") Twitter画像
-        .content
-          p
-            b Twitter画像
-          p
-            img(:src="twitter_card_url" width="256")
-          p {{twitter_card_url}}
-        pre {{JSON.stringify(record, null, 4)}}
-        debug_print
+        .room_code.is_clickable(@click="room_code_edit" v-if="false")
+          | {{room_code}}
+
+    .columns(v-if="development_p")
+      .column
+        .box
+          .buttons
+            b-button(tag="a" :href="json_debug_url") JSON
+            b-button(tag="a" :href="twitter_card_url") Twitter画像
+          .content
+            p
+              b Twitter画像
+            p
+              img(:src="twitter_card_url" width="256")
+            p {{twitter_card_url}}
+          pre {{JSON.stringify(record, null, 4)}}
+          debug_print
 </template>
 
 <script>
@@ -68,21 +74,24 @@ import the_pulldown_menu                  from "./the_pulldown_menu.vue"
 import the_image_view_point_setting_modal from "./the_image_view_point_setting_modal.vue"
 import the_any_source_read_modal          from "./the_any_source_read_modal.vue"
 
+import shogi_player                    from "shogi-player/src/components/ShogiPlayer.vue"
+
 export default {
   store,
-  name: "share_board",
+  name: "ShareBoardApp",
   mixins: [
     support,
     application_room,
     application_room_init,
   ],
   components: {
+    shogi_player,
     the_pulldown_menu,
     the_image_view_point_setting_modal,
     the_any_source_read_modal,
   },
   props: {
-    info: { required: false },
+    info: { type: Object, required: true },
   },
   data() {
     return {
@@ -325,10 +334,17 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
-@import "application.sass"
+.ShareBoardApp
+  +mobile
+    .section
+      padding: 2.8rem 0.5rem 0
+    .column
+      padding: 0
+      margin: 1.25rem
+      &.is_shogi_player
+        padding: 0
+        margin: 0
 
-.share_board
   ////////////////////////////////////////////////////////////////////////////////
   .title_container
     padding-top: 0.65rem

@@ -105,7 +105,6 @@ import three_stage_league_player_chart from "three_stage_league_player_chart.vue
 import custom_chart                    from "custom_chart.vue"
 import acns1_sample                    from "acns1_sample.vue"
 import actb_app                        from "actb_app/application.vue"
-import share_board                     from "share_board/application.vue"
 import simple_board                    from "simple_board.vue"
 import sp_show                         from "sp_show.vue"
 import ox_modal                        from "ox_modal.vue"
@@ -152,7 +151,6 @@ Vue.mixin({
     swars_user_link_to,
     pulldown_menu,
     simple_board,
-    share_board,
     sp_show,
     ox_modal,
     win_lose_circle,
