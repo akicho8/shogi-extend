@@ -43,9 +43,17 @@ class XyRuleInfo
     #   each(&:current_clean)
     # end
 
+    # rails r 'XyRuleInfo.rebuild'
     def rebuild
       redis.flushdb
       each(&:aggregate)
+    end
+
+    # 全削除
+    # rails r 'XyRuleInfo.reset_all'
+    def reset_all
+      XyRecord.delete_all
+      rebuild
     end
 
     def description

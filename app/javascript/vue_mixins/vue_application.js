@@ -98,8 +98,10 @@ export default {
 
   computed: {
     global_current_user() {
-      if (js_global.current_user) {
-        return js_global.current_user
+      if (typeof js_global !== 'undefined') {
+        if (js_global.current_user) {
+          return js_global.current_user
+        }
       }
     },
   },

@@ -32,6 +32,7 @@ export default {
         { title: 'クレジット',               to: { name: 'about-credit'               }, },
         { title: '対局時計',                 to: { name: 'vs-clock'                   }, },
         { title: 'ストップウォッチ',         to: { name: 'stopwatch'                  }, },
+        { title: '符号の鬼',                 to: { name: 'xy'                         }, },
       ],
       experiment_items: [
         { title: 'フルスクリーンAPIテスト',    to: { name: 'experiment-full_screen_api'   }, },
@@ -40,7 +41,8 @@ export default {
         { title: '初期非同期読み込み',         to: { name: 'experiment-async_data_test'   }, },
         { title: 'Bulma動作チェック',          to: { name: 'experiment-bulma_test'        }, },
         { title: 'オンラインチェック',         to: { name: 'experiment-online_offline'    }, },
-        { title: 'Inspire',                    to: { name: 'experiment-inspire'           }, },
+        { title: 'YES/NO API',                 to: { name: 'experiment-yesno_test'        }, },
+        { title: 'Inspire',                    to: { name: 'inspire'                      }, },
       ],
     }
   }

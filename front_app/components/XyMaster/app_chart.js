@@ -1,5 +1,7 @@
 // 下のチャート関連
 
+import Chart from "chart.js"
+
 const CHART_CONFIG_DEFAULT = {
   type: "line",
   options: {
@@ -9,6 +11,10 @@ const CHART_CONFIG_DEFAULT = {
     // responsive: false,
     // responsive: true,
     // maintainAspectRatio: false,
+
+    animation: {
+      duration: 0, //  アニメーションOFF
+    },
 
     elements: {
       line: {
@@ -81,7 +87,7 @@ const CHART_CONFIG_DEFAULT = {
     hover: {
       mode: "nearest",          // 近くの点だけにマッチさせる(必須) https:www.chartjs.org/docs/latest/general/interactions/modes.html#interaction-modes
       // intersect: true,       // Y座標のチェックは無視する
-      // animationDuration: 400, // デフォルト400
+      // animationDuration: 0, // デフォルト400
     },
 
     tooltips: {
@@ -107,7 +113,7 @@ const CHART_CONFIG_DEFAULT = {
 
 import dayjs from "dayjs"
 
-export default {
+export const app_chart = {
   data() {
     return {
       xy_chart_rule_key: null,
@@ -116,29 +122,36 @@ export default {
     }
   },
 
-  mounted() {
+  beforeDestroy() {
+    this.chart_destroy()
   },
 
   watch: {
     xy_chart_rule_key() {
-      this.chart_show()
+      this.chart_reshow()
       this.data_save_to_local_storage()
     },
 
     xy_chart_scope_key() {
-      this.chart_show()
+      this.chart_reshow()
       this.data_save_to_local_storage()
     },
   },
 
   methods: {
+    chart_reshow() {
+      this.chart_destroy()
+      this.chart_show()
+    },
+
     chart_show() {
-      if (this.xy_chart_counter == 0) {
-        this.xy_chart_counter += 1
-        this.remote_get(this.$root.$options.xhr_post_path, { xy_chart_scope_key: this.xy_chart_scope_key, xy_chart_rule_key: this.xy_chart_rule_key }, data => {
-          this.chart_destroy()
-          window.chart_instance = new Chart(this.$refs.chart_canvas, this.days_chart_js_options(data.chartjs_datasets))
-          this.xy_chart_counter = 0
+      if (!window.chart_instance) {
+        const params = {
+          xy_chart_scope_key: this.xy_chart_scope_key,
+          xy_chart_rule_key:  this.xy_chart_rule_key,
+        }
+        this.$axios.get("/api/xy", {params: params}).then(({data}) => {
+          window.chart_instance = new Chart(this.$refs.chart_canvas, this.chart_options_build(data.chartjs_datasets))
         })
       }
     },
@@ -150,7 +163,7 @@ export default {
       }
     },
 
-    days_chart_js_options(datasets) {
+    chart_options_build(datasets) {
       return Object.assign({}, {data: {datasets: datasets}}, CHART_CONFIG_DEFAULT)
     },
   },

@@ -8,10 +8,6 @@ import { LZMA } from "lzma/src/lzma_worker.js"
 import * as UrlSafeBase64 from "url-safe-base64"
 
 export default {
-  created() {
-    this.data_restore_from_url_or_storage()
-  },
-
   methods: {
     // hashに埋めたくなくなったので未使用
     data_save() {
@@ -34,11 +30,12 @@ export default {
     data_restore_from_url_or_storage() {
       let enc_base64 = null
 
-      if (this.$route.query.restore_code) {
-        enc_base64 = this.$route.query.restore_code
-      } else if (location.hash) {
-        enc_base64 = location.hash.replace(/^#/, "")
-      } else {
+      if (!enc_base64) {
+        if (this.$route.query.restore_code) {
+          enc_base64 = this.$route.query.restore_code
+        }
+      }
+      if (!enc_base64) {
         enc_base64 = localStorage.getItem(this.ls_key)
       }
 
@@ -55,7 +52,10 @@ export default {
     },
 
     data_restore_from_base64(enc_base64) {
-      const value = this.base64_to_value(enc_base64)
+      let value = null
+      if (enc_base64) {
+        value = this.base64_to_value(enc_base64)
+      }
       this.data_restore_from_hash(value || {})
     },
 

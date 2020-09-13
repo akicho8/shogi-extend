@@ -17,6 +17,8 @@
     "@nuxtjs/pwa": "^3.0.2",
     "buefy": "^0.9.3",
     "bulma": "^0.9.0",
+    "chart.js": "^2.9.3",
+    "dayjs": "^1.8.35",
     "js-memory-record": "^0.0.16",
     "lzma": "^2.3.2",
     "node-sass": "^4.14.1",
@@ -26,6 +28,7 @@
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^8.0.2",
+    "shogi-player": "^0.0.213",
     "url-safe-base64": "^1.1.1"
   },
   "devDependencies": {

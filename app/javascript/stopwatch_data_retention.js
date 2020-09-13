@@ -32,6 +32,10 @@ export default {
     },
 
     data_restore_from_url_or_storage() {
+      if (typeof window === 'undefined') {
+        return
+      }
+
       let enc_base64 = null
 
       if (this.$route.query.restore_code) {

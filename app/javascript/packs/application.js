@@ -107,7 +107,6 @@ import acns1_sample                    from "acns1_sample.vue"
 import actb_app                        from "actb_app/application.vue"
 import share_board                     from "share_board/application.vue"
 import simple_board                    from "simple_board.vue"
-import xy_master                       from "xy_master.vue"
 import cpu_battle                      from "cpu_battle.vue"
 import sp_show                         from "sp_show.vue"
 import ox_modal                        from "ox_modal.vue"
@@ -155,7 +154,6 @@ Vue.mixin({
     pulldown_menu,
     simple_board,
     share_board,
-    xy_master,
     cpu_battle,
     sp_show,
     ox_modal,

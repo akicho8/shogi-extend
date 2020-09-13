@@ -36,9 +36,15 @@ set :open_urls, [
   "https://shogi-flow.xyz/xy",
   "https://shogi-flow.xyz/cpu/battles",
   "https://shogi-flow.xyz/stopwatch",
+  "https://shogi-flow.xyz/vs-clock",
   "https://shogi-flow.xyz/x",
   "https://shogi-flow.xyz/x/new",
   "https://shogi-flow.xyz/board",
+  "https://shogi-flow.xyz/about/terms",
+  "https://shogi-flow.xyz/about/credit",
+  "https://shogi-flow.xyz/about/privacy-policy",
+  "https://shogi-flow.xyz/training",
+  "https://shogi-flow.xyz/app",
 ]
 
 append :linked_dirs, "storage"
@@ -50,14 +56,6 @@ tp({
     bundle_servers: fetch(:bundle_servers).collect(&:hostname).join(", "),
   })
 
-# 起動確認
-# set :my_heartbeat_urls, ["https://staging.shogi-flow.xyz/"]
-set :my_heartbeat_urls, ["https://shogi-flow.xyz/"]
-
-# 起動するURL
-set :open_urls, [
-  "https://shogi-flow.xyz/",
-]
-
 after "deploy:published", "puma:restart"
 after "deploy:published", "sidekiq:restart"
+after "deploy:published", "nuxt:restart"

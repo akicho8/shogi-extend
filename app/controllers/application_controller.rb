@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   # ログインしたあとに移動するパス
   # https://notsleeeping.com/archives/2487
   def after_sign_in_path_for(resource_or_scope)
-    return_to = session[:return_to]
+    return_to = session[:return_to] || :root
     session[:return_to] = nil
 
     # devise経由でログインしたときでも session と cookie に設定する
@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
     # アプリではログインしたときは current_user が nil になってしまう
     current_user_set(resource_or_scope)
 
-    return_to || :root
+    return_to
   end
 
   concerning :ChoreMethods do

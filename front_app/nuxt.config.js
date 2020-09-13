@@ -34,7 +34,7 @@ const config = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: "将棋に関連する便利サービスを提供するサイトです" },
-      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "") + "/x-cable" },
+      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://lvh.me:3000" : "") + "/x-cable" },
 
       { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
       { hid: "og:type",        property: "og:type",        content: "website" },
@@ -53,7 +53,7 @@ const config = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
-    // base: { href: "http://localhost:3000" },
+    // base: { href: "http://lvh.me:3000" },
   },
   /*
   ** Customize the progress-bar color
@@ -196,8 +196,9 @@ const config = {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  config.proxy["/api"]    = "http://0.0.0.0:3000"
-  config.proxy["/system"] = "http://0.0.0.0:3000" // for mp3
+  config.proxy["/api"]        = "http://0.0.0.0:3000"
+  config.proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
+  config.proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
 }
 
 export default config

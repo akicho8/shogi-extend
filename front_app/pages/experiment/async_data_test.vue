@@ -1,6 +1,8 @@
 <template lang="pug">
 .async_data_test
-  //- | {{ip}}
+  .box
+    | {{time}}
+  hr
   nuxt-link(:to="{name:'index'}" exact-active-class="is-active") TOP
 </template>
 
@@ -9,6 +11,9 @@
 export default {
   name: "async_data_test",
   async asyncData({ $axios }) {
+    const time = (new Date()).toString()
+    return { time }
+
     // if (process.server) {
     //   // const childProcess = require('child_process');
     //   childProcess.exec('date', (error, stdout, stderr) => {

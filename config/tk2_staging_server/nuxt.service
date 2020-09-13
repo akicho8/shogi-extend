@@ -1,0 +1,67 @@
+# -*- coding: utf-8; compile-command: "scp nuxt.service s:/etc/systemd/system/; ssh s 'sudo systemctl daemon-reload; sudo systemctl restart nuxt; sudo systemctl status nuxt; sudo systemctl reset-failed nuxt'" -*-
+
+# ssh s sudo systemctl status nuxt
+# bundle binstub nuxt --bin=sbin
+
+# https://github.com/nuxt/nuxt/blob/master/docs/systemd.md
+# https://qiita.com/ch7821/items/369090459769c603bb6b
+
+[Unit]
+Description=nuxt staging
+After=syslog.target network.target
+
+[Service]
+Type=simple
+# Type=notify
+# If your Nuxt process locks up, systemd's watchdog will restart it within seconds.
+# WatchdogSec=10
+
+WorkingDirectory=/var/www/shogi_web_staging/current/front_app
+# Environment="RAILS_ENV=staging"
+# Environment="PORT=4000"
+# http://thoames.hatenadiary.jp/entry/2018/07/13/104308
+# ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec nuxt -C config/nuxt/staging.rb'
+# nuxt build --dotenv .env.staging
+ExecStart=/bin/bash -lc "npx nuxt start -p 4000 --dotenv .env.staging"
+# ExecStop=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec nuxtctl -S /var/www/shogi_web_staging/current/front_app/tmp/pids/nuxt.state stop"
+# /usr/local/rbenv/bin/rbenv exec bundle exec nuxtctl
+# ExecStart="/usr/local/rbenv/shims/nuxt -e staging -C config/nuxt/staging.rb"
+# ExecStart="/var/www/shogi_web_staging/current/front_app/.bin/nuxt -e staging -C config/nuxt/staging.rb"
+# ExecStart="/usr/local/rbenv/shims/bundle exec nuxt -e staging -C config/nuxt/staging.rb"
+# If you use the system's ruby:
+# ExecStart=/usr/local/bin/bundle exec nuxt -e staging
+# If you use rvm in staging, don't.
+
+# If you use the system's ruby:
+# ExecStart=/usr/local/bin/bundle exec nuxt -e staging
+# If you use rvm in staging, don't.
+
+# use `systemctl reload nuxt` to send the quiet signal to Nuxt
+# at the start of your deploy process.
+# Or you can use `systemctl kill -s TSTP nuxt`
+# ExecReload=/usr/bin/kill -TSTP $MAINPID
+
+# !!! Change this to your deploy user account !!!
+# User=root
+User=deploy
+Group=deploy
+UMask=0002
+
+# Greatly reduce Ruby memory fragmentation and heap usage
+# https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
+# https://evilmartians.com/chronicles/fullstaq-ruby-first-impressions-and-how-to-migrate-your-docker-kubernetes-ruby-apps-today
+Environment=MALLOC_ARENA_MAX=2
+
+# if we crash, restart
+RestartSec=1
+Restart=on-failure
+
+# # output goes to /var/log/syslog (Ubuntu) or /var/log/messages (CentOS)
+# StandardOutput=syslog
+# StandardError=syslog
+# 
+# # This will default to "bundler" if we don't specify it
+# SyslogIdentifier=nuxt
+
+[Install]
+WantedBy=multi-user.target
