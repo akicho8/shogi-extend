@@ -6,7 +6,6 @@ div
         Logo
         span.ml-2
           b SHOGI-EXTEND
-    template(slot="start")
   .section.pt-5
     .columns.is-marginless
       .column
