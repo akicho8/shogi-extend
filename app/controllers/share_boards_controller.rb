@@ -34,11 +34,19 @@
 #  ・リンクは         share-board?body%3Dposition になっている
 #  ・ので不正なアドレスと認識される。Chrome では問題なし
 #
+
 class ShareBoardsController < ApplicationController
   include EncodeMod
   include ShogiErrorRescueMod
 
   def show
+    # http://localhost:3000/share-board
+    if request.format.html?
+      query = params.permit!.to_h.except(:controller, :action).to_query.presence
+      redirect_to UrlProxy.wrap(["/share-board", query].compact.join("?"))
+      return
+    end
+
     # アクセスがあれば「上げて」消さないようにするため
     current_record.update_columns(accessed_at: Time.current)
 

@@ -27,6 +27,7 @@ export default {
     return {
       production_items: [
         { title: 'Home',                     to: { name: 'index'                      }, },
+        { title: '共有将棋盤',               to: { name: 'share-board'                }, },
         { title: 'CPU対戦',                  to: { name: 'cpu-battle'                 }, },
         { title: '利用規約',                 to: { name: 'about-terms'                }, },
         { title: 'プライバシー  ',           to: { name: 'about-privacy-policy'       }, },

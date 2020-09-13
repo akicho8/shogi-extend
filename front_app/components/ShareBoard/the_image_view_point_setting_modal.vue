@@ -51,7 +51,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
 .the_image_view_point_setting_modal
   .desc
     color: $grey
