@@ -4,6 +4,9 @@ export const application_room_init = {
       idol_timer_id: null,
     }
   },
+  beforeDestroy() {
+    this.idol_timer_stop()
+  },
   methods: {
     idol_timer_start() {
       this.idol_timer_stop()

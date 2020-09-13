@@ -93,7 +93,7 @@ import the_pulldown_menu                  from "./the_pulldown_menu.vue"
 import the_image_view_point_setting_modal from "./the_image_view_point_setting_modal.vue"
 import the_any_source_read_modal          from "./the_any_source_read_modal.vue"
 
-import shogi_player                    from "shogi-player/src/components/ShogiPlayer.vue"
+import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
 export default {
   store,
@@ -158,7 +158,7 @@ export default {
     // デバッグ用
     mediator_snapshot_sfen_set(sfen) {
       if (this.development_p) {
-        this.$buefy.toast.open({message: `mediator_snapshot_sfen -> ${sfen}`, queue: false})
+        // this.$buefy.toast.open({message: `mediator_snapshot_sfen -> ${sfen}`, queue: false})
       }
     },
 
