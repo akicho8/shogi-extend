@@ -16,7 +16,7 @@
                   b-button(type="is-primary" @click="start_handle" :rounded="true")
                     | 対局開始
                 template(v-if="mode === 'playing'")
-                  b-button(type="is-danger" outlined @click="give_up_handle" :rounded="true" :loading="give_up_processing")
+                  b-button(@click="give_up_handle" :rounded="true" :loading="give_up_processing")
                     | 投了
                   template(v-if="development_p")
                     b-button(@click="candidate_handle" :loading="candidate_processing")
