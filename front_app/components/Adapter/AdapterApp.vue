@@ -3,6 +3,8 @@
   b-navbar(type="is-primary")
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="div") なんでも棋譜変換
+    template(slot="end")
+      b-navbar-item(tag="a" href="/") TOP
   .section
     .columns
       .column
