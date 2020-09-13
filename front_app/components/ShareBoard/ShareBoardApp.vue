@@ -4,9 +4,29 @@
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(@click="title_edit")
         | {{current_title}}
+    template(slot="start")
+      template(v-if="run_mode === 'play_mode'")
+        b-navbar-item(@click="reset_handle") 盤面リセット
+        b-navbar-item(@click="kifu_copy_handle") 棋譜コピー
+        b-navbar-item(:href="snapshot_image_url") 局面画像の取得
+      b-navbar-item(@click="mode_toggle_handle")
+        template(v-if="run_mode === 'play_mode'")
+          | 局面編集
+        template(v-else)
+          | 局面編集(終了)
+      b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
+      b-navbar-item(@click="image_view_point_setting_handle") Twitter画像の視点
+      b-navbar-dropdown(hoverable arrowless right label="その他")
+        b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
+        b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
+        b-navbar-item(@click="title_edit") タイトル編集
+        template(v-if="run_mode === 'play_mode'")
+          b-navbar-item(@click="room_code_edit")
+            | リアルタイム共有
+            .has-text-danger(v-if="room_code")
+              | {{room_code}}
+        b-navbar-item(tag="a" href="/") TOPに戻る
 
-    template(slot="end")
-      b-navbar-item(tag="a" href="/") TOP
   .section
     .columns
       .column.is_shogi_player
@@ -58,7 +78,7 @@
               img(:src="twitter_card_url" width="256")
             p {{twitter_card_url}}
           pre {{JSON.stringify(record, null, 4)}}
-          debug_print
+          //- debug_print
 </template>
 
 <script>
@@ -166,7 +186,6 @@ export default {
     // 操作←→編集 切り替え
     mode_toggle_handle() {
       if (this.run_mode === "play_mode") {
-        this.$gtag.event("open", {event_category: "共有将棋盤(編集)"})
         this.run_mode = "edit_mode"
         if (true) {
           this.board_flip = false // ▲視点にしておく(お好み)
@@ -260,11 +279,11 @@ export default {
         component: the_any_source_read_modal,
         events: {
           "update:any_source": any_source => {
-            this.remote_fetch("POST", "/api/general/any_source_to", { any_source: any_source, to_format: "sfen" }, e => {
-              if (e.body) {
+            this.$axios.post("/api/general/any_source_to", {any_source: any_source, to_format: "sfen"}).then(({data}) => {
+              if (data.body) {
                 this.general_ok_notice("正常に読み込みました")
-                this.current_sfen = e.body
-                this.turn_offset = e.turn_max
+                this.current_sfen = data.body
+                this.turn_offset = data.turn_max
                 this.board_flip = false
                 modal_instance.close()
               }
@@ -275,14 +294,24 @@ export default {
     },
 
     permalink_for(params = {}) {
-      const url = new URL(location)
+      let url = null
+      if (params.format) {
+        url = new URL(this.$config.BASE_URL + `/share-board.${params.format}`)
+      } else {
+        url = new URL(location)
+      }
+
       url.searchParams.set("body", this.current_body) // 編集モードでもURLを更新するため
       url.searchParams.set("turn", this.turn_offset)
       url.searchParams.set("title", this.current_title)
       url.searchParams.set("image_view_point", this.image_view_point)
       url.searchParams.set("room_code", this.room_code)
 
-      _.each(params, (v, k) => url.searchParams.set(k, v))
+      _.each(params, (v, k) => {
+        if (k !== "format") {
+          url.searchParams.set(k, v)
+        }
+      })
 
       // 編集モードでの状態を維持したいのでURLに含めておく
       // 操作モードのときは常にURLに入っているのはアレなので消す

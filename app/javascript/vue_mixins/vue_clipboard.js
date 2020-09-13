@@ -22,15 +22,15 @@ export default {
         return this.simple_clipboard_copy(body)
       }
 
-      this.remote_fetch("POST", "/api/general/any_source_to", {
+      (this.$axios || this.$http).post("/api/general/any_source_to", {
         any_source: any_source,
         to_format: to_format,
         candidate_enable: false,
         validate_enable: false,
-      }, e => {
-        if (e.body) {
-          if (!this.simple_clipboard_copy(e.body)) {
-            this.$set(this.kif_clipboard_copy_cache, key, e.body)
+      }).then(({data}) => {
+        if (data.body) {
+          if (!this.simple_clipboard_copy(data.body)) {
+            this.$set(this.kif_clipboard_copy_cache, key, data.body)
           }
         }
       })
