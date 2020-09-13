@@ -160,7 +160,6 @@ export default {
     // 戦力情報の反映
     score_list_reflection(e) {
       if (e["score_list"]) {
-        console.log(e["score_list"])
         e["score_list"].forEach(e => {
           this._chart_config.data.labels.push(e.x)
           this._chart_config.data.datasets[0].data.push(e)

@@ -147,12 +147,12 @@ import _ from "lodash"
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
 // static
-import CpuBrainInfo from "./cpu_brain_info.js"
+import CpuBrainInfo    from "./cpu_brain_info.js"
 import CpuStrategyInfo from "./cpu_strategy_info.js"
-import CpuPresetInfo from "./cpu_preset_info.js"
-import BoardStyleInfo from "./board_style_info.js"
-import PresetInfo from "shogi-player/src/preset_info.js"
-import Location from "shogi-player/src/location.js"
+import CpuPresetInfo   from "./cpu_preset_info.js"
+import BoardStyleInfo  from "./board_style_info.js"
+import PresetInfo      from "shogi-player/src/preset_info.js"
+import Location        from "shogi-player/src/location.js"
 
 import cpu_battle_force_chart from "./cpu_battle_force_chart.js"
 
@@ -174,14 +174,14 @@ export default {
       // -------------------------------------------------------------------------------- dynamic
       mode: null,                                   // 現在の状態
       give_up_processing: null,                     // 投了処理中(連打防止用)
-      judge_group: this.config.judge_group, // 勝敗
+      judge_group: this.config.judge_group,         // 勝敗
       candidate_processing: null,                   // 形勢判断中
 
       // 設定用
       cpu_brain_key:    this.config.cpu_brain_key,    // 強さ
       cpu_strategy_key: this.config.cpu_strategy_key, // 戦法
       cpu_preset_key:   this.config.cpu_preset_key,   // 手合
-      cpu_strategy_random_number: null,                       // オールラウンド時の戦法選択用乱数
+      cpu_strategy_random_number: null,               // オールラウンド時の戦法選択用乱数
       yomiage_mode: true,
 
       // 候補手
@@ -189,15 +189,15 @@ export default {
       candidate_rows: null,   // 配列
 
       // デバッグ用
-      pressure_rate_hash: null,       // 終盤度
-      think_text: null,       // 思考内容テキスト
+      pressure_rate_hash: null, // 終盤度
+      think_text:         null, // 思考内容テキスト
 
       // shogi-player 用パラメータ
-      current_sfen: null,                       // 譜面
-      flip: null,                               // 駒落ちなら反転させる
+      current_sfen: null,               // 譜面
+      flip: null,                       // 駒落ちなら反転させる
       sp_params: this.config.sp_params, // スタイル(createdで反映させるとwatchが反応してしまう)
-      bg_variant: null,                         // 背景の種類
-      human_side_key: null,                     // 人間が操作する側を絞る
+      bg_variant: null,                 // 背景の種類
+      human_side_key: null,             // 人間が操作する側を絞る
     }
   },
 
@@ -257,11 +257,11 @@ export default {
 
     post_shared_params() {
       return {
-        cpu_brain_key: this.cpu_brain_key,
-        cpu_strategy_key: this.cpu_strategy_key,
+        cpu_brain_key:              this.cpu_brain_key,
+        cpu_strategy_key:           this.cpu_strategy_key,
         cpu_strategy_random_number: this.cpu_strategy_random_number,
-        cpu_preset_key: this.cpu_preset_key,
-        yomiage_mode: this.yomiage_mode,
+        cpu_preset_key:             this.cpu_preset_key,
+        yomiage_mode:               this.yomiage_mode,
       }
     },
   },
