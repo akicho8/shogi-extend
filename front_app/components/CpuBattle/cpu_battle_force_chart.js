@@ -3,7 +3,9 @@
 const CHART_TOP_PADDING_RATE = 1.0   // 評価値の上の隙間率(1.0〜1.5ぐらい1.0で無し)
 const SUGGESTED_MAX_DEFAULT = 10000  // 評価値の初期値
 
-import PaletteInfo from './palette_info.js'
+import Vue from "chart.js"
+
+import PaletteInfo from "../../../app/javascript/palette_info.js"
 
 const MainPalette = PaletteInfo.fetch("info")
 

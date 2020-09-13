@@ -108,7 +108,7 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: [:cpu_battles],
+      link_path: UrlProxy.wrap("/cpu-battle"),
       title: "CPU対戦",
       image_source: "cpu_battle_1200x630.png",
       description: "自作の将棋AIと対戦",

@@ -27,6 +27,7 @@ export default {
     return {
       production_items: [
         { title: 'Home',                     to: { name: 'index'                      }, },
+        { title: 'CPU対戦',                  to: { name: 'cpu-battle'                 }, },
         { title: '利用規約',                 to: { name: 'about-terms'                }, },
         { title: 'プライバシー  ',           to: { name: 'about-privacy-policy'       }, },
         { title: 'クレジット',               to: { name: 'about-credit'               }, },

@@ -1,5 +1,5 @@
 <template lang="pug">
-.cpu_battle
+.CpuBattleApp
   .columns
     .column.sp_mobile_padding
       template(v-if="mode === 'playing' || mode === 'standby'")
@@ -41,11 +41,11 @@
           :controller_show="development_p || mode === 'standby'"
           :size="'large'"
           :sound_effect="true"
-          :volume="$root.$options.volume"
+          :volume="config.volume"
           :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
           :flip.sync="flip"
           :setting_button_show="development_p"
-          :summary_show="development_p || RAILS_ENV === 'test'"
+          :summary_show="development_p"
           @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
           ref="sp_vm"
         )
@@ -138,12 +138,13 @@
 
 <script>
 import _ from "lodash"
+import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
 // static
-import CpuBrainInfo from "cpu_brain_info"
-import CpuStrategyInfo from "cpu_strategy_info"
-import CpuPresetInfo from "cpu_preset_info"
-import BoardStyleInfo from "board_style_info"
+import CpuBrainInfo from "./cpu_brain_info.js"
+import CpuStrategyInfo from "./cpu_strategy_info.js"
+import CpuPresetInfo from "./cpu_preset_info.js"
+import BoardStyleInfo from "./board_style_info.js"
 import PresetInfo from "shogi-player/src/preset_info.js"
 import Location from "shogi-player/src/location.js"
 
@@ -152,26 +153,28 @@ import cpu_battle_force_chart from "./cpu_battle_force_chart.js"
 const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
 
 export default {
-  name: "cpu_battle",
+  name: "CpuBattleApp",
   mixins: [
     cpu_battle_force_chart,
   ],
-
+  props: {
+    config: { type: Object, required: true },
+  },
+  components: {
+    shogi_player,
+  },
   data() {
     return {
-      // -------------------------------------------------------------------------------- static
-      current_user: js_global.current_user, // 名前を読み上げるため
-
       // -------------------------------------------------------------------------------- dynamic
       mode: null,                                   // 現在の状態
       give_up_processing: null,                     // 投了処理中(連打防止用)
-      judge_group: this.$root.$options.judge_group, // 勝敗
+      judge_group: this.config.judge_group, // 勝敗
       candidate_processing: null,                   // 形勢判断中
 
       // 設定用
-      cpu_brain_key:    this.$root.$options.cpu_brain_key,    // 強さ
-      cpu_strategy_key: this.$root.$options.cpu_strategy_key, // 戦法
-      cpu_preset_key:   this.$root.$options.cpu_preset_key,   // 手合
+      cpu_brain_key:    this.config.cpu_brain_key,    // 強さ
+      cpu_strategy_key: this.config.cpu_strategy_key, // 戦法
+      cpu_preset_key:   this.config.cpu_preset_key,   // 手合
       cpu_strategy_random_number: null,                       // オールラウンド時の戦法選択用乱数
       yomiage_mode: true,
 
@@ -186,16 +189,16 @@ export default {
       // shogi-player 用パラメータ
       current_sfen: null,                       // 譜面
       flip: null,                               // 駒落ちなら反転させる
-      sp_params: this.$root.$options.sp_params, // スタイル(createdで反映させるとwatchが反応してしまう)
+      sp_params: this.config.sp_params, // スタイル(createdで反映させるとwatchが反応してしまう)
       bg_variant: null,                         // 背景の種類
       human_side_key: null,                     // 人間が操作する側を絞る
     }
   },
 
   created() {
-    CpuBrainInfo.memory_record_reset(this.$root.$options.cpu_brain_infos)
-    CpuStrategyInfo.memory_record_reset(this.$root.$options.cpu_strategy_infos)
-    CpuPresetInfo.memory_record_reset(this.$root.$options.cpu_preset_infos)
+    CpuBrainInfo.memory_record_reset(this.config.cpu_brain_infos)
+    CpuStrategyInfo.memory_record_reset(this.config.cpu_strategy_infos)
+    CpuPresetInfo.memory_record_reset(this.config.cpu_preset_infos)
 
     this.board_style_info_reflection()
 
@@ -207,8 +210,6 @@ export default {
 
     this.give_up_processing = false
     this.candidate_processing = false
-
-    console.log("this.$route.query:", this.$route.query)
   },
 
   mounted() {
@@ -300,8 +301,6 @@ export default {
 
     // 開始
     start_handle() {
-      this.$gtag.event("start", {event_category: "CPU対戦"})
-
       this.sound_play("click")
 
       this.current_sfen_set()
@@ -330,7 +329,7 @@ export default {
       this.post_apply({start_trigger: true})
 
       // 平手であれば振り駒(ただしテストのときは先手からとする)
-      if (RAILS_ENV !== "test") {
+      if (!this.development_p) {
         if (this.preset_info.first_location_key === "black") {
           this.human_side_key = _.sample(Location.keys) // 振り駒をして
           if (this.human_side_key === "white") {        // 後手番なら
@@ -423,10 +422,7 @@ export default {
     },
 
     post_apply(params) {
-      this.silent_remote_fetch("POST", this.$root.$options.post_path, {
-        ...this.post_shared_params,
-        ...params,
-      }, e => this.response_process(e))
+      this.$axios.post("/api/cpu_battle", {...this.post_shared_params, ...params}).then(({data}) => this.response_process(data))
     },
 
     response_process(e) {
@@ -516,8 +512,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./stylesheets/bulma_init.scss"
-.cpu_battle
+.CpuBattleApp
   .table_format_area
     line-height: 100%
 
