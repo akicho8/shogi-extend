@@ -107,7 +107,6 @@ import acns1_sample                    from "acns1_sample.vue"
 import actb_app                        from "actb_app/application.vue"
 import share_board                     from "share_board/application.vue"
 import simple_board                    from "simple_board.vue"
-import cpu_battle                      from "cpu_battle.vue"
 import sp_show                         from "sp_show.vue"
 import ox_modal                        from "ox_modal.vue"
 import tactic_show                     from "tactic_show.vue"
@@ -154,7 +153,6 @@ Vue.mixin({
     pulldown_menu,
     simple_board,
     share_board,
-    cpu_battle,
     sp_show,
     ox_modal,
     win_lose_circle,

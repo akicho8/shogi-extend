@@ -9,8 +9,8 @@ class ServiceInfo
       description: "直近の対局の検討することを目的とした棋譜取得サービス",
       feature_items: [
         "<b>ぴよ将棋</b>や<b>KENTO</b>と連携",
-        "<b>激指</b>に転送するための<b>棋譜コピー</b>",
-        "対戦相手の<b>段級位毎</b>の勝率表示",
+        "<b>激指</b>に転送するための棋譜コピー",
+        "対戦相手の段級位毎の勝率表示",
         # "プロ棋戦風の<b>棋譜印刷</b>",
         # "消費時間の可視化",
         # "指定局面の画像化やツイート",
@@ -20,13 +20,13 @@ class ServiceInfo
       display_p: true,
       link_path: UrlProxy.wrap("/vs-clock"),
       title: "対局時計",
-      new_p: true,
+      new_p: false,
       image_source: "ogp/vs-clock.png",
-      description: "チェスクロックとも言う",
+      description: "チェスクロック買うのがもったいないので作った",
       feature_items: [
-        "一般的なネット対局のプリセットがある",
-        "24の猶予時間やABEMAのフィッシャールールも可",
-        "PCの場合はキーボードの左と右のほうを叩く",
+        "一般的なネット対局のプリセットを用意",
+        "24の猶予時間対応",
+        "フィッシャールール可",
       ],
     },
     {
@@ -108,7 +108,7 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: [:cpu_battles],
+      link_path: UrlProxy.wrap("/cpu-battle"),
       title: "CPU対戦",
       image_source: "cpu_battle_1200x630.png",
       description: "自作の将棋AIと対戦",

@@ -91,8 +91,8 @@ Rails.application.routes.draw do
 
   ################################################################################ CPU対戦
 
-  resource :cpu_battles, path: "cpu/battles", only: [:show, :create]
-  get "cpu/battles", to: "cpu_battles#show"
+  # resource :cpu_battles, path: "cpu/battles", only: [:show, :create]
+  # get "cpu/battles", to: "cpu_battles#show"
 
   ################################################################################ 将棋トレーニングバトル
 
@@ -170,6 +170,8 @@ Rails.application.routes.draw do
     end
     resource :talk, only: [:show, :create]
     resources :xy_records, path: "xy", only: [:index, :create, :update]
+    
+    resource :cpu_battle, only: [:show, :create]
   end
 
   ################################################################################ admin

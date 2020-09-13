@@ -1,6 +1,6 @@
 import MemoryRecord from "js-memory-record"
 
-export default class BoardStyleInfo extends MemoryRecord {
+export class BoardStyleInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "a", name: "普通駒",       func: praams => { praams.theme = 'real'; praams.piece_variant = 'a' }, },

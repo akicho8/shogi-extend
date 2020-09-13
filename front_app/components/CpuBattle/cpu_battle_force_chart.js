@@ -3,7 +3,9 @@
 const CHART_TOP_PADDING_RATE = 1.0   // 評価値の上の隙間率(1.0〜1.5ぐらい1.0で無し)
 const SUGGESTED_MAX_DEFAULT = 10000  // 評価値の初期値
 
-import PaletteInfo from './palette_info.js'
+import Vue from "chart.js"
+
+import PaletteInfo from "../../../app/javascript/palette_info.js"
 
 const MainPalette = PaletteInfo.fetch("info")
 
@@ -104,7 +106,7 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-export default {
+export const cpu_battle_force_chart = {
   data() {
     return {
       _chart_config: null,
@@ -158,7 +160,6 @@ export default {
     // 戦力情報の反映
     score_list_reflection(e) {
       if (e["score_list"]) {
-        console.log(e["score_list"])
         e["score_list"].forEach(e => {
           this._chart_config.data.labels.push(e.x)
           this._chart_config.data.datasets[0].data.push(e)
