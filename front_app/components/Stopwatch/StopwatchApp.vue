@@ -2,9 +2,7 @@
 .StopwatchApp
   b-navbar(type="is-primary")
     template(slot="brand")
-      b-navbar-item(@click="book_title_input_dialog")
-        b {{book_title}}
-    template(slot="start")
+      b-navbar-item.has-text-weight-bold(@click="book_title_input_dialog") {{book_title}}
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right)
         template(slot="label")
