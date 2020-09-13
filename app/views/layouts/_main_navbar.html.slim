@@ -9,7 +9,7 @@ nav#main_nav.navbar.is-primary.is_screen_only
     .navbar-start
       = link_to("ウォーズ検索", [:swars, :battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("swars/battles"))])
       = link_to("トレーニングバトル", :training, class: ["navbar-item", ("is-active" if params[:controller] == "scripts" && params[:id] == "actb_app")]) if Actb::Config[:actb_display_p]
-      = link_to("棋譜変換", :adapter, class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] == "adapter")])
+      = link_to("棋譜変換", UrlProxy.wrap("/adapter"), class: "navbar-item")
       = link_to("CPU対戦", UrlProxy.wrap("/cpu-battle"), class: "navbar-item")
       = link_to("符号の鬼", UrlProxy.wrap("/xy"), class: "navbar-item")
       = link_to("詰将棋RTA", UrlProxy.wrap("/stopwatch"), class: "navbar-item")

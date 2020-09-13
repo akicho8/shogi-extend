@@ -27,6 +27,7 @@ export default {
     return {
       production_items: [
         { title: 'Home',                     to: { name: 'index'                      }, },
+        { title: 'なんでも棋譜変換',         to: { name: 'adapter'                    }, },
         { title: 'CPU対戦',                  to: { name: 'cpu-battle'                 }, },
         { title: '利用規約',                 to: { name: 'about-terms'                }, },
         { title: 'プライバシー  ',           to: { name: 'about-privacy-policy'       }, },

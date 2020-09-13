@@ -40,6 +40,18 @@ class FreeBattlesController < ApplicationController
   include BattleControllerSharedMethods
   include AdapterMod
 
+  # http://0.0.0.0:3000/x.json?config_fetch=true
+  def index
+    if request.format.json?
+      if params[:config_fetch]
+        render json: js_edit_options
+        return
+      end
+    end
+
+    super
+  end
+
   def new
     if id = params[:source_id]
       record = FreeBattle.find_by!(key: id)
