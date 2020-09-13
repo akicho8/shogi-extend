@@ -147,14 +147,14 @@ import _ from "lodash"
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
 // static
-import CpuBrainInfo    from "./cpu_brain_info.js"
-import CpuStrategyInfo from "./cpu_strategy_info.js"
-import CpuPresetInfo   from "./cpu_preset_info.js"
-import BoardStyleInfo  from "./board_style_info.js"
+import { CpuBrainInfo    } from "./cpu_brain_info.js"
+import { CpuStrategyInfo } from "./cpu_strategy_info.js"
+import { CpuPresetInfo   } from "./cpu_preset_info.js"
+import { BoardStyleInfo  } from "./board_style_info.js"
 import PresetInfo      from "shogi-player/src/preset_info.js"
 import Location        from "shogi-player/src/location.js"
 
-import cpu_battle_force_chart from "./cpu_battle_force_chart.js"
+import { cpu_battle_force_chart } from "./cpu_battle_force_chart.js"
 
 const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
 

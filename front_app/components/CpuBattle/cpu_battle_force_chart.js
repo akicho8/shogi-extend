@@ -106,7 +106,7 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-export default {
+export const cpu_battle_force_chart = {
   data() {
     return {
       _chart_config: null,
