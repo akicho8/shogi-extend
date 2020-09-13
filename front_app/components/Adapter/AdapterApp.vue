@@ -6,22 +6,14 @@
   .section
     .columns
       .column
-        template(v-if="development_p")
-          .box
-            .buttons.are-small
-              template(v-for="row in test_kifu_body_list")
-                .button(@click="input_test_handle(row.input_text)") {{row.name || row.input_text}}
-
         b-field
           b-input(type="textarea" ref="input_text" v-model="input_text")
 
         .buttons.are-small
           PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
-
           KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
-
           KifCopyButton(@click="kifu_copy_handle('kif')")
-          SpShowButton(@click="board_show_handle")
+          SpShowButton(@click="board_show_handle" v-if="development_p && false")
           TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url(tweet_body) : ''")
 
     .columns
@@ -34,7 +26,7 @@
         template(v-if="option_show_p")
           .buttons.are-small
             b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'" :disabled="record") 検証
-            b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${record.show_path}?formal_sheet=true` : ''") 棋譜用紙
+            b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.BASE_URL}${record.show_path}?formal_sheet=true` : ''") 棋譜用紙
 
           b-field(grouped)
             b-field
@@ -82,43 +74,22 @@
     template(v-if="development_p")
       .columns
         .column
+          .box
+            .buttons.are-small
+              template(v-for="row in test_kifu_body_list")
+                .button(@click="input_test_handle(row.input_text)") {{row.name || row.input_text}}
+    template(v-if="development_p")
+      .columns
+        .column
           template(v-if="all_kifs")
             pre {{all_kifs.ki2}}
+
 </template>
 
 <script>
-// import _ from "lodash"
-// import dayjs from "dayjs"
-//
-// import MemoryRecord from 'js-memory-record'
-// import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
-// import Soldier      from "shogi-player/src/soldier.js"
-// import Place        from "shogi-player/src/place.js"
-//
-// import { isMobile        } from "../../../app/javascript/models/isMobile.js"
-// import { IntervalCounter } from '@/components/models/IntervalCounter.js'
-// import { IntervalFrame } from '@/components/models/IntervalFrame.js'
-//
-// import { app_chart       } from "./app_chart.js"
-// import { app_keyboard    } from "./app_keyboard.js"
-// import { app_debug       } from "./app_debug.js"
-// import { app_rule_dialog } from "./app_rule_dialog.js"
-//
-// import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
-//
-// class XyRuleInfo extends MemoryRecord {}
-// class XyScopeInfo extends MemoryRecord {}
-// class XyChartScopeInfo extends MemoryRecord {}
-//
-// const COUNTDOWN_INTERVAL = 0.5  // カウントダウンはN秒毎に進む
-// const COUNTDOWN_MAX      = 3    // カウントダウンはNから開始する
-// const DIMENSION          = 9    // 盤面の辺サイズ
-// const CONGRATS_LTEQ      = 10   // N位以内ならおめでとう
-
 import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
 
 import ls_support from "../../../app/javascript/ls_support.js"
-import normalizeUrl from "normalize-url"
 
 export default {
   mixins: [ls_support],
@@ -235,7 +206,7 @@ export default {
 
     // 「棋譜印刷」
     kifu_paper_handle() {
-      this.record_fetch(() => this.url_open(`${this.record.show_path}?formal_sheet=true`))
+      this.record_fetch(() => this.url_open(`${this.$config.BASE_URL}${this.record.show_path}?formal_sheet=true`))
     },
 
     // 「KIFダウンロード」
@@ -267,6 +238,9 @@ export default {
 
     kifu_show_url(kifu_type, other_params = {}) {
       if (this.record) {
+        let url = `${this.$config.BASE_URL}${this.record.show_path}.${kifu_type}`
+        // let url = `${this.record.show_path}.${kifu_type}`
+
         // やっぱり普通のハッシュで扱った方がわかりやすい
         const params = {...other_params}
         if (this.body_encode === "sjis") {
@@ -274,9 +248,14 @@ export default {
         }
 
         // 最後に変換
-        const usp = new URLSearchParams()
-        _.each(params, (v, k) => usp.set(k, v))
-        return normalizeUrl(`${this.record.show_path}.${kifu_type}?${usp}`)
+        const p = new URLSearchParams()
+        _.each(params, (v, k) => p.set(k, v))
+        const query = p.toString()
+        if (query) {
+          url += "?" + query
+        }
+
+        return url
       }
     },
 
@@ -286,13 +265,13 @@ export default {
 
     png_show_url() {
       if (this.record) {
-        return `${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}`
+        return `${this.$config.BASE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}`
       }
     },
 
     png_dl_url() {
       if (this.record) {
-        return `${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}&attachment=true`
+        return `${this.$config.BASE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}&attachment=true`
       }
     },
 
@@ -316,7 +295,7 @@ export default {
       params.set("input_text", this.input_text)
       params.set("edit_mode", "adapter")
 
-      this.remote_fetch("POST", this.config.post_path, params, e => {
+      this.$axios.$post(this.config.post_path, params).then(e => {
         this.change_counter = 0
 
         this.all_kifs = null

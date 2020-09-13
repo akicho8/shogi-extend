@@ -199,6 +199,7 @@ if (process.env.NODE_ENV === 'development') {
   config.proxy["/api"]        = "http://0.0.0.0:3000"
   config.proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
   config.proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
+  config.proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
 }
 
 export default config
