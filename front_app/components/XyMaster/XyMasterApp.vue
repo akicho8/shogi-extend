@@ -310,7 +310,9 @@ export default {
         xy_scope_key: this.xy_scope_key,
         entry_name_unique: this.entry_name_unique,
       }
-      return this.$axios.get("/api/xy", {params: params}).then(({data}) => this.xy_records_hash = data)
+      return this.$axios.$get("/api/xy.json", {params: params}).then(data => {
+        this.xy_records_hash = data
+      })
     },
 
     persistense_variables_init() {
@@ -426,7 +428,7 @@ export default {
         xy_scope_key: this.xy_scope_key,
         xy_record:    this.post_params,
       }
-      const { data } = await this.$axios.post("/api/xy", params)
+      const { data } = await this.$axios.$post("/api/xy", params)
 
       this.entry_name_unique = false // 「プレイヤー別順位」の解除
       this.data_update(data)         // ランキングに反映

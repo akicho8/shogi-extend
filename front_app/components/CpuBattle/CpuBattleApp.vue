@@ -429,7 +429,7 @@ export default {
     },
 
     post_apply(params) {
-      this.$axios.post("/api/cpu_battle", {...this.post_shared_params, ...params}).then(({data}) => this.response_process(data))
+      this.$axios.$post("/api/cpu_battle", {...this.post_shared_params, ...params}).then(data => this.response_process(data))
     },
 
     response_process(e) {
