@@ -1,10 +1,10 @@
 <template lang="pug">
 .ShareBoardApp
-  b-navbar(type="is-primary" centered)
+  b-navbar(type="is-primary")
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(@click="title_edit")
         | {{current_title}}
-    template(slot="start")
+    template(slot="end")
       template(v-if="run_mode === 'play_mode'")
         b-navbar-item(@click="reset_handle") 盤面リセット
         b-navbar-item(@click="kifu_copy_handle") 棋譜コピー
@@ -30,10 +30,10 @@
   .section
     .columns
       .column.is_shogi_player
-        the_pulldown_menu
+        //- the_pulldown_menu
 
         .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
-          .turn_offset.has-text-weight-bold \#{{turn_offset}}
+          .turn_offset.has-text-weight-bold {{turn_offset}}手目
 
         .sp_container
           shogi_player(
@@ -78,7 +78,6 @@
               img(:src="twitter_card_url" width="256")
             p {{twitter_card_url}}
           pre {{JSON.stringify(record, null, 4)}}
-          //- debug_print
 </template>
 
 <script>
@@ -376,8 +375,6 @@ export default {
 
   ////////////////////////////////////////////////////////////////////////////////
   .title_container
-    padding-top: 0.65rem
-    .title
     .turn_offset
       margin-top: 0.65rem
 
