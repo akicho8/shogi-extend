@@ -150,7 +150,7 @@ export const app_chart = {
           xy_chart_scope_key: this.xy_chart_scope_key,
           xy_chart_rule_key:  this.xy_chart_rule_key,
         }
-        this.$axios.get("/api/xy", {params: params}).then(({data}) => {
+        this.$axios.$get("/api/xy.json", {params: params}).then(data => {
           window.chart_instance = new Chart(this.$refs.chart_canvas, this.chart_options_build(data.chartjs_datasets))
         })
       }

@@ -67,7 +67,7 @@ Rails.application.routes.draw do
   #   [record, options]
   # end
 
-  get "adapter", to: "free_battles#new", defaults: { edit_mode: "adapter" }
+  # get "adapter", to: "free_battles#new", defaults: { edit_mode: "adapter" }
 
   # resolve "FreeBattle" do |free_battle, options|
   #   [ns_prefix, free_battle, options]

@@ -59,9 +59,9 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: [:adapter],
+      link_path: UrlProxy.wrap("/adapter"),
       title: "なんでも棋譜変換",
-      image_source: "adapter.png",
+      image_source: "ogp/adapter.png",
       description: "多種多様な棋譜形式を正規化するサービス",
       feature_items: [
         "<b>将棋倶楽部24</b>や<b>将棋クエスト</b>の棋譜を正規化",

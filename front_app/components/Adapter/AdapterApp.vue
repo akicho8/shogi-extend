@@ -1,8 +1,104 @@
-import ls_support from "ls_support.js"
-import normalizeUrl from "normalize-url"
+<template lang="pug">
+.AdapterApp
+  b-navbar(type="is-primary")
+    template(slot="brand")
+      b-navbar-item.has-text-weight-bold(tag="div") なんでも棋譜変換
+    template(slot="end")
+      b-navbar-item(tag="a" href="/") TOP
+  .section
+    .columns
+      .column
+        b-field
+          b-input(type="textarea" ref="input_text" v-model="input_text")
 
-window.Adapter = Vue.extend({
+        .buttons.are-small
+          PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
+          KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
+          KifCopyButton(@click="kifu_copy_handle('kif')")
+          SpShowButton(@click="board_show_handle" v-if="development_p && false")
+          TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url(tweet_body) : ''")
+
+    .columns
+      .column
+        b-switch#option_switch(v-model="option_show_p" size="is-small" :rounded="false")
+          | オプション
+
+    .columns
+      .column
+        template(v-if="option_show_p")
+          .buttons.are-small
+            b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'" :disabled="record") 検証
+            b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.BASE_URL}${record.show_path}?formal_sheet=true` : ''") 棋譜用紙
+
+          b-field(grouped)
+            b-field
+              b-icon.icon_in_field(icon="clipboard-plus-outline" size="is-small")
+            b-field
+              .buttons.has-addons.are-small
+                b-button(@click="kifu_copy_handle('kif')")  KIF
+                b-button(@click="kifu_copy_handle('ki2')")  KI2
+                b-button(@click="kifu_copy_handle('csa')")  CSA
+                b-button(@click="kifu_copy_handle('sfen')") SFEN
+                b-button(@click="kifu_copy_handle('bod')")  BOD
+
+          b-field(grouped)
+            b-field
+              b-icon.icon_in_field(icon="eye" size="is-small")
+            b-field
+              .buttons.has-addons.are-small
+                b-button(@click.prevent="kifu_show_handle('kif')"  tag="a" :href="kifu_show_url('kif')")  KIF
+                b-button(@click.prevent="kifu_show_handle('ki2')"  tag="a" :href="kifu_show_url('ki2')")  KI2
+                b-button(@click.prevent="kifu_show_handle('csa')"  tag="a" :href="kifu_show_url('csa')")  CSA
+                b-button(@click.prevent="kifu_show_handle('sfen')" tag="a" :href="kifu_show_url('sfen')") SFEN
+                b-button(@click.prevent="kifu_show_handle('bod')"  tag="a" :href="kifu_show_url('bod')")  BOD
+                b-button(@click.prevent="png_show_handle()"        tag="a" :href="png_show_url()")        PNG
+                //- - if Rails.env.test?
+                //-   b-button.kif_show_button(@click="kifu_show_handle('kif')") KIF
+
+          b-field(grouped)
+            b-field
+              b-icon.icon_in_field(icon="download" size="is-small")
+            b-field
+              .buttons.has-addons.are-small
+                b-button(@click.prevent="kifu_dl_handle('kif')"  tag="a" :href="kifu_dl_url('kif')")  KIF
+                b-button(@click.prevent="kifu_dl_handle('ki2')"  tag="a" :href="kifu_dl_url('ki2')")  KI2
+                b-button(@click.prevent="kifu_dl_handle('csa')"  tag="a" :href="kifu_dl_url('csa')")  CSA
+                b-button(@click.prevent="kifu_dl_handle('sfen')" tag="a" :href="kifu_dl_url('sfen')") SFEN
+                b-button(@click.prevent="kifu_dl_handle('bod')"  tag="a" :href="kifu_dl_url('bod')")  BOD
+                b-button(@click.prevent="png_dl_handle()"        tag="a" :href="png_dl_url()")        PNG
+
+          template(v-if="development_p")
+            b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")
+              | Shift_JIS
+
+          template(v-if="development_p")
+            .button.is-small(@click="kifu_dl_handle('png')") 画像
+    template(v-if="development_p")
+      .columns
+        .column
+          .box
+            .buttons.are-small
+              template(v-for="row in test_kifu_body_list")
+                .button(@click="input_test_handle(row.input_text)") {{row.name || row.input_text}}
+    template(v-if="development_p")
+      .columns
+        .column
+          template(v-if="all_kifs")
+            pre {{all_kifs.ki2}}
+
+</template>
+
+<script>
+import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
+
+import ls_support from "../../../app/javascript/ls_support.js"
+
+export default {
   mixins: [ls_support],
+
+  props: {
+    config: { type: Object,  required: true },
+  },
 
   data() {
     return {
@@ -25,7 +121,7 @@ window.Adapter = Vue.extend({
     this.desktop_focus_to(this.$refs.input_text)
 
     // ?body=xxx の値を反映する
-    this.input_text = this.$options.record_attributes.kifu_body || ""
+    this.input_text = this.config.record_attributes.kifu_body || ""
   },
 
   watch: {
@@ -112,7 +208,7 @@ window.Adapter = Vue.extend({
 
     // 「棋譜印刷」
     kifu_paper_handle() {
-      this.record_fetch(() => this.url_open(`${this.record.show_path}?formal_sheet=true`))
+      this.record_fetch(() => this.url_open(`${this.$config.BASE_URL}${this.record.show_path}?formal_sheet=true`))
     },
 
     // 「KIFダウンロード」
@@ -144,6 +240,9 @@ window.Adapter = Vue.extend({
 
     kifu_show_url(kifu_type, other_params = {}) {
       if (this.record) {
+        let url = `${this.$config.BASE_URL}${this.record.show_path}.${kifu_type}`
+        // let url = `${this.record.show_path}.${kifu_type}`
+
         // やっぱり普通のハッシュで扱った方がわかりやすい
         const params = {...other_params}
         if (this.body_encode === "sjis") {
@@ -151,9 +250,14 @@ window.Adapter = Vue.extend({
         }
 
         // 最後に変換
-        const usp = new URLSearchParams()
-        _.each(params, (v, k) => usp.set(k, v))
-        return normalizeUrl(`${this.record.show_path}.${kifu_type}?${usp}`)
+        const p = new URLSearchParams()
+        _.each(params, (v, k) => p.set(k, v))
+        const query = p.toString()
+        if (query) {
+          url += "?" + query
+        }
+
+        return url
       }
     },
 
@@ -163,13 +267,13 @@ window.Adapter = Vue.extend({
 
     png_show_url() {
       if (this.record) {
-        return `${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}`
+        return `${this.$config.BASE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}`
       }
     },
 
     png_dl_url() {
       if (this.record) {
-        return `${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}&attachment=true`
+        return `${this.$config.BASE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}&attachment=true`
       }
     },
 
@@ -187,13 +291,13 @@ window.Adapter = Vue.extend({
     },
 
     record_create(callback) {
-      this.$gtag.event("create", {event_category: "なんでも棋譜変換"})
+      // this.$gtag.event("create", {event_category: "なんでも棋譜変換"})
 
       const params = new URLSearchParams()
       params.set("input_text", this.input_text)
       params.set("edit_mode", "adapter")
 
-      this.remote_fetch("POST", this.$options.post_path, params, e => {
+      this.$axios.$post(this.config.post_path, params).then(e => {
         this.change_counter = 0
 
         this.all_kifs = null
@@ -219,4 +323,10 @@ window.Adapter = Vue.extend({
       })
     },
   },
-})
+}
+
+</script>
+
+<style lang="sass">
+.AdapterApp
+</style>
