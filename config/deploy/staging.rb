@@ -28,7 +28,7 @@ before 'deploy:check:linked_files', 'deploy:database_yml_upload'
 set :my_heartbeat_urls, ["https://shogi-flow.xyz/"]
 
 # 起動するURL
-set :open_urls, eval(Pathname("VALIDATE_URLS").read).collect { |e| "https://shogi-flow.xyz" + URI(e).request_uri }
+# set :open_urls, eval(Pathname("VALIDATE_URLS").read).collect { |e| "https://shogi-flow.xyz" + URI(e).request_uri }
 
 append :linked_dirs, "storage"
 

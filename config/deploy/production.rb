@@ -28,7 +28,7 @@ before 'deploy:check:linked_files', 'deploy:database_yml_upload'
 set :my_heartbeat_urls, ["https://www.shogi-extend.com/"]
 
 # 起動するURL
-set :open_urls, eval(Pathname("VALIDATE_URLS").read).collect { |e| "https://www.shogi-extend.com" + URI(e).request_uri }
+# set :open_urls, eval(Pathname("VALIDATE_URLS").read).collect { |e| "https://www.shogi-extend.com" + URI(e).request_uri }
 
 # if ENV["USE_NEW_DOMAIN"] && false
 #   set :application, "shogi_web"

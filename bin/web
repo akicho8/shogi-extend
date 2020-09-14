@@ -21,24 +21,39 @@ class Web < Thor
   package_name "web"
   default_command :validate
   class_option :env, type: :string, desc: "対象の環境", default: "staging", aliases: "-e"
+  class_option :open, type: :boolean, desc: "open で開く", default: false, aliases: "-o"
+  class_option :break, type: :boolean, desc: "1つ目でbreakする", default: false, aliases: "-b"
 
   desc "validate", "表示確認"
   def validate
     if options[:env] == "staging"
-      app_host = "https://#{BASIC_AUTH[:user]}:#{BASIC_AUTH[:password]}@shogi-flow.xyz"
+      host = "https://#{BASIC_AUTH[:user]}:#{BASIC_AUTH[:password]}@shogi-flow.xyz"
     else
-      app_host = "https://www.shogi-extend.com"
+      host = "https://www.shogi-extend.com"
     end
-    Capybara.app_host = app_host
-
-    VALIDATE_URLS.each do |url|
-      window = Capybara.open_new_window
-      Capybara.switch_to_window(window)
-      path = URI(url).request_uri
-      Capybara.visit(path)
+    if options[:open]
+      VALIDATE_URLS.each do |url|
+        url = host + URI(url).request_uri
+        puts url
+        `open '#{url}'`
+        if options[:break]
+          break
+        end
+      end
+    else
+      Capybara.app_host = host
+      VALIDATE_URLS.each do |url|
+        window = Capybara.open_new_window
+        Capybara.switch_to_window(window)
+        path = URI(url).request_uri
+        Capybara.visit(path)
+        puts Capybara.current_url
+        if options[:break]
+          break
+        end
+      end
+      $stdin.gets
     end
-
-    $stdin.gets
   end
 
   start

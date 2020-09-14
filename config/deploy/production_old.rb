@@ -28,18 +28,18 @@ before 'deploy:check:linked_files', 'deploy:database_yml_upload'
 set :my_heartbeat_urls, ["https://www.shogi-extend.com/"]
 
 # 起動するURL
-set :open_urls, [
-  "https://www.shogi-extend.com",
-  "https://www.shogi-extend.com/w",
-  "https://www.shogi-extend.com/w?query=kinakom0chi",
-  "https://www.shogi-extend.com/adapter",
-  "https://www.shogi-extend.com/xy",
-  "https://www.shogi-extend.com/cpu/battles",
-  "https://www.shogi-extend.com/stopwatch",
-  "https://www.shogi-extend.com/x",
-  "https://www.shogi-extend.com/x/new",
-  "https://www.shogi-extend.com/board",
-]
+# set :open_urls, [
+#   "https://www.shogi-extend.com",
+#   "https://www.shogi-extend.com/w",
+#   "https://www.shogi-extend.com/w?query=kinakom0chi",
+#   "https://www.shogi-extend.com/adapter",
+#   "https://www.shogi-extend.com/xy",
+#   "https://www.shogi-extend.com/cpu/battles",
+#   "https://www.shogi-extend.com/stopwatch",
+#   "https://www.shogi-extend.com/x",
+#   "https://www.shogi-extend.com/x/new",
+#   "https://www.shogi-extend.com/board",
+# ]
 
 # if ENV["USE_NEW_DOMAIN"] && false
 #   set :application, "shogi_web"

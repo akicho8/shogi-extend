@@ -124,9 +124,10 @@ end
 
 desc "デプロイ後に確認したいURLを全部開いておく"
 after "deploy:finished", :open_urls do
-  Array(fetch(:open_urls)).reverse.each do |url|
-    system("open #{url}")
-  end
+  # Array(fetch(:open_urls)).reverse.each do |url|
+  #   system("open #{url}")
+  # end
+  system "web -o -e #{fetch(:stage)}"
 end
 
 desc "デプロイ失敗"
