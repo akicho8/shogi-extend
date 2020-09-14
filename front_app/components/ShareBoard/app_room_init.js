@@ -1,4 +1,4 @@
-export const application_room_init = {
+export const app_room_init = {
   data() {
     return {
       idol_timer_id: null,

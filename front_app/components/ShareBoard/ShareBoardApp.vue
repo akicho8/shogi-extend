@@ -86,8 +86,8 @@ const RUN_MODE_DEFAULT = "play_mode"
 import { store }   from "./store.js"
 import { support } from "./support.js"
 
-import { application_room      } from "./application_room.js"
-import { application_room_init } from "./application_room_init.js"
+import { app_room      } from "./app_room.js"
+import { app_room_init } from "./app_room_init.js"
 
 import the_pulldown_menu                  from "./the_pulldown_menu.vue"
 import the_image_view_point_setting_modal from "./the_image_view_point_setting_modal.vue"
@@ -100,8 +100,8 @@ export default {
   name: "ShareBoardApp",
   mixins: [
     support,
-    application_room,
-    application_room_init,
+    app_room,
+    app_room_init,
   ],
   components: {
     shogi_player,

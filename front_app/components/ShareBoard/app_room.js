@@ -1,4 +1,4 @@
-export const application_room = {
+export const app_room = {
   data() {
     return {
       room_code: "",                         // リアルタイム共有合言葉
