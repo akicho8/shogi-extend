@@ -32,6 +32,11 @@ class Web < Thor
       host = "https://www.shogi-extend.com"
     end
     if options[:open]
+      if options[:env] == "staging"
+        host = "https://shogi-flow.xyz"
+      else
+        host = "https://www.shogi-extend.com"
+      end
       VALIDATE_URLS.each do |url|
         url = host + URI(url).request_uri
         puts url
