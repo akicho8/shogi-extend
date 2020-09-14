@@ -23,9 +23,13 @@ name: "DebugBox",
 .DebugBox
   color: $white
   position: fixed
-  top: 0
-  left: 0
-  background-color: hsla(0, 0%, 0%, 0.6)
+  top: 0.5rem
+  left: 0.5rem
+  background-color: hsla(0, 0%, 0%, 0.7)
   padding: 1rem
   z-index: 100
+  max-width: 25vw
+  overflow: auto
+  white-space: nowrap
+  border-radius: 0.5rem
 </style>
