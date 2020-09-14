@@ -162,14 +162,24 @@ class ShareBoardsController < ApplicationController
       if v = params[:board_flip].presence
         return boolean_for(v)
       end
-      number_of_turns_in_consideration_of_the_frame_dropping.odd?
+      # # 次に指す人の視点で開くなら
+      # if true
+      #   number_of_turns_in_consideration_of_the_frame_dropping.odd?
+      # end
+      image_view_point_info.board_flip.call(number_of_turns_in_consideration_of_the_frame_dropping)
     end
 
     def image_flip
+      # 視点設定用
+      # ビュー側で確認用画像を表示するため board_flip の結果で画像をflipする
+      if params[:__board_flip_as_image_flip__]
+        return board_flip
+      end
+
       if v = params[:image_flip].presence
         return boolean_for(v)
       end
-      image_view_point_info.image_flip[number_of_turns_in_consideration_of_the_frame_dropping]
+      image_view_point_info.image_flip.call(number_of_turns_in_consideration_of_the_frame_dropping)
     end
 
     def image_view_point_info

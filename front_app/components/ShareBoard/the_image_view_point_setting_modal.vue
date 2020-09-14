@@ -1,30 +1,26 @@
 <template lang="pug">
-.modal-card.the_image_view_point_setting_modal
+.modal-card.the_image_view_point_setting_modal(style="width:auto")
   header.modal-card-head
-    p.modal-card-title Twitter画像の視点
+    p.modal-card-title 視点設定
   section.modal-card-body
-    .field
-      b-radio(v-model="new_image_view_point" native-value="self")
-        | 自分
-        span.desc 1手指し継いだとき、その人の視点 (リレー将棋向け・初期値)
-    .field
-      b-radio(v-model="new_image_view_point" native-value="opponent")
-        | 相手
-        span.desc 1手指し継いだとき、次に指す人の視点 (リレー将棋 or 詰将棋向け)
-    .field
-      b-radio(v-model="new_image_view_point" native-value="black")
-        | 先手
-        span.desc 常に☗ (詰将棋向け)
-    .field
-      b-radio(v-model="new_image_view_point" native-value="white")
-        | 後手
-        span.desc 常に☖ (詰将棋を攻められ視点にしたいとき)
-    .has-text-centered
-      img(:src="twitter_card_preview_url")
-    .is_line_break_on.is-size-7(v-if="development_p" :key="twitter_card_preview_url") {{twitter_card_preview_url}}
+    .field.my-1
+      b-radio(size="is-small" v-model="new_image_view_point" native-value="self") 1手指し継いだとき、自分の視点 (リレー将棋向け・初期値)
+    .field.my-1
+      b-radio(size="is-small" v-model="new_image_view_point" native-value="opponent") 1手指し継いだとき、相手の視点 (リレー将棋向け・詰将棋向け)
+    .field.my-1
+      b-radio(size="is-small" v-model="new_image_view_point" native-value="black") 常に☗ (詰将棋向け)
+    .field.my-1
+      b-radio(size="is-small" v-model="new_image_view_point" native-value="white") 常に☖ (逃れ将棋向け)
+    .preview_images.is-flex.mt-3
+      .preview_image.is-flex
+        .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered Twitter画像の視点
+        b-image.mr-1(:src="preview_url1")
+      .preview_image.is-flex
+        .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered ブラウザで開いたときの視点
+        b-image.ml-1(:src="preview_url2")
   footer.modal-card-foot
-    b-button(@click="$emit('close')") キャンセル
-    b-button.submit_handle(@click="submit_handle" type="is-primary" :disabled="!change_p") 保存
+    b-button(@click="close_handle") キャンセル
+    b-button.submit_handle(@click="submit_handle" type="is-primary") 保存
 </template>
 
 <script>
@@ -39,17 +35,30 @@ export default {
       new_image_view_point: this.image_view_point,
     }
   },
+  watch: {
+    new_image_view_point(v) {
+      this.sound_play("click")
+    },
+  },
   methods: {
+    close_handle() {
+      this.sound_play("click")
+      this.$emit("close")
+    },
     submit_handle() {
+      this.sound_play("click")
+      this.$emit("close")
       this.$emit("update:image_view_point", this.new_image_view_point)
     },
   },
   computed: {
-    twitter_card_preview_url() {
+    // Twitter画像URL
+    preview_url1() {
       return this.permalink_for({format: "png", image_view_point: this.new_image_view_point, disposition: "inline"})
     },
-    change_p() {
-      return this.new_image_view_point !== this.image_view_point
+    // URLを開いた(と仮定した)ときの画像URL
+    preview_url2() {
+      return this.permalink_for({format: "png", image_view_point: this.new_image_view_point, disposition: "inline", __board_flip_as_image_flip__: "true"})
     },
   },
 }
@@ -57,13 +66,15 @@ export default {
 
 <style lang="sass">
 .the_image_view_point_setting_modal
-  .desc
-    color: $grey
-    font-size: $size-7
-    margin-left: 0.4rem
-  img
-    border-radius: 1rem
-    border: 1px solid $grey-lighter
+  .preview_images
+    justify-content: center
+    .preview_image
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      img
+        border-radius: 0.4rem
+        border: 1px solid $grey-lighter
   .modal-card-foot
     justify-content: flex-end
     .button

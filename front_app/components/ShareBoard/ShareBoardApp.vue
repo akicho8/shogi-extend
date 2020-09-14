@@ -1,7 +1,13 @@
 <template lang="pug">
 .ShareBoardApp
   DebugBox
-    | A
+    p current_sfen: {{current_sfen}}
+    p current_title: {{current_title}}
+    p turn_offset: {{turn_offset}}
+    p image_view_point: {{image_view_point}}
+    p run_mode: {{run_mode}}
+    p board_flip: {{board_flip}}
+    p current_url: {{current_url}}
 
   b-navbar(type="is-primary")
     template(slot="brand")
@@ -18,7 +24,7 @@
         template(v-else)
           | 局面編集(終了)
       b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
-      b-navbar-item(@click="image_view_point_setting_handle") Twitter画像の視点
+      b-navbar-item(@click="image_view_point_setting_handle") 視点設定
       b-navbar-dropdown(hoverable arrowless right label="その他")
         b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
         b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
@@ -30,7 +36,7 @@
               | {{room_code}}
         b-navbar-item(tag="a" href="/") TOPに戻る
 
-  b-navbar(type="is-dark" fixed-bottom)
+  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
       b-navbar-item(@click="reset_handle") 盤面リセット
 
@@ -254,9 +260,10 @@ export default {
       })
     },
 
-    // Twitter画像の視点変更
+    // 視点設定変更
     image_view_point_setting_handle() {
-      const modal_instance = this.$buefy.modal.open({
+      this.sound_play("click")
+      this.$buefy.modal.open({
         parent: this,
         trapFocus: true,
         hasModalCard: true,
@@ -266,11 +273,10 @@ export default {
           permalink_for: this.permalink_for,
         },
         component: the_image_view_point_setting_modal,
+        onCancel: () => this.sound_play("click"),
         events: {
           "update:image_view_point": v => {
             this.image_view_point = v
-            this.sound_play("click")
-            modal_instance.close()
           }
         },
       })

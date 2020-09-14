@@ -11,9 +11,9 @@
 class ImageViewPointInfo
   include ApplicationMemoryRecord
   memory_record [
-    { key: :self,     name: "自分", image_flip: -> e { e.even? } },
-    { key: :opponent, name: "相手", image_flip: -> e { e.odd?  } },
-    { key: :black,    name: "☗",   image_flip: -> e { false   } },
-    { key: :white,    name: "☖",   image_flip: -> e { true    } },
+    { key: :self,     name: "自分", image_flip: -> e { e.even? }, board_flip: -> e { e.odd? } },
+    { key: :opponent, name: "相手", image_flip: -> e { e.odd?  }, board_flip: -> e { e.odd? } },
+    { key: :black,    name: "☗",   image_flip: -> e { false   }, board_flip: -> e { false  } },
+    { key: :white,    name: "☖",   image_flip: -> e { true    }, board_flip: -> e { true   } },
   ]
 end

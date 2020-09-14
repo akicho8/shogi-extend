@@ -17,7 +17,7 @@
       template(v-else)
         | 局面編集(終了)
     b-dropdown-item(@click="$parent.any_source_read_handle") 棋譜の読み込み
-    b-dropdown-item(@click="$parent.image_view_point_setting_handle") Twitter画像の視点
+    b-dropdown-item(@click="$parent.image_view_point_setting_handle") 視点設定
     template(v-if="$parent.run_mode === 'play_mode'")
       b-dropdown-item(@click="$parent.room_code_edit")
         | リアルタイム共有
