@@ -1,30 +1,35 @@
 <template lang="pug">
-<div class="modal-card the_image_view_point_setting_modal">
-  <header class="modal-card-head">
-    <p class="modal-card-title">Twitter画像の視点</p>
-  </header>
-  <section class="modal-card-body">
-    <div class="field"><b-radio v-model="new_image_view_point" native-value="self">自分<span class="desc">1手指し継いだとき、その人の視点 (リレー将棋向け・初期値)</span></b-radio></div>
-    <div class="field"><b-radio v-model="new_image_view_point" native-value="opponent">相手<span class="desc">1手指し継いだとき、次に指す人の視点 (リレー将棋 or 詰将棋向け)</span></b-radio></div>
-    <div class="field"><b-radio v-model="new_image_view_point" native-value="black">先手<span class="desc">常に☗ (詰将棋向け)</span></b-radio></div>
-    <div class="field"><b-radio v-model="new_image_view_point" native-value="white">後手<span class="desc">常に☖ (詰将棋を攻められ視点にしたいとき)</span></b-radio></div>
-    <div class="has-text-centered"><img :src="twitter_card_preview_url" /></div>
-    <div v-if="development_p" class="is_line_break_on" :key="twitter_card_preview_url">{{twitter_card_preview_url}}</div>
-  </section>
-  <footer class="modal-card-foot">
-    <b-button @click="$emit('close')">キャンセル</b-button>
-    <b-button @click="submit_handle" class="submit_handle" type="is-primary" :disabled="!change_p">保存</b-button>
-  </footer>
-</div>
+.modal-card.the_image_view_point_setting_modal
+  header.modal-card-head
+    p.modal-card-title Twitter画像の視点
+  section.modal-card-body
+    .field
+      b-radio(v-model="new_image_view_point" native-value="self")
+        | 自分
+        span.desc 1手指し継いだとき、その人の視点 (リレー将棋向け・初期値)
+    .field
+      b-radio(v-model="new_image_view_point" native-value="opponent")
+        | 相手
+        span.desc 1手指し継いだとき、次に指す人の視点 (リレー将棋 or 詰将棋向け)
+    .field
+      b-radio(v-model="new_image_view_point" native-value="black")
+        | 先手
+        span.desc 常に☗ (詰将棋向け)
+    .field
+      b-radio(v-model="new_image_view_point" native-value="white")
+        | 後手
+        span.desc 常に☖ (詰将棋を攻められ視点にしたいとき)
+    .has-text-centered
+      img(:src="twitter_card_preview_url")
+    .is_line_break_on.is-size-7(v-if="development_p" :key="twitter_card_preview_url") {{twitter_card_preview_url}}
+  footer.modal-card-foot
+    b-button(@click="$emit('close')") キャンセル
+    b-button.submit_handle(@click="submit_handle" type="is-primary" :disabled="!change_p") 保存
 </template>
 
 <script>
 export default {
   name: "the_image_view_point_setting_modal",
-  data() {
-    return {
-    }
-  },
   props: [
     "image_view_point",
     "permalink_for",
