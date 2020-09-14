@@ -22,7 +22,7 @@
           img.is-rounded(:src="config.current_user.avatar_path")
       b-navbar-item(v-if="!config.current_user || development_p" @click="login_handle") ログイン
 
-      b-navbar-item(tag="a" href="/") TOPに戻る
+      b-navbar-item(tag="a" href="/") TOP
 
       b-navbar-dropdown(hoverable arrowless right v-if="development_p")
         template(slot="label")
