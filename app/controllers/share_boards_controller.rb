@@ -39,6 +39,7 @@ class ShareBoardsController < ApplicationController
   concerning :ShareBoardMod do
     included do
       include EncodeMod
+      include KifShowMod
       include ShogiErrorRescueMod
     end
 
@@ -70,20 +71,19 @@ class ShareBoardsController < ApplicationController
       # http://localhost:3000/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
       if request.format.png?
         png = current_record.to_dynamic_png(params.merge(turn: initial_turn, flip: image_flip))
-        send_data png, type: Mime[:png], disposition: current_disposition, filename: "#{current_record.to_param}-#{initial_turn}.png"
+        send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
         return
       end
 
-      # ぴよ将棋用にkifを返す
-      # http://localhost:3000/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
-      #
-      # TODO: ぴよ将棋に url=http://.../foo.kif?body=position... のように渡せればこの部分は汎用化できる
-      if request.format.kif?
-        text_body = current_record.fast_parsed_info.to_kif(no_embed_if_time_blank: true)
-        headers["Content-Type"] = current_type
-        render plain: text_body
-        return
-      end
+      # http://localhost:3000/share-board.kif
+      # http://localhost:3000/share-board.ki2
+      # http://localhost:3000/share-board.sfen
+      # http://localhost:3000/share-board.csa
+      kif_data_send
+    end
+
+    def current_filename
+      "#{current_record.to_param}-#{initial_turn}.#{params[:format]}"
     end
 
     def info_params
