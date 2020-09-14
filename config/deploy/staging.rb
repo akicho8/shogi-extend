@@ -28,26 +28,7 @@ before 'deploy:check:linked_files', 'deploy:database_yml_upload'
 set :my_heartbeat_urls, ["https://shogi-flow.xyz/"]
 
 # 起動するURL
-set :open_urls, [
-  "https://shogi-flow.xyz",
-  "https://shogi-flow.xyz/w",
-  "https://shogi-flow.xyz/w?query=kinakom0chi",
-  "https://shogi-flow.xyz/adapter",
-  "https://shogi-flow.xyz/xy",
-  "https://shogi-flow.xyz/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7g7f&turn=1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&image_view_point=self&room_code=&image_flip=false&disposition=inline",
-  "https://shogi-flow.xyz/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7g7f&turn=1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&image_view_point=self&room_code=&image_flip=false&disposition=inline",
-  "https://shogi-flow.xyz/cpu-battle",
-  "https://shogi-flow.xyz/stopwatch",
-  "https://shogi-flow.xyz/vs-clock",
-  "https://shogi-flow.xyz/x",
-  "https://shogi-flow.xyz/x/new",
-  "https://shogi-flow.xyz/board",
-  "https://shogi-flow.xyz/about/terms",
-  "https://shogi-flow.xyz/about/credit",
-  "https://shogi-flow.xyz/about/privacy-policy",
-  "https://shogi-flow.xyz/training",
-  "https://shogi-flow.xyz/app",
-]
+set :open_urls, eval(Pathname("VALIDATE_URLS").read).collect { |e| "https://shogi-flow.xyz" + URI(e).request_uri }
 
 append :linked_dirs, "storage"
 

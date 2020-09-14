@@ -28,31 +28,7 @@ before 'deploy:check:linked_files', 'deploy:database_yml_upload'
 set :my_heartbeat_urls, ["https://www.shogi-extend.com/"]
 
 # 起動するURL
-set :open_urls, [
-  "https://www.shogi-extend.com",
-  "https://www.shogi-extend.com/training",
-  "https://www.shogi-extend.com/training?question_id=1",
-  "https://www.shogi-extend.com/training?user_id=1",
-  "https://www.shogi-extend.com/admin/script/actb-room",
-  "https://www.shogi-extend.com/admin/script/regular-user",
-  "https://www.shogi-extend.com/w",
-  "https://www.shogi-extend.com/w?query=kinakom0chi",
-  "https://www.shogi-extend.com/w?query=kinakom0chi&user_info_show=true&tab_index=1",
-  "https://www.shogi-extend.com/admin/sidekiq",
-  "https://www.shogi-extend.com/adapter",
-  "https://www.shogi-extend.com/xy",
-  "https://www.shogi-extend.com/cpu/battles",
-  "https://www.shogi-extend.com/x",
-  "https://www.shogi-extend.com/x/new",
-  "https://www.shogi-extend.com/board",
-  "https://www.shogi-extend.com/script/professional",
-  "https://www.shogi-extend.com/share-board",
-  "https://www.shogi-extend.com/vs-clock",
-  "https://www.shogi-extend.com/stopwatch",
-  "https://www.shogi-extend.com/about/terms",
-  "https://www.shogi-extend.com/about/credit",
-  "https://www.shogi-extend.com/about/privacy-policy",
-]
+set :open_urls, eval(Pathname("VALIDATE_URLS").read).collect { |e| "https://www.shogi-extend.com" + URI(e).request_uri }
 
 # if ENV["USE_NEW_DOMAIN"] && false
 #   set :application, "shogi_web"
