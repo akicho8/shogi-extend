@@ -1,5 +1,8 @@
 <template lang="pug">
 .ShareBoardApp
+  DebugBox
+    | A
+
   b-navbar(type="is-primary")
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(@click="title_edit")
@@ -26,6 +29,10 @@
             .has-text-danger(v-if="room_code")
               | {{room_code}}
         b-navbar-item(tag="a" href="/") TOPに戻る
+
+  b-navbar(type="is-dark" fixed-bottom)
+    template(slot="start")
+      b-navbar-item(@click="reset_handle") 盤面リセット
 
   .section
     .columns

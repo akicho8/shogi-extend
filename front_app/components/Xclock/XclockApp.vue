@@ -1,6 +1,6 @@
 <template lang="pug">
 .Xclock(:class="chess_clock.running_p ? 'is_xclock_active' : 'is_xclock_inactive'")
-  .float_debug_container(v-if="development_p")
+  DebugBox
     div turn: {{chess_clock.turn}}
     div running_p: {{chess_clock.running_p}}
     div timer: {{chess_clock.timer}}
@@ -309,15 +309,6 @@ export default {
 @import "time_fields_desktop.sass"
 
 .Xclock
-  .float_debug_container
-    color: $white
-    position: fixed
-    top: 0
-    left: 0
-    background-color: hsla(0, 0%, 0%, 0.6)
-    padding: 1rem
-    z-index: 1
-
   // ポーズのときのカバー
   .pause_bg
     position: fixed
