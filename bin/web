@@ -27,16 +27,12 @@ class Web < Thor
   desc "validate", "表示確認"
   def validate
     if options[:env] == "staging"
-      host = "https://#{BASIC_AUTH[:user]}:#{BASIC_AUTH[:password]}@shogi-flow.xyz"
+      # host = "https://#{BASIC_AUTH[:user]}:#{BASIC_AUTH[:password]}@shogi-flow.xyz"
+      host = "https://shogi-flow.xyz"
     else
       host = "https://www.shogi-extend.com"
     end
     if options[:open]
-      if options[:env] == "staging"
-        host = "https://shogi-flow.xyz"
-      else
-        host = "https://www.shogi-extend.com"
-      end
       VALIDATE_URLS.each do |url|
         url = host + URI(url).request_uri
         puts url
