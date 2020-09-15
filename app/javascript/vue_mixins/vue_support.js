@@ -146,8 +146,8 @@ export default {
     },
 
     popup_open(url) {
-      const width = 575
-      const height = 256
+      const width = 800
+      const height = 640
       const left = (window.screen.width - width) / 2
       const top = (window.screen.height - height) / 2
       const opts = `status=no,top=${top},left=${left},width=${width},height=${height}`
