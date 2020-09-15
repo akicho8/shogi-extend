@@ -127,7 +127,6 @@ class ApplicationController < ActionController::Base
 
   concerning :AdminUserMethods do
     included do
-      before_action :admin_login_required, :if => proc { Rails.env.staging? }
       helper_method :admin_user
     end
 
