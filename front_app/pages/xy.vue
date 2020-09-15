@@ -11,10 +11,10 @@ export default {
     return {
       title: "符号の鬼",
       meta: [
-        { hid: "og:title",       property: "og:title",       content: "符号の鬼"                                                       },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary"                                                        },
-        { hid: "og:image",       property: "og:image",       content: this.$config.BASE_URL_OGP + "/ogp/xy.png"                  },
-        { hid: "og:description", property: "og:description", content: this.config.description },
+        { hid: "og:title",       property: "og:title",       content: "符号の鬼"                                },
+        { hid: "twitter:card",   property: "twitter:card",   content: "summary"                                 },
+        { hid: "og:image",       property: "og:image",       content: this.$config.BASE_URL_OGP + "/ogp/xy.png" },
+        { hid: "og:description", property: "og:description", content: this.config.description                   },
       ],
     }
   },

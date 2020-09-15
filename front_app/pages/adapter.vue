@@ -19,7 +19,6 @@ export default {
     }
   },
   async asyncData({ $axios }) {
-    // proxy してないのになぜ呼ばれる？？？
     const config = await $axios.$get("/x.json", {params: {config_fetch: true}})
     return { config }
   },
