@@ -59,6 +59,7 @@ const config = {
   ** Customize the progress-bar color
   */
   loading: { color: 'hsl(348, 100%, 61%)' }, // bulma danger red color
+  // loading: { color: 'hsl(48,  100%, 67%)' }, // bulma danger yellow color
   /*
   ** Global CSS
   */
@@ -124,6 +125,12 @@ const config = {
 
     // baseURL の設定があれば、何を実行しても 3000 の方に行くので /api は 3000 のような proxy を設定する必要はないっぽい
     baseURL: process.env.BASE_URL, // generate する staging では proxy が無効になり https://shogi-flow.xyz/api/* を叩かせる
+
+    headers: {
+      "Content-Type": "application/json", // ← これがあるとAPIを叩くときいちいち .json をつけなくてよくなる
+      // "X-Requested-With": "XMLHttpRequest",
+    },
+    // responseType: "json",
 
     credentials: true,             // これを入れないと /api/talk のとき HTML が返ってきてしまう
   },
