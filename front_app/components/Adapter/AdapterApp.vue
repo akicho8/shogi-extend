@@ -9,38 +9,37 @@
     .columns
       .column
         b-field.mt-1
-          b-input(type="textarea" ref="input_text" v-model="input_text")
-
-        .buttons.are-small.mt-4
-          b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'") 検証
+          b-input(type="textarea" ref="input_text" v-model="input_text" expanded rows="8")
+        .buttons.is-centered.mt-5.mb-0
           PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
           KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
           KifCopyButton(@click="kifu_copy_handle('kif')")
           SpShowButton(@click="board_show_handle" v-if="development_p && false")
+        .buttons.is-centered.are-small.mt-3
+          b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'") 検証
           b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.BASE_URL}${record.show_path}?formal_sheet=true` : ''") 棋譜用紙
           TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url({text: tweet_body}) : ''")
 
-        .box.is-inline-block.has-background-white-ter.is-shadowless
-          table.table.has-background-white-ter.mb-0
-            tr
-              th.has-text-right コピー
-              template(v-for="e in FormatTypeInfo.values")
-                td
-                  a(@click="kifu_copy_handle(e.key)") {{e.name}}
-            tr
-              th.has-text-right 表示
-              template(v-for="e in FormatTypeInfo.values")
-                td
-                  a(@click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)") {{e.name}}
-            tr
-              th.has-text-right DL
-              template(v-for="e in FormatTypeInfo.values")
-                td
-                  a(@click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)") {{e.name}}
-
-          .has-text-centered.mt-3
-            b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")
-              | 文字コード Shift_JIS
+        .has-text-centered-touch
+          .format_box.box.is-inline-block.has-background-white-ter.is-shadowless.px-5
+            .mt-0
+              .is-size-7.has-text-weight-bold.has-text-left コピー
+              .list.ml-3
+                template(v-for="e in FormatTypeInfo.values")
+                  a.is-size-7.mx-1(@click="kifu_copy_handle(e.key)") {{e.name}}
+            .mt-3
+              .is-size-7.has-text-weight-bold.has-text-left 表示
+              .list.ml-3
+                template(v-for="e in FormatTypeInfo.values")
+                  a.is-size-7.mx-1(@click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)") {{e.name}}
+            .mt-3
+              .is-size-7.has-text-weight-bold.has-text-left ダウンロード
+              .list.ml-3
+                template(v-for="e in FormatTypeInfo.values")
+                  a.is-size-7.mx-1(@click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)") {{e.name}}
+            .has-text-centered.mt-3
+              b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")
+                | 文字コード Shift_JIS
 
     template(v-if="development_p")
       .columns
@@ -322,8 +321,7 @@ export default {
 
 <style lang="sass">
 .AdapterApp
-  .table
-    font-size: $size-7
-    tr > *
-      border-width: 0
+  +desktop
+    .buttons
+      justify-content: flex-start
 </style>

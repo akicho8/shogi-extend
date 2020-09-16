@@ -19,10 +19,14 @@ export default {
       // this.$gtag.event("click", {event_category: "ぴよ将棋"})
     },
   },
+  watch: {
+    "$attrs.href": function(v) {
+    }
+  },
   computed: {
     // 「ぴよ将棋w」に飛ぼうとしている？
     web_version_p() {
-      return this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")
+      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !this.piyo_shogi_app_p
     },
   },
 }
