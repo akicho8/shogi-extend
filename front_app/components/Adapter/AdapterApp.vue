@@ -41,18 +41,16 @@
               b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")
                 | 文字コード Shift_JIS
 
+      .column(v-if="all_kifs")
+        pre {{all_kifs.kif}}
+
     template(v-if="development_p")
       .columns
         .column
           .box
             .buttons.are-small
               template(v-for="row in test_kifu_body_list")
-                .button(@click="input_test_handle(row.input_text)") {{row.name || row.input_text}}
-    template(v-if="development_p")
-      .columns
-        .column
-          template(v-if="all_kifs")
-            pre {{all_kifs.ki2}}
+                .button(@click="input_test_handle(row.input_text)") {{row.name}}
 
 </template>
 
@@ -88,8 +86,9 @@ export default {
       body_encode: "utf8", // ダウンロードするファイルを shift_jis にする？
 
       // データ
-      all_kifs: null, // 変換した棋譜
-      record: null,      // FreeBattle のインスタンスの属性たち + いろいろんな情報
+      all_kifs: null,  // 変換した棋譜
+      record: null,    // FreeBattle のインスタンスの属性たち + いろいろんな情報
+      bs_error: null,  //  エラー情報
 
       // その他
       change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
@@ -108,6 +107,7 @@ export default {
     input_text() {
       this.change_counter += 1
       this.record = null
+      this.bs_error = null
     },
     body_encode(v) {
       this.sound_play("click")
@@ -144,7 +144,7 @@ export default {
 
     validate_handle() {
       this.sound_play("click")
-      this.record_fetch(() => this.general_ok_notice(`${this.record.turn_max}手の棋譜を読み込みました`))
+      this.record_fetch(() => this.general_ok_notice(`${this.record.turn_max}手の棋譜として読み取りました`))
     },
 
     input_test_handle(input_text) {
@@ -233,6 +233,10 @@ export default {
     },
 
     record_fetch(callback) {
+      if (this.bs_error) {
+        this.bs_error_message_dialog(this.bs_error)
+        return
+      }
       if (this.change_counter === 0) {
         if (this.record) {
           callback()
@@ -263,6 +267,11 @@ export default {
             this.input_text = ""
           }
           this.url_open(e.redirect_to)
+        }
+
+        if (e.bs_error) {
+          this.bs_error = e.bs_error
+          this.bs_error_message_dialog(e.bs_error)
         }
 
         if (e.all_kifs) {

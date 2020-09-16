@@ -81,6 +81,8 @@ export default {
         type: "is-danger",
         hasIcon: true,
         trapFocus: true,
+        onConfirm: () => { this.sound_play("click") },
+        onCancel:  () => { this.sound_play("click") },
       })
     },
 
@@ -88,7 +90,7 @@ export default {
       const message = `
           <div>${bs_error.message_prefix}</div>
           <div>${bs_error.message}</div>
-          <div class="error_message_pre">${bs_error.board}</div>
+          <div class="error_message_pre mt-2 has-background-white-ter box is-shadowless">${bs_error.board}</div>
         `
       this.error_message_dialog(message)
     },
