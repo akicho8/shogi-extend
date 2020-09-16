@@ -150,7 +150,18 @@ export default {
       this.current_title,
       this.image_view_point,
       this.room_code,
-    ], () => this.$router.replace({query: this.current_url_params}))
+    ], () => {
+      if (true) {
+        // 両方エラーになってしまう
+        // this.$router.replace({name: "share-board", query: this.current_url_params})
+        // this.$router.replace({query: this.current_url_params})
+
+        // パラメータだけ変更するときは変更してくれるけどエラーになるっぽいのでエラーにぎりつぶす(いいのか？)
+        this.$router.replace({query: this.current_url_params}).catch(() => {})
+      } else {
+        window.history.replaceState("", null, this.current_url)
+      }
+    })
   },
   methods: {
     // 現在の手数を受けとる(URLに反映する)
