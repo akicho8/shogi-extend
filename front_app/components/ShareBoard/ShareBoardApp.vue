@@ -17,13 +17,14 @@
       template(v-if="run_mode === 'play_mode'")
         b-navbar-item(@click="reset_handle") 盤面リセット
         b-navbar-item(@click="kifu_copy_handle") 棋譜コピー
+        b-navbar-item(:href="kif_download_url" @click="sound_play('click')") 棋譜ダウンロード
+        b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
         b-navbar-item(@click="mode_toggle_handle") 局面編集
-        b-navbar-item(@click="image_view_point_setting_handle") 視点設定
         b-navbar-dropdown(hoverable arrowless right label="その他")
           b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
           b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
+          b-navbar-item(@click="image_view_point_setting_handle") 視点設定
           b-navbar-item(:href="snapshot_image_url" @click="sound_play('click')") 局面画像の取得
-          b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
           b-navbar-item(@click="title_edit") タイトル編集
           template(v-if="run_mode === 'play_mode'")
             b-navbar-item(@click="room_code_edit")
@@ -149,7 +150,7 @@ export default {
       this.current_title,
       this.image_view_point,
       this.room_code,
-    ], () => this.url_replace())
+    ], () => this.$router.replace({query: this.current_url_params}))
   },
   methods: {
     // 現在の手数を受けとる(URLに反映する)
@@ -215,11 +216,7 @@ export default {
     // private
 
     url_replace() {
-      window.history.replaceState("", null, this.current_url)
-      
-      
-
-      
+      this.$router.replace({query: this.current_url_params})
     },
 
     // タイトル編集
@@ -300,6 +297,9 @@ export default {
         events: {
           "update:any_source": any_source => {
             this.$axios.$post("/api/general/any_source_to", {any_source: any_source, to_format: "sfen"}).then(e => {
+              if (e.bs_error) {
+                this.bs_error_message_dialog(e.bs_error)
+              }
               if (e.body) {
                 this.general_ok_notice("正常に読み込みました")
                 this.current_sfen = e.body
@@ -321,25 +321,15 @@ export default {
         url = new URL(location)
       }
 
-      url.searchParams.set("body", this.current_body) // 編集モードでもURLを更新するため
-      url.searchParams.set("turn", this.turn_offset)
-      url.searchParams.set("title", this.current_title)
-      url.searchParams.set("image_view_point", this.image_view_point)
-      url.searchParams.set("room_code", this.room_code)
+      params = {...params, ...this.current_url_params}
 
       _.each(params, (v, k) => {
         if (k !== "format") {
-          url.searchParams.set(k, v)
+          if (v) {
+            url.searchParams.set(k, v)
+          }
         }
       })
-
-      // 編集モードでの状態を維持したいのでURLに含めておく
-      // 操作モードのときは常にURLに入っているのはアレなので消す
-      if (this.run_mode === RUN_MODE_DEFAULT) {
-        url.searchParams.delete("run_mode")
-      } else {
-        url.searchParams.set("run_mode", this.run_mode)
-      }
 
       return url.toString()
     },
@@ -354,11 +344,29 @@ export default {
   },
 
   computed: {
+    current_url_params() {
+      const params = {
+        body:             this.current_body, // 編集モードでもURLを更新するため
+        turn:             this.turn_offset,
+        title:            this.current_title,
+        image_view_point: this.image_view_point,
+        room_code:        this.room_code,
+      }
+
+      // 編集モードでの状態を維持したいのでURLに含めておく
+      if (this.run_mode === "edit_mode") {
+        params["run_mode"] = this.run_mode
+      }
+
+      return params
+    },
+
     // URL
     current_url()        { return this.permalink_for()                                                                        },
     json_debug_url()     { return this.permalink_for({format: "json"})                                                        },
     twitter_card_url()   { return this.permalink_for({format: "png"})                                                         },
     snapshot_image_url() { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
+    kif_download_url()   { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
 
     // 外部アプリ
     piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({path: this.current_url, sfen: this.current_sfen, turn: this.turn_offset, flip: this.board_flip, game_name: this.current_title}) },

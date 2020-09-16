@@ -92,6 +92,7 @@ export default {
           <div>${bs_error.message}</div>
           <div class="error_message_pre mt-2 has-background-white-ter box is-shadowless">${bs_error.board}</div>
         `
+      this.sound_play("x")
       this.error_message_dialog(message)
     },
   },

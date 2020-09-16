@@ -18,10 +18,7 @@
         b-icon(icon="link")
       b-navbar-item(@click="keyboard_modal_show")
         b-icon(icon="keyboard")
-      b-navbar-dropdown(hoverable arrowless right)
-        template(slot="label")
-          b-icon(icon="menu")
-        b-navbar-item(tag="a" href="/") TOP
+      b-navbar-item(tag="a" href="/") TOP
 
   .section.pt-4
     .columns

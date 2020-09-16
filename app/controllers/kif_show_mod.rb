@@ -46,6 +46,7 @@ module KifShowMod
   end
 
   def current_filename
-    "#{current_record.to_param}.#{params[:format]}"
+    basename = params[:title].presence || current_record.to_param
+    "#{basename}-#{initial_turn}.#{params[:format]}"
   end
 end

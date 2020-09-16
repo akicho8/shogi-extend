@@ -82,10 +82,6 @@ class ShareBoardsController < ApplicationController
       kif_data_send
     end
 
-    def current_filename
-      "#{current_record.to_param}-#{initial_turn}.#{params[:format]}"
-    end
-
     def info_params
       {
         record: current_json,

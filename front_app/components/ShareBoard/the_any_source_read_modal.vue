@@ -5,6 +5,7 @@
   section.modal-card-body
     b-input(type="textarea" v-model="any_source" ref="any_source")
   footer.modal-card-foot
+    b-button(@click="close_handle") キャンセル
     b-button(@click="submit_handle" type="is-primary") 読み込む
 </template>
 
@@ -20,7 +21,13 @@ export default {
     this.desktop_focus_to(this.$refs.any_source.$refs.textarea)
   },
   methods: {
+    close_handle() {
+      this.sound_play("click")
+      this.$emit("close")
+    },
     submit_handle() {
+      this.sound_play("click")
+      this.$emit("close")
       this.$emit("update:any_source", this.any_source)
     },
   },
