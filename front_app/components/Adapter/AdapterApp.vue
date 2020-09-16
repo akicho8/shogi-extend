@@ -14,7 +14,7 @@
           PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
           KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
           KifCopyButton(@click="kifu_copy_handle('kif')")
-          SpShowButton(@click="board_show_handle" v-if="development_p && false")
+          SpShowButton(@click="board_show_handle")
         .buttons.is-centered.are-small.mt-3
           b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'") 検証
           b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.BASE_URL}${record.show_path}?formal_sheet=true` : ''") 棋譜用紙
@@ -119,6 +119,19 @@ export default {
   },
 
   methods: {
+    // board_image_url() {
+    //   // const params = {
+    //   //   format: "png",
+    //   //   body: this.row.question.init_sfen,
+    //   //   image_view_point: "black",
+    //   // }
+    //   // const url = new URL(this.as_full_url("/share-board"))
+    //   // _.each(params, (v, k) => url.searchParams.set(k, v))
+    //   // return url.toString()
+    //
+    //   // /share-board
+    // },
+
     piyo_shogi_open_handle() {
       this.record_fetch(() => this.url_open(this.piyo_shogi_app_with_params_url, this.target_default))
     },
@@ -182,7 +195,13 @@ export default {
 
     // 「盤面」
     board_show_handle() {
-      this.record_fetch(() => this.sp_show_modal({record: this.record, board_show_type: "last"}))
+      // this.record_fetch(() => this.sp_show_modal({record: this.record, board_show_type: "last"}))
+
+      this.sound_play("click")
+      this.record_fetch(() => {
+        // https://router.vuejs.org/guide/essentials/navigation.html#programmatic-navigation
+        this.$router.push({name: "share-board", query: {body: this.all_kifs.sfen, image_view_point: "black", title: "共有将棋盤 (棋譜変換後の確認)"}})
+      })
     },
 
     // helper
