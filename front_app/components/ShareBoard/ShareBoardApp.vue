@@ -17,24 +17,19 @@
       template(v-if="run_mode === 'play_mode'")
         b-navbar-item(@click="reset_handle") 盤面リセット
         b-navbar-item(@click="kifu_copy_handle") 棋譜コピー
-        b-navbar-item(:href="snapshot_image_url") 局面画像の取得
-      b-navbar-item(@click="mode_toggle_handle")
-        template(v-if="run_mode === 'play_mode'")
-          | 局面編集
-        template(v-else)
-          | 局面編集(終了)
-      b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
-      b-navbar-item(@click="image_view_point_setting_handle") 視点設定
-      b-navbar-dropdown(hoverable arrowless right label="その他")
-        b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
-        b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
-        b-navbar-item(@click="title_edit") タイトル編集
-        template(v-if="run_mode === 'play_mode'")
-          b-navbar-item(@click="room_code_edit")
-            | リアルタイム共有
-            .has-text-danger(v-if="room_code")
-              | {{room_code}}
-        b-navbar-item(tag="a" href="/") TOPに戻る
+        b-navbar-item(@click="mode_toggle_handle") 局面編集
+        b-navbar-item(@click="image_view_point_setting_handle") 視点設定
+        b-navbar-dropdown(hoverable arrowless right label="その他")
+          b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
+          b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
+          b-navbar-item(:href="snapshot_image_url" @click="sound_play('click')") 局面画像の取得
+          b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
+          b-navbar-item(@click="title_edit") タイトル編集
+          template(v-if="run_mode === 'play_mode'")
+            b-navbar-item(@click="room_code_edit")
+              | リアルタイム共有
+              .has-text-danger.ml-1(v-if="room_code") {{room_code}}
+      b-navbar-item(tag="a" href="/") TOP
 
   b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
@@ -73,7 +68,7 @@
         .tweet_button_container
           .buttons.is-centered
             b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
-            a.delete.page_delete.is-large(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
+            b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
 
         .room_code.is_clickable(@click="room_code_edit" v-if="false")
           | {{room_code}}
@@ -187,6 +182,7 @@ export default {
 
     // 棋譜コピー
     kifu_copy_handle() {
+      this.sound_play("click")
       this.general_kifu_copy(this.current_body, {to_format: "kif"})
     },
 
@@ -220,18 +216,24 @@ export default {
 
     url_replace() {
       window.history.replaceState("", null, this.current_url)
+      
+      
+
+      
     },
 
     // タイトル編集
     title_edit() {
+      this.sound_play("click")
       this.$buefy.dialog.prompt({
         title: "タイトル",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: "text", value: this.current_title, required: false },
+        onCancel: () => this.sound_play("click"),
         onConfirm: value => {
-          this.current_title_set(value)
           this.sound_play("click")
+          this.current_title_set(value)
         },
       })
     },
@@ -242,6 +244,7 @@ export default {
     },
 
     room_code_edit() {
+      this.sound_play("click")
       this.$buefy.dialog.prompt({
         title: "リアルタイム共有",
         size: "is-small",
@@ -250,13 +253,17 @@ export default {
             <ul>
               <li>同じ合言葉を設定した人とリアルタイムに盤を共有できます</li>
               <li>合言葉を設定したら同じ合言葉を相手に伝えてください</li>
-              <li>合言葉はURLにも付加するので、たんにURLを伝えてもかまいません</li>
+              <li>合言葉はURLにも付加するのでURLを伝えてもかまいません</li>
             </ul>
           </div>`,
         confirmText: "設定",
         cancelText: "キャンセル",
         inputAttrs: { type: "text", value: this.room_code, required: false },
-        onConfirm: value => this.room_code_set(value),
+        onCancel: () => this.sound_play("click"),
+        onConfirm: value => {
+          this.sound_play("click")
+          this.room_code_set(value)
+        },
       })
     },
 
@@ -284,6 +291,7 @@ export default {
 
     // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
+      this.sound_play("click")
       const modal_instance = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
@@ -291,11 +299,11 @@ export default {
         component: the_any_source_read_modal,
         events: {
           "update:any_source": any_source => {
-            this.$axios.post("/api/general/any_source_to", {any_source: any_source, to_format: "sfen"}).then(({data}) => {
-              if (data.body) {
+            this.$axios.$post("/api/general/any_source_to", {any_source: any_source, to_format: "sfen"}).then(e => {
+              if (e.body) {
                 this.general_ok_notice("正常に読み込みました")
-                this.current_sfen = data.body
-                this.turn_offset = data.turn_max
+                this.current_sfen = e.body
+                this.turn_offset = e.turn_max
                 this.board_flip = false
                 modal_instance.close()
               }
@@ -338,6 +346,7 @@ export default {
 
     // 盤面のみ最初の状態に戻す
     reset_handle() {
+      this.sound_play("click")
       this.current_sfen = this.info.record.sfen_body        // 渡している棋譜
       this.turn_offset  = this.info.record.initial_turn     // 現在の手数
       this.general_ok_notice("盤面を最初の状態に戻しました")
@@ -392,12 +401,12 @@ export default {
       margin-top: 0.65rem
 
   ////////////////////////////////////////////////////////////////////////////////
-  position: relative
-  .dropdown_menu, .delete
-    position: absolute
-    top: 0rem
-    right: 0rem
-    z-index: 1
+  // position: relative
+  // .dropdown_menu
+  //   position: absolute
+  //   top: 0rem
+  //   right: 0rem
+  //   z-index: 1
 
   ////////////////////////////////////////////////////////////////////////////////
   .sp_container
