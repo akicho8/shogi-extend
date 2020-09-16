@@ -28,11 +28,11 @@ export default {
         }
         // return this.$axios.request({method: "get", url: "/api/talk", params: params}).then(({data}) => this.mp3_talk(data, options))
         // return this.$axios.get("/api/talk", {params: params}).then(({data}) => this.mp3_talk(data, options))
-        return this.$axios.post("/api/talk", params, {progress: false}).then(({data}) => {
-          if (data.mp3_path == null) {
+        return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
+          if (e.mp3_path == null) {
             return Promise.reject("mp3_path is blank")
           } else {
-            this.mp3_talk(data, options)
+            this.mp3_talk(e, options)
           }
         })
       }
