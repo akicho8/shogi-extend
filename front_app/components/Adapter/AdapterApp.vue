@@ -108,6 +108,7 @@ export default {
       this.change_counter += 1
       this.record = null
       this.bs_error = null
+      this.all_kifs = null
     },
     body_encode(v) {
       this.sound_play("click")
@@ -256,7 +257,6 @@ export default {
       }
       this.$axios.$post(this.config.post_path, params).then(e => {
         this.change_counter = 0
-
         this.all_kifs = null
 
         if (e.redirect_to) {
