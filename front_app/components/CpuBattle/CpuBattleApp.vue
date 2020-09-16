@@ -498,8 +498,6 @@ export default {
             message: data["message"],
             type: "is-danger",
             hasIcon: true,
-            icon: "times-circle",
-            iconPack: "fa",
           })
         } else {
           this.talk(data["message"])

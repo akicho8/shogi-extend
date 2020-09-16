@@ -11,8 +11,6 @@ export const support = {
         canCancel: ["outside", "escape"],
         type: "is-danger",
         hasIcon: true,
-        icon: "times-circle",
-        iconPack: "fa",
         trapFocus: true,
       })
     },
