@@ -305,14 +305,16 @@ export default {
     },
 
     xy_records_hash_update() {
-      const params = {
-        xy_records_hash_fetch: true,
-        xy_scope_key: this.xy_scope_key,
-        entry_name_unique: this.entry_name_unique,
+      if (this.xy_scope_key) {
+        const params = {
+          xy_records_hash_fetch: true,
+          xy_scope_key: this.xy_scope_key,
+          entry_name_unique: this.entry_name_unique,
+        }
+        return this.$axios.$get("/api/xy.json", {params: params}).then(data => {
+          this.xy_records_hash = data
+        })
       }
-      return this.$axios.$get("/api/xy.json", {params: params}).then(data => {
-        this.xy_records_hash = data
-      })
     },
 
     persistense_variables_init() {
