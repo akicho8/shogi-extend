@@ -82,7 +82,7 @@
               :flip="current_rule.flip"
               :board_piece_back_user_class="board_piece_back_user_class"
               :overlay_navi="false"
-              :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
+              :board_cell_pointerdown_user_handle="board_cell_left_click_user_handle"
             )
 
           .time_container
