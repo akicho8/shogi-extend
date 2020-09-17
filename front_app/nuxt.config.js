@@ -1,5 +1,7 @@
 // export default {
 const config = {
+  debug: true,
+
   // mode: 'spa',
   mode: 'universal',
 
