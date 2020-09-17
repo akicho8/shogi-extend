@@ -1,13 +1,13 @@
 <template lang="pug">
 .ShareBoardApp
   DebugBox
-    p current_sfen: {{current_sfen}}
-    p current_title: {{current_title}}
-    p turn_offset: {{turn_offset}}
-    p image_view_point: {{image_view_point}}
-    p run_mode: {{run_mode}}
-    p board_flip: {{board_flip}}
-    p current_url: {{current_url}}
+    p 手数: {{turn_offset}} / {{turn_offset_max}}
+    p SFEN: {{current_sfen}}
+    p タイトル: {{current_title}}
+    p 視点: {{image_view_point}}
+    p モード: {{run_mode}}
+    p 反転: {{board_flip}}
+    p URL: {{current_url}}
 
   b-navbar(type="is-primary")
     template(slot="brand")
@@ -16,16 +16,17 @@
     template(slot="end")
       template(v-if="run_mode === 'play_mode'")
         b-navbar-item(@click="reset_handle") 盤面リセット
-        b-navbar-item(@click="kifu_copy_handle") 棋譜コピー
-        b-navbar-item(:href="kif_download_url" @click="sound_play('click')") 棋譜ダウンロード
         b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
+        b-navbar-item(@click="kifu_copy_handle('kif')") 棋譜コピー
         b-navbar-item(@click="mode_toggle_handle") 局面編集
+        b-navbar-item(@click="image_view_point_setting_handle") 視点設定
         b-navbar-dropdown(hoverable arrowless right label="その他")
           b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
           b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
-          b-navbar-item(@click="image_view_point_setting_handle") 視点設定
           b-navbar-item(:href="snapshot_image_url" @click="sound_play('click')") 局面画像の取得
+          b-navbar-item(:href="kif_download_url" @click="sound_play('click')") 棋譜ダウンロード
           b-navbar-item(@click="title_edit") タイトル編集
+          b-navbar-item(@click="kifu_copy_handle('sfen')") SFENコピー
           template(v-if="run_mode === 'play_mode'")
             b-navbar-item(@click="room_code_edit")
               | リアルタイム共有
@@ -41,8 +42,11 @@
       .column.is_shogi_player
         //- the_pulldown_menu
 
-        .title_container.has-text-centered(v-if="run_mode === 'play_mode'")
-          .turn_offset.has-text-weight-bold {{turn_offset}}手目
+        .turn_container.has-text-centered(v-if="run_mode === 'play_mode'")
+          span.turn_offset.has-text-weight-bold {{turn_offset}}
+          template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
+            span.mx-1.has-text-grey /
+            span.has-text-grey {{turn_offset_max}}
 
         .sp_container
           shogi_player(
@@ -63,7 +67,8 @@
             @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
             @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
             @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
-            @update:turn_offset="turn_offset_set"
+            @update:turn_offset="v => turn_offset = v"
+            @update:turn_offset_max="v => turn_offset_max = v"
           )
 
         .tweet_button_container
@@ -131,6 +136,7 @@ export default {
 
       // urlには反映しない
       board_flip: this.info.record.board_flip,       // 反転用
+      turn_offset_max: null,                         // 最後の手数
 
       record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
@@ -164,11 +170,6 @@ export default {
     })
   },
   methods: {
-    // 現在の手数を受けとる(URLに反映する)
-    turn_offset_set(v) {
-      this.turn_offset = v
-    },
-
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
       this.current_sfen = v
@@ -193,9 +194,9 @@ export default {
     },
 
     // 棋譜コピー
-    kifu_copy_handle() {
+    kifu_copy_handle(fomrat) {
       this.sound_play("click")
-      this.general_kifu_copy(this.current_body, {to_format: "kif"})
+      this.general_kifu_copy(this.current_body, {to_format: fomrat})
     },
 
     // ツイートする
@@ -350,7 +351,7 @@ export default {
       this.sound_play("click")
       this.current_sfen = this.info.record.sfen_body        // 渡している棋譜
       this.turn_offset  = this.info.record.initial_turn     // 現在の手数
-      this.general_ok_notice("盤面を最初の状態に戻しました")
+      this.general_ok_notice("URLを最初に開いたときの状態に盤面を戻しました")
     },
   },
 
@@ -361,11 +362,14 @@ export default {
         turn:             this.turn_offset,
         title:            this.current_title,
         image_view_point: this.image_view_point,
-        room_code:        this.room_code,
+      }
+
+      if (this.room_code) {
+        params["room_code"] = this.room_code
       }
 
       // 編集モードでの状態を維持したいのでURLに含めておく
-      if (this.run_mode === "edit_mode") {
+      if (this.run_mode !== "play_mode") {
         params["run_mode"] = this.run_mode
       }
 
@@ -415,9 +419,7 @@ export default {
         margin: 0
 
   ////////////////////////////////////////////////////////////////////////////////
-  .title_container
-    .turn_offset
-      margin-top: 0.65rem
+  .turn_container
 
   ////////////////////////////////////////////////////////////////////////////////
   // position: relative

@@ -1698,6 +1698,13 @@ buefy@^0.8.20:
   dependencies:
     bulma "0.7.5"
 
+buefy@^0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.9.3.tgz#c33b3309e9458ca5fe3ef14955e4bc2df7a0e3e2"
+  integrity sha512-Xqfo3ppeBo8Fwhb2fLwWnpkIC/1thPErU7DX3HksxTHxrSMixJ2BYkf3f6aWv4Ffx/FWX5UHnUrgtT7o7slnDA==
+  dependencies:
+    bulma "0.9.0"
+
 buffer-from@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
@@ -1732,7 +1739,7 @@ bulma@0.7.5:
   resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.5.tgz#35066c37f82c088b68f94450be758fc00a967208"
   integrity sha512-cX98TIn0I6sKba/DhW0FBjtaDpxTelU166pf7ICXpCCuplHWyu6C9LYZmL5PEsnePIeJaiorsTEzzNk3Tsm1hw==
 
-bulma@^0.9.0:
+bulma@0.9.0, bulma@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.9.0.tgz#948c5445a49e9d7546f0826cb3820d17178a814f"
   integrity sha512-rV75CJkubNUroAt0qCRkjznZLoaXq/ctfMXsMvKSL84UetbSyx5REl96e8GoQ04G4Tkw0XF3STECffTOQrbzOQ==
@@ -4533,6 +4540,13 @@ js-memory-record@^0.0.15:
   integrity sha512-C50ksO366ucyUy6+jNVDkQNkLL1EH9jpAMpbTWdpmyqFVOIoXvENVBDxRDVYwtrogFpg2SFaxAWbVHVp9w8P2Q==
   dependencies:
     babel-core "^6.26.3"
+    lodash "^4.17.15"
+
+js-memory-record@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.16.tgz#476a8953bcbac07131216d0c39aff09badce29b6"
+  integrity sha512-X/8J3MLxaXoEmc/KSoX7yq+OGo2rg4ZmQe0Ds4rYxmKS7sJ9y2hW7u9HMp+ucGyXJJHv0ZfSUnVckF5grKdVOA==
+  dependencies:
     lodash "^4.17.15"
 
 js-stringify@^1.0.2:
@@ -7671,10 +7685,10 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shogi-player@^0.0.213:
-  version "0.0.213"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.213.tgz#0a33312d5ec907131afc62cee859d7355abaf3b7"
-  integrity sha512-zYF2yv4kZ29i040n1HUi5ULlUgJIT5jbFV/ct1mc+IuemHtrgutxiQoDh3JCrxCMSFwevywNrh2Jv0AjnTUtuQ==
+shogi-player@^0.0.214:
+  version "0.0.214"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.214.tgz#3b09c52b10b6386ecf96474a04840b25002b8846"
+  integrity sha512-M81vRkDzOcht5zVgEjj4K7C9Wg3uUIsPIKqzBARa6fBsiM+SzTOo/MMOwXOlvUxprVuEAWo5nRjFpU0aXKPXFA==
   dependencies:
     autolinker "^3.14.1"
     autoprefixer "^9.7.6"

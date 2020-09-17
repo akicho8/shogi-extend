@@ -10809,10 +10809,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shogi-player@^0.0.213:
-  version "0.0.213"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.213.tgz#0a33312d5ec907131afc62cee859d7355abaf3b7"
-  integrity sha512-zYF2yv4kZ29i040n1HUi5ULlUgJIT5jbFV/ct1mc+IuemHtrgutxiQoDh3JCrxCMSFwevywNrh2Jv0AjnTUtuQ==
+shogi-player@^0.0.214:
+  version "0.0.214"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.214.tgz#3b09c52b10b6386ecf96474a04840b25002b8846"
+  integrity sha512-M81vRkDzOcht5zVgEjj4K7C9Wg3uUIsPIKqzBARa6fBsiM+SzTOo/MMOwXOlvUxprVuEAWo5nRjFpU0aXKPXFA==
   dependencies:
     autolinker "^3.14.1"
     autoprefixer "^9.7.6"
