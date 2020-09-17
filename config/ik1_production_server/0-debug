@@ -13,12 +13,21 @@ curl -sI https://www.shogi-extend.com/ | head -1
 
 scp puma.service i:/etc/systemd/system/
 ssh i 'sudo systemctl daemon-reload'
+ssh i 'sudo systemctl enable puma'
 ssh i 'sudo systemctl restart puma'
 ssh i 'sudo systemctl status puma'
 ssh i 'sudo systemctl reset-failed puma'
 
 scp sidekiq.service i:/etc/systemd/system/
 ssh i 'sudo systemctl daemon-reload'
+ssh i 'sudo systemctl enable sidekiq'
 ssh i 'sudo systemctl restart sidekiq'
 ssh i 'sudo systemctl status sidekiq'
 ssh i 'sudo systemctl reset-failed sidekiq'
+
+scp nuxt.service i:/etc/systemd/system/
+ssh i 'sudo systemctl daemon-reload'
+ssh i 'sudo systemctl enable nuxt'
+ssh i 'sudo systemctl restart nuxt'
+ssh i 'sudo systemctl status nuxt'
+ssh i 'sudo systemctl reset-failed nuxt'

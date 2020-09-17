@@ -1,0 +1,13 @@
+#!/bin/sh
+scp nginx_default.conf i:/etc/nginx/conf.d/default.conf
+ssh i "sudo nginx -t && sudo systemctl restart nginx"
+
+scp nuxt.service i:/etc/systemd/system/
+ssh i sudo systemctl enable nuxt
+ssh i sudo systemctl daemon-reload
+ssh i sudo systemctl restart nuxt
+ssh i sudo systemctl status nuxt
+ssh i sudo systemctl reset-failed nuxt
+
+curl -sI https://www.shogi-extend.com/vs-clock | head -1
+curl -sI https://www.shogi-extend.com/app/experiment/async_data_test | head -1

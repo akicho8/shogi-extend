@@ -11,6 +11,9 @@ ssh i 'sudo chown deploy:deploy /etc/systemd/system/puma.service'
 ssh i 'sudo touch               /etc/systemd/system/sidekiq.service'
 ssh i 'sudo chown deploy:deploy /etc/systemd/system/sidekiq.service'
 
+ssh i 'sudo touch               /etc/systemd/system/nuxt.service'
+ssh i 'sudo chown deploy:deploy /etc/systemd/system/nuxt.service'
+
 ssh i 'mkdir -p /var/www/shogi_web_production/current/config/puma'
 
 scp custom_profile.sh     i:/etc/profile.d
@@ -18,6 +21,7 @@ scp nginx.conf            i:/etc/nginx/nginx.conf
 scp nginx_default.conf    i:/etc/nginx/conf.d/default.conf
 scp puma.service          i:/etc/systemd/system/
 scp sidekiq.service       i:/etc/systemd/system/
+scp nuxt.service          i:/etc/systemd/system/
 scp ../puma/production.rb i:/var/www/shogi_web_production/current/config/puma/production.rb
 
 ssh i sudo chkconfig httpd off

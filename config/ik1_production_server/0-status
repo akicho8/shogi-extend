@@ -2,6 +2,7 @@
 ssh i sudo systemctl status nginx
 ssh i sudo systemctl status puma
 ssh i sudo systemctl status sidekiq
+ssh i sudo systemctl status nuxt
 curl -sI https://www.shogi-extend.com/ | head -1
 curl -sI https://shogi-extend.com/ | head -1
 curl -sI http://shogi-extend.com/ | head -1
