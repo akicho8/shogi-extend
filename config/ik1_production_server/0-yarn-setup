@@ -1,0 +1,7 @@
+#!/bin/sh
+ssh i 'sudo chown root:wheel -R /usr/local/nodenv'
+ssh i 'sudo chmod ug+rw -R /usr/local/nodenv'
+ssh i 'nodenv install --force 12.10.0'
+ssh i 'cd /var/www/shogi_web_production/current/front_app && npm i -g yarn'
+ssh i 'cd /var/www/shogi_web_production/current/front_app && yarn'
+ssh i 'cd /var/www/shogi_web_production/current/front_app && which npx'
