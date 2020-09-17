@@ -128,7 +128,7 @@ const config = {
 
     headers: {
       "Content-Type": "application/json", // ← これがあるとAPIを叩くときいちいち .json をつけなくてよくなる
-      "X-Requested-With": "XMLHttpRequest",
+      // "X-Requested-With": "XMLHttpRequest", // ←これがあると $axios.$get("https://yesno.wtf/api") が動かない
     },
     // responseType: "json",
 
