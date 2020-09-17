@@ -19,8 +19,8 @@ export default {
     }
   },
   async asyncData({ $axios, query }) {
-    // http://0.0.0.0:3000/api/share_board?config_fetch=true
-    const config = await $axios.$get("/api/share_board", {params: {config_fetch: true, ...query}})
+    // http://0.0.0.0:3000/api/share_board
+    const config = await $axios.$get("/api/share_board", {params: query})
     return { config }
   },
 }

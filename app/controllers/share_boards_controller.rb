@@ -59,10 +59,10 @@ class ShareBoardsController < ApplicationController
       current_record.update_columns(accessed_at: Time.current)
 
       if request.format.json?
-        if params[:config_fetch]
-          render json: config_params
-          return
-        end
+        # if params[:config_fetch]
+        render json: config_params
+        return
+        # end
       end
 
       # Twitter画像
@@ -104,12 +104,12 @@ class ShareBoardsController < ApplicationController
     end
 
     def current_image_path
-      if false
-        # params[:image_flip] が渡せていない
+      if true
+        # params[:image_flip] が渡せていないけどこれでいい
         url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png", turn: initial_turn, image_view_point: image_view_point])
       else
         # params[:image_flip] をそのまま渡すために params にマージしないといけない
-        url_for(params.to_unsafe_h.merge(body: current_record.sfen_body, format: "png"))
+        # url_for([:share_board, params.to_unsafe_h.merge(body: current_record.sfen_body, format: "png")])
       end
     end
 

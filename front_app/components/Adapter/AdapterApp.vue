@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       // フォーム関連
-      input_text: null,    // 入力した棋譜
+      input_text: null,      // 入力した棋譜
       body_encode: "utf8", // ダウンロードするファイルを shift_jis にする？
 
       // データ
@@ -100,7 +100,7 @@ export default {
     this.desktop_focus_to(this.$refs.input_text)
 
     // ?body=xxx の値を反映する
-    this.input_text = this.config.record_attributes.kifu_body || this.$route.query.body
+    this.input_text = this.config.record_attributes.kifu_body || this.$route.query.body || ""
   },
 
   watch: {
@@ -271,7 +271,7 @@ export default {
       // this.$gtag.event("create", {event_category: "なんでも棋譜変換"})
 
       const params = {
-        input_text: this.input_text,
+        input_text: this.input_text, // 空文字列でもわたさないといけない
         edit_mode: "adapter",
       }
       this.$axios.$post(this.config.post_path, params).then(e => {
