@@ -87,11 +87,6 @@ RSpec.describe FreeBattlesController, type: :controller do
     expect(response).to have_http_status(:redirect)
   end
 
-  it "なんでも棋譜変換" do
-    get :new, params: { edit_mode: "adapter" }
-    expect(response).to have_http_status(:ok)
-  end
-
   it "create" do
     post :create, params: {}
     expect(response).to have_http_status(:redirect)

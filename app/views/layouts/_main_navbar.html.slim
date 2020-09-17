@@ -27,7 +27,7 @@ nav#main_nav.navbar.is-primary.is_screen_only
         .navbar-dropdown.is-boxed
           = link_to("対局時計", UrlProxy.wrap("/vs-clock"), class: "navbar-item")
           = link_to("野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
-          = link_to("野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new" && params[:edit_mode] != "adapter")])
+          = link_to("野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
           = link_to("プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")]) if AppConfig[:player_info_function]
           - if Rails.env.development? || Rails.env.test?
             = link_to("ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])
