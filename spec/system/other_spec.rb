@@ -9,9 +9,8 @@ RSpec.describe "その他", type: :system do
 
   it "符号の鬼" do
     XyRecord.setup
-
-    visit "/xy"
-    expect(page).to have_content "Rails"
+    visit "http://localhost:4000/xy"
+    expect(page).to have_content "符号の鬼"
     doc_image
   end
 

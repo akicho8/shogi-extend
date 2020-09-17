@@ -124,21 +124,21 @@ export default {
     the_any_source_read_modal,
   },
   props: {
-    info: { type: Object, required: true },
+    config: { type: Object, required: true },
   },
   data() {
     return {
       // watch して url に反映するもの
-      current_sfen:     this.info.record.sfen_body,        // 渡している棋譜
-      current_title:    this.info.record.title,            // 現在のタイトル
-      turn_offset:      this.info.record.initial_turn,     // 現在の手数
-      image_view_point: this.info.record.image_view_point, // Twitter画像の向き
+      current_sfen:     this.config.record.sfen_body,        // 渡している棋譜
+      current_title:    this.config.record.title,            // 現在のタイトル
+      turn_offset:      this.config.record.initial_turn,     // 現在の手数
+      image_view_point: this.config.record.image_view_point, // Twitter画像の向き
 
       // urlには反映しない
-      board_flip: this.info.record.board_flip,       // 反転用
+      board_flip: this.config.record.board_flip,       // 反転用
       turn_offset_max: null,                         // 最後の手数
 
-      record: this.info.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
+      record: this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_sfen: null,     // 局面編集モードの局面
     }
@@ -349,8 +349,8 @@ export default {
     // 盤面のみ最初の状態に戻す
     reset_handle() {
       this.sound_play("click")
-      this.current_sfen = this.info.record.sfen_body        // 渡している棋譜
-      this.turn_offset  = this.info.record.initial_turn     // 現在の手数
+      this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
+      this.turn_offset  = this.config.record.initial_turn     // 現在の手数
       this.general_ok_notice("URLを最初に開いたときの状態に盤面を戻しました")
     },
   },
@@ -390,7 +390,7 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 最初に表示した手数より進めたか？
-    advanced_p() { return this.turn_offset > this.info.record.initial_turn },
+    advanced_p() { return this.turn_offset > this.config.record.initial_turn },
 
     // 常に画面上の盤面と一致している
     current_body() { return this.edit_mode_sfen || this.current_sfen },

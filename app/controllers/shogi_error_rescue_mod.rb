@@ -21,22 +21,23 @@ module ShogiErrorRescueMod
       end
 
       slack_message(key: error.class.name, body: [error.message, params].join("\n"), channel: "#adapter_error")
+      ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
 
       case
       when request.format.json?
         # なんでも棋譜変換の場合は頻繁にエラーになるため ExceptionNotifier しない
         render json: as_bs_error(error) # status: 500 としたいが production で json を HTML で上書きされてしまう
       when request.format.png?
-        ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
-
         # https://developer.mozilla.org/ja/docs/Web/HTTP/Status/422
         send_file Rails.root.join("app/assets/images/fallback.png"), type: Mime[:png], disposition: "inline", status: 422
+      # when request.format.html?
+      #   # 野良棋譜投稿の場合は滅多に使われないので通知する
+      #   #   EXCEPTION_NOTIFICATION_ENABLE=1 foreman s
+      #   # で確認できる
+      #   behavior_after_rescue(error_html_build(error))
       else
-        # 野良棋譜投稿の場合は滅多に使われないので通知する
-        #   EXCEPTION_NOTIFICATION_ENABLE=1 foreman s
-        # で確認できる
-        ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
-        behavior_after_rescue(error_html_build(error))
+        # http://lvh.me:3000/share-board.kif?body=position%20startpos%20moves%205i5e
+        render plain: error.message
       end
     end
   end
@@ -78,6 +79,6 @@ module ShogiErrorRescueMod
       #   s += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre_with_margin").html_safe
       # end
     end
-    s
+    s.html_safe
   end
 end

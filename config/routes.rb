@@ -164,7 +164,7 @@ Rails.application.routes.draw do
 
   ################################################################################ api
 
-  namespace :api, format: "json" do
+  namespace :api do # ここで format: "json" を指定するとデフォルトが json ではなく json の場合しか実行されない
     resource :general, only: [:show] do
       match "any_source_to", via: [:get, :post]
     end

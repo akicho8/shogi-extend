@@ -37,11 +37,9 @@
 
 class ShareBoardsController < ApplicationController
   concerning :ShareBoardMod do
-    included do
-      include EncodeMod
-      include KifShowMod
-      include ShogiErrorRescueMod
-    end
+    include EncodeMod
+    include KifShowMod
+    include ShogiErrorRescueMod
 
     def show
       # http://localhost:3000/share-board
@@ -61,8 +59,8 @@ class ShareBoardsController < ApplicationController
       current_record.update_columns(accessed_at: Time.current)
 
       if request.format.json?
-        if params[:info_fetch]
-          render json: info_params
+        if params[:config_fetch]
+          render json: config_params
           return
         end
       end
@@ -82,7 +80,7 @@ class ShareBoardsController < ApplicationController
       kif_data_send
     end
 
-    def info_params
+    def config_params
       {
         record: current_json,
         twitter_card_options: twitter_card_options,
@@ -117,14 +115,22 @@ class ShareBoardsController < ApplicationController
 
     private
 
+    def current_filename
+      basename = params[:title].presence || current_record.to_param
+      "#{basename}-#{initial_turn}.#{params[:format]}"
+    end
+
     def turn_full_message
       if initial_turn.nonzero?
         "#{initial_turn}手目"
       end
     end
 
+    # HTMLはリダイレクトしてしまうのでそのまま表示する
     def behavior_after_rescue(message)
-      redirect_to controller_name.singularize.to_sym, danger: message
+      # redirect_to controller_name.singularize.to_sym, danger: message
+      # render html: message.html_safe
+      render html: message.html_safe
     end
 
     def current_json
