@@ -351,7 +351,7 @@ export default {
       this.sound_play("click")
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
       this.turn_offset  = this.config.record.initial_turn     // 現在の手数
-      this.general_ok_notice("URLを最初に開いたときの状態に盤面を戻しました")
+      this.general_ok_notice("盤面を最初の状態に戻しました")
     },
   },
 
