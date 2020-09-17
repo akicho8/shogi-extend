@@ -18,8 +18,8 @@ export default {
       ],
     }
   },
-  async asyncData({ $axios }) {
-    const config = await $axios.$get("/x.json", {params: {config_fetch: true}})
+  async asyncData({ $axios, query }) {
+    const config = await $axios.$get("/x.json", {params: {config_fetch: true, ...query}})
     return { config }
   },
 }

@@ -100,7 +100,7 @@ export default {
     this.desktop_focus_to(this.$refs.input_text)
 
     // ?body=xxx の値を反映する
-    this.input_text = this.config.record_attributes.kifu_body || ""
+    this.input_text = this.config.record_attributes.kifu_body || this.$route.query.body
   },
 
   watch: {
