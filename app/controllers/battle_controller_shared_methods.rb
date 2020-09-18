@@ -202,7 +202,6 @@ module BattleControllerSharedMethods
     included do
       helper_method :js_show_options
       helper_method :decorator
-      helper_method :show_twitter_options
 
       before_action only: [:edit, :update, :destroy] do
         if request.format.html?

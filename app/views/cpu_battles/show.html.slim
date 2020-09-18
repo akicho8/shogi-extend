@@ -1,9 +1,0 @@
-- ogp_params_set(show_twitter_options)
-
-- content_for :head do
-  = javascript_pack_tag("cpu_battles_app")
-  javascript:
-    document.addEventListener('DOMContentLoaded', () => { new CpuBattlesApp(#{js_cpu_battle.to_json.html_safe}).$mount("#cpu_battles_app") })
-
-#cpu_battles_app(v-cloak)
-  cpu_battle
