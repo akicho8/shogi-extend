@@ -765,6 +765,8 @@ export default {
 $board_color: hsl(0, 0%, 60%)
 
 .XyMasterApp
+  touch-action: manipulation
+
   .restart_button
     position: fixed
     top: 0.5rem
