@@ -162,7 +162,7 @@
     .columns(v-show="(mode === 'stop' || mode === 'goal')")
       .column
         .has-text-centered.has-text-white-ter
-          | 2020-09-18 17:44
+          | 2020-09-18 21:01
 </template>
 
 <script>
@@ -305,6 +305,7 @@ export default {
       } else {
         this.place_talk(place)
       }
+      // ダブルタップによる拡大禁止の意味でこれを入れたが効果はなかったけど一応そのまま入れとこう
       event.preventDefault()
       event.stopPropagation()
       return true
