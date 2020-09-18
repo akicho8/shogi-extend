@@ -68,7 +68,7 @@
 
           .shogi_player_container
             template(v-if="mode === 'ready'")
-              .countdown_wrap
+              .countdown_wrap(@click.prevent.stop.capture)
                 .countdown
                   | {{countdown}}
             shogi_player(
