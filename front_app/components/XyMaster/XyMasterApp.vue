@@ -294,6 +294,8 @@ export default {
       } else {
         this.place_talk(place)
       }
+      event.preventDefault()
+      event.stopPropagation()
       return true
     },
 
