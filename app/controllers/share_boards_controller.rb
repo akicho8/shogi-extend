@@ -42,6 +42,14 @@ class ShareBoardsController < ApplicationController
     include ShogiErrorRescueMod
 
     def show
+      slack_message(key: "ShareBoard", body: {
+          "request.format"        => request.format,
+          "request.format.blank?" => request.format.blank?,
+          "request.format.html?"  => request.format.html?,
+          "params[:format]"       => params[:format],
+          "params"                => params,
+        }.to_t)
+
       # http://localhost:3000/share-board
       if request.format.blank? || request.format.html?
         query = params.permit!.to_h.except(:controller, :action, :format).to_query.presence
