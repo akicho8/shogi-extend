@@ -2,7 +2,7 @@
 div
   b-navbar(type="is-primary")
     template(slot="brand")
-      b-navbar-item(tag="a" :href="$config.BASE_URL")
+      b-navbar-item(tag="a" :href="$config.MY_SITE_URL")
         span.ml-2
           b SHOGI-EXTEND
   .section.pt-5

@@ -13,7 +13,7 @@ export default {
       meta: [
         { hid: "og:title",       property: "og:title",       content: "なんでも棋譜変換"                             },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                          },
-        { hid: "og:image",       property: "og:image",       content: this.$config.BASE_URL_OGP + "/ogp/adapter.png" },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/adapter.png" },
         { hid: "og:description", property: "og:description", content: "将棋倶楽部24や掲示板などで見かける棋譜を外部アプリへ橋渡ししたり、検証・正規化・相互変換・印刷ができます" },
       ],
     }

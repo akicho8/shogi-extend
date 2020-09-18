@@ -26,6 +26,9 @@ export default function ({ $axios, $buefy }) {
   if (process.env.NODE_ENV === "development") {
     $axios.onRequest(config => {
       console.log(`[axios_mod] onRequest`)
+      console.log(config)
+      console.log(`[baseURL] ${config.baseURL}`)
+      console.log(`[url] ${config.url}`)
     })
     $axios.onResponse(response => {
       // if (window.$loading) { window.$loading.close(); window.$loading = null }

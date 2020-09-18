@@ -17,7 +17,7 @@
           SpShowButton(@click="board_show_handle")
         .buttons.is-centered.are-small.mt-3
           b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'") 検証
-          b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.BASE_URL}${record.show_path}?formal_sheet=true` : ''") 棋譜用紙
+          b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.MY_SITE_URL}${record.show_path}?formal_sheet=true` : ''") 棋譜用紙
           TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url({text: tweet_body}) : ''")
 
         .has-text-centered-touch
@@ -168,7 +168,7 @@ export default {
 
     // 「棋譜印刷」
     kifu_paper_handle() {
-      this.record_fetch(() => this.simple_open(`${this.$config.BASE_URL}${this.record.show_path}?formal_sheet=true`))
+      this.record_fetch(() => this.simple_open(`${this.$config.MY_SITE_URL}${this.record.show_path}?formal_sheet=true`))
     },
 
     // 「KIFダウンロード」
@@ -216,7 +216,7 @@ export default {
           params["width"] = 1200
           params["turn"] = this.record.turn_max
         }
-        let url = `${this.$config.BASE_URL}${this.record.show_path}.${kifu_type}`
+        let url = `${this.$config.MY_SITE_URL}${this.record.show_path}.${kifu_type}`
 
         // 最後に変換
         const p = new URLSearchParams()
@@ -236,13 +236,13 @@ export default {
 
     // png_show_url() {
     //   if (this.record) {
-    //     return `${this.$config.BASE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}`
+    //     return `${this.$config.MY_SITE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}`
     //   }
     // },
 
     // png_dl_url() {
     //   if (this.record) {
-    //     return `${this.$config.BASE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}&attachment=true`
+    //     return `${this.$config.MY_SITE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}&attachment=true`
     //   }
     // },
 

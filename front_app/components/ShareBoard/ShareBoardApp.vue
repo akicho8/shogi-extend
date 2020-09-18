@@ -328,7 +328,7 @@ export default {
     permalink_for(params = {}) {
       let url = null
       if (params.format) {
-        url = new URL(this.$config.BASE_URL + `/share-board.${params.format}`)
+        url = new URL(this.$config.MY_SITE_URL + `/share-board.${params.format}`)
       } else {
         url = new URL(location)
       }

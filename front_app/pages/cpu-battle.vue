@@ -13,7 +13,7 @@ export default {
       meta: [
         { hid: "og:title",       property: "og:title",       content: "CPU対戦"                                         },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                             },
-        { hid: "og:image",       property: "og:image",       content: this.$config.BASE_URL_OGP + "/ogp/cpu-battle.png" },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/cpu-battle.png" },
         { hid: "og:description", property: "og:description", content: "めっちゃ弱いです"                                },
       ],
     }
