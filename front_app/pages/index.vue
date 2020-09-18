@@ -15,11 +15,6 @@ div
         .box
           div(v-for="(item, key) of experiment_items" :key="key")
             nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
-    .columns
-      .column
-        .box
-          | $config:
-          pre {{$config}}
 </template>
 
 
