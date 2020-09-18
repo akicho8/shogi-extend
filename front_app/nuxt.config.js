@@ -36,7 +36,7 @@ const config = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: "将棋に関連する便利サービスを提供するサイトです" },
-      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://lvh.me:3000" : "") + "/x-cable" },
+      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://0.0.0.0:3000" : "") + "/x-cable" },
 
       { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
       { hid: "og:type",        property: "og:type",        content: "website" },
@@ -55,7 +55,7 @@ const config = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
-    // base: { href: "http://lvh.me:3000" },
+    // base: { href: "http://0.0.0.0:3000" },
   },
   /*
   ** Customize the progress-bar color
@@ -139,6 +139,9 @@ const config = {
     credentials: true,             // これを入れないと /api/talk のとき HTML が返ってきてしまう(？)
   },
 
+  // 下で設定している
+  proxy: {},
+
   /*
   ** Build configuration
   */
@@ -205,16 +208,17 @@ const config = {
   },
 }
 
-// if (process.env.NODE_ENV === 'development') {
-//   // これがないと CORS にひっかかる
-//
-//   // ↓これいらんはず
-//   config.proxy["/api"]        = "http://0.0.0.0:3000"
-//
-//   // ↓これはいる(たぶん)
-//   config.proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
-//   config.proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
-//   config.proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
-// }
+// :src="/rails/..." のときに 3000 に切り替えるための仕組みであって axios はなんも関係ない
+if (process.env.NODE_ENV === 'development') {
+  // // これがないと CORS にひっかかる
+  // // ↓これいらんはず
+  // config.proxy["/api"]        = "http://0.0.0.0:3000"
+
+  // ↓これはいる(たぶん)
+  config.proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
+  config.proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
+  config.proxy["/assets"]     = "http://0.0.0.0:3000" // for /assets/human/0005_fallback_avatar_icon-f076233f605139a9b8991160e1d79e6760fe6743d157446f88b12d9dae5f0e03.png
+  // config.proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
+}
 
 export default config

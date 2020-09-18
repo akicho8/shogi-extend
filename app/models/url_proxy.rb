@@ -22,7 +22,7 @@ module UrlProxy
   # rails r "p UrlProxy.workaround('/about/terms')"
   def workaround(path)
     if Rails.env.development? || Rails.env.test?
-      domain = ENV["DOMAIN"] || "lvh.me"
+      domain = ENV["DOMAIN"] || "0.0.0.0"
       return "http://#{domain}:4000" + path
     end
 

@@ -36,7 +36,7 @@ module ShogiErrorRescueMod
       #   # で確認できる
       #   behavior_after_rescue(error_html_build(error))
       else
-        # http://lvh.me:3000/share-board.kif?body=position%20startpos%20moves%205i5e
+        # http://0.0.0.0:3000/share-board.kif?body=position%20startpos%20moves%205i5e
         render plain: error.message
       end
     end

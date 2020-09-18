@@ -42,12 +42,12 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     # origins "*"                 # クッキーが欲しいときはそのサーバーを明示的に指定する必要があり)
 
     if Rails.env.development?
-      # origins "lvh.me:4000"
+      # origins "0.0.0.0:4000"
       # resource "*", headers: :any, methods: [:head, :get, :post, :patch, :put, :options], credentials: true
       origins *[
         "0.0.0.0:4000",
         "localhost:4000",
-        "lvh.me:4000",
+        "0.0.0.0:4000",
       ]
       resource "*", {
         headers: :any,
