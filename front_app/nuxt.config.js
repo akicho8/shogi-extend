@@ -1,14 +1,3 @@
-// let proxy = {}
-// if (process.env.NODE_ENV === 'development') {
-//   // ↓これいらんはず
-//   // proxy["/api"]        = "http://0.0.0.0:3000"
-//
-//   // ↓これはいる(たぶん)
-//   proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
-//   proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
-//   // proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
-// }
-
 const config = {
 // export default {
   // debug: true,
@@ -134,7 +123,7 @@ const config = {
   */
   axios: {
     debug: process.env.NODE_ENV === 'development',
-    proxy: process.env.NODE_ENV === 'development',
+    // proxy: process.env.NODE_ENV === 'development',
 
     // baseURL の設定があれば、何を実行しても 3000 の方に行くので /api は 3000 のような proxy を設定する必要はないっぽい
     // baseURL: process.env.MY_SITE_URL, // generate する staging では proxy が無効になり https://shogi-flow.xyz/api/* を叩かせる
@@ -149,9 +138,6 @@ const config = {
 
     credentials: true,             // これを入れないと /api/talk のとき HTML が返ってきてしまう(？)
   },
-
-  proxy: {
-  },                        // 下で設定している
 
   /*
   ** Build configuration
@@ -219,16 +205,16 @@ const config = {
   },
 }
 
-if (process.env.NODE_ENV === 'development') {
-  // これがないと CORS にひっかかる
-
-  // ↓これいらんはず
-  config.proxy["/api"]        = "http://0.0.0.0:3000"
-
-  // ↓これはいる(たぶん)
-  config.proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
-  config.proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
-  config.proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
-}
+// if (process.env.NODE_ENV === 'development') {
+//   // これがないと CORS にひっかかる
+//
+//   // ↓これいらんはず
+//   config.proxy["/api"]        = "http://0.0.0.0:3000"
+//
+//   // ↓これはいる(たぶん)
+//   config.proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
+//   config.proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
+//   config.proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
+// }
 
 export default config

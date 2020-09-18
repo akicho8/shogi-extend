@@ -44,8 +44,16 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     if Rails.env.development?
       # origins "lvh.me:4000"
       # resource "*", headers: :any, methods: [:head, :get, :post, :patch, :put, :options], credentials: true
-      origins "*"
-      resource "*", headers: :any, methods: :any
+      origins *[
+        "0.0.0.0:4000",
+        "localhost:4000",
+        "lvh.me:4000",
+      ]
+      resource "*", {
+        headers: :any,
+        methods: [:get, :post, :put, :patch, :delete, :options, :head],
+        credentials: true,
+      }
     else
       origins "*"
       resource "*", headers: :any, methods: [:head, :get, :post, :patch, :put, :options]
