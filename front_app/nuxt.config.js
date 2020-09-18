@@ -1,15 +1,16 @@
-let proxy = {}
-if (process.env.NODE_ENV === 'development') {
-  // ↓これいらんはず
-  // proxy["/api"]        = "http://0.0.0.0:3000"
+// let proxy = {}
+// if (process.env.NODE_ENV === 'development') {
+//   // ↓これいらんはず
+//   // proxy["/api"]        = "http://0.0.0.0:3000"
+//
+//   // ↓これはいる(たぶん)
+//   proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
+//   proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
+//   // proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
+// }
 
-  // ↓これはいる(たぶん)
-  proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
-  proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
-  // proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
-}
-
-export default {
+const config = {
+// export default {
   // debug: true,
 
   // mode: 'spa',
@@ -147,7 +148,8 @@ export default {
     credentials: true,             // これを入れないと /api/talk のとき HTML が返ってきてしまう
   },
 
-  proxy,                        // 上で設定している
+  proxy: {
+  },                        // 下で設定している
 
   /*
   ** Build configuration
@@ -214,3 +216,14 @@ export default {
     // FOO: process.env.FOO,
   },
 }
+
+if (process.env.NODE_ENV === 'development') {
+  // ↓これいらんはず
+  config.proxy["/api"]        = "http://0.0.0.0:3000"
+
+  // ↓これはいる(たぶん)
+  config.proxy["/system"]     = "http://0.0.0.0:3000" // for mp3
+  config.proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
+  config.proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
+}
+export default config
