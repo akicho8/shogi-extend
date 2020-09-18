@@ -35,7 +35,7 @@ class UserMailer < ApplicationMailer
     if Rails.env.test? || Rails.env.development?
       out << ""
       out << "--"
-      out << "▼将棋トレーニングバトル！"
+      out << "▼将棋トレーニングバトル"
       out << url_for(:training)
     end
 
