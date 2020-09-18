@@ -48,7 +48,7 @@ class ShareBoardsController < ApplicationController
           "request.format.html?"  => request.format.html?,
           "params[:format]"       => params[:format],
           "params"                => params,
-        }.to_t)
+        })
 
       # http://localhost:3000/share-board
       if request.format.blank? || request.format.html?
