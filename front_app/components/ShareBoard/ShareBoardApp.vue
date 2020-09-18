@@ -306,6 +306,7 @@ export default {
         hasModalCard: true,
         animation: "",
         component: the_any_source_read_modal,
+        onCancel: () => this.sound_play("click"),
         events: {
           "update:any_source": any_source => {
             this.$axios.$post("/api/general/any_source_to", {any_source: any_source, to_format: "sfen"}).then(e => {
