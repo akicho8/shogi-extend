@@ -23,7 +23,8 @@
           :narrowed="false"
           hoverable
           )
-          b-table-column(v-slot="props" field="age"        label="名前" sortable) {{props.row.name_with_age}}
+          b-table-column(v-slot="props" field="age"        label="名前" sortable)
+            nuxt-link(:to="{name: 'three-stage-league-player', query: {user_name: props.row.user.name}}") {{props.row.name_with_age}}
           b-table-column(v-slot="props" field="win"        label="勝"   numeric sortable) {{props.row.win}}
           b-table-column(v-slot="props" field="win"        label="勝敗" sortable) {{props.row.ox_human}}
           b-table-column(v-slot="props" field="seat_count" label="在" numeric sortable) {{props.row.seat_count}} / {{props.row.user.memberships_count}}

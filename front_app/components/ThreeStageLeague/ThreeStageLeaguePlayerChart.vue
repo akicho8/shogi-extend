@@ -1,5 +1,5 @@
 <template lang="pug">
-.three_stage_league_player_chart
+.ThreeStageLeaguePlayerChart
   .columns.is-unselectable
     .column.is-half
       canvas#main_canvas.is_clickable(ref="main_canvas")
@@ -155,13 +155,15 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from './chart_mod.js'
+import chart_mod from '../../../app/javascript/chart_mod.js'
 
 export default {
-  name: "three_stage_league_player_chart",
-  mixins: [chart_mod],
+  name: "ThreeStageLeaguePlayerChart",
+  mixins: [
+    chart_mod,
+  ],
   props: {
-    info: { required: true },
+    config: { required: true },
   },
   data() {
     return {
@@ -169,7 +171,7 @@ export default {
   },
   created() {
     this.chart_setup(CHART_CONFIG_DEFAULT)
-    this._chart_config.data = this.info.data
+    this._chart_config.data = this.config.chart_data
   },
   mounted() {
     this.chart_create()
@@ -183,6 +185,5 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./stylesheets/bulma_init.scss"
-.three_stage_league_player_chart
+.ThreeStageLeaguePlayerChart
 </style>

@@ -93,6 +93,7 @@ const config = {
   */
   plugins: [
     "~/plugins/mixin_mod.client.js",
+    "~/plugins/other.client.js",
     "~/plugins/axios_mod.js",
     "~/plugins/universal.js",
   ],

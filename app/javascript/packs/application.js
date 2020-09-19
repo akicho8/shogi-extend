@@ -101,7 +101,6 @@ import shogi_player                    from "shogi-player/src/components/ShogiPl
 import swars_user_link_to              from "swars_user_link_to.vue"
 import pulldown_menu                   from "pulldown_menu.vue"
 import buefy_table_wrapper             from "buefy_table_wrapper.vue"
-import three_stage_league_player_chart from "three_stage_league_player_chart.vue"
 import custom_chart                    from "custom_chart.vue"
 import acns1_sample                    from "acns1_sample.vue"
 import actb_app                        from "actb_app/application.vue"
@@ -155,7 +154,6 @@ Vue.mixin({
     ox_modal,
     win_lose_circle,
     buefy_table_wrapper,
-    three_stage_league_player_chart,
     custom_chart,
     acns1_sample,
     actb_app,
