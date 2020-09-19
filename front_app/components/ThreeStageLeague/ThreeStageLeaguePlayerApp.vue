@@ -77,8 +77,6 @@ export default {
 .ThreeStageLeaguePlayerApp
   +mobile
     .section
-      padding: 2.8rem 0.5rem 0
-    .column
-      padding: 0
-      margin: 1.25rem
+      padding-left: 0.5rem
+      padding-right: 0.5rem
 </style>
