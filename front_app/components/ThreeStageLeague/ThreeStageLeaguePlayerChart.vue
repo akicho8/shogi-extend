@@ -172,6 +172,13 @@ export default {
   mounted() {
     this.chart_create()
   },
+  watch: {
+    // これがないと config が変化したときにチャートが更新されない
+    config() {
+      this._chart_config.data = this.config.chart_data
+      this.chart_update()
+    },
+  },
   methods: {
     bar_click_handle(generation) {
       this.sound_play("click")
