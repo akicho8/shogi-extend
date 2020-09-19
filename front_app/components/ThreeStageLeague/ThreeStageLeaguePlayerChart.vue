@@ -3,8 +3,8 @@
   .columns.is-unselectable
     .column.is-half
       canvas#main_canvas.is_clickable(ref="main_canvas")
-  template(v-if="development_p")
-    | {{info}}
+  template(v-if="development_p && false")
+    | {{config}}
 </template>
 
 <script>
@@ -126,7 +126,7 @@ const CHART_CONFIG_DEFAULT = {
         label(tooltipItem, data) {
           const chart_element = this
           const __vm__ = chart_element._chart.config.__vm__
-          const membership = __vm__.info.memberships[tooltipItem.index]
+          const membership = __vm__.config.memberships[tooltipItem.index]
           const v = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
           let s = `${v}勝`
           if (membership.result_key !== "none") {
@@ -178,7 +178,8 @@ export default {
   },
   methods: {
     bar_click_handle(generation) {
-      this.url_open(`/script/three-stage-league?generation=${generation}`)
+      // this.url_open(`/script/three-stage-league?generation=${generation}`)
+      this.$router.push({name: "three-stage-league", query: {generation: generation}})
     },
   },
 }

@@ -25,14 +25,22 @@
           :mobile-cards="false"
           hoverable
           )
-          b-table-column(v-slot="props" field="age"        label="名前" sortable)
-            nuxt-link(:to="{name: 'three-stage-league-player', query: {user_name: props.row.user.name}}" :class="{'has-text-weight-bold': props.row.goal_p}")
-              | {{props.row.name_with_age}}
-          b-table-column(v-slot="props" field="win"        label="勝"   numeric sortable) {{props.row.win}}
-          b-table-column(v-slot="props" field="win"        label="勝敗" sortable) {{props.row.ox_human}}
-          b-table-column(v-slot="props" field="seat_count" label="在" numeric sortable) {{props.row.seat_count}} / {{props.row.user.memberships_count}}
-          b-table-column(v-slot="props")
-            a(:href="user_image_search_url(props.row)" target="_blank")
+          b-table-column(v-slot="{row}" field="age"        label="名前" sortable)
+            nuxt-link(:to="{name: 'three-stage-league-player', query: {user_name: row.user.name}}" :class="{'has-text-weight-bold': row.break_through_p}")
+              | {{row.name_with_age}}
+          b-table-column(v-slot="{row}" field="win"        label="勝"   numeric sortable) {{row.win}}
+          b-table-column(v-slot="{row}" field="win"        label="勝敗" sortable)
+            | {{row.ox_human}}
+            template(v-if="row.result_mark")
+              template(v-if="row.result_mark === '昇'")
+                span.ml-1.has-text-danger {{row.result_mark}}
+              template(v-else)
+                span.ml-1.has-text-grey {{row.result_mark}}
+
+          b-table-column(v-slot="{row}" field="seat_count" label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
+
+          b-table-column(v-slot="{row}")
+            a(:href="user_image_search_url(row)" target="_blank")
               b-icon(icon="account-question")
 </template>
 

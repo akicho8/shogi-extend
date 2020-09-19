@@ -42,24 +42,23 @@ module Tsl
     def name_with_age
       s = ""
 
-      s += "#{memberships.count} - " # 在籍N期
-
       s += name
 
       if first_age && last_age
         s += "(#{first_age}-#{last_age})"
       end
 
-      # プロ？
-      if break_through?
-        s += " ★"
+      if break_through_generation
+        s += " #{memberships_count}期抜け"
+      else
+        s += " 在籍#{memberships_count}期"
       end
 
-      s
-    end
+      # if break_through_generation
+      #   s += " (プロ)"
+      # end
 
-    def break_through?
-      memberships.any? { |e| e.result_key == "昇段" }
+      s
     end
 
     # シーズン generation を含むこれまでの在籍回数

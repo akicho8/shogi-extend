@@ -2,7 +2,7 @@
 .ThreeStageLeaguePlayerApp
   b-navbar(type="is-primary")
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold {{config.current_user_name}}
+      b-navbar-item.has-text-weight-bold {{config.main_user.name_with_age}}
     template(slot="end")
       b-navbar-item(tag="a" href="/") TOP
 
@@ -10,7 +10,7 @@
     .columns
       .column
         ThreeStageLeaguePlayerChart(:config="config")
-        b-table(
+        b-table.mt-3(
           :data="config.memberships"
           :mobile-cards="false"
           hoverable
@@ -21,7 +21,20 @@
           b-table-column(v-slot="{row}" field="seat_count"        label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
           b-table-column(v-slot="{row}" field="age"               label="歳" numeric sortable) {{row.age}}
           b-table-column(v-slot="{row}" field="win"               label="勝" numeric sortable) {{row.win}}
-          b-table-column(v-slot="{row}" field="win"               label="勝敗" sortable) {{row.ox_human}}
+          b-table-column(v-slot="{row}" field="win"               label="勝敗" sortable)
+            | {{row.ox_human}}
+            template(v-if="row.result_mark")
+              template(v-if="row.result_mark === '昇'")
+                span.ml-1.has-text-danger {{row.result_mark}}
+              template(v-else)
+                span.ml-1.has-text-grey {{row.result_mark}}
+
+        .box.is-shadowless.is-inline-block.is-marginless.mt-6
+          .buttons.are-small
+            template(v-for="user in config.users.slice().reverse()")
+              //- exact-active-class="is-primary"
+              b-button(tag="nuxt-link" :to="{name: 'three-stage-league-player', query: {user_name: user.name}}" :class="{'is-primary': config.main_user.name === user.name, 'is-primary is-light': user.break_through_generation}")
+                | {{user.name}}
 </template>
 
 <script>

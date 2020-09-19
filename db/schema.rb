@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_115322) do
+ActiveRecord::Schema.define(version: 2020_09_19_170000) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -692,6 +692,8 @@ ActiveRecord::Schema.define(version: 2020_08_17_115322) do
     t.integer "memberships_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "break_through_generation", comment: "プロになったか？"
+    t.index ["break_through_generation"], name: "index_tsl_users_on_break_through_generation"
     t.index ["name"], name: "index_tsl_users_on_name", unique: true
   end
 

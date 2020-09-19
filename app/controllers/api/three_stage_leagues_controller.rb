@@ -55,8 +55,9 @@ module Api
             methods: [
               :name_with_age,
               :ox_human,
+              :result_mark,
               :seat_count,
-              :goal_p,
+              :break_through_p,
             ],
             except: [
               :league_id,

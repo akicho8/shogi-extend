@@ -47,6 +47,10 @@ module Tsl
           user.update!(last_age: age)
         end
       end
+
+      if break_through_p
+        user.update!(break_through_generation: league.generation)
+      end
     end
 
     def name_with_age
@@ -54,7 +58,7 @@ module Tsl
       if age
         s += "(#{age})"
       end
-      if user.break_through?
+      if user.break_through_generation
         s += " ★"
       end
       s
@@ -75,7 +79,8 @@ module Tsl
       user.seat_count(league.generation)
     end
 
-    def goal_p
+    # プロになったか？
+    def break_through_p
       result_key.include?("昇")
     end
   end
