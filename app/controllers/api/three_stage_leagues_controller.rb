@@ -2,7 +2,7 @@ module Api
   class ThreeStageLeaguesController < ::Api::ApplicationController
     # http://0.0.0.0:3000/api/three_stage_league
     def show
-      # 最新三段リーグは表示する直前でときどきクロールする
+      # 最新の三段リーグだけときどきクロールする
       if current_generation == Tsl::Scraping.league_range.last
         Rails.cache.fetch([self.class.name, current_generation].join("/"), :expires_in => 1.hour) do
           Tsl::League.generation_update(current_generation)
@@ -12,31 +12,7 @@ module Api
       league = Tsl::League.find_by!(generation: current_generation)
       memberships = league.memberships.includes(:user, :league).order(win: :desc, start_pos: :asc)
 
-      # if request.format.json?
-      #   return memberships.as_json(include: [:user, :league], except: [:league_id, :user_id])
-      # end
-
-      # rows = memberships.collect do |m|
-      #   {}.tap do |row|
-      #     row["名前"] = h.link_to(m.name_with_age
-      #     row["勝"]   = m.win
-      #     row["勝敗"] = [
-      #       h.tag.span(m.ox_human, :class => "ox_sequense is_line_break_on"),
-      #       h.tag.span(m.result_mark, :class => "has-text-danger is-size-7 has-text-weight-bold"),
-      #     ].join(" ").html_safe
-      #     row["在"] = [m.user.seat_count(league.generation), m.user.memberships_count].join(" / ")
-      #     row[""] = h.link_to(h.tag.i(:class => "mdi mdi-account-question mr-2"), user_name_google_image_search(m.user.name), target: "_blank")
-      #   end
-      # end
-
-      #   [
-      #     rows.to_html,
-      #     h.link_to("本家", league.source_url, :class => "button is-small", target: "_blank"),
-      #   ].join(h.tag.br)
-      # end
-
       render json: {
-        current_generation: current_generation,
         page_title: page_title,
         leagues: Tsl::League.all.as_json(only: [:generation]),
         league: league.as_json({

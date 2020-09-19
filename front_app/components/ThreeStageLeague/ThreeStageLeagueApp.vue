@@ -26,7 +26,7 @@
           hoverable
           )
           b-table-column(v-slot="{row}" field="age"        label="名前" sortable)
-            nuxt-link(:to="{name: 'three-stage-league-player', query: {user_name: row.user.name}}" :class="{'has-text-weight-bold': row.break_through_p}")
+            nuxt-link(:to="{name: 'three-stage-league-player', query: {name: row.user.name}}" :class="{'has-text-weight-bold': row.break_through_p}")
               | {{row.name_with_age}}
           b-table-column(v-slot="{row}" field="win"        label="勝"   numeric sortable) {{row.win}}
           b-table-column(v-slot="{row}" field="win"        label="勝敗" sortable)

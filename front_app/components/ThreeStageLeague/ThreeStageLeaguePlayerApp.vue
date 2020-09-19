@@ -33,7 +33,7 @@
           .buttons.are-small
             template(v-for="user in config.users.slice().reverse()")
               //- exact-active-class="is-primary"
-              b-button(tag="nuxt-link" :to="{name: 'three-stage-league-player', query: {user_name: user.name}}" :class="{'is-primary': config.main_user.name === user.name, 'is-primary is-light': user.break_through_generation}")
+              b-button(tag="nuxt-link" :to="{name: 'three-stage-league-player', query: {name: user.name}}" :class="{'is-primary': config.main_user.name === user.name, 'is-primary is-light': user.break_through_generation}")
                 | {{user.name}}
 </template>
 
