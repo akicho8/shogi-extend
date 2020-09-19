@@ -1,3 +1,6 @@
+import dayjs from "dayjs"
+const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
+
 const config = {
 // export default {
   // debug: true,
@@ -190,12 +193,15 @@ const config = {
   // https://nuxtjs.org/guide/runtime-config
   // 空文字列は空で設定したのではなく XXX: process.env.XXX の意味(この仕様は余計にわかりにくい)
   publicRuntimeConfig: {
-    MY_SITE_URL:     "",
+    CSR_BUILD_VERSION: BUILD_VERSION,
+    MY_SITE_URL: "",
     MY_OGP_URL: "",
   },
 
   // SSR側での定義で publicRuntimeConfig を上書きする
-  privateRuntimeConfig: {},
+  privateRuntimeConfig: {
+    SSR_BUILD_VERSION: BUILD_VERSION,
+  },
 
   // 面倒な process.env.XXX の再定義
   // ・ここで定義すると .vue 側で process.env.XXX で参照できる
@@ -205,6 +211,7 @@ const config = {
   // ・だけど publicRuntimeConfig を使う方がまし
   env: {
     // FOO: process.env.FOO,
+    ENV_BUILD_VERSION: BUILD_VERSION,
   },
 }
 

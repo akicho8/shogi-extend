@@ -18,16 +18,20 @@ div
     .columns
       .column
         .box
-          | $config:
-          pre {{$config}}
+          pre
+            | CSR_BUILD_VERSION: {{$config.CSR_BUILD_VERSION}}
+            | SSR_BUILD_VERSION: {{SSR_config.SSR_BUILD_VERSION}}
+            |
+            | CSR_ENV_BUILD_VERSION: {{CSR_ENV_BUILD_VERSION}}
+            | SSR_ENV_BUILD_VERSION: {{SSR_ENV_BUILD_VERSION}}
 </template>
-
 
 <script>
 export default {
   name: "index",
   data () {
     return {
+      CSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
       production_items: [
         { title: 'Home',                     to: { name: 'index'                      }, },
         { title: 'なんでも棋譜変換',         to: { name: 'adapter'                    }, },
@@ -41,6 +45,7 @@ export default {
         { title: '符号の鬼',                 to: { name: 'xy'                         }, },
       ],
       experiment_items: [
+        { title: 'DOCTOR',                     to: { name: 'experiment-doctor'            }, },
         { title: 'フルスクリーンAPIテスト',    to: { name: 'experiment-full_screen_api'   }, },
         { title: 'フルスクリーンモデルテスト', to: { name: 'experiment-full_screen_model' }, },
         { title: '初期非同期外部IP確認',       to: { name: 'experiment-ip-show'           }, },
@@ -51,6 +56,12 @@ export default {
         { title: 'Inspire',                    to: { name: 'inspire'                      }, },
       ],
     }
-  }
+  },
+  async asyncData({$config}) {
+    return {
+      SSR_config: $config,
+      SSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
+    }
+  },
 }
 </script>
