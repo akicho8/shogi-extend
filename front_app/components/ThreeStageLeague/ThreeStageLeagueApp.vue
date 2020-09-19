@@ -17,7 +17,7 @@
           .buttons.are-small
             template(v-for="league in config.leagues.slice().reverse()")
               //- exact-active-class="is-primary"
-              b-button(tag="nuxt-link" :to="{name: 'three-stage-league', query: {generation: league.generation}}" :class="{'is-primary': config.league.generation === league.generation}")
+              b-button(tag="nuxt-link" :to="{name: 'three-stage-league', query: {generation: league.generation}}" :class="{'is-active': config.league.generation === league.generation}")
                 | {{league.generation}}
 
         b-table(

@@ -31,9 +31,9 @@
 
         .box.is-shadowless.is-inline-block.is-marginless.mt-6
           .buttons.are-small
-            template(v-for="user in config.users.slice().reverse()")
+            template(v-for="user in config.users")
               //- exact-active-class="is-primary"
-              b-button(tag="nuxt-link" :to="{name: 'three-stage-league-player', query: {name: user.name}}" :class="{'is-primary': config.main_user.name === user.name, 'is-primary is-light': user.break_through_generation}")
+              b-button(tag="nuxt-link" :to="{name: 'three-stage-league-player', query: {name: user.name}}" :class="{'is-active': config.main_user.name === user.name, 'has-text-weight-bold': user.break_through_generation}")
                 | {{user.name}}
 </template>
 
