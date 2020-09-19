@@ -35,6 +35,7 @@ module Api
               methods: [
                 :ox_human,
                 :seat_count,
+                :goal_p,
               ],
               except: [
                 :league_id,

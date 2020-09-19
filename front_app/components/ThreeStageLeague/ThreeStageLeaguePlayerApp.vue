@@ -13,10 +13,11 @@
         b-table(
           :data="config.memberships"
           :mobile-cards="false"
-          :narrowed="false"
           hoverable
           )
-          b-table-column(v-slot="{row}" field="league.generation" label="期" numeric sortable) {{row.league.generation}}
+          b-table-column(v-slot="{row}" field="league.generation" label="期" numeric sortable)
+            nuxt-link(:to="{name: 'three-stage-league', query: {generation: row.league.generation}}")
+              | {{row.league.generation}}
           b-table-column(v-slot="{row}" field="seat_count"        label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
           b-table-column(v-slot="{row}" field="age"               label="歳" numeric sortable) {{row.age}}
           b-table-column(v-slot="{row}" field="win"               label="勝" numeric sortable) {{row.win}}

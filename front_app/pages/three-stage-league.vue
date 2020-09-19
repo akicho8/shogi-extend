@@ -18,6 +18,11 @@ export default {
       ],
     }
   },
+  watch: {
+    "$route.query": function(params) {
+      this.$axios.$get("/api/three_stage_league", {params: params}).then(e => this.config = e)
+    }
+  },
   async asyncData({ $axios, query }) {
     // http://0.0.0.0:3000/api/three_stage_league
     const config = await $axios.$get("/api/three_stage_league", {params: query})

@@ -74,5 +74,9 @@ module Tsl
     def seat_count
       user.seat_count(league.generation)
     end
+
+    def goal_p
+      result_key.include?("昇")
+    end
   end
 end

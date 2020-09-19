@@ -10,21 +10,24 @@
       b-navbar-item(tag="a" :href="config.league.source_url" target="_blank") 本家
       b-navbar-item(tag="a" href="/") TOP
 
-  //- b-navbar(type="is-dark" fixed-bottom v-if="development_p")
-  //-   template(slot="start")
-  //-     | OK
-
-  .section
+  .section.pt-5
     .columns
       .column
+        .box.is-shadowless.is-inline-block.is-marginless
+          .buttons.are-small
+            template(v-for="league in config.leagues.slice().reverse()")
+              //- exact-active-class="is-primary"
+              b-button(tag="nuxt-link" :to="{name: 'three-stage-league', query: {generation: league.generation}}" :class="{'is-primary': config.league.generation === league.generation}")
+                | {{league.generation}}
+
         b-table(
           :data="config.memberships"
           :mobile-cards="false"
-          :narrowed="false"
           hoverable
           )
           b-table-column(v-slot="props" field="age"        label="名前" sortable)
-            nuxt-link(:to="{name: 'three-stage-league-player', query: {user_name: props.row.user.name}}") {{props.row.name_with_age}}
+            nuxt-link(:to="{name: 'three-stage-league-player', query: {user_name: props.row.user.name}}" :class="{'has-text-weight-bold': props.row.goal_p}")
+              | {{props.row.name_with_age}}
           b-table-column(v-slot="props" field="win"        label="勝"   numeric sortable) {{props.row.win}}
           b-table-column(v-slot="props" field="win"        label="勝敗" sortable) {{props.row.ox_human}}
           b-table-column(v-slot="props" field="seat_count" label="在" numeric sortable) {{props.row.seat_count}} / {{props.row.user.memberships_count}}
@@ -52,6 +55,7 @@ export default {
     return {
     }
   },
+
   methods: {
     user_image_search_url(row) {
       const url = new URL("https://www.google.co.jp/search")
@@ -69,8 +73,8 @@ export default {
 .ThreeStageLeagueApp
   +mobile
     .section
-      padding: 2.8rem 0.5rem 0
+      padding: 0 0.25rem 0
     .column
       padding: 0
-      margin: 1.25rem
+      margin: 1rem
 </style>

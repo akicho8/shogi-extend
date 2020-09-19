@@ -38,6 +38,7 @@ module Api
       render json: {
         current_generation: current_generation,
         page_title: page_title,
+        leagues: Tsl::League.all.as_json(only: [:generation]),
         league: league.as_json({
             only: [
               :generation,
@@ -55,6 +56,7 @@ module Api
               :name_with_age,
               :ox_human,
               :seat_count,
+              :goal_p,
             ],
             except: [
               :league_id,
