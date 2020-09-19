@@ -9,7 +9,7 @@ module Api
 
         memberships = s
 
-        data = {
+        chart_data = {
           labels: memberships.collect { |e| e.league.generation },
           datasets: [
             {
@@ -21,7 +21,7 @@ module Api
 
         render json: {
           main_user: main_user.as_json(methods: [:name_with_age]),
-          chart_data: data.as_json,
+          chart_data: chart_data.as_json,
           memberships: s.as_json({
               include: [
                 :user,

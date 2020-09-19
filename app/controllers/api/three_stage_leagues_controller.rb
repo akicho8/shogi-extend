@@ -9,13 +9,12 @@ module Api
         end
       end
 
-      league = Tsl::League.find_by!(generation: current_generation)
-      memberships = league.memberships.includes(:user, :league).order(win: :desc, start_pos: :asc)
+      memberships = current_league.memberships.includes(:user, :league).order(win: :desc, start_pos: :asc)
 
       render json: {
         page_title: page_title,
         leagues: Tsl::League.all.as_json(only: [:generation]),
-        league: league.as_json({
+        league: current_league.as_json({
             only: [
               :generation,
             ],
@@ -43,32 +42,16 @@ module Api
       }
     end
 
+    def current_league
+      @current_league ||= Tsl::League.find_by!(generation: current_generation)
+    end
+
     def current_generation
       (params[:generation].presence || Tsl::Scraping.league_range.last).to_i
     end
 
-    def name_class(m)
-      if v = m.result_mark
-        if v.include?("昇")
-          "has-text-weight-bold"
-        end
-      end
-    end
-
     def page_title
       "第#{current_generation}期 奨励会三段リーグ"
-    end
-
-    def form_parts
-      [
-        {
-          :label   => "シーズン",
-          :key     => :generation,
-          :elems   => Tsl::Scraping.league_range.to_a.reverse,
-          :type    => :select,
-          :default => current_generation,
-        },
-      ]
     end
   end
 end
