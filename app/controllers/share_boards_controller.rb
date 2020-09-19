@@ -51,7 +51,7 @@ class ShareBoardsController < ApplicationController
         })
 
       # http://localhost:3000/share-board
-      if request.format.blank? || request.format.html?
+      if params[:format].blank? || request.format.html?
         query = params.permit!.to_h.except(:controller, :action, :format).to_query.presence
         if Rails.env.development? || Rails.env.test?
           redirect_to UrlProxy.wrap(["/share-board", query].compact.join("?"))
