@@ -54,6 +54,7 @@ append :linked_dirs, "storage"
 
 after "deploy:published", "puma:restart"
 after "deploy:published", "sidekiq:restart"
+after "deploy:published", "nuxt:restart"
 
 tp({
     application: fetch(:application),
