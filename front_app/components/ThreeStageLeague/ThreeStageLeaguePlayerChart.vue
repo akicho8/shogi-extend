@@ -163,11 +163,7 @@ export default {
     chart_mod,
   ],
   props: {
-    config: { required: true },
-  },
-  data() {
-    return {
-    }
+    config: { type: Object, required: true },
   },
   created() {
     this.chart_setup(CHART_CONFIG_DEFAULT)
@@ -178,7 +174,6 @@ export default {
   },
   methods: {
     bar_click_handle(generation) {
-      // this.url_open(`/script/three-stage-league?generation=${generation}`)
       this.sound_play("click")
       this.$router.push({name: "three-stage-league", query: {generation: generation}})
     },

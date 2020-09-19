@@ -42,39 +42,20 @@
           b-table-column(v-slot="{row}" field="seat_count" label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
 
           b-table-column(v-slot="{row}")
-            a(:href="user_image_search_url(row)" target="_blank")
+            a(:href="image_search_url(row.user.name)" target="_blank")
               b-icon(icon="account-question")
 </template>
 
 <script>
-import { store }   from "./store.js"
 import { support } from "./support.js"
 
 export default {
-  store,
   name: "ThreeStageLeagueApp",
   mixins: [
     support,
   ],
-  components: {
-  },
   props: {
     config: { type: Object, required: true },
-  },
-  data() {
-    return {
-    }
-  },
-
-  methods: {
-    user_image_search_url(row) {
-      const url = new URL("https://www.google.co.jp/search")
-      url.searchParams.set("query", [row.user.name, "将棋"].join(" "))
-      return url.toString()
-    },
-  },
-
-  computed: {
   },
 }
 </script>

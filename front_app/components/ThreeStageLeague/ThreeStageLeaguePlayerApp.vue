@@ -8,6 +8,7 @@
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="div") {{config.main_user.name_with_age}}
     template(slot="end")
+      b-navbar-item(tag="a" :href="image_search_url(config.main_user.name)" target="_blank") ぐぐる
       b-navbar-item(tag="a" href="/") TOP
 
   .section
@@ -42,11 +43,9 @@
 </template>
 
 <script>
-import { store }   from "./store.js"
 import { support } from "./support.js"
 
 export default {
-  store,
   name: "ThreeStageLeaguePlayerApp",
   mixins: [
     support,
@@ -61,13 +60,7 @@ export default {
     }
   },
   methods: {
-    user_image_search_url(row) {
-      const url = new URL("https://www.google.co.jp/search")
-      url.searchParams.set("query", [row.user.name, "将棋"].join(" "))
-      return url.toString()
-    },
   },
-
   computed: {
   },
 }
