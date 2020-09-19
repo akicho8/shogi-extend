@@ -44,12 +44,9 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: FrontendScript::ThreeStageLeagueScript.script_link_path,
+      link_path: UrlProxy.wrap("/three-stage-league"),
       title: "三段リーグ成績早見表",
-      image_source: [
-        "frontend_script/three_stage_league_script_1200x630.png",
-        "frontend_script/three_stage_league_player_script_1200x630.png",
-      ],
+      image_source: "ogp/three-stage-league.png",
       description: "成績が一目でわかるサービス",
       feature_items: [
         "スマホに最適化",

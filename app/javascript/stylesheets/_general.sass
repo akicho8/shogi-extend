@@ -1,4 +1,10 @@
+// Nuxt.js のほうでも読み込んでいる
+
 // 汎用的スタイル
+
+*
+  // iOS 13.6.1 で効かなくなっている
+  touch-action: manipulation
 
 ////////////////////////////////////////////////////////////////////////////// Vue
 
@@ -91,3 +97,12 @@ a.no-decoration
   overflow: hidden
   white-space: nowrap
   text-overflow: ellipsis
+
+//////////////////////////////////////////////////////////////////////////////// ox
+
+.ox_sequense
+  vertical-align: middle
+  font-family: monospace
+  font-size: 0.5rem
+  +desktop
+    font-size: 1rem

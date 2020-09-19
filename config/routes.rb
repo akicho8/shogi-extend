@@ -172,6 +172,8 @@ Rails.application.routes.draw do
     resources :xy_records, path: "xy", only: [:index, :create, :update]
     resource :cpu_battle, only: [:show, :create]
     resource :share_board, only: [:show, :create]
+    resource :three_stage_league, only: [:show]
+    resource :three_stage_league_player, only: [:show]
   end
 
   ################################################################################ admin

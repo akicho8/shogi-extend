@@ -1,10 +1,10 @@
 <template lang="pug">
-.three_stage_league_player_chart
+.ThreeStageLeaguePlayerChart
   .columns.is-unselectable
     .column.is-half
       canvas#main_canvas.is_clickable(ref="main_canvas")
-  template(v-if="development_p")
-    | {{info}}
+  template(v-if="development_p && false")
+    | {{config}}
 </template>
 
 <script>
@@ -126,7 +126,7 @@ const CHART_CONFIG_DEFAULT = {
         label(tooltipItem, data) {
           const chart_element = this
           const __vm__ = chart_element._chart.config.__vm__
-          const membership = __vm__.info.memberships[tooltipItem.index]
+          const membership = __vm__.config.memberships[tooltipItem.index]
           const v = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
           let s = `${v}勝`
           if (membership.result_key !== "none") {
@@ -155,34 +155,32 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from './chart_mod.js'
+import chart_mod from '../../../app/javascript/chart_mod.js'
 
 export default {
-  name: "three_stage_league_player_chart",
-  mixins: [chart_mod],
+  name: "ThreeStageLeaguePlayerChart",
+  mixins: [
+    chart_mod,
+  ],
   props: {
-    info: { required: true },
-  },
-  data() {
-    return {
-    }
+    config: { type: Object, required: true },
   },
   created() {
     this.chart_setup(CHART_CONFIG_DEFAULT)
-    this._chart_config.data = this.info.data
+    this._chart_config.data = this.config.chart_data
   },
   mounted() {
     this.chart_create()
   },
   methods: {
     bar_click_handle(generation) {
-      this.url_open(`/script/three-stage-league?generation=${generation}`)
+      this.sound_play("click")
+      this.$router.push({name: "three-stage-league", query: {generation: generation}})
     },
   },
 }
 </script>
 
 <style lang="sass">
-@import "./stylesheets/bulma_init.scss"
-.three_stage_league_player_chart
+.ThreeStageLeaguePlayerChart
 </style>

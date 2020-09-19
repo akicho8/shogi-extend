@@ -1,0 +1,58 @@
+module Api
+  class ThreeStageLeaguePlayersController < ::Api::ApplicationController
+    # http://0.0.0.0:3000/api/three_stage_league_player.json
+    def show
+      if main_user
+        s = main_user.memberships
+        s = s.joins(:league).order(Tsl::League.arel_table[:generation].asc)
+        s = s.includes({:user => :memberships}, :league)
+
+        memberships = s
+
+        chart_data = {
+          labels: memberships.collect { |e| e.league.generation },
+          datasets: [
+            {
+              label: main_user.name,
+              data: memberships.collect { |e| e.win },
+            },
+          ],
+        }
+
+        render json: {
+          main_user: main_user.as_json(methods: [:name_with_age]),
+          chart_data: chart_data.as_json,
+          memberships: s.as_json({
+              include: [
+                :user,
+                league: {only: [:generation]},
+              ],
+              methods: [
+                :ox_human,
+                :result_mark,
+                :seat_count,
+                :break_through_p,
+              ],
+              except: [
+                :league_id,
+                :user_id,
+              ],
+            }),
+          users: Tsl::User.order(:name).as_json({
+              only: [:name, :break_through_generation],
+            }),
+        }
+      end
+    end
+
+    def main_user
+      if v = main_user_name
+        Tsl::User.find_by(name: v)
+      end
+    end
+
+    def main_user_name
+      params[:name].presence || params[:user_name].presence || Tsl::User.order(:name).first&.name
+    end
+  end
+end
