@@ -57,6 +57,11 @@ export default {
   },
 
   methods: {
+    // options に $event が渡されないように引数は受けとらない
+    click_play() {
+      this.sound_play("click")
+    },
+
     sound_play(key, options = {}) {
       if (this.sound_silent_p) {
         return
