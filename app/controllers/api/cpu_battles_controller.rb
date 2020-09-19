@@ -33,7 +33,7 @@ module Api
         render json: config_params
         return
       end
-      
+
       if false
         talk("talk")
         direct_talk("direct_talk")
