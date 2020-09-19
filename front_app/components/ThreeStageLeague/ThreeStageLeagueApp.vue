@@ -31,7 +31,7 @@
             nuxt-link(:to="{name: 'three-stage-league-player', query: {name: row.user.name}}" :class="{'has-text-weight-bold': row.break_through_p}" @click.native="sound_play('click')")
               | {{row.name_with_age}}
           b-table-column(v-slot="{row}" field="win"        label="勝"   numeric sortable) {{row.win}}
-          b-table-column(v-slot="{row}" field="win"        label="勝敗" sortable)
+          b-table-column.ox_sequense.is_line_break_on(v-slot="{row}" field="win"        label="勝敗" sortable)
             | {{row.ox_human}}
             template(v-if="row.result_mark")
               template(v-if="row.result_mark === '昇'")

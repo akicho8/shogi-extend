@@ -26,7 +26,7 @@
           b-table-column(v-slot="{row}" field="seat_count"        label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
           b-table-column(v-slot="{row}" field="age"               label="歳" numeric sortable) {{row.age}}
           b-table-column(v-slot="{row}" field="win"               label="勝" numeric sortable) {{row.win}}
-          b-table-column(v-slot="{row}" field="win"               label="勝敗" sortable)
+          b-table-column.ox_sequense.is_line_break_on(v-slot="{row}" field="win"               label="勝敗" sortable)
             | {{row.ox_human}}
             template(v-if="row.result_mark")
               template(v-if="row.result_mark === '昇'")
@@ -50,18 +50,8 @@ export default {
   mixins: [
     support,
   ],
-  components: {
-  },
   props: {
     config: { type: Object, required: true },
-  },
-  data() {
-    return {
-    }
-  },
-  methods: {
-  },
-  computed: {
   },
 }
 </script>
