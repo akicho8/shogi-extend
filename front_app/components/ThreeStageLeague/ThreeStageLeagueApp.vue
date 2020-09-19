@@ -1,7 +1,9 @@
 <template lang="pug">
 .ThreeStageLeagueApp
   DebugBox
-    p OK
+    p http://0.0.0.0:3000/api/three_stage_league
+    p http://0.0.0.0:4000/three-stage-league?generation=67
+    p http://0.0.0.0:4000/three-stage-league?generation=28
 
   b-navbar(type="is-primary")
     template(slot="brand")

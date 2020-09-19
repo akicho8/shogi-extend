@@ -1,5 +1,9 @@
 <template lang="pug">
 .ThreeStageLeaguePlayerApp
+  DebugBox
+    p http://0.0.0.0:3000/api/three_stage_league_player
+    p http://0.0.0.0:3000/api/three_stage_league_player?name=西山朋佳
+
   b-navbar(type="is-primary")
     template(slot="brand")
       b-navbar-item.has-text-weight-bold {{config.main_user.name_with_age}}
