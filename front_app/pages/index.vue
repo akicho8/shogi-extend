@@ -34,6 +34,7 @@ export default {
       CSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
       production_items: [
         { title: 'Home',                     to: { name: 'index'                      }, },
+        { title: '三段リーグ成績早見表',     to: { name: 'three-stage-league'         }, },
         { title: 'なんでも棋譜変換',         to: { name: 'adapter'                    }, },
         { title: '共有将棋盤',               to: { name: 'share-board'                }, },
         { title: 'CPU対戦',                  to: { name: 'cpu-battle'                 }, },

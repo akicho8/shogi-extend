@@ -69,5 +69,10 @@ module Tsl
         result_key[0]
       end
     end
+
+    # 在籍数
+    def seat_count
+      user.seat_count(league.generation)
+    end
   end
 end
