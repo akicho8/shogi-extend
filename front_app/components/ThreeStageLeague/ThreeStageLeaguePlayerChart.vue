@@ -179,6 +179,7 @@ export default {
   methods: {
     bar_click_handle(generation) {
       // this.url_open(`/script/three-stage-league?generation=${generation}`)
+      this.sound_play("click")
       this.$router.push({name: "three-stage-league", query: {generation: generation}})
     },
   },

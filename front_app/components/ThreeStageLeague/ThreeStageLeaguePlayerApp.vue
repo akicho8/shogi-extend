@@ -20,7 +20,7 @@
           hoverable
           )
           b-table-column(v-slot="{row}" field="league.generation" label="期" numeric sortable)
-            nuxt-link(:to="{name: 'three-stage-league', query: {generation: row.league.generation}}")
+            nuxt-link(:to="{name: 'three-stage-league', query: {generation: row.league.generation}}" @click.native="sound_play('click')")
               | {{row.league.generation}}
           b-table-column(v-slot="{row}" field="seat_count"        label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
           b-table-column(v-slot="{row}" field="age"               label="歳" numeric sortable) {{row.age}}
@@ -37,7 +37,7 @@
           .buttons.are-small
             template(v-for="user in config.users")
               //- exact-active-class="is-primary"
-              b-button(tag="nuxt-link" :to="{name: 'three-stage-league-player', query: {name: user.name}}" :class="{'is-active': config.main_user.name === user.name, 'has-text-weight-bold': user.break_through_generation}")
+              b-button(tag="nuxt-link" :to="{name: 'three-stage-league-player', query: {name: user.name}}" :class="{'is-active': config.main_user.name === user.name, 'has-text-weight-bold': user.break_through_generation}" @click.native="sound_play('click')")
                 | {{user.name}}
 </template>
 
