@@ -16,4 +16,9 @@ module Tsl
       e.find_each(&:destroy!)
     end
   end
+
+  def self.reset_all
+    destroy_all
+    setup
+  end
 end

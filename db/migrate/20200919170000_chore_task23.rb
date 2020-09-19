@@ -4,5 +4,8 @@ class ChoreTask23 < ActiveRecord::Migration[6.0]
       t.remove :break_through_p
       t.integer :break_through_generation, index: true, null: true, comment: "プロになったか？"
     end
+
+    Tsl::User.reset_column_information
+    Tsl.reset_all
   end
 end
