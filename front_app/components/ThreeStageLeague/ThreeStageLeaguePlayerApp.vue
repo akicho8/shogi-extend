@@ -6,7 +6,7 @@
 
   b-navbar(type="is-primary")
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold {{config.main_user.name_with_age}}
+      b-navbar-item.has-text-weight-bold(tag="div") {{config.main_user.name_with_age}}
     template(slot="end")
       b-navbar-item(tag="a" href="/") TOP
 

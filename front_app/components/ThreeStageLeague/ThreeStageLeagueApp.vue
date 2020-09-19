@@ -7,19 +7,19 @@
 
   b-navbar(type="is-primary")
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold {{config.page_title}}
+      b-navbar-item.has-text-weight-bold(tag="div") {{config.page_title}}
     template(slot="end")
       b-navbar-item(tag="a" :href="config.league.source_url" target="_blank") 本家
       b-navbar-item(tag="a" href="/") TOP
 
   .section.pt-5
     .columns
-      .column
+      .column.pt-0
         .box.is-shadowless.is-inline-block.is-marginless
           .buttons.are-small
             template(v-for="league in config.leagues.slice().reverse()")
               //- exact-active-class="is-primary"
-              b-button(tag="nuxt-link" :to="{name: 'three-stage-league', query: {generation: league.generation}}" :class="{'is-active': config.league.generation === league.generation}")
+              b-button(tag="nuxt-link" :to="{name: 'three-stage-league', query: {generation: league.generation}}" :class="{'is-active': config.league.generation === league.generation}" @click.native="sound_play('click')")
                 | {{league.generation}}
 
         b-table(
