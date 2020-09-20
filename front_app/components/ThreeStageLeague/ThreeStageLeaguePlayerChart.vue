@@ -12,7 +12,7 @@
 const CHART_CONFIG_DEFAULT = {
   type: "bar",
   options: {
-    aspectRatio: 2.0, // 大きいほど横長方形になる
+    aspectRatio: 2, // 大きいほど横長方形になる
 
     // datasets 内に適応
     showLines: true,
@@ -182,7 +182,7 @@ export default {
   methods: {
     bar_click_handle(generation) {
       this.sound_play("click")
-      this.$router.push({name: "three-stage-league", query: {generation: generation}})
+      this.$router.push({name: "three-stage-leagues-generation", params: {generation: generation}})
     },
   },
 }

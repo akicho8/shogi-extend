@@ -21,7 +21,7 @@
           hoverable
           )
           b-table-column(v-slot="{row}" field="league.generation" label="期" numeric sortable)
-            nuxt-link(:to="{name: 'three-stage-league', query: {generation: row.league.generation}}" @click.native="sound_play('click')")
+            nuxt-link(:to="{name: 'three-stage-leagues-generation', params: {generation: row.league.generation}}" @click.native="sound_play('click')")
               | {{row.league.generation}}
           //- b-table-column(v-slot="{row}" field="seat_count"        label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
           b-table-column(v-slot="{row}" field="age"               label="歳" numeric sortable) {{row.age}}
@@ -34,12 +34,12 @@
               template(v-else)
                 span.ml-1.has-text-grey {{row.result_mark}}
 
-        .box.is-shadowless.is-inline-block.is-marginless.mt-6
-          .buttons.are-small
-            template(v-for="user in config.users")
-              //- exact-active-class="is-primary"
-              b-button(tag="nuxt-link" :to="{name: 'three-stage-league-player', query: {name: user.name}}" :class="{'is-active': config.main_user.name === user.name, 'has-text-weight-bold': user.break_through_generation}" @click.native="sound_play('click')")
-                | {{user.name}}
+      .column
+        .buttons.are-small
+          template(v-for="user in config.users")
+            //- exact-active-class="is-primary"
+            b-button(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: user.name}}" :class="{'is-active': config.main_user.name === user.name, 'has-text-weight-bold': user.break_through_generation}" @click.native="sound_play('click')")
+              | {{user.name}}
 </template>
 
 <script>
