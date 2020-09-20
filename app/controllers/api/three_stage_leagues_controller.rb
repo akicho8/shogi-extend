@@ -32,7 +32,10 @@ module Api
               :ox_human,
               :result_mark,
               :seat_count,
-              :break_through_p,
+              :level_up_p,
+              :level_down_p,
+              :runner_up_p,
+              :previous_runner_up_count,
             ],
             except: [
               :league_id,

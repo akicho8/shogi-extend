@@ -30,27 +30,36 @@ module Tsl
 
     before_validation on: :create do
       self.ox ||= ""
+      self.previous_runner_up_count = user.runner_up_count
+      self.seat_count = user.seat_count(league.generation) + 1 # 在籍数(自分を含むため+1)
     end
 
     with_options presence: true do
       validates :start_pos
       validates :win
       validates :lose
+      validates :seat_count
     end
 
     after_create do
       if age
         if !user.first_age || age < user.first_age
-          user.update!(first_age: age)
+          user.first_age = age
         end
         if !user.last_age || age > user.last_age
-          user.update!(last_age: age)
+          user.last_age = age
         end
       end
 
-      if break_through_p
-        user.update!(break_through_generation: league.generation)
+      if level_up_p
+        user.level_up_generation = league.generation
       end
+
+      if runner_up_p
+        user.runner_up_count += 1
+      end
+
+      user.save!
     end
 
     def name_with_age
@@ -58,9 +67,9 @@ module Tsl
       if age
         s += "(#{age})"
       end
-      if user.break_through_generation
-        s += " ★"
-      end
+      # if user.level_up_generation
+      #   s += " ★"
+      # end
       s
     end
 
@@ -74,14 +83,19 @@ module Tsl
       end
     end
 
-    # 在籍数
-    def seat_count
-      user.seat_count(league.generation)
+    # プロになったか？
+    def level_up_p
+      result_key.include?("昇")
     end
 
-    # プロになったか？
-    def break_through_p
-      result_key.include?("昇")
+    # 次点あり？
+    def runner_up_p
+      result_key.include?("次")
+    end
+
+    # 降段
+    def level_down_p
+      result_key.include?("降")
     end
   end
 end

@@ -39,6 +39,10 @@ module Tsl
     has_many :memberships, dependent: :destroy, inverse_of: :user # 対局時の情報(複数)
     has_many :leagues, through: :memberships                      # 対局(複数)
 
+    before_validation on: :create do
+      self.runner_up_count ||= 0
+    end
+
     def name_with_age
       s = ""
 
@@ -48,22 +52,27 @@ module Tsl
         s += "(#{first_age}-#{last_age})"
       end
 
-      if break_through_generation
+      case
+      when level_up_generation
         s += " #{memberships_count}期抜け"
+      when runner_up_count >= 2
+        s += " 次点2回で#{memberships_count}期抜け"
+      when runner_up_count >= 1
+        s += " 在籍#{memberships_count}期 次点あり"
       else
         s += " 在籍#{memberships_count}期"
       end
 
-      # if break_through_generation
+      # if level_up_generation
       #   s += " (プロ)"
       # end
 
       s
     end
 
-    # シーズン generation を含むこれまでの在籍回数
+    # シーズン generation を含まないこれまでの在籍回数
     def seat_count(generation)
-      memberships.joins(:league).where(Tsl::League.arel_table[:generation].lteq(generation)).count
+      memberships.joins(:league).where(Tsl::League.arel_table[:generation].lt(generation)).count
     end
   end
 end

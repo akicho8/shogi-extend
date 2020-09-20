@@ -47,7 +47,6 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       origins *[
         "0.0.0.0:4000",
         "localhost:4000",
-        "0.0.0.0:4000",
       ]
       resource "*", {
         headers: :any,
