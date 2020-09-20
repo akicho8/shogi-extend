@@ -164,7 +164,15 @@ Rails.application.routes.draw do
 
   ################################################################################ api
 
+  # http://0.0.0.0:3000/ping
+  # http://0.0.0.0:3000/ping.json
+  # http://0.0.0.0:3000/ping.txt
+  match "ping(.:format)", to: "api/etc#ping", via: :all, format: nil
+
   namespace :api, format: "json" do
+    match "ping(.:format)", to: "etc#ping", via: :all, format: nil
+    match "echo(.:format)", to: "etc#echo", via: :all, format: nil
+
     resource :general, only: [:show] do
       match "any_source_to", via: [:get, :post]
     end
