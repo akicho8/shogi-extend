@@ -28,16 +28,13 @@
           hoverable
           )
           b-table-column(v-slot="{row}" field="age"        label="名前" sortable)
-            nuxt-link(:to="{name: 'three-stage-league-players-name', params: {name: row.user.name}}" :class="{'has-text-weight-bold': row.break_through_p}" @click.native="sound_play('click')")
+            nuxt-link(:to="{name: 'three-stage-league-players-name', params: {name: row.user.name}}" :class="{'has-text-weight-bold': row.user.level_up_generation || row.user.runner_up_count >= 2}" @click.native="sound_play('click')")
               | {{row.name_with_age}}
+              ThreeStageLeagueMark(:record="row")
+
           b-table-column(v-slot="{row}" field="win"        label="勝"   numeric sortable) {{row.win}}
           b-table-column.ox_sequense.is_line_break_on(v-slot="{row}" field="win"        label="勝敗" sortable)
             | {{row.ox_human}}
-            template(v-if="row.result_mark")
-              template(v-if="row.result_mark === '昇'")
-                span.ml-1.has-text-danger {{row.result_mark}}
-              template(v-else)
-                span.ml-1.has-text-grey {{row.result_mark}}
 
           b-table-column(v-slot="{row}" field="seat_count" label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
 

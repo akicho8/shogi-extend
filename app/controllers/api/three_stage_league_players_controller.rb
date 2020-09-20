@@ -31,7 +31,10 @@ module Api
                 :ox_human,
                 :result_mark,
                 :seat_count,
-                :break_through_p,
+                :level_up_p,
+                :level_down_p,
+                :runner_up_p,
+                :previous_runner_up_count,
               ],
               except: [
                 :league_id,
@@ -39,7 +42,11 @@ module Api
               ],
             }),
           users: Tsl::User.order(:name).as_json({
-              only: [:name, :break_through_generation],
+              only: [
+                :name,
+                :level_up_generation,
+                :runner_up_count,
+              ],
             }),
         }
       end

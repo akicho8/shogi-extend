@@ -28,17 +28,13 @@
           b-table-column(v-slot="{row}" field="win"               label="勝" numeric sortable) {{row.win}}
           b-table-column.ox_sequense.is_line_break_on(v-slot="{row}" field="win"               label="勝敗" sortable)
             | {{row.ox_human}}
-            template(v-if="row.result_mark")
-              template(v-if="row.result_mark === '昇'")
-                span.ml-1.has-text-danger {{row.result_mark}}
-              template(v-else)
-                span.ml-1.has-text-grey {{row.result_mark}}
+            ThreeStageLeagueMark(:record="row")
 
       .column
         .buttons.are-small
           template(v-for="user in config.users")
             //- exact-active-class="is-primary"
-            b-button(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: user.name}}" :class="{'is-active': config.main_user.name === user.name, 'has-text-weight-bold': user.break_through_generation}" @click.native="sound_play('click')")
+            b-button(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: user.name}}" :class="{'is-active': config.main_user.name === user.name, 'has-text-weight-bold': (user.level_up_generation || user.runner_up_count >= 2)}" @click.native="sound_play('click')")
               | {{user.name}}
 </template>
 

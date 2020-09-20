@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_19_170000) do
+ActiveRecord::Schema.define(version: 2020_09_19_170003) do
 
   create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
@@ -676,9 +676,12 @@ ActiveRecord::Schema.define(version: 2020_09_19_170000) do
     t.string "ox", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "previous_runner_up_count", default: 0, null: false, comment: "これまでの次点回数"
+    t.integer "seat_count", null: false, comment: "在籍数"
     t.index ["league_id", "user_id"], name: "index_tsl_memberships_on_league_id_and_user_id", unique: true
     t.index ["league_id"], name: "index_tsl_memberships_on_league_id"
     t.index ["lose"], name: "index_tsl_memberships_on_lose"
+    t.index ["previous_runner_up_count"], name: "index_tsl_memberships_on_previous_runner_up_count"
     t.index ["result_key"], name: "index_tsl_memberships_on_result_key"
     t.index ["start_pos"], name: "index_tsl_memberships_on_start_pos"
     t.index ["user_id"], name: "index_tsl_memberships_on_user_id"
@@ -692,9 +695,11 @@ ActiveRecord::Schema.define(version: 2020_09_19_170000) do
     t.integer "memberships_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "break_through_generation", comment: "プロになったか？"
-    t.index ["break_through_generation"], name: "index_tsl_users_on_break_through_generation"
+    t.integer "level_up_generation", comment: "プロになったか？"
+    t.integer "runner_up_count", default: 0, null: false, comment: "次点回数"
+    t.index ["level_up_generation"], name: "index_tsl_users_on_level_up_generation"
     t.index ["name"], name: "index_tsl_users_on_name", unique: true
+    t.index ["runner_up_count"], name: "index_tsl_users_on_runner_up_count"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
