@@ -6,6 +6,9 @@ tr(v-if="$parent.show_p(dp_key)")
 
 <script>
 export default {
-  props: ["dp_key", "value"],
+  props: [
+    "dp_key",
+    "value",
+  ],
 }
 </script>

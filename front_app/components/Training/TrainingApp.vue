@@ -16,7 +16,7 @@
 
   details(v-if="app.debug_read_p")
     summary DEBUG
-    debug_print(:grep="/./")
+    DebugPrint(:grep="/./")
 </template>
 
 <script>
@@ -28,7 +28,7 @@ import the_question_show from "./the_question_show.vue"
 import the_user_show     from "./the_user_show.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_rule_select   from "./the_rule_select.vue"
-// import the_profile_edit  from "./the_profile_edit/the_profile_edit.vue"
+import the_profile_edit  from "./the_profile_edit/the_profile_edit.vue"
 import the_emotion       from "./the_emotion/the_emotion.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle        from "./the_battle/the_battle.vue"
@@ -86,7 +86,7 @@ export default {
     the_user_show,
     the_lobby,
     the_rule_select,
-    // the_profile_edit,
+    the_profile_edit,
     the_emotion,
     the_matching,
     the_battle,

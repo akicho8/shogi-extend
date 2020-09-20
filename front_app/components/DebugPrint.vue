@@ -1,5 +1,5 @@
 <template lang="pug">
-.debug_print
+.DebugPrint(v-if="true")
   template(v-if="vars")
     table
       template(v-for="var_name in vars")
@@ -12,42 +12,36 @@
       caption
         | props
       template(v-for="(value, key) in $parent.$props")
-        debug_print_value(:dp_key="key" :value="value")
+        DebugPrintValue(:dp_key="key" :value="value")
 
     table(v-if="$parent.$data")
       caption
         | data
       template(v-for="(value, key) in $parent.$data")
-        debug_print_value(:dp_key="key" :value="value")
+        DebugPrintValue(:dp_key="key" :value="value")
 
     table(v-if="$parent._computedWatchers")
       caption
         | computed
       template(v-for="(e, key) in $parent._computedWatchers")
-        debug_print_value(:dp_key="key" :value="e.value")
+        DebugPrintValue(:dp_key="key" :value="e.value")
 
     table(v-if="'$store' in this && $store.state")
       caption
         | store
       template(v-for="(value, key) in $store.state")
-        debug_print_value(:dp_key="key" :value="value")
+        DebugPrintValue(:dp_key="key" :value="value")
 </template>
 
 <script>
-import debug_print_value from "./debug_print_value"
-
 export default {
-  name: "debug_print",
+  name: "DebugPrint",
 
   props: {
     grep:    { required: false },
     grep_v:  { required: false },
     vars:    { required: false },
     oneline: { default: false  },
-  },
-
-  components: {
-    debug_print_value,
   },
 
   methods: {
@@ -110,7 +104,7 @@ export default {
 </script>
 
 <style lang="sass">
-.debug_print
+.DebugPrint
   overflow-x: scroll
   font-size: 0.75rem
 

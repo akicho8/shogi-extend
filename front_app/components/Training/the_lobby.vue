@@ -27,7 +27,7 @@
 
     ////////////////////////////////////////////////////////////////////////////////
 
-  debug_print(v-if="app.debug_read_p && false" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode']" oneline)
+  DebugPrint(v-if="app.debug_read_p && false" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode']" oneline)
 
   //- router-link(to="/vr_page1") vr_page1
   //- router-link(to="/vr_page2") vr_page2

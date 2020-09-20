@@ -2,7 +2,7 @@
 .the_builder
   the_builder_index(v-if="!question")
   the_builder_edit(v-if="question" ref="the_builder_edit")
-  debug_print(v-if="app.debug_read_p")
+  DebugPrint(v-if="app.debug_read_p")
 </template>
 
 <script>

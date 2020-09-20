@@ -114,7 +114,6 @@ import sp_show_button                  from "components/sp_show_button.vue"
 import png_dl_button                   from "components/png_dl_button.vue"
 import tweet_button                    from "components/tweet_button.vue"
 import membership_medal                from "components/membership_medal.vue"
-import debug_print                     from "components/debug_print.vue"
 import win_lose_circle                 from "win_lose_circle.vue"
 import vr_page1                        from "vr_page1.vue"
 import vr_page2                        from "vr_page2.vue"
@@ -163,7 +162,6 @@ Vue.mixin({
     sp_show_button,
     png_dl_button,
     tweet_button,
-    debug_print,
 
     // icon
     membership_medal,
