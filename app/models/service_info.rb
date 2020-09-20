@@ -45,7 +45,7 @@ class ServiceInfo
     {
       display_p: true,
       link_path: UrlProxy.wrap("/three-stage-league"),
-      title: "三段リーグ成績早見表",
+      title: "奨励会三段リーグ成績早見表",
       image_source: "ogp/three-stage-leagues.png",
       description: "成績が一目でわかるサービス",
       feature_items: [

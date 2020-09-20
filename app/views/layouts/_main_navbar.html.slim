@@ -26,6 +26,8 @@ nav#main_nav.navbar.is-primary.is_screen_only
           | もっと見る
         .navbar-dropdown.is-boxed
           = link_to("対局時計", UrlProxy.wrap("/vs-clock"), class: "navbar-item")
+          = link_to("奨励会三段リーグ成績早見表", UrlProxy.wrap("/three-stage-leagues"), class: "navbar-item")
+          = link_to("奨励会三段リーグ個人成績", UrlProxy.wrap("/three-stage-league-players"), class: "navbar-item")
           = link_to("野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
           = link_to("野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
           = link_to("プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")]) if AppConfig[:player_info_function]
