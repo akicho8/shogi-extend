@@ -1,5 +1,5 @@
 <template lang="pug">
-.actb_app(:class="mode")
+.TrainingApp(:class="mode")
   the_profile_edit( v-if="mode === 'profile_edit'")
   the_emotion(v-if="mode === 'emotion'")
   the_lobby(        v-if="mode === 'lobby'")
@@ -17,10 +17,6 @@
   details(v-if="app.debug_read_p")
     summary DEBUG
     debug_print(:grep="/./")
-
-  template(v-if="development_p")
-    router-link(to="/training/menu") menu
-    router-view
 </template>
 
 <script>
@@ -65,7 +61,7 @@ import { EmotionFolderInfo       } from "./models/emotion_folder_info.js"
 
 export default {
   store,
-  name: "actb_app",
+  name: "TrainingApp",
   mixins: [
     support,
     config,
@@ -542,5 +538,5 @@ export default {
 <style lang="sass">
 @import "support.sass"
 @import "application.sass"
-.actb_app
+.TrainingApp
 </style>

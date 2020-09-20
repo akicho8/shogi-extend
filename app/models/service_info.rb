@@ -120,14 +120,10 @@ class ServiceInfo
     {
       on_swars_search_p: false,
       display_p: Actb::Config[:actb_display_p],
-      link_path: [:training],
+      link_path: UrlProxy.wrap("/training"),
       title: "将棋トレーニングバトル",
       new_p: false,
-      image_source: [
-        "frontend_script/actb_app_script1_1200x630.png",
-        "frontend_script/actb_app_script2_1200x630.png",
-        # "frontend_script/actb_app_script3_1200x630.png",
-      ],
+      image_source: "ogp/training.png",
       description: "将棋の問題を解く力を競う対戦ゲーム",
       feature_items: [
         "詰将棋以外の問題もある",

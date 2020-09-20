@@ -103,7 +103,6 @@ import pulldown_menu                   from "pulldown_menu.vue"
 import buefy_table_wrapper             from "buefy_table_wrapper.vue"
 import custom_chart                    from "custom_chart.vue"
 import acns1_sample                    from "acns1_sample.vue"
-import actb_app                        from "actb_app/application.vue"
 import simple_board                    from "simple_board.vue"
 import sp_show                         from "sp_show.vue"
 import ox_modal                        from "ox_modal.vue"
@@ -128,15 +127,12 @@ import vr_page2                        from "vr_page2.vue"
 //   ],
 // })
 
-import actb_app_routes from "../actb_app/routes.js"
-
 Vue.mixin({
   router: new VueRouter({
     mode: "history",
     routes: [
       { path: '/vr_page1', component: vr_page1 },
       { path: '/vr_page2', component: vr_page2 },
-      ...actb_app_routes,
     ]
   }),
 
@@ -156,7 +152,6 @@ Vue.mixin({
     buefy_table_wrapper,
     custom_chart,
     acns1_sample,
-    actb_app,
 
     // for buefy modal
     tactic_show,

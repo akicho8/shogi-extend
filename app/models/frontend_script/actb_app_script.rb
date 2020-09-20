@@ -113,6 +113,7 @@ module FrontendScript
       #   Actb::BaseChannel.redis_clear
       # end
 
+      # http://0.0.0.0:3000/script/actb-app.json
       if request.format.json?
         return info
       end
