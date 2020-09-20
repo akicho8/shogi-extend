@@ -1,0 +1,48 @@
+<template lang="pug">
+.experiment-users-id
+  b-navbar(type="is-primary")
+    template(slot="brand")
+      b-navbar-item(tag="div") users/_id 動作検証
+    template(slot="start")
+    template(slot="end")
+      b-navbar-item(tag="nuxt-link" :to="{name:'index'}" exact-active-class="is-active") TOP
+
+  .section
+    .block
+      nuxt-link.is-block(:to="{name: 'experiment-users-id'                 }") users
+      nuxt-link.is-block(:to="{name: 'experiment-users-id', params: {id: 1}}") users/1
+      nuxt-link.is-block(:to="{name: 'experiment-users-id', params: {id: 2}}") users/2
+      nuxt-link.is-block(:to="{name: 'experiment-users-id', params: {id: 2}, query: {a:1}}") users/2?a=1
+      nuxt-link.is-block(:to="{name: 'experiment-users-id', params: {id: 2}, query: {a:2}}") users/2?a=2
+    .block
+      b $route.query
+      pre {{$route.query}}
+    .block
+      b $route.params
+      pre {{$route.params}}
+    .block
+      b config
+      pre {{config}}
+</template>
+
+<script>
+export default {
+  name: "experiment-users-id",
+  watch: {
+    "$route.query": function(v) {
+      this.$buefy.toast.open({message: `watch query: ${JSON.stringify(v)}`, queue: false})
+    },
+    "$route.params": function(v) {
+      this.$buefy.toast.open({message: `watch params: ${JSON.stringify(v)}`, queue: false})
+    },
+  },
+  async asyncData({ $axios, params, query }) {
+    const config = await $axios.$post("/api/ping.json", params)
+    return { config }
+  },
+}
+</script>
+
+<style lang="sass">
+.experiment-users-id
+</style>
