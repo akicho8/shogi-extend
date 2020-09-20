@@ -52,7 +52,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.actb_app
+.TrainingApp
   .the_footer
     &.footer_nav
       border-top: 1px solid $grey-lighter

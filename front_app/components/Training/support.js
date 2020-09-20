@@ -88,19 +88,19 @@ export const support = {
     ////////////////////////////////////////////////////////////////////////////////
 
     api_get(command, params, block) {
-      return this.remote_get(this.app.info.api_path, {remote_action: command, ...params}, block)
+      return this.$axios.$get("/script/actb-app.json", {params: {remote_action: command, ...params}}).then(e => block(e))
     },
 
     silent_api_get(command, params, block) {
-      return this.silent_remote_get(this.app.info.api_path, {remote_action: command, ...params}, block)
+      return this.$axios.$get("/script/actb-app.json", {params: {remote_action: command, ...params}}, {progress: false}).then(e => block(e))
     },
 
     api_put(command, params, block) {
-      return this.remote_fetch("PUT", this.app.info.api_path, {remote_action: command, ...params}, block)
+      return this.$axios.$put("/script/actb-app.json", {remote_action: command, ...params}).then(e => block(e))
     },
 
     silent_api_put(command, params, block) {
-      return this.silent_remote_fetch("PUT", this.app.info.api_path, {remote_action: command, ...params}, block)
+      return this.$axios.$put("/script/actb-app.json", {remote_action: command, ...params}, {progress: false}).then(e => block(e))
     },
 
     ////////////////////////////////////////////////////////////////////////////////

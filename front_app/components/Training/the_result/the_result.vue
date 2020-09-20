@@ -68,7 +68,7 @@ export default {
     the_result_membership,
   },
   created() {
-    this.$gtag.event("open", {event_category: "対戦結果"})
+    // this.$gtag.event("open", {event_category: "対戦結果"})
   },
   computed: {
     // 参加者が全員いる？

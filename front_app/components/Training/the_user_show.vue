@@ -1,5 +1,5 @@
 <template lang="pug">
-.actb_app.the_user_show.modal-card
+.TrainingApp.the_user_show.modal-card
   .modal-card-body.box
     .delete.page_delete.is-large(@click="delete_click_handle")
     .user_container.is-flex
@@ -89,7 +89,7 @@ export default {
     window.history.pushState(this.$options.name, null, "")
   },
   created() {
-    this.$gtag.event("open", {event_category: "ユーザー詳細", event_label: this.ov_user_info.name})
+    // this.$gtag.event("open", {event_category: "ユーザー詳細", event_label: this.ov_user_info.name})
     window.history.replaceState("", null, this.permalink_url)
   },
   beforeDestroy() {

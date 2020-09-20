@@ -94,7 +94,7 @@ export default {
     mode_select(tab_key) {
       const tab_info = TabInfo.fetch(tab_key)
       this.tab_index = tab_info.code
-      this.$gtag.event("open", {event_category: "ランキング", event_label: tab_info.name})
+      // this.$gtag.event("open", {event_category: "ランキング", event_label: tab_info.name})
     },
 
     tab_change_handle() {

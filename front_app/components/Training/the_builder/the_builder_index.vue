@@ -213,7 +213,7 @@ export default {
     }
   },
   created() {
-    this.$gtag.event("open", {event_category: "問題一覧"})
+    // this.$gtag.event("open", {event_category: "問題一覧"})
     this.folder_active_handle()
   },
   mounted() {
