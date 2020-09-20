@@ -77,7 +77,7 @@
 
 <script>
 
-import { ChessClock   } from "../../../app/javascript/actb_app/models/chess_clock.js"
+import { ChessClock   } from "../Training/models/chess_clock.js"
 import { DeviseAngle  } from "../../../app/javascript/models/DeviseAngle.js"
 import { isMobile     } from "../../../app/javascript/models/isMobile.js"
 import { FullScreen   } from "../models/FullScreen.js"
