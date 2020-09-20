@@ -46,11 +46,11 @@ class ServiceInfo
       display_p: true,
       link_path: UrlProxy.wrap("/three-stage-league"),
       title: "三段リーグ成績早見表",
-      image_source: "ogp/three-stage-league.png",
+      image_source: "ogp/three-stage-leagues.png",
       description: "成績が一目でわかるサービス",
       feature_items: [
         "スマホに最適化",
-        "個人毎の成績表示",
+        "個人毎の総成績表示",
         "在籍期間の表示",
       ],
     },
