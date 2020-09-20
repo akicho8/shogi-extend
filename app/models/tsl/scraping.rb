@@ -89,6 +89,7 @@ module Tsl
     def name_normalize(str)
       str = str.gsub("小髙", "小高")
       str = str.gsub("泰煕", "泰熙")
+      str = str.gsub("廣瀬章人", "広瀬章人")
     end
 
     def result_key_normalize(key)
