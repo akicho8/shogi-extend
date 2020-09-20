@@ -44,9 +44,12 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: UrlProxy.wrap("/three-stage-league"),
+      link_path: UrlProxy.wrap("/three-stage-leagues"),
       title: "奨励会三段リーグ成績早見表",
-      image_source: "ogp/three-stage-leagues.png",
+      image_source: [
+        "ogp/three-stage-leagues.png",
+        "ogp/three-stage-league-players.png",
+      ],
       description: "成績が一目でわかるサービス",
       feature_items: [
         "スマホに最適化",
