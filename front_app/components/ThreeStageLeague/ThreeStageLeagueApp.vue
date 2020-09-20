@@ -54,6 +54,9 @@ export default {
   props: {
     config: { type: Object, required: true },
   },
+  mounted() {
+    this.talk(this.config.league.generation)
+  },
 }
 </script>
 

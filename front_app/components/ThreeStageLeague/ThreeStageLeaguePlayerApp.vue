@@ -49,6 +49,9 @@ export default {
   props: {
     config: { type: Object, required: true },
   },
+  mounted() {
+    this.talk(this.config.main_user.name)
+  },
 }
 </script>
 
