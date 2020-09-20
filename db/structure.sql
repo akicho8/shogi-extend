@@ -986,6 +986,8 @@ CREATE TABLE `tsl_memberships` (
   `win` int(11) DEFAULT NULL,
   `lose` int(11) DEFAULT NULL,
   `ox` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `previous_runner_up_count` int(11) NOT NULL COMMENT 'これまでの次点回数',
+  `seat_count` int(11) NOT NULL COMMENT 'これまでの在籍数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -995,7 +997,8 @@ CREATE TABLE `tsl_memberships` (
   KEY `index_tsl_memberships_on_result_key` (`result_key`),
   KEY `index_tsl_memberships_on_start_pos` (`start_pos`),
   KEY `index_tsl_memberships_on_win` (`win`),
-  KEY `index_tsl_memberships_on_lose` (`lose`)
+  KEY `index_tsl_memberships_on_lose` (`lose`),
+  KEY `index_tsl_memberships_on_previous_runner_up_count` (`previous_runner_up_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tsl_users`;
@@ -1007,10 +1010,13 @@ CREATE TABLE `tsl_users` (
   `first_age` int(11) DEFAULT NULL COMMENT 'リーグ入り年齢',
   `last_age` int(11) DEFAULT NULL COMMENT 'リーグ最後の年齢',
   `memberships_count` int(11) DEFAULT '0',
+  `runner_up_count` int(11) NOT NULL COMMENT '次点個数',
+  `level_up_generation` int(11) DEFAULT NULL COMMENT 'プロになった世代',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_tsl_users_on_name` (`name`)
+  UNIQUE KEY `index_tsl_users_on_name` (`name`),
+  KEY `index_tsl_users_on_level_up_generation` (`level_up_generation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
@@ -1123,7 +1129,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200331163900'),
 ('20200331163901'),
 ('20200331163902'),
-('20200404191500'),
 ('20200414142100'),
 ('20200605133900'),
 ('20200605133902'),
@@ -1170,6 +1175,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200725112115'),
 ('20200817115320'),
 ('20200817115321'),
-('20200817115322');
+('20200817115322'),
+('20200920154200');
 
 
