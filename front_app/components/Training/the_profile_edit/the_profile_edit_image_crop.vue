@@ -21,7 +21,7 @@ const CIRCLE_OUTER_WIDTH = IMAGE_SIZE              // canvas内の円の太さ(�
 const CIRCLE_INNER_WIDTH = 2                       // canvas内の円の太さ(内)
 const ROTATE_ONE         = 360 / 4                 // 一度で回転する角度
 
-import PaletteInfo from "../../../../app/javascript/palette_info.js"
+import PaletteInfo from "@/components/models/PaletteInfo.js"
 
 // 動かすレイヤー調整
 // http://fabricjs.com/docs/fabric.Object.html#borderScaleFactor

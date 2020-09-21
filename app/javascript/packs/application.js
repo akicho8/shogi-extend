@@ -4,7 +4,6 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-// require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
@@ -29,9 +28,6 @@ window.Vue = Vue
 
 import Vuex from "vuex"
 Vue.use(Vuex)                   // これは一箇所だけで実行すること。shogi-player 側で実行すると干渉する
-
-import VueRouter from "vue-router"
-Vue.use(VueRouter)
 
 import VueGtag from "vue-gtag"
 Vue.use(VueGtag, {
@@ -115,26 +111,8 @@ import png_dl_button                   from "components/png_dl_button.vue"
 import tweet_button                    from "components/tweet_button.vue"
 import membership_medal                from "components/membership_medal.vue"
 import win_lose_circle                 from "win_lose_circle.vue"
-import vr_page1                        from "vr_page1.vue"
-import vr_page2                        from "vr_page2.vue"
-
-// const router = new VueRouter({
-//   mode: 'history',
-//   // base: process.env.BASE_URL,
-//   // linkActiveClass: "is-active", // router-link-exact-active
-//   routes: [
-//   ],
-// })
 
 Vue.mixin({
-  router: new VueRouter({
-    mode: "history",
-    routes: [
-      { path: '/vr_page1', component: vr_page1 },
-      { path: '/vr_page2', component: vr_page2 },
-    ]
-  }),
-
   mixins: [
     vue_mixins,
   ],
