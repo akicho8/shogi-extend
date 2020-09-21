@@ -3,7 +3,8 @@ import the_user_show from "./the_user_show.vue"
 export const application_user_show = {
   methods: {
     ov_user_url(id) {
-      const url = new URL(location)
+      // const url = new URL(this.$config.MY_SITE_URL + "/training")
+      const url = new URL(location.href)
       url.searchParams.set("user_id", id)
       return url.toString()
     },

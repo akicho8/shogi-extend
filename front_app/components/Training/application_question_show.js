@@ -4,7 +4,7 @@ import { Question } from "./models/question.js"
 export const application_question_show = {
   methods: {
     ov_question_url(id) {
-      const url = new URL(location)
+      const url = new URL(this.$config.MY_SITE_URL + "/training")
       url.searchParams.set("question_id", id)
       return url.toString()
     },
