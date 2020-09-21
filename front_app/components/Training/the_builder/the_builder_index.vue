@@ -157,7 +157,7 @@
             template(v-if="props.row.description")
               p.is_line_break_on.is-hidden-mobile {{props.row.description}}
 
-  .has-text-right.has-text-centered-mobile
+  .has-text-right.has-text-centered-mobile.mt-3
     .buttons.is-inline-block.mx-2
       b-button(@click="detail_close_handle" icon-left="chevron-up")
       b-button(@click="detail_open_handle" icon-left="chevron-down")
