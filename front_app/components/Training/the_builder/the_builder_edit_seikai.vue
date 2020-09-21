@@ -11,8 +11,6 @@
     :setting_button_show="false"
     :theme="'simple'"
     :size="'default'"
-    :sound_effect="true"
-    :volume="0.5"
     @update:turn_offset="bapp.turn_offset_set"
     @update:mediator_snapshot_sfen="bapp.mediator_snapshot_sfen_set"
     ref="seikai_sp"
@@ -37,8 +35,6 @@
           :setting_button_show="false"
           :theme="'simple'"
           :size="'default'"
-          :sound_effect="true"
-          :volume="0.5"
           )
         .delete_button.is_clickable(@click="bapp.moves_answer_delete_handle(i)")
           b-icon(type="is-danger" icon="trash-can-outline" size="is-small")

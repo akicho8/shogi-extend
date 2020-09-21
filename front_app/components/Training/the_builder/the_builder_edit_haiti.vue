@@ -10,7 +10,6 @@
     :theme="'simple'"
     :size="'default'"
     :sound_effect="false"
-    :volume="0.5"
     @update:edit_mode_snapshot_sfen="bapp.edit_mode_snapshot_sfen"
     ref="main_sp"
     )

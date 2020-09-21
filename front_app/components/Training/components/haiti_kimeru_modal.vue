@@ -13,8 +13,6 @@
       :setting_button_show="false"
       :theme="'simple'"
       :size="'default'"
-      :sound_effect="true"
-      :volume="0.5"
       @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
       )
   footer.modal-card-foot

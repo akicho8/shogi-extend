@@ -11,8 +11,6 @@
     :size="app.config.sp_size"
     :human_side_key="current_human_side_key"
     :flip="current_flip"
-    :sound_effect="true"
-    :volume="0.5"
     @update:play_mode_advanced_full_moves_sfen="app.vs_func_play_mode_advanced_full_moves_sfen_set"
   )
 

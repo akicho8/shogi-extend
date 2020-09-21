@@ -12,8 +12,6 @@
     :flip_if_white="true"
     :summary_show="false"
     :setting_button_show="false"
-    :sound_effect="true"
-    :volume="0.5"
     :controller_show="true"
     :human_side_key="'both'"
     :theme="app.config.sp_theme"

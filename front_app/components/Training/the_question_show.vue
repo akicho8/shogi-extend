@@ -64,8 +64,6 @@
         :setting_button_show="false"
         :theme="app.config.sp_theme"
         :size="app.config.sp_size"
-        :sound_effect="true"
-        :volume="0.5"
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
         )
 
