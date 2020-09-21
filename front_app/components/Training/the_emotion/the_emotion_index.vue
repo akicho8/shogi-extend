@@ -31,18 +31,17 @@
     @dragleave="dragleave"
     @click="row => $parent.play_handle(row)"
     )
-    template(slot-scope="props")
-      b-table-column.is_clickable(custom-key="name" field="name" label="鍵" @click.native.stop="$parent.play_handle(props.row)")
-        | {{props.row.name}}
-      b-table-column(v-slot="{row}" custom-key="message" field="message" label="伝")
-        .is_truncate {{props.row.message}}
-      b-table-column(v-slot="{row}" custom-key="voice" field="voice" label="声")
-        .is_truncate {{props.row.voice}}
-      b-table-column(v-slot="{row}" custom-key="operation" label="")
-        a.mx-1(@click.stop="$parent.play_handle(props.row)" v-if="development_p") 再生
-        a.mx-1(@click.stop="$parent.edit_handle(props.row)") 編集
-        a.mx-1(@click.stop="move_to_handle(props.row, 'lower')") ▼
-        a.mx-1(@click.stop="move_to_handle(props.row, 'higher')") ▲
+    b-table-column.is_clickable(v-slot="{row}" custom-key="name" field="name" label="鍵" @click.native.stop="$parent.play_handle(row)")
+      | {{row.name}}
+    b-table-column(v-slot="{row}" custom-key="message" field="message" label="伝")
+      .is_truncate {{row.message}}
+    b-table-column(v-slot="{row}" custom-key="voice" field="voice" label="声")
+      .is_truncate {{row.voice}}
+    b-table-column(v-slot="{row}" custom-key="operation" label="")
+      a.mx-1(@click.stop="$parent.play_handle(row)" v-if="development_p") 再生
+      a.mx-1(@click.stop="$parent.edit_handle(row)") 編集
+      a.mx-1(@click.stop="move_to_handle(row, 'lower')") ▼
+      a.mx-1(@click.stop="move_to_handle(row, 'higher')") ▲
 </template>
 
 <script>
