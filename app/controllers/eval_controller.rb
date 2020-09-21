@@ -1,4 +1,6 @@
 class EvalController < ApplicationController
+  skip_before_action :user_name_required
+
   before_action if: proc { Rails.env.production? || Rails.env.staging? } do
     raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
   end
