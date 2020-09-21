@@ -44,10 +44,6 @@ Rails.application.routes.draw do
   namespace :swars, path: "" do
     resources :battles, path: "w"
     resources :player_infos, :only => :index, path: "w-user-stat"
-
-    get "wr/:id",   to: "battles#show" # 互換性のため
-
-    get "w",        to: "battles#index", as: :basic
   end
 
   resolve "Swars::User" do |user, options|
