@@ -158,11 +158,6 @@
             template(v-if="config.count_all_gteq > 1")
               .has-text-centered
                 | {{config.count_all_gteq}}回以上やるとチャートに登場します
-
-    .columns(v-show="(mode === 'stop' || mode === 'goal')")
-      .column
-        .has-text-centered.has-text-white-ter
-          | 2020-09-18 21:01
 </template>
 
 <script>
