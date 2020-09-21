@@ -121,9 +121,9 @@
           b-taginput(v-model="append_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]" @input="append_tag_list_input_handle" :disabled="!app.regular_p")
 
     .buttons.is-centered.are-small.mt-6
-      piyo_shogi_button(:href="piyo_shogi_app_with_params_url")
-      kento_button(tag="a" :href="kento_app_with_params_url" :target="target_default")
-      kif_copy_button(@click="kifu_copy_handle") コピー
+      PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+      KentoButton(tag="a" :href="kento_app_with_params_url" :target="target_default")
+      KifCopyButton(@click="kifu_copy_handle") コピー
 
     .tweet_button_container.buttons.is-centered.mt-6
       b-button.has-text-weight-bold(rounded icon-left="twitter" size="is-small" type="is-twitter" tag="a" :href="tweet_intent_url(tweet_body)" :target="target_default") ツイート
