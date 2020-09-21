@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_builder_edit_seikai
-  shogi_player(
+  MyShogiPlayer(
     :run_mode="'play_mode'"
     :kifu_body="bapp.question.init_sfen"
     :flip_if_white="true"
@@ -25,7 +25,7 @@
   b-tabs.answer_tabs(v-model="bapp.answer_tab_index" position="is-centered" expanded :animated="false" v-if="bapp.question.moves_answers.length >= 1" @change="sound_play('click')")
     template(v-for="(e, i) in bapp.question.moves_answers")
       b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
-        shogi_player(
+        MyShogiPlayer(
           :run_mode="'view_mode'"
           :kifu_body="bapp.full_sfen_build(e)"
           :flip_if_white="true"

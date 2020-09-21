@@ -66,62 +66,61 @@
     :opened-detailed="detailed_ids"
     )
 
-    template(slot-scope="props")
-      b-table-column(custom-key="id"                field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{props.row.id}}
-      b-table-column(custom-key="user_id"           field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id")
-        a(@click.stop="app.ov_user_info_set(props.row.user.id)" :href="app.ov_user_url(props.row.user.id)")
-          | {{props.row.user.name}}
+    b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{row.id}}
+    b-table-column(v-slot="{row}" custom-key="user_id"           field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id")
+      a(@click.stop="app.ov_user_info_set(row.user.id)" :href="app.ov_user_url(row.user.id)")
+        | {{row.user.name}}
 
-      b-table-column(custom-key="source_author"     field="source_author"     :label="QuestionIndexColumnInfo.fetch('source_author').short_name"       sortable         :visible="visible_hash.source_author")
+    b-table-column(v-slot="{row}" custom-key="source_author"     field="source_author"     :label="QuestionIndexColumnInfo.fetch('source_author').short_name"       sortable         :visible="visible_hash.source_author")
 
-        template(v-if="props.row.source_about_key === 'unknown'")
-          | 不詳
-        template(v-else-if="props.row.source_author")
-          span.has-text-weight-bold
-            template(v-if="props.row.source_media_url")
-              a(:href="props.row.source_media_url" target="_blank")
-                | {{props.row.source_author}}
-                b-icon(icon="link" size="is-small")
-            template(v-else)
-              | {{props.row.source_author}}
-        template(v-else)
-          a(@click.prevent.stop="app.ov_user_info_set(props.row.user.id)" :href="app.ov_user_url(props.row.user.id)")
-            | {{props.row.user.name}}
+      template(v-if="row.source_about_key === 'unknown'")
+        | 不詳
+      template(v-else-if="row.source_author")
+        span.has-text-weight-bold
+          template(v-if="row.source_media_url")
+            a(:href="row.source_media_url" target="_blank")
+              | {{row.source_author}}
+              b-icon(icon="link" size="is-small")
+          template(v-else)
+            | {{row.source_author}}
+      template(v-else)
+        a(@click.prevent.stop="app.ov_user_info_set(row.user.id)" :href="app.ov_user_url(row.user.id)")
+          | {{row.user.name}}
 
-      b-table-column(custom-key="title"             field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
-        a(@click.prevent.stop="app.ov_question_info_set(props.row.id)" :href="app.ov_question_url(props.row.id)")
-          | {{string_truncate(props.row.title, {length: 20})}}
+    b-table-column(v-slot="{row}" custom-key="title"             field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
+      a(@click.prevent.stop="app.ov_question_info_set(row.id)" :href="app.ov_question_url(row.id)")
+        | {{string_truncate(row.title, {length: 20})}}
 
-      b-table-column(custom-key="histories_count"   field="histories_count"   :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{props.row.histories_count}}
-      b-table-column(custom-key="ox_record.o_rate"  field="ox_record.o_rate"  :label="QuestionIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc(props.row.ox_record.o_rate)}} %
-      b-table-column(custom-key="ox_record.o_count" field="ox_record.o_count" :label="QuestionIndexColumnInfo.fetch('o_count').short_name" sortable numeric :visible="visible_hash.o_count") {{props.row.ox_record.o_count}}
-      b-table-column(custom-key="ox_record.x_count" field="ox_record.x_count" :label="QuestionIndexColumnInfo.fetch('x_count').short_name" sortable numeric :visible="visible_hash.x_count") {{props.row.ox_record.x_count}}
-      b-table-column(custom-key="messages_count"    field="messages_count"  :label="QuestionIndexColumnInfo.fetch('messages_count').short_name"      sortable numeric :visible="visible_hash.messages_count")      {{props.row.messages_count}}
+    b-table-column(v-slot="{row}" custom-key="histories_count"   field="histories_count"   :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{row.histories_count}}
+    b-table-column(v-slot="{row}" custom-key="ox_record.o_rate"  field="ox_record.o_rate"  :label="QuestionIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc(row.ox_record.o_rate)}} %
+    b-table-column(v-slot="{row}" custom-key="ox_record.o_count" field="ox_record.o_count" :label="QuestionIndexColumnInfo.fetch('o_count').short_name" sortable numeric :visible="visible_hash.o_count") {{row.ox_record.o_count}}
+    b-table-column(v-slot="{row}" custom-key="ox_record.x_count" field="ox_record.x_count" :label="QuestionIndexColumnInfo.fetch('x_count').short_name" sortable numeric :visible="visible_hash.x_count") {{row.ox_record.x_count}}
+    b-table-column(v-slot="{row}" custom-key="messages_count"    field="messages_count"  :label="QuestionIndexColumnInfo.fetch('messages_count').short_name"      sortable numeric :visible="visible_hash.messages_count")      {{row.messages_count}}
 
-      b-table-column(custom-key="good_rate"         field="good_rate"         :label="QuestionIndexColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="visible_hash.good_rate") {{float_to_perc(props.row.good_rate)}} %
-      b-table-column(custom-key="good_marks_count"  field="good_marks_count"  :label="QuestionIndexColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{props.row.good_marks_count}}
-      b-table-column(custom-key="bad_marks_count"   field="bad_marks_count"   :label="QuestionIndexColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{props.row.bad_marks_count}}
+    b-table-column(v-slot="{row}" custom-key="good_rate"         field="good_rate"         :label="QuestionIndexColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="visible_hash.good_rate") {{float_to_perc(row.good_rate)}} %
+    b-table-column(v-slot="{row}" custom-key="good_marks_count"  field="good_marks_count"  :label="QuestionIndexColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{row.good_marks_count}}
+    b-table-column(v-slot="{row}" custom-key="bad_marks_count"   field="bad_marks_count"   :label="QuestionIndexColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{row.bad_marks_count}}
 
-      //- b-table-column(custom-key="clip_marks_count"  field="clip_marks_count"  :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{props.row.clip_marks_count}}
+    //- b-table-column(v-slot="{row}" custom-key="clip_marks_count"  field="clip_marks_count"  :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{row.clip_marks_count}}
 
-      //- b-table-column(custom-key="difficulty_level"  field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{props.row.difficulty_level}}
-      //- b-table-column(custom-key="time_limit_sec"    field="time_limit_sec"  :label="QuestionIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="visible_hash.time_limit_sec") {{props.row.time_limit_sec}}秒
+    //- b-table-column(v-slot="{row}" custom-key="difficulty_level"  field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{row.difficulty_level}}
+    //- b-table-column(v-slot="{row}" custom-key="time_limit_sec"    field="time_limit_sec"  :label="QuestionIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="visible_hash.time_limit_sec") {{row.time_limit_sec}}秒
 
-      b-table-column(custom-key="lineage_key"    field="lineage_key"  :label="QuestionIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="visible_hash.lineage_key") {{props.row.lineage_key}}
-      b-table-column(custom-key="turn_max"  field="turn_max"  :label="QuestionIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="visible_hash.turn_max")      {{props.row.turn_max}}
-      b-table-column(custom-key="moves_answers_count" field="moves_answers_count" :label="QuestionIndexColumnInfo.fetch('moves_answers_count').short_name" sortable numeric :visible="visible_hash.moves_answers_count") {{props.row.moves_answers_count}}
+    b-table-column(v-slot="{row}" custom-key="lineage_key"    field="lineage_key"  :label="QuestionIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="visible_hash.lineage_key") {{row.lineage_key}}
+    b-table-column(v-slot="{row}" custom-key="turn_max"  field="turn_max"  :label="QuestionIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="visible_hash.turn_max")      {{row.turn_max}}
+    b-table-column(v-slot="{row}" custom-key="moves_answers_count" field="moves_answers_count" :label="QuestionIndexColumnInfo.fetch('moves_answers_count').short_name" sortable numeric :visible="visible_hash.moves_answers_count") {{row.moves_answers_count}}
 
-      b-table-column(custom-key="owner_tag_list"    field="owner_tag_list"  :label="QuestionIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="visible_hash.owner_tag_list")
-        b-taglist
-          b-tag.is_clickable(v-for="tag in props.row.owner_tag_list" @click.native.stop="bapp.tag_search_handle(tag)" rounded)
-            | {{tag}}
+    b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="QuestionIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="visible_hash.owner_tag_list")
+      b-taglist
+        b-tag.is_clickable(v-for="tag in row.owner_tag_list" @click.native.stop="bapp.tag_search_handle(tag)" rounded)
+          | {{tag}}
 
-      b-table-column(custom-key="created_at"        field="created_at"        :label="QuestionIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="visible_hash.created_at")       {{row_time_format(props.row.created_at)}}
-      b-table-column(custom-key="updated_at"        field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(props.row.updated_at)}}
+    b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="QuestionIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="visible_hash.created_at")       {{row_time_format(row.created_at)}}
+    b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(row.updated_at)}}
 
-      b-table-column(custom-key="operation" label="操作")
-        template(v-if="app.current_user.id === props.row.user.id || app.debug_force_edit_p")
-          a(@click.stop="bapp.question_edit_for(props.row)") 編集
+    b-table-column(v-slot="{row}" custom-key="operation" label="操作")
+      template(v-if="app.current_user.id === row.user.id || app.debug_force_edit_p")
+        a(@click.stop="bapp.question_edit_for(row)") 編集
 
     template(slot="empty")
       section.section.is-unselectable
@@ -137,7 +136,7 @@
           //- <p class="image is-64x64">
           //-   <img src="/static/img/placeholder-128x128.png">
           //- </p>
-          shogi_player(
+          MyShogiPlayer(
             :run_mode="'view_mode'"
             :kifu_body="props.row.init_sfen"
             :flip_if_white="true"
@@ -341,7 +340,7 @@ export default {
           // 行が上下が広がってしまうのを防ぐ
           height: auto
 
-    // モバイルでは shogi_player を横幅最大にしたいので横のパディングを取る
+    // モバイルでは MyShogiPlayer を横幅最大にしたいので横のパディングを取る
     +mobile
       .detail
         td, .detail-container

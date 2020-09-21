@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_builder_edit_haiti.mt-4
-  shogi_player(
+  MyShogiPlayer(
     :run_mode="'edit_mode'"
     :kifu_body="new_kifu_body"
     :start_turn="-1"

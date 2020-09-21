@@ -3,7 +3,7 @@
   header.modal-card-head
     p.modal-card-title 局面を確定させてください
   section.modal-card-body
-    shogi_player(
+    MyShogiPlayer(
       :run_mode="'view_mode'"
       :kifu_body="yomikonda_sfen"
       :start_turn="start_turn"

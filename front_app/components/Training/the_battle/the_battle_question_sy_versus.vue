@@ -2,7 +2,7 @@
 .the_battle_question_sy_versus
   the_battle_question_sy_versus_membership.mt-3(:membership="app.opponent_membership")
 
-  shogi_player.mt-3(
+  MyShogiPlayer.mt-3(
     :run_mode="'play_mode'"
     :kifu_body="app.vs_share_sfen"
     :summary_show="false"

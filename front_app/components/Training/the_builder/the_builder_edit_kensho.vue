@@ -3,7 +3,7 @@
   .has-text-centered(v-if="bapp.question.direction_message")
     | {{bapp.question.direction_message}}
 
-  shogi_player(
+  MyShogiPlayer(
     :run_mode="'play_mode'"
     :kifu_body="bapp.question.init_sfen"
     :flip_if_white="true"

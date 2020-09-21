@@ -34,11 +34,11 @@
     template(slot-scope="props")
       b-table-column.is_clickable(custom-key="name" field="name" label="鍵" @click.native.stop="$parent.play_handle(props.row)")
         | {{props.row.name}}
-      b-table-column(custom-key="message" field="message" label="伝")
+      b-table-column(v-slot="{row}" custom-key="message" field="message" label="伝")
         .is_truncate {{props.row.message}}
-      b-table-column(custom-key="voice" field="voice" label="声")
+      b-table-column(v-slot="{row}" custom-key="voice" field="voice" label="声")
         .is_truncate {{props.row.voice}}
-      b-table-column(custom-key="operation" label="")
+      b-table-column(v-slot="{row}" custom-key="operation" label="")
         a.mx-1(@click.stop="$parent.play_handle(props.row)" v-if="development_p") 再生
         a.mx-1(@click.stop="$parent.edit_handle(props.row)") 編集
         a.mx-1(@click.stop="move_to_handle(props.row, 'lower')") ▼

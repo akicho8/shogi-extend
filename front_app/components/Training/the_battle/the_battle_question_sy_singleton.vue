@@ -7,7 +7,7 @@
   template(v-if="app.x_mode === 'x1_think'")
     .status_line2.has-text-centered.has-text-weight-bold
       | {{app.main_time_as_string}}
-    shogi_player(
+    MyShogiPlayer(
       :run_mode="'play_mode'"
       :kifu_body="app.current_question.init_sfen"
       :flip_if_white="true"
@@ -26,7 +26,7 @@
       | {{app.ops_rest_seconds}}
       template(v-if="app.debug_read_p")
         | ({{app.share_turn_offset}})
-    shogi_player(
+    MyShogiPlayer(
       :key="`quest_${app.question_index}`"
       :run_mode="'play_mode'"
       :kifu_body="app.current_question.init_sfen"
@@ -48,7 +48,7 @@
   template(v-if="app.x_mode === 'x3_see'")
     .status_line2.has-text-centered.has-text-weight-bold
       | 相手が操作中 ({{app.share_turn_offset}}手目)
-    shogi_player(
+    MyShogiPlayer(
       :run_mode="'play_mode'"
       :kifu_body="app.share_sfen"
       :flip_if_white="true"
