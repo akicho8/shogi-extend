@@ -518,6 +518,8 @@ export default {
 
 <style lang="sass">
 .CpuBattleApp
+  min-height: 100vh
+
   +mobile
     .section
       padding: 2.8rem 0.5rem 0
