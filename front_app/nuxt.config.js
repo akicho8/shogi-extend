@@ -227,6 +227,7 @@ if (process.env.NODE_ENV === 'development') {
   config.proxy["/rails"]      = "http://0.0.0.0:3000" // for /rails/active_storage/*
   config.proxy["/assets"]     = "http://0.0.0.0:3000" // for /assets/human/0005_fallback_avatar_icon-f076233f605139a9b8991160e1d79e6760fe6743d157446f88b12d9dae5f0e03.png
   // config.proxy["/x.json"]     = "http://0.0.0.0:3000" // for /x.json
+  config.proxy["/admin"]     = "http://0.0.0.0:3000"
 }
 
 export default config
