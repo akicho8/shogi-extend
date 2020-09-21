@@ -442,7 +442,8 @@ export default {
 
     login_required2() {
       if (!this.current_user) {
-        this.url_open(this.login_path)
+        this.login_handle()
+        // this.url_open(this.login_path)
         return true
         // this.url_open("/xusers/sign_in")
       }
@@ -506,11 +507,11 @@ export default {
     // },
 
     // いったんスクリプトに飛ばしているのは sessions[:return_to] を設定するため
-    login_path() {
-      const url = new URL(location)
-      url.searchParams.set("goto_login", true)
-      return url.toString()
-    },
+    // login_path() {
+    //   const url = new URL(location)
+    //   url.searchParams.set("goto_login", true)
+    //   return url.toString()
+    // },
 
     user_type() {
       if (this.current_user) {
