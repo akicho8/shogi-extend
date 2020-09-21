@@ -33,8 +33,8 @@ tmux send-keys -t shogi.3 'nuxt dev -p 4000' C-m
 tmux select-pane -t shogi.3
 
 sleep 5
-open http://lvm.me:3000
-open http://lvm.me:4000
+open http://0.0.0.0:3000
+open http://0.0.0.0:4000
 
 # open http://0.0.0.0:4000
 # open https://bulma.io/
