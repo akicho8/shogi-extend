@@ -13,7 +13,7 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   .secondary_header
-    b-tabs.tabs_in_secondary(v-model="bapp.tab_index" expanded @change="bapp.edit_tab_change_handle")
+    b-tabs.tabs_in_secondary(v-model="bapp.tab_index" expanded @input="bapp.edit_tab_change_handle")
       b-tab-item(label="配置")
 
       b-tab-item

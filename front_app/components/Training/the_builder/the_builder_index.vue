@@ -24,7 +24,7 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   .secondary_header
-    b-tabs.tabs_in_secondary(v-model="question_tab_index" expanded @change="question_tab_index_change_handle")
+    b-tabs.tabs_in_secondary(v-model="question_tab_index" expanded @input="question_tab_index_change_handle")
       template(v-for="tab_info in TabInfo.values")
         b-tab-item(v-if="question_tab_available_p(tab_info)")
           template(slot="header")

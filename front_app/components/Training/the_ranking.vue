@@ -10,7 +10,7 @@
         b-dropdown-item(@click="switch_to(season)") {{season.name}}
 
   .secondary_header
-    b-tabs.tabs_in_secondary(v-model="tab_index" expanded @change="tab_change_handle")
+    b-tabs.tabs_in_secondary(v-model="tab_index" expanded @input="tab_change_handle")
       template(v-for="tab_info in TabInfo.values")
         b-tab-item.is-size-2(:label="tab_info.name")
 

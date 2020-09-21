@@ -10,7 +10,7 @@
       b-dropdown-item.px-4(@click.native.stop="reset_handle" v-if="development_p") リセット (全削除してプリセットインポート)
 
   .secondary_header
-    b-tabs.tabs_in_secondary(v-model="$parent.current_tabpos" expanded @change="tab_change_hook")
+    b-tabs.tabs_in_secondary(v-model="$parent.current_tabpos" expanded @input="tab_change_hook")
       template(v-for="e in app.EmotionFolderInfo.values")
         b-tab-item
           template(slot="header")
