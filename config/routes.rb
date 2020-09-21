@@ -48,8 +48,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 他サービス
 
-  resource :simple_board, path: "board", only: [:show, :create]
-  resource :share_board, path: "share-board", only: [:show, :create]
+  resource :share_board, path: "share-board", only: [:show]
 
   ################################################################################ CPU対戦
 

@@ -99,7 +99,6 @@ import pulldown_menu                   from "pulldown_menu.vue"
 import buefy_table_wrapper             from "buefy_table_wrapper.vue"
 import custom_chart                    from "custom_chart.vue"
 import acns1_sample                    from "acns1_sample.vue"
-import simple_board                    from "simple_board.vue"
 import sp_show                         from "sp_show.vue"
 import ox_modal                        from "ox_modal.vue"
 import tactic_show                     from "tactic_show.vue"
@@ -122,7 +121,6 @@ Vue.mixin({
     shogi_player,
     swars_user_link_to,
     pulldown_menu,
-    simple_board,
     sp_show,
     ox_modal,
     win_lose_circle,
