@@ -7,7 +7,7 @@ import SfenParser from "shogi-player/src/sfen_parser"
 
 const strip_tags = require('striptags')
 
-import { isMobile } from "../models/isMobile.js"
+import { isMobile } from "../../../front_app/components/models/isMobile.js"
 
 export default {
   methods: {

@@ -78,9 +78,9 @@
 <script>
 
 import { ChessClock   } from "../Training/models/chess_clock.js"
-import { DeviseAngle  } from "../../../app/javascript/models/DeviseAngle.js"
-import { isMobile     } from "../../../app/javascript/models/isMobile.js"
-import { FullScreen   } from "../models/FullScreen.js"
+import { DeviseAngle  } from "@/components/models/DeviseAngle.js"
+import { isMobile     } from "@/components/models/isMobile.js"
+import { FullScreen   } from "@/components/models/FullScreen.js"
 
 import { support      } from "./support.js"
 import { store        } from "./store.js"
