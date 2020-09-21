@@ -4,7 +4,6 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-// require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
@@ -29,9 +28,6 @@ window.Vue = Vue
 
 import Vuex from "vuex"
 Vue.use(Vuex)                   // これは一箇所だけで実行すること。shogi-player 側で実行すると干渉する
-
-import VueRouter from "vue-router"
-Vue.use(VueRouter)
 
 import VueGtag from "vue-gtag"
 Vue.use(VueGtag, {
@@ -103,7 +99,6 @@ import pulldown_menu                   from "pulldown_menu.vue"
 import buefy_table_wrapper             from "buefy_table_wrapper.vue"
 import custom_chart                    from "custom_chart.vue"
 import acns1_sample                    from "acns1_sample.vue"
-import actb_app                        from "actb_app/application.vue"
 import simple_board                    from "simple_board.vue"
 import sp_show                         from "sp_show.vue"
 import ox_modal                        from "ox_modal.vue"
@@ -115,31 +110,9 @@ import sp_show_button                  from "components/sp_show_button.vue"
 import png_dl_button                   from "components/png_dl_button.vue"
 import tweet_button                    from "components/tweet_button.vue"
 import membership_medal                from "components/membership_medal.vue"
-import debug_print                     from "components/debug_print.vue"
 import win_lose_circle                 from "win_lose_circle.vue"
-import vr_page1                        from "vr_page1.vue"
-import vr_page2                        from "vr_page2.vue"
-
-// const router = new VueRouter({
-//   mode: 'history',
-//   // base: process.env.BASE_URL,
-//   // linkActiveClass: "is-active", // router-link-exact-active
-//   routes: [
-//   ],
-// })
-
-import actb_app_routes from "../actb_app/routes.js"
 
 Vue.mixin({
-  router: new VueRouter({
-    mode: "history",
-    routes: [
-      { path: '/vr_page1', component: vr_page1 },
-      { path: '/vr_page2', component: vr_page2 },
-      ...actb_app_routes,
-    ]
-  }),
-
   mixins: [
     vue_mixins,
   ],
@@ -156,7 +129,6 @@ Vue.mixin({
     buefy_table_wrapper,
     custom_chart,
     acns1_sample,
-    actb_app,
 
     // for buefy modal
     tactic_show,
@@ -168,7 +140,6 @@ Vue.mixin({
     sp_show_button,
     png_dl_button,
     tweet_button,
-    debug_print,
 
     // icon
     membership_medal,

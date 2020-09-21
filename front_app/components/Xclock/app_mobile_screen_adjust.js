@@ -1,4 +1,4 @@
-import { MobileScreen } from "../../../app/javascript/models/MobileScreen.js"
+import { MobileScreen } from "@/components/models/MobileScreen.js"
 
 export const app_mobile_screen_adjust = {
   data() {

@@ -158,11 +158,6 @@
             template(v-if="config.count_all_gteq > 1")
               .has-text-centered
                 | {{config.count_all_gteq}}回以上やるとチャートに登場します
-
-    .columns(v-show="(mode === 'stop' || mode === 'goal')")
-      .column
-        .has-text-centered.has-text-white-ter
-          | 2020-09-18 21:01
 </template>
 
 <script>
@@ -174,9 +169,9 @@ import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import Soldier      from "shogi-player/src/soldier.js"
 import Place        from "shogi-player/src/place.js"
 
-import { isMobile        } from "../../../app/javascript/models/isMobile.js"
+import { isMobile        } from "@/components/models/isMobile.js"
 import { IntervalCounter } from '@/components/models/IntervalCounter.js'
-import { IntervalFrame } from '@/components/models/IntervalFrame.js'
+import { IntervalFrame   } from '@/components/models/IntervalFrame.js'
 
 import { app_chart       } from "./app_chart.js"
 import { app_keyboard    } from "./app_keyboard.js"
