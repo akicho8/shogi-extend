@@ -43,11 +43,10 @@ Rails.application.routes.draw do
 
   namespace :swars, path: "" do
     resources :battles, path: "w"
-    resources :player_infos, :only => :index, path: "w-user-stat"
   end
 
   resolve "Swars::User" do |user, options|
-    swars_basic_path(query: user.to_param)
+    swars_battles_path(query: user.to_param)
   end
 
   ################################################################################ 棋譜投稿

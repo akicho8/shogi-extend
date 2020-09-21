@@ -3,7 +3,6 @@ AppConfig.deep_merge!({
     :volume                                  =>  0.5,
 
     :free_battles_import                     =>  false, # 野良棋譜のセットアップ時に保持している対局を取り込むか？
-    :player_info_function                    =>  true,  # プレイヤー情報
     :more_import_function                    =>  true,  # もっと取り込む
     :swars_tag_search_function               =>  true,  # タグ検索
     :battle_index_permalink_show             =>  true,  # 固定リンクを表示するか？

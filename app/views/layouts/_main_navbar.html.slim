@@ -30,7 +30,6 @@ nav#main_nav.navbar.is-primary.is_screen_only
           = link_to("奨励会三段リーグ個人成績", UrlProxy.wrap("/three-stage-league-players"), class: "navbar-item")
           = link_to("野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
           = link_to("野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
-          = link_to("プレイヤー情報", [:swars, :player_infos], class: ["navbar-item", ("is-active" if params[:controller] == "swars/player_infos")]) if AppConfig[:player_info_function]
           - if Rails.env.development? || Rails.env.test?
             = link_to("ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])
             = link_to("局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])

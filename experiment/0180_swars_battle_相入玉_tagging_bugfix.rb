@@ -16,9 +16,6 @@ module Swars
 
   tp ActsAsTaggableOn::Tag.find_by(name: "入玉").taggings
 
-  # user1.tactic_summary_for(:note) # =>
-  # user2.tactic_summary_for(:note) # =>
-  #
   # tp Battle.last
 end
 # >> |------------------------------------------------------------------------------|
