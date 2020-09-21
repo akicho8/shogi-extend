@@ -18,9 +18,6 @@ export default {
       this.$gtag.event("click", {event_category: "KENTO"})
     },
   },
-  computed: {
-    piyo_shogi_icon() { return piyo_shogi_icon }, // TODO: Vue.js の重複強制どうにかならんの？
-  },
 }
 </script>
 
