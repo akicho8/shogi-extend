@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   ################################################################################ Debug
 
-  match "eval", to: "eval#run", via: [:get, :post, :put, :delete]
+  match "eval", to: "eval#run", via: :all
 
   ################################################################################ ログアウト
 
@@ -49,11 +49,6 @@ Rails.application.routes.draw do
   ################################################################################ 他サービス
 
   resource :share_board, path: "share-board", only: [:show]
-
-  ################################################################################ CPU対戦
-
-  # resource :cpu_battles, path: "cpu/battles", only: [:show, :create]
-  # get "cpu/battles", to: "cpu_battles#show"
 
   ################################################################################ 将棋トレーニングバトル
 
