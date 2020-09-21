@@ -25,14 +25,6 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    it "ぴよ将棋専用" do
-      visit "/w-light"
-      fill_in "query", with: "devuser1"
-      find(".search_form_submit_button").click
-      expect(page).to have_content "相手"
-      doc_image
-    end
-
     it "アプリ起動できるブックマーク可能なページに飛ぶ" do
       visit "/w?query=devuser1"
       find(".usage_modal_open_handle").click

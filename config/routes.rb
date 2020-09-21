@@ -48,7 +48,6 @@ Rails.application.routes.draw do
     get "wr/:id",   to: "battles#show" # 互換性のため
 
     get "w",        to: "battles#index", as: :basic
-    get "w-light",  to: "battles#index", as: :light
   end
 
   resolve "Swars::User" do |user, options|
