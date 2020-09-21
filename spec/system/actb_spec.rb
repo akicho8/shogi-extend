@@ -15,19 +15,19 @@ RSpec.describe "将棋トレーニングバトル", type: :system do
     doc_image
   end
 
-  it "トップ(ログインあり)" do
+  xit "トップ(ログインあり)" do
     visit "/training?_user_id=#{user1.id}"
     expect(page).to have_content "対人戦"
     doc_image
   end
 
-  it "問題詳細(ログインなし)" do
+  xit "問題詳細(ログインなし)" do
     visit "/training?question_id=#{question1.id}"
     expect(page).to have_content "配置"
     doc_image
   end
 
-  it "問題詳細(ログインあり)" do
+  xit "問題詳細(ログインあり)" do
     visit "/training?question_id=#{question1.id}&_user_id=#{user1.id}"
     expect(page).to have_content "配置"
     doc_image

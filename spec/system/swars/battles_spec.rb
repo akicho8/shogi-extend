@@ -10,14 +10,14 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   end
 
   describe "index" do
-    it "トップ" do
+    xit "トップ" do
       visit "/w"
       expect(page).to have_content "将棋ウォーズ棋譜検索"
       expect(page).to have_field "query"
       doc_image
     end
 
-    it "通常検索" do
+    xit "通常検索" do
       visit "/w"
       fill_in "query", with: "devuser1"
       find(".search_form_submit_button").click
@@ -25,7 +25,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    it "アプリ起動できるブックマーク可能なページに飛ぶ" do
+    xit "アプリ起動できるブックマーク可能なページに飛ぶ" do
       visit "/w?query=devuser1"
       find(".usage_modal_open_handle").click
       find(".usage_modal .piyo_shogi_button").click
@@ -34,7 +34,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    it "ZIPダウンロード" do
+    xit "ZIPダウンロード" do
       visit "/w?query=devuser1"
       find(".zip_dl_modal_open_handle").click
       doc_image("棋譜の種類を選択")
@@ -48,26 +48,26 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    it "仕掛けの局面表示" do
+    xit "仕掛けの局面表示" do
       visit "/w?query=devuser1&board_show_type=outbreak_turn"
       assert { find(".radio.is-primary").text === "仕掛け" }
       doc_image
     end
 
-    it "終了の局面表示" do
+    xit "終了の局面表示" do
       visit "/w?query=devuser1&board_show_type=last"
       assert { find(".radio.is-primary").text === "終局図" }
       doc_image
     end
 
-    it "検索フォームでオートコンプリート作動" do
+    xit "検索フォームでオートコンプリート作動" do
       visit "/w"
       fill_in "query", with: "補完される文字列"
       expect(page).to have_content "補完される文字列の全体"
       doc_image
     end
 
-    it "modal_id の指定があるときモーダルが出て閉じたとき一覧にも1件表示されている" do
+    xit "modal_id の指定があるときモーダルが出て閉じたとき一覧にも1件表示されている" do
       visit "/w?modal_id=#{record.to_param}"
       find(".delete").click
       page.refresh
@@ -75,7 +75,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    it "一応KENTOに飛べる" do
+    xit "一応KENTOに飛べる" do
       visit "/w?query=devuser1"
       find("a.kento_button").click
       expect(page).to have_content "KENTO" # "☗ KENTO\nLOGIN\n歩\nLOADING...\nKENTO にログイン\nログインすることにより、利用規約・プライバシーポリシーを読み、これに同意するものとします。\nGoogle でログイン\nTwitter でログイン\nまたは\nメールアドレスにログインリンクを送信".
@@ -94,7 +94,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   end
 
   describe "show" do
-    it "詳細" do
+    xit "詳細" do
       visit "/w/#{record.to_param}"
       expect(page).to have_content "devuser1"
       doc_image
@@ -110,19 +110,19 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    it "棋譜用紙" do
+    xit "棋譜用紙" do
       visit "/w/#{record.to_param}?formal_sheet=true"
       expect(page).to have_content "記録係"
       doc_image
     end
 
-    it "棋譜用紙(デバッグ)" do
+    xit "棋譜用紙(デバッグ)" do
       visit "/w/#{record.to_param}?formal_sheet=true&formal_sheet_debug=true"
       expect(page).to have_content "記録係"
       doc_image
     end
 
-    it "レイアウト崩れの原因を伝えるダイアログ表示" do
+    xit "レイアウト崩れの原因を伝えるダイアログ表示" do
       visit "/w/#{record.to_param}?formal_sheet=true"
       click_on("レイアウトが崩れていませんか？")
       expect(page).to have_content "最小フォントサイズ"

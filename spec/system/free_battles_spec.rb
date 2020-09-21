@@ -6,12 +6,12 @@ RSpec.describe "棋譜投稿", type: :system do
   end
 
   describe "一覧" do
-    it "表示" do
+    xit "表示" do
       visit "/x"
       expect(page).to have_content "一覧"
     end
 
-    it "modal_id の指定があるときモーダルが出て閉じたとき一覧にも1件表示されている" do
+    xit "modal_id の指定があるときモーダルが出て閉じたとき一覧にも1件表示されている" do
       visit "/x?modal_id=#{record.to_param}"
       find(".delete").click
       page.refresh
@@ -21,7 +21,7 @@ RSpec.describe "棋譜投稿", type: :system do
   end
 
   describe "投稿" do
-    it "入力" do
+    xit "入力" do
       visit "/x/new"
 
       text_input_click
@@ -54,7 +54,7 @@ RSpec.describe "棋譜投稿", type: :system do
     #   doc_image
     # end
 
-    it "詳細" do
+    xit "詳細" do
       visit "/x/#{record.to_param}"
       expect(page).to have_content "(test_title)"
     end
