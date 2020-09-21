@@ -51,10 +51,6 @@ Rails.application.routes.draw do
   resource :simple_board, path: "board", only: [:show, :create]
   resource :share_board, path: "share-board", only: [:show, :create]
 
-  ################################################################################ 局面編集
-
-  get "position-editor", to: "position_editor#show", as: :position_editor
-
   ################################################################################ CPU対戦
 
   # resource :cpu_battles, path: "cpu/battles", only: [:show, :create]

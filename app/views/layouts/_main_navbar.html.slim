@@ -32,7 +32,6 @@ nav#main_nav.navbar.is-primary.is_screen_only
           = link_to("野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
           - if Rails.env.development? || Rails.env.test?
             = link_to("ただの将棋盤", :simple_board, class: ["navbar-item", ("is-active" if params[:controller] == "simple_boards")])
-            = link_to("局面編集", :position_editor, class: ["navbar-item", ("is-active" if params[:controller] == "position_editor")])
             = link_to("戦法トリガー事典", :tactic_notes, class: ["navbar-item", ("is-active" if params[:controller] == "tactic_notes")])
           hr.navbar-divider.is-hidden-tablet
           = link_to("プライバシーポリシー", UrlProxy.wrap("/about/privacy-policy"), class: ["navbar-item", "is-hidden-tablet"])
