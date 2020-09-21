@@ -171,7 +171,7 @@ export default {
 
     // FIXME: イベントで受けとる
     current_moves() {
-      return this.$refs.the_builder_edit.$refs.the_builder_edit_seikai.$refs.seikai_sp.moves_take_turn_offset
+      return this.$refs.the_builder_edit.$refs.the_builder_edit_seikai.$refs.main_sp.$refs.pure_sp.moves_take_turn_offset
     },
 
     // 「この手順を正解とする」

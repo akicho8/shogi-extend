@@ -4,6 +4,7 @@ ShogiPlayer(
   v-on="$listeners"
   :sound_effect="true"
   :volume="0.5"
+  ref="pure_sp"
   )
 </template>
 

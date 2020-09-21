@@ -13,7 +13,7 @@
     :size="'default'"
     @update:turn_offset="bapp.turn_offset_set"
     @update:mediator_snapshot_sfen="bapp.mediator_snapshot_sfen_set"
-    ref="seikai_sp"
+    ref="main_sp"
     )
 
   .buttons.is-centered.konotejunsiikai
