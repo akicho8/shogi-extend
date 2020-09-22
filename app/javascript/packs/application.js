@@ -97,7 +97,6 @@ import shogi_player                    from "shogi-player/src/components/ShogiPl
 import swars_user_link_to              from "swars_user_link_to.vue"
 import pulldown_menu                   from "pulldown_menu.vue"
 import buefy_table_wrapper             from "buefy_table_wrapper.vue"
-import custom_chart                    from "custom_chart.vue"
 import acns1_sample                    from "acns1_sample.vue"
 import sp_show                         from "sp_show.vue"
 import ox_modal                        from "ox_modal.vue"
@@ -125,7 +124,6 @@ Vue.mixin({
     ox_modal,
     win_lose_circle,
     buefy_table_wrapper,
-    custom_chart,
     acns1_sample,
 
     // for buefy modal

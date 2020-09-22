@@ -34,6 +34,7 @@ export default {
       CSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
       production_items: [
         { title: 'Home',                     to: { name: 'index'                           }, },
+        { title: '将棋ウォーズ段級位分布',   to: { name: 'swars-grade-histogram'           }, },
         { title: '将棋トレーニングバトル',   to: { name: 'training'                        }, },
         { title: '三段リーグ成績早見表',     to: { name: 'three-stage-leagues-generation'  }, },
         { title: '三段リーグ個人成績'  ,     to: { name: 'three-stage-league-players-name' }, },

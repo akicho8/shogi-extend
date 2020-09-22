@@ -1,10 +1,5 @@
 <template lang="pug">
-.custom_chart
-  .columns.is-unselectable
-    .column.is-4
-      canvas#main_canvas(ref="main_canvas")
-  template(v-if="development_p && false")
-    | {{info}}
+canvas#main_canvas.CustomChart(ref="main_canvas")
 </template>
 
 <script>
@@ -128,7 +123,7 @@ const CHART_CONFIG_DEFAULT = {
         // label(tooltipItem, data) {
         //   const chart_element = this
         //   const __vm__ = chart_element._chart.config.__vm__
-        //   const membership = __vm__.info.memberships[tooltipItem.index]
+        //   const membership = __vm__.params.memberships[tooltipItem.index]
         //   const v = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
         //   let s = `${v}勝`
         //   if (membership.result_key !== "none") {
@@ -141,35 +136,30 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from './chart_mod.js'
+import chart_mod from "../../app/javascript/chart_mod.js" // FIXME
 
 export default {
-  name: "custom_chart",
+  name: "CustomChart",
   mixins: [chart_mod],
   props: {
-    info: { required: true },
-  },
-  data() {
-    return {
-    }
+    params: { type: Object, required: true },
   },
   created() {
     this.chart_setup(CHART_CONFIG_DEFAULT)
-    this._chart_config.data = this.info.data
+    this._chart_config.data = this.params.data
 
-    if (this.info.scales_yAxes_ticks) {
-      this._chart_config.options.scales.yAxes[0].ticks = this.info.scales_yAxes_ticks
+    if (this.params.scales_yAxes_ticks) {
+      this._chart_config.options.scales.yAxes[0].ticks = this.params.scales_yAxes_ticks
     }
   },
   mounted() {
     this.chart_create()
   },
-  methods: {
-  },
 }
 </script>
 
 <style lang="sass">
-@import "./stylesheets/bulma_init.scss"
-.custom_chart
+.development
+  .CustomChart
+    // border: 1px solid $danger
 </style>

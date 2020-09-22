@@ -38,6 +38,10 @@ export default {
       return Math.floor(v * 100 * base) / base
     },
 
+    number_floor(v, precision = 0) {
+      return _.floor(v, precision)
+    },
+
     process_now() {
       this.$buefy.loading.open()
     },
