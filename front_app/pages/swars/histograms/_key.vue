@@ -14,7 +14,7 @@ client-only
           .buttons
             template(v-for="tactic in config.tactics")
               b-button(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: tactic.key}}" exact-active-class="is-active") {{tactic.name}}
-
+        .column
           .level.is-mobile.mb-0
             .level-left
               .level-item.has-text-centered
@@ -25,7 +25,8 @@ client-only
                 div
                   .head.is-size-7 サンプル数直近
                   .title.is-size-6 {{config.sample_count}}件
-
+      .columns
+        .column
           b-table.mt-3(
             :data="config.records"
             :mobile-cards="false"
