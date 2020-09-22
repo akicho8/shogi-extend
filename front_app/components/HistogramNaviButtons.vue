@@ -1,5 +1,5 @@
 <template lang="pug">
-.buttons
+.buttons.are-small
   template(v-for="item in items")
     b-button(tag="nuxt-link" :to="item.to" exact-active-class="is-active") {{item.title}}
 </template>
@@ -14,7 +14,7 @@ export default {
         { title: '囲い', to: { name: 'swars-histograms-key', params: {key: 'defense'   }, }, },
         { title: '手筋', to: { name: 'swars-histograms-key', params: {key: 'technique' }, }, },
         { title: '備考', to: { name: 'swars-histograms-key', params: {key: 'note'      }, }, },
-        { title: '段級', to: { name: 'swars-grade-histogram'                              }, },
+        { title: '段級', to: { name: 'swars-histograms-grade'                          }, },
       ],
     }
   },

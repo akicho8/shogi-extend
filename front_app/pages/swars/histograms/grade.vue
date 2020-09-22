@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  .swars-grade-histogram
+  .swars-histograms-grade
     b-navbar(type="is-primary")
       template(slot="brand")
         b-navbar-item.has-text-weight-bold(tag="div") 将棋ウォーズ段級ヒストグラム
@@ -31,14 +31,14 @@ client-only
 
 <script>
 export default {
-  name: "swars-grade-histogram",
+  name: "swars-histograms-grade",
   head() {
     return {
       title: "将棋ウォーズ段級ヒストグラム",
       meta: [
         { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ段級ヒストグラム"                                   },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                      },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-grade-histogram.png" },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-histograms-grade.png" },
         { hid: "og:description", property: "og:description", content: ""                                                         },
       ],
     }
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="sass">
-.swars-grade-histogram
+.swars-histograms-grade
   .section
     padding-top: 1.7rem
 </style>
