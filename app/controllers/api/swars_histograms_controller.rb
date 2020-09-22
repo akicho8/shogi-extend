@@ -37,7 +37,7 @@ module Api
     end
 
     def current_max
-      [params[:max].to_i, 1000].min
+      [params[:max].to_i, 10000].min
     end
 
     def cache_key
@@ -45,7 +45,7 @@ module Api
     end
 
     def counts_hash_fetch
-      s = Swars::Membership.order(created_at: :desc).limit(current_max) # TODO: order(id: desc) とどっちが速い？
+      s = Swars::Membership.order(id: :desc).limit(current_max) # id だと何件でも一瞬で created_at だとで1000件で4秒かかる
       tags = s.tag_counts_on("#{tactic_key}_tags")
       counts_hash = tags.inject({}) { |a, e| a.merge(e.name => e.count) }    # => { "棒銀" => 3, "棒金" => 4 }
 
@@ -55,7 +55,7 @@ module Api
       end
 
       # いらんタグを消す場合
-      if false
+      if true
         if Rails.env.production? || Rails.env.staging? || Rails.env.test?
           Array(TagMod.reject_tag_keys[tactic_key]).each do |e|
             counts_hash.delete(e.to_s)
