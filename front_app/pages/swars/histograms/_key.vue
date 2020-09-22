@@ -37,7 +37,7 @@ client-only
               template(v-if="row.ratio")
                 | {{float_to_perc(row.ratio, 3)}} %
             b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable)
-              template(v-if="deviation_score")
+              template(v-if="row.deviation_score")
                 | {{number_floor(row.deviation_score, 3)}}
             b-table-column(v-slot="{row}" field="count"           label="個数" numeric sortable) {{row.count}}
 
