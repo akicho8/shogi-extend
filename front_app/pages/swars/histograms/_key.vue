@@ -11,9 +11,11 @@ client-only
     .section
       .columns
         .column
-          .buttons
-            template(v-for="tactic in config.tactics")
-              b-button(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: tactic.key}}" exact-active-class="is-active") {{tactic.name}}
+          HistogramNaviButtons
+          //- .buttons
+          //-   template(v-for="tactic in config.tactics")
+          //-     b-button(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: tactic.key}}" exact-active-class="is-active") {{tactic.name}}
+          //-   b-button(tag="nuxt-link" :to="{name: 'swars-grade-histogram'}" exact-active-class="is-active") 段級位
         .column
           .level.is-mobile.mb-0
             .level-left

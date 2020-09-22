@@ -20,7 +20,7 @@ module Api
       render json: {
         :updated_at   => updated_at,
         :tactic       => tactic_info,          # 現在選択したもの
-        :tactics      => Bioshogi::TacticInfo, # 選択肢表示用
+        # :tactics      => Bioshogi::TacticInfo, # 選択肢表示用
         :records      => records,
         :sample_count => counts_hash.values.sum,
       }

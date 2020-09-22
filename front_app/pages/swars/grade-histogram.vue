@@ -3,13 +3,16 @@ client-only
   .swars-grade-histogram
     b-navbar(type="is-primary")
       template(slot="brand")
-        b-navbar-item.has-text-weight-bold(tag="div") 将棋ウォーズ段級位分布
+        b-navbar-item.has-text-weight-bold(tag="div") 将棋ウォーズ段級ヒストグラム
       template(slot="end")
         b-navbar-item(tag="a" href="/") TOP
 
     .section
+      .columns
+        .column
+          HistogramNaviButtons
       .columns.is-unselectable
-        .column.is-4
+        .column.is-4.mt-3
           CustomChart(:params="config.custom_chart_params")
       .columns
         .column
@@ -31,14 +34,17 @@ export default {
   name: "swars-grade-histogram",
   head() {
     return {
-      title: "将棋ウォーズ段級位分布",
+      title: "将棋ウォーズ段級ヒストグラム",
       meta: [
-        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ段級位分布"                                   },
+        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ段級ヒストグラム"                                   },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                      },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-grade-histogram.png" },
         { hid: "og:description", property: "og:description", content: ""                                                         },
       ],
     }
+  },
+  mounted() {
+    this.sound_play("click")
   },
   async asyncData({ $axios, query }) {
     // http://0.0.0.0:3000/api/swars_grade_histogram.json
@@ -51,5 +57,5 @@ export default {
 <style lang="sass">
 .swars-grade-histogram
   .section
-    padding-top: 2.6rem
+    padding-top: 1.7rem
 </style>
