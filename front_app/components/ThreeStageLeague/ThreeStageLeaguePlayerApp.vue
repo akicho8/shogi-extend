@@ -21,7 +21,7 @@
           hoverable
           )
           b-table-column(v-slot="{row}" field="league.generation" label="期" numeric sortable)
-            nuxt-link(:to="{name: 'three-stage-leagues-generation', params: {generation: row.league.generation}}" @click.native="sound_play('click')")
+            nuxt-link(:to="{name: 'three-stage-leagues-generation', params: {generation: row.league.generation}}")
               | {{row.league.generation}}
           //- b-table-column(v-slot="{row}" field="seat_count"        label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
           b-table-column(v-slot="{row}" field="age"               label="歳" numeric sortable) {{row.age}}
@@ -33,8 +33,7 @@
       .column
         .buttons.are-small
           template(v-for="user in config.users")
-            //- exact-active-class="is-primary"
-            b-button(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: user.name}}" :class="{'is-active': config.main_user.name === user.name, 'has-text-weight-bold': (user.level_up_generation || user.runner_up_count >= 2)}" @click.native="sound_play('click')")
+            b-button(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: user.name}}" :class="{'has-text-weight-bold': (user.level_up_generation || user.runner_up_count >= 2)}" exact-active-class="is-active")
               | {{user.name}}
 </template>
 
@@ -50,6 +49,7 @@ export default {
     config: { type: Object, required: true },
   },
   mounted() {
+    this.sound_play("click")
     this.talk(this.config.main_user.name)
   },
 }
