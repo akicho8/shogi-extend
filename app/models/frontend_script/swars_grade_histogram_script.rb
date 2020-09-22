@@ -8,7 +8,7 @@ module FrontendScript
       {
         custom_chart_params: custom_chart_params,
         records: records,
-        sample_count: records.sum { |e| e.count },
+        sample_count: records.sum { |e| e[:count] },
       }
     end
 
