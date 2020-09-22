@@ -41,8 +41,8 @@ export default {
     }
   },
   async asyncData({ $axios, query }) {
-    // http://0.0.0.0:3000/script/swars-grade-histogram.json
-    const config = await $axios.$get("/script/swars-grade-histogram.json", {params: query})
+    // http://0.0.0.0:3000/api/swars_grade_histogram.json
+    const config = await $axios.$get("/api/swars_grade_histogram.json", {params: query})
     return { config }
   },
 }

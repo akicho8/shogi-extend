@@ -1,16 +1,15 @@
-module FrontendScript
-  # http://0.0.0.0:3000/script/swars-grade-histogram.json
-  class SwarsGradeHistogramScript < ::FrontendScript::Base
-    self.script_name = "将棋ウォーズ段級位分布"
-    self.visibility_hidden_on_menu = true
-
-    def script_body
-      {
+module Api
+  # http://0.0.0.0:3000/api/swars_grade_histogram.json
+  class SwarsGradeHistogramsController < ::Api::ApplicationController
+    def show
+      render json: {
         custom_chart_params: custom_chart_params,
         records: records,
         sample_count: records.sum { |e| e[:count] },
       }
     end
+
+    private
 
     # 調査対象段級位
     def grade_keys

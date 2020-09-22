@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Api::EtcController, type: :controller do
   it "ping" do
-    get :ping, params: {}
+    get :ping
     expect(response).to have_http_status(:ok)
   end
 

@@ -1,9 +1,7 @@
-module FrontendScript
-  class SwarsHistogramsScript < ::FrontendScript::Base
-    self.script_name = "将棋ウォーズヒストグラム"
-    self.visibility_hidden_on_menu = true
-
-    def script_body
+module Api
+  # http://0.0.0.0:3000/api/swars_histogram.json
+  class SwarsHistogramsController < ::Api::ApplicationController
+    def show
       counts_hash, updated_at = Rails.cache.fetch(cache_key, expires_in: 1.days) do
         [counts_hash_fetch, Time.current]
       end
@@ -19,7 +17,7 @@ module FrontendScript
         }
       end
 
-      {
+      render json: {
         :updated_at   => updated_at,
         :tactic       => tactic_info,          # 現在選択したもの
         :tactics      => Bioshogi::TacticInfo, # 選択肢表示用

@@ -62,8 +62,8 @@ export default {
     this.sound_play("click")
   },
   async asyncData({ $axios, params }) {
-    // http://0.0.0.0:3000/script/swars-histograms.json
-    const config = await $axios.$get("/script/swars-histograms.json", {params: params})
+    // http://0.0.0.0:3000/api/swars_histogram.json
+    const config = await $axios.$get("/api/swars_histogram.json", {params: params})
     return { config }
   },
 }

@@ -78,6 +78,8 @@ Rails.application.routes.draw do
     resource :share_board, only: [:show, :create]
     resource :three_stage_league, only: [:show]
     resource :three_stage_league_player, only: [:show]
+    resource :swars_grade_histogram, only: [:show]
+    resource :swars_histogram, only: [:show]
   end
 
   ################################################################################ admin
