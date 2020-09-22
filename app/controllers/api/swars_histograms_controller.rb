@@ -37,7 +37,7 @@ module Api
     end
 
     def current_max
-      [params[:max].to_i, 10000].min
+      (params[:max].presence || 10000).to_i.clamp(0, 10000)
     end
 
     def cache_key
