@@ -44,8 +44,6 @@ client-only
 </template>
 
 <script>
-import dayjs from "dayjs"
-
 export default {
   name: "swars-histograms-key",
   head() {
