@@ -2,7 +2,7 @@ module Api
   # http://0.0.0.0:3000/api/swars_histogram.json
   class SwarsHistogramsController < ::Api::ApplicationController
     def show
-      counts_hash, updated_at = Rails.cache.fetch(cache_key, expires_in: 1.days) do
+      counts_hash, updated_at = Rails.cache.fetch(cache_key, expires_in: 1.hours) do
         [counts_hash_fetch, Time.current]
       end
 
@@ -50,7 +50,7 @@ module Api
       counts_hash = tags.inject({}) { |a, e| a.merge(e.name => e.count) }    # => { "棒銀" => 3, "棒金" => 4 }
 
       # タグにない戦法も抽出する場合
-      if true
+      if false
         counts_hash = tactic_info.model.inject({}) { |a, e| a.merge(e.name => counts_hash[e.name] || 0) } # => { "棒銀" => 3, "棒金" => 4, "風車" => 0 }
       end
 
