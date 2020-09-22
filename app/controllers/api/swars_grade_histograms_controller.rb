@@ -2,10 +2,19 @@ module Api
   # http://0.0.0.0:3000/api/swars_grade_histogram.json
   class SwarsGradeHistogramsController < ::Api::ApplicationController
     def show
+      @counts_hash, @updated_at = Rails.cache.fetch(self.class.name, expires_in: Rails.env.production? ? 1.days : 0) do
+        [
+          Swars::User.group(:grade).where(grade: grade_records).count,
+          Time.current,
+        ]
+      end
+
       render json: {
-        custom_chart_params: custom_chart_params,
-        records: records,
-        sample_count: records.sum { |e| e[:count] },
+        :sample_count        => @counts_hash.values.sum,
+        :updated_at          => @updated_at,
+        :custom_chart_params => custom_chart_params,
+        :records             => records,
+        :sample_count        => records.sum { |e| e[:count] },
       }
     end
 
@@ -21,16 +30,10 @@ module Api
       Swars::Grade.where(key: grade_keys).reorder("")
     end
 
-    def counts_hash
-      @counts_hash ||= Rails.cache.fetch(self.class.name, expires_in: Rails.env.production? ? 1.days : 0) do
-        Swars::User.group(:grade).where(grade: grade_records).count
-      end
-    end
-
     def records
       @records ||= -> {
-        sdc = StandardDeviation.new(counts_hash.values)
-        counts_hash.reverse_each.collect do |grade, count|
+        sdc = StandardDeviation.new(@counts_hash.values)
+        @counts_hash.reverse_each.collect do |grade, count|
           {
             grade: grade.as_json(only: [:id, :key, :priority]),
             count: count,

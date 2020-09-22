@@ -9,24 +9,7 @@ client-only
         b-navbar-item(tag="a" href="/") TOP
 
     .section
-      .columns
-        .column
-          HistogramNaviButtons
-          //- .buttons
-          //-   template(v-for="tactic in config.tactics")
-          //-     b-button(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: tactic.key}}" exact-active-class="is-active") {{tactic.name}}
-          //-   b-button(tag="nuxt-link" :to="{name: 'swars-histograms/grade'}" exact-active-class="is-active") 段級位
-        .column
-          .level.is-mobile.mb-0
-            .level-left
-              .level-item.has-text-centered
-                div
-                  .head.is-size-7 最終計測
-                  .title.is-size-6 {{diff_time_format(config.updated_at)}}
-              .level-item.has-text-centered
-                div
-                  .head.is-size-7 サンプル数直近
-                  .title.is-size-6 {{config.sample_count}}件
+      HistogramNaviButtons(:config="config")
       .columns
         .column
           b-table.mt-3(
@@ -38,17 +21,22 @@ client-only
             b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable)
               template(v-if="row.ratio")
                 | {{float_to_perc(row.ratio, 3)}} %
-            b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable)
+            b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="debug_p")
               template(v-if="row.deviation_score")
                 | {{number_floor(row.deviation_score, 3)}}
             b-table-column(v-slot="{row}" field="count"           label="個数" numeric sortable) {{row.count}}
 
-          pre(title="DEBUG" v-if="development_p || !!$route.query.debug") {{config}}
+          pre(title="DEBUG" v-if="debug_p") {{config}}
 </template>
 
 <script>
 export default {
   name: "swars-histograms-key",
+  async asyncData({ $axios, params }) {
+    // http://0.0.0.0:3000/api/swars_histogram.json
+    const config = await $axios.$get("/api/swars_histogram.json", {params: params})
+    return { config }
+  },
   head() {
     return {
       title: `将棋ウォーズ${this.config.tactic.name}ヒストグラム`,
@@ -56,17 +44,12 @@ export default {
         { hid: "og:title",       property: "og:title",       content: `将棋ウォーズ${this.config.tactic.name}ヒストグラム` },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                 },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-histograms.png" },
-        { hid: "og:description", property: "og:description", content: `サンプル数直近:${this.config.sample_count} 最終計測:${this.diff_time_format(this.config.updated_at)}`},
+        { hid: "og:description", property: "og:description", content: ""},
       ],
     }
   },
   mounted() {
     this.sound_play("click")
-  },
-  async asyncData({ $axios, params }) {
-    // http://0.0.0.0:3000/api/swars_histogram.json
-    const config = await $axios.$get("/api/swars_histogram.json", {params: params})
-    return { config }
   },
 }
 </script>

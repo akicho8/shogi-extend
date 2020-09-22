@@ -1,14 +1,26 @@
 module Api
   # http://0.0.0.0:3000/api/swars_histogram.json
   class SwarsHistogramsController < ::Api::ApplicationController
+    DEFAULT_LIMIT = 10000
+
     def show
-      counts_hash, updated_at = Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hours : 0) do
+      @counts_hash, @updated_at = Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hours : 0) do
         [counts_hash_fetch, Time.current]
       end
 
-      sdc = StandardDeviation.new(counts_hash.values)
+      render json: {
+        :sample_count => @counts_hash.values.sum,
+        :updated_at   => @updated_at,
+        :tactic       => tactic_info,
+        :records      => records,
+      }
+    end
 
-      records = counts_hash.sort_by { |name, count| -count }.collect do |name, count|
+    private
+
+    def records
+      sdc = StandardDeviation.new(@counts_hash.values)
+      @counts_hash.sort_by { |name, count| -count }.collect do |name, count|
         {
           :name            => name,
           :count           => count,
@@ -16,17 +28,7 @@ module Api
           :ratio           => sdc.appear_ratio(count),
         }
       end
-
-      render json: {
-        :updated_at   => updated_at,
-        :tactic       => tactic_info,          # 現在選択したもの
-        # :tactics      => Bioshogi::TacticInfo, # 選択肢表示用
-        :records      => records,
-        :sample_count => counts_hash.values.sum,
-      }
     end
-
-    private
 
     def tactic_key
       @tactic_key ||= (params[:key].presence || :attack).to_sym
@@ -37,7 +39,7 @@ module Api
     end
 
     def current_max
-      (params[:max].presence || 10000).to_i.clamp(0, 10000)
+      (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT)
     end
 
     def cache_key

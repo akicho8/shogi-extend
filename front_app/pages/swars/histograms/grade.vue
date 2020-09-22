@@ -8,9 +8,7 @@ client-only
         b-navbar-item(tag="a" href="/") TOP
 
     .section
-      .columns
-        .column
-          HistogramNaviButtons
+      HistogramNaviButtons(:config="config")
       .columns.is-unselectable
         .column.is-4.mt-3
           CustomChart(:params="config.custom_chart_params")
