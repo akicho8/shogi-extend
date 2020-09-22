@@ -1,11 +1,5 @@
 <template lang="pug">
-.XyMasterApp(:class="[mode, {tap_mode: tap_mode, kb_mode: !tap_mode}]")
-  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
-    template(slot="start")
-      b-navbar-item(@click="reset_all_handle") リセット
-      b-navbar-item(@click="goal_handle") ゴール
-      b-navbar-item(@click="rebuild_handle") リビルド
-
+.XyMasterApp(:class="[mode, `current_rule_input_mode-${current_rule.input_mode}`]")
   b-navbar(type="is-primary" v-if="mode === 'stop' || mode === 'goal'")
     template(slot="brand")
       b-navbar-item(tag="span")
@@ -28,6 +22,12 @@
         template(slot="label")
           b-icon(icon="menu")
         b-navbar-item(tag="a" href="/") TOPに戻る
+
+  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
+    template(slot="start")
+      b-navbar-item(@click="reset_all_handle") リセット
+      b-navbar-item(@click="goal_handle") ゴール
+      b-navbar-item(@click="rebuild_handle") リビルド
 
   .section(:class="mode")
     .columns
@@ -62,7 +62,7 @@
                     b-icon(icon="close" type="is-danger" size="is-small")
                   p.title {{x_count}}
 
-          .tap_digits_container(v-if="tap_mode")
+          .tap_digits_container(v-if="tap_method_p")
             .value
               | {{kanji_human}}
 
@@ -292,7 +292,7 @@ export default {
     // こっちは prevent.stop されてないので自分で呼ぶ
     board_cell_pointerdown_user_handle(place, event) {
       if (this.mode === "run") {
-        if (this.tap_mode) {
+        if (this.tap_method_p) {
           this.input_valid(place.x, place.y)
         } else {
           this.place_talk(place)
@@ -307,7 +307,7 @@ export default {
     },
 
     board_piece_back_user_class(place) {
-      if (!this.tap_mode) {
+      if (!this.tap_method_p) {
         if (this.mode === "run") {
         }
       }
@@ -320,8 +320,8 @@ export default {
           xy_scope_key: this.xy_scope_key,
           entry_name_unique: this.entry_name_unique,
         }
-        return this.$axios.$get("/api/xy.json", {params: params}).then(data => {
-          this.xy_records_hash = data
+        return this.$axios.$get("/api/xy.json", {params: params}).then(e => {
+          this.xy_records_hash = e
         })
       }
     },
@@ -500,7 +500,7 @@ export default {
       if (this.mode != "run") {
         return
       }
-      if (this.tap_mode) {
+      if (this.tap_method_p) {
         if (!this.development_p) {
           return
         }
@@ -566,7 +566,7 @@ export default {
         p = {x: this.place_random(), y: _.sample([5,6])}
       }
 
-      if (!this.tap_mode) {
+      if (!this.tap_method_p) {
         const soldier = Soldier.random()
         soldier.place = Place.fetch([p.x, p.y])
         this.$refs.main_sp.api_board_clear()
@@ -724,10 +724,14 @@ export default {
       return XyRuleInfo.fetch(this.xy_rule_key)
     },
 
-    tap_mode() {
-      return this.current_rule.tap_mode
+    tap_method_p() {
+      return this.current_rule.input_mode === "tap"
     },
 
+    keyboard_method_p() {
+      return this.current_rule.input_mode === "keyboard"
+    },
+    
     kanji_human() {
       if (this.mode === "run") {
         if (this.current_place) {
@@ -750,9 +754,9 @@ export default {
       return this.xy_record.rank_info[this.xy_scope_key].rank
     },
 
-    XyScopeInfo() { return XyScopeInfo },
+    XyScopeInfo()      { return XyScopeInfo      },
     XyChartScopeInfo() { return XyChartScopeInfo },
-    XyRuleInfo() { return XyRuleInfo },
+    XyRuleInfo()       { return XyRuleInfo       },
   },
 }
 </script>
@@ -863,7 +867,7 @@ $board_color: hsl(0, 0%, 60%)
         height: 32px
 
   &.run, &.ready
-    &.kb_mode
+    &.current_rule_input_mode-keyboard
       .shogi-player
         margin-top: 3rem
 </style>
