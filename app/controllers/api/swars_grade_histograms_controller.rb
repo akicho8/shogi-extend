@@ -22,7 +22,7 @@ module Api
     end
 
     def counts_hash
-      @counts_hash ||= Rails.cache.fetch(self.class.name, :expires_in => 1.days) do
+      @counts_hash ||= Rails.cache.fetch(self.class.name, expires_in: Rails.env.production? ? 1.days : 0) do
         Swars::User.group(:grade).where(grade: grade_records).count
       end
     end

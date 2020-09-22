@@ -2,7 +2,7 @@ module Api
   # http://0.0.0.0:3000/api/swars_histogram.json
   class SwarsHistogramsController < ::Api::ApplicationController
     def show
-      counts_hash, updated_at = Rails.cache.fetch(cache_key, expires_in: 1.hours) do
+      counts_hash, updated_at = Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hours : 0) do
         [counts_hash_fetch, Time.current]
       end
 
