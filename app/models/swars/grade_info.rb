@@ -21,7 +21,7 @@ module Swars
       { key:  "7級", visualize: true,  },
       { key:  "8級", visualize: true,  },
       { key:  "9級", visualize: true,  },
-      { key: "10級", visualize: true,  },
+      { key: "10級", visualize: false, },
       { key: "11級", visualize: false, },
       { key: "12級", visualize: false, },
       { key: "13級", visualize: false, },
