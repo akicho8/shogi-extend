@@ -9,7 +9,7 @@ module Api
       end
 
       render json: {
-        :sample_count => @counts_hash.values.sum,
+        :sample_count => target_ids.size,
         :updated_at   => @updated_at,
         :tactic       => tactic_info,
         :records      => records,
@@ -46,8 +46,12 @@ module Api
       [self.class.name, tactic_key, current_max].join("/")
     end
 
+    def target_ids
+      @target_ids ||= Swars::Membership.order(id: :desc).limit(current_max).pluck(:id)
+    end
+
     def counts_hash_fetch
-      s = Swars::Membership.order(id: :desc).limit(current_max) # id だと何件でも一瞬で created_at だとで1000件で4秒かかる
+      s = Swars::Membership.where(id: target_ids)
       tags = s.tag_counts_on("#{tactic_key}_tags")
       counts_hash = tags.inject({}) { |a, e| a.merge(e.name => e.count) }    # => { "棒銀" => 3, "棒金" => 4 }
 

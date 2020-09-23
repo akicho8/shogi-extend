@@ -1,10 +1,15 @@
 module Api
   # http://0.0.0.0:3000/api/swars_grade_histogram.json
   class SwarsGradeHistogramsController < ::Api::ApplicationController
+    # Swars::Membership.where(id: Swars::Membership.order(id: :desc).limit(5000).pluck(:id)).group(:grade_id).count
+    # で 15ms なので 20000 ぐらいまで一瞬
+    DEFAULT_LIMIT = 10000
+
     def show
-      @counts_hash, @updated_at = Rails.cache.fetch(self.class.name, expires_in: Rails.env.production? ? 1.days : 0) do
+      @counts_hash, @updated_at = Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hour : 0) do
         [
-          Swars::User.group(:grade).where(grade: grade_records).count,
+          # Swars::User.group(:grade).where(grade: grade_records).count,
+          memberships_fetch,
           Time.current,
         ]
       end
@@ -14,11 +19,28 @@ module Api
         :updated_at          => @updated_at,
         :custom_chart_params => custom_chart_params,
         :records             => records,
-        :sample_count        => records.sum { |e| e[:count] },
+        :sample_count        => target_ids.size,
       }
     end
 
     private
+
+    def target_ids
+      @target_ids ||= Swars::Membership.where(grade: grade_records).order(id: :desc).limit(current_max).pluck(:id)
+    end
+
+    def memberships_fetch
+      # target_idsを副SQLにすると動かない。limitがあるとダメっぽい。なんで？
+      Swars::Membership.where(id: target_ids).group(:grade).count
+    end
+
+    def current_max
+      (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT)
+    end
+
+    def cache_key
+      [self.class.name, current_max].join("/")
+    end
 
     # 調査対象段級位
     def grade_keys
@@ -33,7 +55,7 @@ module Api
     def records
       @records ||= -> {
         sdc = StandardDeviation.new(@counts_hash.values)
-        @counts_hash.reverse_each.collect do |grade, count|
+        @counts_hash.each.collect do |grade, count|
           {
             grade: grade.as_json(only: [:id, :key, :priority]),
             count: count,
