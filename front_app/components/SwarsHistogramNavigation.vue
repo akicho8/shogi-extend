@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: "HistogramNaviButtons",
+  name: "SwarsHistogramNavigation",
   props: {
     config: { type: Object, required: true },
   },

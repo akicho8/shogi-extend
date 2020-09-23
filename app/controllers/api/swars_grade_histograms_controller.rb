@@ -37,7 +37,7 @@ module Api
           {
             grade: grade.as_json(only: [:id, :key, :priority]),
             count: count,
-            deviation_score: sdc.deviation_score(count, -1),
+            # deviation_score: sdc.deviation_score(count, -1),
             ratio: sdc.appear_ratio(count),
           }
         end

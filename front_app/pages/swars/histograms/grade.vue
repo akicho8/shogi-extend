@@ -8,7 +8,7 @@ client-only
         b-navbar-item(tag="a" href="/") TOP
 
     .section
-      HistogramNaviButtons(:config="config")
+      SwarsHistogramNavigation(:config="config")
       .columns.is-unselectable
         .column.is-4.mt-3
           CustomChart(:params="config.custom_chart_params")
@@ -21,8 +21,8 @@ client-only
             )
             b-table-column(v-slot="{row}" field="grade.priority"  label="段級" sortable) {{row.grade.key}}
             b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{float_to_perc(row.ratio, 2)}} %
-            b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable) {{number_floor(row.deviation_score)}}
-            b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable :visible="development_p || !!$route.query.debug") {{row.count}}
+            b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable) {{row.count}}
+            //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable) {{number_floor(row.deviation_score)}}
 
           pre(title="DEBUG" v-if="development_p || !!$route.query.debug") {{config}}
 </template>
