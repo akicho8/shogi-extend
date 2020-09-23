@@ -75,10 +75,16 @@ module Swars
             if params[:time_limit] <= (Time.current - t)
               break
             end
-            begin
-              g.each(&:destroy)
-            rescue ActiveRecord::Deadlocked => error
-              Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, error])
+            g.each do |e|
+              if e.memberships.any? { |e| e.grade.key == "十段" }
+                next
+              end
+
+              begin
+                e.destroy
+              rescue ActiveRecord::Deadlocked => error
+                Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, error])
+              end
             end
           end
         end
