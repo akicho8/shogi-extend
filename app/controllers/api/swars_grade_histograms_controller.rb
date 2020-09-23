@@ -3,7 +3,7 @@ module Api
   class SwarsGradeHistogramsController < ::Api::ApplicationController
     # Swars::Membership.where(id: Swars::Membership.order(id: :desc).limit(5000).pluck(:id)).group(:grade_id).count
     # で 15ms なので 20000 ぐらいまで一瞬
-    DEFAULT_LIMIT = 1000
+    DEFAULT_LIMIT = 5000
 
     def show
       render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hour : 0) {
@@ -61,11 +61,11 @@ module Api
     def custom_chart_params
       {
         data: {
-          labels: records.collect { |e| e[:grade]["key"][0] },
+          labels: records.reverse.collect { |e| e[:grade]["key"][0] },
           datasets: [
             {
               label: nil,
-              data: records.collect { |e| e[:ratio] },
+              data: records.reverse.collect { |e| e[:ratio] },
             },
           ],
         },

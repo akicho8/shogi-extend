@@ -1,7 +1,7 @@
 module Api
   # http://0.0.0.0:3000/api/swars_histogram.json
   class SwarsHistogramsController < ::Api::ApplicationController
-    DEFAULT_LIMIT = 1000
+    DEFAULT_LIMIT = 5000
 
     def show
       render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hours : 0) {
