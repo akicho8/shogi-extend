@@ -137,5 +137,41 @@ class ServiceInfo
         # "アヒル戦法の誰得問題集があります",
       ],
     },
+    {
+      display_p: true,
+      link_path: UrlProxy.wrap("/swars/professional"),
+      title: "将棋ウォーズ十段の成績",
+      image_source: "ogp/swars-professional.png",
+      description: "プロとの対局の棋譜を探したいときに使えるかもしれない",
+      feature_items: [
+        "なぜか電脳少女シロ(SiroChannel)の成績もある",
+        "名前タップで検索できる",
+        "他とくになし",
+      ],
+    },
+    {
+      display_p: true,
+      link_path: UrlProxy.wrap("/swars/top-runner"),
+      title: "将棋ウォーズ急上昇プレイヤー",
+      image_source: "ogp/swars-top-runner.png",
+      description: "勢いのあるプレイヤーがわかる",
+      feature_items: [
+        "棋士団戦の期間は幽霊団員も出てきてしまう",
+        "名前タップで検索できる",
+        "他とくになし",
+      ],
+    },
+    {
+      display_p: true,
+      link_path: UrlProxy.wrap("/swars/histograms/attack"),
+      title: "将棋ウォーズ戦法ヒストグラム",
+      image_source: "ogp/swars-histograms-attack.png",
+      description: "人気のある戦法の傾向がわかる",
+      feature_items: [
+        "全体だと変動しなくておもしろくないので最近のだけ出してる",
+        "囲いの分布もある",
+        "段級位の分布もある",
+      ],
+    },
   ]
 end
