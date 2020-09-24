@@ -29,6 +29,9 @@ window.Vue = Vue
 import Vuex from "vuex"
 Vue.use(Vuex)                   // これは一箇所だけで実行すること。shogi-player 側で実行すると干渉する
 
+import VueRouter from "vue-router"
+Vue.use(VueRouter)
+
 import VueGtag from "vue-gtag"
 Vue.use(VueGtag, {
   config: {
@@ -111,6 +114,8 @@ import membership_medal                from "components/membership_medal.vue"
 import win_lose_circle                 from "win_lose_circle.vue"
 
 Vue.mixin({
+  router: new VueRouter({mode: "history"}),
+
   mixins: [
     vue_mixins,
   ],
