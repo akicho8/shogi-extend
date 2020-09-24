@@ -40,13 +40,26 @@
 
 require "open-uri"
 
-module FrontendScript
-  class ProfessionalScript < ::FrontendScript::Base
-    self.script_name = "将棋ウォーズ十段の成績"
+module Api
+  class ProfessionalsController < ::Api::ApplicationController
+    # http://0.0.0.0:3000/api/professional.json
+    def show
+      render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.days : 0) {
+        rows
+      }
+      # rows.collect do |e|
+      #   {}.tap do |row|
+      #     row["名前"] = h.link_to(e[:user][:name], [:swars, :battles, query: e[:user][:key]])
+      #     row["勝敗"] = h.tag.span(e[:judge], :class => "ox_sequense is_line_break_on")
+      #   end
+      # end
+    end
 
-    def script_body
-      ogp_params_set
+    def cache_key
+      self.class.name
+    end
 
+    def rows
       user_infos_hash = user_infos_fetch.inject({}) { |a, e| a.merge(e[:key].downcase => e) }
 
       grade = Swars::Grade.find_by!(key: "十段")
@@ -56,7 +69,7 @@ module FrontendScript
         users = Swars::User.all
       end
 
-      rows = users.collect do |user|
+      users.collect do |user|
         {}.tap do |row|
           name = user.key
           if user_info = user_infos_hash[user.key.downcase]
@@ -66,17 +79,6 @@ module FrontendScript
           end
           row[:user] = { name: name, key: user.key }
           row[:judge] = user.memberships.joins(:battle).order(Swars::Battle.arel_table[:battled_at]).collect { |e| e.judge_info.ox_mark }.join
-        end
-      end
-
-      if request.format.json?
-        return rows
-      end
-
-      rows.collect do |e|
-        {}.tap do |row|
-          row["名前"] = h.link_to(e[:user][:name], [:swars, :battles, query: e[:user][:key]])
-          row["勝敗"] = h.tag.span(e[:judge], :class => "ox_sequense is_line_break_on")
         end
       end
     end

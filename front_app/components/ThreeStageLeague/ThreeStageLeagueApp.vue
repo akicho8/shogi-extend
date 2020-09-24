@@ -33,7 +33,7 @@
               ThreeStageLeagueMark(:record="row")
 
           b-table-column(v-slot="{row}" field="win"        label="勝"   numeric sortable) {{row.win}}
-          b-table-column.ox_sequense.is_line_break_on(v-slot="{row}" field="win"        label="勝敗" sortable)
+          b-table-column(v-slot="{row}" field="win"        label="勝敗" sortable cell-class="ox_sequense is_line_break_on")
             | {{row.ox_human}}
 
           b-table-column(v-slot="{row}" field="seat_count" label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
