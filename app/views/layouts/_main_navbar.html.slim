@@ -14,7 +14,8 @@ nav#main_nav.navbar.is-primary.is_screen_only
       = link_to("CPU対戦", UrlProxy.wrap("/cpu-battle"), class: "navbar-item")
       = link_to("共有将棋盤", UrlProxy.wrap("/share-board"), class: "navbar-item")
       = link_to("詰将棋RTA", UrlProxy.wrap("/stopwatch"), class: "navbar-item")
-      - if Rails.env.development? || Rails.env.staging? || true
+
+      - if Rails.env.development? || Rails.env.test?
         .navbar-item.has-dropdown.is-hoverable
           span.navbar-link
             | スクリプト
@@ -25,11 +26,13 @@ nav#main_nav.navbar.is-primary.is_screen_only
         span.navbar-link
           | もっと見る
         .navbar-dropdown.is-boxed
-          = link_to("対局時計", UrlProxy.wrap("/vs-clock"), class: "navbar-item")
-          = link_to("将棋ウォーズヒストグラム", UrlProxy.wrap("/swars/histograms/attack"), class: "navbar-item")
+          = link_to("将棋ウォーズ急上昇者", UrlProxy.wrap("/swars/top-runner"), class: "navbar-item")
+          = link_to("将棋ウォーズ十段の成績", UrlProxy.wrap("/swars/top-runner"), class: "navbar-item")
+          = link_to("将棋ウォーズ戦法ヒストグラム", UrlProxy.wrap("/swars/histograms/attack"), class: "navbar-item")
           = link_to("将棋ウォーズ段級ヒストグラム", UrlProxy.wrap("/swars/histograms/grade"), class: "navbar-item")
           = link_to("奨励会三段リーグ成績早見表", UrlProxy.wrap("/three-stage-leagues"), class: "navbar-item")
           = link_to("奨励会三段リーグ個人成績", UrlProxy.wrap("/three-stage-league-players"), class: "navbar-item")
+          = link_to("対局時計", UrlProxy.wrap("/vs-clock"), class: "navbar-item")
           = link_to("野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
           = link_to("野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
           - if Rails.env.development? || Rails.env.test?
