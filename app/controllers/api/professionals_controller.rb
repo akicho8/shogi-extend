@@ -38,21 +38,11 @@
 # | 斎藤明日斗 <Asuto Saito>     |      311 | 1998年07月17日 | 神奈川県川崎市   | 宮田利男八段           | -                                | Saito_Asuto      |
 # |-------------------------------+----------+----------------+------------------+------------------------+----------------------------------+------------------|
 
-require "open-uri"
-
 module Api
   class ProfessionalsController < ::Api::ApplicationController
     # http://0.0.0.0:3000/api/professional.json
     def show
-      render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.days : 0) {
-        rows
-      }
-      # rows.collect do |e|
-      #   {}.tap do |row|
-      #     row["名前"] = h.link_to(e[:user][:name], [:swars, :battles, query: e[:user][:key]])
-      #     row["勝敗"] = h.tag.span(e[:judge], :class => "ox_sequense is_line_break_on")
-      #   end
-      # end
+      render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.days : 0) { rows }
     end
 
     def cache_key
@@ -63,13 +53,18 @@ module Api
       user_infos_hash = user_infos_fetch.inject({}) { |a, e| a.merge(e[:key].downcase => e) }
 
       grade = Swars::Grade.find_by!(key: "十段")
-      users = Swars::User.where(grade: grade).order(created_at: :desc).includes(:memberships).joins(:memberships) # joins を取るとデータがないデータも表示できる
 
       if Rails.env.development? || Rails.env.test?
-        users = Swars::User.all
+        grade = Swars::Grade.all
       end
 
-      users.collect do |user|
+      s = Swars::User.all
+      s = s.where(grade: grade)
+      s = s.includes(:memberships).joins(:memberships) # joins を取るとデータがないデータも表示できる
+      s = s.order(id: :desc)
+      users = s
+
+      users = users.collect do |user|
         {}.tap do |row|
           name = user.key
           if user_info = user_infos_hash[user.key.downcase]
@@ -78,15 +73,21 @@ module Api
             end
           end
           row[:user] = { name: name, key: user.key }
-          row[:judge] = user.memberships.joins(:battle).order(Swars::Battle.arel_table[:battled_at]).collect { |e| e.judge_info.ox_mark }.join
+
+          s = user.memberships.all
+          s = s.joins(:battle).order(Swars::Battle.arel_table[:battled_at])
+          row[:judge] = s.collect { |e| e.judge_info.ox_mark }.join
         end
       end
+
+      users
     end
 
     def user_infos_fetch
       rows = []
       256.times.with_index(1) do |_, page|
-        html = html_fetch(page) # 404 にはならず空データが返ってくる
+        url = "https://shogiwars.heroz.jp/premium/coach_list?page=#{page}"
+        html = html_fetch(url) # 404 にはならず空データが返ってくる
         doc = Nokogiri::HTML(html)
         list = doc.search("#coach_list li")
         if list.empty?
@@ -104,13 +105,6 @@ module Api
         end
       end
       rows
-    end
-
-    def html_fetch(page)
-      url = "https://shogiwars.heroz.jp/premium/coach_list?page=#{page}"
-      Rails.cache.fetch(url, :expires_in => 1.days) do
-        URI(url).read.toutf8
-      end
     end
   end
 end

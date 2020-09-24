@@ -21,6 +21,7 @@ module ToolBelt
           link_to_eval("find(0)", redirect_to: :root)                         { "User.find(0)"                                                 },
           link_to_eval("flash確認", redirect_to: h.root_path(debug: "true"))  { ""                                                                        },
           link_to_eval("Swars::Battle.destroy_all")                           { "Swars::Battle.destroy_all"                                               },
+          link_to_eval("lovelive 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'lovelive', run_remote: true)"      },
           link_to_eval("itoshinTV 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'itoshinTV', run_remote: true)"      },
           link_to_eval("misaka_level5 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'misaka_level5', run_remote: true)"      },
           link_to_eval("aika0603 取り込み", redirect_to: [:swars, :battles]) { "Swars::Battle.user_import(user_key: 'aika0603', run_remote: true)"      },

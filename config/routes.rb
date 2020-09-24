@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     resource :swars_grade_histogram, only: [:show]
     resource :swars_histogram, only: [:show]
     resource :professional, only: [:show]
+    resource :top_runner, only: [:show]
   end
 
   ################################################################################ admin
