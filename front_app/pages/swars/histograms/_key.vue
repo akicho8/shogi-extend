@@ -4,7 +4,7 @@ client-only
     b-navbar(type="is-primary")
       template(slot="brand")
         b-navbar-item.has-text-weight-bold(tag="div")
-          | 将棋ウォーズ{{config.tactic.name}}ヒストグラム
+          | 将棋ウォーズ{{config.tactic.name}}分布
       template(slot="end")
         b-navbar-item(tag="a" href="/") TOP
 
@@ -39,9 +39,9 @@ export default {
   },
   head() {
     return {
-      title: `将棋ウォーズ${this.config.tactic.name}ヒストグラム`,
+      title: `将棋ウォーズ${this.config.tactic.name}分布`,
       meta: [
-        { hid: "og:title",       property: "og:title",       content: `将棋ウォーズ${this.config.tactic.name}ヒストグラム` },
+        { hid: "og:title",       property: "og:title",       content: `将棋ウォーズ${this.config.tactic.name}分布` },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                 },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-histograms-attack.png" },
         { hid: "og:description", property: "og:description", content: ""},

@@ -3,7 +3,7 @@ client-only
   .swars-professional
     b-navbar(type="is-primary")
       template(slot="brand")
-        b-navbar-item.has-text-weight-bold(tag="div") 将棋ウォーズ急上昇プレイヤー
+        b-navbar-item.has-text-weight-bold(tag="div") 将棋ウォーズイベント上位プレイヤー
       template(slot="end")
         b-navbar-item(tag="a" href="/") TOP
     .section
@@ -27,9 +27,9 @@ export default {
   name: "swars-professional",
   head() {
     return {
-      title: "将棋ウォーズ急上昇プレイヤー",
+      title: "将棋ウォーズイベント上位プレイヤー",
       meta: [
-        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ急上昇プレイヤー"                                },
+        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズイベント上位プレイヤー"                                },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                 },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-top-runner.png" },
         { hid: "og:description", property: "og:description", content: ""                                                    },

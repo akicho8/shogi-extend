@@ -26,10 +26,10 @@ nav#main_nav.navbar.is-primary.is_screen_only
         span.navbar-link
           | もっと見る
         .navbar-dropdown.is-boxed
-          = link_to("将棋ウォーズ急上昇プレイヤー", UrlProxy.wrap("/swars/top-runner"), class: "navbar-item")
+          = link_to("将棋ウォーズイベント上位プレイヤー", UrlProxy.wrap("/swars/top-runner"), class: "navbar-item")
           = link_to("将棋ウォーズ十段の成績", UrlProxy.wrap("/swars/professional"), class: "navbar-item")
-          = link_to("将棋ウォーズ戦法ヒストグラム", UrlProxy.wrap("/swars/histograms/attack"), class: "navbar-item")
-          = link_to("将棋ウォーズ段級ヒストグラム", UrlProxy.wrap("/swars/histograms/grade"), class: "navbar-item")
+          = link_to("将棋ウォーズ戦法分布", UrlProxy.wrap("/swars/histograms/attack"), class: "navbar-item")
+          = link_to("将棋ウォーズ段級分布", UrlProxy.wrap("/swars/histograms/grade"), class: "navbar-item")
           = link_to("奨励会三段リーグ成績早見表", UrlProxy.wrap("/three-stage-leagues"), class: "navbar-item")
           = link_to("奨励会三段リーグ個人成績", UrlProxy.wrap("/three-stage-league-players"), class: "navbar-item")
           = link_to("対局時計", UrlProxy.wrap("/vs-clock"), class: "navbar-item")

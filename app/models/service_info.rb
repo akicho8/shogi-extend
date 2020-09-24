@@ -152,7 +152,7 @@ class ServiceInfo
     {
       display_p: true,
       link_path: UrlProxy.wrap("/swars/top-runner"),
-      title: "将棋ウォーズ急上昇プレイヤー",
+      title: "将棋ウォーズイベント上位プレイヤー",
       image_source: "ogp/swars-top-runner.png",
       description: "勢いのあるプレイヤーがわかる",
       feature_items: [
@@ -164,7 +164,7 @@ class ServiceInfo
     {
       display_p: true,
       link_path: UrlProxy.wrap("/swars/histograms/attack"),
-      title: "将棋ウォーズ戦法ヒストグラム",
+      title: "将棋ウォーズ戦法分布",
       image_source: "ogp/swars-histograms-attack.png",
       description: "人気のある戦法の傾向がわかる",
       feature_items: [
