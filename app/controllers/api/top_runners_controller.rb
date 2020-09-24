@@ -1,6 +1,6 @@
 module Api
   class TopRunnersController < ::Api::ApplicationController
-    DEFAULT_LIMIT = 50
+    DEFAULT_LIMIT = 200
 
     # http://0.0.0.0:3000/api/top_runner.json
     def show
@@ -10,7 +10,7 @@ module Api
     private
 
     def cache_key
-      self.class.name
+      [self.class.name, current_max].join("/")
     end
 
     def records
