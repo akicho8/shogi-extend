@@ -31,6 +31,7 @@
 # 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
 #--------------------------------------------------------------------------------
 
+# http://0.0.0.0:3000/w.json?query=devuser1
 module Swars
   class BattlesController < ApplicationController
     include ModulableCrud::All

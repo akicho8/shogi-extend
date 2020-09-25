@@ -48,7 +48,8 @@ module Swars
       end
 
       if request.format.json?
-        render json: js_current_records.to_json # 【重要】 明示的に to_json することで ActiveModelSerializer での変換の試みを回避する
+        # render json: js_current_records.to_json # 【重要】 明示的に to_json することで ActiveModelSerializer での変換の試みを回避する
+        render json: js_index_options.as_json
         return
       end
 

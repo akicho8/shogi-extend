@@ -34,6 +34,7 @@ export default {
       CSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
       production_items: [
         { title: 'Home',                               to: { name: 'index'                           }, },
+        { title: '将棋ウォーズ棋譜検索',               to: { name: 'swars-search',                   }, },
         { title: '将棋ウォーズイベント上位プレイヤー', to: { name: 'swars-top-runner',               }, },
         { title: '将棋ウォーズ十段の成績',             to: { name: 'swars-professional',             }, },
         { title: '将棋ウォーズ分布',                   to: { name: 'swars-histograms-key', params: {key: 'attack'}, }, },

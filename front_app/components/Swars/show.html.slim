@@ -1,0 +1,6 @@
+- content_for :head do
+  = javascript_pack_tag("swars_battle_show")
+  javascript:
+    document.addEventListener('DOMContentLoaded', () => { new SwarsBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
+
+= render partial: "free_battles/show_shared"
