@@ -11,7 +11,9 @@ module ShareBoardMod
     def same_body_fetch(params)
       body = params[:body] || "position startpos"
       if DOUBLE_ESCAPE_MEASURES
-        body = CGI.unescape(body) # "+" → " "
+        if body.start_with?("position+")
+          body = CGI.unescape(body) # "+" → " "
+        end
       end
       body = body.sub(Bioshogi::Sfen::STARTPOS_EXPANSION, "startpos")
       sfen_hash = Digest::MD5.hexdigest(body)
