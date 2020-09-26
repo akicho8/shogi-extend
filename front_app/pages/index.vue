@@ -34,7 +34,8 @@ export default {
       CSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
       production_items: [
         { title: 'Home',                               to: { name: 'index'                           }, },
-        { title: '将棋ウォーズプレイヤー情報',         to: { name: 'swars-users-key', params: {key: 'devuser1'}, }, },
+        { title: '将棋ウォーズバトル詳細'    ,         to: { name: 'swars-battles-key', params: {key: 'devuser1-Yamada_Taro-20200101_123401'}, }, },
+        { title: '将棋ウォーズプレイヤー情報',         to: { name: 'swars-users-key',   params: {key: 'devuser1'}, }, },
         { title: '将棋ウォーズ棋譜検索',               to: { name: 'swars-search',                   }, },
         { title: '将棋ウォーズイベント上位プレイヤー', to: { name: 'swars-top-runner',               }, },
         { title: '将棋ウォーズ十段の成績',             to: { name: 'swars-professional',             }, },

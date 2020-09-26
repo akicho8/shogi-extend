@@ -7,8 +7,12 @@ export default {
       location.href = this.$config.MY_SITE_URL + `/login?${params}`
     },
 
-    user_info_show_modal2(user_key) {
-      this.$router.push({name: "swars-users-key", params: {key: user_key}})
+    user_info_show_modal2(key) {
+      this.$router.push({name: "swars-users-key", params: {key: key}})
+    },
+
+    sp_show_modal2(key, options = {}) {
+      this.$router.push({name: "swars-battles-key", params: {key: key}, query: options})
     },
   },
 }

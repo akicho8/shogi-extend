@@ -12,6 +12,7 @@
       b-navbar-item(tag="a" :href="config.league.source_url" target="_blank") 本家
       b-navbar-item(tag="a" href="/") TOP
 
+      
   .section.pt-5
     .columns
       .column.pt-0
