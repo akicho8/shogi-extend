@@ -43,8 +43,8 @@ module Tsl
       validates :seat_count
     end
 
-    after_create do
-      if age
+    after_save do
+      if saved_change_to_attribute?(:age) && age
         if !user.first_age || age < user.first_age
           user.first_age = age
         end
@@ -53,11 +53,11 @@ module Tsl
         end
       end
 
-      if level_up_p
+      if saved_change_to_attribute?(:level_up_p) && level_up_p
         user.level_up_generation = league.generation
       end
 
-      if runner_up_p
+      if saved_change_to_attribute?(:runner_up_p) && runner_up_p
         user.runner_up_count += 1
       end
 
