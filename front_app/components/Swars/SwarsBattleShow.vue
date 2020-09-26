@@ -40,11 +40,8 @@
 
       .sp_show_switches.has-text-centered
         // 継盤
-        b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle" size="is-small")
-          b-icon(icon="source-branch" size="is-small")
-        // 時間
-        b-switch(v-model="time_chart_p" size="is-small")
-          b-icon(icon="chart-timeline-variant" size="is-small")
+        b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
+          b-icon(icon="source-branch")
 
       .buttons.is-centered
         PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
@@ -56,7 +53,7 @@
 
     .column
       SwarsBattleShowTimeChart(
-        v-if="time_chart_p && time_chart_params"
+        v-if="record && time_chart_params"
         :record="record"
         :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
@@ -102,7 +99,7 @@ export default {
     }
   },
 
-  async fetch() {
+  fetch() {
     // alert("fetch")
     // alert(this.user_key)
     // console.log(this)
@@ -115,11 +112,17 @@ export default {
     // http://0.0.0.0:4000/swars/battles/devuser1-Yamada_Taro-20200101_123401
     // const record = await $axios.$get(`/w/${params.key}.json`, {params: {ogp_only: true, basic_fetch: true, ...query}})
 
-    this.record = await this.$axios.$get(`/w/${this.user_key}.json`, {params: {basic_fetch: true}})
+    // 待たないデータ
+    this.$axios.$get(`/w/${this.user_key}.json`, {params: {time_chart_fetch: true}}).then(e => {
+      this.time_chart_params = e.time_chart_params
+    })
 
-    this.record_setup()
-    this.chart_show_auto()
-    this.slider_focus_delay()
+    // 重要なのはこっちなので待つ
+    return this.$axios.$get(`/w/${this.user_key}.json`, {params: {basic_fetch: true}}).then(e => {
+      this.record = e
+      this.record_setup()
+      this.slider_focus_delay()
+    })
   },
 
   // beforeCreate() {
@@ -141,20 +144,26 @@ export default {
     // permalink_url() {
     //   // window.history.replaceState("", null, this.permalink_url)
     // },
-    time_chart_p: async function() {
-      if (!this.$fetchState.pending) {
-        if (this.time_chart_p) {
-          if (!this.time_chart_params) {
-            // http://0.0.0.0:3000/w/devuser1-Yamada_Taro-20200101_123401.json?time_chart_fetch=1
-            const retval = await this.$axios.$get(`/w/${this.user_key}.json`, {params: {time_chart_fetch: true}})
-            this.time_chart_params = retval.time_chart_params
-          }
-        }
-      }
-    }
+    // time_chart_p: async function() {
+    //   if (!this.$fetchState.pending) {
+    //     if (this.time_chart_p) {
+    //       if (!this.time_chart_params) {
+    //         // http://0.0.0.0:3000/w/devuser1-Yamada_Taro-20200101_123401.json?time_chart_fetch=1
+    //         const retval = await this.$axios.$get(`/w/${this.user_key}.json`, {params: {time_chart_fetch: true}})
+    //         this.time_chart_params = retval.time_chart_params
+    //       }
+    //     }
+    //   }
+    // }
   },
 
   methods: {
+    // time_chart_data_fetch() {
+    //   // http://0.0.0.0:3000/w/devuser1-Yamada_Taro-20200101_123401.json?time_chart_fetch=1
+    //   const retval = await this.$axios.$get(`/w/${this.user_key}.json`, {params: {time_chart_fetch: true}})
+    //   this.time_chart_params = retval.time_chart_params
+    // },
+
     delete_click_handle() {
       this.$emit("close")
       window.history.back()

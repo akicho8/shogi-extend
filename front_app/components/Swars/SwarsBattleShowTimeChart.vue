@@ -1,8 +1,7 @@
 <template lang="pug">
 .SwarsBattleShowTimeChart.columns.is-centered.is-unselectable
-  .column.is-half
-    .canvas_holder
-      canvas#main_canvas(ref="main_canvas")
+  .column
+    canvas#main_canvas(ref="main_canvas")
     .bottom_buttons.has-text-centered
       b-switch(v-model="zoom_p" size="is-small")
         b-icon(icon="magnify-plus-outline" size="is-small")
