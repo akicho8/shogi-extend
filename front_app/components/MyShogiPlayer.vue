@@ -1,9 +1,7 @@
 <template lang="pug">
 ShogiPlayer(
-  v-bind="$attrs"
+  v-bind="{...default_params, ...$attrs}"
   v-on="$listeners"
-  :sound_effect="true"
-  :volume="0.5"
   ref="pure_sp"
   )
 </template>
@@ -12,8 +10,17 @@ ShogiPlayer(
 import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
 
 export default {
+  inheritAttrs: false,
   components: {
     ShogiPlayer,
-  }
+  },
+  computed: {
+    default_params() {
+      return {
+        sound_effect: true,
+        volume: 0.5,
+      }
+    }
+  },
 }
 </script>

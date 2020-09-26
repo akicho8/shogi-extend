@@ -17,65 +17,62 @@
           p.control
             b-button.search_form_submit_button(@click="search_handle" class="is-info" icon-left="magnify")
 
-        //- template(v-if="fetched_count >= 1 && config.current_swars_user_key")
-        //-   .columns
-        //-     .column.search_bottom_controllers
-        //-       .is-flex
-        //-         template(v-if="config.current_swars_user_key")
-        //-           b-dropdown.search_index_dropdown_menu(position="is-bottom-right")
-        //-             b-button(slot="trigger" size="is-small" icon-left="menu") フィルタ
-        //-             b-dropdown-item(@click="query_search(`${config.current_swars_user_key} judge:win`)") 勝ち
-        //-             b-dropdown-item(@click="query_search(`${config.current_swars_user_key} judge:lose`)") 負け
-        //-             template(v-if="config.current_swars_user_key !== this.query")
-        //-               b-dropdown-item(separator)
-        //-               b-dropdown-item(@click="query_search(config.current_swars_user_key)") 解除
-        //-
-        //-         b-field.board_show_type_field
-        //-           b-radio-button(v-model="board_show_type" size="is-small" native-value="none") リスト
-        //-           b-radio-button(v-model="board_show_type" size="is-small" native-value="outbreak_turn") 仕掛け
-        //-           b-radio-button(v-model="board_show_type" size="is-small" native-value="last") 終局図
-        //-
-        //-         template(v-if="config.current_swars_user_key")
-        //-           b-button.player_info_show_button(@click="user_info_show_modal(config.current_swars_user_key)" icon-left="account" size="is-small" rounded) プレイヤー情報
+        .search_bottom_controllers.mt-5.is-flex(v-if="config.current_swars_user_key")
+          template(v-if="config.current_swars_user_key")
+            b-dropdown.search_index_dropdown_menu(position="is-bottom-right")
+              b-button(slot="trigger" size="is-small" icon-left="menu") フィルタ
+              b-dropdown-item(@click="query_search(`${config.current_swars_user_key} judge:win`)") 勝ち
+              b-dropdown-item(@click="query_search(`${config.current_swars_user_key} judge:lose`)") 負け
+              template(v-if="config.current_swars_user_key !== $route.query.query")
+                b-dropdown-item(separator)
+                b-dropdown-item(@click="query_search(config.current_swars_user_key)") 解除
 
-        //- .columns.is-multiline(v-show="board_show_type === 'outbreak_turn' || board_show_type === 'last'")
-        //-   template(v-for="e in records")
-        //-     / https://bulma.io/documentation/columns/responsiveness/
-        //-     / widescreen 1/5 (is-one-fifth-widescreen)
-        //-     / desktop    1/4 (is-one-quarter-desktop)
-        //-     / table      1/4 (is-one-quarter-tablet)
-        //-     .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered
-        //-       a.no-decoration(@click.stop.prevent="show_handle(e)")
-        //-         small.is_line_break_on.has-text-black-ter
-        //-           | {{e.memberships[1].user.key}} {{e.memberships[1].grade_info.name}}
-        //-         shogi_player(
-        //-           :run_mode="'view_mode'"
-        //-           :debug_mode="false"
-        //-           :start_turn="trick_start_turn_for(e)"
-        //-           :kifu_body="e.sfen_body"
-        //-           :theme="'simple'"
-        //-           :size="'x-small'"
-        //-           :sound_effect="false"
-        //-           :vlayout="true"
-        //-           :setting_button_show="false"
-        //-           :summary_show="false"
-        //-           :operation_disable="true"
-        //-           :overlay_navi="false"
-        //-           :flip="e.flip"
-        //-         )
-        //-         / :hidden_if_piece_stand_blank="board_show_type === 'outbreak_turn'"
-        //-         small.is_line_break_on.has-text-black-ter
-        //-           | {{e.memberships[0].user.key}} {{e.memberships[0].grade_info.name}}
+          b-field.board_show_type_field
+            b-radio-button(v-model="board_show_type" size="is-small" native-value="none") テーブル
+            b-radio-button(v-model="board_show_type" size="is-small" native-value="outbreak_turn") 仕掛け
+            b-radio-button(v-model="board_show_type" size="is-small" native-value="last") 終局図
+
+          template(v-if="config.current_swars_user_key")
+            b-button.player_info_show_button(@click="user_info_show_modal2(config.current_swars_user_key)" icon-left="account" size="is-small" rounded) プレイヤー情報
+
+        .columns.is-multiline.mt-4(v-show="board_show_type === 'outbreak_turn' || board_show_type === 'last'")
+          template(v-for="e in config.records")
+            // https://bulma.io/documentation/columns/responsiveness/
+            // widescreen 1/5 (is-one-fifth-widescreen)
+            // desktop    1/4 (is-one-quarter-desktop)
+            // table      1/4 (is-one-quarter-tablet)
+            .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered.px-0
+              a.no-decoration(@click.stop.prevent="show_handle(e)")
+                small.is_line_break_on.has-text-black-ter
+                  | {{e.memberships[1].user.key}} {{e.memberships[1].grade_info.name}}
+                MyShogiPlayer(
+                  :run_mode="'view_mode'"
+                  :debug_mode="false"
+                  :start_turn="trick_start_turn_for(e)"
+                  :kifu_body="e.sfen_body"
+                  :theme="'simple'"
+                  :size="'x-small'"
+                  :sound_effect="false"
+                  :vlayout="true"
+                  :setting_button_show="false"
+                  :summary_show="false"
+                  :operation_disable="true"
+                  :overlay_navi="false"
+                  :flip="e.flip"
+                )
+                // :hidden_if_piece_stand_blank="board_show_type === 'outbreak_turn'"
+                small.is_line_break_on.has-text-black-ter
+                  | {{e.memberships[0].user.key}} {{e.memberships[0].grade_info.name}}
 
         template(v-if="board_show_type === 'none'")
           template(v-if="records.length >= 1")
-            b-field.table_column_toggle_checkboxes(grouped group-multiline)
+            b-field.table_column_toggle_checkboxes.mt-3(grouped group-multiline)
               .control(v-for="(value, key, index) in table_columns_hash" :key="index")
                 b-checkbox(v-model="visible_hash[key]" size="is-small")
                   | {{value.label}}
 
-          b-table(:data="records")
-            b-table-column(v-slot="{row}" field="id" :label="ID" sortable numeric) {{row.id}}
+          //- b-table(:data="records")
+          //-   b-table-column(v-slot="{row}" field="id" :label="ID" sortable numeric) {{row.id}}
 
           b-table.is_battle_table(
             v-if="index_table_show_p"
@@ -102,13 +99,7 @@
 
             )
 
-            template(slot="empty")
-              template(v-if="fetched_count >= 1")
-                section.section.is-unselectable
-                  .content.has-text-grey.has-text-centered
-                    p
-                      b-icon(icon="emoticon-sad" size="is-large")
-                    p 見つかりませんでした
+            TableEmpty(slot="empty")
 
             b-table-column(v-slot="{row}" field="id" :label="table_columns_hash['id'].label" :visible="visible_hash.id" sortable numeric v-if="table_columns_hash.id")
               a(@click.stop :href="row.show_path") \#{{row.id}}
@@ -159,12 +150,29 @@
 
           template(v-if="development_p")
             .box.is_line_break_on
-              p
-                | page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} config.sort_order_default={{config.sort_order_default}}
-              p
-                | visible_only_keys: {{visible_only_keys}}
-              p
-                | permalink_url: {{permalink_url}}
+              p page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} config.sort_order_default={{config.sort_order_default}}
+              p visible_only_keys: {{visible_only_keys}}
+              p permalink_url: {{permalink_url}}
+
+          //- - if current_records
+          //-   - if Rails.env.development?
+          //-     .columns
+          //-       .column
+          //-         = paginate current_records
+          //-
+          //-   .columns.is-unselectable(v-if="fetched_count >= 1 && records.length >= 1 && board_show_type === 'none'")
+          //-     .column
+          //-       - args = params.to_unsafe_h.except(:latest_open_index)
+          //-       - list = [Kaminari.config.default_per_page, *AppConfig[:per_page_list], Kaminari.config.max_per_page]
+          //-       = list.collect { |per| link_to(" #{per} ", args.merge(per: per)) }.join(tag.span(" / ", :class => "has-text-grey-lighter")).html_safe
+          //-       span.has-text-grey-light.is-size-7
+          //-         | 件ごと表示
+
+        template(v-if="config.import_enable_p")
+          template(v-if="config.records.length >= 1")
+            .buttons.is-centered.are-small
+              b-button.usage_modal_open_handle(@click="usage_modal_open_handle" icon-left="lightbulb-on-outline") 便利な使い方
+              b-button.zip_dl_modal_open_handle(@click="zip_dl_modal_open_handle" icon-left="download") ZIP
 
   pre {{config}}
 </template>
@@ -191,7 +199,7 @@ export default {
   mixins: [
     support,
     battle_index_mod,
-    // usage_mod,
+    usage_mod,
   ],
   // components: {
   //   shogi_player,
@@ -283,8 +291,8 @@ export default {
 <style lang="sass">
 .SwarsSearchApp
   .section
-    &:first-child
-      margin-top: 20rem
+    &:first-of-type
+      padding-top: 1.8rem
 
   //////////////////////////////////////////////////////////////////////////////// 便利な使い方
 
@@ -295,15 +303,14 @@ export default {
   //////////////////////////////////////////////////////////////////////////////// 検索の下のところ
 
   .search_bottom_controllers
-    .is-flex
-      justify-content: space-around
-      +desktop
-        justify-content: flex-start
-      .search_index_dropdown_menu
-      .board_show_type_field
-        margin-left: 1rem
-      .player_info_show_button
-        margin-left: 1rem
+    justify-content: space-around
+    +desktop
+      justify-content: flex-start
+    .search_index_dropdown_menu
+    .board_show_type_field
+      margin-left: 1rem
+    .player_info_show_button
+      margin-left: 1rem
 
   //////////////////////////////////////////////////////////////////////////////// 検索ボタン
 
@@ -313,13 +320,11 @@ export default {
   //////////////////////////////////////////////////////////////////////////////// テーブル上のチェックボックス
 
   .table_column_toggle_checkboxes
-    &.field.is-grouped
-      +mobile
+    +mobile
+      .is-grouped
         justify-content: center
-        .control
-          margin-right: 0         // 「□ラベル(ここ)」の隙間
-          .control-label
-            padding-left: 0.18rem // 「□(ここ)ラベル」の隙間
+        .control-label
+          padding-left: 0.18rem // 「□(ここ)ラベル」の隙間
 
   //////////////////////////////////////////////////////////////////////////////// モバイル時の shogi-player の横スペース調整用
 
@@ -327,21 +332,4 @@ export default {
     +mobile
       padding-left: 0px
       padding-right: 0px
-
-  //////////////////////////////////////////////////////////////////////////////// ウォーズ検索右上ドロップダウンメニュー
-
-  // .search_index_dropdown_menu
-  //   position: absolute
-  //   top: 0rem
-  //   right: 0.5rem
-  //   z-index: 1
-
-  .b-table.is_battle_table
-    // .tags は is-inline-flex なので margin は padding 相当
-
-    // 勝った行は黄色にする
-    .table
-      // border-collapse: collapse
-      tr.is-win
-        // background-color: change_color($black, $lightness: 98.5%)
 </style>

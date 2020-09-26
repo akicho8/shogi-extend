@@ -15,7 +15,7 @@
 //
 //     computed: {
 //       ls_key() {
-//         return "my_app" // localStorage のキー ← デフォルトでは this.config.name なのでそのままでもよい
+//         return "my_app" // localStorage のキー ← デフォルトでは this.$options.name なのでそのままでもよい
 //       },
 //
 //       ls_data() {
@@ -42,6 +42,7 @@
 export default {
   created() {
     this.$_ls_load()
+    // FIXME: unwatch してない
     this.$watch(() => this.$_ls_watch_values, () => this.$_ls_save(), {deep: true}) // 変数がハッシュかもしれないので deep: true にしておく
   },
 
@@ -79,7 +80,7 @@ export default {
 
   computed: {
     ls_key() {
-      return this.config.name || alert("ls_key is not implemented")
+      return this.$options.name || alert("ls_key is not implemented")
     },
 
     ls_data() {

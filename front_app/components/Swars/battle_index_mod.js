@@ -144,7 +144,8 @@ export default {
     }
 
     if (this.config.current_swars_user_key) {
-      if (this.$route.query.user_info_show) {
+      // alert("リダイレクト")
+      if (this.$route.query.SwarsUserShow) {
         this.user_info_show_modal(this.config.current_swars_user_key)
       }
     }

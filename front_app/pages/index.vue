@@ -34,6 +34,7 @@ export default {
       CSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
       production_items: [
         { title: 'Home',                               to: { name: 'index'                           }, },
+        { title: '将棋ウォーズプレイヤー情報',         to: { name: 'swars-users-key', params: {key: 'devuser1'}, }, },
         { title: '将棋ウォーズ棋譜検索',               to: { name: 'swars-search',                   }, },
         { title: '将棋ウォーズイベント上位プレイヤー', to: { name: 'swars-top-runner',               }, },
         { title: '将棋ウォーズ十段の成績',             to: { name: 'swars-professional',             }, },
@@ -53,6 +54,7 @@ export default {
         { title: '符号の鬼',                           to: { name: 'xy'                              }, },
       ],
       experiment_items: [
+        { title: 'fetch 動作検証',             to: { name: 'experiment-fetch_test'        }, },
         { title: 'users/_id 動作検証',         to: { name: 'experiment-users-id'          }, },
         { title: 'DOCTOR',                     to: { name: 'experiment-doctor'            }, },
         { title: 'フルスクリーンAPIテスト',    to: { name: 'experiment-full_screen_api'   }, },
