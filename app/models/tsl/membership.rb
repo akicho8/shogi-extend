@@ -53,12 +53,13 @@ module Tsl
         end
       end
 
-      if saved_change_to_attribute?(:level_up_p) && level_up_p
-        user.level_up_generation = league.generation
-      end
-
-      if saved_change_to_attribute?(:runner_up_p) && runner_up_p
-        user.runner_up_count += 1
+      if saved_change_to_attribute?(:result_key) && result_key
+        if level_up_p
+          user.level_up_generation ||= league.generation
+        end
+        if runner_up_p
+          user.runner_up_count += 1
+        end
       end
 
       user.save!
