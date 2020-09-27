@@ -1,6 +1,6 @@
 <template lang="pug">
 .SwarsBattleShow(v-if="!$fetchState.pending")
-  .delete.is-large(@click="delete_click_handle")
+  .delete.is-large(@click="delete_click_handle" v-if="development_p")
 
   b-navbar(type="is-primary")
     template(slot="brand")
@@ -133,9 +133,9 @@ export default {
   },
   methods: {
     delete_click_handle() {
-      this.$emit("close")
-      window.history.back()
+      alert("not implemented")
     },
+
     // バトル情報がセットされたタイミングまたは変更されたタイミング
     record_setup() {
       // 開始手数を保存 (KENTOに渡すためでもある)
