@@ -55,7 +55,6 @@ export default {
     config: { type: Object, required: true },
   },
   mounted() {
-    this.sound_play("click")
     this.talk(this.config.league.generation)
   },
 }
