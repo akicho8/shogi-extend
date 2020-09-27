@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     delete_click_handle() {
-      alert("not implemented")
+      this.$router.go(-1)
     },
 
     // バトル情報がセットされたタイミングまたは変更されたタイミング

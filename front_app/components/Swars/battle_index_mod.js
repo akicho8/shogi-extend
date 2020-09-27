@@ -76,7 +76,7 @@ export default {
     // },
 
     show_handle(row) {
-      this.sp_show_modal2({record: row, board_show_type: this.board_show_type})
+      this.sp_show_modal2(row.key, {board_show_type: this.board_show_type})
     },
 
     sort_handle(column, order) {
