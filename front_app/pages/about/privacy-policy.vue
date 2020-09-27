@@ -1,7 +1,7 @@
 <template lang="pug">
-.privacy-policy
+.about-privacy-policy
   .content
-    h2 プライバシーポリシー
+    .title.is-4.has-text-centered-mobile プライバシーポリシー
     hr
     p
       | 個人情報保護法を遵守すると共に適切な取扱い及び保護に努めます
@@ -9,11 +9,11 @@
 
 <script>
 export default {
-  name: "privacy-policy",
+  name: "about-privacy-policy",
   layout: "about",
 }
 </script>
 
 <style lang="sass">
-.privacy-policy
+.about-privacy-policy
 </style>

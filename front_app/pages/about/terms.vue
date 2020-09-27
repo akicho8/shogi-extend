@@ -1,7 +1,7 @@
 <template lang="pug">
-.terms
+.about-terms
   .content
-    h2 サービス利用規約
+    .title.is-4.has-text-centered-mobile サービス利用規約
     hr
     p
       | 重いからって連打しちゃだめ
@@ -9,11 +9,11 @@
 
 <script>
 export default {
-  name: "terms",
+  name: "about-terms",
   layout: "about",
 }
 </script>
 
 <style lang="sass">
-.terms
+.about-terms
 </style>
