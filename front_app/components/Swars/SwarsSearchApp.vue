@@ -146,7 +146,7 @@
                 KentoButton(tag="a" @click.stop :href="kento_app_with_params_url(row)")
                 KifCopyButton(@click.stop.prevent="kif_clipboard_copy({kc_path: row.show_path})")
                 SpShowButton(@click="show_handle(row)")
-                PulldownMenu(:record="row" position="is-bottom-left" :turn_offset="trick_start_turn_for(row)")
+                PulldownMenu(:record="row" position="is-bottom-right" :turn_offset="trick_start_turn_for(row)")
 
           template(v-if="development_p")
             .box.is_line_break_on

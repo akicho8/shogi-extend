@@ -2,21 +2,56 @@
 .SwarsBattleShow(v-if="!$fetchState.pending")
   .delete.is-large(@click="delete_click_handle" v-if="development_p")
 
+  b-sidebar(type="is-light" fullheight overlay v-model="sidebar_open_p")
+    .mx-3.my-3
+      b-menu
+        b-menu-list(label="Menu")
+          b-menu-item(label="共有将棋盤にコピー" icon="link" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
+          b-menu-item(label="棋譜用紙(PDF)"      icon="pdf-box" :href="`${$config.MY_SITE_URL}${record.show_path}?formal_sheet=true`")
+
+        b-menu-list(label="export")
+          b-menu-item(icon="eye")
+            template(slot="label" slot-scope="props")
+              | 表示
+              b-icon.is-pulled-right(icon="props.expanded ? 'menu-down' : 'menu-up'")
+            b-menu-item(label="PNG"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.png?width=&flip=${new_flip}&turn=${turn_offset}`")
+            b-menu-item(label="BOD"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${turn_offset}`")
+            b-menu-item(label="KIF"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
+            b-menu-item(label="KI2"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
+            b-menu-item(label="CSA"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
+            b-menu-item(label="SFEN" icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
+
+          b-menu-item(icon="download")
+            template(slot="label" slot-scope="props")
+              | ダウンロード
+              b-icon.is-pulled-right(icon="props.expanded ? 'menu-down' : 'menu-up'")
+            b-menu-item(label="PNG"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&width=&flip=${new_flip}&turn=${turn_offset}`")
+            b-menu-item(label="BOD"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${turn_offset}`")
+            b-menu-item(label="KIF"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
+            b-menu-item(label="KI2"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
+            b-menu-item(label="CSA"  icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
+            b-menu-item(label="SFEN" icon="download" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
+
+        //- b-menu-list(label="Menu")
+        //-   b-menu-item(label="Info")
+        //-   b-menu-item(label="Info")
+        //-   b-menu-item(label="Info")
+
   b-navbar(type="is-primary")
     template(slot="brand")
-      b-navbar-item(@click="sidebar_open_p = !sidebar_open_p" v-if="development_p")
+      b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
         b-icon(icon="menu")
       b-navbar-item.has-text-weight-bold(tag="div") {{record.title}}
-    template(slot="end")
-      //- b-navbar-item
-      //-   PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-      //- b-navbar-item
-      //-   KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
-      //- b-navbar-item
-      //-   KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
-      //- b-navbar-item
-      //-   TweetButton(tag="a" :href="tweet_url" :turn="turn_offset" v-if="false")
-      b-navbar-item(tag="a" href="/") TOP
+    //- template(slot="end")
+    //-   //- b-navbar-item
+    //-   //-   PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+    //-   //- b-navbar-item
+    //-   //-   KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
+    //-   //- b-navbar-item
+    //-   //-   KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
+    //-   //- b-navbar-item
+    //-   //-   TweetButton(tag="a" :href="tweet_url" :turn="turn_offset" v-if="false")
+    //-   b-navbar-item(tag="a" href="/") TOP
 
   .columns
     .column
@@ -38,17 +73,6 @@
         ref="main_sp"
       )
 
-      b-sidebar(type="is-light" fullheight overlay v-model="sidebar_open_p")
-        b-menu
-          b-menu-list(label="Menu")
-            b-menu-item(label="Info")
-            b-menu-item(label="Info")
-            b-menu-item(label="Info")
-          b-menu-list(label="Menu")
-            b-menu-item(label="Info")
-            b-menu-item(label="Info")
-            b-menu-item(label="Info")
-
       .has-text-centered.mt-4
         b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
           b-icon(icon="source-branch")
@@ -57,9 +81,9 @@
         PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
         KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
         KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
-        TweetButton(tag="a" :href="tweet_url" :turn="turn_offset" v-if="false")
-        PngDlButton(tag="a" :href="png_dl_url" :turn="turn_offset")
-        PulldownMenu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
+        TweetButton(@click="tweet_share_open({url: permalink_url})") ツイート
+        //- PngDlButton(tag="a" :href="png_dl_url" :turn="turn_offset")
+        //- PulldownMenu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
 
     .column
       SwarsBattleShowTimeChart(
@@ -158,11 +182,11 @@ export default {
 
     // 「チャート表示→閉じる→別レコード開く」のときに別レコードの時間チャートを開く
     // 本当は SwarsBattleShowTimeChart の中で処理したかった
-    chart_show_auto() {
-      if (this.time_chart_p) {
-        this.$nextTick(() => { this.$refs.SwarsBattleShowTimeChart.chart_show() })
-      }
-    },
+    // chart_show_auto() {
+    //   if (this.time_chart_p) {
+    //     this.$nextTick(() => { this.$refs.SwarsBattleShowTimeChart.chart_show() })
+    //   }
+    // },
 
     // マウスで操作したときだけ呼べる
     run_mode_change_handle(v) {
@@ -221,26 +245,42 @@ export default {
     },
 
     permalink_url() {
-      const url = new URL(this.as_full_url(this.record.modal_on_index_path))
-      url.searchParams.set("turn", this.turn_offset)
-      url.searchParams.set("flip", this.new_flip)
-      return url.toString()
-    },
+      let url = null
+      if (this.development_p) {
+        url = this.$config.MY_OGP_URL
+      } else {
+        url = this.$config.MY_SITE_URL
+      }
 
-    // これはメソッドにする必要なかったけどまぁいい
-    png_dl_url() {
       const params = new URLSearchParams()
-      params.set("attachment", true)
       params.set("turn", this.turn_offset)
       params.set("flip", this.new_flip)
-      return `${this.record.show_path}.png?${params}`
+
+      return `${url}/swars/battles/${this.record.key}?${params}`
     },
+
+    // png_dl_url() {
+    //   const params = new URLSearchParams()
+    //   params.set("attachment", true)
+    //   params.set("turn", this.turn_offset)
+    //   params.set("flip", this.new_flip)
+    //   return `${this.$config.MY_SITE_URL}/w/${this.record.key}.png?${params}`
+    // },
 
     piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({path: this.record.show_path, sfen: this.record.sfen_body, turn: this.turn_offset, flip: this.new_flip, ...this.record.piyo_shogi_base_params}) },
     kento_app_with_params_url()      { return this.kento_full_url({sfen: this.record.sfen_body, turn: this.turn_offset, flip: this.new_flip}) },
 
     tweet_url() {
       return this.tweet_intent_url(this.permalink_url)
+    },
+
+    share_board_query() {
+      return {
+        title: this.record.description,
+        body:  this.record.sfen_body,
+        turn:  this.turn_offset,
+        image_view_point: this.new_flip ? "white" : "black",
+      }
     },
   },
 }
