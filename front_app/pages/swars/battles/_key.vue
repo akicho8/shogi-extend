@@ -4,7 +4,7 @@ client-only
     //- | {{$route.params.key}}
     SwarsBattleShow(:user_key="$route.params.key")
     //- SwarsBattleShow(:key="$route.params.key" :pulldown_menu_p="!!$route.query.pulldown_menu_p" :board_show_type="$route.query.board_show_type || 'none'")
-    pre {{info}}
+    //- pre {{info}}
 </template>
 
 <script>

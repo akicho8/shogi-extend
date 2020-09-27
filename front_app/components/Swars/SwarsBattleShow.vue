@@ -1,8 +1,6 @@
 <template lang="pug">
 .SwarsBattleShow(v-if="!$fetchState.pending")
-  //- pre {{$fetchState}}
-  // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
-  .delete.page_delete.is-large(@click="delete_click_handle")
+  .delete.is-large(@click="delete_click_handle")
 
   b-navbar(type="is-primary")
     template(slot="brand")
@@ -20,7 +18,7 @@
 
   .columns
     .column
-      MyShogiPlayer(
+      MyShogiPlayer.mt-5(
         :run_mode.sync="run_mode"
         :debug_mode="false"
         :start_turn="start_turn"
@@ -38,12 +36,11 @@
         ref="main_sp"
       )
 
-      .sp_show_switches.has-text-centered
-        // 継盤
+      .has-text-centered.mt-4
         b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
           b-icon(icon="source-branch")
 
-      .buttons.is-centered
+      .buttons.is-centered.mt-5
         PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
         KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
         KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
@@ -72,33 +69,28 @@
   //-     | record.turn_max: {{record.turn_max}}
   //-     | record.turn: {{record.turn}}
   //-     | new_flip: {{new_flip}}
-  //-
-
 </template>
 
 <script>
 export default {
   name: "SwarsBattleShow",
-
   props: {
     user_key:        { type: String, required: true, },
     pulldown_menu_p: { default: true,                }, // 右のプルダウンを表示する？
     board_show_type: { default: "none",              }, // どの局面から開始するか
   },
-
   data() {
     return {
-      record: null,
+      record: null,            // 属性がたくさん入ってる
 
-      run_mode: null,      // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
-      turn_offset: null,   // KENTOに渡すための手番
-      new_flip: null,      // 上下反転している？
+      run_mode: null,          // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
+      turn_offset: null,       // KENTOに渡すための手番
+      new_flip: null,          // 上下反転している？
 
       time_chart_p: false,     // 時間チャートを表示する？
       time_chart_params: null, // 時間チャートのデータ
     }
   },
-
   fetch() {
     // alert("fetch")
     // alert(this.user_key)
@@ -124,51 +116,11 @@ export default {
       this.slider_focus_delay()
     })
   },
-
-  // beforeCreate() {
-  //   window.history.pushState(this.$options.name, null, this.permalink_url)
-  // },
-
-  // beforeDestroy() {
-  // },
-
-  // created() {
-  //   alert(this.user_key)
-  // },
-
-  mounted() {
-    // this.$gtag.event("open", {event_category: "盤面"})
-  },
-
-  watch: {
-    // permalink_url() {
-    //   // window.history.replaceState("", null, this.permalink_url)
-    // },
-    // time_chart_p: async function() {
-    //   if (!this.$fetchState.pending) {
-    //     if (this.time_chart_p) {
-    //       if (!this.time_chart_params) {
-    //         // http://0.0.0.0:3000/w/devuser1-Yamada_Taro-20200101_123401.json?time_chart_fetch=1
-    //         const retval = await this.$axios.$get(`/w/${this.user_key}.json`, {params: {time_chart_fetch: true}})
-    //         this.time_chart_params = retval.time_chart_params
-    //       }
-    //     }
-    //   }
-    // }
-  },
-
   methods: {
-    // time_chart_data_fetch() {
-    //   // http://0.0.0.0:3000/w/devuser1-Yamada_Taro-20200101_123401.json?time_chart_fetch=1
-    //   const retval = await this.$axios.$get(`/w/${this.user_key}.json`, {params: {time_chart_fetch: true}})
-    //   this.time_chart_params = retval.time_chart_params
-    // },
-
     delete_click_handle() {
       this.$emit("close")
       window.history.back()
     },
-
     // バトル情報がセットされたタイミングまたは変更されたタイミング
     record_setup() {
       // 開始手数を保存 (KENTOに渡すためでもある)
@@ -281,35 +233,13 @@ export default {
 
 <style lang="sass">
 .SwarsBattleShow
-  .delete.page_delete
+  .delete
     position: absolute
-    top: 0.6rem
+    top: 3.9rem
     left: 0.6rem
     z-index: 2 // shogi-player の「○手目」のdivより下にあって押せない場合があるため指定する必要がある
-
-  .is-shogi-player-modal-card
-    width: auto
-
-  // 継盤
-  .sp_show_switches
-    margin-top: 0.5rem
-    .switch
-      margin: 0 1rem
-
-  // 説明分
-  .sp_show_desc
-    // margin-top: 0.8rem
-
-  // .title
-  //   border: 1px solid blue
-  //   margin-top: 0px
-
-  //////////////////////////////////////////////////////////////////////////////// フッターのボタンの配置(is-shogi-player-modal-card の方で指定あり)
-  // .modal-card-foot
-  //   justify-content: space-around
-
-  ////////////////////////////////////////////////////////////////////////////// _sp_show
-  // .modal_loading_content
-  //   width: 40vmin
-  //   height: 40vmin
+  .SwarsBattleShowTimeChart
+    margin: 2.75rem 2rem
+    +mobile
+      margin: 0
 </style>

@@ -1,17 +1,16 @@
 <template lang="pug">
-.SwarsBattleShowTimeChart.columns.is-centered.is-unselectable
-  .column
-    canvas#main_canvas(ref="main_canvas")
-    .bottom_buttons.has-text-centered
-      b-switch(v-model="zoom_p" size="is-small")
-        b-icon(icon="magnify-plus-outline" size="is-small")
+.SwarsBattleShowTimeChart
+  canvas#main_canvas.is-unselectable(ref="main_canvas")
+  .has-text-centered.mt-4
+    b-switch(v-model="zoom_p")
+      b-icon(icon="magnify-plus-outline")
 </template>
 
 <script>
 const CHART_CONFIG_DEFAULT = {
   type: "line",
   options: {
-    aspectRatio: 2.0, // 大きいほど横長方形になる
+    aspectRatio: 1.6, // 大きいほど横長方形になる
 
     // datasets 内に適応
     showLines: true,
@@ -335,7 +334,7 @@ import chart_mod from '../../../app/javascript/chart_mod.js'
 export default {
   name: "SwarsBattleShowTimeChart",
   mixins: [
-    // sp_show_time_chart_vline, // 縦線表示機能(コメントアウトでOFF)
+    sp_show_time_chart_vline, // 縦線表示機能(コメントアウトでOFF)
     chart_mod,
   ],
 
@@ -378,10 +377,10 @@ export default {
       if (v) {
         // 拡大
         const ticks = this._chart_config.options.scales.yAxes[0].ticks
-        const seconds = 10
+        const seconds = 5       // 範囲秒数
         ticks.min = -seconds
         ticks.max = +seconds
-        ticks.maxTicksLimit = 5
+        ticks.maxTicksLimit = 12
         ticks.stepSize = 1
       } else {
         // 元に戻す
@@ -555,6 +554,4 @@ export default {
 
 <style lang="sass">
 .SwarsBattleShowTimeChart
-  margin-top: 0.15rem
-  .bottom_buttons
 </style>
