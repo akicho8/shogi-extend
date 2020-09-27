@@ -1,7 +1,7 @@
 // 両方で読み込む
 
-@import "~bulma/sass/utilities/initial-variables"; // なくてもいいけど bulma の初期値を参照したいとき用
-@import "~bulma/sass/utilities/functions.sass"; // findColorInvert を使うため
+@import "~bulma/sass/utilities/initial-variables";      // なくてもいいけど bulma の初期値を参照したいとき用
+@import "~bulma/sass/utilities/functions.sass";         // findColorInvert を使うため
 
 $twitter : #55acee;
 $github  : #333;
@@ -32,8 +32,11 @@ $custom-colors: (
   "orange"  : ($orange  , $orange-invert  ),
 );
 
+// 主用カラー
 $primary: $cyan;
 
-$modal-background-background-color: bulmaRgba($black, 0.2); // オーバーレイのとときも背景を明るめにする
+// オーバーレイのとときも背景を明るめにする
+$modal-background-background-color: bulmaRgba($black, 0.2);
+
 // 両方で定義したいもの
 @import "../app/javascript/stylesheets/_my_mixins.sass"
