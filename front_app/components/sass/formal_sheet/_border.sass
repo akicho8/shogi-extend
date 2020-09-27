@@ -1,0 +1,59 @@
+.formal_sheet_workspace
+  .b_b
+    border-bottom: 1px solid black
+
+  .b_r
+    border-right: 1px solid black
+
+  .double_border
+    @extend %double_border
+
+  // 罫線調整
+  .tables_box
+    //////////////////////////////////////////////////////////////////////////////// 外枠
+    $bold: 2px solid black
+    $type: table                // frame にするとシンプルだけど padding によって隙間ができる。将来のバージョンだと frame でよい
+    
+    @if $type == frame
+      // 本来はこのように外枠太線を一発で引きたかった
+      border: $bold
+    @else
+      // .tables_box の方で border: 2px solid black すると(Google Chrome のみで)隙間ができるため table のまりに太線を引く
+      table
+        &.is_head1
+          border: $bold
+        &.is_head2, &.is_body
+          border-left: $bold
+          border-right: $bold
+          border-bottom: $bold
+        
+    //////////////////////////////////////////////////////////////////////////////// 指し手の部分はCSSだけで行う
+      
+    .is_body
+      thead
+        td
+          // 下は常に太線
+          border-bottom: $bold
+          // 最後のセルを除いて右線
+          &:not(:last-child)
+            @extend .b_r
+
+      tbody
+        // 最後の行を除いて下線
+        tr:not(:last-child)
+          td
+            @extend .b_b
+
+        // 右端を除いて右線
+        td:not(:last-child)
+          @extend .b_r
+
+        // 5行毎下に下太線
+        tr:not(:last-child):nth-child(5n)
+          td
+            border-bottom: $bold
+
+      // 5列毎の右太線(tbody, thead 共通)
+      tr
+        td:not(:last-child):nth-child(4n+4)
+          border-right: $bold

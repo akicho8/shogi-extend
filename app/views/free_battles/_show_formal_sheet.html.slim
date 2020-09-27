@@ -177,6 +177,7 @@ b-button.font_size_limit_off_button.is_screen_only(@click="font_size_limit_off_m
                   - decorator.outer_columns.times do |x|
                     - decorator.inner_fixed_columns.times do |left_or_right|
                       td
+                        / shogi_player のを利用
                         = Bioshogi::Location.fetch(left_or_right).hexagon_mark
                       td.td_spend_times
                         svg

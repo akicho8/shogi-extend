@@ -38,5 +38,5 @@ $primary: $cyan;
 // オーバーレイのとときも背景を明るめにする
 $modal-background-background-color: bulmaRgba($black, 0.2);
 
-// 両方で定義したいもの
+// styleResources と両方で定義したいもの
 @import "../app/javascript/stylesheets/_my_mixins.sass"

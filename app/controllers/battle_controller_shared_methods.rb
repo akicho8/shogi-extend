@@ -223,6 +223,13 @@ module BattleControllerSharedMethods
       access_log_create(current_record)
 
       if request.format.json?
+        if params[:formal_sheet]
+          render json: decorator.as_json
+          return
+        end
+      end
+
+      if request.format.json?
         if params[:basic_fetch]
           render json: js_record_for(current_record)
           return

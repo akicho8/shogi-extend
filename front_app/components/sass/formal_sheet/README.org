@@ -1,0 +1,21 @@
+* 構造
+
+.formal_sheet_workspace
+  .sheet                    ; 紙
+    .sheet_body             ; 余白を除いた部分
+      .tables_box_container ; レイアウト確認用
+        .tables_box         ; 本体
+          table.is_head1    ; 対局者など
+          table.is_head2    ; 手合割など
+          table.is_body     ; 指し手
+
+* 備考
+
+tables_box_container 内で縦中央に tables_box がくるようになっている
+なので .tables_box 内の高さだけを調整する
+高さの調整は主に指し手の行の高さで行う
+
+外枠は tables_box で行う予定だったが Google Chrome でのみ、右端に隙間ができるため 3 つの table の border で調整している
+
+Google Chrome でのみ起きる右端隙間問題は sheet の padding を調整すると治る値もある
+13.6mm だと治る。13mm だと隙間ができる

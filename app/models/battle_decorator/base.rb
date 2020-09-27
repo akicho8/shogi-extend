@@ -190,28 +190,64 @@ module BattleDecorator
       end
 
       {
-        desc_body: desc_body,
-        tournament_name: tournament_name,
-        rule_name: rule_name,
-        strategy_pack_for_all: strategy_pack_for_all,
-        battle_result_str: battle_result_str,
-        player_name_for_black: player_name_for(:black),
-        player_name_for_white: player_name_for(:white),
-        grade_name_for_black: grade_name_for(:black),
-        grade_name_for_white: grade_name_for(:white),
-        umpire_name: "",
-        begin_at_s: begin_at_s,
-        end_at_s: end_at_s,
-        preset_str: preset_str,
-        hold_time_str: hold_time_str,
-        total_seconds_str_for_black: total_seconds_str_for(:black),
-        total_seconds_str_for_white: total_seconds_str_for(:white),
-        hirukyuu: "",
-        yuukyuu: "",
+        :desc_body                   => desc_body,
+        :tournament_name             => tournament_name,
+        :rule_name                   => rule_name,
+        :strategy_pack_for_all       => strategy_pack_for_all,
+        :battle_result_str           => battle_result_str,
+        :player_name_for_black       => player_name_for(:black),
+        :player_name_for_white       => player_name_for(:white),
+        :grade_name_for_black        => grade_name_for(:black),
+        :grade_name_for_white        => grade_name_for(:white),
+        :umpire_name                 => "",
+        :begin_at_s                  => begin_at_s,
+        :end_at_s                    => end_at_s,
+        :preset_str                  => preset_str,
+        :hold_time_str               => hold_time_str,
+        :total_seconds_str_for_black => total_seconds_str_for(:black),
+        :total_seconds_str_for_white => total_seconds_str_for(:white),
+        :hirukyuu                    => "",
+        :yuukyuu                     => "",
+
+        ################################################################################
+
+        :workspace_class           => Rails.env,
+        :page_count                => page_count,
+        :location_kanji_char_black => location_kanji_char(:black),
+        :location_kanji_char_white => location_kanji_char(:white),
+        :outer_columns             => outer_columns,
+        :inner_fixed_columns       => inner_fixed_columns,
+        :cell_rows                 => cell_rows,
+        :html_title                => battle.title,
+
+        :cell_matrix               => cell_matrix,
       }
     end
 
     private
+
+    def cell_matrix
+      page_count.times.collect do |page_index|
+        cell_rows.times.collect do |y|
+          outer_columns.times.collect do |x|
+            inner_fixed_columns.times.collect do |left_or_right|
+              cell = {}
+              if params[:formal_sheet_blank]
+              else
+                if hand_info = hand_info(page_index, x, y, left_or_right)
+                  cell[:class] = hand_info[:class]
+                  cell[:value] = hand_info[:value]
+                  personal_clock = hand_info[:object].personal_clock
+                  cell[:used_seconds] = self.class.personal_clock_format(personal_clock.used_seconds)
+                  cell[:total_seconds] = self.class.personal_clock_format(personal_clock.total_seconds)
+                end
+              end
+              cell
+            end
+          end
+        end
+      end
+    end
 
     def total_seconds_for(location)
     end

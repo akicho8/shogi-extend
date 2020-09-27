@@ -1,0 +1,114 @@
+.formal_sheet_workspace
+  color: black
+
+  // 文字詰め
+  // https://qiita.com/ryosukemaehira/items/3af1196b9947dec79ed5
+  // https://ics.media/entry/14087/
+  font-feature-settings: "palt"
+
+  .sheet
+    .sheet_body
+      .tables_box
+        .editable
+          cursor: pointer
+          // スムーズに背景色を変更したいとき
+          // transition: background-color 0.2s 0.2s ease-in-out
+          &:hover
+            background-color: change_color($black, $alpha: 0.08)
+
+        table
+          user-select: none
+
+          td
+            text-align: center
+            vertical-align: middle
+            @extend %is_line_break_off
+            &:empty
+              &:after
+                content: "\03000"
+
+          .basic_label
+            @extend %is_slendar
+            padding: 0 0.2em
+
+          &.is_body
+            thead
+              tr
+
+            tbody
+              td.td_kifu_data
+                padding: 0 0.2em
+                width: 100% / (4 * 3)
+
+            .td_spend_times
+              @extend %cell_slash
+              height: 1em           // ？ これを入れないと上下にならない
+              .values
+                @extend %oppoite_pole_pos
+                padding: 0 0.25em
+
+          td
+            &.td_strategy_pack_body
+              .value
+                padding: 0 0.25em
+
+            &.td_total_seconds
+              padding: 0 0.3em
+
+            &.td_datetime_label
+              @extend %is_slendar
+              padding: 0 0.2em
+            &.td_datetime
+              @extend %is_slendar
+              padding: 0 0.5em
+
+            &.td_location_label
+              @extend %is_slendar
+              @extend %is_small1
+              padding: 0 0.5em
+
+            &.td_desc_label
+              width: 2em
+              @extend %is_small1
+              letter-spacing: 0.5em
+              .value
+                @extend %vertical_writing
+
+            &.td_desc_body
+              padding: 0.25em
+              @extend %is_line_break_on
+              text-align: left
+
+            &.td_players
+              padding: 0.5em 0
+              width: 2em
+              .value
+                @extend %text_just
+                @extend %vertical_writing
+
+            &.td_tournament_label
+              @extend %is_slendar
+              width: 2em
+              .value
+                @extend %is_small1
+                @extend %vertical_writing
+
+            &.td_playing_field_label
+              @extend %is_slendar
+              width: 2em
+              .value
+                @extend %is_small1
+                @extend %vertical_writing
+
+            &.td_player_name
+              text-align: left
+              padding: 0.25em
+
+            &.td_grade
+              @extend %is_slendar
+              padding: 0 0.75em
+
+            &.td_preset
+              padding: 0 0.5em
+            &.td_preset_body
+              padding: 0 0.5em
