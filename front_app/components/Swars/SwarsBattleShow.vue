@@ -173,7 +173,7 @@ export default {
 
     // SwarsBattleShowTimeChart でチャートをクリックしたときに変更する
     turn_set_from_chart(v) {
-      this.$refs.main_sp.api_board_turn_set(v) // 直接 shogi-player に設定
+      this.$refs.main_sp.$refs.pure_sp.api_board_turn_set(v) // 直接 shogi-player に設定
       this.turn_offset = v                      // KENTO用に設定 (shogi-playerからイベントが来ないため)
     },
 
