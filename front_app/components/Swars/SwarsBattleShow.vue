@@ -4,6 +4,8 @@
 
   b-navbar(type="is-primary")
     template(slot="brand")
+      b-navbar-item(@click="sidebar_open_p = !sidebar_open_p" v-if="development_p")
+        b-icon(icon="menu")
       b-navbar-item.has-text-weight-bold(tag="div") {{record.title}}
     template(slot="end")
       //- b-navbar-item
@@ -35,6 +37,17 @@
         @update:start_turn="real_turn_set"
         ref="main_sp"
       )
+
+      b-sidebar(type="is-light" fullheight overlay v-model="sidebar_open_p")
+        b-menu
+          b-menu-list(label="Menu")
+            b-menu-item(label="Info")
+            b-menu-item(label="Info")
+            b-menu-item(label="Info")
+          b-menu-list(label="Menu")
+            b-menu-item(label="Info")
+            b-menu-item(label="Info")
+            b-menu-item(label="Info")
 
       .has-text-centered.mt-4
         b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
@@ -89,6 +102,8 @@ export default {
 
       time_chart_p: false,     // 時間チャートを表示する？
       time_chart_params: null, // 時間チャートのデータ
+
+      sidebar_open_p: false,
     }
   },
   fetch() {
