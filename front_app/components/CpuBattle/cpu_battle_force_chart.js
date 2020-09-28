@@ -104,25 +104,26 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
+import chart_mod from '../../../app/javascript/chart_mod.js'
+
 export const cpu_battle_force_chart = {
+  mixins: [
+    chart_mod,
+  ],
+
   data() {
     return {
-      _chart_config: null,
       chart_value_max: null,
     }
   },
 
   created() {
-    this._chart_config = Object.assign({}, CHART_CONFIG_DEFAULT)
+    this.chart_setup(CHART_CONFIG_DEFAULT)
     this._chart_config_reset()
   },
 
   mounted() {
     this.chart_create()
-  },
-
-  beforeDestroy() {
-    this.chart_destroy()
   },
 
   methods: {
@@ -134,25 +135,12 @@ export const cpu_battle_force_chart = {
       this.chart_value_max = 0
     },
 
-    // 時間チャート表示
-    chart_create() {
-      this.chart_destroy()
-      window.chart_instance = new Chart(this.$refs.main_canvas, this._chart_config)
-    },
-
-    // 時間チャート更新
-    chart_update() {
-      if (window.chart_instance) {
-        window.chart_instance.update()
-      }
-    },
-
-    // 時間チャート非表示
-    chart_destroy() {
-      if (window.chart_instance) {
-        window.chart_instance.destroy()
-        window.chart_instance = null
-      }
+    _chart_config_reset() {
+      this._chart_config.__vm__ = this
+      this._chart_config.data.labels = []
+      this._chart_config.data.datasets[0].data = []
+      this._chart_config.options.scales.yAxes[0].ticks.suggestedMax = SUGGESTED_MAX_DEFAULT
+      this._chart_config.options.scales.yAxes[0].ticks.suggestedMin = -SUGGESTED_MAX_DEFAULT
     },
 
     // 戦力情報の反映
@@ -178,16 +166,6 @@ export const cpu_battle_force_chart = {
         }
         this.chart_update()
       }
-    },
-
-    // private
-
-    _chart_config_reset() {
-      this._chart_config.__vm__ = this
-      this._chart_config.data.labels = []
-      this._chart_config.data.datasets[0].data = []
-      this._chart_config.options.scales.yAxes[0].ticks.suggestedMax = SUGGESTED_MAX_DEFAULT
-      this._chart_config.options.scales.yAxes[0].ticks.suggestedMin = -SUGGESTED_MAX_DEFAULT
     },
   },
 }
