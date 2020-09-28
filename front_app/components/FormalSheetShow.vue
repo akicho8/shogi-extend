@@ -183,6 +183,7 @@ export default {
   head() {
     return {
       title: this.info.html_title,
+      titleTemplate: null,
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.info.html_title },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                },
