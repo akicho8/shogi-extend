@@ -180,6 +180,17 @@ export default {
       new_info: this.info,
     }
   },
+  head() {
+    return {
+      title: this.info.html_title,
+      meta: [
+        { hid: "og:title",       property: "og:title",       content: this.info.html_title },
+        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-formal-sheets-key.png" },
+        { hid: "og:description", property: "og:description", content: ""},
+      ],
+    }
+  },
   methods: {
     printer_handle() {
       window.print()
@@ -203,14 +214,13 @@ export default {
     },
   },
 
-  // mounted() {
-  //   if (this.$options.formal_sheet) {
-  //     setTimeout(function () {
-  //       // window.print()
-  //       // window.close()
-  //     }, 200)
-  //   }
-  // },
+  mounted() {
+    // 自動的に印刷する場合
+    setTimeout(() => {
+      // window.print()
+      // window.close()
+    }, 200)
+  },
 }
 </script>
 
