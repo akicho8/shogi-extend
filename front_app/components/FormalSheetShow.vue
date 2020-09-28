@@ -185,10 +185,10 @@ export default {
       title: this.info.html_title,
       titleTemplate: null,
       meta: [
-        { hid: "og:title",       property: "og:title",       content: this.info.html_title },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-formal-sheets-key.png" },
-        { hid: "og:description", property: "og:description", content: ""},
+        { hid: "og:title",       property: "og:title",       content: this.info.html_title                              },
+        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                             },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/formal-sheet.png" },
+        { hid: "og:description", property: "og:description", content: ""                                                },
       ],
     }
   },

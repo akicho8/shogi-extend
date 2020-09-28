@@ -1,7 +1,7 @@
 export const app_room = {
   data() {
     return {
-      room_code: "",                         // リアルタイム共有合言葉
+      room_code: "",                           // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
     }
   },
