@@ -4,7 +4,10 @@
 
   b-sidebar(type="is-light" fullheight overlay v-model="sidebar_open_p")
     .mx-3.my-3
-      b-menu
+      .MySidebarMenuIconWithTitle
+        b-icon.is_clickable(icon="menu" @click.native="sidebar_open_p = false")
+        .ml-3 棋譜詳細
+      b-menu.mt-4
         b-menu-list(label="Menu")
           b-menu-item(label="共有将棋盤に転送" icon="link"    tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
           b-menu-item(label="棋譜用紙 (PDF)"   icon="pdf-box" tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
@@ -72,7 +75,7 @@
         ref="main_sp"
       )
 
-      .has-text-centered.mt-4
+      .has-text-centered.mt-4(v-if="false")
         b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
           b-icon(icon="source-branch")
 
@@ -286,6 +289,11 @@ export default {
 </script>
 
 <style lang="sass">
+.MySidebarMenuIconWithTitle
+  display: flex
+  justify-content: flex-start
+  align-items: center
+
 .SwarsBattleShow
   .delete
     position: absolute
