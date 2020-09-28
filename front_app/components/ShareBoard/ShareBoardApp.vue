@@ -49,7 +49,7 @@
             span.has-text-grey {{turn_offset_max}}
 
         .sp_container
-          shogi_player(
+          MyShogiPlayer(
             :run_mode="run_mode"
             :debug_mode="debug_mode"
             :start_turn="turn_offset"
@@ -106,8 +106,6 @@ import the_pulldown_menu                  from "./the_pulldown_menu.vue"
 import the_image_view_point_setting_modal from "./the_image_view_point_setting_modal.vue"
 import AnySourceReadModal                 from "@/components/AnySourceReadModal.vue"
 
-import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
-
 export default {
   store,
   name: "ShareBoardApp",
@@ -117,7 +115,6 @@ export default {
     app_room_init,
   ],
   components: {
-    shogi_player,
     the_pulldown_menu,
     the_image_view_point_setting_modal,
   },
