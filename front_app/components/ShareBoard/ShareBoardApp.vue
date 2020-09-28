@@ -50,7 +50,6 @@
 
         .sp_container
           shogi_player(
-            ref="main_sp"
             :run_mode="run_mode"
             :debug_mode="debug_mode"
             :start_turn="turn_offset"
@@ -105,7 +104,7 @@ import { app_room_init } from "./app_room_init.js"
 
 import the_pulldown_menu                  from "./the_pulldown_menu.vue"
 import the_image_view_point_setting_modal from "./the_image_view_point_setting_modal.vue"
-import the_any_source_read_modal          from "./the_any_source_read_modal.vue"
+import AnySourceReadModal                 from "@/components/AnySourceReadModal.vue"
 
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
@@ -121,7 +120,6 @@ export default {
     shogi_player,
     the_pulldown_menu,
     the_image_view_point_setting_modal,
-    the_any_source_read_modal,
   },
   props: {
     config: { type: Object, required: true },
@@ -305,7 +303,7 @@ export default {
         parent: this,
         hasModalCard: true,
         animation: "",
-        component: the_any_source_read_modal,
+        component: AnySourceReadModal,
         onCancel: () => this.sound_play("click"),
         events: {
           "update:any_source": any_source => {

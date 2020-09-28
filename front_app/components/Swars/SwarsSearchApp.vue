@@ -184,15 +184,6 @@ import { support } from "./support.js"
 import battle_index_mod from "./battle_index_mod.js"
 import usage_mod from "./usage_mod.js"
 
-// import { app_room      } from "./app_room.js"
-// import { app_room_init } from "./app_room_init.js"
-//
-// import the_pulldown_menu                  from "./the_pulldown_menu.vue"
-// import the_image_view_point_setting_modal from "./the_image_view_point_setting_modal.vue"
-// import the_any_source_read_modal          from "./the_any_source_read_modal.vue"
-//
-// import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
-
 export default {
   store,
   name: "SwarsSearchApp",
@@ -201,12 +192,6 @@ export default {
     battle_index_mod,
     usage_mod,
   ],
-  // components: {
-  //   shogi_player,
-  //   the_pulldown_menu,
-  //   the_image_view_point_setting_modal,
-  //   the_any_source_read_modal,
-  // },
   props: {
     config: { type: Object, required: true },
   },

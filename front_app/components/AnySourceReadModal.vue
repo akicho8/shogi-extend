@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.the_any_source_read_modal
+.modal-card.AnySourceReadModal
   header.modal-card-head
     p.modal-card-title 棋譜の読み込み
   section.modal-card-body
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "the_any_source_read_modal",
+  name: "AnySourceReadModal",
   data() {
     return {
       any_source: "",
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style lang="sass">
-.the_any_source_read_modal
+.AnySourceReadModal
   .modal-card-foot
     justify-content: flex-end
     .button
