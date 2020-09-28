@@ -26,8 +26,7 @@ export default {
       this.$emit("close")
     },
     submit_handle() {
-      this.sound_play("click")
-      this.$emit("close")
+      this.close_handle()
       this.$emit("update:any_source", this.any_source)
     },
   },

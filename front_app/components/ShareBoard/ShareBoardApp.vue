@@ -296,7 +296,7 @@ export default {
     // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
       this.sound_play("click")
-      const modal_instance = this.$buefy.modal.open({
+      this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         animation: "",
@@ -313,7 +313,6 @@ export default {
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max
                 this.board_flip = false
-                modal_instance.close()
               }
             })
           },
