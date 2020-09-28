@@ -147,10 +147,11 @@ import _ from "lodash"
 import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
 // static
-import { CpuBrainInfo    } from "./cpu_brain_info.js"
-import { CpuStrategyInfo } from "./cpu_strategy_info.js"
-import { CpuPresetInfo   } from "./cpu_preset_info.js"
-import { BoardStyleInfo  } from "./board_style_info.js"
+import { CpuBrainInfo    } from "./models/CpuBrainInfo.js"
+import { CpuStrategyInfo } from "./models/CpuStrategyInfo.js"
+import { CpuPresetInfo   } from "./models/CpuPresetInfo.js"
+import { BoardStyleInfo  } from "./models/BoardStyleInfo.js"
+
 import PresetInfo      from "shogi-player/src/preset_info.js"
 import Location        from "shogi-player/src/location.js"
 
