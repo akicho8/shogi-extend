@@ -6,8 +6,8 @@
     .mx-3.my-3
       b-menu
         b-menu-list(label="Menu")
-          b-menu-item(label="共有将棋盤にコピー" icon="link" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
-          b-menu-item(label="棋譜用紙(PDF)"      icon="pdf-box" :href="`${$config.MY_SITE_URL}${record.show_path}?formal_sheet=true`")
+          b-menu-item(label="共有将棋盤にコピー" icon="link"    tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
+          b-menu-item(label="棋譜用紙(PDF)"      icon="pdf-box" tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
 
         b-menu-list(label="export")
           b-menu-item(icon="eye")

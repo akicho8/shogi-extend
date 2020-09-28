@@ -1,3 +1,4 @@
+
 <template lang="pug">
 client-only
   .swars-histograms-key
