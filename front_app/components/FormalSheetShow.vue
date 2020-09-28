@@ -1,5 +1,5 @@
 <template lang="pug">
-.FormalSheetShow
+.FormalSheetShow.has_formal_sheet
   // 斜線の定義
   svg(display="none")
     defs
