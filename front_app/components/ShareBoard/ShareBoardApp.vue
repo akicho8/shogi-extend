@@ -102,8 +102,8 @@ import { support } from "./support.js"
 import { app_room      } from "./app_room.js"
 import { app_room_init } from "./app_room_init.js"
 
-import the_image_view_point_setting_modal from "./the_image_view_point_setting_modal.vue"
-import AnySourceReadModal                 from "@/components/AnySourceReadModal.vue"
+import TheImageViewPointSettingModal from "./TheImageViewPointSettingModal.vue"
+import AnySourceReadModal            from "@/components/AnySourceReadModal.vue"
 
 export default {
   store,
@@ -113,9 +113,6 @@ export default {
     app_room,
     app_room_init,
   ],
-  components: {
-    the_image_view_point_setting_modal,
-  },
   props: {
     config: { type: Object, required: true },
   },
@@ -150,16 +147,15 @@ export default {
       this.image_view_point,
       this.room_code,
     ], () => {
-      if (true) {
-        // 両方エラーになってしまう
-        // this.$router.replace({name: "share-board", query: this.current_url_params})
-        // this.$router.replace({query: this.current_url_params})
-
-        // パラメータだけ変更するときは変更してくれるけどエラーになるっぽいのでエラーにぎりつぶす(いいのか？)
-        this.$router.replace({query: this.current_url_params}).catch(() => {})
-      } else {
-        window.history.replaceState("", null, this.current_url)
-      }
+      // 両方エラーになってしまう
+      //   this.$router.replace({name: "share-board", query: this.current_url_params})
+      //   this.$router.replace({query: this.current_url_params})
+      // パラメータだけ変更するときは変更してくれるけどエラーになるっぽいのでエラーにぎりつぶす(いいのか？)
+      this.$router.replace({query: this.current_url_params}).catch(e => {
+        if (this.development_p) {
+          console.debug(e)
+        }
+      })
     })
   },
   methods: {
@@ -273,6 +269,7 @@ export default {
     image_view_point_setting_handle() {
       this.sound_play("click")
       this.$buefy.modal.open({
+        component: TheImageViewPointSettingModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
@@ -281,7 +278,6 @@ export default {
           image_view_point: this.image_view_point,
           permalink_for: this.permalink_for,
         },
-        component: the_image_view_point_setting_modal,
         onCancel: () => this.sound_play("click"),
         events: {
           "update:image_view_point": v => {
