@@ -20,7 +20,7 @@
               | テーブル
               b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
                 b-icon(icon="dots-vertical" slot="trigger")
-                template(v-for="(e, key) in table_columns_hash")
+                template(v-for="(e, key) in config.table_columns_hash")
                   b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="key")
                     .has-text-weight-bold(v-if="visible_hash[key]")
                       | {{e.label}}
@@ -34,6 +34,13 @@
           b-menu-item(label="勝ち"    @click.stop="filter_search(`judge:win`)")
           b-menu-item(label="負け"    @click.stop="filter_search(`judge:lose`)")
           b-menu-item(label="なし"    @click.stop="filter_search(``)")
+
+        b-menu-list(label="表示件数")
+          template(v-if="development_p")
+            b-menu-item(label="0" @click.stop="per_change(0)")
+            b-menu-item(label="1" @click.stop="per_change(1)")
+          template(v-for="per in config.per_page_list")
+            b-menu-item(:label="`${per}`" @click.stop="per_change(per)")
 
         b-menu-list(label="その他")
           b-menu-item(:disabled="!config.current_swars_user_key")
@@ -53,11 +60,13 @@
                 b-dropdown-item Action
                 b-dropdown-item Action
 
-  b-navbar(type="is-primary" :mobile-burger="false" spaced)
+  b-navbar(type="is-primary" :mobile-burger="false" spaced centered)
     template(slot="brand")
       b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
         b-icon(icon="menu")
       b-navbar-item.has-text-weight-bold(tag="div") 将棋ウォーズ棋譜検索
+    //- template(slot="start")
+    //-   b-navbar-item(tag="a" href="/") TOP
     //- template(slot="end")
     //-   b-navbar-item(tag="a" href="/") TOP
 
@@ -80,13 +89,8 @@
             @keydown.native.enter="search_enter_handle"
             )
 
-            //- @select="ac_select"
-            //- @typing="ac_typing"
-            //- @focus="ac_focus"
-            //- @keypress.native.enter="ac_keypress_native_enter"
-
           p.control
-            b-button.search_form_submit_button(@click="search_click_handle" class="is-info" icon-left="magnify" size="is-large")
+            b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large")
 
         .columns.is-multiline.mt-4(v-show="board_show_type === 'outbreak_turn' || board_show_type === 'last'")
           template(v-for="e in config.records")
@@ -121,18 +125,19 @@
           b-table.is_battle_table(
             :loading="$fetchState.pending"
 
+            :total        = "config.total"
+            :current-page = "config.page"
+            :per-page     = "config.per"
+
             paginated
             backend-pagination
             pagination-simple
-            :current-page="page"
             :data="config.records"
-            :total="total"
-            :per-page="per"
             @page-change="page_change_handle"
 
             backend-sorting
             :default-sort-direction="config.sort_order_default"
-            :default-sort="[sort_column, sort_order]"
+            :default-sort="[config.sort_column, config.sort_order]"
             @sort="sort_handle"
 
             ref="table"
@@ -143,7 +148,7 @@
 
             TableEmpty(slot="empty" v-if="!$fetchState.pending && config.records.length === 0")
 
-            b-table-column(v-slot="{row}" field="id" :label="table_columns_hash['id'].label" :visible="visible_hash.id" sortable numeric v-if="table_columns_hash.id")
+            b-table-column(v-slot="{row}" field="id" :label="config.table_columns_hash['id'].label" :visible="visible_hash.id" sortable numeric v-if="config.table_columns_hash.id")
               a(@click.stop :href="row.show_path") \#{{row.id}}
 
             template(v-if="config.current_swars_user_key")
@@ -157,29 +162,29 @@
               b-table-column(v-slot="{row}" label="負け")
                 SwarsTableColumn(:visible_hash="visible_hash" :membership="row.memberships[1]")
 
-            b-table-column(v-slot="{row}" field="final_key" :label="table_columns_hash.final_info.label" :visible="visible_hash.final_info" sortable)
+            b-table-column(v-slot="{row}" field="final_key" :label="config.table_columns_hash.final_info.label" :visible="visible_hash.final_info" sortable)
               span(:class="row.final_info.class")
                 | {{row.final_info.name}}
 
-            b-table-column(v-slot="{row}" field="turn_max" :label="table_columns_hash.turn_max.label" :visible="visible_hash.turn_max" sortable numeric)
+            b-table-column(v-slot="{row}" field="turn_max" :label="config.table_columns_hash.turn_max.label" :visible="visible_hash.turn_max" sortable numeric)
               | {{row.turn_max}}
 
-            b-table-column(v-slot="{row}" field="critical_turn" :label="table_columns_hash.critical_turn.label" :visible="visible_hash.critical_turn" sortable numeric v-if="table_columns_hash.critical_turn")
+            b-table-column(v-slot="{row}" field="critical_turn" :label="config.table_columns_hash.critical_turn.label" :visible="visible_hash.critical_turn" sortable numeric v-if="config.table_columns_hash.critical_turn")
               | {{row.critical_turn}}
 
-            b-table-column(v-slot="{row}" field="outbreak_turn" :label="table_columns_hash.outbreak_turn.label" :visible="visible_hash.outbreak_turn" sortable numeric v-if="table_columns_hash.outbreak_turn")
+            b-table-column(v-slot="{row}" field="outbreak_turn" :label="config.table_columns_hash.outbreak_turn.label" :visible="visible_hash.outbreak_turn" sortable numeric v-if="config.table_columns_hash.outbreak_turn")
               | {{row.outbreak_turn}}
 
-            b-table-column(v-slot="{row}" field="grade_diff" :label="table_columns_hash.grade_diff.label" :visible="visible_hash.grade_diff" sortable numeric v-if="table_columns_hash.grade_diff")
+            b-table-column(v-slot="{row}" field="grade_diff" :label="config.table_columns_hash.grade_diff.label" :visible="visible_hash.grade_diff" sortable numeric v-if="config.table_columns_hash.grade_diff")
               | {{row.grade_diff}}
 
-            b-table-column(v-slot="{row}" field="rule_key" :label="table_columns_hash.rule_info.label" :visible="visible_hash.rule_info" sortable)
+            b-table-column(v-slot="{row}" field="rule_key" :label="config.table_columns_hash.rule_info.label" :visible="visible_hash.rule_info" sortable)
               | {{row.rule_info.name}}
 
-            b-table-column(v-slot="{row}" field="preset_key" :label="table_columns_hash.preset_info.label" :visible="visible_hash.preset_info" sortable)
+            b-table-column(v-slot="{row}" field="preset_key" :label="config.table_columns_hash.preset_info.label" :visible="visible_hash.preset_info" sortable)
               | {{row.preset_info.name}}
 
-            b-table-column(v-slot="{row}" field="battled_at" :label="table_columns_hash.battled_at.label" :visible="visible_hash.battled_at" sortable)
+            b-table-column(v-slot="{row}" field="battled_at" :label="config.table_columns_hash.battled_at.label" :visible="visible_hash.battled_at" sortable)
               | {{row_time_format(row.battled_at)}}
 
             b-table-column(v-slot="{row}")
@@ -209,7 +214,7 @@
             .buttons.is-centered.are-small
               b-button.usage_modal_open_handle(@click="usage_modal_open_handle" icon-left="lightbulb-on-outline") 便利な使い方
 
-  //- pre {{config}}
+  pre {{config}}
 </template>
 
 <script>
@@ -223,6 +228,7 @@ import MemoryRecord from 'js-memory-record'
 
 class ZipKifuInfo extends MemoryRecord {
 }
+ZipKifuInfo.memory_record_reset([])
 
 export default {
   store,
@@ -262,7 +268,7 @@ export default {
   },
 
   watch: {
-    '$route.query': '$fetch',
+    "$route.query": "$fetch",
   },
 
   fetch() {
@@ -274,28 +280,12 @@ export default {
       this.board_show_type  = this.config.board_show_type // 何の局面の表示をするか？
       this.records          = this.config.records // 表示するレコード配列
 
-      this.total            = this.config.total
-      this.page             = this.config.page
-      this.per              = this.config.per
-
-      this.sort_column      = this.config.sort_column
-      this.sort_order       = this.config.sort_order
-
       this.query              = this.config.query
-      this.table_columns_hash = this.config.table_columns_hash
 
       this.$_ls_setup()
       ZipKifuInfo.memory_record_reset(this.config.zip_kifu_info)
     })
   },
-
-  // async asyncData({ $axios, query }) {
-  //   // http://0.0.0.0:4000/swars/search?query=devuser1
-  //   // http://0.0.0.0:3000/w.json?query=devuser1
-  //   console.log("asyncData")
-  //   const config = await $axios.$get("/w.json", {params: query})
-  //   return { config }
-  // },
 
   computed: {
     query_key() {
@@ -322,9 +312,11 @@ export default {
     },
 
     search_form_complete_list() {
-      return this.config.remember_swars_user_keys.filter((option) => {
-        return option.toString().toLowerCase().indexOf(this.query.toLowerCase()) >= 0
-      })
+      if (this.config.remember_swars_user_keys) {
+        return this.config.remember_swars_user_keys.filter((option) => {
+          return option.toString().toLowerCase().indexOf(this.query.toLowerCase()) >= 0
+        })
+      }
     }
   },
 
@@ -360,6 +352,14 @@ export default {
       // window.history.replaceState("", null, this.permalink_url)
       // this.async_records_load()
       // }
+    },
+
+    per_change(per) {
+      if (this.config.current_swars_user_key) {
+        this.debug_alert(per)
+        this.sidebar_open_p = false
+        this.$router.push({to: "swars-search", query: {query: this.config.current_swars_user_key, per: per}})
+      }
     },
 
     form_submited(e) {

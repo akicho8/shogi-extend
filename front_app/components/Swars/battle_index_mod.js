@@ -24,11 +24,6 @@ export default {
       board_show_type:  null, // 何の局面の表示をするか？
       loading: false,
       records:          null, // 表示するレコード配列
-      total:            null,
-      page:             null,
-      per:              null,
-      sort_column:      null,
-      sort_order:       null,
       fetched_count: 0,         // fetch した回数で 1 以上でレコード配列が空だったらデータがありませんを表示する
     }
   },
