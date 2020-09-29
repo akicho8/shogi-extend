@@ -128,17 +128,6 @@ export default {
     },
   },
 
-  mounted() {
-    // if (this.config.modal_record) {
-    //   this.show_handle(this.config.modal_record)
-    // }
-    // if (this.config.current_swars_user_key) {
-    //   if (this.$route.query.SwarsUserShow) {
-    //     this.user_info_show_modal(this.config.current_swars_user_key)
-    //   }
-    // }
-  },
-
   computed: {
     // テーブルを表示する条件
     index_table_show_p() {

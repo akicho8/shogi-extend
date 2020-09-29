@@ -1,5 +1,5 @@
 <template lang="pug">
-.SwarsSearchApp(v-if="!$fetchState.pending")
+.SwarsSearchApp
   //- DebugBox
   //-   p http://0.0.0.0:4000/swars/search?query=devuser1
   b-sidebar(type="is-light" fullheight overlay v-model="sidebar_open_p")
@@ -66,11 +66,11 @@
       .column
         b-field
           b-autocomplete(
+            size="is-large"
             v-model.trim="query"
             :data="search_form_complete_list"
             list="search_field_query_completion"
             rounded
-            icon="magnify"
             type="search"
             placeholder="ウォーズIDを入力"
             open-on-focus
@@ -86,7 +86,7 @@
             //- @keypress.native.enter="ac_keypress_native_enter"
 
           p.control
-            b-button.search_form_submit_button(@click="search_click_handle" class="is-info" icon-left="magnify")
+            b-button.search_form_submit_button(@click="search_click_handle" class="is-info" icon-left="magnify" size="is-large")
 
         .columns.is-multiline.mt-4(v-show="board_show_type === 'outbreak_turn' || board_show_type === 'last'")
           template(v-for="e in config.records")
@@ -119,9 +119,7 @@
 
         template(v-if="board_show_type === 'none'")
           b-table.is_battle_table(
-            v-if="index_table_show_p"
-
-            :loading="loading"
+            :loading="$fetchState.pending"
 
             paginated
             backend-pagination
@@ -143,7 +141,7 @@
 
             )
 
-            TableEmpty(slot="empty")
+            TableEmpty(slot="empty" v-if="!$fetchState.pending && config.records.length === 0")
 
             b-table-column(v-slot="{row}" field="id" :label="table_columns_hash['id'].label" :visible="visible_hash.id" sortable numeric v-if="table_columns_hash.id")
               a(@click.stop :href="row.show_path") \#{{row.id}}
@@ -192,12 +190,6 @@
                 SpShowButton(@click="show_handle(row)")
                 PulldownMenu(:record="row" position="is-bottom-right" :turn_offset="trick_start_turn_for(row)")
 
-          template(v-if="development_p")
-            .box.is_line_break_on
-              p page:{{page}} per:{{per}} total:{{total}} loading:{{loading}} records.length:{{records.length}} sort_column:{{sort_column}} sort_order:{{sort_order}} config.sort_order_default={{config.sort_order_default}}
-              p visible_only_keys: {{visible_only_keys}}
-              p permalink_url: {{permalink_url}}
-
           //- - if current_records
           //-   - if Rails.env.development?
           //-     .columns
@@ -217,7 +209,7 @@
             .buttons.is-centered.are-small
               b-button.usage_modal_open_handle(@click="usage_modal_open_handle" icon-left="lightbulb-on-outline") 便利な使い方
 
-  pre {{config}}
+  //- pre {{config}}
 </template>
 
 <script>
@@ -253,7 +245,7 @@ export default {
       sidebar_open_p: false,
       submited: false,
       detailed: false,
-      config: null,
+      config: {},
     }
   },
 
@@ -306,6 +298,12 @@ export default {
   // },
 
   computed: {
+    query_key() {
+      if (this.config) {
+        return this.config.current_swars_user_key
+      }
+    },
+
     ZipKifuInfo() { return ZipKifuInfo },
 
     permalink_url() {
@@ -415,11 +413,6 @@ export default {
       margin-left: 1rem
     .player_info_show_button
       margin-left: 1rem
-
-  //////////////////////////////////////////////////////////////////////////////// 検索ボタン
-
-  .search_form_submit_button
-    min-width: 4rem
 
   //////////////////////////////////////////////////////////////////////////////// テーブル上のチェックボックス
 
