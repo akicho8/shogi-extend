@@ -20,23 +20,15 @@ export default {
 
   data() {
     return {
-      search_scope_key: this.config.search_scope_key, // スコープ
-
-      board_show_type: this.config.board_show_type, // 何の局面の表示をするか？
-
-      sp_show_p: false,               // モーダルを開くフラグ
-
+      search_scope_key: null, // スコープ
+      board_show_type:  null, // 何の局面の表示をするか？
       loading: false,
-
-      records: this.config.records, // 表示するレコード配列
-
-      total: this.config.total,
-      page: this.config.page,
-      per: this.config.per,
-
-      sort_column: this.config.sort_column,
-      sort_order: this.config.sort_order,
-
+      records:          null, // 表示するレコード配列
+      total:            null,
+      page:             null,
+      per:              null,
+      sort_column:      null,
+      sort_order:       null,
       fetched_count: 0,         // fetch した回数で 1 以上でレコード配列が空だったらデータがありませんを表示する
     }
   },
@@ -57,8 +49,6 @@ export default {
     //
     //   this.sp_show_p            = false                        // モーダルを開くフラグ
     //
-    //   this.loading              = false
-    //
     //   this.records              = this.config.records          // 表示するレコード配列
     //
     //   this.total                = this.config.total
@@ -76,7 +66,7 @@ export default {
     // },
 
     show_handle(row) {
-      this.sp_show_modal2(row.key, {board_show_type: this.board_show_type})
+      this.jump_to_battle(row.key, {board_show_type: this.board_show_type})
     },
 
     sort_handle(column, order) {
@@ -139,16 +129,14 @@ export default {
   },
 
   mounted() {
-    if (this.config.modal_record) {
-      this.show_handle(this.config.modal_record)
-    }
-
-    if (this.config.current_swars_user_key) {
-      // alert("リダイレクト")
-      if (this.$route.query.SwarsUserShow) {
-        this.user_info_show_modal(this.config.current_swars_user_key)
-      }
-    }
+    // if (this.config.modal_record) {
+    //   this.show_handle(this.config.modal_record)
+    // }
+    // if (this.config.current_swars_user_key) {
+    //   if (this.$route.query.SwarsUserShow) {
+    //     this.user_info_show_modal(this.config.current_swars_user_key)
+    //   }
+    // }
   },
 
   computed: {

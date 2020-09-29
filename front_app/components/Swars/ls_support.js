@@ -25,28 +25,14 @@
 //       },
 //     },
 //   }
-//
-//
-// データの引っ越しをするときの例
-//
-//   beforeCreate() {
-//     const old_key = `${this.config.table_column_storage_prefix_key}/table_column_storage_key`
-//     const new_key = `${this.config.table_column_storage_prefix_key}/index`
-//     let v = localStorage.getItem(old_key)
-//     if (v) {
-//       localStorage.setItem(new_key, JSON.stringify({visible_hash: JSON.parse(v)}))
-//       localStorage.removeItem(old_key)
-//     }
-//   },
-//
 export default {
-  created() {
-    this.$_ls_load()
-    // FIXME: unwatch してない
-    this.$watch(() => this.$_ls_watch_values, () => this.$_ls_save(), {deep: true}) // 変数がハッシュかもしれないので deep: true にしておく
-  },
-
   methods: {
+    $_ls_setup() {
+      this.$_ls_load()
+      // FIXME: unwatch してない
+      this.$watch(() => this.$_ls_watch_values, () => this.$_ls_save(), {deep: true}) // 変数がハッシュかもしれないので deep: true にしておく
+    },
+
     $_ls_save() {
       if (this.development_p) {
         console.log("$_ls_save", JSON.stringify(this.$_ls_hash))

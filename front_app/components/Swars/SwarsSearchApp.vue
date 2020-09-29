@@ -1,39 +1,92 @@
 <template lang="pug">
-.SwarsSearchApp
+.SwarsSearchApp(v-if="!$fetchState.pending")
   //- DebugBox
   //-   p http://0.0.0.0:4000/swars/search?query=devuser1
+  b-sidebar(type="is-light" fullheight overlay v-model="sidebar_open_p")
+    .mx-3.my-3
+      .MySidebarMenuIconWithTitle
+        b-icon.is_clickable(icon="menu" @click.native="sidebar_open_p = false")
+        .my_title.has-text-centered
+          nuxt-link.has-text-weight-bold.has-text-dark(:to="{name: 'index'}") SHOGI-EXTEND
 
-  b-navbar(type="is-primary")
+      b-menu.mt-4
+        b-menu-list(label="")
+          b-menu-item(icon="home" tag="nuxt-link" :to="{name: 'index'}" label="ホーム")
+          b-menu-item(@click="jump_to_user(config.current_swars_user_key)" icon="account" label="プレイヤー情報" :disabled="!config.current_swars_user_key")
+
+        b-menu-list(label="表示形式")
+          b-menu-item(@click.stop="board_show_type = 'none'")
+            template(slot="label")
+              | テーブル
+              b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
+                b-icon(icon="dots-vertical" slot="trigger")
+                template(v-for="(e, key) in table_columns_hash")
+                  b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="key")
+                    .has-text-weight-bold(v-if="visible_hash[key]")
+                      | {{e.label}}
+                    .has-text-grey(v-else)
+                      | {{e.label}}
+
+          b-menu-item(label="仕掛け"   @click.stop="board_show_type = 'outbreak_turn'" )
+          b-menu-item(label="終局図"   @click.stop="board_show_type = 'last'"          )
+
+        b-menu-list(label="フィルタ")
+          b-menu-item(label="勝ち"    @click.stop="filter_search(`judge:win`)")
+          b-menu-item(label="負け"    @click.stop="filter_search(`judge:lose`)")
+          b-menu-item(label="なし"    @click.stop="filter_search(``)")
+
+        b-menu-list(label="その他")
+          b-menu-item(:disabled="!config.current_swars_user_key")
+            template(slot="label" slot-scope="props")
+              | ZIP ダウンロード
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-down' : 'menu-up'")
+            template(v-for="e in ZipKifuInfo.values")
+              b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
+
+        b-menu-list(label="test" v-if="development_p")
+          b-menu-item
+            template(slot="label")
+              | Devices
+              b-dropdown.is-pulled-right(position="is-bottom-left")
+                b-icon(icon="dots-vertical" slot="trigger")
+                b-dropdown-item Action
+                b-dropdown-item Action
+                b-dropdown-item Action
+
+  b-navbar(type="is-primary" :mobile-burger="false" spaced)
     template(slot="brand")
+      b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
+        b-icon(icon="menu")
       b-navbar-item.has-text-weight-bold(tag="div") 将棋ウォーズ棋譜検索
-    template(slot="end")
-      b-navbar-item(tag="a" href="/") TOP
+    //- template(slot="end")
+    //-   b-navbar-item(tag="a" href="/") TOP
 
   .section
     .columns
       .column
         b-field
-          b-autocomplete(name="query" v-model.trim="query" :data="search_form_complete_list" rounded icon="magnify" type="search" placeholder="ウォーズIDを入力" ref="query_field" :open-on-focus="true" expanded list="search_field_query_completion" @select="ac_select" @typing="ac_typing" @focus="ac_focus" @keypress.native.enter="ac_keypress_native_enter")
+          b-autocomplete(
+            v-model.trim="query"
+            :data="search_form_complete_list"
+            list="search_field_query_completion"
+            rounded
+            icon="magnify"
+            type="search"
+            placeholder="ウォーズIDを入力"
+            open-on-focus
+            expanded
+            @focus="query = ''"
+            @select="search_select_handle"
+            @keydown.native.enter="search_enter_handle"
+            )
+
+            //- @select="ac_select"
+            //- @typing="ac_typing"
+            //- @focus="ac_focus"
+            //- @keypress.native.enter="ac_keypress_native_enter"
+
           p.control
-            b-button.search_form_submit_button(@click="search_handle" class="is-info" icon-left="magnify")
-
-        .search_bottom_controllers.mt-5.is-flex(v-if="config.current_swars_user_key")
-          template(v-if="config.current_swars_user_key")
-            b-dropdown.search_index_dropdown_menu(position="is-bottom-right")
-              b-button(slot="trigger" size="is-small" icon-left="menu") フィルタ
-              b-dropdown-item(@click="query_search(`${config.current_swars_user_key} judge:win`)") 勝ち
-              b-dropdown-item(@click="query_search(`${config.current_swars_user_key} judge:lose`)") 負け
-              template(v-if="config.current_swars_user_key !== $route.query.query")
-                b-dropdown-item(separator)
-                b-dropdown-item(@click="query_search(config.current_swars_user_key)") 解除
-
-          b-field.board_show_type_field
-            b-radio-button(v-model="board_show_type" size="is-small" native-value="none") テーブル
-            b-radio-button(v-model="board_show_type" size="is-small" native-value="outbreak_turn") 仕掛け
-            b-radio-button(v-model="board_show_type" size="is-small" native-value="last") 終局図
-
-          template(v-if="config.current_swars_user_key")
-            b-button.player_info_show_button(@click="user_info_show_modal2(config.current_swars_user_key)" icon-left="account" size="is-small" rounded) プレイヤー情報
+            b-button.search_form_submit_button(@click="search_click_handle" class="is-info" icon-left="magnify")
 
         .columns.is-multiline.mt-4(v-show="board_show_type === 'outbreak_turn' || board_show_type === 'last'")
           template(v-for="e in config.records")
@@ -65,15 +118,6 @@
                   | {{e.memberships[0].user.key}} {{e.memberships[0].grade_info.name}}
 
         template(v-if="board_show_type === 'none'")
-          template(v-if="records.length >= 1")
-            b-field.table_column_toggle_checkboxes.mt-3(grouped group-multiline)
-              .control(v-for="(value, key, index) in table_columns_hash" :key="index")
-                b-checkbox(v-model="visible_hash[key]" size="is-small")
-                  | {{value.label}}
-
-          //- b-table(:data="records")
-          //-   b-table-column(v-slot="{row}" field="id" :label="ID" sortable numeric) {{row.id}}
-
           b-table.is_battle_table(
             v-if="index_table_show_p"
 
@@ -172,7 +216,6 @@
           template(v-if="config.records.length >= 1")
             .buttons.is-centered.are-small
               b-button.usage_modal_open_handle(@click="usage_modal_open_handle" icon-left="lightbulb-on-outline") 便利な使い方
-              b-button.zip_dl_modal_open_handle(@click="zip_dl_modal_open_handle" icon-left="download") ZIP
 
   pre {{config}}
 </template>
@@ -184,6 +227,11 @@ import { support } from "./support.js"
 import battle_index_mod from "./battle_index_mod.js"
 import usage_mod from "./usage_mod.js"
 
+import MemoryRecord from 'js-memory-record'
+
+class ZipKifuInfo extends MemoryRecord {
+}
+
 export default {
   store,
   name: "SwarsSearchApp",
@@ -193,7 +241,7 @@ export default {
     usage_mod,
   ],
   props: {
-    config: { type: Object, required: true },
+    // config: { type: Object, required: true },
   },
 
   beforeCreate() {
@@ -202,26 +250,64 @@ export default {
 
   data() {
     return {
+      sidebar_open_p: false,
       submited: false,
       detailed: false,
+      config: null,
     }
   },
 
-  created() {
-    // GVI.$on("query_search", e => this.query_search(e))
+  head() {
+    return {
+      title: "将棋ウォーズ棋譜検索",
+      meta: [
+        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ棋譜検索"                            },
+        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                             },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-search.png" },
+        { hid: "og:description", property: "og:description", content: ""                                                },
+      ],
+    }
   },
 
-  beforeDestroy() {
-    // GVI.$off("query_search")
+  watch: {
+    '$route.query': '$fetch',
   },
 
-  mounted() {
-    // if (this.index_table_show_p) {
-    //   this.async_records_load()
-    // }
+  fetch() {
+    // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
+    // http://0.0.0.0:4000/swars/users/devuser1
+    return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
+      this.config = config
+      this.search_scope_key = this.config.search_scope_key // スコープ
+      this.board_show_type  = this.config.board_show_type // 何の局面の表示をするか？
+      this.records          = this.config.records // 表示するレコード配列
+
+      this.total            = this.config.total
+      this.page             = this.config.page
+      this.per              = this.config.per
+
+      this.sort_column      = this.config.sort_column
+      this.sort_order       = this.config.sort_order
+
+      this.query              = this.config.query
+      this.table_columns_hash = this.config.table_columns_hash
+
+      this.$_ls_setup()
+      ZipKifuInfo.memory_record_reset(this.config.zip_kifu_info)
+    })
   },
+
+  // async asyncData({ $axios, query }) {
+  //   // http://0.0.0.0:4000/swars/search?query=devuser1
+  //   // http://0.0.0.0:3000/w.json?query=devuser1
+  //   console.log("asyncData")
+  //   const config = await $axios.$get("/w.json", {params: query})
+  //   return { config }
+  // },
 
   computed: {
+    ZipKifuInfo() { return ZipKifuInfo },
+
     permalink_url() {
       return this.query_url_build(this.query)
     },
@@ -234,7 +320,7 @@ export default {
       }
       // テーブルを表示する条件は検索文字列があること。または modal_record があること。
       // フォームに割り当てられている this.query だと変動するので使ってはいけない
-      return this.config.query || this.config.modal_record
+      return this.config.query // || this.config.modal_record
     },
 
     search_form_complete_list() {
@@ -245,11 +331,37 @@ export default {
   },
 
   methods: {
+    zip_dl_handle(key) {
+      const params = new URLSearchParams()
+      params.set("zip_kifu_key", key)
+      params.set("query", this.query)
+      const url = this.$config.MY_SITE_URL + `/w.zip?${params}`
+      location.href = url
+    },
+
+    // チェックボックスをトグルする
+    cb_toggle_handle(column) {
+      this.sound_play('click')
+      this.$set(this.visible_hash, column.key, !this.visible_hash[column.key])
+      // if (this.visible_hash[column.key]) {
+      //   this.say(column.name)
+      // }
+    },
+
     query_search(query) {
       this.$router.push({to: "swars-search", query: {query: query}})
       // this.query = query
       // window.history.replaceState("", null, this.permalink_url)
       // this.async_records_load()
+    },
+    filter_search(query) {
+      if (this.config.current_swars_user_key) {
+        this.$router.push({to: "swars-search", query: {query: _.trim(`${this.config.current_swars_user_key} ${query}`)}})
+      }
+      // this.query = query
+      // window.history.replaceState("", null, this.permalink_url)
+      // this.async_records_load()
+      // }
     },
 
     form_submited(e) {
@@ -274,6 +386,13 @@ export default {
 </script>
 
 <style lang="sass">
+.MySidebarMenuIconWithTitle
+  display: flex
+  justify-content: flex-start
+  align-items: center
+  .my_title
+    width: 100%
+
 .SwarsSearchApp
   .section
     &:first-of-type

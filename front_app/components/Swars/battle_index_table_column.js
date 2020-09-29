@@ -3,7 +3,7 @@ import _ from "lodash"
 export default {
   data() {
     return {
-      table_columns_hash: this.config.table_columns_hash,
+      table_columns_hash: null,
       visible_hash: null,       //  { xxx: true, yyy: false } 形式
     }
   },

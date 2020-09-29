@@ -27,7 +27,7 @@
       b-icon(icon="arrow-up-bold" size="is-small")
       | 最大200件
 
-    b-dropdown-item(:href="`/w?query=${info.user.key}`" @click="$buefy.loading.open()")
+    b-dropdown-item(:href="`/w?query=${info.user.key}`")
       b-icon(icon="magnify" size="is-small")
       | 棋譜検索
 
@@ -217,6 +217,7 @@ export default {
     // http://0.0.0.0:4000/swars/users/devuser1
     this.info = await this.$axios.$get("/w.json", {params: {query: this.$route.params.key, format_type: "user", ...this.$route.query}})
   },
+
 
   created() {
     if ("tab_index" in this.$route.query) {
