@@ -43,12 +43,15 @@
             b-menu-item(:label="`${per}`" @click.stop="per_change(per)")
 
         b-menu-list(label="その他")
+
           b-menu-item(:disabled="!config.current_swars_user_key")
             template(slot="label" slot-scope="props")
               | ZIP ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-down' : 'menu-up'")
             template(v-for="e in ZipKifuInfo.values")
               b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
+
+          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key-kento-api', params: {key: config.current_swars_user_key}}" label="KENTO用API" :disabled="!config.current_swars_user_key")
 
         b-menu-list(label="test" v-if="development_p")
           b-menu-item
@@ -123,6 +126,7 @@
 
         template(v-if="board_show_type === 'none'")
           b-table.is_battle_table(
+            v-if="$route.query.query"
             :loading="$fetchState.pending"
 
             :total        = "config.total"
@@ -146,7 +150,7 @@
 
             )
 
-            TableEmpty(slot="empty" v-if="!$fetchState.pending && config.records.length === 0")
+            TableEmpty(slot="empty" v-if="!$fetchState.pending && $route.query.query && config.records.length === 0")
 
             b-table-column(v-slot="{row}" field="id" :label="config.table_columns_hash['id'].label" :visible="visible_hash.id" sortable numeric v-if="config.table_columns_hash.id")
               a(@click.stop :href="row.show_path") \#{{row.id}}
