@@ -1,0 +1,124 @@
+<template lang="pug">
+client-only
+  .swars-users-key-direct-open-external_app_key
+    b-navbar(type="is-primary" shadow :mobile-burger="false" wrapper-class="container")
+      template(slot="brand")
+        b-navbar-item.has-text-weight-bold(tag="div") {{title}}
+    .section
+      .container
+        b-button(tag="nuxt-link" :to="{name: 'swars-search', query: {query: $route.params.key}}")
+          | ← 将棋ウォーズ棋譜検索に戻る
+        pre(v-if="development_p") {{config}}
+</template>
+
+<script>
+import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
+import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
+
+export default {
+  name: "swars-users-key-direct-open-external_app_key",
+  data() {
+    return {
+      external_app_setup: null,
+      config: null,
+    }
+  },
+  head() {
+    return {
+      title: this.external_app_info.shortcut_name, // アイコン名なので短かく
+      meta: [
+        { hid: "og:title",       property: "og:title",       content: this.title,                                        },
+        { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                         },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-search.png", },
+        { hid: "og:description", property: "og:description", content: "",                                                },
+      ],
+      link: [
+        { hid: "apple-touch-icon", rel: "apple-touch-icon", href: `/apple-touch-icon/${this.external_app_info.key}.png` },
+      ],
+    }
+  },
+  fetchOnServer: false,
+  fetch() {
+    this.external_app_setup = MyLocalStorage.get("external_app_setup")
+    MyLocalStorage.remove("external_app_setup")
+
+    if (this.external_app_setup) {
+      this.$buefy.dialog.alert({
+        title: "設定",
+        message: `
+          <div class="content">
+            <p>現在の画面を<b>ホーム画面に追加</b>(PCの場合はブークマークに追加)するとそこから直前の対局を最短で開けるようになります</p>
+            <p>これは直前の対局を外部アプリで毎回必ず検討する人向けのショートカットです</p>
+            <p>検索後に一番上に表示された対局の外部アプリをタップするところを自動化する感じです</p>
+          </div>`,
+        confirmText: "OK",
+        type: 'is-info',
+        animation: "", // 最初から表示しているようにしたいのでアニメーションOFF
+        onConfirm: () => {
+          // this.$router.push({name: "swars-search", query: {query: this.$route.params.key}})
+        },
+      })
+    } else {
+      return this.$axios.$get("/w.json", {params: {query: this.$route.params.key, per: 1}}).then(config => {
+        this.config = config
+        // this.config.records = []
+
+        if (!this.record) {
+          this.general_ng_notice("棋譜が見つかりませんでした")
+          return
+        }
+
+        if (this.external_app_info.key === "piyo_shogi") {
+          location.href = this.piyo_shogi_app_with_params_url
+        }
+        if (this.external_app_info.key === "kento") {
+          location.href = this.kento_app_with_params_url
+        }
+
+      })
+    }
+  },
+
+  computed: {
+    external_app_key() {
+      return this.$route.params.external_app_key
+    },
+    external_app_info() {
+      return ExternalAppInfo.fetch(this.external_app_key)
+    },
+    title() {
+      return `直前の対局を${this.external_app_info.name}で開く`
+    },
+    record() {
+      return this.config.records[0]
+    },
+    piyo_shogi_app_with_params_url() {
+      if (this.record) {
+        return this.piyo_shogi_auto_url({
+          path: this.record.show_path,
+          sfen: this.record.sfen_body,
+          turn: this.record.display_turn,
+          flip: this.record.flip,
+          ...this.record.piyo_shogi_base_params,
+        })
+      }
+    },
+    kento_app_with_params_url() {
+      if (this.record) {
+        return this.kento_full_url({
+          sfen: this.record.sfen_body,
+          turn: this.record.display_turn,
+          flip: false,
+        })
+      }
+    },
+  },
+}
+</script>
+
+<style lang="sass">
+.swars-users-key-direct-open-external_app_key
+  .section
+    &:first-of-type
+      padding-top: 1.8rem
+</style>

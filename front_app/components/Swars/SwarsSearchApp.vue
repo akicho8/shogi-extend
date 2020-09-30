@@ -2,7 +2,7 @@
 .SwarsSearchApp
   //- DebugBox
   //-   p http://0.0.0.0:4000/swars/search?query=devuser1
-  b-sidebar(type="is-light" fullheight overlay v-model="sidebar_open_p")
+  b-sidebar(fullheight overlay v-model="sidebar_open_p")
     .mx-3.my-3
       .MySidebarMenuIconWithTitle
         b-icon.is_clickable(icon="menu" @click.native="sidebar_open_p = false")
@@ -51,7 +51,17 @@
             template(v-for="e in ZipKifuInfo.values")
               b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
 
-          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key-kento-api', params: {key: config.current_swars_user_key}}" label="KENTO用API" :disabled="!config.current_swars_user_key")
+        b-menu-list(label="便利な使い方")
+          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key-kento-api', params: {key: config.current_swars_user_key}}" label="KENTO側で一覧表示" :disabled="!config.current_swars_user_key")
+
+          b-menu-item(:disabled="!config.current_swars_user_key")
+            template(slot="label" slot-scope="props")
+              | 直近を外部APPで開く
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-down' : 'menu-up'")
+            template(v-for="e in ExternalAppInfo.values")
+              b-menu-item(@click="external_app_handle(e)" :label="e.name")
+
+          //- b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key-direct-open-external_app_key', params: {key: config.current_swars_user_key, external_app_key: 'piyo_shogi'}}" label="直近ぴよ開く" :disabled="!config.current_swars_user_key")
 
         b-menu-list(label="test" v-if="development_p")
           b-menu-item
@@ -63,7 +73,7 @@
                 b-dropdown-item Action
                 b-dropdown-item Action
 
-  b-navbar(type="is-primary" :mobile-burger="false" spaced centered)
+  b-navbar(type="is-primary" :mobile-burger="false")
     template(slot="brand")
       b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
         b-icon(icon="menu")
@@ -198,32 +208,15 @@
                 KifCopyButton(@click.stop.prevent="kif_clipboard_copy({kc_path: row.show_path})")
                 SpShowButton(@click="show_handle(row)")
                 PulldownMenu(:record="row" position="is-bottom-right" :turn_offset="trick_start_turn_for(row)")
-
-          //- - if current_records
-          //-   - if Rails.env.development?
-          //-     .columns
-          //-       .column
-          //-         = paginate current_records
-          //-
-          //-   .columns.is-unselectable(v-if="fetched_count >= 1 && records.length >= 1 && board_show_type === 'none'")
-          //-     .column
-          //-       - args = params.to_unsafe_h.except(:latest_open_index)
-          //-       - list = [Kaminari.config.default_per_page, *AppConfig[:per_page_list], Kaminari.config.max_per_page]
-          //-       = list.collect { |per| link_to(" #{per} ", args.merge(per: per)) }.join(tag.span(" / ", :class => "has-text-grey-lighter")).html_safe
-          //-       span.has-text-grey-light.is-size-7
-          //-         | 件ごと表示
-
-        template(v-if="config.import_enable_p")
-          template(v-if="config.records.length >= 1")
-            .buttons.is-centered.are-small
-              b-button.usage_modal_open_handle(@click="usage_modal_open_handle" icon-left="lightbulb-on-outline") 便利な使い方
-
-  pre {{config}}
+  pre(v-if="development_p") {{config}}
 </template>
 
 <script>
 import { store }   from "./store.js"
 import { support } from "./support.js"
+
+import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
+import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
 
 import battle_index_mod from "./battle_index_mod.js"
 import usage_mod from "./usage_mod.js"
@@ -252,6 +245,7 @@ export default {
 
   data() {
     return {
+      external_app_setup: false,
       sidebar_open_p: false,
       submited: false,
       detailed: false,
@@ -292,6 +286,8 @@ export default {
   },
 
   computed: {
+    ExternalAppInfo() { return ExternalAppInfo },
+
     query_key() {
       if (this.config) {
         return this.config.current_swars_user_key
@@ -325,6 +321,39 @@ export default {
   },
 
   methods: {
+    external_app_handle(info) {
+      if (this.config.current_swars_user_key) {
+        MyLocalStorage.set("external_app_setup", true)
+        this.$router.push({
+          name: 'swars-users-key-direct-open-external_app_key',
+          params: {
+            key: this.config.current_swars_user_key,
+            external_app_key: info.key,
+          },
+        })
+      }
+
+      // if (this.config.current_swars_user_key) {
+      //   const params = {
+      //     query: this.config.current_swars_user_key,
+      //     latest_open_index: 0,
+      //     // external_app_setup: true,
+      //     external_app_key: external_app_key,
+      //   }
+      //   this.external_app_setup = true
+      //   this.$router.push({name: "swars-search", query: params})
+      //
+      //   this.$buefy.dialog.alert({
+      //     title: "設定",
+      //     message: "この状態で「ホーム画面に追加」しておくと1回のタップで直前の対局を開けるようになります",
+      //     // canCancel: ["outside", "escape"],
+      //     // onConfirm: () => { this.sound_play("click") },
+      //     // onCancel:  () => { this.sound_play("click") },
+      //   })
+      //
+      // }
+    },
+
     zip_dl_handle(key) {
       const params = new URLSearchParams()
       params.set("zip_kifu_key", key)
@@ -343,14 +372,14 @@ export default {
     },
 
     query_search(query) {
-      this.$router.push({to: "swars-search", query: {query: query}})
+      this.$router.push({name: "swars-search", query: {query: query}})
       // this.query = query
       // window.history.replaceState("", null, this.permalink_url)
       // this.async_records_load()
     },
     filter_search(query) {
       if (this.config.current_swars_user_key) {
-        this.$router.push({to: "swars-search", query: {query: _.trim(`${this.config.current_swars_user_key} ${query}`)}})
+        this.$router.push({name: "swars-search", query: {query: _.trim(`${this.config.current_swars_user_key} ${query}`)}})
       }
       // this.query = query
       // window.history.replaceState("", null, this.permalink_url)
@@ -362,7 +391,7 @@ export default {
       if (this.config.current_swars_user_key) {
         this.debug_alert(per)
         this.sidebar_open_p = false
-        this.$router.push({to: "swars-search", query: {query: this.config.current_swars_user_key, per: per}})
+        this.$router.push({name: "swars-search", query: {query: this.config.current_swars_user_key, per: per}})
       }
     },
 

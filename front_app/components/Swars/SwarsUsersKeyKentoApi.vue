@@ -1,16 +1,19 @@
 <template lang="pug">
-.SwarsUsersKeyKentoApi.has-background-white-ter
-  b-navbar(shadow :mobile-burger="false" wrapper-class="container" spaced)
+.SwarsUsersKeyKentoApi
+  b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container")
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="div") {{title}}
   .section
     .container
-      p 下のURLをKENTOの設定(棋譜ソース→API追加)にコピペするとKENTO側でも棋譜一覧を表示できるようになります
+      p 下のURLをKENTOの設定にコピペするとKENTOでも棋譜一覧が出るようになります
       b-field.mt-2
         b-input(type="text" :value="kento_api_url" expanded readonly)
         p.control
           b-button(icon-left="clipboard-plus-outline" @click="clipboard_copy({text: kento_api_url})")
-      b-button.mt-3(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new") KENTOの設定に移動
+      .buttons
+        b-button.mt-3(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new") KENTOの設定に移動
+        span.has-text-grey.is-size-7
+          | ※ 棋譜ソース → API追加
 </template>
 
 <script>
@@ -29,7 +32,7 @@ export default {
   },
   computed: {
     title() {
-      return `${this.$route.params.key}さんのKENTO用API`
+      return `${this.$route.params.key} さん専用の KENTO API`
     },
     kento_api_url() {
       const params = new URLSearchParams()
@@ -43,7 +46,6 @@ export default {
 
 <style lang="sass">
 .SwarsUsersKeyKentoApi
-  min-height: 100vh
   .section
     &:first-of-type
       padding-top: 1.8rem

@@ -1,6 +1,8 @@
 import dayjs from "dayjs"
 const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
 
+const site_desc = "将棋に関連する便利サービスを提供するサイトです"
+
 const config = {
 // export default {
   // debug: true,
@@ -16,6 +18,9 @@ const config = {
 
   router: {
     base: process.env.NODE_ENV === 'production' ? "/app/" : "/",
+
+    // https://ja.nuxtjs.org/api/configuration-router/#trailingslash
+    // trailingSlash: false,
   },
 
   generate: {
@@ -38,7 +43,7 @@ const config = {
       // https://ja.nuxtjs.org/faq/duplicated-meta-tags/
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: "将棋に関連する便利サービスを提供するサイトです" },
+      { hid: 'description', name: 'description', content: site_desc },
       { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://0.0.0.0:3000" : "") + "/x-cable" },
 
       { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
@@ -47,7 +52,7 @@ const config = {
 
       // 重要なのはこの4つだけで各ページで上書きする
       { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND" },
-      { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです" },
+      { hid: "og:description", property: "og:description", content: site_desc },
       { hid: "og:image",       property: "og:image",       content: process.env.MY_OGP_URL + "/ogp/application.png" },
       { hid: "twitter:card",   property: "twitter:card",   content: "summary" }, // summary or summary_large_image
 
@@ -56,7 +61,8 @@ const config = {
 
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { hid: "icon",             rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'          },
+      { hid: "apple-touch-icon", rel: "apple-touch-icon",           href: "/apple-touch-icon.png" },
     ],
     // base: { href: "http://0.0.0.0:3000" },
   },
