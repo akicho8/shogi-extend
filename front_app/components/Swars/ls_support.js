@@ -14,76 +14,92 @@
 //     },
 //
 //     computed: {
-//       ls_key() {
+//       ls_storage_key() {
 //         return "my_app" // localStorage のキー ← デフォルトでは this.$options.name なのでそのままでもよい
 //       },
 //
-//       ls_data() {
+//       ls_default() {
 //         return {
 //           my_var1: false, // 初期値
 //         }
 //       },
 //     },
 //   }
+
+import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
+
 export default {
+  beforeDestroy() {
+    this.ls_destroy()
+  },
+
   methods: {
-    $_ls_setup() {
-      this.$_ls_load()
-      // FIXME: unwatch してない
-      this.$watch(() => this.$_ls_watch_values, () => this.$_ls_save(), {deep: true}) // 変数がハッシュかもしれないので deep: true にしておく
-    },
-
-    $_ls_save() {
-      if (this.development_p) {
-        console.log("$_ls_save", JSON.stringify(this.$_ls_hash))
+    ls_setup() {
+      if (!this.$ls_unwatch) {
+        this.ls_load()
+        // 変数がハッシュかもしれないので deep: true にしておく
+        this.$ls_unwatch = this.$watch(() => this.ls_attributes, () => this.ls_save(), {deep: true})
       }
-      this.lst_save(this.ls_key, this.$_ls_hash)
     },
 
-    $_ls_load() {
-      if (this.development_p) {
-        console.log("$_ls_load", this.lst_load(this.ls_key))
+    // private
+
+    ls_destroy() {
+      if (this.$ls_unwatch) {
+        this.$ls_unwatch()
+        this.$ls_unwatch = null
       }
-      this.$_ls_set_vars(this.lst_load(this.ls_key))
     },
 
-    $_ls_set_vars(hash) {
-      this.$_ls_data_keys.forEach(key => {
-        const val = hash[key]
-        if (val != null) {
-          this[key] = val
+    ls_save() {
+      MyLocalStorage.set(this.ls_storage_key, this.ls_attributes)
+    },
+
+    ls_load() {
+      this.ls_restore(MyLocalStorage.get(this.ls_storage_key))
+    },
+
+    ls_restore(hash) {
+      if (!hash) {
+        hash = {}
+      }
+      this.ls_keys.forEach(key => {
+        if (key in hash) {
+          this[key] = hash[key]
         } else {
-          this[key] = this.ls_data[key] // 初期値設定
+          this[key] = this.ls_default[key] // 初期値設定
         }
       })
     },
 
-    $_ls_reset() {
-      this.lst_delete(this.ls_key)
-      this.$_ls_load()
+    ls_reset() {
+      MyLocalStorage.remove(this.ls_storage_key)
+      this.ls_load()
     },
   },
 
   computed: {
-    ls_key() {
-      return this.$options.name || alert("ls_key is not implemented")
+    ls_storage_key() {
+      return this.$options.name || alert("ls_storage_key is not implemented")
     },
 
-    ls_data() {
-      alert("ls_data is not implemented")
+    // 初期値を設定することで使われているキーがわかる
+    ls_default() {
+      alert("ls_default is not implemented")
     },
 
-    $_ls_data_keys() {
-      return Object.keys(this.ls_data)
+    // private
+
+    ls_keys() {
+      return Object.keys(this.ls_default)
     },
 
-    $_ls_watch_values() {
-      return this.$_ls_data_keys.map(e => this[e])
+    ls_values() {
+      return this.ls_keys.map(e => this[e])
     },
 
-    // ハッシュ型にした保存するデータ
-    $_ls_hash() {
-      return this.$_ls_data_keys.reduce((a, e) => ({...a, [e]: this[e]}), {})
+    ls_attributes() {
+      return this.ls_keys.reduce((a, e) => ({...a, [e]: this[e]}), {})
     },
   },
 }

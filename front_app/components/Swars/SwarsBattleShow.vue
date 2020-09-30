@@ -204,7 +204,6 @@ export default {
 
     // 開始局面
     // turn start_turn critical_turn の順に見る
-    // turn は $options.modal_record にのみ入っている
     start_turn_for(record) {
       if (this.board_show_type === "last") {
         return record.turn_max

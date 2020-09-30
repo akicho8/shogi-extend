@@ -21,6 +21,12 @@
       b $route.params
       pre {{$route.params}}
     .block
+      b $nuxt.$route.query
+      pre {{$nuxt.$route.query}}
+    .block
+      b $nuxt.$route.params
+      pre {{$nuxt.$route.params}}
+    .block
       b config
       pre {{config}}
 </template>

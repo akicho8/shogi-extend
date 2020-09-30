@@ -398,8 +398,7 @@ module Swars
 
     let :table_column_list do
       list = []
-      if Rails.env.production? || Rails.env.staging?
-      else
+      if Rails.env.development? || Rails.env.test?
         list << { key: :id,             label: "ID",   visible: true, }
       end
       list << { key: :attack_tag_list,  label: "戦型", visible: true,  }

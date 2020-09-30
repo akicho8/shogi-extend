@@ -30,38 +30,46 @@
           b-menu-item(label="仕掛け"   @click.stop="board_show_type = 'outbreak_turn'" )
           b-menu-item(label="終局図"   @click.stop="board_show_type = 'last'"          )
 
-        b-menu-list(label="フィルタ")
-          b-menu-item(label="勝ち"    @click.stop="filter_search(`judge:win`)")
-          b-menu-item(label="負け"    @click.stop="filter_search(`judge:lose`)")
-          b-menu-item(label="なし"    @click.stop="filter_search(``)")
+        b-menu-list(label="表示オプション")
+          b-menu-item
+            template(slot="label" slot-scope="props")
+              | 表示件数
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-if="development_p")
+              b-menu-item(label="0" @click.stop="update_search({per: 0})")
+              b-menu-item(label="1" @click.stop="update_search({per: 1})")
+            template(v-for="per in config.per_page_list")
+              b-menu-item(:label="`${per}`" @click.stop="update_search({per})")
 
-        b-menu-list(label="表示件数")
-          template(v-if="development_p")
-            b-menu-item(label="0" @click.stop="per_change(0)")
-            b-menu-item(label="1" @click.stop="per_change(1)")
-          template(v-for="per in config.per_page_list")
-            b-menu-item(:label="`${per}`" @click.stop="per_change(per)")
+          b-menu-item
+            template(slot="label" slot-scope="props")
+              | フィルタ
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            b-menu-item(label="勝ち"    @click.stop="filter_search(`judge:win`)")
+            b-menu-item(label="負け"    @click.stop="filter_search(`judge:lose`)")
+            b-menu-item(label="なし"    @click.stop="filter_search(``)")
 
         b-menu-list(label="その他")
 
           b-menu-item(:disabled="!config.current_swars_user_key")
             template(slot="label" slot-scope="props")
-              | ZIP ダウンロード
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-down' : 'menu-up'")
+              | ダウンロード
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in ZipKifuInfo.values")
               b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
 
-        b-menu-list(label="便利な使い方")
-          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key-kento-api', params: {key: config.current_swars_user_key}}" label="KENTO側で一覧表示" :disabled="!config.current_swars_user_key")
+          b-menu-item(
+            label="KENTO API"
+            tag="nuxt-link"
+            :to="{name: 'swars-users-key-kento-api', params: {key: config.current_swars_user_key}}"
+            :disabled="!config.current_swars_user_key")
 
           b-menu-item(:disabled="!config.current_swars_user_key")
             template(slot="label" slot-scope="props")
-              | 直近を外部APPで開く
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-down' : 'menu-up'")
+              | 外部APPショートカット
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in ExternalAppInfo.values")
               b-menu-item(@click="external_app_handle(e)" :label="e.name")
-
-          //- b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key-direct-open-external_app_key', params: {key: config.current_swars_user_key, external_app_key: 'piyo_shogi'}}" label="直近ぴよ開く" :disabled="!config.current_swars_user_key")
 
         b-menu-list(label="test" v-if="development_p")
           b-menu-item
@@ -77,11 +85,7 @@
     template(slot="brand")
       b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
         b-icon(icon="menu")
-      b-navbar-item.has-text-weight-bold(tag="div") 将棋ウォーズ棋譜検索
-    //- template(slot="start")
-    //-   b-navbar-item(tag="a" href="/") TOP
-    //- template(slot="end")
-    //-   b-navbar-item(tag="a" href="/") TOP
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{query: {}}") 将棋ウォーズ棋譜検索
 
   .section
     .columns
@@ -147,12 +151,12 @@
             backend-pagination
             pagination-simple
             :data="config.records"
-            @page-change="page_change_handle"
+            @page-change="(page) => update_search({page})"
 
             backend-sorting
             :default-sort-direction="config.sort_order_default"
             :default-sort="[config.sort_column, config.sort_order]"
-            @sort="sort_handle"
+            @sort="(sort_column, sort_order) => update_search({sort_column, sort_order})"
 
             ref="table"
 
@@ -163,7 +167,7 @@
             TableEmpty(slot="empty" v-if="!$fetchState.pending && $route.query.query && config.records.length === 0")
 
             b-table-column(v-slot="{row}" field="id" :label="config.table_columns_hash['id'].label" :visible="visible_hash.id" sortable numeric v-if="config.table_columns_hash.id")
-              a(@click.stop :href="row.show_path") \#{{row.id}}
+              a(@click="show_handle(row)") \#{{row.id}}
 
             template(v-if="config.current_swars_user_key")
               b-table-column(v-slot="{row}" label="自分")
@@ -207,7 +211,6 @@
                 KentoButton(tag="a" @click.stop :href="kento_app_with_params_url(row)")
                 KifCopyButton(@click.stop.prevent="kif_clipboard_copy({kc_path: row.show_path})")
                 SpShowButton(@click="show_handle(row)")
-                PulldownMenu(:record="row" position="is-bottom-right" :turn_offset="trick_start_turn_for(row)")
   pre(v-if="development_p") {{config}}
 </template>
 
@@ -219,7 +222,6 @@ import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
 import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
 
 import battle_index_mod from "./battle_index_mod.js"
-import usage_mod from "./usage_mod.js"
 
 import MemoryRecord from 'js-memory-record'
 
@@ -233,11 +235,7 @@ export default {
   mixins: [
     support,
     battle_index_mod,
-    usage_mod,
   ],
-  props: {
-    // config: { type: Object, required: true },
-  },
 
   beforeCreate() {
     this.$store.state.app = this
@@ -245,7 +243,6 @@ export default {
 
   data() {
     return {
-      external_app_setup: false,
       sidebar_open_p: false,
       submited: false,
       detailed: false,
@@ -270,46 +267,25 @@ export default {
   },
 
   fetch() {
+    this.sidebar_open_p = false
+
     // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
     // http://0.0.0.0:4000/swars/users/devuser1
     return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
       this.config = config
-      this.search_scope_key = this.config.search_scope_key // スコープ
+      // this.search_scope_key = this.config.search_scope_key // スコープ
       this.board_show_type  = this.config.board_show_type // 何の局面の表示をするか？
-      this.records          = this.config.records // 表示するレコード配列
 
       this.query              = this.config.query
 
-      this.$_ls_setup()
+      this.ls_setup()
       ZipKifuInfo.memory_record_reset(this.config.zip_kifu_info)
     })
   },
 
   computed: {
     ExternalAppInfo() { return ExternalAppInfo },
-
-    query_key() {
-      if (this.config) {
-        return this.config.current_swars_user_key
-      }
-    },
-
-    ZipKifuInfo() { return ZipKifuInfo },
-
-    permalink_url() {
-      return this.query_url_build(this.query)
-    },
-
-    // 最初に一覧を表示するか？
-    index_table_show_p() {
-      // required_query_for_search の指定がなければ常に表示する
-      if (!this.config.required_query_for_search) {
-        return true
-      }
-      // テーブルを表示する条件は検索文字列があること。または modal_record があること。
-      // フォームに割り当てられている this.query だと変動するので使ってはいけない
-      return this.config.query // || this.config.modal_record
-    },
+    ZipKifuInfo()     { return ZipKifuInfo     },
 
     search_form_complete_list() {
       if (this.config.remember_swars_user_keys) {
@@ -321,6 +297,14 @@ export default {
   },
 
   methods: {
+    update_search(params) {
+      this.$router.push({query: {...this.$route.query, ...params}})
+    },
+
+    filter_search(query) {
+      this.update_search({query: _.trim(`${this.config.current_swars_user_key} ${query}`)})
+    },
+
     external_app_handle(info) {
       if (this.config.current_swars_user_key) {
         MyLocalStorage.set("external_app_setup", true)
@@ -332,33 +316,16 @@ export default {
           },
         })
       }
-
-      // if (this.config.current_swars_user_key) {
-      //   const params = {
-      //     query: this.config.current_swars_user_key,
-      //     latest_open_index: 0,
-      //     // external_app_setup: true,
-      //     external_app_key: external_app_key,
-      //   }
-      //   this.external_app_setup = true
-      //   this.$router.push({name: "swars-search", query: params})
-      //
-      //   this.$buefy.dialog.alert({
-      //     title: "設定",
-      //     message: "この状態で「ホーム画面に追加」しておくと1回のタップで直前の対局を開けるようになります",
-      //     // canCancel: ["outside", "escape"],
-      //     // onConfirm: () => { this.sound_play("click") },
-      //     // onCancel:  () => { this.sound_play("click") },
-      //   })
-      //
-      // }
     },
 
     zip_dl_handle(key) {
-      const params = new URLSearchParams()
-      params.set("zip_kifu_key", key)
-      params.set("query", this.query)
-      const url = this.$config.MY_SITE_URL + `/w.zip?${params}`
+      const params = {
+        ...this.$route.query,
+        zip_kifu_key: key,
+      }
+      const usp = new URLSearchParams()
+      _.each(params, (v, k) => usp.set(k, v))
+      const url = this.$config.MY_SITE_URL + `/w.zip?${usp}`
       location.href = url
     },
 
@@ -366,45 +333,6 @@ export default {
     cb_toggle_handle(column) {
       this.sound_play('click')
       this.$set(this.visible_hash, column.key, !this.visible_hash[column.key])
-      // if (this.visible_hash[column.key]) {
-      //   this.say(column.name)
-      // }
-    },
-
-    query_search(query) {
-      this.$router.push({name: "swars-search", query: {query: query}})
-      // this.query = query
-      // window.history.replaceState("", null, this.permalink_url)
-      // this.async_records_load()
-    },
-    filter_search(query) {
-      if (this.config.current_swars_user_key) {
-        this.$router.push({name: "swars-search", query: {query: _.trim(`${this.config.current_swars_user_key} ${query}`)}})
-      }
-      // this.query = query
-      // window.history.replaceState("", null, this.permalink_url)
-      // this.async_records_load()
-      // }
-    },
-
-    per_change(per) {
-      if (this.config.current_swars_user_key) {
-        this.debug_alert(per)
-        this.sidebar_open_p = false
-        this.$router.push({name: "swars-search", query: {query: this.config.current_swars_user_key, per: per}})
-      }
-    },
-
-    form_submited(e) {
-      this.process_now()
-
-      this.submited = true
-    },
-
-    query_url_build(query) {
-      const params = new URLSearchParams()
-      params.set("query", query)
-      return `/w?${params}`
     },
 
     row_class(row, index) {
@@ -428,38 +356,4 @@ export default {
   .section
     &:first-of-type
       padding-top: 1.8rem
-
-  //////////////////////////////////////////////////////////////////////////////// 便利な使い方
-
-  .usage_modal
-    li:not(:first-child)
-      margin-top: 0.8rem
-
-  //////////////////////////////////////////////////////////////////////////////// 検索の下のところ
-
-  .search_bottom_controllers
-    justify-content: space-around
-    +desktop
-      justify-content: flex-start
-    .search_index_dropdown_menu
-    .board_show_type_field
-      margin-left: 1rem
-    .player_info_show_button
-      margin-left: 1rem
-
-  //////////////////////////////////////////////////////////////////////////////// テーブル上のチェックボックス
-
-  .table_column_toggle_checkboxes
-    +mobile
-      .is-grouped
-        justify-content: center
-        .control-label
-          padding-left: 0.18rem // 「□(ここ)ラベル」の隙間
-
-  //////////////////////////////////////////////////////////////////////////////// モバイル時の shogi-player の横スペース調整用
-
-  .sp_mobile_padding
-    +mobile
-      padding-left: 0px
-      padding-right: 0px
 </style>

@@ -268,7 +268,7 @@ export default {
   },
 
   computed: {
-    ls_data() {
+    ls_default() {
       return {
         tab_index: 0, // 初期値
       }

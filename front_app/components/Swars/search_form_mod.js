@@ -13,7 +13,7 @@ export default {
         this.debug_alert("query is blank")
         return
       }
-      this.query_search(this.query)
+      this.update_search({query: this.query})
     },
 
     // Enterキーを叩いた
@@ -28,7 +28,7 @@ export default {
     search_select_handle(query) {
       this.debug_alert(`select: ${query}`)
       if (query) {
-        this.query_search(query)
+        this.update_search({query: query})
       }
     },
   },
