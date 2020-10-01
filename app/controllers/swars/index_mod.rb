@@ -126,7 +126,7 @@ module Swars
         {
           :title       => "将棋ウォーズ棋譜検索",
           :description => "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます",
-          :image       => "swars_battles_index.png",
+          :image       => nil,
         }
       end
     end

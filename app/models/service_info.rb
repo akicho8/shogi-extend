@@ -3,9 +3,9 @@ class ServiceInfo
   memory_record [
     {
       display_p: true,
-      link_path: [:swars, :battles],
+      link_path: UrlProxy.wrap("/swars/search"),
       title: "将棋ウォーズ棋譜検索",
-      image_source: "swars_battles_index.png",
+      image_source: "ogp/swars-search.png",
       description: "直近の対局の検討することを目的とした棋譜取得サービス",
       feature_items: [
         "ぴよ将棋やKENTOと連携",
