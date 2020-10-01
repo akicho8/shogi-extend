@@ -1,7 +1,0 @@
-.columns
-  .column
-    = form_with(url: [:swars, :battles], method: :get, skip_enforcing_utf8: true, html: { ref: "search_form" }) do |form|
-      b-field
-        b-autocomplete(name="query" v-model.trim="query" :data="search_form_complete_list" rounded icon="magnify" type="search" placeholder="ウォーズIDを入力" ref="query_field" :open-on-focus="true" expanded list="search_field_query_completion" @select="ac_select" @typing="ac_typing" @focus="ac_focus" @keypress.native.enter="ac_keypress_native_enter")
-        p.control
-          b-button.search_form_submit_button(native-type="submit" class="is-info" icon-left="magnify")
