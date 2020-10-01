@@ -27,6 +27,8 @@ namespace :front_app do
         execute :rm, "-rf", "#{release_path}/public/s"
         execute :rm, "-rf", "#{release_path}/front_app/.nuxts"
         upload! "front_app/.nuxt", "#{release_path}/front_app/", recursive: true
+        upload! "front_app/.env.#{fetch(:stage)}", "#{release_path}/front_app/"
+
         within "#{release_path}/front_app" do
           execute :yarn
         end

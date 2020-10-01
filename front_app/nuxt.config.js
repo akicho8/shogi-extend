@@ -17,7 +17,7 @@ const config = {
   target: 'server',
 
   router: {
-    base: process.env.NODE_ENV === 'production' ? "/app/" : "/",
+    // base: process.env.NODE_ENV === 'production' ? "/app/" : "/",
 
     // https://ja.nuxtjs.org/api/configuration-router/#trailingslash
     // trailingSlash: false,
@@ -44,7 +44,7 @@ const config = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: site_desc },
-      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://0.0.0.0:3000" : "") + "/x-cable" },
+      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://0.0.0.0:3000" : "") + "/maincable" },
 
       { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
       { hid: "og:type",        property: "og:type",        content: "website" },

@@ -102,7 +102,7 @@ module FrontendScript
         info[:current_user] = current_user.as_json_type9x
 
         if true
-          # すでにログインしている人は x-cable で unauthorized になる
+          # すでにログインしている人は maincable で unauthorized になる
           # これはクッキーに記録しないままログインしたのが原因
           # なのですでにログインしていたらクッキーに埋める
           c.current_user_set_for_action_cable(current_user)
