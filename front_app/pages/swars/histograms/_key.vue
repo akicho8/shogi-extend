@@ -1,32 +1,32 @@
 <template lang="pug">
 client-only
   .swars-histograms-key
-    b-navbar(type="is-primary")
+    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
       template(slot="brand")
-        b-navbar-item.has-text-weight-bold(tag="div")
+        HomeNavbarItem
+        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: $route.params.key}}")
           | 将棋ウォーズ{{config.tactic.name}}分布
-      template(slot="end")
-        b-navbar-item(tag="a" href="/") TOP
 
     .section
-      SwarsHistogramNavigation(:config="config")
-      .columns
-        .column
-          b-table.mt-3(
-            :data="config.records"
-            :mobile-cards="false"
-            hoverable
-            )
-            b-table-column(v-slot="{row}" field="name"            label="名前" sortable) {{row.name}}
-            b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable)
-              template(v-if="row.ratio")
-                | {{float_to_perc(row.ratio, 3)}} %
-            //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="debug_p")
-            //-   template(v-if="row.deviation_score")
-            //-     | {{number_floor(row.deviation_score, 3)}}
-            b-table-column(v-slot="{row}" field="count"           label="数" numeric sortable) {{row.count}}
+      .container
+        SwarsHistogramNavigation(:config="config")
+        .columns
+          .column
+            b-table.mt-3(
+              :data="config.records"
+              :mobile-cards="false"
+              hoverable
+              )
+              b-table-column(v-slot="{row}" field="name"            label="名前" sortable) {{row.name}}
+              b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable)
+                template(v-if="row.ratio")
+                  | {{float_to_perc(row.ratio, 3)}} %
+              //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="debug_p")
+              //-   template(v-if="row.deviation_score")
+              //-     | {{number_floor(row.deviation_score, 3)}}
+              b-table-column(v-slot="{row}" field="count"           label="数" numeric sortable) {{row.count}}
 
-          pre(title="DEBUG" v-if="debug_p") {{config}}
+            pre(title="DEBUG" v-if="debug_p") {{config}}
 </template>
 
 <script>
@@ -47,9 +47,6 @@ export default {
         { hid: "og:description", property: "og:description", content: ""},
       ],
     }
-  },
-  mounted() {
-    this.sound_play("click")
   },
 }
 </script>

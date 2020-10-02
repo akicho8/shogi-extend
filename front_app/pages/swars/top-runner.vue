@@ -1,25 +1,26 @@
 <template lang="pug">
 client-only
   .swars-professional
-    b-navbar(type="is-primary")
+    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
       template(slot="brand")
-        b-navbar-item.has-text-weight-bold(tag="div") 将棋ウォーズイベント上位プレイヤー
-      template(slot="end")
-        b-navbar-item(tag="a" href="/") TOP
+        HomeNavbarItem
+        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-top-runner'}")
+          | 将棋ウォーズイベント上位プレイヤー
     .section
-      .columns
-        .column
-          b-table(
-            :data="records"
-            :mobile-cards="false"
-            hoverable
-            )
-            b-table-column(v-slot="{row}" field="user.name"  label="名前" sortable :width="1" numeric)
-              a.is-block(:href="`${$config.MY_SITE_URL}/w?query=${row.user.key}`")
-                | {{row.user.name}}
-            b-table-column(v-slot="{row}" field="win_ratio"  label="直近の勝敗" sortable cell-class="ox_sequense is_line_break_on")
-              | {{row.judge}}
-          pre(title="DEBUG" v-if="development_p || !!$route.query.debug") {{records}}
+      .container
+        .columns
+          .column
+            b-table(
+              :data="records"
+              :mobile-cards="false"
+              hoverable
+              )
+              b-table-column(v-slot="{row}" field="user.name"  label="名前" sortable :width="1" numeric)
+                a.is-block(:href="`${$config.MY_SITE_URL}/w?query=${row.user.key}`")
+                  | {{row.user.name}}
+              b-table-column(v-slot="{row}" field="win_ratio"  label="直近の勝敗" sortable cell-class="ox_sequense is_line_break_on")
+                | {{row.judge}}
+            pre(title="DEBUG" v-if="development_p || !!$route.query.debug") {{records}}
 </template>
 
 <script>

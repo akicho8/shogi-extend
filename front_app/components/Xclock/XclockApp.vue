@@ -231,9 +231,6 @@ export default {
         e.tap_and_auto_start_handle()
       }
     },
-    back_handle() {
-      location.href = "/"
-    },
     copy_handle() {
       this.sound_play("click")
       this.say("左の設定を右にコピーしますか？")

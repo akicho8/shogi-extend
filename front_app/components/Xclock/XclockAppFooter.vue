@@ -1,7 +1,7 @@
 <template lang="pug">
 .XclockAppFooter.is-flex
-  .item(@click="app.back_handle")
-    b-icon(icon="arrow-left")
+  nuxt-link.item(:to="{name: 'index'}" @click.native="sound_play('click')")
+    b-icon(icon="home")
 
   b-dropdown(position="is-top-left" @active-change="e => app.dropdown_active_change(e)" ref="preset_menu_pull_down")
     .item(slot="trigger")
@@ -79,6 +79,7 @@ export default {
   background-color: change_color($white-ter, $alpha: 0.96)
 
   .item
+    color: inherit
     cursor: pointer
 
     padding-right: 1rem

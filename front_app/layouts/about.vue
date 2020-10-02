@@ -1,26 +1,27 @@
 <template lang="pug">
 .about
-  b-navbar(type="is-primary")
+  b-navbar(type="is-primary" wrapper-class="container" spaced)
     template(slot="brand")
-      b-navbar-item.px-4.has-text-weight-bold(tag="a" :href="$config.MY_SITE_URL") SHOGI-EXTEND
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'index'}") SHOGI-EXTEND
     template(slot="start" v-if="false")
-      b-navbar-item(v-if="development_p" tag="nuxt-link" :to="{name:'index'}" exact-active-class="is-active") Home
+      b-navbar-item(v-if="development_p" tag="nuxt-link" :to="{name: 'index'}" exact-active-class="is-active") Home
       template(v-for="(item, key) of items")
         b-navbar-item(tag="nuxt-link" :to="item.to" exact-active-class="is-active") {{item.title}}
 
   .section.pt-4
-    .tabs.mb-6(v-if="false")
-      ul
-        li(v-for="(item, key) of items" :key="key" class="is-active")
-          nuxt-link(:to="item.to" exact-active-class="is-active" class="is-active") {{item.title}}
+    .container
+      .tabs.mb-6(v-if="false")
+        ul
+          li(v-for="(item, key) of items" :key="key" class="is-active")
+            nuxt-link(:to="item.to" exact-active-class="is-active" class="is-active") {{item.title}}
 
-    .tabs.mb-6(v-if="true")
-      ul
-        template(v-for="(item, key) of items")
-          nuxt-link(:to="item.to" v-slot="{ href, route, navigate, isActive, isExactActive }")
-            li(:class="[isActive && 'is-active', isExactActive && '']")
-              a(:href="href" @click="navigate") {{item.title}}
-    nuxt
+      .tabs.mb-6(v-if="true")
+        ul
+          template(v-for="(item, key) of items")
+            nuxt-link(:to="item.to" v-slot="{ href, route, navigate, isActive, isExactActive }")
+              li(:class="[isActive && 'is-active', isExactActive && '']")
+                a(:href="href" @click="navigate") {{item.title}}
+      nuxt
 </template>
 
 <script>

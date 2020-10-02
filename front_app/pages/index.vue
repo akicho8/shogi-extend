@@ -1,5 +1,5 @@
 <template lang="pug">
-.index
+.index.has-background-white-bis
   b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container" spaced)
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'index'}") SHOGI-EXTEND
@@ -8,8 +8,8 @@
       .columns.is-multiline
         template(v-for="e in config")
           template(v-if="e.display_p")
-            .column.is-one-third-desktop.is-half-tablet(:key="e._key")
-              nuxt-link.box(:to="e.nuxt_link_to")
+            .column.is-one-third-desktop.is-half-tablet
+              nuxt-link.box(:to="e.nuxt_link_to" @click.native="sound_play('click')")
                 .content
                   .image
                     img(:src="`/ogp/${e.ogp_image_base}.png`")
@@ -21,8 +21,34 @@
                   ul.is-size-7.features
                     template(v-for="e in e.features")
                       li(v-html="e")
+  .footer
+    .container
+      .columns
+        .column.is-half.has-text-centered
+          .title.is-6.mb-0.has-text-weight-bold About
+          ul.mt-1
+            li
+              nuxt-link(:to="{path: '/about/privacy-policy'}") プライバシー
+            li
+              nuxt-link(:to="{path: '/about/terms'}") 利用規約
+            li
+              nuxt-link(:to="{path: '/about/credit'}") クレジット
+            li
+              a(href="https://twitter.com/sgkinakomochi" target="_blank") 問い合わせ
 
-      pre {{config}}
+        .column.is-half.has-text-centered
+          .title.is-6.mb-0.has-text-weight-bold GitHub
+          ul.mt-1
+            li
+              a(href="https://github.com/akicho8/shogi_web") shogi_web
+            li
+              a(href="https://akicho8.github.io/shogi-player/") shogi-player
+            li
+              a(href="https://github.com/akicho8/bioshogi") bioshogi
+            li
+              a(href="https://github.com/akicho8/SKK-JISYO.shogi") 将棋用語辞書
+            li
+              a(href="https://github.com/akicho8/shogi-mode") shogi-mode.el
 </template>
 
 <script>
@@ -56,4 +82,8 @@ export default {
 <style scoped lang="sass">
 .features
   height: 3rem
+.footer
+  color: $grey
+  a
+    color: inherit
 </style>

@@ -1,15 +1,13 @@
 <template lang="pug">
 .about-credit
   .content
-    .title.is-4.has-text-centered-mobile クレジット 
-    .subtitle.is-6.has-text-centered-mobile 利用素材
+    .title.is-4.has-text-centered-mobile クレジット (利用素材)
     hr
 
     h4 画像
-
     ul
       li
-        a(href="http://sozai.7gates.net/docs/japanese-chess/") 無料素材倶楽部 将棋駒と将棋盤
+        a(href="http://sozai.7gates.net/docs/japanese-chess/") 無料素材倶楽部
       li
         a(href="http://mucho.girly.jp/bona/") 将棋アプリ用クリエイティブコモンズ画像
       li
@@ -17,7 +15,7 @@
       li
         a(href="http://free-paper-texture.com/") Paper-co
       li
-        a(href="https://www.irasutoya.com/") かわいいフリー素材集 いらすとや
+        a(href="https://www.irasutoya.com/") いらすとや
       li
         a(href="https://twitter.com/Shogi_Zuan") 将棋図案駒
       li
@@ -45,16 +43,9 @@
 </template>
 
 <script>
-import autolinker from 'autolinker'
-
 export default {
   name: "about-credit",
   layout: "about",
-  methods: {
-    auto_link(str, options = {}) {
-      return autolinker.link(str, {newWindow: true, truncate: null, mention: "twitter", ...options})
-    },
-  },
 }
 </script>
 

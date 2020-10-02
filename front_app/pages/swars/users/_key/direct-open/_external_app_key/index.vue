@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .swars-users-key-direct-open-external_app_key
-    b-navbar(type="is-primary" shadow :mobile-burger="false" wrapper-class="container")
+    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
       template(slot="brand")
         b-navbar-item.has-text-weight-bold(tag="div") {{title}}
     .section
