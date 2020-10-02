@@ -73,6 +73,7 @@ Rails.application.routes.draw do
       match "any_source_to", via: [:get, :post]
     end
     resource :talk, only: [:show, :create]
+    resources :service_infos, only: :index
     resources :xy_records, path: "xy", only: [:index, :create, :update]
     resource :cpu_battle, only: [:show, :create]
     resource :share_board, only: [:show, :create]

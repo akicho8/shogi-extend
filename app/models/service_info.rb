@@ -3,11 +3,11 @@ class ServiceInfo
   memory_record [
     {
       display_p: true,
-      link_path: UrlProxy.wrap("/swars/search"),
+      nuxt_link_to: {path: "/swars/search"},
       title: "将棋ウォーズ棋譜検索",
-      image_source: "ogp/swars-search.png",
-      description: "直近の対局の検討することを目的とした棋譜取得サービス",
-      feature_items: [
+      ogp_image_base: "swars-search",
+      description: "検索と言いつつそんなに検索しない",
+      features: [
         "ぴよ将棋やKENTOと連携",
         "激指に転送するための棋譜コピー",
         "段級位毎の勝率表示",
@@ -15,24 +15,45 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: UrlProxy.wrap("/vs-clock"),
-      title: "対局時計",
-      new_p: false,
-      image_source: "ogp/vs-clock.png",
-      description: "チェスクロックやゲームクロックとも呼ばれている",
-      feature_items: [
-        "一般的なネット対局のプリセットを用意",
-        "24の猶予時間対応",
-        "フィッシャールール可",
+      nuxt_link_to: {path: "/swars/histograms/attack"},
+      title: "将棋ウォーズ戦法分布",
+      ogp_image_base: "swars-histograms-attack",
+      description: "人気のある戦法の傾向がわかる",
+      features: [
+        "全体だと変動しなくておもしろくないので最近のだけ出してる",
+        "囲いの分布もある",
+        "段級位の分布もある",
       ],
     },
     {
       display_p: true,
-      link_path: UrlProxy.wrap("/xy"),
+      nuxt_link_to: {path: "/swars/top-runner"},
+      title: "将棋ウォーズイベント上位プレイヤー",
+      ogp_image_base: "swars-top-runner",
+      description: "勢いのあるプレイヤーがわかる",
+      features: [
+        "棋士団戦の期間は幽霊団員も出てきてしまう",
+        "名前タップで検索できる",
+      ],
+    },
+    {
+      display_p: true,
+      nuxt_link_to: {path: "/swars/professional"},
+      title: "将棋ウォーズ十段の成績",
+      ogp_image_base: "swars-professional",
+      description: "プロの成績を覗き見る",
+      features: [
+        "なぜか電脳少女シロの成績もある",
+        "名前タップで検索できる",
+      ],
+    },
+    {
+      display_p: true,
+      nuxt_link_to: {path: "/xy"},
       title: "符号の鬼",
-      image_source: "ogp/xy.png",
+      ogp_image_base: "xy",
       description: "符号マスター養成所",
-      feature_items: [
+      features: [
         "タップするルールはスマホ用",
         # "キーボードで入力するルールはPC用",
         "100問正解するまでの時間を競う",
@@ -44,14 +65,24 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: UrlProxy.wrap("/three-stage-leagues"),
-      title: "奨励会三段リーグ成績早見表",
-      image_source: [
-        "ogp/three-stage-leagues.png",
-        "ogp/three-stage-league-players.png",
+      nuxt_link_to: {path: "/vs-clock"},
+      title: "対局時計",
+      new_p: false,
+      ogp_image_base: "vs-clock",
+      description: "チェスクロックとも言う",
+      features: [
+        "一般的なネット対局のプリセットを用意",
+        "24の猶予時間対応",
+        "フィッシャールール可",
       ],
-      description: "成績が一目でわかるサービス",
-      feature_items: [
+    },
+    {
+      display_p: true,
+      nuxt_link_to: {path: "/three-stage-leagues"},
+      title: "奨励会三段リーグ成績早見表",
+      ogp_image_base: "three-stage-league-players",
+      description: "個人の総合成績がわかる",
+      features: [
         "スマホに最適化",
         "個人毎の総成績表示",
         "在籍期間の表示",
@@ -59,26 +90,23 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: UrlProxy.wrap("/adapter"),
+      nuxt_link_to: {path: "/adapter"},
       title: "なんでも棋譜変換",
-      image_source: "ogp/adapter.png",
-      description: "多種多様な棋譜形式を正規化するサービス",
-      feature_items: [
-        "将棋倶楽部24や将棋クエストの棋譜を正規化",
-        "KENTOや将棋DB2のURLを棋譜化",
+      ogp_image_base: "adapter",
+      description: "混沌とした棋譜フォーマット界を正したい",
+      features: [
+        "変則的な将棋倶楽部24の棋譜を正規化",
+        "将棋クエストのCSA形式をKIFに変換",
         "KIF・KI2・SFEN・BOD 形式の相互変換",
-        # "「ぴよ将棋」や「KENTO」に橋渡し",
-        # "棋譜共有(ツイートできる)",
-        # "特定局面の画像化",
       ],
     },
     {
       display_p: true,
-      link_path: UrlProxy.wrap("/share-board"),
+      nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",
-      image_source: "ogp/share-board.png",
-      description: "リレー将棋などを目的としたサービス",
-      feature_items: [
+      ogp_image_base: "share-board",
+      description: "リレー将棋や詰将棋の共有に向いている",
+      features: [
         "SNS等での指し継ぎ",
         "課題局面や詰将棋の作成",
         "オンライン対局向けのリアルタイム盤共有",
@@ -91,11 +119,11 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: UrlProxy.wrap("/stopwatch"),
+      nuxt_link_to: {path: "/stopwatch"},
       title: "詰将棋RTA用ストップウォッチ",
-      image_source: "ogp/stopwatch.png",
+      ogp_image_base: "stopwatch",
       description: "詰将棋を解く時間と正解率の計測サービス",
-      feature_items: [
+      features: [
         "間違えた問題だけの復習が簡単",
         "途中からの再開可",
         "問題は自分で用意してください",
@@ -105,14 +133,14 @@ class ServiceInfo
     },
     {
       display_p: true,
-      link_path: UrlProxy.wrap("/cpu-battle"),
+      nuxt_link_to: {path: "/cpu-battle"},
       title: "CPU対戦",
-      image_source: "ogp/cpu-battle.png",
+      ogp_image_base: "cpu-battle",
       description: "自作の将棋AIと対戦",
-      feature_items: [
+      features: [
         # "コンピュータ将棋が初めて生まれたときぐらいのアリゴリズムで動作",
         # "CPUは矢倉・右四間飛車・嬉野流・アヒル戦法・振り飛車・英春流かまいたち戦法を指せます",
-        "将棋に特化したプログラムであってAIではない",
+        "将棋に特化したプログラムであって別にAIではない",
         "見掛け倒しな矢倉や右四間飛車が指せる",
         "作者に似てめちゃくちゃ弱い",
       ],
@@ -120,14 +148,14 @@ class ServiceInfo
     {
       on_swars_search_p: false,
       display_p: Actb::Config[:actb_display_p],
-      link_path: UrlProxy.wrap("/training"),
+      nuxt_link_to: {path: "/training"},
       title: "将棋トレーニングバトル",
       new_p: false,
-      image_source: "ogp/training.png",
+      ogp_image_base: "training",
       description: "将棋の問題を解く力を競う対戦ゲーム",
-      feature_items: [
-        "詰将棋以外の問題もある",
+      features: [
         "自作の問題を作れる",
+        "思ったより面白くない",
         "過疎っている",
         # "自作の問題を作れる",
         # "対戦は 23:00 - 23:15 のみ",
@@ -135,42 +163,6 @@ class ServiceInfo
         # "対戦→見直し→対戦のサイクルで棋力アップ(？)",
         # "ランキング上位をめざす必要はありません",
         # "アヒル戦法の誰得問題集があります",
-      ],
-    },
-    {
-      display_p: true,
-      link_path: UrlProxy.wrap("/swars/professional"),
-      title: "将棋ウォーズ十段の成績",
-      image_source: "ogp/swars-professional.png",
-      description: "プロとの対局の棋譜を探したいときに使えるかもしれない",
-      feature_items: [
-        "なぜか電脳少女シロ(SiroChannel)の成績もある",
-        "名前タップで検索できる",
-        "他とくになし",
-      ],
-    },
-    {
-      display_p: true,
-      link_path: UrlProxy.wrap("/swars/top-runner"),
-      title: "将棋ウォーズイベント上位プレイヤー",
-      image_source: "ogp/swars-top-runner.png",
-      description: "勢いのあるプレイヤーがわかる",
-      feature_items: [
-        "棋士団戦の期間は幽霊団員も出てきてしまう",
-        "名前タップで検索できる",
-        "他とくになし",
-      ],
-    },
-    {
-      display_p: true,
-      link_path: UrlProxy.wrap("/swars/histograms/attack"),
-      title: "将棋ウォーズ戦法分布",
-      image_source: "ogp/swars-histograms-attack.png",
-      description: "人気のある戦法の傾向がわかる",
-      feature_items: [
-        "全体だと変動しなくておもしろくないので最近のだけ出してる",
-        "囲いの分布もある",
-        "段級位の分布もある",
       ],
     },
   ]
