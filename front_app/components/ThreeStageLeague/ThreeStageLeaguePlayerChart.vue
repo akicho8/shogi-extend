@@ -39,7 +39,7 @@ const CHART_CONFIG_DEFAULT = {
       padding: {
         // left: 0,
         // right: 12,
-        top: 14,                // ツールチップが欠けるのを防ぐ
+        top: 0,                // ツールチップが欠けるのを防ぐ
         // bottom: 0
       },
     },
@@ -114,7 +114,7 @@ const CHART_CONFIG_DEFAULT = {
 
       displayColors: false, // 左に「■」を表示するか？
 
-      yAlign: 'bottom', // 下側にキャロットがでるようにする。マニュアルに載ってない。https://stackoverflow.com/questions/44050238/change-chart-js-tooltip-caret-position
+      yAlign: 'top', // 下側にキャロットがでるようにする。マニュアルに載ってない。https://stackoverflow.com/questions/44050238/change-chart-js-tooltip-caret-position
 
       callbacks: {
         title(tooltipItems, data) {
@@ -128,9 +128,11 @@ const CHART_CONFIG_DEFAULT = {
           const __vm__ = chart_element._chart.config.__vm__
           const membership = __vm__.config.memberships[tooltipItem.index]
           const v = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
-          let s = `${v}勝`
-          if (membership.result_key !== "none") {
-            s += ` (${membership.result_key})`
+          let s = `${v}`
+          if (false) {
+            if (membership.result_key !== "none") {
+              s += ` (${membership.result_key})`
+            }
           }
           return s
         },

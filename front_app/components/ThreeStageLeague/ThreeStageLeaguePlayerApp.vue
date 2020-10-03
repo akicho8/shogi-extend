@@ -4,37 +4,38 @@
     p http://0.0.0.0:3000/api/three_stage_league_player
     p http://0.0.0.0:3000/api/three_stage_league_player?name=西山朋佳
 
-  b-navbar(type="is-primary")
+  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold(tag="div") {{config.main_user.name_with_age}}
+      HomeNavbarItem
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: config.main_user.name}}") {{config.main_user.name_with_age}}
     template(slot="end")
-      b-navbar-item(tag="a" :href="image_search_url(config.main_user.name)" target="_blank") ぐぐる
-      b-navbar-item(tag="a" href="/") TOP
+      b-navbar-item.has-text-weight-bold(tag="a" :href="image_search_url(config.main_user.name)" target="_blank") ぐぐる
 
   .section
-    .columns
-      .column
-        ThreeStageLeaguePlayerChart(:config="config")
-        b-table.mt-3(
-          :data="config.memberships"
-          :mobile-cards="false"
-          hoverable
-          )
-          b-table-column(v-slot="{row}" field="league.generation" label="期" numeric sortable)
-            nuxt-link(:to="{name: 'three-stage-leagues-generation', params: {generation: row.league.generation}}" @click.native="sound_play('click')")
-              | {{row.league.generation}}
-          //- b-table-column(v-slot="{row}" field="seat_count"        label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
-          b-table-column(v-slot="{row}" field="age"               label="歳" numeric sortable) {{row.age}}
-          b-table-column(v-slot="{row}" field="win"               label="勝" numeric sortable) {{row.win}}
-          b-table-column(v-slot="{row}" field="win"               label="勝敗" sortable cell-class="ox_sequense is_line_break_on")
-            | {{row.ox_human}}
-            ThreeStageLeagueMark(:record="row")
+    .container
+      .columns
+        .column
+          ThreeStageLeaguePlayerChart(:config="config")
+          b-table.mt-3(
+            :data="config.memberships"
+            :mobile-cards="false"
+            hoverable
+            )
+            b-table-column(v-slot="{row}" field="league.generation" label="期" numeric sortable)
+              nuxt-link(:to="{name: 'three-stage-leagues-generation', params: {generation: row.league.generation}}" @click.native="sound_play('click')")
+                | {{row.league.generation}}
+            //- b-table-column(v-slot="{row}" field="seat_count"        label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
+            b-table-column(v-slot="{row}" field="age"               label="歳" numeric sortable) {{row.age}}
+            b-table-column(v-slot="{row}" field="win"               label="勝" numeric sortable) {{row.win}}
+            b-table-column(v-slot="{row}" field="win"               label="勝敗" sortable cell-class="ox_sequense is_line_break_on")
+              | {{row.ox_human}}
+              ThreeStageLeagueMark(:record="row")
 
-      .column
-        .buttons.are-small
-          template(v-for="user in config.users")
-            b-button(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: user.name}}" :class="{'has-text-weight-bold': (user.level_up_generation || user.runner_up_count >= 2)}" exact-active-class="is-active")
-              | {{user.name}}
+        .column
+          .buttons.are-small
+            template(v-for="user in config.users")
+              b-button(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: user.name}}" :class="{'has-text-weight-bold': (user.level_up_generation || user.runner_up_count >= 2)}" exact-active-class="is-active")
+                | {{user.name}}
 </template>
 
 <script>
