@@ -1,34 +1,8 @@
-- if !iframe_p && @layout_type != :raw
-  footer.footer.is_screen_only.is-hidden-mobile
-    .container.is-fluid
-      .columns
-        .column.has-text-centered
-          ul
-            li= link_to("プライバシー", UrlProxy.wrap("/about/privacy-policy"))
-            li= link_to("利用規約", UrlProxy.wrap("/about/terms"))
-            li= link_to("クレジット", UrlProxy.wrap("/about/credit"))
-            li= link_to("問い合わせ", "https://twitter.com/sgkinakomochi")
-            - if Rails.env.development?
-              li= link_to("404", root_path + "404.html")
-              li= link_to("422", root_path + "422.html")
-              li= link_to("500", root_path + "500.html")
-        .column.has-text-centered
-          ul
-            ul
-              b GitHub
-            ul= link_to("shogi_web", "https://github.com/akicho8/shogi_web")
-            ul= link_to("shogi-player", "https://akicho8.github.io/shogi-player/")
-            ul= link_to("bioshogi", "https://github.com/akicho8/bioshogi")
-            ul= link_to("将棋用語辞書", "https://github.com/akicho8/SKK-JISYO.shogi")
-            ul= link_to("shogi-mode.el", "https://github.com/akicho8/shogi-mode")
-        - if false
-          .column.has-text-centered
-            ul
-              li= link_to(image_tag("made-with-bulma.png", width: "128", height: "24"), "https://bulma.io")
-      .column
-        .column.has-text-centered
-          small
-            = "Powered by "
-            = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/")
-            = " and "
-            = link_to("Rails #{Rails.version}", "https://rubyonrails.org/")
+.footer
+  .container
+    .has-text-centered
+      small
+        = "Powered by "
+        = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/")
+        = " and "
+        = link_to("Rails #{Rails.version}", "https://rubyonrails.org/")

@@ -146,7 +146,6 @@ class ServiceInfo
       ],
     },
     {
-      on_swars_search_p: false,
       display_p: Actb::Config[:actb_display_p],
       nuxt_link_to: {path: "/training"},
       title: "将棋トレーニングバトル",

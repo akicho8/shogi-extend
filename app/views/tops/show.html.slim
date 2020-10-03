@@ -1,10 +1,2 @@
-javascript:
-  document.addEventListener('DOMContentLoaded', () => GVI.html_background_color_set("hsl(0,0%,98%)"))
-
-.tops_show
-  / .has-text-centered-mobile
-  /   .title.is-6.mb-4 主なサービスの紹介
-
-  .columns.is-multiline
-    - ServiceInfo.find_all(&:display_p).each do |si|
-      = render partial: "service_info", locals: { si: si }
+- if Rails.env.development?
+  = debug ServiceInfo.find_all(&:display_p)
