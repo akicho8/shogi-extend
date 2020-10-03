@@ -194,7 +194,7 @@ export default {
   data() {
     return {
       info: null,
-      tab_index: null,
+      tab_index: 0,
     }
   },
 
