@@ -1,11 +1,15 @@
 <template lang="pug">
-.DebugBox(v-if="development_p && show_p" @click="click_handle")
+.DebugBox(v-if="development_p && show_p" @click="click_handle" :class="position")
   slot
 </template>
 
 <script>
 export default {
 name: "DebugBox",
+  props: {
+    position: { type: String, required: false, default: "bottom_left", },
+  },
+
   data() {
     return {
       show_p: true,
@@ -23,8 +27,6 @@ name: "DebugBox",
 .DebugBox
   color: $white
   position: fixed
-  top: 0.5rem
-  left: 0.5rem
   background-color: hsla(0, 0%, 0%, 0.7)
   padding: 1rem
   z-index: 100
@@ -32,4 +34,7 @@ name: "DebugBox",
   overflow: auto
   white-space: nowrap
   border-radius: 0.5rem
+  &.bottom_left
+    bottom: 0.5rem
+    left: 0.5rem
 </style>

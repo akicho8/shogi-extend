@@ -1,5 +1,5 @@
 <template lang="pug">
-.index.has-background-white-bis
+.service-infos.has-background-white-bis
   b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container" spaced)
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'index'}") SHOGI-EXTEND
@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: "index",
+  name: "service-infos",
   data () {
     return {
       config: null,

@@ -5,43 +5,47 @@
     p http://0.0.0.0:4000/three-stage-leagues/67
     p http://0.0.0.0:4000/three-stage-leagues/28
 
-  b-navbar(type="is-primary")
+  b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container" spaced)
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold(tag="div") {{config.page_title}}
+      HomeNavbarItem
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'three-stage-leagues', params: {generation: config.league.generation}}") {{config.page_title}}
     template(slot="end")
-      b-navbar-item(tag="a" :href="config.league.source_url" target="_blank") 本家
-      b-navbar-item(tag="a" href="/") TOP
+      b-navbar-item.has-text-weight-bold(tag="a" :href="config.league.source_url" target="_blank") 本家
 
-      
   .section.pt-5
-    .columns
-      .column.pt-0
-        .box.is-shadowless.is-inline-block.is-marginless
-          .buttons.are-small
-            template(v-for="league in config.leagues")
-              //- exact-active-class="is-primary"
-              b-button(tag="nuxt-link" :to="{name: 'three-stage-leagues-generation', params: {generation: league.generation}}" :class="{'is-active': config.league.generation === league.generation}" @click.native="sound_play('click')")
-                | {{league.generation}}
+    .container
+      .columns
+        .column
+          .box.is-shadowless.is-inline-block.is-marginless
+            .buttons.are-small
+              template(v-for="league in config.leagues")
+                //- exact-active-class="is-primary"
+                b-button(tag="nuxt-link" :to="{name: 'three-stage-leagues-generation', params: {generation: league.generation}}" :class="{'is-active': config.league.generation === league.generation}" @click.native="sound_play('click')")
+                  | {{league.generation}}
 
-        b-table(
-          :data="config.memberships"
-          :mobile-cards="false"
-          hoverable
-          )
-          b-table-column(v-slot="{row}" field="age"        label="名前" sortable)
-            nuxt-link(:to="{name: 'three-stage-league-players-name', params: {name: row.user.name}}" :class="{'has-text-weight-bold': row.user.level_up_generation || row.user.runner_up_count >= 2}" @click.native="sound_play('click')")
-              | {{row.name_with_age}}
-              ThreeStageLeagueMark(:record="row")
+          b-table(
+            :data="config.memberships"
+            :mobile-cards="false"
+            hoverable
+            )
+            b-table-column(v-slot="{row}" field="age"        label="名前" sortable)
+              nuxt-link(:to="{name: 'three-stage-league-players-name', params: {name: row.user.name}}" :class="{'has-text-weight-bold': row.user.level_up_generation || row.user.runner_up_count >= 2}" @click.native="sound_play('click')")
+                | {{row.name_with_age}}
+                ThreeStageLeagueMark(:record="row")
 
-          b-table-column(v-slot="{row}" field="win"        label="勝"   numeric sortable) {{row.win}}
-          b-table-column(v-slot="{row}" field="win"        label="勝敗" sortable cell-class="ox_sequense is_line_break_on")
-            | {{row.ox_human}}
+            b-table-column(v-slot="{row}" field="win"        label="勝"   numeric sortable) {{row.win}}
+            b-table-column(v-slot="{row}" field="win"        label="勝敗" sortable cell-class="ox_sequense is_line_break_on")
+              | {{row.ox_human}}
 
-          b-table-column(v-slot="{row}" field="seat_count" label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
+            b-table-column(v-slot="{row}" field="seat_count" label="在" numeric sortable)
+              template(v-if="row.seat_count === row.user.memberships_count")
+                | {{row.seat_count}}
+              template(v-else)
+                | {{row.seat_count}} / {{row.user.memberships_count}}
 
-          b-table-column(v-slot="{row}")
-            a(:href="image_search_url(row.user.name)" target="_blank")
-              b-icon(icon="account-question")
+            b-table-column(v-slot="{row}")
+              a(:href="image_search_url(row.user.name)" target="_blank")
+                b-icon(icon="account-question")
 </template>
 
 <script>

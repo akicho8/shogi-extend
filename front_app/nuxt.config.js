@@ -199,24 +199,31 @@ const config = {
   },
 
   // https://nuxtjs.org/guide/runtime-config
-  // 空文字列は空で設定したのではなく XXX: process.env.XXX の意味(この仕様は余計にわかりにくい)
+  // 空文字列は空で設定したのではなく XXX: process.env.XXX の意味(わかりにくい！)
+  // またビルドしてもこの情報はそこに含まれてないので注意
+  // デプロイするときには .nuxt だけでなく .env* も転送しないといけない
+  // このせいで本番環境なのに開発環境の設定で運用していて不可解な現象が起きていた
   publicRuntimeConfig: {
     CSR_BUILD_VERSION: BUILD_VERSION,
     MY_SITE_URL: "",
     MY_OGP_URL: "",
+    STAGE: "",
   },
 
   // SSR側での定義で publicRuntimeConfig を上書きする
+  // 意味はよくわかっていない
   privateRuntimeConfig: {
     SSR_BUILD_VERSION: BUILD_VERSION,
   },
 
   // 面倒な process.env.XXX の再定義
   // ・ここで定義すると .vue 側で process.env.XXX で参照できる
-  // ・が、だとテンプレートで使えなかったり単なる文字列だったり process.env が空だったりでデバッグしにくい
-  // ・ので publicRuntimeConfig を使う方がよい
-  // ・NUXT_ENV_ プレフィクスをつけた環境変数は自動的にここで定義したことになる(プレフィクスはついたまま)
-  // ・だけど publicRuntimeConfig を使う方がまし
+  // ・しかし process.env.XXX は文字列として展開されるので非常に扱いづらい
+  // ・それを忘れて process.env がハッシュだと勘違いしていつもはまる
+  // ・だから publicRuntimeConfig を使う方がよい
+  // ・ちなみに NUXT_ENV_ プレフィクスをつけた環境変数は自動的にここで定義したことになる
+  // ・しかしプレフィクスはついたままなのでこれまた使いにくい
+  // ・なので publicRuntimeConfig を使う方がよい
   env: {
     // FOO: process.env.FOO,
     ENV_BUILD_VERSION: BUILD_VERSION,

@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  .swars-professional
+  .swars-top-runner
     b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
       template(slot="brand")
         HomeNavbarItem
@@ -25,7 +25,7 @@ client-only
 
 <script>
 export default {
-  name: "swars-professional",
+  name: "swars-top-runner",
   head() {
     return {
       title: "将棋ウォーズイベント上位プレイヤー",
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="sass">
-.swars-professional
+.swars-top-runner
   .section
     padding-top: 1.3rem
 </style>

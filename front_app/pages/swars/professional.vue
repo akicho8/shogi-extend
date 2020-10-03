@@ -5,7 +5,6 @@ client-only
       template(slot="brand")
         HomeNavbarItem
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-professional'}") 将棋ウォーズ十段の成績
-        b-navbar-item(tag="nuxt-link" :to="{name: 'swars-professional'}") 将棋ウォーズ十段の成績
     .section
       .container
         .columns
@@ -16,8 +15,7 @@ client-only
               hoverable
               )
               b-table-column(v-slot="{row}" field="user.name"  label="名前" sortable :width="1" numeric)
-                a.is-block(:href="`${$config.MY_SITE_URL}/w?query=${row.user.key}`")
-                  | {{row.user.name}}
+                nuxt-link(:to="{name: 'swars-search', query: {query: row.user.key}}") {{row.user.name}}
               b-table-column(v-slot="{row}" field="judge"      label="勝敗" sortable cell-class="ox_sequense is_line_break_on")
                 | {{row.judge}}
             pre(title="DEBUG" v-if="development_p || !!$route.query.debug") {{records}}

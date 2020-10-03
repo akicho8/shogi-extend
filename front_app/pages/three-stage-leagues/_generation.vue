@@ -18,6 +18,7 @@ export default {
       ],
     }
   },
+  // FIXME: generation があるURLにリダイレクトしたい
   async asyncData({ $axios, params }) {
     // http://0.0.0.0:3000/api/three_stage_league
     const config = await $axios.$get("/api/three_stage_league", {params: params})
