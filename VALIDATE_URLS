@@ -1,5 +1,8 @@
 # -*- mode: ruby -*-
 [
+  "http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=40",
+  "http://localhost:3000/x?flip=false&modal_id=1",
+
   # "https://www.shogi-extend.com/app",
   # "https://www.shogi-extend.com/app/about/credit",
   # "https://www.shogi-extend.com/app/about/privacy-policy",

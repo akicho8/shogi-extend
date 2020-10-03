@@ -1,7 +1,7 @@
 <template lang="pug">
 .SwarsBattleIndex
   //- DebugBox
-  //-   p http://0.0.0.0:4000/swars/search?query=devuser1
+  //-   p http://0.0.0.0:4000/swars/battles?query=devuser1
   b-sidebar(fullheight overlay right v-model="sidebar_open_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle

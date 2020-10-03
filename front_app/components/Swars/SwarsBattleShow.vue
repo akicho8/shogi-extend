@@ -293,12 +293,16 @@ export default {
 </script>
 
 <style lang="sass">
-.MySidebarMenuIconWithTitle
-  display: flex
-  justify-content: flex-start
-  align-items: center
+// .MySidebarMenuIconWithTitle
+//   display: flex
+//   justify-content: flex-start
+//   align-items: center
 
 .SwarsBattleShow
+  +mobile
+    .column
+      padding: 0
+
   .delete
     position: absolute
     top: 6.0rem

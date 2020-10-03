@@ -12,8 +12,6 @@ module Swars
     end
 
     def index
-      # raise Swars::Agent::OfficialFormatChanged
-
       # FIXME: BOTを許可する
       if bot_agent?
         return
@@ -21,6 +19,23 @@ module Swars
 
       # FIXME: 名前変更する
       if params[:stop_processing_because_it_is_too_heavy]
+        return
+      end
+
+      if params[:format].blank? || request.format.html?
+        modal_id = params[:modal_id]
+
+        hash = params.permit!.to_h
+        hash = hash.except(:controller, :action, :format, :modal_id)
+        query = hash.to_query.presence
+        path = ["/swars/battles/#{params[:modal_id]}", query].compact.join("?")
+        redirect_to UrlProxy.wrap(path)
+        # if Rails.env.development? || Rails.env.test?
+        # else
+        #   redirect_to ["/app/share-board", query].compact.join("?")
+        # end
+        # redirect_to UrlProxy.wrap(["/share-board", query].compact.join("?"))
+        # redirect_to UrlProxy.wrap(["/app/share-board", query].compact.join("?"))
         return
       end
 
