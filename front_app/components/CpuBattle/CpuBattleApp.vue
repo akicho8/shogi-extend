@@ -1,145 +1,145 @@
 <template lang="pug">
 .CpuBattleApp.has-background-white-ter
-  b-navbar(type="is-primary" centered)
+  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold(tag="div") CPU対戦
-    template(slot="end")
-      b-navbar-item(tag="a" href="/") TOP
+      HomeNavbarItem
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'cpu-battle'}") CPU対戦
   .section
-    .columns
-      .column.is_shogi_player
-        template(v-if="mode === 'playing' || mode === 'standby'")
-          nav.level.is-mobile
-            .level-item
+    .container
+      .columns
+        .column.is_shogi_player
+          template(v-if="mode === 'playing' || mode === 'standby'")
+            nav.level.is-mobile
+              .level-item
+                .buttons
+                  template(v-if="mode === 'standby'")
+                    b-button(type="is-primary" @click="start_handle" :rounded="true")
+                      | 対局開始
+                  template(v-if="mode === 'playing'")
+                    b-button(@click="give_up_handle" :rounded="true" :loading="give_up_processing")
+                      | 投了
+                    template(v-if="development_p")
+                      b-button(@click="candidate_handle" :loading="candidate_processing")
+                        | 形勢判断
+                      b-button(@click="break_handle")
+                        | 終了
+                      b-button(@click="restart_handle")
+                        | 再挑戦
+                      b-button(@click="one_hand_exec")
+                        | 1手指す
+                      b-button(@click="retract_a_move")
+                        | 待った
+                      b-button(@click="judge_dialog_display({judge_key: 'win', message: 'かち'})")
+                        | win
+                      b-button(@click="judge_dialog_display({judge_key: 'lose', message: 'まけ'})")
+                        | lose
+
+          .has-text-centered
+            shogi_player(
+              :kifu_body="current_sfen"
+              :human_side_key="human_side_key"
+              :theme="sp_params.theme"
+              :bg_variant.sync="bg_variant"
+              :piece_variant="sp_params.piece_variant"
+              :key_event_capture="false"
+              :sfen_show="false"
+              :slider_show="development_p || mode === 'standby'"
+              :controller_show="development_p || mode === 'standby'"
+              :size="'large'"
+              :sound_effect="true"
+              :volume="config.volume"
+              :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
+              :flip.sync="flip"
+              :setting_button_show="development_p"
+              :summary_show="development_p"
+              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+              ref="sp_vm"
+            )
+
+            .mt-3(v-if="mode === 'standby'")
+              .mx-1.is-size-7.has-text-grey CPUの成績
+              .mx-1.is-size-6.has-text-weight-bold {{judge_group.lose || 0}}勝{{judge_group.win || 0}}敗
+
+        .column.is-two-fifths
+          template(v-if="mode === 'standby'")
+            .box
+              .content
+                h4 設定
+              b-field(label="強さ" custom-class="is-small")
+                .block
+                  template(v-for="e in CpuBrainInfo.values")
+                    b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
+                      | {{e.name}}
+
+              b-field(label="戦法" custom-class="is-small")
+                .block
+                  template(v-for="e in CpuStrategyInfo.values")
+                    b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
+                      | {{e.name}}
+
+              b-field(label="手合" custom-class="is-small")
+                .block
+                  template(v-for="e in CpuPresetInfo.values")
+                    b-radio(v-model="cpu_preset_key" :native-value="e.key" size="is-small")
+                      | {{e.name}}
+              hr
+              b-field(label="スタイル" custom-class="is-small")
+                .block
+                  template(v-for="e in BoardStyleInfo.values")
+                    b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
+                      | {{e.name}}
+              b-button(@click="bg_variant_reset_handle" size="is-small")
+                | ランダム盤
+
+              template(v-if="development_p")
+                | &nbsp;
+                | &nbsp;
+                b-tooltip(label="指し手の読み上げ")
+                  template(v-if="yomiage_mode")
+                    b-button(@click="yomiage_mode_set(false)" size="is-small" icon-left="volume-high")
+                  template(v-if="!yomiage_mode")
+                    b-button(@click="yomiage_mode_set(true)" size="is-small" icon-left="volume-off")
+
+          template(v-if="mode === 'playing'")
+            template(v-if="candidate_rows")
               .buttons
-                template(v-if="mode === 'standby'")
-                  b-button(type="is-primary" @click="start_handle" :rounded="true")
-                    | 対局開始
-                template(v-if="mode === 'playing'")
-                  b-button(@click="give_up_handle" :rounded="true" :loading="give_up_processing")
-                    | 投了
-                  template(v-if="development_p")
-                    b-button(@click="candidate_handle" :loading="candidate_processing")
-                      | 形勢判断
-                    b-button(@click="break_handle")
-                      | 終了
-                    b-button(@click="restart_handle")
-                      | 再挑戦
-                    b-button(@click="one_hand_exec")
-                      | 1手指す
-                    b-button(@click="retract_a_move")
-                      | 待った
-                    b-button(@click="judge_dialog_display({judge_key: 'win', message: 'かち'})")
-                      | win
-                    b-button(@click="judge_dialog_display({judge_key: 'lose', message: 'まけ'})")
-                      | lose
+                b-button(@click="candidate_handle" :loading="candidate_processing")
+                  | 自分の形勢判断
+              template(v-if="!candidate_processing")
+                .box
+                  b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 
-        .has-text-centered
-          shogi_player(
-            :kifu_body="current_sfen"
-            :human_side_key="human_side_key"
-            :theme="sp_params.theme"
-            :bg_variant.sync="bg_variant"
-            :piece_variant="sp_params.piece_variant"
-            :key_event_capture="false"
-            :sfen_show="false"
-            :slider_show="development_p || mode === 'standby'"
-            :controller_show="development_p || mode === 'standby'"
-            :size="'large'"
-            :sound_effect="true"
-            :volume="config.volume"
-            :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
-            :flip.sync="flip"
-            :setting_button_show="development_p"
-            :summary_show="development_p"
-            @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
-            ref="sp_vm"
-          )
+          template(v-if="pressure_rate_hash")
+            .box
+              small
+                b 終盤度
+              template(v-for="e in Location.values")
+                .label_with_progress
+                  | {{e.name}}
+                  progress.progress.is-danger.is-small(:value="pressure_rate_hash[e.key] * 100" :max="100")
+              template(v-if="development_p")
+                | {{pressure_rate_hash}}
 
-          .mt-3(v-if="mode === 'standby'")
-            .mx-1.is-size-7.has-text-grey CPUの成績
-            .mx-1.is-size-6.has-text-weight-bold {{judge_group.lose}}勝{{judge_group.win}}敗
-
-      .column.is-two-fifths
-        template(v-if="mode === 'standby'")
           .box
-            .content
-              h4 設定
-            b-field(label="強さ" custom-class="is-small")
-              .block
-                template(v-for="e in CpuBrainInfo.values")
-                  b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
-                    | {{e.name}}
+            canvas#chart_canvas(ref="main_canvas")
+            template(v-if="development_p && false")
+              | {{chart_config.data.datasets[0].data}}
 
-            b-field(label="戦法" custom-class="is-small")
-              .block
-                template(v-for="e in CpuStrategyInfo.values")
-                  b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
-                    | {{e.name}}
-
-            b-field(label="手合" custom-class="is-small")
-              .block
-                template(v-for="e in CpuPresetInfo.values")
-                  b-radio(v-model="cpu_preset_key" :native-value="e.key" size="is-small")
-                    | {{e.name}}
-            hr
-            b-field(label="スタイル" custom-class="is-small")
-              .block
-                template(v-for="e in BoardStyleInfo.values")
-                  b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
-                    | {{e.name}}
-            b-button(@click="bg_variant_reset_handle" size="is-small")
-              | ランダム盤
-
-            template(v-if="development_p")
-              | &nbsp;
-              | &nbsp;
-              b-tooltip(label="指し手の読み上げ")
-                template(v-if="yomiage_mode")
-                  b-button(@click="yomiage_mode_set(false)" size="is-small" icon-left="volume-high")
-                template(v-if="!yomiage_mode")
-                  b-button(@click="yomiage_mode_set(true)" size="is-small" icon-left="volume-off")
-
-        template(v-if="mode === 'playing'")
-          template(v-if="candidate_rows")
-            .buttons
-              b-button(@click="candidate_handle" :loading="candidate_processing")
-                | 自分の形勢判断
-            template(v-if="!candidate_processing")
+      template(v-if="development_p && mode === 'playing'")
+        .columns
+          .column
+            template(v-if="think_text")
+              pre.box.is-size-7.table_format_area
+                | {{think_text}}
+          .column
+            template(v-if="candidate_report")
+              pre.box.is-size-7.table_format_area
+                | {{candidate_report}}
+        .columns(v-if="development_p && mode === 'playing'")
+          .column.is-half
+            template(v-if="candidate_rows")
               .box
                 b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
-
-        template(v-if="pressure_rate_hash")
-          .box
-            small
-              b 終盤度
-            template(v-for="e in Location.values")
-              .label_with_progress
-                | {{e.name}}
-                progress.progress.is-danger.is-small(:value="pressure_rate_hash[e.key] * 100" :max="100")
-            template(v-if="development_p")
-              | {{pressure_rate_hash}}
-
-        .box
-          canvas#chart_canvas(ref="main_canvas")
-          template(v-if="development_p && false")
-            | {{chart_config.data.datasets[0].data}}
-
-    template(v-if="development_p && mode === 'playing'")
-      .columns
-        .column
-          template(v-if="think_text")
-            pre.box.is-size-7.table_format_area
-              | {{think_text}}
-        .column
-          template(v-if="candidate_report")
-            pre.box.is-size-7.table_format_area
-              | {{candidate_report}}
-      .columns(v-if="development_p && mode === 'playing'")
-        .column.is-half
-          template(v-if="candidate_rows")
-            .box
-              b-table(:data="candidate_rows" :mobile-cards="false" :hoverable="true" :columns="candidate_columns" narrowed)
 </template>
 
 <script>
