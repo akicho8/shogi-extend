@@ -13,7 +13,7 @@
 
   b-dropdown(position="is-top-left" v-if="false")
     b-button(slot="trigger" icon-left="menu" @click="sound_play('click')")
-    b-dropdown-item(href="/" @click="sound_play('click')") TOP
+    b-dropdown-item(@click="sound_play('click'); $router.push({name: 'index'})") TOP
 </template>
 
 <script>

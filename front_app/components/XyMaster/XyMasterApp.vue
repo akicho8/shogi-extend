@@ -16,11 +16,6 @@
           img.is-rounded(:src="config.current_user.avatar_path")
       b-navbar-item(v-if="!config.current_user || development_p" @click="login_handle") ログイン
 
-      b-navbar-dropdown(hoverable arrowless right v-if="development_p")
-        template(slot="label")
-          b-icon(icon="menu")
-        b-navbar-item(tag="a" href="/") TOPに戻る
-
   b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
       b-navbar-item(@click="reset_all_handle") リセット

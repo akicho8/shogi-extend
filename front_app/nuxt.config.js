@@ -32,7 +32,7 @@ const config = {
   ** Headers of the page
   */
   head: {
-    title: "TOP",
+    title: "?",
     titleTemplate: `%s - SHOGI-EXTEND`,
     htmlAttrs: {
       lang: "ja",
