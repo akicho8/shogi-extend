@@ -86,7 +86,7 @@ export default {
       return ExternalAppInfo.fetch(this.external_app_key)
     },
     title() {
-      return `直前の対局を${this.external_app_info.name}で開く`
+      return `直前の対局を${this.external_app_info.name}ですぐ開く画面`
     },
     record() {
       return this.config.records[0]
