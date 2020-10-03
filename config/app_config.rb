@@ -16,7 +16,6 @@ AppConfig.deep_merge!({
     :zip_dl_max            =>  30,    # 一括ダウンロードするときの件数(最大)
 
     :per_page_list                           =>  [25],  # 1ページあたりの項目数選択肢リストの最初と最後を除いたもの
-    :required_user_key_for_search            =>  true,  # 検索にはユーザー名を必ず指定するか？
     :required_query_for_search               =>  true,  # js側から一覧のレコードを出すときは必ず query が入っていないといけないか？
 
     ################################################################################ email

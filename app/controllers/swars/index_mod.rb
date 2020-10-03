@@ -369,9 +369,7 @@ module Swars
         else
           if current_swars_user
           else
-            if AppConfig[:required_user_key_for_search]
-              s = s.none
-            end
+            s = s.none
           end
         end
         s
