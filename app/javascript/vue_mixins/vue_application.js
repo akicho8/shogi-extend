@@ -63,13 +63,13 @@ export default {
       })
     },
 
-    general_ok_notice(message) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-dark", queue: false})
+    general_ok_notice(message, options = {}) {
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-dark", queue: false, ...options})
       this.talk(message)
     },
 
-    general_ng_notice(message) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger", queue: false})
+    general_ng_notice(message, options = {}) {
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger", queue: false, ...options})
       this.talk(message)
     },
 

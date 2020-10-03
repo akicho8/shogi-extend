@@ -53,7 +53,7 @@ export default {
     },
     submit_handle() {
       this.close_handle()
-      nthis.$emit("update:image_view_point", this.new_image_view_point)
+      this.$emit("update:image_view_point", this.new_image_view_point)
     },
     preview_url(options = {}) {
       return this.permalink_for({
