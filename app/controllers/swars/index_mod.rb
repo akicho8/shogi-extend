@@ -52,11 +52,6 @@ module Swars
         end
       end
 
-      # external_app_setup
-      # if performed?
-      #   return
-      # end
-
       import_process2(flash)
 
       if request.format.json?

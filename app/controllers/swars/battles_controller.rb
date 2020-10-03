@@ -37,7 +37,6 @@ module Swars
     include ModulableCrud::All
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
-    include ExternalAppMod
     include ZipDlMod
     include RememberSwarsUserKeysMod
     include IndexMod
