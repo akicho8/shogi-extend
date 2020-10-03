@@ -334,7 +334,11 @@ export default {
         url = new URL(location)
       }
 
-      params = {...params, ...this.current_url_params}
+      // TheImageViewPointSettingModal から新しい image_view_point が渡されるので params で上書きすること
+      params = {
+        ...this.current_url_params,
+        ...params,
+      }
 
       _.each(params, (v, k) => {
         if (k !== "format") {
