@@ -6,7 +6,7 @@ client-only
         b-navbar-item.has-text-weight-bold(tag="div") {{title}}
     .section
       .container
-        b-button(tag="nuxt-link" :to="{name: 'swars-search', query: {query: $route.params.key}}")
+        b-button(tag="nuxt-link" :to="{name: 'swars-battles', query: {query: $route.params.key}}")
           | ← 検索に戻る
         pre(v-if="development_p") {{config}}
 </template>
@@ -29,7 +29,7 @@ export default {
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.title,                                        },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                         },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-search.png", },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles.png", },
         { hid: "og:description", property: "og:description", content: "",                                                },
       ],
       link: [
@@ -54,7 +54,7 @@ export default {
         type: 'is-info',
         animation: "", // 最初から表示しているようにしたいのでアニメーションOFF
         onConfirm: () => {
-          // this.$router.push({name: "swars-search", query: {query: this.$route.params.key}})
+          // this.$router.push({name: "swars-battles", query: {query: this.$route.params.key}})
         },
       })
     } else {

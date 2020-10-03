@@ -3,6 +3,8 @@
   b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container" spaced)
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'index'}") SHOGI-EXTEND
+    template(slot="end")
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}") Launcher
   .section
     .container
       .columns.is-multiline

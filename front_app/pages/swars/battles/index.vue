@@ -1,11 +1,11 @@
 <template lang="pug">
 client-only
-  SwarsSearchApp
+  SwarsBattleIndex
 </template>
 
 <script>
 export default {
-  name: "swars-search",
+  name: "swars-battles",
 }
 </script>
 

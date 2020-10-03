@@ -1,5 +1,5 @@
 <template lang="pug">
-.SwarsUsersKeyKentoApi
+.SwarsUserKeyKentoApi
   b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container")
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="div") {{title}}
@@ -21,14 +21,14 @@
 
 <script>
 export default {
-  name: "SwarsUsersKeyKentoApi",
+  name: "SwarsUserKeyKentoApi",
   head() {
     return {
       title: this.title,
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.title,                                       },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                        },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-search.png" },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles.png" },
         { hid: "og:description", property: "og:description", content: ""                                                },
       ],
     }
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsUsersKeyKentoApi
+.SwarsUserKeyKentoApi
   .section
     &:first-of-type
       padding-top: 2.6rem

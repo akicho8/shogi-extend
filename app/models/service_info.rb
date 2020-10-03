@@ -3,9 +3,9 @@ class ServiceInfo
   memory_record [
     {
       display_p: true,
-      nuxt_link_to: {path: "/swars/search"},
+      nuxt_link_to: {name: "swars-battles"},
       title: "将棋ウォーズ棋譜検索",
-      ogp_image_base: "swars-search",
+      ogp_image_base: "swars-battles",
       description: "検索と言いつつそんなに検索しない",
       features: [
         "ぴよ将棋やKENTOと連携",
