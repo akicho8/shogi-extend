@@ -57,20 +57,12 @@ module Swars
         return
       end
 
+      import_process2(flash)
+
       if request.format.json?
         render json: js_index_options.as_json
         return
       end
-
-      # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき詳細に飛ばす
-      if false
-        if primary_record_key
-          redirect_to [:swars, :battle, id: primary_record_key]
-          return
-        end
-      end
-
-      import_process2(flash)
 
       external_app_run
       if performed?
@@ -110,9 +102,6 @@ module Swars
 
     let :twitter_card_options do
       case
-      when v = modal_record
-        # http://localhost:3000/w?modal_id=1
-        v.to_twitter_card_params(params)
       when v = primary_record
         # http://localhost:3000/w?query=https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1
         v.to_twitter_card_params(params)
@@ -377,8 +366,6 @@ module Swars
         case
         when primary_record_key
           s = s.where(key: primary_record_key)
-        when modal_record
-          s = s.where(key: modal_record.to_param)
         else
           if current_swars_user
           else
