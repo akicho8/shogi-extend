@@ -2,13 +2,13 @@
 .SwarsBattleShow(v-if="!$fetchState.pending")
   .delete.is-large(@click="delete_click_handle" v-if="development_p")
 
-  b-sidebar(type="is-light" fullheight overlay v-model="sidebar_open_p")
-    .mx-3.my-3
-      .MySidebarMenuIconWithTitle
-        b-icon.is_clickable(icon="menu" @click.native="sidebar_open_p = false")
-        .ml-3 棋譜詳細
-      b-menu.mt-4
-        b-menu-list(label="Menu")
+  b-sidebar(type="is-light" fullheight overlay right v-model="sidebar_open_p")
+    .mx-4.my-4
+      //- .MySidebarMenuIconWithTitle
+      //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_open_p = false")
+      //-   .ml-3 棋譜詳細
+      b-menu
+        b-menu-list(label="Action")
           b-menu-item(label="共有将棋盤に転送" icon="link"    tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
           b-menu-item(label="棋譜用紙 (PDF)"   icon="pdf-box" tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
 
@@ -39,11 +39,14 @@
         //-   b-menu-item(label="Info")
         //-   b-menu-item(label="Info")
 
-  b-navbar(type="is-primary")
+  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
     template(slot="brand")
+      b-navbar-item(tag="nuxt-link" :to="{name: 'swars-battles'}" @click.native="sound_play('click')")
+        b-icon(icon="arrow-left")
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}}") {{record.title}}
+    template(slot="end")
       b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
         b-icon(icon="menu")
-      b-navbar-item.has-text-weight-bold(tag="div") {{record.title}}
     //- template(slot="end")
     //-   //- b-navbar-item
     //-   //-   PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
@@ -55,59 +58,61 @@
     //-   //-   TweetButton(tag="a" :href="tweet_url" :turn="turn_offset" v-if="false")
     //-   b-navbar-item(tag="a" href="/") TOP
 
-  .columns
-    .column
-      MyShogiPlayer.mt-5(
-        :run_mode.sync="run_mode"
-        :debug_mode="false"
-        :start_turn="start_turn"
-        :kifu_body="record.sfen_body"
-        :key_event_capture="true"
-        :slider_show="true"
-        :sfen_show="false"
-        :controller_show="true"
-        :theme="'simple'"
-        :size="'medium'"
-        :setting_button_show="false"
-        :flip.sync="new_flip"
-        :player_info="player_info"
-        @update:start_turn="real_turn_set"
-        ref="main_sp"
-      )
+  .section
+    .container
+      .columns
+        .column
+          MyShogiPlayer.mt-5(
+            :run_mode.sync="run_mode"
+            :debug_mode="false"
+            :start_turn="start_turn"
+            :kifu_body="record.sfen_body"
+            :key_event_capture="true"
+            :slider_show="true"
+            :sfen_show="false"
+            :controller_show="true"
+            :theme="'real'"
+            :size="'medium'"
+            :setting_button_show="false"
+            :flip.sync="new_flip"
+            :player_info="player_info"
+            @update:start_turn="real_turn_set"
+            ref="main_sp"
+          )
 
-      .has-text-centered.mt-4(v-if="false")
-        b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
-          b-icon(icon="source-branch")
+          .has-text-centered.mt-4(v-if="false")
+            b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
+              b-icon(icon="source-branch")
 
-      .buttons.is-centered.mt-5
-        PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-        KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
-        KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
-        TweetButton(@click="tweet_share_open({url: permalink_url})") ツイート
-        //- PngDlButton(tag="a" :href="png_dl_url" :turn="turn_offset")
-        //- PulldownMenu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
+          .buttons.is-centered.mt-5
+            PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+            KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
+            KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
+            TweetButton(@click="tweet_share_open({url: permalink_url})") ツイート
+            //- PngDlButton(tag="a" :href="png_dl_url" :turn="turn_offset")
+            //- PulldownMenu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
 
-    .column
-      SwarsBattleShowTimeChart(
-        v-if="record && time_chart_params"
-        :record="record"
-        :time_chart_params="time_chart_params"
-        @update:turn="turn_set_from_chart"
-        :chart_turn="turn_offset"
-        :flip="new_flip"
-        ref="SwarsBattleShowTimeChart"
-      )
+        .column
+          SwarsBattleShowTimeChart(
+            v-if="record && time_chart_params"
+            :record="record"
+            :time_chart_params="time_chart_params"
+            @update:turn="turn_set_from_chart"
+            :chart_turn="turn_offset"
+            :flip="new_flip"
+            ref="SwarsBattleShowTimeChart"
+          )
 
-  //-   pre(v-if="development_p")
-  //-     | start_turn: {{start_turn}}
-  //-     | turn_offset: {{turn_offset}}
-  //-     | record.turn: {{record.turn}}
-  //-     | record.display_turn: {{record.display_turn}}
-  //-     | record.critical_turn: {{record.critical_turn}}
-  //-     | record.outbreak_turn: {{record.outbreak_turn}}
-  //-     | record.turn_max: {{record.turn_max}}
-  //-     | record.turn: {{record.turn}}
-  //-     | new_flip: {{new_flip}}
+      //-   pre(v-if="development_p")
+      //-     | start_turn: {{start_turn}}
+      //-     | turn_offset: {{turn_offset}}
+      //-     | record.turn: {{record.turn}}
+      //-     | record.display_turn: {{record.display_turn}}
+      //-     | record.critical_turn: {{record.critical_turn}}
+      //-     | record.outbreak_turn: {{record.outbreak_turn}}
+      //-     | record.turn_max: {{record.turn_max}}
+      //-     | record.turn: {{record.turn}}
+      //-     | new_flip: {{new_flip}}
 </template>
 
 <script>
@@ -296,7 +301,7 @@ export default {
 .SwarsBattleShow
   .delete
     position: absolute
-    top: 3.9rem
+    top: 6.0rem
     left: 0.6rem
     z-index: 2 // shogi-player の「○手目」のdivより下にあって押せない場合があるため指定する必要がある
   .SwarsBattleShowTimeChart
