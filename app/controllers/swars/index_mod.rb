@@ -282,10 +282,6 @@ module Swars
       ["meta_info", "csa_seq"]
     end
 
-    let :current_placeholder do
-      "ウォーズIDを入力"
-    end
-
     def current_scope
       @current_scope ||= -> {
         s = current_model.all
