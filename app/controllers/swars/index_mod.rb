@@ -52,10 +52,10 @@ module Swars
         end
       end
 
-      external_app_setup
-      if performed?
-        return
-      end
+      # external_app_setup
+      # if performed?
+      #   return
+      # end
 
       import_process2(flash)
 
@@ -64,10 +64,10 @@ module Swars
         return
       end
 
-      external_app_run
-      if performed?
-        return
-      end
+      # external_app_run
+      # if performed?
+      #   return
+      # end
 
       zip_dl_perform
       if performed?
@@ -86,7 +86,7 @@ module Swars
       v &&= params[:page].blank?
       v &&= !params[:import_skip]
       v &&= !flash[:import_skip]
-      v &&= !flash[:external_app_setup]
+      # v &&= !flash[:external_app_setup]
       v
     end
 
