@@ -93,7 +93,6 @@ module Swars
     def js_index_options
       super.merge({
           :current_swars_user_key    => current_swars_user_key,
-          :required_query_for_search => AppConfig[:required_query_for_search], # js側から一覧のレコードを出すときは必ず query が入っていないといけない
           :remember_swars_user_keys  => remember_swars_user_keys,
           :import_enable_p           => import_enable?,
           :per_page_list             => [Kaminari.config.default_per_page, *AppConfig[:per_page_list], Kaminari.config.max_per_page],
