@@ -1,57 +1,56 @@
 <template lang="pug">
 .AdapterApp
-  b-navbar(type="is-primary")
+  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold(tag="div") なんでも棋譜変換
-    template(slot="end")
-      b-navbar-item(tag="a" href="/") TOP
+      HomeNavbarItem
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'adapter'}") なんでも棋譜変換
   .section.pt-5
-    .columns
-      .column
-        b-field.mt-1
-          b-input(type="textarea" ref="input_text" v-model="input_text" expanded rows="8")
-        .buttons.is-centered.mt-5.mb-0
-          PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
-          KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
-          KifCopyButton(@click="kifu_copy_handle('kif')")
-          SpShowButton(@click="board_show_handle")
-        .buttons.is-centered.are-small.mt-3
-          b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'") 検証
-          b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.MY_SITE_URL}${record.show_path}?formal_sheet=true` : ''") 棋譜用紙
-          TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url({text: tweet_body}) : ''")
-
-        .has-text-centered-touch
-          .format_box.box.is-inline-block.has-background-white-ter.is-shadowless.px-5
-            .mt-0
-              .is-size-7.has-text-weight-bold.has-text-left コピー
-              .list.ml-3
-                template(v-for="e in FormatTypeInfo.values")
-                  a.is-size-7.mx-1(@click="kifu_copy_handle(e.key)") {{e.name}}
-            .mt-3
-              .is-size-7.has-text-weight-bold.has-text-left 表示
-              .list.ml-3
-                template(v-for="e in FormatTypeInfo.values")
-                  a.is-size-7.mx-1(@click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)") {{e.name}}
-            .mt-3
-              .is-size-7.has-text-weight-bold.has-text-left ダウンロード
-              .list.ml-3
-                template(v-for="e in FormatTypeInfo.values")
-                  a.is-size-7.mx-1(@click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)") {{e.name}}
-            .has-text-centered.mt-3
-              b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")
-                | 文字コード Shift_JIS
-
-      .column(v-if="all_kifs")
-        pre {{all_kifs.kif}}
-
-    template(v-if="development_p")
+    .container
       .columns
         .column
-          .box
-            .buttons.are-small
-              template(v-for="row in test_kifu_body_list")
-                .button(@click="input_test_handle(row.input_text)") {{row.name}}
+          b-field.mt-1
+            b-input(type="textarea" ref="input_text" v-model="input_text" expanded rows="8")
+          .buttons.is-centered.mt-5.mb-0
+            PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
+            KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
+            KifCopyButton(@click="kifu_copy_handle('kif')")
+            SpShowButton(@click="board_show_handle")
+          .buttons.is-centered.are-small.mt-3
+            b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'") 検証
+            b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.MY_SITE_URL}${record.show_path}?formal_sheet=true` : ''" v-if="development_p") 棋譜用紙
+            TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url({text: tweet_body}) : ''")
 
+          .has-text-centered-touch
+            .format_box.box.is-inline-block.has-background-white-ter.is-shadowless.px-5
+              .mt-0
+                .is-size-7.has-text-weight-bold.has-text-left コピー
+                .list.ml-3
+                  template(v-for="e in FormatTypeInfo.values")
+                    a.is-size-7.mx-1(@click="kifu_copy_handle(e.key)") {{e.name}}
+              .mt-3
+                .is-size-7.has-text-weight-bold.has-text-left 表示
+                .list.ml-3
+                  template(v-for="e in FormatTypeInfo.values")
+                    a.is-size-7.mx-1(@click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)") {{e.name}}
+              .mt-3
+                .is-size-7.has-text-weight-bold.has-text-left ダウンロード
+                .list.ml-3
+                  template(v-for="e in FormatTypeInfo.values")
+                    a.is-size-7.mx-1(@click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)") {{e.name}}
+              .has-text-centered.mt-3
+                b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")
+                  | 文字コード Shift_JIS
+
+        .column(v-if="all_kifs")
+          pre {{all_kifs.kif}}
+
+      template(v-if="development_p")
+        .columns
+          .column
+            .box
+              .buttons.are-small
+                template(v-for="row in test_kifu_body_list")
+                  .button(@click="input_test_handle(row.input_text)") {{row.name}}
 </template>
 
 <script>
@@ -119,19 +118,6 @@ export default {
   },
 
   methods: {
-    // board_image_url() {
-    //   // const params = {
-    //   //   format: "png",
-    //   //   body: this.row.question.init_sfen,
-    //   //   image_view_point: "black",
-    //   // }
-    //   // const url = new URL(this.as_full_url("/share-board"))
-    //   // _.each(params, (v, k) => url.searchParams.set(k, v))
-    //   // return url.toString()
-    //
-    //   // /share-board
-    // },
-
     piyo_shogi_open_handle() {
       this.record_fetch(() => this.url_open(this.piyo_shogi_app_with_params_url, this.target_default))
     },
@@ -183,20 +169,8 @@ export default {
       this.record_fetch(() => this.simple_open(this.kifu_show_url(kifu_type)))
     },
 
-    // 画像 表示
-    // png_show_handle() {
-    //   this.record_fetch(() => this.simple_open(this.png_show_url()))
-    // },
-
-    // 画像 DL
-    // png_dl_handle() {
-    //   this.record_fetch(() => this.url_open(this.png_dl_url()))
-    // },
-
     // 「盤面」
     board_show_handle() {
-      // this.record_fetch(() => this.sp_show_modal({record: this.record, board_show_type: "last"}))
-
       this.sound_play("click")
       this.record_fetch(() => {
         // https://router.vuejs.org/guide/essentials/navigation.html#programmatic-navigation
@@ -233,18 +207,6 @@ export default {
     kifu_dl_url(kifu_type) {
       return this.kifu_show_url(kifu_type, {attachment: "true"})
     },
-
-    // png_show_url() {
-    //   if (this.record) {
-    //     return `${this.$config.MY_SITE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}`
-    //   }
-    // },
-
-    // png_dl_url() {
-    //   if (this.record) {
-    //     return `${this.$config.MY_SITE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}&attachment=true`
-    //   }
-    // },
 
     // private
 

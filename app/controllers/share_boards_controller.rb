@@ -182,7 +182,7 @@ class ShareBoardsController < ApplicationController
     def image_flip
       # 視点設定用
       # ビュー側で確認用画像を表示するため board_flip の結果で画像をflipする
-      if params[:__board_flip_as_image_flip__]
+      if params[:__board_flip_as_image_flip__] == "true"
         return board_flip
       end
 

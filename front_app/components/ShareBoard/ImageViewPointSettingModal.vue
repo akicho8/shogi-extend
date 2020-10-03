@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.TheImageViewPointSettingModal(style="width:auto")
+.modal-card.ImageViewPointSettingModal(style="width:auto")
   header.modal-card-head
     p.modal-card-title 視点設定
   section.modal-card-body
@@ -19,11 +19,11 @@
       .preview_image.is-flex
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
           | Twitter画像の視点
-        b-image.mr-1(:src="preview_url()")
+        b-image.mr-1(:src="ogp_image_url")
       .preview_image.is-flex
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
           | ブラウザで開いたときの視点
-        b-image.ml-1(:src="preview_url({__board_flip_as_image_flip__: true})")
+        b-image.ml-1(:src="opened_image_url")
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
     b-button.submit_handle(@click="submit_handle" type="is-primary") 保存
@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: "TheImageViewPointSettingModal",
+  name: "ImageViewPointSettingModal",
   props: {
     image_view_point: { type: String,   required: true, },
     permalink_for:    { type: Function, required: true, },
@@ -52,19 +52,31 @@ export default {
       this.$emit("close")
     },
     submit_handle() {
-      this.sound_play("click")
-      this.$emit("close")
-      this.$emit("update:image_view_point", this.new_image_view_point)
+      this.close_handle()
+      nthis.$emit("update:image_view_point", this.new_image_view_point)
     },
     preview_url(options = {}) {
-      return this.permalink_for({format: "png", image_view_point: this.new_image_view_point, disposition: "inline", ...options})
+      return this.permalink_for({
+        format: "png",
+        image_view_point: this.new_image_view_point,
+        disposition: "inline",
+        ...options,
+      })
+    },
+  },
+  computed: {
+    ogp_image_url() {
+      return this.preview_url({title: "ogp_image", __board_flip_as_image_flip__: false})
+    },
+    opened_image_url() {
+      return this.preview_url({title: "opened_image", __board_flip_as_image_flip__: true})
     },
   },
 }
 </script>
 
 <style lang="sass">
-.TheImageViewPointSettingModal
+.ImageViewPointSettingModal
   .preview_image_container
     justify-content: center
     .preview_image

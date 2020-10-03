@@ -9,10 +9,10 @@
     p 反転: {{board_flip}}
     p URL: {{current_url}}
 
-  b-navbar(type="is-primary")
+  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold(@click="title_edit")
-        | {{current_title}}
+      HomeNavbarItem
+      b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
     template(slot="end")
       template(v-if="run_mode === 'play_mode'")
         b-navbar-item(@click="reset_handle") 盤面リセット
@@ -31,66 +31,64 @@
             b-navbar-item(@click="room_code_edit")
               | リアルタイム共有
               .has-text-danger.ml-1(v-if="room_code") {{room_code}}
-      b-navbar-item(tag="a" href="/") TOP
 
   b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
       b-navbar-item(@click="reset_handle") 盤面リセット
 
   .section
-    .columns
-      .column.is_shogi_player
-        //- the_pulldown_menu
+    .container
+      .columns
+        .column.is_shogi_player
+          .turn_container.has-text-centered(v-if="run_mode === 'play_mode'")
+            span.turn_offset.has-text-weight-bold {{turn_offset}}
+            template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
+              span.mx-1.has-text-grey /
+              span.has-text-grey {{turn_offset_max}}
 
-        .turn_container.has-text-centered(v-if="run_mode === 'play_mode'")
-          span.turn_offset.has-text-weight-bold {{turn_offset}}
-          template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
-            span.mx-1.has-text-grey /
-            span.has-text-grey {{turn_offset_max}}
+          .sp_container
+            MyShogiPlayer(
+              :run_mode="run_mode"
+              :debug_mode="debug_mode"
+              :start_turn="turn_offset"
+              :kifu_body="current_sfen"
+              :summary_show="false"
+              :slider_show="true"
+              :setting_button_show="development_p"
+              :size="'large'"
+              :sound_effect="true"
+              :controller_show="true"
+              :human_side_key="'both'"
+              :theme="'real'"
+              :flip.sync="board_flip"
+              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+              @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
+              @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
+              @update:turn_offset="v => turn_offset = v"
+              @update:turn_offset_max="v => turn_offset_max = v"
+            )
 
-        .sp_container
-          MyShogiPlayer(
-            :run_mode="run_mode"
-            :debug_mode="debug_mode"
-            :start_turn="turn_offset"
-            :kifu_body="current_sfen"
-            :summary_show="false"
-            :slider_show="true"
-            :setting_button_show="development_p"
-            :size="'large'"
-            :sound_effect="true"
-            :controller_show="true"
-            :human_side_key="'both'"
-            :theme="'real'"
-            :flip.sync="board_flip"
-            @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
-            @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
-            @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
-            @update:turn_offset="v => turn_offset = v"
-            @update:turn_offset_max="v => turn_offset_max = v"
-          )
+          .tweet_button_container
+            .buttons.is-centered
+              b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
+              b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
 
-        .tweet_button_container
-          .buttons.is-centered
-            b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-info' : ''" v-if="run_mode === 'play_mode'")
-            b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
+          .room_code.is_clickable(@click="room_code_edit" v-if="false")
+            | {{room_code}}
 
-        .room_code.is_clickable(@click="room_code_edit" v-if="false")
-          | {{room_code}}
-
-    .columns(v-if="development_p")
-      .column
-        .box
-          .buttons
-            b-button(tag="a" :href="json_debug_url") JSON
-            b-button(tag="a" :href="twitter_card_url") Twitter画像
-          .content
-            p
-              b Twitter画像
-            p
-              img(:src="twitter_card_url" width="256")
-            p {{twitter_card_url}}
-          pre {{JSON.stringify(record, null, 4)}}
+      .columns(v-if="development_p")
+        .column
+          .box
+            .buttons
+              b-button(tag="a" :href="json_debug_url") JSON
+              b-button(tag="a" :href="twitter_card_url") Twitter画像
+            .content
+              p
+                b Twitter画像
+              p
+                img(:src="twitter_card_url" width="256")
+              p {{twitter_card_url}}
+            pre {{JSON.stringify(record, null, 4)}}
 </template>
 
 <script>
@@ -102,7 +100,7 @@ import { support } from "./support.js"
 import { app_room      } from "./app_room.js"
 import { app_room_init } from "./app_room_init.js"
 
-import TheImageViewPointSettingModal from "./TheImageViewPointSettingModal.vue"
+import ImageViewPointSettingModal from "./ImageViewPointSettingModal.vue"
 import AnySourceReadModal            from "@/components/AnySourceReadModal.vue"
 
 export default {
@@ -269,7 +267,7 @@ export default {
     image_view_point_setting_handle() {
       this.sound_play("click")
       this.$buefy.modal.open({
-        component: TheImageViewPointSettingModal,
+        component: ImageViewPointSettingModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
@@ -322,7 +320,7 @@ export default {
         url = new URL(location)
       }
 
-      // TheImageViewPointSettingModal から新しい image_view_point が渡されるので params で上書きすること
+      // ImageViewPointSettingModal から新しい image_view_point が渡されるので params で上書きすること
       params = {
         ...this.current_url_params,
         ...params,
