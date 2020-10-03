@@ -27,7 +27,7 @@
       b-icon(icon="arrow-up-bold" size="is-small")
       | 最大200件
 
-    b-dropdown-item(:href="`/w?query=${info.user.key}`")
+    b-dropdown-item(@click="$router.push({name: 'swars-search', query: {query: info.user.key}})")
       b-icon(icon="magnify" size="is-small")
       | 棋譜検索
 
