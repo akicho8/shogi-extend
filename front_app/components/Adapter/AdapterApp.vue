@@ -1,9 +1,43 @@
 <template lang="pug">
 .AdapterApp
+  b-sidebar(fullheight overlay right v-model="sidebar_open_p")
+    .mx-3.my-3
+      b-menu
+        b-menu-list(label="Export")
+          b-menu-item(expanded)
+            template(slot="label" slot-scope="props")
+              | 表示
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in FormatTypeInfo.values")
+              b-menu-item(:label="e.name" @click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)")
+          b-menu-item
+            template(slot="label" slot-scope="props")
+              | コピー
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in FormatTypeInfo.values")
+              b-menu-item(:label="e.name" @click="kifu_copy_handle(e.key)")
+          b-menu-item
+            template(slot="label" slot-scope="props")
+              | ダウンロード
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in FormatTypeInfo.values")
+              b-menu-item(:label="e.name" @click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)")
+          b-menu-item
+            template(slot="label" slot-scope="props")
+              | 文字コード
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in EncodeInfo.values")
+              b-menu-item(:label="e.name" @click="body_encode = e.key" :class="{'has-text-weight-bold': body_encode === e.key}")
+
   b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'adapter'}") なんでも棋譜変換
+    template(slot="end")
+      b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
+        b-icon(icon="menu")
+        //- EXPORTにする
+
   .section.pt-5
     .container
       .columns
@@ -14,34 +48,15 @@
             PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
             KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
             KifCopyButton(@click="kifu_copy_handle('kif')")
-            SpShowButton(@click="board_show_handle")
+            b-button(@click="board_show_handle" size="is-small") 共有将棋盤で開く
           .buttons.is-centered.are-small.mt-3
             b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'") 検証
             b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.MY_SITE_URL}${record.show_path}?formal_sheet=true` : ''" v-if="development_p") 棋譜用紙
-            TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url({text: tweet_body}) : ''")
+            TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url({text: tweet_body}) : ''" v-if="development_p")
 
-          .has-text-centered-touch
-            .format_box.box.is-inline-block.has-background-white-ter.is-shadowless.px-5
-              .mt-0
-                .is-size-7.has-text-weight-bold.has-text-left コピー
-                .list.ml-3
-                  template(v-for="e in FormatTypeInfo.values")
-                    a.is-size-7.mx-1(@click="kifu_copy_handle(e.key)") {{e.name}}
-              .mt-3
-                .is-size-7.has-text-weight-bold.has-text-left 表示
-                .list.ml-3
-                  template(v-for="e in FormatTypeInfo.values")
-                    a.is-size-7.mx-1(@click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)") {{e.name}}
-              .mt-3
-                .is-size-7.has-text-weight-bold.has-text-left ダウンロード
-                .list.ml-3
-                  template(v-for="e in FormatTypeInfo.values")
-                    a.is-size-7.mx-1(@click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)") {{e.name}}
-              .has-text-centered.mt-3
-                b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")
-                  | 文字コード Shift_JIS
+          .box.is-shadowless
 
-        .column(v-if="all_kifs")
+        .column.is-4(v-if="all_kifs")
           pre {{all_kifs.kif}}
 
       template(v-if="development_p")
@@ -73,6 +88,15 @@ class FormatTypeInfo extends MemoryRecord {
   }
 }
 
+class EncodeInfo extends MemoryRecord {
+  static get define() {
+    return [
+      { key: "utf8", name: "UTF-8",     },
+      { key: "sjis", name: "Shift_JIS", },
+    ]
+  }
+}
+
 export default {
   props: {
     config: { type: Object,  required: true },
@@ -91,6 +115,7 @@ export default {
 
       // その他
       change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
+      sidebar_open_p: false,
     }
   },
 
@@ -112,7 +137,7 @@ export default {
     body_encode(v) {
       this.sound_play("click")
       if (v === "sjis") {
-        this.general_ok_notice("ダウンロードするファイルの文字コードを Shift_JIS に変更します (意味がわからない場合は OFF にしてください)")
+        this.general_ok_notice("ダウンロード時のファイル文字コードを Shift_JIS に変更します (なんのこっちゃわからん場合は UTF-8 に戻してください)", {duration: 10 * 1000})
       }
     }
   },
@@ -269,6 +294,7 @@ export default {
 
   computed: {
     FormatTypeInfo() { return FormatTypeInfo },
+    EncodeInfo()     { return EncodeInfo     },
 
     //////////////////////////////////////////////////////////////////////////////// piyoshogi
 
@@ -286,6 +312,11 @@ export default {
 
     tweet_body() {
       if (this.record) {
+        // ツイート機能は廃止する
+        // なんなら共有将棋盤のURLにする
+        // this.$router.push({name: "share-board", query: {body: this.all_kifs.sfen, image_view_point: "black", title: "共有将棋盤 (棋譜変換後の確認)"}})
+
+        
         return this.as_full_url(this.record.modal_on_index_path)
       }
     },
