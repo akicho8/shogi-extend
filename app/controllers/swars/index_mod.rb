@@ -22,21 +22,16 @@ module Swars
         return
       end
 
-      if params[:format].blank? || request.format.html?
-        modal_id = params[:modal_id]
-
-        hash = params.permit!.to_h
-        hash = hash.except(:controller, :action, :format, :modal_id)
-        query = hash.to_query.presence
-        path = ["/swars/battles/#{params[:modal_id]}", query].compact.join("?")
-        redirect_to UrlProxy.wrap(path)
-        # if Rails.env.development? || Rails.env.test?
-        # else
-        #   redirect_to ["/app/share-board", query].compact.join("?")
-        # end
-        # redirect_to UrlProxy.wrap(["/share-board", query].compact.join("?"))
-        # redirect_to UrlProxy.wrap(["/app/share-board", query].compact.join("?"))
-        return
+      # 新しいURLにリダイレクト
+      # 旧 http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
+      # 新 http://localhost:4000/swars/battles/devuser1-Yamada_Taro-20200101_123401?flip=false&turn=34
+      if request.format.html?
+        if modal_id = params[:modal_id].presence
+          query = params.permit!.to_h.except(:controller, :action, :format, :modal_id).to_query.presence
+          path = ["/swars/battles/#{modal_id}", query].compact.join("?")
+          redirect_to UrlProxy.wrap(path)
+          return
+        end
       end
 
       kento_json_render
@@ -63,7 +58,6 @@ module Swars
       end
 
       if request.format.json?
-        # render json: js_current_records.to_json # 【重要】 明示的に to_json することで ActiveModelSerializer での変換の試みを回避する
         render json: js_index_options.as_json
         return
       end
