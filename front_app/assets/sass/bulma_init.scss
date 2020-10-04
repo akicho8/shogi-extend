@@ -42,6 +42,3 @@ $modal-background-background-color: bulmaRgba($black, 0.2);
 // これをするとモバイルのときバーが小さくならない
 // が、メニュー化されることの弊害の方が大きいのでメニュー化を阻止する
 $navbar-breakpoint: 0;
-
-// styleResources と両方で定義したいもの
-@import "./rails/_my_mixins.sass"

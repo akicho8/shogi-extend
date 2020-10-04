@@ -1,7 +1,5 @@
 // *.vue で $primary や +mobile を使えるようにするための styleResources 用の定義
 
-// 独自の色など
-@import "customize.scss"
-
-// +mobile など
-@import "~bulma/sass/utilities/_all";
+@import "bulma_init.scss";            // bulma
+@import "css_macro.sass";             // 独自
+@import "~bulma/sass/utilities/_all"; // +mobile など
