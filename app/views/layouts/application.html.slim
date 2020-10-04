@@ -1,23 +1,13 @@
 doctype 5
-html(lang="ja" class=([params[:formal_sheet] ? "has_formal_sheet" : "", iframe_p ? "iframe" : "", Rails.env, @layout_type == :raw ? "" : "size_reduction_when_the_mobile"]))
+html(lang="ja" class=([Rails.env]))
   head
     = render partial: "layouts/head"
   body
-    #single_notification_app
-
-    - if !@simple_layout && !iframe_p && @layout_type != :raw
-      = render partial: "layouts/main_navbar"
-
-    - if @layout_type == :raw
-      = flash_danger_notify_tag
-      = yield
-      = ToolBelt::Basic.new(view_context: self).to_html
-    - else
-      section.section
-        .container.is-fluid.main_container
-          = flash_danger_notify_tag
-          = yield
-          = ToolBelt::Basic.new(view_context: self).to_html
-
+    = render partial: "layouts/main_navbar"
+    .section
+      .container.main_container
+        = flash_danger_notify_tag
+        = yield
+        = ToolBelt::Basic.new(view_context: self).to_html
     = render partial: "layouts/footer"
     = render partial: "layouts/toast_flash"

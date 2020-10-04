@@ -15,12 +15,6 @@ module BattleControllerSharedMethods
       helper_method :current_per
       helper_method :current_placeholder
       helper_method :js_index_options
-
-      before_action do
-        if params[:modal_id] && !modal_record
-          flash.now[:alert] = "#{params[:modal_id]} に対応するレコードが見つかりませんでした"
-        end
-      end
     end
 
     let :current_records do
@@ -46,15 +40,13 @@ module BattleControllerSharedMethods
 
     def js_index_options
       {
-        :query                           => current_query || "",
-        :modal_record                    => js_modal_record,
-        :search_scope_key                => current_search_scope_key,
-        :board_show_type                 => params[:board_show_type].presence || "none",
-        :xhr_index_path                  => polymorphic_path([ns_prefix, current_plural_key]),
-        :table_column_storage_prefix_key => controller_path,
-        :zip_kifu_info                   => ZipKifuInfo.as_json,
-        :table_columns_hash              => table_columns_hash,
-        :records                         => js_current_records,                  # JS側から最初のリクエストをしない場合は js_current_records を渡す
+        :query              => current_query || "",
+        :search_scope_key   => current_search_scope_key,
+        :board_show_type    => params[:board_show_type].presence || "none",
+        :xhr_index_path     => polymorphic_path([ns_prefix, current_plural_key]),
+        :zip_kifu_info      => ZipKifuInfo.as_json,
+        :table_columns_hash => table_columns_hash,
+        :records            => js_current_records,                  # JS側から最初のリクエストをしない場合は js_current_records を渡す
       }.merge(page_info(current_records), sort_info)
     end
 
@@ -271,7 +263,6 @@ module BattleControllerSharedMethods
 
     let :js_show_options do
       a = {}
-      a[:iframe_p]        = iframe_p
       a[:formal_sheet]    = !!params[:formal_sheet]
       a[:record]          = js_modal_record_for(current_record)
 

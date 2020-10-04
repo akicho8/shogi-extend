@@ -1,3 +1,5 @@
+// クラスにする
+
 export default {
   data() {
     return {

@@ -136,7 +136,7 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from "../../app/javascript/chart_mod.js" // FIXME
+import chart_mod from "@/components/models/chart_mod.js" // FIXME
 
 export default {
   name: "CustomChart",

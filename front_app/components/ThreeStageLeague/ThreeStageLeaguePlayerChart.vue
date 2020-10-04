@@ -157,7 +157,7 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from '../../../app/javascript/chart_mod.js'
+import chart_mod from '@/components/models/chart_mod.js'
 
 export default {
   name: "ThreeStageLeaguePlayerChart",

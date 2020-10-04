@@ -72,10 +72,6 @@ window._ = _
 
 //////////////////////////////////////////////////////////////////////////////// Chart.js
 
-import "chart_init.js"
-
-////////////////////////////////////////////////////////////////////////////////
-
 document.addEventListener("DOMContentLoaded", () => {
   if (document.querySelector("#flash_danger_notify_tag")) {
     new Vue({
@@ -96,22 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
 import vue_mixins from "vue_mixins/vue_mixins.js"
 
 // Components
-import shogi_player                    from "shogi-player/src/components/ShogiPlayer.vue"
-import swars_user_link_to              from "swars_user_link_to.vue"
-import pulldown_menu                   from "pulldown_menu.vue"
 import buefy_table_wrapper             from "buefy_table_wrapper.vue"
 import acns1_sample                    from "acns1_sample.vue"
-import sp_show                         from "sp_show.vue"
-import ox_modal                        from "ox_modal.vue"
-import tactic_show                     from "tactic_show.vue"
-import piyo_shogi_button               from "components/piyo_shogi_button.vue"
-import kento_button                    from "components/kento_button.vue"
-import kif_copy_button                 from "components/kif_copy_button.vue"
-import sp_show_button                  from "components/sp_show_button.vue"
-import png_dl_button                   from "components/png_dl_button.vue"
-import tweet_button                    from "components/tweet_button.vue"
-import membership_medal                from "components/membership_medal.vue"
-import win_lose_circle                 from "win_lose_circle.vue"
 
 Vue.mixin({
   router: new VueRouter({mode: "history"}),
@@ -122,28 +104,8 @@ Vue.mixin({
 
   // よくない命名規則だけどこっちの方が開発しやすい
   components: {
-    shogi_player,
-    swars_user_link_to,
-    pulldown_menu,
-    sp_show,
-    ox_modal,
-    win_lose_circle,
     buefy_table_wrapper,
     acns1_sample,
-
-    // for buefy modal
-    tactic_show,
-
-    // buttons
-    piyo_shogi_button,
-    kento_button,
-    kif_copy_button,
-    sp_show_button,
-    png_dl_button,
-    tweet_button,
-
-    // icon
-    membership_medal,
   },
 })
 

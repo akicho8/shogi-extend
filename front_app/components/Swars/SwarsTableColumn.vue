@@ -8,7 +8,6 @@
       template(v-if="visible_hash[key]")
         template(v-for="name in m[key]")
           a
-            //- a(@click="tactic_show_modal(name)")
             b-tag(rounded) {{name}}
 </template>
 

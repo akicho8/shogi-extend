@@ -6,18 +6,8 @@
 <script>
 export default {
   name: "buefy_table_wrapper",
-
   props: {
     info: { required: true },
-  },
-
-  created() {
-    console.log(this.info)
-  },
-
-  data() {
-    return {
-    }
   },
 }
 </script>

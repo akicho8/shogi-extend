@@ -1,9 +1,0 @@
-- @page_title ||= current_record.title
-- sp_title = current_record.title
-- ogp_params_set(current_record.to_twitter_card_params(params))
-
-#show_app.battle_show_container(v-cloak)
-  - if params[:formal_sheet]
-    = render partial: "free_battles/show_formal_sheet", locals: { sp_title: sp_title }
-  - else
-    = render partial: "free_battles/show_basic", locals: { sp_title: sp_title }

@@ -57,7 +57,7 @@ class FlashInfo
   # 危険通知は notification を使う
   def flash_danger_notify_tag
     if list = normalized_flash.slice(*buefy_preset_types).presence
-      tag.div(id: "flash_danger_notify_tag", :class => "is_screen_only") do
+      tag.div(id: "flash_danger_notify_tag") do
         list.collect { |key, message|
           content_tag("b-notification", message.html_safe, type: "is-#{key}", ":has-icon": "false", ":closable": "false")
         }.join.html_safe

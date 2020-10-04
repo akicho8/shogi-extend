@@ -104,7 +104,7 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from '../../../app/javascript/chart_mod.js'
+import chart_mod from '@/components/models/chart_mod.js'
 
 export const cpu_battle_force_chart = {
   mixins: [

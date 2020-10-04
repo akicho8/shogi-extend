@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
 
   skip_forgery_protection :if => proc { request.format.json? }
 
-  attr_accessor :layout_type
-
   before_action do
     ActiveStorage::Current.host = request.base_url
   end
@@ -60,7 +58,6 @@ class ApplicationController < ActionController::Base
     included do
       add_flash_types *FlashInfo.all_keys
       helper_method :submitted?
-      helper_method :iframe_p
       helper_method :slack_message
     end
 
@@ -70,10 +67,6 @@ class ApplicationController < ActionController::Base
 
     def slack_message(params = {})
       SlackAgent.message_send(params.merge(ua: ua))
-    end
-
-    def iframe_p
-      !!params[:iframe]
     end
 
     private

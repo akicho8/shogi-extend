@@ -1,8 +1,0 @@
-- if AppConfig[:battle_index_permalink_show]
-  template(v-if="fetched_count >= 1")
-    .columns
-      .column
-        p
-          a.button.is-small(:href="permalink_url")
-            b-icon(icon="link" size="is-small")
-            | &nbsp; パーマリンク

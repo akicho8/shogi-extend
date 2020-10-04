@@ -1,6 +1,0 @@
-- content_for :head do
-  = javascript_pack_tag("free_battle_show")
-  javascript:
-    document.addEventListener('DOMContentLoaded', () => { new FreeBattleShow(#{js_show_options.to_json.html_safe}).$mount("#show_app") })
-
-= render partial: "free_battles/show_shared"

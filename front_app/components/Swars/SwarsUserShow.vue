@@ -109,7 +109,7 @@
             WinLoseCircle(:info="row" size="is-small" narrowed)
           .column.is-paddingless.is-flex
             template(v-for="tag in row.all_tags")
-              .tag_wrapper.is_clickable.has-text-weight-bold.is-size-5(@click.stop="tactic_show_modal(tag.name)")
+              .tag_wrapper.is_clickable.has-text-weight-bold.is-size-5
                 | {{tag.name}}
 
               //- b-taglist.tag_wrapper(attached @click.native="tactic_modal_start(tag)")

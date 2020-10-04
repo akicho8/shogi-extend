@@ -1,4 +1,0 @@
-= tag.datalist(id: "search_field_query_completion") do
-  = cache do
-    - Bioshogi::TacticInfo.all_elements.each do |e|
-      = tag.option(value: "tag:#{e.name}")

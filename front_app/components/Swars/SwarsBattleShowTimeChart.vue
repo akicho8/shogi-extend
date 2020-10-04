@@ -329,7 +329,7 @@ const CHART_CONFIG_DEFAULT = {
 
 import sp_show_time_chart_vline from './sp_show_time_chart_vline.js'
 import PaletteInfo from "@/components/models/PaletteInfo.js"
-import chart_mod from '../../../app/javascript/chart_mod.js'
+import chart_mod from '@/components/models/chart_mod.js'
 
 export default {
   name: "SwarsBattleShowTimeChart",
