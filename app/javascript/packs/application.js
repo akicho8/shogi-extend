@@ -15,7 +15,6 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 import "modulable_crud.js"
-import "global_variable_set.js"
 
 //////////////////////////////////////////////////////////////////////////////// Vue
 
