@@ -37,7 +37,7 @@ const config = {
     htmlAttrs: {
       lang: "ja",
       prefix: 'og: http://ogp.me/ns#',
-      class: `NODE_ENV_${process.env.NODE_ENV} STAGE_${process.env.STAGE}`,
+      class: `NODE_ENV-${process.env.NODE_ENV} STAGE-${process.env.STAGE}`,
     },
     meta: [
       // https://ja.nuxtjs.org/faq/duplicated-meta-tags/
