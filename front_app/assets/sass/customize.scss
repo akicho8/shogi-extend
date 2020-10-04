@@ -44,4 +44,4 @@ $modal-background-background-color: bulmaRgba($black, 0.2);
 $navbar-breakpoint: 0;
 
 // styleResources と両方で定義したいもの
-@import "../app/javascript/stylesheets/_my_mixins.sass"
+@import "./rails/_my_mixins.sass"

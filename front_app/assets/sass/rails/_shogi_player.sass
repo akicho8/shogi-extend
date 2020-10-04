@@ -1,0 +1,62 @@
+////////////////////////////////////////////////////////////////////////////// ShogiPlayer の css を適用 (ShogiPlayer.vue とは別に管理する)
+
+// /* @import "../../../node_modules/bulma/bulma.sass"
+// @import "../../../node_modules/bulma/sass/utilities/initial-variables.sass"
+// @import "../../../node_modules/bulma/sass/utilities/derived-variables.sass"
+
+// ShogiPlayer.sass からの相対パスで画像が参照できるはずだけど次の謎のエラーになるため $sp_assets_dir をこのファイルからの相対パスに変更する
+//
+// ERROR in ./node_modules/css-loader??ref--2-2!./node_modules/postcss-loader/lib??ref--2-3!./node_modules/sass-loader/lib/loader.js??ref--2-4!./app/javascript/packs/application_dependent.sass
+// Module not found: Error: Can't resolve '../assets/japanese-chess/koma/60x64/sgl58.png' in '/Users/ikeda/src/shogi_web/app/javascript/packs'
+//  @ ./node_modules/css-loader??ref--2-2!./node_modules/postcss-loader/lib??ref--2-3!./node_modules/sass-loader/lib/loader.js??ref--2-4!./app/javascript/packs/application_dependent.sass 7:13975-14031
+//
+$sp_assets_dir: "../../../node_modules/shogi-player/src/assets"
+@import "../../../node_modules/shogi-player/src/components/ShogiPlayer.sass"
+
+////////////////////////////////////////////////////////////////////////////// bulma の .table のなかにあると td の padding が影響してしまう
+
+.table
+  .detail-container
+    .shogi-player
+      td, th
+        padding: 0
+
+////////////////////////////////////////////////////////////////////////////// 囲い・戦型 用
+
+$cell_blank_bg:      $grey
+$something_exist_bg: $green
+$any_exist_soldiers: $grey-light
+
+.shogi-player
+  table
+    .cell_blank
+      background: $cell_blank_bg
+    .something_exist
+      background: $something_exist_bg
+    .any_exist_soldiers
+      color: $any_exist_soldiers
+
+// 左右キーが効くように常にスライダーにフォーカスさせているけど、これがスマホだととても目立つし、スマホだと役にたたないため、色を消す(重要)
+// ただフォーカスが効いているのかわからなため production のみとする
+html
+  &.production, &.staging
+    .shogi-player
+      .turn_slider
+        &:focus
+          outline: none
+
+/* 背景画像
+/* body
+/*   position: relative
+/*   &:after
+/*     position: absolute
+/*     z-index: -1
+/*     content: ""
+/*     background-image: url("../image_basename")
+/*     background-position: center
+/*     background-size: cover
+/*     opacity: 1.0
+/*     top: 0
+/*     left: 0
+/*     width: 100%
+/*     height: 100%

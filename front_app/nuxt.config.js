@@ -86,7 +86,7 @@ const config = {
   ],
   styleResources: {
     sass: [
-      './assets/sass/resource.scss', // FIXME: なぜか sass の項目に *.scss のファイルを与えないと読み込まれない
+      './assets/sass/styleResources.scss', // sass の項目に scss のファイルを与えないと読み込まれないのは謎
     ],
     // scss: [
     //   // "../app/javascript/stylesheets/bulma_init.scss",
