@@ -1,31 +1,5 @@
 module Swars
   concern :ShowMod do
-    included do
-      prepend_before_action only: :show do
-        if bot_agent?
-          if v = params[:id].presence
-            unless current_scope.where(key: v).exists?
-              raise ActionController::RoutingError, "ページが見つかりません(for bot)"
-            end
-          end
-        end
-      end
-    end
-
-    def show
-      # クローラーが古いURLの /w/(user_key) 形式で跳んできたとき対策
-      # http://localhost:3000/w/devuser1
-      if v = params[:id].presence
-        if User.where(user_key: v).exists?
-          flash[:import_skip] = true
-          redirect_to [:swars, :battles, query: v], alert: "URLを変更したのでトップにリダイレクトしました。お手数ですが新しい棋譜を取り込むには再度検索してください"
-          return
-        end
-      end
-
-      super
-    end
-
     private
 
     let :current_record do
