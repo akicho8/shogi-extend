@@ -96,7 +96,7 @@
 
 <script>
 const HYPHEN_SEP = " "
-const TITLE_DEFAULT = "詰将棋RTA用ストップウォッチ"
+const TITLE_DEFAULT = "詰将棋用ストップウォッチ"
 
 import _ from "lodash"
 import dayjs from "dayjs"

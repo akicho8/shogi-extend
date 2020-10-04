@@ -120,7 +120,7 @@ class ServiceInfo
     {
       display_p: true,
       nuxt_link_to: {path: "/stopwatch"},
-      title: "詰将棋RTA用ストップウォッチ",
+      title: "詰将棋用ストップウォッチ",
       ogp_image_base: "stopwatch",
       description: "詰将棋を解く時間と正解率の計測サービス",
       features: [
