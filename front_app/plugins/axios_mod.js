@@ -33,6 +33,12 @@ export default function ({ $axios, $buefy }) {
     $axios.onResponse(response => {
       // if (window.$loading) { window.$loading.close(); window.$loading = null }
       console.log(`[axios_mod] onResponse`)
+
+      // if (process.client) {
+      //   debugger
+      //   $buefy.toast.open("ok")
+      // }
+
     })
     $axios.onError(err => {
       // if (window.$loading) { window.$loading.close(); window.$loading = null }
