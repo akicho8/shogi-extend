@@ -104,13 +104,17 @@ module Swars
           p c
         end
 
-        def sometimes_user_import(params = {})
+        def throttle_user_import(params = {})
           params = {
-            seconds: sometimes_user_import_skip_seconds_default,
+            seconds: throttle_user_import_skip_seconds_default,
           }.merge(params)
 
+          if params[:force]
+            throttle_user_import_cache_delete(params)
+          end
+
           # キャッシュの有効時間のみ利用して連続実行を防ぐ
-          cache_key = ["sometimes_user_import", params[:user_key], params[:page_max]].join("/")
+          cache_key = throttle_user_import_cache_key(params)
           if Rails.cache.exist?(cache_key)
             return false
           end
@@ -120,7 +124,15 @@ module Swars
           true
         end
 
-        def sometimes_user_import_skip_seconds_default
+        def throttle_user_import_cache_delete(params)
+          Rails.cache.delete(throttle_user_import_cache_key(params))
+        end
+
+        def throttle_user_import_cache_key(params)
+          ["throttle_user_import", params[:user_key], params[:page_max]].join("/")
+        end
+
+        def throttle_user_import_skip_seconds_default
           if Rails.env.production? || Rails.env.staging?
             3.minutes
           else
@@ -202,8 +214,12 @@ module Swars
             # end
           end
 
-          new_keys = keys - where(key: keys).pluck(:key)
-          new_keys.each do |key|
+          if params[:error_capture_test]
+          else
+            keys = keys - where(key: keys).pluck(:key)
+          end
+
+          keys.each do |key|
             begin
               if params[:error_capture_test]
                 raise Bioshogi::BioshogiError, "(test1)\n(test2)\n"

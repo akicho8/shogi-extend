@@ -77,6 +77,11 @@
                 b-dropdown-item Action
                 b-dropdown-item Action
 
+        b-menu-list(label="DEBUG" v-if="development_p")
+          b-menu-item(label="棋譜の不整合"     @click="$router.push({query: {query: 'Yamada_Taro', error_capture_test: true, force: true}})")
+          b-menu-item(label="棋譜の再取得"     @click="$router.push({query: {query: 'Yamada_Taro', destroy_all: true, force: true}})")
+          b-menu-item(label="棋譜の普通に取得" @click="$router.push({query: {query: 'Yamada_Taro'}})")
+
   b-navbar(type="is-primary" :wrapper-class="['container', {'is-fluid': wide_p}]" :mobile-burger="false" spaced)
     template(slot="brand")
       HomeNavbarItem
@@ -270,14 +275,33 @@ export default {
 
     // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
     // http://0.0.0.0:4000/swars/users/devuser1
+
     return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
       this.config = config
       this.board_show_type  = this.config.board_show_type // 何の局面の表示をするか？
-
-      this.query              = this.config.query
+      this.query = this.config.query
 
       this.ls_setup()
       ZipKifuInfo.memory_record_reset(this.config.zip_kifu_info)
+
+      if (this.config.import_logs) {
+        this.config.import_logs.forEach(e => {
+          if (e.method === "dialog") {
+            this.talk(e.title)
+            this.$buefy.dialog.alert({
+              title: e.title,
+              type: `is-${e.type}`,
+              hasIcon: true,
+              message: e.message,
+              onConfirm: () => { this.sound_play('click') },
+              onCancel: () => { this.sound_play('click') },
+            })
+          }
+          if (e.method === "toast") {
+            this.general_ok_notice(e.message, {type: `is-${e.type}`})
+          }
+        })
+      }
     })
   },
 

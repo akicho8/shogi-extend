@@ -137,30 +137,29 @@ module Swars
         import_params = {
           :user_key           => current_swars_user_key,
           :page_max           => import_page_max,
+          :force              => params[:force],
           :error_capture_test => params[:error_capture_test],
           :error_capture      => -> error { errors << error },
         }
 
-        remember_swars_user_keys_update
+        if Rails.env.development? || Rails.env.test?
+          if params[:destroy_all]
+            if current_swars_user
+              Battle.where(id: current_swars_user.battle_ids).destroy_all # user.battles.destroy_all だと memberships の片方が残る
+            end
+          end
+        end
 
         before_count = 0
         if current_swars_user
           before_count = current_swars_user.battles.count
         end
 
-        if params[:force]
-          Battle.user_import(import_params)
-          success = true
-        else
-          # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-          success = Battle.sometimes_user_import(import_params)
-          if !success
-            # ここを有効にするには rails dev:cache してキャッシュを有効にすること
-            if Rails.env.production? || Rails.env.staging?
-            else
-              import_logs_add(:warning, "#{current_swars_user_key} さんの棋譜はさっき取得したばかりです")
-            end
-          end
+        # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
+        success = Battle.throttle_user_import(import_params)
+        if !success
+          # ここを有効にするには rails dev:cache してキャッシュを有効にすること
+          import_logs_add(:warning, "さっき取得したばかりです", development_only: true)
         end
 
         if success
@@ -170,16 +169,13 @@ module Swars
           if current_swars_user
             hit_count = current_swars_user.battles.count - before_count
             if hit_count.zero?
-              if Rails.env.production? || Rails.env.staging?
-              else
-                import_logs_add(:warning, "#{current_swars_user_key} さんの新しい棋譜は見つかりませんでした")
-              end
+              import_logs_add(:dark, "新しい棋譜は見つかりませんでした", development_only: true)
             else
-              import_logs_add(:toast_info, "#{hit_count}件、新しく見つかりました")
+              import_logs_add(:info, "#{hit_count}件、新しく見つかりました")
             end
             current_swars_user.search_logs.create!
           else
-            import_logs_add(:warning, "#{current_swars_user_key} さんは存在しないかも？")
+            import_logs_add(:warning, "#{current_swars_user_key}さんは存在しません。アルファベットの大文字小文字を見直してください")
           end
 
           if hit_count.nonzero?
@@ -199,20 +195,23 @@ module Swars
               ].join("\n")
               ApplicationMailer.developper_notice(subject: "【ウォーズ棋譜不整合】#{e[:error].message.lines.first.strip}", body: body).deliver_later
             end
-            html_text = errors.collect { |e|
+            message = errors.collect { |e|
               [
-                "【棋譜の不整合】#{e[:error].message.strip}",
+                e[:error].message.strip,
                 "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
               ].collect { |e| "#{e}\n" }.join
-            }.join("\n")
-            import_logs_add(:error, html_text.gsub(/\R/, "<br>"))
+            }.join("\n").gsub(/\R/, "<br>")
+            import_logs_add(:danger, message, method: "dialog", title: "棋譜の不整合")
           end
         end
       end
     end
 
-    def import_logs_add(type, message)
-      @import_logs << { type: type, message: message }
+    def import_logs_add(type, message, options = {})
+      if Rails.env.production? && options[:development_only]
+        return
+      end
+      @import_logs << { type: type, message: message, title: "foo", method: "toast", **options }
     end
 
     let :import_page_max do
