@@ -6,25 +6,31 @@ module Swars
       helper_method :twitter_card_options
 
       rescue_from "Swars::Agent::OfficialFormatChanged" do |exception|
-        flash.now[:danger] = exception.message
-        render :index
+        render json: { status: :error, type: :danger, message: exception.message }
       end
     end
 
     def index
-      # FIXME: BOTを許可する
-      if bot_agent?
-        return
-      end
+      @import_logs = []
 
-      # FIXME: 名前変更する
-      if params[:stop_processing_because_it_is_too_heavy]
-        return
+      [
+        :redirect_if_exist_modal_id,
+        :kento_json_render,
+        :swars_users_key_json_render,
+        :zip_dl_perform,
+        :default_json_render,
+      ].each do |e|
+        send(e)
+        if performed?
+          return
+        end
       end
+    end
 
-      # 新しいURLにリダイレクト
-      # 旧 http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
-      # 新 http://localhost:4000/swars/battles/devuser1-Yamada_Taro-20200101_123401?flip=false&turn=34
+    # 新しいURLにリダイレクト
+    # 旧 http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
+    # 新 http://localhost:4000/swars/battles/devuser1-Yamada_Taro-20200101_123401?flip=false&turn=34
+    def redirect_if_exist_modal_id
       if request.format.html?
         if modal_id = params[:modal_id].presence
           query = params.permit!.to_h.except(:controller, :action, :format, :modal_id).to_query.presence
@@ -33,16 +39,21 @@ module Swars
           return
         end
       end
+    end
 
-      kento_json_render
-      if performed?
+    def default_json_render
+      if request.format.json?
+        import_process2
+        render json: js_index_options.as_json
         return
       end
+    end
 
+    def swars_users_key_json_render
       if request.format.json? && format_type == "user"
         if current_swars_user
           if params[:try_fetch] == "true"
-            import_process2(flash)
+            import_process2
           end
           if Rails.env.test?
             slack_message(key: "新プ情報", body: current_swars_user.key)
@@ -50,28 +61,6 @@ module Swars
           render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
           return
         end
-      end
-
-      import_process2(flash)
-
-      if request.format.json?
-        render json: js_index_options.as_json
-        return
-      end
-
-      # external_app_run
-      # if performed?
-      #   return
-      # end
-
-      zip_dl_perform
-      if performed?
-        return
-      end
-
-      @page_title = ["将棋ウォーズ棋譜検索"]
-      if current_swars_user
-        @page_title << current_swars_user.key
       end
     end
 
@@ -86,10 +75,12 @@ module Swars
     end
 
     def js_index_options
-      super.merge({
-          :current_swars_user_key    => current_swars_user_key,
+      {
+        :import_logs            => @import_logs,
+        :import_enable_p        => import_enable?,
+        :current_swars_user_key => current_swars_user_key,
+      }.merge(super).merge({
           :remember_swars_user_keys  => remember_swars_user_keys,
-          :import_enable_p           => import_enable?,
           :per_page_list             => [Kaminari.config.default_per_page, *AppConfig[:per_page_list], Kaminari.config.max_per_page],
         })
     end
@@ -130,17 +121,16 @@ module Swars
       end
     end
 
-    def import_process2(flash)
-      # 検索窓に将棋ウォーズへ棋譜URLが指定されたとき
+    def import_process2
       if primary_record_key
-        # 一覧に表示したいので取得
-        current_model.single_battle_import(key: primary_record_key)
+        Swars::Battle.single_battle_import(key: primary_record_key)
       else
-        import_process(flash.now)
+        import_process
       end
     end
 
-    def import_process(flash)
+    def import_process
+      @import_logs = []
 
       if import_enable?
         errors = []
@@ -168,7 +158,7 @@ module Swars
             # ここを有効にするには rails dev:cache してキャッシュを有効にすること
             if Rails.env.production? || Rails.env.staging?
             else
-              flash[:warning] = "#{current_swars_user_key} さんの棋譜はさっき取得したばかりです"
+              import_logs_add(:warning, "#{current_swars_user_key} さんの棋譜はさっき取得したばかりです")
             end
           end
         end
@@ -182,14 +172,14 @@ module Swars
             if hit_count.zero?
               if Rails.env.production? || Rails.env.staging?
               else
-                flash[:warning] = "#{current_swars_user_key} さんの新しい棋譜は見つかりませんでした"
+                import_logs_add(:warning, "#{current_swars_user_key} さんの新しい棋譜は見つかりませんでした")
               end
             else
-              flash[:toast_info] = "#{hit_count}件、新しく見つかりました"
+              import_logs_add(:toast_info, "#{hit_count}件、新しく見つかりました")
             end
             current_swars_user.search_logs.create!
           else
-            flash[:warning] = "#{current_swars_user_key} さんは存在しないかも？"
+            import_logs_add(:warning, "#{current_swars_user_key} さんは存在しないかも？")
           end
 
           if hit_count.nonzero?
@@ -215,10 +205,14 @@ module Swars
                 "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
               ].collect { |e| "#{e}\n" }.join
             }.join("\n")
-            flash[:error] = html_text.gsub(/\R/, "<br>")
+            import_logs_add(:error, html_text.gsub(/\R/, "<br>"))
           end
         end
       end
+    end
+
+    def import_logs_add(type, message)
+      @import_logs << { type: type, message: message }
     end
 
     let :import_page_max do
@@ -278,7 +272,7 @@ module Swars
 
     def current_scope
       @current_scope ||= -> {
-        s = current_model.all
+        s = Swars::Battle.all
 
         if v = query_info.lookup(:ids)
           s = s.where(id: v)
