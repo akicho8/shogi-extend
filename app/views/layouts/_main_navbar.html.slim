@@ -65,7 +65,7 @@ nav#main_nav.navbar.is-danger.is-spaced
             = link_to([current_user], class: "navbar-link", slot: "trigger") do
               = image_tag(current_user.avatar_path, class: "header_avatar_image")
               - if Rails.env.development? || Rails.env.test?
-                span.my_name
+                span.ml-2
                   b= current_user.name
             .navbar-dropdown.is-boxed.is-right
               = link_to("プロフィール", [current_user], class: "navbar-item")
