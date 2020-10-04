@@ -143,14 +143,6 @@ module Swars
         assert { record.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車"] }
       end
     end
-
-    describe "PathMethods" do
-      it do
-        assert { record.kento_app_path     == "/?initpos=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&moves=7i6h.8b3b.5g5f.3c3d.6h5g#5"                            }
-        assert { record.kento_app_url      == "https://www.kento-shogi.com/?initpos=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&moves=7i6h.8b3b.5g5f.3c3d.6h5g#5" }
-        assert { record.piyo_shogi_app_url == "piyoshogi://?num=5&url=http://0.0.0.0:3000/w/battle1.kif"                                                                                            }
-      end
-    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
