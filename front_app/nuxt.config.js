@@ -99,8 +99,11 @@ const config = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    // client only
     "~/plugins/mixin_mod.client.js",
     "~/plugins/other.client.js",
+    "~/plugins/audio_queue.client.js",
+    // 両方
     "~/plugins/axios_mod.js",
     "~/plugins/universal.js",
   ],

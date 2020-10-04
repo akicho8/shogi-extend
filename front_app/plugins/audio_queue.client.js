@@ -11,7 +11,7 @@
 //   なお chrome://flags/#autoplay-policy で No user gesture is required にすると回避できるが、もちろん利用者の設定をこちらから変更することはできない
 //
 
-import no_sound from "./sound_effect/no_sound.mp3" // 自動再生制限を解除するための無音
+import no_sound from "../static/sound_effect/no_sound.mp3" // 自動再生制限を解除するための無音
 
 class AudioQueue {
   constructor() {
