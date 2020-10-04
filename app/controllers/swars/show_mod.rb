@@ -21,7 +21,6 @@ module Swars
       end
 
       a[:flip] = flip
-      a[:modal_on_index_path] = e.modal_on_index_path(flip: flip)
 
       # a[:time_chart_params] = e.time_chart_params
 
