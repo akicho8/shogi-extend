@@ -2,8 +2,8 @@
 
 import Vue from "vue"
 
-import vue_universal from "../../app/javascript/vue_mixins/vue_universal.js"
-import vue_time      from "../../app/javascript/vue_mixins/vue_time.js"
+import vue_universal from "./vue_mixins/vue_universal.js"
+import vue_time      from "./vue_mixins/vue_time.js"
 
 Vue.mixin({
   mixins: [

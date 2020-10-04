@@ -302,7 +302,6 @@ export default {
       this.sound_play("start")
       this.track_next()
       this.memento_create("start")
-      this.alive_notice()
     },
 
     button_focus(o_or_x) {
@@ -314,15 +313,6 @@ export default {
       this.mode = "standby"
       this.interval_runner.stop()
       this.memento_create("stop")
-      this.alive_notice()
-    },
-
-    alive_notice() {
-      // this.silent_remote_fetch("POST", this.$root.$options.post_path, {
-      //   mode: this.mode,
-      //   summary: this.summary,
-      //   book_title: this.book_title,
-      // })
     },
 
     stop_if_playing() {

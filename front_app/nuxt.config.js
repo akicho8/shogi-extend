@@ -101,7 +101,7 @@ const config = {
   plugins: [
     // client only
     "~/plugins/mixin_mod.client.js",
-    "~/plugins/other.client.js",
+    "~/plugins/chart_init.client.js",
     "~/plugins/audio_queue.client.js",
     // 両方
     "~/plugins/axios_mod.js",

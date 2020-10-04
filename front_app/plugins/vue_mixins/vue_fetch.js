@@ -1,54 +1,40 @@
 export default {
   methods: {
-    // POST の場合 data はHashをそのまま渡せばよい
-    remote_fetch(method, url, data, callback = null) {
-      const loading = this.$buefy.loading.open()
-      return this.$axios({method: method, url: url, data: data})
-        .then(r      => this.remote_fetch_success(r, loading, callback))
-        .catch(error => this.remote_fetch_error(error, loading))
-    },
-
-    silent_remote_fetch(method, url, data, callback = null) {
-      return this.$axios({method: method, url: url, data: data})
-        .then(r      => this.remote_fetch_success(r, null, callback))
-        .catch(error => this.remote_fetch_error(error, null))
-    },
-
     remote_get(url, params, callback = null) {
       const loading = this.$buefy.loading.open()
-      return this.$axios.$get(url, {params: params})
+      return this.$http.get(url, {params: params})
         .then(r      => this.remote_fetch_success(r, loading, callback))
         .catch(error => this.remote_fetch_error(error, loading))
     },
 
     silent_remote_get(url, params, callback = null) {
-      return this.$axios.$get(url, {params: params})
+      return this.$http.get(url, {params: params})
         .then(r      => this.remote_fetch_success(r, null, callback))
         .catch(error => this.remote_fetch_error(error, null))
     },
 
     // private
 
-    remote_fetch_success(data, loading, callback) {
+    remote_fetch_success(response, loading, callback) {
       if (loading) {
         loading.close()
       }
 
       // 本当はここでは呼びたくない
       // Rails側で render json: as_bs_error(error), status: 500 のようにしても
-      // json は無視して 500 用のHTMLを error.data に格納してしまう
+      // json は無視して 500 用のHTMLを error.response.data に格納してしまう
       // なので catch の方では bs_error がとれない
       // だからしかたなくこちらでひっかけている
       // メリットは then の方で bs_error がとれること
-      if (data.bs_error) {
-        this.bs_error_message_dialog(data.bs_error)
+      if (response.data.bs_error) {
+        this.bs_error_message_dialog(response.data.bs_error)
       }
 
       if (callback) {
-        callback(data)
+        callback(response.data)
       }
 
-      return Promise.resolve(data)
+      return Promise.resolve(response.data)
     },
 
     remote_fetch_error(error, loading) {

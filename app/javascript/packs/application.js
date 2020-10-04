@@ -71,16 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
 
-import vue_mixins from "vue_mixins/vue_mixins.js"
-
 // Components
 import acns1_sample from "acns1_sample.vue"
 
 Vue.mixin({
   router: new VueRouter({mode: "history"}),
-  mixins: [
-    vue_mixins,
-  ],
   components: {
     acns1_sample,
   },

@@ -271,7 +271,7 @@ module BattleControllerSharedMethods
           :piyo_shogi_base_params,
         ],
         ).tap do |a|
-        # a[:show_path]          = polymorphic_path([ns_prefix, e])
+        a[:show_path]          = polymorphic_path([ns_prefix, e]) # ← これはとりあえずいる kc_path などに渡している
         # if editable_record?(e) || Rails.env.development?
         #   a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
         # end

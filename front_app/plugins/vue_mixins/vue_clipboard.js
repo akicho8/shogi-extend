@@ -46,7 +46,7 @@ export default {
       if (text) {
         this.clipboard_copy({text: text})
       } else {
-        this.remote_get(url, {}, text => {
+        this.$axios.$get(url).then(text => {
           this.$set(this.kif_clipboard_copy_cache, url, text)
           this.clipboard_copy({text: text})
         })

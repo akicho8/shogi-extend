@@ -312,7 +312,7 @@ export default {
 
     tweet_body() {
       if (this.record) {
-        alert("TODO: ツイート機能は廃止する")
+        // alert("TODO: ツイート機能は廃止する")
         // ツイート機能は廃止する
         // なんなら共有将棋盤のURLにする
         // this.$router.push({name: "share-board", query: {body: this.all_kifs.sfen, image_view_point: "black", title: "共有将棋盤 (棋譜変換後の確認)"}})
