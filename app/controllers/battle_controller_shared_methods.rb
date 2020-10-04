@@ -43,7 +43,6 @@ module BattleControllerSharedMethods
         :query              => current_query || "",
         :search_scope_key   => current_search_scope_key,
         :board_show_type    => params[:board_show_type].presence || "none",
-        :xhr_index_path     => polymorphic_path([ns_prefix, current_plural_key]),
         :zip_kifu_info      => ZipKifuInfo.as_json,
         :table_columns_hash => table_columns_hash,
         :records            => js_current_records,                  # JS側から最初のリクエストをしない場合は js_current_records を渡す
