@@ -41,19 +41,5 @@ module Swars
     include RememberSwarsUserKeysMod
     include IndexMod
     include ShowMod
-
-    def create
-      import_process(flash)     # これはなに……？？？
-      flash[:import_skip] = true
-      redirect_to [:swars, :battles, query: current_swars_user]
-    end
-
-    concerning :EditCustomMethods do
-      def js_edit_options
-        super.merge({
-            run_mode: "view_mode",
-          })
-      end
-    end
   end
 end
