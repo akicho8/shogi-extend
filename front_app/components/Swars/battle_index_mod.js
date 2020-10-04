@@ -5,7 +5,7 @@ import MemoryRecord from 'js-memory-record'
 import battle_index_table_column from "./battle_index_table_column.js"
 
 import search_form_mod from "./search_form_mod.js"
-import ls_support from "./ls_support.js"
+import ls_support from "@/components/models/ls_support.js"
 
 export default {
   mixins: [

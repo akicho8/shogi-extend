@@ -17,9 +17,6 @@ import vue_talk        from "./vue_talk.js"
 import vue_fetch       from "./vue_fetch.js"
 import vue_support_nuxt_side       from "./vue_support_nuxt_side.js"
 
-// import axios_support from "../../app/javascript/axios_support.js"
-// Vue.prototype.$http = axios_support
-
 Vue.mixin({
   mixins: [
     vue_universal,

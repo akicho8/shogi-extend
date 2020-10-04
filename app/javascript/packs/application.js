@@ -31,23 +31,6 @@ Vue.use(Vuex)                   // これは一箇所だけで実行すること
 import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
-import VueGtag from "vue-gtag"
-Vue.use(VueGtag, {
-  config: {
-    id: 'UA-109851345-1',
-    params: {
-      // send_page_view: process.env.NODE_ENV !== "production",
-
-      // https://developers.google.com/analytics/devguides/collection/gtagjs/cookies-user-id?hl=ja
-      // > サーバーがローカル環境（例: localhost）で実行されていることが検出されると、cookie_domain は自動的に 'none' に設定されます
-      // cookie_domain: 'none',
-    },
-  },
-})
-
-import axios_support from "axios_support.js"
-Vue.prototype.$http = axios_support
-
 import "css-browser-selector"   // 読み込んだ時点で htmlタグの class に "mobile" などを付与してくれる
 
 //////////////////////////////////////////////////////////////////////////////// Buefy
@@ -91,25 +74,16 @@ document.addEventListener("DOMContentLoaded", () => {
 import vue_mixins from "vue_mixins/vue_mixins.js"
 
 // Components
-import buefy_table_wrapper             from "buefy_table_wrapper.vue"
-import acns1_sample                    from "acns1_sample.vue"
+import acns1_sample from "acns1_sample.vue"
 
 Vue.mixin({
   router: new VueRouter({mode: "history"}),
-
   mixins: [
     vue_mixins,
   ],
-
-  // よくない命名規則だけどこっちの方が開発しやすい
   components: {
-    buefy_table_wrapper,
     acns1_sample,
   },
 })
 
-window.GVI = new Vue()           // ActionCable 側から Vue のグローバルなメソッドを呼ぶため
-
 import "audio_queue.js"
-
-window.App = {}

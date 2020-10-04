@@ -180,7 +180,7 @@
 </template>
 
 <script>
-import ls_support from "./ls_support.js"
+import ls_support from "@/components/models/ls_support.js"
 
 export default {
   name: "SwarsUserShow",
@@ -216,8 +216,8 @@ export default {
     // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
     // http://0.0.0.0:4000/swars/users/devuser1
     this.info = await this.$axios.$get("/w.json", {params: {query: this.$route.params.key, format_type: "user", ...this.$route.query}})
+    this.ls_setup() // ←これうごいてんのか？？？
   },
-
 
   created() {
     if ("tab_index" in this.$route.query) {

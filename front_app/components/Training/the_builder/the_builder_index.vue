@@ -171,7 +171,7 @@
 <script>
 import { support } from "../support.js"
 
-import ls_support from "../../../../app/javascript/ls_support.js"
+import ls_support from "@/components/models/ls_support.js"
 
 import the_footer from "../the_footer.vue"
 
@@ -214,6 +214,7 @@ export default {
   created() {
     // this.$gtag.event("open", {event_category: "問題一覧"})
     this.folder_active_handle()
+    this.ls_setup()
   },
   mounted() {
     // 有効にすると localStorage をクリアする
@@ -293,7 +294,7 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
 
-    ls_data() {
+    ls_default() {
       return {
         visible_hash: this.as_visible_hash(QuestionIndexColumnInfo.values),
       }
