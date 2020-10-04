@@ -62,7 +62,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./stylesheets/bulma_init.scss"
 .acns1_sample
   .messages_box
     height: 20rem

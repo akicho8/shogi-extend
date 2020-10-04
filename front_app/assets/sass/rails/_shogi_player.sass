@@ -23,40 +23,23 @@ $sp_assets_dir: "../../../node_modules/shogi-player/src/assets"
 
 ////////////////////////////////////////////////////////////////////////////// 囲い・戦型 用
 
-$cell_blank_bg:      $grey
-$something_exist_bg: $green
-$any_exist_soldiers: $grey-light
-
-.shogi-player
-  table
-    .cell_blank
-      background: $cell_blank_bg
-    .something_exist
-      background: $something_exist_bg
-    .any_exist_soldiers
-      color: $any_exist_soldiers
+// $cell_blank_bg:      $grey
+// $something_exist_bg: $green
+// $any_exist_soldiers: $grey-light
+// 
+// .shogi-player
+//   table
+//     .cell_blank
+//       background: $cell_blank_bg
+//     .something_exist
+//       background: $something_exist_bg
+//     .any_exist_soldiers
+//       color: $any_exist_soldiers
 
 // 左右キーが効くように常にスライダーにフォーカスさせているけど、これがスマホだととても目立つし、スマホだと役にたたないため、色を消す(重要)
 // ただフォーカスが効いているのかわからなため production のみとする
-html
-  &.production, &.staging
-    .shogi-player
-      .turn_slider
-        &:focus
-          outline: none
-
-/* 背景画像
-/* body
-/*   position: relative
-/*   &:after
-/*     position: absolute
-/*     z-index: -1
-/*     content: ""
-/*     background-image: url("../image_basename")
-/*     background-position: center
-/*     background-size: cover
-/*     opacity: 1.0
-/*     top: 0
-/*     left: 0
-/*     width: 100%
-/*     height: 100%
+.NODE_ENV_production
+  .shogi-player
+    .turn_slider
+      &:focus
+        outline: none

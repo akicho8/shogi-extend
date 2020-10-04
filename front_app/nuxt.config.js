@@ -37,7 +37,7 @@ const config = {
     htmlAttrs: {
       lang: "ja",
       prefix: 'og: http://ogp.me/ns#',
-      class: process.env.NODE_ENV,
+      class: `NODE_ENV_${process.env.NODE_ENV} STAGE_${process.env.STAGE}`,
     },
     meta: [
       // https://ja.nuxtjs.org/faq/duplicated-meta-tags/
@@ -77,7 +77,6 @@ const config = {
   */
   css: [
     // 'application.sass'
-    // '../app/javascript/stylesheets/bulma_init.scss',
     // '~/assets/css/buefy.scss',
     // '~/assets/sass/application.sass',
     // '../app/javascript/stylesheets/application.sass',
@@ -89,7 +88,6 @@ const config = {
       './assets/sass/styleResources.scss', // sass の項目に scss のファイルを与えないと読み込まれないのは謎
     ],
     // scss: [
-    //   // "../app/javascript/stylesheets/bulma_init.scss",
     //   // '~assets/vars/*.scss',
     //   // '~assets/abstracts/_mixins.scss'
     // ]

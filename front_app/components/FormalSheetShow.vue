@@ -226,6 +226,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "@/assets/sass/formal_sheet/_all.sass"
+@import "FormalSheetShow/_all.sass"
 .FormalSheetShow
 </style>
