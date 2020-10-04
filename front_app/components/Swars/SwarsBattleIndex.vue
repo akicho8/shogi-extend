@@ -170,14 +170,14 @@
 
               template(v-if="config.current_swars_user_key")
                 b-table-column(v-slot="{row}" label="自分")
-                  SwarsTableColumn(:visible_hash="visible_hash" :membership="row.memberships[0]")
+                  SwarsBattleIndexMembership(:visible_hash="visible_hash" :membership="row.memberships[0]")
                 b-table-column(v-slot="{row}" label="相手")
-                  SwarsTableColumn(:visible_hash="visible_hash" :membership="row.memberships[1]")
+                  SwarsBattleIndexMembership(:visible_hash="visible_hash" :membership="row.memberships[1]")
               template(v-else)
                 b-table-column(v-slot="{row}" label="勝ち")
-                  SwarsTableColumn(:visible_hash="visible_hash" :membership="row.memberships[0]")
+                  SwarsBattleIndexMembership(:visible_hash="visible_hash" :membership="row.memberships[0]")
                 b-table-column(v-slot="{row}" label="負け")
-                  SwarsTableColumn(:visible_hash="visible_hash" :membership="row.memberships[1]")
+                  SwarsBattleIndexMembership(:visible_hash="visible_hash" :membership="row.memberships[1]")
 
               b-table-column(v-slot="{row}" field="final_key" :label="config.table_columns_hash.final_info.label" :visible="visible_hash.final_info" sortable)
                 span(:class="row.final_info.class")
@@ -367,8 +367,12 @@ export default {
 //     width: 100%
 
 .SwarsBattleIndex
-
   .section
     &:first-of-type
       padding-top: 1.8rem
+
+  .container
+    +mobile
+      padding-left: 0 ! important
+      padding-right: 0 ! important
 </style>

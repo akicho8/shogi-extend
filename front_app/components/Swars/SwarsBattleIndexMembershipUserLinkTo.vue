@@ -1,5 +1,5 @@
 <template lang="pug">
-a.SwarsUserLinkTo(@click="click_handle" :class="css_class")
+a.SwarsBattleIndexMembershipUserLinkTo(@click="click_handle" :class="css_class")
   | {{membership.user.key}} {{membership.grade_info.name}}
 </template>
 
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsUserLinkTo
+.SwarsBattleIndexMembershipUserLinkTo
   &.is-win
     font-weight: bold
 </style>
