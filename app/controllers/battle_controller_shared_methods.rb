@@ -41,7 +41,6 @@ module BattleControllerSharedMethods
     def js_index_options
       {
         :query              => current_query || "",
-        :search_scope_key   => current_search_scope_key,
         :board_show_type    => params[:board_show_type].presence || "none",
         :zip_kifu_info      => ZipKifuInfo.as_json,
         :table_columns_hash => table_columns_hash,
@@ -59,11 +58,6 @@ module BattleControllerSharedMethods
   concerning :QueryMethods do
     included do
       helper_method :current_query
-      helper_method :current_search_scope_key
-    end
-
-    let :current_search_scope_key do
-      (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
     end
 
     let :current_query do
@@ -93,7 +87,6 @@ module BattleControllerSharedMethods
         s = s.where(battled_at: v...v.tomorrow)
       end
 
-      s = search_scope_add(s)
       s = other_scope_add(s)
       if v = query_info.lookup(:ids)
         s = s.where(id: v)
@@ -109,31 +102,6 @@ module BattleControllerSharedMethods
           #   s = s.merge(w)
           # end
           # # raise s.to_sql.inspect
-        end
-      end
-      s
-    end
-
-    def search_scope_add(s)
-      case current_search_scope_key
-      when :ss_public
-        s = s.where(saturn_key: :public)
-      when :ss_my_public
-        s = s.where(saturn_key: :public)
-        s = s.where(user: current_user)
-        unless current_user
-          s = s.none
-        end
-      when :ss_my_private
-        s = s.where(saturn_key: :private)
-        s = s.where(user: current_user)
-        unless current_user
-          s = s.none
-        end
-      when :ss_my_all
-        s = s.where(user: current_user)
-        unless current_user
-          s = s.none
         end
       end
       s

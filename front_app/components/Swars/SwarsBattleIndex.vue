@@ -272,7 +272,6 @@ export default {
     // http://0.0.0.0:4000/swars/users/devuser1
     return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
       this.config = config
-      // this.search_scope_key = this.config.search_scope_key // スコープ
       this.board_show_type  = this.config.board_show_type // 何の局面の表示をするか？
 
       this.query              = this.config.query
