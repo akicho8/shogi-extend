@@ -25,14 +25,6 @@ import "babel-polyfill"
 import Vue from "vue/dist/vue.esm" // esm版はvueのtemplateをパースできる
 window.Vue = Vue
 
-import Vuex from "vuex"
-Vue.use(Vuex)                   // これは一箇所だけで実行すること。shogi-player 側で実行すると干渉する
-
-import VueRouter from "vue-router"
-Vue.use(VueRouter)
-
-import "css-browser-selector"   // 読み込んだ時点で htmlタグの class に "mobile" などを付与してくれる
-
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
 import "stylesheets/application.sass"
@@ -47,35 +39,10 @@ Vue.use(Buefy, {
   defaultTooltipAnimated: true,   // ←効いてなくね？
 })
 
-//////////////////////////////////////////////////////////////////////////////// lodash
-
-import _ from "lodash"
-window._ = _
-
-//////////////////////////////////////////////////////////////////////////////// Chart.js
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.querySelector("#flash_danger_notify_tag")) {
-    new Vue({
-      el: "#flash_danger_notify_tag",
-    })
-  }
-  if (toast_flash) {
-    _.forIn(toast_flash, (message, key) => {
-      Vue.prototype.$buefy.toast.open({message: message, position: "is-bottom", type: `is-${key}`, duration: 1000 * 3, queue: false})
-    })
-  }
-})
-
-//////////////////////////////////////////////////////////////////////////////// タブがアクティブか？(見えているか？)
-
-//////////////////////////////////////////////////////////////////////////////// どこからでも使いたい2
-
 // Components
 import acns1_sample from "acns1_sample.vue"
 
 Vue.mixin({
-  router: new VueRouter({mode: "history"}),
   components: {
     acns1_sample,
   },
