@@ -38,12 +38,3 @@ Vue.use(Buefy, {
   defaultTooltipType: "is-dark", // デフォルトは背景が明るいため黒くしておく
   defaultTooltipAnimated: true,   // ←効いてなくね？
 })
-
-// Components
-import acns1_sample from "acns1_sample.vue"
-
-Vue.mixin({
-  components: {
-    acns1_sample,
-  },
-})
