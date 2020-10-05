@@ -208,7 +208,7 @@ module Swars
     end
 
     def import_logs_add(type, message, options = {})
-      if Rails.env.production? && options[:development_only]
+      if !Rails.env.development? && options[:development_only]
         return
       end
       @import_logs << { type: type, message: message, title: "foo", method: "toast", **options }
