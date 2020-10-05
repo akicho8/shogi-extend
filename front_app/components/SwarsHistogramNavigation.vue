@@ -5,7 +5,7 @@
       template(v-for="item in items")
         template(v-if="!development_p && item.development_only")
         template(v-else)
-          b-button(tag="nuxt-link" :to="item.to" exact-active-class="is-active") {{item.title}}
+          b-button(tag="nuxt-link" :to="item.to" exact-active-class="is-active" @click.native="sound_play('click')") {{item.title}}
   .column
     .level.is-mobile.mb-0
       .level-left

@@ -1,6 +1,6 @@
 <template lang="pug">
 .AdapterApp
-  b-sidebar(fullheight overlay right v-model="sidebar_open_p")
+  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_open_p")
     .mx-3.my-3
       b-menu
         b-menu-list(label="Export")

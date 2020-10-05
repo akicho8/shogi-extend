@@ -1,6 +1,6 @@
 <template lang="pug">
-  b-button.NormalShowButton.is-small(v-bind="$attrs" v-on="$listeners" icon-left="play-circle" @click="click_handle")
-    | 詳細
+b-button.NormalShowButton.is-small(v-bind="$attrs" v-on="$listeners" icon-left="play-circle")
+  | 詳細
 </template>
 
 <script>

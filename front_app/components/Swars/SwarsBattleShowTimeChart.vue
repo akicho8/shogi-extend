@@ -327,14 +327,14 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import sp_show_time_chart_vline from './sp_show_time_chart_vline.js'
+import SwarsBattleShowTimeChartVerticalLine from './SwarsBattleShowTimeChartVerticalLine.js'
 import PaletteInfo from "@/components/models/PaletteInfo.js"
 import chart_mod from '@/components/models/chart_mod.js'
 
 export default {
   name: "SwarsBattleShowTimeChart",
   mixins: [
-    sp_show_time_chart_vline, // 縦線表示機能(コメントアウトでOFF)
+    SwarsBattleShowTimeChartVerticalLine, // 縦線表示機能(コメントアウトでOFF)
     chart_mod,
   ],
 

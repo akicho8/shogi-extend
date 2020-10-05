@@ -2,7 +2,7 @@
 .SwarsBattleShow(v-if="!$fetchState.pending")
   .delete.is-large(@click="delete_click_handle" v-if="development_p")
 
-  b-sidebar(type="is-light" fullheight overlay right v-model="sidebar_open_p")
+  b-sidebar.is-unselectable(type="is-light" fullheight overlay right v-model="sidebar_open_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
       //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_open_p = false")

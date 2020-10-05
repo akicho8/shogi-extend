@@ -1,8 +1,8 @@
 <template lang="pug">
 .SwarsBattleIndex
-  //- DebugBox
-  //-   p http://0.0.0.0:4000/swars/battles?query=devuser1
-  b-sidebar(fullheight overlay right v-model="sidebar_open_p")
+  DebugBox
+    p $route.query: {{$route.query}}
+  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_open_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
       //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_open_p = false")
@@ -19,18 +19,18 @@
               | 表示件数
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-if="development_p")
-              b-menu-item(label="0" @click.stop="update_search({per: 0})")
-              b-menu-item(label="1" @click.stop="update_search({per: 1})")
+              b-menu-item(label="0" @click.stop="per_change_handle(0)")
+              b-menu-item(label="1" @click.stop="per_change_handle(1)")
             template(v-for="per in config.per_page_list")
-              b-menu-item(:label="`${per}`" @click.stop="update_search({per})" :class="{'has-text-weight-bold': per === config.per}")
+              b-menu-item(:label="`${per}`" @click.stop="per_change_handle(per)" :class="{'has-text-weight-bold': per === config.per}")
 
           b-menu-item
             template(slot="label" slot-scope="props")
               | フィルタ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            b-menu-item(label="勝ち" @click.stop="filter_search(`judge:win`)"  :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
-            b-menu-item(label="負け" @click.stop="filter_search(`judge:lose`)" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
-            b-menu-item(label="なし" @click.stop="filter_search(``)"           :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
+            b-menu-item(label="勝ち" @click.stop="filter_research(`judge:win`)"  :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
+            b-menu-item(label="負け" @click.stop="filter_research(`judge:lose`)" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
+            b-menu-item(label="なし" @click.stop="filter_research(``)"           :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
 
         b-menu-list(label="表示形式")
           b-menu-item(@click.stop="board_show_type = 'none'")
@@ -82,10 +82,11 @@
           b-menu-item(label="棋譜の再取得"     @click="$router.push({query: {query: 'Yamada_Taro', destroy_all: true, force: true}})")
           b-menu-item(label="棋譜の普通に取得" @click="$router.push({query: {query: 'Yamada_Taro'}})")
 
-  b-navbar(type="is-primary" :wrapper-class="['container', {'is-fluid': wide_p}]" :mobile-burger="false" spaced)
+  //- b-navbar(type="is-primary" :wrapper-class="['container', {'is-fluid': wide_p}]" :mobile-burger="false" spaced)
+  b-navbar(type="is-primary" wrapper-class="container is-fluid" :mobile-burger="false" spaced)
     template(slot="brand")
       HomeNavbarItem
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{query: {}}") 将棋ウォーズ棋譜検索
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{query: {}}" @click.native="query= ''") 将棋ウォーズ棋譜検索
     template(slot="end")
       b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
         b-icon(icon="menu")
@@ -100,7 +101,6 @@
               v-model.trim="query"
               :data="search_form_complete_list"
               list="search_field_query_completion"
-              rounded
               type="search"
               placeholder="ウォーズIDを入力"
               open-on-focus
@@ -109,11 +109,10 @@
               @select="search_select_handle"
               @keydown.native.enter="search_enter_handle"
               )
-
             p.control
-              b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large")
+              b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large" :type="{'is-primary': query}" :loading="$fetchState.pending")
 
-          .columns.is-multiline.mt-4(v-show="board_show_type === 'outbreak_turn' || board_show_type === 'last'")
+          .columns.is-multiline.mt-4(v-if="board_show_type === 'outbreak_turn' || board_show_type === 'last'")
             template(v-for="e in config.records")
               // https://bulma.io/documentation/columns/responsiveness/
               // widescreen 1/5 (is-one-fifth-widescreen)
@@ -155,12 +154,12 @@
               backend-pagination
               pagination-simple
               :data="config.records"
-              @page-change="(page) => update_search({page})"
+              @page-change="(page) => page_change_or_sort_handle({page})"
 
               backend-sorting
               :default-sort-direction="config.sort_order_default"
               :default-sort="[config.sort_column, config.sort_order]"
-              @sort="(sort_column, sort_order) => update_search({sort_column, sort_order})"
+              @sort="(sort_column, sort_order) => page_change_or_sort_handle({sort_column, sort_order})"
 
               ref="table"
 
@@ -168,7 +167,7 @@
 
               )
 
-              TableEmpty(slot="empty" v-if="!$fetchState.pending && $route.query.query && config.total === 0")
+              SwarsBattleIndexTableEmpty(slot="empty" v-if="!$fetchState.pending && $route.query.query && config.total === 0")
 
               b-table-column(v-slot="{row}" field="id" :label="config.table_columns_hash['id'].label" :visible="visible_hash.id" sortable numeric v-if="config.table_columns_hash.id")
                 a(@click="show_handle(row)") \#{{row.id}}
@@ -225,7 +224,7 @@ import { support } from "./support.js"
 import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
 import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
 
-import battle_index_mod from "./battle_index_mod.js"
+import SwarsBattleIndexCore from "./SwarsBattleIndexCore.js"
 
 import MemoryRecord from 'js-memory-record'
 
@@ -238,7 +237,7 @@ export default {
   name: "SwarsBattleIndex",
   mixins: [
     support,
-    battle_index_mod,
+    SwarsBattleIndexCore,
   ],
 
   beforeCreate() {
@@ -266,20 +265,28 @@ export default {
     }
   },
 
+  // watchQuery: ['query'],
   watch: {
     "$route.query": "$fetch",
   },
 
   fetch() {
+    // this.clog(`fetch: ${this.$route.query}`)
+
     this.sidebar_open_p = false
+
+    // alert(`${this.$route.query.query} を設定`)
+    // this.query = this.$route.query.query
 
     // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
     // http://0.0.0.0:4000/swars/users/devuser1
 
+    // return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
+    this.clog(`fetch: ${JSON.stringify(this.$route.query)}`)
     return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
       this.config = config
       this.board_show_type  = this.config.board_show_type // 何の局面の表示をするか？
-      this.query = this.config.query
+      // this.query = this.config.query
 
       this.ls_setup()
       ZipKifuInfo.memory_record_reset(this.config.zip_kifu_info)
@@ -310,27 +317,61 @@ export default {
     ZipKifuInfo()     { return ZipKifuInfo     },
 
     wide_p() {
-      return this.config.total >= 1
+      return true
+      // return this.config.total >= 1
     },
 
     search_form_complete_list() {
       if (this.config.remember_swars_user_keys) {
         return this.config.remember_swars_user_keys.filter((option) => {
-          return option.toString().toLowerCase().indexOf(this.query.toLowerCase()) >= 0
+          return option.toString().toLowerCase().indexOf((this.query || "").toLowerCase()) >= 0
         })
       }
     }
   },
 
   methods: {
-    update_search(params) {
-      this.$router.push({query: {...this.$route.query, ...params}})
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 検索すべてここで処理する
+    interactive_search(params) { // private
+      this.sound_play("click")
+      if (this.$fetchState.pending) {
+        this.general_ng_notice("連打すんな🛸")
+        return
+      }
+      const new_query = {...this.$route.query, ...params} // フィルターなどでは query を上書きする。またはなにもしない。
+      this.clog("new_query", new_query)
+      this.$router.push({query: new_query}, () => {
+        this.clog("query に変化があったので watch 経由で $fetch が呼ばれる")
+      }, () => {
+        this.clog("query に変化がないので watch 経由で $fetch が呼ばれない。ので自分で呼ぶ")
+        this.$fetch()
+      })
+      // $router.push の直後に $fetch を呼ぶと nuxt.js の不具合かわからんけど、
+      // $route.query が更新前の値のままなので、検索結果が異なってしまう ($nextTickも意味なし)
+      // なので watch にまかせている
     },
 
-    filter_search(query) {
-      if (this.config.current_swars_user_key) {
-        this.update_search({query: _.trim(`${this.config.current_swars_user_key} ${query}`)})
+    // b-table の @sort と @page-change に反応
+    page_change_or_sort_handle(params) {
+      this.interactive_search(params)
+    },
+
+    // 1ページあたりの件数の変更
+    per_change_handle(per) {
+      this.interactive_search({per: per})
+    },
+
+    // ここだけ特別で this.query で上書きしている
+    // なぜならフィルターは query に埋め込まないといけないから
+    filter_research(query) {
+      if (!this.config.current_swars_user_key) {
+        this.general_ng_notice("先に誰かで検索してください")
+        return
       }
+      this.query = _.trim(`${this.config.current_swars_user_key} ${query}`)
+      this.interactive_search({query: this.query})
     },
 
     filter_match_p(str) {
@@ -339,6 +380,8 @@ export default {
         return query.includes(str)
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     external_app_handle(info) {
       if (this.config.current_swars_user_key) {

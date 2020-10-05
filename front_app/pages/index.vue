@@ -13,6 +13,7 @@
             .column.is-one-third-desktop.is-half-tablet
               nuxt-link.box(:to="e.nuxt_link_to" @click.native="sound_play('click')")
                 .content
+                  //- b-image.is-marginless(:src="`/ogp/${e.ogp_image_base}.png`")
                   .image
                     img(:src="`/ogp/${e.ogp_image_base}.png`")
                   .title.is-5.mt-5

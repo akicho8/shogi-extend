@@ -2,15 +2,15 @@ import _ from "lodash"
 import dayjs from "dayjs"
 import MemoryRecord from 'js-memory-record'
 
-import battle_index_table_column from "./battle_index_table_column.js"
+import SwarsBattleIndexTableColumn from "./SwarsBattleIndexTableColumn.js"
 
-import search_form_mod from "./search_form_mod.js"
+import SwarsBattleIndexSearchAction from "./SwarsBattleIndexSearchAction.js"
 import ls_support from "@/components/models/ls_support.js"
 
 export default {
   mixins: [
-    battle_index_table_column,
-    search_form_mod,
+    SwarsBattleIndexTableColumn,
+    SwarsBattleIndexSearchAction,
     ls_support,
   ],
 

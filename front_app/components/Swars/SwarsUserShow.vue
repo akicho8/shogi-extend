@@ -257,6 +257,7 @@ export default {
     },
 
     delete_click_handle() {
+      this.sound_play("click")
       this.$router.go(-1)
     },
 

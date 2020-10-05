@@ -10,7 +10,7 @@
     p URL: {{current_url}}
     p サイドバー {{sidebar_open_p}}
 
-  b-sidebar(fullheight overlay right v-model="sidebar_open_p")
+  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_open_p")
     .mx-5.my-5
       b-menu-list(label="Action")
         b-menu-item(label="盤面リセット" @click="reset_handle")

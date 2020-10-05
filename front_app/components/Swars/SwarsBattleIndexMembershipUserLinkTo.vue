@@ -10,6 +10,7 @@ export default {
   },
   methods: {
     click_handle() {
+      this.sound_play("click")
       this.$router.push({name: "swars-users-key", params: {key: this.membership.user.key}})
     },
   },

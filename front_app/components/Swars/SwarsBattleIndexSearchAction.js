@@ -1,7 +1,7 @@
 export default {
   data() {
     return {
-      query: null,
+      query: this.$route.query.query, // 最初の検索時に b-autocomplete に入力しておくため
     }
   },
 
@@ -10,10 +10,10 @@ export default {
     search_click_handle() {
       this.debug_alert(`click: ${this.query}`)
       if (this.query === "") {
-        this.debug_alert("query is blank")
+        this.general_ok_notice("ウォーズIDを入力してから検索してください")
         return
       }
-      this.update_search({query: this.query})
+      this.interactive_search({query: this.query}, {force: true})
     },
 
     // Enterキーを叩いた
@@ -28,7 +28,8 @@ export default {
     search_select_handle(query) {
       this.debug_alert(`select: ${query}`)
       if (query) {
-        this.update_search({query: query})
+        this.query = query
+        this.interactive_search({query: this.query})
       }
     },
   },
