@@ -218,6 +218,8 @@
 </template>
 
 <script>
+import _ from "lodash"
+
 import { store }   from "./store.js"
 import { support } from "./support.js"
 
@@ -255,7 +257,7 @@ export default {
 
   head() {
     return {
-      title: "将棋ウォーズ棋譜検索",
+      title: this.page_title,
       meta: [
         { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ棋譜検索"                            },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                             },
@@ -313,6 +315,10 @@ export default {
   },
 
   computed: {
+    page_title() {
+      return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" - ")
+    },
+
     ExternalAppInfo() { return ExternalAppInfo },
     ZipKifuInfo()     { return ZipKifuInfo     },
 
