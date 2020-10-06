@@ -36,7 +36,7 @@ $custom-colors: (
 $primary: $cyan;
 
 // オーバーレイのとときも背景を明るめにする
-$modal-background-background-color: bulmaRgba($black, 0.2);
+$modal-background-background-color: bulmaRgba($black, 0.4);
 
 // モバイルでナビバーをメニュー化しない
 // これをするとモバイルのときバーが小さくならない

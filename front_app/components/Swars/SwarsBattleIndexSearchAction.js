@@ -9,7 +9,7 @@ export default {
     // 送信ボタンを押した
     search_click_handle() {
       this.debug_alert(`click: ${this.query}`)
-      if (this.query === "") {
+      if (!this.query) {
         this.general_ok_notice("ウォーズIDを入力してから検索してください")
         return
       }
