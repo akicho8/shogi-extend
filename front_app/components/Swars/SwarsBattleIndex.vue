@@ -213,7 +213,8 @@
                   PiyoShogiButton(type="button" :href="piyo_shogi_app_with_params_url(row)")
                   KentoButton(tag="a" @click.stop :href="kento_app_with_params_url(row)")
                   KifCopyButton(@click="kif_clipboard_copy({kc_path: row.show_path})")
-                  NormalShowButton(@click="show_handle(row)")
+                  b-button(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}}" @click.native="sound_play('click')") 詳細
+
     pre(v-if="development_p") {{config}}
 </template>
 
