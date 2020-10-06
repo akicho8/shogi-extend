@@ -88,7 +88,7 @@
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{query: {}}" @click.native="query= ''") 将棋ウォーズ棋譜検索
     template(slot="end")
-      b-navbar-item(@click="sidebar_p = !sidebar_p")
+      b-navbar-item(@click="sidebar_toggle")
         b-icon(icon="menu")
 
   .section
@@ -142,7 +142,7 @@
                     | {{e.memberships[0].user.key}} {{e.memberships[0].grade_info.name}}
 
           template(v-if="board_show_type === 'none'")
-            b-table.is_battle_table(
+            b-table.mt-5(
               v-if="$route.query.query"
               :loading="$fetchState.pending"
 
@@ -269,6 +269,9 @@ export default {
   // watchQuery: ['query'],
   watch: {
     "$route.query": "$fetch",
+
+    sidebar_p() {
+    },
   },
 
   fetch() {
@@ -311,28 +314,6 @@ export default {
         })
       }
     })
-  },
-
-  computed: {
-    page_title() {
-      return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" - ")
-    },
-
-    ExternalAppInfo() { return ExternalAppInfo },
-    ZipKifuInfo()     { return ZipKifuInfo     },
-
-    wide_p() {
-      return true
-      // return this.config.total >= 1
-    },
-
-    search_form_complete_list() {
-      if (this.config.remember_swars_user_keys) {
-        return this.config.remember_swars_user_keys.filter((option) => {
-          return option.toString().toLowerCase().indexOf((this.query || "").toLowerCase()) >= 0
-        })
-      }
-    }
   },
 
   methods: {
@@ -423,6 +404,33 @@ export default {
         return `is-${row.judge.key}` // is- で始めないと mobile-cards になったとき消される
       }
     },
+
+    sidebar_toggle() {
+      this.sidebar_p = !this.sidebar_p
+      this.sound_play('click')
+    },
+  },
+
+  computed: {
+    page_title() {
+      return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" - ")
+    },
+
+    ExternalAppInfo() { return ExternalAppInfo },
+    ZipKifuInfo()     { return ZipKifuInfo     },
+
+    wide_p() {
+      return true
+      // return this.config.total >= 1
+    },
+
+    search_form_complete_list() {
+      if (this.config.remember_swars_user_keys) {
+        return this.config.remember_swars_user_keys.filter((option) => {
+          return option.toString().toLowerCase().indexOf((this.query || "").toLowerCase()) >= 0
+        })
+      }
+    }
   },
 }
 </script>
@@ -440,8 +448,9 @@ export default {
 
 .SwarsBattleIndex
   .section
-    &:first-of-type
-      padding-top: 1.8rem
+    padding-top: 2.5rem
+    +mobile
+      padding-top: 1.6rem
 
   .container
     +mobile

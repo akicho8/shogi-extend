@@ -1,6 +1,6 @@
 <template lang="pug">
 .SwarsBattleShow(v-if="!$fetchState.pending")
-  .delete.is-large(@click="delete_click_handle" v-if="development_p")
+  //- .delete.is-large(@click="delete_click_handle" v-if="development_p")
 
   b-sidebar.is-unselectable(type="is-light" fullheight overlay right v-model="sidebar_p")
     .mx-4.my-4
@@ -41,11 +41,14 @@
 
   b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'swars-battles'}" @click.native="sound_play('click')")
+      b-navbar-item(@click="back_handle")
         b-icon(icon="arrow-left")
+
+      //- b-navbar-item(tag="nuxt-link" :to="{name: 'swars-battles'}" @click.native="sound_play('click')")
+      //-   b-icon(icon="arrow-left")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}}") {{record.title}}
     template(slot="end")
-      b-navbar-item(@click="sidebar_p = !sidebar_p")
+      b-navbar-item(@click="sidebar_toggle")
         b-icon(icon="menu")
     //- template(slot="end")
     //-   //- b-navbar-item
@@ -137,6 +140,15 @@ export default {
       sidebar_p: false,
     }
   },
+
+  // https://router.vuejs.org/ja/guide/advanced/navigation-guards.html#%E3%83%AB%E3%83%BC%E3%83%88%E5%8D%98%E4%BD%8D%E3%82%AC%E3%83%BC%E3%83%89
+  // beforeRouteEnter (to, from, next) {
+  //   debugger
+  //   // このコンポーネントを描画するルートが確立する前に呼ばれます。
+  //   // `this` でのこのコンポーネントへのアクセスはできません。
+  //   // なぜならばこのガードが呼び出される時にまだ作られていないからです!
+  // },
+
   fetch() {
     // alert("fetch")
     // alert(this.user_key)
@@ -162,10 +174,26 @@ export default {
       this.slider_focus_delay()
     })
   },
+
+  watch: {
+    sidebar_p() {
+      this.sound_play('click')
+    },
+  },
+
   methods: {
-    delete_click_handle() {
+    sidebar_toggle() {
+      this.sidebar_p = !this.sidebar_p
+    },
+
+    back_handle() {
+      this.sound_play('click')
       this.$router.go(-1)
     },
+
+    // delete_click_handle() {
+    //   // this.$router.go(-1)
+    // },
 
     // バトル情報がセットされたタイミングまたは変更されたタイミング
     record_setup() {
