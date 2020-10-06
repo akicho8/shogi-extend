@@ -1,7 +1,5 @@
 <template lang="pug">
-  b-button.KifCopyButton.is-small(v-bind="$attrs" v-on="$listeners" icon-left="clipboard-plus-outline" @click="click_handle")
-    template(v-if="!icon_only")
-      | コピー
+  b-button.KifCopyButton.is-small(v-bind="$attrs" v-on="$listeners" @click="click_handle") コピー
 </template>
 
 <script>
