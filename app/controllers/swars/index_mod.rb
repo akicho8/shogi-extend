@@ -208,10 +208,15 @@ module Swars
     end
 
     def import_logs_add(type, message, options = {})
+      if options[:development_only]
+        return
+      end
+
       if !Rails.env.development? && options[:development_only]
         return
       end
-      @import_logs << { type: type, message: message, title: "foo", method: "toast", **options }
+
+      @import_logs << { type: type, message: message, title: nil, method: "toast", **options }
     end
 
     let :import_page_max do

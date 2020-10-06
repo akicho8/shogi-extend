@@ -1,5 +1,9 @@
 <template lang="pug">
-a.SwarsBattleIndexMembershipUserLinkTo(@click="click_handle" :class="css_class")
+nuxt-link.SwarsBattleIndexMembershipUserLinkTo(
+  :to="{name: 'swars-users-key', params: {key: this.membership.user.key}}"
+  @click.native="sound_play('click')"
+  :class="css_class"
+  )
   | {{membership.user.key}} {{membership.grade_info.name}}
 </template>
 
@@ -7,12 +11,6 @@ a.SwarsBattleIndexMembershipUserLinkTo(@click="click_handle" :class="css_class")
 export default {
   props: {
     membership: { required: true },
-  },
-  methods: {
-    click_handle() {
-      this.sound_play("click")
-      this.$router.push({name: "swars-users-key", params: {key: this.membership.user.key}})
-    },
   },
   computed: {
     css_class() {
