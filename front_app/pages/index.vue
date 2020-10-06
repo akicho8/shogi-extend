@@ -1,5 +1,5 @@
 <template lang="pug">
-.service-infos
+.service-infos.has-background-white-bis
   b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container" spaced)
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'index'}") SHOGI-EXTEND
@@ -11,21 +11,19 @@
         template(v-for="e in config")
           template(v-if="e.display_p")
             .column.is-one-third-desktop.is-half-tablet
-              nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play('click')")
-                .card
-                  .card-image
-                    .image
-                      img(:src="`/ogp/${e.ogp_image_base}.png`")
-                  .card-content
-                    .content
-                      .title.is-5.mt-5
-                        h2.title.is-5.is-inline {{e.title}}
-                        template(v-if="e.new_p")
-                          span.has-text-danger.ml-2.is-size-6 NEW!
-                      p(v-html="e.description")
-                      ul.is-size-7.features
-                        template(v-for="e in e.features")
-                          li(v-html="e")
+              nuxt-link.box(:to="e.nuxt_link_to" @click.native="sound_play('click')")
+                .content
+                  //- b-image.is-marginless(:src="`/ogp/${e.ogp_image_base}.png`")
+                  .image
+                    img(:src="`/ogp/${e.ogp_image_base}.png`")
+                  .title.is-5.mt-5
+                    h2.title.is-5.is-inline {{e.title}}
+                    template(v-if="e.new_p")
+                      span.has-text-danger.ml-2.is-size-6 NEW!
+                  p(v-html="e.description")
+                  ul.is-size-7.features
+                    template(v-for="e in e.features")
+                      li(v-html="e")
   .footer
     .container
       .columns
