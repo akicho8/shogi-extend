@@ -1,10 +1,10 @@
 <template lang="pug">
 client-only
-  .swars-top-runner
+  .swars-top-group
     b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
       template(slot="brand")
         HomeNavbarItem
-        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-top-runner'}")
+        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-top-group'}")
           | 将棋ウォーズイベント上位プレイヤー
     .section
       .container
@@ -25,28 +25,28 @@ client-only
 
 <script>
 export default {
-  name: "swars-top-runner",
+  name: "swars-top-group",
   head() {
     return {
       title: "将棋ウォーズイベント上位プレイヤー",
       meta: [
         { hid: "og:title",       property: "og:title",       content: "将棋ウォーズイベント上位プレイヤー"                                },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                 },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-top-runner.png" },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-top-group.png" },
         { hid: "og:description", property: "og:description", content: ""                                                    },
       ],
     }
   },
   async asyncData({ $axios, query }) {
-    // http://0.0.0.0:3000/api/top_runner.json
-    const records = await $axios.$get("/api/top_runner.json", {params: query})
+    // http://0.0.0.0:3000/api/top_group.json
+    const records = await $axios.$get("/api/top_group.json", {params: query})
     return { records }
   },
 }
 </script>
 
 <style lang="sass">
-.swars-top-runner
+.swars-top-group
   .section
     padding-top: 1.3rem
 </style>

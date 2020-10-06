@@ -27,9 +27,9 @@ class ServiceInfo
     },
     {
       display_p: true,
-      nuxt_link_to: {path: "/swars/top-runner"},
+      nuxt_link_to: {path: "/swars/top-group"},
       title: "将棋ウォーズイベント上位プレイヤー",
-      ogp_image_base: "swars-top-runner",
+      ogp_image_base: "swars-top-group",
       description: "勢いのあるプレイヤーがわかる",
       features: [
         "棋士団戦の期間は幽霊団員も出てきてしまう",
