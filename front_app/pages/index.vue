@@ -83,8 +83,12 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.box
+  padding-bottom: 2rem
+
 .features
   height: 3rem
+
 .footer
   color: $grey
   a
