@@ -112,7 +112,7 @@
               ref="main_search_form"
               )
             p.control
-              b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large" :type="{'is-primary': query}" :loading="$fetchState.pending")
+              b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large" :loading="$fetchState.pending" :disabled="!query")
 
           .columns.is-multiline.mt-4(v-if="board_show_type === 'outbreak_turn' || board_show_type === 'last'")
             template(v-for="e in config.records")
