@@ -96,7 +96,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       message = "#{social_media_info.name} アカウントと連携しました"
       return_to = session[:return_to] || :new_xuser_registration
       session[:return_to] = nil
-      redirect_to return_to, toast_notice: message
+      redirect_to return_to, notice: message
       return
     end
 

@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   concerning :FlashMethods do
-    delegate :normalized_flash, :flash_danger_notify_tag, :toast_flash, to: :flash_info
+    delegate :normalized_flash, :flash_notify_tag, to: :flash_info
 
     def flash_info
       @flash_info ||= FlashInfo.new(self)

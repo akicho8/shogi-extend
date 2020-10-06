@@ -6,8 +6,7 @@ html(lang="ja" class=([Rails.env]))
     = render partial: "layouts/main_navbar"
     .section
       .container.main_container
-        = flash_danger_notify_tag
+        = flash_notify_tag
         = yield
         = ToolBelt::Basic.new(view_context: self).to_html
     = render partial: "layouts/footer"
-    = render partial: "layouts/toast_flash"
