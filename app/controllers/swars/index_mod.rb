@@ -81,7 +81,12 @@ module Swars
         :current_swars_user_key => current_swars_user_key,
       }.merge(super).merge({
           :remember_swars_user_keys  => remember_swars_user_keys,
-          :per_page_list             => [Kaminari.config.default_per_page, *AppConfig[:per_page_list], Kaminari.config.max_per_page],
+          :per_page_list             => [
+            *(Rails.env.development? ? [0, 1] : []),
+            Kaminari.config.default_per_page,
+            *AppConfig[:per_page_list],
+            Kaminari.config.max_per_page,
+          ],
         })
     end
 

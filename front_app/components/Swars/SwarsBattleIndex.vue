@@ -18,9 +18,6 @@
             template(slot="label" slot-scope="props")
               | 表示件数
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-if="development_p")
-              b-menu-item(label="0" @click.stop="per_change_handle(0)")
-              b-menu-item(label="1" @click.stop="per_change_handle(1)")
             template(v-for="per in config.per_page_list")
               b-menu-item(:label="`${per}`" @click.stop="per_change_handle(per)" :class="{'has-text-weight-bold': per === config.per}")
 
