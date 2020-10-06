@@ -249,8 +249,6 @@ export default {
   data() {
     return {
       sidebar_open_p: false,
-      submited: false,
-      detailed: false,
       config: {},
     }
   },
