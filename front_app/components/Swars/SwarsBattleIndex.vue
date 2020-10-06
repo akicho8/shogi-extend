@@ -2,7 +2,7 @@
 .SwarsBattleIndex
   DebugBox
     p $route.query: {{$route.query}}
-  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_p")
+  b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
       //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_p = false")
@@ -33,7 +33,7 @@
             b-menu-item(label="なし" @click.stop="filter_research(``)"           :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
 
         b-menu-list(label="表示形式")
-          b-menu-item(@click.stop="board_show_type = 'none'")
+          b-menu-item(@click.stop="board_show_type_set('none')")
             template(slot="label")
               span(:class="{'has-text-weight-bold': board_show_type === 'none'}") テーブル
               b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
@@ -42,30 +42,31 @@
                   b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="key")
                     span(:class="{'has-text-grey': !visible_hash[key], 'has-text-weight-bold': visible_hash[key]}") {{e.label}}
 
-          b-menu-item(label="仕掛け"   @click.stop="board_show_type = 'outbreak_turn'" :class="{'has-text-weight-bold': board_show_type === 'outbreak_turn'}")
-          b-menu-item(label="終局図"   @click.stop="board_show_type = 'last'"          :class="{'has-text-weight-bold': board_show_type === 'last'}")
+          b-menu-item(label="仕掛け"   @click.stop="board_show_type_set('outbreak_turn')" :class="{'has-text-weight-bold': board_show_type === 'outbreak_turn'}")
+          b-menu-item(label="終局図"   @click.stop="board_show_type_set('last')"          :class="{'has-text-weight-bold': board_show_type === 'last'}")
 
         b-menu-list(label="その他")
 
-          b-menu-item(:disabled="!config.current_swars_user_key")
+          b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in ZipKifuInfo.values")
               b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
 
-          b-menu-item(
-            label="KENTO API"
-            tag="nuxt-link"
-            :to="{name: 'swars-users-key-kento-api', params: {key: config.current_swars_user_key}}"
-            :disabled="!config.current_swars_user_key")
-
-          b-menu-item(:disabled="!config.current_swars_user_key")
+          b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
-              | 外部APPショートカット
+              | 外部APP ｼｮｰﾄｶｯﾄ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in ExternalAppInfo.values")
               b-menu-item(@click="external_app_handle(e)" :label="e.name")
+
+          b-menu-item(
+            label="KENTO API"
+            @click.native="sound_play('click')"
+            tag="nuxt-link"
+            :to="{name: 'swars-users-key-kento-api', params: {key: config.current_swars_user_key}}"
+            :disabled="!config.current_swars_user_key")
 
         b-menu-list(label="test" v-if="development_p")
           b-menu-item
@@ -108,6 +109,7 @@
               @focus="query = ''"
               @select="search_select_handle"
               @keydown.native.enter="search_enter_handle"
+              ref="main_search_form"
               )
             p.control
               b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large" :type="{'is-primary': query}" :loading="$fetchState.pending")
@@ -150,7 +152,9 @@
               :current-page = "config.page"
               :per-page     = "config.per"
 
-              paginated
+              :show-header  = "config.total >= 1"
+              :paginated    = "config.total >= 1"
+
               backend-pagination
               pagination-simple
               :data="config.records"
@@ -211,7 +215,7 @@
               b-table-column(v-slot="{row}")
                 .buttons.are-small
                   PiyoShogiButton(type="button" :href="piyo_shogi_app_with_params_url(row)")
-                  KentoButton(tag="a" @click.stop :href="kento_app_with_params_url(row)")
+                  KentoButton(tag="a" :href="kento_app_with_params_url(row)")
                   KifCopyButton(@click="kif_clipboard_copy({kc_path: row.show_path})")
                   b-button(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}}" @click.native="sound_play('click')") 詳細
 
@@ -269,15 +273,18 @@ export default {
   // watchQuery: ['query'],
   watch: {
     "$route.query": "$fetch",
+  },
 
-    sidebar_p() {
-    },
+  mounted() {
+    if (false) {
+      this.desktop_focus_to(this.$refs.main_search_form)
+    }
   },
 
   fetch() {
     // this.clog(`fetch: ${this.$route.query}`)
 
-    this.sidebar_p = false
+    // this.sidebar_p = false
 
     // alert(`${this.$route.query.query} を設定`)
     // this.query = this.$route.query.query
@@ -323,12 +330,15 @@ export default {
     interactive_search(params) { // private
       this.sound_play("click")
       if (this.$fetchState.pending) {
-        this.general_ng_notice("連打すんな🛸")
+        this.general_ng_notice("連打すんな")
         return
       }
-      const new_query = {...this.$route.query, ...params} // フィルターなどでは query を上書きする。またはなにもしない。
-      this.clog("new_query", new_query)
-      this.$router.push({query: new_query}, () => {
+      const new_params = {...this.$route.query, ...params} // フィルターなどでは query を上書きする。またはなにもしない。
+      if (Number(new_params.page || 0) <= 1) {
+        delete new_params.page
+      }
+      this.clog("new_params", new_params)
+      this.$router.push({query: new_params}, () => {
         this.clog("query に変化があったので watch 経由で $fetch が呼ばれる")
       }, () => {
         this.clog("query に変化がないので watch 経由で $fetch が呼ばれない。ので自分で呼ぶ")
@@ -341,12 +351,14 @@ export default {
 
     // b-table の @sort と @page-change に反応
     page_change_or_sort_handle(params) {
-      this.interactive_search(params)
+      this.$router.push({query: {...this.$route.query, ...params}}, () => {
+        this.sound_play("click")
+      })
     },
 
     // 1ページあたりの件数の変更
     per_change_handle(per) {
-      this.interactive_search({per: per})
+      this.page_change_or_sort_handle({per})
     },
 
     // ここだけ特別で this.query で上書きしている
@@ -371,6 +383,7 @@ export default {
 
     external_app_handle(info) {
       if (this.config.current_swars_user_key) {
+        this.sound_play("click")
         MyLocalStorage.set("external_app_setup", true)
         this.$router.push({
           name: 'swars-users-key-direct-open-external_app_key',
@@ -383,6 +396,7 @@ export default {
     },
 
     zip_dl_handle(key) {
+      this.sound_play("click")
       const params = {
         ...this.$route.query,
         zip_kifu_key: key,
@@ -406,8 +420,15 @@ export default {
     },
 
     sidebar_toggle() {
-      this.sidebar_p = !this.sidebar_p
       this.sound_play('click')
+      this.sidebar_p = !this.sidebar_p
+    },
+
+    board_show_type_set(key) {
+      if (this.board_show_type != key) {
+        this.sound_play('click')
+        this.board_show_type = key
+      }
     },
   },
 

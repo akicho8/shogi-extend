@@ -6,7 +6,7 @@ client-only
         b-navbar-item.has-text-weight-bold(tag="div") {{title}}
     .section
       .container
-        b-button(tag="nuxt-link" :to="{name: 'swars-battles', query: {query: $route.params.key}}")
+        b-button(tag="nuxt-link" :to="{name: 'swars-battles', query: {query: $route.params.key}}" @click.native="sound_play('click')")
           | ← 検索に戻る
         pre(v-if="development_p") {{config}}
 </template>
@@ -47,15 +47,14 @@ export default {
         title: "設定",
         message: `
           <div class="content">
+            <p>直前の対局を${this.external_app_info.name}で必ず検討する人向けのショートカットの設定です</p>
             <p>現在の画面を<b>ホーム画面に追加</b> (PCの場合はブークマークに追加) すると、そこから直前の対局を最短で開けるようになります</p>
-            <p>具体的には検索して一番上に表示された対局の外部アプリをタップする流れを自動化する感じです。直前の対局を毎回必ず検討する人向けのショートカットです</p>
+            <p>具体的には検索して一番上に表示された対局の外部アプリをタップする流れを自動化する感じです</p>
           </div>`,
         confirmText: "OK",
         type: 'is-info',
         animation: "", // 最初から表示しているようにしたいのでアニメーションOFF
-        onConfirm: () => {
-          // this.$router.push({name: "swars-battles", query: {query: this.$route.params.key}})
-        },
+        onConfirm: () => this.sound_play("click"),
       })
     } else {
       return this.$axios.$get("/w.json", {params: {query: this.$route.params.key, per: 1}}).then(config => {

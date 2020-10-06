@@ -13,7 +13,7 @@ export default {
         this.general_ok_notice("ウォーズIDを入力してから検索してください")
         return
       }
-      this.interactive_search({query: this.query}, {force: true})
+      this.interactive_search({query: this.query})
     },
 
     // Enterキーを叩いた
@@ -30,7 +30,7 @@ export default {
       if (user_key) {
         // this.talk(user_key)
         this.query = user_key
-        this.interactive_search({query: this.query})
+        this.interactive_search({query: this.query, page: null})
       }
     },
   },

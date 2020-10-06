@@ -103,8 +103,7 @@ export default {
     // モバイルでないときだけ elem にフォーカスする
     // なぜか $nextTick ではフォーカスされない場合があるため setTimeout に変更
     desktop_focus_to(elem) {
-      if (isMobile.any()) {
-      } else {
+      if (!isMobile.any()) {
         this.focus_to(elem)
       }
     },
