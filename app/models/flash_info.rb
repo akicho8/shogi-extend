@@ -59,7 +59,7 @@ class FlashInfo
     if list = normalized_flash.slice(*buefy_preset_types).presence
       tag.div(id: "flash_danger_notify_tag") do
         list.collect { |key, message|
-          content_tag("b-notification", message.html_safe, type: "is-#{key}", ":has-icon": "false", ":closable": "false")
+          content_tag("div", message.html_safe, class: "notification is-#{key}")
         }.join.html_safe
       end
     end

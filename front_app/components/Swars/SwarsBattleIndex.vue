@@ -119,8 +119,7 @@
               // table      1/4 (is-one-quarter-tablet)
               .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered.px-0
                 a.no-decoration(@click.stop.prevent="show_handle(e)")
-                  small.is_line_break_on.has-text-black-ter
-                    | {{e.memberships[1].user.key}} {{e.memberships[1].grade_info.name}}
+                  SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[1]")
                   MyShogiPlayer(
                     :run_mode="'view_mode'"
                     :debug_mode="false"
@@ -137,8 +136,7 @@
                     :flip="e.flip"
                   )
                   // :hidden_if_piece_stand_blank="board_show_type === 'outbreak_turn'"
-                  small.is_line_break_on.has-text-black-ter
-                    | {{e.memberships[0].user.key}} {{e.memberships[0].grade_info.name}}
+                  SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
           template(v-if="board_show_type === 'none'")
             b-table.mt-5(
@@ -293,7 +291,11 @@ export default {
     this.clog(`fetch: ${JSON.stringify(this.$route.query)}`)
     return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
       this.config = config
-      this.board_show_type  = this.config.board_show_type // 何の局面の表示をするか？
+
+      if (this.board_show_type == null) {
+        this.board_show_type  = this.config.board_show_type // 何の局面の表示をするか？
+      }
+
       // this.query = this.config.query
 
       this.ls_setup()

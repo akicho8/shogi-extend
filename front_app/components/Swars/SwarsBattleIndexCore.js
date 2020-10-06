@@ -16,7 +16,7 @@ export default {
 
   data() {
     return {
-      board_show_type:  null, // 何の局面の表示をするか？
+      board_show_type: null, // 何の局面の表示をするか？
     }
   },
 
