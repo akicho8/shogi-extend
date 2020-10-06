@@ -11,10 +11,10 @@
 
       b-menu
         b-menu-list(label="Action")
-          b-menu-item(@click="jump_to_user(config.current_swars_user_key)" icon="account" label="プレイヤー情報" :disabled="!config.current_swars_user_key")
+          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" icon="account" label="プレイヤー情報" :disabled="!config.current_swars_user_key")
 
         b-menu-list(label="表示オプション")
-          b-menu-item
+          b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 表示件数
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -24,7 +24,7 @@
             template(v-for="per in config.per_page_list")
               b-menu-item(:label="`${per}`" @click.stop="per_change_handle(per)" :class="{'has-text-weight-bold': per === config.per}")
 
-          b-menu-item
+          b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | フィルタ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")

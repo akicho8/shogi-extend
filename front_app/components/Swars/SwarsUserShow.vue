@@ -4,10 +4,20 @@
   // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
   .delete.page_delete.is-large(@click="delete_click_handle")
 
-  b-dropdown.top_right_menu(position="is-bottom-left")
+  b-dropdown.top_right_menu(position="is-bottom-left" @click.native="sound_play('click')")
     b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
-    b-dropdown-item(@click="update_handle({try_fetch: true})")
+    b-dropdown-item(@click="sound_play('click'); $router.push({name: 'swars-battles', query: {query: info.user.key}})")
+      b-icon(icon="magnify" size="is-small")
+      | 棋譜検索
+
+    b-dropdown-item(:href="`https://shogiwars.heroz.jp/users/mypage/${info.user.key}`" :target="target_default")
+      b-icon(icon="link" size="is-small")
+      | ウォーズ本家
+
+    b-dropdown-item(separator)
+
+    b-dropdown-item(@click="update_handle({try_fetch: true})" v-if="development_p")
       b-icon(icon="sync" size="is-small")
       | 更新
 
@@ -27,19 +37,11 @@
       b-icon(icon="arrow-up-bold" size="is-small")
       | 最大200件
 
-    b-dropdown-item(@click="$router.push({name: 'swars-battles', query: {query: info.user.key}})")
-      b-icon(icon="magnify" size="is-small")
-      | 棋譜検索
-
     b-dropdown-item(separator)
 
     b-dropdown-item(:href="`https://twitter.com/search?q=将棋 ${info.user.key}`")
-      b-icon(icon="twitter" size="is-small" type="is-info")
+      b-icon(icon="twitter" size="is-small" type="is-twitter")
       | Twitter検索
-
-    b-dropdown-item(:href="`https://shogiwars.heroz.jp/users/mypage/${info.user.key}`")
-      b-icon(icon="link" size="is-small")
-      | ウォーズ
 
     b-dropdown-item(:href="`https://www.google.co.jp/search?q=${info.user.key}`")
       b-icon(icon="google" size="is-small")
@@ -88,7 +90,7 @@
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered")
+  b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" @input="sound_play('click')")
     //- TODO: key を指定する
     b-tab-item(label="日付")
     b-tab-item(label="段級")
@@ -199,6 +201,7 @@ export default {
   },
 
   watch: {
+    // tab_index を除外するため
     "$route.query.sample_max": "$fetch",
     "$route.query.query":      "$fetch",
     "$route.query.try_fetch":  "$fetch",
@@ -227,6 +230,8 @@ export default {
 
   methods: {
     swars_search_jump(queries) {
+      this.sound_play("click")
+
       const query = [
         this.info.user.key,
         `sample:${this.info.sample_max}`, // 検索用のlimit
@@ -253,6 +258,7 @@ export default {
     },
 
     update_handle(options = {}) {
+      this.sound_play("click")
       this.$router.replace({name: "swars-users-key", params: {key: this.info.user.key}, query: {tab_index: this.tab_index, ...options}})
     },
 
