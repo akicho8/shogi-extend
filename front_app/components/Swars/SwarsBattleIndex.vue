@@ -212,7 +212,7 @@
                 .buttons.are-small
                   PiyoShogiButton(type="button" :href="piyo_shogi_app_with_params_url(row)")
                   KentoButton(tag="a" @click.stop :href="kento_app_with_params_url(row)")
-                  KifCopyButton(@click.stop.prevent="kif_clipboard_copy({kc_path: row.show_path})")
+                  KifCopyButton(@click="kif_clipboard_copy({kc_path: row.show_path})")
                   NormalShowButton(@click="show_handle(row)")
     pre(v-if="development_p") {{config}}
 </template>

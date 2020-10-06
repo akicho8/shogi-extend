@@ -6,12 +6,9 @@
 
 export default {
   name: "KifCopyButton",
-  // props: {
-  //   icon_only: { default: false, },
-  // },
   methods: {
     click_handle() {
-      // this.$gtag.event("click", {event_category: "棋譜コピー"})
+      this.sound_play("click")
     },
   },
 }

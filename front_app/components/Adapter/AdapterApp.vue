@@ -152,7 +152,7 @@ export default {
     },
 
     kifu_copy_handle(kifu_type) {
-      this.sound_play("click")
+      // this.sound_play("click")
       this.record_fetch(() => {
         if (kifu_type === "png") {
           this.general_ng_notice("画像はコピーできません")
