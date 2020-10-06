@@ -9,24 +9,24 @@
       //-   .ml-3 棋譜詳細
       b-menu
         b-menu-list(label="Action")
-          b-menu-item(label="共有将棋盤に転送" icon="link"    tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
-          b-menu-item(label="棋譜用紙 (PDF)"   icon="pdf-box" tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
+          b-menu-item(label="共有将棋盤で開く" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
 
         b-menu-list(label="export")
-          b-menu-item(icon="eye")
+          b-menu-item(label="棋譜用紙"         tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
+          b-menu-item
             template(slot="label" slot-scope="props")
               span.ml-1 表示
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-down' : 'menu-up'")
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             b-menu-item(label="KIF"  :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
             b-menu-item(label="KI2"  :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
             b-menu-item(label="CSA"  :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
             b-menu-item(label="SFEN" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
             b-menu-item(label="BOD"  :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${turn_offset}`")
             b-menu-item(label="PNG"  :href="`${$config.MY_SITE_URL}${record.show_path}.png?width=&flip=${new_flip}&turn=${turn_offset}`")
-          b-menu-item(icon="download")
+          b-menu-item
             template(slot="label" slot-scope="props")
               span.ml-1 ダウンロード
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-down' : 'menu-up'")
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             b-menu-item(label="KIF"  :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
             b-menu-item(label="KI2"  :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
             b-menu-item(label="CSA"  :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
