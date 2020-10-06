@@ -10,14 +10,9 @@ client-only
       .container
         .columns
           .column
-            b-table(
-              :data="records"
-              :mobile-cards="false"
-              hoverable
-              )
+            b-table(:data="records" :mobile-cards="false" hoverable)
               b-table-column(v-slot="{row}" field="user.name"  label="名前" sortable :width="1" numeric)
-                a.is-block(:href="`${$config.MY_SITE_URL}/w?query=${row.user.key}`")
-                  | {{row.user.name}}
+                nuxt-link(:to="{name: 'swars-battles', query: {query: row.user.key}}") {{row.user.name}}
               b-table-column(v-slot="{row}" field="win_ratio"  label="直近の勝敗" sortable cell-class="ox_sequense is_line_break_on")
                 | {{row.judge}}
             pre(title="DEBUG" v-if="development_p || !!$route.query.debug") {{records}}
