@@ -8,7 +8,7 @@ export default {
   name: "KifCopyButton",
   methods: {
     click_handle() {
-      this.sound_play("click")
+      // this.sound_play("click")
     },
   },
 }

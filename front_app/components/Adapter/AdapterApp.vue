@@ -1,40 +1,40 @@
 <template lang="pug">
 .AdapterApp
-  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_p")
+  b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
     .mx-3.my-3
       b-menu
         b-menu-list(label="Export")
-          b-menu-item(expanded)
+          b-menu-item(:expanded="false" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 表示
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
-              b-menu-item(:label="e.name" @click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)")
-          b-menu-item
+              b-menu-item(:label="e.name" @click="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)")
+          b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | コピー
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
               b-menu-item(:label="e.name" @click="kifu_copy_handle(e.key)")
-          b-menu-item
+          b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
-              b-menu-item(:label="e.name" @click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)")
-          b-menu-item
+              b-menu-item(:label="e.name" @click="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)")
+          b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 文字コード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in EncodeInfo.values")
-              b-menu-item(:label="e.name" @click="body_encode = e.key" :class="{'has-text-weight-bold': body_encode === e.key}")
+              b-menu-item(:label="e.name" @click="sound_play('click'); body_encode = e.key" :class="{'has-text-weight-bold': body_encode === e.key}")
 
   b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'adapter'}") なんでも棋譜変換
     template(slot="end")
-      b-navbar-item(@click="sidebar_p = !sidebar_p")
+      b-navbar-item(@click="sidebar_toggle")
         b-icon(icon="menu")
         //- EXPORTにする
 
@@ -143,6 +143,11 @@ export default {
   },
 
   methods: {
+    sidebar_toggle() {
+      this.sound_play('click')
+      this.sidebar_p = !this.sidebar_p
+    },
+
     piyo_shogi_open_handle() {
       this.record_fetch(() => this.url_open(this.piyo_shogi_app_with_params_url, this.target_default))
     },
@@ -152,7 +157,7 @@ export default {
     },
 
     kifu_copy_handle(kifu_type) {
-      // this.sound_play("click")
+      this.sound_play("click")
       this.record_fetch(() => {
         if (kifu_type === "png") {
           this.general_ng_notice("画像はコピーできません")

@@ -2,7 +2,7 @@
 .SwarsBattleShow(v-if="!$fetchState.pending")
   //- .delete.is-large(@click="delete_click_handle" v-if="development_p")
 
-  b-sidebar.is-unselectable(type="is-light" fullheight overlay right v-model="sidebar_p")
+  b-sidebar.is-unselectable(type="is-light" fullheight right v-model="sidebar_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
       //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_p = false")
@@ -90,7 +90,7 @@
           .buttons.is-centered.mt-5
             PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
             KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
-            KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
+            KifCopyButton(@click="kifu_copy_handle")
             TweetButton(@click="tweet_share_open({url: permalink_url})") ツイート
             //- PngDlButton(tag="a" :href="png_dl_url" :turn="turn_offset")
             //- PulldownMenu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
@@ -182,6 +182,11 @@ export default {
   },
 
   methods: {
+    kifu_copy_handle() {
+      this.sound_play('click')
+      this.kif_clipboard_copy({kc_path: this.record.show_path})
+    },
+
     sidebar_toggle() {
       this.sidebar_p = !this.sidebar_p
     },

@@ -210,7 +210,7 @@
                 .buttons.are-small
                   PiyoShogiButton(type="button" :href="piyo_shogi_app_with_params_url(row)")
                   KentoButton(tag="a" :href="kento_app_with_params_url(row)")
-                  KifCopyButton(@click="kif_clipboard_copy({kc_path: row.show_path})")
+                  KifCopyButton(@click="kifu_copy_handle(row)")
                   b-button(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}}" @click.native="sound_play('click')") 詳細
 
     pre(v-if="development_p") {{config}}
@@ -427,6 +427,11 @@ export default {
         this.sound_play('click')
         this.board_show_type = key
       }
+    },
+
+    kifu_copy_handle(row) {
+      this.sound_play('click')
+      this.kif_clipboard_copy({kc_path: row.show_path})
     },
   },
 

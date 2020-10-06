@@ -10,7 +10,7 @@
     p URL: {{current_url}}
     p サイドバー {{sidebar_p}}
 
-  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_p")
+  b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
     .mx-5.my-5
       b-menu-list(label="Action")
         b-menu-item(label="盤面リセット" @click="reset_handle")
@@ -20,8 +20,8 @@
         b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.run_mode === 'edit_mode'}")
         b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
       b-menu-list(label="検討")
-        b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sidebar_p = false")
-        b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sidebar_p = false")
+        b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default")
+        b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default")
       b-menu-list(label="Export")
         b-menu-item(label="棋譜コピー" @click="kifu_copy_handle('kif')")
         b-menu-item(label="SFENコピー" @click="kifu_copy_handle('sfen')")

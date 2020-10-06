@@ -4,7 +4,7 @@
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'index'}") SHOGI-EXTEND
     template(slot="end")
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}") Launcher
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}" v-if="development_p") Launcher
   .section
     .container
       .columns.is-multiline

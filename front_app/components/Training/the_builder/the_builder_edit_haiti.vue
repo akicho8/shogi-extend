@@ -132,7 +132,7 @@ export default {
 
     // 棋譜コピー
     kifu_copy_handle() {
-      // this.sound_play("click")
+      this.sound_play("click")
       this.general_kifu_copy(this.bapp.question.init_sfen, {to_format: "kif"})
     },
 
