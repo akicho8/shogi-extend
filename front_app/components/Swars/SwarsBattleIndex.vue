@@ -2,10 +2,10 @@
 .SwarsBattleIndex
   DebugBox
     p $route.query: {{$route.query}}
-  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_open_p")
+  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
-      //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_open_p = false")
+      //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_p = false")
       //-   .my_title.has-text-centered
       //-     nuxt-link.has-text-weight-bold.has-text-dark(:to="{name: 'index'}") SHOGI-EXTEND
 
@@ -88,7 +88,7 @@
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{query: {}}" @click.native="query= ''") 将棋ウォーズ棋譜検索
     template(slot="end")
-      b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
+      b-navbar-item(@click="sidebar_p = !sidebar_p")
         b-icon(icon="menu")
 
   .section
@@ -248,7 +248,7 @@ export default {
 
   data() {
     return {
-      sidebar_open_p: false,
+      sidebar_p: false,
       config: {},
     }
   },
@@ -273,7 +273,7 @@ export default {
   fetch() {
     // this.clog(`fetch: ${this.$route.query}`)
 
-    this.sidebar_open_p = false
+    this.sidebar_p = false
 
     // alert(`${this.$route.query.query} を設定`)
     // this.query = this.$route.query.query

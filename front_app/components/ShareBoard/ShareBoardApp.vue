@@ -8,9 +8,9 @@
     p モード: {{run_mode}}
     p 反転: {{board_flip}}
     p URL: {{current_url}}
-    p サイドバー {{sidebar_open_p}}
+    p サイドバー {{sidebar_p}}
 
-  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_open_p")
+  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_p")
     .mx-5.my-5
       b-menu-list(label="Action")
         b-menu-item(label="盤面リセット" @click="reset_handle")
@@ -20,8 +20,8 @@
         b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.run_mode === 'edit_mode'}")
         b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
       b-menu-list(label="検討")
-        b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sidebar_open_p = false")
-        b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sidebar_open_p = false")
+        b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sidebar_p = false")
+        b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sidebar_p = false")
       b-menu-list(label="Export")
         b-menu-item(label="棋譜コピー" @click="kifu_copy_handle('kif')")
         b-menu-item(label="SFENコピー" @click="kifu_copy_handle('sfen')")
@@ -35,7 +35,7 @@
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
     template(slot="end")
-      b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
+      b-navbar-item(@click="sidebar_p = !sidebar_p")
         b-icon(icon="menu")
         template(v-if="development_p && $nuxt.isOffline") (MENU)
 
@@ -155,7 +155,7 @@ export default {
       run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_sfen: null,     // 局面編集モードの局面
 
-      sidebar_open_p: false,
+      sidebar_p: false,
     }
   },
   beforeCreate() {
@@ -220,7 +220,7 @@ export default {
 
     // 操作←→編集 切り替え
     mode_toggle_handle() {
-      this.sidebar_open_p = false
+      this.sidebar_p = false
       this.sound_play("click")
 
       if (this.run_mode === "play_mode") {
@@ -253,7 +253,7 @@ export default {
 
     // タイトル編集
     title_edit() {
-      this.sidebar_open_p = false
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.dialog.prompt({
         title: "タイトル",
@@ -274,7 +274,7 @@ export default {
     },
 
     room_code_edit() {
-      this.sidebar_open_p = false
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.dialog.prompt({
         title: "リアルタイム共有",
@@ -300,7 +300,7 @@ export default {
 
     // 視点設定変更
     image_view_point_setting_handle() {
-      this.sidebar_open_p = false
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
         component: ImageViewPointSettingModal,
@@ -323,7 +323,7 @@ export default {
 
     // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
-      this.sidebar_open_p = false
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
         parent: this,
@@ -376,7 +376,7 @@ export default {
 
     // 盤面のみ最初の状態に戻す
     reset_handle() {
-      this.sidebar_open_p = false
+      this.sidebar_p = false
       this.sound_play("click")
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
       this.turn_offset  = this.config.record.initial_turn     // 現在の手数

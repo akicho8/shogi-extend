@@ -2,10 +2,10 @@
 .SwarsBattleShow(v-if="!$fetchState.pending")
   .delete.is-large(@click="delete_click_handle" v-if="development_p")
 
-  b-sidebar.is-unselectable(type="is-light" fullheight overlay right v-model="sidebar_open_p")
+  b-sidebar.is-unselectable(type="is-light" fullheight overlay right v-model="sidebar_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
-      //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_open_p = false")
+      //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_p = false")
       //-   .ml-3 棋譜詳細
       b-menu
         b-menu-list(label="Action")
@@ -45,7 +45,7 @@
         b-icon(icon="arrow-left")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}}") {{record.title}}
     template(slot="end")
-      b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
+      b-navbar-item(@click="sidebar_p = !sidebar_p")
         b-icon(icon="menu")
     //- template(slot="end")
     //-   //- b-navbar-item
@@ -134,7 +134,7 @@ export default {
       time_chart_p: false,     // 時間チャートを表示する？
       time_chart_params: null, // 時間チャートのデータ
 
-      sidebar_open_p: false,
+      sidebar_p: false,
     }
   },
   fetch() {

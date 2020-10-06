@@ -1,6 +1,6 @@
 <template lang="pug">
 .AdapterApp
-  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_open_p")
+  b-sidebar.is-unselectable(fullheight overlay right v-model="sidebar_p")
     .mx-3.my-3
       b-menu
         b-menu-list(label="Export")
@@ -34,7 +34,7 @@
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'adapter'}") なんでも棋譜変換
     template(slot="end")
-      b-navbar-item(@click="sidebar_open_p = !sidebar_open_p")
+      b-navbar-item(@click="sidebar_p = !sidebar_p")
         b-icon(icon="menu")
         //- EXPORTにする
 
@@ -115,7 +115,7 @@ export default {
 
       // その他
       change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
-      sidebar_open_p: false,
+      sidebar_p: false,
     }
   },
 
