@@ -65,13 +65,7 @@ module Swars
     end
 
     def import_enable?
-      v = true
-      v &&= current_swars_user_key
-      v &&= params[:page].blank?
-      v &&= !params[:import_skip]
-      v &&= !flash[:import_skip]
-      # v &&= !flash[:external_app_setup]
-      v
+      current_swars_user_key && params[:page].blank?
     end
 
     def js_index_options
@@ -138,6 +132,8 @@ module Swars
       @import_logs = []
 
       if import_enable?
+        remember_swars_user_keys_update
+
         errors = []
         import_params = {
           :user_key           => current_swars_user_key,

@@ -98,7 +98,6 @@
               size="is-large"
               v-model.trim="query"
               :data="search_form_complete_list"
-              list="search_field_query_completion"
               type="search"
               placeholder="ウォーズIDを入力"
               open-on-focus
@@ -147,8 +146,8 @@
               :current-page = "config.page"
               :per-page     = "config.per"
 
-              :show-header  = "config.total >= 1"
-              :paginated    = "config.total >= 1"
+              :show-header  = "config.total >= 1 || true"
+              :paginated    = "config.total >= 1 || true"
 
               backend-pagination
               pagination-simple
