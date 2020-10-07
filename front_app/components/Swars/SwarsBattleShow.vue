@@ -124,7 +124,7 @@ export default {
   props: {
     user_key:        { type: String, required: true, },
     pulldown_menu_p: { default: true,                }, // 右のプルダウンを表示する？
-    display_type: { default: "none",              }, // どの局面から開始するか
+    display_key:     { default: "default",           }, // どの局面から開始するか (一覧のdisplay_keyとは若干型が違う)
   },
   data() {
     return {
@@ -243,7 +243,7 @@ export default {
     // 開始局面
     // turn start_turn critical_turn の順に見る
     start_turn_for(record) {
-      if (this.display_type === "last") {
+      if (this.display_key === "last") {
         return record.turn_max
       }
       return record.display_turn

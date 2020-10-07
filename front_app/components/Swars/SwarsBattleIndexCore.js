@@ -16,19 +16,19 @@ export default {
 
   data() {
     return {
-      display_type: null, // 何の局面の表示をするか？
+      display_key: null, // 何の局面の表示をするか？
     }
   },
 
   methods: {
     show_handle(row) {
-      this.jump_to_battle(row.key, {display_type: this.display_type})
+      this.jump_to_battle(row.key, {display_key: this.display_key})
     },
 
     // 開始局面
     // force_turn start_turn critical_turn の順に見る
     trick_start_turn_for(record) {
-      if (this.display_type === "last") {
+      if (this.display_key === "last") {
         return record.turn_max
       }
       return record.display_turn
@@ -53,6 +53,7 @@ export default {
     ls_default() {
       return {
         visible_hash: this.as_visible_hash(this.config.table_columns_hash),
+        display_key:  this.config.display_key,
       }
     },
 

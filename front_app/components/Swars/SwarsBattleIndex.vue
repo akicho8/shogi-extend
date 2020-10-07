@@ -14,16 +14,16 @@
           b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" icon="account" label="プレイヤー情報" :disabled="!config.current_swars_user_key")
 
         b-menu-list(label="表示形式")
-          b-menu-item(@click.stop="display_type_set('table')")
+          b-menu-item(@click.stop="display_key_set('table')")
             template(slot="label")
-              span(:class="{'has-text-weight-bold': display_type === 'table'}") テーブル
+              span(:class="{'has-text-weight-bold': display_key === 'table'}") テーブル
               b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
                 b-icon(icon="dots-vertical" slot="trigger")
                 template(v-for="(e, key) in config.table_columns_hash")
                   b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="key")
                     span(:class="{'has-text-grey': !visible_hash[key], 'has-text-weight-bold': visible_hash[key]}") {{e.label}}
-          b-menu-item(label="仕掛け"   @click.stop="display_type_set('critical')" :class="{'has-text-weight-bold': display_type === 'critical'}")
-          b-menu-item(label="終局図"   @click.stop="display_type_set('last')"          :class="{'has-text-weight-bold': display_type === 'last'}")
+          b-menu-item(label="仕掛け"   @click.stop="display_key_set('critical')" :class="{'has-text-weight-bold': display_key === 'critical'}")
+          b-menu-item(label="終局図"   @click.stop="display_key_set('last')"          :class="{'has-text-weight-bold': display_key === 'last'}")
 
         b-menu-list(label="表示オプション")
           b-menu-item(@click="sound_play('click')")
@@ -109,7 +109,7 @@
             p.control
               b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large" :loading="$fetchState.pending" :disabled="!query")
 
-          .columns.is-multiline.mt-4(v-if="display_type === 'critical' || display_type === 'last'")
+          .columns.is-multiline.mt-4(v-if="display_key === 'critical' || display_key === 'last'")
             template(v-for="e in config.records")
               // https://bulma.io/documentation/columns/responsiveness/
               // widescreen 1/5 (is-one-fifth-widescreen)
@@ -133,10 +133,10 @@
                     :overlay_navi="false"
                     :flip="e.flip"
                   )
-                  // :hidden_if_piece_stand_blank="display_type === 'critical'"
+                  // :hidden_if_piece_stand_blank="display_key === 'critical'"
                   SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
-          template(v-if="display_type === 'table'")
+          template(v-if="display_key === 'table'")
             b-table.mt-5(
               v-if="$route.query.query"
               :loading="$fetchState.pending"
@@ -290,13 +290,14 @@ export default {
     return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
       this.config = config
 
-      if (this.display_type == null) {
-        this.display_type  = this.config.display_type // 何の局面の表示をするか？
-      }
+      // if (this.display_key == null) {
+      //   this.display_key  = this.config.display_key // 何の局面の表示をするか？
+      // }
 
       // this.query = this.config.query
 
-      this.ls_setup()
+      this.ls_setup() // config から visible_hash や display_key を設定
+
       ZipKifuInfo.memory_record_reset(this.config.zip_kifu_info)
 
       if (this.config.import_logs) {
@@ -421,10 +422,10 @@ export default {
       this.sidebar_p = !this.sidebar_p
     },
 
-    display_type_set(key) {
-      if (this.display_type != key) {
+    display_key_set(key) {
+      if (this.display_key != key) {
         this.sound_play('click')
-        this.display_type = key
+        this.display_key = key
       }
     },
 
