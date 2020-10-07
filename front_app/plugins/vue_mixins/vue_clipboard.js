@@ -112,8 +112,7 @@ export default {
           return false
         }
 
-        this.talk(success_message, {rate: 1.5})
-        this.$buefy.toast.open({message: success_message, position: "is-bottom", queue: false, type: "is-success"})
+        this.general_ok_notice(success_message)
         return true
       }
 
