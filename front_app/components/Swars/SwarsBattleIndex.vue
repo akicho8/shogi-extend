@@ -116,12 +116,12 @@
               // desktop    1/4 (is-one-quarter-desktop)
               // table      1/4 (is-one-quarter-tablet)
               .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered.px-0
-                a.no-decoration(@click.stop.prevent="show_handle(e)")
-                  SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[1]")
+                SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[1]")
+                a(@click="show_handle(e)")
                   MyShogiPlayer(
                     :run_mode="'view_mode'"
                     :debug_mode="false"
-                    :start_turn="trick_start_turn_for(e)"
+                    :start_turn="sp_start_turn(e)"
                     :kifu_body="e.sfen_body"
                     :theme="'simple'"
                     :size="'x-small'"
@@ -133,8 +133,8 @@
                     :overlay_navi="false"
                     :flip="e.flip"
                   )
-                  // :hidden_if_piece_stand_blank="display_key === 'critical'"
-                  SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
+                // :hidden_if_piece_stand_blank="display_key === 'critical'"
+                SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
           template(v-if="display_key === 'table'")
             b-table.mt-5(

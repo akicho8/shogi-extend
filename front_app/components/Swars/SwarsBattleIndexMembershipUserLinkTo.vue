@@ -1,7 +1,7 @@
 <template lang="pug">
 nuxt-link.SwarsBattleIndexMembershipUserLinkTo(
   :to="{name: 'swars-users-key', params: {key: this.membership.user.key}}"
-  @click.native="sound_play('click')"
+  @click.native.stop="sound_play('click')"
   :class="css_class"
   )
   | {{membership.user.key}} {{membership.grade_info.name}}

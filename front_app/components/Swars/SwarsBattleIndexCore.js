@@ -27,7 +27,7 @@ export default {
 
     // 開始局面
     // force_turn start_turn critical_turn の順に見る
-    trick_start_turn_for(record) {
+    sp_start_turn(record) {
       if (this.display_key === "last") {
         return record.turn_max
       }
@@ -35,11 +35,11 @@ export default {
     },
 
     piyo_shogi_app_with_params_url(record) {
-      return this.piyo_shogi_auto_url({path: record.show_path, sfen: record.sfen_body, turn: this.trick_start_turn_for(record), flip: record.flip, ...record.piyo_shogi_base_params})
+      return this.piyo_shogi_auto_url({path: record.show_path, sfen: record.sfen_body, turn: this.sp_start_turn(record), flip: record.flip, ...record.piyo_shogi_base_params})
     },
 
     kento_app_with_params_url(record) {
-      return this.kento_full_url({sfen: record.sfen_body, turn: this.trick_start_turn_for(record), flip: record.flip})
+      return this.kento_full_url({sfen: record.sfen_body, turn: this.sp_start_turn(record), flip: record.flip})
     },
   },
 
