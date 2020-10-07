@@ -41,7 +41,7 @@ module BattleControllerSharedMethods
     def js_index_options
       {
         :query              => current_query || "",
-        :board_show_type    => params[:board_show_type].presence || "none",
+        :display_type       => params[:display_type].presence || "table",
         :zip_kifu_info      => ZipKifuInfo.as_json,
         :table_columns_hash => table_columns_hash,
         :records            => js_current_records,                  # JS側から最初のリクエストをしない場合は js_current_records を渡す

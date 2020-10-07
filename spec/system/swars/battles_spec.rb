@@ -49,13 +49,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     end
 
     xit "仕掛けの局面表示" do
-      visit "/w?query=devuser1&board_show_type=outbreak_turn"
+      visit "/w?query=devuser1&display_type=critical"
       assert { find(".radio.is-primary").text === "仕掛け" }
       doc_image
     end
 
     xit "終了の局面表示" do
-      visit "/w?query=devuser1&board_show_type=last"
+      visit "/w?query=devuser1&display_type=last"
       assert { find(".radio.is-primary").text === "終局図" }
       doc_image
     end
