@@ -34,6 +34,7 @@ export default {
       CSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
       production_items: [
         { title: 'Home',                               to: { name: 'index'                           }, },
+        { title: 'ユーザー詳細',                       to: { name: 'users-id', params: {id: 1}, }, },
         { title: '将棋ウォーズバトル詳細'    ,         to: { name: 'swars-battles-key', params: {key: 'devuser1-Yamada_Taro-20200101_123401'}, }, },
         { title: '将棋ウォーズプレイヤー情報',         to: { name: 'swars-users-key',   params: {key: 'devuser1'}, }, },
         { title: '将棋ウォーズ棋譜検索',               to: { name: 'swars-battles',                   }, },
@@ -55,6 +56,7 @@ export default {
         { title: '符号の鬼',                           to: { name: 'xy'                              }, },
       ],
       experiment_items: [
+        { title: 'store 動作検証',             to: { name: 'experiment-store_test'        }, },
         { title: 'fetch 動作検証',             to: { name: 'experiment-fetch_test'        }, },
         { title: 'users/_id 動作検証',         to: { name: 'experiment-users-id'          }, },
         { title: 'DOCTOR',                     to: { name: 'experiment-doctor'            }, },

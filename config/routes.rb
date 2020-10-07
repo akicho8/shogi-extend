@@ -72,9 +72,15 @@ Rails.application.routes.draw do
     resource :general, only: [:show] do
       match "any_source_to", via: [:get, :post]
     end
+
+    resource :session, only: [] do
+      get :current_user_fetch
+    end
+
     resource :talk, only: [:show, :create]
     resources :service_infos, only: :index
     resources :xy_records, path: "xy", only: [:index, :create, :update]
+    resources :users
     resource :cpu_battle, only: [:show, :create]
     resource :share_board, only: [:show, :create]
     resource :three_stage_league, only: [:show]

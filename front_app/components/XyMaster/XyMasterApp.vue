@@ -1,5 +1,9 @@
 <template lang="pug">
 .XyMasterApp(:class="[mode, `current_rule_input_mode-${current_rule.input_mode}`]")
+  hr
+  CurrentUserElement
+  hr
+
   b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced v-if="mode === 'stop' || mode === 'goal'")
     template(slot="brand")
       HomeNavbarItem
@@ -723,7 +727,7 @@ export default {
     keyboard_method_p() {
       return this.current_rule.input_mode === "keyboard"
     },
-    
+
     kanji_human() {
       if (this.mode === "run") {
         if (this.current_place) {
@@ -852,11 +856,10 @@ $board_color: hsl(0, 0%, 60%)
   #chart_canvas
     margin: 0 auto
   .navbar-item
-    .avatar_image
-      img
-        max-height: none
-        width: 32px
-        height: 32px
+    img
+      max-height: none
+      width: 32px
+      height: 32px
 
   &.run, &.ready
     &.current_rule_input_mode-keyboard

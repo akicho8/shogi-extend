@@ -1,3 +1,4 @@
+
 module UserCoreMod
   extend ActiveSupport::Concern
 

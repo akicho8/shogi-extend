@@ -101,6 +101,8 @@ const config = {
     "~/plugins/mixin_mod.client.js",
     "~/plugins/chart_init.client.js",
     "~/plugins/audio_queue.client.js",
+    "~/plugins/local_storage_persistedstate.client.js",
+
     // 両方
     "~/plugins/axios_mod.js",
     "~/plugins/universal.js",
