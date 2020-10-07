@@ -13,6 +13,18 @@
         b-menu-list(label="Action")
           b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" icon="account" label="プレイヤー情報" :disabled="!config.current_swars_user_key")
 
+        b-menu-list(label="表示形式")
+          b-menu-item(@click.stop="board_show_type_set('none')")
+            template(slot="label")
+              span(:class="{'has-text-weight-bold': board_show_type === 'none'}") テーブル
+              b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
+                b-icon(icon="dots-vertical" slot="trigger")
+                template(v-for="(e, key) in config.table_columns_hash")
+                  b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="key")
+                    span(:class="{'has-text-grey': !visible_hash[key], 'has-text-weight-bold': visible_hash[key]}") {{e.label}}
+          b-menu-item(label="仕掛け"   @click.stop="board_show_type_set('outbreak_turn')" :class="{'has-text-weight-bold': board_show_type === 'outbreak_turn'}")
+          b-menu-item(label="終局図"   @click.stop="board_show_type_set('last')"          :class="{'has-text-weight-bold': board_show_type === 'last'}")
+
         b-menu-list(label="表示オプション")
           b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
@@ -28,19 +40,6 @@
             b-menu-item(label="勝ち" @click.stop="filter_research(`judge:win`)"  :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
             b-menu-item(label="負け" @click.stop="filter_research(`judge:lose`)" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
             b-menu-item(label="なし" @click.stop="filter_research(``)"           :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
-
-        b-menu-list(label="表示形式")
-          b-menu-item(@click.stop="board_show_type_set('none')")
-            template(slot="label")
-              span(:class="{'has-text-weight-bold': board_show_type === 'none'}") テーブル
-              b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
-                b-icon(icon="dots-vertical" slot="trigger")
-                template(v-for="(e, key) in config.table_columns_hash")
-                  b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="key")
-                    span(:class="{'has-text-grey': !visible_hash[key], 'has-text-weight-bold': visible_hash[key]}") {{e.label}}
-
-          b-menu-item(label="仕掛け"   @click.stop="board_show_type_set('outbreak_turn')" :class="{'has-text-weight-bold': board_show_type === 'outbreak_turn'}")
-          b-menu-item(label="終局図"   @click.stop="board_show_type_set('last')"          :class="{'has-text-weight-bold': board_show_type === 'last'}")
 
         b-menu-list(label="その他")
 
