@@ -17,6 +17,7 @@
     "@nuxtjs/pwa": "^3.0.2",
     "@rails/actioncable": "^6.0.3-3",
     "autolinker": "^3.14.1",
+    "bowser": "^2.11.0",
     "buefy": "^0.9.3",
     "bulma": "^0.9.0",
     "chart.js": "^2.9.3",
