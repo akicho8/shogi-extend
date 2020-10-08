@@ -1,9 +1,5 @@
 <template lang="pug">
 .XyMasterApp(:class="[mode, `current_rule_input_mode-${current_rule.input_mode}`]")
-  hr
-  CurrentUserElement
-  hr
-
   b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced v-if="mode === 'stop' || mode === 'goal'")
     template(slot="brand")
       HomeNavbarItem
@@ -15,10 +11,8 @@
         b-navbar-item(@click="persistense_variables_init") 保存可能な変数のリセット
         b-navbar-item ランキングタブの各表示ページ:{{current_pages}}
 
-      b-navbar-item(v-if="config.current_user" tag="span")
-        .image.avatar_image
-          img.is-rounded(:src="config.current_user.avatar_path")
-      b-navbar-item(v-if="!config.current_user || development_p" @click="login_handle") ログイン
+      LoginElement
+      CurrentUserElement
 
   b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")

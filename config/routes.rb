@@ -75,6 +75,7 @@ Rails.application.routes.draw do
 
     resource :session, only: [] do
       get :current_user_fetch
+      delete :current_user_clear_action   # ログアウト
     end
 
     resource :talk, only: [:show, :create]

@@ -1,3 +1,5 @@
+import { mapState, mapMutations, mapActions } from "vuex"
+
 export default {
   methods: {
     general_ok_notice(message, options = {}) {
@@ -32,5 +34,11 @@ export default {
       this.sound_play("x")
       this.error_message_dialog(message)
     },
+  },
+
+  computed: {
+    ...mapState("user", [
+      "g_current_user",
+    ]),
   },
 }

@@ -25,4 +25,11 @@ export const actions = {
       commit('current_user_set', e)
     })
   },
+  // this.$store.dispatch("current_user_clear")
+  async current_user_clear({commit}) {
+    // curl -d _method=delete http://localhost:3000/api/session/current_user_clear_action.json
+    return this.$axios.$delete(`/api/session/current_user_clear_action.json`).then(e => {
+      commit('current_user_clear')
+    })
+  },
 }
