@@ -1,3 +1,4 @@
 <template lang="pug">
-UserProfileEdit
+client-only
+  UserProfileEdit
 </template>

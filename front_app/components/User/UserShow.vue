@@ -8,7 +8,7 @@
         b-navbar-item(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
           .ml-2.has-text-weight-bold {{config.name}}さんのプロフィール
       template(slot="end" v-if="g_current_user && g_current_user.id === config.id")
-        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'profile-edit'}") 変更
+        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'settings-profile'}") 変更
     .section
       .container
         b-image(:src="config.avatar_path")
