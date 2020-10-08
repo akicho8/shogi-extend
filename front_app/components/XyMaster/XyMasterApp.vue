@@ -11,8 +11,8 @@
         b-navbar-item(@click="persistense_variables_init") 保存可能な変数のリセット
         b-navbar-item ランキングタブの各表示ページ:{{current_pages}}
 
-      LoginElement
-      CurrentUserElement
+      NavbarItemLogin
+      NavbarItemCurrentUser
 
   b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")

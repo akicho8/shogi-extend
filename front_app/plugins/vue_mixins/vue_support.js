@@ -9,8 +9,15 @@ const strip_tags = require('striptags')
 
 import { isMobile } from "../../../front_app/components/models/isMobile.js"
 
+import Autolinker from 'autolinker'
+
 export default {
   methods: {
+    // ../../../node_modules/autolinker/README.md
+    auto_link(str, options = {}) {
+      return Autolinker.link(str, {newWindow: true, truncate: 30, mention: "twitter", ...options})
+    },
+
     // string_truncate("hello", {length: 20})
     string_truncate(str, options = {}) {
       return _.truncate(str, {omission: "...", length: 80, ...options})

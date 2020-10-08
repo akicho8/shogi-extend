@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar-dropdown.CurrentUserElement(:hoverable="false" arrowless right v-if="g_current_user")
+b-navbar-dropdown.NavbarItemCurrentUser(:hoverable="false" arrowless right v-if="g_current_user")
   template(slot="label")
     .image
       img.is-rounded(:src="g_current_user.avatar_path")
@@ -13,7 +13,7 @@ b-navbar-dropdown.CurrentUserElement(:hoverable="false" arrowless right v-if="g_
 import { mapState, mapMutations, mapActions } from "vuex"
 
 export default {
-  name: "CurrentUserElement",
+  name: "NavbarItemCurrentUser",
   methods: {
     ...mapActions("user", [
       "current_user_clear",
@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="sass">
-.CurrentUserElement
+.NavbarItemCurrentUser
   img
     max-height: none
     height: 32px

@@ -1,7 +1,5 @@
 import Vuex from 'vuex'
 
-import Autolinker from 'autolinker'
-
 export const support = {
   methods: {
     warning_dialog(message_body) {
@@ -61,11 +59,6 @@ export const support = {
       str = this.simple_format(str)
       str = this.number_replace_to_question_link(str)
       return str
-    },
-
-    // ../../../node_modules/autolinker/README.md
-    auto_link(str, options = {}) {
-      return Autolinker.link(str, {newWindow: true, truncate: 30, mention: "twitter", ...options})
     },
 
     number_replace_to_question_link(s) {

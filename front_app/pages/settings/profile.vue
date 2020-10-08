@@ -1,4 +1,3 @@
 <template lang="pug">
-  UserShow
+UserProfileEdit
 </template>
-

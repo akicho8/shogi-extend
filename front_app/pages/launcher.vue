@@ -34,6 +34,7 @@ export default {
       CSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
       production_items: [
         { title: 'Home',                               to: { name: 'index'                           }, },
+        { title: 'プロフィール編集',                   to: { name: 'settings-profile', }},
         { title: 'ユーザー詳細',                       to: { name: 'users-id', params: {id: 1}, }, },
         { title: '将棋ウォーズバトル詳細'    ,         to: { name: 'swars-battles-key', params: {key: 'devuser1-Yamada_Taro-20200101_123401'}, }, },
         { title: '将棋ウォーズプレイヤー情報',         to: { name: 'swars-users-key',   params: {key: 'devuser1'}, }, },
