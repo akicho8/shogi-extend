@@ -21,12 +21,12 @@ client-only
               b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable)
                 template(v-if="row.ratio")
                   | {{float_to_perc(row.ratio, 3)}} %
-              //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="debug_p")
+              //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="development_p")
               //-   template(v-if="row.deviation_score")
               //-     | {{number_floor(row.deviation_score, 3)}}
               b-table-column(v-slot="{row}" field="count"           label="数" numeric sortable) {{row.count}}
 
-            pre(title="DEBUG" v-if="debug_p") {{config}}
+            pre(title="DEBUG" v-if="development_p") {{config}}
 </template>
 
 <script>
