@@ -31,15 +31,15 @@ module EncodeMod
     (params[:filename_encode].presence || current_filename_encode_default).to_sym
   end
 
-  def filename_sjis?
-    request.user_agent.to_s.match?(/Windows/i) || boolean_for(params[:shift_jis]) || boolean_for(params[:sjis])
-  end
-
   def current_filename_encode_default
     if filename_sjis?
       :sjis
     else
       :utf8
     end
+  end
+
+  def filename_sjis?
+    request.user_agent.to_s.match?(/Windows/i) || boolean_for(params[:shift_jis]) || boolean_for(params[:sjis])
   end
 end

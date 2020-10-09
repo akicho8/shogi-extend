@@ -42,7 +42,8 @@ module KifShowMod
     end
 
     # inline でこれを表示すると headers["Content-Transfer-Encoding"] = "binary" になっているため Capybara でテキストが文字化けする
-    send_data(text_body, type: current_type, filename: current_filename.public_send("to#{current_filename_encode}"), disposition: current_disposition)
+    filename = current_filename.public_send("to#{current_filename_encode}")
+    send_data(text_body, type: current_type, filename: filename, disposition: current_disposition)
   end
 
   def current_filename
