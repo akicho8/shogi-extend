@@ -12,19 +12,21 @@
         template(v-for="e in config")
           template(v-if="e.display_p")
             .column.is-one-third-desktop.is-half-tablet
-              nuxt-link.box(:to="e.nuxt_link_to" @click.native="sound_play('click')")
-                .content
-                  //- b-image.is-marginless(:src="`/ogp/${e.ogp_image_base}.png`")
-                  .image
+              nuxt-link.card.is-block(:to="e.nuxt_link_to" @click.native="sound_play('click')")
+                .card-image
+                  figure.image
+                    //- b-image.is-marginless(:src="`/ogp/${e.ogp_image_base}.png`")
                     img(:src="`/ogp/${e.ogp_image_base}.png`")
-                  .title.is-5.mt-5
-                    h2.title.is-5.is-inline {{e.title}}
-                    template(v-if="e.new_p")
-                      span.has-text-danger.ml-2.is-size-6 NEW!
-                  p(v-html="e.description")
-                  ul.is-size-7.features
-                    template(v-for="e in e.features")
-                      li(v-html="e")
+                .card-content
+                  .content
+                    .title.is-5.mt-2
+                      h2.title.is-5.is-inline {{e.title}}
+                      template(v-if="e.new_p")
+                        span.has-text-danger.ml-2.is-size-6 NEW!
+                    p(v-html="e.description")
+                    ul.is-size-7.features
+                      template(v-for="e in e.features")
+                        li(v-html="e")
   .footer
     .container
       .columns
@@ -83,15 +85,16 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-.box
-  padding-bottom: 2rem
+<style lang="sass">
+.service-infos
+  .box
+    padding-bottom: 2rem
 
-.features
-  height: 3rem
+  .features
+    height: 3rem
 
-.footer
-  color: $grey
-  a
-    color: inherit
+  .footer
+    color: $grey
+    a
+      color: inherit
 </style>

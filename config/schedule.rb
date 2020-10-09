@@ -61,6 +61,7 @@ if @environment == "production"
 end
 if @environment == "staging"
   every("30 2 * * *") do
-    command %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d shogi-flow.xyz)
+    command %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d         shogi-flow.xyz)
+    # command %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d webtech.shogi-flow.xyz)
   end
 end
