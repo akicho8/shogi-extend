@@ -15,14 +15,18 @@ export default {
   // },
   head() {
     return {
-      title: `将棋ウォーズプレイヤー情報`,
+      title: this.page_title,
       meta: [
-        { hid: "og:title",       property: "og:title",       content: `将棋ウォーズプレイヤー情報` },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                },
+        { hid: "og:title",       property: "og:title",       content: this.page_title                                      },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-users-key.png" },
-        { hid: "og:description", property: "og:description", content: ""},
+        { hid: "og:description", property: "og:description", content: ""                                                   },
       ],
     }
+  },
+  computed: {
+    page_title() {
+      return `${this.$route.params.key} - 将棋ウォーズプレイヤー情報`
+    },
   },
 }
 </script>

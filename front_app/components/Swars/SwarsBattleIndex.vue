@@ -252,17 +252,17 @@ export default {
     }
   },
 
-  head() {
-    return {
-      title: this.page_title,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ棋譜検索"                                                                                          },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                                                                           },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles.png"                                                              },
-        { hid: "og:description", property: "og:description", content: "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます" },
-      ],
-    }
-  },
+  // head() {
+  //   return {
+  //     title: this.page_title,
+  //     meta: [
+  //       { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ棋譜検索"                                                                                          },
+  //       { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                                                                           },
+  //       { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles.png"                                                              },
+  //       { hid: "og:description", property: "og:description", content: "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます" },
+  //     ],
+  //   }
+  // },
 
   // watchQuery: ['query'],
   watch: {
@@ -421,9 +421,9 @@ export default {
   },
 
   computed: {
-    page_title() {
-      return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" - ")
-    },
+    // page_title() {
+    //   return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" - ")
+    // },
 
     ExternalAppInfo() { return ExternalAppInfo },
     ZipKifuInfo()     { return ZipKifuInfo     },

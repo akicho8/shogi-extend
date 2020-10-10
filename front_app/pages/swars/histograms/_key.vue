@@ -42,7 +42,6 @@ export default {
       title: `将棋ウォーズ${this.config.tactic.name}分布`,
       meta: [
         { hid: "og:title",       property: "og:title",       content: `将棋ウォーズ${this.config.tactic.name}分布` },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                 },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-histograms-attack.png" },
         { hid: "og:description", property: "og:description", content: ""},
       ],

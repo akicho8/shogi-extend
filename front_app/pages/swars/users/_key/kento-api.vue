@@ -1,6 +1,5 @@
 <template lang="pug">
-client-only
-  SwarsUserKeyKentoApi
+SwarsUserKeyKentoApi
 </template>
 
 <script>

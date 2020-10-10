@@ -66,18 +66,18 @@ export default {
       config: null,
     }
   },
-  head() {
-    return {
-      title: "SHOGI-EXTEND",
-      titleTemplate: null,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND",                                   },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image",                            },
-        { hid: "og:image",       property: "og:image",       content: "/ogp/application.png",                           },
-        { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです", },
-      ],
-    }
-  },
+  // デフォルトが使われるのでここで指定する必要なし
+  // head() {
+  //   return {
+  //     title: "SHOGI-EXTEND",
+  //     titleTemplate: null,
+  //     meta: [
+  //       { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND",                                   },
+  //       { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image",                            },
+  //       { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです", },
+  //     ],
+  //   }
+  // },
   fetch() {
     this.call_log("index")
     return this.$axios.$get("/api/service_infos.json").then(config => {

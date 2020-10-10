@@ -11,7 +11,6 @@ export default {
       title: this.config.twitter_card_options.title,
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.config.twitter_card_options.title       },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                        },
         { hid: "og:image",       property: "og:image",       content: this.config.twitter_card_options.image,      },
         { hid: "og:description", property: "og:description", content: this.config.twitter_card_options.description },
       ],

@@ -3,7 +3,7 @@ client-only
   .swars-users-key-direct-open-external_app_key
     b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
       template(slot="brand")
-        b-navbar-item.has-text-weight-bold(tag="div") {{title}}
+        b-navbar-item.has-text-weight-bold(tag="div") {{long_title}}
     .section
       .container
         b-button(tag="nuxt-link" :to="{name: 'swars-battles', query: {query: $route.params.key}}" @click.native="sound_play('click')")
@@ -26,11 +26,12 @@ export default {
   head() {
     return {
       title: this.external_app_info.shortcut_name, // アイコン名なので短かく
+      titleTemplate: null,
       meta: [
-        { hid: "og:title",       property: "og:title",       content: this.title,                                        },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                         },
+        { hid: "og:title",       property: "og:title",       content: this.long_title,                                    },
+        { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                          },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles.png", },
-        { hid: "og:description", property: "og:description", content: "",                                                },
+        { hid: "og:description", property: "og:description", content: "",                                                 },
       ],
       link: [
         { hid: "apple-touch-icon", rel: "apple-touch-icon", href: `/apple-touch-icon/${this.external_app_info.key}.png` },
@@ -84,8 +85,8 @@ export default {
     external_app_info() {
       return ExternalAppInfo.fetch(this.external_app_key)
     },
-    title() {
-      return `直前の対局を${this.external_app_info.name}ですぐ開く画面`
+    long_title() {
+      return `${this.$route.params.key}さんの直近対局を${this.external_app_info.name}ですぐ開く画面`
     },
     record() {
       return this.config.records[0]

@@ -1,7 +1,15 @@
 import dayjs from "dayjs"
 const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
+const SITE_DESC = "将棋に関連する便利サービスを提供するサイトです"
 
-const site_desc = "将棋に関連する便利サービスを提供するサイトです"
+// FIXME: const APP_NAME が参照できない罠
+function title_build(title) {
+  if (title) {
+    return [title, process.env.APP_NAME].join(" - ")
+  } else {
+    return process.env.APP_NAME
+  }
+}
 
 const config = {
 // export default {
@@ -32,8 +40,31 @@ const config = {
   ** Headers of the page
   */
   head: {
-    title: "?",
-    titleTemplate: `%s - SHOGI-EXTEND`,
+    title: null,
+    // titleTemplate: (e) => {
+    //   if (e) {
+    //     return [e, process.env.APP_NAME].join(" - ")
+    //   } else {
+    //     return process.env.APP_NAME
+    //   }
+    // },
+    // titleTemplate: title_build,
+    // titleTemplate: (title) => {
+    //   if (title) {
+    //     return [title, this.$config.APP_NAME].join(" - ")
+    //   } else {
+    //     return this.$config.APP_NAME
+    //   }
+    // },
+    // FIXME: なんだこれ？
+    titleTemplate: (title) => {
+      if (title) {
+        return [title, "SHOGI-EXTEND"].join(" - ")
+      } else {
+        return "SHOGI-EXTEND"
+      }
+    },
+
     htmlAttrs: {
       lang: "ja",
       prefix: 'og: http://ogp.me/ns#',
@@ -43,18 +74,18 @@ const config = {
       // https://ja.nuxtjs.org/faq/duplicated-meta-tags/
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: site_desc },
+      { hid: 'description', name: 'description', content: SITE_DESC },
       { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://0.0.0.0:3000" : "") + "/maincable" },
 
-      { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
+      { hid: "og:site_name",   property: "og:site_name",   content: process.env.APP_NAME },
       { hid: "og:type",        property: "og:type",        content: "website" },
       { hid: "og:url",         property: "og:url",         content: process.env.MY_SITE_URL }, // これいるのか？
 
       // 重要なのはこの4つだけで各ページで上書きする
-      { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND" },
-      { hid: "og:description", property: "og:description", content: site_desc },
+      { hid: "og:title",       property: "og:title",       content: process.env.APP_NAME },
+      { hid: "og:description", property: "og:description", content: SITE_DESC },
       { hid: "og:image",       property: "og:image",       content: process.env.MY_OGP_URL + "/ogp/application.png" },
-      { hid: "twitter:card",   property: "twitter:card",   content: "summary" }, // summary or summary_large_image
+      { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image" }, // summary or summary_large_image
 
       { hid: "twitter:site",       property: "twitter:site",       content: "@sgkinakomochi" }, // これいるのか？
       { hid: "twitter:creator",    property: "twitter:creator",    content: "@sgkinakomochi" }, // これいるのか？
@@ -211,6 +242,7 @@ const config = {
     MY_SITE_URL: "",
     MY_OGP_URL: "",
     STAGE: "",
+    APP_NAME: "",
   },
 
   // SSR側での定義で publicRuntimeConfig を上書きする

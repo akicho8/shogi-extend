@@ -23,11 +23,28 @@ class Ogp < Thor
 
     # url = host + URI(url).request_uri
     rows = [
-      { url: "/",                                body_include: "電脳少女シロ", title_include: nil,           },
-      { url: "/swars/battles?query=Yamada_Taro", body_include: nil,            title_include: "Yamada_Taro", },
+      # { url: "/",                                                    body_include: "電脳少女シロ", title_include: "SHOGI-EXTEND", },
+      # { url: "/swars/battles?query=Yamada_Taro",                     body_include: nil,            title_include: "Yamada_Taro",  },
+      # { url: "/swars/users/Yamada_Taro/",                            body_include: nil,            title_include: nil,  },
+      { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/",             body_include: nil,            title_include: nil,  },
+      { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet", body_include: nil,            title_include: nil,  },
+      # { url: "/swars/users/Yamada_Taro/direct-open/kento",        body_include: nil,            title_include: "KENTO", icon_include: "kento",       },
+      # { url: "/swars/users/Yamada_Taro/direct-open/piyo_shogi",   body_include: nil,            title_include: "ぴよ",  icon_include: "piyo_shogi",  },
+      # { url: "/swars/users/Yamada_Taro/kento-api",                body_include: nil,            title_include: "Yamada_Taro",  },
+      # { url: "/swars/histograms/attack",         body_include: nil,            title_include: "戦型",         },
+      # { url: "/swars/histograms/grade",          body_include: nil,            title_include: "段級",         },
+      # { url: "/swars/top-group",                 body_include: nil,            title_include: "上位",         },
+      # { url: "/swars/professional",              body_include: nil,            title_include: "十段",         },
+      # { url: "/xy",                              body_include: nil,            title_include: "符号の鬼",     },
+      # { url: "/vs-clock",                        body_include: nil,            title_include: "対局時計",     },
+      # { url: "/three-stage-leagues",                                    body_include: nil, title_include: nil,    },
+      # { url: "/three-stage-leagues/67",                                 body_include: nil, title_include: nil,    },
+      # { url: "/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0", body_include: nil, title_include: nil,    },
     ].collect do |e|
-      {}.tap do |row|
-
+      {
+        "結果" => "",
+        "画像" => "",
+      }.tap do |row|
         url = e[:url]
         unless url.start_with?("http")
           url = host + e[:url]
@@ -46,18 +63,46 @@ class Ogp < Thor
           "og:title",
           "og:description",
           "twitter:card",
-        ].inject({}) {|a, k| a.merge(k => doc.at("meta[property='#{k}']")[:content]) }
+        ].inject({}) {|a, k|
+          content = nil
+          if element = doc.at("meta[property='#{k}']")
+            content = element[:content]
+          else
+            tp "タグが見つからない : #{k}"
+            content = "(missing)"
+          end
+          a.merge(k => content)
+        }
         attributes["title"] = doc.title
+        attributes["icon"] = doc.at("link[rel=apple-touch-icon]")[:href]
 
         # row["title"]    = attributes["title"]
         row["og:title"] = attributes["og:title"]
 
-        row["結果"] = ""
+        row.update(attributes)
+
+        success = true
         if s = e[:body_include]
-          if html.include?(s)
-            row["結果"] = "OK"
+          unless html.include?(s)
+            success = false
           end
         end
+        if s = e[:title_include]
+          unless attributes["title"].include?(s)
+            success = false
+          end
+        end
+        if s = e[:icon_include]
+          unless attributes["icon"].include?(s)
+            success = false
+          end
+        end
+        if success
+          row["結果"] = "OK"
+        end
+
+        bin = URI(attributes["og:image"]).read rescue ""
+        row["画像"] = bin[1..3] == "PNG" ? "OK" : ""
       end
     end
     tp rows
@@ -75,3 +120,12 @@ class Ogp < Thor
 
   start
 end
+# >> (development)
+# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/
+# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet
+# >> |------+------+---------------------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------+----------------+---------------------+---------------------------------------+-----------------------|
+# >> | 結果 | 画像 | URL                                                                                   | og:title                          | og:image                                      | og:description | twitter:card        | title                                 | icon                  |
+# >> |------+------+---------------------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------+----------------+---------------------+---------------------------------------+-----------------------|
+# >> | OK   |      | http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/             | 将棋ウォーズバトル情報            | http://0.0.0.0:4000/ogp/swars-battles-key.png |                | summary_large_image | 将棋ウォーズバトル情報 - SHOGI-EXTEND | /apple-touch-icon.png |
+# >> | OK   |      | http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet | devuser3 三段 vs Yamada_Taro 四段 | http://0.0.0.0:4000/ogp/formal-sheet.png      |                | summary_large_image | devuser3 三段 vs Yamada_Taro 四段     | /apple-touch-icon.png |
+# >> |------+------+---------------------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------+----------------+---------------------+---------------------------------------+-----------------------|
