@@ -166,6 +166,12 @@ export default {
     })
   },
 
+  beforeDestroy() {
+    this.lobby_unsubscribe()
+    this.school_unsubscribe()
+    this.room_unsubscribe()
+    this.battle_unsubscribe()
+  },
   methods: {
     app_setup() {
       this.school_setup()
@@ -229,6 +235,10 @@ export default {
       this.__assert__(this.$ac_school == null, "this.$ac_school == null")
       this.$ac_school = this.ac_subscription_create({channel: "Actb::SchoolChannel"})
     },
+    school_unsubscribe() {
+      this.ac_unsubscribe("$ac_school")
+    },
+
     active_users_status_broadcasted(params) {
       if (params.school_user_ids) {
         this.school_user_ids = params.school_user_ids
