@@ -8,6 +8,7 @@
     template(slot="start")
       b-navbar-item.has-text-weight-bold(@click="cancel_handle") キャンセル
     template(slot="end")
+      b-navbar-item(@click="test_handle" v-if="development_p") 不正入力テスト
       b-navbar-item.has-text-weight-bold(@click="save_handle") 保存
 
   .section
@@ -52,6 +53,11 @@ export default {
       this.sound_play('click')
       this.base.upload_file_info = v
       this.base.current_component = "UserProfileEditImageCrop"
+    },
+
+    test_handle() {
+      this.base.new_twitter_key = "1234567890123456"
+      this.save_handle()
     },
 
     // 保存

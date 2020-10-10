@@ -10,6 +10,7 @@ module Api
         bin = data_base64_body_to_binary(v)
         io = StringIO.new(bin)
         user.avatar.attach(io: io, filename: "avatar.png")
+        # user.avatar_blob.saved_changes? # => true
       end
 
       user.name = params[:name]
@@ -32,7 +33,14 @@ module Api
         end
       end
 
-      if user.saved_changes? || user.profile.saved_changes?
+      # 変更したかもしれないレコードたち
+      changed_records = [
+        user,
+        user.profile,
+        user.avatar_blob, # ← 上で user.save! しちゃったせいで saved_changes? は常に false になっとるっぽい
+      ]
+
+      if changed_records.any?(:saved_changes?) || params[:croped_image]
         notice_collector = NoticeCollector.single(:success, "保存しました")
       else
         notice_collector = NoticeCollector.single(:info, "変更はありませんでした")

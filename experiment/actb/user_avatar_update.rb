@@ -2,21 +2,38 @@ require "./setup"
 
 file = {io: StringIO.open(Pathname("../../spec/rails.png").read), filename: "foo.png"}
 user = User.sysop
-user.avatar.attach(file)
-user.avatar                                                                        # => #<ActiveStorage::Attached::One:0x00007fa54b9bd6b8 @name="avatar", @record=#<User id: 14, key: "sysop", name: "運営", online_at: nil, fighting_at: nil, matching_at: nil, cpu_brain_key: nil, user_agent: "", race_key: "human", created_at: "2020-05-25 14:20:35", updated_at: "2020-05-28 05:44:05", email: "sysop@localhost", joined_at: "2020-05-25 14:20:35">>
-user.avatar.attached?                                                              # => true
+avatar = user.avatar
+avatar.attach(file)
+avatar                                                                        # => #<ActiveStorage::Attached::One:0x00007f85a3ed8520 @name="avatar", @record=#<User id: 1, key: "sysop", name: "運営", cpu_brain_key: nil, user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Ap...", race_key: "human", created_at: "2020-09-20 09:58:35", updated_at: "2020-10-10 07:27:42", email: "shogi.extend@gmail.com", name_input_at: "2020-09-20 09:58:35", permit_tag_list: nil>>
+avatar.attached?                                                              # => true
+avatar.saved_changes?      # => false
+
+avatar.saved_change_to_attribute?(:updated_at)       # => false
+avatar.saved_change_to_attribute(:updated_at)        # => nil
+avatar.attribute_before_last_save(:updated_at)       # => nil
+avatar.saved_changes                           # => {}
+avatar.saved_changes?                          # => false
+avatar.saved_changes.keys                      # => []
+avatar.saved_changes.transform_values(&:first) # => {}
+
+user.avatar_attachment.saved_changes?              # => false
+
+user.avatar_blob.saved_changes?              # => true
+
+# User.sysop.avatar_blob.saved_changes? # => false
 
 tp ActiveStorage::Attachment
 tp ActiveStorage::Blob
 
-# >> |----+--------+-----------------+-----------+---------+---------------------------|
-# >> | id | name   | record_type     | record_id | blob_id | created_at                |
-# >> |----+--------+-----------------+-----------+---------+---------------------------|
-# >> | 11 | avatar | User |        14 |      11 | 2020-05-28 14:44:05 +0900 |
-# >> |----+--------+-----------------+-----------+---------+---------------------------|
-# >> |----+------------------------------+----------+--------------+-------------------------------------------------------------------+-----------+--------------------------+---------------------------|
-# >> | id | key                          | filename | content_type | metadata                                                          | byte_size | checksum                 | created_at                |
-# >> |----+------------------------------+----------+--------------+-------------------------------------------------------------------+-----------+--------------------------+---------------------------|
-# >> | 10 | 8cojyvbhi5w7ue46rb3d2jfdgpq4 | foo.png  | image/png    | {"identified"=>true, "width"=>50, "height"=>64, "analyzed"=>true} |      6646 | nAoHm913AdfnKb2VaCPRUw== | 2020-05-28 14:44:00 +0900 |
-# >> | 11 | u8r2mf39yc4ba8vzl6k62501xrdj | foo.png  | image/png    | {"identified"=>true}                                              |      6646 | nAoHm913AdfnKb2VaCPRUw== | 2020-05-28 14:44:05 +0900 |
-# >> |----+------------------------------+----------+--------------+-------------------------------------------------------------------+-----------+--------------------------+---------------------------|
+# >> |----+--------+-------------+-----------+---------+---------------------------|
+# >> | id | name   | record_type | record_id | blob_id | created_at                |
+# >> |----+--------+-------------+-----------+---------+---------------------------|
+# >> | 14 | avatar | User        |        10 |      14 | 2020-10-10 16:08:44 +0900 |
+# >> | 24 | avatar | User        |         1 |      24 | 2020-10-10 16:27:42 +0900 |
+# >> |----+--------+-------------+-----------+---------+---------------------------|
+# >> |----+------------------------------+------------+--------------+---------------------------------------------------------------------+-----------+--------------------------+---------------------------|
+# >> | id | key                          | filename   | content_type | metadata                                                            | byte_size | checksum                 | created_at                |
+# >> |----+------------------------------+------------+--------------+---------------------------------------------------------------------+-----------+--------------------------+---------------------------|
+# >> | 14 | c1v92lviqkq9zzvsj3tehr7yl7y3 | avatar.png | image/png    | {"identified"=>true, "width"=>400, "height"=>400, "analyzed"=>true} |    269435 | kdKeA6Xj7wguMYYL3v9k+Q== | 2020-10-10 16:08:44 +0900 |
+# >> | 24 | 3kwsj8owcn6cdiztc18thsmkxg7s | foo.png    | image/png    | {"identified"=>true}                                                |      6646 | nAoHm913AdfnKb2VaCPRUw== | 2020-10-10 16:27:42 +0900 |
+# >> |----+------------------------------+------------+--------------+---------------------------------------------------------------------+-----------+--------------------------+---------------------------|
