@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_profile_edit_image_crop.has-background-black
+.UserProfileEditImageCrop.has-background-black
   b-navbar(type="is-dark" wrapper-class="container" :mobile-burger="false" spaced)
     //- template(slot="brand")
     //-   b-navbar-item キャンセル
@@ -62,7 +62,7 @@ const IMAGE_CONTROLLER_PARAMS = {
 import { fabric }  from "fabric"
 
 export default {
-  name: "the_profile_edit_image_crop",
+  name: "UserProfileEditImageCrop",
 
   data() {
     return {
@@ -97,7 +97,7 @@ export default {
   methods: {
     cancel_handle() {
       this.sound_play("click")
-      this.$parent.current_component = "the_profile_edit_form"
+      this.$parent.current_component = "UserProfileEditForm"
     },
 
     canvas_setup() {
@@ -173,7 +173,7 @@ export default {
       // が、どうせ戻るので意味ない
       this.fcanvas.renderAll()
 
-      this.$parent.current_component = "the_profile_edit_form"
+      this.$parent.current_component = "UserProfileEditForm"
     },
 
     // 少しずつ回転
@@ -209,7 +209,7 @@ export default {
 </script>
 
 <style lang="sass">
-.the_profile_edit_image_crop
+.UserProfileEditImageCrop
   min-height: 100vh
 
   .canvas_container

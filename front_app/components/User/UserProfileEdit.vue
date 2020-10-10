@@ -1,39 +1,15 @@
 <template lang="pug">
 .UserProfileEdit(v-if="g_current_user")
-  component(:is="current_component" v-if="current_component")
-  //- b-navbar-item(@click="back_handle")
-  //-   .delete
-  //- b-navbar-item(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
-  //-   //- .image.is-inline-block
-  //-   //-   img.is-rounded(:src="config.avatar_path")
-  //-   .ml-2.has-text-weight-bold {{config.name}}さんのプロフィール
-  //- template(slot="end" v-if="g_current_user && g_current_user.id === config.id")
-  //-   b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'profile-edit'}") 変更
-  //- .section
-  //-   .container
-  //-     component(:is="current_component" v-if="current_component")
-  //-       b-image(:src="config.avatar_path")
-  //-     .content
-  //-       p
-  //-         .has-text-weight-bold Twitter
-  //-         a.is-block(:href="twitter_url" :target="target_default" ) @{{config.twitter_key}}
-  //-       p.box.description.has-background-white-ter.is-shadowless(
-  //-         v-if="config.description"
-  //-         v-html="auto_link(config.description)")
-  //-
-  //-     pre(v-if="development_p") {{config}}
+  template(v-if="false")
+    component(:is="current_component" v-if="current_component")
+  template(v-else)
+    UserProfileEditForm(v-if="current_component === 'UserProfileEditForm'")
+    UserProfileEditImageCrop(v-if="current_component === 'UserProfileEditImageCrop'")
 </template>
 
 <script>
-import the_profile_edit_form       from "./the_profile_edit_form.vue"
-import the_profile_edit_image_crop from "./the_profile_edit_image_crop.vue"
-
 export default {
   name: "UserProfileEdit",
-  components: {
-    the_profile_edit_form,
-    the_profile_edit_image_crop,
-  },
   data() {
     return {
       // meta
@@ -61,7 +37,7 @@ export default {
     this.var_reset()
 
     // if (this.app.info.warp_to === "profile_edit_image_crop") {
-    //   this.current_component = "the_profile_edit_image_crop"
+    //   this.current_component = "UserProfileEditImageCrop"
     // }
   },
 
@@ -73,7 +49,7 @@ export default {
     var_reset() {
       this.watch_clear()
 
-      this.current_component = "the_profile_edit_form"
+      this.current_component = "UserProfileEditForm"
       this.changed_p         = false
       this.croped_image      = null
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_profile_edit_form.has-background-white-bis
+.UserProfileEditForm.has-background-white-bis
   DebugBox
     div valid_p        = {{valid_p}}
     div name_invalid_p = {{name_invalid_p}}
@@ -21,7 +21,7 @@
                 .image_same_size_box
                   b-icon(icon="pack-man")
 
-          b-field(label="名前" label-position="on-border" :type="name_invalid_p && 'is-danger'")
+          b-field(label="名前" label-position="on-border" :type="name_invalid_p ? 'is-danger' : ''")
             b-input(type="text" v-model.trim="$parent.new_name")
 
           b-field(label="Twitterアカウント" label-position="on-border")
@@ -36,7 +36,7 @@
 import _ from "lodash"
 
 export default {
-  name: "the_profile_edit",
+  name: "UserProfileEditForm",
   mixins: [
     // support,
   ],
@@ -51,7 +51,7 @@ export default {
     avatar_upload_handle(v) {
       this.sound_play('click')
       this.$parent.upload_file_info = v
-      this.$parent.current_component = "the_profile_edit_image_crop"
+      this.$parent.current_component = "UserProfileEditImageCrop"
     },
 
     // 保存
@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style scoped lang="sass">
-.the_profile_edit_form
+.UserProfileEditForm
   min-height: 100vh
 
   .section
