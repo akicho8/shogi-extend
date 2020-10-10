@@ -3,8 +3,8 @@
   template(v-if="false")
     component(:is="current_component" v-if="current_component")
   template(v-else)
-    UserProfileEditForm(v-if="current_component === 'UserProfileEditForm'")
-    UserProfileEditImageCrop(v-if="current_component === 'UserProfileEditImageCrop'")
+    UserProfileEditForm(      :base="this" v-if="current_component === 'UserProfileEditForm'"      )
+    UserProfileEditImageCrop( :base="this" v-if="current_component === 'UserProfileEditImageCrop'" )
 </template>
 
 <script>
@@ -26,19 +26,8 @@ export default {
     }
   },
 
-  fetch() {
-    // http://0.0.0.0:3000/api/users/1.json
-    // http://0.0.0.0:4000/users/1
-    // return this.$axios.$get(`/api/users/${this.$route.params.id}.json`).then(e => {
-    //   this.config = e
-    // })
-  },
   mounted() {
     this.var_reset()
-
-    // if (this.app.info.warp_to === "profile_edit_image_crop") {
-    //   this.current_component = "UserProfileEditImageCrop"
-    // }
   },
 
   beforeDestroy() {
@@ -78,11 +67,4 @@ export default {
 
 <style lang="sass">
 .UserProfileEdit
-  // .navbar-item
-  //   img
-  //     max-height: none
-  //     height: 32px
-  //     width: 32px
-  .section
-    padding-top: 1.5rem
 </style>

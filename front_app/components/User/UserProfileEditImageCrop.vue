@@ -63,7 +63,9 @@ import { fabric }  from "fabric"
 
 export default {
   name: "UserProfileEditImageCrop",
-
+  props: {
+    base: { type: Object, required: true },
+  },
   data() {
     return {
       fcanvas:      null, // fabric.Canvas インスタンス
@@ -71,33 +73,22 @@ export default {
       image_obj:    null,
     }
   },
-
-  created() {
-    // if (this.app.info.warp_to === "profile_edit_image_crop") {
-    //   this.uploaded_src = "/foo.png"
-    // }
-    // this.html_background_color_set("black")
-  },
-
   beforeDestroy() {
-    this.fabric_free()
-    // this.html_background_color_set("")
+    this.fabric_destroy()
   },
-
   mounted() {
     this.canvas_setup()
 
-    if (this.$parent.upload_file_info) {
+    if (this.base.upload_file_info) {
       this.input_file_to_canvas()
     } else if (this.uploaded_src) {
       this.image_url_to_canvas()
     }
   },
-
   methods: {
     cancel_handle() {
       this.sound_play("click")
-      this.$parent.current_component = "UserProfileEditForm"
+      this.base.current_component = "UserProfileEditForm"
     },
 
     canvas_setup() {
@@ -138,7 +129,7 @@ export default {
         this.uploaded_src = reader.result
         this.image_url_to_canvas()
       }, false)
-      reader.readAsDataURL(this.$parent.upload_file_info)
+      reader.readAsDataURL(this.base.upload_file_info)
     },
 
     image_url_to_canvas() {
@@ -162,7 +153,7 @@ export default {
 
       // http://fabricjs.com/docs/fabric.Canvas.html#toDataURL
       this.__assert__(this.fcanvas, "this.fcanvas")
-      this.$parent.croped_image = this.fcanvas.toDataURL({
+      this.base.croped_image = this.fcanvas.toDataURL({
         top:    CANVAS_PADDING,
         left:   CANVAS_PADDING,
         width:  IMAGE_SIZE,
@@ -173,7 +164,7 @@ export default {
       // が、どうせ戻るので意味ない
       this.fcanvas.renderAll()
 
-      this.$parent.current_component = "UserProfileEditForm"
+      this.base.current_component = "UserProfileEditForm"
     },
 
     // 少しずつ回転
@@ -191,12 +182,12 @@ export default {
 
     // この方法で解放されているのかは不明
     // そもそも自分で解放する必要はないのかもしれない
-    fabric_free() {
+    fabric_destroy() {
       // http://fabricjs.com/docs/fabric.Canvas.html#getObjects
-      this.__assert__(this.fcanvas.getObjects().length >= 1, "this.fcanvas.getObjects().length >= 1")
+      this.__assert__(this.fcanvas.getObjects().length >= 1, "[fabric] オブジェクトが生成されていないのに解放しようとしている")
       // http://fabricjs.com/docs/fabric.StaticCanvas.html#dispose
       this.fcanvas.dispose()
-      this.__assert__(this.fcanvas.getObjects().length === 0, "this.fcanvas.getObjects().length === 0")
+      this.__assert__(this.fcanvas.getObjects().length === 0, "[fabric] オブジェクトが解放できていない")
     },
   },
   computed: {

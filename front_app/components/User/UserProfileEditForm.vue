@@ -21,14 +21,14 @@
                 .image_same_size_box
                   b-icon(icon="pack-man")
 
-          b-field(label="名前" label-position="on-border" :type="name_invalid_p ? 'is-danger' : ''")
-            b-input(type="text" v-model.trim="$parent.new_name")
+          b-field(label-position="on-border" label="名前" :type="name_invalid_p ? 'is-danger' : ''")
+            b-input(type="text" v-model.trim="base.new_name")
 
-          b-field(label="Twitterアカウント" label-position="on-border")
-            b-input(type="text" v-model.trim="$parent.new_twitter_key")
+          b-field(label-position="on-border" label="Twitterアカウント")
+            b-input(type="text" v-model.trim="base.new_twitter_key")
 
-          b-field(label="自己紹介" label-position="on-border")
-            b-input.new_description(type="textarea" v-model.trim="$parent.new_description" rows="6")
+          b-field(label-position="on-border" label="自己紹介")
+            b-input(type="textarea" v-model.trim="base.new_description" rows="6")
 
 </template>
 
@@ -37,9 +37,9 @@ import _ from "lodash"
 
 export default {
   name: "UserProfileEditForm",
-  mixins: [
-    // support,
-  ],
+  props: {
+    base: { type: Object, required: true },
+  },
   methods: {
     // キャンセル
     cancel_handle() {
@@ -50,8 +50,8 @@ export default {
     // アバター画像アップロード(と同時に切り抜きモードに移動)
     avatar_upload_handle(v) {
       this.sound_play('click')
-      this.$parent.upload_file_info = v
-      this.$parent.current_component = "UserProfileEditImageCrop"
+      this.base.upload_file_info = v
+      this.base.current_component = "UserProfileEditImageCrop"
     },
 
     // 保存
@@ -65,10 +65,10 @@ export default {
       }
 
       const params = {
-        name:                this.$parent.new_name,
-        profile_description: this.$parent.new_description,
-        profile_twitter_key: this.$parent.new_twitter_key,
-        croped_image:        this.$parent.croped_image,
+        name:                this.base.new_name,
+        profile_description: this.base.new_description,
+        profile_twitter_key: this.base.new_twitter_key,
+        croped_image:        this.base.croped_image,
       }
 
       const retval = await this.$axios.$put("/api/settings/profile_update", params)
@@ -81,7 +81,7 @@ export default {
       // 直後に遷移しているので一見不要な処理な気がするが、
       // 詳細は g_current_user とは異なるスコープなのでこの処理は必要
       await this.current_user_fetch()
-      this.$parent.var_reset()
+      this.base.var_reset()
 
       // 詳細に戻る
       this.$router.push({name: "users-id", params: {id: this.g_current_user.id}})
@@ -96,17 +96,17 @@ export default {
 
     // 名前が不正か？
     name_invalid_p() {
-      if (_.isEmpty(this.$parent.new_name)) {
+      if (_.isEmpty(this.base.new_name)) {
         return true
       }
-      if (/^([._])$/.test(this.$parent.new_name)) {
+      if (/^([._])$/.test(this.base.new_name)) {
         return true
       }
       return false
     },
 
     image_source() {
-      return this.$parent.croped_image || this.g_current_user.avatar_path
+      return this.base.croped_image || this.g_current_user.avatar_path
     },
   },
 }
