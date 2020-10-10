@@ -10,7 +10,7 @@
     .container
       .columns.is-multiline
         template(v-for="e in config")
-          template(v-if="e.display_p")
+          template(v-if="e.display_p || development_p")
             .column.is-one-third-desktop.is-half-tablet
               nuxt-link.card.is-block(:to="e.nuxt_link_to" @click.native="sound_play('click')")
                 .card-image
