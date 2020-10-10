@@ -1,6 +1,5 @@
 <template lang="pug">
 .TrainingApp(:class="mode")
-  the_profile_edit( v-if="mode === 'profile_edit'")
   the_emotion(v-if="mode === 'emotion'")
   the_lobby(        v-if="mode === 'lobby'")
   the_rule_select(  v-if="mode === 'rule_select'")
@@ -28,7 +27,6 @@ import the_question_show from "./the_question_show.vue"
 import the_user_show     from "./the_user_show.vue"
 import the_lobby         from "./the_lobby.vue"
 import the_rule_select   from "./the_rule_select.vue"
-import the_profile_edit  from "./the_profile_edit/the_profile_edit.vue"
 import the_emotion       from "./the_emotion/the_emotion.vue"
 import the_matching      from "./the_matching.vue"
 import the_battle        from "./the_battle/the_battle.vue"
@@ -86,7 +84,6 @@ export default {
     the_user_show,
     the_lobby,
     the_rule_select,
-    the_profile_edit,
     the_emotion,
     the_matching,
     the_battle,
@@ -172,14 +169,12 @@ export default {
     this.room_unsubscribe()
     this.battle_unsubscribe()
   },
+
   methods: {
     app_setup() {
       this.school_setup()
 
       if (this.info.warp_to) {
-        if (this.info.warp_to === "profile_edit" || this.info.warp_to === "profile_edit_image_crop") {
-          this.profile_edit_setup()
-        }
         if (this.info.warp_to === "emotion_index" || this.info.warp_to === "emotion_edit") {
           this.emotion_setup()
         }
@@ -246,11 +241,6 @@ export default {
       if (params.room_user_ids) {
         this.room_user_ids = params.room_user_ids
       }
-    },
-
-    profile_edit_setup() {
-      this.lobby_unsubscribe()
-      this.mode = "profile_edit"
     },
 
     emotion_setup() {
@@ -365,13 +355,7 @@ export default {
         if (this.current_user) {
           if (!this.current_user.name_input_at) {
             this.warning_notice("名前を入力してください")
-            this.app.profile_edit_handle()
-            this.$nextTick(() => {
-              const el = document.querySelector("#user_name_input_field")
-              if (el) {
-                el.click()
-              }
-            })
+            this.$router.push({name: "settings-profile"})
             return true
           }
         }
@@ -431,14 +415,6 @@ export default {
       } else {
         this.sound_play("click")
         this.lobby_setup()
-      }
-    },
-
-    profile_edit_handle() {
-      if (this.mode === "profile_edit") {
-      } else {
-        this.sound_play("click")
-        this.profile_edit_setup()
       }
     },
 
