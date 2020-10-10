@@ -1,0 +1,77 @@
+#!/usr/bin/env ruby
+#
+# ogp
+# ogp -e production
+
+require "bundler/setup"
+Dir.chdir(Bundler.root)
+
+require "thor"
+require "pathname"
+require "open-uri"
+require "nokogiri"
+require "table_format"
+
+class Ogp < Thor
+  package_name "ogp"
+  default_command :validate
+  class_option :env,   type: :string,  desc: "対象環境", default: "development", aliases: "-e"
+
+  desc "validate", "確認"
+  def validate
+    puts "(#{options[:env]})"
+
+    # url = host + URI(url).request_uri
+    rows = [
+      { url: "/",                                body_include: "電脳少女シロ", title_include: nil,           },
+      { url: "/swars/battles?query=Yamada_Taro", body_include: nil,            title_include: "Yamada_Taro", },
+    ].collect do |e|
+      {}.tap do |row|
+
+        url = e[:url]
+        unless url.start_with?("http")
+          url = host + e[:url]
+        end
+        puts url
+
+        row["URL"] = url
+        html = URI(url).read
+        doc = Nokogiri::HTML(html)
+
+        # p doc.title
+        # puts doc.search("meta")
+
+        attributes = [
+          "og:image",
+          "og:title",
+          "og:description",
+          "twitter:card",
+        ].inject({}) {|a, k| a.merge(k => doc.at("meta[property='#{k}']")[:content]) }
+        attributes["title"] = doc.title
+
+        # row["title"]    = attributes["title"]
+        row["og:title"] = attributes["og:title"]
+
+        row["結果"] = ""
+        if s = e[:body_include]
+          if html.include?(s)
+            row["結果"] = "OK"
+          end
+        end
+      end
+    end
+    tp rows
+  end
+
+  private
+
+  def host
+    {
+      :development => "http://localhost:4000",
+      :staging     => "https://shogi-flow.xyz",
+      :production  => "https://www.shogi-extend.com",
+    }.fetch(options[:env].to_sym)
+  end
+
+  start
+end

@@ -2,7 +2,8 @@
 .service-infos.has-background-white-bis
   b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container" spaced)
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'index'}") SHOGI-EXTEND
+      b-navbar-item(tag="nuxt-link" :to="{name: 'index'}")
+        h1.has-text-weight-bold SHOGI-EXTEND
     template(slot="end")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}" v-if="development_p") Launcher
       NavbarItemCurrentUser
@@ -40,21 +41,21 @@
             li
               nuxt-link(:to="{path: '/about/credit'}") クレジット
             li
-              a(href="https://twitter.com/sgkinakomochi" target="_blank") 問い合わせ
+              a(href="https://twitter.com/sgkinakomochi" :target="target_default") 問い合わせ
 
         .column.is-half.has-text-centered
           .title.is-6.mb-0.has-text-weight-bold GitHub
           ul.mt-1
             li
-              a(href="https://github.com/akicho8/shogi_web") shogi_web
+              a(href="https://github.com/akicho8/shogi_web" :target="target_default") shogi_web
             li
-              a(href="https://akicho8.github.io/shogi-player/") shogi-player
+              a(href="https://akicho8.github.io/shogi-player/" :target="target_default") shogi-player
             li
-              a(href="https://github.com/akicho8/bioshogi") bioshogi
+              a(href="https://github.com/akicho8/bioshogi" :target="target_default") bioshogi
             li
-              a(href="https://github.com/akicho8/SKK-JISYO.shogi") 将棋用語辞書
+              a(href="https://github.com/akicho8/SKK-JISYO.shogi" :target="target_default") 将棋用語辞書
             li
-              a(href="https://github.com/akicho8/shogi-mode") shogi-mode.el
+              a(href="https://github.com/akicho8/shogi-mode" :target="target_default") shogi-mode.el
 </template>
 
 <script>
@@ -78,6 +79,7 @@ export default {
     }
   },
   fetch() {
+    this.call_log("index")
     return this.$axios.$get("/api/service_infos.json").then(config => {
       this.config = config
     })

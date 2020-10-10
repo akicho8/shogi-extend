@@ -12,7 +12,6 @@ require "webdrivers"
 require "capybara/dsl"
 require "pathname"
 
-BASIC_AUTH = eval(Pathname(".basic_auth.rb").read)
 VALIDATE_URLS = eval(Pathname("VALIDATE_URLS").read)
 
 Capybara.current_driver = :selenium_chrome
@@ -20,14 +19,13 @@ Capybara.current_driver = :selenium_chrome
 class Web < Thor
   package_name "web"
   default_command :validate
-  class_option :env, type: :string, desc: "対象の環境", default: "staging", aliases: "-e"
-  class_option :open, type: :boolean, desc: "open で開く", default: false, aliases: "-o"
-  class_option :break, type: :boolean, desc: "1つ目でbreakする", default: false, aliases: "-b"
+  class_option :env,   type: :string,  desc: "対象の環境",       default: "staging", aliases: "-e"
+  class_option :open,  type: :boolean, desc: "open で開く",      default: false,     aliases: "-o"
+  class_option :break, type: :boolean, desc: "1つ目でbreakする", default: false,     aliases: "-b"
 
   desc "validate", "表示確認"
   def validate
     if options[:env] == "staging"
-      # host = "https://#{BASIC_AUTH[:user]}:#{BASIC_AUTH[:password]}@shogi-flow.xyz"
       host = "https://shogi-flow.xyz"
     else
       host = "https://www.shogi-extend.com"

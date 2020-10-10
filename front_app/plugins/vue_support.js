@@ -12,6 +12,12 @@ import { isMobile } from "../components/models/isMobile.js"
 import Autolinker from 'autolinker'
 
 export default {
+  data() {
+    return {
+      call_logs: [],
+    }
+  },
+
   methods: {
     // ../../../node_modules/autolinker/README.md
     auto_link(str, options = {}) {
@@ -65,6 +71,18 @@ export default {
       if (this.development_p) {
         console.log(...args)
       }
+    },
+
+    call_log(key) {
+      let mark = ""
+      if (process.server) {
+        mark = "server"
+      } else {
+        mark = "client"
+      }
+      const log = `●[fetch][${key}] ${mark}`
+      this.call_logs.push(log)
+      this.clog(log)
     },
 
     // #以降を除いた現在のパス

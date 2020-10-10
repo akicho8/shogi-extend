@@ -129,7 +129,7 @@ module Swars
     end
 
     def import_process
-      @notice_collector = []
+      @notice_collector = NoticeCollector.new
 
       if import_enable?
         remember_swars_user_keys_update

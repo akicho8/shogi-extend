@@ -83,7 +83,8 @@
   b-navbar(type="is-primary" wrapper-class="container is-fluid" :mobile-burger="false" spaced)
     template(slot="brand")
       HomeNavbarItem
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{query: {}}" @click.native="query= ''") 将棋ウォーズ棋譜検索
+      b-navbar-item(tag="nuxt-link" :to="{query: {}}" @click.native="query= ''")
+        h1.has-text-weight-bold 将棋ウォーズ棋譜検索
     template(slot="end")
       b-navbar-item(@click="sidebar_toggle")
         b-icon(icon="menu")
@@ -255,10 +256,10 @@ export default {
     return {
       title: this.page_title,
       meta: [
-        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ棋譜検索"                            },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                             },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles.png" },
-        { hid: "og:description", property: "og:description", content: "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます"                                                },
+        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ棋譜検索"                                                                                          },
+        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                                                                           },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles.png"                                                              },
+        { hid: "og:description", property: "og:description", content: "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます" },
       ],
     }
   },
@@ -286,6 +287,7 @@ export default {
     // http://0.0.0.0:4000/swars/users/devuser1
 
     // return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
+    this.call_log("swars/battles")
     this.clog(`fetch: ${JSON.stringify(this.$route.query)}`)
     return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
       this.config = config
