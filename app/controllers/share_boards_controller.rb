@@ -97,8 +97,8 @@ class ShareBoardsController < ApplicationController
     def twitter_card_options
       {
         :title       => current_page_title,
-        :image       => current_image_path,
-        :description => params[:description].presence || current_record.simple_versus_desc,
+        :image       => current_og_image_path,
+        :description => params[:description].presence || current_record.simple_versus_desc || "",
       }
     end
 
@@ -110,14 +110,28 @@ class ShareBoardsController < ApplicationController
       [current_title, turn_full_message].compact.join(" ")
     end
 
-    def current_image_path
-      if true
-        # params[:image_flip] が渡せていないけどこれでいい
-        url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png", turn: initial_turn, image_view_point: image_view_point])
-      else
-        # params[:image_flip] をそのまま渡すために params にマージしないといけない
-        # url_for([:share_board, params.to_unsafe_h.merge(body: current_record.sfen_body, format: "png")])
-      end
+    # これは JS 側で作る手もある。そうすればリアルタイムに更新できる。が、og:image なのでリアルタイムな必要がない。迷う。
+    # API 単体として使う場合は API の方で作っておいた方が都合がよい
+    # ので、こっちで作るのであってる
+    # http://0.0.0.0:3000/api/share_board.json?turn=1&title=%E3%81%82%E3%81%84%E3%81%88%E3%81%86%E3%81%8A
+    def current_og_image_path
+      # if true
+      #   # params[:image_flip] が渡せていないけどこれでいい
+      #   # url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png", turn: initial_turn, image_view_point: image_view_point])
+      # else
+      #   # params[:image_flip] をそのまま渡すために params にマージしないといけない
+      #   # url_for([:share_board, params.to_unsafe_h.merge(body: current_record.sfen_body, format: "png")])
+      # end
+
+      # ../../front_app/components/ShareBoard/ShareBoardApp.vue の permalink_for と一致させること
+      args = params.to_unsafe_h.except(:action, :controller, :format).merge({
+          :turn             => initial_turn,
+          :title            => current_title,
+          :body             => current_record.sfen_body,
+          :image_view_point => image_view_point,
+        })
+
+      url_for(:root) + "share-board.png?#{args.to_query}"
     end
 
     private
@@ -128,7 +142,7 @@ class ShareBoardsController < ApplicationController
     end
 
     def turn_full_message
-      if initial_turn.nonzero?
+      if initial_turn.nonzero? || true
         "#{initial_turn}手目"
       end
     end

@@ -1,3 +1,5 @@
+import _ from "lodash"
+
 export const app_room = {
   data() {
     return {
@@ -5,7 +7,7 @@ export const app_room = {
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
     }
   },
-  created() {
+  mounted() {
     this.room_code_set(this.config.record.room_code, {initial: true})
   },
   methods: {

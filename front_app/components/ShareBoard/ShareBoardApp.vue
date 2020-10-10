@@ -1,123 +1,128 @@
 <template lang="pug">
-.ShareBoardApp
-  DebugBox
-    p 手数: {{turn_offset}} / {{turn_offset_max}}
-    p SFEN: {{current_sfen}}
-    p タイトル: {{current_title}}
-    p 視点: {{image_view_point}}
-    p モード: {{run_mode}}
-    p 反転: {{board_flip}}
-    p URL: {{current_url}}
-    p サイドバー {{sidebar_p}}
+client-only
+  .ShareBoardApp
+    DebugBox
+      p 手数: {{turn_offset}} / {{turn_offset_max}}
+      p SFEN: {{current_sfen}}
+      p タイトル: {{current_title}}
+      p 視点: {{image_view_point}}
+      p モード: {{run_mode}}
+      p 反転: {{board_flip}}
+      p URL: {{current_url}}
+      p サイドバー {{sidebar_p}}
 
-  b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
-    .mx-5.my-5
-      b-menu-list(label="Action")
-        b-menu-item(label="盤面リセット" @click="reset_handle")
-        b-menu-item(label="視点設定" @click="image_view_point_setting_handle")
-        b-menu-item(label="タイトル変更" @click="title_edit")
-      b-menu-list(label="Edit")
-        b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.run_mode === 'edit_mode'}")
-        b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
-      b-menu-list(label="検討")
-        b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default")
-        b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default")
-      b-menu-list(label="Export")
-        b-menu-item(label="棋譜コピー" @click="kifu_copy_handle('kif')")
-        b-menu-item(label="SFENコピー" @click="kifu_copy_handle('sfen')")
-        b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
-        b-menu-item(label="棋譜ダウンロード" :href="kif_download_url" @click="sound_play('click')")
-      b-menu-list(label="その他")
-        b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
+    b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
+      .mx-5.my-5
+        b-menu-list(label="Action")
+          b-menu-item(label="盤面リセット" @click="reset_handle")
+          b-menu-item(label="視点設定" @click="image_view_point_setting_handle")
+          b-menu-item(label="タイトル変更" @click="title_edit")
+        b-menu-list(label="Edit")
+          b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.run_mode === 'edit_mode'}")
+          b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
+        b-menu-list(label="検討")
+          b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default")
+          b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default")
+        b-menu-list(label="Export")
+          b-menu-item(label="棋譜コピー" @click="kifu_copy_handle('kif')")
+          b-menu-item(label="SFENコピー" @click="kifu_copy_handle('sfen')")
+          b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
+          b-menu-item(label="棋譜ダウンロード" :href="kif_download_url" @click="sound_play('click')")
+        b-menu-list(label="その他")
+          b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
 
-  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
-    template(slot="brand")
-      HomeNavbarItem
-      b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
-    template(slot="end")
-      b-navbar-item(@click="sidebar_p = !sidebar_p")
-        b-icon(icon="menu")
-        template(v-if="development_p && $nuxt.isOffline") (MENU)
+    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+      template(slot="brand")
+        HomeNavbarItem
+        b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
+      template(slot="end")
+        b-navbar-item(@click="sidebar_p = !sidebar_p")
+          b-icon(icon="menu")
+          template(v-if="development_p && $nuxt.isOffline") (MENU)
 
-      //- template(v-if="run_mode === 'play_mode'")
-      //-   b-navbar-item(@click="reset_handle") 盤面リセット
-      //-   b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
-      //-   b-navbar-item(@click="kifu_copy_handle('kif')") 棋譜コピー
-      //-   b-navbar-item(@click="mode_toggle_handle") 局面編集
-      //-   b-navbar-item(@click="image_view_point_setting_handle") 視点設定
-      //-   b-navbar-dropdown(hoverable arrowless right label="その他")
-      //-     b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
-      //-     b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
-      //-     b-navbar-item(:href="snapshot_image_url" @click="sound_play('click')") 局面画像の取得
-      //-     b-navbar-item(:href="kif_download_url" @click="sound_play('click')") 棋譜ダウンロード
-      //-     b-navbar-item(@click="title_edit") タイトル編集
-      //-     b-navbar-item(@click="kifu_copy_handle('sfen')") SFENコピー
-      //-     template(v-if="run_mode === 'play_mode'")
-      //-       b-navbar-item(@click="room_code_edit")
-      //-         | リアルタイム共有
-      //-         .has-text-danger.ml-1(v-if="room_code") {{room_code}}
+        //- template(v-if="run_mode === 'play_mode'")
+        //-   b-navbar-item(@click="reset_handle") 盤面リセット
+        //-   b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
+        //-   b-navbar-item(@click="kifu_copy_handle('kif')") 棋譜コピー
+        //-   b-navbar-item(@click="mode_toggle_handle") 局面編集
+        //-   b-navbar-item(@click="image_view_point_setting_handle") 視点設定
+        //-   b-navbar-dropdown(hoverable arrowless right label="その他")
+        //-     b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
+        //-     b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
+        //-     b-navbar-item(:href="snapshot_image_url" @click="sound_play('click')") 局面画像の取得
+        //-     b-navbar-item(:href="kif_download_url" @click="sound_play('click')") 棋譜ダウンロード
+        //-     b-navbar-item(@click="title_edit") タイトル編集
+        //-     b-navbar-item(@click="kifu_copy_handle('sfen')") SFENコピー
+        //-     template(v-if="run_mode === 'play_mode'")
+        //-       b-navbar-item(@click="room_code_edit")
+        //-         | リアルタイム共有
+        //-         .has-text-danger.ml-1(v-if="room_code") {{room_code}}
 
-  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
-    template(slot="start")
-      b-navbar-item(@click="reset_handle") 盤面リセット
+    b-navbar(type="is-dark" fixed-bottom v-if="development_p")
+      template(slot="start")
+        b-navbar-item(@click="reset_handle") 盤面リセット
 
-  .section
-    .container
-      .columns
-        .column.is_shogi_player
-          .turn_container.has-text-centered(v-if="run_mode === 'play_mode'")
-            span.turn_offset.has-text-weight-bold {{turn_offset}}
-            template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
-              span.mx-1.has-text-grey /
-              span.has-text-grey {{turn_offset_max}}
+    .section
+      .container
+        .columns
+          .column.is_shogi_player
+            .turn_container.has-text-centered(v-if="run_mode === 'play_mode'")
+              span.turn_offset.has-text-weight-bold {{turn_offset}}
+              template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
+                span.mx-1.has-text-grey /
+                span.has-text-grey {{turn_offset_max}}
 
-          .sp_container
-            MyShogiPlayer(
-              :run_mode="run_mode"
-              :debug_mode="debug_mode"
-              :start_turn="turn_offset"
-              :kifu_body="current_sfen"
-              :summary_show="false"
-              :slider_show="true"
-              :setting_button_show="development_p"
-              :size="'large'"
-              :sound_effect="true"
-              :controller_show="true"
-              :human_side_key="'both'"
-              :theme="'real'"
-              :flip.sync="board_flip"
-              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
-              @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
-              @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
-              @update:turn_offset="v => turn_offset = v"
-              @update:turn_offset_max="v => turn_offset_max = v"
-            )
+            .sp_container
+              MyShogiPlayer(
+                :run_mode="run_mode"
+                :debug_mode="debug_mode"
+                :start_turn="turn_offset"
+                :kifu_body="current_sfen"
+                :summary_show="false"
+                :slider_show="true"
+                :setting_button_show="development_p"
+                :size="'large'"
+                :sound_effect="true"
+                :controller_show="true"
+                :human_side_key="'both'"
+                :theme="'real'"
+                :flip.sync="board_flip"
+                @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+                @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
+                @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
+                @update:turn_offset="v => turn_offset = v"
+                @update:turn_offset_max="v => turn_offset_max = v"
+              )
 
-          .tweet_button_container
-            .buttons.is-centered
-              b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
-              b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
+            .tweet_button_container
+              .buttons.is-centered
+                b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
+                b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
 
-          .room_code.is_clickable(@click="room_code_edit" v-if="false")
-            | {{room_code}}
+            .room_code.is_clickable(@click="room_code_edit" v-if="false")
+              | {{room_code}}
 
-      .columns(v-if="development_p")
-        .column
-          .box
+        .columns(v-if="development_p")
+          .column
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
-              b-button(tag="a" :href="twitter_card_url") Twitter画像
-            .content
-              p
-                b Twitter画像
-              p
-                img(:src="twitter_card_url" width="256")
-              p {{twitter_card_url}}
-            pre {{JSON.stringify(record, null, 4)}}
+            .block
+              b JS側で作った動的なTwitter画像URL(指定設定プレビューで使用する。Rails側と一致していること)
+              p(:key="twitter_card_url") {{twitter_card_url}}
+              img.is-block(:src="twitter_card_url" width="256")
+            .block
+              b Rails側で作った静的なTwitter画像URL(og:imageにはこっちを指定している)
+              p {{config.twitter_card_options.image}}
+              img.is-block(:src="config.twitter_card_options.image" width="256")
+            .block
+              b this.record
+              pre {{JSON.stringify(record, null, 4)}}
 </template>
 
 <script>
 const RUN_MODE_DEFAULT = "play_mode"
+
+import _ from "lodash"
 
 import { store }   from "./store.js"
 import { support } from "./support.js"
@@ -126,7 +131,7 @@ import { app_room      } from "./app_room.js"
 import { app_room_init } from "./app_room_init.js"
 
 import ImageViewPointSettingModal from "./ImageViewPointSettingModal.vue"
-import AnySourceReadModal            from "@/components/AnySourceReadModal.vue"
+import AnySourceReadModal         from "@/components/AnySourceReadModal.vue"
 
 export default {
   store,
@@ -138,6 +143,18 @@ export default {
   ],
   props: {
     config: { type: Object, required: true },
+  },
+  head() {
+    return {
+      title: this.page_title,
+      meta: [
+        // { hid: "og:title",       property: "og:title",       content: this.page_title,             },
+
+// { hid: "og:image",       property: "og:image",       content: this.twitter_card_url,             },
+        // { hid: "og:description", property: "og:description", content: this.config.twitter_card_options.description || "", },
+        // { hid: "description",    property: "description",    content: "リレー将棋・詰将棋の作成や公開・課題局面の作成や公開・オンライン対局向けリアルタイム盤共有などが可能です", },
+      ],
+    }
   },
   data() {
     return {
@@ -161,7 +178,7 @@ export default {
   beforeCreate() {
     this.$store.state.app = this
   },
-  created() {
+  mounted() {
     // どれかが変更されたらURLを更新
     this.$watch(() => [
       this.run_mode,
@@ -227,7 +244,7 @@ export default {
         if (this.image_view_point === "self") {
           this.toast_ok(`詰将棋をツイッターで共有する場合は<b>視点設定</b>を<b>常に☗</b>に変更することおすすめします`, {duration: 1000 * 10})
         }
-        
+
         this.run_mode = "edit_mode"
         if (true) {
           this.board_flip = false // ▲視点にしておく(お好み)
@@ -247,9 +264,9 @@ export default {
 
     // private
 
-    url_replace() {
-      this.$router.replace({query: this.current_url_params})
-    },
+    // url_replace() {
+    //   this.$router.replace({query: this.current_url_params})
+    // },
 
     // タイトル編集
     title_edit() {
@@ -349,12 +366,13 @@ export default {
       })
     },
 
+    // ../../../app/controllers/share_boards_controller.rb の current_og_image_path と一致させること
     permalink_for(params = {}) {
       let url = null
       if (params.format) {
         url = new URL(this.$config.MY_SITE_URL + `/share-board.${params.format}`)
       } else {
-        url = new URL(location)
+        url = new URL(this.$config.MY_SITE_URL + `/share-board`)
       }
 
       // ImageViewPointSettingModal から新しい image_view_point が渡されるので params で上書きすること
@@ -365,7 +383,7 @@ export default {
 
       _.each(params, (v, k) => {
         if (k !== "format") {
-          if (v) {
+          if (v || true) {              // if (v) にしてしまうと turn = 0 のとき turn=0 が URL に含まれない
             url.searchParams.set(k, v)
           }
         }
@@ -385,6 +403,10 @@ export default {
   },
 
   computed: {
+    page_title() {
+      return `${this.current_title} ${this.turn_offset}手目`
+    },
+
     current_url_params() {
       const params = {
         body:             this.current_body, // 編集モードでもURLを更新するため

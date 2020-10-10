@@ -1,7 +1,6 @@
 <template lang="pug">
-client-only
-  .three-stage-league-generation
-    ThreeStageLeagueApp(:config="config")
+.three-stage-league-generation
+  ThreeStageLeagueApp(:config="config")
 </template>
 
 <script>
