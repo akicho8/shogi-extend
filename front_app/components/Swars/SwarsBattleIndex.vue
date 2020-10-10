@@ -300,24 +300,7 @@ export default {
 
       ZipKifuInfo.memory_record_reset(this.config.zip_kifu_info)
 
-      if (this.config.import_logs) {
-        this.config.import_logs.forEach(e => {
-          if (e.method === "dialog") {
-            this.talk(e.title)
-            this.$buefy.dialog.alert({
-              title: e.title,
-              type: `is-${e.type}`,
-              hasIcon: true,
-              message: e.message,
-              onConfirm: () => { this.sound_play('click') },
-              onCancel: () => { this.sound_play('click') },
-            })
-          }
-          if (e.method === "toast") {
-            this.general_ok_notice(e.message, {type: `is-${e.type}`})
-          }
-        })
-      }
+      this.notice_collector_run(this.config)
     })
   },
 
@@ -328,7 +311,7 @@ export default {
     interactive_search(params) { // private
       this.sound_play("click")
       if (this.$fetchState.pending) {
-        this.general_ng_notice("連打すんな")
+        this.toast_ng("連打すんな")
         return
       }
       const new_params = {...this.$route.query, ...params} // フィルターなどでは query を上書きする。またはなにもしない。
@@ -363,7 +346,7 @@ export default {
     // なぜならフィルターは query に埋め込まないといけないから
     filter_research(query) {
       if (!this.config.current_swars_user_key) {
-        this.general_ng_notice("先に誰かで検索してください")
+        this.toast_ng("先に誰かで検索してください")
         return
       }
       this.query = _.trim(`${this.config.current_swars_user_key} ${query}`)

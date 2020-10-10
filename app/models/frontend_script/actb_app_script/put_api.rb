@@ -176,6 +176,8 @@ module FrontendScript
 
       # curl -d _method=put -d user_name=a -d remote_action=user_profile_update -d _user_id=1 http://localhost:3000/script/actb-app
       def user_profile_update
+        raise "使用禁止"
+
         user = current_user
 
         if v = params[:croped_image]
@@ -231,6 +233,8 @@ module FrontendScript
 
       # from app/javascript/actb_app/the_profile_edit_form.vue profile_update_handle
       def data_base64_body_to_binary(data_base64_body)
+        raise "must not happen"
+        
         md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<base64_bin>.*)/)
         md or raise ArgumentError, "Data URL scheme 形式になっていません : #{data_base64_body.inspect.truncate(80)}"
         Base64.decode64(md["base64_bin"])

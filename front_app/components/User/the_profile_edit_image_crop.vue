@@ -12,7 +12,7 @@
     template(slot="end")
       //- b-navbar-item(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
       //-   .ml-2.has-text-weight-bold {{config.name}}さんのプロフィール
-      b-navbar-item.has-text-weight-bold(@click="clop_handle") 保存
+      b-navbar-item.has-text-weight-bold(@click="clop_handle") 決定
 
   .columns.is-vcentered
     .column

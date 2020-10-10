@@ -25,7 +25,7 @@ module UserChoreMod
   end
 
   # ユーザー詳細
-  def as_json_public_profile
+  def as_json_simple_profile
     as_json({
         only: [
           :id,

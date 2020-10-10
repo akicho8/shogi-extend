@@ -225,7 +225,7 @@ export default {
 
       if (this.run_mode === "play_mode") {
         if (this.image_view_point === "self") {
-          this.general_ok_notice(`詰将棋をツイッターで共有する場合は<b>視点設定</b>を<b>常に☗</b>に変更することおすすめします`, {duration: 1000 * 10})
+          this.toast_ok(`詰将棋をツイッターで共有する場合は<b>視点設定</b>を<b>常に☗</b>に変更することおすすめします`, {duration: 1000 * 10})
         }
         
         this.run_mode = "edit_mode"
@@ -338,7 +338,7 @@ export default {
                 this.bs_error_message_dialog(e.bs_error)
               }
               if (e.body) {
-                this.general_ok_notice("正常に読み込みました")
+                this.toast_ok("正常に読み込みました")
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max
                 this.board_flip = false
@@ -380,7 +380,7 @@ export default {
       this.sound_play("click")
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
       this.turn_offset  = this.config.record.initial_turn     // 現在の手数
-      this.general_ok_notice("盤面を最初の状態に戻しました")
+      this.toast_ok("盤面を最初の状態に戻しました")
     },
   },
 

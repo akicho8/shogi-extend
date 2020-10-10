@@ -137,7 +137,7 @@ export default {
     body_encode(v) {
       this.sound_play("click")
       if (v === "sjis") {
-        this.general_ok_notice("ダウンロード時のファイル文字コードを Shift_JIS に変更します (なんのこっちゃわからん場合は UTF-8 に戻してください)", {duration: 10 * 1000})
+        this.toast_ok("ダウンロード時のファイル文字コードを Shift_JIS に変更します (なんのこっちゃわからん場合は UTF-8 に戻してください)", {duration: 10 * 1000})
       }
     }
   },
@@ -160,7 +160,7 @@ export default {
       this.sound_play("click")
       this.record_fetch(() => {
         if (kifu_type === "png") {
-          this.general_ng_notice("画像はコピーできません")
+          this.toast_ng("画像はコピーできません")
           return
         }
         this.simple_clipboard_copy(this.all_kifs[kifu_type])
@@ -174,7 +174,7 @@ export default {
 
     validate_handle() {
       this.sound_play("click")
-      this.record_fetch(() => this.general_ok_notice(`${this.record.turn_max}手の棋譜として読み取りました`))
+      this.record_fetch(() => this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`))
     },
 
     input_test_handle(input_text) {

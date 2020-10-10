@@ -66,17 +66,12 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.unwatch_func) {
-      this.unwatch_func()
-      this.unwatch_func = null
-    }
+    this.watch_clear()
   },
 
   methods: {
     var_reset() {
-      if (this.unwatch_func) {
-        this.unwatch_func()
-      }
+      this.watch_clear()
 
       this.current_component = "the_profile_edit_form"
       this.changed_p         = false
@@ -93,6 +88,13 @@ export default {
         this.new_description,
         this.new_twitter_key,
       ], () => this.changed_p = true, {deep: false})
+    },
+
+    watch_clear() {
+      if (this.unwatch_func) {
+        this.unwatch_func()
+        this.unwatch_func = null
+      }
     },
   },
 }

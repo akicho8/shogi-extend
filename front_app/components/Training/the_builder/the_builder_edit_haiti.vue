@@ -77,7 +77,7 @@ export default {
               modal_instance.close()
 
               if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN
-                this.general_ok_notice("反映しました")
+                this.toast_ok("反映しました")
                 this.kyokumen_set(e.body)
               } else {
                 // moves があるので局面を確定してもらう
@@ -102,7 +102,7 @@ export default {
 
     // 棋譜の読み込みタップ時の処理
     kyokumen_kimeru_handle(props) {
-      this.general_ok_notice("局面を確定させてください")
+      this.toast_ok("局面を確定させてください")
       const modal_instance = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
@@ -112,7 +112,7 @@ export default {
         events: {
           "update:kyokumen_kimeta_sfen": kyokumen_kimeta_sfen => {
             this.sound_play("click")
-            this.general_ok_notice("反映しました")
+            this.toast_ok("反映しました")
             this.kyokumen_set(kyokumen_kimeta_sfen)
             modal_instance.close()
           },

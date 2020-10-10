@@ -11,11 +11,14 @@
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'settings-profile'}") 変更
     .section
       .container
-        b-image(:src="config.avatar_path")
-        .mt-4(v-if="config.twitter_key")
-          .has-text-weight-bold Twitter
-          a.is-block(:href="twitter_url" :target="target_default") @{{config.twitter_key}}
-        .mt-4.box.description.has-background-white-ter.is-shadowless(v-if="config.description" v-html="auto_link(config.description)")
+        .columns.is-centered
+          .column.is-7-desktop
+            .has-text-centered
+              b-image.is-inline-block(:src="config.avatar_path" rounded)
+            .mt-4(v-if="config.twitter_key")
+              .has-text-weight-bold Twitter
+              a.is-block(:href="twitter_url" :target="target_default") @{{config.twitter_key}}
+            .mt-4.box.description.has-background-white-ter.is-shadowless(v-if="config.description" v-html="auto_link(config.description)")
         pre(v-if="development_p") {{config}}
 </template>
 
@@ -54,5 +57,10 @@ export default {
 <style lang="sass">
 .UserShow
   .section
-    padding-top: 1.5rem
+    padding-top: 2.8rem
+
+  .image
+    img
+      width: 256px
+      height: 256px
 </style>

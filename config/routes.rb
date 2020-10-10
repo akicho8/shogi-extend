@@ -78,6 +78,10 @@ Rails.application.routes.draw do
       delete :current_user_clear_action   # ログアウト
     end
 
+    resource :settings, only: [] do
+      put :profile_update
+    end
+
     resource :talk, only: [:show, :create]
     resources :service_infos, only: :index
     resources :xy_records, path: "xy", only: [:index, :create, :update]

@@ -1,4 +1,4 @@
-import consumer from "../../../app/javascript/channels/consumer.js" // FIXME: なんで Rails 側を見ないといけない？
+import consumer from "../../app/javascript/channels/consumer.js" // FIXME: なんで Rails 側を見ないといけない？
 
 export default {
   data() {

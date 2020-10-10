@@ -112,7 +112,7 @@ export default {
           return false
         }
 
-        this.general_ok_notice(success_message)
+        this.toast_ok(success_message)
         return true
       }
 

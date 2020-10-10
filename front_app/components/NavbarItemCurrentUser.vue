@@ -20,7 +20,7 @@ export default {
     ]),
     async logout_handle() {
       await this.current_user_clear()
-      this.general_ok_notice("ログアウトしました")
+      this.toast_ok("ログアウトしました")
     },
   },
 }

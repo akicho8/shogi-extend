@@ -11,7 +11,7 @@ module Swars
     end
 
     def index
-      @import_logs = []
+      @notice_collector = NoticeCollector.new
 
       [
         :redirect_if_exist_modal_id,
@@ -70,7 +70,7 @@ module Swars
 
     def js_index_options
       {
-        :import_logs            => @import_logs,
+        :notice_collector       => @notice_collector,
         :import_enable_p        => import_enable?,
         :current_swars_user_key => current_swars_user_key,
       }.merge(super).merge({
@@ -129,7 +129,7 @@ module Swars
     end
 
     def import_process
-      @import_logs = []
+      @notice_collector = []
 
       if import_enable?
         remember_swars_user_keys_update
@@ -160,7 +160,7 @@ module Swars
         success = Battle.throttle_user_import(import_params)
         if !success
           # ここを有効にするには rails dev:cache してキャッシュを有効にすること
-          import_logs_add(:warning, "さっき取得したばかりです", development_only: true)
+          @notice_collector.add(:warning, "さっき取得したばかりです", development_only: true)
         end
 
         if success
@@ -170,13 +170,13 @@ module Swars
           if current_swars_user
             hit_count = current_swars_user.battles.count - before_count
             if hit_count.zero?
-              import_logs_add(:dark, "新しい棋譜は見つかりませんでした", development_only: true)
+              @notice_collector.add(:dark, "新しい棋譜は見つかりませんでした", development_only: true)
             else
-              import_logs_add(:info, "#{hit_count}件、新しく見つかりました")
+              @notice_collector.add(:info, "#{hit_count}件、新しく見つかりました")
             end
             current_swars_user.search_logs.create!
           else
-            import_logs_add(:warning, "#{current_swars_user_key}さんは存在しません。アルファベットの大文字小文字を見直してください")
+            @notice_collector.add(:warning, "#{current_swars_user_key}さんは存在しません。アルファベットの大文字小文字を見直してください")
           end
 
           if hit_count.nonzero?
@@ -202,22 +202,10 @@ module Swars
                 "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
               ].collect { |e| "#{e}\n" }.join
             }.join("\n").gsub(/\R/, "<br>")
-            import_logs_add(:danger, message, method: "dialog", title: "棋譜の不整合")
+            @notice_collector.add(:danger, message, method: "dialog", title: "棋譜の不整合")
           end
         end
       end
-    end
-
-    def import_logs_add(type, message, options = {})
-      if options[:development_only]
-        return
-      end
-
-      if !Rails.env.development? && options[:development_only]
-        return
-      end
-
-      @import_logs << { type: type, message: message, title: nil, method: "toast", **options }
     end
 
     let :import_page_max do

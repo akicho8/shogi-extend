@@ -19,9 +19,9 @@ export const app_room = {
 
       if (!options.initial) {
         if (this.room_code) {
-          this.general_ok_notice(`合言葉を「${this.room_code}」に設定しました`)
+          this.toast_ok(`合言葉を「${this.room_code}」に設定しました`)
         } else {
-          this.general_ok_notice("合言葉を削除しました")
+          this.toast_ok("合言葉を削除しました")
         }
       }
 
@@ -41,7 +41,7 @@ export const app_room = {
         },
         disconnected: () => {
           if (this.development_p) {
-            this.general_ok_notice("部屋を解放しました")
+            this.toast_ok("部屋を解放しました")
           }
         },
       })
@@ -86,7 +86,7 @@ export const app_room = {
         // 自分から自分へ
       } else {
         this.attributes_set(params)
-        this.general_ok_notice("タイトルを変更しました")
+        this.toast_ok("タイトルを変更しました")
       }
     },
 
