@@ -1,128 +1,127 @@
 <template lang="pug">
 .SwarsBattleShow(v-if="!$fetchState.pending")
-  //- .delete.is-large(@click="delete_click_handle" v-if="development_p")
+  client-only
+    //- .delete.is-large(@click="delete_click_handle" v-if="development_p")
+    b-sidebar.is-unselectable(type="is-light" fullheight right v-model="sidebar_p")
+      .mx-4.my-4
+        //- .MySidebarMenuIconWithTitle
+        //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_p = false")
+        //-   .ml-3 棋譜詳細
+        b-menu
+          b-menu-list(label="Action")
+            b-menu-item(label="共有将棋盤で開く" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
 
-  b-sidebar.is-unselectable(type="is-light" fullheight right v-model="sidebar_p")
-    .mx-4.my-4
-      //- .MySidebarMenuIconWithTitle
-      //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_p = false")
-      //-   .ml-3 棋譜詳細
-      b-menu
-        b-menu-list(label="Action")
-          b-menu-item(label="共有将棋盤で開く" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
+          b-menu-list(label="export")
+            b-menu-item(label="棋譜用紙"         tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
+            b-menu-item
+              template(slot="label" slot-scope="props")
+                span.ml-1 表示
+                b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+              b-menu-item(label="KIF"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
+              b-menu-item(label="KI2"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
+              b-menu-item(label="CSA"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
+              b-menu-item(label="SFEN" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
+              b-menu-item(label="BOD"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${new_turn}`")
+              b-menu-item(label="PNG"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&flip=${new_flip}&width=`")
+            b-menu-item
+              template(slot="label" slot-scope="props")
+                span.ml-1 ダウンロード
+                b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+              b-menu-item(label="KIF"  :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
+              b-menu-item(label="KI2"  :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
+              b-menu-item(label="CSA"  :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
+              b-menu-item(label="SFEN" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
+              b-menu-item(label="BOD"  :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
+              b-menu-item(label="PNG"  :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&flip=${new_flip}&width=`")
 
-        b-menu-list(label="export")
-          b-menu-item(label="棋譜用紙"         tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
-          b-menu-item
-            template(slot="label" slot-scope="props")
-              span.ml-1 表示
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            b-menu-item(label="KIF"  :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
-            b-menu-item(label="KI2"  :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
-            b-menu-item(label="CSA"  :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
-            b-menu-item(label="SFEN" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
-            b-menu-item(label="BOD"  :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${turn_offset}`")
-            b-menu-item(label="PNG"  :href="`${$config.MY_SITE_URL}${record.show_path}.png?width=&flip=${new_flip}&turn=${turn_offset}`")
-          b-menu-item
-            template(slot="label" slot-scope="props")
-              span.ml-1 ダウンロード
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            b-menu-item(label="KIF"  :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
-            b-menu-item(label="KI2"  :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
-            b-menu-item(label="CSA"  :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
-            b-menu-item(label="SFEN" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
-            b-menu-item(label="BOD"  :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${turn_offset}`")
-            b-menu-item(label="PNG"  :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&width=&flip=${new_flip}&turn=${turn_offset}`")
+          //- b-menu-list(label="Menu")
+          //-   b-menu-item(label="Info")
+          //-   b-menu-item(label="Info")
+          //-   b-menu-item(label="Info")
 
-        //- b-menu-list(label="Menu")
-        //-   b-menu-item(label="Info")
-        //-   b-menu-item(label="Info")
-        //-   b-menu-item(label="Info")
+    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+      template(slot="brand")
+        b-navbar-item(@click="back_handle")
+          b-icon(icon="arrow-left")
 
-  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
-    template(slot="brand")
-      b-navbar-item(@click="back_handle")
-        b-icon(icon="arrow-left")
+        //- b-navbar-item(tag="nuxt-link" :to="{name: 'swars-battles'}" @click.native="sound_play('click')")
+        //-   b-icon(icon="arrow-left")
+        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}") {{record.title}}
+      template(slot="end")
+        b-navbar-item(@click="sidebar_toggle")
+          b-icon(icon="menu")
+      //- template(slot="end")
+      //-   //- b-navbar-item
+      //-   //-   PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+      //-   //- b-navbar-item
+      //-   //-   KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
+      //-   //- b-navbar-item
+      //-   //-   KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
+      //-   //- b-navbar-item
+      //-   //-   TweetButton(tag="a" :href="tweet_url" :turn="new_turn" v-if="false")
+      //-   b-navbar-item(tag="a" href="/") TOP
 
-      //- b-navbar-item(tag="nuxt-link" :to="{name: 'swars-battles'}" @click.native="sound_play('click')")
-      //-   b-icon(icon="arrow-left")
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}}") {{record.title}}
-    template(slot="end")
-      b-navbar-item(@click="sidebar_toggle")
-        b-icon(icon="menu")
-    //- template(slot="end")
-    //-   //- b-navbar-item
-    //-   //-   PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-    //-   //- b-navbar-item
-    //-   //-   KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
-    //-   //- b-navbar-item
-    //-   //-   KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
-    //-   //- b-navbar-item
-    //-   //-   TweetButton(tag="a" :href="tweet_url" :turn="turn_offset" v-if="false")
-    //-   b-navbar-item(tag="a" href="/") TOP
+    .section
+      .container
+        .columns
+          .column
+            MyShogiPlayer.mt-5(
+              :run_mode.sync="run_mode"
+              :debug_mode="false"
+              :start_turn="start_turn"
+              :kifu_body="record.sfen_body"
+              :key_event_capture="true"
+              :slider_show="true"
+              :sfen_show="false"
+              :controller_show="true"
+              :theme="'real'"
+              :size="'medium'"
+              :setting_button_show="false"
+              :flip.sync="new_flip"
+              :player_info="player_info"
+              @update:start_turn="real_turn_set"
+              ref="main_sp"
+            )
 
-  .section
-    .container
-      .columns
-        .column
-          MyShogiPlayer.mt-5(
-            :run_mode.sync="run_mode"
-            :debug_mode="false"
-            :start_turn="start_turn"
-            :kifu_body="record.sfen_body"
-            :key_event_capture="true"
-            :slider_show="true"
-            :sfen_show="false"
-            :controller_show="true"
-            :theme="'real'"
-            :size="'medium'"
-            :setting_button_show="false"
-            :flip.sync="new_flip"
-            :player_info="player_info"
-            @update:start_turn="real_turn_set"
-            ref="main_sp"
-          )
+            .has-text-centered.mt-4(v-if="false")
+              b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
+                b-icon(icon="source-branch")
 
-          .has-text-centered.mt-4(v-if="false")
-            b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
-              b-icon(icon="source-branch")
+            .buttons.is-centered.mt-5
+              PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+              KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
+              KifCopyButton(@click="kifu_copy_handle")
+              TweetButton(@click="tweet_share_open({url: permalink_url})") Tweet
+              //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
+              //- PulldownMenu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :new_turn="new_turn" :flip="new_flip" v-if="pulldown_menu_p")
 
-          .buttons.is-centered.mt-5
-            PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-            KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
-            KifCopyButton(@click="kifu_copy_handle")
-            TweetButton(@click="tweet_share_open({url: permalink_url})") ツイート
-            //- PngDlButton(tag="a" :href="png_dl_url" :turn="turn_offset")
-            //- PulldownMenu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :turn_offset="turn_offset" :flip="new_flip" v-if="pulldown_menu_p")
+          .column
+            SwarsBattleShowTimeChart(
+              v-if="record && time_chart_params"
+              :record="record"
+              :time_chart_params="time_chart_params"
+              @update:turn="turn_set_from_chart"
+              :chart_turn="new_turn"
+              :flip="new_flip"
+              ref="SwarsBattleShowTimeChart"
+            )
 
-        .column
-          SwarsBattleShowTimeChart(
-            v-if="record && time_chart_params"
-            :record="record"
-            :time_chart_params="time_chart_params"
-            @update:turn="turn_set_from_chart"
-            :chart_turn="turn_offset"
-            :flip="new_flip"
-            ref="SwarsBattleShowTimeChart"
-          )
-
-      //-   pre(v-if="development_p")
-      //-     | start_turn: {{start_turn}}
-      //-     | turn_offset: {{turn_offset}}
-      //-     | record.turn: {{record.turn}}
-      //-     | record.display_turn: {{record.display_turn}}
-      //-     | record.critical_turn: {{record.critical_turn}}
-      //-     | record.outbreak_turn: {{record.outbreak_turn}}
-      //-     | record.turn_max: {{record.turn_max}}
-      //-     | record.turn: {{record.turn}}
-      //-     | new_flip: {{new_flip}}
+        //-   pre(v-if="development_p")
+        //-     | start_turn: {{start_turn}}
+        //-     | new_turn: {{new_turn}}
+        //-     | record.turn: {{record.turn}}
+        //-     | record.display_turn: {{record.display_turn}}
+        //-     | record.critical_turn: {{record.critical_turn}}
+        //-     | record.outbreak_turn: {{record.outbreak_turn}}
+        //-     | record.turn_max: {{record.turn_max}}
+        //-     | record.turn: {{record.turn}}
+        //-     | new_flip: {{new_flip}}
 </template>
 
 <script>
 export default {
   name: "SwarsBattleShow",
   props: {
-    user_key:        { type: String, required: true, },
     pulldown_menu_p: { default: true,                }, // 右のプルダウンを表示する？
     display_key:     { default: "default",           }, // どの局面から開始するか (一覧のdisplay_keyとは若干型が違う)
   },
@@ -131,7 +130,7 @@ export default {
       record: null,            // 属性がたくさん入ってる
 
       run_mode: null,          // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
-      turn_offset: null,       // KENTOに渡すための手番
+      new_turn: null,       // KENTOに渡すための手番
       new_flip: null,          // 上下反転している？
 
       time_chart_p: false,     // 時間チャートを表示する？
@@ -151,7 +150,7 @@ export default {
 
   fetch() {
     // alert("fetch")
-    // alert(this.user_key)
+    // alert(this.$route.params.key)
     // console.log(this)
 
     // console.log(this.$route.query)
@@ -162,26 +161,53 @@ export default {
     // http://0.0.0.0:4000/swars/battles/devuser1-Yamada_Taro-20200101_123401
     // const record = await $axios.$get(`/w/${params.key}.json`, {params: {ogp_only: true, basic_fetch: true, ...query}})
 
-    // 待たないデータ
-    this.$axios.$get(`/w/${this.user_key}.json`, {params: {time_chart_fetch: true}}).then(e => {
-      this.time_chart_params = e.time_chart_params
-    })
-
     // 重要なのはこっちなので待つ
-    return this.$axios.$get(`/w/${this.user_key}.json`, {params: {basic_fetch: true}}).then(e => {
-      this.record = e
-      this.record_setup()
-      this.slider_focus_delay()
-    })
+    return Promise.all([
+      this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: {basic_fetch: true}}).then(e => {
+        this.record = e
+        this.record_setup()
+        this.lazy_slider_focus()
+      }),
+      this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: {time_chart_fetch: true}}).then(e => {
+        this.time_chart_params = e.time_chart_params
+      }),
+    ])
+  },
+
+  head() {
+    // ページ遷移で来たとき head は fetch より前にいきなり呼ばれているためガードが必要
+    if (!this.record) {
+      return
+    }
+
+    return {
+      title: `${this.og_title} - 将棋ウォーズ`,
+      meta: [
+        { hid: "og:title",       property: "og:title",       content: this.og_title,           },
+        { hid: "og:image",       property: "og:image",       content: this.og_image,           },
+        { hid: "og:description", property: "og:description", content: this.record.description, },
+      ],
+    }
   },
 
   watch: {
     sidebar_p() {
       this.sound_play('click')
     },
+    new_turn() { this.url_replace() },
+    new_flip()    { this.url_replace() },
   },
 
   methods: {
+    url_replace() {
+      // FIXME: queryだけ変更するとエラーになる
+      this.$router.replace({query: {
+        ...this.$route.query,
+        turn: this.new_turn,
+        flip: this.new_flip,
+      }}, () => {}, () => {})
+    },
+
     kifu_copy_handle() {
       this.sound_play('click')
       this.kif_clipboard_copy({kc_path: this.record.show_path})
@@ -203,13 +229,13 @@ export default {
     // バトル情報がセットされたタイミングまたは変更されたタイミング
     record_setup() {
       // 開始手数を保存 (KENTOに渡すためでもある)
-      this.turn_offset = this.start_turn
+      this.new_turn = this.start_turn
 
       // 継盤解除
       this.run_mode = "view_mode"
 
       // 最初の上下反転状態
-      this.new_flip = this.record.flip
+      this.new_flip = this.default_flip
 
       // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
       // これは勝手にやらない方がいい？
@@ -237,12 +263,16 @@ export default {
         message = "元に戻しました"
       }
       this.simple_notify(message)
-      this.slider_focus_delay()
+      this.lazy_slider_focus()
     },
 
     // 開始局面
     // turn start_turn critical_turn の順に見る
     start_turn_for(record) {
+      const turn = this.$route.query.turn
+      if (turn != null) {
+        return Number(turn)
+      }
       if (this.display_key === "last") {
         return record.turn_max
       }
@@ -252,29 +282,50 @@ export default {
     // SwarsBattleShowTimeChart でチャートをクリックしたときに変更する
     turn_set_from_chart(v) {
       this.$refs.main_sp.$refs.pure_sp.api_board_turn_set(v) // 直接 shogi-player に設定
-      this.turn_offset = v                      // KENTO用に設定 (shogi-playerからイベントが来ないため)
+      this.new_turn = v                      // KENTO用に設定 (shogi-playerからイベントが来ないため)
     },
 
     // shogi-player の局面が変化したときの手数を取り出す
     real_turn_set(v) {
-      this.turn_offset = v
+      this.new_turn = v
     },
 
     // this.$nextTick(() => this.slider_focus()) の方法だと失敗する
-    slider_focus_delay() {
+    lazy_slider_focus() {
       setTimeout(() => this.slider_focus(), 1)
     },
 
     // $el は使えるタイミング難しいため普通に document から探す
     slider_focus() {
-      const dom = document.querySelector(".turn_slider")
-      if (dom) {
-        dom.focus()
+      if (typeof document !== 'undefined') {
+        const dom = document.querySelector(".turn_slider")
+        if (dom) {
+          dom.focus()
+        }
       }
     },
   },
 
   computed: {
+    default_flip() {
+      const v = this.$route.query.flip
+      if (v === "true") {
+        return true
+      }
+      return this.record.flip
+    },
+
+    og_image() {
+      const params = new URLSearchParams()
+      params.set("turn", this.new_turn)
+      params.set("flip", this.new_flip)
+      return this.$config.MY_SITE_URL + `${this.record.show_path}.png?${params}`
+    },
+
+    og_title() {
+      return `${this.record.title} ${this.new_turn}手目`
+    },
+
     start_turn() {
       return this.start_turn_for(this.record)
     },
@@ -285,14 +336,14 @@ export default {
 
     permalink_url() {
       let url = null
-      if (this.development_p) {
-        url = this.$config.MY_OGP_URL
-      } else {
-        url = this.$config.MY_SITE_URL
-      }
+      // if (this.development_p) {
+      //   url = this.$config.MY_OGP_URL
+      // } else {
+      url = this.$config.MY_SITE_URL
+      // }
 
       const params = new URLSearchParams()
-      params.set("turn", this.turn_offset)
+      params.set("turn", this.new_turn)
       params.set("flip", this.new_flip)
 
       return `${url}/swars/battles/${this.record.key}?${params}`
@@ -301,13 +352,28 @@ export default {
     // png_dl_url() {
     //   const params = new URLSearchParams()
     //   params.set("attachment", true)
-    //   params.set("turn", this.turn_offset)
+    //   params.set("turn", this.new_turn)
     //   params.set("flip", this.new_flip)
     //   return `${this.$config.MY_SITE_URL}/w/${this.record.key}.png?${params}`
     // },
 
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({path: this.record.show_path, sfen: this.record.sfen_body, turn: this.turn_offset, flip: this.new_flip, ...this.record.piyo_shogi_base_params}) },
-    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.record.sfen_body, turn: this.turn_offset, flip: this.new_flip}) },
+    piyo_shogi_app_with_params_url() {
+      return this.piyo_shogi_auto_url({
+        path: this.record.show_path,
+        sfen: this.record.sfen_body,
+        turn: this.new_turn,
+        flip: this.new_flip,
+        ...this.record.piyo_shogi_base_params,
+      })
+    },
+
+    kento_app_with_params_url() {
+      return this.kento_full_url({
+        sfen: this.record.sfen_body,
+        turn: this.new_turn,
+        flip: this.new_flip,
+      })
+    },
 
     tweet_url() {
       return this.tweet_intent_url(this.permalink_url)
@@ -315,9 +381,9 @@ export default {
 
     share_board_query() {
       return {
-        title: this.record.description,
+        title: this.record.description, // title:対戦者の名前 description:戦法のみ
         body:  this.record.sfen_body,
-        turn:  this.turn_offset,
+        turn:  this.new_turn,
         image_view_point: this.new_flip ? "white" : "black",
       }
     },
