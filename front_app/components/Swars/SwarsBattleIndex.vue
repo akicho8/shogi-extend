@@ -1,5 +1,7 @@
 <template lang="pug">
 .SwarsBattleIndex
+  b-loading(:active="$fetchState.pending")
+
   DebugBox
     p $route.query: {{$route.query}}
   b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
@@ -108,7 +110,7 @@
               ref="main_search_form"
               )
             p.control
-              b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large" :loading="$fetchState.pending" :disabled="!query")
+              b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large" :loading="$fetchState.pending && false" :disabled="!query")
 
           .columns.is-multiline.mt-4(v-if="display_key === 'critical' || display_key === 'last'")
             template(v-for="e in config.records")
@@ -140,7 +142,7 @@
           template(v-if="display_key === 'table'")
             b-table.mt-5(
               v-if="$route.query.query"
-              :loading="$fetchState.pending"
+              :loading="$fetchState.pending && false"
 
               :total        = "config.total"
               :current-page = "config.page"
