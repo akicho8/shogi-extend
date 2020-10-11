@@ -12,7 +12,7 @@
             b-menu-item(label="共有将棋盤で開く" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
 
           b-menu-list(label="export")
-            b-menu-item(label="棋譜用紙"         tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
+            b-menu-item(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
             b-menu-item
               template(slot="label" slot-scope="props")
                 span.ml-1 表示

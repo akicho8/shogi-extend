@@ -225,6 +225,23 @@ export default {
       // window.print()
       // window.close()
     }, 200)
+
+    this.dialog_ok(`
+       <div class="content">
+         <ol>
+           <li class="mt-5">編集できます</li>
+           <li class="mt-5">PDFにするには印刷時に<b>PDFに保存</b>を選択してください</li>
+           <li class="mt-5">
+             ブラウザがフォントを小さくさせない設定になっていると罫線がずれます
+             <div class="mt-3">ブラウザごとの解除方法</div>
+             <ul class="mt-2">
+               <li>Google Chrome:「環境設定」→「デザイン」→「フォントをカスタマイズ」→<b>最小フォントサイズ</b>を極小にする</li>
+               <li>Safari:「環境設定」→「詳細」→<b>これより小さいフォントサイズを使わない</b>のチェックを外す</li>
+               <li>その他のブラウザ: それっぽいのを探してなんとかする</li>
+             </ul>
+           </li>
+         </ol>
+       </div>`, {rate: 3.0})
   },
 
   computed: {

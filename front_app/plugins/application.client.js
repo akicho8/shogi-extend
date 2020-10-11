@@ -1,5 +1,29 @@
 export default {
   methods: {
+    dialog_ok(message, options = {}) {
+      options = {
+        type: "info",
+        ...options,
+      }
+      this.talk(message, options)
+      this.$buefy.dialog.alert({
+        title: options.title,
+        type: `is-${options.type}`,
+        hasIcon: true,
+        message: message,
+        onConfirm: () => { this.sound_play("click") },
+        onCancel:  () => { this.sound_play("click") },
+      })
+    },
+
+    dialog_ng(message, params = {}) {
+      params = {
+        type: "danger",
+        ...params,
+      }
+      this.dialog_ok(message, params)
+    },
+
     toast_ok(message, options = {}) {
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-dark", queue: false, ...options})
       this.talk(message)
@@ -46,25 +70,27 @@ export default {
       if (response) {
         const notice_collector = response.notice_collector
         if (notice_collector) {
-          notice_collector.infos.forEach(e => {
-            if (false) {
-            } else if (e.method === "dialog") {
-              this.talk(e.title)
-              this.$buefy.dialog.alert({
-                title: e.title,
-                type: `is-${e.type}`,
-                hasIcon: true,
-                message: e.message,
-                onConfirm: () => { this.sound_play("click") },
-                onCancel:  () => { this.sound_play("click") },
-              })
-            } else if (e.method === "toast") {
-              this.toast_ok(e.message, {type: `is-${e.type}`})
-            } else {
-              throw new Error("must not happen")
-            }
-          })
+          notice_collector.infos.forEach(e => this.notice_single_call(e))
         }
+      }
+    },
+
+    notice_single_call(e) {
+      if (false) {
+      } else if (e.method === "dialog") {
+        this.talk(e.title)
+        this.$buefy.dialog.alert({
+          title: e.title,
+          type: `is-${e.type}`,
+          hasIcon: true,
+          message: e.message,
+          onConfirm: () => { this.sound_play("click") },
+          onCancel:  () => { this.sound_play("click") },
+        })
+      } else if (e.method === "toast") {
+        this.toast_ok(e.message, {type: `is-${e.type}`})
+      } else {
+        throw new Error("must not happen")
       }
     },
   },

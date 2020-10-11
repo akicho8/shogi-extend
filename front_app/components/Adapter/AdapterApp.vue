@@ -51,7 +51,8 @@
             b-button(@click="board_show_handle" size="is-small") 共有将棋盤で開く
           .buttons.is-centered.are-small.mt-3
             b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'") 検証
-            b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.MY_SITE_URL}${record.show_path}?formal_sheet=true` : ''" v-if="development_p") 棋譜用紙
+
+            b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.MY_SITE_URL}${record.show_path}?formal_sheet=true` : ''" v-if="development_p") 棋譜用紙(廃止)
             TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url({text: tweet_body}) : ''" v-if="development_p")
 
           .box.is-shadowless
