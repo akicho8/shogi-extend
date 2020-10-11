@@ -10,6 +10,7 @@ ShogiPlayer(
 import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
 
 export default {
+  name: "MyShogiPlayer",
   inheritAttrs: false,
   components: {
     ShogiPlayer,
