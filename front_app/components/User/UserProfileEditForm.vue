@@ -20,7 +20,7 @@
               figure.image.is_clickable
                 img.is-rounded(:src="image_source")
                 .image_same_size_box
-                  b-icon(icon="pack-man")
+                  b-icon.has-text-white(icon="camera" size="is-large")
 
           b-field(label-position="on-border" label="名前" :type="name_invalid_p ? 'is-danger' : ''")
             b-input(type="text" v-model.trim="base.new_name")
@@ -129,7 +129,7 @@ export default {
     img
       width: 256px
       height: 256px
-      filter: brightness(0.9)
+      filter: brightness(0.8)
     position: relative
     .image_same_size_box
       position: absolute
@@ -139,8 +139,6 @@ export default {
       display: flex
       align-items: center
       justify-content: center
-      .icon
-        border: 1px solid $white
 
   .field
     margin-top: 2rem
