@@ -78,7 +78,7 @@ export default {
     notice_single_call(e) {
       if (false) {
       } else if (e.method === "dialog") {
-        this.talk(e.title)
+        this.talk(e.message)
         this.$buefy.dialog.alert({
           title: e.title,
           type: `is-${e.type}`,

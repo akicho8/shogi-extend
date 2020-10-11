@@ -4,6 +4,7 @@ b-navbar-dropdown.NavbarItemCurrentUser(:hoverable="false" arrowless right v-if=
     .image
       img.is-rounded(:src="g_current_user.avatar_path")
   b-navbar-item(tag="nuxt-link" :to="{name: 'users-id', params: {id: g_current_user.id}}") プロフィール
+  b-navbar-item(tag="nuxt-link" :to="{name: 'settings-email'}") メールアドレス変更
   //- b-navbar-item(tag="nuxt-link" :to="{name: 'profile-edit'") プロフィール
   .navbar-divider
   b-navbar-item(@click="logout_handle") ログアウト

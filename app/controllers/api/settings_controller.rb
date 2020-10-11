@@ -17,14 +17,8 @@ module Api
       user.name_input_at ||= Time.current
       user.profile.description = params[:profile_description]
       user.profile.twitter_key = params[:profile_twitter_key]
-      if user.invalid?
-        error_messages = user.errors.full_messages.join(" ")
-        render json: {
-          notice_collector: NoticeCollector.single(:danger, error_messages, method: "dialog"),
-        }
-        return
-      end
-      user.save!
+      user_save(user)
+      return if performed?
 
       if user.saved_change_to_attribute?(:name_input_at)
         if v = user.saved_change_to_attribute(:name)
@@ -40,16 +34,49 @@ module Api
         user.avatar_blob, # ← 上で user.save! しちゃったせいで saved_changes? は常に false になっとるっぽい
       ]
 
-      if changed_records.any?(:saved_changes?) || params[:croped_image]
-        notice_collector = NoticeCollector.single(:success, "保存しました")
+      saved_changes_p = changed_records.any?(:saved_changes?) || params[:croped_image]
+      return_noticecollector(saved_changes_p)
+    end
+
+    # curl -d _method=put http://localhost:3000/api/settings/email_fetch.json
+    def email_fetch
+      raise "must not happen" unless current_user
+      render json: { email: current_user.email }
+    end
+
+    def email_update
+      raise "must not happen" unless current_user
+      user = current_user
+      user.email = params[:email]
+
+      user_save(user) if true
+      return if performed?
+
+      if user.saved_changes?
+        notice_collector = NoticeCollector.single(:success, "メールを送信したので変更を確定させてください", method: "dialog")
       else
         notice_collector = NoticeCollector.single(:info, "変更はありませんでした")
       end
-
       render json: { notice_collector: notice_collector }
     end
 
     private
+
+    def user_save(user)
+      unless user.save
+        error_messages = user.errors.full_messages.join(" ")
+        render json: { notice_collector: NoticeCollector.single(:danger, error_messages, method: "dialog") }
+      end
+    end
+
+    def return_noticecollector(saved_changes_p)
+      if saved_changes_p
+        notice_collector = NoticeCollector.single(:success, "変更しました")
+      else
+        notice_collector = NoticeCollector.single(:info, "変更はありませんでした")
+      end
+      render json: { notice_collector: notice_collector }
+    end
 
     # def required_return_value
     #   (params[:required_return_value].presence || "simple_profile").to_sym

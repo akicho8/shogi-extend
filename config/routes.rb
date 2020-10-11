@@ -80,6 +80,8 @@ Rails.application.routes.draw do
 
     resource :settings, only: [] do
       put :profile_update
+      get :email_fetch
+      put :email_update
     end
 
     resource :talk, only: [:show, :create]
