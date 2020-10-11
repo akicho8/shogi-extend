@@ -65,7 +65,7 @@
       .container
         .columns
           .column
-            MyShogiPlayer.mt-5(
+            MyShogiPlayer(
               :run_mode.sync="run_mode"
               :debug_mode="false"
               :start_turn="start_turn"
@@ -402,13 +402,15 @@ export default {
     .column
       padding: 0
 
-  .delete
-    position: absolute
-    top: 6.0rem
-    left: 0.6rem
-    z-index: 2 // shogi-player の「○手目」のdivより下にあって押せない場合があるため指定する必要がある
+  // .delete
+  //   position: absolute
+  //   top: 6.0rem
+  //   left: 0.6rem
+  //   z-index: 2 // shogi-player の「○手目」のdivより下にあって押せない場合があるため指定する必要がある
+
   .SwarsBattleShowTimeChart
-    margin: 2.75rem 2rem
+    margin: 1.75rem 2rem
     +mobile
       margin: 0
+      margin-top: 1.75rem
 </style>
