@@ -77,7 +77,9 @@ module Tsl
     end
 
     def ox_human
-      ox.tr("ox", "○●")
+      # ox.tr("ox", "○●")
+      # ox.tr("ox", "🍓💀")
+      ox.tr("ox", "🍎💀")
     end
 
     def result_mark
