@@ -91,7 +91,7 @@
                     .buttons.is-centered
                       a.button.is-twitter.is-rounded(:href="tweet_url")
                         b-icon.mx-1(icon="twitter" size="is-small")
-                        | ツイート
+                        | Tweet
 
         .column.is-5(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
           b-field.xy_scope_info_field

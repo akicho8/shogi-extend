@@ -91,7 +91,7 @@
 
           template(v-if="rows.length >= 1")
             .has-text-centered
-              b-button(tag="a" :href="tweet_url" target="_blank" icon-left="twitter" type="is-info" rounded) ツイート
+              b-button(tag="a" :href="tweet_url" target="_blank" icon-left="twitter" type="is-twitter" rounded) Tweet
 </template>
 
 <script>
