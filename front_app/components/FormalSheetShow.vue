@@ -10,7 +10,7 @@
     button.button.is-primary.is-large(@click="printer_handle")
       b-icon(icon="printer" size="is-medium")
 
-  .formal_sheet_workspace(:class="new_info.workspace_class")
+  .formal_sheet_workspace(:class="new_info.workspace_class" :contenteditable="contenteditable_p ? 'true' : 'false'")
     template(v-for="(_, page_index) in new_info.page_count")
       .sheet
         .sheet_body
@@ -169,6 +169,7 @@
 </template>
 
 <script>
+const CONTENTEDITABLE_FUNCTION_P = true
 
 export default {
   name: "FormalSheetShow",
@@ -197,6 +198,10 @@ export default {
     },
 
     edit_to(page_index, key) {
+      if (this.contenteditable_p) {
+        return
+      }
+
       if (page_index === 0) {
         this.$buefy.dialog.prompt({
           title: "編集",
@@ -220,6 +225,16 @@ export default {
       // window.print()
       // window.close()
     }, 200)
+  },
+
+  computed: {
+    contenteditable_p() {
+      const v = this.$route.query.contenteditable
+      if (v != null) {
+        return v === "true"
+      }
+      return CONTENTEDITABLE_FUNCTION_P
+    },
   },
 }
 </script>
