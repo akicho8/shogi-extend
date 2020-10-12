@@ -6,6 +6,7 @@
         h1.has-text-weight-bold SHOGI-EXTEND
     template(slot="end")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}" v-if="development_p") Launcher
+      NavbarItemLogin
       NavbarItemCurrentUser
   .section
     .container

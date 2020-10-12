@@ -10,16 +10,12 @@ nav#main_nav.navbar.is-danger.is-spaced
       .navbar-start
         - if Rails.env.development?
           = link_to("front_app", UrlProxy.wrap("/"), class: "navbar-item")
-
-        - if Rails.env.development?
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link
               | もっと見る
             .navbar-dropdown.is-boxed
               = link_to("野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
               = link_to("野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
-
-        - if Rails.env.development?
           = link_to("管理画面", [:admin, :root], class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
 
         - if session[:admin_user]
@@ -60,41 +56,42 @@ nav#main_nav.navbar.is-danger.is-spaced
         /       b-dropdown-item(:has-link="true" :paddingless="true")
         /         = link_to("ログアウト", [:session], method: :delete)
 
-        - if current_user
-          .navbar-item.has-dropdown.is-hoverable
-            = link_to([current_user], class: "navbar-link", slot: "trigger") do
-              = image_tag(current_user.avatar_path, class: "header_avatar_image")
-              - if Rails.env.development? || Rails.env.test?
-                span.ml-2
-                  b= current_user.name
-            .navbar-dropdown.is-boxed.is-right
-              = link_to("プロフィール", [current_user], class: "navbar-item")
-              = link_to("設定", [:edit, current_user], class: "navbar-item")
-              .navbar-divider
-              = link_to("ログアウト", [:direct_session], method: :delete, class: "navbar-item")
-              / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
+        - if Rails.env.development?
+          - if current_user && Rails.env.development?
+            .navbar-item.has-dropdown.is-hoverable
+              = link_to([current_user], class: "navbar-link", slot: "trigger") do
+                = image_tag(current_user.avatar_path, class: "header_avatar_image")
+                - if Rails.env.development? || Rails.env.test?
+                  span.ml-2
+                    b= current_user.name
+              .navbar-dropdown.is-boxed.is-right
+                = link_to("プロフィール", [current_user], class: "navbar-item")
+                = link_to("設定", [:edit, current_user], class: "navbar-item")
+                .navbar-divider
+                = link_to("ログアウト", [:direct_session], method: :delete, class: "navbar-item")
+                / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
-          / こっちを使うと縦幅が大きくなってしまう
-          / span.navbar-item
-          /   b-dropdown(hoverable)
-          /     = link_to([current_user], class: "navbar-link", slot: "trigger") do
-          /       = image_tag(current_user.avatar_path, class: "header_avatar_image")
-          /       span.my_name
-          /         = current_user.name
-          /     b-dropdown-item(:has-link="true" :paddingless="true")
-          /       = link_to("プロフィール", [current_user], id: "header_profile_show")
-          /     b-dropdown-item(:has-link="true" :paddingless="true")
-          /       = link_to("設定", [:edit, current_user])
-          /     b-dropdown-item(:separator="true")
-          /     b-dropdown-item(:has-link="true" :paddingless="true")
-          /       = link_to("ログアウト", [:session], method: :delete)
-          /       / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
+            / こっちを使うと縦幅が大きくなってしまう
+            / span.navbar-item
+            /   b-dropdown(hoverable)
+            /     = link_to([current_user], class: "navbar-link", slot: "trigger") do
+            /       = image_tag(current_user.avatar_path, class: "header_avatar_image")
+            /       span.my_name
+            /         = current_user.name
+            /     b-dropdown-item(:has-link="true" :paddingless="true")
+            /       = link_to("プロフィール", [current_user], id: "header_profile_show")
+            /     b-dropdown-item(:has-link="true" :paddingless="true")
+            /       = link_to("設定", [:edit, current_user])
+            /     b-dropdown-item(:separator="true")
+            /     b-dropdown-item(:has-link="true" :paddingless="true")
+            /       = link_to("ログアウト", [:session], method: :delete)
+            /       / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
 
-        - if !current_user
-          = link_to("ログイン", :new_xuser_session, class: "navbar-item")
-          = link_to("アカウント登録", :new_xuser_registration, class: "navbar-item") if Rails.env.development? || Rails.env.test?
-          / .navbar-item.has-dropdown.is-hoverable
-          /   span.navbar-link ログイン
-          /   .navbar-dropdown.is-boxed
-          /     = link_to("Googleアカウントでログイン", :new_xuser_registration, class: "navbar-item")
-          /     = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")
+          - if !current_user
+            = link_to("ログイン", :new_xuser_session, class: "navbar-item")
+            = link_to("面倒なアカウント登録", :new_xuser_registration, class: "navbar-item") if Rails.env.development? || Rails.env.test?
+            / .navbar-item.has-dropdown.is-hoverable
+            /   span.navbar-link ログイン
+            /   .navbar-dropdown.is-boxed
+            /     = link_to("Googleアカウントでログイン", :new_xuser_registration, class: "navbar-item")
+            /     = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")

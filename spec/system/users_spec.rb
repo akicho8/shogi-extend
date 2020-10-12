@@ -6,7 +6,7 @@ RSpec.describe "ユーザー", type: :system do
   end
 
   context "ログインしてない状態" do
-    it "アカウント登録" do
+    it "面倒なアカウント登録" do
       visit "/xusers/sign_up"
       doc_image
     end

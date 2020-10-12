@@ -26,7 +26,7 @@ ja:
       locked: "あなたのアカウントは凍結されています"
       not_found_in_database: "メールアドレスまたはパスワードが違います"
       timeout: "セッションがタイムアウトしました。もう一度ログインしてください"
-      unauthenticated: "アカウント登録もしくはログインしてください。匿名ですぐに登録したい場合は「名無しのアカウントを作成してログイン」を使ってみてください"
+      unauthenticated: "アカウント登録もしくはログインしてください"
       unconfirmed: "メールアドレスの本人確認が必要です"
     mailer:
       confirmation_instructions:
@@ -80,8 +80,8 @@ ja:
         update: "更新"
         we_need_your_current_password_to_confirm_your_changes: "変更を反映するには現在のパスワードを入力してください"
       new:
-        sign_up: "アカウント登録"
-      signed_up: "アカウント登録が完了しました"
+        sign_up: "面倒なアカウント登録"
+      signed_up: "面倒なアカウント登録が完了しました"
       signed_up_but_inactive: "ログインするためには、アカウントを有効化してください"
       signed_up_but_locked: "アカウントが凍結されているためログインできません"
       signed_up_but_unconfirmed: "本人確認用のメールを送信しました。メール内のリンクからアカウントを有効化させてください"
@@ -102,7 +102,7 @@ ja:
         forgot_your_password: "パスワードを忘れましたか？"
         sign_in: "ログイン"
         sign_in_with_provider: "%{provider} でログイン"
-        sign_up: "アカウント登録"
+        sign_up: "面倒なアカウント登録"
     unlocks:
       new:
         resend_unlock_instructions: "アカウントの凍結解除方法を再送する"
