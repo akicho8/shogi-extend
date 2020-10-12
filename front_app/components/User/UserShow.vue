@@ -3,10 +3,11 @@
   client-only
     b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
       template(slot="brand")
-        b-navbar-item(@click="back_handle")
-          .delete
-        b-navbar-item(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
-          .ml-2.has-text-weight-bold {{config.name}}さんのプロフィール
+        HomeNavbarItem
+        //- b-navbar-item(@click="back_handle")
+        //-   .delete
+        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
+          | {{config.name}}さんのプロフィール
       template(slot="end" v-if="g_current_user && g_current_user.id === config.id")
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'settings-profile'}") 変更
     .section
