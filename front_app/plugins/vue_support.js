@@ -205,6 +205,14 @@ export default {
       }
     },
 
+    login_url_build() {
+      const params = new URLSearchParams()
+      if (typeof location !== 'undefined') {
+        params.set("return_to", location.href)
+      }
+      return this.$config.MY_SITE_URL + `/login?${params}`
+    },
+
     assert_path(path) {
       if (path.match(/^http/)) {
         alert(`すでにフルURL化されている : ${path}`)
