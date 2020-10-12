@@ -57,7 +57,7 @@ nav#main_nav.navbar.is-danger.is-spaced
         /         = link_to("ログアウト", [:session], method: :delete)
 
         - if Rails.env.development?
-          - if current_user && Rails.env.development?
+          - if current_user
             .navbar-item.has-dropdown.is-hoverable
               = link_to([current_user], class: "navbar-link", slot: "trigger") do
                 = image_tag(current_user.avatar_path, class: "header_avatar_image")
