@@ -60,7 +60,7 @@ export const application_battle_sy_versus = {
         this.debug_alert("相手受信")
         // 自分の操作を相手の盤面で動かす
         this.vs_share_sfen = params.vs_share_sfen
-        // this.sound_play("pishi") // shogi-player で音が鳴らないのでここで鳴らす
+        // this.sound_play("piece_sound") // shogi-player で音が鳴らないのでここで鳴らす
       }
     },
 

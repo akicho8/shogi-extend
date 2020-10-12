@@ -12,7 +12,7 @@
     b-button(expanded @click="sound_play('win')")           勝ち
     b-button(expanded @click="sound_play('lose')")          負け
     b-button(expanded @click="sound_play('draw')")          引き分け
-    b-button(expanded @click="sound_play('pishi')")         駒音
+    b-button(expanded @click="sound_play('piece_sound')")         駒音
     b-button(expanded @click="sound_play('new_challenge')") 挑戦者現る
     b-button(expanded @click="sound_play('bell2')")         ベル2 (未使用)
     b-button(expanded @click="sound_play('pon')")           ぽん (練習終了)

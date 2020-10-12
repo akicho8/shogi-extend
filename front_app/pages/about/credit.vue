@@ -29,17 +29,6 @@
         a(href="https://soundeffect-lab.info/") 効果音ラボ
       li
         a(href="https://otologic.jp") OtoLogic
-      li
-        a(href="http://commons.nicovideo.jp/material/nc141655") ニコニ･コモンズ
-      li
-        a(href="http://shineleckoma.web.fc2.com/") しんえれ外部駒 (駒音)
-      li
-        a(href="https://www.samplescience.ca/2018/03/8-bit-fx.html") SampleScience 8 bit FX
-
-    h4 フォント
-    ul
-      li
-        a(href="https://www.rs.tus.ac.jp/yyusa/ricty_diminished.html") Ricty Diminished
 </template>
 
 <script>

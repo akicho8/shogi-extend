@@ -203,7 +203,7 @@ export const application_battle = {
       } else {
         // 自分の操作を相手の盤面で動かす
         this.share_sfen = params.share_sfen
-        this.sound_play("pishi") // shogi-player で音が鳴らないのでここで鳴らす
+        this.sound_play("piece_sound") // shogi-player で音が鳴らないのでここで鳴らす
       }
     },
 
