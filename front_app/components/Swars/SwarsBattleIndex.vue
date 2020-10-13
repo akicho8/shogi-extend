@@ -19,7 +19,7 @@
           b-menu-item(@click.stop="display_key_set('table')")
             template(slot="label")
               span(:class="{'has-text-weight-bold': display_key === 'table'}") テーブル
-              b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
+              b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="false && sound_play('click')")
                 b-icon(icon="dots-vertical" slot="trigger")
                 template(v-for="(e, key) in config.table_columns_hash")
                   b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="key")

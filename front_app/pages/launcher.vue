@@ -1,29 +1,36 @@
 <template lang="pug">
 .launcher
-  b-navbar(type="is-primary")
+  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
     template(slot="brand")
-      b-navbar-item(tag="a" :href="$config.MY_SITE_URL")
-        span.ml-2
-          b SHOGI-EXTEND
-  .section.pt-5
-    .columns.is-marginless
-      .column
-        .box
-          div(v-for="(item, key) of production_items" :key="key")
-            nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
-      .column
-        .box
-          div(v-for="(item, key) of experiment_items" :key="key")
-            nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
-    .columns
-      .column
-        .box
-          pre
-            | CSR_BUILD_VERSION: {{$config.CSR_BUILD_VERSION}}
-            | SSR_BUILD_VERSION: {{SSR_config.SSR_BUILD_VERSION}}
-            |
-            | CSR_ENV_BUILD_VERSION: {{CSR_ENV_BUILD_VERSION}}
-            | SSR_ENV_BUILD_VERSION: {{SSR_ENV_BUILD_VERSION}}
+      HomeNavbarItem
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}") Launcher
+    template(slot="start" v-if="development_p")
+      b-navbar-item(:href="$config.MY_SITE_URL") {{$config.MY_SITE_URL}}
+    template(slot="end")
+      NavbarItemLogin
+      NavbarItemProfileLink
+  .section
+    .container
+      .columns.is-marginless
+        .column
+          .card
+            .card-content
+              div(v-for="(item, key) of production_items" :key="key")
+                nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
+        .column
+          .card
+            .card-content
+              div(v-for="(item, key) of experiment_items" :key="key")
+                nuxt-link(:to="item.to" exact-active-class="is-active") {{item.title}}
+      .columns
+        .column
+          .box
+            pre
+              | CSR_BUILD_VERSION: {{$config.CSR_BUILD_VERSION}}
+              | SSR_BUILD_VERSION: {{SSR_config.SSR_BUILD_VERSION}}
+              |
+              | CSR_ENV_BUILD_VERSION: {{CSR_ENV_BUILD_VERSION}}
+              | SSR_ENV_BUILD_VERSION: {{SSR_ENV_BUILD_VERSION}}
 </template>
 
 <script>
@@ -34,6 +41,7 @@ export default {
       CSR_ENV_BUILD_VERSION: process.env.ENV_BUILD_VERSION,
       production_items: [
         { title: "Home",                               to: { name: "index"                           }, },
+        { title: "サウンドテスト",                     to: { name: "sound-test", }},
         { title: "プロフィール編集",                   to: { name: "settings-profile", }},
         { title: "ユーザー詳細",                       to: { name: "users-id", params: {id: 1}, }, },
         { title: "将棋ウォーズバトル詳細"    ,         to: { name: "swars-battles-key", params: {key: "devuser1-Yamada_Taro-20200101_123401"}, }, },
