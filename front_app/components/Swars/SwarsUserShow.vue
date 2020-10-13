@@ -77,16 +77,17 @@
 
     .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
       template(v-for="(row, i) in info.medal_list")
-        template(v-if="row.method === 'tag'")
-          b-tag(:key="`medal_list/${i}`" :type="row.type" rounded) {{row.name}}
-        template(v-else-if="row.method === 'raw'")
-          span.raw(:key="`medal_list/${i}`") {{row.name}}
-        template(v-else-if="row.method === 'icon'")
-          template(v-if="row.tag_wrap")
-            b-tag(:key="`medal_list/${i}`" :type="row.tag_wrap.type" rounded)
+        span.is_clickable(@click="medal_click_handle(row)")
+          template(v-if="row.method === 'tag'")
+            b-tag(:key="`medal_list/${i}`" :type="row.type" rounded) {{row.name}}
+          template(v-else-if="row.method === 'raw'")
+            span.raw(:key="`medal_list/${i}`") {{row.name}}
+          template(v-else-if="row.method === 'icon'")
+            template(v-if="row.tag_wrap")
+              b-tag(:key="`medal_list/${i}`" :type="row.tag_wrap.type" rounded)
+                b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
+            template(v-else)
               b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
-          template(v-else)
-            b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -175,6 +176,7 @@
           .columns
             .column.is-paddingless
               WinLoseCircle(:info="row" size="is-small")
+  pre(v-if="development_p") {{info}}
 </template>
 
 <script>
@@ -225,6 +227,11 @@ export default {
   },
 
   methods: {
+    medal_click_handle(medal) {
+      this.sound_play("click")
+      this.toast_ok(medal.message)
+    },
+
     search_path(queries) {
       // this.sound_play("click")
 
