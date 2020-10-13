@@ -35,7 +35,7 @@ module Swars
         attrs = {
           :label        => label,
           :user         => { key: e.user.key },
-          :medal_params => e.medal_params,
+          :medal_params => e.medal_params(params),
           :grade_info   => { name: e.grade.name, priority: e.grade.priority },
           :location     => { key: e.location.key, hexagon_mark: e.location.hexagon_mark },
           :judge        => { key: e.judge_key },

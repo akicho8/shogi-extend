@@ -1,18 +1,25 @@
 <template lang="pug">
-.MembershipMedal.is-inline-block
-  template(v-if="typeof params === 'string'")
+.MembershipMedal.is-inline-block.is_clickable(@click="click_handle")
+  template(v-if="params.emoji")
     span.emoji
-      | {{params}}
-  template(v-else)
+      | {{params.emoji}}
+  template(v-else-if="params.icon")
     b-icon(:icon="params.icon" :type="params.type" size="is-small" :class="params.class")
+  template(v-else)
+    | {{params}}
 </template>
 
 <script>
-
 export default {
   name: "MembershipMedal",
   props: {
-    params: { required: true },
+    params: { type: Object, required: true },
+  },
+  methods: {
+    click_handle() {
+      this.sound_play("click")
+      this.toast_ok(this.params.message)
+    },
   },
 }
 </script>
