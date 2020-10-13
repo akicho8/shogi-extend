@@ -128,7 +128,6 @@ export default {
   .image
     img
       width: 256px
-      height: 256px
       filter: brightness(0.8)
     position: relative
     .image_same_size_box

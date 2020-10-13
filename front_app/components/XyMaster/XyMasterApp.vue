@@ -12,7 +12,7 @@
         b-navbar-item ランキングタブの各表示ページ:{{current_pages}}
 
       NavbarItemLogin
-      NavbarItemCurrentUser
+      NavbarItemProfileLink
 
   b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")

@@ -7,7 +7,7 @@
     template(slot="end")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}" v-if="development_p") Launcher
       NavbarItemLogin
-      NavbarItemCurrentUser
+      NavbarItemProfileLink
   .section
     .container
       .columns.is-multiline

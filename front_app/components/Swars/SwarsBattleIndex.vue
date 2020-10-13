@@ -61,7 +61,7 @@
 
           b-menu-item(
             label="KENTO API"
-            @click.native="sound_play('click')"
+            @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-kento-api', params: {key: config.current_swars_user_key}}"
             :disabled="!config.current_swars_user_key")
