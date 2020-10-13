@@ -5,9 +5,10 @@
     SwarsBattleIndexMembershipUserLinkTo(:membership="m")
   b-taglist
     template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
-      template(v-if="visible_hash[key]")
+      template(v-if="base.visible_hash[key]")
         template(v-for="name in m[key]")
-          b-tag(rounded) {{name}}
+          nuxt-link(:to="{name: 'swars-battles', query: {query: `${m.user.key} tag:${name}`}}")
+            b-tag(rounded) {{name}}
 </template>
 
 <script>
@@ -19,8 +20,8 @@ export default {
     support,
   ],
   props: {
-    visible_hash: { type: Object, required: true },
-    membership:   { type: Object, required: true },
+    base:       { type: Object, required: true },
+    membership: { type: Object, required: true },
   },
   computed: {
     m() { return this.membership },

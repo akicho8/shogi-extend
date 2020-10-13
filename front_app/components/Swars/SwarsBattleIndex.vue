@@ -39,12 +39,14 @@
             template(slot="label" slot-scope="props")
               | フィルタ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            b-menu-item(label="勝ち" @click.stop="filter_research(`judge:win`)"  :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
-            b-menu-item(label="負け" @click.stop="filter_research(`judge:lose`)" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
-            b-menu-item(label="なし" @click.stop="filter_research(``)"           :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
+            //- b-menu-item(label="勝ち" @click.stop="filter_research(`judge:win`)"  :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
+            //- b-menu-item(label="負け" @click.stop="filter_research(`judge:lose`)" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
+            //- b-menu-item(label="なし" @click.stop="filter_research(``)"           :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
+            b-menu-item(label="勝ち" tag="nuxt-link" :to="{name: 'swars-battles', query: {query: `${config.current_swars_user_key} judge:win`}}"  @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
+            b-menu-item(label="負け" tag="nuxt-link" :to="{name: 'swars-battles', query: {query: `${config.current_swars_user_key} judge:lose`}}" @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
+            b-menu-item(label="なし" tag="nuxt-link" :to="{name: 'swars-battles', query: {query: `${config.current_swars_user_key}`}}"            @click.native="sound_play('click')" :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
 
         b-menu-list(label="その他")
-
           b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | ダウンロード
@@ -174,14 +176,14 @@
 
               template(v-if="config.current_swars_user_key")
                 b-table-column(v-slot="{row}" label="自分")
-                  SwarsBattleIndexMembership(:visible_hash="visible_hash" :membership="row.memberships[0]")
+                  SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
                 b-table-column(v-slot="{row}" label="相手")
-                  SwarsBattleIndexMembership(:visible_hash="visible_hash" :membership="row.memberships[1]")
+                  SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
               template(v-else)
                 b-table-column(v-slot="{row}" label="勝ち")
-                  SwarsBattleIndexMembership(:visible_hash="visible_hash" :membership="row.memberships[0]")
+                  SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
                 b-table-column(v-slot="{row}" label="負け")
-                  SwarsBattleIndexMembership(:visible_hash="visible_hash" :membership="row.memberships[1]")
+                  SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
 
               b-table-column(v-slot="{row}" field="final_key" :label="config.table_columns_hash.final_info.label" :visible="visible_hash.final_info" sortable)
                 span(:class="row.final_info.class")
@@ -299,6 +301,9 @@ export default {
       // }
 
       // this.query = this.config.query
+      // なかから nuxt-link したとき $fetch が呼ばれるが、
+      // this.query は前の状態なので更新する
+      this.query = this.$route.query.query
 
       this.ls_setup() // config から visible_hash や display_key を設定
 
@@ -349,12 +354,18 @@ export default {
     // ここだけ特別で this.query で上書きしている
     // なぜならフィルターは query に埋め込まないといけないから
     filter_research(query) {
+      alert("未使用")
+
       if (!this.config.current_swars_user_key) {
         this.toast_ng("先に誰かで検索してください")
         return
       }
-      this.query = _.trim(`${this.config.current_swars_user_key} ${query}`)
-      this.interactive_search({query: this.query})
+      const new_query = _.trim(`${this.config.current_swars_user_key} ${query}`)
+
+      // ここで設定しておくと検索前に変更される。けどなくてもい。意味あるかな？
+      this.query = new_query
+
+      this.interactive_search({query: new_query})
     },
 
     filter_match_p(str) {
@@ -423,6 +434,8 @@ export default {
   },
 
   computed: {
+    base() { return this },
+
     // page_title() {
     //   return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" - ")
     // },

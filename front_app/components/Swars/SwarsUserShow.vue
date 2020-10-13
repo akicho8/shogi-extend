@@ -99,86 +99,82 @@
 
   .tab_content
     template(v-if="tab_index === 0")
-      .box.one_box.two_column.is_clickable(v-for="(row, i) in info.every_day_list" :key="`every_day_list/${i}`" @click="every_day_click_handle(row)")
-        .columns.is-mobile
-          .column.is-paddingless
-            .one_box_title.has-text-weight-bold.is-size-5
-              | {{date_to_custom_format(row.battled_on) + " "}}
-              span(:class="battled_on_to_class(row)")
-                | {{date_to_wday(row.battled_on)}}
-        .columns.is-mobile
-          .column.is-paddingless
-            WinLoseCircle(:info="row" size="is-small" narrowed)
-          .column.is-paddingless.is-flex
-            template(v-for="tag in row.all_tags")
-              .tag_wrapper.is_clickable.has-text-weight-bold.is-size-5
-                | {{tag.name}}
-
-              //- b-taglist.tag_wrapper(attached @click.native="tactic_modal_start(tag)")
-              //-   b-tag(type="is-light" size="is-medium")
-              //-     | {{tag.name}}
-              //-   template(v-if="tag.count >= 2")
-              //-     b-tag(type="is-primary")
-              //-       | {{tag.count}}
+      template(v-for="(row, i) in info.every_day_list")
+        nuxt-link.box.one_box.two_column(:key="`every_day_list/${i}`" :to="every_day_search_path(row)" @click.native="sound_play('click')")
+          .columns.is-mobile
+            .column.is-paddingless
+              .one_box_title.has-text-weight-bold.is-size-5
+                | {{date_to_custom_format(row.battled_on) + " "}}
+                span(:class="battled_on_to_class(row)")
+                  | {{date_to_wday(row.battled_on)}}
+          .columns.is-mobile
+            .column.is-paddingless
+              WinLoseCircle(:info="row" size="is-small" narrowed)
+            .column.is-paddingless.is-flex
+              template(v-for="tag in row.all_tags")
+                nuxt-link.tag_wrapper.has-text-weight-bold.is-size-5(:to="{name: 'swars-battles', query: {query: `${info.user.key} tag:${tag.name}`}}") {{tag.name}}
 
     template(v-if="tab_index === 1")
-      .box.one_box.is_clickable(v-for="(row, i) in info.every_grade_list" :key="`every_grade_list/${i}`" @click="every_grade_click_handle(row)")
-        .columns.is-mobile
-          .column.is-three-quarters.is-paddingless
-            .one_box_title
-              span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
-                | vs
-              span.has-text-weight-bold.is-size-5.vs_name
-                | {{row.grade_name}}
-          .column.is-paddingless
-            .has-text-right
-              span.has-text-grey-light.is-size-7.use_rate_label
-                | 遭遇率
-              span.use_rate
-                | {{float_to_perc(row.appear_ratio, 1)}}
-              span.has-text-grey-light.is-size-7.use_rate_unit
-                | %
-        .columns
-          .column.is-paddingless
-            WinLoseCircle(:info="row" size="is-small")
+      template(v-for="(row, i) in info.every_grade_list")
+        nuxt-link.box.one_box.two_column(:key="`every_grade_list/${i}`" :to="every_grade_search_path(row)" @click.native="sound_play('click')")
+          .columns.is-mobile
+            .column.is-three-quarters.is-paddingless
+              .one_box_title
+                span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
+                  | vs
+                span.has-text-weight-bold.is-size-5.vs_name
+                  | {{row.grade_name}}
+            .column.is-paddingless
+              .has-text-right
+                span.has-text-grey-light.is-size-7.use_rate_label
+                  | 遭遇率
+                span.use_rate
+                  | {{float_to_perc(row.appear_ratio, 1)}}
+                span.has-text-grey-light.is-size-7.use_rate_unit
+                  | %
+          .columns
+            .column.is-paddingless
+              WinLoseCircle(:info="row" size="is-small")
     template(v-if="tab_index === 2")
-      .box.one_box.is_clickable(v-for="(row, i) in info.every_my_attack_list" :key="`every_my_attack_list/${i}`" @click="every_my_attack_click_handle(row)")
-        .columns.is-mobile
-          .column.is-three-quarters.is-paddingless
-            .one_box_title.has-text-weight-bold.is-size-5
-              | {{row.tag.name}}
-          .column.is-paddingless
-            .has-text-right
-              span.has-text-grey-light.is-size-7.use_rate_label
-                | 使用率
-              span.use_rate
-                | {{float_to_perc(row.appear_ratio, 1)}}
-              span.has-text-grey-light.is-size-7.use_rate_unit
-                | %
-        .columns
-          .column.is-paddingless
-            WinLoseCircle(:info="row" size="is-small")
+      template(v-for="(row, i) in info.every_my_attack_list")
+        nuxt-link.box.one_box.two_column(:key="`every_my_attack_list/${i}`" :to="every_my_attack_search_path(row)" @click.native="sound_play('click')")
+          .columns.is-mobile
+            .column.is-three-quarters.is-paddingless
+              .one_box_title.has-text-weight-bold.is-size-5
+                | {{row.tag.name}}
+            .column.is-paddingless
+              .has-text-right
+                span.has-text-grey-light.is-size-7.use_rate_label
+                  | 使用率
+                span.use_rate
+                  | {{float_to_perc(row.appear_ratio, 1)}}
+                span.has-text-grey-light.is-size-7.use_rate_unit
+                  | %
+          .columns
+            .column.is-paddingless
+              WinLoseCircle(:info="row" size="is-small")
 
     template(v-if="tab_index === 3")
-      .box.one_box.is_clickable(v-for="(row, i) in info.every_vs_attack_list" :key="`every_vs_attack_list/${i}`" @click="every_vs_attack_click_handle(row)")
-        .columns.is-mobile
-          .column.is-three-quarters.is-paddingless
-            .one_box_title
-              span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
-                | vs
-              span.has-text-weight-bold.is-size-5.vs_name
-                | {{row.tag.name}}
-          .column.is-paddingless
-            .has-text-right
-              span.has-text-grey-light.is-size-7.use_rate_label
-                | 遭遇率
-              span.use_rate
-                | {{float_to_perc(row.appear_ratio, 1)}}
-              span.has-text-grey-light.is-size-7.use_rate_unit
-                | %
-        .columns
-          .column.is-paddingless
-            WinLoseCircle(:info="row" size="is-small")
+      template(v-for="(row, i) in info.every_vs_attack_list")
+        nuxt-link.box.one_box.two_column(:key="`every_vs_attack_list/${i}`" :to="every_vs_attack_search_path(row)" @click.native="sound_play('click')")
+          .columns.is-mobile
+            .column.is-three-quarters.is-paddingless
+              .one_box_title
+                span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
+                  | vs
+                span.has-text-weight-bold.is-size-5.vs_name
+                  | {{row.tag.name}}
+            .column.is-paddingless
+              .has-text-right
+                span.has-text-grey-light.is-size-7.use_rate_label
+                  | 遭遇率
+                span.use_rate
+                  | {{float_to_perc(row.appear_ratio, 1)}}
+                span.has-text-grey-light.is-size-7.use_rate_unit
+                  | %
+          .columns
+            .column.is-paddingless
+              WinLoseCircle(:info="row" size="is-small")
 </template>
 
 <script>
@@ -229,8 +225,8 @@ export default {
   },
 
   methods: {
-    swars_search_jump(queries) {
-      this.sound_play("click")
+    search_path(queries) {
+      // this.sound_play("click")
 
       const query = [
         this.info.user.key,
@@ -238,24 +234,28 @@ export default {
         ...queries,
       ].join(" ")
 
-      this.$router.push({name: "swars-battles", query: {query: query}})
+      return {name: "swars-battles", query: {query: query}}
     },
 
-    every_day_click_handle(row) {
-      this.swars_search_jump([`date:${this.date_to_ymd(row.battled_on)}`])
+    ////////////////////////////////////////////////////////////////////////////////
+
+    every_day_search_path(row) {
+      return this.search_path([`date:${this.date_to_ymd(row.battled_on)}`])
     },
 
-    every_my_attack_click_handle(row) {
-      this.swars_search_jump([`tag:${row.tag.name}`])
+    every_grade_search_path(row) {
+      return this.search_path([`vs-grade:${row.grade_name}`])
     },
 
-    every_vs_attack_click_handle(row) {
-      this.swars_search_jump([`vs-tag:${row.tag.name}`])
+    every_my_attack_search_path(row) {
+      return this.search_path([`tag:${row.tag.name}`])
     },
 
-    every_grade_click_handle(row) {
-      this.swars_search_jump([`vs-grade:${row.grade_name}`])
+    every_vs_attack_search_path(row) {
+      return this.search_path([`vs-tag:${row.tag.name}`])
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     update_handle(options = {}) {
       this.sound_play("click")
@@ -352,6 +352,7 @@ export default {
     .one_box
       margin: 1rem 0.5rem
       padding: 1.5rem
+
       .vs_mark
       .vs_name
         margin-left: 0.5rem
@@ -375,6 +376,7 @@ export default {
         align-items: center
         .tag_wrapper
           margin: 0rem
+          color: inherit
 
         // flex-wrap: wrap
         // justify-content: flex-start
@@ -397,4 +399,5 @@ export default {
       // その対策
       .tag_wrapper
         flex-wrap: nowrap
+
 </style>
