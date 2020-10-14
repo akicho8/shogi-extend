@@ -17,9 +17,9 @@ module Swars
       { key: "UFOマン",            medal_params: { message: "UFO銀で勝った", method: "raw",  name: "🛸",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("UFO銀") > 0 },},
       { key: "カニ執着マン",       medal_params: { message: "カニ系の戦法や囲いで勝った", method: "raw",  name: "🦀",                type: nil, },          if_cond: proc { (win_and_all_tag_ratio_for("カニカニ銀") > 0 || win_and_all_tag_ratio_for("カニカニ金") > 0) || win_and_all_tag_ratio_for("カニ囲い") >= 0.2 || win_and_all_tag_ratio_for("蟹罐囲い") > 0 },},
       { key: "穴熊マン",           medal_params: { message: "穴熊を使った", method: "raw",  name: "🐻",                type: nil, },          if_cond: proc { all_tag_names_join.include?("熊") },},
-      { key: "ダイヤマン",         medal_params: { message: "ダイヤモンド美濃に囲って勝った", method: "raw",  name: "💎",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("ダイヤモンド美濃") > 0 },},
+      { key: "ダイヤマン",         medal_params: { message: "ダイヤモンド美濃を使って勝った", method: "raw",  name: "💎",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("ダイヤモンド美濃") > 0 },},
       { key: "レグスペマン",       medal_params: { message: "レグスペを使って勝った", method: "raw",  name: "🐔",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("レグスペ") > 0 },},
-      { key: "音無しマン",         medal_params: { message: "音無しの構えの囲いで勝った", method: "raw",  name: "🦉",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("音無しの構え") > 0 },},
+      { key: "音無しマン",         medal_params: { message: "音無しの構えを使って勝った", method: "raw",  name: "🦉",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("音無しの構え") > 0 },},
       { key: "筋違い角おじさん",   medal_params: { message: "筋違い角おじさん", method: "raw",  name: "🧓",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("筋違い角") > 0 },},
       { key: "スイーツマン",       medal_params: { message: "いちご囲いで勝った", method: "raw",  name: "🍓",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("いちご囲い") > 0 },},
       { key: "無敵囲いマン",       medal_params: { message: "無敵囲いを使った", method: "raw",  name: "🔰",                type: nil, },          if_cond: proc { all_tag_ratio_for("無敵囲い") > 0 },},
@@ -43,21 +43,21 @@ module Swars
 
       { key: "レアマン",           medal_params: { message: "レアな戦法が多い", method: "raw",  name: "🍀",                type: nil, },          if_cond: proc { (r = deviation_avg) && r < 50.0     },},
 
-      { key: "切断マン",           medal_params: { message: nil, method: "raw",  name: "💩",                type: nil, },          if_cond: proc { (r = lose_ratio_of("DISCONNECT")) && r > 0 },},
+      { key: "切断マン",           medal_params: { message: "悔しくて投了せずに切断した", method: "raw",  name: "💩",                type: nil, },          if_cond: proc { (r = lose_ratio_of("DISCONNECT")) && r > 0 },},
 
       { key: "角不成マン",         medal_params: { message: "角不成をした", method: "raw",  name: "☠",                 type: nil, },          if_cond: proc { all_tag_ratio_for("角不成") > 0 }           },
       { key: "飛車不成マン",       medal_params: { message: "飛車不成をした", method: "raw",  name: "💀",                type: nil, },          if_cond: proc { all_tag_ratio_for("飛車不成") > 0 }           },
 
-      { key: "1手詰じらしマン",    medal_params: { message: "1手詰を焦らして優越感に浸った", method: "raw",  name: "😈",                type: nil, },          if_cond: proc { (r = jirasi_ratio) && r > 0 } },
-      { key: "絶対投了しないマン", medal_params: { message: "投了するのが悔しくて放置した", method: "raw",  name: "🧟",                type: nil, },          if_cond: proc { (r = zettai_toryo_sinai_ratio) && r > 0 } },
+      { key: "1手詰じらしマン",    medal_params: { message: "1手詰を焦らして歪んだ優越感に浸った", method: "raw",  name: "😈",                type: nil, },          if_cond: proc { (r = jirasi_ratio) && r > 0 } },
+      { key: "絶対投了しないマン", medal_params: { message: "悔しくて投了せずに放置した", method: "raw",  name: "🧟",                type: nil, },          if_cond: proc { (r = zettai_toryo_sinai_ratio) && r > 0 } },
 
       { key: "大長考マン",         medal_params: { message: "ありえないほどの長考をした", method: "raw",  name: "🚫",                type: nil, },          if_cond: proc { (r = long_think_ratio) && r > 0 } },
       { key: "長考マン",           medal_params: { message: "考えすぎて負けることが多い", method: "raw",  name: "🤯",                type: nil, },          if_cond: proc { (r = short_think_ratio) && r > 0.1 } },
 
-      { key: "開幕千日手",         medal_params: { message: "開幕千日手をした", method: "raw",  name: "❓",                type: nil },           if_cond: proc { (r = start_draw_ratio) && r > 0 } },
+      { key: "開幕千日手",         medal_params: { message: "開幕千日手があった", method: "raw",  name: "❓",                type: nil },           if_cond: proc { (r = start_draw_ratio) && r > 0 } },
       { key: "ただの千日手",       medal_params: { message: "千日手があった", method: "icon", name: "autorenew",         type: "is-danger" },   if_cond: proc { (r = draw_ratio) && r > 0 } },
 
-      { key: "棋神マン",           medal_params: { message: "棋神を使用した疑惑がある", method: "raw",  name: "🤖",                type: nil },           if_cond: proc { ai_use_battle_count >= 1 } },
+      { key: "棋神マン",           medal_params: { message: "棋神召喚疑惑あり", method: "raw",  name: "🤖",                type: nil },           if_cond: proc { ai_use_battle_count >= 1 } },
     ]
   end
 end
