@@ -24,24 +24,28 @@ module Swars
         if_cond: -> m { true },
         builder: -> m {
           d = m.grade_diff
+          a = d.abs
+          p1 = "#{a}#{a <= 9 ? 'つ' : ''}"
+          p2 = "#{p1}#{a >= 2 ? 'も' : ''}"
+
           case
           when m.judge_info.key == :win
             case
             when d >= 1
-              { message: "段級位が#{d}つ#{d >= 2 ? 'も' : ''}上の人に勝った", icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
+              { message: "段級位が#{p2}上の人に勝った", icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
             when d == 0
               { message: "同じ段級位に勝った", icon: "star", :class => "has-text-gold" }
             else
-              { message: "下の段級位にあたりまえのように勝った", icon: "star-outline", :class => "has-text-gold" }
+              { message: "段級位が下の人にあたりまえのように勝った", icon: "star-outline", :class => "has-text-gold" }
             end
           when m.judge_info.key == :lose
             case
             when d >= 1
-              { message: "段級位が#{d}つ#{d >= 2 ? 'も' : ''}上の人にあたりまえのように負けた", icon: "emoticon-neutral-outline", :class => "has-text-grey-light" }
+              { message: "段級位が上の人にあたりまえのように負けた", icon: "emoticon-neutral-outline", :class => "has-text-grey-light" }
             when d == 0
               { message: "同じ段級位に負けた", icon: "emoticon-sad-outline", :class => "has-text-grey-light" }
             else
-              { message: "段級位が#{d.abs}つ#{d.abs >= 2 ? 'も' : ''}下の人に負けた", icon: "emoticon-dead-outline", :class => "has-text-grey-light" }
+              { message: "段級位が#{p2}下の人に負けた", icon: "emoticon-dead-outline", :class => "has-text-grey-light" }
             end
           end
         },
