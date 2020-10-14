@@ -14,7 +14,7 @@ module Swars
       @notice_collector = NoticeCollector.new
 
       [
-        :redirect_if_exist_modal_id,
+        :redirect_if_legacy_path,
         :kento_json_render,
         :swars_users_key_json_render,
         :zip_dl_perform,
@@ -30,14 +30,23 @@ module Swars
     # 新しいURLにリダイレクト
     # 旧 http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
     # 新 http://localhost:4000/swars/battles/devuser1-Yamada_Taro-20200101_123401?flip=false&turn=34
-    def redirect_if_exist_modal_id
-      if request.format.html?
+    def redirect_if_legacy_path
+      if params[:format].blank? || request.format.html?
+        query = params.permit!.to_h.except(:controller, :action, :format, :modal_id).to_query.presence
         if modal_id = params[:modal_id].presence
-          query = params.permit!.to_h.except(:controller, :action, :format, :modal_id).to_query.presence
           path = ["/swars/battles/#{modal_id}", query].compact.join("?")
           redirect_to UrlProxy.wrap(path)
           return
         end
+        if params[:latest_open_index] && current_swars_user_key
+          external_app_key = params[:external_app_key] || :piyo_shogi
+          path = "/swars/users/#{current_swars_user_key}/direct-open/#{external_app_key}"
+          redirect_to UrlProxy.wrap(path)
+          return
+        end
+        path = ["/swars/search", query].compact.join("?")
+        redirect_to UrlProxy.wrap(path)
+        return
       end
     end
 

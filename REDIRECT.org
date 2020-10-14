@@ -3,8 +3,10 @@
 |------------------+-------------------------------------------------------------------------------------------+----------------------------------------------------------------------+------|
 | 場所             | 古いURL                                                                                   | リダイレクト先                                                       | 備考 |
 |------------------+-------------------------------------------------------------------------------------------+----------------------------------------------------------------------+------|
-| ウォーズ検索     | http://localhost:3000/w                                                                   | http://localhost:4000/swars/battles                                  |      |
-| 最新開くぴよ(旧) | http://localhost:3000/w?query=kinakom0chi&latest_open_index=0                             | http://localhost:4000/swars/users/kinakom0chi/direct-open/piyo_shogi |      |
-| 最新開くぴよ(新) | http://localhost:3000/w?query=kinakom0chi&latest_open_index=0&external_app_key=piyo_shogi | http://localhost:4000/swars/users/kinakom0chi/direct-open/piyo_shogi |      |
-| 最新開くKENTO    | http://localhost:3000/w?query=kinakom0chi&latest_open_index=0&external_app_key=kento      | http://localhost:4000/swars/users/kinakom0chi/direct-open/kento      |      |
+| ウォーズ検索     | http://0.0.0.0:3000/w                                                                   | http://0.0.0.0:4000/swars/search                                   |      |
+| 最新開くぴよ(旧) | http://0.0.0.0:3000/w?query=kinakom0chi&latest_open_index=0                             | http://0.0.0.0:4000/swars/users/kinakom0chi/direct-open/piyo_shogi |      |
+| 最新開くぴよ(新) | http://0.0.0.0:3000/w?query=kinakom0chi&latest_open_index=0&external_app_key=piyo_shogi | http://0.0.0.0:4000/swars/users/kinakom0chi/direct-open/piyo_shogi |      |
+| 最新開くKENTO    | http://0.0.0.0:3000/w?query=kinakom0chi&latest_open_index=0&external_app_key=kento      | http://0.0.0.0:4000/swars/users/kinakom0chi/direct-open/kento      |      |
+| バトル詳細       | http://0.0.0.0:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34  |                                                                      |      |
+|                  | http://0.0.0.0:3000/share-board                                                         |                                                                      |      |
 |------------------+-------------------------------------------------------------------------------------------+----------------------------------------------------------------------+------|
