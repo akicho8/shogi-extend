@@ -4,18 +4,18 @@ module Swars
     include ApplicationMemoryRecord
     memory_record [
       # ヒットしたらbreakなので順序重要
-      { key: "切断マン",           message: "foo", medal_params: "💩", if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :DISCONNECT } },
-      { key: "棋神マン",           message: "foo", medal_params: "🤖", if_cond: -> m { m.judge_key == "win" && m.battle.turn_max >= 50 && (m.two_serial_max || 0) >= 15 } },
-      { key: "一手詰じらしマン",   message: "foo", medal_params: "😈", if_cond: -> m { (t = m.battle.rule_info.teasing_limit) && (m.think_last || 0) >= t && m.judge_key == "win" && m.battle.final_info.key == :CHECKMATE } },
-      { key: "絶対投了しないマン", message: "foo", medal_params: "🧟", if_cond: -> m { (t = m.battle.rule_info.long_leave_alone) && (m.think_last || 0) >= t && m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
-      { key: "角不成マン",         message: "foo", medal_params: "☠",  if_cond: -> m { m.tag_names_for(:note).include?("角不成") } },
-      { key: "飛車不成マン",       message: "foo", medal_params: "💀", if_cond: -> m { m.tag_names_for(:note).include?("飛車不成") } },
-      { key: "背水マン",           message: "foo", medal_params: "🧠",  if_cond: -> m { m.tag_names_for(:note).include?("背水の陣") && m.judge_key == "win" && m.battle.final_info.toryo_or_tsumi },},
-      { key: "大長考マン",         message: "foo", medal_params: "🚫", if_cond: -> m { (t = m.battle.rule_info.long_leave_alone) && m.think_max >= t } },
-      { key: "長考マン",           message: "foo", medal_params: "🤯", if_cond: -> m { (t = m.battle.rule_info.short_leave_alone) && m.think_max >= t && m.judge_key == "lose" } },
-      { key: "切れ負けマン",       message: "foo", medal_params: "⌛",  if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
-      { key: "開幕千日手",         message: "foo", medal_params: "❓", if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max == 12 } },
-      { key: "ただの千日手",       message: "foo", medal_params: { icon: "autorenew", :class => "has-text-danger" }, if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max > 12 } },
+      { key: "切断マン",           message: nil,                                   medal_params: "💩", if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :DISCONNECT } },
+      { key: "棋神マン",           message: "棋神を使用した疑惑がある",            medal_params: "🤖", if_cond: -> m { m.judge_key == "win" && m.battle.turn_max >= 50 && (m.two_serial_max || 0) >= 15 } },
+      { key: "1手詰じらしマン",    message: "1手詰を焦らして歪んだ優越感に浸った", medal_params: "😈", if_cond: -> m { (t = m.battle.rule_info.teasing_limit) && (m.think_last || 0) >= t && m.judge_key == "win" && m.battle.final_info.key == :CHECKMATE } },
+      { key: "絶対投了しないマン", message: "投了するのが悔しくて放置した",        medal_params: "🧟", if_cond: -> m { (t = m.battle.rule_info.long_leave_alone) && (m.think_last || 0) >= t && m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
+      { key: "角不成マン",         message: "角成らずでナメプした",                medal_params: "☠",  if_cond: -> m { m.tag_names_for(:note).include?("角不成") } },
+      { key: "飛車不成マン",       message: "飛車成らずでナメプした",              medal_params: "💀", if_cond: -> m { m.tag_names_for(:note).include?("飛車不成") } },
+      { key: "背水マン",           message: "大駒すべて捨てて勝った",              medal_params: "🧠",  if_cond: -> m { m.tag_names_for(:note).include?("背水の陣") && m.judge_key == "win" && m.battle.final_info.toryo_or_tsumi },},
+      { key: "大長考マン",         message: "ありえないほどの長考をした",          medal_params: "🚫", if_cond: -> m { (t = m.battle.rule_info.long_leave_alone) && m.think_max >= t } },
+      { key: "長考マン",           message: "考えすぎて負けた",                    medal_params: "🤯", if_cond: -> m { (t = m.battle.rule_info.short_leave_alone) && m.think_max >= t && m.judge_key == "lose" } },
+      { key: "切れ負けマン",       message: "時間切れで負けた",                    medal_params: "⌛",  if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
+      { key: "開幕千日手",         message: "開幕千日手",                          medal_params: "❓", if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max == 12 } },
+      { key: "ただの千日手",       message: "千日手",                              medal_params: { icon: "autorenew", :class => "has-text-danger" }, if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max > 12 } },
 
       {
         key: "段級位差",
@@ -52,7 +52,12 @@ module Swars
       if builder
         builder[m]
       else
-        { emoji: medal_params, message: message || key }
+        if medal_params.kind_of? Hash
+          v = medal_params
+        else
+          v = { emoji: medal_params}
+        end
+        v.merge(message: message)
       end
     end
   end

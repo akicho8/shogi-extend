@@ -77,7 +77,7 @@
 
     .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
       template(v-for="(row, i) in info.medal_list")
-        span.is_clickable(@click="medal_click_handle(row)")
+        span(@click="medal_click_handle(row)" :class="{is_clickable: row.message}")
           template(v-if="row.method === 'tag'")
             b-tag(:key="`medal_list/${i}`" :type="row.type" rounded) {{row.name}}
           template(v-else-if="row.method === 'raw'")
@@ -228,8 +228,11 @@ export default {
 
   methods: {
     medal_click_handle(medal) {
-      this.sound_play("click")
-      this.toast_ok(medal.message)
+      const message = medal.message
+      if (message) {
+        this.sound_play("click")
+        this.toast_ok(message)
+      }
     },
 
     search_path(queries) {

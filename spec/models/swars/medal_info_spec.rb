@@ -111,7 +111,7 @@ module Swars
       end
     end
 
-    describe "一手詰じらしマン" do
+    describe "1手詰じらしマン" do
       before do
         @black = User.create!
         @white = User.create!
@@ -122,7 +122,7 @@ module Swars
       end
 
       it do
-        assert { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"一手詰じらしマン") }
+        assert { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"1手詰じらしマン") }
       end
     end
 

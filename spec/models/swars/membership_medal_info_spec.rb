@@ -66,7 +66,7 @@ module Swars
       end
     end
 
-    describe "一手詰じらしマン" do
+    describe "1手詰じらしマン" do
       before do
         @black = User.create!
         @white = User.create!
@@ -77,7 +77,7 @@ module Swars
       end
 
       it do
-        assert { @black.memberships.first.first_matched_medal.key == :"一手詰じらしマン" }
+        assert { @black.memberships.first.first_matched_medal.key == :"1手詰じらしマン" }
       end
     end
 

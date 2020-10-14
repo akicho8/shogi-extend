@@ -1,5 +1,5 @@
 <template lang="pug">
-.MembershipMedal.is-inline-block.is_clickable(@click="click_handle")
+.MembershipMedal.is-inline-block(@click="click_handle" :class="{is_clickable: params.message}")
   template(v-if="params.emoji")
     span.emoji
       | {{params.emoji}}
@@ -17,8 +17,11 @@ export default {
   },
   methods: {
     click_handle() {
-      this.sound_play("click")
-      this.toast_ok(this.params.message)
+      const message = this.params.message
+      if (message) {
+        this.sound_play("click")
+        this.toast_ok(message)
+      }
     },
   },
 }
