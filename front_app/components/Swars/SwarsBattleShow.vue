@@ -9,30 +9,30 @@
         //-   .ml-3 棋譜詳細
         b-menu
           b-menu-list(label="Action")
-            b-menu-item(label="共有将棋盤で開く" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}")
+            b-menu-item(label="共有将棋盤で開く" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}" @click.native="sound_play('click')")
 
           b-menu-list(label="export")
-            b-menu-item(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}")
-            b-menu-item
+            b-menu-item(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}" @click.native="sound_play('click')")
+            b-menu-item(@click="sound_play('click')")
               template(slot="label" slot-scope="props")
                 span.ml-1 表示
                 b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-              b-menu-item(label="KIF"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
-              b-menu-item(label="KI2"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
-              b-menu-item(label="CSA"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
-              b-menu-item(label="SFEN" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
-              b-menu-item(label="BOD"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${new_turn}`")
-              b-menu-item(label="PNG"  :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&flip=${new_flip}&width=`")
-            b-menu-item
+              b-menu-item(label="KIF"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
+              b-menu-item(label="KI2"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
+              b-menu-item(label="CSA"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
+              b-menu-item(label="SFEN" @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
+              b-menu-item(label="BOD"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${new_turn}`")
+              b-menu-item(label="PNG"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&flip=${new_flip}&width=`")
+            b-menu-item(@click="sound_play('click')")
               template(slot="label" slot-scope="props")
                 span.ml-1 ダウンロード
                 b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-              b-menu-item(label="KIF"  :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
-              b-menu-item(label="KI2"  :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
-              b-menu-item(label="CSA"  :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
-              b-menu-item(label="SFEN" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
-              b-menu-item(label="BOD"  :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
-              b-menu-item(label="PNG"  :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&flip=${new_flip}&width=`")
+              b-menu-item(label="KIF"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
+              b-menu-item(label="KI2"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
+              b-menu-item(label="CSA"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
+              b-menu-item(label="SFEN" @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
+              b-menu-item(label="BOD"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
+              b-menu-item(label="PNG"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&flip=${new_flip}&width=`")
 
           //- b-menu-list(label="Menu")
           //-   b-menu-item(label="Info")

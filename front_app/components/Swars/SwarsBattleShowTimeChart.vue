@@ -374,6 +374,7 @@ export default {
 
   watch: {
     zoom_p(v) {
+      this.sound_play("click")
       if (v) {
         // 拡大
         const ticks = this._chart_config.options.scales.yAxes[0].ticks
