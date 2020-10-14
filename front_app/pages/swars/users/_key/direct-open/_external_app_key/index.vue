@@ -6,7 +6,7 @@ client-only
         b-navbar-item.has-text-weight-bold(tag="div") {{long_title}}
     .section
       .container
-        b-button(tag="nuxt-link" :to="{name: 'swars-battles', query: {query: $route.params.key}}" @click.native="sound_play('click')")
+        b-button(tag="nuxt-link" :to="{name: 'swars-search', query: {query: $route.params.key}}" @click.native="sound_play('click')")
           | ← 検索に戻る
         pre(v-if="development_p") {{config}}
 </template>
@@ -30,7 +30,7 @@ export default {
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.long_title,                                    },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                          },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles.png", },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-search.png", },
         { hid: "og:description", property: "og:description", content: "",                                                 },
       ],
       link: [

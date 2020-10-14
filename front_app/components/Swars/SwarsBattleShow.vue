@@ -44,7 +44,7 @@
         b-navbar-item(@click="back_handle")
           b-icon(icon="arrow-left")
 
-        //- b-navbar-item(tag="nuxt-link" :to="{name: 'swars-battles'}" @click.native="sound_play('click')")
+        //- b-navbar-item(tag="nuxt-link" :to="{name: 'swars-search'}" @click.native="sound_play('click')")
         //-   b-icon(icon="arrow-left")
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}") {{record.title}}
       template(slot="end")

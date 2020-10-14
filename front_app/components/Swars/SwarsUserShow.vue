@@ -7,7 +7,7 @@
   b-dropdown.top_right_menu(position="is-bottom-left" @click.native="sound_play('click')")
     b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
-    b-dropdown-item(@click="sound_play('click'); $router.push({name: 'swars-battles', query: {query: info.user.key}})")
+    b-dropdown-item(@click="sound_play('click'); $router.push({name: 'swars-search', query: {query: info.user.key}})")
       b-icon(icon="magnify" size="is-small")
       | 棋譜検索
 
@@ -113,7 +113,7 @@
               WinLoseCircle(:info="row" size="is-small" narrowed)
             .column.is-paddingless.is-flex
               template(v-for="tag in row.all_tags")
-                nuxt-link.tag_wrapper.has-text-weight-bold.is-size-5(:to="{name: 'swars-battles', query: {query: `${info.user.key} tag:${tag.name}`}}") {{tag.name}}
+                nuxt-link.tag_wrapper.has-text-weight-bold.is-size-5(:to="{name: 'swars-search', query: {query: `${info.user.key} tag:${tag.name}`}}") {{tag.name}}
 
     template(v-if="tab_index === 1")
       template(v-for="(row, i) in info.every_grade_list")
@@ -244,7 +244,7 @@ export default {
         ...queries,
       ].join(" ")
 
-      return {name: "swars-battles", query: {query: query}}
+      return {name: "swars-search", query: {query: query}}
     },
 
     ////////////////////////////////////////////////////////////////////////////////

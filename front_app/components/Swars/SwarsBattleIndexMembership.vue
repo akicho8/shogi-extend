@@ -7,7 +7,7 @@
     template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
       template(v-if="base.visible_hash[key]")
         template(v-for="name in m[key]")
-          nuxt-link(:to="{name: 'swars-battles', query: {query: new_query(name)}}" @click.native="sound_play('click')")
+          nuxt-link(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="sound_play('click')")
             b-tag(rounded) {{name}}
 </template>
 
@@ -29,7 +29,7 @@ export default {
     },
     // click_handle(name) {
     //   // this.base.interactive_search({query: this.new_query(name)})
-    //   // this.$router.push({name: 'swars-battles', query: {query: this.new_query(name)}}, () => {
+    //   // this.$router.push({name: 'swars-search', query: {query: this.new_query(name)}}, () => {
     //   //   // this.sound_play('click')
     //   // }, () => {
     //   //   // かならず失敗するのはどういうこと？？？

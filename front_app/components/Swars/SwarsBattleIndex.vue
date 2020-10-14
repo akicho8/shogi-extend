@@ -42,9 +42,9 @@
             //- b-menu-item(label="勝ち" @click.stop="filter_research(`judge:win`)"  :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
             //- b-menu-item(label="負け" @click.stop="filter_research(`judge:lose`)" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
             //- b-menu-item(label="なし" @click.stop="filter_research(``)"           :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
-            b-menu-item(label="勝ち" tag="nuxt-link" :to="{name: 'swars-battles', query: {query: `${config.current_swars_user_key} judge:win`}}"  @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
-            b-menu-item(label="負け" tag="nuxt-link" :to="{name: 'swars-battles', query: {query: `${config.current_swars_user_key} judge:lose`}}" @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
-            b-menu-item(label="なし" tag="nuxt-link" :to="{name: 'swars-battles', query: {query: `${config.current_swars_user_key}`}}"            @click.native="sound_play('click')" :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
+            b-menu-item(label="勝ち" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} judge:win`}}"  @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
+            b-menu-item(label="負け" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} judge:lose`}}" @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
+            b-menu-item(label="なし" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key}`}}"            @click.native="sound_play('click')" :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
 
         b-menu-list(label="その他")
           b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
@@ -262,7 +262,7 @@ export default {
   //     meta: [
   //       { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ棋譜検索"                                                                                          },
   //       { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                                                                           },
-  //       { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles.png"                                                              },
+  //       { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-search.png"                                                              },
   //       { hid: "og:description", property: "og:description", content: "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます" },
   //     ],
   //   }
