@@ -241,7 +241,7 @@ export default {
              </ul>
            </li>
          </ol>
-       </div>`, {rate: 3.0})
+       </div>`)
   },
 
   computed: {
