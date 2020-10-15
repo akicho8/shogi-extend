@@ -4,10 +4,10 @@ module Swars
     include ApplicationMemoryRecord
     memory_record [
       # ヒットしたらbreakなので順序重要
-      { key: "切断マン",           message: "悔しくて投了せずに切断した",          medal_params: "💩", if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :DISCONNECT } },
+      { key: "切断マン",           message: "悔しかったので投了するかわりに切断した",          medal_params: "💩", if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :DISCONNECT } },
       { key: "棋神マン",           message: "棋神召喚疑惑あり",                    medal_params: "🤖", if_cond: -> m { m.judge_key == "win" && m.battle.turn_max >= 50 && (m.two_serial_max || 0) >= 15 } },
       { key: "1手詰じらしマン",    message: "1手詰を焦らして歪んだ優越感に浸った", medal_params: "😈", if_cond: -> m { (t = m.battle.rule_info.teasing_limit) && (m.think_last || 0) >= t && m.judge_key == "win" && m.battle.final_info.key == :CHECKMATE } },
-      { key: "絶対投了しないマン", message: "悔しくて投了せずに放置した",          medal_params: "🧟", if_cond: -> m { (t = m.battle.rule_info.long_leave_alone) && (m.think_last || 0) >= t && m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
+      { key: "絶対投了しないマン", message: "悔しかったので投了するかわりに放置した",          medal_params: "🧟", if_cond: -> m { (t = m.battle.rule_info.long_leave_alone) && (m.think_last || 0) >= t && m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
       { key: "角不成マン",         message: "角成らずで舐めプした",                medal_params: "☠",  if_cond: -> m { m.tag_names_for(:note).include?("角不成") } },
       { key: "飛車不成マン",       message: "飛車成らずで舐めプした",              medal_params: "💀", if_cond: -> m { m.tag_names_for(:note).include?("飛車不成") } },
       { key: "背水マン",           message: "大駒すべて捨てて勝った",              medal_params: "🧠",  if_cond: -> m { m.tag_names_for(:note).include?("背水の陣") && m.judge_key == "win" && m.battle.final_info.toryo_or_tsumi },},
