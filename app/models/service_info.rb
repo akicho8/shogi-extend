@@ -6,11 +6,11 @@ class ServiceInfo
       nuxt_link_to: {name: "swars-search"},
       title: "将棋ウォーズ棋譜検索",
       ogp_image_base: "swars-search",
-      description: "検索と言いつつそんなに検索しない",
+      description: "他のアプリで検討したいときにどうぞ",
       features: [
-        "ぴよ将棋やKENTOと連携",
-        "激指に転送するための棋譜コピー",
-        "段級位毎の勝率表示",
+        "ぴよ将棋やKENTOですぐ読み込める",
+        "激指には棋譜コピーで転送しよう",
+        "段級位毎の勝率表示などもある",
       ],
     },
     {
@@ -18,11 +18,11 @@ class ServiceInfo
       nuxt_link_to: {path: "/swars/histograms/attack"},
       title: "将棋ウォーズ戦法分布",
       ogp_image_base: "swars-histograms-attack",
-      description: "人気のある戦法の傾向がわかる",
+      description: "人気戦法を知りたいときにどうぞ",
       features: [
-        "全体だと変動しなくておもしろくないので最近のだけ出してる",
-        "囲いの分布もある",
-        "段級位の分布もある",
+        "そこそこ変動するように最近のだけ出してる",
+        "囲いや段級位の分布もある",
+        "人気戦法の対策をすれば勝ちやすいかも？",
       ],
     },
     {
@@ -30,7 +30,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/swars/top-group"},
       title: "将棋ウォーズイベント上位プレイヤー",
       ogp_image_base: "swars-top-group",
-      description: "勢いのあるプレイヤーがわかる",
+      description: "上位プレイヤーの棋譜を見たいときにどうぞ",
       features: [
         "棋士団戦の期間は幽霊団員も出てきてしまう",
         "名前タップで検索できる",
@@ -39,12 +39,13 @@ class ServiceInfo
     {
       display_p: true,
       nuxt_link_to: {path: "/swars/professional"},
-      title: "将棋ウォーズ十段の成績",
+      title: "将棋ウォーズ指導対局成績",
       ogp_image_base: "swars-professional",
-      description: "プロの成績を覗き見る",
+      description: "プロの棋譜を探したいときにどうぞ",
       features: [
-        "なぜか電脳少女シロの成績もある",
-        "名前タップで検索できる",
+        "十段のプレイヤーを列挙しているだけ",
+        "名前タップで棋譜検索に飛ぶ",
+        "なぜか電脳少女シロもいる",
       ],
     },
     {
@@ -52,15 +53,11 @@ class ServiceInfo
       nuxt_link_to: {path: "/xy"},
       title: "符号の鬼",
       ogp_image_base: "xy",
-      description: "符号マスター養成所",
+      description: "符号がぺらぺらになりたい人向け",
       features: [
         "タップするルールはスマホ用",
-        # "キーボードで入力するルールはPC用",
         "100問正解するまでの時間を競う",
         "1分半切ったら卒業",
-        # "先後両方の視点で練習可",
-        # "ランキングあり",
-        # "キーボードで入力するルールはパソコン用",
       ],
     },
     {
@@ -69,7 +66,7 @@ class ServiceInfo
       title: "対局時計",
       new_p: false,
       ogp_image_base: "vs-clock",
-      description: "チェスクロックとも言う",
+      description: "大会などでチェスクロックが足りないときにどうぞ",
       features: [
         "一般的なネット対局のプリセットを用意",
         "24の猶予時間対応",
@@ -81,7 +78,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/three-stage-leagues"},
       title: "奨励会三段リーグ成績早見表",
       ogp_image_base: "three-stage-league-players",
-      description: "個人の総合成績がわかる",
+      description: "個人の成績を知りたいときにどうぞ",
       features: [
         "スマホに最適化",
         "個人毎の総成績表示",
@@ -93,7 +90,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/adapter"},
       title: "なんでも棋譜変換",
       ogp_image_base: "adapter",
-      description: "混沌とした棋譜フォーマット界を正したい",
+      description: "棋譜が読み込めない場合に放り込んでください",
       features: [
         "変則的な将棋倶楽部24の棋譜を正規化",
         "将棋クエストのCSA形式をKIFに変換",
@@ -105,7 +102,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",
       ogp_image_base: "share-board",
-      description: "リレー将棋や詰将棋の共有に向いている",
+      description: "リレー将棋・詰将棋作成・仲間内での対戦にどうぞ",
       features: [
         "SNS等での指し継ぎ",
         "課題局面や詰将棋の作成",

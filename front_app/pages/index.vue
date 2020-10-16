@@ -32,7 +32,15 @@
   .footer
     .container
       .columns
-        .column.is-half.has-text-centered
+        .column.is-4.has-text-centered
+          .title.is-6.mb-0.has-text-weight-bold Service Map
+          ul.mt-1
+            template(v-for="e in config")
+              template(v-if="e.display_p || development_p")
+                li
+                  nuxt-link(:to="e.nuxt_link_to") {{e.title}}
+
+        .column.is-4.has-text-centered
           .title.is-6.mb-0.has-text-weight-bold About
           ul.mt-1
             li
@@ -44,7 +52,7 @@
             li
               a(href="https://twitter.com/sgkinakomochi" :target="target_default") 問い合わせ
 
-        .column.is-half.has-text-centered
+        .column.is-4.has-text-centered
           .title.is-6.mb-0.has-text-weight-bold GitHub
           ul.mt-1
             li
@@ -92,9 +100,6 @@ export default {
 .service-infos
   .box
     padding-bottom: 2rem
-
-  .features
-    height: 3rem
 
   .footer
     color: $grey
