@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_154202) do
+ActiveRecord::Schema.define(version: 2020_10_15_170400) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -560,6 +560,18 @@ ActiveRecord::Schema.define(version: 2020_09_20_154202) do
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
   end
 
+  create_table "swars_crawl_reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "target_user_key", null: false
+    t.string "to_email", null: false
+    t.string "attachment_mode", null: false
+    t.datetime "processed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attachment_mode"], name: "index_swars_crawl_reservations_on_attachment_mode"
+    t.index ["user_id"], name: "index_swars_crawl_reservations_on_user_id"
+  end
+
   create_table "swars_grades", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "priority", null: false, comment: "優劣"
@@ -786,4 +798,5 @@ ActiveRecord::Schema.define(version: 2020_09_20_154202) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "mute_infos", "users"
   add_foreign_key "mute_infos", "users", column: "target_user_id"
+  add_foreign_key "swars_crawl_reservations", "users"
 end

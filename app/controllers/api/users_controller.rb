@@ -56,7 +56,7 @@ module Api
     # http://localhost:3000/api/users/1.json
     def show
       user = User.find(params[:id])
-      render json: user.as_json_simple_profile
+      render json: user.as_json_simple_public_profile
     end
 
     # def update

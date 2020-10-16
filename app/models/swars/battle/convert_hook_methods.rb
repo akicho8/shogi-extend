@@ -1,4 +1,3 @@
-
 module Swars
   class Battle
     concern :ConvertHookMethods do

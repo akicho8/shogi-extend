@@ -1,8 +1,8 @@
 <template lang="pug">
 //- info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
-.SwarsUserShow(v-if="!$fetchState.pending" :key="info.key")
+.SwarsUserShow(v-if="!$fetchState.pending && info")
   // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
-  .delete.page_delete.is-large(@click="delete_click_handle")
+  .delete.page_delete.is-large(@click="back_handle")
 
   b-dropdown.top_right_menu(position="is-bottom-left" @click.native="sound_play('click')")
     b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
@@ -98,7 +98,7 @@
     b-tab-item(label="戦法")
     b-tab-item(label="対抗")
 
-  .tab_content
+  .tab_content(v-if="info")
     template(v-if="tab_index === 0")
       template(v-for="(row, i) in info.every_day_list")
         nuxt-link.box.one_box.two_column(:key="`every_day_list/${i}`" :to="every_day_search_path(row)" @click.native="sound_play('click')")
@@ -211,13 +211,26 @@ export default {
     },
   },
 
-  async fetch() {
-    // alert("fetch")
-    // console.log(this.$route.query)
-    // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
+  fetch({error}) {
     // http://0.0.0.0:4000/swars/users/devuser1
-    this.info = await this.$axios.$get("/w.json", {params: {query: this.$route.params.key, format_type: "user", ...this.$route.query}})
-    this.ls_setup() // ←これうごいてんのか？？？
+    // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
+    // http://0.0.0.0:3000/w.json?query=foo&format_type=user
+    const query = {
+      ...this.$route.query,
+      query: this.$route.params.key,
+      format_type: "user",
+    }
+    return this.$axios.$get("/w.json", {params: query}).then(e => { // FIXME: /api/users.json にする
+      if (this.notice_collector_has_error(e)) {
+        error({statusCode: 404, message: "a"})
+      }
+
+      this.notice_collector_run(e)
+      if (e.user_info) {
+        this.info = e.user_info
+        this.ls_setup()
+      }
+    })
   },
 
   created() {
@@ -272,9 +285,9 @@ export default {
       this.$router.replace({name: "swars-users-key", params: {key: this.info.user.key}, query: {tab_index: this.tab_index, ...options}})
     },
 
-    delete_click_handle() {
+    back_handle() {
       this.sound_play("click")
-      this.$router.go(-1)
+      this.browser_back_or_top({name: "swars-search", query: {query: this.$route.params.key}})
     },
 
     battled_on_to_class(row) {

@@ -44,9 +44,9 @@ export default {
         email: this.new_email,
       }
 
-      const retval = await this.$axios.$put("/api/settings/email_update", params)
-      this.notice_collector_run(retval)
-      if (this.notice_collector_has_error(retval)) {
+      const retv = await this.$axios.$put("/api/settings/email_update", params)
+      this.notice_collector_run(retv)
+      if (this.notice_collector_has_error(retv)) {
         return
       }
 

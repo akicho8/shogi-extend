@@ -5,6 +5,7 @@
   DebugBox
     p $route.query: {{$route.query}}
     p g_current_user: {{g_current_user && g_current_user.id}}
+    p download_active_p: {{download_active_p}}
   b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
@@ -50,13 +51,13 @@
         b-menu-list(label="その他")
           b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
-              | すぐにダウンロード
+              | 直近30件 ﾀﾞｳﾝﾛｰﾄﾞ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in ZipKifuInfo.values")
               b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
 
           b-menu-item(
-            label="ぜんぶダウンロード"
+            label="古い棋譜を取得"
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
@@ -277,6 +278,12 @@ export default {
   // watchQuery: ['query'],
   watch: {
     "$route.query": "$fetch",
+    download_active_p(v) {
+      if (v) {
+        this.toast_ok("3")
+      }
+    },
+
   },
 
   mounted() {

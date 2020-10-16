@@ -14,7 +14,7 @@ module Swars
       @notice_collector = NoticeCollector.new
 
       [
-        :redirect_if_legacy_path,
+        :redirect_if_old_path,
         :kento_json_render,
         :swars_users_key_json_render,
         :zip_dl_perform,
@@ -28,26 +28,30 @@ module Swars
     end
 
     # 新しいURLにリダイレクト
-    # 旧 http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
-    # 新 http://localhost:4000/swars/battles/devuser1-Yamada_Taro-20200101_123401?flip=false&turn=34
-    def redirect_if_legacy_path
-      if params[:format].blank? || request.format.html?
-        query = params.permit!.to_h.except(:controller, :action, :format, :modal_id).to_query.presence
-        if modal_id = params[:modal_id].presence
-          path = ["/swars/battles/#{modal_id}", query].compact.join("?")
-          redirect_to UrlProxy.wrap(path)
-          return
-        end
-        if params[:latest_open_index] && current_swars_user_key
-          external_app_key = params[:external_app_key] || :piyo_shogi
-          path = "/swars/users/#{current_swars_user_key}/direct-open/#{external_app_key}"
-          redirect_to UrlProxy.wrap(path)
-          return
-        end
-        path = ["/swars/search", query].compact.join("?")
-        redirect_to UrlProxy.wrap(path)
-        return
-      end
+    def redirect_if_old_path
+      # routes.rb に移動
+      #
+      # if params[:format].blank? || request.format.html?
+      #   query = params.permit!.to_h.except(:controller, :action, :format, :modal_id).to_query.presence
+      #
+      #   # http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
+      #   if modal_id = params[:modal_id].presence
+      #     path = ["/swars/battles/#{modal_id}", query].compact.join("?")
+      #     redirect_to UrlProxy.wrap(path)
+      #     return
+      #   end
+      #
+      #   if params[:latest_open_index] && current_swars_user_key
+      #     external_app_key = params[:external_app_key] || :piyo_shogi
+      #     path = "/swars/users/#{current_swars_user_key}/direct-open/#{external_app_key}"
+      #     redirect_to UrlProxy.wrap(path)
+      #     return
+      #   end
+      #
+      #   path = ["/swars/search", query].compact.join("?")
+      #   redirect_to UrlProxy.wrap(path)
+      #   return
+      # end
     end
 
     def default_json_render
@@ -60,16 +64,19 @@ module Swars
 
     def swars_users_key_json_render
       if request.format.json? && format_type == "user"
-        if current_swars_user
-          if params[:try_fetch] == "true"
-            import_process2
-          end
-          if Rails.env.test?
-            slack_message(key: "新プ情報", body: current_swars_user.key)
-          end
-          render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
+        unless current_swars_user
+          render json: { notice_collector: NoticeCollector.single(:danger, "#{current_swars_user_key}さんが見つかりません", method: "dialog") }
           return
         end
+
+        if params[:try_fetch] == "true"
+          import_process2
+        end
+        if Rails.env.test?
+          slack_message(key: "新プ情報", body: current_swars_user.key)
+        end
+        render json: { user_info: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json }
+        return
       end
     end
 

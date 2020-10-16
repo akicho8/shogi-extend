@@ -3,7 +3,7 @@ module Api
     # curl http://localhost:3000/api/session/current_user_fetch
     def current_user_fetch
       if current_user
-        render json: current_user.as_json_simple_profile
+        render json: current_user.as_json_simple_public_profile
       end
     end
 

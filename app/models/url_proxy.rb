@@ -15,12 +15,27 @@
 module UrlProxy
   extend self
 
+  def [](*args)
+    workaround(*args)
+  end
+
+  # rails r "p UrlProxy.wrap('/about/terms')"
+  # rails r "p UrlProxy.wrap(path: '/swars/search', query: {query: 'devuser1'})"
   def wrap(*args)
     workaround(*args)
   end
 
-  # rails r "p UrlProxy.workaround('/about/terms')"
   def workaround(path)
+    if path.kind_of?(Hash)
+      if query = path[:query].presence
+        if query.kind_of?(Hash)
+          query = query.to_query
+        end
+      end
+      path[:path] or raise "must not happen"
+      path = [path[:path], query].compact.join("?")
+    end
+
     if Rails.env.development? || Rails.env.test?
       domain = ENV["DOMAIN"] || "0.0.0.0"
       return "http://#{domain}:4000" + path

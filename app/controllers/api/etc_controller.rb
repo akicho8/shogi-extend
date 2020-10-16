@@ -2,7 +2,8 @@ module Api
   class EtcController < ::Api::ApplicationController
     skip_forgery_protection
 
-    # http://0.0.0.0:3000/api/echo.json?message=ok
+    # curl -X GET  http://0.0.0.0:3000/api/echo.json?message=ok
+    # curl -X POST http://0.0.0.0:3000/api/echo.json?message=ok
     def echo
       render json: {
         :message   => params[:message],

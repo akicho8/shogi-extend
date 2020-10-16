@@ -34,19 +34,33 @@
 # | name_input_at          | Name input at              | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
-class User < ApplicationRecord
-  include UserCoreMod
-  include UserAvatarMod
-  include UserProfileMod
-  include UserDeviseMod
-  include UserMuteMod
-  include UserTagMod
-  include UserRaceMod
-  include UserFreeBattleMod
-  include UserCpuBrainMod
-  include UserXyRerordMod
-  include UserStaffMod
-  include UserChoreMod
-  include ::Actb::UserMod
-  include UserCrawlReservationMod
+module Api
+  class SwarsController < ::Api::ApplicationController
+    # curl -d _method=post http://0.0.0.0:3000/api/swars/users/devuser1/download_yoyaku
+    # http://0.0.0.0:3000/api/swars/users/devuser1/download_yoyaku
+    def download_yoyaku
+      no = ::Swars::CrawlReservation.madanoyatu.count
+      record = current_user.swars_crawl_reservations.create(crawl_reservation_params)
+      if record.errors.present?
+        error_messages = record.errors.full_messages.join(" ")
+        render json: { notice_collector: NoticeCollector.single(:danger, error_messages, method: "dialog") }
+        return
+      end
+      notice_collector = NoticeCollector.single(:success, "予約が完了しました<br>(#{no}人待ち)", title: "予約完了", method: "dialog")
+      render json: { notice_collector: notice_collector }
+    end
+
+    def crawler_run
+      Swars::Crawler::ReservationCrawler.new.run
+      count = ::Swars::CrawlReservation.madanoyatu.count
+      notice_collector = NoticeCollector.single(:success, "取得処理実行完了(残り:#{count})")
+      render json: { notice_collector: notice_collector }
+    end
+
+    private
+
+    def crawl_reservation_params
+      params.permit![:crawl_reservation]
+    end
+  end
 end

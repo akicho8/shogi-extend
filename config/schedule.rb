@@ -14,13 +14,15 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 
 every("5 3 * * *") do
   runner [
-    "XyRecord.entry_name_blank_scope.destroy_all",
-    "Swars::Battle.old_record_destroy",
-    "FreeBattle.old_record_destroy",
     # "Swars::Battle.rule_key_bugfix_process",
+    "Swars::Crawler::ReservationCrawler.run",
     # "Swars::Crawler::RegularCrawler.run",
     # "Swars::Crawler::ExpertCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
+
+    "XyRecord.entry_name_blank_scope.destroy_all",
+    "Swars::Battle.old_record_destroy",
+    "FreeBattle.old_record_destroy",
 
     "ActiveRecord::Base.logger = nil",
     "Swars::Membership.where(:think_all_avg => nil).find_each{|e|e.think_columns_update;e.save!}",

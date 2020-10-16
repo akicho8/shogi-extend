@@ -40,7 +40,7 @@ module Swars
       parts << kifu_format_info.key
       parts << current_body_encode
       parts << zip_scope.count
-      str = parts.compact.join("_") + ".zip"
+      str = parts.compact.join("-") + ".zip"
       str.public_send("to#{current_body_encode}")
     end
 

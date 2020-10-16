@@ -85,6 +85,17 @@ export default {
       this.clog(log)
     },
 
+    // 1つ前に戻れるなら戻る
+    // 戻れないならトップに戻る
+    // window.history.length は自分を含めるので、1つ前に戻れる条件は2要素以上あるとき
+    browser_back_or_top(path = null) {
+      if (window.history.length >= 2) {
+        this.$router.go(-1)
+      } else {
+        this.$router.push(path || "/")
+      }
+    },
+
     // #以降を除いた現在のパス
     // http://localhost:3000/xy?abc=1#1 ↓
     // http://localhost:3000/xy?abc=1

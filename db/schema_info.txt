@@ -85,37 +85,6 @@
 
 # == Schema Information ==
 #
-# Room (acns1_rooms as Acns1::Room)
-#
-# |------------+----------+------------+-------------+------+-------|
-# | name       | desc     | type       | opts        | refs | index |
-# |------------+----------+------------+-------------+------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |      |       |
-# | created_at | 作成日時 | datetime   | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |      |       |
-# |------------+----------+------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Message (acns1_messages as Acns1::Message)
-#
-# |------------+----------+-------------+-------------+--------------+-------|
-# | name       | desc     | type        | opts        | refs         | index |
-# |------------+----------+-------------+-------------+--------------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |              |       |
-# | user_id    | User     | integer(8)  |             | => ::User#id | A     |
-# | room_id    | Room     | integer(8)  |             |              | B     |
-# | body       | 内容     | text(65535) |             |              |       |
-# | created_at | 作成日時 | datetime    | NOT NULL    |              |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |              |       |
-# |------------+----------+-------------+-------------+--------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
 # Mute info (mute_infos as MuteInfo)
 #
 # |----------------+-------------+------------+-------------+--------------+-------|
@@ -273,6 +242,25 @@
 # | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
 # |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Crawl reservation (swars_crawl_reservations as Swars::CrawlReservation)
+#
+# |-----------------+-----------------+-------------+-------------+------------+-------|
+# | name            | desc            | type        | opts        | refs       | index |
+# |-----------------+-----------------+-------------+-------------+------------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |            |       |
+# | user_id         | User            | integer(8)  | NOT NULL    | => User#id | A     |
+# | to_email        | To email        | string(255) | NOT NULL    |            |       |
+# | attachment_mode | Attachment mode | string(255) | NOT NULL    |            |       |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |            |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |            |       |
+# |-----------------+-----------------+-------------+-------------+------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #

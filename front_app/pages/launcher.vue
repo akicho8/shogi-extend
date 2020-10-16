@@ -45,6 +45,11 @@ export default {
         { title: "プロフィール編集",                   to: { name: "settings-profile", }},
         { title: "ユーザー詳細",                       to: { name: "users-id", params: {id: 1}, }, },
         { title: "将棋ウォーズバトル詳細"    ,         to: { name: "swars-battles-key", params: {key: "devuser1-Yamada_Taro-20200101_123401"}, }, },
+        { title: "将棋ウォーズプレイヤー情報2",        to: { name: "swars-users-key",   params: {key: "devuser1"}, }, },
+        { title: "将棋ウォーズショートカット kento",      to: { name: 'swars-users-key-direct-open-external_app_key', params: { key: "devuser1", external_app_key: "kento",        }}},
+        { title: "将棋ウォーズショートカット piyo_shogi", to: { name: 'swars-users-key-direct-open-external_app_key', params: { key: "devuser1", external_app_key: "piyo_shogi", }}},
+        { title: "将棋ウォーズショート一括DL",         to: { name: 'swars-users-key-download-all', params: { key: "devuser1", }}},
+
         { title: "将棋ウォーズプレイヤー情報",         to: { name: "swars-users-key",   params: {key: "devuser1"}, }, },
         { title: "将棋ウォーズ棋譜検索",               to: { name: "swars-search",                   }, },
         { title: "将棋ウォーズイベント上位プレイヤー", to: { name: "swars-top-group",               }, },

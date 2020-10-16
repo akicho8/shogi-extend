@@ -77,9 +77,9 @@ export default {
         croped_image:        this.base.croped_image,
       }
 
-      const retval = await this.$axios.$put("/api/settings/profile_update", params)
-      this.notice_collector_run(retval)
-      if (this.notice_collector_has_error(retval)) {
+      const retv = await this.$axios.$put("/api/settings/profile_update", params)
+      this.notice_collector_run(retv)
+      if (this.notice_collector_has_error(retv)) {
         return
       }
 
