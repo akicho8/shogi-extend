@@ -4,6 +4,7 @@
 
   DebugBox
     p $route.query: {{$route.query}}
+    p g_current_user: {{g_current_user && g_current_user.id}}
   b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
@@ -49,10 +50,17 @@
         b-menu-list(label="その他")
           b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
-              | ダウンロード
+              | すぐにダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in ZipKifuInfo.values")
               b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
+
+          b-menu-item(
+            label="ぜんぶダウンロード"
+            @click.native="config.current_swars_user_key && sound_play('click')"
+            tag="nuxt-link"
+            :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
+            :disabled="!config.current_swars_user_key")
 
           b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
@@ -90,6 +98,8 @@
       b-navbar-item(tag="nuxt-link" :to="{query: {}}" @click.native="query= ''")
         h1.has-text-weight-bold 将棋ウォーズ棋譜検索
     template(slot="end")
+      NavbarItemLogin
+      NavbarItemProfileLink
       b-navbar-item(@click="sidebar_toggle")
         b-icon(icon="menu")
 
@@ -217,13 +227,14 @@
                   KifCopyButton(@click="kifu_copy_handle(row)")
                   b-button(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}}" @click.native="sound_play('click')") 詳細
 
-    pre(v-if="development_p") {{config}}
+    client-only
+      pre(v-if="development_p") {{config}}
+      pre(v-if="development_p") {{$store.user}}
 </template>
 
 <script>
 import _ from "lodash"
 
-import { store }   from "./store.js"
 import { support } from "./support.js"
 
 import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
@@ -238,16 +249,11 @@ class ZipKifuInfo extends MemoryRecord {
 ZipKifuInfo.memory_record_reset([])
 
 export default {
-  store,
   name: "SwarsBattleIndex",
   mixins: [
     support,
     SwarsBattleIndexCore,
   ],
-
-  beforeCreate() {
-    this.$store.state.app = this
-  },
 
   data() {
     return {
@@ -459,7 +465,7 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
+<style lang="sass">
 .menu-label:not(:first-child)
   margin-top: 2em
 
