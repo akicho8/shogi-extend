@@ -64,10 +64,10 @@ class UserMailer < ApplicationMailer
   # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
   # http://0.0.0.0:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify(record)
-    subject = "棋譜の取得が完了しました"
+    subject = "棋譜取得完了"
 
     out = []
-    out << "▼#{record.target_user_key}さんの棋譜"
+    out << "#{record.target_user_key}さんの棋譜"
     out << UrlProxy[path: "/swars/search", query: {query: record.target_user_key}]
 
     out << ""
@@ -89,7 +89,6 @@ class UserMailer < ApplicationMailer
     end
 
     if record.attachment_mode == "with_zip"
-      subject += "(添付ファイルあり)"
       attachments[record.zip_filename] = record.zip_binary
     end
 
