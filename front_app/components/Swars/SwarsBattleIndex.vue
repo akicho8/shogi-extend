@@ -5,7 +5,6 @@
   DebugBox
     p $route.query: {{$route.query}}
     p g_current_user: {{g_current_user && g_current_user.id}}
-    p download_active_p: {{download_active_p}}
   b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
@@ -278,12 +277,6 @@ export default {
   // watchQuery: ['query'],
   watch: {
     "$route.query": "$fetch",
-    download_active_p(v) {
-      if (v) {
-        this.toast_ok("3")
-      }
-    },
-
   },
 
   mounted() {
