@@ -124,7 +124,6 @@ const RUN_MODE_DEFAULT = "play_mode"
 
 import _ from "lodash"
 
-import { store }   from "./store.js"
 import { support } from "./support.js"
 
 import { app_room      } from "./app_room.js"
@@ -134,7 +133,6 @@ import ImageViewPointSettingModal from "./ImageViewPointSettingModal.vue"
 import AnySourceReadModal         from "@/components/AnySourceReadModal.vue"
 
 export default {
-  store,
   name: "ShareBoardApp",
   mixins: [
     support,
@@ -174,9 +172,6 @@ export default {
 
       sidebar_p: false,
     }
-  },
-  beforeCreate() {
-    this.$store.state.app = this
   },
   mounted() {
     // どれかが変更されたらURLを更新
