@@ -1,10 +1,10 @@
 <template lang="pug">
 client-only
   .store_test
-    b-button.is-block(@click="$store.dispatch('user/auth_user_fetch')")   $store.dispatch("user/auth_user_fetch")
-    b-button.is-block(@click="$store.commit('user/current_user_clear')") $store.commit('user/current_user_clear')
-    b-button.is-block(@click="auth_user_fetch") auth_user_fetch()
-    b-button.is-block(@click="current_user_clear") current_user_clear()
+    b-button.is-block(@click="$store.dispatch('user/a_auth_user_fetch')")   $store.dispatch("user/a_auth_user_fetch")
+    b-button.is-block(@click="$store.commit('user/m_auth_user_logout')") $store.commit('user/m_auth_user_logout')
+    b-button.is-block(@click="a_auth_user_fetch") a_auth_user_fetch()
+    b-button.is-block(@click="a_auth_user_logout") a_auth_user_logout()
     pre
       | $store.state = {{JSON.stringify($store.state, null, 2)}}
       | g_current_user = {{JSON.stringify(g_current_user, null, 2)}}
@@ -40,7 +40,7 @@ client-only
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex"
+// import { mapState, mapMutations, mapActions } from "vuex"
 
 export default {
   name: "store_test",
@@ -55,12 +55,12 @@ export default {
   //   // })
   // },
   methods: {
-    ...mapMutations("user", ["current_user_clear"]),
-    ...mapActions('user', ["auth_user_fetch"]),
+    // ...mapMutations("user", ["m_auth_user_logout"]),
+    // ...mapActions('user', ["a_auth_user_fetch"]),
   },
   computed: {
     // ...mapState(['increment']),
-    ...mapState("user", ["g_current_user"]),
+    // ...mapState("user", ["g_current_user"]),
     //   'isSignedIn'
     // ])
   },

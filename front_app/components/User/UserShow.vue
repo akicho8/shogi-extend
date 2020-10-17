@@ -25,9 +25,9 @@
             .has-text-centered
               .image
                 img.is-rounded.is-inline-block(:src="record.avatar_path")
-            .mt-4(v-if="record.twitter_key")
+            .mt-4(v-if="twitter_key")
               .has-text-weight-bold Twitter
-              a.is-block(:href="twitter_url" :target="target_default") @{{record.twitter_key}}
+              a.is-block(:href="twitter_url" :target="target_default") @{{twitter_key}}
             .mt-4.box.description.has-background-white-ter.is-shadowless(v-if="record.description" v-html="auto_link(record.description)")
         pre(v-if="development_p") {{record}}
 </template>
@@ -51,25 +51,23 @@ export default {
   methods: {
     async logout_handle() {
       this.sound_play('click')
-      await this.current_user_clear()
+      await this.a_auth_user_logout()
       this.toast_ok("ログアウトしました")
     },
-
     sidebar_toggle() {
       this.sound_play('click')
       this.sidebar_p = !this.sidebar_p
     },
-
     back_handle() {
       this.sound_play('click')
       this.back_to()
     },
   },
   computed: {
+    twitter_key: () => this.record.twitter_key,
     twitter_url() {
-      const v = this.record.twitter_key
-      if (v) {
-        return `https://twitter.com/${v}`
+      if (this.twitter_key) {
+        return `https://twitter.com/${this.twitter_key}`
       }
     },
   },

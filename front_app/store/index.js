@@ -17,9 +17,9 @@ export const mutations = {
 // https://tech.glatchdesign.com/nuxtjs-vuex-module-mode
 export const actions = {
   async nuxtServerInit ({ commit, dispatch }, { req }) {
-    await dispatch("user/auth_user_fetch")
+    await dispatch("user/a_auth_user_fetch")
     // if (req.session && req.session.current_user) {
-    //   commit('current_user_set', req.session.current_user)
+    //   commit('m_auth_user_set', req.session.current_user)
     // }
   },
 }

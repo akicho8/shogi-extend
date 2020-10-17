@@ -17,10 +17,10 @@ export default {
   name: "NavbarItemCurrentUser",
   methods: {
     ...mapActions("user", [
-      "current_user_clear",
+      "a_auth_user_logout",
     ]),
     async logout_handle() {
-      await this.current_user_clear()
+      await this.a_auth_user_logout()
       this.toast_ok("ログアウトしました")
     },
   },

@@ -86,7 +86,7 @@ export default {
       // profile_update の結果を取るのではなく別APIで再取得する
       // 直後に遷移しているので一見不要な処理な気がするが、
       // 詳細は g_current_user とは異なるスコープなのでこの処理は必要
-      await this.auth_user_fetch()
+      await this.a_auth_user_fetch()
       this.base.var_reset()
 
       // 詳細に戻る

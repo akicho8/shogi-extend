@@ -15,8 +15,13 @@ Vue.mixin({
     vue_piyo_shogi,
   ],
   methods: {
-    ...mapMutations("user", ["current_user_clear"]),
-    ...mapActions('user', ["auth_user_fetch"]),
+    ...mapMutations("user", [
+      "m_auth_user_logout",
+    ]),
+    ...mapActions('user', [
+      "a_auth_user_fetch",
+      "a_auth_user_logout",
+    ]),
   },
   computed: {
     ...mapState("user", [
