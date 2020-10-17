@@ -25,7 +25,7 @@
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
               b-field(label="猶予" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
-      XclockAppFooter(ref="XclockAppFooter")
+      XclockAppFooter(:base="base" ref="XclockAppFooter")
 
   //////////////////////////////////////////////////////////////////////////////// 実行中
   template(v-if="chess_clock.running_p")
@@ -83,14 +83,12 @@ import { isMobile     } from "@/components/models/isMobile.js"
 import { FullScreen   } from "@/components/models/FullScreen.js"
 
 import { support      } from "./support.js"
-import { store        } from "./store.js"
 
 import { app_mouse_hidden         } from "./app_mouse_hidden.js"
 import { app_keyboard_shortcut    } from "./app_keyboard_shortcut.js"
 import { app_mobile_screen_adjust } from "./app_mobile_screen_adjust.js"
 
 export default {
-  store,
   name: "XclockApp",
   mixins: [
     support,
@@ -103,9 +101,6 @@ export default {
       chess_clock: null,
       full_screen: null,
     }
-  },
-  beforeCreate() {
-    this.$store.state.app = this
   },
   created() {
     this.chess_clock = new ChessClock({
@@ -292,6 +287,7 @@ export default {
     },
   },
   computed: {
+    base() { return this },
     mouse_cursor_hidden() {
       return this.chess_clock.timer && !this.mouse_cursor_p
     },
@@ -301,7 +297,6 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-@import "app.sass"
 @import "time_fields_default.sass"
 @import "time_fields_desktop.sass"
 
