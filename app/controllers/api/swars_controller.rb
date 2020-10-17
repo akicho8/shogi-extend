@@ -47,13 +47,16 @@ module Api
         return
       end
       notice_collector = NoticeCollector.single(:success, "予約が完了しました<br>(#{no}人待ち)", title: "予約完了", method: "dialog")
+      n = ::Swars::CrawlReservation.madanoyatu.count
+      slack_message(key: "棋譜取得の予約(#{n})", body: record.to_t)
       render json: { notice_collector: notice_collector }
     end
 
     def crawler_run
+      before_count = ::Swars::CrawlReservation.madanoyatu.count
       Swars::Crawler::ReservationCrawler.new.run
-      count = ::Swars::CrawlReservation.madanoyatu.count
-      notice_collector = NoticeCollector.single(:success, "取得処理実行完了(残り:#{count})")
+      after_count = ::Swars::CrawlReservation.madanoyatu.count
+      notice_collector = NoticeCollector.single(:success, "取得処理実行完了(#{before_count}→#{after_count})")
       render json: { notice_collector: notice_collector }
     end
 

@@ -22,7 +22,7 @@ export default {
 
   methods: {
     show_handle(row) {
-      this.jump_to_battle(row.key, {display_key: this.display_key})
+      this.$router.push({name: "swars-battles-key", params: {key: row.key}, query: {display_key: this.display_key}})
     },
 
     // 開始局面

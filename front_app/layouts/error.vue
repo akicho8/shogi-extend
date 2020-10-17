@@ -3,7 +3,9 @@
   .section.px-4.py-4
     .container
       .box.has-text-weight-bold.has-text-centered
-        | {{message_body}}
+        template(v-if="error.statusCode !== 404")
+          p ブッコワレマシタ
+        p {{message_body}}
       .has-text-centered.is-unselectable
         img(src="~/assets/robot2_green.png")
       .buttons.is-centered.mt-6

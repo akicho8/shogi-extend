@@ -63,12 +63,29 @@ class UserMailer < ApplicationMailer
   # 以前コメントした人に通知
   # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
   # http://0.0.0.0:3000/rails/mailers/user/battle_fetch_notify
-  def battle_fetch_notify(record)
-    subject = "棋譜取得完了"
+  def battle_fetch_notify(record, other_options = {})
+    subject = "【将棋ウォーズ棋譜検索】棋譜取得完了"
+
+    other_options = {
+    }.merge(other_options)
 
     out = []
+    if n = other_options[:diff_count]
+      out << "#{n}件、新しく取得しました"
+      out << ""
+    end
     out << "#{record.target_user_key}さんの棋譜"
-    out << UrlProxy[path: "/swars/search", query: {query: record.target_user_key}]
+    if Rails.env.development?
+      out << UrlProxy[path: "/swars/search", query: {query: record.target_user_key}]
+    else
+      out << url_for(:root) + "swars/search?query=#{record.target_user_key}"
+    end
+
+    if Rails.env.development?
+      if other_options.present?
+        out << other_options.to_t
+      end
+    end
 
     out << ""
     out << "--"
