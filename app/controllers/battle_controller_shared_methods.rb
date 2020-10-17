@@ -11,12 +11,6 @@ module BattleControllerSharedMethods
   include PageMod
 
   concerning :IndexMethods do
-    included do
-      helper_method :current_per
-      helper_method :current_placeholder
-      helper_method :js_index_options
-    end
-
     let :current_records do
       s = current_index_scope
       s = s.select(current_model.column_names - exclude_column_names)
