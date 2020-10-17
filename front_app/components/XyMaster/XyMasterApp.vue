@@ -766,7 +766,7 @@ $board_color: hsl(0, 0%, 60%)
     top: 0.5rem
     left: 0.5rem
 
-  MainSection
+  .MainSection
     +mobile
       padding: 2.0rem 0.5rem
       &.run, &.ready

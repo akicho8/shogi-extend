@@ -61,6 +61,6 @@ export default {
 .UserEmailEdit
   min-height: 100vh
 
-  MainSection
+  .MainSection
     padding-top: 2.25rem
 </style>

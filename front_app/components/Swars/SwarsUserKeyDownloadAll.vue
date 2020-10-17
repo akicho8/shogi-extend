@@ -113,7 +113,7 @@ export default {
 
 <style lang="sass">
 .SwarsUserKeyDownloadAll
-  MainSection
+  .MainSection
     .container
       max-width: 65ch ! important
 </style>

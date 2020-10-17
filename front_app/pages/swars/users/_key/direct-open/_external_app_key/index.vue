@@ -117,7 +117,7 @@ export default {
 
 <style lang="sass">
 .swars-users-key-direct-open-external_app_key
-  MainSection
+  .MainSection
     &:first-of-type
       padding-top: 1.8rem
 </style>

@@ -78,7 +78,7 @@ export default {
 .menu-label:not(:first-child)
   margin-top: 2em
 
-MainSection
+.MainSection
   padding-top: 2.8rem
 
 .image

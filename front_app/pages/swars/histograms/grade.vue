@@ -50,6 +50,6 @@ export default {
 
 <style lang="sass">
 .swars-histograms-grade
-  MainSection
+  .MainSection
     padding-top: 1.7rem
 </style>

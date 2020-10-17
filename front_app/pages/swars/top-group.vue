@@ -41,6 +41,6 @@ export default {
 
 <style lang="sass">
 .swars-top-group
-  MainSection
+  .MainSection
     padding-top: 1.3rem
 </style>

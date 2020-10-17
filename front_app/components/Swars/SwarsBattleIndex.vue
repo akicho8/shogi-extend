@@ -471,10 +471,10 @@ export default {
 //     width: 100%
 
 .SwarsBattleIndex
-  MainSection
-    padding-top: 2.5rem
-    +mobile
-      padding-top: 1.6rem
+  .MainSection
+    // padding-top: 2.5rem
+    // +mobile
+    //   padding-top: 1.6rem
 
   .container
     +mobile

@@ -520,7 +520,7 @@ export default {
   min-height: 100vh
 
   +mobile
-    MainSection
+    .MainSection
       padding: 2.8rem 0.5rem 0
     .column
       padding: 0

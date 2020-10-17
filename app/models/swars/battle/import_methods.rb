@@ -19,7 +19,7 @@ module Swars
           end
 
           # rails r 'Swars::Battle.create!; tp Swars::Battle'
-          if Rails.env.development? && ENV["SEED_GAME_RECORD_BOUNDARY_LINE_CHECK_FOR_DATA_INPUT_OF_THE_PAPER"]
+          if Rails.env.development? && (ENV["SEED_GAME_RECORD_BOUNDARY_LINE_CHECK_FOR_DATA_INPUT_OF_THE_PAPER"] || true)
             tp "棋譜用紙の境界線チェック用データ投入"
             [
               { turn_max:   0, preset_key: "平手",   },

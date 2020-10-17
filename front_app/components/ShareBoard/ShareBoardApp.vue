@@ -463,7 +463,7 @@ export default {
 
 .ShareBoardApp
   +mobile
-    MainSection
+    .MainSection
       padding: 2.8rem 0.5rem 0
     .column
       padding: 0

@@ -3,9 +3,12 @@ export default {
     dialog_ok(message, options = {}) {
       options = {
         type: "info",
+        talk: true,
         ...options,
       }
-      this.talk(message, options)
+      if (options.talk) {
+        this.talk(message, options)
+      }
       this.$buefy.dialog.alert({
         title: options.title,
         type: `is-${options.type}`,

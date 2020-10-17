@@ -57,7 +57,7 @@ export default {
 
 <style lang="sass">
 .SwarsUserKeyKentoApi
-  MainSection
+  .MainSection
     &:first-of-type
       padding-top: 2.6rem
 </style>
