@@ -1,7 +1,7 @@
 <template lang="pug">
 .about-credit
   .content
-    .title.is-4.has-text-centered-mobile クレジット (利用素材)
+    .title.is-4.has-text-centered-mobile クレジット
     hr
 
     h4 画像

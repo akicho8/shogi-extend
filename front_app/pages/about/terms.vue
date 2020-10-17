@@ -4,7 +4,7 @@
     .title.is-4.has-text-centered-mobile サービス利用規約
     hr
     p
-      | 重いからって連打しちゃだめ
+      | 重いからって連打しちゃだめ(絶対だぞ！)
 </template>
 
 <script>
