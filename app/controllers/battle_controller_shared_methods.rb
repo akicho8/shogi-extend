@@ -45,6 +45,7 @@ module BattleControllerSharedMethods
 
     private
 
+    # FIXME: flashが動作しない
     def behavior_after_rescue(message)
       redirect_to [:swars, :battles], danger: message
     end
@@ -154,9 +155,6 @@ module BattleControllerSharedMethods
 
   concerning :ShowMethods do
     included do
-      helper_method :js_show_options
-      helper_method :decorator
-
       before_action only: [:edit, :update, :destroy] do
         if request.format.html?
           unless editable_record?(current_record)
@@ -275,20 +273,12 @@ module BattleControllerSharedMethods
   end
 
   concerning :EditMethods do
-    included do
-      helper_method :current_edit_mode
-    end
-
     let :current_edit_mode do
       (params[:edit_mode].presence || :basic).to_sym
     end
   end
 
   concerning :EditCustomMethods do
-    included do
-      helper_method :js_edit_options
-    end
-
     # free_battle_edit.js の引数用
     def js_edit_options
       {
