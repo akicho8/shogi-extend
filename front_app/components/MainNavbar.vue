@@ -43,4 +43,10 @@ export default {
       background: $purple
     +mobile
       background: $green
+    +desktop
+      background: $blue
+    +widescreen
+      background: $danger
+    +fullhd
+      background: $turquoise
 </style>

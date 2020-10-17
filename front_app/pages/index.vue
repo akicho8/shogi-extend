@@ -12,7 +12,7 @@
         b-icon(icon="rocket")
       NavbarItemLogin
       NavbarItemProfileLink
-  .section
+  MainSection
     .container
       .columns.is-multiline
         template(v-for="e in config")
@@ -113,8 +113,4 @@ export default {
     color: $grey
     a
       color: inherit
-      
-  .section
-    +mobile
-      padding: 1.4rem 1.2rem
 </style>
