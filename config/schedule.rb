@@ -37,6 +37,10 @@ every("5 3 * * *") do
   ].join(";")
 end
 
+if @environment == "staging"
+  every("*/5 0,7-23 * * *") { runner "Swars::Crawler::ReservationCrawler.run" }
+end
+
 every("15 5 * * *") { command "sudo systemctl restart sidekiq" }
 
 if @environment == "production"
