@@ -287,7 +287,7 @@ export default {
 
     back_handle() {
       this.sound_play("click")
-      this.browser_back_or_top({name: "swars-search", query: {query: this.$route.params.key}})
+      this.back_or_top({name: "swars-search", query: {query: this.$route.params.key}})
     },
 
     battled_on_to_class(row) {

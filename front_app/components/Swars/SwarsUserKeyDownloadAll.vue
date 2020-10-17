@@ -89,7 +89,7 @@ export default {
 
     back_handle() {
       this.sound_play('click')
-      this.$router.go(-1)
+      this.back_or_top()
     },
   },
   computed: {
