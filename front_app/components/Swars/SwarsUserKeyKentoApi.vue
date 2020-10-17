@@ -5,7 +5,7 @@
       b-navbar-item(@click="back_handle")
         b-icon(icon="arrow-left")
       b-navbar-item.has-text-weight-bold(tag="div") {{page_title}}
-  .section
+  MainSection
     .container
       p 1. URLをコピー
       b-field.mt-3
@@ -57,7 +57,7 @@ export default {
 
 <style lang="sass">
 .SwarsUserKeyKentoApi
-  .section
+  MainSection
     &:first-of-type
       padding-top: 2.6rem
 </style>

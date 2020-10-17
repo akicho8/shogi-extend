@@ -9,7 +9,7 @@
     template(slot="end")
       NavbarItemLogin
       NavbarItemProfileLink
-  .section
+  MainSection
     .container
       .columns.is-marginless
         .column

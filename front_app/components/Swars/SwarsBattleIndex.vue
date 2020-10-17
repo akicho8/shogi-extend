@@ -91,7 +91,6 @@
           b-menu-item(label="棋譜の再取得"     @click="$router.push({query: {query: 'Yamada_Taro', destroy_all: true, force: true}})")
           b-menu-item(label="棋譜の普通に取得" @click="$router.push({query: {query: 'Yamada_Taro'}})")
 
-  //- b-navbar(type="is-primary" :wrapper-class="['container', {'is-fluid': wide_p}]" :mobile-burger="false" spaced)
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
       HomeNavbarItem
@@ -103,8 +102,8 @@
       b-navbar-item(@click="sidebar_toggle")
         b-icon(icon="menu")
 
-  .section
-    .container(:class="{'is-fluid': wide_p}")
+  MainSection
+    .container.is-fluid
       .columns
         .column
           b-field
@@ -449,11 +448,6 @@ export default {
     ExternalAppInfo() { return ExternalAppInfo },
     ZipKifuInfo()     { return ZipKifuInfo     },
 
-    wide_p() {
-      return true
-      // return this.config.total >= 1
-    },
-
     search_form_complete_list() {
       if (this.config.remember_swars_user_keys) {
         return this.config.remember_swars_user_keys.filter((option) => {
@@ -477,7 +471,7 @@ export default {
 //     width: 100%
 
 .SwarsBattleIndex
-  .section
+  MainSection
     padding-top: 2.5rem
     +mobile
       padding-top: 1.6rem

@@ -30,8 +30,8 @@ export default {
 .navbar.MainNavbar
   // touch以下で is-spaced の左右の padding が外れ navbar-item が画面端にくっついてしまうため少し隙間を入れる
   +touch
-    padding-left: 32px
-    padding-right: 32px
+    padding-left: 24px
+    padding-right: 24px
   // さらにモバイル時はさらに上下の隙間がもったいないので is-spaced の上下を無効にする
   +mobile
     padding-top: 0

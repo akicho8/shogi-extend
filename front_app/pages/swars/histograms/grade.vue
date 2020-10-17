@@ -6,7 +6,7 @@ client-only
         HomeNavbarItem
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-grade'}") 将棋ウォーズ段級分布
 
-    .section
+    MainSection
       .container
         SwarsHistogramNavigation(:config="config")
         .columns.is-unselectable
@@ -50,6 +50,6 @@ export default {
 
 <style lang="sass">
 .swars-histograms-grade
-  .section
+  MainSection
     padding-top: 1.7rem
 </style>

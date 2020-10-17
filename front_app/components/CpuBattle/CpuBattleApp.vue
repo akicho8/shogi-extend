@@ -4,7 +4,7 @@
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'cpu-battle'}") CPU対戦
-  .section
+  MainSection
     .container
       .columns
         .column.is_shogi_player
@@ -520,7 +520,7 @@ export default {
   min-height: 100vh
 
   +mobile
-    .section
+    MainSection
       padding: 2.8rem 0.5rem 0
     .column
       padding: 0

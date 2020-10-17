@@ -7,7 +7,7 @@ client-only
       template(slot="start")
       template(slot="end")
         b-navbar-item(tag="nuxt-link" :to="{name:'index'}" exact-active-class="is-active") TOP
-    .section
+    MainSection
       .columns
         .column
           .title Client

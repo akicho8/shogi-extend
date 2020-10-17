@@ -7,7 +7,7 @@
     template(slot="end")
       b-navbar-item(tag="nuxt-link" :to="{name:'index'}" exact-active-class="is-active") TOP
 
-  .section
+  MainSection
     .block
       nuxt-link.is-block(:to="{name: 'experiment-users-id'                 }") users
       nuxt-link.is-block(:to="{name: 'experiment-users-id', params: {id: 1}}") users/1

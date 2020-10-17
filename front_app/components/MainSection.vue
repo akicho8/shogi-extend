@@ -3,20 +3,14 @@
   slot
 </template>
 
-<script>
-export default {
-  name: "MainSection",
-}
-</script>
-
 <style lang="sass">
 .MainSection.section
   +mobile
-    padding: 1.4rem 1.2rem
+    padding: 1.2rem 1.0rem
 .STAGE-development
   .MainSection.section
     +touch
-      border: 1px dashed $primary
+      border: 2px dashed $primary
     +mobile
-      border: 1px dashed $danger
+      border: 2px dashed $danger
 </style>

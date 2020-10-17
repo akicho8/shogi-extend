@@ -4,7 +4,7 @@ client-only
     MainNavbar
       template(slot="brand")
         b-navbar-item.has-text-weight-bold(tag="div") {{long_title}}
-    .section
+    MainSection
       .container
         b-button(tag="nuxt-link" :to="{name: 'swars-search', query: {query: $route.params.key}}" @click.native="sound_play('click')")
           | ← 検索に戻る
@@ -117,7 +117,7 @@ export default {
 
 <style lang="sass">
 .swars-users-key-direct-open-external_app_key
-  .section
+  MainSection
     &:first-of-type
       padding-top: 1.8rem
 </style>

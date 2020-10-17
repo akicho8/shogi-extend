@@ -62,7 +62,7 @@ client-only
       template(slot="start")
         b-navbar-item(@click="reset_handle") 盤面リセット
 
-    .section
+    MainSection
       .container
         .columns
           .column.is_shogi_player
@@ -463,7 +463,7 @@ export default {
 
 .ShareBoardApp
   +mobile
-    .section
+    MainSection
       padding: 2.8rem 0.5rem 0
     .column
       padding: 0

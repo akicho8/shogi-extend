@@ -10,7 +10,7 @@
       NavbarItemLogin
       NavbarItemProfileLink
 
-  .section
+  MainSection
     .container
       template(v-if="!g_current_user")
         b-notification(type="is-warning")
@@ -113,7 +113,7 @@ export default {
 
 <style lang="sass">
 .SwarsUserKeyDownloadAll
-  .section
+  MainSection
     .container
       max-width: 65ch ! important
 </style>

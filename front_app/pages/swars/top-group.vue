@@ -6,7 +6,7 @@ client-only
         HomeNavbarItem
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-top-group'}")
           | 将棋ウォーズイベント上位プレイヤー
-    .section
+    MainSection
       .container
         .columns
           .column
@@ -41,6 +41,6 @@ export default {
 
 <style lang="sass">
 .swars-top-group
-  .section
+  MainSection
     padding-top: 1.3rem
 </style>

@@ -7,7 +7,7 @@ client-only
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: $route.params.key}}")
           | 将棋ウォーズ{{config.tactic.name}}分布
 
-    .section
+    MainSection
       .container
         SwarsHistogramNavigation(:config="config")
         .columns
@@ -52,6 +52,6 @@ export default {
 
 <style lang="sass">
 .swars-histograms-key
-  .section
+  MainSection
     padding-top: 1.7rem
 </style>

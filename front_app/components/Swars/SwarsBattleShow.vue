@@ -61,7 +61,7 @@
       //-   //-   TweetButton(tag="a" :href="tweet_url" :turn="new_turn" v-if="false")
       //-   b-navbar-item(tag="a" href="/") TOP
 
-    .section
+    MainSection
       .container
         .columns
           .column
@@ -116,6 +116,7 @@
         //-     | record.turn_max: {{record.turn_max}}
         //-     | record.turn: {{record.turn}}
         //-     | new_flip: {{new_flip}}
+    pre(v-if="development_p") {{record}}
 </template>
 
 <script>

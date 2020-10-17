@@ -11,7 +11,7 @@
       b-navbar-item(@click="test_handle" v-if="development_p") 不正入力テスト
       b-navbar-item.has-text-weight-bold(@click="save_handle") 保存
 
-  .section
+  MainSection
     .container
       .columns.is-centered
         .column.is-7-desktop
@@ -122,7 +122,7 @@ export default {
 .UserProfileEditForm
   min-height: 100vh
 
-  .section
+  MainSection
     padding-top: 2.8rem
 
   .image

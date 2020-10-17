@@ -5,7 +5,7 @@ client-only
       template(slot="brand")
         HomeNavbarItem
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-professional'}") 将棋ウォーズ十段の成績
-    .section
+    MainSection
       .container
         .columns
           .column
@@ -44,6 +44,6 @@ export default {
 
 <style lang="sass">
 .swars-professional
-  .section
+  MainSection
     padding-top: 1.3rem
 </style>

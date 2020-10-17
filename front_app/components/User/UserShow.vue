@@ -18,7 +18,7 @@
       template(slot="end" v-if="g_current_user && g_current_user.id === record.id")
         b-navbar-item(@click="sidebar_toggle")
           b-icon(icon="menu")
-    .section
+    MainSection
       .container
         .columns.is-centered
           .column.is-7-desktop
@@ -78,7 +78,7 @@ export default {
 .menu-label:not(:first-child)
   margin-top: 2em
 
-.section
+MainSection
   padding-top: 2.8rem
 
 .image

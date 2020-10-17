@@ -4,7 +4,7 @@
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'sound-test'}") サウンドテスト
-  .section
+  MainSection
     .container
       .buttons
         template(v-for="e of SoundPreset.values")

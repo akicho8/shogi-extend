@@ -11,7 +11,7 @@
     template(slot="end")
       b-navbar-item.has-text-weight-bold(tag="a" :href="image_search_url(config.main_user.name)" target="_blank") ぐぐる
 
-  .section
+  MainSection
     .container
       .columns
         .column
@@ -58,7 +58,7 @@ export default {
 <style lang="sass">
 .ThreeStageLeaguePlayerApp
   +mobile
-    .section
+    MainSection
       padding-left: 0.5rem
       padding-right: 0.5rem
 </style>
