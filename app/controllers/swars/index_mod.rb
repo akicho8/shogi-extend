@@ -1,9 +1,9 @@
 module Swars
   concern :IndexMod do
     included do
-      helper_method :current_swars_user
-      helper_method :query_info
-      helper_method :twitter_card_options
+      # helper_method :current_swars_user
+      # helper_method :query_info
+      # helper_method :twitter_card_options
 
       rescue_from "Swars::Agent::OfficialFormatChanged" do |exception|
         render json: { status: :error, type: :danger, message: exception.message }
@@ -103,7 +103,7 @@ module Swars
     let :twitter_card_options do
       case
       when v = primary_record
-        # http://localhost:3000/w?query=https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1
+        # http://localhost:3000/w?query=https://shogiwars.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1
         v.to_twitter_card_params(params)
       when current_swars_user && params[:user_info_show] == "true"
         # http://localhost:3000/w?query=itoshinTV&user_info_show=true
@@ -250,18 +250,28 @@ module Swars
       query_info.lookup(:ms_tag)
     end
 
-    # 対局URLが指定されているときはそれを優先するので current_swars_user_key を拾ってはいけない
-    # 拾うと次の文字列の先頭をウォーズIDと解釈してしまう
-    # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1"
+    # http://0.0.0.0:3000/w.json?query=https://shogiwars.heroz.jp/games/devuser3-Yamada_Taro-20200101_123403
+    # http://0.0.0.0:4000/swars/search?query=https://shogiwars.heroz.jp/games/devuser3-Yamada_Taro-20200101_123403
+    # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://shogiwars.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1"
     let :current_swars_user_key do
-      unless primary_record_key
-        current_swars_user_key_from_url || query_info.values.first
-      end
+      v = nil
+      v ||= extract_type1
+      v ||= extract_type2
+      v ||= extract_type3
+
+      # # url = query_info.urls.first
+      # # v ||= nil
+      # # v ||= Battle.user_key_extract_from_battle_url(url) # https://shogiwars.heroz.jp/games/foo-bar-20200204_211329" --> foo
+      # # v ||= extract_type1              # https://shogiwars.heroz.jp/users/foo                      --> foo
+      #
+      # unless primary_record_key
+      #   extract_type1 || query_info.values.first
+      # end
     end
 
     # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
     # https://shogiwars.heroz.jp/users/foo                          -> foo
-    def current_swars_user_key_from_url
+    def extract_type1
       if url = query_info.urls.first
         if url = URI::Parser.new.extract(url).first
           uri = URI(url)
@@ -275,6 +285,18 @@ module Swars
       end
     end
 
+    # https://shogiwars.heroz.jp/games/foo-bar-20200204_211329" --> foo
+    def extract_type2
+      if url = query_info.urls.first
+        Battle.user_key_extract_from_battle_url(url)
+      end
+    end
+
+    # "foo" --> foo
+    def extract_type3
+      query_info.values.first
+    end
+
     def exclude_column_names
       ["meta_info", "csa_seq"]
     end
@@ -285,6 +307,10 @@ module Swars
 
         if v = query_info.lookup(:ids)
           s = s.where(id: v)
+        end
+
+        if v = primary_record_key # バトルが指定されている
+          s = s.where(key: v)
         end
 
         if current_swars_user
@@ -334,7 +360,9 @@ module Swars
           end
         end
 
-        s.includes(win_user: nil, memberships: {user: nil, grade: nil, taggings: :tag})
+        s = s.includes(win_user: nil, memberships: {user: nil, grade: nil, taggings: :tag})
+
+        s
       }.call
     end
 
@@ -356,14 +384,8 @@ module Swars
     def current_index_scope
       @current_index_scope ||= -> {
         s = current_scope
-        case
-        when primary_record_key
-          s = s.where(key: primary_record_key)
-        else
-          if current_swars_user
-          else
-            s = s.none
-          end
+        unless current_swars_user
+          s = s.none
         end
         s
       }.call
@@ -372,7 +394,7 @@ module Swars
     # primary_record_key に対応するレコード
     let :primary_record do
       if primary_record_key
-        current_scope.find_by(key: primary_record_key)
+        Swars::Battle.find_by(key: primary_record_key)
       end
     end
 
