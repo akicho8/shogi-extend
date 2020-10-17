@@ -744,9 +744,9 @@ export default {
       return this.xy_record.rank_info[this.xy_scope_key].rank
     },
 
-    XyScopeInfo()      { return XyScopeInfo      },
-    XyChartScopeInfo() { return XyChartScopeInfo },
-    XyRuleInfo()       { return XyRuleInfo       },
+    XyScopeInfo:      () => XyScopeInfo,
+    XyChartScopeInfo: () => XyChartScopeInfo,
+    XyRuleInfo:       () => XyRuleInfo,
   },
 }
 </script>
