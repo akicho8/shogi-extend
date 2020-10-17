@@ -305,7 +305,6 @@ module BattleControllerSharedMethods
         show_path: polymorphic_path([ns_prefix, current_record]),
 
         saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
-        free_battles_pro_mode: AppConfig[:free_battles_pro_mode],
         current_edit_mode: current_edit_mode,
       }
     end
