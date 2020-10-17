@@ -3,9 +3,7 @@ AppConfig.deep_merge!({
     :volume                                  =>  0.5,
 
     :free_battles_import                     =>  false, # 野良棋譜のセットアップ時に保持している対局を取り込むか？
-    :more_import_function                    =>  true,  # もっと取り込む
     :swars_tag_search_function               =>  true,  # タグ検索
-    :battle_index_permalink_show             =>  true,  # 固定リンクを表示するか？
     :search_form_datalist_function           =>  false, # 検索で入力したユーザー名を共有して検索候補にするか？
     :swars_tweet_function                    =>  true,  # 将棋ウォーズ棋譜詳細へのツイートできる？
     :columns_detail_show                     =>  true,  # 「開戦」の手数を表示する？
