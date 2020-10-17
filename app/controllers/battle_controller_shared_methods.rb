@@ -20,7 +20,8 @@ module BattleControllerSharedMethods
     let :current_records do
       s = current_index_scope
       s = s.select(current_model.column_names - exclude_column_names)
-      s = sort_scope(s).order(id: :desc) # 2番目のソートもつけないとゆらぐ
+      s = sort_scope(s)
+      s = s.order(id: :desc) # 順序揺れ防止策
       s = page_scope(s)
     end
 
