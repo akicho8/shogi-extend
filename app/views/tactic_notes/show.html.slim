@@ -36,11 +36,6 @@ javascript:
         :sound_effect="true"
         :volume=AppConfig[:volume]
         )
-        = render partial: "sfen_link"
-
-      / - content_for :head do
-        / = javascript_pack_tag("shogi_player_app")
-        / = stylesheet_pack_tag("shogi_player_app")
 
     ////////////////////////////////////////////////////////////////////////////////
     - if @board_table

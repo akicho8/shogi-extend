@@ -9,31 +9,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-DROP TABLE IF EXISTS `acns1_messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `acns1_messages` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) DEFAULT NULL,
-  `room_id` bigint(20) DEFAULT NULL,
-  `body` text COLLATE utf8mb4_bin,
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_acns1_messages_on_user_id` (`user_id`),
-  KEY `index_acns1_messages_on_room_id` (`room_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `acns1_rooms`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `acns1_rooms` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actb_bad_marks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -848,6 +823,24 @@ CREATE TABLE `swars_battles` (
   KEY `index_swars_battles_on_critical_turn` (`critical_turn`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `swars_crawl_reservations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `swars_crawl_reservations` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '登録者',
+  `target_user_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '対象者',
+  `to_email` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '完了通知先メールアドレス',
+  `attachment_mode` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'ZIPファイル添付の有無',
+  `processed_at` datetime DEFAULT NULL COMMENT '処理完了日時',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_swars_crawl_reservations_on_user_id` (`user_id`),
+  KEY `index_swars_crawl_reservations_on_attachment_mode` (`attachment_mode`),
+  CONSTRAINT `fk_rails_5d22a228b8` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_grades`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1129,7 +1122,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200331163900'),
 ('20200331163901'),
 ('20200331163902'),
-('20200414142100'),
 ('20200605133900'),
 ('20200605133902'),
 ('20200605133903'),
@@ -1176,6 +1168,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200817115320'),
 ('20200817115321'),
 ('20200817115322'),
-('20200920154200');
+('20200920154202'),
+('20201015170400');
 
 

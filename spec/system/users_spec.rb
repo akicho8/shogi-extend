@@ -19,19 +19,19 @@ RSpec.describe "ユーザー", type: :system do
 
   it "プロフィール表示" do
     alice = create(:user)
-    visit "/users/#{alice.id}"
+    visit "/accounts/#{alice.id}"
     doc_image
   end
 
   it "プロフィール設定" do
     alice = create(:user)
-    visit "/users/#{alice.id}/edit"
+    visit "/accounts/#{alice.id}/edit"
     doc_image
   end
 
   it "名前がないときプロフィール設定に飛ばされる" do
     alice = create(:user, name: "")
     visit "/?_user_id=#{alice.id}"
-    assert { current_path == "/users/#{alice.id}/edit" }
+    assert { current_path == "/accounts/#{alice.id}/edit" }
   end
 end

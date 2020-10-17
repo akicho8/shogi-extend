@@ -561,11 +561,11 @@ ActiveRecord::Schema.define(version: 2020_10_15_170400) do
   end
 
   create_table "swars_crawl_reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "target_user_key", null: false
-    t.string "to_email", null: false
-    t.string "attachment_mode", null: false
-    t.datetime "processed_at"
+    t.bigint "user_id", null: false, comment: "登録者"
+    t.string "target_user_key", null: false, comment: "対象者"
+    t.string "to_email", null: false, comment: "完了通知先メールアドレス"
+    t.string "attachment_mode", null: false, comment: "ZIPファイル添付の有無"
+    t.datetime "processed_at", comment: "処理完了日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["attachment_mode"], name: "index_swars_crawl_reservations_on_attachment_mode"
