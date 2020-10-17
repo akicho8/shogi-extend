@@ -75,7 +75,7 @@ client-only
             .sp_container
               MyShogiPlayer(
                 :run_mode="run_mode"
-                :debug_mode="debug_mode"
+                :debug_mode="false"
                 :start_turn="turn_offset"
                 :kifu_body="current_sfen"
                 :summary_show="false"
@@ -145,13 +145,6 @@ export default {
   head() {
     return {
       title: this.page_title,
-      meta: [
-        // { hid: "og:title",       property: "og:title",       content: this.page_title,             },
-
-// { hid: "og:image",       property: "og:image",       content: this.twitter_card_url,             },
-        // { hid: "og:description", property: "og:description", content: this.config.twitter_card_options.description || "", },
-        // { hid: "description",    property: "description",    content: "リレー将棋・詰将棋の作成や公開・課題局面の作成や公開・オンライン対局向けリアルタイム盤共有などが可能です", },
-      ],
     }
   },
   data() {
@@ -430,8 +423,23 @@ export default {
     kif_download_url()   { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
 
     // 外部アプリ
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({path: this.current_url, sfen: this.current_sfen, turn: this.turn_offset, flip: this.board_flip, game_name: this.current_title}) },
-    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.current_sfen, turn: this.turn_offset, flip: this.board_flip})   },
+    piyo_shogi_app_with_params_url() {
+      return this.piyo_shogi_auto_url({
+        path: this.current_url,
+        sfen: this.current_sfen,
+        turn: this.turn_offset,
+        flip: this.board_flip,
+        game_name: this.current_title,
+      })
+    },
+
+    kento_app_with_params_url() {
+      return this.kento_full_url({
+        sfen: this.current_sfen,
+        turn: this.turn_offset,
+        flip: this.board_flip,
+      })
+    },
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -446,8 +454,6 @@ export default {
         return "#" + this.current_title
       }
     },
-
-    debug_mode() { return this.$route.query.debug_mode === "true" },
   },
 }
 </script>
@@ -469,14 +475,6 @@ export default {
 
   ////////////////////////////////////////////////////////////////////////////////
   .turn_container
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // position: relative
-  // .dropdown_menu
-  //   position: absolute
-  //   top: 0rem
-  //   right: 0rem
-  //   z-index: 1
 
   ////////////////////////////////////////////////////////////////////////////////
   .sp_container
