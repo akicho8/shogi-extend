@@ -211,20 +211,19 @@ export default {
     },
   },
 
-  fetch({error}) {
-    // http://0.0.0.0:4000/swars/users/devuser1
-    // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
-    // http://0.0.0.0:3000/w.json?query=foo&format_type=user
+  // http://0.0.0.0:4000/swars/users/devuser1
+  // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
+  // http://0.0.0.0:3000/w.json?query=foo&format_type=user
+  fetch() { // fetch({error}) { // とすると $fetchState がつくられなくなる謎の罠あり
     const query = {
       ...this.$route.query,
       query: this.$route.params.key,
       format_type: "user",
     }
     return this.$axios.$get("/w.json", {params: query}).then(e => { // FIXME: /api/users.json にする
-      if (this.notice_collector_has_error(e)) {
-        error({statusCode: 404, message: "a"})
-      }
-
+      // if (this.notice_collector_has_error(e)) {
+      //   error({statusCode: 404}) // ←罠があるので使えない
+      // }
       this.notice_collector_run(e)
       if (e.user_info) {
         this.info = e.user_info

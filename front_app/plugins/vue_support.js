@@ -88,10 +88,13 @@ export default {
     // 1つ前に戻れるなら戻る
     // 戻れないならトップに戻る
     // window.history.length は自分を含めるので、1つ前に戻れる条件は2要素以上あるとき
+    // 2要素あっても戻れないことがあるので3にしてみる(適当)→やっぱり2にしとく
     back_to(path = null) {
       if (window.history.length >= 2) {
+        this.debug_alert("戻る")
         this.$router.go(-1)
       } else {
+        this.debug_alert("戻れない")
         this.$router.push(path || "/")
       }
     },
