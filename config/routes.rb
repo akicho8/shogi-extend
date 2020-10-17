@@ -28,41 +28,43 @@ Rails.application.routes.draw do
 
   ################################################################################ 将棋ウォーズ棋譜検索
 
-  get "w", format: "html", to: redirect { |params, request|
-    query = request.params.to_query.presence
-    path = nil
+  ["w", "w-light"].each do |entry|
+    get entry, format: "html", to: redirect { |params, request|
+      query = request.params.to_query.presence
+      path = nil
 
-    # http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
-    unless path
-      if modal_id = request.params[:modal_id]
-        path = { path: "/swars/battles/#{modal_id}", query: query }
+      # http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
+      unless path
+        if modal_id = request.params[:modal_id]
+          path = { path: "/swars/battles/#{modal_id}", query: query }
+        end
       end
-    end
 
-    # http://0.0.0.0:3000/w?query=devuser1&latest_open_index=0&external_app_key=piyo_shogi
-    unless path
-      if request.params[:latest_open_index]
-        user_key = request.params[:query]
-        external_app_key = params[:external_app_key] || :piyo_shogi
-        path = "/swars/users/#{user_key}/direct-open/#{external_app_key}"
+      # http://0.0.0.0:3000/w?query=devuser1&latest_open_index=0&external_app_key=piyo_shogi
+      unless path
+        if request.params[:latest_open_index]
+          user_key = request.params[:query]
+          external_app_key = params[:external_app_key] || :piyo_shogi
+          path = "/swars/users/#{user_key}/direct-open/#{external_app_key}"
+        end
       end
-    end
 
-    # http://0.0.0.0:3000/w?query=devuser1&user_info_show=true
-    unless path
-      if request.params[:user_info_show]
-        user_key = request.params[:query]
-        path = "/swars/users/#{user_key}"
+      # http://0.0.0.0:3000/w?query=devuser1&user_info_show=true
+      unless path
+        if request.params[:user_info_show]
+          user_key = request.params[:query]
+          path = "/swars/users/#{user_key}"
+        end
       end
-    end
 
-    # http://0.0.0.0:3000/w?query=devuser1
-    unless path
-      path = { path: "/swars/search", query: query }
-    end
+      # http://0.0.0.0:3000/w?query=devuser1
+      unless path
+        path = { path: "/swars/search", query: query }
+      end
 
-    UrlProxy.wrap(path)
-  }
+      UrlProxy.wrap(path)
+    }
+  end
 
   namespace :swars, path: "" do
     resources :battles, path: "w"
