@@ -1,9 +1,9 @@
 <template lang="pug">
 client-only
   .store_test
-    b-button.is-block(@click="$store.dispatch('user/current_user_fetch')")   $store.dispatch("user/current_user_fetch")
+    b-button.is-block(@click="$store.dispatch('user/auth_user_fetch')")   $store.dispatch("user/auth_user_fetch")
     b-button.is-block(@click="$store.commit('user/current_user_clear')") $store.commit('user/current_user_clear')
-    b-button.is-block(@click="current_user_fetch") current_user_fetch()
+    b-button.is-block(@click="auth_user_fetch") auth_user_fetch()
     b-button.is-block(@click="current_user_clear") current_user_clear()
     pre
       | $store.state = {{JSON.stringify($store.state, null, 2)}}
@@ -49,14 +49,14 @@ export default {
     }
   },
   // fetch() {
-  //   // http://localhost:3000/api/session/current_user_fetch
+  //   // http://localhost:3000/api/session/auth_user_fetch
   //   // return this.$axios.$get(`/api/sessionscurrent_user.json`).then(e => {
   //   //   this.current_user = e
   //   // })
   // },
   methods: {
     ...mapMutations("user", ["current_user_clear"]),
-    ...mapActions('user', ["current_user_fetch"]),
+    ...mapActions('user', ["auth_user_fetch"]),
   },
   computed: {
     // ...mapState(['increment']),

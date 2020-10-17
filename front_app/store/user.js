@@ -18,18 +18,19 @@ export const mutations = {
 }
 
 export const actions = {
-  // this.$store.dispatch("current_user_fetch")
-  async current_user_fetch({commit}) {
-    // http://localhost:3000/api/session/current_user_fetch.json
-    return this.$axios.$get(`/api/session/current_user_fetch.json`).then(e => {
+  // this.$store.dispatch("auth_user_fetch")
+  async auth_user_fetch({commit}) {
+    // http://localhost:3000/api/session/auth_user_fetch.json
+    return this.$axios.$get(`/api/session/auth_user_fetch.json`).then(e => {
       commit('current_user_set', e)
     })
   },
   // this.$store.dispatch("current_user_clear")
   async current_user_clear({commit}) {
-    // curl -d _method=delete http://localhost:3000/api/session/current_user_clear_action.json
-    return this.$axios.$delete(`/api/session/current_user_clear_action.json`).then(e => {
+    // curl -d _method=delete http://localhost:3000/api/session/auth_user_logout.json
+    return this.$axios.$delete(`/api/session/auth_user_logout.json`).then(e => {
       commit('current_user_clear')
+      // FIXME: 結果を表示したいけどどうやって notice_collector_run を呼ぶ？ → というかサーバー側で呼ばれているので無理なのか？？？
     })
   },
 }

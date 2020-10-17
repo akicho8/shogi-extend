@@ -16,7 +16,7 @@ Vue.mixin({
   ],
   methods: {
     ...mapMutations("user", ["current_user_clear"]),
-    ...mapActions('user', ["current_user_fetch"]),
+    ...mapActions('user', ["auth_user_fetch"]),
   },
   computed: {
     ...mapState("user", [

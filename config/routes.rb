@@ -113,8 +113,8 @@ Rails.application.routes.draw do
     end
 
     resource :session, only: [] do
-      get :current_user_fetch
-      delete :current_user_clear_action   # ログアウト
+      get :auth_user_fetch
+      delete :auth_user_logout   # ログアウト
     end
 
     resource :settings, only: [] do
