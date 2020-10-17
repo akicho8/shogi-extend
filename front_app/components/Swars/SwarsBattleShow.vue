@@ -219,7 +219,7 @@ export default {
 
     back_handle() {
       this.sound_play('click')
-      this.back_or_top({name: "swars-search"})
+      this.back_to({name: "swars-search"})
     },
 
     // delete_click_handle() {

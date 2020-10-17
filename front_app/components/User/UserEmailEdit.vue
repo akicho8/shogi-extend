@@ -33,7 +33,7 @@ export default {
     cancel_handle() {
       this.sound_play("click")
       // this.$router.push({name: "users-id", params: {id: this.g_current_user.id}})
-      this.back_or_top()
+      this.back_to()
     },
 
     // 保存
@@ -51,7 +51,7 @@ export default {
       }
 
       // this.$router.push({name: "users-id", params: {id: this.g_current_user.id}})
-      this.back_or_top()
+      this.back_to()
     },
   },
 }

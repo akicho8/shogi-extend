@@ -89,7 +89,7 @@ export default {
 
     back_handle() {
       this.sound_play('click')
-      this.back_or_top({name: "swars-search", query: {query: this.$route.params.key}})
+      this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
     },
   },
   computed: {

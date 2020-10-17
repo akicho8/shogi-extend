@@ -62,7 +62,7 @@ export default {
 
     back_handle() {
       this.sound_play('click')
-      this.back_or_top()
+      this.back_to()
     },
   },
   computed: {
