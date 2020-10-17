@@ -157,7 +157,7 @@ export default {
   mounted() {
     if (this.development_p) {
     } else {
-      this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()
+      // this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()
     }
     this.full_screen = new FullScreen()
   },
