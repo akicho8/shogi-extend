@@ -1,11 +1,15 @@
 <template lang="pug">
 .service-infos.has-background-white-bis
-  b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container" spaced)
+  DebugBox
+    | OK
+
+  MainNavbar
     template(slot="brand")
       b-navbar-item(tag="nuxt-link" :to="{name: 'index'}")
         h1.has-text-weight-bold SHOGI-EXTEND
     template(slot="end")
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}" v-if="development_p") Launcher
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}" v-if="development_p")
+        b-icon(icon="rocket")
       NavbarItemLogin
       NavbarItemProfileLink
   .section
@@ -68,6 +72,8 @@
 </template>
 
 <script>
+import { isMobile } from "@/components/models/isMobile.js"
+
 export default {
   name: "service-infos",
   data () {
@@ -93,6 +99,8 @@ export default {
       this.config = config
     })
   },
+  computed: {
+  },
 }
 </script>
 
@@ -105,4 +113,8 @@ export default {
     color: $grey
     a
       color: inherit
+      
+  .section
+    +mobile
+      padding: 1.4rem 1.2rem
 </style>
