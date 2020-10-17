@@ -1,6 +1,6 @@
 <template lang="pug">
 .StopwatchApp
-  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+  MainNavbar
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(@click="book_title_input_dialog") {{book_title}}

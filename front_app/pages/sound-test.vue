@@ -1,6 +1,6 @@
 <template lang="pug">
 .sound-test
-  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+  MainNavbar
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'sound-test'}") サウンドテスト

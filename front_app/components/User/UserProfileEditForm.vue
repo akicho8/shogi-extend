@@ -4,7 +4,7 @@
     div valid_p        = {{valid_p}}
     div name_invalid_p = {{name_invalid_p}}
 
-  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+  MainNavbar
     template(slot="start")
       b-navbar-item.has-text-weight-bold(@click="cancel_handle") キャンセル
     template(slot="end")

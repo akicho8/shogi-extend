@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .swars-histograms-grade
-    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+    MainNavbar
       template(slot="brand")
         HomeNavbarItem
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-grade'}") 将棋ウォーズ段級分布

@@ -31,7 +31,7 @@ client-only
         b-menu-list(label="その他")
           b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
 
-    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+    MainNavbar
       template(slot="brand")
         HomeNavbarItem
         b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
@@ -58,7 +58,7 @@ client-only
         //-         | リアルタイム共有
         //-         .has-text-danger.ml-1(v-if="room_code") {{room_code}}
 
-    b-navbar(type="is-dark" fixed-bottom v-if="development_p")
+    MainNavbar(type="is-dark" fixed-bottom v-if="development_p")
       template(slot="start")
         b-navbar-item(@click="reset_handle") 盤面リセット
 

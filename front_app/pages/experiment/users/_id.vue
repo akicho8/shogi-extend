@@ -1,6 +1,6 @@
 <template lang="pug">
 .experiment-users-id
-  b-navbar(type="is-primary")
+  MainNavbar
     template(slot="brand")
       b-navbar-item(tag="div") users/_id 動作検証
     template(slot="start")

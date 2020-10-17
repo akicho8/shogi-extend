@@ -1,7 +1,7 @@
 <template lang="pug">
 .SwarsUserKeyDownloadAll
   b-loading(:active="$fetchState.pending")
-  b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container" spaced)
+  MainNavbar
     template(slot="brand")
       b-navbar-item(@click="back_handle")
         b-icon(icon="arrow-left")

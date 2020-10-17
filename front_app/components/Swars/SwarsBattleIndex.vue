@@ -92,7 +92,7 @@
           b-menu-item(label="棋譜の普通に取得" @click="$router.push({query: {query: 'Yamada_Taro'}})")
 
   //- b-navbar(type="is-primary" :wrapper-class="['container', {'is-fluid': wide_p}]" :mobile-burger="false" spaced)
-  b-navbar(type="is-primary" wrapper-class="container is-fluid" :mobile-burger="false" spaced)
+  MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item(tag="nuxt-link" :to="{query: {}}" @click.native="query= ''")

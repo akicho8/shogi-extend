@@ -5,7 +5,7 @@
     p http://0.0.0.0:4000/three-stage-leagues/67
     p http://0.0.0.0:4000/three-stage-leagues/28
 
-  b-navbar(type="is-primary" :mobile-burger="false" wrapper-class="container" spaced)
+  MainNavbar
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'three-stage-leagues', params: {generation: config.league.generation}}") {{config.page_title}}

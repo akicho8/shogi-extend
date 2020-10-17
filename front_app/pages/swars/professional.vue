@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .swars-professional
-    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+    MainNavbar
       template(slot="brand")
         HomeNavbarItem
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-professional'}") 将棋ウォーズ十段の成績

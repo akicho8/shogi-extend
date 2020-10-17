@@ -1,6 +1,6 @@
 <template lang="pug">
 .XyMasterApp(:class="[mode, `current_rule_input_mode-${current_rule.input_mode}`]")
-  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced v-if="mode === 'stop' || mode === 'goal'")
+  MainNavbar(v-if="mode === 'stop' || mode === 'goal'")
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'xy'}") 符号の鬼
@@ -14,7 +14,7 @@
       NavbarItemLogin
       NavbarItemProfileLink
 
-  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
+  MainNavbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
       b-navbar-item(@click="reset_all_handle") リセット
       b-navbar-item(@click="goal_handle") ゴール

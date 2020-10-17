@@ -10,7 +10,7 @@
           b-menu-list(label="その他")
             b-menu-item(label="アカウント連携" :href="`${$config.MY_SITE_URL}/accounts/${record.id}/edit`")
             b-menu-item(label="ログアウト" @click="logout_handle")
-    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+    MainNavbar
       template(slot="brand")
         HomeNavbarItem
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")

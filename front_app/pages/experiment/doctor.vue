@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .doctor
-    b-navbar(type="is-primary")
+    MainNavbar
       template(slot="brand")
         b-navbar-item(tag="nuxt-link" :to="{name:'experiment-doctor'}" exact-active-class="is-active") DOCTOR
       template(slot="start")

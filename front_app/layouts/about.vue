@@ -1,6 +1,6 @@
 <template lang="pug">
 .about
-  b-navbar(type="is-primary" wrapper-class="container" spaced)
+  MainNavbar
     template(slot="brand")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'index'}") SHOGI-EXTEND
     template(slot="start" v-if="false")

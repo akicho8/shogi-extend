@@ -1,6 +1,6 @@
 <template lang="pug">
 .UserProfileEditImageCrop.has-background-black
-  b-navbar(type="is-dark" wrapper-class="container" :mobile-burger="false" spaced)
+  MainNavbar(type="is-dark")
     //- template(slot="brand")
     //-   b-navbar-item キャンセル
     template(slot="start")
@@ -19,7 +19,7 @@
       .canvas_container.is-flex
         canvas(ref="my_canvas" :width="canvas_size" :height="canvas_size")
 
-  b-navbar(type="is-dark" wrapper-class="container" :mobile-burger="false" spaced fixed-bottom centered)
+  MainNavbar(type="is-dark" fixed-bottom centered)
     template(slot="start")
       b-navbar-item(@click="rotate_handle")
         b-icon(icon="format-rotate-90 mdi-flip-h")

@@ -29,7 +29,7 @@
             template(v-for="e in EncodeInfo.values")
               b-menu-item(:label="e.name" @click="sound_play('click'); body_encode = e.key" :class="{'has-text-weight-bold': body_encode === e.key}")
 
-  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+  MainNavbar
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'adapter'}") なんでも棋譜変換

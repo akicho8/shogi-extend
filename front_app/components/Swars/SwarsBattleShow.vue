@@ -39,7 +39,7 @@
           //-   b-menu-item(label="Info")
           //-   b-menu-item(label="Info")
 
-    b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+    MainNavbar
       template(slot="brand")
         b-navbar-item(@click="back_handle")
           b-icon(icon="arrow-left")

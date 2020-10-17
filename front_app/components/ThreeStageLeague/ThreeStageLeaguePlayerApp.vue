@@ -4,7 +4,7 @@
     p http://0.0.0.0:3000/api/three_stage_league_player
     p http://0.0.0.0:3000/api/three_stage_league_player?name=西山朋佳
 
-  b-navbar(type="is-primary" wrapper-class="container" :mobile-burger="false" spaced)
+  MainNavbar
     template(slot="brand")
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: config.main_user.name}}") {{config.main_user.name_with_age}}
