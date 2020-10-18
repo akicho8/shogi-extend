@@ -16,7 +16,9 @@
       .columns.is-centered
         .column.is-7-desktop
           .has-text-centered
-            b-upload(@input="avatar_upload_handle" @click.native="sound_play('click')")
+            // @click.native="sound_play('click')" すると2連続で呼ばれてしまうので指定してない
+            // @click.native="toast_ok(1)" すると2回呼ばれていることがわかる
+            b-upload(@input="avatar_upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音OFF')")
               figure.image.is_clickable
                 img.is-rounded(:src="image_source")
                 .image_same_size_box
