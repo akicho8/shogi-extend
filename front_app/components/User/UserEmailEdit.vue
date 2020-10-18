@@ -1,5 +1,6 @@
 <template lang="pug">
 .UserEmailEdit.has-background-white-bis
+  b-loading(:active="$fetchState.pending")
   MainNavbar
     template(slot="start")
       b-navbar-item.has-text-weight-bold(@click="cancel_handle") キャンセル
