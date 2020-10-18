@@ -384,8 +384,13 @@ module Swars
     def current_index_scope
       @current_index_scope ||= -> {
         s = current_scope
-        unless current_swars_user
-          s = s.none
+        if current_swars_user
+        else
+          if Rails.env.development?
+            s = s.none
+          else
+            s = s.none
+          end
         end
         s
       }.call
