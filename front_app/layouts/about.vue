@@ -1,12 +1,9 @@
 <template lang="pug">
-.about
+.about-layout
   MainNavbar
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'index'}") SHOGI-EXTEND
-    template(slot="start" v-if="false")
-      b-navbar-item(v-if="development_p" tag="nuxt-link" :to="{name: 'index'}" exact-active-class="is-active") Home
-      template(v-for="(item, key) of items")
-        b-navbar-item(tag="nuxt-link" :to="item.to" exact-active-class="is-active") {{item.title}}
+      HomeNavbarItem
+      b-navbar-item.has-text-weight-bold About
 
   .section.pt-4
     .container
@@ -18,7 +15,7 @@
       .tabs.mb-6(v-if="true")
         ul
           template(v-for="(item, key) of items")
-            nuxt-link(:to="item.to" v-slot="{ href, route, navigate, isActive, isExactActive }")
+            nuxt-link(:to="item.to" v-slot="{ href, route, navigate, isActive, isExactActive }" @click.native="sound_play('click')")
               li(:class="[isActive && 'is-active', isExactActive && '']")
                 a(:href="href" @click="navigate") {{item.title}}
       nuxt
@@ -40,7 +37,7 @@ export default {
 </script>
 
 <style lang="sass">
-.about
+.about-layout
   .tabs ul
     +mobile
       justify-content: center
