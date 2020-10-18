@@ -39,23 +39,23 @@ module Api
     # curl -d _method=post http://0.0.0.0:3000/api/swars/users/devuser1/download_yoyaku
     # http://0.0.0.0:3000/api/swars/users/devuser1/download_yoyaku
     def download_yoyaku
-      no = ::Swars::CrawlReservation.madanoyatu.count
+      no = ::Swars::CrawlReservation.active_only.count
       record = current_user.swars_crawl_reservations.create(crawl_reservation_params)
       if record.errors.present?
         error_messages = record.errors.full_messages.join(" ")
-        render json: { notice_collector: NoticeCollector.single(:danger, error_messages, method: "dialog") }
+        render json: { notice_collector: NoticeCollector.single(:warning, error_messages, method: "dialog") }
         return
       end
-      notice_collector = NoticeCollector.single(:success, "予約が完了しました<br>(#{no}人待ち)", title: "予約完了", method: "dialog")
-      n = ::Swars::CrawlReservation.madanoyatu.count
+      notice_collector = NoticeCollector.single(:success, "予約しました(#{no}件待ち)", method: "dialog")
+      n = ::Swars::CrawlReservation.active_only.count
       slack_message(key: "棋譜取得の予約(#{n})", body: record.to_t)
       render json: { notice_collector: notice_collector }
     end
 
     def crawler_run
-      before_count = ::Swars::CrawlReservation.madanoyatu.count
+      before_count = ::Swars::CrawlReservation.active_only.count
       Swars::Crawler::ReservationCrawler.new.run
-      after_count = ::Swars::CrawlReservation.madanoyatu.count
+      after_count = ::Swars::CrawlReservation.active_only.count
       notice_collector = NoticeCollector.single(:success, "取得処理実行完了(#{before_count}→#{after_count})")
       render json: { notice_collector: notice_collector }
     end

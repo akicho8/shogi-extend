@@ -22,27 +22,33 @@
 
 module Swars
   class CrawlReservation < ApplicationRecord
-    cattr_accessor(:maximum_reservation_number_of_per_capita) { Rails.env.development? ? 3 : 10 } # 一人当たりの予約件数
+    # 一人当たりの予約件数
+    cattr_accessor(:maximum_reservation_number_of_per_capita) do
+      if Rails.env.development?
+        3
+      else
+        10
+      end
+    end
 
     belongs_to :user, class_name: "::User"
-    # belongs_to :user, counter_cache: true, touch: :last_reception_at
 
-    scope :madanoyatu, -> { where(processed_at: nil) }
+    scope :active_only, -> { where(processed_at: nil) }
 
     with_options presence: true do
       validates :attachment_mode
       validates :target_user_key
     end
 
-    # with_options allow_blank: true do
-    #   validates :target_user_key, uniqueness: { scope: :user_id, message: "a" }
-    # end
+    with_options allow_blank: true do
+      validates :attachment_mode, inclusion: ["nothing", "with_zip"]
+    end
 
-    validate :on => :create do
+    validate on: :create do
       if errors.empty?
         if maximum_reservation_number_of_per_capita
           if user
-            n = user.swars_crawl_reservations.madanoyatu.count
+            n = user.swars_crawl_reservations.active_only.count
             if n >= maximum_reservation_number_of_per_capita
               errors.add(:base, "#{user.name}さんはもう#{n}件も予約してるので次のは明日以降にしてください")
             end
@@ -52,8 +58,8 @@ module Swars
 
       if errors.empty?
         if user && target_user_key
-          if user.swars_crawl_reservations.madanoyatu.where(target_user_key: target_user.key).exists?
-            errors.add(:base, "#{user.name}さんはもう#{target_user_key}さんの棋譜取得を予約しています")
+          if user.swars_crawl_reservations.active_only.where(target_user_key: target_user.key).exists?
+            errors.add(:base, "#{user.name}さんはもう#{target_user_key}さんの棋譜取得を予約済みです")
           end
         end
       end
@@ -84,6 +90,8 @@ module Swars
     def zip_scope
       target_user.battles
     end
+
+    private
 
     def zip_filename
       parts = []

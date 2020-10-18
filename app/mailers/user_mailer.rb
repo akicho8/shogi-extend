@@ -69,16 +69,17 @@ class UserMailer < ApplicationMailer
     other_options = {
     }.merge(other_options)
 
+    diff_count = other_options[:diff_count] || 0
+
     out = []
-    if n = other_options[:diff_count]
-      out << "#{n}件、新しく取得しました"
-      out << ""
-    end
-    out << "#{record.target_user_key}さんの棋譜"
+    out << "#{diff_count}件、新しく取得しました"
+    out << "全体で#{record.zip_scope.count}件あります"
+
+    out << "#{record.target_user.key}さんの棋譜"
     if Rails.env.development?
       out << UrlProxy[path: "/swars/search", query: {query: record.target_user_key}]
     else
-      out << url_for(:root) + "swars/search?query=#{record.target_user_key}"
+      out << url_for(:root) + "swars/search?query=#{record.target_user.key}"
     end
 
     if Rails.env.development?
