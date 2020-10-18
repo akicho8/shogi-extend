@@ -7,6 +7,9 @@
   b-dropdown.top_right_menu(position="is-bottom-left" @click.native="sound_play('click')")
     b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
+    // この下のアイテムはすべてクリック音を設定してない
+    // なんか変な気もするけど押したときに伝搬して b-dropdown で鳴る
+
     b-dropdown-item(@click="search_handle")
       b-icon(icon="magnify" size="is-small")
       | 棋譜検索
@@ -35,11 +38,11 @@
 
     b-dropdown-item(separator)
 
-    b-dropdown-item(:href="`https://twitter.com/search?q=将棋 ${info.user.key}`")
+    b-dropdown-item(:href="`https://twitter.com/search?q=将棋 ${info.user.key}`" :target="target_default")
       b-icon(icon="twitter" size="is-small" type="is-twitter")
       | Twitter検索
 
-    b-dropdown-item(:href="`https://www.google.co.jp/search?q=${info.user.key}`")
+    b-dropdown-item(:href="`https://www.google.co.jp/search?q=${info.user.key}`" :target="target_default")
       b-icon(icon="google" size="is-small")
       | ぐぐる
 
