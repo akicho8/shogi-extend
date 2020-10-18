@@ -11,10 +11,6 @@
       b-icon(icon="magnify" size="is-small")
       | 棋譜検索
 
-    b-dropdown-item(:href="`https://shogiwars.heroz.jp/users/mypage/${info.user.key}`" :target="target_default")
-      b-icon(icon="link" size="is-small")
-      | ウォーズ本家
-
     b-dropdown-item(separator)
 
     b-dropdown-item(@click="update_handle({try_fetch: true})" v-if="development_p")
@@ -46,6 +42,10 @@
     b-dropdown-item(:href="`https://www.google.co.jp/search?q=${info.user.key}`")
       b-icon(icon="google" size="is-small")
       | ぐぐる
+
+    b-dropdown-item(:href="`https://shogiwars.heroz.jp/users/mypage/${info.user.key}`" :target="target_default")
+      b-icon(icon="link" size="is-small")
+      | ウォーズ本家
 
   .top_container
     ////////////////////////////////////////////////////////////////////////////////
