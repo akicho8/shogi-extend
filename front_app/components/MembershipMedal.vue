@@ -1,8 +1,7 @@
 <template lang="pug">
-.MembershipMedal.is-inline-block(@click="click_handle" :class="{is_clickable: params.message}")
+span.MembershipMedal(:class="wrapper_class" @click="click_handle")
   template(v-if="params.emoji")
-    span.emoji
-      | {{params.emoji}}
+    | {{params.emoji}}
   template(v-else-if="params.icon")
     b-icon(:icon="params.icon" :type="params.type" size="is-small" :class="params.class")
   template(v-else)
@@ -24,13 +23,25 @@ export default {
       }
     },
   },
+  computed: {
+    wrapper_class() {
+      return {
+        emoji:        this.params.emoji,
+        icon:         this.params.icon,
+        raw:          !(this.params.emoji || this.params.icon),
+        is_clickable: this.params.message,
+      }
+    },
+  },
 }
 </script>
 
 <style lang="sass">
 .MembershipMedal
-  .emoji
-    margin-right: 0.25rem
-  .icon
-    margin-right: 0.6rem
+  +mobile
+    &.emoji
+      // 絵文字によって大きさが異なるのので結局完璧に揃えるのは難しい
+      margin-right: 0.25rem
+    &.icon
+      margin-right: 0.6rem
 </style>
