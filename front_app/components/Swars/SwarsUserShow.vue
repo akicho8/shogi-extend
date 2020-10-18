@@ -50,7 +50,7 @@
   .top_container
     ////////////////////////////////////////////////////////////////////////////////
     // 名前
-    .user_key.has-text-weight-bold.has-text-centered
+    .has-text-weight-bold.has-text-centered.mt-2
       | {{info.user.key}}
     // 段級位
     .is-flex.rule_container
@@ -327,7 +327,6 @@ export default {
     padding-bottom: 0.2rem // アイコンの下の隙間
     border-bottom: 1px solid $grey-lighter
 
-    .user_key
     .rule_container
       justify-content: center
       // 一つのルール
