@@ -82,10 +82,7 @@ module Swars
     end
 
     def zip_scope
-      Swars::Battle.all
-
-      # target_user.battles
-      # target_user.battles.order(battled_at: :desc)
+      target_user.battles
     end
 
     def zip_filename
