@@ -1,3 +1,5 @@
+# FIXME: RESTにしないと方がいいんじゃないか？ 余計に管理しにくい
+
 module Api
   class ThreeStageLeaguesController < ::Api::ApplicationController
     # http://0.0.0.0:3000/api/three_stage_league

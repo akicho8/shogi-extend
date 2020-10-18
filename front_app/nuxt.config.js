@@ -11,6 +11,33 @@ function title_build(title) {
   }
 }
 
+// https://github.com/nuxt-community/sitemap-module
+// http://0.0.0.0:4000/sitemap.xml
+const axios = require('axios')
+const sitemap = {
+  hostname: process.env.MY_OGP_URL,
+  gzip: true,
+  cacheTime: 1000 * 60 * 60,    // 1時間
+  exclude: [
+    "/experiment/**",
+    "/settings/**",
+  ],
+  routes: async () => {
+    let list = []
+    let res = null
+
+    // http://0.0.0.0:3000/api/tsl_user_all
+    res = await axios.get(`${process.env.API_URL}/api/tsl_league_all`)
+    list = list.concat(res.data.map(({generation}) => `/three-stage-leagues/${generation}`))
+
+    // http://0.0.0.0:3000/api/tsl_league_all
+    res = await axios.get(`${process.env.API_URL}/api/tsl_user_all`)
+    list = list.concat(res.data.map(({name}) => `/three-stage-league-players/${name}`))
+
+    return list
+  },
+}
+
 const config = {
 // export default {
   // debug: true,
@@ -161,7 +188,11 @@ const config = {
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
+    '@nuxtjs/sitemap',
   ],
+
+  sitemap,
+
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

@@ -55,5 +55,17 @@ module Api
         }
       }
     end
+
+    # 三段リーグのユーザー配列
+    # http://0.0.0.0:3000/api/tsl_user_all
+    def tsl_user_all
+      render json: Tsl::User.all
+    end
+
+    # 三段リーグのリーグ配列
+    # http://0.0.0.0:3000/api/tsl_league_all
+    def tsl_league_all
+      render json: Tsl::League.all
+    end
   end
 end

@@ -1,5 +1,8 @@
 # -*- mode: ruby -*-
 [
+  "http://0.0.0.0:4000/sitemap.xml",
+  "http://0.0.0.0:4000/sitemap.xml.gz",
+
   "http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=40",
   "http://localhost:3000/x?flip=false&modal_id=1",
   "http://localhost:3000/app/share-board",
