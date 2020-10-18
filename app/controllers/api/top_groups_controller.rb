@@ -57,10 +57,20 @@ module Api
     def user_keys
       keys = []
 
-      doc = Nokogiri::HTML(html_fetch("https://shogiwars.heroz.jp/"))
+      body = html_fetch("https://shogiwars.heroz.jp/")
+      doc = Nokogiri::HTML(body)
+
+      # リンクのユーザー名が小文字化されているのでランキングの表示を取らないといけない
+      keys += doc.search(".ranking_list dl").collect { |e|
+        e.search("dd").first.text
+      }
+
+      # texts = doc.search("div.ranking_list dd").collect(&:text)
+      # texts = texts.find_all { |e| e.match?(/[A-Z\d_]+\z/i) }
+      # raise texts.inspect
 
       # 個人戦
-      keys += user_key_collect(doc, "a")
+      # keys += user_key_collect(doc, "a")
 
       # 団体戦
       keys += doc.search("a").flat_map { |e|
