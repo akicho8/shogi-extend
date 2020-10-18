@@ -41,7 +41,7 @@ export default {
   +mobile
     &.emoji
       // 絵文字によって大きさが異なるのので結局完璧に揃えるのは難しい
-      margin-right: 0.25rem
+      margin-right: 0.35rem
     &.icon
-      margin-right: 0.6rem
+      margin-right: 0.7rem
 </style>

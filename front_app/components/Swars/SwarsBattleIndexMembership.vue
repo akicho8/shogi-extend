@@ -36,15 +36,16 @@ export default {
 
 <style lang="sass">
 .SwarsBattleIndexMembership
+  // モバイルのときは縦表示になるので名前を大きくする
   .icon_with_name
     +mobile
       font-size: $size-4
 
   .tags
-    .tag
-      margin: 0              // 右方向にあるマージを除去
+    a
+      margin: 0           // 右方向にあるマージを除去
       &:not(:first-child)
-        margin-left: 0.25rem // タグ同士の隙間
+        margin-left: 1px  // タグ同士の隙間
 
     // モバイル時は折り返しありの右より
     flex-wrap: wrap
@@ -55,7 +56,7 @@ export default {
     // デスクトップ以上で1行表示
     +desktop
       display: inline-flex  // inlineにするとそのまま名前の右配置になる
-      margin-left: 0.25rem  // 横並びなのでプレイヤー名との隙間を少しあける
+      margin-left: 0.2rem  // 横並びなのでプレイヤー名との隙間を少しあける
 
     // これを指定しないとモバイルのときタグのしたに隙間がなくなる
     +mobile
