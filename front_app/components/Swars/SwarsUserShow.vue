@@ -1,6 +1,6 @@
 <template lang="pug">
 //- info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
-.SwarsUserShow(v-if="!$fetchState.pending && info")
+.SwarsUserShow(v-if="!$fetchState.pending && info" :key="info ? info.key : ''")
   // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
   .delete.page_delete.is-large(@click="back_handle")
 
