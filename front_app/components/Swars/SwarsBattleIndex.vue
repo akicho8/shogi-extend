@@ -152,7 +152,7 @@
                 SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
           template(v-if="display_key === 'table'")
-            b-table.mt-5(
+            b-table(
               v-if="$route.query.query"
               :loading="$fetchState.pending && false"
 
@@ -485,4 +485,9 @@ export default {
     +mobile
       padding-left: 0 ! important
       padding-right: 0 ! important
+
+  .b-table
+    margin-top: 1.5rem
+    +mobile
+      margin-top: 1.1rem
 </style>
