@@ -1,184 +1,186 @@
 <template lang="pug">
 //- info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
-.SwarsUserShow(v-if="!$fetchState.pending && info" :key="info ? info.key : ''")
-  // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
-  .delete.page_delete.is-large(@click="back_handle")
+.SwarsUserShowWrapper
+  b-loading(:active="$fetchState.pending")
+  .SwarsUserShow(v-if="!$fetchState.pending && info" :key="info ? info.key : ''")
+    // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
+    .delete.page_delete.is-large(@click="back_handle")
 
-  b-dropdown.top_right_menu(position="is-bottom-left" @click.native="sound_play('click')")
-    b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
+    b-dropdown.top_right_menu(position="is-bottom-left" @click.native="sound_play('click')")
+      b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
-    // この下のアイテムはすべてクリック音を設定してない
-    // なんか変な気もするけど押したときに伝搬して b-dropdown で鳴る
+      // この下のアイテムはすべてクリック音を設定してない
+      // なんか変な気もするけど押したときに伝搬して b-dropdown で鳴る
 
-    b-dropdown-item(@click="search_handle")
-      b-icon(icon="magnify" size="is-small")
-      | 棋譜検索
+      b-dropdown-item(@click="search_handle")
+        b-icon(icon="magnify" size="is-small")
+        | 棋譜検索
 
-    b-dropdown-item(separator)
+      b-dropdown-item(separator)
 
-    b-dropdown-item(@click="update_handle({try_fetch: true})" v-if="development_p")
-      b-icon(icon="sync" size="is-small")
-      | 更新
+      b-dropdown-item(@click="update_handle({try_fetch: true})" v-if="development_p")
+        b-icon(icon="sync" size="is-small")
+        | 更新
 
-    b-dropdown-item(@click="update_handle({sample_max: 0})" v-if="development_p")
-      b-icon(icon="arrow-up-bold" size="is-small")
-      | 最大0件
+      b-dropdown-item(@click="update_handle({sample_max: 0})" v-if="development_p")
+        b-icon(icon="arrow-up-bold" size="is-small")
+        | 最大0件
 
-    b-dropdown-item(@click="update_handle({sample_max: 1})" v-if="development_p")
-      b-icon(icon="arrow-up-bold" size="is-small")
-      | 最大1件
+      b-dropdown-item(@click="update_handle({sample_max: 1})" v-if="development_p")
+        b-icon(icon="arrow-up-bold" size="is-small")
+        | 最大1件
 
-    b-dropdown-item(@click="update_handle({sample_max: 100})")
-      b-icon(icon="arrow-up-bold" size="is-small")
-      | 最大100件
+      b-dropdown-item(@click="update_handle({sample_max: 100})")
+        b-icon(icon="arrow-up-bold" size="is-small")
+        | 最大100件
 
-    b-dropdown-item(@click="update_handle({sample_max: 200})")
-      b-icon(icon="arrow-up-bold" size="is-small")
-      | 最大200件
+      b-dropdown-item(@click="update_handle({sample_max: 200})")
+        b-icon(icon="arrow-up-bold" size="is-small")
+        | 最大200件
 
-    b-dropdown-item(separator)
+      b-dropdown-item(separator)
 
-    b-dropdown-item(:href="`https://twitter.com/search?q=${info.user.key} 将棋`" :target="target_default")
-      b-icon(icon="twitter" size="is-small" type="is-twitter")
-      | Twitter検索
+      b-dropdown-item(:href="`https://twitter.com/search?q=${info.user.key} 将棋`" :target="target_default")
+        b-icon(icon="twitter" size="is-small" type="is-twitter")
+        | Twitter検索
 
-    b-dropdown-item(:href="`https://www.google.co.jp/search?q=${info.user.key} 将棋`" :target="target_default")
-      b-icon(icon="google" size="is-small")
-      | ぐぐる
+      b-dropdown-item(:href="`https://www.google.co.jp/search?q=${info.user.key} 将棋`" :target="target_default")
+        b-icon(icon="google" size="is-small")
+        | ぐぐる
 
-    b-dropdown-item(:href="`https://shogiwars.heroz.jp/users/mypage/${info.user.key}`" :target="target_default")
-      b-icon(icon="link" size="is-small")
-      | ウォーズ本家
+      b-dropdown-item(:href="`https://shogiwars.heroz.jp/users/mypage/${info.user.key}`" :target="target_default")
+        b-icon(icon="link" size="is-small")
+        | ウォーズ本家
 
-  .top_container
-    ////////////////////////////////////////////////////////////////////////////////
-    // 名前
-    .has-text-weight-bold.has-text-centered.mt-2
-      | {{info.user.key}}
-    // 段級位
-    .is-flex.rule_container
-      .rule_one(v-for="(row, key) in info.rules_hash")
-        span.rule_name.is-size-7.has-text-grey
-          | {{row.rule_name}}
-        span.grade_name.is-size-5
-          template(v-if="row.grade_name")
-            | {{row.grade_name}}
-          template(v-else)
-            span.has-text-grey-lighter
-              | ？
-
-    ////////////////////////////////////////////////////////////////////////////////
-    WinLoseCircle(:info="info")
-
-    ////////////////////////////////////////////////////////////////////////////////
-    .ox_container.has-text-centered.is_line_break_on
-      template(v-for="judge_key in info.judge_keys")
-        span.has-text-danger(v-if="judge_key === 'win'")
-          b-icon(icon="checkbox-blank-circle" size="is-small" type="is-danger")
-        span.has-text-success(v-if="judge_key === 'lose'")
-          b-icon(icon="close" size="is-small" type="is-success")
-
-    .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
-      template(v-for="(row, i) in info.medal_list")
-        span(@click="medal_click_handle(row)" :class="{is_clickable: row.message}")
-          template(v-if="row.method === 'tag'")
-            b-tag(:key="`medal_list/${i}`" :type="row.type" rounded) {{row.name}}
-          template(v-else-if="row.method === 'raw'")
-            span.raw(:key="`medal_list/${i}`") {{row.name}}
-          template(v-else-if="row.method === 'icon'")
-            template(v-if="row.tag_wrap")
-              b-tag(:key="`medal_list/${i}`" :type="row.tag_wrap.type" rounded)
-                b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
+    .top_container
+      ////////////////////////////////////////////////////////////////////////////////
+      // 名前
+      .has-text-weight-bold.has-text-centered.mt-2
+        | {{info.user.key}}
+      // 段級位
+      .is-flex.rule_container
+        .rule_one(v-for="(row, key) in info.rules_hash")
+          span.rule_name.is-size-7.has-text-grey
+            | {{row.rule_name}}
+          span.grade_name.is-size-5
+            template(v-if="row.grade_name")
+              | {{row.grade_name}}
             template(v-else)
-              b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
+              span.has-text-grey-lighter
+                | ？
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////
+      WinLoseCircle(:info="info")
 
-  b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" @input="sound_play('click')")
-    //- TODO: key を指定する
-    b-tab-item(label="日付")
-    b-tab-item(label="段級")
-    b-tab-item(label="戦法")
-    b-tab-item(label="対抗")
+      ////////////////////////////////////////////////////////////////////////////////
+      .ox_container.has-text-centered.is_line_break_on
+        template(v-for="judge_key in info.judge_keys")
+          span.has-text-danger(v-if="judge_key === 'win'")
+            b-icon(icon="checkbox-blank-circle" size="is-small" type="is-danger")
+          span.has-text-success(v-if="judge_key === 'lose'")
+            b-icon(icon="close" size="is-small" type="is-success")
 
-  .tab_content(v-if="info")
-    template(v-if="tab_index === 0")
-      template(v-for="(row, i) in info.every_day_list")
-        nuxt-link.box.one_box.two_column(:key="`every_day_list/${i}`" :to="every_day_search_path(row)" @click.native="sound_play('click')")
-          .columns.is-mobile
-            .column.is-paddingless
-              .one_box_title.has-text-weight-bold.is-size-5
-                | {{date_to_custom_format(row.battled_on) + " "}}
-                span(:class="battled_on_to_class(row)")
-                  | {{date_to_wday(row.battled_on)}}
-          .columns.is-mobile
-            .column.is-paddingless
-              WinLoseCircle(:info="row" size="is-small" narrowed)
-            .column.is-paddingless.is-flex
-              template(v-for="tag in row.all_tags")
-                nuxt-link.tag_wrapper.has-text-weight-bold.is-size-5(:to="{name: 'swars-search', query: {query: `${info.user.key} tag:${tag.name}`}}") {{tag.name}}
+      .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
+        template(v-for="(row, i) in info.medal_list")
+          span(@click="medal_click_handle(row)" :class="{is_clickable: row.message}")
+            template(v-if="row.method === 'tag'")
+              b-tag(:key="`medal_list/${i}`" :type="row.type" rounded) {{row.name}}
+            template(v-else-if="row.method === 'raw'")
+              span.raw(:key="`medal_list/${i}`") {{row.name}}
+            template(v-else-if="row.method === 'icon'")
+              template(v-if="row.tag_wrap")
+                b-tag(:key="`medal_list/${i}`" :type="row.tag_wrap.type" rounded)
+                  b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
+              template(v-else)
+                b-icon(:key="`medal_list/${i}`" :icon="row.name" :type="row.type" size="is-small")
 
-    template(v-if="tab_index === 1")
-      template(v-for="(row, i) in info.every_grade_list")
-        nuxt-link.box.one_box.two_column(:key="`every_grade_list/${i}`" :to="every_grade_search_path(row)" @click.native="sound_play('click')")
-          .columns.is-mobile
-            .column.is-three-quarters.is-paddingless
-              .one_box_title
-                span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
-                  | vs
-                span.has-text-weight-bold.is-size-5.vs_name
-                  | {{row.grade_name}}
-            .column.is-paddingless
-              .has-text-right
-                span.has-text-grey-light.is-size-7.use_rate_label
-                  | 遭遇率
-                span.use_rate
-                  | {{float_to_perc(row.appear_ratio, 1)}}
-                span.has-text-grey-light.is-size-7.use_rate_unit
-                  | %
-          .columns
-            .column.is-paddingless
-              WinLoseCircle(:info="row" size="is-small")
-    template(v-if="tab_index === 2")
-      template(v-for="(row, i) in info.every_my_attack_list")
-        nuxt-link.box.one_box.two_column(:key="`every_my_attack_list/${i}`" :to="every_my_attack_search_path(row)" @click.native="sound_play('click')")
-          .columns.is-mobile
-            .column.is-three-quarters.is-paddingless
-              .one_box_title.has-text-weight-bold.is-size-5
-                | {{row.tag.name}}
-            .column.is-paddingless
-              .has-text-right
-                span.has-text-grey-light.is-size-7.use_rate_label
-                  | 使用率
-                span.use_rate
-                  | {{float_to_perc(row.appear_ratio, 1)}}
-                span.has-text-grey-light.is-size-7.use_rate_unit
-                  | %
-          .columns
-            .column.is-paddingless
-              WinLoseCircle(:info="row" size="is-small")
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    template(v-if="tab_index === 3")
-      template(v-for="(row, i) in info.every_vs_attack_list")
-        nuxt-link.box.one_box.two_column(:key="`every_vs_attack_list/${i}`" :to="every_vs_attack_search_path(row)" @click.native="sound_play('click')")
-          .columns.is-mobile
-            .column.is-three-quarters.is-paddingless
-              .one_box_title
-                span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
-                  | vs
-                span.has-text-weight-bold.is-size-5.vs_name
+    b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" @input="sound_play('click')")
+      //- TODO: key を指定する
+      b-tab-item(label="日付")
+      b-tab-item(label="段級")
+      b-tab-item(label="戦法")
+      b-tab-item(label="対抗")
+
+    .tab_content
+      template(v-if="tab_index === 0")
+        template(v-for="(row, i) in info.every_day_list")
+          nuxt-link.box.one_box.two_column(:key="`every_day_list/${i}`" :to="every_day_search_path(row)" @click.native="sound_play('click')")
+            .columns.is-mobile
+              .column.is-paddingless
+                .one_box_title.has-text-weight-bold.is-size-5
+                  | {{date_to_custom_format(row.battled_on) + " "}}
+                  span(:class="battled_on_to_class(row)")
+                    | {{date_to_wday(row.battled_on)}}
+            .columns.is-mobile
+              .column.is-paddingless
+                WinLoseCircle(:info="row" size="is-small" narrowed)
+              .column.is-paddingless.is-flex
+                template(v-for="tag in row.all_tags")
+                  nuxt-link.tag_wrapper.has-text-weight-bold.is-size-5(:to="{name: 'swars-search', query: {query: `${info.user.key} tag:${tag.name}`}}") {{tag.name}}
+
+      template(v-if="tab_index === 1")
+        template(v-for="(row, i) in info.every_grade_list")
+          nuxt-link.box.one_box.two_column(:key="`every_grade_list/${i}`" :to="every_grade_search_path(row)" @click.native="sound_play('click')")
+            .columns.is-mobile
+              .column.is-three-quarters.is-paddingless
+                .one_box_title
+                  span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
+                    | vs
+                  span.has-text-weight-bold.is-size-5.vs_name
+                    | {{row.grade_name}}
+              .column.is-paddingless
+                .has-text-right
+                  span.has-text-grey-light.is-size-7.use_rate_label
+                    | 遭遇率
+                  span.use_rate
+                    | {{float_to_perc(row.appear_ratio, 1)}}
+                  span.has-text-grey-light.is-size-7.use_rate_unit
+                    | %
+            .columns
+              .column.is-paddingless
+                WinLoseCircle(:info="row" size="is-small")
+      template(v-if="tab_index === 2")
+        template(v-for="(row, i) in info.every_my_attack_list")
+          nuxt-link.box.one_box.two_column(:key="`every_my_attack_list/${i}`" :to="every_my_attack_search_path(row)" @click.native="sound_play('click')")
+            .columns.is-mobile
+              .column.is-three-quarters.is-paddingless
+                .one_box_title.has-text-weight-bold.is-size-5
                   | {{row.tag.name}}
-            .column.is-paddingless
-              .has-text-right
-                span.has-text-grey-light.is-size-7.use_rate_label
-                  | 遭遇率
-                span.use_rate
-                  | {{float_to_perc(row.appear_ratio, 1)}}
-                span.has-text-grey-light.is-size-7.use_rate_unit
-                  | %
-          .columns
-            .column.is-paddingless
-              WinLoseCircle(:info="row" size="is-small")
+              .column.is-paddingless
+                .has-text-right
+                  span.has-text-grey-light.is-size-7.use_rate_label
+                    | 使用率
+                  span.use_rate
+                    | {{float_to_perc(row.appear_ratio, 1)}}
+                  span.has-text-grey-light.is-size-7.use_rate_unit
+                    | %
+            .columns
+              .column.is-paddingless
+                WinLoseCircle(:info="row" size="is-small")
+
+      template(v-if="tab_index === 3")
+        template(v-for="(row, i) in info.every_vs_attack_list")
+          nuxt-link.box.one_box.two_column(:key="`every_vs_attack_list/${i}`" :to="every_vs_attack_search_path(row)" @click.native="sound_play('click')")
+            .columns.is-mobile
+              .column.is-three-quarters.is-paddingless
+                .one_box_title
+                  span.has-text-weight-bold.is-size-6.vs_mark.has-text-grey-light
+                    | vs
+                  span.has-text-weight-bold.is-size-5.vs_name
+                    | {{row.tag.name}}
+              .column.is-paddingless
+                .has-text-right
+                  span.has-text-grey-light.is-size-7.use_rate_label
+                    | 遭遇率
+                  span.use_rate
+                    | {{float_to_perc(row.appear_ratio, 1)}}
+                  span.has-text-grey-light.is-size-7.use_rate_unit
+                    | %
+            .columns
+              .column.is-paddingless
+                WinLoseCircle(:info="row" size="is-small")
   pre(v-if="development_p") {{info}}
 </template>
 
