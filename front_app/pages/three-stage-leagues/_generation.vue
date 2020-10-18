@@ -11,7 +11,7 @@ export default {
       title: this.config.page_title,
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.config.page_title,                                 },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/three-stage-leagues.png" },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/three-stage-leagues.png" },
         { hid: "og:description", property: "og:description", content: ""                                                      },
       ],
     }

@@ -188,7 +188,7 @@ export default {
       titleTemplate: null,
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.info.html_title                              },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/formal-sheet.png" },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/formal-sheet.png" },
         { hid: "og:description", property: "og:description", content: ""                                                },
       ],
     }

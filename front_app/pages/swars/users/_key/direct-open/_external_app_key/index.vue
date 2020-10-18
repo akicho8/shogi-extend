@@ -30,7 +30,7 @@ export default {
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.long_title,                                    },
         { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                          },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-search.png", },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-search.png", },
         { hid: "og:description", property: "og:description", content: "",                                                 },
       ],
       link: [

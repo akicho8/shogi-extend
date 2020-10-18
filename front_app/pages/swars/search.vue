@@ -13,7 +13,7 @@ export default {
       title: this.page_title,
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.page_title,                                                                                      },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-search.png"                                                    },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-search.png"                                                    },
         { hid: "og:description", property: "og:description", content: "ウォーズの棋譜をぴよ将棋やKENTOで開いたりクリップボード経由で外部アプリに渡すような使い方ができます" },
       ],
     }

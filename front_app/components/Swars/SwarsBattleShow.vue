@@ -347,7 +347,7 @@ export default {
     permalink_url() {
       let url = null
       // if (this.development_p) {
-      //   url = this.$config.MY_OGP_URL
+      //   url = this.$config.MY_NUXT_URL
       // } else {
       url = this.$config.MY_SITE_URL
       // }

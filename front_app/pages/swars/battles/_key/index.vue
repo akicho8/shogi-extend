@@ -16,7 +16,7 @@ export default {
   //     title: `将棋ウォーズバトル情報`,
   //     meta: [
   //       { hid: "og:title",       property: "og:title",       content: `将棋ウォーズバトル情報` },
-  //       { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-battles-key.png" },
+  //       { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-battles-key.png" },
   //       { hid: "og:description", property: "og:description", content: ""},
   //     ],
   //   }

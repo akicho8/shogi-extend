@@ -268,7 +268,7 @@ export default {
   //     meta: [
   //       { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ棋譜検索"                                                                                          },
   //       { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                                                                           },
-  //       { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-search.png"                                                              },
+  //       { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-search.png"                                                              },
   //       { hid: "og:description", property: "og:description", content: "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます" },
   //     ],
   //   }

@@ -15,7 +15,7 @@ function title_build(title) {
 // http://0.0.0.0:4000/sitemap.xml
 const axios = require('axios')
 const sitemap = {
-  hostname: process.env.MY_OGP_URL,
+  hostname: process.env.MY_NUXT_URL,
   gzip: true,
   cacheTime: 1000 * 60 * 60,    // 1時間
   exclude: [
@@ -111,7 +111,7 @@ const config = {
       // 重要なのはこの4つだけで各ページで上書きする
       { hid: "og:title",       property: "og:title",       content: process.env.APP_NAME },
       { hid: "og:description", property: "og:description", content: SITE_DESC },
-      { hid: "og:image",       property: "og:image",       content: process.env.MY_OGP_URL + "/ogp/application.png" },
+      { hid: "og:image",       property: "og:image",       content: process.env.MY_NUXT_URL + "/ogp/application.png" },
       { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image" }, // summary or summary_large_image
 
       { hid: "twitter:site",       property: "twitter:site",       content: "@sgkinakomochi" }, // これいるのか？
@@ -271,7 +271,7 @@ const config = {
   publicRuntimeConfig: {
     CSR_BUILD_VERSION: BUILD_VERSION,
     MY_SITE_URL: "",
-    MY_OGP_URL: "",
+    MY_NUXT_URL: "",
     STAGE: "",
     APP_NAME: "",
   },
