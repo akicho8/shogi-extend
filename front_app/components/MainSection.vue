@@ -6,7 +6,7 @@
 <style lang="sass">
 .MainSection.section
   +mobile
-    padding: 1.2rem 1.0rem
+    padding: 1.0rem 0.8rem
 .STAGE-development
   .MainSection.section
     +touch

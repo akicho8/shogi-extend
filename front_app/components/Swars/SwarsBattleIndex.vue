@@ -489,5 +489,5 @@ export default {
   .b-table
     margin-top: 1.5rem
     +mobile
-      margin-top: 1.1rem
+      margin-top: 1rem
 </style>
