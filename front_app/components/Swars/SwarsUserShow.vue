@@ -346,16 +346,17 @@ export default {
 
     .medal_container
       margin-top: 0.1rem
-      > .tag                // .tag > .icon の場合もあるため最初の .tag だけに適用
-        margin: auto 0.1rem
-      > .raw
-        position: relative
-        bottom: -0.1rem     // 絵文字は大きいので若干下げる
-        margin: auto 0.1rem
-      > .icon
-        position: relative
-        bottom: -0.152rem
-        margin: auto 0.1rem
+      span
+        > .tag                // .tag > .icon の場合もあるため最初の .tag だけに適用
+          margin: auto 0.1rem
+        > .raw
+          position: relative
+          bottom: -0.1rem     // 絵文字は大きいので若干下げる
+          margin: auto 0.1rem
+        > .icon
+          position: relative
+          bottom: -0.152rem
+          margin: auto 0.1rem
 
   ////////////////////////////////////////////////////////////////////////////////
 
