@@ -88,7 +88,7 @@ export const app_room = {
         // 自分から自分へ
       } else {
         this.attributes_set(params)
-        this.toast_ok("タイトルを変更しました")
+        this.toast_ok(`タイトルを${params.title}に変更しました`)
       }
     },
 

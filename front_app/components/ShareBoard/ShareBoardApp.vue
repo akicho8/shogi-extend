@@ -14,31 +14,29 @@ client-only
     b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
       .mx-5.my-5
         b-menu-list(label="Action")
-          b-menu-item(label="盤面リセット" @click="reset_handle")
+          b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
           b-menu-item(label="視点設定" @click="image_view_point_setting_handle")
-          b-menu-item(label="タイトル変更" @click="title_edit")
+          b-menu-item(label="盤面リセット" @click="reset_handle")
         b-menu-list(label="Edit")
+          b-menu-item(label="タイトル変更" @click="title_edit")
           b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.run_mode === 'edit_mode'}")
           b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
-        b-menu-list(label="検討")
-          b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default")
-          b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default")
         b-menu-list(label="Export")
           b-menu-item(label="棋譜コピー" @click="kifu_copy_handle('kif')")
           b-menu-item(label="SFENコピー" @click="kifu_copy_handle('sfen')")
           b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
           b-menu-item(label="棋譜ダウンロード" :href="kif_download_url" @click="sound_play('click')")
-        b-menu-list(label="その他")
-          b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
+        b-menu-list(label="検討")
+          b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
+          b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
 
     MainNavbar
       template(slot="brand")
         HomeNavbarItem
         b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
       template(slot="end")
-        b-navbar-item(@click="sidebar_p = !sidebar_p")
+        b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
           b-icon(icon="menu")
-          template(v-if="development_p && $nuxt.isOffline") (MENU)
 
         //- template(v-if="run_mode === 'play_mode'")
         //-   b-navbar-item(@click="reset_handle") 盤面リセット
@@ -72,32 +70,30 @@ client-only
                 span.mx-1.has-text-grey /
                 span.has-text-grey {{turn_offset_max}}
 
-            .sp_container
-              MyShogiPlayer(
-                :run_mode="run_mode"
-                :debug_mode="false"
-                :start_turn="turn_offset"
-                :kifu_body="current_sfen"
-                :summary_show="false"
-                :slider_show="true"
-                :setting_button_show="development_p"
-                :size="'large'"
-                :sound_effect="true"
-                :controller_show="true"
-                :human_side_key="'both'"
-                :theme="'real'"
-                :flip.sync="board_flip"
-                @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
-                @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
-                @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
-                @update:turn_offset="v => turn_offset = v"
-                @update:turn_offset_max="v => turn_offset_max = v"
-              )
+            MyShogiPlayer.mt-3(
+              :run_mode="run_mode"
+              :debug_mode="false"
+              :start_turn="turn_offset"
+              :kifu_body="current_sfen"
+              :summary_show="false"
+              :slider_show="true"
+              :setting_button_show="development_p"
+              :size="'large'"
+              :sound_effect="true"
+              :controller_show="true"
+              :human_side_key="'both'"
+              :theme="'real'"
+              :flip.sync="board_flip"
+              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+              @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
+              @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
+              @update:turn_offset="v => turn_offset = v"
+              @update:turn_offset_max="v => turn_offset_max = v"
+            )
 
-            .tweet_button_container
-              .buttons.is-centered
-                b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
-                b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
+            .buttons.is-centered.mt-5
+              b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
+              b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
 
             .room_code.is_clickable(@click="room_code_edit" v-if="false")
               | {{room_code}}
@@ -189,6 +185,11 @@ export default {
     })
   },
   methods: {
+    sidebar_toggle() {
+      this.sound_play('click')
+      this.sidebar_p = !this.sidebar_p
+    },
+
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
       this.current_sfen = v
@@ -230,7 +231,9 @@ export default {
 
       if (this.run_mode === "play_mode") {
         if (this.image_view_point === "self") {
-          this.toast_ok(`詰将棋をツイッターで共有する場合は<b>視点設定</b>を<b>常に☗</b>に変更することおすすめします`, {duration: 1000 * 10})
+          this.toast_ok(`
+局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、
+詰将棋を公開する場合は<b>視点設定</b>を<b>常に☗(先手)</b>に変更することおすすめします`, {duration: 1000 * 10})
         }
 
         this.run_mode = "edit_mode"
@@ -465,22 +468,14 @@ export default {
 .ShareBoardApp
   +mobile
     .MainSection
-      padding: 2.8rem 0.5rem 0
+      padding-top: 2rem
+      padding-left: 0.5rem
+      padding-right: 0.5rem
+      padding-bottom: 0
     .column
       padding: 0
       margin: 1.25rem
       &.is_shogi_player
         padding: 0
-        margin: 0
-
-  ////////////////////////////////////////////////////////////////////////////////
-  .turn_container
-
-  ////////////////////////////////////////////////////////////////////////////////
-  .sp_container
-    margin-top: 0.8rem
-
-  ////////////////////////////////////////////////////////////////////////////////
-  .tweet_button_container
-    margin-top: 1.5rem
+        margin:  0
 </style>
