@@ -31,7 +31,9 @@ module Swars
           case
           when m.judge_info.key == :win
             case
-            when d >= 1
+            when d >= 2
+              { message: "段級位が#{p2}上の人に、負けてあたりまえなのに、勝った", icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
+            when d == 1
               { message: "段級位が#{p2}上の人に勝った", icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
             when d == 0
               { message: "同じ段級位に勝った", icon: "star", :class => "has-text-gold" }
@@ -44,6 +46,8 @@ module Swars
               { message: "段級位が上の人にあたりまえのように負けた", icon: "emoticon-neutral-outline", :class => "has-text-grey-light" }
             when d == 0
               { message: "同じ段級位に負けた", icon: "emoticon-sad-outline", :class => "has-text-grey-light" }
+            when d == -1
+              { message: "段級位が#{p2}下の人に負けた", emoji: "🥺" }
             else
               { message: "段級位が#{p2}下の人に、勝ってあたりまえなのに、負けた", emoji: "🥺" }
             end
