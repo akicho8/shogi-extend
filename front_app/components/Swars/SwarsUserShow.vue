@@ -7,7 +7,7 @@
   b-dropdown.top_right_menu(position="is-bottom-left" @click.native="sound_play('click')")
     b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
 
-    b-dropdown-item(@click="sound_play('click'); $router.push({name: 'swars-search', query: {query: info.user.key}})")
+    b-dropdown-item(@click="search_handle")
       b-icon(icon="magnify" size="is-small")
       | 棋譜検索
 
@@ -239,6 +239,10 @@ export default {
   },
 
   methods: {
+    search_handle() {
+      this.$router.push({name: "swars-search", query: {query: this.info.user.key}})
+    },
+
     medal_click_handle(medal) {
       const message = medal.message
       if (message) {
