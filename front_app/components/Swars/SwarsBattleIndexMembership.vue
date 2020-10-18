@@ -27,15 +27,6 @@ export default {
     new_query(name) {
       return `${this.m.user.key} tag:${name}`
     },
-    // click_handle(name) {
-    //   // this.base.interactive_search({query: this.new_query(name)})
-    //   // this.$router.push({name: 'swars-search', query: {query: this.new_query(name)}}, () => {
-    //   //   // this.sound_play('click')
-    //   // }, () => {
-    //   //   // かならず失敗するのはどういうこと？？？
-    //   //   // this.toast_ng("NG")
-    //   // })
-    // },
   },
   computed: {
     m() { return this.membership },
