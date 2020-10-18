@@ -51,7 +51,7 @@ module Swars
       { key: "1手詰じらしマン",    medal_params: { message: "1手詰を焦らして歪んだ優越感に浸った",    method: "raw",  name: "😈",                type: nil, },          if_cond: proc { (r = jirasi_ratio) && r > 0 } },
       { key: "絶対投了しないマン", medal_params: { message: "悔しかったので投了するかわりに放置した", method: "raw",  name: "🧟",                type: nil, },          if_cond: proc { (r = zettai_toryo_sinai_ratio) && r > 0 } },
 
-      { key: "大長考マン",         medal_params: { message: "ありえないほどの長考をした",             method: "raw",  name: "🚫",                type: nil, },          if_cond: proc { (r = long_think_ratio) && r > 0 } },
+      { key: "大長考マン",         medal_params: { message: "対局放棄に近い、ありえないほどの長考をした",             method: "raw",  name: "🚫",                type: nil, },          if_cond: proc { (r = long_think_ratio) && r > 0 } },
       { key: "長考マン",           medal_params: { message: "考えすぎて負けることが多い",             method: "raw",  name: "🤯",                type: nil, },          if_cond: proc { (r = short_think_ratio) && r > 0.1 } },
 
       { key: "開幕千日手",         medal_params: { message: "開幕千日手があった",                     method: "raw",  name: "❓",                type: nil },           if_cond: proc { (r = start_draw_ratio) && r > 0 } },
