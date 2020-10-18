@@ -59,7 +59,11 @@ const CHART_CONFIG_DEFAULT = {
           minRotation: 0,   // 表示角度水平
           maxRotation: 0,   // 表示角度水平
           // maxTicksLimit: 5, // 最大横N個の目盛りにする
-          // callback(value, index, values) { return value + "" }, // 単位をつける
+          // callback(value, index, values) {
+          //   // Chart.js でX軸の軸ラベル(ticks)を「縦書き」にする一撃必殺技
+          //   // https://qiita.com/kd9951/items/c324424528358a457a5c
+          //   return value.split("")
+          // },
         },
         gridLines: {
           display: false,    // x軸の中間の縦線

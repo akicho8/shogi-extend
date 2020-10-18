@@ -10,7 +10,7 @@ client-only
       .container
         SwarsHistogramNavigation(:config="config")
         .columns.is-unselectable
-          .column.is-4.mt-3
+          .column.is-6.mt-3
             CustomChart(:params="config.custom_chart_params")
         .columns
           .column

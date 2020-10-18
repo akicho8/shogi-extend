@@ -10,6 +10,9 @@ client-only
     MainSection
       .container
         SwarsHistogramNavigation(:config="config")
+        .columns.is-unselectable
+          .column.is-6.mt-3
+            CustomChart(:params="config.custom_chart_params")
         .columns
           .column
             b-table.mt-3(
@@ -26,7 +29,7 @@ client-only
               //-     | {{number_floor(row.deviation_score, 3)}}
               b-table-column(v-slot="{row}" field="count"           label="数" numeric sortable) {{row.count}}
 
-            pre(title="DEBUG" v-if="development_p") {{config}}
+    pre(v-if="development_p") {{config}}
 </template>
 
 <script>

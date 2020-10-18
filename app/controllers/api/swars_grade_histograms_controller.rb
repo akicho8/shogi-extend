@@ -59,13 +59,14 @@ module Api
     end
 
     def custom_chart_params
+      e = records.reverse
       {
         data: {
-          labels: records.reverse.collect { |e| e[:grade]["key"][0] },
+          labels: e.collect { |e| e[:grade]["key"][0] },
           datasets: [
             {
               label: nil,
-              data: records.reverse.collect { |e| e[:ratio] },
+              data: e.collect { |e| e[:count] },
             },
           ],
         },
