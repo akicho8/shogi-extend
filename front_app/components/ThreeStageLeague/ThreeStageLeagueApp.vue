@@ -12,7 +12,7 @@
     template(slot="end")
       b-navbar-item.has-text-weight-bold(tag="a" :href="config.league.source_url" target="_blank") 本家
 
-  .section.pt-5
+  MainSection
     .container
       .columns
         .column

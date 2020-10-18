@@ -38,7 +38,7 @@
         b-icon(icon="menu")
         //- EXPORTにする
 
-  .section.pt-5
+  MainSection
     .container
       .columns
         .column

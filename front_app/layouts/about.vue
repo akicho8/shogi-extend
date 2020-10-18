@@ -5,7 +5,7 @@
       HomeNavbarItem
       b-navbar-item.has-text-weight-bold About
 
-  .section.pt-4
+  MainSection
     .container
       .tabs.mb-6(v-if="false")
         ul

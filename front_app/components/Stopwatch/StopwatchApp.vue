@@ -20,7 +20,7 @@
       b-navbar-item(@click="keyboard_modal_show")
         b-icon(icon="keyboard")
 
-  .section.pt-4
+  MainSection
     .container
       .columns
         .column.is-7
