@@ -38,6 +38,11 @@ export default {
 
 <style lang="sass">
 .MembershipMedal
+  &.emoji
+    margin-right: 0.15rem
+  &.icon
+    margin-right: 0.4rem
+
   +mobile
     &.emoji
       // 絵文字によって大きさが異なるのので結局完璧に揃えるのは難しい
