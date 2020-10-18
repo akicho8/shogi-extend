@@ -22,16 +22,21 @@ export default {
 
   methods: {
     show_handle(row) {
-      this.$router.push({name: "swars-battles-key", params: {key: row.key}, query: {display_key: this.display_key}})
+      this.$router.push({name: "swars-battles-key", params: {key: row.key}, query: {turn_key: this.display_key}})
     },
 
     // 開始局面
     // force_turn start_turn critical_turn の順に見る
     sp_start_turn(record) {
-      if (this.display_key === "last") {
-        return record.turn_max
+      let v = null
+      if (this.display_key === "critical") {
+        v = record.critical_turn
+      } else if (this.display_key === "outbreak") {
+        v = record.outbreak_turn
+      } else if (this.display_key === "last") {
+        v = record.turn_max
       }
-      return record.display_turn
+      return v || record.display_turn
     },
 
     piyo_shogi_app_with_params_url(record) {

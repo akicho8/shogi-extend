@@ -93,7 +93,6 @@
               KifCopyButton(@click="kifu_copy_handle")
               TweetButton(@click="tweet_share_open({url: permalink_url})") Tweet
               //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
-              //- PulldownMenu(:record="record" :in_modal_p="true" :permalink_url="permalink_url" :new_turn="new_turn" :flip="new_flip" v-if="pulldown_menu_p")
 
           .column
             SwarsBattleShowTimeChart(
@@ -123,8 +122,7 @@
 export default {
   name: "SwarsBattleShow",
   props: {
-    pulldown_menu_p: { default: true,                }, // 右のプルダウンを表示する？
-    display_key:     { default: "default",           }, // どの局面から開始するか (一覧のdisplay_keyとは若干型が違う)
+    // turn_key:     { default: "default",           }, // どの局面から開始するか (一覧のturn_keyとは若干型が違う)
   },
   data() {
     return {
@@ -274,10 +272,17 @@ export default {
       if (turn != null) {
         return Number(turn)
       }
-      if (this.display_key === "last") {
-        return record.turn_max
+
+      // Indexのコードと同じだけど共通化はするな
+      let v = null
+      if (this.turn_key === "critical") {
+        v = record.critical_turn
+      } else if (this.turn_key === "outbreak") {
+        v = record.outbreak_turn
+      } else if (this.turn_key === "last") {
+        v = record.turn_max
       }
-      return record.display_turn
+      return v || record.display_turn
     },
 
     // SwarsBattleShowTimeChart でチャートをクリックしたときに変更する
@@ -308,6 +313,10 @@ export default {
   },
 
   computed: {
+    turn_key() {
+      return this.$route.query.turn_key
+    },
+
     default_flip() {
       const v = this.$route.query.flip
       if (v === "true") {

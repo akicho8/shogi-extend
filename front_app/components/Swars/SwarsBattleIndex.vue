@@ -25,8 +25,9 @@
                 template(v-for="(e, key) in config.table_columns_hash")
                   b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="key")
                     span(:class="{'has-text-grey': !visible_hash[key], 'has-text-weight-bold': visible_hash[key]}") {{e.label}}
-          b-menu-item(label="仕掛け"   @click.stop="display_key_set('critical')" :class="{'has-text-weight-bold': display_key === 'critical'}")
-          b-menu-item(label="終局図"   @click.stop="display_key_set('last')"          :class="{'has-text-weight-bold': display_key === 'last'}")
+          b-menu-item(label="開戦" @click.stop="display_key_set('critical')" :class="{'has-text-weight-bold': display_key === 'critical'}")
+          b-menu-item(label="中盤" @click.stop="display_key_set('outbreak')" :class="{'has-text-weight-bold': display_key === 'outbreak'}")
+          b-menu-item(label="終局" @click.stop="display_key_set('last')"     :class="{'has-text-weight-bold': display_key === 'last'}")
 
         b-menu-list(label="表示オプション")
           b-menu-item(@click="sound_play('click')")
@@ -123,7 +124,7 @@
             p.control
               b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large" :loading="$fetchState.pending && false" :disabled="!query")
 
-          .columns.is-multiline.mt-4(v-if="display_key === 'critical' || display_key === 'last'")
+          .columns.is-multiline.mt-4(v-if="board_show_p")
             template(v-for="e in config.records")
               // https://bulma.io/documentation/columns/responsiveness/
               // widescreen 1/5 (is-one-fifth-widescreen)
@@ -439,6 +440,10 @@ export default {
   },
 
   computed: {
+    board_show_p() {
+      return this.display_key === "critical" || this.display_key === "outbreak" || this.display_key === "last"
+    },
+
     base() { return this },
 
     // page_title() {

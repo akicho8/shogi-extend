@@ -414,9 +414,9 @@ module Swars
       list << { key: :defense_tag_list, label: "囲い", visible: false,  }
       list << { key: :final_info,       label: "結果", visible: false, }
       list << { key: :turn_max,         label: "手数", visible: false, }
+      list << { key: :critical_turn,    label: "開戦", visible: false, }
+      list << { key: :outbreak_turn,    label: "中盤", visible: false, }
       if AppConfig[:columns_detail_show]
-        list << { key: :critical_turn,    label: "開戦", visible: false, }
-        list << { key: :outbreak_turn,    label: "仕掛", visible: false, }
         list << { key: :grade_diff,       label: "力差", visible: false, }
       end
       list << { key: :rule_info,        label: "種類", visible: false, }
