@@ -10,9 +10,9 @@
   MainSection
     .container
       .columns.is-centered
-        .column.is-7-desktop
+        .column
           b-field(label-position="on-border" label="メールアドレス")
-            b-input(type="text" v-model.trim="new_email")
+            b-input(type="text" v-model.trim="new_email" size="is-large")
 </template>
 
 <script>
@@ -62,6 +62,6 @@ export default {
 .UserEmailEdit
   min-height: 100vh
 
-  .MainSection
-    padding-top: 2.25rem
+  .column
+    max-width: 65ch
 </style>
