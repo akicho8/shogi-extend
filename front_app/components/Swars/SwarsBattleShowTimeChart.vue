@@ -288,7 +288,7 @@ const CHART_CONFIG_DEFAULT = {
       //   config: {type: "line", options: {…}, __vm__: VueComponent, plugins: Array(1), chart_turn: 9, …}
       //   width: 375
       //   height: 187
-      //   aspectRatio: 2
+      //   aspectRatio: 1.618
       //   options: {defaultColor: "rgba(0,0,0,0.1)", defaultFontColor: "#666", defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", defaultFontSize: 12, defaultFontStyle: "normal", …}
       //   _bufferedRender: false
       //   _layers: (4) [{…}, {…}, {…}, {…}]
@@ -425,7 +425,7 @@ export default {
         // config: {type: "line", options: {…}, __vm__: VueComponent, plugins: Array(1), chart_turn: 34, …}
         // width: 375
         // height: 187
-        // aspectRatio: 2
+        // aspectRatio: 1.618
         // options: {defaultColor: "rgba(0,0,0,0.1)", defaultFontColor: "#666", defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", defaultFontSize: 12, defaultFontStyle: "normal", …}
         // _bufferedRender: false
         // _layers: (4) [{…}, {…}, {…}, {…}]

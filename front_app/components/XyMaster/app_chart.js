@@ -6,7 +6,7 @@ const CHART_CONFIG_DEFAULT = {
   type: "line",
   options: {
     // サイズ
-    aspectRatio: 1.5, // 大きいほど横長方形になる
+    aspectRatio: 1.618, // 大きいほど横長方形になる
     // maintainAspectRatio: false,
     // responsive: false,
     // responsive: true,

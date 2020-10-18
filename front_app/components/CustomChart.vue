@@ -7,7 +7,7 @@ canvas#main_canvas.CustomChart(ref="main_canvas")
 const CHART_CONFIG_DEFAULT = {
   type: "bar",
   options: {
-    aspectRatio: 2.0, // 大きいほど横長方形になる
+    aspectRatio: 1.618, // 大きいほど横長方形になる
 
     // datasets 内に適応
     showLines: true,
@@ -159,7 +159,7 @@ export default {
 </script>
 
 <style lang="sass">
-.development
+.STAGE-development
   .CustomChart
-    // border: 1px solid $danger
+    border: 1px dashed change_color($primary, $alpha: 0.1)
 </style>

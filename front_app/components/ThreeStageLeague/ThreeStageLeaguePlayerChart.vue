@@ -12,7 +12,7 @@
 const CHART_CONFIG_DEFAULT = {
   type: "bar",
   options: {
-    aspectRatio: 2, // 大きいほど横長方形になる
+    aspectRatio: 1.618, // 大きいほど横長方形になる
 
     // datasets 内に適応
     showLines: true,
