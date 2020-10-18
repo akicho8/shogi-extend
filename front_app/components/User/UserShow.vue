@@ -64,7 +64,11 @@ export default {
     },
   },
   computed: {
-    twitter_key() { this.record.twitter_key },
+    twitter_key() {
+      if (this.record) {
+        return this.record.twitter_key
+      }
+    },
     twitter_url() {
       if (this.twitter_key) {
         return `https://twitter.com/${this.twitter_key}`
