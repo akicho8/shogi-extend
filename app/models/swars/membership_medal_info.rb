@@ -45,7 +45,7 @@ module Swars
             when d == 0
               { message: "同じ段級位に負けた", icon: "emoticon-sad-outline", :class => "has-text-grey-light" }
             else
-              { message: "段級位が#{p2}下の人に負けた", icon: "emoticon-dead-outline", :class => "has-text-grey-light" }
+              { message: "段級位が#{p2}下の人に勝ってあたりまえなのに負けた", emoji: "🥺" }
             end
           end
         },
