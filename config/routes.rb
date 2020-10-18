@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 将棋ウォーズ棋譜検索
 
-  SWARS_SEARCH_SHARED_REDIRECT_BLOCK = -> (params, request) {
+  swars_search_shared_redirect_block = -> (params, request) {
     query = request.params.to_query.presence
     path = nil
 
@@ -64,8 +64,8 @@ Rails.application.routes.draw do
     UrlProxy.wrap(path)
   }
 
-  get "w",       format: "html", to: redirect(&SWARS_SEARCH_SHARED_REDIRECT_BLOCK)
-  get "w-light", format: "html", to: redirect(&SWARS_SEARCH_SHARED_REDIRECT_BLOCK)
+  get "w",       format: "html", to: redirect(&swars_search_shared_redirect_block)
+  get "w-light", format: "html", to: redirect(&swars_search_shared_redirect_block)
 
   namespace :swars, path: "" do
     resources :battles, path: "w"
