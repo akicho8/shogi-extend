@@ -38,11 +38,11 @@
 
     b-dropdown-item(separator)
 
-    b-dropdown-item(:href="`https://twitter.com/search?q=将棋 ${info.user.key}`" :target="target_default")
+    b-dropdown-item(:href="`https://twitter.com/search?q=${info.user.key} 将棋`" :target="target_default")
       b-icon(icon="twitter" size="is-small" type="is-twitter")
       | Twitter検索
 
-    b-dropdown-item(:href="`https://www.google.co.jp/search?q=${info.user.key}`" :target="target_default")
+    b-dropdown-item(:href="`https://www.google.co.jp/search?q=${info.user.key} 将棋`" :target="target_default")
       b-icon(icon="google" size="is-small")
       | ぐぐる
 
