@@ -45,7 +45,7 @@
             b-button(@click="yoyaku_handle" :disabled="!g_current_user") 棋譜取得の予約
             b-button(@click="sabaku_handle_handle" v-if="development_p") さばく
 
-  pre(v-if="development_p") {{$data}}
+  DebugPre {{$data}}
 </template>
 
 <script>

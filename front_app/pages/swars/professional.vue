@@ -18,7 +18,7 @@ client-only
                 nuxt-link(:to="{name: 'swars-search', query: {query: row.user.key}}") {{row.user.name}}
               b-table-column(v-slot="{row}" field="judge"      label="勝敗" sortable cell-class="ox_sequense is_line_break_on")
                 | {{row.judge}}
-            pre(title="DEBUG" v-if="development_p || !!$route.query.debug") {{records}}
+            DebugPre {{records}}
 </template>
 
 <script>

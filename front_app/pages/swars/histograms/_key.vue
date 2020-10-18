@@ -29,7 +29,7 @@ client-only
               //-     | {{number_floor(row.deviation_score, 3)}}
               b-table-column(v-slot="{row}" field="count"           label="数" numeric sortable) {{row.count}}
 
-    pre(v-if="development_p") {{config}}
+    DebugPre {{config}}
 </template>
 
 <script>

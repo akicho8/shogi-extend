@@ -228,8 +228,8 @@
                   b-button(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}}" @click.native="sound_play('click')") 詳細
 
     client-only
-      pre(v-if="development_p") {{config}}
-      pre(v-if="development_p") {{$store.user}}
+      DebugPre {{config}}
+      DebugPre {{$store.user}}
 </template>
 
 <script>

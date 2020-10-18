@@ -24,7 +24,7 @@ client-only
               b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable) {{row.count}}
               //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable) {{number_floor(row.deviation_score)}}
 
-            pre(title="DEBUG" v-if="development_p || !!$route.query.debug") {{config}}
+            DebugPre {{config}}
 </template>
 
 <script>

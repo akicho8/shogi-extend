@@ -181,7 +181,7 @@
             .columns
               .column.is-paddingless
                 WinLoseCircle(:info="row" size="is-small")
-  pre(v-if="development_p") {{info}}
+  DebugPre {{info}}
 </template>
 
 <script>

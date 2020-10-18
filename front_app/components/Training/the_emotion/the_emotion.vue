@@ -2,7 +2,7 @@
 .the_emotion
   the_footer
   component(:is="current_component")
-  pre(v-if="development_p") {{$data}}
+  DebugPre {{$data}}
 </template>
 
 <script>

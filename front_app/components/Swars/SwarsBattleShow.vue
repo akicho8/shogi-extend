@@ -105,7 +105,7 @@
               ref="SwarsBattleShowTimeChart"
             )
 
-        //-   pre(v-if="development_p")
+        //-   DebugPre
         //-     | start_turn: {{start_turn}}
         //-     | new_turn: {{new_turn}}
         //-     | record.turn: {{record.turn}}
@@ -115,7 +115,7 @@
         //-     | record.turn_max: {{record.turn_max}}
         //-     | record.turn: {{record.turn}}
         //-     | new_flip: {{new_flip}}
-    pre(v-if="development_p") {{record}}
+    DebugPre {{record}}
 </template>
 
 <script>
