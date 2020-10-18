@@ -21,6 +21,8 @@ const sitemap = {
   exclude: [
     "/experiment/**",
     "/settings/**",
+    "/launcher",
+    "/inspire",
   ],
   routes: async () => {
     let list = []
@@ -33,6 +35,11 @@ const sitemap = {
     // http://0.0.0.0:3000/api/tsl_league_all
     res = await axios.get(`${process.env.API_URL}/api/tsl_user_all`)
     list = list.concat(res.data.map(({name}) => `/three-stage-league-players/${name}`))
+
+    list.push("/swars/histograms/attack")
+    list.push("/swars/histograms/defense")
+    list.push("/swars/histograms/technique")
+    list.push("/swars/histograms/note")
 
     return list
   },
