@@ -230,15 +230,14 @@ export default {
     this.dialog_ok(`
        <div class="content">
          <ol>
-           <li class="mt-5">編集できます</li>
-           <li class="mt-5">PDFにするには印刷時に<b>PDFに保存</b>を選択してください</li>
-           <li class="mt-5">
-             ブラウザがフォントを小さくさせない設定になっていると罫線がずれます
+           <li class="mt-4">用紙の各項目は変更できます</li>
+           <li class="mt-4">PDFにするには印刷時の送信先を<b>PDFに保存</b>にしてください</li>
+           <li class="mt-4">
+             ブラウザの設定でフォントの最小サイズを制限していると罫線がずれる場合があります
              <div class="mt-3">ブラウザごとの解除方法</div>
-             <ul class="mt-2">
-               <li>Google Chrome:「環境設定」→「デザイン」→「フォントをカスタマイズ」→<b>最小フォントサイズ</b>を極小にする</li>
-               <li>Safari:「環境設定」→「詳細」→<b>これより小さいフォントサイズを使わない</b>のチェックを外す</li>
-               <li>その他のブラウザ: それっぽいのを探してなんとかする</li>
+             <ul class="mt-3">
+               <li class="mt-3">Google Chrome:「環境設定」→「デザイン」→「フォントをカスタマイズ」→<b>最小フォントサイズ</b>を極小にする</li>
+               <li class="mt-3">Safari:「環境設定」→「詳細」→<b>これより小さいフォントサイズを使わない</b>のチェックを外す</li>
              </ul>
            </li>
          </ol>
