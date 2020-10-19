@@ -17,13 +17,17 @@ export const app_room = {
         ...options,
       }
 
-      this.room_code = _.trim(room_code)
+      room_code = _.trim(room_code)
+      const changed_p = this.room_code != room_code
+      this.room_code = room_code
 
-      if (!options.initial) {
-        if (this.room_code) {
-          this.toast_ok(`合言葉を「${this.room_code}」に設定しました`)
-        } else {
-          this.toast_ok("合言葉を削除しました")
+      if (changed_p) {
+        if (!options.initial) {
+          if (this.room_code) {
+            this.toast_ok(`合言葉を「${this.room_code}」に設定しました`)
+          } else {
+            this.toast_ok("合言葉を削除しました")
+          }
         }
       }
 
