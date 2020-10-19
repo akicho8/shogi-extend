@@ -2,7 +2,7 @@ require "open-uri"
 
 module Api
   class ApplicationController < ::ApplicationController
-    include ShogiErrorRescueMod
+    include ShogiErrorRescueMod # for bs_error
 
     def html_fetch(url, options = {})
       options = {

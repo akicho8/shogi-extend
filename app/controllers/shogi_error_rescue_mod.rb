@@ -30,11 +30,11 @@ module ShogiErrorRescueMod
       when request.format.png?
         # https://developer.mozilla.org/ja/docs/Web/HTTP/Status/422
         send_file Rails.root.join("app/assets/images/fallback.png"), type: Mime[:png], disposition: "inline", status: 422
-      # when request.format.html?
-      #   # 野良棋譜投稿の場合は滅多に使われないので通知する
-      #   #   EXCEPTION_NOTIFICATION_ENABLE=1 foreman s
-      #   # で確認できる
-      #   behavior_after_rescue(error_html_build(error))
+        # when request.format.html?
+        #   # 野良棋譜投稿の場合は滅多に使われないので通知する
+        #   #   EXCEPTION_NOTIFICATION_ENABLE=1 foreman s
+        #   # で確認できる
+        #   behavior_after_rescue(error_html_build(error))
       else
         # http://0.0.0.0:3000/share-board.kif?body=position%20startpos%20moves%205i5e
         render plain: error.message

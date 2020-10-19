@@ -41,32 +41,32 @@ class FreeBattlesController < ApplicationController
   include AdapterMod
 
   # http://0.0.0.0:3000/x.json?config_fetch=true
-  def index
-    if request.format.json?
-      if params[:config_fetch]
-        render json: js_edit_options
-        return
-      end
-    end
+  # def index
+  #   if request.format.json?
+  #     if params[:config_fetch]
+  #       render json: js_edit_options
+  #       return
+  #     end
+  #   end
+  # 
+  #   super
+  # end
 
-    super
-  end
-
-  def create
-    if request.format.json?
-      if current_edit_mode === :adapter
-        if params[:input_text]
-          # なんでも棋譜変換
-          adapter_process
-          if performed?
-            return
-          end
-        end
-      end
-    end
-
-    super
-  end
+  # def create
+  #   if request.format.json?
+  #     if current_edit_mode === :adapter
+  #       if params[:input_text]
+  #         # なんでも棋譜変換
+  #         adapter_process
+  #         if performed?
+  #           return
+  #         end
+  #       end
+  #     end
+  #   end
+  # 
+  #   super
+  # end
 
   private
 

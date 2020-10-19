@@ -129,6 +129,10 @@ Rails.application.routes.draw do
       put :email_update
     end
 
+    resource :adapter, only: [] do
+      post :record_create
+    end
+
     resource :talk, only: [:show, :create]
     resources :service_infos, only: :index
     resources :xy_records, path: "xy", only: [:index, :create, :update]

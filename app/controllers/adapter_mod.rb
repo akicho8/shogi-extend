@@ -16,18 +16,18 @@ module AdapterMod
 
   private
 
-  def return_redirect_params_if_official_swars_battle_url_included
-    # 自動的に飛ばすとそれが正規の方法だと思う人がでてくる問題ありか……？
-    if current_input_text.lines.count <= 2
-      if url = Swars::Battle.battle_url_extract(current_input_text)
-        slack_message(key: "なんでも棋譜変換にウォーズの対局URL入力した方を検知", body: current_input_text)
-        if Rails.env.development?
-          flash[:warning] = "ウォーズの対局URLはこちらに入力してください"
-        end
-        render json: { redirect_to: url_for([:swars, :battles, query: current_input_text]) }
-      end
-    end
-  end
+  # def return_redirect_params_if_official_swars_battle_url_included
+  #   # 自動的に飛ばすとそれが正規の方法だと思う人がでてくる問題ありか……？
+  #   if current_input_text.lines.count <= 2
+  #     if url = Swars::Battle.battle_url_extract(current_input_text)
+  #       slack_message(key: "なんでも棋譜変換にウォーズの対局URL入力した方を検知", body: current_input_text)
+  #       if Rails.env.development?
+  #         flash[:warning] = "ウォーズの対局URLはこちらに入力してください"
+  #       end
+  #       render json: { redirect_to: url_for([:swars, :battles, query: current_input_text]) }
+  #     end
+  #   end
+  # end
 
   def ok_notify
     return if current_input_text.blank?
