@@ -91,7 +91,9 @@ module Swars
       target_user.battles
     end
 
-    private
+    def target_user
+      @target_user ||= User.find_by!(key: target_user_key)
+    end
 
     def zip_filename
       parts = []
@@ -105,6 +107,8 @@ module Swars
       str.public_send("to#{current_body_encode}")
     end
 
+    private
+
     def kifu_format_info
       @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_kifu_info.key)
     end
@@ -115,10 +119,6 @@ module Swars
 
     def zip_kifu_key
       "kif"
-    end
-
-    def target_user
-      @target_user ||= User.find_by!(key: target_user_key)
     end
 
     def current_body_encode

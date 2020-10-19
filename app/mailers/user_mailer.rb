@@ -64,16 +64,14 @@ class UserMailer < ApplicationMailer
   # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
   # http://0.0.0.0:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify(record, other_options = {})
-    subject = "【将棋ウォーズ棋譜検索】棋譜取得完了"
-
-    other_options = {
-    }.merge(other_options)
+    subject = "【将棋ウォーズ棋譜検索】#{record.target_user.key}さんの棋譜取得完了"
 
     diff_count = other_options[:diff_count] || 0
 
     out = []
-    out << "#{diff_count}件、新しく取得しました"
-    out << "全体で#{record.zip_scope.count}件あります"
+    out << "新しく#{diff_count}件取得しました"
+    out << "全体では#{record.zip_scope.count}件あります"
+    out << ""
 
     out << "#{record.target_user.key}さんの棋譜"
     if Rails.env.development?
@@ -82,18 +80,15 @@ class UserMailer < ApplicationMailer
       out << url_for(:root) + "swars/search?query=#{record.target_user.key}"
     end
 
-    if Rails.env.development?
-      if other_options.present?
-        out << other_options.to_t
-      end
-    end
-
     out << ""
     out << "--"
     out << "SHOGI-EXTEND"
     out << url_for(:root)
     if Rails.env.development?
       out << record.to_t
+      if other_options.present?
+        out << other_options.to_t
+      end
     end
 
     body = out.join("\n")

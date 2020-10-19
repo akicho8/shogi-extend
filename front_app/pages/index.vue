@@ -37,7 +37,7 @@
     .container
       .columns
         .column.is-4.has-text-centered-tablet
-          .title.is-6.mb-0.has-text-weight-bold Service Map
+          .title.is-6.mb-0.has-text-weight-bold App Map
           ul.mt-1
             template(v-for="e in config")
               template(v-if="e.display_p || development_p")

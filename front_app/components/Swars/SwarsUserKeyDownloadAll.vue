@@ -42,7 +42,7 @@
       b-field.mt-5
         .control
           .buttons
-            b-button(@click="yoyaku_handle" :disabled="!g_current_user") 棋譜取得の予約
+            b-button(@click="yoyaku_handle" :disabled="!g_current_user" :loading="loading_p") 棋譜取得の予約
             b-button(@click="sabaku_handle_handle" v-if="development_p") さばく
 
   DebugPre {{$data}}
@@ -64,6 +64,7 @@ export default {
     return {
       to_email: null,
       attachment_mode: "nothing",
+      loading_p: false,
     }
   },
   fetchOnServer: false,
@@ -91,7 +92,9 @@ export default {
           attachment_mode: this.attachment_mode,
         },
       }
+      this.loading_p = true
       const retv = await this.$axios.$post("/api/swars/download_yoyaku", params)
+      this.loading_p = false
       this.notice_collector_run(retv)
     },
 

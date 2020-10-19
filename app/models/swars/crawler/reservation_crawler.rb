@@ -18,7 +18,7 @@ module Swars
               Battle.user_import(params.merge(user_key: key))
             end
             record.update!(processed_at: Time.current)
-            UserMailer.battle_fetch_notify(record, other_options).deliver_later
+            p UserMailer.battle_fetch_notify(record, other_options).deliver_later
           end
         end
       end
