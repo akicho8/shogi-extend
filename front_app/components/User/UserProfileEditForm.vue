@@ -14,16 +14,14 @@
   MainSection
     .container
       .columns.is-centered
-        .column.is-7-desktop
-          .has-text-centered
-            // @click.native="sound_play('click')" すると2連続で呼ばれてしまうので指定してない
-            // @click.native="toast_ok(1)" すると2回呼ばれていることがわかる
-            b-upload(@input="avatar_upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音OFF')")
-              figure.image.is_clickable
-                img.is-rounded(:src="image_source")
-                .image_same_size_box
-                  b-icon.has-text-white(icon="camera" size="is-large")
-
+        .column.has-text-centered
+          // @click.native="sound_play('click')" すると2連続で呼ばれてしまうので指定してない
+          // @click.native="toast_ok(1)" すると2回呼ばれていることがわかる
+          b-upload(@input="avatar_upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音OFF')")
+            figure.image.is_clickable
+              img.is-rounded(:src="image_source")
+              .image_same_size_box
+                b-icon.has-text-white(icon="camera" size="is-large")
           b-field(label-position="on-border" label="名前" :type="name_invalid_p ? 'is-danger' : ''")
             b-input(type="text" v-model.trim="base.new_name")
 
@@ -32,7 +30,6 @@
 
           b-field(label-position="on-border" label="自己紹介")
             b-input(type="textarea" v-model.trim="base.new_description" rows="6")
-
 </template>
 
 <script>
@@ -120,7 +117,7 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
+<style lang="sass">
 .UserProfileEditForm
   min-height: 100vh
 
@@ -143,4 +140,8 @@ export default {
 
   .field
     margin-top: 2rem
+
+  .column
+    +tablet
+      max-width: 65ch
 </style>

@@ -21,13 +21,13 @@
     MainSection
       .container
         .columns.is-centered
-          .column.is-7-desktop
+          .column
             .has-text-centered
               .image
                 img.is-rounded.is-inline-block(:src="record.avatar_path")
             .mt-4(v-if="twitter_key")
               .has-text-weight-bold Twitter
-              a.is-block(:href="twitter_url" :target="target_default") @{{twitter_key}}
+              a(:href="twitter_url" :target="target_default") @{{twitter_key}}
             .mt-4.box.description.has-background-white-ter.is-shadowless(v-if="record.description" v-html="auto_link(record.description)")
   DebugPre {{record}}
 </template>
@@ -50,16 +50,16 @@ export default {
   },
   methods: {
     async logout_handle() {
-      this.sound_play('click')
+      this.sound_play("click")
       await this.a_auth_user_logout()
       this.toast_ok("ログアウトしました")
     },
     sidebar_toggle() {
-      this.sound_play('click')
+      this.sound_play("click")
       this.sidebar_p = !this.sidebar_p
     },
     back_handle() {
-      this.sound_play('click')
+      this.sound_play("click")
       this.back_to()
     },
   },
@@ -78,14 +78,28 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
+<style lang="sass">
 .menu-label:not(:first-child)
   margin-top: 2em
 
-.MainSection
-  padding-top: 2.8rem
+.UserShow
+  .MainSection
+    padding-top: 2.8rem
 
-.image
-  img
-    width: 256px
+  .image
+    img
+      width: 256px
+
+  .column
+    +tablet
+      max-width: 65ch
+
+.STAGE-development
+  .UserShow
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.1)
+    .image
+      border: 1px dashed change_color($danger, $alpha: 0.1)
+      .FriendlyWidth
+        border: 1px dashed change_color($primary, $alpha: 0.1)
 </style>
