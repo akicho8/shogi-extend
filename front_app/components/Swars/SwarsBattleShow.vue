@@ -1,121 +1,101 @@
 <template lang="pug">
-.SwarsBattleShow(v-if="!$fetchState.pending")
-  client-only
-    //- .delete.is-large(@click="delete_click_handle" v-if="development_p")
-    b-sidebar.is-unselectable(type="is-light" fullheight right v-model="sidebar_p")
-      .mx-4.my-4
-        //- .MySidebarMenuIconWithTitle
-        //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_p = false")
-        //-   .ml-3 棋譜詳細
-        b-menu
-          b-menu-list(label="Action")
-            b-menu-item(label="共有将棋盤で開く" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}" @click.native="sound_play('click')")
+.SwarsBattleShow
+  b-loading(:active="$fetchState.pending")
+  .MainContainer(v-if="!$fetchState.pending")
+    client-only
+      b-sidebar.is-unselectable(type="is-light" fullheight right v-model="sidebar_p")
+        .mx-4.my-4
+          b-menu
+            b-menu-list(label="Action")
+              b-menu-item(label="共有将棋盤で開く" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}" @click.native="sound_play('click')")
 
-          b-menu-list(label="export")
-            b-menu-item(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}" @click.native="sound_play('click')")
-            b-menu-item(@click="sound_play('click')")
-              template(slot="label" slot-scope="props")
-                span.ml-1 表示
-                b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-              b-menu-item(label="KIF"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
-              b-menu-item(label="KI2"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
-              b-menu-item(label="CSA"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
-              b-menu-item(label="SFEN" @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
-              b-menu-item(label="BOD"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${new_turn}`")
-              b-menu-item(label="PNG"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&flip=${new_flip}&width=`")
-            b-menu-item(@click="sound_play('click')")
-              template(slot="label" slot-scope="props")
-                span.ml-1 ダウンロード
-                b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-              b-menu-item(label="KIF"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
-              b-menu-item(label="KI2"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
-              b-menu-item(label="CSA"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
-              b-menu-item(label="SFEN" @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
-              b-menu-item(label="BOD"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
-              b-menu-item(label="PNG"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&flip=${new_flip}&width=`")
+            b-menu-list(label="export")
+              b-menu-item(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}" @click.native="sound_play('click')")
+              b-menu-item(@click="sound_play('click')")
+                template(slot="label" slot-scope="props")
+                  span.ml-1 表示
+                  b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+                b-menu-item(label="KIF"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
+                b-menu-item(label="KI2"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
+                b-menu-item(label="CSA"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
+                b-menu-item(label="SFEN" @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
+                b-menu-item(label="BOD"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${new_turn}`")
+                b-menu-item(label="PNG"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&flip=${new_flip}&width=`")
+              b-menu-item(@click="sound_play('click')")
+                template(slot="label" slot-scope="props")
+                  span.ml-1 ダウンロード
+                  b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+                b-menu-item(label="KIF"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
+                b-menu-item(label="KI2"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
+                b-menu-item(label="CSA"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
+                b-menu-item(label="SFEN" @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
+                b-menu-item(label="BOD"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
+                b-menu-item(label="PNG"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&flip=${new_flip}&width=`")
 
-          //- b-menu-list(label="Menu")
-          //-   b-menu-item(label="Info")
-          //-   b-menu-item(label="Info")
-          //-   b-menu-item(label="Info")
+      MainNavbar
+        template(slot="brand")
+          b-navbar-item(@click="back_handle")
+            b-icon(icon="arrow-left")
+          b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}") {{record.title}}
+        template(slot="end")
+          b-navbar-item(@click="sidebar_toggle")
+            b-icon(icon="menu")
 
-    MainNavbar
-      template(slot="brand")
-        b-navbar-item(@click="back_handle")
-          b-icon(icon="arrow-left")
+      MainSection
+        .container
+          .columns
+            .column
+              MyShogiPlayer(
+                :run_mode.sync="run_mode"
+                :debug_mode="false"
+                :start_turn="start_turn"
+                :kifu_body="record.sfen_body"
+                :key_event_capture="true"
+                :slider_show="true"
+                :sfen_show="false"
+                :controller_show="true"
+                :theme="'real'"
+                :size="'medium'"
+                :setting_button_show="false"
+                :flip.sync="new_flip"
+                :player_info="player_info"
+                @update:start_turn="real_turn_set"
+                ref="main_sp"
+              )
 
-        //- b-navbar-item(tag="nuxt-link" :to="{name: 'swars-search'}" @click.native="sound_play('click')")
-        //-   b-icon(icon="arrow-left")
-        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}") {{record.title}}
-      template(slot="end")
-        b-navbar-item(@click="sidebar_toggle")
-          b-icon(icon="menu")
-      //- template(slot="end")
-      //-   //- b-navbar-item
-      //-   //-   PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-      //-   //- b-navbar-item
-      //-   //-   KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
-      //-   //- b-navbar-item
-      //-   //-   KifCopyButton(@click="kif_clipboard_copy({kc_path: record.show_path})")
-      //-   //- b-navbar-item
-      //-   //-   TweetButton(tag="a" :href="tweet_url" :turn="new_turn" v-if="false")
-      //-   b-navbar-item(tag="a" href="/") TOP
+              .has-text-centered.mt-4(v-if="false")
+                b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
+                  b-icon(icon="source-branch")
 
-    MainSection
-      .container
-        .columns
-          .column
-            MyShogiPlayer(
-              :run_mode.sync="run_mode"
-              :debug_mode="false"
-              :start_turn="start_turn"
-              :kifu_body="record.sfen_body"
-              :key_event_capture="true"
-              :slider_show="true"
-              :sfen_show="false"
-              :controller_show="true"
-              :theme="'real'"
-              :size="'medium'"
-              :setting_button_show="false"
-              :flip.sync="new_flip"
-              :player_info="player_info"
-              @update:start_turn="real_turn_set"
-              ref="main_sp"
-            )
+              .buttons.is-centered.mt-5
+                PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+                KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
+                KifCopyButton(@click="kifu_copy_handle")
+                TweetButton(@click="tweet_share_open({url: permalink_url})") Tweet
+                //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
 
-            .has-text-centered.mt-4(v-if="false")
-              b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
-                b-icon(icon="source-branch")
+            .column
+              SwarsBattleShowTimeChart(
+                v-if="record && time_chart_params"
+                :record="record"
+                :time_chart_params="time_chart_params"
+                @update:turn="turn_set_from_chart"
+                :chart_turn="new_turn"
+                :flip="new_flip"
+                ref="SwarsBattleShowTimeChart"
+              )
 
-            .buttons.is-centered.mt-5
-              PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-              KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
-              KifCopyButton(@click="kifu_copy_handle")
-              TweetButton(@click="tweet_share_open({url: permalink_url})") Tweet
-              //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
-
-          .column
-            SwarsBattleShowTimeChart(
-              v-if="record && time_chart_params"
-              :record="record"
-              :time_chart_params="time_chart_params"
-              @update:turn="turn_set_from_chart"
-              :chart_turn="new_turn"
-              :flip="new_flip"
-              ref="SwarsBattleShowTimeChart"
-            )
-
-        //-   DebugPre
-        //-     | start_turn: {{start_turn}}
-        //-     | new_turn: {{new_turn}}
-        //-     | record.turn: {{record.turn}}
-        //-     | record.display_turn: {{record.display_turn}}
-        //-     | record.critical_turn: {{record.critical_turn}}
-        //-     | record.outbreak_turn: {{record.outbreak_turn}}
-        //-     | record.turn_max: {{record.turn_max}}
-        //-     | record.turn: {{record.turn}}
-        //-     | new_flip: {{new_flip}}
-    DebugPre {{record}}
+          //-   DebugPre
+          //-     | start_turn: {{start_turn}}
+          //-     | new_turn: {{new_turn}}
+          //-     | record.turn: {{record.turn}}
+          //-     | record.display_turn: {{record.display_turn}}
+          //-     | record.critical_turn: {{record.critical_turn}}
+          //-     | record.outbreak_turn: {{record.outbreak_turn}}
+          //-     | record.turn_max: {{record.turn_max}}
+          //-     | record.turn: {{record.turn}}
+          //-     | new_flip: {{new_flip}}
+  DebugPre {{record}}
 </template>
 
 <script>
@@ -185,6 +165,7 @@ export default {
         { hid: "og:title",       property: "og:title",       content: this.og_title,           },
         { hid: "og:image",       property: "og:image",       content: this.og_image,           },
         { hid: "og:description", property: "og:description", content: this.record.description, },
+        { hid: "description",    property: "description",    content: this.record.description, },
       ],
     }
   },
