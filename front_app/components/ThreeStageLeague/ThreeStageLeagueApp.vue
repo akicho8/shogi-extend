@@ -20,7 +20,7 @@
             .buttons.are-small
               template(v-for="league in config.leagues")
                 //- exact-active-class="is-primary"
-                b-button(tag="nuxt-link" :to="{name: 'three-stage-leagues-generation', params: {generation: league.generation}}" :class="{'is-active': config.league.generation === league.generation}" @click.native="sound_play('click')")
+                b-button(tag="nuxt-link" :to="{name: 'three-stage-leagues-generation', params: {generation: league.generation}}" exact-active-class="is-primary" @click.native="sound_play('click')")
                   | {{league.generation}}
 
           b-table(
