@@ -290,11 +290,6 @@ export default {
         this.ov_question_info_set(id)
       }
 
-      id = this.$route.query.user_id
-      if (id) {
-        this.ov_user_info_set(id)
-      }
-
       this.redirect_counter += 1
     },
 
