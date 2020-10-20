@@ -81,16 +81,16 @@ export default {
       config: null,
     }
   },
-  // デフォルトが使われるのでここで指定する必要なし
+  // // デフォルトが使われるのでここで指定する必要なし
   // head() {
   //   return {
-  //     title: "SHOGI-EXTEND",
-  //     titleTemplate: null,
-  //     meta: [
-  //       { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND",                                   },
-  //       { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image",                            },
-  //       { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです", },
-  //     ],
+  //     title: "",
+  //     // titleTemplate: null,
+  //     // meta: [
+  //     //   { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND",                                   },
+  //     //   { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image",                            },
+  //     //   { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです", },
+  //     // ],
   //   }
   // },
   fetch() {

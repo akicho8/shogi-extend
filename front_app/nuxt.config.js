@@ -2,15 +2,6 @@ import dayjs from "dayjs"
 const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
 const SITE_DESC = "将棋に関連する便利サービスを提供するサイトです"
 
-// FIXME: const APP_NAME が参照できない罠
-function title_build(title) {
-  if (title) {
-    return [title, process.env.APP_NAME].join(" - ")
-  } else {
-    return process.env.APP_NAME
-  }
-}
-
 // https://github.com/nuxt-community/sitemap-module
 // http://0.0.0.0:4000/sitemap.xml
 const axios = require('axios')
@@ -75,28 +66,8 @@ const config = {
   */
   head: {
     title: null,
-    // titleTemplate: (e) => {
-    //   if (e) {
-    //     return [e, process.env.APP_NAME].join(" - ")
-    //   } else {
-    //     return process.env.APP_NAME
-    //   }
-    // },
-    // titleTemplate: title_build,
-    // titleTemplate: (title) => {
-    //   if (title) {
-    //     return [title, this.$config.APP_NAME].join(" - ")
-    //   } else {
-    //     return this.$config.APP_NAME
-    //   }
-    // },
-    // FIXME: なんだこれ？
-    titleTemplate: (title) => {
-      if (title) {
-        return [title, "SHOGI-EXTEND"].join(" - ")
-      } else {
-        return "SHOGI-EXTEND"
-      }
+    titleTemplate(title) {
+      return (title ? `${title} | ` : "") + process.env.APP_NAME
     },
 
     htmlAttrs: {
