@@ -1,7 +1,7 @@
 <template lang="pug">
 .AdapterApp
   b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
-    .mx-3.my-3
+    .mx-4.my-4
       b-menu
         b-menu-list(label="Export")
           b-menu-item(:expanded="false" @click="sound_play('click')" :disabled="disabled_p")
@@ -32,7 +32,7 @@
   MainNavbar
     template(slot="brand")
       HomeNavbarItem
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'adapter'}") なんでも棋譜変換
+      b-navbar-item.has-text-weight-bold(@click="clear_handle") なんでも棋譜変換
     template(slot="end")
       b-navbar-item(@click="sidebar_toggle")
         b-icon(icon="menu")
@@ -41,17 +41,21 @@
     .container
       .columns.is-centered
         .column.MainColumn
-          b-field
+          b-field(:type="input_text_field_type")
             b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8")
 
-          .buttons.is-centered.mt-5
-            b-button(@click="validate_handle") 検証
+          b-field.mt-5
+            .control
+              .buttons.is-centered
+                b-button(@click="validate_handle") 検証
 
-          .buttons.is-centered
-            PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
-            KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
-            KifCopyButton(@click="kifu_copy_handle('kif')")
-            b-button(@click="board_show_handle" size="is-small") 共有将棋盤に転送
+          b-field.mt-5
+            .control
+              .buttons.is-centered
+                PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
+                KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
+                KifCopyButton(@click="kifu_copy_handle('kif')")
+                b-button(@click="board_show_handle" size="is-small") 共有将棋盤に転送
 
       .columns(v-if="record")
         .column
@@ -124,15 +128,14 @@ export default {
     }
   },
   mounted() {
-    // デスクトップのときだけ棋譜のテキストエリアにフォーカス
-    this.desktop_focus_to(this.$refs.input_text)
+    this.input_text_focus()
   },
-
   watch: {
     input_text() {
       this.change_counter += 1
       this.record = null
       this.bs_error = null
+      this.swars_url_check()
     },
     body_encode(v) {
       if (v === "sjis") {
@@ -140,29 +143,50 @@ export default {
       }
     }
   },
-
   methods: {
+    swars_url_check() {
+      const s = this.input_text
+      if (s) {
+        const count = (s.match(/\r/g) || 0) + 1
+        if (count <= 2) {
+          if (s.match(/https.*heroz.jp.*/)) {
+            this.toast_ok("将棋ウォーズのURLは将棋ウォーズ棋譜検索の検索欄に入力しても読み込めるよ")
+          }
+        }
+      }
+    },
+
+    input_text_focus() {
+      this.desktop_focus_to(this.$refs.input_text)
+    },
+    clear_handle() {
+      if (this.input_text) {
+        this.sound_play('click')
+        this.input_text = ""
+        this.input_text_focus()
+      }
+    },
+    app_open(url) {
+      this.sound_play('click')
+      this.url_open(url)
+    },
     body_encode_set(key) {
       this.sound_play('click')
       this.body_encode = key
     },
-
     sidebar_toggle() {
       this.sound_play('click')
       this.sidebar_p = !this.sidebar_p
     },
-
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.url_open(this.piyo_shogi_app_with_params_url, this.target_default))
+      this.record_fetch(() => this.app_open(this.piyo_shogi_app_with_params_url, this.target_default))
     },
-
     kento_open_handle() {
-      this.record_fetch(() => this.url_open(this.kento_app_with_params_url, this.target_default))
+      this.record_fetch(() => this.app_open(this.kento_app_with_params_url, this.target_default))
     },
-
     kifu_copy_handle(kifu_type) {
-      this.sound_play("click")
       this.record_fetch(() => {
+        this.sound_play("click")
         if (kifu_type === "png") {
           this.toast_ng("画像はコピーできません")
           return
@@ -170,12 +194,12 @@ export default {
         this.simple_clipboard_copy(this.record.all_kifs[kifu_type])
       })
     },
-
     validate_handle() {
-      this.sound_play("click")
-      this.record_fetch(() => this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`))
+      this.record_fetch(() => {
+        this.sound_play("click")
+        this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`)
+      })
     },
-
     input_test_handle(input_text) {
       this.input_text = input_text
       this.$nextTick(() => this.validate_handle())
@@ -188,27 +212,25 @@ export default {
 
     // 「KIFダウンロード」
     kifu_dl_handle(kifu_type) {
-      this.sound_play("click")
-      this.record_fetch(() => this.url_open(this.kifu_dl_url(kifu_type)))
+      this.record_fetch(() => this.app_open(this.kifu_dl_url(kifu_type)))
     },
 
     // 「表示」
     kifu_show_handle(kifu_type) {
-      this.sound_play("click")
       this.record_fetch(() => this.simple_open(this.kifu_show_url(kifu_type)))
     },
 
     // 「盤面」
     board_show_handle() {
-      this.sound_play("click")
       this.record_fetch(() => {
+        this.sound_play("click")
         // https://router.vuejs.org/guide/essentials/navigation.html#programmatic-navigation
         this.$router.push({
           name: "share-board",
           query: {
             body: this.record.all_kifs.sfen,
             image_view_point: "black",
-            title: "共有将棋盤 (棋譜変換後の確認)",
+            // title: "共有将棋盤 (棋譜変換後の確認)",
           },
         })
       })
@@ -247,12 +269,17 @@ export default {
     // private
 
     simple_open(url) {
+      this.sound_play('click')
       this.popup_open(url)
     },
 
     record_fetch(callback) {
       if (this.bs_error) {
         this.bs_error_message_dialog(this.bs_error)
+        return
+      }
+      if (!this.input_text) {
+        this.toast_ng("棋譜を入力してください")
         return
       }
       if (this.change_counter === 0) {
@@ -291,6 +318,15 @@ export default {
     EncodeInfo()     { return EncodeInfo              },
     show_path()      { return `/x/${this.record.key}` },
     disabled_p()     { return !this.record            },
+
+    input_text_field_type() {
+      if (this.bs_error) {
+        return "is-danger"
+      }
+      if (this.record) {
+        return "is-success"
+      }
+    },
 
     //////////////////////////////////////////////////////////////////////////////// piyoshogi
 

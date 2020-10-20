@@ -431,4 +431,6 @@ export default {
       .tag_wrapper
         flex-wrap: nowrap
 
+.STAGE-development
+  .SwarsUserShow
 </style>
