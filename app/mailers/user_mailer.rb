@@ -69,8 +69,8 @@ class UserMailer < ApplicationMailer
     diff_count = other_options[:diff_count] || 0
 
     out = []
-    out << "新しく#{diff_count}件取得しました"
-    out << "全体では#{record.zip_scope.count}件あります"
+    out << "追加: #{diff_count} 件"
+    out << "全体: #{record.zip_scope.count}件"
     out << ""
 
     out << "#{record.target_user.key}さんの棋譜"

@@ -121,7 +121,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/three-stage-leagues"},
       title: "奨励会三段リーグ成績早見表",
       ogp_image_base: "three-stage-league-players",
-      description: "連盟サイトにはない個人成績を見たいときにどうぞ",
+      description: "連盟のサイトでは把握しずらい個人成績を見たいときにどうぞ",
       features: [
         "スマホに最適化",
         "個人毎の総成績表示",

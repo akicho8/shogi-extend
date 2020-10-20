@@ -45,12 +45,12 @@ export default {
 
     if (this.external_app_setup) {
       this.$buefy.dialog.alert({
-        title: "設定",
+        title: "これは何？",
         message: `
           <div class="content">
-            <p>直前の対局を${this.external_app_info.name}で必ず検討する人向けのショートカットの設定です</p>
-            <p>現在の画面を<b>ホーム画面に追加</b> (PCの場合はブークマークに追加) すると、そこから直前の対局を最短で開けるようになります</p>
-            <p>具体的には検索して一番上に表示された対局の外部アプリをタップする流れを自動化する感じです</p>
+            <p>直前の対局を${this.external_app_info.name}で毎回検討する人向けのショートカットの設定ができます</p>
+            <p>この画面を<b>ホーム画面に追加</b> (PCの場合はブークマークに追加) すると、そこから直前の対局を最短で開けるようになります</p>
+            <p>ウォーズ検索で名前を入力して検索して一番上に対局の外部アプリをタップする流れを自動化するイメージです</p>
           </div>`,
         confirmText: "OK",
         type: 'is-info',
