@@ -35,7 +35,7 @@
       MainNavbar
         template(slot="brand")
           b-navbar-item(@click="back_handle")
-            b-icon(icon="arrow-left")
+            b-icon(icon="chevron-left")
           b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}") {{record.title}}
         template(slot="end")
           b-navbar-item(@click="sidebar_toggle")

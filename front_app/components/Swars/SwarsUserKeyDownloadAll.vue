@@ -4,7 +4,7 @@
   MainNavbar
     template(slot="brand")
       b-navbar-item(@click="back_handle")
-        b-icon(icon="arrow-left")
+        b-icon(icon="chevron-left")
       b-navbar-item.has-text-weight-bold(tag="div") {{page_title}}
     template(slot="end")
       NavbarItemLogin
