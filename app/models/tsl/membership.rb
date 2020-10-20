@@ -104,8 +104,8 @@ module Tsl
     end
 
     # 在籍回数のかわりに表示したい在籍毎の勝数
-    def zaiseki_wins
-      user.zaiseki_wins(league.generation)
+    def zaiseki_win_list
+      user.zaiseki_win_list(league.generation)
     end
   end
 end

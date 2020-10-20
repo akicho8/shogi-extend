@@ -42,7 +42,7 @@
               //- span.is-hidden-tablet
               //-   | {{row.seat_count}} / {{row.user.memberships_count}}
               //- span.is-hidden-mobile
-              //-   template(v-for="win in row.zaiseki_wins")
+              //-   template(v-for="win in row.zaiseki_win_list")
               //-     span.mx-1 {{win}}
 
             b-table-column(v-slot="{row}")

@@ -38,7 +38,7 @@ module Api
               :level_down_p,
               :runner_up_p,
               :previous_runner_up_count,
-              # :zaiseki_wins,
+              # :zaiseki_win_list,
             ],
             except: [
               :league_id,
