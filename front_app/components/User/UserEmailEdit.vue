@@ -12,7 +12,7 @@
       .columns.is-centered
         .column
           b-field(label-position="on-border" label="メールアドレス")
-            b-input(type="text" v-model.trim="new_email" size="is-large")
+            b-input(type="text" v-model.trim="new_email")
 </template>
 
 <script>

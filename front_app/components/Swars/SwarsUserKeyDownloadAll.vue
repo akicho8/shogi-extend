@@ -29,15 +29,15 @@
         | そんなときに<b>棋譜取得の予約</b>をすると残りの5局を取ってきます。
         | 深夜に古い棋譜(※最大直近1ヶ月分)を探しに行きます。
         | 終わったら指定のメールアドレスに通知します。
-        | その際に棋譜データも必要であれば下のZIPファイル添付のところを有効にしてください。
+        | その際に棋譜データも必要であれば下のZIPファイルの添付を有効にしてください。
 
       b-field.mt-6(label="通知先メールアドレス" label-position="on-border")
-        b-input(v-model.trim="to_email" required :disabled="!g_current_user" size="is-large")
+        b-input(v-model.trim="to_email" required :disabled="!g_current_user")
 
       b-field.mt-5
         .control
           b-switch(v-model="attachment_mode" true-value="with_zip" false-value="nothing" :disabled="!g_current_user")
-            | KIF形式の棋譜をZIPファイルにして添付する
+            | 棋譜をZIPファイルにして添付
 
       b-field.mt-5
         .control

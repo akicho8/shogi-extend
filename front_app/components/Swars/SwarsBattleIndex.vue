@@ -110,7 +110,7 @@
         .column
           b-field
             b-autocomplete(
-              size="is-large"
+              size="is-medium"
               v-model.trim="query"
               :data="search_form_complete_list"
               type="search"
@@ -123,7 +123,7 @@
               ref="main_search_form"
               )
             p.control
-              b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-large" :loading="$fetchState.pending && false" :disabled="!query")
+              b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-medium" :loading="$fetchState.pending && false" :disabled="!query")
 
           .columns.is-multiline.mt-4(v-if="board_show_p")
             template(v-for="e in config.records")
