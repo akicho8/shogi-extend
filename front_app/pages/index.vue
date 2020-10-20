@@ -60,7 +60,7 @@
           .title.is-6.mb-0.has-text-weight-bold GitHub
           ul.mt-1
             li
-              a(href="https://github.com/akicho8/shogi_web" :target="target_default") shogi_web
+              a(href="https://github.com/akicho8/shogi-extend" :target="target_default") shogi-extend
             li
               a(href="https://akicho8.github.io/shogi-player/" :target="target_default") shogi-player
             li
