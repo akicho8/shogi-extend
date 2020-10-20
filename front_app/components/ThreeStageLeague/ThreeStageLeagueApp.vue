@@ -46,8 +46,8 @@
               //-     span.mx-1 {{win}}
 
             b-table-column(v-slot="{row}")
-              a(:href="image_search_url(row.user.name)" target="_blank")
-                b-icon(icon="account-question")
+              a.no-decoration.has-text-grey(:href="image_search_url(row.user.name)" target="_blank" @click="sound_play('click')")
+                b-icon(icon="account-question" size="is-small")
   DebugPre {{config}}
 </template>
 
