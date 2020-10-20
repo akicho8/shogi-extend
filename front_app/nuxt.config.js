@@ -172,7 +172,11 @@ const config = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/pwa',
+
+    // https://pwa.nuxtjs.org/
+    // '@nuxtjs/onesignal',   // push通知
+    // '@nuxtjs/pwa',         // アプリ化
+
     '@nuxtjs/style-resources',
     '@nuxtjs/sitemap',
   ],
