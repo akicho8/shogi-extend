@@ -7,8 +7,8 @@
 export default {
   name: "HomeNavbarItem",
   props: {
-    to:   { default: { name: "index" }, },
-    icon: { default: "home",            },
+    to:   { default: () => ({name: "index"}), },
+    icon: { default: "home",                  },
   },
 }
 </script>
