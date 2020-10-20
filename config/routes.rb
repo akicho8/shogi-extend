@@ -130,6 +130,7 @@ Rails.application.routes.draw do
     end
 
     resource :adapter, only: [] do
+      get :formal_sheet
       post :record_create
     end
 

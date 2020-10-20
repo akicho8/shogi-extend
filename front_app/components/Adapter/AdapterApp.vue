@@ -4,6 +4,7 @@
     .mx-4.my-4
       b-menu
         b-menu-list(label="Export")
+          b-menu-item(@click="kifu_paper_handle" :disabled="disabled_p" label="棋譜印刷 (PDF)")
           b-menu-item(:expanded="false" @click="sound_play('click')" :disabled="disabled_p")
             template(slot="label" slot-scope="props")
               | 表示
@@ -206,9 +207,17 @@ export default {
     },
 
     // 「棋譜印刷」
-    // kifu_paper_handle() {
-    //   this.record_fetch(() => this.simple_open(`${this.$config.MY_SITE_URL}${this.show_path}?formal_sheet=true`))
-    // },
+    kifu_paper_handle() {
+      this.record_fetch(() => {
+        this.sound_play("click")
+        this.$router.push({
+          name: "adapter-key-formal-sheet",
+          params: {
+            key: this.record.key,
+          },
+        })
+      })
+    },
 
     // 「KIFダウンロード」
     kifu_dl_handle(kifu_type) {
