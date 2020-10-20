@@ -8,7 +8,7 @@ client-only
       .container
         b-button(tag="nuxt-link" :to="{name: 'swars-search', query: {query: $route.params.key}}" @click.native="sound_play('click')")
           | ← 検索に戻る
-        DebugPre {{config}}
+    DebugPre {{config}}
 </template>
 
 <script>

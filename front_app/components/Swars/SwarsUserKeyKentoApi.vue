@@ -1,24 +1,27 @@
 <template lang="pug">
-.SwarsUserKeyKentoApi
-  MainNavbar
-    template(slot="brand")
-      b-navbar-item(@click="back_handle")
-        b-icon(icon="arrow-left")
-      b-navbar-item.has-text-weight-bold(tag="div") {{page_title}}
-  MainSection
-    .container
-      p 1. URLをコピー
-      b-field.mt-3
-        p.control
-          b-button(type="is-primary" icon-left="clipboard-plus-outline" @click="sound_play('click'); clipboard_copy({text: kento_api_url})")
-        b-input(type="text" :value="kento_api_url" expanded readonly)
+client-only
+  .SwarsUserKeyKentoApi.has-background-white-bis
+    MainNavbar
+      template(slot="brand")
+        b-navbar-item(@click="back_handle")
+          b-icon(icon="arrow-left")
+        b-navbar-item.has-text-weight-bold(tag="div") {{page_title}}
+    MainSection
+      .container
+        b-field(label="1. URLをコピー").mt-3
+          .control
+            b-button(icon-left="clipboard-plus-outline" @click="sound_play('click'); clipboard_copy({text: kento_api_url})")
+          b-input(type="text" :value="kento_api_url" expanded readonly)
 
-      p.mt-6 2. これで移動して<b>API追加</b>にペースト
-      b-button.mt-3(type="is-primary" tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new") KENTOの設定に移動
+        b-field(label="2. KENTO側で設定").mt-6
+          .control
+            b-button(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new") 移動
 
-      p.mt-6.mb-0
-        | これでKENTO側でも棋譜一覧が出るようになります
+        .image.box.mt-5
+          img(src="~/assets/kento_settings_api.png")
 
+        p.mt-6.mb-0
+          | これでKENTO側でも棋譜一覧が出るようになります
 </template>
 
 <script>
@@ -57,7 +60,11 @@ export default {
 
 <style lang="sass">
 .SwarsUserKeyKentoApi
+  min-height: 100vh
+
   .MainSection
     &:first-of-type
       padding-top: 2.6rem
+  .image
+    max-width: 400px
 </style>
