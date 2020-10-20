@@ -17,7 +17,7 @@ module Api
       records = user_keys.collect do |key|
         row = {}
 
-        user = Swars::User.find_by(key: key)
+        user = Swars::User.find_by(key: key) # TODO: ここで大文字小文字関係なくfindすればいいのでは？
         if user
           name = user.name_with_grade
         else
@@ -61,8 +61,20 @@ module Api
       doc = Nokogiri::HTML(body)
 
       # リンクのユーザー名が小文字化されているのでランキングの表示を取らないといけない
-      keys += doc.search(".ranking_list dl").collect { |e|
-        e.search("dd").first.text
+      doc.search(".ranking_list dl a").each { |e|
+        # "/groups/70833?locale=ja"
+        if href = e[:href]
+          if href.match?(%r{/users/})
+            keys << e.parent.parent.search("dd").first.text
+          end
+          if href.match?(%r{/groups/})
+            url = "https://shogiwars.heroz.jp#{e[:href]}"
+            d = Nokogiri::HTML(html_fetch(url))
+            d.search("header").each { |e|
+              keys << e.text.sub(/\d位\p{blank}*/, "")
+            }
+          end
+        end
       }
 
       # texts = doc.search("div.ranking_list dd").collect(&:text)
@@ -73,26 +85,27 @@ module Api
       # keys += user_key_collect(doc, "a")
 
       # 団体戦
-      keys += doc.search("a").flat_map { |e|
-        if e[:href].match?(%r{/groups/})
-          url = "https://shogiwars.heroz.jp#{e[:href]}"
-          user_key_collect(Nokogiri::HTML(html_fetch(url)), ".boxMypage a")
-        end
-      }.compact
+      # keys += doc.search("a").flat_map { |e|
+      #   if e[:href].match?(%r{/groups/})
+      #     url = "https://shogiwars.heroz.jp#{e[:href]}"
+      #     user_key_collect(Nokogiri::HTML(html_fetch(url)), ".boxMypage a")
+      #   end
+      # }.compact
 
       # 念のためユニーク化
-      keys.uniq
+      # keys.uniq
+      keys
     end
 
-    def user_key_collect(doc, selector)
-      doc.search(selector).collect { |e|
-        if e[:href]
-          if md = e[:href].match(%r{/users/mypage/(\w+)})
-            md.captures.first
-          end
-        end
-      }.compact
-    end
+    # def user_key_collect(doc, selector)
+    #   doc.search(selector).collect { |e|
+    #     if e[:href]
+    #       if md = e[:href].match(%r{/users/mypage/(\w+)})
+    #         md.captures.first
+    #       end
+    #     end
+    #   }.compact
+    # end
 
     def current_max
       (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT)
