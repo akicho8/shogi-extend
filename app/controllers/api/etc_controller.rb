@@ -64,9 +64,14 @@ module Api
 
     # 三段リーグのリーグ配列
     # http://0.0.0.0:3000/api/tsl_league_all
-
     def tsl_league_all
       render json: Tsl::League.all
+    end
+
+    # 三段リーグの最新
+    # http://0.0.0.0:3000/api/tsl_league_newest
+    def tsl_league_newest
+      render json: Tsl::League.newest_order.first
     end
   end
 end

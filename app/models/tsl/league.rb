@@ -39,6 +39,9 @@ module Tsl
     has_many :memberships, dependent: :destroy, inverse_of: :league
     has_many :users, through: :memberships
 
+    scope :newest_order, -> { order(generation: :desc) }
+    scope :oldest_order, -> { order(generation: :asc)  }
+
     def source_url
       Tsl::Scraping.new(generation: generation).source_url
     end

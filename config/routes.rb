@@ -108,8 +108,9 @@ Rails.application.routes.draw do
     match "ping(.:format)", to: "etc#ping", via: :all, format: nil
     match "echo(.:format)", to: "etc#echo", via: :all, format: nil
 
-    get "tsl_user_all(.:format)",   to: "etc#tsl_user_all"
-    get "tsl_league_all(.:format)", to: "etc#tsl_league_all"
+    get "tsl_user_all(.:format)",      to: "etc#tsl_user_all"
+    get "tsl_league_all(.:format)",    to: "etc#tsl_league_all"
+    get "tsl_league_newest(.:format)", to: "etc#tsl_league_newest"
 
     post "swars/download_yoyaku(.:format)", to: "swars#download_yoyaku"
     post "swars/crawler_run(.:format)",     to: "swars#crawler_run"
