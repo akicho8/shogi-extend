@@ -2,7 +2,7 @@
 .CpuBattleApp.has-background-white-ter
   MainNavbar
     template(slot="brand")
-      HomeNavbarItem
+      NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'cpu-battle'}") CPU対戦
   MainSection
     .container

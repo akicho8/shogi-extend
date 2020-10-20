@@ -2,7 +2,7 @@
 .XyMasterApp(:class="[mode, `current_rule_input_mode-${current_rule.input_mode}`]")
   MainNavbar(v-if="mode === 'stop' || mode === 'goal'")
     template(slot="brand")
-      HomeNavbarItem
+      NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'xy'}") 符号の鬼
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")

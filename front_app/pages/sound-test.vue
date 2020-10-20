@@ -2,7 +2,7 @@
 .sound-test
   MainNavbar
     template(slot="brand")
-      HomeNavbarItem
+      NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'sound-test'}") サウンドテスト
   MainSection
     .container

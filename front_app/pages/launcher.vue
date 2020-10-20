@@ -2,7 +2,7 @@
 .launcher
   MainNavbar
     template(slot="brand")
-      HomeNavbarItem
+      NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}") Launcher
     template(slot="start" v-if="development_p")
       b-navbar-item(:href="$config.MY_SITE_URL") {{$config.MY_SITE_URL}}

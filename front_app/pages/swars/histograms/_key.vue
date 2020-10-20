@@ -3,7 +3,7 @@ client-only
   .swars-histograms-key
     MainNavbar
       template(slot="brand")
-        HomeNavbarItem
+        NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: $route.params.key}}")
           | 将棋ウォーズ{{config.tactic.name}}分布
 

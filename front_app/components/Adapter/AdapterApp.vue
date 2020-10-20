@@ -32,7 +32,7 @@
 
   MainNavbar
     template(slot="brand")
-      HomeNavbarItem
+      NavbarItemHome
       b-navbar-item.has-text-weight-bold(@click="clear_handle") なんでも棋譜変換
     template(slot="end")
       b-navbar-item(@click="sidebar_toggle")

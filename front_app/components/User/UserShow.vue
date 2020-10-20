@@ -12,7 +12,7 @@
             b-menu-item(label="ログアウト" @click="logout_handle")
     MainNavbar
       template(slot="brand")
-        HomeNavbarItem
+        NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
           | {{record.name}}さんのプロフィール
       template(slot="end" v-if="g_current_user && g_current_user.id === record.id")

@@ -6,7 +6,7 @@
 
   MainNavbar
     template(slot="brand")
-      HomeNavbarItem(icon="chevron-left" :to="{name: 'three-stage-leagues-generation', params: {generation: latest_generation}}")
+      NavbarItemHome(icon="chevron-left" :to="{name: 'three-stage-leagues-generation', params: {generation: latest_generation}}")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: config.main_user.name}}") {{config.main_user.name_with_age}}
     template(slot="end")
       b-navbar-item.has-text-weight-bold(tag="a" :href="image_search_url(config.main_user.name)" target="_blank") ぐぐる

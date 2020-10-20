@@ -95,7 +95,7 @@
 
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
-      HomeNavbarItem
+      NavbarItemHome
       b-navbar-item(tag="nuxt-link" :to="{query: {}}" @click.native="query= ''")
         h1.has-text-weight-bold 将棋ウォーズ棋譜検索
     template(slot="end")

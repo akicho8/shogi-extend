@@ -32,7 +32,7 @@ client-only
 
     MainNavbar
       template(slot="brand")
-        HomeNavbarItem
+        NavbarItemHome
         b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
       template(slot="end")
         b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")

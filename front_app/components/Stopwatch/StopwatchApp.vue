@@ -2,7 +2,7 @@
 .StopwatchApp
   MainNavbar
     template(slot="brand")
-      HomeNavbarItem
+      NavbarItemHome
       b-navbar-item.has-text-weight-bold(@click="book_title_input_dialog") {{book_title}}
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right)

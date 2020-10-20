@@ -3,7 +3,7 @@ client-only
   .swars-professional
     MainNavbar
       template(slot="brand")
-        HomeNavbarItem
+        NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-professional'}") 将棋ウォーズ十段の成績
     MainSection
       .container

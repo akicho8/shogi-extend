@@ -2,7 +2,7 @@
 .about-layout
   MainNavbar
     template(slot="brand")
-      HomeNavbarItem
+      NavbarItemHome
       b-navbar-item.has-text-weight-bold About
 
   MainSection

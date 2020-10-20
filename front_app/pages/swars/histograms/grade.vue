@@ -3,7 +3,7 @@ client-only
   .swars-histograms-grade
     MainNavbar
       template(slot="brand")
-        HomeNavbarItem
+        NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-grade'}") 将棋ウォーズ段級分布
 
     MainSection
