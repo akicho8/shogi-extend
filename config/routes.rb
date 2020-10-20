@@ -109,6 +109,7 @@ Rails.application.routes.draw do
     match "echo(.:format)", to: "etc#echo", via: :all, format: nil
 
     get "tsl_user_all(.:format)",      to: "etc#tsl_user_all"
+    get "tsl_user_newest(.:format)",   to: "etc#tsl_user_newest"
     get "tsl_league_all(.:format)",    to: "etc#tsl_league_all"
     get "tsl_league_newest(.:format)", to: "etc#tsl_league_newest"
 

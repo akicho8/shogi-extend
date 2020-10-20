@@ -62,6 +62,12 @@ module Api
       render json: Tsl::User.all
     end
 
+    # 三段リーグのユーザーの代表
+    # http://0.0.0.0:3000/api/tsl_user_newest
+    def tsl_user_newest
+      render json: Tsl::League.newest_order.first.users.where.not(level_up_generation: nil).sample
+    end
+
     # 三段リーグのリーグ配列
     # http://0.0.0.0:3000/api/tsl_league_all
     def tsl_league_all

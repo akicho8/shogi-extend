@@ -6,7 +6,7 @@
 
   MainNavbar
     template(slot="brand")
-      HomeNavbarItem
+      HomeNavbarItem(icon="chevron-left" :to="{name: 'three-stage-leagues-generation', params: {generation: latest_generation}}")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: config.main_user.name}}") {{config.main_user.name_with_age}}
     template(slot="end")
       b-navbar-item.has-text-weight-bold(tag="a" :href="image_search_url(config.main_user.name)" target="_blank") ぐぐる
@@ -36,10 +36,13 @@
             template(v-for="user in config.users")
               b-button(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: user.name}}" :class="{'has-text-weight-bold': (user.level_up_generation || user.runner_up_count >= 2)}" exact-active-class="is-active")
                 | {{user.name}}
+
+  DebugPre {{config}}
 </template>
 
 <script>
 import { support } from "./support.js"
+import _ from "lodash"
 
 export default {
   name: "ThreeStageLeaguePlayerApp",
@@ -51,6 +54,14 @@ export default {
   },
   mounted() {
     this.talk(this.config.main_user.name)
+  },
+  computed: {
+    // 参加した最後のリーグ
+    latest_generation() {
+      if (this.config) {
+        return _.last(this.config.memberships).league.generation
+      }
+    },
   },
 }
 </script>

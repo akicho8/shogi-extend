@@ -37,15 +37,18 @@
             b-table-column(v-slot="{row}" field="win"        label="勝敗" sortable cell-class="ox_sequense is_line_break_on")
               | {{row.ox_human}}
 
-            b-table-column(v-slot="{row}" field="seat_count" label="在" numeric sortable)
-              template(v-if="row.seat_count === row.user.memberships_count")
-                | {{row.seat_count}}
-              template(v-else)
-                | {{row.seat_count}} / {{row.user.memberships_count}}
+            b-table-column(v-slot="{row}" field="seat_count" label="在籍" numeric sortable)
+              | {{row.seat_count}} / {{row.user.memberships_count}}
+              //- span.is-hidden-tablet
+              //-   | {{row.seat_count}} / {{row.user.memberships_count}}
+              //- span.is-hidden-mobile
+              //-   template(v-for="win in row.zaiseki_wins")
+              //-     span.mx-1 {{win}}
 
             b-table-column(v-slot="{row}")
               a(:href="image_search_url(row.user.name)" target="_blank")
                 b-icon(icon="account-question")
+  DebugPre {{config}}
 </template>
 
 <script>

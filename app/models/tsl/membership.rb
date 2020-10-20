@@ -102,5 +102,10 @@ module Tsl
     def level_down_p
       result_key.include?("降")
     end
+
+    # 在籍回数のかわりに表示したい在籍毎の勝数
+    def zaiseki_wins
+      user.zaiseki_wins(league.generation)
+    end
   end
 end
