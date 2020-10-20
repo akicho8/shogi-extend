@@ -43,13 +43,13 @@ module Swars
 
       { key: "レアマン",           medal_params: { message: "レアな戦法が多い",                       method: "raw",  name: "🍀",                type: nil, },          if_cond: proc { (r = deviation_avg) && r < 50.0     },},
 
-      { key: "切断マン",           medal_params: { message: "悔しかったので投了するかわりに切断した", method: "raw",  name: "💩",                type: nil, },          if_cond: proc { (r = lose_ratio_of("DISCONNECT")) && r > 0 },},
+      { key: "切断マン",           medal_params: { message: "悔しかったので切断した", method: "raw",  name: "💩",                type: nil, },          if_cond: proc { (r = lose_ratio_of("DISCONNECT")) && r > 0 },},
 
       { key: "角不成マン",         medal_params: { message: "角不成をした",                           method: "raw",  name: "☠",                 type: nil, },          if_cond: proc { all_tag_ratio_for("角不成") > 0 }           },
       { key: "飛車不成マン",       medal_params: { message: "飛車不成をした",                         method: "raw",  name: "💀",                type: nil, },          if_cond: proc { all_tag_ratio_for("飛車不成") > 0 }           },
 
       { key: "1手詰じらしマン",    medal_params: { message: "1手詰を焦らして歪んだ優越感に浸った",    method: "raw",  name: "😈",                type: nil, },          if_cond: proc { (r = jirasi_ratio) && r > 0 } },
-      { key: "絶対投了しないマン", medal_params: { message: "悔しかったので投了するかわりに放置した", method: "raw",  name: "🧟",                type: nil, },          if_cond: proc { (r = zettai_toryo_sinai_ratio) && r > 0 } },
+      { key: "絶対投了しないマン", medal_params: { message: "悔しかったので放置した", method: "raw",  name: "🧟",                type: nil, },          if_cond: proc { (r = zettai_toryo_sinai_ratio) && r > 0 } },
 
       { key: "大長考マン",         medal_params: { message: "対局放棄に近い、ありえないほどの長考をした",             method: "raw",  name: "🚫",                type: nil, },          if_cond: proc { (r = long_think_ratio) && r > 0 } },
       { key: "長考マン",           medal_params: { message: "考えすぎて負けることが多い",             method: "raw",  name: "🤯",                type: nil, },          if_cond: proc { (r = short_think_ratio) && r > 0.1 } },
