@@ -73,17 +73,17 @@ export default {
       }
     },
 
-    call_log(key) {
-      let mark = ""
-      if (process.server) {
-        mark = "server"
-      } else {
-        mark = "client"
-      }
-      const log = `●[fetch][${key}] ${mark}`
-      this.call_logs.push(log)
-      this.clog(log)
-    },
+    // call_log(key) {
+    //   let mark = ""
+    //   if (process.server) {
+    //     mark = "server"
+    //   } else {
+    //     mark = "client"
+    //   }
+    //   const log = `●[fetch][${key}] ${mark}`
+    //   this.call_logs.push(log)
+    //   this.clog(log)
+    // },
 
     // 1つ前に戻れるなら戻る
     // 戻れないならトップに戻る

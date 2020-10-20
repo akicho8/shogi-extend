@@ -298,7 +298,7 @@ export default {
     // http://0.0.0.0:4000/swars/users/devuser1
 
     // return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
-    this.call_log("swars/battles")
+    //- this.call_log("swars/battles")
     this.clog(`fetch: ${JSON.stringify(this.$route.query)}`)
     return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
       this.config = config

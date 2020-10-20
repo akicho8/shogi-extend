@@ -94,12 +94,10 @@ export default {
   //   }
   // },
   fetch() {
-    this.call_log("index")
+    // this.call_log("index")
     return this.$axios.$get("/api/service_infos.json").then(config => {
       this.config = config
     })
-  },
-  computed: {
   },
 }
 </script>
