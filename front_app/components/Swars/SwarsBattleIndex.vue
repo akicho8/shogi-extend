@@ -48,14 +48,7 @@
             b-menu-item(label="負け" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} judge:lose`}}" @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
             b-menu-item(label="なし" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key}`}}"            @click.native="sound_play('click')" :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
 
-        b-menu-list(label="その他")
-          b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | 直近30件 ﾀﾞｳﾝﾛｰﾄﾞ
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in ZipKifuInfo.values")
-              b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
-
+        b-menu-list(label="一括取得")
           b-menu-item(
             label="古い棋譜を取得"
             @click.native="config.current_swars_user_key && sound_play('click')"
@@ -63,6 +56,14 @@
             :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
             :disabled="!config.current_swars_user_key")
 
+          b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
+            template(slot="label" slot-scope="props")
+              | 直近30件 ﾀﾞｳﾝﾛｰﾄﾞ
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in ZipKifuInfo.values")
+              b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
+
+        b-menu-list(label="連携")
           b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 外部APP ｼｮｰﾄｶｯﾄ
