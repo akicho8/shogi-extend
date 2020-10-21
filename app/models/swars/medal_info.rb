@@ -23,7 +23,7 @@ module Swars
       { key: "筋違い角おじさん",   medal_params: { message: "筋違い角おじさん",                       method: "raw",  name: "🧓",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("筋違い角") > 0 },},
       { key: "スイーツマン",       medal_params: { message: "いちご囲いで勝った",                     method: "raw",  name: "🍓",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("いちご囲い") > 0 },},
       { key: "無敵囲いマン",       medal_params: { message: "無敵囲いを使った",                       method: "raw",  name: "🔰",                type: nil, },          if_cond: proc { all_tag_ratio_for("無敵囲い") > 0 },},
-      { key: "背水マン",           medal_params: { message: "大駒すべて捨てて勝った",                 method: "raw",  name: "🧠",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("背水の陣") > 0 },},
+      { key: "背水マン",           medal_params: { message: "大駒すべて捨てたのに勝った",             method: "raw",  name: "🧠",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("背水の陣") > 0 },},
       { key: "エルモマン",         medal_params: { message: "エルモ囲いで勝った",                     method: "raw",  name: "🐒",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("elmo囲い") > 0 },},
       { key: "鬼殺されマン",       medal_params: { message: "鬼殺しを食らって負けた",                 method: "raw",  name: "👹",                type: nil, },          if_cond: proc { defeated_tag_counts["鬼殺し向かい飛車"] > 0 || defeated_tag_counts["鬼殺し"] > 0 || defeated_tag_counts["新鬼殺し"] > 0 },},
 
@@ -37,7 +37,7 @@ module Swars
 
       { key: "波が激しいマン",     medal_params: { message: "勝ち負けの波が激しい",                   method: "raw",  name: "🌊",                type: nil, },          if_cond: proc { win_lose_streak_max_hash["win"] >= 5 && win_lose_streak_max_hash["lose"] >= 5 },},
 
-      { key: "居玉勝ちマン",       medal_params: { message: "居玉で勝った",                           method: "raw",  name: "🗿",                type: nil, },          if_cond: proc { (r = igyoku_win_ratio) && r >= 0.01       },},
+      { key: "居玉勝ちマン",       medal_params: { message: "居玉でそこそこ勝っている",               method: "raw",  name: "🗿",                type: nil, },          if_cond: proc { (r = igyoku_win_ratio) && r >= 0.1       },},
 
       { key: "切れ負けマン",       medal_params: { message: "切れ負けが多い",                         method: "raw", name: "⌛",                 type: nil, },           if_cond: proc { (r = lose_ratio_of("TIMEOUT")) && r >= 0.25 },},
 
