@@ -71,7 +71,7 @@
                 PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
                 KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
                 KifCopyButton(@click="kifu_copy_handle")
-                TweetButton(@click="tweet_share_open({url: permalink_url})") Tweet
+                TweetButton(@click="tweet_share_open({url: permalink_url})")
                 //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
 
             .column
