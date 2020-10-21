@@ -30,7 +30,7 @@
                     ul.is-size-7.features
                       template(v-for="e in e.features")
                         li(v-html="e")
-  .footer
+  .footer(v-if="config")
     .container
       .columns
         .column.is-4.has-text-centered-tablet
