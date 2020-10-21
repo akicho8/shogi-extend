@@ -23,7 +23,7 @@
   MainSection(:class="mode")
     .container
       .columns
-        .column
+        .column.is-paddingless
           .buttons.is-centered.mb-0
             template(v-if="mode === 'stop' || mode === 'goal'")
               button.button.is-primary(@click="start_handle") START
@@ -63,7 +63,7 @@
                 .countdown_wrap(@click.prevent.stop.capture)
                   .countdown
                     | {{countdown}}
-              shogi_player(
+              MyShogiPlayer(
                 ref="main_sp"
                 :kifu_body="''"
                 :summary_show="false"
@@ -155,7 +155,6 @@ import _ from "lodash"
 import dayjs from "dayjs"
 
 import MemoryRecord from 'js-memory-record'
-import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 import Soldier      from "shogi-player/src/soldier.js"
 import Place        from "shogi-player/src/place.js"
 
@@ -188,9 +187,6 @@ export default {
     app_rule_dialog,
     app_chart,
   ],
-  components: {
-    shogi_player,
-  },
   props: {
     config: { type: Object, required: true },
   },
@@ -229,7 +225,7 @@ export default {
   },
 
   mounted() {
-    this.$refs.main_sp.api_board_clear()
+    this.$refs.main_sp.$refs.pure_sp.api_board_clear()
   },
 
   beforeDestroy() {
@@ -366,7 +362,7 @@ export default {
       this.init_other_variables()
       this.latest_rule = this.current_rule
       this.talk_stop()
-      this.$refs.main_sp.api_flip_set(this.current_rule.flip)
+      this.$refs.main_sp.$refs.pure_sp.api_flip_set(this.current_rule.flip)
       this.interval_counter.start()
     },
 
@@ -483,7 +479,7 @@ export default {
 
     timer_stop() {
       this.interval_frame.stop()
-      this.$refs.main_sp.api_board_clear()
+      this.$refs.main_sp.$refs.pure_sp.api_board_clear()
     },
 
     keydown_handle_core(e) {
@@ -559,8 +555,8 @@ export default {
       if (!this.tap_method_p) {
         const soldier = Soldier.random()
         soldier.place = Place.fetch([p.x, p.y])
-        this.$refs.main_sp.api_board_clear()
-        this.$refs.main_sp.api_place_on(soldier)
+        this.$refs.main_sp.$refs.pure_sp.api_board_clear()
+        this.$refs.main_sp.$refs.pure_sp.api_place_on(soldier)
       }
 
       this.current_place = p
@@ -816,7 +812,7 @@ $board_color: hsl(0, 0%, 60%)
       .font_size_base
         // モバイルのときに画面幅に合わせて盤面を大きくする
         +mobile
-          font-size: 6.0vmin        // このサイズでぎりぎり升目が正方形を保ったまま最大幅になる
+          font-size: 6.2vmin        // このサイズでぎりぎり升目が正方形を保ったまま最大幅になる
           // table
           //   width: inherit      // 升目が正方形になるように戻す
 
