@@ -26,9 +26,9 @@ export default {
   computed: {
     wrapper_class() {
       return {
-        emoji:        this.params.emoji,
-        icon:         this.params.icon,
-        raw:          !(this.params.emoji || this.params.icon),
+        my_emoji: this.params.emoji,
+        my_icon:  this.params.icon,
+        my_raw:   !(this.params.emoji || this.params.icon),
         is_clickable: this.params.message,
       }
     },
@@ -38,15 +38,15 @@ export default {
 
 <style lang="sass">
 .MembershipMedal
-  &.emoji
-    margin-right: 0.15rem
-  &.icon
+  &.my_emoji
+    margin-right: 0.2rem
+  &.my_icon
     margin-right: 0.4rem
 
   +mobile
-    &.emoji
+    &.my_emoji
       // 絵文字によって大きさが異なるのので結局完璧に揃えるのは難しい
       margin-right: 0.35rem
-    &.icon
+    &.my_icon
       margin-right: 0.7rem
 </style>
