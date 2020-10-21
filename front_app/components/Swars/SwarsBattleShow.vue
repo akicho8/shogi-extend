@@ -7,7 +7,7 @@
         .mx-4.my-4
           b-menu
             b-menu-list(label="Action")
-              b-menu-item(label="共有将棋盤で開く" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}" @click.native="sound_play('click')")
+              b-menu-item(label="共有将棋盤に転送" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}" @click.native="sound_play('click')")
 
             b-menu-list(label="export")
               b-menu-item(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}" @click.native="sound_play('click')")
@@ -359,9 +359,16 @@ export default {
       return this.tweet_intent_url(this.permalink_url)
     },
 
+    // 共有将棋盤で開くときのパラメータ
     share_board_query() {
       return {
-        title: this.record.description, // title:対戦者の名前 description:戦法のみ
+        // 共有将棋盤に転送するときは個人情報をなるべく隠したい意図があるのであえて何も入れない
+        //
+        // record.title:        対戦者の名前
+        // record.description:  戦法のみ
+        //
+        title: "将棋ウォーズ棋譜",
+
         body:  this.record.sfen_body,
         turn:  this.new_turn,
         image_view_point: this.new_flip ? "white" : "black",
