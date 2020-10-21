@@ -5,10 +5,10 @@
   section.modal-card-body
     .field.my-1
       b-radio(size="is-small" v-model="new_image_view_point" native-value="self")
-        | 1手指し継いだとき、自分の視点 (リレー将棋向け・初期値)
+        | 1手指し継いだとき自分の視点 (リレー将棋向け・初期値)
     .field.my-1
       b-radio(size="is-small" v-model="new_image_view_point" native-value="opponent")
-        | 1手指し継いだとき、相手の視点 (リレー将棋向け・詰将棋向け)
+        | 1手指し継いだとき相手の視点 (リレー将棋向け)
     .field.my-1
       b-radio(size="is-small" v-model="new_image_view_point" native-value="black")
         | 常に☗ (詰将棋向け)
