@@ -16,11 +16,7 @@
       .columns
         .column
           ThreeStageLeaguePlayerChart(:config="config")
-          b-table.mt-3(
-            :data="config.memberships"
-            :mobile-cards="false"
-            hoverable
-            )
+          b-table.mt-3(:data="config.memberships" :mobile-cards="false" hoverable)
             b-table-column(v-slot="{row}" field="league.generation" label="期" numeric sortable)
               nuxt-link(:to="{name: 'three-stage-leagues-generation', params: {generation: row.league.generation}}" @click.native="sound_play('click')")
                 | {{row.league.generation}}
