@@ -384,13 +384,10 @@ module Swars
     def current_index_scope
       @current_index_scope ||= -> {
         s = current_scope
-        if current_swars_user
+        if current_swars_user || (Rails.env.development? && params[:all])
+          # すべて表示
         else
-          if Rails.env.development?
-            s = s.none
-          else
-            s = s.none
-          end
+          s = s.none
         end
         s
       }.call

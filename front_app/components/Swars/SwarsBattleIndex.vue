@@ -92,6 +92,7 @@
           b-menu-item(label="棋譜の不整合"     @click="$router.push({query: {query: 'Yamada_Taro', error_capture_test: true, force: true}})")
           b-menu-item(label="棋譜の再取得"     @click="$router.push({query: {query: 'Yamada_Taro', destroy_all: true, force: true}})")
           b-menu-item(label="棋譜の普通に取得" @click="$router.push({query: {query: 'Yamada_Taro'}})")
+          b-menu-item(label="全レコード表示"   @click="$router.push({query: {query: '', all: 'true', per: 50, debug: 'true'}})")
 
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
@@ -154,8 +155,7 @@
 
           template(v-if="display_key === 'table'")
             b-table(
-              v-if="$route.query.query"
-              :loading="$fetchState.pending && false"
+              v-if="$route.query.query || config.records.length >= 1"
 
               :total        = "config.total"
               :current-page = "config.page"
@@ -410,7 +410,6 @@ export default {
       location.href = url
     },
 
-    // チェックボックスをトグルする
     cb_toggle_handle(column) {
       this.sound_play('click')
       this.$set(this.visible_hash, column.key, !this.visible_hash[column.key])
@@ -418,7 +417,7 @@ export default {
 
     row_class(row, index) {
       if (row.judge) {
-        return `is-${row.judge.key}` // is- で始めないと mobile-cards になったとき消される
+        return `is-${row.judge.key}` // is- で始めると mobile-cards になったとき消されなくなる
       }
     },
 
