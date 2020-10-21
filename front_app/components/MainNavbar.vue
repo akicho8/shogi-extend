@@ -37,8 +37,9 @@ export default {
     padding-top: 0
     padding-bottom: 0
     // モバイルだと左右隙間が開きすぎているように見えるのでもっと端に寄せる
-    padding-left: 18px
-    padding-right: 18px
+    // 微調整ではなく0にしたい
+    padding-left: 12px
+    padding-right: 12px
 
 .STAGE-development
   .navbar.MainNavbar
