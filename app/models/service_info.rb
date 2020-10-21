@@ -35,7 +35,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/adapter"},
       title: "なんでも棋譜変換",
       ogp_image_base: "adapter",
-      description: "棋譜が読み込めない場合に放り込んでください",
+      description: "棋譜が読み込めないときに放り込んでください",
       features: [
         "変則的な将棋倶楽部24の棋譜を正規化",
         "将棋クエストのCSA形式をKIFに変換",
