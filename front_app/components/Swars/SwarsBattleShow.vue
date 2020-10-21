@@ -161,7 +161,7 @@ export default {
     }
 
     return {
-      title: `${this.og_title} | 将棋ウォーズ`,
+      title: `${this.og_title} - 将棋ウォーズ`,
       meta: [
         { hid: "og:title",       property: "og:title",       content: this.og_title,           },
         { hid: "og:image",       property: "og:image",       content: this.og_image,           },

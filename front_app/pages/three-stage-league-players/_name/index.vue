@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     page_title() {
-      return `${this.config.main_user.name}の成績 | 奨励会三段リーグ`
+      return `${this.config.main_user.name}の成績 - 奨励会三段リーグ`
     },
   },
 }

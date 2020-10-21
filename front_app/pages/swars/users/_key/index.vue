@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     page_title() {
-      return `${this.$route.params.key} | 将棋ウォーズプレイヤー情報`
+      return `${this.$route.params.key} - 将棋ウォーズプレイヤー情報`
     },
   },
 }

@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     page_title() {
-      return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" | ")
+      return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" - ")
     },
   },
 }
