@@ -53,7 +53,7 @@ export default {
         { title: "将棋ウォーズプレイヤー情報",         to: { name: "swars-users-key",   params: {key: "devuser1"}, }, },
         { title: "将棋ウォーズ棋譜検索",               to: { name: "swars-search",                   }, },
         { title: "将棋ウォーズイベント上位プレイヤー", to: { name: "swars-top-group",               }, },
-        { title: "将棋ウォーズ十段の成績",             to: { name: "swars-professional",             }, },
+        { title: "将棋ウォーズ指導対局成績",             to: { name: "swars-professional",             }, },
         { title: "将棋ウォーズ分布",                   to: { name: "swars-histograms-key", params: {key: "attack"}, }, },
         { title: "将棋ウォーズ段級分布",               to: { name: "swars-histograms-grade"           }, },
         { title: "将棋トレーニングバトル",             to: { name: "training"                        }, },

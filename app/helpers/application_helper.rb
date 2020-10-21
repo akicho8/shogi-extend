@@ -9,7 +9,7 @@ module ApplicationHelper
 
   def full_html_title
     titles = [AppConfig[:app_name], content_for(:page_title), @page_title]
-    titles.flatten.reject(&:blank?).reverse.join(" - ")
+    titles.flatten.reject(&:blank?).reverse.join(" | ")
   end
 
   concerning :FlashMethods do

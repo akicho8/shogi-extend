@@ -20,7 +20,7 @@
       b-navbar-item(@click="goal_handle") ゴール
       b-navbar-item(@click="rebuild_handle") リビルド
 
-  .section(:class="mode")
+  MainSection(:class="mode")
     .container
       .columns
         .column
