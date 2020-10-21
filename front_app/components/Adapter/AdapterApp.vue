@@ -3,27 +3,31 @@
   b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
     .mx-4.my-4
       b-menu
+        b-menu-list(label="Action")
+          b-menu-item(@click="board_show_handle" label="共有将棋盤に転送")
+
         b-menu-list(label="Export")
-          b-menu-item(@click="kifu_paper_handle" :disabled="disabled_p" label="棋譜印刷 (PDF)")
-          b-menu-item(:expanded="false" @click="sound_play('click')" :disabled="disabled_p")
+          b-menu-item(@click="kifu_paper_handle" label="棋譜印刷 (PDF)")
+          b-menu-item(:expanded="false" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 表示
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
               b-menu-item(:label="e.name" @click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)")
-          b-menu-item(@click="sound_play('click')" :disabled="disabled_p")
+          b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | コピー
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
-              b-menu-item(:label="e.name" @click="kifu_copy_handle(e.key)")
-          b-menu-item(@click="sound_play('click')" :disabled="disabled_p")
+              template(v-if="e.clipboard_copyable")
+                b-menu-item(:label="e.name" @click="kifu_copy_handle(e.key)")
+          b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
               b-menu-item(:label="e.name" @click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)")
-          b-menu-item(@click="sound_play('click')" :disabled="disabled_p")
+          b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 文字コード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -56,11 +60,11 @@
                 PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
                 KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
                 KifCopyButton(@click="kifu_copy_handle('kif')")
-                b-button(@click="board_show_handle" size="is-small") 共有将棋盤に転送
 
       .columns(v-if="record")
         .column
-          pre {{record.all_kifs.kif}}
+          pre.box.has-background-primary-light
+            | {{record.all_kifs.kif}}
 
       .columns(v-if="development_p")
         .column
@@ -78,12 +82,12 @@ import MemoryRecord from 'js-memory-record'
 class FormatTypeInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "kif",  },
-      { key: "ki2",  },
-      { key: "csa",  },
-      { key: "sfen", },
-      { key: "bod",  },
-      { key: "png",  },
+      { key: "kif",  clipboard_copyable: true,  },
+      { key: "ki2",  clipboard_copyable: true,  },
+      { key: "csa",  clipboard_copyable: true,  },
+      { key: "sfen", clipboard_copyable: true,  },
+      { key: "bod",  clipboard_copyable: true,  },
+      { key: "png",  clipboard_copyable: false, },
     ]
   }
 
@@ -226,7 +230,11 @@ export default {
 
     // 「表示」
     kifu_show_handle(kifu_type) {
-      this.record_fetch(() => this.simple_open(this.kifu_show_url(kifu_type)))
+      this.record_fetch(() => {
+        this.sound_play('click')
+        const url = this.kifu_show_url(kifu_type)
+        this.popup_open(url)
+      })
     },
 
     // 「盤面」
@@ -276,11 +284,6 @@ export default {
     },
 
     // private
-
-    simple_open(url) {
-      this.sound_play('click')
-      this.popup_open(url)
-    },
 
     record_fetch(callback) {
       if (this.bs_error) {
