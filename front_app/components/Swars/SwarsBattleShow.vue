@@ -32,19 +32,23 @@
                 b-menu-item(label="BOD"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
                 b-menu-item(label="PNG"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&flip=${new_flip}&width=`")
 
-      MainNavbar
+      MainNavbar(wrapper-class="container is-fluid")
         template(slot="brand")
           b-navbar-item(@click="back_handle")
             b-icon(icon="chevron-left")
-          b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}") {{record.title}}
+          b-navbar-item.has-text-weight-bold.is_title(
+            tag="nuxt-link"
+            :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}"
+            )
+            | {{record.title}}
         template(slot="end")
           b-navbar-item(@click="sidebar_toggle")
             b-icon(icon="menu")
 
       MainSection
-        .container
-          .columns
-            .column
+        .container.is-fluid
+          .columns.is-multiline.is-mobile
+            .column.is-half-desktop.is_left_column
               MyShogiPlayer(
                 :run_mode.sync="run_mode"
                 :debug_mode="false"
@@ -63,18 +67,7 @@
                 ref="main_sp"
               )
 
-              .has-text-centered.mt-4(v-if="false")
-                b-switch(v-model="run_mode" true-value="play_mode" false-value="view_mode" @input="run_mode_change_handle")
-                  b-icon(icon="source-branch")
-
-              .buttons.is-centered.mt-5
-                PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-                KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
-                KifCopyButton(@click="kifu_copy_handle")
-                TweetButton(@click="tweet_share_open({url: permalink_url})")
-                //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
-
-            .column
+            .column.is-half-desktop.is_right_column
               SwarsBattleShowTimeChart(
                 v-if="record && time_chart_params"
                 :record="record"
@@ -84,6 +77,14 @@
                 :flip="new_flip"
                 ref="SwarsBattleShowTimeChart"
               )
+          .columns
+            .column.is-half-desktop.is_buttons_column
+              .buttons.is-centered
+                PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+                KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
+                KifCopyButton(@click="kifu_copy_handle")
+                TweetButton(@click="tweet_share_open({url: permalink_url})")
+                //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
 
           //-   DebugPre
           //-     | start_turn: {{start_turn}}
@@ -234,18 +235,6 @@ export default {
     //   }
     // },
 
-    // マウスで操作したときだけ呼べる
-    run_mode_change_handle(v) {
-      let message = null
-      if (v === "play_mode") {
-        message = "駒を操作できます"
-      } else {
-        message = "元に戻しました"
-      }
-      this.simple_notify(message)
-      this.lazy_slider_focus()
-    },
-
     // 開始局面
     // turn start_turn critical_turn の順に見る
     start_turn_for(record) {
@@ -383,25 +372,26 @@ export default {
 </script>
 
 <style lang="sass">
-// .MySidebarMenuIconWithTitle
-//   display: flex
-//   justify-content: flex-start
-//   align-items: center
-
 .SwarsBattleShow
-  +mobile
-    .column
-      padding: 0
+  .container.is-fluid
+    padding: 0
+    +widescreen
+      padding-left: 2rem
+      padding-right: 2rem
 
-  // .delete
-  //   position: absolute
-  //   top: 6.0rem
-  //   left: 0.6rem
-  //   z-index: 2 // shogi-player の「○手目」のdivより下にあって押せない場合があるため指定する必要がある
+  .is_left_column
+    padding: 0
 
-  .SwarsBattleShowTimeChart
-    margin: 1.75rem 2rem
+  .is_right_column
+    +desktop
+      margin-top: 0.8rem
+
+  .is_title
     +mobile
-      margin: 0
-      margin-top: 1.75rem
+      font-size: $size-7
+
+.STAGE-development
+  .SwarsBattleShow
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.2)
 </style>
