@@ -65,10 +65,11 @@ const config = {
   ** Headers of the page
   */
   head: {
-    title: null,
-    titleTemplate(title) {
-      return (title ? `${title} | ` : "") + process.env.APP_NAME
-    },
+    title: process.env.APP_NAME,
+    titleTemplate: `%s - ${process.env.APP_NAME}`,
+    // titleTemplate(title) {
+    //   return (title ? `${title} | ` : "") + process.env.APP_NAME
+    // },
 
     htmlAttrs: {
       lang: "ja",

@@ -1,8 +1,5 @@
 <template lang="pug">
 .service-infos.has-background-white-bis
-  DebugBox
-    | OK
-
   MainNavbar
     template(slot="brand")
       b-navbar-item(tag="nuxt-link" :to="{name: 'index'}")
@@ -81,18 +78,14 @@ export default {
       config: null,
     }
   },
-  // // デフォルトが使われるのでここで指定する必要なし
-  // head() {
-  //   return {
-  //     title: "",
-  //     // titleTemplate: null,
-  //     // meta: [
-  //     //   { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND",                                   },
-  //     //   { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image",                            },
-  //     //   { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです", },
-  //     // ],
-  //   }
-  // },
+  // 内容は nuxt.config.js と同じだけど設定は必要
+  // 他のページから遷移してきたとき設定していないと title が undefined になってしまう
+  head() {
+    return {
+      title: this.$config.APP_NAME,
+      titleTemplate: null,
+    }
+  },
   fetch() {
     // this.call_log("index")
     return this.$axios.$get("/api/service_infos.json").then(config => {
