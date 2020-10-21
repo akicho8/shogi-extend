@@ -66,7 +66,7 @@ const config = {
   */
   head: {
     title: process.env.APP_NAME,
-    titleTemplate: `%s - ${process.env.APP_NAME}`,
+    titleTemplate: `%s | ${process.env.APP_NAME}`,
     // titleTemplate(title) {
     //   return (title ? `${title} | ` : "") + process.env.APP_NAME
     // },
