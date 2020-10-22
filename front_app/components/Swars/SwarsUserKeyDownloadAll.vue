@@ -21,7 +21,7 @@
         | 将棋ウォーズ棋譜検索は将棋ウォーズ公式(以下本家)とはあんまり同期していません。
         | 検索という名前をつけているものの、直近の対局をすぐに検討できることを目的としているのと、本家への負荷軽減や、レスポンス速度の兼ね合いもあって、本家から取得するのは各ルール直近10件だけにしています。
         | <br><br>
-        | そのため、たくさん対戦しているはずなのに、検索してみたら思ったより表示件数が少なかったとか、一覧で見ると抜けができたりします。
+        | そのため、たくさん対戦しているはずなのに検索してみたら思ったより表示件数が少なかったとか、一覧で見ると抜けができたりします。
         | <br><br>
         | たとえば、3分切れ負けをいきなり15局やったあと検索しても直近の10局しか取り込んでないので残り5局が見当たりません。
         | 最初に対局した5局のなかに検討したかった対局がある場合は困るでしょう。
@@ -29,7 +29,7 @@
         | そんなときに<b>棋譜取得の予約</b>をすると残りの5局を取ってきます。
         | 深夜に古い棋譜(※最大直近1ヶ月分)を探しに行きます。
         | 終わったら指定のメールアドレスに通知します。
-        | その際に棋譜データも必要であれば下のZIPファイルの添付を有効にしてください。
+        | その際に棋譜データも必要であればZIPファイルの添付を有効にしてください。
 
       b-field.mt-6(label="通知先メールアドレス" label-position="on-border")
         b-input(v-model.trim="to_email" required :disabled="!g_current_user")
@@ -69,9 +69,11 @@ export default {
   },
   fetchOnServer: false,
   fetch() {
-    return this.$axios.$get("/api/settings/email_fetch").then(e => {
-      this.to_email = e.email
-    })
+    if (this.g_current_user) {
+      return this.$axios.$get("/api/settings/email_fetch").then(e => {
+        this.to_email = e.email
+      })
+    }
   },
   methods: {
     async yoyaku_handle() {
@@ -121,4 +123,6 @@ export default {
   .MainSection
     .container
       max-width: 65ch ! important
+    .notification
+      padding-right: 1.25rem // notification はなぜか右のpaddingが広くなっているため左と同じにする
 </style>
