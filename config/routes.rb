@@ -113,7 +113,7 @@ Rails.application.routes.draw do
     get "tsl_league_all(.:format)",    to: "etc#tsl_league_all"
     get "tsl_league_newest(.:format)", to: "etc#tsl_league_newest"
 
-    post "swars/download_yoyaku(.:format)", to: "swars#download_yoyaku"
+    post "swars/download_set(.:format)", to: "swars#download_set"
     post "swars/crawler_run(.:format)",     to: "swars#crawler_run"
 
     resource :general, only: [:show] do

@@ -347,7 +347,7 @@ export default {
 
     append_message() {
       return `<div class="mt-2">
-                どうしても変換できない棋譜がある場合は
+                どうしても読み取れない棋譜がある場合は
                   <a href="https://twitter.com/sgkinakomochi" target="_blank">@sgkinakomochi</a>
                 に棋譜を送ってください
               </div>`

@@ -36,9 +36,9 @@
 
 module Api
   class SwarsController < ::Api::ApplicationController
-    # curl -d _method=post http://0.0.0.0:3000/api/swars/users/devuser1/download_yoyaku
-    # http://0.0.0.0:3000/api/swars/users/devuser1/download_yoyaku
-    def download_yoyaku
+    # curl -d _method=post http://0.0.0.0:3000/api/swars/users/devuser1/download_set
+    # http://0.0.0.0:3000/api/swars/users/devuser1/download_set
+    def download_set
       no = ::Swars::CrawlReservation.active_only.count
       record = current_user.swars_crawl_reservations.create(crawl_reservation_params)
       if record.errors.present?

@@ -43,7 +43,7 @@
         .control
           .buttons
             b-button(@click="yoyaku_handle" :disabled="!g_current_user" :loading="loading_p") 棋譜取得の予約
-            b-button(@click="sabaku_handle_handle" v-if="development_p") さばく
+            b-button(@click="crawler_run_handle_handle" v-if="development_p") さばく
 
   DebugPre {{$data}}
 </template>
@@ -93,12 +93,12 @@ export default {
         },
       }
       this.loading_p = true
-      const retv = await this.$axios.$post("/api/swars/download_yoyaku", params)
+      const retv = await this.$axios.$post("/api/swars/download_set", params)
       this.loading_p = false
       this.notice_collector_run(retv)
     },
 
-    async sabaku_handle_handle() {
+    async crawler_run_handle_handle() {
       const retv = await this.$axios.$post("/api/swars/crawler_run")
       this.notice_collector_run(retv)
     },
