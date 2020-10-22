@@ -11,9 +11,19 @@
       button.button.is-primary.is-large(@click="printer_handle")
         b-icon(icon="printer" size="is-medium")
 
-    .formal_sheet_workspace(:class="new_info.workspace_class" :contenteditable="contenteditable_p ? 'true' : 'false'")
+    .fixed_font_switch_container.is_screen_only
+      b-field(label="フォント" custom-class="is-small")
+        b-radio-button(v-model="font_key" native-value="mincho" size="is-small") 明朝
+        b-radio-button(v-model="font_key" native-value="gothic" size="is-small") ゴシック
+      b-field.mt-4(label="文字サイズ(mm)" custom-class="is-small")
+        b-numberinput(size="is-small" controls-position="compact" v-model="font_size" :min="0" :max="10" :step="0.01" exponential)
+
+    .formal_sheet_workspace(
+      :class="{is_mincho: font_key === 'mincho'}"
+      :contenteditable="direct_editable_p ? 'true' : 'false'"
+      )
       template(v-for="(_, page_index) in new_info.page_count")
-        .sheet
+        .sheet(:style="{'font-size': `${font_size}mm`}")
           .sheet_body
             .tables_box_container
               .tables_box
@@ -170,7 +180,9 @@
 </template>
 
 <script>
-const CONTENTEDITABLE_FUNCTION_P = true
+const AUTO_PRINT = false
+
+import { isMobile } from "@/components/models/isMobile.js"
 
 export default {
   name: "FormalSheetShow",
@@ -180,6 +192,8 @@ export default {
   data() {
     return {
       new_info: this.info,
+      font_key: "mincho",
+      font_size: 3.9,
     }
   },
   head() {
@@ -193,39 +207,45 @@ export default {
       ],
     }
   },
+  watch: {
+    font_key() {
+      this.sound_play("click")
+    },
+    font_size() {
+      this.sound_play("click")
+    },
+  },
   methods: {
     printer_handle() {
       window.print()
     },
 
     edit_to(page_index, key) {
-      if (this.contenteditable_p) {
-        return
-      }
-
-      if (page_index === 0) {
-        this.$buefy.dialog.prompt({
-          title: "編集",
-          inputAttrs: {type: "text", value: this.new_info[key], required: false},
-          confirmText: "更新",
-          cancelText: "キャンセル",
-          onConfirm: (value) => {
-            if (this.new_info[key] !== value) {
-              this.$set(this.new_info, key, value)
-              this.$buefy.toast.open({message: `更新しました`, position: "is-bottom"})
-            }
-          },
-        })
+      if (isMobile.any()) {
+        if (page_index === 0) {
+          this.$buefy.dialog.prompt({
+            inputAttrs: {type: "text", value: this.new_info[key], required: false},
+            confirmText: "更新",
+            cancelText: "キャンセル",
+            onConfirm: (value) => {
+              if (this.new_info[key] !== value) {
+                this.$set(this.new_info, key, value)
+                this.$buefy.toast.open({message: `更新しました`, position: "is-bottom"})
+              }
+            },
+          })
+        }
       }
     },
   },
 
   mounted() {
-    // 自動的に印刷する場合
-    setTimeout(() => {
-      // window.print()
-      // window.close()
-    }, 200)
+    if (AUTO_PRINT) {
+      setTimeout(() => {
+        window.print()
+        window.close()
+      }, 200)
+    }
 
     this.dialog_ok(`
        <div class="content">
@@ -245,12 +265,10 @@ export default {
   },
 
   computed: {
-    contenteditable_p() {
-      const v = this.$route.query.contenteditable
-      if (v != null) {
-        return v === "true"
-      }
-      return CONTENTEDITABLE_FUNCTION_P
+    // PCのブラウザのみ有効にする
+    // モバイルブラウザは反応しないので常時有効でもよいが念のためPCの場合のみにしとく
+    direct_editable_p() {
+      return !isMobile.any()
     },
   },
 }
@@ -259,4 +277,10 @@ export default {
 <style lang="sass">
 @import "FormalSheetShow/_all.sass"
 .FormalSheetShow
+  .is_mincho
+    // YuGothic  ← Mac
+    // Yu Gothic ← Windows
+    font-family: "YuMincho", "Yu Mincho", serif
+  .b-radio
+    min-width: 5rem
 </style>

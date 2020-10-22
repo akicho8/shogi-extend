@@ -211,7 +211,6 @@ module BattleDecorator
 
         ################################################################################
 
-        :workspace_class           => Rails.env,
         :page_count                => page_count,
         :location_kanji_char_black => location_kanji_char(:black),
         :location_kanji_char_white => location_kanji_char(:white),
