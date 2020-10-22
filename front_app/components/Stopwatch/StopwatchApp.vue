@@ -1,24 +1,29 @@
 <template lang="pug">
 .StopwatchApp
+  b-sidebar.is-unselectable.StopwatchApp-Sidebar(fullheight right v-model="sidebar_p" overlay)
+    .mx-4.my-4
+      b-menu
+        b-menu-list(label="Action")
+          b-menu-item(label="最後のタイムだけリセット (r)"   @click="rap_reset"     :disabled="lap_counter === 0")
+          b-menu-item(label="1つ前に戻す (z)"                @click="revert_handle" :disabled="rows.length === 0")
+          b-menu-item(label="最後の解答の正誤を反転する (t)" @click="toggle_handle" :disabled="rows.length === 0")
+
+        b-menu-list(label="再テスト")
+          b-menu-item(label="不正解のみ"         @click="reset_by_x"                :disabled="rows.length === 0")
+          b-menu-item(label="不正解と指定秒以上" @click="reset_by_x_with_n_seconds" :disabled="rows.length === 0")
+
+        b-menu-list(label="その他")
+          b-menu-item(label="操作を間違えたら？" @click="history_modal_show"   :disabled="mode !== 'standby'")
+          b-menu-item(label="パーマリンク"       @click="parmalink_modal_show" :disabled="mode !== 'standby'")
+          b-menu-item(label="キーボード操作"     @click="keyboard_modal_show"                                )
+
   MainNavbar
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(@click="book_title_input_dialog") {{book_title}}
     template(slot="end")
-      b-navbar-dropdown(hoverable arrowless right)
-        template(slot="label")
-          b-icon(icon="cog")
-        b-navbar-item(@click="rap_reset") 最後のタイムだけリセット (r)
-        b-navbar-item(@click="revert_handle") 1つ前に戻す (z)
-        b-navbar-item(@click="toggle_handle") 最後の解答の正誤を反転する (t)
-        b-navbar-item(@click="reset_by_x") 不正解だけ再テスト
-        b-navbar-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
-      b-navbar-item(@click="history_modal_show" v-if="mode === 'standby'")
-        b-icon(icon="history")
-      b-navbar-item(@click="parmalink_modal_show" v-if="mode === 'standby'")
-        b-icon(icon="link")
-      b-navbar-item(@click="keyboard_modal_show")
-        b-icon(icon="keyboard")
+      b-navbar-item(@click="sidebar_toggle")
+        b-icon(icon="menu")
 
   MainSection
     .container
@@ -92,6 +97,9 @@
           template(v-if="rows.length >= 1")
             .has-text-centered
               b-button(tag="a" :href="tweet_url" target="_blank" icon-left="twitter" type="is-twitter" rounded) Tweet
+
+  DebugPre
+    div rows = {{rows}}
 </template>
 
 <script>
@@ -144,6 +152,7 @@ export default {
       book_title: null,
       timeout_sec: null,
       total_timeout_min: null,
+      sidebar_p: false,
     }
   },
 
@@ -156,12 +165,18 @@ export default {
   },
 
   methods: {
+    sidebar_toggle() {
+      this.sound_play("click")
+      this.sidebar_p = !this.sidebar_p
+    },
+
     copy_handle(text) {
       this.sound_play("click")
       this.clipboard_copy({text: text})
     },
 
     parmalink_modal_show() {
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
         parent: this,
@@ -174,6 +189,7 @@ export default {
     },
 
     history_modal_show() {
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
         parent: this,
@@ -186,6 +202,7 @@ export default {
     },
 
     keyboard_modal_show() {
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
         parent: this,
@@ -328,6 +345,7 @@ export default {
     },
 
     toggle_handle() {
+      this.sidebar_p = false
       const last = _.last(this.rows)
       if (last) {
         if (last.o_or_x === "x") {
@@ -417,6 +435,8 @@ export default {
     },
 
     revert_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
       if (this.rows.length >= 1) {
         this.rows.pop()
         this.current_track -= 1
@@ -426,6 +446,8 @@ export default {
     },
 
     rap_reset() {
+      this.sidebar_p = false
+      this.sound_play("click")
       this.lap_counter = 0
       this.notice(`最後のタイムだけリセットしました`)
     },
@@ -498,6 +520,8 @@ export default {
     },
 
     reset_by_x() {
+      this.sidebar_p = false
+      this.sound_play("click")
       this.reset_by_x_with_drop(null)
     },
 
@@ -528,6 +552,8 @@ export default {
     },
 
     reset_by_x_with_n_seconds() {
+      this.sidebar_p = false
+      this.sound_play("click")
       this.$buefy.dialog.prompt({
         message: "秒",
         confirmText: "OK",
@@ -856,6 +882,14 @@ export default {
 
 <style lang="sass">
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap")
+
+.StopwatchApp-Sidebar
+  .sidebar-content
+    width: unset
+    a
+      white-space: nowrap
+    .menu-label:not(:first-child)
+      margin-top: 2em
 
 .StopwatchApp
   touch-action: manipulation

@@ -1,7 +1,7 @@
 <template lang="pug">
 .UserShow(v-if="!$fetchState.pending")
   client-only
-    b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
+    b-sidebar.is-unselectable.UserShow-Sidebar(fullheight right v-model="sidebar_p")
       .mx-4.my-4
         b-menu
           b-menu-list(label="Action")
@@ -79,8 +79,9 @@ export default {
 </script>
 
 <style lang="sass">
-.menu-label:not(:first-child)
-  margin-top: 2em
+.UserShow-Sidebar
+  .menu-label:not(:first-child)
+    margin-top: 2em
 
 .UserShow
   .MainSection

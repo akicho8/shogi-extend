@@ -5,7 +5,7 @@
   DebugBox
     p $route.query: {{$route.query}}
     p g_current_user: {{g_current_user && g_current_user.id}}
-  b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
+  b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right v-model="sidebar_p")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
       //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_p = false")
@@ -465,22 +465,11 @@ export default {
 </script>
 
 <style lang="sass">
-.menu-label:not(:first-child)
-  margin-top: 2em
-
-// .MySidebarMenuIconWithTitle
-//   display: flex
-//   justify-content: flex-start
-//   align-items: center
-//   .my_title
-//     width: 100%
+.SwarsBattleIndex-Sidebar
+  .menu-label:not(:first-child)
+    margin-top: 2em
 
 .SwarsBattleIndex
-  .MainSection
-    // padding-top: 2.5rem
-    // +mobile
-    //   padding-top: 1.6rem
-
   .container
     +mobile
       padding-left: 0 ! important

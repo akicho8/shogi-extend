@@ -11,7 +11,7 @@ client-only
       p URL: {{current_url}}
       p サイドバー {{sidebar_p}}
 
-    b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
+    b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right v-model="sidebar_p")
       .mx-5.my-5
         b-menu-list(label="Action")
           b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
@@ -461,9 +461,10 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-.menu-label:not(:first-child)
-  margin-top: 2em
+<style lang="sass">
+.ShareBoardApp-Sidebar
+  .menu-label:not(:first-child)
+    margin-top: 2em
 
 .ShareBoardApp
   +mobile
