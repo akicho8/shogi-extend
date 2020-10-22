@@ -64,14 +64,19 @@ $a4_h: 297mm
     .section
       padding: $fp_preview_screen_margin 0
 
-  .fixed_printer_button_container
+  .fixed_top_left_container
+    position: fixed
+    top: $fp_preview_screen_margin
+    left: $fp_preview_screen_margin
+      
+  .fixed_top_right_container
     position: fixed
     top: $fp_preview_screen_margin
     right: $fp_preview_screen_margin
 
-  .fixed_font_switch_container
+  .fixed_bottom_left_container
     position: fixed
-    top: $fp_preview_screen_margin
+    bottom: $fp_preview_screen_margin
     left: $fp_preview_screen_margin
 
   .formal_sheet_workspace

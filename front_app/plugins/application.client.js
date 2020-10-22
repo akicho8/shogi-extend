@@ -12,7 +12,7 @@ export default {
       this.$buefy.dialog.alert({
         title: options.title,
         type: `is-${options.type}`,
-        hasIcon: true,
+        // hasIcon: true,
         message: message,
         onConfirm: () => { this.sound_play("click") },
         onCancel:  () => { this.sound_play("click") },
