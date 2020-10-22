@@ -50,12 +50,12 @@ export default {
       })
     },
 
-    bs_error_message_dialog(bs_error) {
+    bs_error_message_dialog(bs_error, append_message = "") {
       const message = `
           <div>${bs_error.message_prefix}</div>
-          <div>${bs_error.message}</div>
-          <div class="error_message_pre mt-2 has-background-white-ter box is-shadowless">${bs_error.board}</div>
-        `
+          <div class="mt-2">${bs_error.message}</div>
+          <div class="mt-2 mb-0 error_message_pre mt-2 has-background-white-ter box is-shadowless">${bs_error.board}</div>
+        ` + append_message
       this.sound_play("x")
       this.error_message_dialog(message)
     },

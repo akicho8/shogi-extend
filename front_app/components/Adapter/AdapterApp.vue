@@ -314,7 +314,7 @@ export default {
 
         if (e.bs_error) {
           this.bs_error = e.bs_error
-          this.bs_error_message_dialog(e.bs_error)
+          this.bs_error_message_dialog(e.bs_error, this.append_message)
         }
 
         if (e.record) {
@@ -338,6 +338,10 @@ export default {
       if (this.record) {
         return "is-success"
       }
+    },
+
+    append_message() {
+      return `<div class="mt-3">どうしても変換できない棋譜がある場合は <a href="https://twitter.com/sgkinakomochi" target="_blank">@sgkinakomochi</a> 宛にDMで棋譜を送ってください</div>`
     },
 
     //////////////////////////////////////////////////////////////////////////////// piyoshogi
