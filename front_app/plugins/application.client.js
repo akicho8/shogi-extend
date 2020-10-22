@@ -39,10 +39,10 @@ export default {
 
     error_message_dialog(message) {
       this.$buefy.dialog.alert({
-        title: "ERROR",
         message: message,
         canCancel: ["outside", "escape"],
         type: "is-danger",
+        size: "is-small",
         hasIcon: true,
         trapFocus: true,
         onConfirm: () => { this.sound_play("click") },
@@ -51,11 +51,19 @@ export default {
     },
 
     bs_error_message_dialog(bs_error, append_message = "") {
-      const message = `
-          <div>${bs_error.message_prefix}</div>
-          <div class="mt-2">${bs_error.message}</div>
-          <div class="mt-2 mb-0 error_message_pre mt-2 has-background-white-ter box is-shadowless">${bs_error.board}</div>
-        ` + append_message
+      let message = ""
+      if (bs_error.message_prefix) {
+        message += `<p>${bs_error.message_prefix}</p>`
+      }
+      if (bs_error.message) {
+        message += `<p class="mt-2">${bs_error.message}</p>`
+      }
+      if (bs_error.board) {
+        message += `<div class="mt-3 mb-0 error_message_pre mt-2 has-background-white-ter box is-shadowless">${bs_error.board}</div>`
+      }
+      if (append_message) {
+        message += append_message
+      }
       this.sound_play("x")
       this.error_message_dialog(message)
     },

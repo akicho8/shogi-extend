@@ -63,7 +63,7 @@
 
       .columns(v-if="record")
         .column
-          pre.box.has-background-primary-light
+          pre.box.has-background-success-light
             | {{record.all_kifs.kif}}
 
       .columns(v-if="development_p")
@@ -287,7 +287,7 @@ export default {
 
     record_fetch(callback) {
       if (this.bs_error) {
-        this.bs_error_message_dialog(this.bs_error)
+        this.error_show()
         return
       }
       if (!this.input_text) {
@@ -314,7 +314,7 @@ export default {
 
         if (e.bs_error) {
           this.bs_error = e.bs_error
-          this.bs_error_message_dialog(e.bs_error, this.append_message)
+          this.error_show()
         }
 
         if (e.record) {
@@ -322,6 +322,11 @@ export default {
           callback()
         }
       })
+    },
+
+    error_show() {
+      this.bs_error_message_dialog(this.bs_error, this.append_message)
+      this.talk(this.bs_error.message)
     },
   },
 
@@ -341,7 +346,11 @@ export default {
     },
 
     append_message() {
-      return `<div class="mt-3">どうしても変換できない棋譜がある場合は <a href="https://twitter.com/sgkinakomochi" target="_blank">@sgkinakomochi</a> 宛にDMで棋譜を送ってください</div>`
+      return `<div class="mt-2">
+                どうしても変換できない棋譜がある場合は
+                  <a href="https://twitter.com/sgkinakomochi" target="_blank">@sgkinakomochi</a>
+                に棋譜を送ってください
+              </div>`
     },
 
     //////////////////////////////////////////////////////////////////////////////// piyoshogi
@@ -373,7 +382,8 @@ export default {
     test_kifu_body_list() {
       return [
         { name: "正常",       input_text: "68銀、三4歩・☗七九角、8四歩五六歩△85歩78金",                                                                                                                                                                                                                                                                                    },
-        { name: "反則",       input_text: "12玉",                                                                                                                                                                                                                                                                                                                           },
+        { name: "反則1",      input_text: "12玉",                                                                                                                                                                                                                                                                                                                           },
+        { name: "反則2",      input_text: "V2,P1 *,+0093KA,T1",                                                                                                                                                                                                                                                                                                                           },
         { name: "shogidb2 A", input_text: "https://shogidb2.com/games/018d3d1ee6594c34c677260002621417c8f75221#lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202",                                                                                                                                                                    },
         { name: "shogidb2 B", input_text: "https://shogidb2.com/board?sfen=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202&moves=-3334FU%2B2726FU-8384FU%2B2625FU-8485FU%2B5958OU-4132KI%2B6978KI-8586FU%2B8786FU-8286HI%2B2524FU-2324FU%2B2824HI-8684HI%2B0087FU-0023FU%2B2428HI-2233KA%2B5868OU-7172GI%2B9796FU-3142GI%2B8833UM", },
         { name: "ウォーズ1",  input_text: "https://shogiwars.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1", },
