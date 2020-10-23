@@ -40,15 +40,15 @@
 
       b-dropdown-item(separator)
 
-      b-dropdown-item(:href="`https://twitter.com/search?q=${info.user.key} 将棋`" :target="target_default")
+      b-dropdown-item(:href="twitter_search_url" :target="target_default")
         b-icon(icon="twitter" size="is-small" type="is-twitter")
         | Twitter検索
 
-      b-dropdown-item(:href="`https://www.google.co.jp/search?q=${info.user.key} 将棋`" :target="target_default")
+      b-dropdown-item(:href="google_search_url" :target="target_default")
         b-icon(icon="google" size="is-small")
         | ぐぐる
 
-      b-dropdown-item(:href="`https://shogiwars.heroz.jp/users/mypage/${info.user.key}`" :target="target_default")
+      b-dropdown-item(:href="swars_player_url" :target="target_default")
         b-icon(icon="link" size="is-small")
         | ウォーズ本家
 
@@ -185,6 +185,8 @@
 </template>
 
 <script>
+const DEFAULT_TAB_INDEX = 0
+
 import ls_support from "@/components/models/ls_support.js"
 
 export default {
@@ -289,7 +291,6 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     update_handle(options = {}) {
-      this.sound_play("click")
       this.$router.replace({name: "swars-users-key", params: {key: this.info.user.key}, query: {tab_index: this.tab_index, ...options}})
     },
 
@@ -308,9 +309,13 @@ export default {
   computed: {
     ls_default() {
       return {
-        tab_index: 0, // 初期値
+        tab_index: DEFAULT_TAB_INDEX,
       }
     },
+
+    google_search_url()  { return `https://www.google.co.jp/search?q=${this.info.user.key} 将棋`  },
+    twitter_search_url() { return `https://twitter.com/search?q=${this.info.user.key} 将棋`       },
+    swars_player_url()   { return `https://shogiwars.heroz.jp/users/mypage/${this.info.user.key}` },
   },
 }
 </script>

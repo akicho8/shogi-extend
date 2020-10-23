@@ -5,7 +5,6 @@
   DebugBox
     p $route.query: {{$route.query}}
     p g_current_user: {{g_current_user && g_current_user.id}}
-    p remember_swars_user_keys: {{remember_swars_user_keys}}
 
   b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right v-model="sidebar_p" v-if="config")
     .mx-4.my-4
@@ -419,17 +418,8 @@ export default {
 
   computed: {
     board_show_p() {
-      return this.display_key === "critical" || this.display_key === "outbreak" || this.display_key === "last"
+      return ["critical", "outbreak", "last"].includes(this.display_key)
     },
-
-    base() { return this },
-
-    // page_title() {
-    //   return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" - ")
-    // },
-
-    ExternalAppInfo() { return ExternalAppInfo },
-    ZipKifuInfo()     { return ZipKifuInfo     },
 
     search_form_complete_list() {
       if (this.config.remember_swars_user_keys) {
@@ -437,7 +427,11 @@ export default {
           return option.toString().toLowerCase().indexOf((this.query || "").toLowerCase()) >= 0
         })
       }
-    }
+    },
+
+    base()            { return this            },
+    ExternalAppInfo() { return ExternalAppInfo },
+    ZipKifuInfo()     { return ZipKifuInfo     },
   },
 }
 </script>
