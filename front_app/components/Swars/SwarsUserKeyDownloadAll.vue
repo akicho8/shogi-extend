@@ -37,12 +37,12 @@
       b-field.mt-5
         .control
           b-switch(v-model="attachment_mode" true-value="with_zip" false-value="nothing" :disabled="!g_current_user")
-            | 棋譜をZIPファイルにして添付
+            | ZIPファイルの添付
 
       b-field.mt-5
         .control
           .buttons
-            b-button(@click="yoyaku_handle" :disabled="!g_current_user" :loading="loading_p") 棋譜取得の予約
+            b-button(@click="yoyaku_handle" :disabled="!g_current_user" :loading="loading_p" icon-left="clock") 棋譜取得の予約
             b-button(@click="crawler_run_handle_handle" v-if="development_p") さばく
 
   DebugPre {{$data}}
