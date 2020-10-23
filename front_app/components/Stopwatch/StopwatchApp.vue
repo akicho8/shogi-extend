@@ -9,8 +9,8 @@
           b-menu-item(label="最後の解答の正誤を反転する (t)" @click="toggle_handle" :disabled="rows.length === 0")
 
         b-menu-list(label="再テスト")
-          b-menu-item(label="不正解のみ"         @click="reset_by_x"                :disabled="rows.length === 0")
-          b-menu-item(label="不正解と指定秒以上" @click="reset_by_x_with_n_seconds" :disabled="rows.length === 0")
+          b-menu-item(label="不正解のみ"         @click="reset_by_x"                :disabled="rows.length === 0 || mode === 'playing'")
+          b-menu-item(label="不正解と指定秒以上" @click="reset_by_x_with_n_seconds" :disabled="rows.length === 0 || mode === 'playing'")
 
         b-menu-list(label="その他")
           b-menu-item(label="操作を間違えたら？" @click="history_modal_show"   :disabled="mode !== 'standby'")
@@ -332,14 +332,12 @@ export default {
       this.memento_create("stop")
     },
 
-    stop_if_playing() {
-      if (this.mode === "playing") {
-        this.stop_handle()
-      }
-    },
-
     reset_handle() {
       this.sound_play("click")
+      this.reset()
+    },
+
+    reset() {
       this.rows = []
       this.lap_counter = 0
     },
@@ -526,8 +524,6 @@ export default {
     },
 
     reset_by_x_with_drop(drop_seconds) {
-      this.stop_if_playing()
-
       let list = []
 
       list = _.concat(list, this.x_list)
@@ -547,7 +543,7 @@ export default {
         this.quest_text_sort()
 
         this.current_track = 1
-        this.reset_handle()
+        this.reset()
       }
     },
 

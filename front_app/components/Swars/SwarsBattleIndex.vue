@@ -244,7 +244,7 @@ import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
 import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
 
 import SwarsBattleIndexCore from "./SwarsBattleIndexCore.js"
-import SwarsBattleIndexHistory from "./SwarsBattleIndexHistory.js"
+//- import SwarsBattleIndexHistory from "./SwarsBattleIndexHistory.js"
 
 import MemoryRecord from 'js-memory-record'
 
