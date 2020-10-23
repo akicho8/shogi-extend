@@ -83,6 +83,7 @@ export default {
         { title: "オンラインチェック",         to: { name: "experiment-online_offline"    }, },
         { title: "YES/NO API",                 to: { name: "experiment-yesno_test"        }, },
         { title: "Inspire",                    to: { name: "inspire"                      }, },
+        { title: "404",                        to: { name: "not_found"                    }, },
       ],
     }
   },
