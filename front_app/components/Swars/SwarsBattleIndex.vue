@@ -5,7 +5,9 @@
   DebugBox
     p $route.query: {{$route.query}}
     p g_current_user: {{g_current_user && g_current_user.id}}
-  b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right v-model="sidebar_p")
+    p remember_swars_user_keys: {{remember_swars_user_keys}}
+
+  b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right v-model="sidebar_p" v-if="config")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
       //-   b-icon.is_clickable(icon="menu" @click.native="sidebar_p = false")
@@ -242,6 +244,7 @@ import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
 import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
 
 import SwarsBattleIndexCore from "./SwarsBattleIndexCore.js"
+import SwarsBattleIndexHistory from "./SwarsBattleIndexHistory.js"
 
 import MemoryRecord from 'js-memory-record'
 

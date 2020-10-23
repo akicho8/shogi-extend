@@ -78,6 +78,7 @@ export default {
         { title: "フルスクリーンモデルテスト", to: { name: "experiment-full_screen_model" }, },
         { title: "初期非同期外部IP確認",       to: { name: "experiment-ip-show"           }, },
         { title: "初期非同期読み込み",         to: { name: "experiment-async_data_test"   }, },
+        { title: "async await の検証",         to: { name: "experiment-async_await_test"  }, },
         { title: "Bulma動作チェック",          to: { name: "experiment-bulma_test"        }, },
         { title: "オンラインチェック",         to: { name: "experiment-online_offline"    }, },
         { title: "YES/NO API",                 to: { name: "experiment-yesno_test"        }, },

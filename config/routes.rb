@@ -105,16 +105,18 @@ Rails.application.routes.draw do
   match "ping(.:format)", to: "api/etc#ping", via: :all, format: nil
 
   namespace :api, format: "json" do
-    match "ping(.:format)", to: "etc#ping", via: :all, format: nil
-    match "echo(.:format)", to: "etc#echo", via: :all, format: nil
+    match "ping(.:format)",  to: "etc#ping",  via: :all, format: nil
+    match "echo(.:format)",  to: "etc#echo",  via: :all, format: nil
+    match "sleep(.:format)", to: "etc#sleep", via: :all, format: nil
 
     get "tsl_user_all(.:format)",      to: "etc#tsl_user_all"
     get "tsl_user_newest(.:format)",   to: "etc#tsl_user_newest"
     get "tsl_league_all(.:format)",    to: "etc#tsl_league_all"
     get "tsl_league_newest(.:format)", to: "etc#tsl_league_newest"
 
-    post "swars/download_set(.:format)", to: "swars#download_set"
-    post "swars/crawler_run(.:format)",     to: "swars#crawler_run"
+    post "swars/download_set(.:format)",                  to: "swars#download_set"
+    post "swars/crawler_run(.:format)",                   to: "swars#crawler_run"
+    get "swars/remember_swars_user_keys_fetch(.:format)", to: "swars#remember_swars_user_keys_fetch"
 
     resource :general, only: [:show] do
       match "any_source_to", via: [:get, :post]

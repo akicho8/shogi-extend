@@ -88,7 +88,7 @@ module Swars
       {
         :notice_collector       => @notice_collector,
         :import_enable_p        => import_enable?,
-        :current_swars_user_key => current_swars_user_key,
+        :current_swars_user_key => current_swars_user ? current_swars_user.key : nil,
       }.merge(super).merge({
           :remember_swars_user_keys  => remember_swars_user_keys,
           :per_page_list             => [
@@ -192,7 +192,7 @@ module Swars
             end
             current_swars_user.search_logs.create!
           else
-            @notice_collector.add(:warning, "#{current_swars_user_key}さんは存在しません。アルファベットの大文字小文字を見直してください")
+            @notice_collector.add(:warning, "#{current_swars_user_key}さんは存在しません")
           end
 
           if hit_count.nonzero?

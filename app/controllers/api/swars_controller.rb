@@ -60,6 +60,10 @@ module Api
       render json: { notice_collector: notice_collector }
     end
 
+    def remember_swars_user_keys_fetch
+      render json: session[:remember_swars_user_keys]
+    end
+
     private
 
     def crawl_reservation_params

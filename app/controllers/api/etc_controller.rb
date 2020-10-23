@@ -11,6 +11,14 @@ module Api
       }
     end
 
+    # curl -X GET http://0.0.0.0:3000/api/sleep.json?sleep=2
+    def sleep
+      if Rails.env.development?
+        Kernel.sleep(params[:sleep].to_f)
+      end
+      render json: params[:retval]
+    end
+
     # http://0.0.0.0:3000/api/ping.json
     def ping
       render json: {

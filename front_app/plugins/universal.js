@@ -22,11 +22,17 @@ Vue.mixin({
       "a_auth_user_fetch",
       "a_auth_user_logout",
     ]),
+    // ...mapMutations("swars", [
+    //   "m_remember_swars_user_keys_set",
+    // ]),
   },
   computed: {
     ...mapState("user", [
       "g_current_user",
     ]),
+    // ...mapState("swars", [
+    //   "g_var1",
+    // ]),
     development_p() {
       return process.env.NODE_ENV === "development"
     },
