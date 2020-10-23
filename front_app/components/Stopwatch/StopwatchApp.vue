@@ -28,7 +28,7 @@
   MainSection
     .container
       .columns
-        .column.is-7
+        .column.is-half
           .box.main_box.is_line_break_off.is-shadowless.has-background-white-bis
             .has-text-centered
               .lap_time
