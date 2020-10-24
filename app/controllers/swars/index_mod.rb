@@ -1,10 +1,6 @@
 module Swars
   concern :IndexMod do
     included do
-      # helper_method :current_swars_user
-      # helper_method :query_info
-      # helper_method :twitter_card_options
-
       rescue_from "Swars::Agent::OfficialFormatChanged" do |exception|
         render json: { status: :error, type: :danger, message: exception.message }
       end
@@ -98,35 +94,6 @@ module Swars
             Kaminari.config.max_per_page,
           ],
         })
-    end
-
-    let :twitter_card_options do
-      case
-      when v = primary_record
-        # http://localhost:3000/w?query=https://shogiwars.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1
-        v.to_twitter_card_params(params)
-      when current_swars_user && params[:user_info_show] == "true"
-        # http://localhost:3000/w?query=itoshinTV&user_info_show=true
-        {
-          :card        => "summary",
-          :title       => "#{current_swars_user.name_with_grade}のプレイヤー情報",
-          # :description => "#{current_swars_user.battles.count}件",
-        }
-      when current_swars_user
-        # http://localhost:3000/w?query=itoshinTV
-        {
-          :card        => "summary",
-          :title       => "#{current_swars_user.name_with_grade}の棋譜リスト",
-          :description => "#{current_swars_user.battles.count}件",
-        }
-      else
-        # http://localhost:3000/w
-        {
-          :title       => "将棋ウォーズ棋譜検索",
-          :description => "ぴよ将棋やKENTOと連携して開けます。またクリップボード経由で棋譜を外部の将棋アプリに渡すような使い方ができます",
-          :image       => nil,
-        }
-      end
     end
 
     # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
@@ -369,7 +336,7 @@ module Swars
     def sampled_memberships(m)
       m = m.joins(:battle)
 
-      # FIXME: プレイヤー情報と条件を合わせるためハードコーディングされている
+      # FIXME: プレイヤー情報と条件を合わせるためハードコーディング
       m = m.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
       m = m.merge(Swars::Battle.newest_order)  # 直近のものから取得
 

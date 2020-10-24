@@ -341,7 +341,7 @@ export default {
         onCancel: () => this.sound_play("click"),
         events: {
           "update:any_source": any_source => {
-            this.$axios.$post("/api/general/any_source_to", {any_source: any_source, to_format: "sfen"}).then(e => {
+            this.$axios.$post("/api/general/any_source_to.json", {any_source: any_source, to_format: "sfen"}).then(e => {
               if (e.bs_error) {
                 this.bs_error_message_dialog(e.bs_error)
               }

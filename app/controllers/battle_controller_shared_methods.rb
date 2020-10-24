@@ -190,7 +190,7 @@ module BattleControllerSharedMethods
 
       if request.format.json?
         if params[:time_chart_fetch]
-          slack_message(key: "時間チャート", body: current_record.title)
+          # slack_message(key: "時間チャート", body: current_record.title)
           # Rails.logger.debug(current_record.time_chart_params)
           render json: { time_chart_params: current_record.time_chart_params }
           return
@@ -200,15 +200,15 @@ module BattleControllerSharedMethods
         return
       end
 
-      if params[:formal_sheet]
-        if (Rails.env.production? || Rails.env.staging?) && !bot_agent?
-          slack_message(key: "棋譜用紙", body: current_record.title)
-        end
-
-        # if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
-        #   flash.now[:warning] = "Safari では正しくレイアウトできてないので Google Chrome で開いてください"
-        # end
-      end
+      # if params[:formal_sheet]
+      #   if (Rails.env.production? || Rails.env.staging?) && !bot_agent?
+      #     slack_message(key: "棋譜用紙", body: current_record.title)
+      #   end
+      #
+      #   # if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
+      #   #   flash.now[:warning] = "Safari では正しくレイアウトできてないので Google Chrome で開いてください"
+      #   # end
+      # end
 
       respond_to do |format|
         format.html
@@ -278,40 +278,21 @@ module BattleControllerSharedMethods
     end
   end
 
-  concerning :EditCustomMethods do
-    # free_battle_edit.js の引数用
-    def js_edit_options
-      {
-        record_attributes: current_record.as_json,
-        output_kifs: output_kifs,
-
-        post_path: url_for([ns_prefix, current_plural_key, format: "json"]),
-        new_path: polymorphic_path([:new, ns_prefix, current_single_key]),
-        show_path: polymorphic_path([ns_prefix, current_record]),
-
-        saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
-        current_edit_mode: current_edit_mode,
-      }
-    end
-
-    private
-
-    # FIXME: これはやめて FreeBattle をつかうべき
-
-    def output_kifs
-      @output_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true, no_embed_if_time_blank: true) }) }
-    end
-
-    def turn_max
-      @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_offset
-    end
-
-    def heavy_parsed_info
-      @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_text, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
-    end
-
-    def current_input_text
-      params[:input_text] || current_record.sfen_body || ""
-    end
-  end
+  # concerning :EditCustomMethods do
+  #   # private
+  #
+  #   # FIXME: これはやめて FreeBattle をつかうべき
+  #
+  #   # def turn_max
+  #   #   @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_offset
+  #   # end
+  #   #
+  #   # def heavy_parsed_info
+  #   #   @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_text, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
+  #   # end
+  #
+  #   # def current_input_text
+  #   #   params[:input_text] || current_record.sfen_body || ""
+  #   # end
+  # end
 end

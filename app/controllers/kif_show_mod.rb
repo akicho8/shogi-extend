@@ -24,7 +24,7 @@ module KifShowMod
   # curl -I http://localhost:3000/x/1.kif?inline=1
   # curl -I http://localhost:3000/x/1.kif?plain=1
   def kif_data_send
-    text_body = current_record.to_cached_kifu(params[:format])
+    text_body = current_record.to_xxx(params[:format])
 
     if current_body_encode == :sjis
       text_body = text_body.tosjis

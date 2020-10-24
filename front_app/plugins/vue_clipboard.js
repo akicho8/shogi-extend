@@ -22,15 +22,15 @@ export default {
         return this.simple_clipboard_copy(body)
       }
 
-      (this.$axios || this.$http).post("/api/general/any_source_to", {
+      this.$axios.$post("/api/general/any_source_to.json", {
         any_source: any_source,
         to_format: to_format,
         candidate_enable: false,
         validate_enable: false,
-      }).then(({data}) => {
-        if (data.body) {
-          if (!this.simple_clipboard_copy(data.body)) {
-            this.$set(this.kif_clipboard_copy_cache, key, data.body)
+      }).then(e => {
+        if (e.body) {
+          if (!this.simple_clipboard_copy(e.body)) {
+            this.$set(this.kif_clipboard_copy_cache, key, e.body)
           }
         }
       })
@@ -100,11 +100,11 @@ export default {
             this.clipboard_copy_error_dialog(params)
           } else {
             if (params.error_counter == 1) {
-              this.talk(failure_message1, {rate: 1.5})
+              this.talk(failure_message1)
               this.$buefy.toast.open({message: failure_message1, position: "is-bottom", queue: false, type: "is-warning"})
             }
             if (params.error_counter >= 2) {
-              this.talk(failure_message2, {rate: 1.5})
+              this.talk(failure_message2)
               this.$buefy.toast.open({message: failure_message2, position: "is-bottom", queue: false, type: "is-danger"})
               this.clipboard_copy_error_dialog(params)
             }

@@ -15,30 +15,45 @@
 module UrlProxy
   extend self
 
-  def [](*args)
-    workaround(*args)
-  end
+  # def [](*args)
+  #   workaround(*args)
+  # end
 
   # rails r "p UrlProxy.wrap('/about/terms')"
   # rails r "p UrlProxy.wrap(path: '/swars/search', query: {query: 'devuser1'})"
-  def wrap(*args)
-    workaround(*args)
+  def wrap(args)
+    workaround(args)
   end
 
-  def workaround(path)
+  def wrap2(args)
+    workaround(args, long_url: true)
+  end
+
+  # 開発環境のときだけ Nuxt 側に切り替える
+  def workaround(path, options = {})
     if path.kind_of?(Hash)
       if query = path[:query].presence
         if query.kind_of?(Hash)
           query = query.to_query
         end
       end
+
       path[:path] or raise "must not happen"
+
+      unless path[:path].start_with?("/")
+        raise "path が / から始まっていない : #{path[:path].inspect}"
+      end
+
       path = [path[:path], query].compact.join("?")
     end
 
     if Rails.env.development? || Rails.env.test?
       domain = ENV["DOMAIN"] || "0.0.0.0"
-      return "http://#{domain}:4000" + path
+      path = "http://#{domain}:4000" + path
+    else
+      if options[:long_url]
+        path = Rails.application.routes.url_helpers.url_for(:root).chop + path
+      end
     end
 
     path

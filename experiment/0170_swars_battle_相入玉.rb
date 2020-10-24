@@ -12,7 +12,7 @@ module Swars
   battle.save!                  # => true
 
   battle.reload
-  puts battle.to_cached_kifu(:kif)
+  puts battle.to_xxx(:kif)
   battle.note_tag_list     # => ["入玉", "相入玉", "居飛車", "相居飛車"]
   battle.memberships[0].reload.note_tag_list # => ["入玉", "相入玉", "居飛車", "相居飛車"]
   battle.memberships[1].reload.note_tag_list # => ["入玉", "相入玉", "居飛車", "相居飛車"]

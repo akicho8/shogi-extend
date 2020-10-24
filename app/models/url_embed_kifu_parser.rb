@@ -68,7 +68,7 @@ class UrlEmbedKifuParser
   end
 
   def initialize(dirty_text)
-    @dirty_text = dirty_text
+    @dirty_text = dirty_text.to_s
   end
 
   # 抽出した本体をSFENに変換してエラーにならないなら「SFENではなく」本体を返す

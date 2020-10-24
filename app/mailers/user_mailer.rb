@@ -74,11 +74,7 @@ class UserMailer < ApplicationMailer
     out << ""
 
     out << "#{record.target_user.key}さんの棋譜"
-    if Rails.env.development?
-      out << UrlProxy[path: "/swars/search", query: {query: record.target_user_key}]
-    else
-      out << url_for(:root) + "swars/search?query=#{record.target_user.key}"
-    end
+    out << UrlProxy.wrap2(path: "/swars/search", query: {query: record.target_user_key})
 
     out << ""
     out << "--"

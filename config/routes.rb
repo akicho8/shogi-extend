@@ -118,9 +118,7 @@ Rails.application.routes.draw do
     post "swars/crawler_run(.:format)",                   to: "swars#crawler_run"
     get "swars/remember_swars_user_keys_fetch(.:format)", to: "swars#remember_swars_user_keys_fetch"
 
-    resource :general, only: [:show] do
-      match "any_source_to", via: [:get, :post]
-    end
+    match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
 
     resource :session, only: [] do
       get :auth_user_fetch

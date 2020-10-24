@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Api::GeneralsController, type: :controller do
   describe "any_source_to" do
     def test(method)
-      send(method, :any_source_to, params: { any_source: "68銀", to_format: "sfen" })
+      send(method, :any_source_to, params: { any_source: "68銀", to_format: "sfen", format: "json" })
       value = JSON.parse(response.body, symbolize_names: true)
       assert { value == { body: "position startpos moves 7i6h", turn_max: 1} }
     end
