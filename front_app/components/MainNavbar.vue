@@ -15,7 +15,8 @@ export default {
   computed: {
     navbar_attrs() {
       return {
-        "type": "is-primary",
+        // "type": "is-primary",
+        "shadow": true,
         "mobile-burger": false,
         "wrapper-class": "container",
         "spaced": true,
@@ -41,7 +42,7 @@ export default {
     padding-left: 12px
     padding-right: 12px
 
-.STAGE-development
+.STAGE-development-x
   .navbar.MainNavbar
     border: 1px dashed $primary
     .navbar-item
