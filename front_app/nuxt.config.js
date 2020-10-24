@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
-const SITE_DESC = "将棋に関連する便利サービスを提供するサイトです"
+const SITE_DESC = "将棋に関連するツールを提供するサイトです"
 
 // https://github.com/nuxt-community/sitemap-module
 // http://0.0.0.0:4000/sitemap.xml

@@ -25,7 +25,7 @@ title= html_title
 = stylesheet_pack_tag "application", media: "all"
 = javascript_pack_tag "application"
 
-- @ogp_params ||= { description: "将棋に関連する便利サービスを提供するサイトです", image: "ogp/swars-search.png" }
+- @ogp_params ||= { description: "将棋に関連するツールを提供するサイトです", image: "ogp/swars-search.png" }
 == OgpCop.as_meta_tags(self, @ogp_params)
 
 = yield :head
