@@ -34,8 +34,13 @@ module Api
         user.avatar_blob, # ← 上で user.save! しちゃったせいで saved_changes? は常に false になっとるっぽい
       ]
 
-      saved_changes_p = changed_records.any?(:saved_changes?) || params[:croped_image]
-      return_noticecollector(saved_changes_p)
+      saved_changes_p = changed_records.any?(&:saved_changes?) || params[:croped_image]
+      if saved_changes_p
+        notice_collector = NoticeCollector.single(:success, "変更しました")
+      else
+        notice_collector = NoticeCollector.single(:info, "変更はありませんでした")
+      end
+      render json: { notice_collector: notice_collector }
     end
 
     # curl -d _method=put http://localhost:3000/api/settings/email_fetch.json
@@ -67,15 +72,6 @@ module Api
         error_messages = user.errors.full_messages.join(" ")
         render json: { notice_collector: NoticeCollector.single(:danger, error_messages, method: "dialog") }
       end
-    end
-
-    def return_noticecollector(saved_changes_p)
-      if saved_changes_p
-        notice_collector = NoticeCollector.single(:success, "変更しました")
-      else
-        notice_collector = NoticeCollector.single(:info, "変更はありませんでした")
-      end
-      render json: { notice_collector: notice_collector }
     end
 
     # def required_return_value

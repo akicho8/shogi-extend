@@ -12,7 +12,7 @@ module SlackAgent
   end
 
   # rails r 'SlackAgent.message_send(key: "検索", body: "xxx")'
-  def message_send(key:, body:, channel: nil, ua: nil)
+  def message_send(key: "", body: "", channel: nil, ua: nil)
     if ENV["SETUP"]
       return
     end
