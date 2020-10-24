@@ -1,9 +1,9 @@
-module FrontendScript
-  class ActbAppScript
+module Api
+  class ActbAppController
     concern :PutApi do
 
       # 更新することでマッチング結果はこちらが対象になる
-      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_set_handle -d session_lock_token=xxx http://localhost:3000/script/actb-app.json
+      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_set_handle -d session_lock_token=xxx http://localhost:3000/api/actb_app.json
       def session_lock_token_set_handle
         raise ArgumentError, params.inspect if params[:session_lock_token].blank?
         # if current_user.actb_setting.session_lock_token
@@ -13,7 +13,7 @@ module FrontendScript
         { status: "success" }
       end
 
-      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_valid_handle -d session_lock_token=xxx http://localhost:3000/script/actb-app.json
+      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_valid_handle -d session_lock_token=xxx http://localhost:3000/api/actb_app.json
       def session_lock_token_valid_handle
         raise ArgumentError, params.inspect if params[:session_lock_token].blank?
         if current_user.session_lock_token_valid?(params[:session_lock_token])
@@ -23,13 +23,13 @@ module FrontendScript
         end
       end
 
-      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_reset_handle http://localhost:3000/script/actb-app.json
+      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_reset_handle http://localhost:3000/api/actb_app.json
       # def session_lock_token_reset_handle
       #   current_user.actb_setting.update!(session_lock_token: nil)
       #   { status: "success" }
       # end
 
-      # curl -d _method=put -d _user_id=1 -d remote_action=rule_key_set_handle -d rule_key=sy_marathon http://localhost:3000/script/actb-app.json
+      # curl -d _method=put -d _user_id=1 -d remote_action=rule_key_set_handle -d rule_key=sy_marathon http://localhost:3000/api/actb_app.json
       def rule_key_set_handle
         raise ArgumentError, params.inspect if params[:session_lock_token].blank?
         unless current_user.session_lock_token_valid?(params[:session_lock_token])
@@ -174,7 +174,7 @@ module FrontendScript
         { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
       end
 
-      # curl -d _method=put -d user_name=a -d remote_action=user_profile_update -d _user_id=1 http://localhost:3000/script/actb-app
+      # curl -d _method=put -d user_name=a -d remote_action=user_profile_update -d _user_id=1 http://localhost:3000/api/actb_app
       def user_profile_update
         raise "使用禁止"
 

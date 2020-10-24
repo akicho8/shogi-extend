@@ -81,19 +81,19 @@ export const support = {
     ////////////////////////////////////////////////////////////////////////////////
 
     api_get(command, params, block) {
-      return this.$axios.$get("/script/actb-app.json", {params: {remote_action: command, ...params}}).then(e => block(e))
+      return this.$axios.$get("/api/actb_app.json", {params: {remote_action: command, ...params}}).then(e => block(e))
     },
 
     silent_api_get(command, params, block) {
-      return this.$axios.$get("/script/actb-app.json", {params: {remote_action: command, ...params}}, {progress: false}).then(e => block(e))
+      return this.$axios.$get("/api/actb_app.json", {params: {remote_action: command, ...params}}, {progress: false}).then(e => block(e))
     },
 
     api_put(command, params, block) {
-      return this.$axios.$put("/script/actb-app.json", {remote_action: command, ...params}).then(e => block(e))
+      return this.$axios.$put("/api/actb_app.json", {remote_action: command, ...params}).then(e => block(e))
     },
 
     silent_api_put(command, params, block) {
-      return this.$axios.$put("/script/actb-app.json", {remote_action: command, ...params}, {progress: false}).then(e => block(e))
+      return this.$axios.$put("/api/actb_app.json", {remote_action: command, ...params}, {progress: false}).then(e => block(e))
     },
 
     ////////////////////////////////////////////////////////////////////////////////

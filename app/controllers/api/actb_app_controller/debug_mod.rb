@@ -1,5 +1,5 @@
-module FrontendScript
-  class ActbAppScript
+module Api
+  class ActbAppController
     concern :DebugMod do
       def form_parts
         if Rails.env.development?
@@ -55,20 +55,20 @@ module FrontendScript
 
       # ログインしている状態でロビー
       def debug_for_login_lobby(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
 
       # エモーション編集
       def debug_for_emotion_index(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
       def debug_for_emotion_edit(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
 
       # プロフィール編集
       def debug_for_profile_edit(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
 
       # プロフィール画像アップロード
@@ -96,7 +96,7 @@ module FrontendScript
 
       # 結果
       def debug_for_result(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
 
         users.each do |user|
           record = user.actb_main_xrecord
@@ -125,32 +125,32 @@ module FrontendScript
 
       # 問題作成(一覧)
       def debug_for_builder(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
 
       # 問題作成(配置)
       def debug_for_builder_haiti(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
 
       # 問題作成(情報)
       def debug_for_builder_form(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
 
       # ランキング
       def debug_for_ranking(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
 
       # 履歴
       def debug_for_history(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
 
       # 問題詳細
       def debug_for_ov_question_info(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
 
         question = Actb::Question.first
         question.title = "始まりの金" * 10
@@ -170,7 +170,7 @@ module FrontendScript
 
       # ユーザー詳細
       def debug_for_ov_user_info(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
 
         e = current_user.actb_main_xrecord
         e.win_count = 1
@@ -190,13 +190,13 @@ module FrontendScript
       end
 
       def debug_for_chess_clock(info)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
       end
 
       ################################################################################
 
       def debug_for_battle_sy(info, rule_key)
-        c.sysop_login_unless_logout
+        sysop_login_unless_logout
 
         rule = Actb::Rule.fetch(rule_key)
 

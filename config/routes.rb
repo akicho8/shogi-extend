@@ -91,7 +91,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 将棋トレーニングバトル
 
-  match "training", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
+  # match "training", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
 
   ################################################################################ scripts
 
@@ -119,6 +119,9 @@ Rails.application.routes.draw do
     get "swars/remember_swars_user_keys_fetch(.:format)", to: "swars#remember_swars_user_keys_fetch"
 
     match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
+
+    get "actb_app(.:format)", to: "actb_app#show",   format: nil
+    put "actb_app(.:format)", to: "actb_app#update", format: nil
 
     resource :session, only: [] do
       get :auth_user_fetch

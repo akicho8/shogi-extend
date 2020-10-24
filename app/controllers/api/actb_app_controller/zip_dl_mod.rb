@@ -1,11 +1,14 @@
-module FrontendScript
-  class ActbAppScript
+module Api
+  class ActbAppController
+    include EncodeMod
+
     concern :ZipDlMod do
-      # http://localhost:3000/script/actb-app.zip?remote_action=question_download
+      # http://localhost:3000/api/actb_app.zip?remote_action=question_download
       def question_download
         if request.format.zip?
+
           unless current_user
-            c.head :no_content
+            head :no_content
             return
           end
 
@@ -16,7 +19,7 @@ module FrontendScript
               zos.put_next_entry("#{record.lineage_key}/#{record.id}_#{record.title}.kif")
 
               str = record.to_kif
-              if c.current_body_encode == :sjis
+              if current_body_encode == :sjis
                 str = str.tosjis
               end
 
@@ -25,8 +28,8 @@ module FrontendScript
           end
 
           sec = "%.2f s" % (Time.current - t)
-          c.slack_message(key: "ZIP #{sec}", body: zip_filename)
-          c.send_data(zip_buffer.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
+          slack_message(key: "ZIP #{sec}", body: zip_filename)
+          send_data(zip_buffer.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
         end
       end
 
@@ -35,10 +38,10 @@ module FrontendScript
         parts << current_user.name
         parts << "将棋問題集"
         parts << Time.current.strftime("%Y%m%d%H%M%S")
-        parts << c.current_body_encode
+        parts << current_body_encode
         parts << zip_scope.count
         str = parts.compact.join("_") + ".zip"
-        str.public_send("to#{c.current_body_encode}")
+        str.public_send("to#{current_body_encode}")
       end
 
       def zip_scope
