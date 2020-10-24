@@ -32,6 +32,11 @@ export default {
       this.talk(message)
     },
 
+    toast_warn(message, options = {}) {
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-warning", queue: false, ...options})
+      this.talk(message)
+    },
+
     toast_ng(message, options = {}) {
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger", queue: false, ...options})
       this.talk(message)

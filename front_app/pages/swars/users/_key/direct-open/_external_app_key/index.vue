@@ -63,7 +63,7 @@ export default {
         // this.config.records = []
 
         if (!this.record) {
-          this.toast_ng("棋譜が見つかりませんでした")
+          this.toast_warn("棋譜が見つかりませんでした")
           return
         }
 

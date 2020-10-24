@@ -107,7 +107,7 @@ class ServiceInfo
     {
       display_p: true,
       nuxt_link_to: {path: "/swars/professional"},
-      title: "将棋ウォーズ指導対局成績",
+      title: "将棋ウォーズ十段の成績",
       ogp_image_base: "swars-professional",
       description: "プロの棋譜を探したいときにどうぞ",
       features: [

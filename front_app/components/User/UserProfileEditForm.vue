@@ -65,7 +65,7 @@ export default {
 
       // 変な名前を弾くため今は冗長だけどこれでいい
       if (this.name_invalid_p) {
-        this.toast_ng("名前を入力してください")
+        this.toast_warn("名前を入力してください")
         return
       }
 

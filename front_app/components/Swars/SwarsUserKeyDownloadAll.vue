@@ -78,12 +78,12 @@ export default {
   methods: {
     async yoyaku_handle() {
       if (!this.g_current_user) {
-        this.toast_ng("ログインしてください")
+        this.toast_warn("ログインしてください")
         return
       }
 
       if (!this.to_email) {
-        this.toast_ng("メールアドレスを入力してください")
+        this.toast_warn("メールアドレスを入力してください")
         return
       }
 

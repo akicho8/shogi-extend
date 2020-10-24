@@ -193,7 +193,7 @@ export default {
       this.record_fetch(() => {
         this.sound_play("click")
         if (kifu_type === "png") {
-          this.toast_ng("画像はコピーできません")
+          this.toast_warn("画像はコピーできません")
           return
         }
         this.simple_clipboard_copy(this.record.all_kifs[kifu_type])
@@ -291,7 +291,7 @@ export default {
         return
       }
       if (!this.input_text) {
-        this.toast_ng("棋譜を入力してください")
+        this.toast_warn("棋譜を入力してください")
         return
       }
       if (this.change_counter === 0) {

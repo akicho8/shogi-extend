@@ -356,7 +356,7 @@ export default {
       alert("未使用")
 
       if (!this.config.current_swars_user_key) {
-        this.toast_ng("先に誰かで検索してください")
+        this.toast_warn("先に誰かで検索してください")
         return
       }
       const new_query = _.trim(`${this.config.current_swars_user_key} ${query}`)
