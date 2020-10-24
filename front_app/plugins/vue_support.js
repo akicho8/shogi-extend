@@ -164,7 +164,7 @@ export default {
 
     // 通知
     simple_notify(message) {
-      this.talk(message, {rate: 1.5})
+      this.talk(message)
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
     },
 
