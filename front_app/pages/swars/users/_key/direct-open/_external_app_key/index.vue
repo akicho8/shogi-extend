@@ -3,7 +3,7 @@ client-only
   .swars-users-key-direct-open-external_app_key
     MainNavbar
       template(slot="brand")
-        b-navbar-item.has-text-weight-bold(tag="div") {{long_title}}
+        b-navbar-item.has-text-weight-bold.is_small_if_mobile(tag="div") {{long_title}}
     MainSection
       .container
         b-button(tag="nuxt-link" :to="{name: 'swars-search', query: {query: $route.params.key}}" @click.native="sound_play('click')")

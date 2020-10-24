@@ -5,7 +5,7 @@
     template(slot="brand")
       b-navbar-item(@click="back_handle")
         b-icon(icon="chevron-left")
-      b-navbar-item.has-text-weight-bold.is_title(tag="div") {{page_title}}
+      b-navbar-item.has-text-weight-bold.is_small_if_mobile(tag="div") {{page_title}}
     template(slot="end")
       NavbarItemLogin
       NavbarItemProfileLink
@@ -120,10 +120,6 @@ export default {
 
 <style lang="sass">
 .SwarsUserKeyDownloadAll
-  .is_title
-    +mobile
-      font-size: $size-7
-
   .MainSection
     .container
       max-width: 65ch ! important

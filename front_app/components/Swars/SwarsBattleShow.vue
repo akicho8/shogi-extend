@@ -36,7 +36,7 @@
         template(slot="brand")
           b-navbar-item(@click="back_handle")
             b-icon(icon="chevron-left")
-          b-navbar-item.has-text-weight-bold.is_title(
+          b-navbar-item.has-text-weight-bold.is_small_if_mobile(
             tag="nuxt-link"
             :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}"
             )
@@ -392,10 +392,6 @@ export default {
   .is_right_column
     +desktop
       margin-top: 0.8rem
-
-  .is_title
-    +mobile
-      font-size: $size-7
 
 .STAGE-development
   .SwarsBattleShow

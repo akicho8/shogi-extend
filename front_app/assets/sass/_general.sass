@@ -104,3 +104,9 @@ a.no-decoration
       height: -webkit-fill-available
       vertical-align: middle
       font-size: 0.5rem
+
+////////// モバイルのときだけ小さくする
+  
+.is_small_if_mobile
+  +mobile
+    font-size: $size-7
