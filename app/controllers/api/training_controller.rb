@@ -1,7 +1,7 @@
 # 将棋トレーニングバトル
 #
 # entry
-#   app/models/frontend_script/actb_app_script.rb
+#   app/controllers/api/training_controller.rb
 #
 # vue
 #   app/javascript/actb_app/index.vue
@@ -32,7 +32,7 @@
 #
 
 module Api
-  class ActbAppController < ::Api::ApplicationController
+  class TrainingController < ::Api::ApplicationController
     # FIXME: GET, PUT で分けるのではなく関心で分離する
     include GetApi
     include PutApi
@@ -51,7 +51,7 @@ module Api
 
     # delegate :current_user, to: :h
 
-    # http://0.0.0.0:3000/api/actb_app
+    # http://0.0.0.0:3000/api/training
     def show
       if v = params[:remote_action]
         v = public_send(v)
@@ -112,7 +112,7 @@ module Api
       #   Actb::BaseChannel.redis_clear
       # end
 
-      # http://0.0.0.0:3000/api/actb_app.json
+      # http://0.0.0.0:3000/api/training.json
       if request.format.json?
         render json: info
         return

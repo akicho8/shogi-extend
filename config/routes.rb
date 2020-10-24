@@ -120,8 +120,8 @@ Rails.application.routes.draw do
 
     match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
 
-    get "actb_app(.:format)", to: "actb_app#show",   format: nil
-    put "actb_app(.:format)", to: "actb_app#update", format: nil
+    get "training(.:format)", to: "training#show",   format: nil # /training.zip もある
+    put "training(.:format)", to: "training#update", format: nil
 
     resource :session, only: [] do
       get :auth_user_fetch

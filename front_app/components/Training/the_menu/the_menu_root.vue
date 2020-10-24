@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     question_zip_download_url() {
-      const url = new URL(this.$config.MY_SITE_URL + "/api/actb_app")
+      const url = new URL(this.$config.MY_SITE_URL + "/api/training")
       url.searchParams.set("remote_action", "question_download")
       url.searchParams.set("format", "zip")
       return url.toString()

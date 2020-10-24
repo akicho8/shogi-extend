@@ -1,9 +1,9 @@
 module Api
-  class ActbAppController
+  class TrainingController
     include EncodeMod
 
     concern :ZipDlMod do
-      # http://localhost:3000/api/actb_app.zip?remote_action=question_download
+      # http://localhost:3000/api/training.zip?remote_action=question_download
       def question_download
         if request.format.zip?
 

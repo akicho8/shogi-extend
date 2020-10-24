@@ -1,5 +1,5 @@
 module Api
-  class ActbAppController
+  class TrainingController
     concern :DebugMod do
       def form_parts
         if Rails.env.development?
