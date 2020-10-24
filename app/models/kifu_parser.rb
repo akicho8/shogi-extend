@@ -82,7 +82,9 @@ class KifuParser
 
   def extra_header
     {
-      "詳細URL" => show_url,        # たくさん埋めなくてもこれ一つで済む
+      "詳細URL"  => show_url,           # たくさん埋めなくてもこれ一つで済む
+      "KENTO"    => show_url("kento"),
+      "ぴよ将棋" => show_url("piyo"),
       # "検索URL" => search_url,
       # "KENTO"      => kento_url,
       # "共有将棋盤" => share_board_url,
@@ -90,9 +92,9 @@ class KifuParser
     }.reject { |k, v| v.blank? }
   end
 
-  def show_url
+  def show_url(path = nil)
     if v = swars_battle_key
-      UrlProxy.wrap2("/swars/battles/#{v}")
+      UrlProxy.wrap2(["/swars/battles/#{v}", path].compact.join("/"))
     end
   end
 
