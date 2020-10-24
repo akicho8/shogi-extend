@@ -306,7 +306,7 @@ module BattleDecorator
     end
 
     def heavy_parsed_info
-      battle.heavy_parsed_info
+      battle.heavy_parsed_info.core_parser
     end
 
     def location_size

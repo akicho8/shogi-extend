@@ -110,8 +110,8 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    xit "棋譜用紙" do
-      visit "/w/#{record.to_param}?formal_sheet=true"
+    it "棋譜用紙" do
+      visit "http://0.0.0.0:4000/swars/battles/devuser2-Yamada_Taro-20200101_123402/formal-sheet"
       expect(page).to have_content "記録係"
       doc_image
     end
