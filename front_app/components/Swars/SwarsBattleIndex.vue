@@ -65,6 +65,8 @@
               b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
 
         b-menu-list(label="連携")
+          b-menu-item(label="少し便利にしよう" @click="bookmark_desc" :disabled="!config.current_swars_user_key")
+
           b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 外部APP ｼｮｰﾄｶｯﾄ
@@ -298,6 +300,19 @@ export default {
   },
 
   methods: {
+    bookmark_desc() {
+      this.sidebar_p = false
+      this.sound_play("click")
+      this.$buefy.dialog.alert({
+        title: "少し便利にしよう",
+        message: "検索直後のページを<b>ホーム画面に追加</b>かブックマークしておくと次からウォーズIDを入力する手間を省けます",
+        confirmText: "わかった",
+        type: 'is-info',
+        onConfirm: () => this.sound_play("click"),
+        onCancel:  () => this.sound_play("click"),
+      })
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // 検索すべてここで処理する
