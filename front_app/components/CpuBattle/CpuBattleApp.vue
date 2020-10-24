@@ -1,5 +1,5 @@
 <template lang="pug">
-.CpuBattleApp.has-background-white-ter
+.CpuBattleApp
   MainNavbar
     template(slot="brand")
       NavbarItemHome
