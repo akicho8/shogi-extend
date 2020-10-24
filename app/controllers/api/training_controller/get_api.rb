@@ -1,5 +1,5 @@
-module FrontendScript
-  class ActbAppScript
+module Api
+  class TrainingController
     concern :GetApi do
       concerning :SortMod do
         included do
@@ -12,9 +12,9 @@ module FrontendScript
       end
 
       # 問題一覧
-      # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch
-      # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch&folder_key=active
-      # http://localhost:3000/script/actb-app.json?remote_action=questions_fetch&sort_column=lineage_key&sort_order=desc
+      # http://localhost:3000/api/training.json?remote_action=questions_fetch
+      # http://localhost:3000/api/training.json?remote_action=questions_fetch&folder_key=active
+      # http://localhost:3000/api/training.json?remote_action=questions_fetch&sort_column=lineage_key&sort_order=desc
       # app/javascript/actb_app/models/question_column_info.js
       def questions_fetch
         params[:per] ||= Actb::Config[:api_questions_fetch_per]
@@ -53,29 +53,29 @@ module FrontendScript
         { question: question.as_json(Actb::Question.json_type5) }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=ranking_fetch&ranking_key=rating
+      # http://localhost:3000/api/training.json?remote_action=ranking_fetch&ranking_key=rating
       def ranking_fetch
         { rank_data: Actb::RankingCop.new(params.merge(current_user: current_user)) }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=seasons_fetch
+      # http://localhost:3000/api/training.json?remote_action=seasons_fetch
       def seasons_fetch
         { seasons: Actb::Season.newest_order.as_json(only: [:id, :generation, :name, :begin_at, :end_at]) }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=history_records_fetch
+      # http://localhost:3000/api/training.json?remote_action=history_records_fetch
       def history_records_fetch
         s = current_user.actb_histories.order(created_at: :desc).limit(Actb::Config[:api_history_fetch_max])
         { history_records: s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ox_mark => {only: :key}}, methods: [:good_p, :bad_p, :clip_p]) }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=clip_records_fetch
+      # http://localhost:3000/api/training.json?remote_action=clip_records_fetch
       def clip_records_fetch
         s = current_user.actb_clip_marks.order(created_at: :desc).limit(Actb::Config[:api_clip_fetch_max])
         { clip_records: s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}}, methods: [:good_p, :bad_p, :clip_p]) }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=question_single_fetch&question_id=1
+      # http://localhost:3000/api/training.json?remote_action=question_single_fetch&question_id=1
       def question_single_fetch
         question = Actb::Question.find(params[:question_id])
         retv = {}
@@ -92,7 +92,7 @@ module FrontendScript
         { ov_user_info: user.as_json_type7 }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=resource_fetch
+      # http://localhost:3000/api/training.json?remote_action=resource_fetch
       def resource_fetch
         {
           RuleInfo: Actb::RuleInfo.as_json,
@@ -103,7 +103,7 @@ module FrontendScript
         }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=builder_form_resource_fetch
+      # http://localhost:3000/api/training.json?remote_action=builder_form_resource_fetch
       def builder_form_resource_fetch
         {
           LineageInfo: Actb::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on]),
@@ -111,14 +111,14 @@ module FrontendScript
         }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=lobby_messages_fetch
+      # http://localhost:3000/api/training.json?remote_action=lobby_messages_fetch
       def lobby_messages_fetch
         lobby_messages = Actb::LobbyMessage.order(:created_at).includes(:user).last(Actb::Config[:api_lobby_message_max])
         lobby_messages = lobby_messages.collect(&:as_json_type8)
         { lobby_messages: lobby_messages }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=notifications_fetch
+      # http://localhost:3000/api/training.json?remote_action=notifications_fetch
       def notifications_fetch
         size = 10
         notifications = []
@@ -132,13 +132,13 @@ module FrontendScript
         { notifications: notifications }
       end
 
-      # http://localhost:3000/script/actb-app.json?remote_action=revision_fetch
+      # http://localhost:3000/api/training.json?remote_action=revision_fetch
       def revision_fetch
         { revision: Actb::Config[:revision] }
       end
 
       # 作成した問題数を返す
-      # http://localhost:3000/script/actb-app.json?remote_action=zip_dl_count_fetch
+      # http://localhost:3000/api/training.json?remote_action=zip_dl_count_fetch
       def zip_dl_count_fetch
         count = 0
         if current_user

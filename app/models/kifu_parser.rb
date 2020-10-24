@@ -54,6 +54,11 @@ class KifuParser
     end
   end
 
+  # for app/models/battle_decorator/base.rb
+  def core_parser
+    core
+  end
+
   private
 
   def to_format

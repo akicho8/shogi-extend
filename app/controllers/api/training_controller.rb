@@ -1,7 +1,7 @@
 # 将棋トレーニングバトル
 #
 # entry
-#   app/models/frontend_script/actb_app_script.rb
+#   app/controllers/api/training_controller.rb
 #
 # vue
 #   app/javascript/actb_app/index.vue
@@ -30,8 +30,9 @@
 #   app/jobs/actb/lobby_broadcast_job.rb
 #   app/jobs/actb/message_broadcast_job.rb
 #
-module FrontendScript
-  class ActbAppScript < ::FrontendScript::Base
+
+module Api
+  class TrainingController < ::Api::ApplicationController
     # FIXME: GET, PUT で分けるのではなく関心で分離する
     include GetApi
     include PutApi
@@ -39,53 +40,59 @@ module FrontendScript
 
     include DebugMod
 
-    self.script_name = "将棋トレーニングバトル"
-    self.page_title = ""
-    self.form_position = :bottom
-    self.column_wrapper_enable = false
+    # self.script_name = "将棋トレーニングバトル"
+    # self.page_title = ""
+    # self.form_position = :bottom
+    # self.column_wrapper_enable = false
 
-    if Rails.env.production?
-      self.visibility_hidden_on_menu = true
-    end
+    # if Rails.env.production?
+    #   self.visibility_hidden_on_menu = true
+    # end
 
-    delegate :current_user, to: :h
+    # delegate :current_user, to: :h
 
-    def script_body
+    # http://0.0.0.0:3000/api/training
+    def show
       if v = params[:remote_action]
-        return public_send(v)
+        v = public_send(v)
+        if performed?
+          return
+        end
+        render json: v
+        return
       end
 
-      # for OGP
-      case
-      when e = current_question
-        ogp_params_set({
-            :card        => :summary_large_image,
-            :title       => e.title_with_author,
-            :description => e.description,
-            :image       => e.shared_image_params,
-            :creator     => e.user.twitter_key,
-          })
-      when e = User.find_by(id: params[:user_id])
-        ogp_params_set({
-            :card        => :summary,
-            :title       => "#{e.name}さんのプロフィール",
-            :description => "",
-            :image       => e.avatar_path,
-            :creator     => e.twitter_key,
-          })
-      else
-        ogp_params_set({
-            :title       => "将棋トレーニングバトル",
-            :description => "クイズ形式で将棋の問題を解く力を競う対戦ゲームです",
-          })
-      end
+      # # for OGP
+      # case
+      # when e = current_question
+      #   ogp_params_set({
+      #       :card        => :summary_large_image,
+      #       :title       => e.title_with_author,
+      #       :description => e.description,
+      #       :image       => e.shared_image_params,
+      #       :creator     => e.user.twitter_key,
+      #     })
+      # when e = User.find_by(id: params[:user_id])
+      #   ogp_params_set({
+      #       :card        => :summary,
+      #       :title       => "#{e.name}さんのプロフィール",
+      #       :description => "",
+      #       :image       => e.avatar_path,
+      #       :creator     => e.twitter_key,
+      #     })
+      # else
+      #   ogp_params_set({
+      #       :title       => "将棋トレーニングバトル",
+      #       :description => "クイズ形式で将棋の問題を解く力を競う対戦ゲームです",
+      #     })
+      # end
 
       ################################################################################
 
       info = {}
       info[:config] = Actb::Config
       info[:mode] ||= "lobby"   # FIXME: とる
-      info[:api_path] = h.url_for(script_link_path)
+      # info[:api_path] = h.url_for(script_link_path)
       info[:question_default_attributes] = Actb::Question.default_attributes
 
       warp_to_params_set(info)  # current_user のデータを作ることもあるので current_user のセットの前で行うこと
@@ -97,7 +104,7 @@ module FrontendScript
           # すでにログインしている人は maincable で unauthorized になる
           # これはクッキーに記録しないままログインしたのが原因
           # なのですでにログインしていたらクッキーに埋める
-          c.current_user_set_for_action_cable(current_user)
+          current_user_set_for_action_cable(current_user)
         end
       end
 
@@ -105,23 +112,26 @@ module FrontendScript
       #   Actb::BaseChannel.redis_clear
       # end
 
-      # http://0.0.0.0:3000/script/actb-app.json
+      # http://0.0.0.0:3000/api/training.json
       if request.format.json?
-        return info
+        render json: info
+        return
       end
+
+      # zip の場合はここにくるっぽい
 
       ################################################################################
 
-      out = ""
-      out += h.javascript_tag(%(document.addEventListener('DOMContentLoaded', () => { new Vue({}).$mount("#app") })))
-      out += %(<div id="app"><actb_app :info='#{info.to_json}' /></div>)
-      out
+      # out = ""
+      # out += h.javascript_tag(%(document.addEventListener('DOMContentLoaded', () => { new Vue({}).$mount("#app") })))
+      # out += %(<div id="app"><actb_app :info='#{info.to_json}' /></div>)
+      # out
     end
 
-    def put_action
+    def update
       v = public_send(params[:remote_action])
       raise v.inspect unless v.kind_of?(Hash)
-      c.render json: v
+      render json: v
     end
 
     def current_battle_id

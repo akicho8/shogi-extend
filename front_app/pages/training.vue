@@ -18,7 +18,7 @@ export default {
     }
   },
   async asyncData({ $axios, query }) {
-    const info = await $axios.$get("/script/actb-app.json", {params: query})
+    const info = await $axios.$get("/api/training.json", {params: query})
     return { info }
   },
 }
