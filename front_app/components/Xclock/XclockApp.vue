@@ -256,14 +256,11 @@ export default {
       const dialog = this.$buefy.dialog.alert({
         title: "ショートカットキー",
         message: `
-          <div class="content is-size-7">
-            <p>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code></p>
-            <p>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></p>
-          </div>`,
-        confirmText: "わかった",
+          <p class="mt-0"><b>左</b> → <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code></p>
+          <p class="mt-2"><b>右</b> → <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></p>
+        `,
+        confirmText: "OK",
         canCancel: ["outside", "escape"],
-        type: "is-info",
-        hasIcon: true,
         trapFocus: true,
         onConfirm: () => {
           this.talk_stop()
@@ -450,7 +447,7 @@ export default {
   $color: hsla((360 / 8) * $level, 50%, 50%, 1.0)
   border: 2px solid $color
 
-.development
+.STAGE-development
   .Xclock
     .screen_container
       .level
