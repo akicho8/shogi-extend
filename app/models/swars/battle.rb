@@ -139,6 +139,10 @@ module Swars
       Bioshogi::Parser::CsaParser
     end
 
+    def heavy_parsed_info
+      @heavy_parsed_info ||= KifuParser.new(source: kifu_body, swars_battle_key: key)
+    end
+
     concerning :SummaryMethods do
       def total_seconds
         @total_seconds ||= memberships.sum(&:total_seconds)

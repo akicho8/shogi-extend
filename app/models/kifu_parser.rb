@@ -83,8 +83,8 @@ class KifuParser
   def extra_header
     {
       "詳細URL"  => show_url,           # たくさん埋めなくてもこれ一つで済む
-      "KENTO"    => show_url("kento"),
       "ぴよ将棋" => show_url("piyo"),
+      "KENTO"    => show_url("kento"),
       # "検索URL" => search_url,
       # "KENTO"      => kento_url,
       # "共有将棋盤" => share_board_url,

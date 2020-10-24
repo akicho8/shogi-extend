@@ -258,7 +258,7 @@ module BattleModelMod
     # FIXME: 名前がよくない
     # KI2変換可能だけど重い
     def heavy_parsed_info
-      @heavy_parsed_info ||= KifuParser.new(source: kifu_body, swars_battle_key: key)
+      @heavy_parsed_info ||= KifuParser.new(source: kifu_body)
     end
 
     # バリデーションをはずして KI2 への変換もしない前提の軽い版
