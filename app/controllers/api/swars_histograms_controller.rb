@@ -1,7 +1,7 @@
 module Api
   # http://0.0.0.0:3000/api/swars_histogram.json
   class SwarsHistogramsController < ::Api::ApplicationController
-    DEFAULT_LIMIT = 5000
+    DEFAULT_LIMIT = 1000
     CHART_BAR_MAX = 20
 
     def show
