@@ -65,6 +65,17 @@ module Api
       render json: { notice_collector: notice_collector }
     end
 
+    # curl -d _method=put http://localhost:3000/api/settings/swars_user_key_fetch.json
+    def swars_user_key_fetch
+      raise "must not happen" unless current_user
+      render json: { swars_user_key: current_user.key }
+    end
+
+    def swars_user_key_update
+      notice_collector = NoticeCollector.single(:success, "変更しました(嘘)")
+      render json: { notice_collector: notice_collector }
+    end
+
     private
 
     def user_save(user)

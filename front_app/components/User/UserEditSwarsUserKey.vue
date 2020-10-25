@@ -1,5 +1,5 @@
 <template lang="pug">
-.UserEmailEdit.has-background-white-bis
+.UserEditSwarsUserKey.has-background-white-bis
   b-loading(:active="$fetchState.pending")
   MainNavbar
     template(slot="start")
@@ -11,16 +11,16 @@
     .container
       .columns.is-centered
         .column
-          b-field(label-position="on-border" label="メールアドレス")
-            b-input(type="text" v-model.trim="new_email")
+          b-field(label-position="on-border" label="ウォーズID")
+            b-input(type="text" v-model.trim="new_swars_user_key")
 </template>
 
 <script>
 export default {
-  name: "UserEmailEdit",
+  name: "UserEditSwarsUserKey",
   data() {
     return {
-      new_email: "",
+      new_swars_user_key: "",
     }
   },
   head() {
@@ -33,8 +33,8 @@ export default {
       this.$nuxt.error({statusCode: 404, message: "ログインしてください"})
       return
     }
-    return this.$axios.$get("/api/settings/email_fetch").then(e => {
-      this.new_email = e.email
+    return this.$axios.$get("/api/settings/swars_user_key_fetch").then(e => {
+      this.new_swars_user_key = e.swars_user_key
     })
   },
   methods: {
@@ -50,10 +50,10 @@ export default {
       this.sound_play("click")
 
       const params = {
-        email: this.new_email,
+        swars_user_key: this.new_swars_user_key,
       }
 
-      const retv = await this.$axios.$put("/api/settings/email_update", params)
+      const retv = await this.$axios.$put("/api/settings/swars_user_key_update", params)
       this.notice_collector_run(retv)
       if (this.notice_collector_has_error(retv)) {
         return
@@ -65,14 +65,14 @@ export default {
   },
   computed: {
     page_title() {
-      return "メールアドレス変更"
+      return "ウォーズIDの設定"
     },
   },
 }
 </script>
 
 <style scoped lang="sass">
-.UserEmailEdit
+.UserEditSwarsUserKey
   min-height: 100vh
 
   .column

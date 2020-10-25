@@ -5,8 +5,9 @@
       .mx-4.my-4
         b-menu
           b-menu-list(label="Action")
-            b-menu-item(label="編集"   tag="nuxt-link" :to="{name: 'settings-profile'}" @click.native="sound_play('click')")
-            b-menu-item(label="メールアドレス変更" tag="nuxt-link" :to="{name: 'settings-email'}" @click.native="sound_play('click')")
+            b-menu-item(label="編集"               tag="nuxt-link" :to="{name: 'settings-profile'}"        @click.native="sound_play('click')")
+            b-menu-item(label="メールアドレス変更" tag="nuxt-link" :to="{name: 'settings-email'}"          @click.native="sound_play('click')")
+            b-menu-item(label="ウォーズIDの設定"   tag="nuxt-link" :to="{name: 'settings-swars-user-key'}" @click.native="sound_play('click')" v-if="development_p")
           b-menu-list(label="その他")
             b-menu-item(label="アカウント連携" :href="`${$config.MY_SITE_URL}/accounts/${record.id}/edit`")
             b-menu-item(label="ログアウト" @click="logout_handle")

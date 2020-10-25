@@ -1,15 +1,15 @@
 <template lang="pug">
-.UserProfileEdit(v-if="g_current_user")
+.UserEditProfile(v-if="g_current_user")
   template(v-if="false")
     component(:is="current_component" v-if="current_component")
   template(v-else)
-    UserProfileEditForm(      :base="this" v-if="current_component === 'UserProfileEditForm'"      )
-    UserProfileEditImageCrop( :base="this" v-if="current_component === 'UserProfileEditImageCrop'" )
+    UserEditProfileForm(      :base="this" v-if="current_component === 'UserEditProfileForm'"      )
+    UserEditProfileImageCrop( :base="this" v-if="current_component === 'UserEditProfileImageCrop'" )
 </template>
 
 <script>
 export default {
-  name: "UserProfileEdit",
+  name: "UserEditProfile",
   data() {
     return {
       // meta
@@ -48,7 +48,7 @@ export default {
     var_reset() {
       this.watch_clear()
 
-      this.current_component = "UserProfileEditForm"
+      this.current_component = "UserEditProfileForm"
       this.changed_p         = false
       this.croped_image      = null
 
@@ -82,5 +82,5 @@ export default {
 </script>
 
 <style lang="sass">
-.UserProfileEdit
+.UserEditProfile
 </style>

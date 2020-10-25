@@ -1,5 +1,5 @@
 <template lang="pug">
-.UserProfileEditForm.has-background-white-bis
+.UserEditProfileForm.has-background-white-bis
   DebugBox
     div valid_p        = {{valid_p}}
     div name_invalid_p = {{name_invalid_p}}
@@ -36,7 +36,7 @@
 import _ from "lodash"
 
 export default {
-  name: "UserProfileEditForm",
+  name: "UserEditProfileForm",
   props: {
     base: { type: Object, required: true },
   },
@@ -51,7 +51,7 @@ export default {
     avatar_upload_handle(v) {
       this.sound_play('click')
       this.base.upload_file_info = v
-      this.base.current_component = "UserProfileEditImageCrop"
+      this.base.current_component = "UserEditProfileImageCrop"
     },
 
     test_handle() {
@@ -118,7 +118,7 @@ export default {
 </script>
 
 <style lang="sass">
-.UserProfileEditForm
+.UserEditProfileForm
   min-height: 100vh
 
   .MainSection

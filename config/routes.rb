@@ -132,6 +132,8 @@ Rails.application.routes.draw do
       put :profile_update
       get :email_fetch
       put :email_update
+      get :swars_user_key_fetch
+      put :swars_user_key_update
     end
 
     resource :adapter, only: [] do

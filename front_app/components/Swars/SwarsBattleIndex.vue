@@ -100,7 +100,7 @@
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
       NavbarItemHome
-      b-navbar-item(tag="nuxt-link" :to="{query: {}}" @click.native="query= ''")
+      b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle")
         h1.has-text-weight-bold 将棋ウォーズ棋譜検索
     template(slot="end")
       NavbarItemLogin
@@ -156,6 +156,7 @@
                 // :hidden_if_piece_stand_blank="display_key === 'critical'"
                 SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
+          //- v-if="$route.query.query || config.records.length >= 1"
           template(v-if="display_key === 'table'")
             b-table(
               v-if="$route.query.query || config.records.length >= 1"
@@ -279,17 +280,26 @@ export default {
   },
 
   fetch() {
-    return this.$axios.$get("/w.json", {params: this.$route.query}).then(config => {
+    // if (!this.$route.query.query) {
+    //   this.$router.push({name: "swars-search", query: {query: "user1"}})
+    // }
+
+    let query = {...this.$route.query}
+    if (!query.query) {
+      query.query = "user1"
+    }
+
+    return this.$axios.$get("/w.json", {params: query}).then(config => {
       this.config = config
 
       // if (this.display_key == null) {
       //   this.display_key  = this.config.display_key // 何の局面の表示をするか？
       // }
 
-      // this.query = this.config.query
       // なかから nuxt-link したとき $fetch が呼ばれるが、
       // this.query は前の状態なので更新する
-      this.query = this.$route.query.query
+      this.query = this.config.query
+      // this.query = this.$route.query.query
 
       this.ls_setup() // config から visible_hash や display_key を設定
 
@@ -300,6 +310,11 @@ export default {
   },
 
   methods: {
+    reset_handle() {
+      // this.query = ""
+      // this.config.records = []
+    },
+
     bookmark_desc() {
       this.sidebar_p = false
       this.sound_play("click")
@@ -327,6 +342,7 @@ export default {
         delete new_params.page
       }
       this.clog("new_params", new_params)
+      // https://github.com/vuejs/vue-router/issues/2872
       this.$router.push({query: new_params}, () => {
         this.clog("query に変化があったので watch 経由で $fetch が呼ばれる")
       }, () => {

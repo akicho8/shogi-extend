@@ -1,5 +1,5 @@
 <template lang="pug">
-.UserProfileEditImageCrop.has-background-black
+.UserEditProfileImageCrop.has-background-black
   MainNavbar(type="is-dark")
     //- template(slot="brand")
     //-   b-navbar-item キャンセル
@@ -62,7 +62,7 @@ const IMAGE_CONTROLLER_PARAMS = {
 import { fabric }  from "fabric"
 
 export default {
-  name: "UserProfileEditImageCrop",
+  name: "UserEditProfileImageCrop",
   props: {
     base: { type: Object, required: true },
   },
@@ -88,7 +88,7 @@ export default {
   methods: {
     cancel_handle() {
       this.sound_play("click")
-      this.base.current_component = "UserProfileEditForm"
+      this.base.current_component = "UserEditProfileForm"
     },
 
     canvas_setup() {
@@ -164,7 +164,7 @@ export default {
       // が、どうせ戻るので意味ない
       this.fcanvas.renderAll()
 
-      this.base.current_component = "UserProfileEditForm"
+      this.base.current_component = "UserEditProfileForm"
     },
 
     // 少しずつ回転
@@ -200,7 +200,7 @@ export default {
 </script>
 
 <style lang="sass">
-.UserProfileEditImageCrop
+.UserEditProfileImageCrop
   min-height: 100vh
 
   .canvas_container
