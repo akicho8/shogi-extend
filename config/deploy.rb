@@ -1,7 +1,10 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.11.0"
 
-set :repo_url, -> { "git@github.com:akicho8/#{fetch(:application)}.git" }
+set :application, "shogi_web"
+set :repo_url, -> { "git@github.com:akicho8/shogi-extend.git" }
+
+# set :repo_url, -> { "git@github.com:akicho8/#{fetch(:application)}.git" }
 
 set :git_shallow_clone, 1
 
