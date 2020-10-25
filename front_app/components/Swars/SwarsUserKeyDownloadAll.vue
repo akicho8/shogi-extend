@@ -122,8 +122,7 @@ export default {
 .SwarsUserKeyDownloadAll
   .MainSection
     .container
-      max-width: 65ch ! important
-
+      max-width: 65ch
     .notification
-      padding-right: 1.25rem // notification はなぜか右のpaddingが広くなっているため左と同じにする
+      padding-right: 1.25rem // notification はクローズボタンを考慮して右のpaddingが広くなっているため左と同じにする
 </style>

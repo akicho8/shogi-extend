@@ -64,8 +64,15 @@
             template(v-for="e in ZipKifuInfo.values")
               b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
 
-        b-menu-list(label="連携")
-          b-menu-item(label="少し便利にしよう" @click="bookmark_desc" :disabled="!config.current_swars_user_key")
+        b-menu-list(label="便利な使い方あれこれ")
+          b-menu-item(
+            label="検索初期値設定"
+            @click.native="config.current_swars_user_key && sound_play('click')"
+            tag="nuxt-link"
+            :to="{name: 'swars-users-key-default-key', params: {key: config.current_swars_user_key}}"
+            :disabled="!config.current_swars_user_key")
+
+          b-menu-item(label="ホーム画面に追加する" @click="bookmark_desc" :disabled="!config.current_swars_user_key")
 
           b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
@@ -279,6 +286,7 @@ export default {
     }
   },
 
+  fetchOnServer: false,
   fetch() {
     // if (!this.$route.query.query) {
     //   this.$router.push({name: "swars-search", query: {query: "user1"}})
@@ -286,7 +294,7 @@ export default {
 
     let query = {...this.$route.query}
     if (!query.query) {
-      query.query = "user1"
+      query.query = MyLocalStorage.get("swars_search_default_key")
     }
 
     return this.$axios.$get("/w.json", {params: query}).then(config => {
@@ -319,8 +327,9 @@ export default {
       this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.dialog.alert({
-        title: "少し便利にしよう",
-        message: "検索直後のページを<b>ホーム画面に追加</b>かブックマークしておくと次からウォーズIDを入力する手間を省けます",
+        title: "ホーム画面に追加する",
+        message: "<b>検索直後</b>のページを<b>ホーム画面に追加</b>かブックマークしておくと次からウォーズIDを入力する手間を省けます",
+        canCancel: ["outside", "escape"],
         confirmText: "わかった",
         type: 'is-info',
         onConfirm: () => this.sound_play("click"),
