@@ -23,8 +23,16 @@ export default {
       new_email: "",
     }
   },
-  fetchOnServer: false,
+  head() {
+    return {
+      title: this.page_title,
+    }
+  },
   fetch() {
+    if (!this.g_current_user) {
+      this.$nuxt.error({statusCode: 404, message: "ログインしてください"})
+      return
+    }
     return this.$axios.$get("/api/settings/email_fetch").then(e => {
       this.new_email = e.email
     })
@@ -53,6 +61,11 @@ export default {
 
       // this.$router.push({name: "users-id", params: {id: this.g_current_user.id}})
       this.back_to()
+    },
+  },
+  computed: {
+    page_title() {
+      return "メールアドレス変更"
     },
   },
 }

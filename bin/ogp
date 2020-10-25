@@ -8,30 +8,35 @@
 URESINORYU = "body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_view_point=self"
 
 LIST_ALL = [
-  { url: "/",                                                                        validations: { "html"  => /電脳少女シロ/, "title" => "SHOGI-EXTEND",                                                                                                           }},
-  { url: "/swars/search?query=Yamada_Taro",                                         validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
-  { url: "/swars/users/Yamada_Taro/",                                                validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
-  { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/",                     validations: { "og:image" => /Yamada_Taro.*png.*turn/                                                                                                                                                                }},
-  { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&flip=false", validations: { "og:image" => /Yamada_Taro.*png.*turn=100/,                                                                                                                                                                }},
-  { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet",         validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
-  { url: "/swars/users/Yamada_Taro/direct-open/kento",                               validations: { "title" => /KENTO/, "mombile_icon" => /kento/,                                                                                                                          }},
-  { url: "/swars/users/Yamada_Taro/direct-open/piyo_shogi",                          validations: { "title" => /ぴよ/,  "mombile_icon" => /piyo_shogi/,                                                                                                                     }},
-  { url: "/swars/users/Yamada_Taro/kento-api",                                       validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
-  { url: "/swars/histograms/attack",                                                 validations: { "title" => /戦型/,                                                                                                                                              }},
-  { url: "/swars/histograms/grade",                                                  validations: { "title" => /段級/,                                                                                                                                              }},
-  { url: "/swars/top-group",                                                         validations: { "title" => /上位/,                                                                                                                                              }},
-  { url: "/swars/professional",                                                      validations: { "title" => /十段/,                                                                                                                                              }},
-  { url: "/xy",                                                                      validations: { "title" => /符号の鬼/,                                                                                                                                          }},
-  { url: "/vs-clock",                                                                validations: { "title" => /対局時計/,                                                                                                                                          }},
-  { url: "/three-stage-leagues",                                                     validations: { "og:title" => /第67期.*奨励会三段リーグ/,                                                                                                                                                                }},
-  { url: "/three-stage-leagues/67",                                                  validations: { "og:title" => /第67期.*奨励会三段リーグ/, "html"  => /伊藤匠/,                                                                                                                                            }},
-  { url: "/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0",                  validations: { "og:title" => /伊藤匠の成績/,                                                                                                                                                                }},
-  { url: "/adapter",                                                                 validations: { "title" => /なんでも棋譜変換/,                                                                                                                                  }},
-  { url: "/share-board",                                                             validations: { "title" => "共有将棋盤 0手目", "og:title" => "共有将棋盤 0手目", "og:description" => "",                     "og:image" => /share-board.png.*position.*turn=0/, }},
-  { url: "/share-board?#{URESINORYU}",                                               validations: { "title" => "嬉野流 1手目",     "og:title" => "嬉野流 1手目",     "og:description" => "☗嬉野流 vs ☖その他", "og:image" => /share-board.png.*position.*turn=1/,   }},
-  { url: "/stopwatch",                                                               validations: { "title" => /ストップウォッチ/,                                                                                                                                  }},
-  { url: "/cpu-battle",                                                              validations: { "title" => /対戦/,                                                                                                                                              }},
-  { url: "/training",                                                                validations: { "title" => /トレーニング/,                                                                                                                                      }},
+  { url: "/users/1",                                                                 validations: { "title" => /さん/,                                                                                                                                      }},
+
+  { url: "/settings/profile",                                                        validations: { "error" => "404"                                                                                                                                      }},
+  { url: "/settings/email",                                                          validations: { "error" => "404",                                                                                                                                      }},
+
+  # { url: "/",                                                                        validations: { "html"  => /電脳少女シロ/, "title" => "SHOGI-EXTEND",                                                                                                           }},
+  # { url: "/swars/search?query=Yamada_Taro",                                          validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
+  # { url: "/swars/users/Yamada_Taro/",                                                validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
+  # { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/",                     validations: { "og:image" => /Yamada_Taro.*png.*turn/                                                                                                                                                                }},
+  # { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&flip=false", validations: { "og:image" => /Yamada_Taro.*png.*turn=100/,                                                                                                                                                                }},
+  # { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet",         validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
+  # { url: "/swars/users/Yamada_Taro/direct-open/kento",                               validations: { "title" => /KENTO/, "mombile_icon" => /kento/,                                                                                                                          }},
+  # { url: "/swars/users/Yamada_Taro/direct-open/piyo_shogi",                          validations: { "title" => /ぴよ/,  "mombile_icon" => /piyo_shogi/,                                                                                                                     }},
+  # { url: "/swars/users/Yamada_Taro/kento-api",                                       validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
+  # { url: "/swars/histograms/attack",                                                 validations: { "title" => /戦型/,                                                                                                                                              }},
+  # { url: "/swars/histograms/grade",                                                  validations: { "title" => /段級/,                                                                                                                                              }},
+  # { url: "/swars/top-group",                                                         validations: { "title" => /上位/,                                                                                                                                              }},
+  # { url: "/swars/professional",                                                      validations: { "title" => /十段/,                                                                                                                                              }},
+  # { url: "/xy",                                                                      validations: { "title" => /符号の鬼/,                                                                                                                                          }},
+  # { url: "/vs-clock",                                                                validations: { "title" => /対局時計/,                                                                                                                                          }},
+  # { url: "/three-stage-leagues",                                                     validations: { "og:title" => /第67期.*奨励会三段リーグ/,                                                                                                                                                                }},
+  # { url: "/three-stage-leagues/67",                                                  validations: { "og:title" => /第67期.*奨励会三段リーグ/, "html"  => /伊藤匠/,                                                                                                                                            }},
+  # { url: "/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0",                  validations: { "og:title" => /伊藤匠の成績/,                                                                                                                                                                }},
+  # { url: "/adapter",                                                                 validations: { "title" => /なんでも棋譜変換/,                                                                                                                                  }},
+  # { url: "/share-board",                                                             validations: { "title" => "共有将棋盤 0手目", "og:title" => "共有将棋盤 0手目", "og:description" => "",                     "og:image" => /share-board.png.*position.*turn=0/, }},
+  # { url: "/share-board?#{URESINORYU}",                                               validations: { "title" => "嬉野流 1手目",     "og:title" => "嬉野流 1手目",     "og:description" => "☗嬉野流 vs ☖その他", "og:image" => /share-board.png.*position.*turn=1/,   }},
+  # { url: "/stopwatch",                                                               validations: { "title" => /ストップウォッチ/,                                                                                                                                  }},
+  # { url: "/cpu-battle",                                                              validations: { "title" => /対戦/,                                                                                                                                              }},
+  # { url: "/training",                                                                validations: { "title" => /トレーニング/,                                                                                                                                      }},
 ]
 
 require "bundler/setup"
@@ -65,7 +70,12 @@ class Ogp < Thor
         puts url
 
         row["URL"] = url
-        html = URI(url).read
+        begin
+          html = URI(url).read
+        rescue OpenURI::HTTPError => error
+          row["結果"] = error.to_s.include?(e[:validations]["error"]) ? "○" : "×"
+          next
+        end
         doc = Nokogiri::HTML(html)
 
         if options[:debug]

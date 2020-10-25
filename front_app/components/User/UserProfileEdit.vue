@@ -25,6 +25,16 @@ export default {
       new_twitter_key:  null,   // Twitterアカウント
     }
   },
+  fetch() {
+    if (!this.g_current_user) {
+      this.$nuxt.error({statusCode: 404, message: "ログインしてください"})
+    }
+  },
+  head() {
+    return {
+      title: this.page_title,
+    }
+  },
 
   mounted() {
     this.var_reset()
@@ -60,6 +70,12 @@ export default {
         this.unwatch_func()
         this.unwatch_func = null
       }
+    },
+  },
+
+  computed: {
+    page_title() {
+      return "プロフィール編集"
     },
   },
 }

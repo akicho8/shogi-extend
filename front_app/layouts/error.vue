@@ -12,6 +12,8 @@ client-only
             | {{error.message}}
         .emoji.has-text-centered.is-unselectable.is_clickable(@click="charactor_click")
           | {{charactor}}
+    DebugPre
+      | {{error}}
 </template>
 
 <script>
@@ -19,7 +21,7 @@ import _ from "lodash"
 
 export default {
   name: "error",
-  props: ["error"],
+  props: ["error"], // BUG: this.$nuxt.error({statusCode: 404, message: ""}) とすると引数がメッセージが含まれるようになる
 
   data() {
     return {
@@ -47,7 +49,7 @@ export default {
   computed: {
     default_message() {
       if (this.error.statusCode === 404) {
-        return "ファイルが見つかりません"
+        return "ページが見つかりません"
       } else {
         return "ぶっこわれました"
       }
