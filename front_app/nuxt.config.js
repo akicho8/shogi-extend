@@ -83,12 +83,21 @@ const config = {
       { hid: 'description', name: 'description', content: SITE_DESC },
       { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://0.0.0.0:3000" : "") + "/maincable" },
 
-      // https://qiita.com/amishiro/items/e668be423a85c2b61696
-      // https://pwa.nuxtjs.org/meta#mobileappios
-      // https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
-      // https://medium.com/@firt/dont-use-ios-web-app-meta-tag-irresponsibly-in-your-progressive-web-apps-85d70f4438cb
-      { name: 'apple-mobile-web-app-capable',          content: 'yes'               },
-      { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+      // 「ホーム画面に追加」したあとアプリのような画面にする設定
+      //
+      //  ・画面は広くなる
+      //  ・が、iOS では localStorage がWEBと繋がっていない問題があったりなかったりする
+      //  ・ブラウザで使えた便利機能が一切使えなくなって困惑
+      //  ・何があっても他に遷移しない閉じたWEBサービスでしか使えない
+      //  ・のでいったんやめ
+      //
+      //   https://qiita.com/amishiro/items/e668be423a85c2b61696
+      //   https://pwa.nuxtjs.org/meta#mobileappios
+      //   https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
+      //   https://medium.com/@firt/dont-use-ios-web-app-meta-tag-irresponsibly-in-your-progressive-web-apps-85d70f4438cb
+      //
+      // { name: 'apple-mobile-web-app-capable',          content: 'yes'               },
+      // { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
 
       ////////////////////////////////////////////////////////////////////////////////
       { hid: "og:site_name",   property: "og:site_name",   content: process.env.APP_NAME },
