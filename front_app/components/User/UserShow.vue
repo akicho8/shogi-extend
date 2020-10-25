@@ -14,7 +14,7 @@
       template(slot="brand")
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
-          | {{record.name}}さんのプロフィール
+          | {{page_title}}
       template(slot="end" v-if="g_current_user && g_current_user.id === record.id")
         b-navbar-item(@click="sidebar_toggle")
           b-icon(icon="menu")
@@ -41,6 +41,18 @@ export default {
       sidebar_p: false,
     }
   },
+  head() {
+    if (this.record) {
+      return {
+        title: this.page_title,
+        meta: [
+          { hid: "og:title",       property: "og:title",       content: this.page_title                                    },
+          { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + this.record.avatar_path },
+          { hid: "og:description", property: "og:description", content: this.record.description                            },
+        ],
+      }
+    }
+  },
   fetch() {
     // http://0.0.0.0:3000/api/users/1.json
     // http://0.0.0.0:4000/users/1
@@ -64,6 +76,11 @@ export default {
     },
   },
   computed: {
+    page_title() {
+      if (this.record) {
+        return `${this.record.name}さん`
+      }
+    },
     twitter_key() {
       if (this.record) {
         return this.record.twitter_key
