@@ -183,8 +183,8 @@ module Swars
 
       it do
         battle = test("初段", "二段")
-        assert { battle.memberships[0].medal_params == {:icon => "numeric-1-circle",      :class => "has-text-gold"       }}
-        assert { battle.memberships[1].medal_params == {:icon => "emoticon-dead-outline", :class => "has-text-grey-light" }}
+        assert { battle.memberships[0].medal_params == {:message => "段級位が1つ上の人に勝った", :icon => "numeric-1-circle", :class => "has-text-gold"} }
+        assert { battle.memberships[1].medal_params == {:message => "段級位が1つ下の人に負けた", :emoji => "🥺"} }
       end
     end
   end

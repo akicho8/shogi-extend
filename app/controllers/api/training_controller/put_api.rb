@@ -174,36 +174,36 @@ module Api
         { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
       end
 
-      # curl -d _method=put -d user_name=a -d remote_action=user_profile_update -d _user_id=1 http://localhost:3000/api/training
-      def user_profile_update
-        raise "使用禁止"
-
-        user = current_user
-
-        if v = params[:croped_image]
-          bin = data_base64_body_to_binary(v)
-          io = StringIO.new(bin)
-          user.avatar.attach(io: io, filename: "user_icon.png")
-        end
-
-        user.name = params[:name]
-        user.name_input_at ||= Time.current
-        user.profile.description = params[:profile_description]
-        user.profile.twitter_key = params[:profile_twitter_key]
-        if user.invalid?
-          return { error_message: user.errors.full_messages.join(" ") }
-        end
-        user.save!
-
-        if user.saved_change_to_attribute?(:name_input_at)
-          if v = user.saved_change_to_attribute(:name)
-            pair = v.join("→")
-            ApplicationMailer.developper_notice(subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
-          end
-        end
-
-        { user: user.as_json_type9 }
-      end
+      # # curl -d _method=put -d user_name=a -d remote_action=user_profile_update -d _user_id=1 http://localhost:3000/api/training
+      # def user_profile_update
+      #   raise "使用禁止"
+      #
+      #   user = current_user
+      #
+      #   if v = params[:croped_image]
+      #     bin = data_base64_body_to_binary(v)
+      #     io = StringIO.new(bin)
+      #     user.avatar.attach(io: io, filename: "user_icon.png")
+      #   end
+      #
+      #   user.name = params[:name]
+      #   user.name_input_at ||= Time.current
+      #   user.profile.description = params[:profile_description]
+      #   user.profile.twitter_key = params[:profile_twitter_key]
+      #   if user.invalid?
+      #     return { error_message: user.errors.full_messages.join(" ") }
+      #   end
+      #   user.save!
+      #
+      #   if user.saved_change_to_attribute?(:name_input_at)
+      #     if v = user.saved_change_to_attribute(:name)
+      #       pair = v.join("→")
+      #       ApplicationMailer.developper_notice(subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
+      #     end
+      #   end
+      #
+      #   { user: user.as_json_type9 }
+      # end
 
       def append_tag_list_input_handle
         question = Actb::Question.find(params[:question_id])
@@ -234,7 +234,7 @@ module Api
       # from app/javascript/actb_app/the_profile_edit_form.vue profile_update_handle
       def data_base64_body_to_binary(data_base64_body)
         raise "must not happen"
-        
+
         md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<base64_bin>.*)/)
         md or raise ArgumentError, "Data URL scheme 形式になっていません : #{data_base64_body.inspect.truncate(80)}"
         Base64.decode64(md["base64_bin"])

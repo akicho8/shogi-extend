@@ -37,74 +37,74 @@
 require 'rails_helper'
 
 RSpec.describe FreeBattlesController, type: :controller do
-  before(:context) do
-    Actb.setup
-  end
-
-  before do
-    user_login(key: "sysop")
-
-    @free_battle = FreeBattle.create!
-  end
-
-  it "index" do
-    get :index
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "index + modal_id" do
-    get :index, params: { modal_id: @free_battle.to_param }
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "show html" do
-    get :show, params: {id: @free_battle.to_param}
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "show png" do
-    get :show, params: {id: @free_battle.to_param, format: "png"}
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "show png turn" do
-    get :show, params: {id: @free_battle.to_param, format: "png", turn: -1}
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "棋譜印刷" do
-    get :show, params: {id: @free_battle.to_param, formal_sheet: true}
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "new" do
-    get :new
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "コピペ新規" do
-    get :new, params: {source_id: @free_battle.to_param}
-    expect(response).to have_http_status(:redirect)
-  end
-
-  it "create" do
-    post :create, params: {}
-    expect(response).to have_http_status(:redirect)
-  end
-
-  it "edit" do
-    get :edit, params: {id: @free_battle.to_param}
-    expect(response).to have_http_status(:ok)
-  end
-
-  it "update" do
-    put :update, params: {id: @free_battle.to_param}
-    expect(response).to have_http_status(:redirect)
-  end
-
-  it "destroy" do
-    delete :destroy, params: {id: @free_battle.to_param}
-    assert { FreeBattle.where(id: @free_battle.to_param).none? }
-    expect(response).to have_http_status(:redirect)
-  end
+  # before(:context) do
+  #   Actb.setup
+  # end
+  #
+  # before do
+  #   user_login(key: "sysop")
+  #
+  #   @free_battle = FreeBattle.create!
+  # end
+  #
+  # it "index" do
+  #   get :index
+  #   expect(response).to have_http_status(:ok)
+  # end
+  #
+  # it "index + modal_id" do
+  #   get :index, params: { modal_id: @free_battle.to_param }
+  #   expect(response).to have_http_status(:ok)
+  # end
+  #
+  # it "show html" do
+  #   get :show, params: {id: @free_battle.to_param}
+  #   expect(response).to have_http_status(:ok)
+  # end
+  #
+  # it "show png" do
+  #   get :show, params: {id: @free_battle.to_param, format: "png"}
+  #   expect(response).to have_http_status(:ok)
+  # end
+  #
+  # it "show png turn" do
+  #   get :show, params: {id: @free_battle.to_param, format: "png", turn: -1}
+  #   expect(response).to have_http_status(:ok)
+  # end
+  #
+  # it "棋譜印刷" do
+  #   get :show, params: {id: @free_battle.to_param, formal_sheet: true}
+  #   expect(response).to have_http_status(:ok)
+  # end
+  #
+  # it "new" do
+  #   get :new
+  #   expect(response).to have_http_status(:ok)
+  # end
+  #
+  # it "コピペ新規" do
+  #   get :new, params: {source_id: @free_battle.to_param}
+  #   expect(response).to have_http_status(:redirect)
+  # end
+  #
+  # it "create" do
+  #   post :create, params: {}
+  #   expect(response).to have_http_status(:redirect)
+  # end
+  #
+  # it "edit" do
+  #   get :edit, params: {id: @free_battle.to_param}
+  #   expect(response).to have_http_status(:ok)
+  # end
+  #
+  # it "update" do
+  #   put :update, params: {id: @free_battle.to_param}
+  #   expect(response).to have_http_status(:redirect)
+  # end
+  #
+  # it "destroy" do
+  #   delete :destroy, params: {id: @free_battle.to_param}
+  #   assert { FreeBattle.where(id: @free_battle.to_param).none? }
+  #   expect(response).to have_http_status(:redirect)
+  # end
 end

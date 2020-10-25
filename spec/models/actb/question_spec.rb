@@ -142,7 +142,7 @@ module Actb
     end
 
     it "page_url" do
-      assert { question1.page_url == "http://0.0.0.0:3000/training?question_id=#{question1.id}" }
+      assert { question1.page_url == "http://0.0.0.0:4000/training?question_id=#{question1.id}" }
     end
 
     it "share_board_png_url" do

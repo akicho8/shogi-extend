@@ -53,7 +53,7 @@ RSpec.describe ShareBoardsController, type: :controller do
 
   it "Twitterカード用の画像パス" do
     get :show, params: { body: "68銀", image_flip: "true", format: "json" }
-    assert { controller.current_og_image_path == "http://test.host/share-board.png?body=position+startpos+moves+7i6h&image_view_point=self&turn=1" }
+    assert { controller.current_og_image_path == "http://test.host/share-board.png?body=position+startpos+moves+7i6h&image_flip=true&image_view_point=self&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=1" }
   end
 
   it "image_view_point の値がおかしいときにエラーにしない" do

@@ -36,7 +36,7 @@ class UserMailer < ApplicationMailer
       out << ""
       out << "--"
       out << "▼将棋トレーニングバトル"
-      out << url_for(:training)
+      out << UrlProxy.wrap2("/training")
     end
 
     body = out.join("\n")

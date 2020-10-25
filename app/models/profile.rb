@@ -28,6 +28,5 @@ class Profile < ApplicationRecord
 
   with_options allow_blank: true do
     validates :description, length: { maximum: 512 }
-    validates :twitter_key, length: { maximum: 15  }
   end
 end
