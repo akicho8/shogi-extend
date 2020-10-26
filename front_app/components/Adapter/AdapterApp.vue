@@ -191,7 +191,6 @@ export default {
     },
     kifu_copy_handle(kifu_type) {
       this.record_fetch(() => {
-        this.sound_play("click")
         if (kifu_type === "png") {
           this.toast_warn("画像はコピーできません")
           return
@@ -201,7 +200,6 @@ export default {
     },
     validate_handle() {
       this.record_fetch(() => {
-        this.sound_play("click")
         this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`)
       })
     },
@@ -213,7 +211,6 @@ export default {
     // 「棋譜印刷」
     kifu_paper_handle() {
       this.record_fetch(() => {
-        this.sound_play("click")
         this.$router.push({
           name: "adapter-key-formal-sheet",
           params: {
@@ -231,7 +228,6 @@ export default {
     // 「表示」
     kifu_show_handle(kifu_type) {
       this.record_fetch(() => {
-        this.sound_play('click')
         const url = this.kifu_show_url(kifu_type)
         this.popup_open(url)
       })
@@ -240,7 +236,6 @@ export default {
     // 「盤面」
     board_show_handle() {
       this.record_fetch(() => {
-        this.sound_play("click")
         // https://router.vuejs.org/guide/essentials/navigation.html#programmatic-navigation
         this.$router.push({
           name: "share-board",
@@ -286,6 +281,7 @@ export default {
     // private
 
     record_fetch(callback) {
+      this.sound_play("click")
       if (this.bs_error) {
         this.error_show()
         return
