@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   ################################################################################ 将棋ウォーズ棋譜検索
 
   swars_search_shared_redirect_block = -> (params, request) {
-    query = request.params.to_query.presence
+    query = request.params.except(:format).to_query.presence
     path = nil
 
     # http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
