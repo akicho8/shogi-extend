@@ -235,8 +235,8 @@
 
               b-table-column(v-slot="{row}")
                 .buttons.are-small
-                  PiyoShogiButton(type="button" :href="piyo_shogi_app_with_params_url(row)")
-                  KentoButton(tag="a" :href="kento_app_with_params_url(row)")
+                  PiyoShogiButton(type="button" :href="piyo_shogi_app_with_params_url(row)" @click="sound_play('click')")
+                  KentoButton(tag="a" :href="kento_app_with_params_url(row)" @click="sound_play('click')")
                   KifCopyButton(@click="kifu_copy_handle(row)")
                   b-button(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}}" @click.native="sound_play('click')") 詳細
 
