@@ -88,7 +88,7 @@ class ServiceInfo
       ogp_image_base: "swars-histograms-attack",
       description: "人気戦法を知りたいときにどうぞ",
       features: [
-        "そこそこ変動するように最近のだけ出してる",
+        "変動するように最近のだけ出してる",
         "囲いや段級位の分布もある",
         "人気戦法の対策をすれば勝ちやすいかも？",
       ],
@@ -109,9 +109,8 @@ class ServiceInfo
       nuxt_link_to: {path: "/swars/professional"},
       title: "将棋ウォーズ十段の成績",
       ogp_image_base: "swars-professional",
-      description: "プロの棋譜を探したいときにどうぞ",
+      description: "プロの棋譜を見たいときにどうぞ",
       features: [
-        "十段のプレイヤーを列挙しているだけ",
         "名前タップで棋譜検索に飛ぶ",
         "なぜか電脳少女シロもいる",
       ],
@@ -121,7 +120,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/three-stage-leagues"},
       title: "奨励会三段リーグ成績早見表",
       ogp_image_base: "three-stage-league-players",
-      description: "連盟のサイトでは把握しずらい個人成績を見たいときにどうぞ",
+      description: "個人成績を見たいときにどうぞ",
       features: [
         "スマホに最適化",
         "個人毎の総成績表示",
