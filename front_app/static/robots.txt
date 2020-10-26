@@ -1,9 +1,16 @@
 # https://developers.google.com/search/reference/robots_txt?hl=ja
 
 user-agent: *
-disallow: /settings
+
 disallow: /x/
+disallow: /settings/
+disallow: /experiment/
 disallow: /xusers/
+disallow: /swars/users/*/direct-open/
+disallow: /swars/users/*/kento-api
+
+disallow: /launcher
+
 disallow: /*.kif
 disallow: /*.ki2
 disallow: /*.sfen
