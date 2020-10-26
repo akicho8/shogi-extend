@@ -1,0 +1,13 @@
+# https://developers.google.com/search/reference/robots_txt?hl=ja
+
+user-agent: *
+disallow: /settings
+disallow: /x/
+disallow: /xusers/
+disallow: /*.kif
+disallow: /*.ki2
+disallow: /*.sfen
+disallow: /*.csa
+disallow: /*.bod
+
+sitemap: https://www.shogi-extend.com/sitemap.xml.gz
