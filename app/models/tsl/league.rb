@@ -45,5 +45,10 @@ module Tsl
     def source_url
       Tsl::Scraping.new(generation: generation).source_url
     end
+
+    # 最新か？
+    def newest_record?
+      self.class.newest_order.first == self
+    end
   end
 end
