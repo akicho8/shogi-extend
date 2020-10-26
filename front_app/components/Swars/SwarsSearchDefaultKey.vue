@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     page_title() {
-      return "検索初期値設定"
+      return "検索初期値の設定"
     },
     new_key() {
       return this.$route.params.key

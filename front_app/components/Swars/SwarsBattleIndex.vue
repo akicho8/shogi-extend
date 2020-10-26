@@ -67,13 +67,13 @@
 
         b-menu-list(label="便利な使い方あれこれ")
           b-menu-item(
-            label="検索初期値設定"
+            label="検索初期値の設定"
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-default-key', params: {key: config.current_swars_user_key}}"
             :disabled="!config.current_swars_user_key")
 
-          b-menu-item(label="ホーム画面に追加する" @click="bookmark_desc" :disabled="!config.current_swars_user_key")
+          b-menu-item(label="ホーム画面に追加" @click="bookmark_desc" :disabled="!config.current_swars_user_key")
 
           b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
@@ -328,7 +328,7 @@ export default {
       this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.dialog.alert({
-        title: "ホーム画面に追加する",
+        title: "ホーム画面に追加",
         message: "<b>検索直後</b>のページを<b>ホーム画面に追加</b>かブックマークしておくと次からウォーズIDを入力する手間を省けます",
         canCancel: ["outside", "escape"],
         confirmText: "わかった",
