@@ -5,6 +5,7 @@
   DebugBox
     p $route.query: {{$route.query}}
     p g_current_user: {{g_current_user && g_current_user.id}}
+    p visible_hash: {{visible_hash}}
 
   b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right v-model="sidebar_p" v-if="config")
     .mx-4.my-4

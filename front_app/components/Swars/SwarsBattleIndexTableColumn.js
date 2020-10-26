@@ -25,7 +25,7 @@ export default {
   },
 
   computed: {
-    // 表示している列のカラム名の配列
+    // 表示している列のカラム名の配列 (未使用)
     // { xxx: true, yyy: false } -> [xxx]
     visible_only_keys() {
       const ary = _.map(this.visible_hash, (value, key) => {
