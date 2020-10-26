@@ -27,6 +27,9 @@
 //   }
 
 import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
+import _ from "lodash"
+
+const HASH_MERGE_P = true // ハッシュは復元するときに初期値に対してマージするか？
 
 export default {
   beforeDestroy() {
@@ -64,11 +67,20 @@ export default {
         hash = {}
       }
       this.ls_keys.forEach(key => {
+        const d = this.ls_default[key]    // => {a: 1, b: 2} (default value)
+        let v = null
         if (key in hash) {
-          this[key] = hash[key]
+          const s = hash[key]             // => {a: 0,     } (stored value)
+          if (HASH_MERGE_P && _.isPlainObject(d) && _.isPlainObject(s)) {
+            v = {..._.cloneDeep(d), ...s} // => {a: 0, b: 2} 初期値に対してマージ
+            this.clog("ls_restore", v)
+          } else {
+            v = s                         // マージできないのでストアされたものをそのまま使う
+          }
         } else {
-          this[key] = this.ls_default[key] // 初期値設定
+          v = d
         }
+        this[key] = v
       })
     },
 

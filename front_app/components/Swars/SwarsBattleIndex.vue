@@ -194,7 +194,7 @@
 
               SwarsBattleIndexTableEmpty(slot="empty" v-if="!$fetchState.pending && $route.query.query && config.total === 0")
 
-              b-table-column(v-slot="{row}" field="id" :label="config.table_columns_hash['id'].label" :visible="visible_hash.id" sortable numeric v-if="config.table_columns_hash.id")
+              b-table-column(v-slot="{row}" field="id" :label="config.table_columns_hash['id'].label" :visible="!!visible_hash.id" sortable numeric v-if="config.table_columns_hash.id")
                 a(@click="show_handle(row)") \#{{row.id}}
 
               template(v-if="config.current_swars_user_key")
@@ -208,29 +208,29 @@
                 b-table-column(v-slot="{row}" label="負け")
                   SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
 
-              b-table-column(v-slot="{row}" field="final_key" :label="config.table_columns_hash.final_info.label" :visible="visible_hash.final_info" sortable)
+              b-table-column(v-slot="{row}" field="final_key" :label="config.table_columns_hash.final_info.label" :visible="!!visible_hash.final_info" sortable)
                 span(:class="row.final_info.class")
                   | {{row.final_info.name}}
 
-              b-table-column(v-slot="{row}" field="turn_max" :label="config.table_columns_hash.turn_max.label" :visible="visible_hash.turn_max" sortable numeric)
+              b-table-column(v-slot="{row}" field="turn_max" :label="config.table_columns_hash.turn_max.label" :visible="!!visible_hash.turn_max" sortable numeric)
                 | {{row.turn_max}}
 
-              b-table-column(v-slot="{row}" field="critical_turn" :label="config.table_columns_hash.critical_turn.label" :visible="visible_hash.critical_turn" sortable numeric v-if="config.table_columns_hash.critical_turn")
+              b-table-column(v-slot="{row}" field="critical_turn" :label="config.table_columns_hash.critical_turn.label" :visible="!!visible_hash.critical_turn" sortable numeric v-if="config.table_columns_hash.critical_turn")
                 | {{row.critical_turn}}
 
-              b-table-column(v-slot="{row}" field="outbreak_turn" :label="config.table_columns_hash.outbreak_turn.label" :visible="visible_hash.outbreak_turn" sortable numeric v-if="config.table_columns_hash.outbreak_turn")
+              b-table-column(v-slot="{row}" field="outbreak_turn" :label="config.table_columns_hash.outbreak_turn.label" :visible="!!visible_hash.outbreak_turn" sortable numeric v-if="config.table_columns_hash.outbreak_turn")
                 | {{row.outbreak_turn}}
 
-              b-table-column(v-slot="{row}" field="grade_diff" :label="config.table_columns_hash.grade_diff.label" :visible="visible_hash.grade_diff" sortable numeric v-if="config.table_columns_hash.grade_diff")
+              b-table-column(v-slot="{row}" field="grade_diff" :label="config.table_columns_hash.grade_diff.label" :visible="!!visible_hash.grade_diff" sortable numeric v-if="config.table_columns_hash.grade_diff")
                 | {{row.grade_diff}}
 
-              b-table-column(v-slot="{row}" field="rule_key" :label="config.table_columns_hash.rule_info.label" :visible="visible_hash.rule_info" sortable)
+              b-table-column(v-slot="{row}" field="rule_key" :label="config.table_columns_hash.rule_info.label" :visible="!!visible_hash.rule_info" sortable)
                 | {{row.rule_info.name}}
 
-              b-table-column(v-slot="{row}" field="preset_key" :label="config.table_columns_hash.preset_info.label" :visible="visible_hash.preset_info" sortable)
+              b-table-column(v-slot="{row}" field="preset_key" :label="config.table_columns_hash.preset_info.label" :visible="!!visible_hash.preset_info" sortable)
                 | {{row.preset_info.name}}
 
-              b-table-column(v-slot="{row}" field="battled_at" :label="config.table_columns_hash.battled_at.label" :visible="visible_hash.battled_at" sortable)
+              b-table-column(v-slot="{row}" field="battled_at" :label="config.table_columns_hash.battled_at.label" :visible="!!visible_hash.battled_at" sortable)
                 | {{row_time_format(row.battled_at)}}
 
               b-table-column(v-slot="{row}")

@@ -116,7 +116,7 @@
                   b-table-column(v-slot="props" field="rank"       label="順位"  numeric centered :width="1") {{props.row.rank}}
                   b-table-column(v-slot="props" field="entry_name" label="名前"  sortable) {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
                   b-table-column(v-slot="props" field="spent_sec"  label="タイム") {{time_format_from_msec(props.row.spent_sec)}}
-                  b-table-column(v-slot="props" field="created_at" label="日付" :visible="curent_scope.date_visible") {{time_default_format(props.row.created_at)}}
+                  b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!curent_scope.date_visible") {{time_default_format(props.row.created_at)}}
 
           .has-text-centered-mobile
             b-switch(v-model="entry_name_unique") プレイヤー別順位
