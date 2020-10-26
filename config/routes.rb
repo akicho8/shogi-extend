@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   ################################################################################ プロフィール編集など
 
-  resources :users
+  resources :users, path: "accounts"
 
   ################################################################################ Debug
 
@@ -27,6 +27,45 @@ Rails.application.routes.draw do
   get :login, to: "login#show"
 
   ################################################################################ 将棋ウォーズ棋譜検索
+
+  swars_search_shared_redirect_block = -> (params, request) {
+    query = request.params.except(:format).to_query.presence
+    path = nil
+
+    # http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
+    unless path
+      if modal_id = request.params[:modal_id]
+        path = { path: "/swars/battles/#{modal_id}", query: query }
+      end
+    end
+
+    # http://0.0.0.0:3000/w?query=devuser1&latest_open_index=0&external_app_key=piyo_shogi
+    unless path
+      if request.params[:latest_open_index]
+        user_key = request.params[:query]
+        external_app_key = params[:external_app_key] || :piyo_shogi
+        path = "/swars/users/#{user_key}/direct-open/#{external_app_key}"
+      end
+    end
+
+    # http://0.0.0.0:3000/w?query=devuser1&user_info_show=true
+    unless path
+      if request.params[:user_info_show]
+        user_key = request.params[:query]
+        path = "/swars/users/#{user_key}"
+      end
+    end
+
+    # http://0.0.0.0:3000/w?query=devuser1
+    unless path
+      path = { path: "/swars/search", query: query }
+    end
+
+    UrlProxy.wrap(path)
+  }
+
+  get "w",       format: "html", to: redirect(&swars_search_shared_redirect_block)
+  get "w-light", format: "html", to: redirect(&swars_search_shared_redirect_block)
 
   namespace :swars, path: "" do
     resources :battles, path: "w"
@@ -52,7 +91,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 将棋トレーニングバトル
 
-  match "training", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
+  # match "training", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
 
   ################################################################################ scripts
 
@@ -66,14 +105,46 @@ Rails.application.routes.draw do
   match "ping(.:format)", to: "api/etc#ping", via: :all, format: nil
 
   namespace :api, format: "json" do
-    match "ping(.:format)", to: "etc#ping", via: :all, format: nil
-    match "echo(.:format)", to: "etc#echo", via: :all, format: nil
+    match "ping(.:format)",  to: "etc#ping",  via: :all, format: nil
+    match "echo(.:format)",  to: "etc#echo",  via: :all, format: nil
+    match "sleep(.:format)", to: "etc#sleep", via: :all, format: nil
 
-    resource :general, only: [:show] do
-      match "any_source_to", via: [:get, :post]
+    get "tsl_user_all(.:format)",      to: "etc#tsl_user_all"
+    get "tsl_user_newest(.:format)",   to: "etc#tsl_user_newest"
+    get "tsl_league_all(.:format)",    to: "etc#tsl_league_all"
+    get "tsl_league_newest(.:format)", to: "etc#tsl_league_newest"
+
+    post "swars/download_set(.:format)",                  to: "swars#download_set"
+    post "swars/crawler_run(.:format)",                   to: "swars#crawler_run"
+    get "swars/remember_swars_user_keys_fetch(.:format)", to: "swars#remember_swars_user_keys_fetch"
+
+    match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
+
+    get "training(.:format)", to: "training#show",   format: nil # /training.zip もある
+    put "training(.:format)", to: "training#update", format: nil
+
+    resource :session, only: [] do
+      get :auth_user_fetch
+      delete :auth_user_logout   # ログアウト
     end
+
+    resource :settings, only: [] do
+      put :profile_update
+      get :email_fetch
+      put :email_update
+      get :swars_user_key_fetch
+      put :swars_user_key_update
+    end
+
+    resource :adapter, only: [] do
+      get :formal_sheet
+      post :record_create
+    end
+
     resource :talk, only: [:show, :create]
+    resources :service_infos, only: :index
     resources :xy_records, path: "xy", only: [:index, :create, :update]
+    resources :users
     resource :cpu_battle, only: [:show, :create]
     resource :share_board, only: [:show, :create]
     resource :three_stage_league, only: [:show]
@@ -81,7 +152,7 @@ Rails.application.routes.draw do
     resource :swars_grade_histogram, only: [:show]
     resource :swars_histogram, only: [:show]
     resource :professional, only: [:show]
-    resource :top_runner, only: [:show]
+    resource :top_group, only: [:show]
   end
 
   ################################################################################ admin

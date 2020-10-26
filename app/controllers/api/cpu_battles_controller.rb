@@ -308,7 +308,7 @@ module Api
               names = last.skill_set.flat_map { |e| e.collect(&:name) }
               names = names.reject { |e| e.in?(["居飛車", "振り飛車"]) }
               if names.present?
-                sound_play(:shine) # このメソッドはない
+                # sound_play(:shine) # このメソッドはない
                 talk(names.join("、"))
                 names.each { |e| toast_message(e) }
               end

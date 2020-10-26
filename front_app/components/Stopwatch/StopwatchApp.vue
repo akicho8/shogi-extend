@@ -1,103 +1,110 @@
 <template lang="pug">
 .StopwatchApp
-  b-navbar(type="is-primary")
+  b-sidebar.is-unselectable.StopwatchApp-Sidebar(fullheight right v-model="sidebar_p" overlay)
+    .mx-4.my-4
+      b-menu
+        b-menu-list(label="Action")
+          b-menu-item(label="最後のタイムだけリセット (r)"   @click="rap_reset"     :disabled="lap_counter === 0")
+          b-menu-item(label="1つ前に戻す (z)"                @click="revert_handle" :disabled="rows.length === 0")
+          b-menu-item(label="最後の解答の正誤を反転する (t)" @click="toggle_handle" :disabled="rows.length === 0")
+
+        b-menu-list(label="再テスト")
+          b-menu-item(label="不正解のみ"         @click="reset_by_x"                :disabled="rows.length === 0 || mode === 'playing'")
+          b-menu-item(label="不正解と指定秒以上" @click="reset_by_x_with_n_seconds" :disabled="rows.length === 0 || mode === 'playing'")
+
+        b-menu-list(label="その他")
+          b-menu-item(label="操作を間違えたら？" @click="history_modal_show"   :disabled="mode !== 'standby'")
+          b-menu-item(label="パーマリンク"       @click="parmalink_modal_show" :disabled="mode !== 'standby'")
+          b-menu-item(label="キーボード操作"     @click="keyboard_modal_show"                                )
+
+  MainNavbar
     template(slot="brand")
+      NavbarItemHome
       b-navbar-item.has-text-weight-bold(@click="book_title_input_dialog") {{book_title}}
     template(slot="end")
-      b-navbar-dropdown(hoverable arrowless right)
-        template(slot="label")
-          b-icon(icon="cog")
-        b-navbar-item(@click="rap_reset") 最後のタイムだけリセット (r)
-        b-navbar-item(@click="revert_handle") 1つ前に戻す (z)
-        b-navbar-item(@click="toggle_handle") 最後の解答の正誤を反転する (t)
-        b-navbar-item(@click="reset_by_x") 不正解だけ再テスト
-        b-navbar-item(@click="reset_by_x_with_n_seconds") 不正解と指定秒以上だった問の再テスト
-      b-navbar-item(@click="history_modal_show" v-if="mode === 'standby'")
-        b-icon(icon="history")
-      b-navbar-item(@click="parmalink_modal_show" v-if="mode === 'standby'")
-        b-icon(icon="link")
-      b-navbar-item(@click="keyboard_modal_show")
-        b-icon(icon="keyboard")
-      b-navbar-item(tag="a" href="/") TOP
+      b-navbar-item(@click="sidebar_toggle")
+        b-icon(icon="menu")
 
-  .section.pt-4
-    .columns
-      .column.is-half
-        .box.main_box.is_line_break_off.is-shadowless
-          .has-text-centered
-            .lap_time
-              span.quest_digit(@click="track_input_dialog")
-                | {{quest_name(new_quest)}}
-              span.has-text-grey-lighter
-                |
-                | -
-              span.current_digit(@click="lap_counter_input_dialog")
-                | {{time_format(lap_counter)}}
-            .has-text-grey-light.total_time.mt-2
-              b-tooltip(label="トータル" position="is-right")
-                | {{ja_time_format(total_with_lap_seconds)}}
-            .buttons.is-centered.start_or_stop
-              template(v-if="mode === 'standby'")
-                button.button.is-large.is-primary.other_button(@click="start_handle")
-                  b-icon(icon="play" size="is-large")
+  MainSection
+    .container
+      .columns
+        .column.is-half
+          .box.main_box.is_line_break_off.is-shadowless.has-background-white-bis
+            .has-text-centered
+              .lap_time
+                span.quest_digit(@click="track_input_dialog")
+                  | {{quest_name(new_quest)}}
+                span.has-text-grey-lighter
+                  |
+                  | -
+                span.current_digit(@click="lap_counter_input_dialog")
+                  | {{time_format(lap_counter)}}
+              .has-text-grey-light.total_time.mt-2
+                b-tooltip(label="トータル" position="is-right")
+                  | {{ja_time_format(total_with_lap_seconds)}}
+              .buttons.is-centered.start_or_stop
+                template(v-if="mode === 'standby'")
+                  button.button.is-large.is-primary.other_button(@click="start_handle")
+                    b-icon(icon="play" size="is-large")
 
-              template(v-if="mode !== 'standby'")
-                button.button.is-large.is-danger.other_button(@click="stop_handle")
-                  b-icon(icon="stop" size="is-large")
+                template(v-if="mode !== 'standby'")
+                  button.button.is-large.is-danger.other_button(@click="stop_handle")
+                    b-icon(icon="stop" size="is-large")
 
-            template(v-if="mode === 'playing'")
-              .buttons.is-centered.ox_buttons
-                button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
-                button.button.is-large.is-primary.is-outlined.ox_button(@click="lap_handle('x')" ref="x_button_ref") ×
+              template(v-if="mode === 'playing'")
+                .buttons.is-centered.ox_buttons
+                  button.button.is-large.is-primary.is-outlined(@click="lap_handle('o')" ref="o_button_ref") ○
+                  button.button.is-large.is-primary.is-outlined(@click="lap_handle('x')" ref="x_button_ref") ×
 
-            template(v-if="mode !== 'playing'")
-              button.button.is-large.other_button(@click="reset_handle" key="reset_key" v-if="total_with_lap_seconds !== 0") リセット
+              template(v-if="mode !== 'playing'")
+                button.button.is-large.other_button(@click="reset_handle" key="reset_key" v-if="total_with_lap_seconds !== 0") リセット
 
-        template(v-if="mode === 'standby'")
-          template(v-if="quest_list.length === 0 || true")
-            .field.is-small
-              label.label.is-small
-                | 問題番号
-                | &nbsp;
-                a.is-link(@click.prevent="current_track = 1")
-                  | (1に設定)
-              .control
-                b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true" size="is-small")
+          template(v-if="mode === 'standby'")
+            template(v-if="quest_list.length === 0 || true")
+              .field
+                label.label
+                  | 問題番号
+                  a.mx-1.is-link(@click.prevent="current_track = 1") (1に設定)
+                .control
+                  b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true")
 
-        .field.quest_text(v-if="mode === 'standby'")
-          .control
-            textarea.textarea.is-small(v-model.trim="quest_text" rows="2" placeholder="スペース区切りで並べると問題を置き換える")
-            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
-            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
-            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
-            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
-            a.mx-1.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
-            a.mx-1.is-link.is-size-7(@click.prevent="quest_generate") 生成
+          .field.mt-5(v-if="mode === 'standby'")
+            .control
+              textarea.textarea(v-model.trim="quest_text" rows="3" placeholder="スペース区切りで並べると問題を置き換える")
+              a.mx-1.is-link.is-size-7(@click.prevent="quest_text_clear") クリア
+              a.mx-1.is-link.is-size-7(@click.prevent="quest_text_sort") ソート
+              a.mx-1.is-link.is-size-7(@click.prevent="quest_text_uniq") ユニーク
+              a.mx-1.is-link.is-size-7(@click.prevent="quest_text_shuffle") シャッフル
+              a.mx-1.is-link.is-size-7(@click.prevent="quest_text_reverse") 反転
+              a.mx-1.is-link.is-size-7(@click.prevent="quest_generate") 生成
 
-        .columns(v-if="mode === 'standby'")
-          .column
-            b-field(label="1問毎のタイムアウト(秒)" expanded custom-class="is-small")
-              b-numberinput(v-model.number="timeout_sec" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
-          .column
-            b-field(label="全体の制限時間(分)" expanded custom-class="is-small")
-              b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" size="is-small")
+          .columns.mt-3(v-if="mode === 'standby'")
+            .column
+              b-field(label="1問毎のタイムアウト(秒)" expanded)
+                b-numberinput(v-model.number="timeout_sec" :min="0" step="1" controls-position="compact" :expanded="true")
+            .column
+              b-field(label="全体の制限時間(分)" expanded)
+                b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true")
 
-      .column
-        b-tabs.result_body(expanded v-model="format_index" @input="sound_play('click')")
-          template(v-for="(value, key) in format_all")
-            b-tab-item(:label="key")
-              a.is-pulled-right.clipboard_copy(@click.stop.prevent="copy_handle(value)")
-                b-icon(icon="clipboard-plus-outline")
-              | {{value}}
+        .column
+          b-tabs.result_body(expanded v-model="format_index" @input="sound_play('click')")
+            template(v-for="(value, key) in format_all")
+              b-tab-item(:label="key")
+                a.is-pulled-right.clipboard_copy(@click.stop.prevent="copy_handle(value)")
+                  b-icon(icon="clipboard-plus-outline")
+                | {{value}}
 
-        template(v-if="rows.length >= 1")
-          .has-text-centered
-            b-button(tag="a" :href="tweet_url" target="_blank" icon-left="twitter" size="is-small" type="is-info" rounded) ツイート
+          template(v-if="rows.length >= 1")
+            .has-text-centered
+              b-button(tag="a" :href="tweet_url" target="_blank" icon-left="twitter" type="is-twitter" rounded) Tweet
+
+  DebugPre
+    div rows = {{rows}}
 </template>
 
 <script>
 const HYPHEN_SEP = " "
-const TITLE_DEFAULT = "詰将棋RTA用ストップウォッチ"
+const TITLE_DEFAULT = "詰将棋用ストップウォッチ"
 
 import _ from "lodash"
 import dayjs from "dayjs"
@@ -109,8 +116,8 @@ import { support } from './support.js'
 import { IntervalRunner } from '@/components/models/IntervalRunner.js'
 
 import StopwatchPermalinkModal from './StopwatchPermalinkModal.vue'
-import StopwatchHistoryModal from './StopwatchHistoryModal.vue'
-import StopwatchKeyboardModal from './StopwatchKeyboardModal.vue'
+import StopwatchHistoryModal   from './StopwatchHistoryModal.vue'
+import StopwatchKeyboardModal  from './StopwatchKeyboardModal.vue'
 
 import MemoryRecord from 'js-memory-record'
 
@@ -145,6 +152,7 @@ export default {
       book_title: null,
       timeout_sec: null,
       total_timeout_min: null,
+      sidebar_p: false,
     }
   },
 
@@ -157,12 +165,18 @@ export default {
   },
 
   methods: {
+    sidebar_toggle() {
+      this.sound_play("click")
+      this.sidebar_p = !this.sidebar_p
+    },
+
     copy_handle(text) {
       this.sound_play("click")
       this.clipboard_copy({text: text})
     },
 
     parmalink_modal_show() {
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
         parent: this,
@@ -175,6 +189,7 @@ export default {
     },
 
     history_modal_show() {
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
         parent: this,
@@ -187,6 +202,7 @@ export default {
     },
 
     keyboard_modal_show() {
+      this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
         parent: this,
@@ -303,7 +319,6 @@ export default {
       this.sound_play("start")
       this.track_next()
       this.memento_create("start")
-      this.alive_notice()
     },
 
     button_focus(o_or_x) {
@@ -315,30 +330,20 @@ export default {
       this.mode = "standby"
       this.interval_runner.stop()
       this.memento_create("stop")
-      this.alive_notice()
-    },
-
-    alive_notice() {
-      // this.silent_remote_fetch("POST", this.$root.$options.post_path, {
-      //   mode: this.mode,
-      //   summary: this.summary,
-      //   book_title: this.book_title,
-      // })
-    },
-
-    stop_if_playing() {
-      if (this.mode === "playing") {
-        this.stop_handle()
-      }
     },
 
     reset_handle() {
       this.sound_play("click")
+      this.reset()
+    },
+
+    reset() {
       this.rows = []
       this.lap_counter = 0
     },
 
     toggle_handle() {
+      this.sidebar_p = false
       const last = _.last(this.rows)
       if (last) {
         if (last.o_or_x === "x") {
@@ -428,6 +433,8 @@ export default {
     },
 
     revert_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
       if (this.rows.length >= 1) {
         this.rows.pop()
         this.current_track -= 1
@@ -437,6 +444,8 @@ export default {
     },
 
     rap_reset() {
+      this.sidebar_p = false
+      this.sound_play("click")
       this.lap_counter = 0
       this.notice(`最後のタイムだけリセットしました`)
     },
@@ -509,12 +518,12 @@ export default {
     },
 
     reset_by_x() {
+      this.sidebar_p = false
+      this.sound_play("click")
       this.reset_by_x_with_drop(null)
     },
 
     reset_by_x_with_drop(drop_seconds) {
-      this.stop_if_playing()
-
       let list = []
 
       list = _.concat(list, this.x_list)
@@ -534,11 +543,13 @@ export default {
         this.quest_text_sort()
 
         this.current_track = 1
-        this.reset_handle()
+        this.reset()
       }
     },
 
     reset_by_x_with_n_seconds() {
+      this.sidebar_p = false
+      this.sound_play("click")
       this.$buefy.dialog.prompt({
         message: "秒",
         confirmText: "OK",
@@ -868,6 +879,14 @@ export default {
 <style lang="sass">
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap")
 
+.StopwatchApp-Sidebar
+  .sidebar-content
+    width: unset
+    a
+      white-space: nowrap
+    .menu-label:not(:first-child)
+      margin-top: 2em
+
 .StopwatchApp
   touch-action: manipulation
 
@@ -877,7 +896,6 @@ export default {
 
   .main_box
     margin-top: 0.6rem
-    background-color: hsl(0, 0%, 98%)
 
     position: relative
     .options_doropdown

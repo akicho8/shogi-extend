@@ -1,27 +1,14 @@
-@import "customize.scss"
+@import "bulma_init.scss"
+@import "css_macro.sass"
 
 @import "~bulma"
 @import "~buefy/src/scss/buefy"
 
-@import "../app/javascript/stylesheets/bulma_support"
-@import "../app/javascript/stylesheets/buefy_support"
+@import "bulma_support"
+@import "buefy_support"
+@import "general"
 
-// // helper的なもの
-// @import "../app/javascript/stylesheets/flex_box"
-//
-// // components
-// @import "../app/javascript/stylesheets/formal_sheet/all"
-@import "../app/javascript/stylesheets/shogi_player"
-//
-// // その他
-@import "../app/javascript/stylesheets/general"
-// @import "../app/javascript/stylesheets/layout"
-// @import "../app/javascript/stylesheets/chore"
-// @import "../app/javascript/stylesheets/colosseum"
-// @import "../app/javascript/stylesheets/battle_table"
-// @import "../app/javascript/stylesheets/free_battle"
-
-// /** トランジション */
+// トランジション
 // .page-enter-active, .page-leave-active
 //   transition: opacity .2s
 // .page-enter, .page-leave-to

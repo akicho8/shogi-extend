@@ -1,3 +1,4 @@
+
 module UserCoreMod
   extend ActiveSupport::Concern
 
@@ -41,7 +42,12 @@ module UserCoreMod
 
       self.key ||= SecureRandom.hex
       self.user_agent ||= ""
-      self.name ||= ""
+      self.name ||= name.to_s.strip
+
+      if Rails.env.development?
+        self.name = name.gsub(/foo/, "bar")
+      end
+
       if name.present?
         self.name_input_at ||= Time.current
       end

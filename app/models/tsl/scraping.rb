@@ -4,11 +4,11 @@ module Tsl
   class Scraping
     cattr_accessor(:league_range)  do
       if Rails.env.production? || Rails.env.staging?
-        28..67
+        28..68
       elsif Rails.env.test?
         [66]
       else
-        [28, 66, 67]
+        [28, 66, 68]
       end
     end
 

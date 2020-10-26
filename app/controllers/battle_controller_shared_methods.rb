@@ -11,22 +11,11 @@ module BattleControllerSharedMethods
   include PageMod
 
   concerning :IndexMethods do
-    included do
-      helper_method :current_per
-      helper_method :current_placeholder
-      helper_method :js_index_options
-
-      before_action do
-        if params[:modal_id] && !modal_record
-          flash.now[:alert] = "#{params[:modal_id]} に対応するレコードが見つかりませんでした"
-        end
-      end
-    end
-
     let :current_records do
       s = current_index_scope
       s = s.select(current_model.column_names - exclude_column_names)
-      s = sort_scope(s).order(id: :desc) # 2番目のソートもつけないとゆらぐ
+      s = sort_scope(s)
+      s = s.order(id: :desc) # 順序揺れ防止策
       s = page_scope(s)
     end
 
@@ -46,20 +35,17 @@ module BattleControllerSharedMethods
 
     def js_index_options
       {
-        :query                           => current_query || "",
-        :modal_record                    => js_modal_record,
-        :search_scope_key                => current_search_scope_key,
-        :board_show_type                 => params[:board_show_type].presence || "none",
-        :xhr_index_path                  => polymorphic_path([ns_prefix, current_plural_key]),
-        :records                         => [],                          # JS側から最初のリクエストをしない場合は js_current_records を渡す
-        :table_columns_hash              => table_columns_hash,
-        :table_column_storage_prefix_key => controller_path,
-        :zip_kifu_info                   => ZipKifuInfo.as_json,
+        :query              => current_query || "",
+        :display_key        => params[:display_key].presence || "table",
+        :zip_kifu_info      => ZipKifuInfo.as_json,
+        :table_columns_hash => table_columns_hash,
+        :records            => js_current_records,                  # JS側から最初のリクエストをしない場合は js_current_records を渡す
       }.merge(page_info(current_records), sort_info)
     end
 
     private
 
+    # FIXME: flashが動作しない
     def behavior_after_rescue(message)
       redirect_to [:swars, :battles], danger: message
     end
@@ -68,11 +54,6 @@ module BattleControllerSharedMethods
   concerning :QueryMethods do
     included do
       helper_method :current_query
-      helper_method :current_search_scope_key
-    end
-
-    let :current_search_scope_key do
-      (params[:search_scope_key].presence || SearchScopeInfo.fetch(:ss_public).key).to_sym
     end
 
     let :current_query do
@@ -102,7 +83,6 @@ module BattleControllerSharedMethods
         s = s.where(battled_at: v...v.tomorrow)
       end
 
-      s = search_scope_add(s)
       s = other_scope_add(s)
       if v = query_info.lookup(:ids)
         s = s.where(id: v)
@@ -118,31 +98,6 @@ module BattleControllerSharedMethods
           #   s = s.merge(w)
           # end
           # # raise s.to_sql.inspect
-        end
-      end
-      s
-    end
-
-    def search_scope_add(s)
-      case current_search_scope_key
-      when :ss_public
-        s = s.where(saturn_key: :public)
-      when :ss_my_public
-        s = s.where(saturn_key: :public)
-        s = s.where(user: current_user)
-        unless current_user
-          s = s.none
-        end
-      when :ss_my_private
-        s = s.where(saturn_key: :private)
-        s = s.where(user: current_user)
-        unless current_user
-          s = s.none
-        end
-      when :ss_my_all
-        s = s.where(user: current_user)
-        unless current_user
-          s = s.none
         end
       end
       s
@@ -200,9 +155,6 @@ module BattleControllerSharedMethods
 
   concerning :ShowMethods do
     included do
-      helper_method :js_show_options
-      helper_method :decorator
-
       before_action only: [:edit, :update, :destroy] do
         if request.format.html?
           unless editable_record?(current_record)
@@ -223,8 +175,22 @@ module BattleControllerSharedMethods
       access_log_create(current_record)
 
       if request.format.json?
+        if params[:formal_sheet]
+          render json: decorator.as_json
+          return
+        end
+      end
+
+      if request.format.json?
+        if params[:basic_fetch]
+          render json: js_record_for(current_record)
+          return
+        end
+      end
+
+      if request.format.json?
         if params[:time_chart_fetch]
-          slack_message(key: "時間チャート", body: current_record.title)
+          # slack_message(key: "時間チャート", body: current_record.title)
           # Rails.logger.debug(current_record.time_chart_params)
           render json: { time_chart_params: current_record.time_chart_params }
           return
@@ -234,15 +200,15 @@ module BattleControllerSharedMethods
         return
       end
 
-      if params[:formal_sheet]
-        if (Rails.env.production? || Rails.env.staging?) && !bot_agent?
-          slack_message(key: "棋譜用紙", body: current_record.title)
-        end
-
-        # if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
-        #   flash.now[:warning] = "Safari では正しくレイアウトできてないので Google Chrome で開いてください"
-        # end
-      end
+      # if params[:formal_sheet]
+      #   if (Rails.env.production? || Rails.env.staging?) && !bot_agent?
+      #     slack_message(key: "棋譜用紙", body: current_record.title)
+      #   end
+      #
+      #   # if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
+      #   #   flash.now[:warning] = "Safari では正しくレイアウトできてないので Google Chrome で開いてください"
+      #   # end
+      # end
 
       respond_to do |format|
         format.html
@@ -257,7 +223,6 @@ module BattleControllerSharedMethods
 
     let :js_show_options do
       a = {}
-      a[:iframe_p]        = iframe_p
       a[:formal_sheet]    = !!params[:formal_sheet]
       a[:record]          = js_modal_record_for(current_record)
 
@@ -299,64 +264,35 @@ module BattleControllerSharedMethods
           :piyo_shogi_base_params,
         ],
         ).tap do |a|
-
-        a[:show_path]          = polymorphic_path([ns_prefix, e])
-        if editable_record?(e) || Rails.env.development?
-          a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
-        end
+        a[:show_path]          = polymorphic_path([ns_prefix, e]) # ← これはとりあえずいる kc_path などに渡している
+        # if editable_record?(e) || Rails.env.development?
+        #   a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
+        # end
       end
     end
   end
 
   concerning :EditMethods do
-    included do
-      helper_method :current_edit_mode
-    end
-
     let :current_edit_mode do
       (params[:edit_mode].presence || :basic).to_sym
     end
   end
 
-  concerning :EditCustomMethods do
-    included do
-      helper_method :js_edit_options
-    end
-
-    # free_battle_edit.js の引数用
-    def js_edit_options
-      {
-        record_attributes: current_record.as_json,
-        output_kifs: output_kifs,
-
-        post_path: url_for([ns_prefix, current_plural_key, format: "json"]),
-        new_path: polymorphic_path([:new, ns_prefix, current_single_key]),
-        show_path: polymorphic_path([ns_prefix, current_record]),
-
-        saturn_info: SaturnInfo.inject({}) { |a, e| a.merge(e.key => e.attributes) },
-        free_battles_pro_mode: AppConfig[:free_battles_pro_mode],
-        current_edit_mode: current_edit_mode,
-      }
-    end
-
-    private
-
-    # FIXME: これはやめて FreeBattle をつかうべき
-
-    def output_kifs
-      @output_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => { key: e.key, name: e.name, value: heavy_parsed_info.public_send("to_#{e.key}", compact: true, no_embed_if_time_blank: true) }) }
-    end
-
-    def turn_max
-      @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_offset
-    end
-
-    def heavy_parsed_info
-      @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_text, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
-    end
-
-    def current_input_text
-      params[:input_text] || current_record.sfen_body || ""
-    end
-  end
+  # concerning :EditCustomMethods do
+  #   # private
+  #
+  #   # FIXME: これはやめて FreeBattle をつかうべき
+  #
+  #   # def turn_max
+  #   #   @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_offset
+  #   # end
+  #   #
+  #   # def heavy_parsed_info
+  #   #   @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_text, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
+  #   # end
+  #
+  #   # def current_input_text
+  #   #   params[:input_text] || current_record.sfen_body || ""
+  #   # end
+  # end
 end

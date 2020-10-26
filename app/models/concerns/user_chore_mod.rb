@@ -23,4 +23,20 @@ module UserChoreMod
   def show_path
     Rails.application.routes.url_helpers.url_for([self, only_path: true])
   end
+
+  # ユーザー詳細
+  def as_json_simple_public_profile
+    as_json({
+        only: [
+          :id,
+          :key,
+          :name,
+        ],
+        methods: [
+          :avatar_path,
+          :description,
+          :twitter_key,
+        ],
+      })
+  end
 end

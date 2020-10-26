@@ -1,19 +1,14 @@
 <template lang="pug">
-  b-button.KifCopyButton.is-small(v-bind="$attrs" v-on="$listeners" icon-left="clipboard-plus-outline" @click="click_handle")
-    template(v-if="!icon_only")
-      | コピー
+  b-button.KifCopyButton.is-small(v-bind="$attrs" v-on="$listeners" @click="click_handle") コピー
 </template>
 
 <script>
 
 export default {
   name: "KifCopyButton",
-  props: {
-    icon_only: { default: false, },
-  },
   methods: {
     click_handle() {
-      // this.$gtag.event("click", {event_category: "棋譜コピー"})
+      // this.sound_play("click")
     },
   },
 }

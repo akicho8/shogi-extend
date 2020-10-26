@@ -33,32 +33,38 @@ module Swars
         test(tactic_keys, :lose)[:white]
       end
 
-      it do
+      it "works" do
         assert { b("角不成").include?("角不成マン")     }
         assert { b("飛車不成").include?("飛車不成マン") }
-
         # プレイヤー情報だけにあるもの
-        assert { b("棒銀").include?("居飛車党")                   }
-        assert { b("早石田").include?("振り飛車党")               }
-        assert { b("棒銀", "早石田").include?("オールラウンダー") }
-        assert { b("ロケット").include?("ロケットマン")           }
-        assert { b("嬉野流").include?("嬉野マン")                 }
-        assert { w("パックマン戦法").include?("パックマン野郎")   }
-        assert { b("耀龍四間飛車").include?("耀龍マン")           }
-        assert { b("耀龍ひねり飛車").include?("耀龍マン")         }
-        assert { b("アヒル囲い").include?("アヒル上級")           }
-        assert { b("UFO銀").include?("UFOマン")                   }
-        assert { b("裏アヒル囲い").include?("レアマン")           }
-        assert { b("カニカニ金").include?("カニ執着マン")         }
-        assert { b("ダイヤモンド美濃").include?("ダイヤマン")     }
-        assert { b("音無しの構え").include?("音無しマン")         }
-        assert { b("筋違い角").include?("筋違い角おじさん")       }
-        assert { b("いちご囲い").include?("スイーツマン")         }
-        assert { b("背水の陣").include?("背水マン")               }
-        assert { b("elmo囲い").include?("エルモマン")               }
-        assert { b("レグスペ").include?("レグスペマン")           }
+        assert { b("棒銀").include?("居飛車党")                             }
+        assert { b("早石田").include?("振り飛車党")                         }
+        assert { b("棒銀", "早石田").include?("オールラウンダー")           }
+        assert { b("ロケット").include?("ロケットマン")                     }
+        assert { b("嬉野流").include?("嬉野マン")                           }
+        assert { w("パックマン戦法").include?("パックマン野郎")             }
+        assert { b("耀龍四間飛車").include?("耀龍マン")                     }
+        assert { b("耀龍ひねり飛車").include?("耀龍マン")                   }
+        assert { b("アヒル囲い").include?("アヒル上級")                     }
+        assert { b("UFO銀").include?("UFOマン")                             }
+        assert { b("裏アヒル囲い").include?("レアマン")                     }
+        assert { b("カニカニ金").include?("カニ執着マン")                   }
+        assert { b("カメレオン戦法").include?("カメレオンマン")             }
+        assert { w("ポンポン桂").include?("ポンポンマン")                   }
+        assert { w("右四間飛車左美濃").include?("右四間飛車マン")           }
+        assert { b("ダイヤモンド美濃").include?("ダイヤマン")               }
+        assert { b("チョコレート囲い").include?("チョコレートマン")         }
+        assert { b("極限早繰り銀").include?("極限早繰りマン")               }
+        assert { b("坊主美濃").include?("坊主マン")                         }
+        assert { b("ツノ銀中飛車").include?("中飛車マン")                   }
+        assert { b("音無しの構え").include?("音無しマン")                   }
+        assert { b("筋違い角").include?("筋違い角おじさん")                 }
+        assert { b("いちご囲い").include?("スイーツマン")                   }
+        assert { b("背水の陣").include?("背水マン")                         }
+        assert { b("elmo囲い").include?("エルモマン")                       }
+        assert { b("レグスペ").include?("レグスペマン")                     }
         assert { test(["無敵囲い"], :lose)[:white].include?("無敵囲いマン") }
-        assert { test(["鬼殺し"], :win)[:white].include?("鬼殺されマン") }
+        assert { test(["鬼殺し"], :win)[:white].include?("鬼殺されマン")    }
       end
     end
 
@@ -111,7 +117,7 @@ module Swars
       end
     end
 
-    describe "一手詰じらしマン" do
+    describe "1手詰じらしマン" do
       before do
         @black = User.create!
         @white = User.create!
@@ -122,7 +128,7 @@ module Swars
       end
 
       it do
-        assert { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"一手詰じらしマン") }
+        assert { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"1手詰じらしマン") }
       end
     end
 

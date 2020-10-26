@@ -1,9 +1,12 @@
+# FIXME: RESTにしないと方がいいんじゃないか？ 余計に管理しにくい
+
 module Api
   class ThreeStageLeaguesController < ::Api::ApplicationController
     # http://0.0.0.0:3000/api/three_stage_league
     def show
-      # 最新の三段リーグだけときどきクロールする
-      if current_generation == Tsl::Scraping.league_range.last
+      # リクエストされたリーグが存在しないか、
+      # 最新の三段リーグだけ、ときどきクロールする
+      if !current_league || current_league.newest_record?
         Rails.cache.fetch([self.class.name, current_generation].join("/"), :expires_in => 1.hour) do
           Tsl::League.generation_update(current_generation)
         end
@@ -36,6 +39,7 @@ module Api
               :level_down_p,
               :runner_up_p,
               :previous_runner_up_count,
+              # :zaiseki_win_list,
             ],
             except: [
               :league_id,
@@ -46,7 +50,7 @@ module Api
     end
 
     def current_league
-      @current_league ||= Tsl::League.find_by!(generation: current_generation)
+      @current_league ||= Tsl::League.find_by(generation: current_generation)
     end
 
     def current_generation

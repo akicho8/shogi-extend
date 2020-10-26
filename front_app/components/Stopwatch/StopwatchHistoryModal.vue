@@ -33,7 +33,7 @@ export default {
     base: { type: Object, required: true },
   },
   mounted() {
-    this.ok_notice("操作を間違えたときや以前の続きから行いたいときに過去の状態に戻れます")
+    this.toast_ok("操作を間違えたときや以前の続きから行いたいときに過去の状態に戻れます")
   },
   methods: {
     click_handle(row) {

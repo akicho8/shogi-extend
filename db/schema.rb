@@ -10,22 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_154201) do
-
-  create_table "acns1_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "room_id"
-    t.text "body"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["room_id"], name: "index_acns1_messages_on_room_id"
-    t.index ["user_id"], name: "index_acns1_messages_on_user_id"
-  end
-
-  create_table "acns1_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
+ActiveRecord::Schema.define(version: 2020_10_15_170400) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -575,6 +560,18 @@ ActiveRecord::Schema.define(version: 2020_09_20_154201) do
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
   end
 
+  create_table "swars_crawl_reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "登録者"
+    t.string "target_user_key", null: false, comment: "対象者"
+    t.string "to_email", null: false, comment: "完了通知先メールアドレス"
+    t.string "attachment_mode", null: false, comment: "ZIPファイル添付の有無"
+    t.datetime "processed_at", comment: "処理完了日時"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attachment_mode"], name: "index_swars_crawl_reservations_on_attachment_mode"
+    t.index ["user_id"], name: "index_swars_crawl_reservations_on_user_id"
+  end
+
   create_table "swars_grades", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "priority", null: false, comment: "優劣"
@@ -801,4 +798,5 @@ ActiveRecord::Schema.define(version: 2020_09_20_154201) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "mute_infos", "users"
   add_foreign_key "mute_infos", "users", column: "target_user_id"
+  add_foreign_key "swars_crawl_reservations", "users"
 end

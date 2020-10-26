@@ -25,7 +25,7 @@
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
               b-field(label="猶予" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
-      XclockAppFooter(ref="XclockAppFooter")
+      XclockAppFooter(:base="base" ref="XclockAppFooter")
 
   //////////////////////////////////////////////////////////////////////////////// 実行中
   template(v-if="chess_clock.running_p")
@@ -83,14 +83,12 @@ import { isMobile     } from "@/components/models/isMobile.js"
 import { FullScreen   } from "@/components/models/FullScreen.js"
 
 import { support      } from "./support.js"
-import { store        } from "./store.js"
 
 import { app_mouse_hidden         } from "./app_mouse_hidden.js"
 import { app_keyboard_shortcut    } from "./app_keyboard_shortcut.js"
 import { app_mobile_screen_adjust } from "./app_mobile_screen_adjust.js"
 
 export default {
-  store,
   name: "XclockApp",
   mixins: [
     support,
@@ -103,9 +101,6 @@ export default {
       chess_clock: null,
       full_screen: null,
     }
-  },
-  beforeCreate() {
-    this.$store.state.app = this
   },
   created() {
     this.chess_clock = new ChessClock({
@@ -157,7 +152,7 @@ export default {
   mounted() {
     if (this.development_p) {
     } else {
-      this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()
+      // this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()
     }
     this.full_screen = new FullScreen()
   },
@@ -231,9 +226,6 @@ export default {
         e.tap_and_auto_start_handle()
       }
     },
-    back_handle() {
-      location.href = "/"
-    },
     copy_handle() {
       this.sound_play("click")
       this.say("左の設定を右にコピーしますか？")
@@ -264,14 +256,11 @@ export default {
       const dialog = this.$buefy.dialog.alert({
         title: "ショートカットキー",
         message: `
-          <div class="content is-size-7">
-            <p>左 <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code></p>
-            <p>右 <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></p>
-          </div>`,
-        confirmText: "わかった",
+          <p class="mt-0"><b>左</b> → <code>左SHIFT</code> <code>左CONTROL</code> <code>TAB</code></p>
+          <p class="mt-2"><b>右</b> → <code>右SHIFT</code> <code>右CONTROL</code> <code>ENTER</code> <code>↑↓←→</code></p>
+        `,
+        confirmText: "OK",
         canCancel: ["outside", "escape"],
-        type: "is-info",
-        hasIcon: true,
         trapFocus: true,
         onConfirm: () => {
           this.talk_stop()
@@ -295,6 +284,7 @@ export default {
     },
   },
   computed: {
+    base() { return this },
     mouse_cursor_hidden() {
       return this.chess_clock.timer && !this.mouse_cursor_p
     },
@@ -304,7 +294,6 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-@import "app.sass"
 @import "time_fields_default.sass"
 @import "time_fields_desktop.sass"
 
@@ -458,7 +447,7 @@ export default {
   $color: hsla((360 / 8) * $level, 50%, 50%, 1.0)
   border: 2px solid $color
 
-.development
+.STAGE-development
   .Xclock
     .screen_container
       .level

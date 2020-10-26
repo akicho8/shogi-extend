@@ -92,7 +92,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
   # config.action_cable.allowed_request_origins = ["https://shogi-flow.xyz"]
   # config.action_cable.url = "wss://shogi-flow.xyz:28081"
-  config.action_cable.mount_path = "/x-cable"
+  config.action_cable.mount_path = "/maincable"
 
   # 内部スレッド数
   # https://railsguides.jp/action_cable_overview.html#%E3%83%AF%E3%83%BC%E3%82%AB%E3%83%BC%E3%83%97%E3%83%BC%E3%83%AB%E3%81%AE%E8%A8%AD%E5%AE%9A

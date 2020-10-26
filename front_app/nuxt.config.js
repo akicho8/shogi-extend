@@ -1,5 +1,40 @@
 import dayjs from "dayjs"
 const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
+const SITE_DESC = "将棋に関連するツールを提供するサイトです"
+
+// https://github.com/nuxt-community/sitemap-module
+// http://0.0.0.0:4000/sitemap.xml
+const axios = require('axios')
+const sitemap = {
+  hostname: process.env.MY_NUXT_URL,
+  gzip: true,
+  cacheTime: 1000 * 60 * 60,    // 1時間
+  exclude: [
+    "/experiment/**",
+    "/settings/**",
+    "/launcher",
+    "/inspire",
+  ],
+  routes: async () => {
+    let list = []
+    let res = null
+
+    // http://0.0.0.0:3000/api/tsl_user_all
+    res = await axios.get(`${process.env.API_URL}/api/tsl_league_all`)
+    list = list.concat(res.data.map(({generation}) => `/three-stage-leagues/${generation}`))
+
+    // http://0.0.0.0:3000/api/tsl_league_all
+    res = await axios.get(`${process.env.API_URL}/api/tsl_user_all`)
+    list = list.concat(res.data.map(({name}) => `/three-stage-league-players/${name}`))
+
+    list.push("/swars/histograms/attack")
+    list.push("/swars/histograms/defense")
+    list.push("/swars/histograms/technique")
+    list.push("/swars/histograms/note")
+
+    return list
+  },
+}
 
 const config = {
 // export default {
@@ -15,7 +50,10 @@ const config = {
   target: 'server',
 
   router: {
-    base: process.env.NODE_ENV === 'production' ? "/app/" : "/",
+    // base: process.env.NODE_ENV === 'production' ? "/app/" : "/",
+
+    // https://ja.nuxtjs.org/api/configuration-router/#trailingslash
+    // trailingSlash: false,
   },
 
   generate: {
@@ -27,50 +65,72 @@ const config = {
   ** Headers of the page
   */
   head: {
-    title: "TOP",
-    titleTemplate: `%s - SHOGI-EXTEND`,
+    title: process.env.APP_NAME,
+    titleTemplate: `%s - ${process.env.APP_NAME}`,
+    // titleTemplate(title) {
+    //   return (title ? `${title} | ` : "") + process.env.APP_NAME
+    // },
+
     htmlAttrs: {
       lang: "ja",
       prefix: 'og: http://ogp.me/ns#',
-      class: process.env.NODE_ENV,
+      class: `NODE_ENV-${process.env.NODE_ENV} STAGE-${process.env.STAGE}`,
     },
     meta: [
       // https://ja.nuxtjs.org/faq/duplicated-meta-tags/
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: "将棋に関連する便利サービスを提供するサイトです" },
-      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://0.0.0.0:3000" : "") + "/x-cable" },
+      { hid: 'description', name: 'description', content: SITE_DESC },
+      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://0.0.0.0:3000" : "") + "/maincable" },
 
-      { hid: "og:site_name",   property: "og:site_name",   content: "SHOGI-EXTEND" },
+      // 「ホーム画面に追加」したあとアプリのような画面にする設定
+      //
+      //  ・画面は広くなる
+      //  ・が、iOS では localStorage がWEBと繋がっていない問題があったりなかったりする
+      //  ・ブラウザで使えた便利機能が一切使えなくなって困惑
+      //  ・何があっても他に遷移しない閉じたWEBサービスでしか使えない
+      //  ・のでいったんやめ
+      //
+      //   https://qiita.com/amishiro/items/e668be423a85c2b61696
+      //   https://pwa.nuxtjs.org/meta#mobileappios
+      //   https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
+      //   https://medium.com/@firt/dont-use-ios-web-app-meta-tag-irresponsibly-in-your-progressive-web-apps-85d70f4438cb
+      //
+      // { name: 'apple-mobile-web-app-capable',          content: 'yes'               },
+      // { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+
+      ////////////////////////////////////////////////////////////////////////////////
+      { hid: "og:site_name",   property: "og:site_name",   content: process.env.APP_NAME },
       { hid: "og:type",        property: "og:type",        content: "website" },
       { hid: "og:url",         property: "og:url",         content: process.env.MY_SITE_URL }, // これいるのか？
 
       // 重要なのはこの4つだけで各ページで上書きする
-      { hid: "og:title",       property: "og:title",       content: "SHOGI-EXTEND" },
-      { hid: "og:description", property: "og:description", content: "将棋に関連する便利サービスを提供するサイトです" },
-      { hid: "og:image",       property: "og:image",       content: process.env.MY_OGP_URL + "/ogp/application.png" },
-      { hid: "twitter:card",   property: "twitter:card",   content: "summary" }, // summary or summary_large_image
+      { hid: "og:title",       property: "og:title",       content: process.env.APP_NAME },
+      { hid: "og:description", property: "og:description", content: SITE_DESC },
+      { hid: "og:image",       property: "og:image",       content: process.env.MY_NUXT_URL + "/ogp/application.png" },
+      { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image" }, // summary or summary_large_image
 
       { hid: "twitter:site",       property: "twitter:site",       content: "@sgkinakomochi" }, // これいるのか？
       { hid: "twitter:creator",    property: "twitter:creator",    content: "@sgkinakomochi" }, // これいるのか？
 
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { hid: "icon",             rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'          },
+      { hid: "apple-touch-icon", rel: "apple-touch-icon",           href: "/apple-touch-icon.png" },
     ],
     // base: { href: "http://0.0.0.0:3000" },
   },
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: 'hsl(348, 100%, 61%)' }, // bulma danger red color
-  // loading: { color: 'hsl(48,  100%, 67%)' }, // bulma danger yellow color
+  // loading: { color: 'hsl(348, 100%, 61%)' }, // bulma red color
+  // loading: { color: 'hsl(48,  100%, 67%)' }, // bulma yellow color
+  loading: { color: 'hsl(0, 0%, 21%)' }, // bulma grey-daker color
   /*
   ** Global CSS
   */
   css: [
     // 'application.sass'
-    // '../app/javascript/stylesheets/bulma_init.scss',
     // '~/assets/css/buefy.scss',
     // '~/assets/sass/application.sass',
     // '../app/javascript/stylesheets/application.sass',
@@ -79,10 +139,9 @@ const config = {
   ],
   styleResources: {
     sass: [
-      './assets/sass/resource.scss', // FIXME: なぜか sass の項目に *.scss のファイルを与えないと読み込まれない
+      './assets/sass/styleResources.scss', // sass の項目に scss のファイルを与えないと読み込まれないのは謎
     ],
     // scss: [
-    //   // "../app/javascript/stylesheets/bulma_init.scss",
     //   // '~assets/vars/*.scss',
     //   // '~assets/abstracts/_mixins.scss'
     // ]
@@ -92,8 +151,13 @@ const config = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    // client only
     "~/plugins/mixin_mod.client.js",
-    "~/plugins/other.client.js",
+    "~/plugins/chart_init.client.js",
+    "~/plugins/audio_queue.client.js",
+    "~/plugins/local_storage_persistedstate.client.js",
+
+    // 両方
     "~/plugins/axios_mod.js",
     "~/plugins/universal.js",
   ],
@@ -118,9 +182,17 @@ const config = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/pwa',
+
+    // https://pwa.nuxtjs.org/
+    // '@nuxtjs/onesignal',   // push通知
+    // '@nuxtjs/pwa',         // アプリ化
+
     '@nuxtjs/style-resources',
+    '@nuxtjs/sitemap',
   ],
+
+  sitemap,
+
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
@@ -192,24 +264,32 @@ const config = {
   },
 
   // https://nuxtjs.org/guide/runtime-config
-  // 空文字列は空で設定したのではなく XXX: process.env.XXX の意味(この仕様は余計にわかりにくい)
+  // 空文字列は空で設定したのではなく XXX: process.env.XXX の意味(わかりにくい！)
+  // またビルドしてもこの情報はそこに含まれてないので注意
+  // デプロイするときには .nuxt だけでなく .env* も転送しないといけない
+  // このせいで本番環境なのに開発環境の設定で運用していて不可解な現象が起きていた
   publicRuntimeConfig: {
     CSR_BUILD_VERSION: BUILD_VERSION,
     MY_SITE_URL: "",
-    MY_OGP_URL: "",
+    MY_NUXT_URL: "",
+    STAGE: "",
+    APP_NAME: "",
   },
 
   // SSR側での定義で publicRuntimeConfig を上書きする
+  // 意味はよくわかっていない
   privateRuntimeConfig: {
     SSR_BUILD_VERSION: BUILD_VERSION,
   },
 
   // 面倒な process.env.XXX の再定義
   // ・ここで定義すると .vue 側で process.env.XXX で参照できる
-  // ・が、だとテンプレートで使えなかったり単なる文字列だったり process.env が空だったりでデバッグしにくい
-  // ・ので publicRuntimeConfig を使う方がよい
-  // ・NUXT_ENV_ プレフィクスをつけた環境変数は自動的にここで定義したことになる(プレフィクスはついたまま)
-  // ・だけど publicRuntimeConfig を使う方がまし
+  // ・しかし process.env.XXX は文字列として展開されるので非常に扱いづらい
+  // ・それを忘れて process.env がハッシュだと勘違いしていつもはまる
+  // ・だから publicRuntimeConfig を使う方がよい
+  // ・ちなみに NUXT_ENV_ プレフィクスをつけた環境変数は自動的にここで定義したことになる
+  // ・しかしプレフィクスはついたままなのでこれまた使いにくい
+  // ・なので publicRuntimeConfig を使う方がよい
   env: {
     // FOO: process.env.FOO,
     ENV_BUILD_VERSION: BUILD_VERSION,

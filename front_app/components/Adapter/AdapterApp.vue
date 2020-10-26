@@ -1,57 +1,79 @@
 <template lang="pug">
 .AdapterApp
-  b-navbar(type="is-primary")
+  b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
+    .mx-4.my-4
+      b-menu
+        b-menu-list(label="Action")
+          b-menu-item(@click="board_show_handle" label="共有将棋盤に転送")
+
+        b-menu-list(label="Export")
+          b-menu-item(@click="kifu_paper_handle" label="棋譜印刷 (PDF)")
+          b-menu-item(:expanded="false" @click="sound_play('click')")
+            template(slot="label" slot-scope="props")
+              | 表示
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in FormatTypeInfo.values")
+              b-menu-item(:label="e.name" @click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)")
+          b-menu-item(@click="sound_play('click')")
+            template(slot="label" slot-scope="props")
+              | コピー
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in FormatTypeInfo.values")
+              template(v-if="e.clipboard_copyable")
+                b-menu-item(:label="e.name" @click="kifu_copy_handle(e.key)")
+          b-menu-item(@click="sound_play('click')")
+            template(slot="label" slot-scope="props")
+              | ダウンロード
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in FormatTypeInfo.values")
+              b-menu-item(:label="e.name" @click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)")
+          b-menu-item(@click="sound_play('click')")
+            template(slot="label" slot-scope="props")
+              | 文字コード
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in EncodeInfo.values")
+              b-menu-item(:label="e.name" @click="body_encode_set(e.key)" :class="{'has-text-weight-bold': body_encode === e.key}")
+
+  MainNavbar
     template(slot="brand")
-      b-navbar-item.has-text-weight-bold(tag="div") なんでも棋譜変換
+      NavbarItemHome
+      b-navbar-item.has-text-weight-bold(@click="clear_handle") なんでも棋譜変換
     template(slot="end")
-      b-navbar-item(tag="a" href="/") TOP
-  .section.pt-5
-    .columns
-      .column
-        b-field.mt-1
-          b-input(type="textarea" ref="input_text" v-model="input_text" expanded rows="8")
-        .buttons.is-centered.mt-5.mb-0
-          PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
-          KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
-          KifCopyButton(@click="kifu_copy_handle('kif')")
-          SpShowButton(@click="board_show_handle")
-        .buttons.is-centered.are-small.mt-3
-          b-button(@click="validate_handle" :icon-left="record ? 'check' : 'doctor'") 検証
-          b-button(@click.prevent="kifu_paper_handle" icon-left="pdf-box" tag="a" :href="record ? `${$config.MY_SITE_URL}${record.show_path}?formal_sheet=true` : ''") 棋譜用紙
-          TweetButton(@click="tweet_handle" :href="record ? tweet_intent_url({text: tweet_body}) : ''")
+      b-navbar-item(@click="sidebar_toggle")
+        b-icon(icon="menu")
 
-        .has-text-centered-touch
-          .format_box.box.is-inline-block.has-background-white-ter.is-shadowless.px-5
-            .mt-0
-              .is-size-7.has-text-weight-bold.has-text-left コピー
-              .list.ml-3
-                template(v-for="e in FormatTypeInfo.values")
-                  a.is-size-7.mx-1(@click="kifu_copy_handle(e.key)") {{e.name}}
-            .mt-3
-              .is-size-7.has-text-weight-bold.has-text-left 表示
-              .list.ml-3
-                template(v-for="e in FormatTypeInfo.values")
-                  a.is-size-7.mx-1(@click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)") {{e.name}}
-            .mt-3
-              .is-size-7.has-text-weight-bold.has-text-left ダウンロード
-              .list.ml-3
-                template(v-for="e in FormatTypeInfo.values")
-                  a.is-size-7.mx-1(@click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)") {{e.name}}
-            .has-text-centered.mt-3
-              b-switch(v-model="body_encode" size="is-small" true-value="sjis" false-value="utf8")
-                | 文字コード Shift_JIS
+  MainSection
+    .container
+      .columns.is-centered
+        .column.MainColumn
+          b-field(:type="input_text_field_type")
+            b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8")
 
-      .column(v-if="all_kifs")
-        pre {{all_kifs.kif}}
+          b-field.mt-5
+            .control
+              .buttons.is-centered
+                b-button(@click="validate_handle") 検証
 
-    template(v-if="development_p")
-      .columns
+          b-field.mt-5
+            .control
+              .buttons.is-centered
+                PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
+                KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
+                KifCopyButton(@click="kifu_copy_handle('kif')")
+
+      .columns(v-if="record")
+        .column
+          pre.box.has-background-success-light
+            | {{record.all_kifs.kif}}
+
+      .columns(v-if="development_p")
         .column
           .box
             .buttons.are-small
               template(v-for="row in test_kifu_body_list")
                 .button(@click="input_test_handle(row.input_text)") {{row.name}}
 
+  DebugPre(v-if="record") {{record}}
 </template>
 
 <script>
@@ -60,12 +82,12 @@ import MemoryRecord from 'js-memory-record'
 class FormatTypeInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "kif",  },
-      { key: "ki2",  },
-      { key: "csa",  },
-      { key: "sfen", },
-      { key: "bod",  },
-      { key: "png",  },
+      { key: "kif",  clipboard_copyable: true,  },
+      { key: "ki2",  clipboard_copyable: true,  },
+      { key: "csa",  clipboard_copyable: true,  },
+      { key: "sfen", clipboard_copyable: true,  },
+      { key: "bod",  clipboard_copyable: true,  },
+      { key: "png",  clipboard_copyable: false, },
     ]
   }
 
@@ -74,93 +96,113 @@ class FormatTypeInfo extends MemoryRecord {
   }
 }
 
-export default {
-  props: {
-    config: { type: Object,  required: true },
-  },
+class EncodeInfo extends MemoryRecord {
+  static get define() {
+    return [
+      { key: "utf8", name: "UTF-8",     },
+      { key: "sjis", name: "Shift_JIS", },
+    ]
+  }
+}
 
+export default {
+  name: "AdapterApp",
   data() {
     return {
       // フォーム関連
-      input_text: null,      // 入力した棋譜
+      input_text: this.$route.query.body || "",      // 入力した棋譜
       body_encode: "utf8", // ダウンロードするファイルを shift_jis にする？
 
       // データ
-      all_kifs: null,  // 変換した棋譜
-      record: null,    // FreeBattle のインスタンスの属性たち + いろいろんな情報
-      bs_error: null,  //  エラー情報
+      record:   null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
+      bs_error: null, //  エラー情報
 
       // その他
       change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
+      sidebar_p: false,
     }
   },
-
-  mounted() {
-    // デスクトップのときだけ棋譜のテキストエリアにフォーカス
-    this.desktop_focus_to(this.$refs.input_text)
-
-    // ?body=xxx の値を反映する
-    this.input_text = this.config.record_attributes.kifu_body || this.$route.query.body || ""
+  head() {
+    return {
+      title: "なんでも棋譜変換",
+      meta: [
+        { hid: "og:title",       property: "og:title",       content: "なんでも棋譜変換"                             },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/adapter.png" },
+        { hid: "og:description", property: "og:description", content: "将棋倶楽部24や掲示板などで見かける棋譜を外部アプリへ橋渡ししたり、検証・正規化・相互変換ができます" },
+      ],
+    }
   },
-
+  mounted() {
+    this.input_text_focus()
+  },
   watch: {
     input_text() {
       this.change_counter += 1
       this.record = null
       this.bs_error = null
-      this.all_kifs = null
+      this.swars_url_check()
     },
     body_encode(v) {
-      this.sound_play("click")
       if (v === "sjis") {
-        this.general_ok_notice("ダウンロードするファイルの文字コードを Shift_JIS に変更します (意味がわからない場合は OFF にしてください)")
+        this.toast_ok("ダウンロード時のファイル文字コードを Shift_JIS に変更します (なんのこっちゃわからん場合は UTF-8 に戻してください)", {duration: 10 * 1000})
       }
     }
   },
-
   methods: {
-    // board_image_url() {
-    //   // const params = {
-    //   //   format: "png",
-    //   //   body: this.row.question.init_sfen,
-    //   //   image_view_point: "black",
-    //   // }
-    //   // const url = new URL(this.as_full_url("/share-board"))
-    //   // _.each(params, (v, k) => url.searchParams.set(k, v))
-    //   // return url.toString()
-    //
-    //   // /share-board
-    // },
+    swars_url_check() {
+      const s = this.input_text
+      if (s) {
+        const count = (s.match(/\r/g) || 0) + 1
+        if (count <= 2) {
+          if (s.match(/https.*heroz.jp.*/)) {
+            this.toast_ok("将棋ウォーズのURLは将棋ウォーズ棋譜検索の検索欄に入力しても読み込めるよ")
+          }
+        }
+      }
+    },
 
+    input_text_focus() {
+      this.desktop_focus_to(this.$refs.input_text)
+    },
+    clear_handle() {
+      if (this.input_text) {
+        this.sound_play('click')
+        this.input_text = ""
+        this.input_text_focus()
+      }
+    },
+    app_open(url) {
+      this.sound_play('click')
+      this.url_open(url)
+    },
+    body_encode_set(key) {
+      this.sound_play('click')
+      this.body_encode = key
+    },
+    sidebar_toggle() {
+      this.sound_play('click')
+      this.sidebar_p = !this.sidebar_p
+    },
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.url_open(this.piyo_shogi_app_with_params_url, this.target_default))
+      this.record_fetch(() => this.app_open(this.piyo_shogi_app_with_params_url, this.target_default))
     },
-
     kento_open_handle() {
-      this.record_fetch(() => this.url_open(this.kento_app_with_params_url, this.target_default))
+      this.record_fetch(() => this.app_open(this.kento_app_with_params_url, this.target_default))
     },
-
     kifu_copy_handle(kifu_type) {
-      this.sound_play("click")
       this.record_fetch(() => {
         if (kifu_type === "png") {
-          this.general_ng_notice("画像はコピーできません")
+          this.toast_warn("画像はコピーできません")
           return
         }
-        this.simple_clipboard_copy(this.all_kifs[kifu_type])
+        this.simple_clipboard_copy(this.record.all_kifs[kifu_type])
       })
     },
-
-    tweet_handle() {
-      this.sound_play("click")
-      this.record_fetch(() => this.tweet_share_open({text: this.tweet_body}))
-    },
-
     validate_handle() {
-      this.sound_play("click")
-      this.record_fetch(() => this.general_ok_notice(`${this.record.turn_max}手の棋譜として読み取りました`))
+      this.record_fetch(() => {
+        this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`)
+      })
     },
-
     input_test_handle(input_text) {
       this.input_text = input_text
       this.$nextTick(() => this.validate_handle())
@@ -168,39 +210,41 @@ export default {
 
     // 「棋譜印刷」
     kifu_paper_handle() {
-      this.record_fetch(() => this.simple_open(`${this.$config.MY_SITE_URL}${this.record.show_path}?formal_sheet=true`))
+      this.record_fetch(() => {
+        this.$router.push({
+          name: "adapter-key-formal-sheet",
+          params: {
+            key: this.record.key,
+          },
+        })
+      })
     },
 
     // 「KIFダウンロード」
     kifu_dl_handle(kifu_type) {
-      this.sound_play("click")
-      this.record_fetch(() => this.url_open(this.kifu_dl_url(kifu_type)))
+      this.record_fetch(() => this.app_open(this.kifu_dl_url(kifu_type)))
     },
 
     // 「表示」
     kifu_show_handle(kifu_type) {
-      this.sound_play("click")
-      this.record_fetch(() => this.simple_open(this.kifu_show_url(kifu_type)))
+      this.record_fetch(() => {
+        const url = this.kifu_show_url(kifu_type)
+        this.popup_open(url)
+      })
     },
-
-    // 画像 表示
-    // png_show_handle() {
-    //   this.record_fetch(() => this.simple_open(this.png_show_url()))
-    // },
-
-    // 画像 DL
-    // png_dl_handle() {
-    //   this.record_fetch(() => this.url_open(this.png_dl_url()))
-    // },
 
     // 「盤面」
     board_show_handle() {
-      // this.record_fetch(() => this.sp_show_modal({record: this.record, board_show_type: "last"}))
-
-      this.sound_play("click")
       this.record_fetch(() => {
         // https://router.vuejs.org/guide/essentials/navigation.html#programmatic-navigation
-        this.$router.push({name: "share-board", query: {body: this.all_kifs.sfen, image_view_point: "black", title: "共有将棋盤 (棋譜変換後の確認)"}})
+        this.$router.push({
+          name: "share-board",
+          query: {
+            body: this.record.all_kifs.sfen,
+            image_view_point: "black",
+            // title: "共有将棋盤 (棋譜変換後の確認)",
+          },
+        })
       })
     },
 
@@ -216,7 +260,7 @@ export default {
           params["width"] = 1200
           params["turn"] = this.record.turn_max
         }
-        let url = `${this.$config.MY_SITE_URL}${this.record.show_path}.${kifu_type}`
+        let url = `${this.$config.MY_SITE_URL}${this.show_path}.${kifu_type}`
 
         // 最後に変換
         const p = new URLSearchParams()
@@ -234,27 +278,16 @@ export default {
       return this.kifu_show_url(kifu_type, {attachment: "true"})
     },
 
-    // png_show_url() {
-    //   if (this.record) {
-    //     return `${this.$config.MY_SITE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}`
-    //   }
-    // },
-
-    // png_dl_url() {
-    //   if (this.record) {
-    //     return `${this.$config.MY_SITE_URL}${this.record.show_path}.png?width=1200&turn=${this.record.turn_max}&attachment=true`
-    //   }
-    // },
-
     // private
 
-    simple_open(url) {
-      this.popup_open(url)
-    },
-
     record_fetch(callback) {
+      this.sound_play("click")
       if (this.bs_error) {
-        this.bs_error_message_dialog(this.bs_error)
+        this.error_show()
+        return
+      }
+      if (!this.input_text) {
+        this.toast_warn("棋譜を入力してください")
         return
       }
       if (this.change_counter === 0) {
@@ -268,33 +301,16 @@ export default {
     },
 
     record_create(callback) {
-      // this.$gtag.event("create", {event_category: "なんでも棋譜変換"})
-
       const params = {
-        input_text: this.input_text, // 空文字列でもわたさないといけない
+        input_text: this.input_text,
         edit_mode: "adapter",
       }
-      this.$axios.$post(this.config.post_path, params).then(e => {
+      this.$axios.$post("/api/adapter/record_create", params).then(e => {
         this.change_counter = 0
-        this.all_kifs = null
-
-        if (e.redirect_to) {
-          if (true) {
-            // リダイレクトしたあとブラウザバックで戻ると前の入力が残っている状態になる
-            // このとき内部の変数 input_text は空！なので、KENTOを押すと空の棋譜を作って飛んでします
-            // それを防ぐためにリダイレクト前に消している
-            this.input_text = ""
-          }
-          this.url_open(e.redirect_to)
-        }
 
         if (e.bs_error) {
           this.bs_error = e.bs_error
-          this.bs_error_message_dialog(e.bs_error)
-        }
-
-        if (e.all_kifs) {
-          this.all_kifs = e.all_kifs
+          this.error_show()
         }
 
         if (e.record) {
@@ -303,28 +319,57 @@ export default {
         }
       })
     },
+
+    error_show() {
+      this.bs_error_message_dialog(this.bs_error, this.append_message)
+      this.talk(this.bs_error.message)
+    },
   },
 
   computed: {
-    FormatTypeInfo() { return FormatTypeInfo },
+    FormatTypeInfo() { return FormatTypeInfo          },
+    EncodeInfo()     { return EncodeInfo              },
+    show_path()      { return `/x/${this.record.key}` },
+    disabled_p()     { return !this.record            },
+
+    input_text_field_type() {
+      if (this.bs_error) {
+        return "is-danger"
+      }
+      if (this.record) {
+        return "is-success"
+      }
+    },
+
+    append_message() {
+      return `<div class="mt-2">
+                どうしても読み取れない棋譜がある場合は
+                  <a href="https://twitter.com/sgkinakomochi" target="_blank">@sgkinakomochi</a>
+                に棋譜を送ってください
+              </div>`
+    },
 
     //////////////////////////////////////////////////////////////////////////////// piyoshogi
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
-        return this.piyo_shogi_auto_url({path: this.record.show_path, sfen: this.record.sfen_body, turn: this.record.display_turn, flip: this.record.flip, ...this.record.piyo_shogi_base_params})
+        return this.piyo_shogi_auto_url({
+          ...this.record.piyo_shogi_base_params,
+          path: this.show_path,
+          sfen: this.record.sfen_body,
+          turn: this.record.display_turn,
+          flip: this.record.flip,
+        })
       }
     },
 
     kento_app_with_params_url() {
       if (this.record) {
-        return this.kento_full_url({sfen: this.record.sfen_body, turn: this.record.display_turn, flip: this.record.flip})
-      }
-    },
-
-    tweet_body() {
-      if (this.record) {
-        return this.as_full_url(this.record.modal_on_index_path)
+        return this.kento_full_url({
+          sfen: this.record.sfen_body,
+          turn: this.record.display_turn,
+          flip: this.record.flip,
+        })
       }
     },
 
@@ -333,7 +378,8 @@ export default {
     test_kifu_body_list() {
       return [
         { name: "正常",       input_text: "68銀、三4歩・☗七九角、8四歩五六歩△85歩78金",                                                                                                                                                                                                                                                                                    },
-        { name: "反則",       input_text: "12玉",                                                                                                                                                                                                                                                                                                                           },
+        { name: "反則1",      input_text: "12玉",                                                                                                                                                                                                                                                                                                                           },
+        { name: "反則2",      input_text: "V2,P1 *,+0093KA,T1",                                                                                                                                                                                                                                                                                                                           },
         { name: "shogidb2 A", input_text: "https://shogidb2.com/games/018d3d1ee6594c34c677260002621417c8f75221#lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202",                                                                                                                                                                    },
         { name: "shogidb2 B", input_text: "https://shogidb2.com/board?sfen=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202&moves=-3334FU%2B2726FU-8384FU%2B2625FU-8485FU%2B5958OU-4132KI%2B6978KI-8586FU%2B8786FU-8286HI%2B2524FU-2324FU%2B2824HI-8684HI%2B0087FU-0023FU%2B2428HI-2233KA%2B5868OU-7172GI%2B9796FU-3142GI%2B8833UM", },
         { name: "ウォーズ1",  input_text: "https://shogiwars.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1", },
@@ -349,7 +395,7 @@ export default {
 
 <style lang="sass">
 .AdapterApp
-  +desktop
-    .buttons
-      justify-content: flex-start
+  .MainColumn
+    +tablet
+      max-width: 65ch
 </style>

@@ -1,0 +1,14 @@
+// styleResources で定義したいもの
+
+%is_line_break_off
+  white-space: nowrap
+
+%is_line_break_on
+  white-space: normal
+  word-break: break-all
+
+=icon_rorate_if_button_hover($button_class)
+  transition: transform 0.5s 0.3s ease-in-out
+  @at-root .#{$button_class}:hover
+    .left_icon
+      transform: rotate(360deg * 2 * -1)

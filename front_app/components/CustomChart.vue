@@ -7,7 +7,7 @@ canvas#main_canvas.CustomChart(ref="main_canvas")
 const CHART_CONFIG_DEFAULT = {
   type: "bar",
   options: {
-    aspectRatio: 2.0, // 大きいほど横長方形になる
+    aspectRatio: 1.618, // 大きいほど横長方形になる
 
     // datasets 内に適応
     showLines: true,
@@ -59,7 +59,11 @@ const CHART_CONFIG_DEFAULT = {
           minRotation: 0,   // 表示角度水平
           maxRotation: 0,   // 表示角度水平
           // maxTicksLimit: 5, // 最大横N個の目盛りにする
-          // callback(value, index, values) { return value + "" }, // 単位をつける
+          // callback(value, index, values) {
+          //   // Chart.js でX軸の軸ラベル(ticks)を「縦書き」にする一撃必殺技
+          //   // https://qiita.com/kd9951/items/c324424528358a457a5c
+          //   return value.split("")
+          // },
         },
         gridLines: {
           display: false,    // x軸の中間の縦線
@@ -136,7 +140,7 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from "../../app/javascript/chart_mod.js" // FIXME
+import chart_mod from "@/components/models/chart_mod.js" // FIXME
 
 export default {
   name: "CustomChart",
@@ -159,7 +163,7 @@ export default {
 </script>
 
 <style lang="sass">
-.development
+.STAGE-development
   .CustomChart
-    // border: 1px solid $danger
+    border: 1px dashed change_color($primary, $alpha: 0.1)
 </style>

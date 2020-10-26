@@ -1,7 +1,5 @@
 import Vuex from 'vuex'
 
-import Autolinker from 'autolinker'
-
 export const support = {
   methods: {
     warning_dialog(message_body) {
@@ -63,11 +61,6 @@ export const support = {
       return str
     },
 
-    // ../../../node_modules/autolinker/README.md
-    auto_link(str, options = {}) {
-      return Autolinker.link(str, {newWindow: true, truncate: 30, mention: "twitter", ...options})
-    },
-
     number_replace_to_question_link(s) {
       return s.replace(/#(\d+)/, '<a href="/training?question_id=$1">#$1</a>')
     },
@@ -88,19 +81,19 @@ export const support = {
     ////////////////////////////////////////////////////////////////////////////////
 
     api_get(command, params, block) {
-      return this.$axios.$get("/script/actb-app.json", {params: {remote_action: command, ...params}}).then(e => block(e))
+      return this.$axios.$get("/api/training.json", {params: {remote_action: command, ...params}}).then(e => block(e))
     },
 
     silent_api_get(command, params, block) {
-      return this.$axios.$get("/script/actb-app.json", {params: {remote_action: command, ...params}}, {progress: false}).then(e => block(e))
+      return this.$axios.$get("/api/training.json", {params: {remote_action: command, ...params}}, {progress: false}).then(e => block(e))
     },
 
     api_put(command, params, block) {
-      return this.$axios.$put("/script/actb-app.json", {remote_action: command, ...params}).then(e => block(e))
+      return this.$axios.$put("/api/training.json", {remote_action: command, ...params}).then(e => block(e))
     },
 
     silent_api_put(command, params, block) {
-      return this.$axios.$put("/script/actb-app.json", {remote_action: command, ...params}, {progress: false}).then(e => block(e))
+      return this.$axios.$put("/api/training.json", {remote_action: command, ...params}, {progress: false}).then(e => block(e))
     },
 
     ////////////////////////////////////////////////////////////////////////////////

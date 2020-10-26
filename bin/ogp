@@ -1,0 +1,191 @@
+#!/usr/bin/env ruby
+#
+# OGP自動テスト
+#
+# ogp
+# ogp -e production
+
+URESINORYU = "body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_view_point=self"
+
+LIST_ALL = [
+  { url: "/users/1",                                                                 validations: { "title" => /さん/,                                                                                                                                      }},
+
+  { url: "/settings/profile",                                                        validations: { "error" => "404"                                                                                                                                      }},
+  { url: "/settings/email",                                                          validations: { "error" => "404",                                                                                                                                      }},
+
+  # { url: "/",                                                                        validations: { "html"  => /電脳少女シロ/, "title" => "SHOGI-EXTEND",                                                                                                           }},
+  # { url: "/swars/search?query=Yamada_Taro",                                          validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
+  # { url: "/swars/users/Yamada_Taro/",                                                validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
+  # { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/",                     validations: { "og:image" => /Yamada_Taro.*png.*turn/                                                                                                                                                                }},
+  # { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&flip=false", validations: { "og:image" => /Yamada_Taro.*png.*turn=100/,                                                                                                                                                                }},
+  # { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet",         validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
+  # { url: "/swars/users/Yamada_Taro/direct-open/kento",                               validations: { "title" => /KENTO/, "mombile_icon" => /kento/,                                                                                                                          }},
+  # { url: "/swars/users/Yamada_Taro/direct-open/piyo_shogi",                          validations: { "title" => /ぴよ/,  "mombile_icon" => /piyo_shogi/,                                                                                                                     }},
+  # { url: "/swars/users/Yamada_Taro/kento-api",                                       validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
+  # { url: "/swars/histograms/attack",                                                 validations: { "title" => /戦型/,                                                                                                                                              }},
+  # { url: "/swars/histograms/grade",                                                  validations: { "title" => /段級/,                                                                                                                                              }},
+  # { url: "/swars/top-group",                                                         validations: { "title" => /上位/,                                                                                                                                              }},
+  # { url: "/swars/professional",                                                      validations: { "title" => /十段/,                                                                                                                                              }},
+  # { url: "/xy",                                                                      validations: { "title" => /符号の鬼/,                                                                                                                                          }},
+  # { url: "/vs-clock",                                                                validations: { "title" => /対局時計/,                                                                                                                                          }},
+  # { url: "/three-stage-leagues",                                                     validations: { "og:title" => /第67期.*奨励会三段リーグ/,                                                                                                                                                                }},
+  # { url: "/three-stage-leagues/67",                                                  validations: { "og:title" => /第67期.*奨励会三段リーグ/, "html"  => /伊藤匠/,                                                                                                                                            }},
+  # { url: "/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0",                  validations: { "og:title" => /伊藤匠の成績/,                                                                                                                                                                }},
+  # { url: "/adapter",                                                                 validations: { "title" => /なんでも棋譜変換/,                                                                                                                                  }},
+  # { url: "/share-board",                                                             validations: { "title" => "共有将棋盤 0手目", "og:title" => "共有将棋盤 0手目", "og:description" => "",                     "og:image" => /share-board.png.*position.*turn=0/, }},
+  # { url: "/share-board?#{URESINORYU}",                                               validations: { "title" => "嬉野流 1手目",     "og:title" => "嬉野流 1手目",     "og:description" => "☗嬉野流 vs ☖その他", "og:image" => /share-board.png.*position.*turn=1/,   }},
+  # { url: "/stopwatch",                                                               validations: { "title" => /ストップウォッチ/,                                                                                                                                  }},
+  # { url: "/cpu-battle",                                                              validations: { "title" => /対戦/,                                                                                                                                              }},
+  # { url: "/training",                                                                validations: { "title" => /トレーニング/,                                                                                                                                      }},
+]
+
+require "bundler/setup"
+Dir.chdir(Bundler.root)
+
+require "thor"
+require "pathname"
+require "open-uri"
+require "nokogiri"
+require "table_format"
+
+class Ogp < Thor
+  package_name "ogp"
+  default_command :validate
+  class_option :env,   type: :string,  desc: "対象環境", default: "development", aliases: "-e"
+  class_option :debug, type: :boolean, desc: "デバッグ", default: false,         aliases: "-d"
+
+  desc "validate", "確認"
+  def validate
+    puts "(#{options[:env]})"
+
+    rows = LIST_ALL.collect do |e|
+      {
+        "結果" => "？",
+        "画像" => "",
+      }.tap do |row|
+        url = e[:url]
+        unless url.start_with?("http")
+          url = host + e[:url]
+        end
+        puts url
+
+        row["URL"] = url
+        begin
+          html = URI(url).read
+        rescue OpenURI::HTTPError => error
+          row["結果"] = error.to_s.include?(e[:validations]["error"]) ? "○" : "×"
+          next
+        end
+        doc = Nokogiri::HTML(html)
+
+        if options[:debug]
+          tp doc.search("meta")
+        end
+
+        attributes = [
+          "og:image",
+          "og:title",
+          "og:description",
+          "twitter:card",
+        ].inject({}) {|a, k|
+          content = nil
+          if element = doc.at("meta[property='#{k}']")
+            content = element[:content]
+          else
+            raise "タグが見つからない : #{k}"
+          end
+          a.merge(k => content)
+        }
+        attributes["title"] = doc.title
+        attributes["mombile_icon"] = doc.at("link[rel=apple-touch-icon]")[:href]
+
+        # row["title"]    = attributes["title"]
+        row["og:title"] = attributes["og:title"]
+
+        row.update(attributes)
+
+        all = attributes.merge("html" => html)
+
+        validations = e[:validations]
+        if !validations.empty?
+          good = validations.all? { |key, s|
+            if s.kind_of?(String)
+              s = /\A#{Regexp.escape(s)}\z/
+            end
+            all[key].match?(s)
+          }
+          row["結果"] = good ? "○" : "×"
+        end
+
+        bin = URI(attributes["og:image"]).read rescue ""
+        row["画像"] = bin[1..3] == "PNG" ? "○" : "×"
+      end
+    end
+    tp rows
+  end
+
+  private
+
+  def host
+    {
+      :development => "http://localhost:4000",
+      :staging     => "https://shogi-flow.xyz",
+      :production  => "https://www.shogi-extend.com",
+    }.fetch(options[:env].to_sym)
+  end
+
+  start
+end
+# >> (development)
+# >> http://localhost:4000/
+# >> http://localhost:4000/swars/battles?query=Yamada_Taro
+# >> http://localhost:4000/swars/users/Yamada_Taro/
+# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/
+# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&flip=false
+# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet
+# >> http://localhost:4000/swars/users/Yamada_Taro/direct-open/kento
+# >> http://localhost:4000/swars/users/Yamada_Taro/direct-open/piyo_shogi
+# >> http://localhost:4000/swars/users/Yamada_Taro/kento-api
+# >> http://localhost:4000/swars/histograms/attack
+# >> http://localhost:4000/swars/histograms/grade
+# >> http://localhost:4000/swars/top-group
+# >> http://localhost:4000/swars/professional
+# >> http://localhost:4000/xy
+# >> http://localhost:4000/vs-clock
+# >> http://localhost:4000/three-stage-leagues
+# >> http://localhost:4000/three-stage-leagues/67
+# >> http://localhost:4000/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0
+# >> http://localhost:4000/adapter
+# >> http://localhost:4000/share-board
+# >> http://localhost:4000/share-board?body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_view_point=self
+# >> http://localhost:4000/stopwatch
+# >> http://localhost:4000/cpu-battle
+# >> http://localhost:4000/training
+# >> |------+------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+---------------------+-------------------------------------------------------------------------+----------------------------------|
+# >> | 結果 | 画像 | URL                                                                                                                                                                                                                          | og:title                                          | og:image                                                                                                                                    | og:description                                                                                           | twitter:card        | title                                                                   | mombile_icon                     |
+# >> |------+------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+---------------------+-------------------------------------------------------------------------+----------------------------------|
+# >> | ○   | ○   | http://localhost:4000/                                                                                                                                                                                                       | SHOGI-EXTEND(d)                                   | http://0.0.0.0:4000/ogp/application.png                                                                                                     | 将棋に関連する便利サービスを提供するサイトです                                                           | summary_large_image | SHOGI-EXTEND                                                            | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/battles?query=Yamada_Taro                                                                                                                                                                        | Yamada_Taro - 将棋ウォーズ棋譜検索                | http://0.0.0.0:4000/ogp/swars-search.png                                                                                                   | ウォーズの棋譜をぴよ将棋やKENTOで開いたりクリップボード経由で外部アプリに渡すような使い方ができます      | summary_large_image | Yamada_Taro - 将棋ウォーズ棋譜検索 - SHOGI-EXTEND                       | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/users/Yamada_Taro/                                                                                                                                                                               | Yamada_Taro - 将棋ウォーズプレイヤー情報          | http://0.0.0.0:4000/ogp/swars-users-key.png                                                                                                 |                                                                                                          | summary_large_image | Yamada_Taro - 将棋ウォーズプレイヤー情報 - SHOGI-EXTEND                 | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/                                                                                                                                                    | devuser3 三段 vs Yamada_Taro 四段 34手目          | http://0.0.0.0:3000/w/devuser3-Yamada_Taro-20200101_123403.png?turn=34&flip=false                                                           | 高美濃囲い vs 対振り持久戦 舟囲い                                                                        | summary_large_image | devuser3 三段 vs Yamada_Taro 四段 34手目 - 将棋ウォーズ - SHOGI-EXTEND  | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&flip=false                                                                                                                                | devuser3 三段 vs Yamada_Taro 四段 100手目         | http://0.0.0.0:3000/w/devuser3-Yamada_Taro-20200101_123403.png?turn=100&flip=false                                                          | 高美濃囲い vs 対振り持久戦 舟囲い                                                                        | summary_large_image | devuser3 三段 vs Yamada_Taro 四段 100手目 - 将棋ウォーズ - SHOGI-EXTEND | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet                                                                                                                                        | devuser3 三段 vs Yamada_Taro 四段                 | http://0.0.0.0:4000/ogp/formal-sheet.png                                                                                                    |                                                                                                          | summary_large_image | devuser3 三段 vs Yamada_Taro 四段                                       | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/users/Yamada_Taro/direct-open/kento                                                                                                                                                              | Yamada_Taroさんの直近対局をKENTOですぐ開く画面    | http://0.0.0.0:4000/ogp/swars-search.png                                                                                                   |                                                                                                          | summary             | 直前KENTO                                                               | /apple-touch-icon/kento.png      |
+# >> | ○   | ○   | http://localhost:4000/swars/users/Yamada_Taro/direct-open/piyo_shogi                                                                                                                                                         | Yamada_Taroさんの直近対局をぴよ将棋ですぐ開く画面 | http://0.0.0.0:4000/ogp/swars-search.png                                                                                                   |                                                                                                          | summary             | 直前開くぴよ                                                            | /apple-touch-icon/piyo_shogi.png |
+# >> | ○   | ○   | http://localhost:4000/swars/users/Yamada_Taro/kento-api                                                                                                                                                                      | Yamada_Taroさん専用の KENTO API 設定手順          | http://0.0.0.0:4000/ogp/swars-search.png                                                                                                   |                                                                                                          | summary             | Yamada_Taroさん専用の KENTO API 設定手順 - SHOGI-EXTEND                 | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/histograms/attack                                                                                                                                                                                | 将棋ウォーズ戦型分布                              | http://0.0.0.0:4000/ogp/swars-histograms-attack.png                                                                                         |                                                                                                          | summary_large_image | 将棋ウォーズ戦型分布 - SHOGI-EXTEND                                     | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/histograms/grade                                                                                                                                                                                 | 将棋ウォーズ段級分布                              | http://0.0.0.0:4000/ogp/swars-histograms-grade.png                                                                                          |                                                                                                          | summary_large_image | 将棋ウォーズ段級分布 - SHOGI-EXTEND                                     | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/top-group                                                                                                                                                                                        | 将棋ウォーズイベント上位プレイヤー                | http://0.0.0.0:4000/ogp/swars-top-group.png                                                                                                 |                                                                                                          | summary_large_image | 将棋ウォーズイベント上位プレイヤー - SHOGI-EXTEND                       | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/swars/professional                                                                                                                                                                                     | 将棋ウォーズ十段の成績                            | http://0.0.0.0:4000/ogp/swars-professional.png                                                                                              |                                                                                                          | summary_large_image | 将棋ウォーズ十段の成績 - SHOGI-EXTEND                                   | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/xy                                                                                                                                                                                                     | 符号の鬼                                          | http://0.0.0.0:4000/ogp/xy.png                                                                                                              |                                                                                                          | summary             | 符号の鬼 - SHOGI-EXTEND                                                 | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/vs-clock                                                                                                                                                                                               | 対局時計                                          | http://0.0.0.0:4000/ogp/vs-clock.png                                                                                                        | ネット対局と同じような持ち時間のプリセットが入った対局時計です                                           | summary_large_image | 対局時計 - SHOGI-EXTEND                                                 | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/three-stage-leagues                                                                                                                                                                                    | 第67期 奨励会三段リーグ                           | http://0.0.0.0:4000/ogp/three-stage-leagues.png                                                                                             |                                                                                                          | summary_large_image | 第67期 奨励会三段リーグ - SHOGI-EXTEND                                  | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/three-stage-leagues/67                                                                                                                                                                                 | 第67期 奨励会三段リーグ                           | http://0.0.0.0:4000/ogp/three-stage-leagues.png                                                                                             |                                                                                                          | summary_large_image | 第67期 奨励会三段リーグ - SHOGI-EXTEND                                  | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0                                                                                                                                                 | 伊藤匠の成績 - 奨励会三段リーグ                   | http://0.0.0.0:4000/ogp/three-stage-league-players.png                                                                                      |                                                                                                          | summary_large_image | 伊藤匠の成績 - 奨励会三段リーグ - SHOGI-EXTEND                          | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/adapter                                                                                                                                                                                                | なんでも棋譜変換                                  | http://0.0.0.0:4000/ogp/adapter.png                                                                                                         | 将棋倶楽部24や掲示板などで見かける棋譜を外部アプリへ橋渡ししたり、検証・正規化・相互変換・印刷ができます | summary_large_image | なんでも棋譜変換 - SHOGI-EXTEND                                         | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/share-board                                                                                                                                                                                            | 共有将棋盤 0手目                                  | http://0.0.0.0:3000/share-board.png?body=position+startpos&image_view_point=self&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0 |                                                                                                          | summary_large_image | 共有将棋盤 0手目                                                        | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/share-board?body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_view_point=self | 嬉野流 1手目                                      | http://0.0.0.0:3000/share-board.png?body=position+startpos+moves+7i6h&image_view_point=self&title=%E5%AC%89%E9%87%8E%E6%B5%81&turn=1        | ☗嬉野流 vs ☖その他                                                                                     | summary_large_image | 嬉野流 1手目                                                            | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/stopwatch                                                                                                                                                                                              | 詰将棋用ストップウォッチ                          | http://0.0.0.0:4000/ogp/stopwatch.png                                                                                                       | 詰将棋を繰り返し解くのに特化したストップウォッチです                                                     | summary_large_image | 詰将棋用ストップウォッチ - SHOGI-EXTEND                                 | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/cpu-battle                                                                                                                                                                                             | CPU対戦                                           | http://0.0.0.0:4000/ogp/cpu-battle.png                                                                                                      | めっちゃ弱いです                                                                                         | summary_large_image | CPU対戦 - SHOGI-EXTEND                                                  | /apple-touch-icon.png            |
+# >> | ○   | ○   | http://localhost:4000/training                                                                                                                                                                                               | 将棋トレーニングバトル                            | http://0.0.0.0:4000/ogp/training.png                                                                                                        | 将棋の問題を解く力を競う対戦ゲーム                                                                       | summary_large_image | 将棋トレーニングバトル - SHOGI-EXTEND                                   | /apple-touch-icon.png            |
+# >> |------+------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+---------------------+-------------------------------------------------------------------------+----------------------------------|

@@ -10,7 +10,7 @@ module Swars
 
         zip_buffer = Zip::OutputStream.write_buffer do |zos|
           zip_scope.each do |battle|
-            if str = battle.to_cached_kifu(kifu_format_info.key)
+            if str = battle.to_xxx(kifu_format_info.key)
               zos.put_next_entry("#{battle.key}.#{kifu_format_info.key}")
               if current_body_encode == :sjis
                 str = str.tosjis
@@ -40,7 +40,7 @@ module Swars
       parts << kifu_format_info.key
       parts << current_body_encode
       parts << zip_scope.count
-      str = parts.compact.join("_") + ".zip"
+      str = parts.compact.join("-") + ".zip"
       str.public_send("to#{current_body_encode}")
     end
 

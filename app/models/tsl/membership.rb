@@ -77,6 +77,8 @@ module Tsl
     end
 
     def ox_human
+      # ox.tr("ox", "🍓💀")
+      # ox.tr("ox", "🍎💀")
       ox.tr("ox", "○●")
     end
 
@@ -99,6 +101,11 @@ module Tsl
     # 降段
     def level_down_p
       result_key.include?("降")
+    end
+
+    # 在籍回数のかわりに表示したい在籍毎の勝数
+    def zaiseki_win_list
+      user.zaiseki_win_list(league.generation)
     end
   end
 end

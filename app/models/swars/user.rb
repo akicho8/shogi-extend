@@ -100,29 +100,6 @@ module Swars
         scope :regular_only, -> { order(search_logs_count: :desc) }                                                        # よく使ってくれる人
         scope :great_only, -> { joins(:grade).order(Swars::Grade.arel_table[:priority].desc).order(:updated_at => :desc) } # すごい人
       end
-
-      class_methods do
-        def search_form_datalist
-          if !AppConfig[:search_form_datalist_function]
-            return []
-          end
-
-          Rails.cache.fetch("search_form_datalist", expires_in: 1.days) do
-            user_keys = []
-
-            # 利用者
-            user_keys += recently_only.limit(10).pluck(:user_key)
-
-            # 最近取り込んだ人たち
-            user_keys += all.order(updated_at: :desc).limit(10).pluck(:user_key)
-
-            # すごい人たち
-            user_keys += Rails.cache.fetch("great_only", expires_in: 1.days) { great_only.limit(10).pluck(:user_key) }
-
-            user_keys.sort.uniq
-          end
-        end
-      end
     end
   end
 end

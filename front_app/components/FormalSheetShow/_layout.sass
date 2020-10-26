@@ -1,0 +1,103 @@
+$a4_w: 210mm
+$a4_h: 297mm
+
+@page
+  size: A4    // A4 は 210mm 297mm と書くのと同じ
+  margin: 0   // Chrome に限っては 0 にするとヘッダー/フッダーの記入を省略できるとのこと https://qiita.com/cognitom/items/d39d5f19054c8c8fd592
+
+@media print
+  .is_screen_only
+    display: none
+
+  body
+    overflow: visible !important
+
+  .section
+    padding: 0 !important
+
+.formal_sheet_workspace
+  .sheet
+    width: $a4_w
+    height: $a4_h
+    // 2019-08-22 Safari とか Chrome とか関係なく ios の印刷機能では break-after が効かず、空の偶数ページできてしまう
+    // ここを 0 にするとなおるがレイアウトが崩してまで対応はできない
+    padding: $fp_sheet_body_margin
+    // http://www.htmq.com/css3/break-after.shtml
+    break-after: page
+
+    // 開発ツールでエミュレートしたとき中央配置
+    @media print
+      margin: auto
+
+    .sheet_body
+      @extend %max_block
+
+      display: flex
+      align-items: center       // 横は100%なのでY軸のみ中央
+
+      .tables_box_container
+        @extend %max_width
+
+        .tables_box
+          @extend %max_width
+          table
+            @extend %max_width
+            border-collapse: collapse
+            border-spacing: 0
+
+// プレビューおよび印刷時に消しておきたいタグ
+.has_formal_sheet
+  nav.navbar
+    display: none
+
+  .tool_belt
+    display: none
+
+  footer.footer
+    display: none
+
+// プレビュー時のみ適用
+@media screen
+  .has_formal_sheet
+    background: hsl(0, 0%, 90%)
+
+    .section
+      padding: $fp_preview_screen_margin 0
+
+  .fixed_top_left_container
+    position: fixed
+    top: $fp_preview_screen_margin
+    left: $fp_preview_screen_margin
+      
+  .fixed_top_right_container
+    position: fixed
+    top: $fp_preview_screen_margin
+    right: $fp_preview_screen_margin
+
+  .fixed_bottom_left_container
+    position: fixed
+    bottom: $fp_preview_screen_margin
+    left: $fp_preview_screen_margin
+
+  .formal_sheet_workspace
+    .sheet
+      background: white
+      box-shadow: 0 .5mm 2mm rgba(0, 0, 0, 0.3)
+      margin: auto
+
+      &:not(:first-of-type)
+        margin-top: $fp_preview_sheet_separator
+
+// @import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css)
+
+// ページ番号の出力
+// https://qiita.com/cognitom/items/d39d5f19054c8c8fd592#%E3%83%9A%E3%83%BC%E3%82%B8%E7%95%AA%E5%8F%B7%E3%81%AE%E5%87%BA%E5%8A%9B
+// body
+//   counter-reset: sheet
+//
+//   .sheet::after
+//     position: absolute
+//     bottom: 0
+//     right: 0
+//     counter-increment: sheet
+//     content: "ページ " counter(sheet)

@@ -132,7 +132,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
   # config.action_cable.allowed_request_origins = ["https://shogi-flow.xyz"]
   # config.action_cable.url = "wss://shogi-flow.xyz:28081"
-  config.action_cable.mount_path = "/x-cable"
+  config.action_cable.mount_path = "/maincable"
 
   # ################################################################################ active_job
   config.active_job.queue_adapter = :sidekiq
@@ -140,16 +140,12 @@ Rails.application.configure do
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
-        :battle_index_permalink_show   => false,
-        :more_import_function          => false,
         :swars_tag_search_function     => false,
-        :search_form_datalist_function => false,
-        :swars_tweet_function          => false,
         :columns_detail_show           => false,
 
         :available_providers           => [:twitter, :google, :github],
         :nanasi_login                  => false,
-        :email_pw_login                   => true,
+        :email_pw_login                => false,
       })
   end
 end

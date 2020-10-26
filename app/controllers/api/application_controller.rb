@@ -2,7 +2,7 @@ require "open-uri"
 
 module Api
   class ApplicationController < ::ApplicationController
-    include ShogiErrorRescueMod
+    include ShogiErrorRescueMod # for bs_error
 
     def html_fetch(url, options = {})
       options = {
@@ -12,7 +12,14 @@ module Api
       key = [:html_fetch, Digest::MD5.hexdigest(url)].join
       Rails.cache.fetch(key, options) do
         Rails.logger.debug("html_fetch: #{url}")
-        URI(url).read.toutf8
+        begin
+          URI(url).read.toutf8
+        rescue SocketError => error
+          Rails.logger.info(error)
+          SlackAgent.notify_exception(error)
+          ExceptionNotifier.notify_exception(error)
+          ""
+        end
       end
     end
   end

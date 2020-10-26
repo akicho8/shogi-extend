@@ -1,7 +1,8 @@
 module Api
   # http://0.0.0.0:3000/api/swars_histogram.json
   class SwarsHistogramsController < ::Api::ApplicationController
-    DEFAULT_LIMIT = 5000
+    DEFAULT_LIMIT = 1000
+    CHART_BAR_MAX = 20
 
     def show
       render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hours : 0) {
@@ -10,6 +11,7 @@ module Api
           :sample_count => target_ids.size,
           :tactic       => tactic_info,
           :records      => records,
+          :custom_chart_params => custom_chart_params,
         }
       }
     end
@@ -17,14 +19,16 @@ module Api
     private
 
     def records
-      sdc = StandardDeviation.new(counts_hash.values)
-      counts_hash.sort_by { |name, count| -count }.collect do |name, count|
-        {
-          :name  => name,
-          :count => count,
-          :ratio => sdc.appear_ratio(count),
-        }
-      end
+      @records ||= -> {
+        sdc = StandardDeviation.new(counts_hash.values)
+        counts_hash.sort_by { |name, count| -count }.collect do |name, count|
+          {
+            :name  => name,
+            :count => count,
+            :ratio => sdc.appear_ratio(count),
+          }
+        end
+      }.call
     end
 
     def tactic_key
@@ -69,6 +73,28 @@ module Api
 
         counts_hash
       }.call
+    end
+
+    def chart_bar_max
+      (params[:chart_bar_max].presence || CHART_BAR_MAX).to_i.clamp(0, CHART_BAR_MAX)
+    end
+
+    def custom_chart_params
+      # [5, 4, 3, 2, 1] => [3, 4, 5]
+      e = records.take(chart_bar_max).reverse
+      {
+        data: {
+          labels: e.collect { |e| e[:name].chars },
+          datasets: [
+            {
+              label: nil,
+              data: e.collect { |e| e[:count] },
+            },
+          ],
+        },
+        scales_yAxes_ticks: {
+        },
+      }
     end
   end
 end

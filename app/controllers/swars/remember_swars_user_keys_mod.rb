@@ -1,11 +1,7 @@
 module Swars
-  module RememberSwarsUserKeysMod
-    extend ActiveSupport::Concern
-
+  concern :RememberSwarsUserKeysMod do
     included do
       cattr_accessor(:remember_swars_user_keys_max) { 20 }
-
-      helper_method :remember_swars_user_keys
     end
 
     private

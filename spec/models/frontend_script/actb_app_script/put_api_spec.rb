@@ -1,4 +1,4 @@
-RSpec.describe FrontendScript::ActbAppScript::PutApi, type: :model do
+RSpec.describe "FrontendScript::ActbAppScript::PutApi", type: :model do
   include ActbSupportMethods
 
   it do

@@ -1,3 +1,4 @@
+
 <template lang="pug">
 .the_emotion_index
   .primary_header

@@ -1,38 +1,38 @@
 <template lang="pug">
 .XclockAppFooter.is-flex
-  .item(@click="app.back_handle")
-    b-icon(icon="arrow-left")
+  nuxt-link.item(:to="{name: 'index'}" @click.native="sound_play('click')")
+    b-icon(icon="home")
 
-  b-dropdown(position="is-top-left" @active-change="e => app.dropdown_active_change(e)" ref="preset_menu_pull_down")
+  b-dropdown(position="is-top-left" @active-change="e => base.dropdown_active_change(e)" ref="preset_menu_pull_down")
     .item(slot="trigger")
       b-icon(icon="menu")
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*10, initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10分
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*3,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 3分
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 0,     initial_read_sec:10, initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10秒
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*10, initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10分
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*3,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 3分
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 0,     initial_read_sec:10, initial_extra_sec: 0,  every_plus:0})") 将棋ウォーズ 10秒
     b-dropdown-item(:separator="true")
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 5分
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*2,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 2分
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 5分
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*2,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0})") 将棋クエスト 2分
     b-dropdown-item(:separator="true")
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5})") ABEMA フィッシャールール 5分 +5秒/手
     b-dropdown-item(:separator="true")
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*1,  initial_read_sec:30, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 0,     initial_read_sec:30, initial_extra_sec: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
-    b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*1,  initial_read_sec:30, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 早指  1分切ると1手30秒
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 0,     initial_read_sec:30, initial_extra_sec: 60, every_plus:0})") 将棋倶楽部24 早指2 1手30秒 猶予1分
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 15分  切ると1手60秒
+    b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0})") 将棋倶楽部24 長考  30分切ると1手60秒
     template(v-if="development_p")
       b-dropdown-item(:separator="true")
-      b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 7文字
-      b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 5文字
-      b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0})") 2行 7文字
-      b-dropdown-item(@click="app.rule_set({initial_main_sec: 60*60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60})") 3行 7文字
+      b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 7文字
+      b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 5文字
+      b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0})") 2行 7文字
+      b-dropdown-item(@click="base.rule_set({initial_main_sec: 60*60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60})") 3行 7文字
 
-  .item(@click="app.play_handle")
+  .item(@click="base.play_handle")
     b-icon(icon="play")
 
-  .item(@click="app.copy_handle")
+  .item(@click="base.copy_handle")
     b-icon(icon="content-duplicate")
 
-  .item(@click="app.keyboard_handle")
+  .item(@click="base.keyboard_handle")
     b-icon(icon="keyboard")
 </template>
 
@@ -41,6 +41,9 @@ import { support } from "./support.js"
 
 export default {
   name: "XclockAppFooter",
+  props: {
+    base: { type: Object, required: true },
+  },
   mixins: [
     support,
   ],
@@ -79,6 +82,7 @@ export default {
   background-color: change_color($white-ter, $alpha: 0.96)
 
   .item
+    color: inherit
     cursor: pointer
 
     padding-right: 1rem

@@ -6,8 +6,8 @@ class EvalController < ApplicationController
   end
 
   def run
-    retval = evaluate(current_code)
-    console_str = ">> #{current_code}\n#{retval}"
+    retv = evaluate(current_code)
+    console_str = ">> #{current_code}\n#{retv}"
 
     if v = params[:redirect_to].presence
       redirect_to v, alert: h.simple_format(console_str)
@@ -26,11 +26,11 @@ class EvalController < ApplicationController
 
   def evaluate(input)
     begin
-      retval = eval(input)
-      if !retval.kind_of?(String) && retval.respond_to?(:to_t)
-        retval = retval.to_t
+      retv = eval(input)
+      if !retv.kind_of?(String) && retv.respond_to?(:to_t)
+        retv = retv.to_t
       end
-      retval
+      retv
     rescue => error
       backtrace = Array(error.backtrace) - caller
       ["#{error.class.name}: #{error}\n", *backtrace.map { |e| "#{' ' * 8}from #{e}\n"}].join

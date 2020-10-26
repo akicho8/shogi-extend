@@ -10,7 +10,6 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   XyRuleInfo,
   XyRecord,
   Tsl,
-  Acns1,
 ].each do |e|
   e.setup
 end

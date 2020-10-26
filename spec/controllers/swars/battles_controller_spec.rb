@@ -108,26 +108,26 @@ RSpec.describe Swars::BattlesController, type: :controller do
   end
 
   describe "show" do
-    describe "ogp" do
-      it do
-        get :show, params: { id: record.to_param, turn: 12, flip: true }
-        expect(response).to have_http_status(:ok)
-
-        doc = Nokogiri::HTML.parse(response.body)
-        assert { doc.at(%(meta[name="og:url"])) == nil }
-        assert { doc.at(%(meta[name="og:image"]))[:content] == "http://0.0.0.0:3000/w/devuser1-Yamada_Taro-20200101_123401.png?flip=true&turn=12" }
-      end
-    end
+    # describe "ogp" do
+    #   it do
+    #     get :show, params: { id: record.to_param, turn: 12, flip: true }
+    #     expect(response).to have_http_status(:ok)
+    # 
+    #     doc = Nokogiri::HTML.parse(response.body)
+    #     assert { doc.at(%(meta[name="og:url"])) == nil }
+    #     assert { doc.at(%(meta[name="og:image"]))[:content] == "http://0.0.0.0:3000/w/devuser1-Yamada_Taro-20200101_123401.png?flip=true&turn=12" }
+    #   end
+    # end
 
     it "png" do
       get :show, params: {id: record.to_param, format: "png", width: "", turn: 999}
       expect(response).to have_http_status(:ok)
     end
 
-    it "棋譜印刷" do
-      get :show, params: {id: record.to_param, formal_sheet: true, formal_sheet_debug: true}
-      expect(response).to have_http_status(:ok)
-    end
+    # it "棋譜印刷" do
+    #   get :show, params: {id: record.to_param, formal_sheet: true, formal_sheet_debug: true}
+    #   expect(response).to have_http_status(:ok)
+    # end
 
     describe "KIF 表示/DL" do
       it "表示(UTF-8)" do

@@ -15,4 +15,9 @@ class UserPreview < ActionMailer::Preview
   def question_other_message
     UserMailer.question_other_message(User.first, Actb::QuestionMessage.first)
   end
+
+  # http://0.0.0.0:3000/rails/mailers/user/battle_fetch_notify
+  def battle_fetch_notify
+    UserMailer.battle_fetch_notify(Swars::CrawlReservation.first)
+  end
 end

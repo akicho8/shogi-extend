@@ -24,7 +24,7 @@ module KifShowMod
   # curl -I http://localhost:3000/x/1.kif?inline=1
   # curl -I http://localhost:3000/x/1.kif?plain=1
   def kif_data_send
-    text_body = current_record.to_cached_kifu(params[:format])
+    text_body = current_record.to_xxx(params[:format])
 
     if current_body_encode == :sjis
       text_body = text_body.tosjis
@@ -42,7 +42,8 @@ module KifShowMod
     end
 
     # inline でこれを表示すると headers["Content-Transfer-Encoding"] = "binary" になっているため Capybara でテキストが文字化けする
-    send_data(text_body, type: current_type, filename: current_filename.public_send("to#{current_filename_encode}"), disposition: current_disposition)
+    filename = current_filename.public_send("to#{current_filename_encode}")
+    send_data(text_body, type: current_type, filename: filename, disposition: current_disposition)
   end
 
   def current_filename

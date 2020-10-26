@@ -48,4 +48,5 @@ class User < ApplicationRecord
   include UserStaffMod
   include UserChoreMod
   include ::Actb::UserMod
+  include UserCrawlReservationMod
 end

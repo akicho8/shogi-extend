@@ -14,13 +14,15 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 
 every("5 3 * * *") do
   runner [
-    "XyRecord.entry_name_blank_scope.destroy_all",
-    "Swars::Battle.old_record_destroy",
-    "FreeBattle.old_record_destroy",
     # "Swars::Battle.rule_key_bugfix_process",
+    "Swars::Crawler::ReservationCrawler.run",
     # "Swars::Crawler::RegularCrawler.run",
     # "Swars::Crawler::ExpertCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
+
+    "XyRecord.entry_name_blank_scope.destroy_all",
+    "Swars::Battle.old_record_destroy",
+    "FreeBattle.old_record_destroy",
 
     "ActiveRecord::Base.logger = nil",
     "Swars::Membership.where(:think_all_avg => nil).find_each{|e|e.think_columns_update;e.save!}",
@@ -33,6 +35,10 @@ every("5 3 * * *") do
     "Actb::SchoolChannel.active_users_clear",
     "Actb::RoomChannel.active_users_clear",
   ].join(";")
+end
+
+if @environment == "staging"
+  every("0 0,7-23 * * *") { runner "Swars::Crawler::ReservationCrawler.run" }
 end
 
 every("15 5 * * *") { command "sudo systemctl restart sidekiq" }
@@ -61,6 +67,7 @@ if @environment == "production"
 end
 if @environment == "staging"
   every("30 2 * * *") do
-    command %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d shogi-flow.xyz)
+    command %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d         shogi-flow.xyz)
+    # command %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d webtech.shogi-flow.xyz)
   end
 end

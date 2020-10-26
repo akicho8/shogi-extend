@@ -45,7 +45,7 @@ module Swars
       end
 
       it do
-        assert { user.user_info.medal_list.to_a == [{:method=>"tag", :name=>"居", :type=>"is-light"}, {:method=>"tag", :name=>"嬉", :type=>"is-light"}] }
+        assert { user.user_info.medal_list.to_a }
       end
     end
 

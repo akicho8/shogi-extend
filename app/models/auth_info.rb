@@ -57,8 +57,6 @@ class AuthInfo < ApplicationRecord
           end
         end
       end
-      profile.save!
-
       if v = meta_info.dig("info", "email")
         if user.email_invalid?
           user.email = v

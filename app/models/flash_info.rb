@@ -1,9 +1,7 @@
 # 使い方
 #
 # flash[:info]        = "..."  → b-notification(type="is-info")
-# flash[:toast_info]  = "..."  → $buefy.toast.open(type="is-info")
 # flash[:error]       = "..."  → b-notification(type="is-danger")    ※ error は buefy の danger に変換する
-# flash[:toast_error] = "..."  → $buefy.toast.open(type="is-danger") ※ error は buefy の danger に変換する
 #
 class FlashInfo
   # flash[:xxx] で使うキー
@@ -31,8 +29,7 @@ class FlashInfo
     }
   end
 
-  cattr_accessor(:toast_keys) { buefy_preset_types.collect { |e| "toast_#{e}".to_sym } }
-  cattr_accessor(:all_keys)   { buefy_preset_types + toast_keys }
+  cattr_accessor(:all_keys)   { buefy_preset_types }
 
   delegate :tag, :params, :flash, :content_tag, to: :view_context
 
@@ -55,18 +52,13 @@ class FlashInfo
   end
 
   # 危険通知は notification を使う
-  def flash_danger_notify_tag
+  def flash_notify_tag
     if list = normalized_flash.slice(*buefy_preset_types).presence
-      tag.div(id: "flash_danger_notify_tag", :class => "is_screen_only") do
+      tag.div(id: "flash_notify_tag") do
         list.collect { |key, message|
-          content_tag("b-notification", message.html_safe, type: "is-#{key}", ":has-icon": "false", ":closable": "false")
+          content_tag("div", message.html_safe, class: "notification is-#{key}")
         }.join.html_safe
       end
     end
-  end
-
-  # toast_ で始まるキーをあつめて toast_ を取る
-  def toast_flash
-    normalized_flash.slice(*toast_keys).transform_keys { |e| e.to_s.remove(/^toast_/) }
   end
 end

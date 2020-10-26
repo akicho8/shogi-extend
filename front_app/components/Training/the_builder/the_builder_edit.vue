@@ -2,7 +2,7 @@
 .the_builder_edit
   ////////////////////////////////////////////////////////////////////////////////
   .primary_header
-    b-icon.header_item.with_icon.ljust(icon="arrow-left" @click.native="bapp.builder_index_handle")
+    b-icon.header_item.with_icon.ljust(icon="chevron-left" @click.native="bapp.builder_index_handle")
     .header_center_title
       template(v-if="bapp.question.title")
         | {{bapp.question.title}}

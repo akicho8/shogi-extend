@@ -66,12 +66,12 @@
     :opened-detailed="detailed_ids"
     )
 
-    b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="visible_hash.id")               {{row.id}}
-    b-table-column(v-slot="{row}" custom-key="user_id"           field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="visible_hash.user_id")
+    b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="!!visible_hash.id")               {{row.id}}
+    b-table-column(v-slot="{row}" custom-key="user_id"           field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="!!visible_hash.user_id")
       a(@click.stop="app.ov_user_info_set(row.user.id)" :href="app.ov_user_url(row.user.id)")
         | {{row.user.name}}
 
-    b-table-column(v-slot="{row}" custom-key="source_author"     field="source_author"     :label="QuestionIndexColumnInfo.fetch('source_author').short_name"       sortable         :visible="visible_hash.source_author")
+    b-table-column(v-slot="{row}" custom-key="source_author"     field="source_author"     :label="QuestionIndexColumnInfo.fetch('source_author').short_name"       sortable         :visible="!!visible_hash.source_author")
 
       template(v-if="row.source_about_key === 'unknown'")
         | 不詳
@@ -87,36 +87,36 @@
         a(@click.prevent.stop="app.ov_user_info_set(row.user.id)" :href="app.ov_user_url(row.user.id)")
           | {{row.user.name}}
 
-    b-table-column(v-slot="{row}" custom-key="title"             field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="visible_hash.title")
+    b-table-column(v-slot="{row}" custom-key="title"             field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="!!visible_hash.title")
       a(@click.prevent.stop="app.ov_question_info_set(row.id)" :href="app.ov_question_url(row.id)")
         | {{string_truncate(row.title, {length: 20})}}
 
-    b-table-column(v-slot="{row}" custom-key="histories_count"   field="histories_count"   :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="visible_hash.histories_count")  {{row.histories_count}}
-    b-table-column(v-slot="{row}" custom-key="ox_record.o_rate"  field="ox_record.o_rate"  :label="QuestionIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="visible_hash.o_rate")  {{float_to_perc(row.ox_record.o_rate)}} %
-    b-table-column(v-slot="{row}" custom-key="ox_record.o_count" field="ox_record.o_count" :label="QuestionIndexColumnInfo.fetch('o_count').short_name" sortable numeric :visible="visible_hash.o_count") {{row.ox_record.o_count}}
-    b-table-column(v-slot="{row}" custom-key="ox_record.x_count" field="ox_record.x_count" :label="QuestionIndexColumnInfo.fetch('x_count').short_name" sortable numeric :visible="visible_hash.x_count") {{row.ox_record.x_count}}
-    b-table-column(v-slot="{row}" custom-key="messages_count"    field="messages_count"  :label="QuestionIndexColumnInfo.fetch('messages_count').short_name"      sortable numeric :visible="visible_hash.messages_count")      {{row.messages_count}}
+    b-table-column(v-slot="{row}" custom-key="histories_count"   field="histories_count"   :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="!!visible_hash.histories_count")  {{row.histories_count}}
+    b-table-column(v-slot="{row}" custom-key="ox_record.o_rate"  field="ox_record.o_rate"  :label="QuestionIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="!!visible_hash.o_rate")  {{float_to_perc(row.ox_record.o_rate)}} %
+    b-table-column(v-slot="{row}" custom-key="ox_record.o_count" field="ox_record.o_count" :label="QuestionIndexColumnInfo.fetch('o_count').short_name" sortable numeric :visible="!!visible_hash.o_count") {{row.ox_record.o_count}}
+    b-table-column(v-slot="{row}" custom-key="ox_record.x_count" field="ox_record.x_count" :label="QuestionIndexColumnInfo.fetch('x_count').short_name" sortable numeric :visible="!!visible_hash.x_count") {{row.ox_record.x_count}}
+    b-table-column(v-slot="{row}" custom-key="messages_count"    field="messages_count"  :label="QuestionIndexColumnInfo.fetch('messages_count').short_name"      sortable numeric :visible="!!visible_hash.messages_count")      {{row.messages_count}}
 
-    b-table-column(v-slot="{row}" custom-key="good_rate"         field="good_rate"         :label="QuestionIndexColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="visible_hash.good_rate") {{float_to_perc(row.good_rate)}} %
-    b-table-column(v-slot="{row}" custom-key="good_marks_count"  field="good_marks_count"  :label="QuestionIndexColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="visible_hash.good_marks_count") {{row.good_marks_count}}
-    b-table-column(v-slot="{row}" custom-key="bad_marks_count"   field="bad_marks_count"   :label="QuestionIndexColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="visible_hash.bad_marks_count")  {{row.bad_marks_count}}
+    b-table-column(v-slot="{row}" custom-key="good_rate"         field="good_rate"         :label="QuestionIndexColumnInfo.fetch('good_rate').short_name"        sortable numeric :visible="!!visible_hash.good_rate") {{float_to_perc(row.good_rate)}} %
+    b-table-column(v-slot="{row}" custom-key="good_marks_count"  field="good_marks_count"  :label="QuestionIndexColumnInfo.fetch('good_marks_count').short_name" sortable numeric :visible="!!visible_hash.good_marks_count") {{row.good_marks_count}}
+    b-table-column(v-slot="{row}" custom-key="bad_marks_count"   field="bad_marks_count"   :label="QuestionIndexColumnInfo.fetch('bad_marks_count').short_name"  sortable numeric :visible="!!visible_hash.bad_marks_count")  {{row.bad_marks_count}}
 
-    //- b-table-column(v-slot="{row}" custom-key="clip_marks_count"  field="clip_marks_count"  :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="visible_hash.clip_marks_count")      {{row.clip_marks_count}}
+    //- b-table-column(v-slot="{row}" custom-key="clip_marks_count"  field="clip_marks_count"  :label="QuestionIndexColumnInfo.fetch('clip_marks_count').short_name"      sortable numeric :visible="!!visible_hash.clip_marks_count")      {{row.clip_marks_count}}
 
-    //- b-table-column(v-slot="{row}" custom-key="difficulty_level"  field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="visible_hash.difficulty_level") {{row.difficulty_level}}
-    //- b-table-column(v-slot="{row}" custom-key="time_limit_sec"    field="time_limit_sec"  :label="QuestionIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="visible_hash.time_limit_sec") {{row.time_limit_sec}}秒
+    //- b-table-column(v-slot="{row}" custom-key="difficulty_level"  field="difficulty_level"  :label="QuestionIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="!!visible_hash.difficulty_level") {{row.difficulty_level}}
+    //- b-table-column(v-slot="{row}" custom-key="time_limit_sec"    field="time_limit_sec"  :label="QuestionIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="!!visible_hash.time_limit_sec") {{row.time_limit_sec}}秒
 
-    b-table-column(v-slot="{row}" custom-key="lineage_key"    field="lineage_key"  :label="QuestionIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="visible_hash.lineage_key") {{row.lineage_key}}
-    b-table-column(v-slot="{row}" custom-key="turn_max"  field="turn_max"  :label="QuestionIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="visible_hash.turn_max")      {{row.turn_max}}
-    b-table-column(v-slot="{row}" custom-key="moves_answers_count" field="moves_answers_count" :label="QuestionIndexColumnInfo.fetch('moves_answers_count').short_name" sortable numeric :visible="visible_hash.moves_answers_count") {{row.moves_answers_count}}
+    b-table-column(v-slot="{row}" custom-key="lineage_key"    field="lineage_key"  :label="QuestionIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="!!visible_hash.lineage_key") {{row.lineage_key}}
+    b-table-column(v-slot="{row}" custom-key="turn_max"  field="turn_max"  :label="QuestionIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="!!visible_hash.turn_max")      {{row.turn_max}}
+    b-table-column(v-slot="{row}" custom-key="moves_answers_count" field="moves_answers_count" :label="QuestionIndexColumnInfo.fetch('moves_answers_count').short_name" sortable numeric :visible="!!visible_hash.moves_answers_count") {{row.moves_answers_count}}
 
-    b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="QuestionIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="visible_hash.owner_tag_list")
+    b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="QuestionIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="!!visible_hash.owner_tag_list")
       b-taglist
         b-tag.is_clickable(v-for="tag in row.owner_tag_list" @click.native.stop="bapp.tag_search_handle(tag)" rounded)
           | {{tag}}
 
-    b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="QuestionIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="visible_hash.created_at")       {{row_time_format(row.created_at)}}
-    b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="visible_hash.updated_at")       {{row_time_format(row.updated_at)}}
+    b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="QuestionIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="!!visible_hash.created_at")       {{row_time_format(row.created_at)}}
+    b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="!!visible_hash.updated_at")       {{row_time_format(row.updated_at)}}
 
     b-table-column(v-slot="{row}" custom-key="operation" label="操作")
       template(v-if="app.current_user.id === row.user.id || app.debug_force_edit_p")
@@ -171,7 +171,7 @@
 <script>
 import { support } from "../support.js"
 
-import ls_support from "../../../../app/javascript/ls_support.js"
+import ls_support from "@/components/models/ls_support.js"
 
 import the_footer from "../the_footer.vue"
 
@@ -214,6 +214,7 @@ export default {
   created() {
     // this.$gtag.event("open", {event_category: "問題一覧"})
     this.folder_active_handle()
+    this.ls_setup()
   },
   mounted() {
     // 有効にすると localStorage をクリアする
@@ -293,7 +294,7 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// ls_support
 
-    ls_data() {
+    ls_default() {
       return {
         visible_hash: this.as_visible_hash(QuestionIndexColumnInfo.values),
       }

@@ -73,7 +73,7 @@ export default {
           src: data.mp3_path,
           autoplay: true,
           volume: options.volume || 1.0,
-          rate: options.rate || 1.5,
+          rate: options.rate || 1.6,
         })
         if (options.onend) {
           window.howl_object.on("end", () => options.onend())

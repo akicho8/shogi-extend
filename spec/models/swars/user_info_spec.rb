@@ -32,7 +32,7 @@ module Swars
     end
 
     it "メダル" do
-      assert { value["medal_list"]   == [{"method"=>"tag", "name"=>"居", "type"=>"is-light"},{"method"=>"tag", "name"=>"嬉", "type"=>"is-light"}] }
+      assert { value["medal_list"] == [{"message" => "居飛車党", "method" => "tag", "name" => "居", "type" => "is-light"}, {"message" => "嬉野流を使ってそこそこ勝った", "method" => "tag", "name" => "嬉", "type" => "is-light"}] }
     end
 
     it "対局数0" do

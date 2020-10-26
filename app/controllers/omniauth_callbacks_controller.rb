@@ -8,6 +8,8 @@
 require "open-uri" # for URI#open
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  FLASH_NOTICE_ENABLE = false
+
   def google
     auth_shared_process
   end
@@ -96,13 +98,15 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       message = "#{social_media_info.name} アカウントと連携しました"
       return_to = session[:return_to] || :new_xuser_registration
       session[:return_to] = nil
-      redirect_to return_to, toast_notice: message
+      redirect_to return_to, notice: message
       return
     end
 
     # アカウントを作成または復元したのでログイン状態にする
     current_user_set(user)
-    flash[:toast_info] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
+    if FLASH_NOTICE_ENABLE
+      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
+    end
     sign_in_and_redirect user, event: :authentication # or redirect_to after_sign_in_path_for(user)
   end
 

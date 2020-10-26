@@ -1,3 +1,5 @@
+// 時間がたつとマウスを消す
+
 import _ from "lodash"
 
 const MOUSE_CURSOR_HIDDEN_DELAY = 3

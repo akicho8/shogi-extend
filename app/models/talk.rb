@@ -119,7 +119,11 @@ class Talk
       # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
       # のエラーになることがある
       # が、よくわからんので例外に含めていない
-      SlackAgent.notify_exception(error)
+      if Rails.env.development?
+        # ログが見えなくなるので出力しない
+      else
+        SlackAgent.notify_exception(error)
+      end
     end
   end
 

@@ -1,7 +1,7 @@
 class DirectSessionsController < ApplicationController
   def create
     user = User.create!
-    flash[:toast_info] = "「#{user.name}」としてログインしました"
+    flash[:notice] = "「#{user.name}」としてログインしました"
     current_user_set(user)
     sign_in_and_redirect user
   end

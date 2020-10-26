@@ -97,7 +97,7 @@ module Swars
         end
 
         if row["前"] && row["後"]
-          row["差分"] = row["後"] - row["前"]
+          row["差分"] = "%+d" % [row["後"] - row["前"]]
         end
 
         if ENV["VERBOSE"]

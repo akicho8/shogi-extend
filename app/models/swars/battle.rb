@@ -139,6 +139,10 @@ module Swars
       Bioshogi::Parser::CsaParser
     end
 
+    def heavy_parsed_info
+      @heavy_parsed_info ||= KifuParser.new(source: kifu_body, swars_battle_key: key)
+    end
+
     concerning :SummaryMethods do
       def total_seconds
         @total_seconds ||= memberships.sum(&:total_seconds)
@@ -162,17 +166,28 @@ module Swars
           counter
         end
 
+        # 汚い文字列から最初に見つけたURLを抽出
         def battle_url_extract(str)
-          if url = URI.extract(str, ["http", "https"]).first
-            if url.match?(%r{\.heroz\.jp/games/})
-              url
+          if str
+            if url = URI.extract(str, ["http", "https"]).first
+              if url.match?(%r{\.heroz\.jp/games/})
+                url
+              end
             end
           end
         end
 
+        # 汚い文字列から最初に見つけたURLから対局キーを取得
         def battle_key_extract(str)
           if url = battle_url_extract(str)
             URI(url).path.split("/").last
+          end
+        end
+
+        # 汚い文字列から最初に見つけたURLから対局キーを取得して最初の人を抽出
+        def user_key_extract_from_battle_url(str)
+          if key = battle_key_extract(str)
+            key.split("-").first
           end
         end
       end

@@ -66,7 +66,7 @@ module Swars
       end
     end
 
-    describe "一手詰じらしマン" do
+    describe "1手詰じらしマン" do
       before do
         @black = User.create!
         @white = User.create!
@@ -77,7 +77,7 @@ module Swars
       end
 
       it do
-        assert { @black.memberships.first.first_matched_medal.key == :"一手詰じらしマン" }
+        assert { @black.memberships.first.first_matched_medal.key == :"1手詰じらしマン" }
       end
     end
 
@@ -183,8 +183,8 @@ module Swars
 
       it do
         battle = test("初段", "二段")
-        assert { battle.memberships[0].medal_params == {:icon => "numeric-1-circle",      :class => "has-text-gold"       }}
-        assert { battle.memberships[1].medal_params == {:icon => "emoticon-dead-outline", :class => "has-text-grey-light" }}
+        assert { battle.memberships[0].medal_params == {:message => "段級位が1つ上の人に勝った", :icon => "numeric-1-circle", :class => "has-text-gold"} }
+        assert { battle.memberships[1].medal_params == {:message => "段級位が1つ下の人に負けた", :emoji => "🥺"} }
       end
     end
   end

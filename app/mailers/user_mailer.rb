@@ -36,7 +36,7 @@ class UserMailer < ApplicationMailer
       out << ""
       out << "--"
       out << "▼将棋トレーニングバトル"
-      out << url_for(:training)
+      out << UrlProxy.wrap2("/training")
     end
 
     body = out.join("\n")
@@ -58,5 +58,49 @@ class UserMailer < ApplicationMailer
     body = out.join("\n")
 
     mail(subject: subject, to: user.email, bcc: AppConfig[:admin_email], body: body)
+  end
+
+  # 以前コメントした人に通知
+  # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
+  # http://0.0.0.0:3000/rails/mailers/user/battle_fetch_notify
+  def battle_fetch_notify(record, other_options = {})
+    subject = "【将棋ウォーズ棋譜検索】#{record.target_user.key}さんの棋譜取得完了"
+
+    diff_count = other_options[:diff_count] || 0
+
+    out = []
+    out << "追加: #{diff_count} 件"
+    out << "全体: #{record.zip_scope.count}件"
+    out << ""
+
+    out << "#{record.target_user.key}さんの棋譜"
+    out << UrlProxy.wrap2(path: "/swars/search", query: {query: record.target_user_key})
+
+    out << ""
+    out << "--"
+    out << "SHOGI-EXTEND"
+    out << url_for(:root)
+    if Rails.env.development?
+      out << record.to_t
+      if other_options.present?
+        out << other_options.to_t
+      end
+    end
+
+    body = out.join("\n")
+
+    user = record.user
+
+    if user.email == record.to_email
+      to = "#{user.name} <#{user.email}>"
+    else
+      to = record.to_email
+    end
+
+    if record.attachment_mode == "with_zip"
+      attachments[record.zip_filename] = record.zip_binary
+    end
+
+    mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)
   end
 end

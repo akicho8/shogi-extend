@@ -1,11 +1,13 @@
+import _ from "lodash"
+
 export const app_room = {
   data() {
     return {
-      room_code: "",                         // リアルタイム共有合言葉
+      room_code: "",                           // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
     }
   },
-  created() {
+  mounted() {
     this.room_code_set(this.config.record.room_code, {initial: true})
   },
   methods: {
@@ -15,13 +17,17 @@ export const app_room = {
         ...options,
       }
 
-      this.room_code = _.trim(room_code)
+      room_code = _.trim(room_code)
+      const changed_p = this.room_code != room_code
+      this.room_code = room_code
 
-      if (!options.initial) {
-        if (this.room_code) {
-          this.general_ok_notice(`合言葉を「${this.room_code}」に設定しました`)
-        } else {
-          this.general_ok_notice("合言葉を削除しました")
+      if (changed_p) {
+        if (!options.initial) {
+          if (this.room_code) {
+            this.toast_ok(`合言葉を「${this.room_code}」に設定しました`)
+          } else {
+            this.toast_ok("合言葉を削除しました")
+          }
         }
       }
 
@@ -41,7 +47,7 @@ export const app_room = {
         },
         disconnected: () => {
           if (this.development_p) {
-            this.general_ok_notice("部屋を解放しました")
+            this.toast_ok("部屋を解放しました")
           }
         },
       })
@@ -86,7 +92,7 @@ export const app_room = {
         // 自分から自分へ
       } else {
         this.attributes_set(params)
-        this.general_ok_notice("タイトルを変更しました")
+        this.toast_ok(`タイトルを${params.title}に変更しました`)
       }
     },
 

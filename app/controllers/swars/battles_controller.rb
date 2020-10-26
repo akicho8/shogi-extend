@@ -31,29 +31,15 @@
 # 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
 #--------------------------------------------------------------------------------
 
+# http://0.0.0.0:3000/w.json?query=devuser1
 module Swars
   class BattlesController < ApplicationController
     include ModulableCrud::All
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
-    include ExternalAppMod
     include ZipDlMod
     include RememberSwarsUserKeysMod
     include IndexMod
     include ShowMod
-
-    def create
-      import_process(flash)     # これはなに……？？？
-      flash[:import_skip] = true
-      redirect_to [:swars, :battles, query: current_swars_user]
-    end
-
-    concerning :EditCustomMethods do
-      def js_edit_options
-        super.merge({
-            run_mode: "view_mode",
-          })
-      end
-    end
   end
 end

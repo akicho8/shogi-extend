@@ -1,32 +1,35 @@
 <template lang="pug">
 client-only
   .swars-histograms-key
-    b-navbar(type="is-primary")
+    MainNavbar
       template(slot="brand")
-        b-navbar-item.has-text-weight-bold(tag="div")
+        NavbarItemHome
+        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: $route.params.key}}")
           | 将棋ウォーズ{{config.tactic.name}}分布
-      template(slot="end")
-        b-navbar-item(tag="a" href="/") TOP
 
-    .section
-      SwarsHistogramNavigation(:config="config")
-      .columns
-        .column
-          b-table.mt-3(
-            :data="config.records"
-            :mobile-cards="false"
-            hoverable
-            )
-            b-table-column(v-slot="{row}" field="name"            label="名前" sortable) {{row.name}}
-            b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable)
-              template(v-if="row.ratio")
-                | {{float_to_perc(row.ratio, 3)}} %
-            //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="debug_p")
-            //-   template(v-if="row.deviation_score")
-            //-     | {{number_floor(row.deviation_score, 3)}}
-            b-table-column(v-slot="{row}" field="count"           label="個数" numeric sortable) {{row.count}}
+    MainSection
+      .container
+        SwarsHistogramNavigation(:config="config")
+        .columns.is-unselectable
+          .column.is-6.mt-3
+            CustomChart(:params="config.custom_chart_params")
+        .columns
+          .column
+            b-table.mt-3(
+              :data="config.records"
+              :mobile-cards="false"
+              hoverable
+              )
+              b-table-column(v-slot="{row}" field="name"            label="名前" sortable) {{row.name}}
+              b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable)
+                template(v-if="row.ratio")
+                  | {{float_to_perc(row.ratio, 3)}} %
+              //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="!!development_p")
+              //-   template(v-if="row.deviation_score")
+              //-     | {{number_floor(row.deviation_score, 3)}}
+              b-table-column(v-slot="{row}" field="count"           label="数" numeric sortable) {{row.count}}
 
-          pre(title="DEBUG" v-if="debug_p") {{config}}
+    DebugPre {{config}}
 </template>
 
 <script>
@@ -42,20 +45,16 @@ export default {
       title: `将棋ウォーズ${this.config.tactic.name}分布`,
       meta: [
         { hid: "og:title",       property: "og:title",       content: `将棋ウォーズ${this.config.tactic.name}分布` },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary_large_image"                                 },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_OGP_URL + "/ogp/swars-histograms-attack.png" },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-histograms-attack.png" },
         { hid: "og:description", property: "og:description", content: ""},
       ],
     }
-  },
-  mounted() {
-    this.sound_play("click")
   },
 }
 </script>
 
 <style lang="sass">
 .swars-histograms-key
-  .section
+  .MainSection
     padding-top: 1.7rem
 </style>

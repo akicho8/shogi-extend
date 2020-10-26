@@ -74,5 +74,12 @@ module Tsl
     def seat_count(generation)
       memberships.joins(:league).where(Tsl::League.arel_table[:generation].lt(generation)).count
     end
+
+    # 在籍回数のかわりに表示したい在籍毎の勝数
+    def zaiseki_win_list(generation)
+      g = Tsl::League.arel_table[:generation]
+      s = memberships.joins(:league).where(g.lt(generation))
+      s.order(g.asc).pluck(:win)
+    end
   end
 end

@@ -2,12 +2,21 @@ module Api
   class EtcController < ::Api::ApplicationController
     skip_forgery_protection
 
-    # http://0.0.0.0:3000/api/echo.json?message=ok
+    # curl -X GET  http://0.0.0.0:3000/api/echo.json?message=ok
+    # curl -X POST http://0.0.0.0:3000/api/echo.json?message=ok
     def echo
       render json: {
         :message   => params[:message],
         :timestamp => Time.current,
       }
+    end
+
+    # curl -X GET http://0.0.0.0:3000/api/sleep.json?sleep=2
+    def sleep
+      if Rails.env.development?
+        Kernel.sleep(params[:sleep].to_f)
+      end
+      render json: params[:retval]
     end
 
     # http://0.0.0.0:3000/api/ping.json
@@ -53,6 +62,30 @@ module Api
           :user_agent        => request.user_agent,
         }
       }
+    end
+
+    # 三段リーグのユーザー配列
+    # http://0.0.0.0:3000/api/tsl_user_all
+    def tsl_user_all
+      render json: Tsl::User.all
+    end
+
+    # 三段リーグのユーザーの代表
+    # http://0.0.0.0:3000/api/tsl_user_newest
+    def tsl_user_newest
+      render json: Tsl::League.newest_order.first.users.where.not(level_up_generation: nil).sample
+    end
+
+    # 三段リーグのリーグ配列
+    # http://0.0.0.0:3000/api/tsl_league_all
+    def tsl_league_all
+      render json: Tsl::League.all
+    end
+
+    # 三段リーグの最新
+    # http://0.0.0.0:3000/api/tsl_league_newest
+    def tsl_league_newest
+      render json: Tsl::League.newest_order.first
     end
   end
 end

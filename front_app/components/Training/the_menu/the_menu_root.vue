@@ -3,7 +3,7 @@
   .primary_header
     .header_center_title メニュー
   .menu_buttons
-    b-button(expanded @click="app.profile_edit_handle" :disabled="!app.current_user") プロフィール
+    b-button(expanded tag="nuxt-link" :to="{name: 'settings-profile'}" :disabled="!app.current_user") プロフィール
     b-button(expanded @click="app.emotion_index_handle" :disabled="!app.current_user" v-if="app.config.emotion_editable_p") エモーション
     b-button(expanded tag="a" :href="question_zip_download_url" @click="sound_play('click')" :disabled="!app.current_user" v-if="development_p") 問題ダウンロード(直接)
     b-button(expanded @click="zip_dl_count_fetch" :disabled="!app.current_user") 問題ダウンロード
@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     question_zip_download_url() {
-      const url = new URL(this.$config.MY_SITE_URL + "/script/actb-app")
+      const url = new URL(this.$config.MY_SITE_URL + "/api/training")
       url.searchParams.set("remote_action", "question_download")
       url.searchParams.set("format", "zip")
       return url.toString()

@@ -249,55 +249,22 @@ module BattleModelMod
     }
   end
 
-  # 直前開く○○
-  # JSとは関係がない
-  # Rails側だけの仕組み → JS側で処理したい
-  concerning :PathMethods do
-    def kento_app_path
-      h.kento_app_path(sfen_info.kento_app_query_hash, display_turn)
-    end
-
-    # app/models/external_app_info.rb から参照している
-    # ・kento_app_url
-    # ・piyo_shogi_app_url
-
-    # TODO: JS 側に渡して GVI.kento_full_url で遷移すること
-    def kento_app_url
-      h.kento_app_url(sfen_info.kento_app_query_hash, display_turn)
-    end
-
-    # TODO: piyo_shogi_base_params を含めて JS 側に渡して GVI.piyo_shogi_auto_url で遷移すること
-    def piyo_shogi_app_url
-      url = h.full_url_for([self, format: :kif])
-      h.piyo_shogi_app_url(url, num: display_turn)
-    end
-
-    attr_accessor :h
-
-    def h
-      @h ||= Rails.application.routes.url_helpers
-    end
-  end
-
+  # FIXME: self に依存させないようにして全部 KifuParser に委譲すること
   concerning :KifuConvertMethods do
-    # cache_key は updated_at が元になっているため、間接的に kifu_body の更新で cache_key は変化する
-    def to_cached_kifu(key)
-      heavy_parsed_info.public_send("to_#{key}", compact: true, no_embed_if_time_blank: true)
+    included do
+      delegate :to_xxx, :to_all, :all_kifs, to: :heavy_parsed_info
+    end
+
+    # FIXME: 名前がよくない
+    # KI2変換可能だけど重い
+    def heavy_parsed_info
+      @heavy_parsed_info ||= KifuParser.new(source: kifu_body)
     end
 
     # バリデーションをはずして KI2 への変換もしない前提の軽い版
     # ヘッダーやタグが欲しいとき用
     def fast_parsed_info
       @fast_parsed_info ||= parser_class.parse(kifu_body, {typical_error_case: :embed}.merge(fast_parser_options))
-    end
-
-    # KI2変換可能だけど重い
-    def heavy_parsed_info
-      @heavy_parsed_info ||= parser_class.parse(kifu_body, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
-    end
-
-    def all_kifs
-      @all_kifs ||= KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => to_cached_kifu(e.key)) }
     end
 
     # # # 平手から開始した76歩の場合

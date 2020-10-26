@@ -15,19 +15,7 @@ link(rel="stylesheet" href="https://cdn.materialdesignicons.com/5.1.45/css/mater
 
 link(rel="apple-touch-icon" href=path_to_image(@apple_touch_icon || "apple-touch-icon.png"))
 
-= javascript_pack_tag "legacy_browser_verify"
-
-/ FIXME: インラインで書くな
-sass:
-  [v-cloak]
-    /* important 指定しないと効かないのが謎 */
-    display: none !important
-
 title= html_title
-
-/ FIXME: とる
-javascript:
-  var js_global = #{js_global.to_json.html_safe}
 
 / sprockets
 = stylesheet_link_tag "application", media: "all"
@@ -37,7 +25,7 @@ javascript:
 = stylesheet_pack_tag "application", media: "all"
 = javascript_pack_tag "application"
 
-- @ogp_params ||= { description: "将棋に関連する便利サービスを提供するサイトです", image: "swars_battles_index.png" }
+- @ogp_params ||= { description: "将棋に関連するツールを提供するサイトです", image: "ogp/swars-search.png" }
 == OgpCop.as_meta_tags(self, @ogp_params)
 
 = yield :head
