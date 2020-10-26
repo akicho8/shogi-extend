@@ -35,7 +35,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/adapter"},
       title: "なんでも棋譜変換",
       ogp_image_base: "adapter",
-      description: "棋譜が読み込めないときに放り込んでください",
+      description: "棋譜が読み込めないときに放り込もう",
       features: [
         "変則的な将棋倶楽部24の棋譜を正規化",
         "将棋クエストのCSA形式をKIFに変換",
@@ -132,13 +132,14 @@ class ServiceInfo
       nuxt_link_to: {path: "/cpu-battle"},
       title: "CPU対戦",
       ogp_image_base: "cpu-battle",
-      description: "対人戦で心をやられた方はどうぞ",
+      description: "対人戦で心をやられたときにどうぞ",
       features: [
-        "コンピュータ将棋が初めて生まれたときぐらいのアリゴリズムで動いている",
+        "自作の将棋AI",
         "見掛け倒しな矢倉や右四間飛車が指せる",
+        "作者に似てめちゃくちゃ弱い",
+        # "コンピュータ将棋が初めて生まれたときぐらいのアリゴリズムで動いている",
         # # "CPUは矢倉・右四間飛車・嬉野流・アヒル戦法・振り飛車・英春流かまいたち戦法を指せます",
         # "将棋に特化したプログラムであって別にAIではない",
-        # "作者に似てめちゃくちゃ弱い",
       ],
     },
     {
