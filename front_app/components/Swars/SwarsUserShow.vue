@@ -55,7 +55,7 @@
     .top_container
       ////////////////////////////////////////////////////////////////////////////////
       // 名前
-      .has-text-weight-bold.has-text-centered.mt-2.is_clickable(@click="search_handle")
+      .has-text-weight-bold.has-text-centered.mt-2.is_clickable(@click="name_click_handle")
         | {{info.user.key}}
       // 段級位
       .is-flex.rule_container
@@ -70,7 +70,7 @@
                 | ？
 
       ////////////////////////////////////////////////////////////////////////////////
-      WinLoseCircle(:info="info")
+      WinLoseCircle(:info="info" :click_func="win_lose_click_handle")
 
       ////////////////////////////////////////////////////////////////////////////////
       .ox_container.has-text-centered.is_line_break_on
@@ -246,6 +246,16 @@ export default {
   },
 
   methods: {
+    win_lose_click_handle(win_or_lose) {
+      this.sound_play("click")
+      this.$router.push({name: "swars-search", query: {query: `${this.info.user.key} judge:${win_or_lose}`}})
+    },
+
+    name_click_handle() {
+      this.sound_play("click")
+      this.search_handle()
+    },
+
     search_handle() {
       this.$router.push({name: "swars-search", query: {query: this.info.user.key}})
     },
