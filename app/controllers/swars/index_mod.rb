@@ -351,9 +351,7 @@ module Swars
     def current_index_scope
       @current_index_scope ||= -> {
         s = current_scope
-        if current_swars_user || (Rails.env.development? && params[:all])
-          # すべて表示
-        else
+        unless primary_key_like?
           s = s.none
         end
         s
@@ -392,6 +390,16 @@ module Swars
       list << { key: :preset_info,      label: "手合", visible: false, }
       list << { key: :battled_at,       label: "日時", visible: true,  }
       list
+    end
+
+    private
+
+    def primary_key_like?
+      if Rails.env.development? && params[:all]
+        return true
+      end
+
+      current_swars_user || primary_record_key || query_info.lookup(:ids)
     end
   end
 end
