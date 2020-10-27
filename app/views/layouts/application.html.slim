@@ -9,11 +9,3 @@ html(lang="ja" class=([Rails.env]))
         = flash_notify_tag
         = yield
         = ToolBelt::Basic.new(view_context: self).to_html
-    .footer
-      .container
-        .has-text-centered
-          small
-            = "Powered by "
-            = link_to("Ruby #{RUBY_VERSION}", "https://www.ruby-lang.org/", :class => "has-text-grey-dark")
-            = " and "
-            = link_to("Rails #{Rails.version}", "https://rubyonrails.org/", :class => "has-text-grey-dark")
