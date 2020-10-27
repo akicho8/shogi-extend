@@ -80,8 +80,8 @@
           .columns
             .column.is-half-desktop.is_buttons_column
               .buttons.is-centered
-                PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-                KentoButton(tag="a" size="is-small" @click.stop="" :href="kento_app_with_params_url")
+                PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
+                KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
                 KifCopyButton(@click="kifu_copy_handle")
                 TweetButton(@click="tweet_share_open({url: permalink_url})")
                 //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")

@@ -19,6 +19,17 @@ export default {
   },
 
   methods: {
+    ga_click(category) {
+      if (this.$ga) {
+        if (this.development_p) {
+          const message = `GA: ${category}`
+          this.$buefy.toast.open({message: message, position: "is-top", type: "is-dark", queue: false})
+          this.clog(message)
+        }
+        this.$ga.event(category, "click")
+      }
+    },
+
     // ../../../node_modules/autolinker/README.md
     auto_link(str, options = {}) {
       return Autolinker.link(str, {newWindow: true, truncate: 30, mention: "twitter", ...options})

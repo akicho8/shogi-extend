@@ -32,7 +32,7 @@ export default {
   created() {
     this.sound_play("click")
 
-    // this.$gtag.event("open", {event_category: "問題履歴"})
+    // this.$ga.event("open", {event_category: "問題履歴"})
 
     this.app.lobby_unsubscribe()
     this.app.history_mode_select("history_index")

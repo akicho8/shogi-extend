@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     click_handle() {
-      // this.$gtag.event("click", {event_category: "KENTO"})
+      this.ga_click("KENTO")
     },
   },
 }

@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     click_handle() {
-      // this.$gtag.event("click", {event_category: "ぴよ将棋"})
+      this.ga_click("ぴよ将棋")
     },
   },
   watch: {

@@ -171,7 +171,17 @@ const config = {
   */
   buildModules: [
     // https://github.com/nuxt-community/analytics-module
-    ['@nuxtjs/google-analytics', { id: 'UA-109851345-1' }],
+    [
+      '@nuxtjs/google-analytics',
+      {
+        id: 'UA-109851345-1',
+        // // コメントアウトすると開発環境で確認できる
+        // debug: {
+        //   enabled: true,
+        //   sendHitTask: true,
+        // },
+      },
+    ],
   ],
   /*
   ** Nuxt.js modules

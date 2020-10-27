@@ -279,7 +279,7 @@ export default {
 
     question_edit_for(row) {
       this.sound_play("click")
-      // this.$gtag.event("open", {event_category: "問題編集"})
+      // this.$ga.event("open", {event_category: "問題編集"})
 
       this.__assert__(row instanceof Question, `問題が Question でラップされてない ${Question.name}`)
       this.question = row

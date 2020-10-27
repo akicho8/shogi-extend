@@ -212,7 +212,7 @@ export default {
     }
   },
   created() {
-    // this.$gtag.event("open", {event_category: "問題一覧"})
+    // this.$ga.event("open", {event_category: "問題一覧"})
     this.folder_active_handle()
     this.ls_setup()
   },
