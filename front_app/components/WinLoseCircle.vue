@@ -71,16 +71,11 @@ export default {
   mixins: [chart_mod],
 
   props: {
-    info:         { required: true,        },  // {win: 1, lose: 2}
-    size:         { default: "is-default", },  // is-default or is-small
-    narrowed:     { default: false,        },  // true: 狭くする
-    total_show_p: { default: true,         },  // true: win + lose の合計を表示する
-    click_func:   { type: Function, default: null, },
-  },
-
-  data() {
-    return {
-    }
+    info:         { required: true,                },  // {win: 1, lose: 2}
+    size:         { default: "is-default",         },  // is-default or is-small
+    narrowed:     { default: false,                },  // true: 狭くする
+    total_show_p: { default: true,                 },  // true: win + lose の合計を表示する
+    click_func:   { type: Function, default: null, },  // $emit にしていないのは is_clickable のフラグとするためでもある
   },
 
   created() {
