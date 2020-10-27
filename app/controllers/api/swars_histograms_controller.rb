@@ -84,7 +84,7 @@ module Api
       e = records.take(chart_bar_max).reverse
       {
         data: {
-          labels: e.collect { |e| e[:name].chars },
+          labels: e.collect { |e| e[:name].tr("→ー", "↓｜").chars },
           datasets: [
             {
               label: nil,
