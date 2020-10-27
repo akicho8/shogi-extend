@@ -55,7 +55,7 @@
     .top_container
       ////////////////////////////////////////////////////////////////////////////////
       // 名前
-      .has-text-weight-bold.has-text-centered.mt-2
+      .has-text-weight-bold.has-text-centered.mt-2.is_clickable(@click="search_handle")
         | {{info.user.key}}
       // 段級位
       .is-flex.rule_container
