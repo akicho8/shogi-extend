@@ -10,12 +10,6 @@ nav#main_nav.navbar.is-danger.is-spaced
       .navbar-start
         - if Rails.env.development?
           = link_to("front_app", UrlProxy.wrap("/"), class: "navbar-item")
-          .navbar-item.has-dropdown.is-hoverable
-            span.navbar-link
-              | もっと見る
-            .navbar-dropdown.is-boxed
-              = link_to("野良棋譜", [:free_battles], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "index")])
-              = link_to("野良棋譜(投稿)", [:new, :free_battle], class: ["navbar-item", ("is-active" if params[:controller].start_with?("free_battles") && params[:action] == "new")])
           = link_to("管理画面", [:admin, :root], class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
 
         - if session[:admin_user]
