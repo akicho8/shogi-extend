@@ -32,7 +32,7 @@
               a.delete.is-large(tag="a" @click="stop_handle")
 
             template(v-if="mode === 'stop' || mode === 'goal'")
-              b-dropdown.is-pulled-left(v-model="xy_rule_key" @input="sound_play('click')" @click.native="sound_play('click')")
+              b-dropdown.is-pulled-left(v-model="xy_rule_key" @click.native="sound_play('click')")
                 button.button(slot="trigger")
                   span {{current_rule.name}}
                   b-icon(icon="menu-down")

@@ -122,6 +122,7 @@
         .column
           b-field
             b-autocomplete(
+              max-height="50vh"
               size="is-medium"
               v-model.trim="query"
               :data="search_form_complete_list"
