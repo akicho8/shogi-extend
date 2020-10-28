@@ -40,8 +40,14 @@ const config = {
 // export default {
   // debug: true,
 
-  // mode: 'spa',
-  mode: 'universal',
+  // https://ja.nuxtjs.org/guides/configuration-glossary/configuration-ssr/
+  //
+  //   mode は DEPRECATED なので下に置き換え
+  //
+  //   mode: 'spa'        → ssr: false
+  //   mode: 'universal'  → ssr: true
+  //
+  ssr: true,
 
   /*
   ** Nuxt target
