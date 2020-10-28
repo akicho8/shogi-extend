@@ -30,29 +30,24 @@ client-only
 <script>
 export default {
   name: "swars-histograms-grade",
-  data() {
-    return {
-      config: null,
-    }
-  },
   head() {
     return {
       title: "将棋ウォーズ段級分布",
       meta: [
-        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ段級分布"                                   },
+        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ段級分布"                                       },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-histograms-grade.png" },
-        { hid: "og:description", property: "og:description", content: ""                                                         },
+        { hid: "og:description", property: "og:description", content: ""                                                           },
       ],
     }
   },
-  watch: {
-    "$route.query": "$fetch",
-  },
-  fetch() {
+  watchQuery: ["max"],
+  async asyncData({$axios, params, query}) {
     // http://0.0.0.0:3000/api/swars_grade_histogram.json
-    return this.$axios.$get("/api/swars_grade_histogram.json", {params: this.$route.query}).then(e => {
-      this.config = e
-    })
+    const config = await $axios.$get("/api/swars_grade_histogram.json", {params: {...params, ...query}})
+    return { config }
+  },
+  mounted() {
+    this.ga_click(`段級分布`)
   },
 }
 </script>

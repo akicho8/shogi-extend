@@ -35,24 +35,16 @@ client-only
 <script>
 export default {
   name: "swars-histograms-key",
-  data() {
-    return {
-      config: null,
-    }
-  },
-  watch: {
-    "$route.query": "$fetch",
-  },
-  fetch() {
+  watchQuery: ["max"],
+  async asyncData({$axios, params, query}) {
     // http://0.0.0.0:3000/api/swars_histogram.json
-    return this.$axios.$get("/api/swars_histogram.json", {params: {...this.$route.params, ...this.$route.query}}).then(e => {
-      this.config = e
-    })
+    const config = await $axios.$get("/api/swars_histogram.json", {params: {...params, ...query}})
+    return { config }
+  },
+  mounted() {
+    this.ga_click(`${this.config.tactic.name}分布`)
   },
   head() {
-    if (!this.config) {
-      return
-    }
     return {
       title: `将棋ウォーズ${this.config.tactic.name}分布`,
       meta: [
