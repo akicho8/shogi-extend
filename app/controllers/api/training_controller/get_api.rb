@@ -4,6 +4,7 @@ module Api
       concerning :SortMod do
         included do
           include ::SortMod
+          include ::PageMod
         end
 
         def sort_column_default
