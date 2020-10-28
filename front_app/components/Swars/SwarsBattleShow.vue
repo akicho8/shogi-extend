@@ -3,7 +3,7 @@
   b-loading(:active="$fetchState.pending")
   .MainContainer(v-if="!$fetchState.pending")
     client-only
-      b-sidebar.is-unselectable(type="is-light" fullheight right v-model="sidebar_p")
+      b-sidebar.SwarsBattleShow-Sidebar.is-unselectable(type="is-light" fullheight right v-model="sidebar_p")
         .mx-4.my-4
           b-menu
             b-menu-list(label="Action")
@@ -31,6 +31,10 @@
                 b-menu-item(label="SFEN" @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
                 b-menu-item(label="BOD"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
                 b-menu-item(label="PNG"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&flip=${new_flip}&width=`")
+
+            b-menu-list(label="短めのリンクをコピー")
+              b-menu-item(label="ぴよ将棋" @click="clipboard_copy({text: short_url('piyo_shogi')})")
+              b-menu-item(label="KENTO"    @click="clipboard_copy({text: short_url('kento')})")
 
       MainNavbar(wrapper-class="container is-fluid")
         template(slot="brand")
@@ -180,6 +184,10 @@ export default {
   },
 
   methods: {
+    short_url(method) {
+      return this.$config.MY_NUXT_URL + `/swars/battles/${this.record.key}/${method}`
+    },
+
     url_replace() {
       // FIXME: queryだけ変更するとエラーになる
       this.$router.replace({query: {
@@ -379,6 +387,10 @@ export default {
 </script>
 
 <style lang="sass">
+.SwarsBattleShow-Sidebar
+  .menu-label:not(:first-child)
+    margin-top: 2em
+
 .SwarsBattleShow
   .container.is-fluid
     padding: 0
