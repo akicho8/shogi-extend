@@ -241,6 +241,21 @@
                   KifCopyButton(@click="kifu_copy_handle(row)")
                   DetailButton(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}}" @click.native="sound_play('click')") 詳細
 
+                  PiyoShogiButton(type="button" :href="`/swars/battles/${row.key}/piyo_shogi`" @click="sound_play('click')")
+                  KentoButton(tag="a"           :href="`/swars/battles/${row.key}/kento`"      @click="sound_play('click')")
+
+                  a.button(:href="`/swars/battles/${row.key}/piyo_shogi`" :target="target_default") piyo_shogi1
+                  a.button(:href="`/swars/battles/${row.key}/kento`"      :target="target_default") kento1
+
+                  nuxt-link.button(:to="`/swars/battles/${row.key}/piyo_shogi`") piyo_shogi2
+                  nuxt-link.button(:to="`/swars/battles/${row.key}/kento`"     ) kento2
+
+                  nuxt-link.button(:to="`/swars/battles/${row.key}/piyo_shogi`" replace) piyo_shogi3
+                  nuxt-link.button(:to="`/swars/battles/${row.key}/kento`"      replace) kento3
+
+                  //- b-button(tag="nuxt-link" :to="{name: 'swars-battles-key-piyo_shogi', params: {key: row.key}}") piyo_shogi
+                  //- b-button(tag="nuxt-link" :to="{name: 'swars-battles-key-kento',      params: {key: row.key}}") kento
+
     client-only
       DebugPre {{config}}
       DebugPre {{$store.user}}
