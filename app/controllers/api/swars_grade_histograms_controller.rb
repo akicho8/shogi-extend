@@ -3,11 +3,13 @@ module Api
   class SwarsGradeHistogramsController < ::Api::ApplicationController
     # Swars::Membership.where(id: Swars::Membership.order(id: :desc).limit(5000).pluck(:id)).group(:grade_id).count
     # で 15ms なので 20000 ぐらいまで一瞬
-    DEFAULT_LIMIT = 1000
+    DEFAULT_LIMIT     = 100
+    DEFAULT_LIMIT_MAX = 10000
 
     def show
       render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hour : 0) {
         {
+          :current_max         => current_max,
           :updated_at          => Time.current,
           :sample_count        => target_ids.size,
           :records             => records,
@@ -28,7 +30,7 @@ module Api
     end
 
     def current_max
-      (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT)
+      (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT_MAX)
     end
 
     def cache_key

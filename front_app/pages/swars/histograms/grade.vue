@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  .swars-histograms-grade
+  .swars-histograms-grade(v-if="config")
     MainNavbar
       template(slot="brand")
         NavbarItemHome
@@ -30,6 +30,12 @@ client-only
 <script>
 export default {
   name: "swars-histograms-grade",
+  data() {
+    return {
+      config: null,
+    }
+  },
+
   head() {
     return {
       title: "将棋ウォーズ段級分布",
@@ -40,10 +46,14 @@ export default {
       ],
     }
   },
-  async asyncData({ $axios, query }) {
+  watch: {
+    "$route.query": "$fetch",
+  },
+  fetch() {
     // http://0.0.0.0:3000/api/swars_grade_histogram.json
-    const config = await $axios.$get("/api/swars_grade_histogram.json", {params: query})
-    return { config }
+    return this.$axios.$get("/api/swars_grade_histogram.json", {params: this.$route.query}).then(e => {
+      this.config = e
+    })
   },
 }
 </script>
