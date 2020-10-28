@@ -9,7 +9,7 @@ client-only
     MainSection
       .container
         b-notification(:closable="false")
-          | 検索初期値を設定すると検索の最初の画面が検索結果になるので、毎回<b>ぴよ将棋</b>から来ている方におすすめです
+          | 検索初期値を設定すると最初の画面が検索結果になるので、毎回<b>ぴよ将棋</b>から来ている方におすすめです
 
         template(v-if="!old_key || (old_key != new_key)")
           .has-text-centered

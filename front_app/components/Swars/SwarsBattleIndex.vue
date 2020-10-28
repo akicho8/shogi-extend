@@ -330,7 +330,7 @@ export default {
       this.sound_play("click")
       this.$buefy.dialog.alert({
         title: "ホーム画面に追加",
-        message: "<b>検索直後</b>のページを<b>ホーム画面に追加</b>かブックマークしておくと次からウォーズIDを入力する手間を省けます",
+        message: `検索初期値の設定の他には<b>検索直後</b>のURLを<b>ホーム画面に追加</b>かブックマークしてもウォーズIDの入力の手間を省けます`,
         canCancel: ["outside", "escape"],
         confirmText: "わかった",
         type: 'is-info',
