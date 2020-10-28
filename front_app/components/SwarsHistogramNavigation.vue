@@ -46,7 +46,7 @@ export default {
       if (this.development_p) {
         return [0, 1, 2, 1000, 5000]
       }
-      return [100, 250, 500, 1000, 2500, 5000, 1000]
+      return [100, 250, 500, 1000, 2500, 5000, 10000]
     },
   },
 }
