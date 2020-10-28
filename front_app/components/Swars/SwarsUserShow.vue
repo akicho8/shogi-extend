@@ -239,6 +239,10 @@ export default {
     })
   },
 
+  mounted() {
+    this.ga_click("プレイヤー情報")
+  },
+
   created() {
     if ("tab_index" in this.$route.query) {
       this.tab_index = parseInt(this.$route.query.tab_index)

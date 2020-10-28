@@ -299,6 +299,10 @@ export default {
       query.query = MyLocalStorage.get("swars_search_default_key")
     }
 
+    if (query.query) {
+      this.ga_click("ウォーズ検索")
+    }
+
     return this.$axios.$get("/w.json", {params: query}).then(config => {
       this.config = config
 

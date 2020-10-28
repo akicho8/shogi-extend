@@ -163,6 +163,8 @@ export default {
     }
   },
   mounted() {
+    this.ga_click("共有将棋盤")
+
     // どれかが変更されたらURLを更新
     this.$watch(() => [
       this.run_mode,

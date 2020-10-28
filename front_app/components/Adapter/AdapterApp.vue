@@ -133,6 +133,7 @@ export default {
     }
   },
   mounted() {
+    this.ga_click("なんでも棋譜変換")
     this.input_text_focus()
   },
   watch: {
