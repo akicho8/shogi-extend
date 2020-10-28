@@ -148,16 +148,31 @@ export default {
   props: {
     params: { type: Object, required: true },
   },
+  watch: {
+    params: {
+      handler() {
+        this.chart_destroy()
+        this.chart_data_set()
+        this.chart_create()
+      },
+      deep: true,
+    },
+  },
   created() {
-    this.chart_setup(CHART_CONFIG_DEFAULT)
-    this._chart_config.data = this.params.data
-
-    if (this.params.scales_yAxes_ticks) {
-      this._chart_config.options.scales.yAxes[0].ticks = this.params.scales_yAxes_ticks
-    }
+    this.chart_data_set()
   },
   mounted() {
     this.chart_create()
+  },
+  methods: {
+    chart_data_set() {
+      this.chart_setup(CHART_CONFIG_DEFAULT)
+      this._chart_config.data = this.params.data
+
+      if (this.params.scales_yAxes_ticks) {
+        this._chart_config.options.scales.yAxes[0].ticks = this.params.scales_yAxes_ticks
+      }
+    },
   },
 }
 </script>

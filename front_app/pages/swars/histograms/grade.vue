@@ -35,7 +35,6 @@ export default {
       config: null,
     }
   },
-
   head() {
     return {
       title: "将棋ウォーズ段級分布",

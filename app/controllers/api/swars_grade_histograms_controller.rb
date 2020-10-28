@@ -9,6 +9,7 @@ module Api
     def show
       render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hour : 0) {
         {
+          :key                 => SecureRandom.hex,
           :current_max         => current_max,
           :updated_at          => Time.current,
           :sample_count        => target_ids.size,

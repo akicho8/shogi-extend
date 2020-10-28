@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  .swars-histograms-key
+  .swars-histograms-key(v-if="config")
     MainNavbar
       template(slot="brand")
         NavbarItemHome
@@ -29,18 +29,30 @@ client-only
               //-     | {{number_floor(row.deviation_score, 3)}}
               b-table-column(v-slot="{row}" field="count"           label="数" numeric sortable) {{row.count}}
 
-    DebugPre {{config}}
+    //- DebugPre {{config}}
 </template>
 
 <script>
 export default {
   name: "swars-histograms-key",
-  async asyncData({ $axios, params }) {
+  data() {
+    return {
+      config: null,
+    }
+  },
+  watch: {
+    "$route.query": "$fetch",
+  },
+  fetch() {
     // http://0.0.0.0:3000/api/swars_histogram.json
-    const config = await $axios.$get("/api/swars_histogram.json", {params: params})
-    return { config }
+    return this.$axios.$get("/api/swars_histogram.json", {params: {...this.$route.params, ...this.$route.query}}).then(e => {
+      this.config = e
+    })
   },
   head() {
+    if (!this.config) {
+      return
+    }
     return {
       title: `将棋ウォーズ${this.config.tactic.name}分布`,
       meta: [

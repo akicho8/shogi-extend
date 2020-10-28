@@ -1,16 +1,19 @@
 module Api
   # http://0.0.0.0:3000/api/swars_histogram.json
   class SwarsHistogramsController < ::Api::ApplicationController
-    DEFAULT_LIMIT = 1000
-    CHART_BAR_MAX = 20
+    DEFAULT_LIMIT     = 100
+    DEFAULT_LIMIT_MAX = 10000
+    CHART_BAR_MAX     = 20
 
     def show
       render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hours : 0) {
         {
-          :updated_at   => Time.current,
-          :sample_count => target_ids.size,
-          :tactic       => tactic_info,
-          :records      => records,
+          :key                 => SecureRandom.hex,
+          :current_max         => current_max,
+          :updated_at          => Time.current,
+          :sample_count        => target_ids.size,
+          :tactic              => tactic_info,
+          :records             => records,
           :custom_chart_params => custom_chart_params,
         }
       }
@@ -40,7 +43,7 @@ module Api
     end
 
     def current_max
-      (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT)
+      (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT_MAX)
     end
 
     def cache_key
