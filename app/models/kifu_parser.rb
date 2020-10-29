@@ -2,6 +2,8 @@ class KifuParser
   KENTO_URL     = "https://www.kento-shogi.com"
   SHOGIWARS_URL = "https://shogiwars.heroz.jp/games"
 
+  SHOGI_GUI_BUG_WORKAROUND = true
+
   attr_accessor :params
 
   def initialize(params = {})
@@ -73,11 +75,21 @@ class KifuParser
     }
   end
 
+  # > 棋譜コピーで貼り付けると「リモートサーバーがエラーを返しました」と出る
+  # http://shogi-gui.bbs.fc2.com/
+  # ↑に対応するため * を入れている
   def extra_header_part
     if params[:extra_header_part_skip]
       return ""
     end
-    extra_header.collect { |k, v| "#{k}：#{v}\n" }.join
+
+    extra_header.collect { |k, v| "#{header_key_prefix}#{k}：#{v}\n" }.join
+  end
+
+  def header_key_prefix
+    if SHOGI_GUI_BUG_WORKAROUND
+      "*"
+    end
   end
 
   def extra_header
