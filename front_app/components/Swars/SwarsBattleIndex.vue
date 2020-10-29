@@ -300,6 +300,8 @@ export default {
     }
 
     if (query.query) {
+      this.ga_click("ウォーズ検索●")
+    } else {
       this.ga_click("ウォーズ検索")
     }
 
