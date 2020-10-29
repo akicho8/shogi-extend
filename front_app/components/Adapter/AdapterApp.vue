@@ -343,11 +343,8 @@ export default {
     },
 
     append_message() {
-      return `<div class="mt-2">
-                どうしても読み取れない棋譜がある場合は
-                  <a href="https://twitter.com/sgkinakomochi" target="_blank">@sgkinakomochi</a>
-                に棋譜を送ってください
-              </div>`
+      const tag = `<a href="https://twitter.com/sgkinakomochi" target="_blank">@sgkinakomochi</a>`
+      return `<div class="mt-2">正しいのに読み込めないときは ${tag} までご一報ください</div>`
     },
 
     //////////////////////////////////////////////////////////////////////////////// piyoshogi
