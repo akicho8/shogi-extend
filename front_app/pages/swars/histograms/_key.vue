@@ -42,7 +42,8 @@ export default {
     return { config }
   },
   mounted() {
-    this.ga_click(`${this.config.tactic.name}分布`)
+    // this.ga_click(`${this.config.tactic.name}分布`)
+    this.ga_click(`データ分布`)
   },
   head() {
     return {

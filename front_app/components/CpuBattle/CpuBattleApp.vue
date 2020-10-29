@@ -307,6 +307,8 @@ export default {
 
     // 開始
     start_handle() {
+      this.ga_click("CPU対戦●")
+
       this.sound_play("click")
 
       this.current_sfen_set()

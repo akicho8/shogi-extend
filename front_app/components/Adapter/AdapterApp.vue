@@ -306,6 +306,7 @@ export default {
         input_text: this.input_text,
         edit_mode: "adapter",
       }
+      this.ga_click("なんでも棋譜変換●")
       this.$axios.$post("/api/adapter/record_create", params).then(e => {
         this.change_counter = 0
 

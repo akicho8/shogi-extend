@@ -3,6 +3,8 @@ ShareBoardApp(:config="config")
 </template>
 
 <script>
+import _ from "lodash"
+
 export default {
   name: "share-board",
   head() {
@@ -20,6 +22,13 @@ export default {
     // http://0.0.0.0:3000/api/share_board
     const config = await $axios.$get("/api/share_board", {params: query})
     return { config }
+  },
+  mounted() {
+    if (_.isEmpty(this.$route.query)) {
+      this.ga_click("共有将棋盤")
+    } else {
+      this.ga_click("共有将棋盤●")
+    }
   },
 }
 </script>

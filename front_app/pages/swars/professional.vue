@@ -35,6 +35,9 @@ export default {
     const records = await $axios.$get("/api/professional.json", {params: query})
     return { records }
   },
+  mounted() {
+    this.ga_click(`将棋ウォーズ十段の成績`)
+  },
 }
 </script>
 

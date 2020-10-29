@@ -37,6 +37,9 @@ export default {
     const records = await $axios.$get("/api/top_group.json", {params: query})
     return { records }
   },
+  mounted() {
+    this.ga_click(`将棋ウォーズイベント上位プレイヤー`)
+  },
 }
 </script>
 

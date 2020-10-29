@@ -202,6 +202,7 @@ export default {
       } else {
         this.full_screen.on()
         this.sound_play("start")
+        this.ga_click("対局時計●")
         this.say(this.play_talk_message())
         this.chess_clock.play_button_handle()
       }

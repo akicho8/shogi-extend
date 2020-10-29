@@ -170,6 +170,10 @@ export default {
     this.battle_unsubscribe()
   },
 
+  mounted() {
+    this.ga_click(`トレーニングバトル`)
+  },
+
   methods: {
     app_setup() {
       this.school_setup()

@@ -314,6 +314,7 @@ export default {
         return
       }
 
+      this.ga_click(`詰将棋用ストップウォッチ●`)
       this.mode = "playing"
       this.interval_runner.start()
       this.sound_play("start")
@@ -606,13 +607,7 @@ export default {
   },
 
   mounted() {
-    if (!document.referrer) {
-      if (location.hash) {
-        if (false) {
-          this.warning_notice("履歴付きURLでブックマークされています。履歴付きURLの場合、ブックマークしたときの状態に復帰してしまいます。履歴がついてないURLをブックマークしておくと、ブラウザに保存している履歴を使って前回の状態から再開できます")
-        }
-      }
-    }
+    this.ga_click(`詰将棋用ストップウォッチ`)
   },
 
   computed: {
