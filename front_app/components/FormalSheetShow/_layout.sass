@@ -64,21 +64,21 @@ $a4_h: 297mm
     .section
       padding: $fp_preview_screen_margin 0
 
-  .fixed_top_left_container
+  .position_fixed
     position: fixed
-    top: $fp_preview_screen_margin
-    left: $fp_preview_screen_margin
-      
-  .fixed_top_right_container
-    position: fixed
-    top: $fp_preview_screen_margin
-    right: $fp_preview_screen_margin
-
-  .fixed_bottom_left_container
-    position: fixed
-    bottom: $fp_preview_screen_margin
-    left: $fp_preview_screen_margin
-
+    &.is_top_left
+      top: $fp_preview_screen_margin
+      left: $fp_preview_screen_margin
+    &.is_top_right
+      top: $fp_preview_screen_margin
+      right: $fp_preview_screen_margin
+    &.is_bottom_left
+      bottom: $fp_preview_screen_margin
+      left: $fp_preview_screen_margin
+    &.is_bottom_right
+      bottom: $fp_preview_screen_margin
+      right: $fp_preview_screen_margin
+    
   .formal_sheet_workspace
     .sheet
       background: white

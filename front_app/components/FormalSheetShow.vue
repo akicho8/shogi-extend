@@ -6,30 +6,27 @@
       symbol#svg_slash(preserveAspectRatio="none")
         line(x1="0" y1="100%" x2="100%" y2="0" stroke="black" stroke-width="0.5")
 
-  .fixed_top_left_container.is_screen_only
-    b-icon.is_screen_only.back_button.is_clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
+  .position_fixed.is_top_left.is_screen_only
+    b-icon.back_button.is_clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
 
-  .fixed_top_right_container.is_screen_only
-    b-button(icon-left="printer" size="is-large" type="is-primary" @click="printer_handle")
+  .position_fixed.is_top_right.is_screen_only
+    b-button(icon-left="printer" size="is-medium" type="is-primary" @click="printer_handle")
 
-  .fixed_bottom_left_container.is_screen_only
+  .position_fixed.is_bottom_left.is_screen_only
     b-field.mt-6(label="フォント" custom-class="is-small")
       b-radio-button(v-model="font_key" native-value="mincho" size="is-small") 明朝
       b-radio-button(v-model="font_key" native-value="gothic" size="is-small") ゴシック
     b-field.mt-4(label="文字サイズ(%)" custom-class="is-small")
       b-numberinput(size="is-small" controls-position="compact" v-model="font_size" :min="0" :max="200" :step="1" exponential @click.native="sound_play('click')")
-    .mt-5
-      b-icon.is_clickable(icon="information-outline" size="is-medium" type="is-primary" @click.native="information_dialog_show")
+  .position_fixed.is_bottom_right.is_screen_only
+    b-icon.is_clickable(icon="information-outline" size="is-medium" type="is-primary" @click.native="information_dialog_show")
 
   .section
 
-    .formal_sheet_workspace(
-      :class="{is_mincho: font_key === 'mincho'}"
-      :contenteditable="direct_editable_p ? 'true' : 'false'"
-      )
+    .formal_sheet_workspace(:class="{is_mincho: font_key === 'mincho'}")
       template(v-for="(_, page_index) in new_info.page_count")
         .sheet(:style="{'font-size': `${font_size}%`}")
-          .sheet_body
+          .sheet_body(:contenteditable="direct_editable_p ? 'true' : 'false'")
             .tables_box_container
               .tables_box
                 template(v-if="new_info.page_count >= 2")
@@ -206,9 +203,9 @@ export default {
       title: this.info.html_title,
       titleTemplate: null,
       meta: [
-        { hid: "og:title",       property: "og:title",       content: this.info.html_title                              },
+        { hid: "og:title",       property: "og:title",       content: this.info.html_title                               },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/formal-sheet.png" },
-        { hid: "og:description", property: "og:description", content: ""                                                },
+        { hid: "og:description", property: "og:description", content: ""                                                 },
       ],
     }
   },
@@ -228,7 +225,7 @@ export default {
       this.dialog_ok(`
          <div class="content">
            <ol>
-             <li class="mt-4">用紙の各項目は変更できます</li>
+             <li class="mt-4">各項目は変更できます</li>
              <li class="mt-4">PDFにするには印刷時の送信先を<b>PDFに保存</b>に設定してください</li>
              <li class="mt-4">
                ブラウザの設定でフォントの最小サイズを制限していると罫線がずれる場合があります
