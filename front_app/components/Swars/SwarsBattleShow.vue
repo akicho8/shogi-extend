@@ -32,9 +32,9 @@
                 b-menu-item(label="BOD"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
                 b-menu-item(label="PNG"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&flip=${new_flip}&width=`")
 
-            b-menu-list(label="短めのリンクをコピー")
-              b-menu-item(label="ぴよ将棋" @click="clipboard_copy({text: short_url('piyo_shogi')})")
-              b-menu-item(label="KENTO"    @click="clipboard_copy({text: short_url('kento')})")
+            b-menu-list(label="短かめの直リンコピー")
+              b-menu-item(label="ぴよ将棋" @click="short_url_copy('piyo_shogi')")
+              b-menu-item(label="KENTO"    @click="short_url_copy('kento')")
 
       MainNavbar(wrapper-class="container is-fluid")
         template(slot="brand")
@@ -184,6 +184,11 @@ export default {
   },
 
   methods: {
+    short_url_copy(method) {
+      this.sound_play('click')
+      this.clipboard_copy({text: this.short_url(method)})
+    },
+
     short_url(method) {
       return this.$config.MY_NUXT_URL + `/swars/battles/${this.record.key}/${method}`
     },
