@@ -23,35 +23,51 @@ module Swars
         medal_params: nil,
         if_cond: -> m { true },
         builder: -> m {
+          # 相手 - 自分 なので恐怖の級位者に負けると 30級 -  1級 で d =  29
+          # 相手 - 自分 なのでいきなり1級に勝つと     1級 - 30級 で d = -29
+
           d = m.grade_diff
           a = d.abs
-          p1 = "#{a}#{a <= 9 ? 'つ' : ''}"
-          p2 = "#{p1}#{a >= 2 ? 'も' : ''}"
+          s1 = "#{a}#{a <= 9 ? 'つ' : ''}"
+          s2 = "#{s1}#{a >= 2 ? 'も' : ''}"
 
+          v = nil
           case
           when m.judge_info.key == :win
             case
+            when d >= 10
+              v = { message: "恐怖の級位者として無双した", emoji: "😎" }
             when d >= 2
-              { message: "段級位が#{p2}上の人に、負けてあたりまえなのに、勝った", icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
-            when d == 1
-              { message: "段級位が#{p2}上の人に勝った", icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
-            when d == 0
-              { message: "同じ段級位に勝った", icon: "star", :class => "has-text-gold" }
+              v = { message: "#{s2}格上の人を倒した",                   icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
+            when d >= 1
+              v = { message: "格上のライバルを倒した",                  icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
+            when d >= 0
+              v = { message: "ライバルに勝った",                        icon: "star", :class => "has-text-gold" }
+            when d >= -1
+              v = { message: "格下の人に着実に勝った",                  icon: "star-outline", :class => "has-text-gold" }
             else
-              { message: "段級位が下の人にあたりまえのように勝った", icon: "star-outline", :class => "has-text-gold" }
+              v = { message: "格下の人にあたりまえのように勝った",      icon: "star-outline", :class => "has-text-gold" }
             end
           when m.judge_info.key == :lose
             case
-            when d >= 1
-              { message: "段級位が上の人にあたりまえのように負けた", icon: "emoticon-neutral-outline", :class => "has-text-grey-light" }
-            when d == 0
-              { message: "同じ段級位に負けた", icon: "emoticon-sad-outline", :class => "has-text-grey-light" }
-            when d == -1
-              { message: "段級位が#{p2}下の人に負けた", emoji: "🥺" }
+            when d <= -10
+              v = { message: "達成率をがっつり奪われた", emoji: "😨" }
+            when d <= -2
+              v = { message: "#{s2}格下の人に、勝ってあたりまえなのに、負けた", emoji: "🥺" }
+            when d <= -1
+              v = { message: "#{s2}格下の人に負けた", emoji: "🥺" }
+            when d <= 0
+              v = { message: "ライバルに負けた", icon: "emoticon-sad-outline", :class => "has-text-grey-light" }
+            when d <= 1
+              v = { message: "格上のライバルにやっぱり負けた", icon: "emoticon-sad-outline", :class => "has-text-grey-light" }
             else
-              { message: "段級位が#{p2}下の人に、勝ってあたりまえなのに、負けた", emoji: "🥺" }
+              v = { message: "格上の人にあたりまえのように負けた", icon: "emoticon-neutral-outline", :class => "has-text-grey-light" }
             end
           end
+          # if Rails.env.development? || Rails.env.test?
+          #   v[:message] = "(#{d})#{v[:message]}"
+          # end
+          v
         },
       },
     ]
