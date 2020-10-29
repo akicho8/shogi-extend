@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     max_defaut() {
-      return 100
+      return 1000
     },
     max_list() {
       if (this.development_p) {

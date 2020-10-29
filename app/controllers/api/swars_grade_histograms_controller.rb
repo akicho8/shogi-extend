@@ -3,7 +3,7 @@ module Api
   class SwarsGradeHistogramsController < ::Api::ApplicationController
     # Swars::Membership.where(id: Swars::Membership.order(id: :desc).limit(5000).pluck(:id)).group(:grade_id).count
     # で 15ms なので 20000 ぐらいまで一瞬
-    DEFAULT_LIMIT     = 100
+    DEFAULT_LIMIT     = 1000
     DEFAULT_LIMIT_MAX = 10000
 
     def show
