@@ -225,6 +225,7 @@ export default {
   },
 
   mounted() {
+    this.ga_click("符号の鬼")
     this.$refs.main_sp.$refs.pure_sp.api_board_clear()
   },
 

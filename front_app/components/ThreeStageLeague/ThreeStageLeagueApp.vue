@@ -63,6 +63,7 @@ export default {
     config: { type: Object, required: true },
   },
   mounted() {
+    this.ga_click("三段リーグ早見表")
     this.talk(this.config.league.generation)
   },
 }

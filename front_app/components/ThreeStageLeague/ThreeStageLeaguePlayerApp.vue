@@ -49,6 +49,7 @@ export default {
     config: { type: Object, required: true },
   },
   mounted() {
+    this.ga_click("三段リーグ早見表(個人成績)")
     this.talk(this.config.main_user.name)
   },
   computed: {

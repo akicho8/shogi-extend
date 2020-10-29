@@ -150,6 +150,7 @@ export default {
     }
   },
   mounted() {
+    this.ga_click("対局時計")
     if (this.development_p) {
     } else {
       // this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()

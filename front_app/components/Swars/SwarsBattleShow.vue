@@ -175,6 +175,10 @@ export default {
     }
   },
 
+  mounted() {
+    this.ga_click("バトル詳細")
+  },
+
   watch: {
     sidebar_p() {
       this.sound_play('click')
