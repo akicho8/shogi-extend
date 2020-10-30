@@ -92,7 +92,7 @@ client-only
             )
 
             .buttons.is-centered.mt-5
-              b-button.has-text-weight-bold(@click="tweet_handle" icon-left="twitter" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
+              TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
               b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
 
             .room_code.is_clickable(@click="room_code_edit" v-if="false")
@@ -220,9 +220,9 @@ export default {
     },
 
     // ツイートする
-    tweet_handle() {
-      this.tweet_share_open({url: this.current_url, text: this.tweet_hash_tag})
-    },
+    // tweet_handle() {
+    //   this.tweet_window_popup({url: this.current_url, text: this.tweet_hash_tag})
+    // },
 
     // 操作←→編集 切り替え
     mode_toggle_handle() {
@@ -452,10 +452,15 @@ export default {
     // 常に画面上の盤面と一致している
     current_body() { return this.edit_mode_sfen || this.current_sfen },
 
-    tweet_hash_tag() {
+    tweet_body() {
+      let o = ""
+      o += "\n"
       if (this.current_title) {
-        return "#" + this.current_title
+        o += "#" + this.current_title
       }
+      o += "\n"
+      o += this.current_url
+      return o
     },
   },
 }

@@ -96,7 +96,7 @@
 
           template(v-if="rows.length >= 1")
             .has-text-centered
-              b-button(tag="a" :href="tweet_url" target="_blank" icon-left="twitter" type="is-twitter" rounded) Tweet
+              TweetButton(:body="tweet_body")
 
   DebugPre
     div rows = {{rows}}
@@ -650,9 +650,9 @@ export default {
       }
     },
 
-    tweet_url() {
-      return this.tweet_intent_url(this.tweet_body)
-    },
+    // tweet_url() {
+    //   return this.tweet_intent_url(this.tweet_body)
+    // },
 
     tweet_body() {
       // return _.concat(this.rows, this.new_quest).map(e => `${this.quest_name(e)} - ${this.time_format(e.lap_counter)}`).join("\n")

@@ -229,7 +229,7 @@ export default {
     kifu_show_handle(kifu_type) {
       this.record_fetch(() => {
         const url = this.kifu_show_url(kifu_type)
-        this.popup_open(url)
+        this.window_popup(url)
       })
     },
 

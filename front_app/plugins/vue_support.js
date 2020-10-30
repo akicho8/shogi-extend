@@ -179,30 +179,37 @@ export default {
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
     },
 
-    tweet_intent_url(text) {
-      if (text) {
-        const url = new URL("https://twitter.com/intent/tweet")
-        url.searchParams.set("text", text)
-        return url.toString()
-      }
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // tweet_url_build_from_text("body")
+    tweet_url_build_from_text(text) {
+      return this.tweet_url_build_from_params({text: text})
     },
 
-    tweet_share_open(params) {
-      const url = new URL("https://twitter.com/intent/tweet")
-      // const url = new URL("https://twitter.com/share")
+    // tweet_url_build_from_params({text: "body"})
+    tweet_url_build_from_params(params) {
+      const url = new URL("https://twitter.com/intent/tweet") // https://twitter.com/share と何が違う？
       _.each(params, (v, k) => {
         if (v) {
           url.searchParams.set(k, v)
         }
       })
-      this.popup_open(url.toString())
+      return url.toString()
     },
 
-    popup_open(url) {
-      const width = 800
+    // tweet_window_popup({text: "body"})
+    // tweet_window_popup({url: "https://example.com/"})
+    tweet_window_popup(params) {
+      this.window_popup(this.tweet_url_build_from_params(params))
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    window_popup(url) {
+      const width  = 800
       const height = 640
-      const left = (window.screen.width - width) / 2
-      const top = (window.screen.height - height) / 2
+      const left   = (window.screen.width  - width)  / 2
+      const top    = (window.screen.height - height) / 2
       const opts = `status=no,top=${top},left=${left},width=${width},height=${height}`
       window.open(url, "_blank", opts)
     },

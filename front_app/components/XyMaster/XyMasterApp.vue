@@ -87,11 +87,7 @@
                 .box
                   .summary
                     | {{summary}}
-                  .tweet_button_container
-                    .buttons.is-centered
-                      a.button.is-twitter.is-rounded(:href="tweet_url")
-                        b-icon.mx-1(icon="twitter" size="is-small")
-                        | Tweet
+                  TweetButton.mt-2(:text="tweet_body")
 
         .column.is-5(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
           b-field.xy_scope_info_field
@@ -652,7 +648,7 @@ export default {
     },
 
     tweet_url() {
-      return this.tweet_intent_url(this.tweet_body)
+      return this.tweet_url_build_from_text(this.tweet_body)
     },
 
     tweet_body() {

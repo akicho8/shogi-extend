@@ -87,7 +87,7 @@
                 PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
                 KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
                 KifCopyButton(@click="kifu_copy_handle")
-                TweetButton(@click="tweet_share_open({url: permalink_url})")
+                TweetButton(@click="tweet_window_popup({url: permalink_url})")
                 //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
 
           //-   DebugPre
@@ -372,9 +372,9 @@ export default {
       })
     },
 
-    tweet_url() {
-      return this.tweet_intent_url(this.permalink_url)
-    },
+    // tweet_url() {
+    //   return this.tweet_url_build_from_text(this.permalink_url)
+    // },
 
     // 共有将棋盤で開くときのパラメータ
     share_board_query() {

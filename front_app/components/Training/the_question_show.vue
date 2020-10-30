@@ -126,7 +126,7 @@
       KifCopyButton(@click="kifu_copy_handle") コピー
 
     .tweet_button_container.buttons.is-centered.mt-6
-      b-button.has-text-weight-bold(rounded icon-left="twitter" size="is-small" type="is-twitter" tag="a" :href="tweet_intent_url(tweet_body)" :target="target_default") ツイート
+      TweetButton(:body="tweet_body")
 
     .box.question_description.has-background-white-ter.is-shadowless.is-size-7.mt-6(v-if="question.description")
       | {{question.description}}

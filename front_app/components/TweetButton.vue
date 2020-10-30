@@ -1,4 +1,31 @@
 <template lang="pug">
-  b-button.TweetButton.has-text-weight-bold(v-bind="$attrs" v-on="$listeners" size="is-small" type="is-twitter" icon-left="twitter")
-    slot
+b-button.TweetButton.has-text-weight-bold(
+  v-bind="$attrs"
+  v-on="$listeners"
+  size="is-small"
+  :type="type"
+  icon-left="twitter"
+  @click="click_handle"
+  rounded)
+  slot
 </template>
+
+<script>
+export default {
+  name: "TweetButton",
+  props: {
+    body: { type: String, required: true,  default: "",           },
+    type: { type: String, required: false, default: "is-twitter", },
+  },
+  methods: {
+    click_handle() {
+      this.__assert__(this.body, "this.body")
+      this.tweet_window_popup({text: this.body})
+    },
+  },
+}
+</script>
+
+<style lang="sass">
+.TweetButton
+</style>
