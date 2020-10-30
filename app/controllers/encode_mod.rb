@@ -39,7 +39,9 @@ module EncodeMod
     end
   end
 
+  # Windows では今は UTF-8 のファイル名で落とすことができるのでファイル名を変換する必要なし
   def filename_sjis?
-    request.user_agent.to_s.match?(/Windows/i) || boolean_for(params[:shift_jis]) || boolean_for(params[:sjis])
+    # request.user_agent.to_s.match?(/Windows/i) || boolean_for(params[:shift_jis]) || boolean_for(params[:sjis])
+    boolean_for(params[:shift_jis]) || boolean_for(params[:sjis])
   end
 end
