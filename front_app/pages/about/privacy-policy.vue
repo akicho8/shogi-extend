@@ -11,6 +11,10 @@
 export default {
   name: "about-privacy-policy",
   layout: "about",
+  mounted() {
+    this.talk_stop()
+    this.talk("個人情報保護法を遵守すると共に適切な取扱い及び保護に努めます")
+  },
 }
 </script>
 

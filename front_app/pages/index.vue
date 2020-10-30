@@ -39,33 +39,33 @@
             template(v-for="e in config")
               template(v-if="e.display_p || development_p")
                 li
-                  nuxt-link(:to="e.nuxt_link_to") {{e.title}}
+                  nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play('click')") {{e.title}}
 
         .column.is-4.has-text-centered-tablet
           .title.is-6.mb-0.has-text-weight-bold About
           ul.mt-1
             li
-              nuxt-link(:to="{path: '/about/privacy-policy'}") プライバシー
+              nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="sound_play('click')") プライバシー
             li
-              nuxt-link(:to="{path: '/about/terms'}") 利用規約
+              nuxt-link(:to="{path: '/about/terms'}" @click.native="sound_play('click')") 利用規約
             li
-              nuxt-link(:to="{path: '/about/credit'}") クレジット
+              nuxt-link(:to="{path: '/about/credit'}" @click.native="sound_play('click')") クレジット
             li
-              a(href="https://twitter.com/sgkinakomochi" :target="target_default") 問い合わせ
+              ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
 
         .column.is-4.has-text-centered-tablet
           .title.is-6.mb-0.has-text-weight-bold GitHub
           ul.mt-1
             li
-              a(href="https://github.com/akicho8/shogi-extend" :target="target_default") shogi-extend
+              ExternalLink(href="https://github.com/akicho8/shogi-extend" beep) shogi-extend
             li
-              a(href="https://akicho8.github.io/shogi-player/" :target="target_default") shogi-player
+              ExternalLink(href="https://akicho8.github.io/shogi-player/" beep) shogi-player
             li
-              a(href="https://github.com/akicho8/bioshogi" :target="target_default") bioshogi
+              ExternalLink(href="https://github.com/akicho8/bioshogi" beep) bioshogi
             li
-              a(href="https://github.com/akicho8/SKK-JISYO.shogi" :target="target_default") 将棋用語辞書
+              ExternalLink(href="https://github.com/akicho8/SKK-JISYO.shogi" beep) 将棋用語辞書
             li
-              a(href="https://github.com/akicho8/shogi-mode" :target="target_default") shogi-mode.el
+              ExternalLink(href="https://github.com/akicho8/shogi-mode" beep) shogi-mode.el
 </template>
 
 <script>

@@ -11,6 +11,10 @@
 export default {
   name: "about-terms",
   layout: "about",
+  mounted() {
+    this.talk_stop()
+    this.talk("重いからって連打しちゃだめ (そんだけ)")
+  },
 }
 </script>
 
