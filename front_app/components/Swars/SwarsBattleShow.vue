@@ -87,7 +87,7 @@
                 PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
                 KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
                 KifCopyButton(@click="kifu_copy_handle")
-                TweetButton(@click="tweet_window_popup({url: permalink_url})")
+                TweetButton(:body="permalink_url")
                 //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
 
           //-   DebugPre

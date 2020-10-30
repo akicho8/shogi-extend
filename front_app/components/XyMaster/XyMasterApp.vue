@@ -87,7 +87,7 @@
                 .box
                   .summary
                     | {{summary}}
-                  TweetButton.mt-2(:text="tweet_body")
+                  TweetButton.mt-2(:body="tweet_body")
 
         .column.is-5(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
           b-field.xy_scope_info_field
