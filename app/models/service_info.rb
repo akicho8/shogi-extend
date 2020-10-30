@@ -74,7 +74,7 @@ class ServiceInfo
       title: "対局時計",
       new_p: false,
       ogp_image_base: "vs-clock",
-      description: "大会などでチェスクロックが足りないときにどうぞ",
+      description: "大会などで時計が足りないときにどうぞ",
       features: [
         "一般的なネット対局のプリセットを用意",
         "24の猶予時間対応",
