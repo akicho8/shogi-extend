@@ -1,6 +1,6 @@
 <template lang="pug">
 .AdapterApp
-  b-sidebar.is-unselectable(fullheight right v-model="sidebar_p")
+  b-sidebar.AdapterApp-Sidebar.is-unselectable(fullheight right v-model="sidebar_p")
     .mx-4.my-4
       b-menu
         b-menu-list(label="Action")
@@ -392,6 +392,14 @@ export default {
 </script>
 
 <style lang="sass">
+.AdapterApp-Sidebar
+  .sidebar-content
+    // width: unset
+    // a
+    //   white-space: nowrap
+    .menu-label:not(:first-child)
+      margin-top: 2em
+
 .AdapterApp
   .MainColumn
     +tablet
