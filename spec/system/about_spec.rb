@@ -15,7 +15,7 @@ RSpec.describe "about", type: :system do
 
   it "クレジット" do
     visit "http://localhost:4000/about/credit"
-    expect(page).to have_content "クレジット"
+    expect(page).to have_content "SHOGI APPS"
     doc_image
   end
 end
