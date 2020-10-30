@@ -173,7 +173,6 @@ export default {
       }
     },
     app_open(url) {
-      this.sound_play('click')
       this.url_open(url)
     },
     body_encode_set(key) {
