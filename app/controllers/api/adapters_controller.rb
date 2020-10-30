@@ -8,8 +8,8 @@ module Api
 
     # curl http://0.0.0.0:3000/api/adapter/formal_sheet.json?key=xxx
     def formal_sheet
-      # record = FreeBattle.find_by!(key: params[:key])
-      record = FreeBattle.first
+      record = FreeBattle.find_by!(key: params[:key])
+      # record = FreeBattle.first
       render json: record.battle_decorator(params.to_unsafe_h.to_options.merge(view_context: view_context))
     end
   end
