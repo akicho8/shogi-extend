@@ -1,5 +1,7 @@
 module Api
   class SettingsController < ::Api::ApplicationController
+    DIRECCT_EMAIL_SET = true
+
     # curl -d _method=put http://localhost:3000/api/settings/profile_update.json
     def profile_update
       raise "must not happen" unless current_user
@@ -52,16 +54,29 @@ module Api
     def email_update
       raise "must not happen" unless current_user
       user = current_user
-      user.email = params[:email]
 
-      user_save(user) if true
-      return if performed?
-
-      if user.saved_changes?
-        notice_collector = NoticeCollector.single(:success, "メールを送信したので変更を確定させてください", method: "dialog")
-      else
+      if user.email == params[:email]
         notice_collector = NoticeCollector.single(:info, "変更はありませんでした")
+        render json: { notice_collector: notice_collector }
+        return
       end
+
+      # メールアドレス未設定なら即設定
+      if user.email_invalid? || DIRECCT_EMAIL_SET
+        user.email = params[:email]
+        user.skip_reconfirmation!
+        user_save(user)
+        return if performed?
+        notice_collector = NoticeCollector.single(:success, "メールアドレスを更新しました")
+        render json: { notice_collector: notice_collector }
+        return
+      end
+
+      # 以前のメールアドレスが生きていて新しいメールアドレスを設定
+      user.email = params[:email]
+      user_save(user)
+      return if performed?
+      notice_collector = NoticeCollector.single(:success, "メールを送信したので変更を確定させてください", method: "dialog")
       render json: { notice_collector: notice_collector }
     end
 
