@@ -10,12 +10,12 @@ client-only
       .container
         b-field(label="1. URLをコピー").mt-3
           .control
-            b-button(icon-left="clipboard-plus-outline" @click="sound_play('click'); clipboard_copy({text: kento_api_url})")
+            b-button(icon-left="clipboard-plus-outline" @click="clipboard_copy_handle")
           b-input(type="text" :value="kento_api_url" expanded readonly)
 
         b-field(label="2. KENTO側で設定").mt-6
           .control
-            b-button(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new") 移動
+            b-button(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new" @click="sound_play('click')") 移動
 
         .image.box.mt-5
           img(src="~/assets/kento_settings_api.png")
@@ -39,6 +39,10 @@ export default {
     }
   },
   methods: {
+    clipboard_copy_handle() {
+      this.sound_play('click')
+      this.clipboard_copy({text: this.kento_api_url})
+    },
     back_handle() {
       this.sound_play('click')
       this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
