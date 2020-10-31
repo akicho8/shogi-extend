@@ -93,6 +93,10 @@ class ApplicationController < ActionController::Base
     let :bot_agent? do
       ua.bot? || request.user_agent.to_s.include?("Barkrowler")
     end
+
+    let :human_agent? do
+      !bot_agent?
+    end
   end
 
   concerning :MobileMethods do

@@ -4,7 +4,9 @@ module Swars
 
     let :current_record do
       if v = params[:id].presence
-        current_model.single_battle_import(key: v)
+        if human_agent?
+          current_model.single_battle_import(key: v)
+        end
         current_scope.find_by!(key: v)
       else
         current_scope.new
