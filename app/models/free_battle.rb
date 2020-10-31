@@ -86,6 +86,10 @@ class FreeBattle < ApplicationRecord
     self.description ||= ""
     self.kifu_body ||= ""
 
+    if respond_to?(:saturn_key)
+      self.saturn_key ||= ""
+    end
+
     if kifu_file
       v = kifu_file.read
       v = v.to_s.toutf8 rescue nil
