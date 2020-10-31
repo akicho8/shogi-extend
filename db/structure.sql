@@ -731,7 +731,6 @@ CREATE TABLE `free_battles` (
   `description` text COLLATE utf8mb4_bin NOT NULL,
   `start_turn` int(11) DEFAULT NULL,
   `critical_turn` int(11) DEFAULT NULL,
-  `saturn_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `sfen_body` varchar(8192) COLLATE utf8mb4_bin NOT NULL,
   `image_turn` int(11) DEFAULT NULL,
   `preset_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
@@ -744,7 +743,6 @@ CREATE TABLE `free_battles` (
   KEY `index_free_battles_on_turn_max` (`turn_max`),
   KEY `index_free_battles_on_start_turn` (`start_turn`),
   KEY `index_free_battles_on_critical_turn` (`critical_turn`),
-  KEY `index_free_battles_on_saturn_key` (`saturn_key`),
   KEY `index_free_battles_on_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1169,6 +1167,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200817115321'),
 ('20200817115322'),
 ('20200920154202'),
-('20201015170400');
+('20201015170400'),
+('20201031150300');
 
 

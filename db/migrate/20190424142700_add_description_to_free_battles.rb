@@ -18,12 +18,11 @@
 # | accessed_at   | Accessed at        | datetime       | NOT NULL    |            |       |
 # | created_at    | 作成日時           | datetime       | NOT NULL    |            |       |
 # | updated_at    | 更新日時           | datetime       | NOT NULL    |            |       |
-# | user_id       | User               | integer(8)     |             | => User#id | I     |
+# | user_id       | User               | integer(8)     |             | => User#id | H     |
 # | title         | タイトル           | string(255)    |             |            |       |
 # | description   | 説明               | text(65535)    | NOT NULL    |            |       |
 # | start_turn    | 開始局面           | integer(4)     |             |            | F     |
 # | critical_turn | 開戦               | integer(4)     |             |            | G     |
-# | saturn_key    | 公開範囲           | string(255)    | NOT NULL    |            | H     |
 # | sfen_body     | SFEN形式棋譜       | string(8192)   | NOT NULL    |            |       |
 # | image_turn    | OGP画像の局面      | integer(4)     |             |            |       |
 # | preset_key    | Preset key         | string(255)    | NOT NULL    |            |       |
