@@ -329,7 +329,7 @@ module Actb
     #   question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
     def update_from_js(params)
-      question = params.deep_symbolize_keys
+      question = params.to_unsafe_h.deep_symbolize_keys
       @save_before_hash = current_hash
 
       ActiveRecord::Base.transaction do

@@ -79,7 +79,7 @@ module Actb
     end
 
     def update_from_js(params)
-      update!(params.slice(:id, :name, :message, :voice, :folder_key))
+      update!(params.to_unsafe_h.slice(:id, :name, :message, :voice, :folder_key))
     end
   end
 end
