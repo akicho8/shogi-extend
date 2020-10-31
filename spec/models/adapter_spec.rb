@@ -22,8 +22,8 @@ RSpec.describe "なんでも棋譜変換", type: :model do
   end
 
   it "将棋ウォーズ" do
-    assert { FreeBattle.create!(kifu_body: "https://shogiwars.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1").kifu_body.include?("$EVENT") }
-    assert { FreeBattle.create!(kifu_body: "https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1").kifu_body.include?("$EVENT")  }
+    assert { FreeBattle.create!(kifu_body: "https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1").kifu_body.include?("$EVENT") }
+    assert { FreeBattle.create!(kifu_body: "https://kif-pona.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1").kifu_body.include?("$EVENT")  }
   end
 
   it "shogidb2" do

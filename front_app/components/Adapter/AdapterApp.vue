@@ -1,5 +1,8 @@
 <template lang="pug">
 .AdapterApp
+  DebugBox
+    div change_counter: {{change_counter}}
+
   b-sidebar.AdapterApp-Sidebar.is-unselectable(fullheight right v-model="sidebar_p")
     .mx-4.my-4
       b-menu
@@ -33,6 +36,9 @@
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in EncodeInfo.values")
               b-menu-item(:label="e.name" @click="body_encode_set(e.key)" :class="{'has-text-weight-bold': body_encode === e.key}")
+
+        b-menu-list(label="ANOTHER")
+          b-menu-item(label="対応フォーマット" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play('click')")
 
   MainNavbar
     template(slot="brand")
@@ -110,7 +116,7 @@ export default {
   data() {
     return {
       // フォーム関連
-      input_text: this.$route.query.body || "",      // 入力した棋譜
+      input_text: "",      // 入力した棋譜
       body_encode: "utf8", // ダウンロードするファイルを shift_jis にする？
 
       // データ
@@ -134,6 +140,13 @@ export default {
   },
   mounted() {
     this.ga_click("なんでも棋譜変換")
+
+    if (this.$route.query.body) {
+      this.input_text = this.$route.query.body
+      this.change_counter += 1
+      this.validate_handle()
+    }
+
     this.input_text_focus()
   },
   watch: {
@@ -156,12 +169,11 @@ export default {
         const count = (s.match(/\r/g) || 0) + 1
         if (count <= 2) {
           if (s.match(/https.*heroz.jp.*/)) {
-            this.toast_ok("将棋ウォーズのURLは将棋ウォーズ棋譜検索の検索欄に入力しても読み込めるよ")
+            this.toast_ok("将棋ウォーズのURLは将棋ウォーズ棋譜検索の検索欄に入力しても読み込めます")
           }
         }
       }
     },
-
     input_text_focus() {
       this.desktop_focus_to(this.$refs.input_text)
     },
@@ -190,13 +202,7 @@ export default {
       this.record_fetch(() => this.app_open(this.kento_app_with_params_url, this.target_default))
     },
     kifu_copy_handle(kifu_type) {
-      this.record_fetch(() => {
-        if (kifu_type === "png") {
-          this.toast_warn("画像はコピーできません")
-          return
-        }
-        this.simple_clipboard_copy(this.record.all_kifs[kifu_type])
-      })
+      this.record_fetch(() => this.simple_clipboard_copy(this.record.all_kifs[kifu_type]))
     },
     validate_handle() {
       this.record_fetch(() => {
@@ -380,8 +386,8 @@ export default {
         { name: "反則2",      input_text: "V2,P1 *,+0093KA,T1",                                                                                                                                                                                                                                                                                                                           },
         { name: "shogidb2 A", input_text: "https://shogidb2.com/games/018d3d1ee6594c34c677260002621417c8f75221#lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202",                                                                                                                                                                    },
         { name: "shogidb2 B", input_text: "https://shogidb2.com/board?sfen=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202&moves=-3334FU%2B2726FU-8384FU%2B2625FU-8485FU%2B5958OU-4132KI%2B6978KI-8586FU%2B8786FU-8286HI%2B2524FU-2324FU%2B2824HI-8684HI%2B0087FU-0023FU%2B2428HI-2233KA%2B5868OU-7172GI%2B9796FU-3142GI%2B8833UM", },
-        { name: "ウォーズ1",  input_text: "https://shogiwars.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1", },
-        { name: "ウォーズ2",  input_text: "https://kif-pona.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1",  },
+        { name: "ウォーズ1",  input_text: "https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1", },
+        { name: "ウォーズ2",  input_text: "https://kif-pona.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1",  },
         { name: "棋王戦HTML", input_text: "http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html", },
         { name: "棋王戦KIF",  input_text: "http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif",  },
       ]

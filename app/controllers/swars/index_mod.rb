@@ -219,7 +219,7 @@ module Swars
 
     # http://0.0.0.0:3000/w.json?query=https://shogiwars.heroz.jp/games/devuser3-Yamada_Taro-20200101_123403
     # http://0.0.0.0:4000/swars/search?query=https://shogiwars.heroz.jp/games/devuser3-Yamada_Taro-20200101_123403
-    # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://shogiwars.heroz.jp/games/maosuki-kazookun-20200204_211329?tw=1"
+    # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1"
     let :current_swars_user_key do
       v = nil
       v ||= extract_type1

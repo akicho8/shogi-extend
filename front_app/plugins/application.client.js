@@ -48,10 +48,10 @@ export default {
         canCancel: ["outside", "escape"],
         type: "is-danger",
         size: "is-small",
-        hasIcon: true,
+        hasIcon: false,
         trapFocus: true,
-        onConfirm: () => { this.sound_play("click") },
-        onCancel:  () => { this.sound_play("click") },
+        onConfirm: () => this.sound_play("click"),
+        onCancel:  () => this.sound_play("click"),
       })
     },
 
@@ -64,7 +64,7 @@ export default {
         message += `<p class="mt-2">${bs_error.message}</p>`
       }
       if (bs_error.board) {
-        message += `<div class="mt-3 mb-0 error_message_pre mt-2 has-background-white-ter box is-shadowless">${bs_error.board}</div>`
+        message += `<div class="mt-2 mb-0 error_message_pre has-background-white-ter box is-shadowless">${bs_error.board}</div>`
       }
       if (append_message) {
         message += append_message
