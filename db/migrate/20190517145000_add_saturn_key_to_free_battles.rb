@@ -36,25 +36,25 @@
 
 class AddSaturnKeyToFreeBattles < ActiveRecord::Migration[5.2]
   def change
-    [:swars_battles, :free_battles].each do |table|
-      change_table table do |t|
-        t.string :saturn_key
-      end
-    end
-
-    [Swars::Battle, FreeBattle].each do |model|
-      model.reset_column_information
-      model.update_all(saturn_key: "public")
-      p model.count
-    end
-
-    [:swars_battles, :free_battles].each do |table|
-      change_table table do |t|
-        t.change :saturn_key, :string, null: false
-      end
-    end
-
-    FreeBattle.reset_column_information
-    FreeBattle.find_each(&:remake)
+    # [:swars_battles, :free_battles].each do |table|
+    #   change_table table do |t|
+    #     t.string :saturn_key
+    #   end
+    # end
+    #
+    # [Swars::Battle, FreeBattle].each do |model|
+    #   model.reset_column_information
+    #   model.update_all(saturn_key: "public")
+    #   p model.count
+    # end
+    #
+    # [:swars_battles, :free_battles].each do |table|
+    #   change_table table do |t|
+    #     t.change :saturn_key, :string, null: false
+    #   end
+    # end
+    #
+    # FreeBattle.reset_column_information
+    # FreeBattle.find_each(&:remake)
   end
 end

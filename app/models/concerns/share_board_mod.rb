@@ -17,7 +17,7 @@ module ShareBoardMod
       end
       body = body.sub(Bioshogi::Sfen::STARTPOS_EXPANSION, "startpos")
       sfen_hash = Digest::MD5.hexdigest(body)
-      find_by(sfen_hash: sfen_hash, use_key: :share_board) || create!(kifu_body: body, use_key: :share_board, saturn_key: :private)
+      find_by(sfen_hash: sfen_hash, use_key: :share_board) || create!(kifu_body: body, use_key: :share_board)
     end
   end
 end

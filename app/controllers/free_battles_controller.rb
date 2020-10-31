@@ -89,17 +89,10 @@ class FreeBattlesController < ApplicationController
 
     record.tap do |e|
       # 初期値設定
-
       if current_edit_mode == :adapter
-        e.saturn_key ||= SaturnInfo.fetch(:private).key
         e.use_key ||= UseInfo.fetch(:adapter).key
       else
         e.use_key ||= UseInfo.fetch(:basic).key
-        if current_user
-          e.saturn_key ||= SaturnInfo.fetch(:private).key
-        else
-          e.saturn_key ||= SaturnInfo.fetch(:public).key
-        end
       end
     end
   end

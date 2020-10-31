@@ -38,11 +38,8 @@ class AddIndexToFreeBattles < ActiveRecord::Migration[5.2]
   def change
     [:swars_battles, :free_battles].each do |table|
       change_table table do |t|
-        # t.index :start_turn
         t.index :critical_turn
-        t.index :saturn_key
-        # t.index :image_turn
-        # t.index :preset_key
+        # t.index :saturn_key
       end
     end
   end
