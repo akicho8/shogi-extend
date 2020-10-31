@@ -6,7 +6,6 @@ module BattleControllerSharedMethods
   include KifShowMod
   include PngShowMod
   include KentoJsonMod
-  include ModalMod
   include SortMod
   include PageMod
 
@@ -219,23 +218,6 @@ module BattleControllerSharedMethods
 
     def access_log_create(record)
       record.update_columns(accessed_at: Time.current)
-    end
-
-    let :js_show_options do
-      a = {}
-      a[:formal_sheet]    = !!params[:formal_sheet]
-      a[:record]          = js_modal_record_for(current_record)
-
-      if Rails.env.production? || Rails.env.staging?
-        a[:close_back_path] = polymorphic_path([ns_prefix, current_plural_key])
-      end
-
-      # 重いので印刷するときだけ入れる
-      if params[:formal_sheet]
-        a[:decorator] = decorator.as_json
-      end
-
-      a
     end
 
     let :decorator do
