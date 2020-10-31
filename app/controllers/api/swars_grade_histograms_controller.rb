@@ -7,7 +7,7 @@ module Api
     DEFAULT_LIMIT_MAX = 10000
 
     def show
-      render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hour : 0) {
+      render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.day : 0) {
         {
           :key                 => SecureRandom.hex,
           :current_max         => current_max,

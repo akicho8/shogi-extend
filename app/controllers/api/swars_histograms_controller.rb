@@ -6,7 +6,7 @@ module Api
     CHART_BAR_MAX     = 20
 
     def show
-      render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hours : 0) {
+      render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.day : 0) {
         {
           :key                 => SecureRandom.hex,
           :current_max         => current_max,
