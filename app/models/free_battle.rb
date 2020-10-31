@@ -43,81 +43,6 @@ class FreeBattle < ApplicationRecord
   class << self
     def setup(options = {})
       super
-
-      # if Rails.env.development?
-      #   unless exists?
-      #     30.times { create!(kifu_body: "") }
-      #   end
-      # end
-
-      if AppConfig[:free_battles_import]
-        Pathname.glob(Rails.root.join("config/app_data/free_battles/**/0*.kif")).each { |file| file_import(file) }
-      end
-
-      # if Rails.env.development?
-      #   Pathname("~/src/bioshogi").expand_path.glob("experiment/必死道場/*.kif").sort.each do |file|
-      #     name = file.basename(".*").to_s
-      #     key = Digest::MD5.hexdigest(file.to_s)
-      #
-      #     if record = find_by(key: key)
-      #       record.destroy!
-      #     end
-      #
-      #     record = find_by(key: key) || new(key: key)
-      #     record.user = User.find_by(name: Rails.application.credentials.production_my_user_name) || User.sysop
-      #     record.kifu_body = file.read.toutf8
-      #     record.title = "必死道場 #{name}"
-      #     record.start_turn = 0
-      #     record.save!
-      #     p [file.to_s, record.id]
-      #   end
-      # end
-    end
-
-    def file_import(file)
-      kifu_body = file.read
-
-      if md = file.basename(".*").to_s.match(/(?<number>\w+?)_(?<key>\w+?)_(?<saturn_key>.)_(?<title_with_desc>.*)/)
-        title, description = md["title_with_desc"].split("__")
-        record = find_by(key: md["key"]) || new(key: md["key"])
-        record.user = User.find_by(name: Rails.application.credentials.production_my_user_name) || User.sysop
-        record.kifu_body = kifu_body
-        record.title = title.gsub(/_/, " ")
-
-        if description
-          if md2 = description.match(/\As(?<start_turn>\d+)_?(?<rest>.*)/)
-            record.start_turn = md2["start_turn"].to_i
-            description = md2["rest"]
-          end
-
-          record.description = description.to_s.gsub(/_/, " ").strip
-        end
-
-        # record.public_send("#{:kifu_body}_will_change!") # 強制的にパースさせるため
-
-        if saturn_info = SaturnInfo.find { |e| e.char_key == md["saturn_key"] }
-          record.saturn_key = saturn_info.key
-        end
-
-        error = nil
-        begin
-          # record.parser_exec    # かならずパースする
-          if kifu_body.blank?
-            if record.persisted?
-              record.destroy!
-            end
-          else
-            record.save!
-          end
-        rescue => error
-          pp record
-          pp record.errors.full_messages
-          pp error
-          raise error
-        end
-
-        p [record.id, record.title, record.description, error]
-      end
     end
 
     def old_record_destroy(params = {})
@@ -203,18 +128,6 @@ class FreeBattle < ApplicationRecord
     BattleDecorator::FreeBattleDecorator
   end
 
-  concerning :SaturnMethods do
-    included do
-      before_validation do
-        self.saturn_key ||= "public"
-      end
-    end
-
-    def saturn_info
-      SaturnInfo.fetch(saturn_key)
-    end
-  end
-
   # ここは nil でよくね？
   def tournament_name
     if v = safe_meta_info
@@ -252,8 +165,6 @@ class FreeBattle < ApplicationRecord
     parts << "%05d" % id
     parts << "_"
     parts << key
-    parts << "_"
-    parts << saturn_info.char_key
     parts << "_"
     parts << title.gsub(/\p{Space}+/, "_")
     if description.present?

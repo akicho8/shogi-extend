@@ -2,7 +2,6 @@ AppConfig.deep_merge!({
     :app_name                            =>  "SHOGI-EXTEND",
     :volume                              =>  0.5,
 
-    :free_battles_import                 =>  false, # 野良棋譜のセットアップ時に保持している対局を取り込むか？
     :swars_tag_search_function           =>  true,  # タグ検索
     :columns_detail_show                 =>  true,  # 「開戦」の手数を表示する？
 

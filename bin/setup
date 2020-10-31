@@ -31,7 +31,7 @@ chdir APP_ROOT do
   system! 'rails dev:cache'
 
   system! 'saferenum -x experiment'
-  system! 'saferenum -x -b 1000 config/app_data/free_battles'
+  # system! 'saferenum -x -b 1000 config/app_data/free_battles'
 
   puts "\n== Preparing database =="
   # system! 'rails db:setup'
