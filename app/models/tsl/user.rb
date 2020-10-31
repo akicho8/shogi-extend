@@ -39,6 +39,8 @@ module Tsl
     has_many :memberships, dependent: :destroy, inverse_of: :user # 対局時の情報(複数)
     has_many :leagues, through: :memberships                      # 対局(複数)
 
+    scope :pro_only, -> { where.not(level_up_generation: nil) }
+
     before_validation on: :create do
       self.runner_up_count ||= 0
     end
