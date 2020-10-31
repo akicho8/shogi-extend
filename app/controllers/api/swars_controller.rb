@@ -60,6 +60,7 @@ module Api
       render json: { notice_collector: notice_collector }
     end
 
+    # curl http://0.0.0.0:3000/api/swars/remember_swars_user_keys_fetch
     def remember_swars_user_keys_fetch
       render json: session[:remember_swars_user_keys]
     end

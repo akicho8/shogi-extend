@@ -5,7 +5,12 @@
       template(v-for="item in items")
         template(v-if="!development_p && item.development_only")
         template(v-else)
-          b-button(tag="nuxt-link" :to="{...item.to, query: {max: current_max}}" exact-active-class="is-active" @click.native="sound_play('click')") {{item.title}}
+          b-button(
+            tag="nuxt-link"
+            :to="{...item.to, query: {max: current_max}}"
+            :class="{'is-active': item.to.params.key === $route.params.key}"
+            @click.native="sound_play('click')")
+            | {{item.title}}
   .column
     .level.is-mobile.mb-0
       .level-left
@@ -18,7 +23,11 @@
             .head.is-size-7 サンプル数直近
             .title.is-size-6.has-text-weight-normal
               template(v-for="max in max_list")
-                nuxt-link.px-1(:to="{name: $route.name, params: $route.params, query: {...$route.query, max: max}}" :class="{'has-text-weight-bold': current_max === max}" @click.native="sound_play('click')") {{max}}
+                nuxt-link.px-1(
+                  :to="{name: $route.name, params: $route.params, query: {...$route.query, max: max}}"
+                  :class="{'has-text-weight-bold': current_max === max}"
+                  @click.native="sound_play('click')")
+                  | {{max}}
 </template>
 
 <script>

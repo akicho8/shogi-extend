@@ -4,7 +4,8 @@ client-only
     MainNavbar
       template(slot="brand")
         NavbarItemHome
-        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-grade'}") 将棋ウォーズ段級分布
+        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-grade', params: {key: $route.params.key}}")
+          | 将棋ウォーズ{{config.histogram_name}}分布
 
     MainSection
       .container
@@ -24,7 +25,7 @@ client-only
               b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable) {{row.count}}
               //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable) {{number_floor(row.deviation_score)}}
 
-            DebugPre {{config}}
+    //- DebugPre {{config}}
 </template>
 
 <script>
@@ -32,18 +33,18 @@ export default {
   name: "swars-histograms-grade",
   head() {
     return {
-      title: "将棋ウォーズ段級分布",
+      title: `将棋ウォーズ${this.config.histogram_name}分布`,
       meta: [
-        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ段級分布"                                       },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-histograms-grade.png" },
-        { hid: "og:description", property: "og:description", content: ""                                                           },
+        { hid: "og:title",       property: "og:title",       content: `将棋ウォーズ${this.config.histogram_name}分布`               },
+        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-histograms-attack.png" },
+        { hid: "og:description", property: "og:description", content: ""                                                            },
       ],
     }
   },
   watchQuery: ["max"],
   async asyncData({$axios, params, query}) {
     // http://0.0.0.0:3000/api/swars_grade_histogram.json
-    const config = await $axios.$get("/api/swars_grade_histogram.json", {params: {...params, ...query}})
+    const config = await $axios.$get("/api/swars_histogram.json", {params: {...params, ...query, key: "grade"}})
     return { config }
   },
   mounted() {

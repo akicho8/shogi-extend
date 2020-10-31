@@ -5,7 +5,7 @@ client-only
       template(slot="brand")
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: $route.params.key}}")
-          | 将棋ウォーズ{{config.tactic.name}}分布
+          | 将棋ウォーズ{{config.histogram_name}}分布
 
     MainSection
       .container
@@ -42,16 +42,16 @@ export default {
     return { config }
   },
   mounted() {
-    // this.ga_click(`${this.config.tactic.name}分布`)
+    // this.ga_click(`${this.config.histogram_name}分布`)
     this.ga_click(`データ分布`)
   },
   head() {
     return {
-      title: `将棋ウォーズ${this.config.tactic.name}分布`,
+      title: `将棋ウォーズ${this.config.histogram_name}分布`,
       meta: [
-        { hid: "og:title",       property: "og:title",       content: `将棋ウォーズ${this.config.tactic.name}分布` },
+        { hid: "og:title",       property: "og:title",       content: `将棋ウォーズ${this.config.histogram_name}分布`               },
         { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-histograms-attack.png" },
-        { hid: "og:description", property: "og:description", content: ""},
+        { hid: "og:description", property: "og:description", content: ""                                                            },
       ],
     }
   },
