@@ -185,7 +185,7 @@ export default {
       }
     },
     app_open(url) {
-      this.url_open(url)
+      this.url_open(url, this.target_default)
     },
     body_encode_set(key) {
       this.sound_play('click')
@@ -196,10 +196,10 @@ export default {
       this.sidebar_p = !this.sidebar_p
     },
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.app_open(this.piyo_shogi_app_with_params_url, this.target_default))
+      this.record_fetch(() => this.app_open(this.piyo_shogi_app_with_params_url))
     },
     kento_open_handle() {
-      this.record_fetch(() => this.app_open(this.kento_app_with_params_url, this.target_default))
+      this.record_fetch(() => this.app_open(this.kento_app_with_params_url))
     },
     kifu_copy_handle(kifu_type) {
       this.record_fetch(() => this.simple_clipboard_copy(this.record.all_kifs[kifu_type]))
