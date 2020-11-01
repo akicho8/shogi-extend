@@ -246,14 +246,9 @@ export default {
       return this.$config.MY_SITE_URL + `/login?${params}`
     },
 
-    login_handle() {
-      // location.href = this.$config.MY_SITE_URL + "/xusers/sign_in"
-      location.href = this.login_url_build()
-    },
-
-    assert_path(path) {
-      if (path.match(/^http/)) {
-        alert(`すでにフルURL化されている : ${path}`)
+    login_url_jump() {
+      if (typeof location !== 'undefined') {
+        location.href = this.login_url_build()
       }
     },
 

@@ -412,10 +412,8 @@ export default {
 
     login_required2() {
       if (!this.current_user) {
-        this.login_handle()
-        // this.url_open(this.login_path)
+        this.login_url_jump()
         return true
-        // this.url_open("/xusers/sign_in")
       }
     },
 
