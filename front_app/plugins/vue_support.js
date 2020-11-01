@@ -316,10 +316,6 @@ export default {
       return isMobile.any() ? "_self" : "_blank"
     },
 
-    RAILS_ENV() {
-      return window.RAILS_ENV
-    },
-
     // https://www.npmjs.com/package/bowser
     user_agent_hash() {
       // 古い Edge
