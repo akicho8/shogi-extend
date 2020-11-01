@@ -205,12 +205,15 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    window_popup(url) {
-      const width  = 800
-      const height = 640
-      const left   = (window.screen.width  - width)  / 2
-      const top    = (window.screen.height - height) / 2
-      const opts = `status=no,top=${top},left=${left},width=${width},height=${height}`
+    window_popup(url, options = {}) {
+      options = {
+        width: 800,
+        height:640,
+        ...options,
+      }
+      const left = (window.screen.width  - options.width)  / 2
+      const top  = (window.screen.height - options.height) / 2
+      const opts = `status=no,top=${top},left=${left},width=${options.width},height=${options.height}`
       window.open(url, "_blank", opts)
     },
 
