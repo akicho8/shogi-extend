@@ -198,17 +198,6 @@ export default {
       font_size: 100,
     }
   },
-  head() {
-    return {
-      title: this.info.html_title,
-      titleTemplate: null,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: this.info.html_title                               },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/formal-sheet.png" },
-        { hid: "og:description", property: "og:description", content: ""                                                 },
-      ],
-    }
-  },
   watch: {
     font_key() {
       this.sound_play("click")
@@ -275,6 +264,16 @@ export default {
   },
 
   computed: {
+    meta() {
+      return {
+        title: this.info.html_title,
+        short_title: true,
+        og_title: this.info.html_title,
+        og_image_key: "formal-sheet",
+        og_description: "",
+      }
+    },
+
     // PCのブラウザのみ有効にする
     // モバイルブラウザは反応しないので常時有効でもよいが念のためPCの場合のみにしとく
     direct_editable_p() {

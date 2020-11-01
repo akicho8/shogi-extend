@@ -30,7 +30,7 @@ export default {
       this.$nuxt.error({statusCode: 404, message: "ログインしてください"})
     }
   },
-  head() {
+    meta() {
     return {
       title: this.page_title,
     }

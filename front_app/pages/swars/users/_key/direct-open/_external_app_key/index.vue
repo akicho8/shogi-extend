@@ -23,21 +23,6 @@ export default {
       config: null,
     }
   },
-  head() {
-    return {
-      title: this.external_app_info.shortcut_name, // アイコン名なので短かく
-      titleTemplate: null,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: this.long_title,                                    },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                          },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-search.png", },
-        { hid: "og:description", property: "og:description", content: "",                                                 },
-      ],
-      link: [
-        { hid: "apple-touch-icon", rel: "apple-touch-icon", href: `/apple-touch-icon/${this.external_app_info.key}.png` },
-      ],
-    }
-  },
   fetchOnServer: false,
   fetch() {
     this.external_app_setup = MyLocalStorage.get("external_app_setup")
@@ -79,6 +64,19 @@ export default {
   },
 
   computed: {
+    meta() {
+      return {
+        short_title: true,
+        title: this.external_app_info.shortcut_name, // アイコン名なので短かく
+        og_title: this.long_title,
+        twitter_card_is_small: true,
+        og_image_key: "swars-search",
+        og_description: "",
+        link: [
+          { hid: "apple-touch-icon", rel: "apple-touch-icon", href: `/apple-touch-icon/${this.external_app_info.key}.png` },
+        ],
+      }
+    },
     external_app_key() {
       return this.$route.params.external_app_key
     },

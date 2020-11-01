@@ -29,10 +29,10 @@ export default {
     }
   },
 
-  head() {
+    meta() {
     return {
       title: this.charactor,
-      titleTemplate: null,
+      short_title: true,
     }
   },
 

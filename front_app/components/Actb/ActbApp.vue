@@ -68,7 +68,6 @@ export default {
 
     application_room,
     application_emotion,
-    application_lobby_clock,
     application_lobby_message,
     application_battle,
     application_matching,
@@ -276,7 +275,6 @@ export default {
       this.debug_alert("lobby_setup")
       this.__assert__(this.$ac_lobby == null, "ロビーが解放されてないのに再び接続しようとしている")
       this.$ac_lobby = this.ac_subscription_create({channel: "Actb::LobbyChannel"})
-      this.lrt_start()
 
       this.ov_redirect_onece()
     },
@@ -419,7 +417,6 @@ export default {
 
     lobby_unsubscribe() {
       this.ac_unsubscribe("$ac_lobby")
-      this.lrt_stop()
     },
 
     // 問題一覧「+」

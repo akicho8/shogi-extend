@@ -158,23 +158,6 @@ export default {
     ])
   },
 
-  head() {
-    // ページ遷移で来たとき head は fetch より前にいきなり呼ばれているためガードが必要
-    if (!this.record) {
-      return
-    }
-
-    return {
-      title: `${this.og_title} - 将棋ウォーズ`,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: this.og_title,           },
-        { hid: "og:image",       property: "og:image",       content: this.og_image,           },
-        { hid: "og:description", property: "og:description", content: this.record.description, },
-        { hid: "description",    property: "description",    content: this.record.description, },
-      ],
-    }
-  },
-
   mounted() {
     this.ga_click("バトル詳細")
   },
@@ -300,6 +283,19 @@ export default {
   },
 
   computed: {
+    meta() {
+      // ページ遷移で来たとき head は fetch より前にいきなり呼ばれているためガードが必要
+      if (!this.record) {
+        return
+      }
+      return {
+        title: [this.og_title, "将棋ウォーズ"],
+        og_title: this.og_title,
+        og_image: this.og_image,
+        description: this.record.description,
+      }
+    },
+
     turn_key() {
       return this.$route.query.turn_key
     },

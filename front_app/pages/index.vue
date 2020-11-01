@@ -80,10 +80,10 @@ export default {
   },
   // 内容は nuxt.config.js と同じだけど設定は必要
   // 他のページから遷移してきたとき設定していないと title が undefined になってしまう
-  head() {
+    meta() {
     return {
       title: this.$config.APP_NAME,
-      titleTemplate: null,
+      short_title: true,
     }
   },
   fetch() {

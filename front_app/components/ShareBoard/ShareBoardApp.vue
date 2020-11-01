@@ -138,7 +138,7 @@ export default {
   props: {
     config: { type: Object, required: true },
   },
-  head() {
+    meta() {
     return {
       title: this.page_title,
     }

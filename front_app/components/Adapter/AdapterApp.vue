@@ -128,16 +128,6 @@ export default {
       sidebar_p: false,
     }
   },
-  head() {
-    return {
-      title: "なんでも棋譜変換",
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: "なんでも棋譜変換"                             },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/adapter.png" },
-        { hid: "og:description", property: "og:description", content: "将棋倶楽部24や掲示板などで見かける棋譜を外部アプリへ橋渡ししたり、検証・正規化・相互変換ができます" },
-      ],
-    }
-  },
   mounted() {
     this.ga_click("なんでも棋譜変換")
 
@@ -337,6 +327,14 @@ export default {
   },
 
   computed: {
+    meta() {
+      return {
+        title: "なんでも棋譜変換",
+        description: "将棋倶楽部24や掲示板などで見かける棋譜を外部アプリへ橋渡ししたり、検証・正規化・相互変換ができます",
+        og_image_key: "adapter",
+      }
+    },
+
     FormatTypeInfo() { return FormatTypeInfo          },
     EncodeInfo()     { return EncodeInfo              },
     show_path()      { return `/x/${this.record.key}` },

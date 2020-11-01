@@ -4,23 +4,15 @@ client-only
 </template>
 
 <script>
-import _ from "lodash"
-
 export default {
   name: "swars-search",
-  head() {
-    return {
-      title: this.page_title,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: this.page_title,                                                                                      },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-search.png"                                                    },
-        { hid: "og:description", property: "og:description", content: "ウォーズの棋譜をぴよ将棋やKENTOで開いたりクリップボード経由で外部アプリに渡すような使い方ができます" },
-      ],
-    }
-  },
   computed: {
-    page_title() {
-      return _.compact([this.$route.query.query, "将棋ウォーズ棋譜検索"]).join(" - ")
+    meta() {
+      return {
+        title: [this.$route.query.query, "将棋ウォーズ棋譜検索"],
+        description: "ウォーズの棋譜をぴよ将棋やKENTOで開いたりクリップボード経由で外部アプリに渡すような使い方ができます",
+        og_image_key: "swars-search",
+      }
     },
   },
 }

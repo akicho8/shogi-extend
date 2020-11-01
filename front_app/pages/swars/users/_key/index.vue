@@ -13,19 +13,12 @@ export default {
   //   const info = await $axios.$get("/w.json", {params: {query: params.key, format_type: "user", ...query}})
   //   return { info }
   // },
-  head() {
-    return {
-      title: this.page_title,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: this.page_title                                      },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-users-key.png" },
-        { hid: "og:description", property: "og:description", content: ""                                                   },
-      ],
-    }
-  },
   computed: {
-    page_title() {
-      return `${this.$route.params.key} - 将棋ウォーズプレイヤー情報`
+    meta() {
+      return {
+        title: [this.$route.params.key, "将棋ウォーズプレイヤー情報"],
+        og_image_key: "swars-users-key",
+      }
     },
   },
 }

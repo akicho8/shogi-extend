@@ -29,17 +29,6 @@ import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
 
 export default {
   name: "SwarsSearchDefaultKey",
-  head() {
-    return {
-      title: this.page_title,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: this.page_title,                                    },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                          },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-search.png", },
-        { hid: "og:description", property: "og:description", content: "",                                                 },
-      ],
-    }
-  },
   data() {
     return {
       old_key: null,
@@ -67,6 +56,14 @@ export default {
     },
   },
   computed: {
+    meta() {
+      return {
+        title: this.page_title,
+        twitter_card_is_small: true,
+        og_image_key: "swars-search",
+        og_description: "",
+      }
+    },
     page_title() {
       return "検索初期値の設定"
     },

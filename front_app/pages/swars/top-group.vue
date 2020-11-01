@@ -22,16 +22,6 @@ client-only
 <script>
 export default {
   name: "swars-top-group",
-  head() {
-    return {
-      title: "将棋ウォーズイベント上位プレイヤー",
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズイベント上位プレイヤー" },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-top-group.png" },
-        { hid: "og:description", property: "og:description", content: ""                                                    },
-      ],
-    }
-  },
   async asyncData({ $axios, query }) {
     // http://0.0.0.0:3000/api/top_group.json
     const records = await $axios.$get("/api/top_group.json", {params: query})
@@ -39,6 +29,14 @@ export default {
   },
   mounted() {
     this.ga_click(`将棋ウォーズイベント上位プレイヤー`)
+  },
+  computed: {
+    meta() {
+      return {
+        title: "将棋ウォーズイベント上位プレイヤー",
+        og_image_key: "swars-top-group",
+      }
+    },
   },
 }
 </script>

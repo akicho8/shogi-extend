@@ -10,7 +10,7 @@
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'three-stage-leagues', params: {generation: config.league.generation}}") {{config.page_title}}
     template(slot="end")
-      b-navbar-item.has-text-weight-bold(tag="a" :href="config.league.source_url" target="_blank") 本家
+      b-navbar-item.has-text-weight-bold(tag="a" :href="config.league.source_url" :target="target_default") 本家
 
   MainSection
     .container

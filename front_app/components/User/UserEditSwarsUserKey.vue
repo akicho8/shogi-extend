@@ -23,7 +23,7 @@ export default {
       new_swars_user_key: "",
     }
   },
-  head() {
+    meta() {
     return {
       title: this.page_title,
     }

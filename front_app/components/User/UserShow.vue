@@ -42,18 +42,6 @@ export default {
       sidebar_p: false,
     }
   },
-  head() {
-    if (this.record) {
-      return {
-        title: this.page_title,
-        meta: [
-          { hid: "og:title",       property: "og:title",       content: this.page_title                                    },
-          { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + this.record.avatar_path },
-          { hid: "og:description", property: "og:description", content: this.record.description                            },
-        ],
-      }
-    }
-  },
   fetch() {
     // http://0.0.0.0:3000/api/users/1.json
     // http://0.0.0.0:4000/users/1
@@ -77,6 +65,15 @@ export default {
     },
   },
   computed: {
+    meta() {
+      if (this.record) {
+        return {
+          title: this.page_title,
+          description: this.record.description,
+          og_image: this.$config.MY_SITE_URL + this.record.avatar_path,
+        }
+      }
+    },
     page_title() {
       if (this.record) {
         return `${this.record.name}さん`

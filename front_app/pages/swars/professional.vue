@@ -20,16 +20,6 @@ client-only
 <script>
 export default {
   name: "swars-professional",
-  head() {
-    return {
-      title: "将棋ウォーズ十段の成績",
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: "将棋ウォーズ十段の成績"                                },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-professional.png" },
-        { hid: "og:description", property: "og:description", content: ""                                                      },
-      ],
-    }
-  },
   async asyncData({ $axios, query }) {
     // http://0.0.0.0:3000/api/professional.json
     const records = await $axios.$get("/api/professional.json", {params: query})
@@ -37,6 +27,15 @@ export default {
   },
   mounted() {
     this.ga_click(`将棋ウォーズ十段の成績`)
+  },
+  computed: {
+    meta() {
+      return {
+        title: "将棋ウォーズ十段の成績",
+        og_description: "",
+        og_image_key: "swars-professional",
+      }
+    },
   },
 }
 </script>

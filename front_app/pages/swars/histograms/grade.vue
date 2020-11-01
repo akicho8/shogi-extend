@@ -31,16 +31,6 @@ client-only
 <script>
 export default {
   name: "swars-histograms-grade",
-  head() {
-    return {
-      title: `将棋ウォーズ${this.config.histogram_name}分布`,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: `将棋ウォーズ${this.config.histogram_name}分布`               },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-histograms-attack.png" },
-        { hid: "og:description", property: "og:description", content: ""                                                            },
-      ],
-    }
-  },
   watchQuery: ["max"],
   async asyncData({$axios, params, query}) {
     // http://0.0.0.0:3000/api/swars_grade_histogram.json
@@ -50,6 +40,15 @@ export default {
   mounted() {
     // this.ga_click(`段級分布`)
     this.ga_click(`データ分布`)
+  },
+  computed: {
+    meta() {
+      return {
+        title: `将棋ウォーズ${this.config.histogram_name}分布`,
+        og_description: "",
+        og_image_key: "swars-histograms-attack",
+      }
+    },
   },
 }
 </script>

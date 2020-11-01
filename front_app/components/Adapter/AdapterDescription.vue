@@ -25,18 +25,15 @@ import { AdapterTestInfo } from "@/components/models/AdapterTestInfo.js"
 
 export default {
   name: "AdapterDescription",
-  head() {
-    return {
-      title: "対応フォーマット - なんでも棋譜変換",
-      meta: [
-        { hid: "og:title", property: "og:title", content: "対応フォーマット" },
-      ],
-    }
-  },
   mounted() {
     this.ga_click("対応フォーマット")
   },
   computed: {
+    meta() {
+      return {
+        title: ["対応フォーマット", "なんでも棋譜変換"],
+      }
+    },
     AdapterTestInfo() { return AdapterTestInfo },
   },
 }

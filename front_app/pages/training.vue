@@ -6,19 +6,18 @@ client-only
 <script>
 export default {
   name: "actb",
-  head() {
-    return {
-      title: "将棋トレーニングバトル",
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: "将棋トレーニングバトル"                      },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/actb.png" },
-        { hid: "og:description", property: "og:description", content: "将棋の問題を解く力を競う対戦ゲーム"          },
-      ],
-    }
-  },
   async asyncData({ $axios, query }) {
     const info = await $axios.$get("/api/actb.json", {params: query})
     return { info }
+  },
+  computed: {
+    meta() {
+      return {
+        title: "将棋トレーニングバトル",
+        description: "将棋の問題を解く力を競う対戦ゲーム",
+        og_image_key: "actb",
+      }
+    },
   },
 }
 </script>

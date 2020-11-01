@@ -27,17 +27,6 @@ client-only
 <script>
 export default {
   name: "SwarsUserKeyKentoApi",
-  head() {
-    return {
-      title: this.page_title,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: this.page_title,                                    },
-        { hid: "twitter:card",   property: "twitter:card",   content: "summary",                                          },
-        { hid: "og:image",       property: "og:image",       content: this.$config.MY_NUXT_URL + "/ogp/swars-search.png", },
-        { hid: "og:description", property: "og:description", content: "",                                                 },
-      ],
-    }
-  },
   methods: {
     clipboard_copy_handle() {
       this.sound_play('click')
@@ -49,6 +38,14 @@ export default {
     },
   },
   computed: {
+    meta() {
+      return {
+        title: this.page_title,
+        twitter_card_is_small: true,
+        og_image_key: "swars-search",
+        og_description: "",
+      }
+    },
     page_title() {
       return `${this.$route.params.key}さん専用の KENTO API 設定手順`
     },

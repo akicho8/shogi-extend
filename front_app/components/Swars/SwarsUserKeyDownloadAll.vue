@@ -51,15 +51,6 @@
 <script>
 export default {
   name: "SwarsUserKeyDownloadAll",
-  head() {
-    return {
-      title: this.page_title,
-      meta: [
-        { hid: "og:title",       property: "og:title",       content: this.page_title, },
-        { hid: "og:description", property: "og:description", content: "",              },
-      ],
-    }
-  },
   data() {
     return {
       to_email: null,
@@ -111,6 +102,13 @@ export default {
     },
   },
   computed: {
+    meta() {
+      return {
+        title: this.page_title,
+        og_title: this.page_title,
+        og_description: "",
+      }
+    },
     page_title() {
       return `${this.$route.params.key}さんの古い棋譜を取得`
     },

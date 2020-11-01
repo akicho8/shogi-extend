@@ -23,7 +23,7 @@ export default {
       new_email: "",
     }
   },
-  head() {
+    meta() {
     return {
       title: this.page_title,
     }
