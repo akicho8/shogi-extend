@@ -224,7 +224,6 @@ export default {
       if (info.attributes.moves) {
         url.searchParams.set("moves", info.attributes.moves.replace(/\s+/g, "."))
       }
-      url.searchParams.set("flip", flip)
       url.hash = turn
       return url.toString()
     },
