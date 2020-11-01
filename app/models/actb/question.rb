@@ -274,7 +274,7 @@ module Actb
 
     def page_url(options = {})
       # UrlProxy.wrap2("/actb/questions/#{id}")
-      UrlProxy.wrap2("/actb?question_id=#{id}")
+      UrlProxy.wrap2("/training?question_id=#{id}")
       # Rails.application.routes.url_helpers.url_for([:actb, {only_path: false, question_id: id}.merge(options)])
     end
 
@@ -329,7 +329,7 @@ module Actb
     #   question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
     def update_from_js(params)
-      question = params.to_unsafe_h.deep_symbolize_keys
+      question = params.deep_symbolize_keys
       @save_before_hash = current_hash
 
       ActiveRecord::Base.transaction do
