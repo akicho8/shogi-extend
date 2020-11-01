@@ -260,7 +260,16 @@ export default {
 
     __assert__(value, message = null) {
       if (!value) {
-        alert(message || "assert error")
+        console.error(value)
+        alert(message || "ぶっこわれました")
+        debugger
+      }
+    },
+
+    __assert_equal__(expected, actual, message = null) {
+      if (actual !== expected) {
+        console.error(`<${expected}> expected but was <${actual}>`)
+        alert(message || "ぶっこわれました")
         debugger
       }
     },
