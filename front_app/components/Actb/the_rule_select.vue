@@ -21,13 +21,11 @@
 
 <script>
 import { support } from "./support.js"
-import { background_grey } from "./background_grey.js"
 
 export default {
   name: "the_rule_select",
   mixins: [
     support,
-    background_grey,
   ],
   methods: {
     rule_display_p(row) {

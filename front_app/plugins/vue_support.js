@@ -276,12 +276,6 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // body ではなく html を対象にしないと隙間が見えてしまう
-    html_background_color_set(color = "") {
-      const elem = document.querySelector("html")
-      elem.style.backgroundColor = color
-    },
-
     // 一番下までスクロール
     scroll_to_bottom(elem) {
       if (elem) {

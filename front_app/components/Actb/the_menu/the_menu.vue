@@ -6,7 +6,6 @@
 
 <script>
 import { support }         from "../support.js"
-import { background_grey } from "../background_grey.js"
 import the_menu_root       from "./the_menu_root.vue"
 import the_menu_etc        from "./the_menu_etc.vue"
 import the_menu_debug      from "./the_menu_debug.vue"
@@ -16,7 +15,6 @@ export default {
   name: "the_menu",
   mixins: [
     support,
-    background_grey,
   ],
   components: {
     the_menu_root,
