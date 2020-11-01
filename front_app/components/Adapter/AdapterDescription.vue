@@ -16,7 +16,7 @@
                   | 【反則】
                 | {{e.name}}
               b-field.mt-3
-                b-input(:value="e.striped_body" readonly :rows="3" type="textarea")
+                b-input(:value="e.striped_body" readonly :rows="6" type="textarea")
               b-button(tag="nuxt-link" :to="{name: 'adapter', query: {body: e.striped_body}}" @click="sound_play('click')" size="is-small") テスト
 </template>
 
