@@ -217,10 +217,8 @@ export default {
       window.open(url, "_blank", opts)
     },
 
-    kento_full_url({sfen, turn, flip}) {
-      if (!sfen) {
-        alert("sfenが空")
-      }
+    kento_full_url({sfen, turn}) {
+      this.__assert__(sfen, "sfen is blank")
       const info = SfenParser.parse(sfen)
       const url = new URL("https://www.kento-shogi.com")
       url.searchParams.set("initpos", info.init_sfen_strip)
@@ -237,6 +235,8 @@ export default {
       }
       return path
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     login_url_build() {
       const params = new URLSearchParams()
