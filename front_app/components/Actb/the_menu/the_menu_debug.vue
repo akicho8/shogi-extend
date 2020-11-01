@@ -11,8 +11,6 @@
       b-switch(v-model="app.debug_read_p") デバッグ情報の表示
     b-field
       b-switch(v-model="app.debug_write_p" type="is-danger") 破壊系を有効化
-    b-field
-      b-switch(v-model="app.config.lobby_clock_restrict_p") バトル開催時間制限
 
     b-button(expanded tag="a" :href="`${$config.MY_SITE_URL}/admin/script/user-switch`") 運営ユーザー切り替え
     b-button(expanded tag="a" :href="user_switch_direct_url('sysop')") → 運営

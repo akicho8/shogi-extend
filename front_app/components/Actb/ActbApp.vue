@@ -40,7 +40,6 @@ import the_chess_clock   from "./the_chess_clock.vue"
 // Mixins
 import { application_room          } from "./application_room.js"
 import { application_emotion          } from "./application_emotion.js"
-import { application_lobby_clock   } from "./application_lobby_clock.js"
 import { application_lobby_message   } from "./application_lobby_message.js"
 import { application_battle        } from "./application_battle.js"
 import { application_matching      } from "./application_matching.js"
@@ -324,20 +323,6 @@ export default {
       this.sound_play("click")
       await this.reload_if_outdated()
       this.new_challenge_snackbar_clear() // 挑戦者登場の snackbar を消去
-
-      if (this.app.config.lobby_clock_restrict_p) {
-        if (practice_p) {
-          if (this.lobby_clock_mode === "active") {
-            this.warning_notice("対人戦が有効なときは練習できません")
-            return
-          }
-        } else {
-          if (this.lobby_clock_mode === "inactive") {
-            this.warning_notice("開催時間におこしください。それまでは練習をどうぞ")
-            return
-          }
-        }
-      }
 
       this.practice_p = practice_p
 

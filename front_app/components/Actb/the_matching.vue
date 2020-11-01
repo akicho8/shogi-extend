@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_matching
   .primary_header
-    b-icon.header_item.with_icon.ljust(icon="chevron-left" @click.native="app.matching_cancel_handle" v-if="app.matching_cancel_possible_p")
+    b-icon.header_item.with_icon.ljust(icon="chevron-left" @click.native="app.matching_cancel_handle")
     .header_center_title 対戦相手を待機中
 
   .progress_container.has-text-centered

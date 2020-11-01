@@ -4,8 +4,6 @@ module Actb
     :actb_display_p                  => true,
 
     # -------------------------------------------------------------------------------- 共通
-    :lobby_clock_restrict_p          => false, # ルールの開催期間制限
-    :lobby_clock_restrict_ranges     => [{:beg => "15:14:00", :end => "15:14:05" }, {:beg => "23:00", :end => "23:55" }],
     :rating_display_p                => true, # 内部レーティングを表示する？
     :action_cable_debug              => true, # ActionCable関連デバッグモード
     :user_name_required              => true, # 「名無し」であれば名前を入力してもらう
@@ -81,32 +79,6 @@ module Actb
         :sp_theme                        => "real",   # 将棋盤のタイプ
         :emotion_editable_p              => false,    # エモーション編集機能有効化
         :o_ucount_notify_func_p         => false,    # 何問解いたか通知
-        :lobby_clock_restrict_p          => false,    # ルールの開催期間制限
-        :lobby_clock_restrict_ranges              => [
-          # { :beg => "12:45", :end => "13:00" },
-          { :beg => "23:00", :end => "23:15" },
-        ],
-      })
-  end
-
-  if Rails.env.staging?
-    Config.update({
-        :lobby_clock_restrict_ranges              => [
-          # { :beg => "12:45", :end => "13:00" },
-          { :beg => "21:00", :end => "21:09" },
-          { :beg => "21:10", :end => "21:19" },
-          { :beg => "21:20", :end => "21:29" },
-          { :beg => "21:30", :end => "21:39" },
-          { :beg => "21:40", :end => "21:49" },
-          { :beg => "21:50", :end => "21:59" },
-          { :beg => "22:00", :end => "22:09" },
-          { :beg => "22:10", :end => "22:19" },
-          { :beg => "22:20", :end => "22:29" },
-          { :beg => "22:30", :end => "22:39" },
-          { :beg => "22:40", :end => "22:49" },
-          { :beg => "22:50", :end => "22:59" },
-          { :beg => "23:00", :end => "23:15" },
-        ],
       })
   end
 end

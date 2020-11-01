@@ -30,13 +30,9 @@
   DebugPrint(v-if="app.debug_read_p && false" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode']" oneline)
 
   the_lobby_ac_info
-
-  .buttons.is-centered.mt-4.is-marginless.are-large.start_buttons
-    b-button.has-text-weight-bold(@click="app.start_handle(false)" :type="{'is-primary': app.lobby_clock_mode === 'active'}")
+  .buttons.is-centered.mt-6.is-marginless.are-large.start_buttons
+    b-button.has-text-weight-bold(@click="app.start_handle(false)" type="is-primary")
       | 対人戦
-      template(v-if="app.config.lobby_clock_restrict_p")
-        template(v-for="e in app.config.lobby_clock_restrict_ranges")
-          .is-size-7 {{e.beg}} - {{e.end}}
     b-button.has-text-weight-bold(@click="app.start_handle(true)") 練習
 
   the_lobby_message
@@ -91,5 +87,4 @@ export default {
   .start_buttons
     .button
       min-width: 10rem
-      min-height: 6rem
 </style>

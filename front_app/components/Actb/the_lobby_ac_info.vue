@@ -5,7 +5,6 @@
     li.ml-1(v-if="app.school_user_ids != null") オンライン{{app.school_user_ids.length}}人
     li.ml-1(v-if="app.matching_user_ids_hash")  対戦待ち{{app.matching_user_count}}人
     li.ml-1(v-if="app.room_user_ids != null")   対戦中{{app.room_user_ids.length}}人
-    li.ml-1(v-if="development_p")               LRT:{{app.lobby_clock_mode_count}},{{app.lobby_clock_mode}}
 </template>
 
 <script>
