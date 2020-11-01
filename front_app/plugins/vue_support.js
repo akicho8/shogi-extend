@@ -229,11 +229,10 @@ export default {
     },
 
     as_full_url(path) {
-      if (path.match(/^http/)) {
-        return path
-      } else {
-        return window.location.origin + path
+      if (!path.match(/^http/)) {
+        path = this.$config.MY_SITE_URL + path
       }
+      return path
     },
 
     login_url_build() {
