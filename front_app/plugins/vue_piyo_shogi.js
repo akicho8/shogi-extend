@@ -28,7 +28,7 @@ export default {
       url.pathname = url.pathname + ".kif"
 
       const a = {...params, url: url}
-      const url2 = this.piyo_shogi_url_build(a, ["num", "flip", "url"])
+      const url2 = this.piyo_shogi_url_build(a, ["num", "url"])
       return url2
     },
 
@@ -36,7 +36,7 @@ export default {
     // 常にSFENを渡す
     piyo_shogi_sfen_url(params) {
       this.__assert__(params.sfen, "params.sfen")
-      return this.piyo_shogi_url_build(params, ["num", "flip", "sente_name", "gote_name", "game_name", "sfen"])
+      return this.piyo_shogi_url_build(params, ["num", "sente_name", "gote_name", "game_name", "sfen"])
     },
 
     //////////////////////////////////////////////////////////////////////////////// private
