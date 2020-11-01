@@ -64,8 +64,8 @@ module Swars
         # rails r 'Swars::Battle.old_record_destroy(time_limit: 0)'
         def old_record_destroy(params = {})
           params = {
-            expires_in: 8.weeks, # 8週間前のものは消す
-            time_limit: 2.hours, # 最大処理時間(朝4時に実行して6時には必ず終了させる)
+            expires_in: 3.months, # 3ヶ月前のものは消す
+            time_limit: 2.hours,  # 最大処理時間(朝4時に実行して6時には必ず終了させる)
           }.merge(params)
 
           t = Time.current
