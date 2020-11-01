@@ -30,7 +30,6 @@
   DebugPrint(v-if="app.debug_read_p && false" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode']" oneline)
 
   the_lobby_ac_info
-  .title.is-5.has-text-centered.mb-1 将棋トレーニングバトル
 
   .buttons.is-centered.mt-4.is-marginless.are-large.start_buttons
     b-button.has-text-weight-bold(@click="app.start_handle(false)" :type="{'is-primary': app.lobby_clock_mode === 'active'}")
