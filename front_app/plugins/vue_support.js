@@ -316,15 +316,6 @@ export default {
       return isMobile.any() ? "_self" : "_blank"
     },
 
-    url_prefix() {
-      if (this.development_p) {
-        return ""
-      } else {
-        return ""
-        // return "/shogi"
-      }
-    },
-
     RAILS_ENV() {
       return window.RAILS_ENV
     },
