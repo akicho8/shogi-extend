@@ -5,7 +5,7 @@ export const application_user_show = {
     ov_user_url(id) {
       const params = new URLSearchParams()
       params.set("user_id", id)
-      return `/training?${params}`
+      return `/actb?${params}`
     },
 
     ov_user_info_set(user_id) {

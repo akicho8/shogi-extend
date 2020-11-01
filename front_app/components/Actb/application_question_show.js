@@ -6,7 +6,7 @@ export const application_question_show = {
     ov_question_url(id) {
       const params = new URLSearchParams()
       params.set("question_id", id)
-      return `${this.$config.MY_SITE_URL}/training?${params}`
+      return `${this.$config.MY_SITE_URL}/actb?${params}`
     },
 
     ov_question_info_set(question_id) {

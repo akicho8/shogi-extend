@@ -1,5 +1,5 @@
 <template lang="pug">
-.TrainingApp(:class="mode")
+.ActbApp(:class="mode")
   the_emotion(v-if="mode === 'emotion'")
   the_lobby(        v-if="mode === 'lobby'")
   the_rule_select(  v-if="mode === 'rule_select'")
@@ -59,7 +59,7 @@ import { EmotionFolderInfo       } from "./models/emotion_folder_info.js"
 
 export default {
   store,
-  name: "TrainingApp",
+  name: "ActbApp",
   mixins: [
     support,
     config,
@@ -524,5 +524,5 @@ export default {
 <style lang="sass">
 @import "support.sass"
 @import "application.sass"
-.TrainingApp
+.ActbApp
 </style>

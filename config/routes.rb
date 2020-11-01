@@ -91,7 +91,7 @@ Rails.application.routes.draw do
 
   ################################################################################ 将棋トレーニングバトル
 
-  # match "training", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
+  # match "actb", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
 
   ################################################################################ scripts
 
@@ -120,8 +120,8 @@ Rails.application.routes.draw do
 
     match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
 
-    get "training(.:format)", to: "training#show",   format: nil # /training.zip もある
-    put "training(.:format)", to: "training#update", format: nil
+    get "actb(.:format)", to: "actb#show",   format: nil # /actb.zip もある
+    put "actb(.:format)", to: "actb#update", format: nil
 
     resource :session, only: [] do
       get :auth_user_fetch

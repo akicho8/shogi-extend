@@ -1,8 +1,8 @@
 # ランキング
 #
-# レーティング http://localhost:3000/api/training.json?remote_action=ranking_fetch&ranking_key=rating
-# 連勝数       http://localhost:3000/api/training.json?remote_action=ranking_fetch&ranking_key=straight_win_count
-# 最大連勝数   http://localhost:3000/api/training.json?remote_action=ranking_fetch&ranking_key=straight_win_max
+# レーティング http://localhost:3000/api/actb.json?remote_action=ranking_fetch&ranking_key=rating
+# 連勝数       http://localhost:3000/api/actb.json?remote_action=ranking_fetch&ranking_key=straight_win_count
+# 最大連勝数   http://localhost:3000/api/actb.json?remote_action=ranking_fetch&ranking_key=straight_win_max
 #
 # season_id もある場合がある
 #

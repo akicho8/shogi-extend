@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::TrainingController, type: :controller do
+RSpec.describe Api::ActbController, type: :controller do
   include ActbSupportMethods
 
   before do

@@ -41,8 +41,8 @@ module Actb
 
     concerning :OtherMethods do
       def page_url(options = {})
-        UrlProxy.wrap2("/training?user_id=#{id}")
-        # Rails.application.routes.url_helpers.url_for([:training, {only_path: false, user_id: id}.merge(options)])
+        UrlProxy.wrap2("/actb?user_id=#{id}")
+        # Rails.application.routes.url_helpers.url_for([:actb, {only_path: false, user_id: id}.merge(options)])
       end
 
       def linked_name(options = {})

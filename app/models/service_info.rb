@@ -147,7 +147,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/training"},
       title: "将棋トレーニングバトル",
       new_p: false,
-      ogp_image_base: "training",
+      ogp_image_base: "actb",
       description: "将棋の問題を解く力を競う対戦ゲーム",
       features: [
         "自作の問題を作れる",

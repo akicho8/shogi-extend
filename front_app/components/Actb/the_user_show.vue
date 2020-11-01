@@ -1,5 +1,5 @@
 <template lang="pug">
-.TrainingApp.the_user_show.modal-card
+.ActbApp.the_user_show.modal-card
   .modal-card-body.box
     .delete.page_delete.is-large(@click="delete_click_handle")
     .user_container.is-flex

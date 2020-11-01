@@ -129,8 +129,8 @@ export const application_new_challenge = {
         message = `<div class="ml-2">${message}</div>`
       }
 
-      // app/javascript/TrainingApp/application.sass で別定義あり
-      return `<div class="TrainingApp new_challenge_message is-flex">
+      // app/javascript/ActbApp/application.sass で別定義あり
+      return `<div class="ActbApp new_challenge_message is-flex">
                ${figure}${message}
               </div>`
     },

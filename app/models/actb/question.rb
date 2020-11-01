@@ -273,9 +273,9 @@ module Actb
     end
 
     def page_url(options = {})
-      # UrlProxy.wrap2("/training/questions/#{id}")
-      UrlProxy.wrap2("/training?question_id=#{id}")
-      # Rails.application.routes.url_helpers.url_for([:training, {only_path: false, question_id: id}.merge(options)])
+      # UrlProxy.wrap2("/actb/questions/#{id}")
+      UrlProxy.wrap2("/actb?question_id=#{id}")
+      # Rails.application.routes.url_helpers.url_for([:actb, {only_path: false, question_id: id}.merge(options)])
     end
 
     def share_board_png_url
