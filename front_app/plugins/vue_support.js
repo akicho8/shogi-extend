@@ -1,6 +1,5 @@
 // 汎用コード
 
-import Bowser from "bowser"
 import qs from "qs"
 
 import SfenParser from "shogi-player/src/sfen_parser"
