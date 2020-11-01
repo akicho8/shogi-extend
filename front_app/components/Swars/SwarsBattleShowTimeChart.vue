@@ -7,7 +7,7 @@
 </template>
 
 <script>
-const TOOLTIP_ENABLE = false
+const TOOLTIP_ENABLE = true
 
 const CHART_CONFIG_DEFAULT = {
   type: "line",
