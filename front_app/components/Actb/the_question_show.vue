@@ -25,7 +25,7 @@
         //- https://buefy.org/documentation/tag/
         b-field(grouped group-multiline position="is-centered")
           .control
-            b-tag.is_clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
+            b-tag.is-clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
               .is-flex
                 template(v-if="question.source_author || question.source_about_key === 'unknown'")
                   | 投稿

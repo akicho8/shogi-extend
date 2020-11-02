@@ -7,7 +7,7 @@
         line(x1="0" y1="100%" x2="100%" y2="0" stroke="black" stroke-width="0.5")
 
   .position_fixed.is_top_left.is_screen_only
-    b-icon.back_button.is_clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
+    b-icon.back_button.is-clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
 
   .position_fixed.is_top_right.is_screen_only
     b-button(icon-left="printer" size="is-medium" type="is-primary" @click="printer_handle")
@@ -19,7 +19,7 @@
     b-field.mt-4(label="文字サイズ(%)" custom-class="is-small")
       b-numberinput(size="is-small" controls-position="compact" v-model="font_size" :min="0" :max="200" :step="1" exponential @click.native="sound_play('click')")
   .position_fixed.is_bottom_right.is_screen_only
-    b-icon.is_clickable(icon="information-outline" size="is-medium" type="is-primary" @click.native="information_dialog_show")
+    b-icon.is-clickable(icon="information-outline" size="is-medium" type="is-primary" @click.native="information_dialog_show")
 
   .section
 

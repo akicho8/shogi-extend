@@ -32,7 +32,7 @@
     @dragleave="dragleave"
     @click="row => $parent.play_handle(row)"
     )
-    b-table-column.is_clickable(v-slot="{row}" custom-key="name" field="name" label="鍵" @click.native.stop="$parent.play_handle(row)")
+    b-table-column.is-clickable(v-slot="{row}" custom-key="name" field="name" label="鍵" @click.native.stop="$parent.play_handle(row)")
       | {{row.name}}
     b-table-column(v-slot="{row}" custom-key="message" field="message" label="伝")
       .is_truncate {{row.message}}

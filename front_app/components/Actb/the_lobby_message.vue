@@ -4,7 +4,7 @@
     .message_line(v-for="message in app.lobby_messages")
       message_row(:message="message")
   .input_field.is-flex.mt-2(v-if="app.current_user && permit_lobby_message_input_p")
-    figure.media-left.is_clickable.ml-2.mr-0(@click="app.ov_user_info_set(app.current_user.id)")
+    figure.media-left.is-clickable.ml-2.mr-0(@click="app.ov_user_info_set(app.current_user.id)")
       p.image.is-32x32.avatar_image
         img.is-rounded(:src="app.current_user.avatar_path")
     b-field.ml-2

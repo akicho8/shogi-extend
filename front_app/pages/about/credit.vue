@@ -1,6 +1,6 @@
 <template lang="pug">
 .about-credit.has-background-black-ter.has-text-centered
-  b-icon.back_button.is_clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
+  b-icon.back_button.is-clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
 
   .section_title.mt-0 SHOGI APPS
   ul.apps

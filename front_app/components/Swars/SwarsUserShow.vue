@@ -55,7 +55,7 @@
     .top_container
       ////////////////////////////////////////////////////////////////////////////////
       // 名前
-      .has-text-weight-bold.has-text-centered.mt-2.is_clickable(@click="name_click_handle")
+      .has-text-weight-bold.has-text-centered.mt-2.is-clickable(@click="name_click_handle")
         | {{info.user.key}}
       // 段級位
       .is-flex.rule_container
@@ -82,7 +82,7 @@
 
       .medal_container.has-text-centered.has-text-weight-bold(v-if="info.medal_list.length >= 1")
         template(v-for="(row, i) in info.medal_list")
-          span(@click="medal_click_handle(row)" :class="{is_clickable: row.message}")
+          span(@click="medal_click_handle(row)" :class="{'is-clickable': row.message}")
             template(v-if="row.method === 'tag'")
               b-tag(:key="`medal_list/${i}`" :type="row.type" rounded) {{row.name}}
             template(v-else-if="row.method === 'raw'")

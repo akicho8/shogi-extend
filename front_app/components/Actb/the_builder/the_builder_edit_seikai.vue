@@ -36,7 +36,7 @@
           :theme="'simple'"
           :size="'default'"
           )
-        .delete_button.is_clickable(@click="bapp.moves_answer_delete_handle(i)")
+        .delete_button.is-clickable(@click="bapp.moves_answer_delete_handle(i)")
           b-icon(type="is-danger" icon="trash-can-outline" size="is-small")
 </template>
 

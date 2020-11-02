@@ -2,7 +2,7 @@
 .WinLoseCircle.is-unselectable(:class="[size, {'is-narrow': narrowed}]")
   .level.is-mobile.win_lose_container
     .level-item.has-text-centered.win.win_lose_counts
-      div(:class="{is_clickable: win_lose_clickable_p}" @click="click_handle('win')")
+      div(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('win')")
         .heading WIN
         .title {{info.judge_counts["win"]}}
     .level-item.has-text-centered.doughnut.is-narrow
@@ -19,7 +19,7 @@
         .total.has-text-weight-bold(v-if="total_show_p && total >= 1")
           | {{total}}
     .level-item.has-text-centered.lose.win_lose_counts
-      div(:class="{is_clickable: win_lose_clickable_p}" @click="click_handle('lose')")
+      div(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('lose')")
         .heading LOSE
         .title {{info.judge_counts["lose"]}}
 </template>
@@ -75,7 +75,7 @@ export default {
     size:         { default: "is-default",         },  // is-default or is-small
     narrowed:     { default: false,                },  // true: 狭くする
     total_show_p: { default: true,                 },  // true: win + lose の合計を表示する
-    click_func:   { type: Function, default: null, },  // $emit にしていないのは is_clickable のフラグとするためでもある
+    click_func:   { type: Function, default: null, },  // $emit にしていないのは is-clickable のフラグとするためでもある
   },
 
   created() {

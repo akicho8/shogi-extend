@@ -2,13 +2,13 @@
 .the_question_show_message
   .articles_container.mx-4(ref="articles_container")
     article.media(v-for="message in new_question.messages")
-      figure.media-left.is_clickable(@click="app.ov_user_info_set(message.user.id)")
+      figure.media-left.is-clickable(@click="app.ov_user_info_set(message.user.id)")
         p.image.is-64x64.avatar_image
           img.is-rounded(:src="message.user.avatar_path")
       .media-content
         .content
           p
-            strong.is_clickable(@click="app.ov_user_info_set(message.user.id)")
+            strong.is-clickable(@click="app.ov_user_info_set(message.user.id)")
               | {{message.user.name}}
             br
             span(v-html="message_decorate(message.body)")
@@ -32,7 +32,7 @@
               span.icon.is-small
                 i.fas.fa-heart
     article.media(v-if="app.current_user")
-      figure.media-left.is_clickable(@click="app.ov_user_info_set(app.current_user.id)")
+      figure.media-left.is-clickable(@click="app.ov_user_info_set(app.current_user.id)")
         p.image.is-64x64.avatar_image
           img.is-rounded(:src="app.current_user.avatar_path")
       .media-content

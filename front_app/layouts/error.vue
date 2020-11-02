@@ -10,7 +10,7 @@ client-only
           p {{default_message}}
           p(v-if="error.message")
             | {{error.message}}
-        .emoji.has-text-centered.is-unselectable.is_clickable(@click="charactor_click")
+        .emoji.has-text-centered.is-unselectable.is-clickable(@click="charactor_click")
           | {{charactor}}
     DebugPre
       | {{error}}

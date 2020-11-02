@@ -3,7 +3,7 @@
   .primary_header
     .header_item.with_text.ljust(@click="cancel_handle") キャンセル
     .header_center_title エモーション編集
-    .header_item.with_text.rjust.has-text-weight-bold.is_clickable(@click="save_handle") {{save_button_name}}
+    .header_item.with_text.rjust.has-text-weight-bold.is-clickable(@click="save_handle") {{save_button_name}}
 
   ////////////////////////////////////////////////////////////////////////////////
   .mx-5.mt-6

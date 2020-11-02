@@ -95,7 +95,7 @@ client-only
               TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
               b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
 
-            .room_code.is_clickable(@click="room_code_edit" v-if="false")
+            .room_code.is-clickable(@click="room_code_edit" v-if="false")
               | {{room_code}}
 
         .columns(v-if="development_p")

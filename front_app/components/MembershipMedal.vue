@@ -29,7 +29,7 @@ export default {
         my_emoji: this.params.emoji,
         my_icon:  this.params.icon,
         my_raw:   !(this.params.emoji || this.params.icon),
-        is_clickable: this.params.message,
+        "is-clickable": this.params.message,
       }
     },
   },

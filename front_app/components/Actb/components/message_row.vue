@@ -1,8 +1,8 @@
 <template lang="pug">
 .message_row.is-flex(v-if="show_p")
-  .image.is_clickable.is-16x16.avatar_image
+  .image.is-clickable.is-16x16.avatar_image
     img.is-rounded(:src="message.user.avatar_path" @click="app.ov_user_info_set(message.user.id)")
-  .user_name.has-text-grey.is-size-7.is_clickable.has-text-weight-bold(@click="app.ov_user_info_set(message.user.id)")
+  .user_name.has-text-grey.is-size-7.is-clickable.has-text-weight-bold(@click="app.ov_user_info_set(message.user.id)")
     | {{message.user.name}}
   .message_body.is-size-7.is_line_break_on
     span(v-html="message_decorate(message_body)" :class="{'has-text-primary': system_message_p, 'has-text-danger': debug_message_p}")

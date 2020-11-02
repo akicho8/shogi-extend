@@ -31,9 +31,9 @@
   template(v-if="chess_clock.running_p")
     .pause_bg(v-if="!chess_clock.timer")
     .screen_container.is-flex(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
-      b-icon.controll_button.pause.is_clickable(icon="pause" v-if="chess_clock.timer" @click.native="pause_handle")
-      b-icon.controll_button.resume.is_clickable(icon="play" v-if="!chess_clock.timer" @click.native="resume_handle")
-      b-icon.controll_button.stop.is_clickable(icon="stop" v-if="!chess_clock.timer" @click.native="stop_handle")
+      b-icon.controll_button.pause.is-clickable(icon="pause" v-if="chess_clock.timer" @click.native="pause_handle")
+      b-icon.controll_button.resume.is-clickable(icon="play" v-if="!chess_clock.timer" @click.native="resume_handle")
+      b-icon.controll_button.stop.is-clickable(icon="stop" v-if="!chess_clock.timer" @click.native="stop_handle")
       .level.is-mobile.is-unselectable.is-marginless
         template(v-for="(e, i) in chess_clock.single_clocks")
           .level-item.has-text-centered.is-marginless(@pointerdown="switch_handle(e)" :class="e.dom_class")
