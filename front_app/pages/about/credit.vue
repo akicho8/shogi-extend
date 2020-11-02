@@ -1,5 +1,5 @@
 <template lang="pug">
-.about-credit.has-background-black-ter.has-text-centered
+.about-credit.has-background-black.has-text-centered
   b-icon.back_button.is-clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
 
   .section_title.mt-0 SHOGI APPS
@@ -65,7 +65,7 @@ export default {
 .about-credit
   min-height: 100vh
   padding: 4rem 0 6rem
-  color: $white
+  color: $white-ter
   font-weight: bold
 
   ul
@@ -87,7 +87,7 @@ export default {
   .section_title
     margin-top: 5rem
     display: inline-block
-    color: $white
+    color: #ffa305
     font-weight: normal
 
   .apps
