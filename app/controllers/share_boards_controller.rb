@@ -131,7 +131,7 @@ class ShareBoardsController < ApplicationController
           :image_view_point => image_view_point,
         })
 
-      url_for(:root) + "share-board.png?#{args.to_query}"
+      "/share-board.png?#{args.to_query}"
     end
 
     private

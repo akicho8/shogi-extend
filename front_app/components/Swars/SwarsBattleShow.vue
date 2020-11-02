@@ -312,7 +312,7 @@ export default {
       const params = new URLSearchParams()
       params.set("turn", this.new_turn)
       params.set("flip", this.new_flip)
-      return this.$config.MY_SITE_URL + `${this.record.show_path}.png?${params}`
+      return `${this.record.show_path}.png?${params}`
     },
 
     og_title() {

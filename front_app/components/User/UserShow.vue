@@ -70,7 +70,7 @@ export default {
         return {
           title: this.page_title,
           description: this.record.description,
-          og_image: this.$config.MY_SITE_URL + this.record.avatar_path,
+          og_image: this.record.avatar_path,
         }
       }
     },
