@@ -1,5 +1,5 @@
 <template lang="pug">
-.about-credit.has-background-black.has-text-centered
+.about-credit.has-background-black-ter.has-text-centered
   b-icon.back_button.is_clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
 
   .section_title.mt-0 SHOGI APPS
@@ -21,31 +21,31 @@
       ExternalLink.creator(beep href="https://twitter.com/na_o_ys") na-o-ys
 
   .section_title.texture TEXTURE
-  ul.mt-3
-    li.my-2
+  ul
+    li
       ExternalLink(beep href="http://sozai.7gates.net/docs/japanese-chess/") 無料素材倶楽部
-    li.my-2
+    li
       ExternalLink(beep href="http://mucho.girly.jp/bona/") 将棋ｱﾌﾟﾘ用ｸﾘｴﾃｨﾌﾞｺﾓﾝｽﾞ画像
-    li.my-2
+    li
       ExternalLink(beep href="https://www.pakutaso.com/") ぱくたそ
-    li.my-2
+    li
       ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
-    li.my-2
+    li
       ExternalLink(beep href="https://www.irasutoya.com/") いらすとや
-    li.my-2
+    li
       ExternalLink(beep href="https://www.beiz.jp/") BEIZ Graphics
-    li.my-2
+    li
       ExternalLink(beep href="https://free-texture.net/seamless-pattern/tatami01.html") フリーテクスチャ素材館
-    li.my-2
+    li
       ExternalLink(beep href="https://twitter.com/Shogi_Zuan") 将棋図案駒
 
   .section_title SOUND EFFECT
-  ul.mt-3
-    li.my-2
+  ul
+    li
       ExternalLink(beep href="https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256") UNIVERSAL SOUND FX
-    li.my-2
+    li
       ExternalLink(beep href="https://soundeffect-lab.info/") 効果音ラボ
-    li.my-2
+    li
       ExternalLink(beep href="https://otologic.jp") OtoLogic
 </template>
 
@@ -67,6 +67,14 @@ export default {
   padding: 4rem 0 6rem
   color: $white
   font-weight: bold
+
+  ul
+    margin-top: 0.5rem
+    li
+      @extend .block
+
+  .block:not(:last-child)
+    margin-bottom: 0.5rem
 
   a
     font-size: $size-5
