@@ -5,7 +5,7 @@ client-only
       template(slot="brand")
         b-navbar-item(@click="back_handle")
           b-icon(icon="chevron-left")
-        b-navbar-item.has-text-weight-bold.is_small_if_mobile(tag="div") {{page_title}}
+        b-navbar-item.has-text-weight-bold.is-size-7-mobile(tag="div") {{page_title}}
     MainSection
       .container
         b-field(label="1. URLをコピー").mt-3
