@@ -1,7 +1,5 @@
 // 汎用コード
 
-import qs from "qs"
-
 import SfenParser from "shogi-player/src/sfen_parser"
 
 const strip_tags = require('striptags')
