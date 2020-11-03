@@ -70,7 +70,7 @@ class UserMailer < ApplicationMailer
 
     out = []
     out << "追加: #{diff_count} 件"
-    out << "全体: #{record.zip_scope.count}件"
+    out << "全体: #{record.zip_scope.count} 件"
     out << ""
 
     out << "#{record.target_user.key}さんの棋譜"
