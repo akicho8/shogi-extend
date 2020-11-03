@@ -16,7 +16,7 @@
 
       b-menu
         b-menu-list(label="Action")
-          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" icon="account" label="プレイヤー情報" :disabled="!config.current_swars_user_key")
+          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" icon="account" label="プレイヤー情報" :disabled="menu_item_disabled")
 
         b-menu-list(label="表示形式")
           b-menu-item(@click.stop="display_key_set('table')")
@@ -39,7 +39,7 @@
             template(v-for="per in config.per_page_list")
               b-menu-item(:label="`${per}`" @click.stop="per_change_handle(per)" :class="{'has-text-weight-bold': per === config.per}")
 
-          b-menu-item(@click="sound_play('click')")
+          b-menu-item(@click="sound_play('click')" :disabled="menu_item_disabled")
             template(slot="label" slot-scope="props")
               | フィルタ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -56,9 +56,9 @@
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
-            :disabled="!config.current_swars_user_key")
+            :disabled="menu_item_disabled")
 
-          b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
+          b-menu-item(:disabled="menu_item_disabled" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 直近30件 ﾀﾞｳﾝﾛｰﾄﾞ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -71,11 +71,11 @@
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-default-key', params: {key: config.current_swars_user_key}}"
-            :disabled="!config.current_swars_user_key")
+            :disabled="menu_item_disabled")
 
-          b-menu-item(label="ホーム画面に追加" @click="bookmark_desc" :disabled="!config.current_swars_user_key")
+          b-menu-item(label="ホーム画面に追加" @click="bookmark_desc" :disabled="menu_item_disabled")
 
-          b-menu-item(:disabled="!config.current_swars_user_key" @click="sound_play('click')")
+          b-menu-item(:disabled="menu_item_disabled" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 外部APP ｼｮｰﾄｶｯﾄ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -87,7 +87,7 @@
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-kento-api', params: {key: config.current_swars_user_key}}"
-            :disabled="!config.current_swars_user_key")
+            :disabled="menu_item_disabled")
 
         b-menu-list(label="test" v-if="development_p")
           b-menu-item
@@ -465,6 +465,10 @@ export default {
   },
 
   computed: {
+    menu_item_disabled() {
+      return !this.config.current_swars_user_key
+    },
+
     board_show_p() {
       return ["critical", "outbreak", "last"].includes(this.display_key)
     },
