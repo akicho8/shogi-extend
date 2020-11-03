@@ -79,7 +79,7 @@ export class HeadGenerator {
 
   set(key, val) {
     if (_.isArray(val)) {
-      val = val.join(" - ")
+      val = _.compact(val).join(" - ")
     }
     val = val || ""
     if (key === "title") {
