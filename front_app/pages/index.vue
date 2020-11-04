@@ -18,8 +18,8 @@
               nuxt-link.card.is-block(:to="e.nuxt_link_to" @click.native="sound_play('click')")
                 .card-image
                   figure.image
-                    //- b-image.is-marginless(:src="`/ogp/${e.ogp_image_base}.png`")
-                    img(:src="`/ogp/${e.ogp_image_base}.png`")
+                    //- b-image.is-marginless(:src="`/ogp/${e.og_image_key}.png`")
+                    img(:src="`/ogp/${e.og_image_key}.png`")
                 .card-content
                   .content
                     .title.is-5.mt-2

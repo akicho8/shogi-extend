@@ -5,7 +5,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {name: "swars-search"},
       title: "将棋ウォーズ棋譜検索",
-      ogp_image_base: "swars-search",
+      og_image_key: "swars-search",
       description: "他のアプリで検討したいときにどうぞ",
       features: [
         "ぴよ将棋やKENTOですぐ読み込める",
@@ -17,7 +17,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",
-      ogp_image_base: "share-board",
+      og_image_key: "share-board",
       description: "リレー将棋・詰将棋作成・仲間内での対戦にどうぞ",
       features: [
         "SNS等での指し継ぎ",
@@ -34,7 +34,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/adapter"},
       title: "なんでも棋譜変換",
-      ogp_image_base: "adapter",
+      og_image_key: "adapter",
       description: "棋譜が読み込めないときに放り込もう",
       features: [
         "変則的な将棋倶楽部24の棋譜を正規化",
@@ -46,7 +46,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/xy"},
       title: "符号の鬼",
-      ogp_image_base: "xy",
+      og_image_key: "xy",
       description: "符号がぺらぺらになりたい方向け",
       features: [
         "タップするルールはスマホ用",
@@ -58,7 +58,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/stopwatch"},
       title: "詰将棋用ストップウォッチ",
-      ogp_image_base: "stopwatch",
+      og_image_key: "stopwatch",
       description: "正解率や速度を見える化したいときにどうぞ",
       features: [
         "間違えた問題だけの復習が簡単",
@@ -73,7 +73,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/vs-clock"},
       title: "対局時計",
       new_p: false,
-      ogp_image_base: "vs-clock",
+      og_image_key: "vs-clock",
       description: "大会などで時計が足りないときにどうぞ",
       features: [
         "一般的なネット対局のプリセットを用意",
@@ -85,7 +85,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/swars/histograms/attack"},
       title: "将棋ウォーズ戦法分布",
-      ogp_image_base: "swars-histograms-attack",
+      og_image_key: "swars-histograms-attack",
       description: "人気戦法を知りたいときにどうぞ",
       features: [
         "変動するように最近のだけ出してる",
@@ -97,7 +97,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/swars/top-group"},
       title: "将棋ウォーズイベント上位プレイヤー",
-      ogp_image_base: "swars-top-group",
+      og_image_key: "swars-top-group",
       description: "上位プレイヤーの棋譜を見たいときにどうぞ",
       features: [
         "棋士団戦の期間は幽霊団員も出てきてしまう",
@@ -108,7 +108,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/swars/professional"},
       title: "将棋ウォーズ十段の成績",
-      ogp_image_base: "swars-professional",
+      og_image_key: "swars-professional",
       description: "プロの棋譜を見たいときにどうぞ",
       features: [
         "名前タップで棋譜検索に飛ぶ",
@@ -119,7 +119,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/three-stage-leagues"},
       title: "奨励会三段リーグ成績早見表",
-      ogp_image_base: "three-stage-league-players",
+      og_image_key: "three-stage-league-players",
       description: "個人成績を見たいときにどうぞ",
       features: [
         "スマホに最適化",
@@ -131,7 +131,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/cpu-battle"},
       title: "CPU対戦",
-      ogp_image_base: "cpu-battle",
+      og_image_key: "cpu-battle",
       description: "ネット対戦で心をやられたときにどうぞ",
       features: [
         "自作の将棋AI",
@@ -147,7 +147,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/training"},
       title: "将棋トレーニングバトル",
       new_p: false,
-      ogp_image_base: "actb",
+      og_image_key: "actb",
       description: "将棋の問題を解く力を競う対戦ゲーム",
       features: [
         "自作の問題を作れる",
