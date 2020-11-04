@@ -21,18 +21,9 @@ export const application_room = {
 
       this.room = new Room(room)
 
-      if (this.room.bot_user_id) {
-        // 練習戦なのでロビーと繋げたままにしておく
-      } else {
-        // 対人戦なのでロビーの接続を切る
-        this.lobby_unsubscribe()
-      }
+      this.lobby_unsubscribe()
 
       this.battle_count = 0
-
-      if (this.info.warp_to === "battle_versus") {
-        this.battle_setup(this.info.battle)
-      }
 
       this.__assert__(this.$ac_room == null, "this.$ac_room == null")
       this.$ac_room = this.ac_subscription_create({channel: "Emox::RoomChannel", room_id: this.room.id})
@@ -47,11 +38,6 @@ export const application_room = {
     // base/jobs/emox/battle_broadcast_job.rb broadcast
     // ↓
     battle_broadcasted(params) {
-      if (this.info.warp_to === "result") {
-        this.battle_setup(this.info.battle)
-        return
-      }
-
       this.battle_setup(params.battle)
     },
 

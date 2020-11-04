@@ -51,11 +51,7 @@ export default {
   },
   computed: {
     current_human_side_key() {
-      if (this.base.room.bot_user_id) {
-        return "both"
-      } else {
-        return this.base.current_membership.location_key
-      }
+      return this.base.current_membership.location_key
     },
     current_flip() {
       return this.base.current_membership.location_key === "white"
