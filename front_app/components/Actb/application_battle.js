@@ -115,30 +115,11 @@ export const application_battle = {
         return
       }
 
-      if (this.versus_mode_p) {
-        this.vs_func_init()
-      }
-
-      if (this.question_mode_p) {
-        this.__assert__(this.battle.best_questions.length >= 1, "対戦開始しようとしたが問題集が空")
-      }
+      this.vs_func_init()
 
       this.debug_alert("battle 接続")
 
-      // if (this.info.warp_to) {
-      // } else {
-      //   this.ac_battle_perform("start_hook", { // 自分の最初の問題の履歴を作るだけ
-      //     question_id: this.current_question.id,
-      //     question_index: this.question_index,
-      //   }) // --> app/channels/actb/battle_channel.rb
-      // }
-
       this.ok_notice("対戦開始")
-
-      if (this.question_mode_p) {
-        this.sub_mode = "sm2_readygo"
-        this.delay(this.config.readygo_delay, () => this.sm3_deden_trigger())
-      }
     },
 
     sm3_deden_trigger() {

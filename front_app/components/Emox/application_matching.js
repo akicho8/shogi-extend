@@ -30,7 +30,7 @@ export const application_matching = {
       if (this.mode === "matching") {
         if (this.matching_forgo_p) {
           this.matching_cancel_handle()
-          this.warning_notice("対戦相手が見つかりません")
+          this.toast_ng("対戦相手が見つかりません")
           return
         }
         if (this.matching_trigger_p) {
@@ -45,13 +45,11 @@ export const application_matching = {
       this.$ac_lobby.perform("matching_search", {
         session_lock_token: this.current_user.session_lock_token,
         matching_rate_threshold: this.matching_rate_threshold,
-        practice_p: this.practice_p,
       }) // --> app/channels/emox/lobby_channel.rb (matching_search)
     },
     // マッチング不成立だったりでしょっちゅう呼ばれる
     matching_user_ids_broadcasted(params) {
       this.matching_user_ids_hash = params.matching_user_ids_hash
-      this.new_challenge_facade(params) // 通知関連は委譲
     },
     // session_lock_token が無効になった
     session_lock_token_invalid_narrowcasted(params) {
@@ -85,9 +83,9 @@ export const application_matching = {
   },
 
   computed: {
-    matching_trigger_count()  { return Math.floor(this.matching_interval_timer_count / this.app.config.matching_interval_second)                                },
-    matching_trigger_p()      { return (this.matching_interval_timer_count % this.app.config.matching_interval_second) === 0                                    },
-    matching_rate_threshold() { return Math.round(Math.pow(this.app.config.matching_gap_base, this.app.config.matching_pow_base + this.matching_trigger_count)) },
-    matching_forgo_p()        { return this.app.config.matching_forgo_second && (this.matching_interval_timer_count >= this.app.config.matching_forgo_second)   },
+    matching_trigger_count()  { return Math.floor(this.matching_interval_timer_count / this.base.config.matching_interval_second)                                },
+    matching_trigger_p()      { return (this.matching_interval_timer_count % this.base.config.matching_interval_second) === 0                                    },
+    matching_rate_threshold() { return Math.round(Math.pow(this.base.config.matching_gap_base, this.base.config.matching_pow_base + this.matching_trigger_count)) },
+    matching_forgo_p()        { return this.base.config.matching_forgo_second && (this.matching_interval_timer_count >= this.base.config.matching_forgo_second)   },
   },
 }

@@ -25,7 +25,7 @@ module Emox
 
     class << self
       def default_key
-        :marathon_rule
+        :versus1_rule
       end
 
       def as_json(*)

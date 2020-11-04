@@ -31,36 +31,6 @@ export const application_battle_timer = {
     },
 
     main_interval_processing() {
-      if (this.current_strategy_key === "sy_marathon") {
-        if (this.sub_mode === "sm4_tactic") {
-          this.main_interval_count += 1
-          if (this.main_rest_seconds === 0) {
-            this.kotae_sentaku('timeout')
-          }
-        }
-      }
-      if (this.current_strategy_key === "sy_singleton") {
-        if (this.sub_mode === "sm4_tactic") {
-          if (this.x_mode === "x1_think") {
-            this.main_interval_count += 1
-            if (this.main_rest_seconds === 0) {
-              if (this.leader_p) {
-                this.kotae_sentaku('timeout') // [ONCE]
-              }
-            }
-          }
-        }
-      }
-      if (this.current_strategy_key === "sy_hybrid") {
-        if (this.sub_mode === "sm4_tactic") {
-          this.main_interval_count += 1
-          if (this.main_rest_seconds === 0) {
-            if (this.leader_p) {
-              this.kotae_sentaku('timeout') // [ONCE]
-            }
-          }
-        }
-      }
     },
 
     //////////////////////////////////////////////////////////////////////////////// シングルトン専用

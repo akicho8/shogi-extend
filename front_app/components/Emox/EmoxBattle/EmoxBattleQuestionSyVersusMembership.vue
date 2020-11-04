@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_battle_question_sy_versus_membership
+.EmoxBattleQuestionSyVersusMembership
   .is-flex.membership_container
     figure.image.is-48x48.avatar_image
       img.is-rounded(:src="membership.user.avatar_path")
@@ -7,23 +7,24 @@
       | {{membership.user.name}}
       br
       | {{membership.user.skill_key}}
-      span.ml-1(v-if="app.config.rating_display_p")
+      span.ml-1(v-if="base.config.rating_display_p")
         | {{membership.user.rating}}
       //- | {{membership.position}}
       //- | {{membership.location.name}}
     .time_format.has-text-centered.fixed_font.ml-3.has-background-white-ter
-      | {{app.chess_clock.single_clocks[membership.position].to_time_format}}
+      | {{base.chess_clock.single_clocks[membership.position].to_time_format}}
 </template>
 
 <script>
 import { support } from "../support.js"
 
 export default {
-  name: "the_battle_question_sy_versus_membership",
+  name: "EmoxBattleQuestionSyVersusMembership",
   mixins: [
     support,
   ],
   props: {
+    base: { type: Object, required: true, },
     membership: { type: Object,  required: true, },
   },
 }
@@ -31,7 +32,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.the_battle_question_sy_versus_membership
+.EmoxBattleQuestionSyVersusMembership
   .membership_container
     justify-content: center
     align-items: center

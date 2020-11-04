@@ -23,27 +23,8 @@ export const application_battle_sy_versus = {
 
     vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
       this.debug_alert(long_sfen)
-      // if (this.sub_mode === "sm4_tactic") {
-      //
-      //   if (this.current_strategy_key === "sy_singleton") {
-      //     // 安全のため残り0秒になってから操作しても無効とする
-      //     if (this.ops_rest_seconds === 0) {
-      //       return
-      //     }
-      //
-      //     // 駒を1つでも動かしたら3秒に復帰する
-      //     if (this.x_mode === "x2_play") {
-      //       this.ops_interval_restart()
-      //     }
-      //
       this.chess_clock.single_clocks[this.current_membership.location.code].tap_and_auto_start_handle()
       this.vs_func_play_board_share(long_sfen)
-      //   }
-      //
-      //   if (this.current_question.sfen_valid_p(long_sfen)) {
-      //     this.kotae_sentaku("correct")
-      //   }
-      // }
     },
 
     vs_func_play_board_share(vs_share_sfen) {

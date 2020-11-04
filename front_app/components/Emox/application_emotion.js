@@ -28,7 +28,7 @@ export const application_emotion = {
           })
         }
         if (params.voice) {
-          this.say(params.voice)
+          this.talk(params.voice)
         }
       }
     },

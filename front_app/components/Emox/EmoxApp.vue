@@ -1,101 +1,41 @@
 <template lang="pug">
 .EmoxApp(:class="mode")
-  the_emotion(v-if="mode === 'emotion'")
-  the_lobby(        v-if="mode === 'lobby'")
-  the_rule_select(  v-if="mode === 'rule_select'")
-  the_matching(     v-if="mode === 'matching'")
-  the_battle(       v-if="mode === 'battle'")
-  the_result(       v-if="mode === 'result'")
+  EmoxLobby(:base="base"      v-if="mode === 'lobby'")
+  EmoxRuleSelect(:base="base" v-if="mode === 'rule_select'")
+  EmoxMatching(:base="base"   v-if="mode === 'matching'")
+  EmoxBattle(:base="base"     v-if="mode === 'battle'")
+  EmoxResult(:base="base"     v-if="mode === 'result'")
 
-  the_ranking(      v-if="mode === 'ranking'")
-  the_history(      v-if="mode === 'history'")
-  the_builder(      v-if="mode === 'builder'" ref="builder")
-  the_menu(         v-if="mode === 'menu'")
-  the_chess_clock(  v-if="mode === 'chess_clock'")
+  EmoxChessClock(:base="base"  v-if="mode === 'chess_clock'")
 
-  details(v-if="app.debug_read_p")
-    summary DEBUG
-    DebugPrint(:grep="/./")
+  DebugPrint(:grep="/./" v-if="base.debug_read_p")
 </template>
 
 <script>
 import { support } from "./support.js"
-import { store   } from "./store.js"
-
-// Page Components
-import the_question_show from "./the_question_show.vue"
-import the_user_show     from "./the_user_show.vue"
-import the_lobby         from "./the_lobby.vue"
-import the_rule_select   from "./the_rule_select.vue"
-import the_emotion       from "./the_emotion/the_emotion.vue"
-import the_matching      from "./the_matching.vue"
-import the_battle        from "./the_battle/the_battle.vue"
-import the_result        from "./the_result/the_result.vue"
-import the_builder       from "./the_builder/the_builder.vue"
-import the_ranking       from "./the_ranking.vue"
-import the_history       from "./the_history/the_history.vue"
-import the_menu          from "./the_menu/the_menu.vue"
-import the_chess_clock   from "./the_chess_clock.vue"
 
 // Mixins
-import { application_room          } from "./application_room.js"
-import { application_emotion          } from "./application_emotion.js"
-import { application_lobby_message   } from "./application_lobby_message.js"
-import { application_battle        } from "./application_battle.js"
-import { application_matching      } from "./application_matching.js"
-import { application_history       } from "./application_history.js"
-import { application_history_vote  } from "./application_history_vote.js"
-import { application_notification  } from "./application_notification.js"
-import { application_new_challenge } from "./application_new_challenge.js"
-import { application_question_show } from "./application_question_show.js"
-import { application_user_show }     from "./application_user_show.js"
-import { config                    } from "./config.js"
-import { RuleInfo                  } from "./models/rule_info.js"
-import { OxMarkInfo                } from "./models/ox_mark_info.js"
-import { SkillInfo                 } from "./models/skill_info.js"
-import { EmotionInfo               } from "./models/emotion_info.js"
-import { EmotionFolderInfo       } from "./models/emotion_folder_info.js"
+import { application_room     } from "./application_room.js"
+import { application_emotion  } from "./application_emotion.js"
+import { application_battle   } from "./application_battle.js"
+import { application_matching } from "./application_matching.js"
+import { config               } from "./config.js"
+import { RuleInfo             } from "./models/rule_info.js"
+import { EmotionInfo          } from "./models/emotion_info.js"
 
 export default {
-  store,
   name: "EmoxApp",
   mixins: [
     support,
     config,
-
-    application_question_show,
-    application_user_show,
-
     application_room,
     application_emotion,
-    application_lobby_message,
     application_battle,
     application_matching,
-    application_history_vote,
-    application_notification,
-    application_new_challenge,
-
-    application_history,
   ],
-  components: {
-    the_question_show,
-    the_user_show,
-    the_lobby,
-    the_rule_select,
-    the_emotion,
-    the_matching,
-    the_battle,
-    the_result,
-    the_builder,
-    the_ranking,
-    the_history,
-    the_menu,
-    the_chess_clock,
-  },
   props: {
     info: { required: true },
   },
-
   data() {
     return {
       current_user: this.info.current_user,
@@ -107,15 +47,9 @@ export default {
       room_user_ids:          null, // 対戦中のユーザーIDs
       matching_user_ids_hash: null, // 対戦待ちユーザーIDsのハッシュでルール名がキー
 
-      // 問題編集
-      edit_question_id: null, // IDを入れて builder_handle を叩けば、そのIDの編集画面に飛ぶ
-
       // リソース
       RuleInfo:   null,
-      OxMarkInfo: null,
-      SkillInfo:  null,
       EmotionInfo: null,
-      EmotionFolderInfo: null,
 
       // メニュー用
       menu_component: null,
@@ -125,7 +59,6 @@ export default {
 
       // デバッグ
       debug_summary_p: false, // ちょっとした表示
-      debug_force_edit_p: false, // 他人の問題を編集できる
       debug_read_p:    false, // 表示系(安全)
       debug_write_p:   false, // 更新系(危険)
 
@@ -137,26 +70,17 @@ export default {
     }
   },
 
-  beforeCreate() {
-    this.$store.state.app = this
-  },
-
-  async created() {
+  fetchOnServer: false,
+  fetch() {
     if (this.development_p) {
-      if (this.permit_staff_p) {
-        this.debug_summary_p    = true
-        this.debug_force_edit_p = true
-        this.debug_read_p       = true
-        this.debug_write_p      = true
-      }
+      this.debug_summary_p    = true
+      this.debug_read_p       = true
+      this.debug_write_p      = true
     }
 
-    await this.api_get("resource_fetch", {}, e => {
-      this.RuleInfo          = RuleInfo.memory_record_reset(e.RuleInfo)
-      this.OxMarkInfo        = OxMarkInfo.memory_record_reset(e.OxMarkInfo)
-      this.SkillInfo         = SkillInfo.memory_record_reset(e.SkillInfo)
-      this.EmotionInfo       = EmotionInfo.memory_record_reset(e.EmotionInfo)
-      this.EmotionFolderInfo = EmotionFolderInfo.memory_record_reset(e.EmotionFolderInfo)
+    return this.api_get("resource_fetch", {}, e => {
+      this.RuleInfo    = RuleInfo.memory_record_reset(e.RuleInfo)
+      this.EmotionInfo = EmotionInfo.memory_record_reset(e.EmotionInfo)
       this.app_setup()
     })
   },
@@ -169,7 +93,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click(`トレーニングバトル`)
+    this.ga_click("エモ将棋")
   },
 
   methods: {
@@ -177,36 +101,14 @@ export default {
       this.school_setup()
 
       if (this.info.warp_to) {
-        if (this.info.warp_to === "emotion_index" || this.info.warp_to === "emotion_edit") {
-          this.emotion_setup()
-        }
-        if (
-          this.info.warp_to === "battle_sy_versus" ||
-          this.info.warp_to === "battle_sy_marathon" ||
-          this.info.warp_to === "battle_sy_singleton" ||
-          this.info.warp_to === "battle_sy_hybrid") {
+        if (this.info.warp_to === "battle_sy_versus") {
           this.room_setup(this.info.room)
         }
         if (this.info.warp_to === "result") {
           this.room_setup(this.info.room)
         }
-        if (this.info.warp_to === "builder" || this.info.warp_to === "builder_haiti" || this.info.warp_to === "builder_form") {
-          this.builder_handle()
-        }
-        if (this.info.warp_to === "ranking") {
-          this.ranking_handle()
-        }
-        if (this.info.warp_to === "history") {
-          this.history_handle()
-        }
         if (this.info.warp_to === "chess_clock") {
           this.chess_clock_handle()
-        }
-        if (this.info.warp_to === "ov_question_info") {
-          this.ov_question_info_set(this.info.question_id)
-        }
-        if (this.info.warp_to === "ov_user_info") {
-          this.ov_user_info_set(this.info.current_user.id)
         }
         if (this.info.warp_to === "login_lobby") {
           this.lobby_setup()
@@ -214,16 +116,6 @@ export default {
       } else {
         this.lobby_setup()
       }
-    },
-
-    reload_if_outdated() {
-      return this.silent_api_get("revision_fetch", {}, e => {
-        if (this.app.config.revision === e.revision) {
-          this.debug_alert(`revision: ${this.app.config.revision} OK`)
-        } else {
-          this.ok_notice("新しいプログラムがあるので更新します", {onend: () => location.reload(true)})
-        }
-      })
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -245,11 +137,6 @@ export default {
       }
     },
 
-    emotion_setup() {
-      this.lobby_unsubscribe()
-      this.mode = "emotion"
-    },
-
     // 練習モードを止める
     rensyu_yameru_handle() {
       this.__assert__(this.room.bot_user_id != null, "this.room.bot_user_id != null")
@@ -263,43 +150,14 @@ export default {
 
       this.mode = "lobby"
       this.room = null          // 対戦中ではないことを判定するため消しておく
-      this.reload_if_outdated()
     },
 
     lobby_setup() {
       this.lobby_setup_without_cable()
 
-      this.lobby_messages_setup()
-      this.notification_setup()
-
       this.debug_alert("lobby_setup")
       this.__assert__(this.$ac_lobby == null, "ロビーが解放されてないのに再び接続しようとしている")
       this.$ac_lobby = this.ac_subscription_create({channel: "Emox::LobbyChannel"})
-
-      this.ov_redirect_onece()
-    },
-
-    ov_redirect_onece() {
-      if (this.redirect_counter >= 1) {
-        return
-      }
-
-      let id = null
-
-      id = this.$route.query.question_id
-      if (id) {
-        this.ov_question_info_set(id)
-      }
-
-      this.redirect_counter += 1
-    },
-
-    lobby_messages_setup() {
-      this.lobby_messages = []
-      this.lobby_message_body = ""
-      this.api_get("lobby_messages_fetch", {}, e => {
-        this.lobby_messages = e.lobby_messages
-      })
     },
 
     debug_matching_add_handle(rule) {
@@ -311,23 +169,19 @@ export default {
     },
 
     session_lock_token_invalid_notify() {
-      this.warning_notice("別の端末で開いたため開始できません。この端末で開始するにはリロードしてください")
+      this.toast_ng("別の端末で開いたため開始できません。この端末で開始するにはリロードしてください")
     },
 
-    async start_handle(practice_p) {
+    start_handle() {
       if (this.login_required2()) { return }
       if (this.handle_name_required()) { return }
 
       this.sound_play("click")
-      await this.reload_if_outdated()
-      this.new_challenge_snackbar_clear() // 挑戦者登場の snackbar を消去
-
-      this.practice_p = practice_p
 
       this.api_put("session_lock_token_set_handle", {session_lock_token: this.current_user.session_lock_token}, e => {
         if (e.status === "success") {
           this.mode = "rule_select"
-          this.say("ルールを選択してください")
+          this.talk("ルールを選択してください")
         }
       })
     },
@@ -336,7 +190,7 @@ export default {
       if (this.config.user_name_required) {
         if (this.current_user) {
           if (!this.current_user.name_input_at) {
-            this.warning_notice("名前を入力してください")
+            this.toast_ng("名前を入力してください")
             this.$router.push({name: "settings-profile"})
             return true
           }
@@ -358,7 +212,7 @@ export default {
         // ルール名を読み上げる場合
         if (false) {
           this.__assert__(rule.name, "rule.name")
-          this.say(rule.name)
+          this.talk(rule.name)
         }
         this.matching_setup()
       })
@@ -374,7 +228,7 @@ export default {
     matching_cancel_handle() {
       this.sound_play("click")
 
-      this.app.matching_interval_timer_clear()
+      this.base.matching_interval_timer_clear()
 
       this.__assert__(this.$ac_lobby, "ロビーの接続切れ")
       this.$ac_lobby.perform("matching_cancel")
@@ -387,7 +241,7 @@ export default {
     // メニュー内の切り替え
     menu_to(v) {
       this.sound_play("click")
-      this.app.menu_component = v
+      this.base.menu_component = v
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -397,14 +251,6 @@ export default {
       } else {
         this.sound_play("click")
         this.lobby_setup()
-      }
-    },
-
-    emotion_index_handle() {
-      if (this.mode === "emotion") {
-      } else {
-        this.sound_play("click")
-        this.emotion_setup()
       }
     },
 
@@ -420,40 +266,12 @@ export default {
     },
 
     // 問題一覧「+」
-    async builder_handle() {
+    builder_handle() {
       if (this.mode === "builder") {
       } else {
-        await this.reload_if_outdated()
         if (this.login_required2()) { return }
         if (this.handle_name_required()) { return }
         this.mode = "builder"
-      }
-    },
-
-    ranking_handle() {
-      if (this.mode === "ranking") {
-      } else {
-        this.mode = "ranking"
-      }
-    },
-
-    history_handle() {
-      if (this.mode === "history") {
-      } else {
-        if (this.login_required2()) { return }
-        this.mode = "history"
-      }
-    },
-
-    menu_handle() {
-      if (this.mode === "menu") {
-        if (this.menu_component === "the_menu_root") {
-        } else {
-          this.menu_to("the_menu_root")
-        }
-      } else {
-        this.lobby_unsubscribe()
-        this.mode = "menu"
       }
     },
 
@@ -467,6 +285,8 @@ export default {
   },
 
   computed: {
+    base() { return this },
+
     // current_user() {
     //   return this.info.current_user
     // },
