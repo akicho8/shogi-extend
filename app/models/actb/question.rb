@@ -48,6 +48,7 @@ module Actb
     include ImportExportMod
     include InfoMod
 
+    # 自演評価の無効化
     def self.good_bad_click_by_owner_reject_all
       p [GoodMark.count, BadMark.count]
       find_each(&:good_bad_click_by_owner_reject)
