@@ -21,19 +21,19 @@
 # | source_media_name   | Source media name   | string(255) |                     |      |       |
 # | source_media_url    | Source media url    | string(255) |                     |      |       |
 # | source_published_on | Source published on | date        |                     |      |       |
+# | source_about_id     | Source about        | integer(8)  |                     |      | H     |
+# | turn_max            | 手数                | integer(4)  |                     |      | I     |
+# | mate_skip           | Mate skip           | boolean     |                     |      |       |
+# | direction_message   | Direction message   | string(255) |                     |      |       |
 # | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
 # | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
-# | good_rate           | Good rate           | float(24)   |                     |      | H     |
+# | good_rate           | Good rate           | float(24)   |                     |      | J     |
 # | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | histories_count     | Histories count     | integer(4)  | DEFAULT(0) NOT NULL |      | I     |
-# | good_marks_count    | Good marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | J     |
-# | bad_marks_count     | Bad marks count     | integer(4)  | DEFAULT(0) NOT NULL |      | K     |
-# | clip_marks_count    | Clip marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | L     |
-# | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |      | M     |
-# | direction_message   | Direction message   | string(255) |                     |      |       |
-# | source_about_id     | Source about        | integer(8)  |                     |      | N     |
-# | turn_max            | 手数                | integer(4)  |                     |      | O     |
-# | mate_skip           | Mate skip           | boolean     |                     |      |       |
+# | histories_count     | Histories count     | integer(4)  | DEFAULT(0) NOT NULL |      | K     |
+# | good_marks_count    | Good marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | L     |
+# | bad_marks_count     | Bad marks count     | integer(4)  | DEFAULT(0) NOT NULL |      | M     |
+# | clip_marks_count    | Clip marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | N     |
+# | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |      | O     |
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

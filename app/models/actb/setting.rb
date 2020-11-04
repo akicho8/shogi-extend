@@ -9,9 +9,9 @@
 # | id                 | ID                 | integer(8)  | NOT NULL PK |              |       |
 # | user_id            | User               | integer(8)  | NOT NULL    | => ::User#id | A     |
 # | rule_id            | Rule               | integer(8)  | NOT NULL    |              | B     |
+# | session_lock_token | Session lock token | string(255) |             |              |       |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |              |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |              |       |
-# | session_lock_token | Session lock token | string(255) |             |              |       |
 # |--------------------+--------------------+-------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

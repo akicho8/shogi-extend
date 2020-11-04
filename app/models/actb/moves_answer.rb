@@ -11,9 +11,9 @@
 # | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
 # | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
 # | end_sfen        | End sfen        | string(255) |             |      |       |
+# | moves_human_str | Moves human str | string(255) |             |      |       |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
-# | moves_human_str | Moves human str | string(255) |             |      |       |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 
 module Actb

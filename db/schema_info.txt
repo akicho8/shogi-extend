@@ -9,23 +9,23 @@
 # |---------------+------------------+--------------+-------------+-------------------+-------|
 # | id            | ID               | integer(8)   | NOT NULL PK |                   |       |
 # | key           | 対局ユニークキー | string(255)  | NOT NULL    |                   | A!    |
-# | battled_at    | 対局日時         | datetime     | NOT NULL    |                   | G     |
-# | rule_key      | ルール           | string(255)  | NOT NULL    |                   | B     |
+# | battled_at    | 対局日時         | datetime     | NOT NULL    |                   | B     |
+# | rule_key      | ルール           | string(255)  | NOT NULL    |                   | C     |
 # | csa_seq       | 棋譜             | text(65535)  | NOT NULL    |                   |       |
-# | final_key     | 結末             | string(255)  | NOT NULL    |                   | C     |
-# | win_user_id   | 勝者             | integer(8)   |             | => Swars::User#id | D     |
-# | turn_max      | 手数             | integer(4)   | NOT NULL    |                   | H     |
+# | final_key     | 結末             | string(255)  | NOT NULL    |                   | D     |
+# | win_user_id   | 勝者             | integer(8)   |             | => Swars::User#id | E     |
+# | turn_max      | 手数             | integer(4)   | NOT NULL    |                   | F     |
 # | meta_info     | メタ情報         | text(65535)  | NOT NULL    |                   |       |
 # | accessed_at   | 最終アクセス日時 | datetime     | NOT NULL    |                   |       |
-# | outbreak_turn | Outbreak turn    | integer(4)   |             |                   | E     |
+# | preset_key    | 手合割           | string(255)  | NOT NULL    |                   | G     |
+# | sfen_body     | SFEN形式棋譜     | string(8192) | NOT NULL    |                   |       |
+# | sfen_hash     | Sfen hash        | string(255)  | NOT NULL    |                   |       |
+# | start_turn    | 開始局面         | integer(4)   |             |                   | H     |
+# | critical_turn | 開戦             | integer(4)   |             |                   | I     |
+# | outbreak_turn | Outbreak turn    | integer(4)   |             |                   | J     |
+# | image_turn    | OGP画像の局面    | integer(4)   |             |                   |       |
 # | created_at    | 作成日時         | datetime     | NOT NULL    |                   |       |
 # | updated_at    | 更新日時         | datetime     | NOT NULL    |                   |       |
-# | preset_key    | 手合割           | string(255)  | NOT NULL    |                   | F     |
-# | start_turn    | 開始局面         | integer(4)   |             |                   | I     |
-# | critical_turn | 開戦             | integer(4)   |             |                   | J     |
-# | sfen_body     | SFEN形式棋譜     | string(8192) | NOT NULL    |                   |       |
-# | image_turn    | OGP画像の局面    | integer(4)   |             |                   |       |
-# | sfen_hash     | Sfen hash        | string(255)  | NOT NULL    |                   |       |
 # |---------------+------------------+--------------+-------------+-------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -61,6 +61,7 @@
 # | cpu_brain_key          | CPUの思考タイプ            | string(255) |                     |      |       |
 # | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
 # | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
+# | name_input_at          | Name input at              | datetime    |                     |      |       |
 # | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
 # | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
 # | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
@@ -80,7 +81,6 @@
 # | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
-# | name_input_at          | Name input at              | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
 # == Schema Information ==
@@ -167,10 +167,10 @@
 # | name        | desc        | type        | opts        | refs         | index |
 # |-------------+-------------+-------------+-------------+--------------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |              |       |
-# | user_id     | User        | integer(8)  |             | => ::User#id | C     |
-# | entry_name  | Entry name  | string(255) | NOT NULL    |              | A     |
+# | user_id     | User        | integer(8)  |             | => ::User#id | A     |
+# | entry_name  | Entry name  | string(255) | NOT NULL    |              | B     |
 # | summary     | Summary     | string(255) |             |              |       |
-# | xy_rule_key | Xy rule key | string(255) | NOT NULL    |              | B     |
+# | xy_rule_key | Xy rule key | string(255) | NOT NULL    |              | C     |
 # | x_count     | X count     | integer(4)  | NOT NULL    |              |       |
 # | spent_sec   | Spent sec   | float(24)   | NOT NULL    |              |       |
 # | created_at  | 作成日時    | datetime    | NOT NULL    |              |       |
@@ -209,19 +209,19 @@
 # | id             | ID             | integer(8)  | NOT NULL PK |                   |            |
 # | battle_id      | 対局共通情報   | integer(8)  | NOT NULL    |                   | A! B! C! D |
 # | user_id        | ユーザー       | integer(8)  | NOT NULL    | => User#id        | B! E       |
-# | grade_id       | 棋力           | integer(8)  | NOT NULL    |                   | F          |
-# | judge_key      | 結果           | string(255) | NOT NULL    |                   | G          |
-# | location_key   | 先手or後手     | string(255) | NOT NULL    |                   | A! H       |
-# | position       | 順序           | integer(4)  |             |                   | I          |
+# | op_user_id     | Op user        | integer(8)  |             | => Swars::User#id | C! F       |
+# | grade_id       | 棋力           | integer(8)  | NOT NULL    |                   | G          |
+# | judge_key      | 結果           | string(255) | NOT NULL    |                   | H          |
+# | location_key   | 先手or後手     | string(255) | NOT NULL    |                   | A! I       |
+# | position       | 順序           | integer(4)  |             |                   | J          |
+# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |                   |            |
 # | created_at     | 作成日時       | datetime    | NOT NULL    |                   |            |
 # | updated_at     | 更新日時       | datetime    | NOT NULL    |                   |            |
-# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |                   | J          |
-# | think_max      | Think max      | integer(4)  |             |                   |            |
-# | op_user_id     | Op user        | integer(8)  |             | => Swars::User#id | C! K       |
-# | think_last     | Think last     | integer(4)  |             |                   |            |
 # | think_all_avg  | Think all avg  | integer(4)  |             |                   |            |
 # | think_end_avg  | Think end avg  | integer(4)  |             |                   |            |
 # | two_serial_max | Two serial max | integer(4)  |             |                   |            |
+# | think_last     | Think last     | integer(4)  |             |                   |            |
+# | think_max      | Think max      | integer(4)  |             |                   |            |
 # |----------------+----------------+-------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -290,10 +290,10 @@
 # |-------------+-------------------+-------------+-------------+------------+-------|
 # | id          | ID                | integer(8)  | NOT NULL PK |            |       |
 # | user_id     | User              | integer(8)  | NOT NULL    | => User#id | A!    |
-# | created_at  | 作成日時          | datetime    | NOT NULL    |            |       |
-# | updated_at  | 更新日時          | datetime    | NOT NULL    |            |       |
 # | description | 自己紹介          | string(512) | NOT NULL    |            |       |
 # | twitter_key | Twitterアカウント | string(255) | NOT NULL    |            |       |
+# | created_at  | 作成日時          | datetime    | NOT NULL    |            |       |
+# | updated_at  | 更新日時          | datetime    | NOT NULL    |            |       |
 # |-------------+-------------------+-------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -308,8 +308,8 @@
 # | name       | desc      | type        | opts        | refs         | index |
 # |------------+-----------+-------------+-------------+--------------+-------|
 # | id         | ID        | integer(8)  | NOT NULL PK |              |       |
-# | user_id    | User      | integer(8)  |             | => ::User#id | B     |
-# | judge_key  | Judge key | string(255) | NOT NULL    |              | A     |
+# | user_id    | User      | integer(8)  |             | => ::User#id | A     |
+# | judge_key  | Judge key | string(255) | NOT NULL    |              | B     |
 # | created_at | 作成日時  | datetime    | NOT NULL    |              |       |
 # | updated_at | 更新日時  | datetime    | NOT NULL    |              |       |
 # |------------+-----------+-------------+-------------+--------------+-------|
@@ -317,6 +317,584 @@
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
 #--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Room message (emox_room_messages as Emox::RoomMessage)
+#
+# |------------+----------+-------------+-------------+--------------+-------|
+# | name       | desc     | type        | opts        | refs         | index |
+# |------------+----------+-------------+-------------+--------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |              |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id | A     |
+# | room_id    | Room     | integer(8)  | NOT NULL    |              | B     |
+# | body       | 内容     | string(512) | NOT NULL    |              |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |              |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |              |       |
+# |------------+----------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Folder (emox_folders as Emox::Folder)
+#
+# |------------+------------+-------------+-------------+--------------------+-------|
+# | name       | desc       | type        | opts        | refs               | index |
+# |------------+------------+-------------+-------------+--------------------+-------|
+# | id         | ID         | integer(8)  | NOT NULL PK |                    |       |
+# | user_id    | User       | integer(8)  | NOT NULL    | => User#id         | A! B  |
+# | type       | 所属モデル | string(255) | NOT NULL    | SpecificModel(STI) | A!    |
+# | created_at | 作成日時   | datetime    | NOT NULL    |                    |       |
+# | updated_at | 更新日時   | datetime    | NOT NULL    |                    |       |
+# |------------+------------+-------------+-------------+--------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Battle (emox_battles as Emox::Battle)
+#
+# |------------+------------+------------+-------------+------+-------|
+# | name       | desc       | type       | opts        | refs | index |
+# |------------+------------+------------+-------------+------+-------|
+# | id         | ID         | integer(8) | NOT NULL PK |      |       |
+# | room_id    | Room       | integer(8) | NOT NULL    |      | A     |
+# | parent_id  | Parent     | integer(8) |             |      | B     |
+# | rule_id    | Rule       | integer(8) | NOT NULL    |      | C     |
+# | final_id   | Final      | integer(8) | NOT NULL    |      | D     |
+# | begin_at   | Begin at   | datetime   | NOT NULL    |      | E     |
+# | end_at     | End at     | datetime   |             |      | F     |
+# | battle_pos | Battle pos | integer(4) | NOT NULL    |      | G     |
+# | practice   | Practice   | boolean    |             |      |       |
+# | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
+# | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
+# |------------+------------+------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# History (emox_histories as Emox::History)
+#
+# |-------------+----------+------------+-------------+--------------+-------|
+# | name        | desc     | type       | opts        | refs         | index |
+# |-------------+----------+------------+-------------+--------------+-------|
+# | id          | ID       | integer(8) | NOT NULL PK |              |       |
+# | user_id     | User     | integer(8) | NOT NULL    | => ::User#id | A     |
+# | question_id | Question | integer(8) | NOT NULL    |              | B     |
+# | room_id     | Room     | integer(8) |             |              | C     |
+# | created_at  | 作成日時 | datetime   | NOT NULL    |              |       |
+# | updated_at  | 更新日時 | datetime   | NOT NULL    |              |       |
+# | ox_mark_id  | Ox mark  | integer(8) | NOT NULL    |              | D     |
+# |-------------+----------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Clip mark (emox_clip_marks as Emox::ClipMark)
+#
+# |-------------+----------+------------+-------------+--------------+-------|
+# | name        | desc     | type       | opts        | refs         | index |
+# |-------------+----------+------------+-------------+--------------+-------|
+# | id          | ID       | integer(8) | NOT NULL PK |              |       |
+# | user_id     | User     | integer(8) | NOT NULL    | => ::User#id | A! B  |
+# | question_id | Question | integer(8) | NOT NULL    |              | A! C  |
+# | created_at  | 作成日時 | datetime   | NOT NULL    |              |       |
+# | updated_at  | 更新日時 | datetime   | NOT NULL    |              |       |
+# |-------------+----------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Room (emox_rooms as Emox::Room)
+#
+# |---------------+---------------+------------+---------------------+------+-------|
+# | name          | desc          | type       | opts                | refs | index |
+# |---------------+---------------+------------+---------------------+------+-------|
+# | id            | ID            | integer(8) | NOT NULL PK         |      |       |
+# | begin_at      | Begin at      | datetime   | NOT NULL            |      | A     |
+# | end_at        | End at        | datetime   |                     |      | B     |
+# | rule_id       | Rule          | integer(8) | NOT NULL            |      | C     |
+# | created_at    | 作成日時      | datetime   | NOT NULL            |      |       |
+# | updated_at    | 更新日時      | datetime   | NOT NULL            |      |       |
+# | battles_count | Battles count | integer(4) | DEFAULT(0) NOT NULL |      | D     |
+# | practice      | Practice      | boolean    |                     |      |       |
+# | bot_user_id   | Bot user      | integer(8) |                     |      | E     |
+# |---------------+---------------+------------+---------------------+------+-------|
+
+# == Schema Information ==
+#
+# エモーション (emox_emotions as Emox::Emotion)
+#
+# |------------+----------+-------------+-------------+---------------------------+-------|
+# | name       | desc     | type        | opts        | refs                      | index |
+# |------------+----------+-------------+-------------+---------------------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |                           |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id              | A     |
+# | folder_id  | Folder   | integer(8)  | NOT NULL    | => Emox::EmotionFolder#id | B     |
+# | name       | 鍵       | string(255) | NOT NULL    |                           |       |
+# | message    | 伝       | string(255) | NOT NULL    |                           |       |
+# | voice      | 声       | string(255) | NOT NULL    |                           |       |
+# | position   | 順序     | integer(4)  | NOT NULL    |                           | C     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |                           |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |                           |       |
+# |------------+----------+-------------+-------------+---------------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+# 【警告:リレーション欠如】Emox::EmotionFolderモデルで has_many :emox/emotions されていません
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Lineage (emox_lineages as Emox::Lineage)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Moves answer (emox_moves_answers as Emox::MovesAnswer)
+#
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | name            | desc            | type        | opts        | refs | index |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
+# | question_id     | Question        | integer(8)  | NOT NULL    |      | A     |
+# | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
+# | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
+# | end_sfen        | End sfen        | string(255) |             |      |       |
+# | moves_human_str | Moves human str | string(255) |             |      |       |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Source about (emox_source_abouts as Emox::SourceAbout)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Lobby message (emox_lobby_messages as Emox::LobbyMessage)
+#
+# |------------+----------+-------------+-------------+--------------+-------|
+# | name       | desc     | type        | opts        | refs         | index |
+# |------------+----------+-------------+-------------+--------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |              |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id | A     |
+# | body       | 内容     | string(512) | NOT NULL    |              |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |              |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |              |       |
+# |------------+----------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Judge (emox_judges as Emox::Judge)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Ox mark (emox_ox_marks as Emox::OxMark)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      | A     |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | B     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Battle membership (emox_battle_memberships as Emox::BattleMembership)
+#
+# |------------+----------+------------+-------------+--------------+-------|
+# | name       | desc     | type       | opts        | refs         | index |
+# |------------+----------+------------+-------------+--------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |              |       |
+# | battle_id  | Battle   | integer(8) | NOT NULL    |              | A! B  |
+# | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | A! C  |
+# | judge_id   | Judge    | integer(8) | NOT NULL    |              | D     |
+# | position   | 順序     | integer(4) | NOT NULL    |              | E     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
+# |------------+----------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Season (emox_seasons as Emox::Season)
+#
+# |------------+------------+-------------+-------------+------+-------|
+# | name       | desc       | type        | opts        | refs | index |
+# |------------+------------+-------------+-------------+------+-------|
+# | id         | ID         | integer(8)  | NOT NULL PK |      |       |
+# | name       | Name       | string(255) | NOT NULL    |      |       |
+# | generation | Generation | integer(4)  | NOT NULL    |      | A     |
+# | begin_at   | Begin at   | datetime    | NOT NULL    |      | B     |
+# | end_at     | End at     | datetime    | NOT NULL    |      | C     |
+# | created_at | 作成日時   | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時   | datetime    | NOT NULL    |      |       |
+# |------------+------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Emotion folder (emox_emotion_folders as Emox::EmotionFolder)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Rule (emox_rules as Emox::Rule)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Main xrecord (emox_main_xrecords as Emox::MainXrecord)
+#
+# |---------------------+---------------------+------------+-------------+--------------+-------|
+# | name                | desc                | type       | opts        | refs         | index |
+# |---------------------+---------------------+------------+-------------+--------------+-------|
+# | id                  | ID                  | integer(8) | NOT NULL PK |              |       |
+# | user_id             | User                | integer(8) | NOT NULL    | => ::User#id | A!    |
+# | judge_id            | Judge               | integer(8) | NOT NULL    |              | B     |
+# | final_id            | Final               | integer(8) | NOT NULL    |              | C     |
+# | battle_count        | Battle count        | integer(4) | NOT NULL    |              | D     |
+# | win_count           | Win count           | integer(4) | NOT NULL    |              | E     |
+# | lose_count          | Lose count          | integer(4) | NOT NULL    |              | F     |
+# | win_rate            | Win rate            | float(24)  | NOT NULL    |              | G     |
+# | rating              | Rating              | float(24)  | NOT NULL    |              | H     |
+# | rating_diff         | Rating diff         | float(24)  | NOT NULL    |              | I     |
+# | rating_max          | Rating max          | float(24)  | NOT NULL    |              | J     |
+# | straight_win_count  | Straight win count  | integer(4) | NOT NULL    |              | K     |
+# | straight_lose_count | Straight lose count | integer(4) | NOT NULL    |              | L     |
+# | straight_win_max    | Straight win max    | integer(4) | NOT NULL    |              | M     |
+# | straight_lose_max   | Straight lose max   | integer(4) | NOT NULL    |              | N     |
+# | skill_id            | Skill               | integer(8) | NOT NULL    |              | O     |
+# | skill_point         | Skill point         | float(24)  | NOT NULL    |              |       |
+# | skill_last_diff     | Skill last diff     | float(24)  | NOT NULL    |              |       |
+# | created_at          | 作成日時            | datetime   | NOT NULL    |              |       |
+# | updated_at          | 更新日時            | datetime   | NOT NULL    |              |       |
+# | disconnect_count    | Disconnect count    | integer(4) | NOT NULL    |              | P     |
+# | disconnected_at     | Disconnected at     | datetime   |             |              |       |
+# |---------------------+---------------------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Question (emox_questions as Emox::Question)
+#
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | name                | desc                | type        | opts                | refs | index |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
+# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |      | A     |
+# | user_id             | User                | integer(8)  | NOT NULL            |      | B     |
+# | folder_id           | Folder              | integer(8)  | NOT NULL            |      | C     |
+# | lineage_id          | Lineage             | integer(8)  | NOT NULL            |      | D     |
+# | init_sfen           | Init sfen           | string(255) | NOT NULL            |      | E     |
+# | time_limit_sec      | Time limit sec      | integer(4)  |                     |      | F     |
+# | difficulty_level    | Difficulty level    | integer(4)  |                     |      | G     |
+# | title               | タイトル            | string(255) |                     |      |       |
+# | description         | 説明                | string(512) |                     |      |       |
+# | hint_desc           | Hint desc           | string(255) |                     |      |       |
+# | source_author       | Source author       | string(255) |                     |      |       |
+# | source_media_name   | Source media name   | string(255) |                     |      |       |
+# | source_media_url    | Source media url    | string(255) |                     |      |       |
+# | source_published_on | Source published on | date        |                     |      |       |
+# | source_about_id     | Source about        | integer(8)  |                     |      | H     |
+# | turn_max            | 手数                | integer(4)  |                     |      | I     |
+# | mate_skip           | Mate skip           | boolean     |                     |      |       |
+# | direction_message   | Direction message   | string(255) |                     |      |       |
+# | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
+# | good_rate           | Good rate           | float(24)   |                     |      | J     |
+# | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | histories_count     | Histories count     | integer(4)  | DEFAULT(0) NOT NULL |      | K     |
+# | good_marks_count    | Good marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | L     |
+# | bad_marks_count     | Bad marks count     | integer(4)  | DEFAULT(0) NOT NULL |      | M     |
+# | clip_marks_count    | Clip marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | N     |
+# | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |      | O     |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Emox::Question モデルに belongs_to :lineage を追加してください
+# [Warning: Need to add relation] Emox::Question モデルに belongs_to :source_about を追加してください
+# [Warning: Need to add relation] Emox::Question モデルに belongs_to :user を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Setting (emox_settings as Emox::Setting)
+#
+# |--------------------+--------------------+-------------+-------------+--------------+-------|
+# | name               | desc               | type        | opts        | refs         | index |
+# |--------------------+--------------------+-------------+-------------+--------------+-------|
+# | id                 | ID                 | integer(8)  | NOT NULL PK |              |       |
+# | user_id            | User               | integer(8)  | NOT NULL    | => ::User#id | A     |
+# | rule_id            | Rule               | integer(8)  | NOT NULL    |              | B     |
+# | session_lock_token | Session lock token | string(255) |             |              |       |
+# | created_at         | 作成日時           | datetime    | NOT NULL    |              |       |
+# | updated_at         | 更新日時           | datetime    | NOT NULL    |              |       |
+# |--------------------+--------------------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Ox record (emox_ox_records as Emox::OxRecord)
+#
+# |-------------+----------+------------+-------------+------+-------|
+# | name        | desc     | type       | opts        | refs | index |
+# |-------------+----------+------------+-------------+------+-------|
+# | id          | ID       | integer(8) | NOT NULL PK |      |       |
+# | question_id | Question | integer(8) | NOT NULL    |      | A!    |
+# | o_count     | O count  | integer(4) | NOT NULL    |      | B     |
+# | x_count     | X count  | integer(4) | NOT NULL    |      | C     |
+# | ox_total    | Ox total | integer(4) | NOT NULL    |      | D     |
+# | o_rate      | O rate   | float(24)  |             |      | E     |
+# | created_at  | 作成日時 | datetime   | NOT NULL    |      |       |
+# | updated_at  | 更新日時 | datetime   | NOT NULL    |      |       |
+# |-------------+----------+------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Notification (emox_notifications as Emox::Notification)
+#
+# |---------------------+------------------+------------+-------------+--------------+-------|
+# | name                | desc             | type       | opts        | refs         | index |
+# |---------------------+------------------+------------+-------------+--------------+-------|
+# | id                  | ID               | integer(8) | NOT NULL PK |              |       |
+# | question_message_id | Question message | integer(8) | NOT NULL    |              | A     |
+# | user_id             | User             | integer(8) | NOT NULL    | => ::User#id | B     |
+# | opened_at           | Opened at        | datetime   |             |              |       |
+# | created_at          | 作成日時         | datetime   | NOT NULL    |              |       |
+# | updated_at          | 更新日時         | datetime   | NOT NULL    |              |       |
+# |---------------------+------------------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Bad mark (emox_bad_marks as Emox::BadMark)
+#
+# |-------------+----------+------------+-------------+--------------+-------|
+# | name        | desc     | type       | opts        | refs         | index |
+# |-------------+----------+------------+-------------+--------------+-------|
+# | id          | ID       | integer(8) | NOT NULL PK |              |       |
+# | user_id     | User     | integer(8) | NOT NULL    | => ::User#id | A! B  |
+# | question_id | Question | integer(8) | NOT NULL    |              | A! C  |
+# | created_at  | 作成日時 | datetime   | NOT NULL    |              |       |
+# | updated_at  | 更新日時 | datetime   | NOT NULL    |              |       |
+# |-------------+----------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Good mark (emox_good_marks as Emox::GoodMark)
+#
+# |-------------+----------+------------+-------------+--------------+-------|
+# | name        | desc     | type       | opts        | refs         | index |
+# |-------------+----------+------------+-------------+--------------+-------|
+# | id          | ID       | integer(8) | NOT NULL PK |              |       |
+# | user_id     | User     | integer(8) | NOT NULL    | => ::User#id | A! B  |
+# | question_id | Question | integer(8) | NOT NULL    |              | A! C  |
+# | created_at  | 作成日時 | datetime   | NOT NULL    |              |       |
+# | updated_at  | 更新日時 | datetime   | NOT NULL    |              |       |
+# |-------------+----------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Room membership (emox_room_memberships as Emox::RoomMembership)
+#
+# |------------+----------+------------+-------------+--------------+-------|
+# | name       | desc     | type       | opts        | refs         | index |
+# |------------+----------+------------+-------------+--------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |              |       |
+# | room_id    | Room     | integer(8) | NOT NULL    |              | A! B  |
+# | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | A! C  |
+# | position   | 順序     | integer(4) | NOT NULL    |              | D     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
+# |------------+----------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Question message (emox_question_messages as Emox::QuestionMessage)
+#
+# |-------------+----------+-------------+-------------+--------------+-------|
+# | name        | desc     | type        | opts        | refs         | index |
+# |-------------+----------+-------------+-------------+--------------+-------|
+# | id          | ID       | integer(8)  | NOT NULL PK |              |       |
+# | user_id     | User     | integer(8)  | NOT NULL    | => ::User#id | A     |
+# | question_id | Question | integer(8)  | NOT NULL    |              | B     |
+# | body        | 内容     | string(512) | NOT NULL    |              |       |
+# | created_at  | 作成日時 | datetime    | NOT NULL    |              |       |
+# | updated_at  | 更新日時 | datetime    | NOT NULL    |              |       |
+# |-------------+----------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Vs record (emox_vs_records as Emox::VsRecord)
+#
+# |------------+--------------+--------------+-------------+------+-------|
+# | name       | desc         | type         | opts        | refs | index |
+# |------------+--------------+--------------+-------------+------+-------|
+# | id         | ID           | integer(8)   | NOT NULL PK |      |       |
+# | battle_id  | Battle       | integer(8)   | NOT NULL    |      | A     |
+# | sfen_body  | SFEN形式棋譜 | string(1536) | NOT NULL    |      |       |
+# | created_at | 作成日時     | datetime     | NOT NULL    |      |       |
+# | updated_at | 更新日時     | datetime     | NOT NULL    |      |       |
+# |------------+--------------+--------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Skill (emox_skills as Emox::Skill)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Season xrecord (emox_season_xrecords as Emox::SeasonXrecord)
+#
+# |---------------------+---------------------+------------+-------------+--------------+-------|
+# | name                | desc                | type       | opts        | refs         | index |
+# |---------------------+---------------------+------------+-------------+--------------+-------|
+# | id                  | ID                  | integer(8) | NOT NULL PK |              |       |
+# | judge_id            | Judge               | integer(8) | NOT NULL    |              | B     |
+# | final_id            | Final               | integer(8) | NOT NULL    |              | C     |
+# | battle_count        | Battle count        | integer(4) | NOT NULL    |              | D     |
+# | win_count           | Win count           | integer(4) | NOT NULL    |              | E     |
+# | lose_count          | Lose count          | integer(4) | NOT NULL    |              | F     |
+# | win_rate            | Win rate            | float(24)  | NOT NULL    |              | G     |
+# | rating              | Rating              | float(24)  | NOT NULL    |              | H     |
+# | rating_diff         | Rating diff         | float(24)  | NOT NULL    |              | I     |
+# | rating_max          | Rating max          | float(24)  | NOT NULL    |              | J     |
+# | straight_win_count  | Straight win count  | integer(4) | NOT NULL    |              | K     |
+# | straight_lose_count | Straight lose count | integer(4) | NOT NULL    |              | L     |
+# | straight_win_max    | Straight win max    | integer(4) | NOT NULL    |              | M     |
+# | straight_lose_max   | Straight lose max   | integer(4) | NOT NULL    |              | N     |
+# | skill_id            | Skill               | integer(8) | NOT NULL    |              | O     |
+# | skill_point         | Skill point         | float(24)  | NOT NULL    |              |       |
+# | skill_last_diff     | Skill last diff     | float(24)  | NOT NULL    |              |       |
+# | created_at          | 作成日時            | datetime   | NOT NULL    |              |       |
+# | updated_at          | 更新日時            | datetime   | NOT NULL    |              |       |
+# | disconnect_count    | Disconnect count    | integer(4) | NOT NULL    |              | P     |
+# | disconnected_at     | Disconnected at     | datetime   |             |              |       |
+# | user_id             | User                | integer(8) | NOT NULL    | => ::User#id | A! Q  |
+# | season_id           | Season              | integer(8) | NOT NULL    |              | A! R  |
+# | create_count        | Create count        | integer(4) | NOT NULL    |              | S     |
+# | generation          | Generation          | integer(4) | NOT NULL    |              | T     |
+# |---------------------+---------------------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Final (emox_finals as Emox::Final)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -341,24 +919,22 @@
 # | id            | ID                 | integer(8)     | NOT NULL PK |            |       |
 # | key           | ユニークなハッシュ | string(255)    | NOT NULL    |            | A!    |
 # | kifu_url      | 棋譜URL            | string(255)    |             |            |       |
-# | kifu_body     | 棋譜               | text(16777215) | NOT NULL    |            |       |
-# | turn_max      | 手数               | integer(4)     | NOT NULL    |            | E     |
-# | meta_info     | 棋譜ヘッダー       | text(65535)    | NOT NULL    |            |       |
-# | battled_at    | Battled at         | datetime       | NOT NULL    |            | D     |
-# | outbreak_turn | Outbreak turn      | integer(4)     |             |            | B     |
-# | use_key       | Use key            | string(255)    | NOT NULL    |            | C     |
-# | accessed_at   | Accessed at        | datetime       | NOT NULL    |            |       |
-# | created_at    | 作成日時           | datetime       | NOT NULL    |            |       |
-# | updated_at    | 更新日時           | datetime       | NOT NULL    |            |       |
-# | user_id       | User               | integer(8)     |             | => User#id | H     |
 # | title         | タイトル           | string(255)    |             |            |       |
+# | kifu_body     | 棋譜               | text(16777215) | NOT NULL    |            |       |
+# | turn_max      | 手数               | integer(4)     | NOT NULL    |            | B     |
+# | meta_info     | 棋譜ヘッダー       | text(65535)    | NOT NULL    |            |       |
+# | battled_at    | Battled at         | datetime       | NOT NULL    |            | C     |
+# | use_key       | Use key            | string(255)    | NOT NULL    |            | D     |
+# | accessed_at   | Accessed at        | datetime       | NOT NULL    |            |       |
+# | user_id       | User               | integer(8)     |             | => User#id | E     |
+# | preset_key    | Preset key         | string(255)    | NOT NULL    |            | F     |
 # | description   | 説明               | text(65535)    | NOT NULL    |            |       |
-# | start_turn    | 開始局面           | integer(4)     |             |            | F     |
-# | critical_turn | 開戦               | integer(4)     |             |            | G     |
 # | sfen_body     | SFEN形式棋譜       | string(8192)   | NOT NULL    |            |       |
-# | image_turn    | OGP画像の局面      | integer(4)     |             |            |       |
-# | preset_key    | Preset key         | string(255)    | NOT NULL    |            |       |
 # | sfen_hash     | Sfen hash          | string(255)    | NOT NULL    |            |       |
+# | start_turn    | 開始局面           | integer(4)     |             |            | G     |
+# | critical_turn | 開戦               | integer(4)     |             |            | H     |
+# | outbreak_turn | Outbreak turn      | integer(4)     |             |            | I     |
+# | image_turn    | OGP画像の局面      | integer(4)     |             |            |       |
 # |---------------+--------------------+----------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -417,9 +993,9 @@
 # | begin_at   | Begin at   | datetime   | NOT NULL    |      | E     |
 # | end_at     | End at     | datetime   |             |      | F     |
 # | battle_pos | Battle pos | integer(4) | NOT NULL    |      | G     |
+# | practice   | Practice   | boolean    |             |      |       |
 # | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
 # | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
-# | practice   | Practice   | boolean    |             |      |       |
 # |------------+------------+------------+-------------+------+-------|
 
 # == Schema Information ==
@@ -432,10 +1008,10 @@
 # | id          | ID       | integer(8) | NOT NULL PK |              |       |
 # | user_id     | User     | integer(8) | NOT NULL    | => ::User#id | A     |
 # | question_id | Question | integer(8) | NOT NULL    |              | B     |
+# | room_id     | Room     | integer(8) |             |              | C     |
 # | created_at  | 作成日時 | datetime   | NOT NULL    |              |       |
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |              |       |
-# | ox_mark_id  | Ox mark  | integer(8) | NOT NULL    |              | C     |
-# | room_id     | Room     | integer(8) |             |              | D     |
+# | ox_mark_id  | Ox mark  | integer(8) | NOT NULL    |              | D     |
 # |-------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -527,9 +1103,9 @@
 # | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
 # | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
 # | end_sfen        | End sfen        | string(255) |             |      |       |
+# | moves_human_str | Moves human str | string(255) |             |      |       |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
-# | moves_human_str | Moves human str | string(255) |             |      |       |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
@@ -713,19 +1289,19 @@
 # | source_media_name   | Source media name   | string(255) |                     |      |       |
 # | source_media_url    | Source media url    | string(255) |                     |      |       |
 # | source_published_on | Source published on | date        |                     |      |       |
+# | source_about_id     | Source about        | integer(8)  |                     |      | H     |
+# | turn_max            | 手数                | integer(4)  |                     |      | I     |
+# | mate_skip           | Mate skip           | boolean     |                     |      |       |
+# | direction_message   | Direction message   | string(255) |                     |      |       |
 # | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
 # | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
-# | good_rate           | Good rate           | float(24)   |                     |      | H     |
+# | good_rate           | Good rate           | float(24)   |                     |      | J     |
 # | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | histories_count     | Histories count     | integer(4)  | DEFAULT(0) NOT NULL |      | I     |
-# | good_marks_count    | Good marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | J     |
-# | bad_marks_count     | Bad marks count     | integer(4)  | DEFAULT(0) NOT NULL |      | K     |
-# | clip_marks_count    | Clip marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | L     |
-# | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |      | M     |
-# | direction_message   | Direction message   | string(255) |                     |      |       |
-# | source_about_id     | Source about        | integer(8)  |                     |      | N     |
-# | turn_max            | 手数                | integer(4)  |                     |      | O     |
-# | mate_skip           | Mate skip           | boolean     |                     |      |       |
+# | histories_count     | Histories count     | integer(4)  | DEFAULT(0) NOT NULL |      | K     |
+# | good_marks_count    | Good marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | L     |
+# | bad_marks_count     | Bad marks count     | integer(4)  | DEFAULT(0) NOT NULL |      | M     |
+# | clip_marks_count    | Clip marks count    | integer(4)  | DEFAULT(0) NOT NULL |      | N     |
+# | messages_count      | Messages count      | integer(4)  | DEFAULT(0) NOT NULL |      | O     |
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -744,9 +1320,9 @@
 # | id                 | ID                 | integer(8)  | NOT NULL PK |              |       |
 # | user_id            | User               | integer(8)  | NOT NULL    | => ::User#id | A     |
 # | rule_id            | Rule               | integer(8)  | NOT NULL    |              | B     |
+# | session_lock_token | Session lock token | string(255) |             |              |       |
 # | created_at         | 作成日時           | datetime    | NOT NULL    |              |       |
 # | updated_at         | 更新日時           | datetime    | NOT NULL    |              |       |
-# | session_lock_token | Session lock token | string(255) |             |              |       |
 # |--------------------+--------------------+-------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

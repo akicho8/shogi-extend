@@ -60,9 +60,9 @@ CREATE TABLE `actb_battles` (
   `begin_at` datetime NOT NULL COMMENT '対戦開始日時',
   `end_at` datetime DEFAULT NULL COMMENT '対戦終了日時',
   `battle_pos` int(11) NOT NULL COMMENT '連戦インデックス',
+  `practice` tinyint(1) DEFAULT NULL COMMENT '練習バトル？',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
-  `practice` tinyint(1) DEFAULT NULL COMMENT '練習バトル？',
   PRIMARY KEY (`id`),
   KEY `index_actb_battles_on_room_id` (`room_id`),
   KEY `index_actb_battles_on_parent_id` (`parent_id`),
@@ -180,15 +180,15 @@ CREATE TABLE `actb_histories` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '自分',
   `question_id` bigint(20) NOT NULL COMMENT '出題',
+  `room_id` bigint(20) DEFAULT NULL COMMENT '対戦部屋',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `ox_mark_id` bigint(20) NOT NULL COMMENT '解答',
-  `room_id` bigint(20) DEFAULT NULL COMMENT '対戦部屋',
   PRIMARY KEY (`id`),
   KEY `index_actb_histories_on_user_id` (`user_id`),
   KEY `index_actb_histories_on_question_id` (`question_id`),
-  KEY `index_actb_histories_on_ox_mark_id` (`ox_mark_id`),
   KEY `index_actb_histories_on_room_id` (`room_id`),
+  KEY `index_actb_histories_on_ox_mark_id` (`ox_mark_id`),
   CONSTRAINT `fk_rails_09aa60b90e` FOREIGN KEY (`room_id`) REFERENCES `actb_rooms` (`id`),
   CONSTRAINT `fk_rails_2856700a8b` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_4edf53cdf7` FOREIGN KEY (`question_id`) REFERENCES `actb_questions` (`id`),
@@ -293,9 +293,9 @@ CREATE TABLE `actb_moves_answers` (
   `moves_count` int(11) NOT NULL COMMENT 'N手',
   `moves_str` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '連続した指し手',
   `end_sfen` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '最後の局面',
+  `moves_human_str` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '人間向け指し手',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
-  `moves_human_str` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '人間向け指し手',
   PRIMARY KEY (`id`),
   KEY `index_actb_moves_answers_on_question_id` (`question_id`),
   KEY `index_actb_moves_answers_on_moves_count` (`moves_count`),
@@ -390,6 +390,10 @@ CREATE TABLE `actb_questions` (
   `source_media_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '出典メディア',
   `source_media_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '出典URL',
   `source_published_on` date DEFAULT NULL COMMENT '出典年月日',
+  `source_about_id` bigint(20) DEFAULT NULL COMMENT '所在',
+  `turn_max` int(11) DEFAULT NULL COMMENT '最大手数',
+  `mate_skip` tinyint(1) DEFAULT NULL COMMENT '詰みチェックをスキップする',
+  `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'メッセージ',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `good_rate` float DEFAULT NULL COMMENT '高評価率',
@@ -399,10 +403,6 @@ CREATE TABLE `actb_questions` (
   `bad_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '低評価数',
   `clip_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '保存された数',
   `messages_count` int(11) NOT NULL DEFAULT '0' COMMENT 'コメント数',
-  `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'メッセージ',
-  `source_about_id` bigint(20) DEFAULT NULL COMMENT '所在',
-  `turn_max` int(11) DEFAULT NULL COMMENT '最大手数',
-  `mate_skip` tinyint(1) DEFAULT NULL COMMENT '詰みチェックをスキップする',
   PRIMARY KEY (`id`),
   KEY `index_actb_questions_on_key` (`key`),
   KEY `index_actb_questions_on_user_id` (`user_id`),
@@ -411,14 +411,14 @@ CREATE TABLE `actb_questions` (
   KEY `index_actb_questions_on_init_sfen` (`init_sfen`),
   KEY `index_actb_questions_on_time_limit_sec` (`time_limit_sec`),
   KEY `index_actb_questions_on_difficulty_level` (`difficulty_level`),
+  KEY `index_actb_questions_on_source_about_id` (`source_about_id`),
+  KEY `index_actb_questions_on_turn_max` (`turn_max`),
   KEY `index_actb_questions_on_good_rate` (`good_rate`),
   KEY `index_actb_questions_on_histories_count` (`histories_count`),
   KEY `index_actb_questions_on_good_marks_count` (`good_marks_count`),
   KEY `index_actb_questions_on_bad_marks_count` (`bad_marks_count`),
   KEY `index_actb_questions_on_clip_marks_count` (`clip_marks_count`),
   KEY `index_actb_questions_on_messages_count` (`messages_count`),
-  KEY `index_actb_questions_on_source_about_id` (`source_about_id`),
-  KEY `index_actb_questions_on_turn_max` (`turn_max`),
   CONSTRAINT `fk_rails_243f259526` FOREIGN KEY (`source_about_id`) REFERENCES `actb_source_abouts` (`id`),
   CONSTRAINT `fk_rails_4c1f4628cc` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_f5a8dc663c` FOREIGN KEY (`lineage_id`) REFERENCES `actb_lineages` (`id`),
@@ -569,7 +569,7 @@ CREATE TABLE `actb_seasons` (
   KEY `index_actb_seasons_on_generation` (`generation`),
   KEY `index_actb_seasons_on_begin_at` (`begin_at`),
   KEY `index_actb_seasons_on_end_at` (`end_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actb_settings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -578,9 +578,9 @@ CREATE TABLE `actb_settings` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '自分',
   `rule_id` bigint(20) NOT NULL COMMENT '選択ルール',
+  `session_lock_token` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
-  `session_lock_token` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン',
   PRIMARY KEY (`id`),
   KEY `index_actb_settings_on_user_id` (`user_id`),
   KEY `index_actb_settings_on_rule_id` (`rule_id`),
@@ -612,7 +612,7 @@ CREATE TABLE `actb_source_abouts` (
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_actb_source_abouts_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actb_vs_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -701,13 +701,632 @@ DROP TABLE IF EXISTS `cpu_battle_records`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cpu_battle_records` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL COMMENT 'ログインしているならそのユーザー',
   `judge_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '結果',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_cpu_battle_records_on_judge_key` (`judge_key`),
-  KEY `index_cpu_battle_records_on_user_id` (`user_id`)
+  KEY `index_cpu_battle_records_on_user_id` (`user_id`),
+  KEY `index_cpu_battle_records_on_judge_key` (`judge_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_bad_marks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_bad_marks` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '自分',
+  `question_id` bigint(20) NOT NULL COMMENT '出題',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_emox_bad_marks_on_user_id_and_question_id` (`user_id`,`question_id`),
+  KEY `index_emox_bad_marks_on_user_id` (`user_id`),
+  KEY `index_emox_bad_marks_on_question_id` (`question_id`),
+  CONSTRAINT `fk_rails_628f595bb8` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_ab63a650ba` FOREIGN KEY (`question_id`) REFERENCES `emox_questions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_battle_memberships`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_battle_memberships` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `battle_id` bigint(20) NOT NULL COMMENT '対戦',
+  `user_id` bigint(20) NOT NULL COMMENT '対戦者',
+  `judge_id` bigint(20) NOT NULL COMMENT '勝敗',
+  `position` int(11) NOT NULL COMMENT '順序',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_emox_battle_memberships_on_battle_id_and_user_id` (`battle_id`,`user_id`),
+  KEY `index_emox_battle_memberships_on_battle_id` (`battle_id`),
+  KEY `index_emox_battle_memberships_on_user_id` (`user_id`),
+  KEY `index_emox_battle_memberships_on_judge_id` (`judge_id`),
+  KEY `index_emox_battle_memberships_on_position` (`position`),
+  CONSTRAINT `fk_rails_7a3ee0482f` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_b21b7d16d2` FOREIGN KEY (`battle_id`) REFERENCES `emox_battles` (`id`),
+  CONSTRAINT `fk_rails_d89e7b1bdc` FOREIGN KEY (`judge_id`) REFERENCES `emox_judges` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_battles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_battles` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `room_id` bigint(20) NOT NULL COMMENT '部屋',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '親',
+  `rule_id` bigint(20) NOT NULL COMMENT 'ルール',
+  `final_id` bigint(20) NOT NULL COMMENT '結果',
+  `begin_at` datetime NOT NULL COMMENT '対戦開始日時',
+  `end_at` datetime DEFAULT NULL COMMENT '対戦終了日時',
+  `battle_pos` int(11) NOT NULL COMMENT '連戦インデックス',
+  `practice` tinyint(1) DEFAULT NULL COMMENT '練習バトル？',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_battles_on_room_id` (`room_id`),
+  KEY `index_emox_battles_on_parent_id` (`parent_id`),
+  KEY `index_emox_battles_on_rule_id` (`rule_id`),
+  KEY `index_emox_battles_on_final_id` (`final_id`),
+  KEY `index_emox_battles_on_begin_at` (`begin_at`),
+  KEY `index_emox_battles_on_end_at` (`end_at`),
+  KEY `index_emox_battles_on_battle_pos` (`battle_pos`),
+  CONSTRAINT `fk_rails_2ef3846e15` FOREIGN KEY (`parent_id`) REFERENCES `emox_battles` (`id`),
+  CONSTRAINT `fk_rails_3bba30c60f` FOREIGN KEY (`final_id`) REFERENCES `emox_finals` (`id`),
+  CONSTRAINT `fk_rails_c12d86d7b3` FOREIGN KEY (`room_id`) REFERENCES `emox_rooms` (`id`),
+  CONSTRAINT `fk_rails_c25a0a91d1` FOREIGN KEY (`rule_id`) REFERENCES `emox_rules` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_clip_marks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_clip_marks` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '自分',
+  `question_id` bigint(20) NOT NULL COMMENT '出題',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_emox_clip_marks_on_user_id_and_question_id` (`user_id`,`question_id`),
+  KEY `index_emox_clip_marks_on_user_id` (`user_id`),
+  KEY `index_emox_clip_marks_on_question_id` (`question_id`),
+  CONSTRAINT `fk_rails_045a5d4961` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_357276229f` FOREIGN KEY (`question_id`) REFERENCES `emox_questions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_emotion_folders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_emotion_folders` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_emotion_folders_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_emotions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_emotions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '所有者',
+  `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
+  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'トリガー名',
+  `message` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '表示用伝言',
+  `voice` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '発声用文言',
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_emotions_on_user_id` (`user_id`),
+  KEY `index_emox_emotions_on_folder_id` (`folder_id`),
+  KEY `index_emox_emotions_on_position` (`position`),
+  CONSTRAINT `fk_rails_1e7d82b920` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_de75e332bd` FOREIGN KEY (`folder_id`) REFERENCES `emox_emotion_folders` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_finals`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_finals` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_finals_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_folders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_folders` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'for STI',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_emox_folders_on_type_and_user_id` (`type`,`user_id`),
+  KEY `index_emox_folders_on_user_id` (`user_id`),
+  CONSTRAINT `fk_rails_0abb719ff9` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_good_marks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_good_marks` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '自分',
+  `question_id` bigint(20) NOT NULL COMMENT '出題',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_emox_good_marks_on_user_id_and_question_id` (`user_id`,`question_id`),
+  KEY `index_emox_good_marks_on_user_id` (`user_id`),
+  KEY `index_emox_good_marks_on_question_id` (`question_id`),
+  CONSTRAINT `fk_rails_73832c4cb7` FOREIGN KEY (`question_id`) REFERENCES `emox_questions` (`id`),
+  CONSTRAINT `fk_rails_aba0728484` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_histories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_histories` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '自分',
+  `question_id` bigint(20) NOT NULL COMMENT '出題',
+  `room_id` bigint(20) DEFAULT NULL COMMENT '対戦部屋',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  `ox_mark_id` bigint(20) NOT NULL COMMENT '解答',
+  PRIMARY KEY (`id`),
+  KEY `index_emox_histories_on_user_id` (`user_id`),
+  KEY `index_emox_histories_on_question_id` (`question_id`),
+  KEY `index_emox_histories_on_room_id` (`room_id`),
+  KEY `index_emox_histories_on_ox_mark_id` (`ox_mark_id`),
+  CONSTRAINT `fk_rails_1f4a5de447` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_46e68d3b57` FOREIGN KEY (`room_id`) REFERENCES `emox_rooms` (`id`),
+  CONSTRAINT `fk_rails_6105a40d6c` FOREIGN KEY (`ox_mark_id`) REFERENCES `emox_ox_marks` (`id`),
+  CONSTRAINT `fk_rails_c584dc8d63` FOREIGN KEY (`question_id`) REFERENCES `emox_questions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_judges`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_judges` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_judges_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_lineages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_lineages` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_lineages_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_lobby_messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_lobby_messages` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '対戦者',
+  `body` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_lobby_messages_on_user_id` (`user_id`),
+  CONSTRAINT `fk_rails_9d9ea13983` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_main_xrecords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_main_xrecords` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '対戦者',
+  `judge_id` bigint(20) NOT NULL COMMENT '直前の勝敗',
+  `final_id` bigint(20) NOT NULL COMMENT '直前の結果',
+  `battle_count` int(11) NOT NULL COMMENT '対戦数',
+  `win_count` int(11) NOT NULL COMMENT '勝ち数',
+  `lose_count` int(11) NOT NULL COMMENT '負け数',
+  `win_rate` float NOT NULL COMMENT '勝率',
+  `rating` float NOT NULL COMMENT 'レーティング',
+  `rating_diff` float NOT NULL COMMENT '直近レーティング変化',
+  `rating_max` float NOT NULL COMMENT 'レーティング(最大)',
+  `straight_win_count` int(11) NOT NULL COMMENT '連勝数',
+  `straight_lose_count` int(11) NOT NULL COMMENT '連敗数',
+  `straight_win_max` int(11) NOT NULL COMMENT '連勝数(最大)',
+  `straight_lose_max` int(11) NOT NULL COMMENT '連敗数(最大)',
+  `skill_id` bigint(20) NOT NULL COMMENT 'ウデマエ',
+  `skill_point` float NOT NULL COMMENT 'ウデマエの内部ポイント',
+  `skill_last_diff` float NOT NULL COMMENT '直近ウデマエ変化度',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  `disconnect_count` int(11) NOT NULL COMMENT '切断数',
+  `disconnected_at` datetime DEFAULT NULL COMMENT '最終切断日時',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_emox_main_xrecords_on_user_id` (`user_id`),
+  KEY `index_emox_main_xrecords_on_judge_id` (`judge_id`),
+  KEY `index_emox_main_xrecords_on_final_id` (`final_id`),
+  KEY `index_emox_main_xrecords_on_battle_count` (`battle_count`),
+  KEY `index_emox_main_xrecords_on_win_count` (`win_count`),
+  KEY `index_emox_main_xrecords_on_lose_count` (`lose_count`),
+  KEY `index_emox_main_xrecords_on_win_rate` (`win_rate`),
+  KEY `index_emox_main_xrecords_on_rating` (`rating`),
+  KEY `index_emox_main_xrecords_on_rating_diff` (`rating_diff`),
+  KEY `index_emox_main_xrecords_on_rating_max` (`rating_max`),
+  KEY `index_emox_main_xrecords_on_straight_win_count` (`straight_win_count`),
+  KEY `index_emox_main_xrecords_on_straight_lose_count` (`straight_lose_count`),
+  KEY `index_emox_main_xrecords_on_straight_win_max` (`straight_win_max`),
+  KEY `index_emox_main_xrecords_on_straight_lose_max` (`straight_lose_max`),
+  KEY `index_emox_main_xrecords_on_skill_id` (`skill_id`),
+  KEY `index_emox_main_xrecords_on_disconnect_count` (`disconnect_count`),
+  CONSTRAINT `fk_rails_4a4cb64494` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_86a3e6887a` FOREIGN KEY (`judge_id`) REFERENCES `emox_judges` (`id`),
+  CONSTRAINT `fk_rails_b94164bd52` FOREIGN KEY (`skill_id`) REFERENCES `emox_skills` (`id`),
+  CONSTRAINT `fk_rails_e7c15644f3` FOREIGN KEY (`final_id`) REFERENCES `emox_finals` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_moves_answers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_moves_answers` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `question_id` bigint(20) NOT NULL COMMENT '問題',
+  `moves_count` int(11) NOT NULL COMMENT 'N手',
+  `moves_str` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '連続した指し手',
+  `end_sfen` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '最後の局面',
+  `moves_human_str` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '人間向け指し手',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_moves_answers_on_question_id` (`question_id`),
+  KEY `index_emox_moves_answers_on_moves_count` (`moves_count`),
+  CONSTRAINT `fk_rails_4f4c69d946` FOREIGN KEY (`question_id`) REFERENCES `emox_questions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_notifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_notifications` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `question_message_id` bigint(20) NOT NULL COMMENT '問題コメント',
+  `user_id` bigint(20) NOT NULL COMMENT '通知先',
+  `opened_at` datetime DEFAULT NULL COMMENT '開封日時',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_notifications_on_question_message_id` (`question_message_id`),
+  KEY `index_emox_notifications_on_user_id` (`user_id`),
+  CONSTRAINT `fk_rails_5dafc1ecf7` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_f07adeccdc` FOREIGN KEY (`question_message_id`) REFERENCES `emox_question_messages` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_ox_marks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_ox_marks` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '正解・不正解',
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_ox_marks_on_key` (`key`),
+  KEY `index_emox_ox_marks_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_ox_records`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_ox_records` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `question_id` bigint(20) NOT NULL COMMENT '問題',
+  `o_count` int(11) NOT NULL COMMENT '正解数',
+  `x_count` int(11) NOT NULL COMMENT '不正解数',
+  `ox_total` int(11) NOT NULL COMMENT '出題数',
+  `o_rate` float DEFAULT NULL COMMENT '高評価率',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_emox_ox_records_on_question_id` (`question_id`),
+  KEY `index_emox_ox_records_on_o_count` (`o_count`),
+  KEY `index_emox_ox_records_on_x_count` (`x_count`),
+  KEY `index_emox_ox_records_on_ox_total` (`ox_total`),
+  KEY `index_emox_ox_records_on_o_rate` (`o_rate`),
+  CONSTRAINT `fk_rails_11b1f62b22` FOREIGN KEY (`question_id`) REFERENCES `emox_questions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_question_messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_question_messages` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '発言者',
+  `question_id` bigint(20) NOT NULL COMMENT '問題',
+  `body` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_question_messages_on_user_id` (`user_id`),
+  KEY `index_emox_question_messages_on_question_id` (`question_id`),
+  CONSTRAINT `fk_rails_b0c6e9ee5f` FOREIGN KEY (`question_id`) REFERENCES `emox_questions` (`id`),
+  CONSTRAINT `fk_rails_d0f7c1686d` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_questions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_questions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `user_id` bigint(20) NOT NULL COMMENT '作成者',
+  `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
+  `lineage_id` bigint(20) NOT NULL COMMENT '種類',
+  `init_sfen` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '問題',
+  `time_limit_sec` int(11) DEFAULT NULL COMMENT '制限時間(秒)',
+  `difficulty_level` int(11) DEFAULT NULL COMMENT '難易度',
+  `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'タイトル',
+  `description` varchar(512) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '説明',
+  `hint_desc` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'ヒント',
+  `source_author` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '作者',
+  `source_media_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '出典メディア',
+  `source_media_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '出典URL',
+  `source_published_on` date DEFAULT NULL COMMENT '出典年月日',
+  `source_about_id` bigint(20) DEFAULT NULL COMMENT '所在',
+  `turn_max` int(11) DEFAULT NULL COMMENT '最大手数',
+  `mate_skip` tinyint(1) DEFAULT NULL COMMENT '詰みチェックをスキップする',
+  `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'メッセージ',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  `good_rate` float DEFAULT NULL COMMENT '高評価率',
+  `moves_answers_count` int(11) NOT NULL DEFAULT '0' COMMENT '解答数',
+  `histories_count` int(11) NOT NULL DEFAULT '0' COMMENT '履歴数(出題数とは異なる)',
+  `good_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '高評価数',
+  `bad_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '低評価数',
+  `clip_marks_count` int(11) NOT NULL DEFAULT '0' COMMENT '保存された数',
+  `messages_count` int(11) NOT NULL DEFAULT '0' COMMENT 'コメント数',
+  PRIMARY KEY (`id`),
+  KEY `index_emox_questions_on_key` (`key`),
+  KEY `index_emox_questions_on_user_id` (`user_id`),
+  KEY `index_emox_questions_on_folder_id` (`folder_id`),
+  KEY `index_emox_questions_on_lineage_id` (`lineage_id`),
+  KEY `index_emox_questions_on_init_sfen` (`init_sfen`),
+  KEY `index_emox_questions_on_time_limit_sec` (`time_limit_sec`),
+  KEY `index_emox_questions_on_difficulty_level` (`difficulty_level`),
+  KEY `index_emox_questions_on_source_about_id` (`source_about_id`),
+  KEY `index_emox_questions_on_turn_max` (`turn_max`),
+  KEY `index_emox_questions_on_good_rate` (`good_rate`),
+  KEY `index_emox_questions_on_histories_count` (`histories_count`),
+  KEY `index_emox_questions_on_good_marks_count` (`good_marks_count`),
+  KEY `index_emox_questions_on_bad_marks_count` (`bad_marks_count`),
+  KEY `index_emox_questions_on_clip_marks_count` (`clip_marks_count`),
+  KEY `index_emox_questions_on_messages_count` (`messages_count`),
+  CONSTRAINT `fk_rails_263239cde3` FOREIGN KEY (`lineage_id`) REFERENCES `emox_lineages` (`id`),
+  CONSTRAINT `fk_rails_5861c2cbe1` FOREIGN KEY (`source_about_id`) REFERENCES `emox_source_abouts` (`id`),
+  CONSTRAINT `fk_rails_8531cfdaeb` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_b87b51383c` FOREIGN KEY (`folder_id`) REFERENCES `emox_folders` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_room_memberships`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_room_memberships` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `room_id` bigint(20) NOT NULL COMMENT '対戦部屋',
+  `user_id` bigint(20) NOT NULL COMMENT '対戦者',
+  `position` int(11) NOT NULL COMMENT '順序',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_emox_room_memberships_on_room_id_and_user_id` (`room_id`,`user_id`),
+  KEY `index_emox_room_memberships_on_room_id` (`room_id`),
+  KEY `index_emox_room_memberships_on_user_id` (`user_id`),
+  KEY `index_emox_room_memberships_on_position` (`position`),
+  CONSTRAINT `fk_rails_cccbbf1fac` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_e89c90cffb` FOREIGN KEY (`room_id`) REFERENCES `emox_rooms` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_room_messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_room_messages` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '対戦者',
+  `room_id` bigint(20) NOT NULL COMMENT '対戦部屋',
+  `body` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_room_messages_on_user_id` (`user_id`),
+  KEY `index_emox_room_messages_on_room_id` (`room_id`),
+  CONSTRAINT `fk_rails_16ea997c6d` FOREIGN KEY (`room_id`) REFERENCES `emox_rooms` (`id`),
+  CONSTRAINT `fk_rails_b7eb8590b2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_rooms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_rooms` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `begin_at` datetime NOT NULL COMMENT '対戦開始日時',
+  `end_at` datetime DEFAULT NULL COMMENT '対戦終了日時',
+  `rule_id` bigint(20) NOT NULL COMMENT 'ルール',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  `battles_count` int(11) NOT NULL DEFAULT '0' COMMENT '連戦数',
+  `practice` tinyint(1) DEFAULT NULL COMMENT '練習バトル？',
+  `bot_user_id` bigint(20) DEFAULT NULL COMMENT '練習相手',
+  PRIMARY KEY (`id`),
+  KEY `index_emox_rooms_on_begin_at` (`begin_at`),
+  KEY `index_emox_rooms_on_end_at` (`end_at`),
+  KEY `index_emox_rooms_on_rule_id` (`rule_id`),
+  KEY `index_emox_rooms_on_battles_count` (`battles_count`),
+  KEY `index_emox_rooms_on_bot_user_id` (`bot_user_id`),
+  CONSTRAINT `fk_rails_2f19240a81` FOREIGN KEY (`bot_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_a20cf0d4cf` FOREIGN KEY (`rule_id`) REFERENCES `emox_rules` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_rules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_rules` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_rules_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_season_xrecords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_season_xrecords` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `judge_id` bigint(20) NOT NULL COMMENT '直前の勝敗',
+  `final_id` bigint(20) NOT NULL COMMENT '直前の結果',
+  `battle_count` int(11) NOT NULL COMMENT '対戦数',
+  `win_count` int(11) NOT NULL COMMENT '勝ち数',
+  `lose_count` int(11) NOT NULL COMMENT '負け数',
+  `win_rate` float NOT NULL COMMENT '勝率',
+  `rating` float NOT NULL COMMENT 'レーティング',
+  `rating_diff` float NOT NULL COMMENT '直近レーティング変化',
+  `rating_max` float NOT NULL COMMENT 'レーティング(最大)',
+  `straight_win_count` int(11) NOT NULL COMMENT '連勝数',
+  `straight_lose_count` int(11) NOT NULL COMMENT '連敗数',
+  `straight_win_max` int(11) NOT NULL COMMENT '連勝数(最大)',
+  `straight_lose_max` int(11) NOT NULL COMMENT '連敗数(最大)',
+  `skill_id` bigint(20) NOT NULL COMMENT 'ウデマエ',
+  `skill_point` float NOT NULL COMMENT 'ウデマエの内部ポイント',
+  `skill_last_diff` float NOT NULL COMMENT '直近ウデマエ変化度',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  `disconnect_count` int(11) NOT NULL COMMENT '切断数',
+  `disconnected_at` datetime DEFAULT NULL COMMENT '最終切断日時',
+  `user_id` bigint(20) NOT NULL COMMENT '対戦者',
+  `season_id` bigint(20) NOT NULL COMMENT '期',
+  `create_count` int(11) NOT NULL COMMENT 'users.emox_season_xrecord.create_count は users.emox_season_xrecords.count と一致',
+  `generation` int(11) NOT NULL COMMENT '世代(seasons.generationと一致)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_emox_season_xrecords_on_user_id_and_season_id` (`user_id`,`season_id`),
+  KEY `index_emox_season_xrecords_on_judge_id` (`judge_id`),
+  KEY `index_emox_season_xrecords_on_final_id` (`final_id`),
+  KEY `index_emox_season_xrecords_on_battle_count` (`battle_count`),
+  KEY `index_emox_season_xrecords_on_win_count` (`win_count`),
+  KEY `index_emox_season_xrecords_on_lose_count` (`lose_count`),
+  KEY `index_emox_season_xrecords_on_win_rate` (`win_rate`),
+  KEY `index_emox_season_xrecords_on_rating` (`rating`),
+  KEY `index_emox_season_xrecords_on_rating_diff` (`rating_diff`),
+  KEY `index_emox_season_xrecords_on_rating_max` (`rating_max`),
+  KEY `index_emox_season_xrecords_on_straight_win_count` (`straight_win_count`),
+  KEY `index_emox_season_xrecords_on_straight_lose_count` (`straight_lose_count`),
+  KEY `index_emox_season_xrecords_on_straight_win_max` (`straight_win_max`),
+  KEY `index_emox_season_xrecords_on_straight_lose_max` (`straight_lose_max`),
+  KEY `index_emox_season_xrecords_on_skill_id` (`skill_id`),
+  KEY `index_emox_season_xrecords_on_disconnect_count` (`disconnect_count`),
+  KEY `index_emox_season_xrecords_on_user_id` (`user_id`),
+  KEY `index_emox_season_xrecords_on_season_id` (`season_id`),
+  KEY `index_emox_season_xrecords_on_create_count` (`create_count`),
+  KEY `index_emox_season_xrecords_on_generation` (`generation`),
+  CONSTRAINT `fk_rails_6b43a8daac` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_8ae45fe675` FOREIGN KEY (`skill_id`) REFERENCES `emox_skills` (`id`),
+  CONSTRAINT `fk_rails_99b1af5657` FOREIGN KEY (`season_id`) REFERENCES `emox_seasons` (`id`),
+  CONSTRAINT `fk_rails_a99c79bb8a` FOREIGN KEY (`final_id`) REFERENCES `emox_finals` (`id`),
+  CONSTRAINT `fk_rails_cc0f92d372` FOREIGN KEY (`judge_id`) REFERENCES `emox_judges` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_seasons`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_seasons` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'レーティング',
+  `generation` int(11) NOT NULL COMMENT '世代',
+  `begin_at` datetime NOT NULL COMMENT '期間開始日時',
+  `end_at` datetime NOT NULL COMMENT '期間終了日時',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_seasons_on_generation` (`generation`),
+  KEY `index_emox_seasons_on_begin_at` (`begin_at`),
+  KEY `index_emox_seasons_on_end_at` (`end_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_settings` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '自分',
+  `rule_id` bigint(20) NOT NULL COMMENT '選択ルール',
+  `session_lock_token` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_settings_on_user_id` (`user_id`),
+  KEY `index_emox_settings_on_rule_id` (`rule_id`),
+  CONSTRAINT `fk_rails_2ddb432ed3` FOREIGN KEY (`rule_id`) REFERENCES `emox_rules` (`id`),
+  CONSTRAINT `fk_rails_a5333674e3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_skills`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_skills` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_skills_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_source_abouts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_source_abouts` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_source_abouts_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `emox_vs_records`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emox_vs_records` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `battle_id` bigint(20) NOT NULL COMMENT '対戦',
+  `sfen_body` varchar(1536) COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_emox_vs_records_on_battle_id` (`battle_id`),
+  CONSTRAINT `fk_rails_d6513b4035` FOREIGN KEY (`battle_id`) REFERENCES `emox_battles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `free_battles`;
@@ -715,35 +1334,34 @@ DROP TABLE IF EXISTS `free_battles`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `free_battles` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'URL識別子',
+  `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'URL識別子',
   `kifu_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '入力した棋譜URL',
+  `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `kifu_body` mediumtext COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜本文',
   `turn_max` int(11) NOT NULL COMMENT '手数',
   `meta_info` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜メタ情報',
   `battled_at` datetime NOT NULL COMMENT '対局開始日時',
-  `outbreak_turn` int(11) DEFAULT NULL COMMENT '仕掛手数',
   `use_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `accessed_at` datetime NOT NULL COMMENT '最終参照日時',
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
   `user_id` bigint(20) DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-  `description` text COLLATE utf8mb4_bin NOT NULL,
-  `start_turn` int(11) DEFAULT NULL,
-  `critical_turn` int(11) DEFAULT NULL,
-  `sfen_body` varchar(8192) COLLATE utf8mb4_bin NOT NULL,
-  `image_turn` int(11) DEFAULT NULL,
   `preset_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `description` text COLLATE utf8mb4_bin NOT NULL,
+  `sfen_body` varchar(8192) COLLATE utf8mb4_bin NOT NULL,
   `sfen_hash` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `start_turn` int(11) DEFAULT NULL COMMENT '???',
+  `critical_turn` int(11) DEFAULT NULL COMMENT '開戦',
+  `outbreak_turn` int(11) DEFAULT NULL COMMENT '中盤',
+  `image_turn` int(11) DEFAULT NULL COMMENT '???',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_free_battles_on_key` (`key`),
-  KEY `index_free_battles_on_outbreak_turn` (`outbreak_turn`),
-  KEY `index_free_battles_on_use_key` (`use_key`),
-  KEY `index_free_battles_on_battled_at` (`battled_at`),
   KEY `index_free_battles_on_turn_max` (`turn_max`),
+  KEY `index_free_battles_on_battled_at` (`battled_at`),
+  KEY `index_free_battles_on_use_key` (`use_key`),
+  KEY `index_free_battles_on_user_id` (`user_id`),
+  KEY `index_free_battles_on_preset_key` (`preset_key`),
   KEY `index_free_battles_on_start_turn` (`start_turn`),
   KEY `index_free_battles_on_critical_turn` (`critical_turn`),
-  KEY `index_free_battles_on_user_id` (`user_id`)
+  KEY `index_free_battles_on_outbreak_turn` (`outbreak_turn`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mute_infos`;
@@ -769,10 +1387,10 @@ DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE `profiles` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT 'ユーザー',
+  `description` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '自己紹介',
+  `twitter_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `description` varchar(512) COLLATE utf8mb4_bin NOT NULL,
-  `twitter_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_profiles_on_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -799,26 +1417,26 @@ CREATE TABLE `swars_battles` (
   `turn_max` int(11) NOT NULL COMMENT '手数',
   `meta_info` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜メタ情報',
   `accessed_at` datetime NOT NULL COMMENT '最終参照日時',
-  `outbreak_turn` int(11) DEFAULT NULL COMMENT '仕掛手数',
+  `preset_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `sfen_body` varchar(8192) COLLATE utf8mb4_bin NOT NULL,
+  `sfen_hash` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `start_turn` int(11) DEFAULT NULL COMMENT '???',
+  `critical_turn` int(11) DEFAULT NULL COMMENT '開戦',
+  `outbreak_turn` int(11) DEFAULT NULL COMMENT '中盤',
+  `image_turn` int(11) DEFAULT NULL COMMENT '???',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `preset_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `start_turn` int(11) DEFAULT NULL,
-  `critical_turn` int(11) DEFAULT NULL,
-  `sfen_body` varchar(8192) COLLATE utf8mb4_bin NOT NULL,
-  `image_turn` int(11) DEFAULT NULL,
-  `sfen_hash` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_swars_battles_on_key` (`key`),
+  KEY `index_swars_battles_on_battled_at` (`battled_at`),
   KEY `index_swars_battles_on_rule_key` (`rule_key`),
   KEY `index_swars_battles_on_final_key` (`final_key`),
   KEY `index_swars_battles_on_win_user_id` (`win_user_id`),
-  KEY `index_swars_battles_on_outbreak_turn` (`outbreak_turn`),
-  KEY `index_swars_battles_on_preset_key` (`preset_key`),
-  KEY `index_swars_battles_on_battled_at` (`battled_at`),
   KEY `index_swars_battles_on_turn_max` (`turn_max`),
+  KEY `index_swars_battles_on_preset_key` (`preset_key`),
   KEY `index_swars_battles_on_start_turn` (`start_turn`),
-  KEY `index_swars_battles_on_critical_turn` (`critical_turn`)
+  KEY `index_swars_battles_on_critical_turn` (`critical_turn`),
+  KEY `index_swars_battles_on_outbreak_turn` (`outbreak_turn`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_crawl_reservations`;
@@ -860,31 +1478,30 @@ CREATE TABLE `swars_memberships` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `battle_id` bigint(20) NOT NULL COMMENT '対局',
   `user_id` bigint(20) NOT NULL COMMENT '対局者',
+  `op_user_id` bigint(20) DEFAULT NULL COMMENT '相手',
   `grade_id` bigint(20) NOT NULL COMMENT '対局時の段級',
   `judge_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '勝・敗・引き分け',
   `location_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '▲△',
   `position` int(11) DEFAULT NULL COMMENT '手番の順序',
+  `grade_diff` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `grade_diff` int(11) NOT NULL,
-  `think_max` int(11) DEFAULT NULL,
-  `op_user_id` bigint(20) DEFAULT NULL COMMENT '相手',
-  `think_last` int(11) DEFAULT NULL,
-  `think_all_avg` int(11) DEFAULT NULL,
-  `think_end_avg` int(11) DEFAULT NULL,
-  `two_serial_max` int(11) DEFAULT NULL,
+  `think_all_avg` int(11) DEFAULT NULL COMMENT '指し手の平均秒数(全体)',
+  `think_end_avg` int(11) DEFAULT NULL COMMENT '指し手の平均秒数(最後5手)',
+  `two_serial_max` int(11) DEFAULT NULL COMMENT '2秒の指し手が連続した回数',
+  `think_last` int(11) DEFAULT NULL COMMENT '最後の指し手の秒数',
+  `think_max` int(11) DEFAULT NULL COMMENT '最大考慮秒数',
   PRIMARY KEY (`id`),
   UNIQUE KEY `memberships_sbri_lk` (`battle_id`,`location_key`),
   UNIQUE KEY `memberships_sbri_sbui` (`battle_id`,`user_id`),
   UNIQUE KEY `memberships_bid_ouid` (`battle_id`,`op_user_id`),
   KEY `index_swars_memberships_on_battle_id` (`battle_id`),
   KEY `index_swars_memberships_on_user_id` (`user_id`),
+  KEY `index_swars_memberships_on_op_user_id` (`op_user_id`),
   KEY `index_swars_memberships_on_grade_id` (`grade_id`),
   KEY `index_swars_memberships_on_judge_key` (`judge_key`),
   KEY `index_swars_memberships_on_location_key` (`location_key`),
-  KEY `index_swars_memberships_on_position` (`position`),
-  KEY `index_swars_memberships_on_grade_diff` (`grade_diff`),
-  KEY `index_swars_memberships_on_op_user_id` (`op_user_id`)
+  KEY `index_swars_memberships_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_search_logs`;
@@ -946,7 +1563,7 @@ DROP TABLE IF EXISTS `tags`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `taggings_count` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_tags_on_name` (`name`)
@@ -1020,6 +1637,7 @@ CREATE TABLE `users` (
   `cpu_brain_key` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'CPUだったときの挙動',
   `user_agent` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'ブラウザ情報',
   `race_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '種族',
+  `name_input_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_bin NOT NULL,
@@ -1039,7 +1657,6 @@ CREATE TABLE `users` (
   `failed_attempts` int(11) NOT NULL DEFAULT '0',
   `unlock_token` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `locked_at` datetime DEFAULT NULL,
-  `name_input_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_key` (`key`),
   UNIQUE KEY `index_users_on_email` (`email`),
@@ -1063,9 +1680,9 @@ CREATE TABLE `xy_records` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `index_xy_records_on_user_id` (`user_id`),
   KEY `index_xy_records_on_entry_name` (`entry_name`),
-  KEY `index_xy_records_on_xy_rule_key` (`xy_rule_key`),
-  KEY `index_xy_records_on_user_id` (`user_id`)
+  KEY `index_xy_records_on_xy_rule_key` (`xy_rule_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1090,84 +1707,14 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20170211211100'),
 ('20180527071050'),
 ('20180712043012'),
-('20190112154800'),
-('20190225163400'),
-('20190415153300'),
-('20190424142700'),
-('20190504135600'),
-('20190504143800'),
-('20190504151300'),
-('20190508171900'),
-('20190517103100'),
-('20190517145000'),
-('20190520222100'),
-('20190522165400'),
-('20190604221600'),
-('20190606202500'),
 ('20190806151001'),
-('20190912155300'),
 ('20191115121600'),
 ('20200228142100'),
-('20200302185500'),
-('20200311122900'),
-('20200312105200'),
-('20200313203800'),
 ('20200321005132'),
-('20200323210000'),
-('20200326155401'),
-('20200328200200'),
-('20200328200201'),
-('20200331163900'),
-('20200331163901'),
-('20200331163902'),
-('20200605133900'),
-('20200605133902'),
-('20200605133903'),
-('20200605202100'),
 ('20200621164300'),
-('20200623111200'),
-('20200623113600'),
-('20200623172500'),
-('20200623172600'),
-('20200627084100'),
-('20200627090400'),
 ('20200701201700'),
-('20200702112300'),
-('20200702112302'),
-('20200703130800'),
-('20200705093600'),
-('20200705125200'),
-('20200711103800'),
-('20200711103801'),
-('20200711103802'),
-('20200711103803'),
-('20200711103804'),
-('20200711103807'),
-('20200711103808'),
-('20200711103810'),
-('20200711103811'),
-('20200711103812'),
-('20200711103813'),
-('20200711103814'),
-('20200725112100'),
-('20200725112102'),
-('20200725112103'),
-('20200725112104'),
-('20200725112105'),
 ('20200725112106'),
-('20200725112107'),
-('20200725112108'),
-('20200725112109'),
-('20200725112110'),
-('20200725112111'),
-('20200725112112'),
-('20200725112114'),
-('20200725112115'),
-('20200817115320'),
-('20200817115321'),
-('20200817115322'),
 ('20200920154202'),
-('20201015170400'),
-('20201031150300');
+('20201103121300');
 
 

@@ -7,10 +7,10 @@
 # | name        | desc        | type        | opts        | refs         | index |
 # |-------------+-------------+-------------+-------------+--------------+-------|
 # | id          | ID          | integer(8)  | NOT NULL PK |              |       |
-# | user_id     | User        | integer(8)  |             | => ::User#id | C     |
-# | entry_name  | Entry name  | string(255) | NOT NULL    |              | A     |
+# | user_id     | User        | integer(8)  |             | => ::User#id | A     |
+# | entry_name  | Entry name  | string(255) | NOT NULL    |              | B     |
 # | summary     | Summary     | string(255) |             |              |       |
-# | xy_rule_key | Xy rule key | string(255) | NOT NULL    |              | B     |
+# | xy_rule_key | Xy rule key | string(255) | NOT NULL    |              | C     |
 # | x_count     | X count     | integer(4)  | NOT NULL    |              |       |
 # | spent_sec   | Spent sec   | float(24)   | NOT NULL    |              |       |
 # | created_at  | 作成日時    | datetime    | NOT NULL    |              |       |

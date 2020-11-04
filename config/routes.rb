@@ -123,6 +123,9 @@ Rails.application.routes.draw do
     get "actb(.:format)", to: "actb#show",   format: nil # /actb.zip もある
     put "actb(.:format)", to: "actb#update", format: nil
 
+    get "emox(.:format)", to: "emox#show",   format: nil # /emox.zip もある
+    put "emox(.:format)", to: "emox#update", format: nil
+
     resource :session, only: [] do
       get :auth_user_fetch
       delete :auth_user_logout   # ログアウト
