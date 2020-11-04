@@ -13,16 +13,9 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   Actb::SourceAbout,
   Actb::Question,
 
-  Emox::OxMark,
-  Emox::Season,
-  Emox::Lineage,
-  Emox::EmotionFolder,
   Emox::Judge,
   Emox::Rule,
   Emox::Final,
-  Emox::Skill,
-  Emox::SourceAbout,
-  Emox::Question,
 
   Actb,
   Emox,

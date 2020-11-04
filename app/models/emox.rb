@@ -11,59 +11,29 @@ module Emox
     end
 
     [
-      Emox::OxMark,
-      Emox::Season,
-      Emox::Lineage,
-      Emox::EmotionFolder,
       Emox::Judge,
       Emox::Rule,
       Emox::Final,
-      Emox::Skill,
-      Emox::SourceAbout,
-      Emox::Question,
     ].each do |e|
       e.setup(options)
     end
 
-    User.find_each(&:create_various_folders_if_blank)
     User.find_each(&:create_emox_setting_if_blank)
-    User.find_each(&:create_emox_season_xrecord_if_blank)
-    User.find_each(&:create_emox_main_xrecord_if_blank)
 
     if Rails.env.development? || Rails.env.test?
       Emox::BaseChannel.redis_clear
-    end
-
-    if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
-      unless Emox::Question.exists?
-        Emox::Question.import_all
-      end
     end
   end
 
   def models
     [
-      Question,
-      MovesAnswer,
-      Folder,
-      Lineage,
       Room,
       RoomMembership,
       Battle,
       BattleMembership,
-      Season,
-      SeasonXrecord,
-      MainXrecord,
       Setting,
-      GoodMark,
-      BadMark,
-      ClipMark,
       Judge,
       Rule,
-      Skill,
-      QuestionMessage,
-      LobbyMessage,
-      RoomMessage,
     ]
   end
 

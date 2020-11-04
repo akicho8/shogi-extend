@@ -16,6 +16,10 @@
 # | practice      | Practice      | boolean    |                     |      |       |
 # | bot_user_id   | Bot user      | integer(8) |                     |      | E     |
 # |---------------+---------------+------------+---------------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Emox::Room モデルに belongs_to :bot_user を追加してください
+#--------------------------------------------------------------------------------
 
 # user1 = User.create!
 # user2 = User.create!
@@ -40,7 +44,6 @@ module Emox
     end
 
     has_many :battles, dependent: :destroy
-    has_many :messages, class_name: "RoomMessage", dependent: :destroy
     has_many :memberships, -> { order(:position) }, class_name: "RoomMembership", dependent: :destroy, inverse_of: :room
     has_many :users, through: :memberships
     belongs_to :rule
