@@ -12,13 +12,6 @@ export const application_battle = {
       // 共通
       battle:            null,  // 問題と memberships が入っている
       member_infos_hash: null,  // 各 membership_id はどこまで進んでいるかわかる
-
-      // シングルトン専用
-      share_sfen:        null, // 自分の操作を相手に伝える棋譜
-
-      // 共通(別になくてもよいもの)
-      battle_count:        null, // 同じ相手との対戦回数
-      continue_tap_counts: null, // それぞれの再戦希望数
     }
   },
 
@@ -60,8 +53,6 @@ export const application_battle = {
       this.mode = "battle"
       this.sub_mode = "sm1_standby"
 
-      this.continue_tap_counts = {}
-
       this.member_infos_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: new MemberInfo(e.id)}), {})
 
       this.__assert__(this.$ac_battle == null, "this.$ac_battle == null")
@@ -70,7 +61,6 @@ export const application_battle = {
           // 結果画面でスマホを閉じる→スマホ開くで再びconnectedが呼ばれるので注意
           if (this.sub_mode === "sm1_standby") {
             this.sub_mode = "sm2_started"
-            this.battle_count += 1
             this.vs_func_init()
             this.debug_alert("battle 接続")
             this.toast_ok("対戦開始")
@@ -103,6 +93,7 @@ export const application_battle = {
     ////////////////////////////////////////////////////////////////////////////////
 
     result_setup(battle) {
+      this.chess_clock_free()
       this.battle = new Battle(battle)
       this.mode = "result"
       this.sound_play(this.base.current_membership.judge.key)

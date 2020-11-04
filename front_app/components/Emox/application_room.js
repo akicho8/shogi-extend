@@ -23,8 +23,6 @@ export const application_room = {
 
       this.lobby_unsubscribe()
 
-      this.battle_count = 0
-
       this.__assert__(this.$ac_room == null, "this.$ac_room == null")
       this.$ac_room = this.ac_subscription_create({channel: "Emox::RoomChannel", room_id: this.room.id})
     },

@@ -44,7 +44,6 @@ export const application_battle_versus = {
     },
 
     vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
-      this.debug_alert(long_sfen)
       this.chess_clock.single_clocks[this.current_membership.location.code].simple_switch_handle()
       this.vs_func_play_board_share(long_sfen)
     },
@@ -84,7 +83,6 @@ export const application_battle_versus = {
       })
     },
     vs_func_toryo_handle_broadcasted(params) {
-      debugger
       if (params.membership_id === this.current_membership.id) {
       } else {
       }

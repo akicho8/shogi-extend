@@ -63,13 +63,4 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .EmoxBattleVersus
-  .membership_container
-    justify-content: center
-    align-items: center
-    .user_name
-      max-width: 7rem
-    .time_format
-      font-size: $size-3
-      padding: 0.25rem 1rem
-      border-radius: 0.5rem
 </style>

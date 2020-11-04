@@ -4,8 +4,8 @@
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'emoshogi'}") エモ将棋
-    //- template(slot="end")
-    //-   NavbarItemLogin
+    template(slot="end")
+      NavbarItemLogin
   MainSection
     .container
       .columns
