@@ -1,4 +1,4 @@
-class CreateThreeStageLeague < ActiveRecord::Migration[6.0]
+class CreateTsl < ActiveRecord::Migration[6.0]
   def up
     create_table :tsl_users, force: true do |t|
       t.string :name, null: false, index: { unique: true }

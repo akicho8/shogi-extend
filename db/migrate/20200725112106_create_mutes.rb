@@ -1,4 +1,4 @@
-class ChoreTask6 < ActiveRecord::Migration[6.0]
+class CreateMutes < ActiveRecord::Migration[6.0]
   def up
     create_table :mute_infos, force: true do |t|
       t.belongs_to :user,        foreign_key: { to_table: :users }, null: false, comment: "オーナー"

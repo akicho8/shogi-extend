@@ -38,7 +38,7 @@
 
 class AddDeviseToUsers < ActiveRecord::Migration[5.2]
   def self.up
-    change_table :colosseum_users do |t|
+    change_table :users do |t|
       ## Database authenticatable
       t.string :email,              null: false
       t.string :encrypted_password, null: false
@@ -77,7 +77,7 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.2]
       t.index :unlock_token,         unique: true
     end
 
-    create_table :colosseum_auth_infos do |t|
+    create_table :auth_infos do |t|
       t.belongs_to :user, null: false, comment: "ユーザー"
       t.string :provider, null: false, comment: "何経由でログインしたか"
       t.string :uid,      null: false, comment: "長い内部ID(providerとペアではユニーク)"

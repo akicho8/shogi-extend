@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_31_150300) do
+ActiveRecord::Schema.define(version: 2020_09_20_154202) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -44,9 +44,9 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
     t.integer "battle_pos", null: false, comment: "連戦インデックス"
+    t.boolean "practice", comment: "練習バトル？"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "practice", comment: "練習バトル？"
     t.index ["battle_pos"], name: "index_actb_battles_on_battle_pos"
     t.index ["begin_at"], name: "index_actb_battles_on_begin_at"
     t.index ["end_at"], name: "index_actb_battles_on_end_at"
@@ -118,10 +118,10 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   create_table "actb_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
     t.bigint "question_id", null: false, comment: "出題"
+    t.bigint "room_id", comment: "対戦部屋"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "ox_mark_id", null: false, comment: "解答"
-    t.bigint "room_id", comment: "対戦部屋"
     t.index ["ox_mark_id"], name: "index_actb_histories_on_ox_mark_id"
     t.index ["question_id"], name: "index_actb_histories_on_question_id"
     t.index ["room_id"], name: "index_actb_histories_on_room_id"
@@ -197,9 +197,9 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.integer "moves_count", null: false, comment: "N手"
     t.string "moves_str", null: false, comment: "連続した指し手"
     t.string "end_sfen", comment: "最後の局面"
+    t.string "moves_human_str", comment: "人間向け指し手"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "moves_human_str", comment: "人間向け指し手"
     t.index ["moves_count"], name: "index_actb_moves_answers_on_moves_count"
     t.index ["question_id"], name: "index_actb_moves_answers_on_question_id"
   end
@@ -263,6 +263,10 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.string "source_media_name", comment: "出典メディア"
     t.string "source_media_url", comment: "出典URL"
     t.date "source_published_on", comment: "出典年月日"
+    t.bigint "source_about_id", comment: "所在"
+    t.integer "turn_max", comment: "最大手数"
+    t.boolean "mate_skip", comment: "詰みチェックをスキップする"
+    t.string "direction_message", comment: "メッセージ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.float "good_rate", comment: "高評価率"
@@ -272,10 +276,6 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.integer "bad_marks_count", default: 0, null: false, comment: "低評価数"
     t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
     t.integer "messages_count", default: 0, null: false, comment: "コメント数"
-    t.string "direction_message", comment: "メッセージ"
-    t.bigint "source_about_id", comment: "所在"
-    t.integer "turn_max", comment: "最大手数"
-    t.boolean "mate_skip", comment: "詰みチェックをスキップする"
     t.index ["bad_marks_count"], name: "index_actb_questions_on_bad_marks_count"
     t.index ["clip_marks_count"], name: "index_actb_questions_on_clip_marks_count"
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"
@@ -401,9 +401,9 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   create_table "actb_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
     t.bigint "rule_id", null: false, comment: "選択ルール"
+    t.string "session_lock_token", comment: "複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "session_lock_token", comment: "複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン"
     t.index ["rule_id"], name: "index_actb_settings_on_rule_id"
     t.index ["user_id"], name: "index_actb_settings_on_user_id"
   end
@@ -469,7 +469,7 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   end
 
   create_table "cpu_battle_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", comment: "ログインしているならそのユーザー"
     t.string "judge_key", null: false, comment: "結果"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -478,30 +478,29 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   end
 
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false, comment: "URL識別子"
+    t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "kifu_url", comment: "入力した棋譜URL"
+    t.string "title"
     t.text "kifu_body", size: :medium, null: false, comment: "棋譜本文"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "battled_at", null: false, comment: "対局開始日時"
-    t.integer "outbreak_turn", comment: "仕掛手数"
     t.string "use_key", null: false
     t.datetime "accessed_at", null: false, comment: "最終参照日時"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.bigint "user_id"
-    t.string "title"
-    t.text "description", null: false
-    t.integer "start_turn"
-    t.integer "critical_turn"
-    t.string "sfen_body", limit: 8192, null: false
-    t.integer "image_turn"
     t.string "preset_key", null: false
+    t.text "description", null: false
+    t.string "sfen_body", limit: 8192, null: false
     t.string "sfen_hash", null: false
+    t.integer "start_turn", comment: "???"
+    t.integer "critical_turn", comment: "開戦"
+    t.integer "outbreak_turn", comment: "中盤"
+    t.integer "image_turn", comment: "???"
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
     t.index ["key"], name: "index_free_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_free_battles_on_outbreak_turn"
+    t.index ["preset_key"], name: "index_free_battles_on_preset_key"
     t.index ["start_turn"], name: "index_free_battles_on_start_turn"
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
     t.index ["use_key"], name: "index_free_battles_on_use_key"
@@ -520,10 +519,10 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
 
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
+    t.string "description", limit: 512, null: false, comment: "自己紹介"
+    t.string "twitter_key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "description", limit: 512, null: false
-    t.string "twitter_key", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
@@ -537,15 +536,15 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "accessed_at", null: false, comment: "最終参照日時"
-    t.integer "outbreak_turn", comment: "仕掛手数"
+    t.string "preset_key", null: false
+    t.string "sfen_body", limit: 8192, null: false
+    t.string "sfen_hash", null: false
+    t.integer "start_turn", comment: "???"
+    t.integer "critical_turn", comment: "開戦"
+    t.integer "outbreak_turn", comment: "中盤"
+    t.integer "image_turn", comment: "???"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "preset_key", null: false
-    t.integer "start_turn"
-    t.integer "critical_turn"
-    t.string "sfen_body", limit: 8192, null: false
-    t.integer "image_turn"
-    t.string "sfen_hash", null: false
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
@@ -582,24 +581,23 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   create_table "swars_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "対局"
     t.bigint "user_id", null: false, comment: "対局者"
+    t.bigint "op_user_id", comment: "相手"
     t.bigint "grade_id", null: false, comment: "対局時の段級"
     t.string "judge_key", null: false, comment: "勝・敗・引き分け"
     t.string "location_key", null: false, comment: "▲△"
     t.integer "position", comment: "手番の順序"
+    t.integer "grade_diff", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "grade_diff", null: false
-    t.integer "think_max"
-    t.bigint "op_user_id", comment: "相手"
-    t.integer "think_last"
-    t.integer "think_all_avg"
-    t.integer "think_end_avg"
-    t.integer "two_serial_max"
+    t.integer "think_all_avg", comment: "指し手の平均秒数(全体)"
+    t.integer "think_end_avg", comment: "指し手の平均秒数(最後5手)"
+    t.integer "two_serial_max", comment: "2秒の指し手が連続した回数"
+    t.integer "think_last", comment: "最後の指し手の秒数"
+    t.integer "think_max", comment: "最大考慮秒数"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
-    t.index ["grade_diff"], name: "index_swars_memberships_on_grade_diff"
     t.index ["grade_id"], name: "index_swars_memberships_on_grade_id"
     t.index ["judge_key"], name: "index_swars_memberships_on_judge_key"
     t.index ["location_key"], name: "index_swars_memberships_on_location_key"
@@ -648,7 +646,7 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   end
 
   create_table "tags", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.string "name"
+    t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
@@ -702,6 +700,7 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.string "cpu_brain_key", comment: "CPUだったときの挙動"
     t.string "user_agent", null: false, comment: "ブラウザ情報"
     t.string "race_key", null: false, comment: "種族"
+    t.datetime "name_input_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", null: false
@@ -721,7 +720,6 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.datetime "name_input_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["key"], name: "index_users_on_key", unique: true

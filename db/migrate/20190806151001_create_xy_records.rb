@@ -24,13 +24,13 @@
 class CreateXyRecords < ActiveRecord::Migration[5.1]
   def change
     create_table :xy_records, force: true do |t|
-      t.belongs_to :colosseum_user, null: true, index: true
-      t.string :entry_name, index: true, null: false
-      t.string :summary
+      t.belongs_to :user,    null: true
+      t.string :entry_name,  null: false, index: true
+      t.string :summary,     null: true
       t.string :xy_rule_key, null: false, index: true
-      t.integer :x_count, null: false
-      t.float :spent_sec, null: false
-      t.timestamps null: false
+      t.integer :x_count,    null: false
+      t.float :spent_sec,    null: false
+      t.timestamps           null: false
     end
   end
 end
