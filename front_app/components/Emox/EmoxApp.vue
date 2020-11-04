@@ -6,8 +6,6 @@
   EmoxBattle(:base="base"     v-if="mode === 'battle'")
   EmoxResult(:base="base"     v-if="mode === 'result'")
 
-  EmoxChessClock(:base="base"  v-if="mode === 'chess_clock'")
-
   DebugPrint(:grep="/./" v-if="base.debug_read_p")
 </template>
 
@@ -214,14 +212,6 @@ export default {
 
     lobby_unsubscribe() {
       this.ac_unsubscribe("$ac_lobby")
-    },
-
-    chess_clock_handle() {
-      if (this.mode === "chess_clock") {
-      } else {
-        this.lobby_unsubscribe()
-        this.mode = "chess_clock"
-      }
     },
   },
 

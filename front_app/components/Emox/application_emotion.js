@@ -1,8 +1,4 @@
 export const application_emotion = {
-  data() {
-    return {
-    }
-  },
   methods: {
     emotion_handle(params) {
       this.ac_room_perform("emotion_handle", params) // --> app/channels/emox/room_channel.rb

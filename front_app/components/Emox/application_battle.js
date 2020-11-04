@@ -77,7 +77,6 @@ export const application_battle = {
 
     // 結果画面へ
     judge_final_set_broadcasted(params) {
-      this.debug_alert("結果画面へ")
       this.result_setup(params.battle)
     },
 
