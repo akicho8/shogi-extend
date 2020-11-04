@@ -6,7 +6,7 @@ module Emox
 
     class << self
       def redis_key
-        :school_user_ids
+        :emox_school_user_ids
       end
     end
 
@@ -14,7 +14,6 @@ module Emox
 
     # 接続と同時にオンラインユーザーとして登録し配信する
     def subscribed
-      __event_notify__(__method__)
       return reject unless current_user
 
       stream_from "emox/school_channel"
@@ -23,7 +22,6 @@ module Emox
 
     # 切断と同時にオンラインユーザーを解除して配信する
     def unsubscribed
-      __event_notify__(__method__)
       self.class.active_users_delete(current_user)
       Emox::Rule.matching_users_delete_from_all_rules(current_user)
     end

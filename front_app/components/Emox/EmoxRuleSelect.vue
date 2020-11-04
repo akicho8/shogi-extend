@@ -2,23 +2,19 @@
 .EmoxRuleSelect
   MainNavbar
     template(slot="brand")
-      NavbarItemHome(icon="chevron-left" @click="base.rule_cancel_handle")
+      b-navbar-item(@click.native="base.rule_cancel_handle")
+        b-icon(icon="chevron-left")
       b-navbar-item.has-text-weight-bold(tag="div") ルール選択
   MainSection
     .container
-      .columns
-        .column
-          .buttons.is-centered.rule_buttons
-            template(v-for="row in base.RuleInfo.values")
-              b-button(@click="base.rule_key_set_handle(row)" :class="{'is_active': base.matching_user_ids_hash[row.key].length >= 1}" expanded)
-                span.has-text-weight-bold
-                  | {{row.name}}
-                  template(v-if="base.debug_read_p")
-                    | (待:{{base.matching_user_ids_hash[row.key].length}})
-                .description.is-size-8.has-text-grey.mt-1
-                  | {{row.description}}
-                .has-text-primary(v-if="base.matching_user_ids_hash[row.key].length >= 1")
-                  b-icon(icon="account")
+      .buttons.is-centered.rule_buttons.mt-0
+        template(v-for="row in base.RuleInfo.values")
+          b-button.has-text-weight-bold(@click="base.rule_key_set_handle(row)" expanded size="is-medium")
+            | {{row.name}}
+            div(v-if="user_count(row) >= 1 && development_p")
+              b-tag(type="is-primary" rounded)
+                | {{user_count(row)}}
+  EmoxLobbyDebug(:base="base")
 </template>
 
 <script>
@@ -32,6 +28,11 @@ export default {
   props: {
     base: { type: Object, required: true, },
   },
+  methods: {
+    user_count(rule) {
+      return this.base.matching_user_ids_hash[rule.key].length
+    },
+  },
 }
 </script>
 
@@ -39,18 +40,8 @@ export default {
 @import "support.sass"
 .EmoxRuleSelect
   .rule_buttons
-    margin-top: 1rem
-    flex-direction: column
     .button
-      height: 4.75rem
+      height: 5rem
       &:not(:first-child)
-        margin-top: 0.3rem // ボタンとボタンの隙間
-      &.is_active
-        border-color: change_color($primary, $lightness: 70%)
-        &:hover
-          border-color: change_color($primary, $lightness: 50%)
-      .icon
-        position: absolute
-        top: 0.35rem
-        left: 0.9rem
+        margin-top: 0.5rem
 </style>

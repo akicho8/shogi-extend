@@ -18,8 +18,6 @@
 
   .box.is-shadowless(v-if="base.debug_read_p")
     .buttons.is-centered.are-small
-      b-button(@click="base.battle_leave_handle(false)") 退出通知(自分)
-      b-button(@click="base.battle_leave_handle(true)") 退出通知(相手)
       b-button(@click="base.battle_unsubscribe") バトル切断(自分)
       b-button(@click="base.member_disconnect_handle(true)") バトル切断風にする(相手)
 </template>

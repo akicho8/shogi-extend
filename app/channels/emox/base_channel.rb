@@ -4,7 +4,7 @@ module Emox
 
     class << self
       def redis
-        @redis ||= Redis.new(db: AppConfig[:redis_db_for_emox])
+        @redis ||= Redis.new(db: AppConfig.fetch(:redis_db_for_emox))
       end
 
       def redis_clear

@@ -16,27 +16,6 @@ module Emox
         memberships.each.with_index do |m|
           m.update!(judge: it.next)
         end
-
-        [:emox_main_xrecord, :emox_latest_xrecord].each do |method|
-          judge_it = judges.each
-          diff = diffs_get(method)
-
-          memberships.each do |m|
-            judge = judge_it.next
-            sdiff = diff * judge.pure_info.sign_value # 引き分けの場合は 0 * 0 になる
-
-            r = m.user.send(method)
-
-            # 順序に意味はない
-            r.rating_add(sdiff)                  # レーティング更新
-            r.skill_add_by_rating(judge, sdiff)  # ウデマエ更新(レーティングの変化度を考慮)
-            r.judge_set(judge)                   # 勝敗
-            r.final_set(final)                   # 結果
-
-            r.save!
-          end
-        end
-
         battle.final = final
         battle.save!
       end
@@ -47,15 +26,6 @@ module Emox
     def hard_validation
       if battle.end_at
         raise "すでに終了している"
-      end
-    end
-
-    def diffs_get(method)
-      if target_user
-        values = memberships.collect { |e| e.user.send(method).rating }
-        EloRating.rating_update1(*values)
-      else
-        0
       end
     end
 

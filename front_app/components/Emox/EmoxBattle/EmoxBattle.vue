@@ -1,7 +1,7 @@
 <template lang="pug">
 .EmoxBattle
   EmoxRoomEmotion(:base="base")
-  EmoxBattleQuestionSyVersus(:base="base")
+  EmoxBattleVersus(:base="base")
 
   template(v-if="development_p")
     .buttons.is-centered.are-small

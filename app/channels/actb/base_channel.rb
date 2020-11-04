@@ -4,7 +4,7 @@ module Actb
 
     class << self
       def redis
-        @redis ||= Redis.new(db: AppConfig[:redis_db_for_actb])
+        @redis ||= Redis.new(db: AppConfig.fetch(:redis_db_for_actb))
       end
 
       def redis_clear

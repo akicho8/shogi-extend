@@ -13,6 +13,7 @@ Rails.application.configure do
         :redis_db_for_colosseum_ranking_info => 10,   # 対戦のランキング用
         :redis_db_for_actb                   => 11,   # actb
         :redis_db_for_sidekiq                => 12,   # sidekiq
+        :redis_db_for_emox                   => 14,   # emox
       })
   end
 end

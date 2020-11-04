@@ -33,107 +33,6 @@
 
 module Api
   class EmoxController < ::Api::ApplicationController
-    # FIXME: GET, PUT で分けるのではなく関心で分離する
-    include GetApi
-    include PutApi
-    include ZipDlMod
-
-    include DebugMod
-
-    # self.script_name = "将棋トレーニングバトル"
-    # self.page_title = ""
-    # self.form_position = :bottom
-    # self.column_wrapper_enable = false
-
-    # if Rails.env.production?
-    #   self.visibility_hidden_on_menu = true
-    # end
-
-    # delegate :current_user, to: :h
-
-    # http://0.0.0.0:3000/api/emox
-    def show
-      if v = params[:remote_action]
-        v = public_send(v)
-        if performed?
-          return
-        end
-        render json: v
-        return
-      end
-
-      # # for OGP
-      # case
-      # when e = current_question
-      #   ogp_params_set({
-      #       :card        => :summary_large_image,
-      #       :title       => e.title_with_author,
-      #       :description => e.description,
-      #       :image       => e.shared_image_params,
-      #       :creator     => e.user.twitter_key,
-      #     })
-      # when e = User.find_by(id: params[:user_id])
-      #   ogp_params_set({
-      #       :card        => :summary,
-      #       :title       => "#{e.name}さんのプロフィール",
-      #       :description => "",
-      #       :image       => e.avatar_path,
-      #       :creator     => e.twitter_key,
-      #     })
-      # else
-      #   ogp_params_set({
-      #       :title       => "将棋トレーニングバトル",
-      #       :description => "クイズ形式で将棋の問題を解く力を競う対戦ゲームです",
-      #     })
-      # end
-
-      ################################################################################
-
-      info = {}
-      info[:config] = Emox::Config
-      info[:mode] ||= "lobby"   # FIXME: とる
-      # info[:api_path] = h.url_for(script_link_path)
-      info[:question_default_attributes] = Emox::Question.default_attributes
-
-      warp_to_params_set(info)  # current_user のデータを作ることもあるので current_user のセットの前で行うこと
-
-      if current_user
-        info[:current_user] = current_user.as_json_type9x
-
-        if true
-          # すでにログインしている人は maincable で unauthorized になる
-          # これはクッキーに記録しないままログインしたのが原因
-          # なのですでにログインしていたらクッキーに埋める
-          current_user_set_for_action_cable(current_user)
-        end
-      end
-
-      # if Rails.env.development?
-      #   Emox::BaseChannel.redis_clear
-      # end
-
-      # http://0.0.0.0:3000/api/emox.json
-      if request.format.json?
-        render json: info
-        return
-      end
-
-      # zip の場合はここにくるっぽい
-
-      ################################################################################
-
-      # out = ""
-      # out += h.javascript_tag(%(document.addEventListener('DOMContentLoaded', () => { new Vue({}).$mount("#app") })))
-      # out += %(<div id="app"><emox_app :info='#{info.to_json}' /></div>)
-      # out
-    end
-
-    def update
-      v = public_send(params[:remote_action])
-      raise v.inspect unless v.kind_of?(Hash)
-      render json: v
-    end
-
     def current_battle_id
       params[:battle_id].presence
     end
@@ -148,16 +47,79 @@ module Api
       [current_user, User.bot]
     end
 
-    concerning :QuestionOgpMethods do
-      def current_question
-        @current_question ||= __current_question
+    # http://localhost:3000/api/emox/resource_fetch.json
+    def resource_fetch
+      if current_user
+        current_user_set_for_action_cable(current_user)
       end
 
-      def __current_question
-        if v = params[:question_id]
-          Emox::Question.find(v)
-        end
+      render json: {
+        :mode         => "lobby",
+        :current_user => current_user&.as_json_type9x,
+        :config       => Emox::Config,
+        :RuleInfo     => Emox::RuleInfo.as_json,
+        :EmotionInfo  => Emox::EmotionInfo.as_json,
+      }
+    end
+
+    # 更新することでマッチング結果はこちらが対象になる
+    # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_set_handle -d session_lock_token=xxx http://localhost:3000/api/emox.json
+    def session_lock_token_set_handle
+      raise ArgumentError, params.inspect if params[:session_lock_token].blank?
+      # if current_user.emox_setting.session_lock_token
+      #   return { error_message: "" }
+      # end
+      current_user.create_emox_setting_if_blank
+      current_user.emox_setting.update!(session_lock_token: params[:session_lock_token])
+      render json: { status: "success" }
+    end
+
+    # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_valid_handle -d session_lock_token=xxx http://localhost:3000/api/emox.json
+    def session_lock_token_valid_handle
+      raise ArgumentError, params.inspect if params[:session_lock_token].blank?
+      if current_user.session_lock_token_valid?(params[:session_lock_token])
+        render json: { status: "success" }
+      else
+        render json: { status: "session_lock_token_invalid" }
       end
+    end
+
+    # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_reset_handle http://localhost:3000/api/emox.json
+    # def session_lock_token_reset_handle
+    #   current_user.emox_setting.update!(session_lock_token: nil)
+    #   { status: "success" }
+    # end
+
+    # curl -d _method=put -d _user_id=1 -d remote_action=rule_key_set_handle -d rule_key=sy_marathon http://localhost:3000/api/emox.json
+    def rule_key_set_handle
+      raise ArgumentError, params.inspect if params[:session_lock_token].blank?
+      unless current_user.session_lock_token_valid?(params[:session_lock_token])
+        render json: { status: "session_lock_token_invalid" }
+        return
+      end
+      current_user.emox_setting.update!(rule: Emox::Rule.fetch(params[:rule_key]))
+      render json: { status: "success" }
+    end
+
+    # 自分以外の誰かを指定ルールに参加させる
+    def debug_matching_add_handle
+      if user = User.where.not(id: params[:exclude_user_id]).first
+        Emox::Rule.matching_users_delete_from_all_rules(user)
+        if rule_key = params[:rule_key]
+          rule = Emox::Rule.fetch(rule_key)
+          user.emox_setting.update!(rule: rule)
+        else
+          rule = current_user.emox_setting.rule
+        end
+        rule.matching_users_add(user)
+      end
+      render json: { status: "success" }
+    end
+
+    # 解散
+    def matching_users_clear_handle
+      Emox::Rule.matching_users_clear
+      render json: { status: "success" }
     end
   end
 end

@@ -19,7 +19,7 @@ import { application_room     } from "./application_room.js"
 import { application_emotion  } from "./application_emotion.js"
 import { application_battle   } from "./application_battle.js"
 import { application_matching } from "./application_matching.js"
-import { config               } from "./config.js"
+
 import { RuleInfo             } from "./models/rule_info.js"
 import { EmotionInfo          } from "./models/emotion_info.js"
 
@@ -27,20 +27,16 @@ export default {
   name: "EmoxApp",
   mixins: [
     support,
-    config,
     application_room,
     application_emotion,
     application_battle,
     application_matching,
   ],
-  props: {
-    info: { required: true },
-  },
   data() {
     return {
-      current_user: this.info.current_user,
+      info: null,
 
-      mode: null,
+      mode: "lobby",
       sub_mode: null,
 
       school_user_ids:        null, // オンラインのユーザーIDs
@@ -78,10 +74,10 @@ export default {
       this.debug_write_p      = true
     }
 
-    return this.api_get("resource_fetch", {}, e => {
+    return this.$axios.$get("/api/emox/resource_fetch.json", {params: this.$route.query}).then(e => {
+      this.info        = e
       this.RuleInfo    = RuleInfo.memory_record_reset(e.RuleInfo)
       this.EmotionInfo = EmotionInfo.memory_record_reset(e.EmotionInfo)
-      this.app_setup()
     })
   },
 
@@ -94,30 +90,11 @@ export default {
 
   mounted() {
     this.ga_click("エモ将棋")
+    this.school_setup()
+    this.lobby_setup()
   },
 
   methods: {
-    app_setup() {
-      this.school_setup()
-
-      if (this.info.warp_to) {
-        if (this.info.warp_to === "battle_sy_versus") {
-          this.room_setup(this.info.room)
-        }
-        if (this.info.warp_to === "result") {
-          this.room_setup(this.info.room)
-        }
-        if (this.info.warp_to === "chess_clock") {
-          this.chess_clock_handle()
-        }
-        if (this.info.warp_to === "login_lobby") {
-          this.lobby_setup()
-        }
-      } else {
-        this.lobby_setup()
-      }
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     school_setup() {
@@ -161,11 +138,11 @@ export default {
     },
 
     debug_matching_add_handle(rule) {
-      this.api_put("debug_matching_add_handle", {exclude_user_id: this.current_user.id, rule_key: rule.key}, e => {})
+      this.$axios.$put("/api/emox/debug_matching_add_handle.json", {exclude_user_id: this.current_user.id, rule_key: rule.key})
     },
 
     matching_users_clear_handle() {
-      this.api_put("matching_users_clear_handle", {exclude_user_id: this.current_user.id}, e => {})
+      this.$axios.$put("/api/emox/matching_users_clear_handle.json", {exclude_user_id: this.current_user.id})
     },
 
     session_lock_token_invalid_notify() {
@@ -173,38 +150,26 @@ export default {
     },
 
     start_handle() {
-      if (this.login_required2()) { return }
-      if (this.handle_name_required()) { return }
-
       this.sound_play("click")
+      if (this.login_required_basic()) {
+        return
+      }
 
-      this.api_put("session_lock_token_set_handle", {session_lock_token: this.current_user.session_lock_token}, e => {
+      this.$axios.$put("/api/emox/session_lock_token_set_handle.json", {session_lock_token: this.current_user.session_lock_token}).then(e => {
         if (e.status === "success") {
           this.mode = "rule_select"
-          this.talk("ルールを選択してください")
+          this.toast_ok("ルールを選択してください")
         }
       })
-    },
-
-    handle_name_required() {
-      if (this.config.user_name_required) {
-        if (this.current_user) {
-          if (!this.current_user.name_input_at) {
-            this.toast_ng("名前を入力してください")
-            this.$router.push({name: "settings-profile"})
-            return true
-          }
-        }
-      }
     },
 
     rule_key_set_handle(rule) {
       this.sound_play("click")
 
-      this.api_put("rule_key_set_handle", {
+      this.$axios.$put("/api/emox/rule_key_set_handle.json", {
         session_lock_token: this.current_user.session_lock_token,
         rule_key: rule.key,
-      }, e => {
+      }).then(e => {
         if (e.status === "session_lock_token_invalid") {
           this.session_lock_token_invalid_notify()
           return
@@ -254,25 +219,8 @@ export default {
       }
     },
 
-    login_required2() {
-      if (!this.current_user) {
-        this.login_url_jump()
-        return true
-      }
-    },
-
     lobby_unsubscribe() {
       this.ac_unsubscribe("$ac_lobby")
-    },
-
-    // 問題一覧「+」
-    builder_handle() {
-      if (this.mode === "builder") {
-      } else {
-        if (this.login_required2()) { return }
-        if (this.handle_name_required()) { return }
-        this.mode = "builder"
-      }
     },
 
     chess_clock_handle() {
@@ -285,28 +233,9 @@ export default {
   },
 
   computed: {
-    base() { return this },
-
-    // current_user() {
-    //   return this.info.current_user
-    // },
-
-    // いったんスクリプトに飛ばしているのは sessions[:return_to] を設定するため
-    // login_path() {
-    //   const url = new URL(location)
-    //   url.searchParams.set("goto_login", true)
-    //   return url.toString()
-    // },
-
-    user_type() {
-      if (this.current_user) {
-        if (this.current_user.key === "sysop") {
-          return "admin"
-        } else {
-          return "general"
-        }
-      }
-    },
+    base()         { return this },
+    current_user() { return this.info.current_user },
+    config()       { return this.info.config },
 
     // マッチング中のユーザー数
     matching_user_count() {

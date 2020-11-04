@@ -25,8 +25,6 @@ module Emox::Question::InfoMod
       a["難易度"] = "★" * (difficulty_level || 0)
     end
 
-    a["出題回数"]   = histories_count
-
     a["正解率"]     = ox_record.o_rate ? ("%.2f %%" % (ox_record.o_rate * 100)) : ""
 
     a["正解数"]     = ox_record.o_count

@@ -1,7 +1,6 @@
 module Api
   class ActbController
     concern :PutApi do
-
       # 更新することでマッチング結果はこちらが対象になる
       # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_set_handle -d session_lock_token=xxx http://localhost:3000/api/actb.json
       def session_lock_token_set_handle
@@ -9,6 +8,7 @@ module Api
         # if current_user.actb_setting.session_lock_token
         #   return { error_message: "" }
         # end
+        current_user.create_actb_setting_if_blank
         current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
         { status: "success" }
       end

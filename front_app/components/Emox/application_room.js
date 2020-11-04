@@ -30,7 +30,7 @@ export const application_room = {
 
       this.battle_count = 0
 
-      if (this.info.warp_to === "battle_sy_versus") {
+      if (this.info.warp_to === "battle_versus") {
         this.battle_setup(this.info.battle)
       }
 
@@ -95,10 +95,6 @@ export const application_room = {
     // 現在のルール
     current_rule_info() {
       return this.RuleInfo.fetch(this.room.rule.key)
-    },
-    // 現在の戦略(sy_marathon など)
-    current_strategy_key() {
-      return this.current_rule_info.strategy_key
     },
   },
 }

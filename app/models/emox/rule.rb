@@ -89,9 +89,7 @@ module Emox
             :trigger  => :add,
             :rule_key => key,
             :user => {
-              :id          => user.id,
-              :name        => user.name,
-              :avatar_path => user.avatar_path,
+              :id => user.id,
             },
           })
         true

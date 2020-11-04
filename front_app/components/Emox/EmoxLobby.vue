@@ -4,6 +4,8 @@
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'emoshogi'}") エモ将棋
+    //- template(slot="end")
+    //-   NavbarItemLogin
   MainSection
     .container
       .columns
@@ -18,7 +20,7 @@
             b-button.has-text-weight-bold(@click="base.start_handle" type="is-primary")
               | START
 
-          EmoxLobbyDebug(:base="base")
+  EmoxLobbyDebug(:base="base")
 </template>
 
 <script>

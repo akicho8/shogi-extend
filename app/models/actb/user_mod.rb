@@ -308,7 +308,7 @@ module Actb
         [ua.mobile? ? "モバイル" : "PC", ua.platform, ua.os, ua.browser, ua.version.to_s.to_i].compact.join(" ").gsub("Windows", "Win")
       end
 
-      # rails r "tp User.first.info"
+      # rails r "tp User.first.actb_info"
       def info
         {
           "ID"                 => id,

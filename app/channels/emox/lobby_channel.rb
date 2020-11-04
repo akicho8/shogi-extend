@@ -3,7 +3,6 @@ module Emox
     MATCHING_RATE_THRESHOLD_DEFAULT = 50
 
     def subscribed
-      __event_notify__(__method__)
       return reject unless current_user
 
       stream_from "emox/lobby_channel"
@@ -11,33 +10,11 @@ module Emox
     end
 
     def unsubscribed
-      __event_notify__(__method__)
       Emox::Rule.matching_users_delete_from_all_rules(current_user)
-    end
-
-    def speak(data)
-      data = data.to_options
-      current_user.lobby_speak(data[:message_body])
-      execution_interrupt_hidden_command(data[:message_body])
-    end
-
-    def execution_interrupt_hidden_command(str)
-      if md = str.to_s.squish.match(/^\/(?<command_line>.*)/)
-        args = md["command_line"].split
-        command = args.shift
-        if command == "ping"
-          current_user.lobby_speak("pong")
-        end
-        if command == "rule_key"
-          current_user.lobby_speak(current_user.rule_key)
-          current_user.lobby_speak(current_user.reload.rule_key)
-        end
-      end
     end
 
     # from app/javascript/emox_app/application_matching.js
     def matching_search(data)
-      __event_notify__(__method__, data)
       data = data.to_options
       raise ArgumentError, data.inspect if data[:session_lock_token].blank?
 
@@ -46,13 +23,6 @@ module Emox
       # session_lock_token が変化していたら別のブラウザで対戦が開始されたことがわかる
       unless current_user.session_lock_token_valid?(data[:session_lock_token])
         ActionCable.server.broadcast("emox/lobby_channel", bc_action: :session_lock_token_invalid_narrowcasted, bc_params: data)
-        return
-      end
-
-      if data[:practice_p]
-        bot_user = User.bot
-        users = [bot_user, current_user]
-        room_create(users, bot_user: bot_user)
         return
       end
 
@@ -101,9 +71,5 @@ module Emox
       current_user.emox_setting.rule
     end
     delegate :matching_users, :matching_user_ids, to: :rule
-
-    def lobby_speak(message_body)
-      current_user.emox_lobby_messages.create!(body: message_body)
-    end
   end
 end

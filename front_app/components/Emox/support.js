@@ -6,13 +6,5 @@ export const support = {
         return true
       }
     },
-
-    api_get(command, params, block) {
-      return this.$axios.$get("/api/emox.json", {params: {remote_action: command, ...params}}).then(e => block(e))
-    },
-
-    api_put(command, params, block) {
-      return this.$axios.$put("/api/emox.json", {remote_action: command, ...params}).then(e => block(e))
-    },
   },
 }

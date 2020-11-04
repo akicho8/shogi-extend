@@ -1,4 +1,4 @@
-import { SingleClock } from "./single_clock.js"
+import { SingleClock } from "./SingleClock.js"
 import Location from "shogi-player/src/location.js"
 
 export class ChessClock {
@@ -22,9 +22,9 @@ export class ChessClock {
     }
 
     this.timer         = null   // null以外ならタイマー動作中
-    this.turn          = null   // 0 or 1:手番 null:手番が設定されていない
+    this.turn          = null   // 0または1が手番。null:手番が設定されていない
     this.counter       = null   // 手数 (未使用)
-    this.zero_arrival  = null   // true:0になった
+    this.zero_arrival  = null   // 0 になったら true
     this.single_clocks = null   // それぞれの時計
     this.running_p     = null   // true:動作中 false:停止中
 

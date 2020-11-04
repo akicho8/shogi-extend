@@ -3,12 +3,12 @@ import { MemberInfo } from "./models/member_info.js"
 
 import { application_battle_timer } from "./application_battle_timer.js"
 
-import { application_battle_sy_versus    } from "./application_battle_sy_versus.js"
+import { application_battle_versus    } from "./application_battle_versus.js"
 
 export const application_battle = {
   mixins: [
     application_battle_timer,
-    application_battle_sy_versus,
+    application_battle_versus,
   ],
   data() {
     return {
@@ -125,6 +125,7 @@ export const application_battle = {
 
     // 結果画面へ
     judge_final_set_broadcasted(params) {
+      debugger
       this.debug_alert("結果画面へ")
       this.result_setup(params.battle)
     },
@@ -151,23 +152,11 @@ export const application_battle = {
     // 部屋から退出する
     room_leave_handle() {
       this.sound_play("click")
-      this.battle_leave_handle()
-      if (this.room.bot_user_id) {
-        this.lobby_setup_without_cable()
-      } else {
-        this.lobby_setup()
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // 退出通知
-    battle_leave_handle(ms_flip = false) {
-      this.ac_battle_perform("battle_leave_handle", {ms_flip: ms_flip})
-    },
-    battle_leave_handle_broadcasted(params) {
-      const membership = this.battle.memberships.find(e => e.id === params.membership_id)
-      this.member_infos_hash[membership.id].member_active_p = false // 退出記録
+      // this.battle_leave_handle()
+      // if (this.room.bot_user_id) {
+      //   this.lobby_setup_without_cable()
+      // } else {
+      this.lobby_setup()
     },
   },
 
@@ -190,25 +179,6 @@ export const application_battle = {
     },
     opponent_mi() {
       return this.member_infos_hash[this.opponent_membership.id]
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    score_orderd_memberships() {
-      return _.sortBy(this.battle.memberships, e => -this.member_infos_hash[e.id].b_score)
-    },
-    score_debug_info() {
-      return this.score_orderd_memberships.map(e => `${e.user.name}(${this.member_infos_hash[e.id].b_score})`).join(", ")
-    },
-    b_score_max() {
-      return _.max(_.map(this.member_infos_hash, (e, membership_id) => e.b_score))
-    },
-    b_score_max_for_win() {
-      return this.current_rule_info.b_score_max_for_win
-    },
-    // バトル終了条件
-    battle_end_p() {
-      return this.b_score_max >= this.b_score_max_for_win
     },
 
     ////////////////////////////////////////////////////////////////////////////////

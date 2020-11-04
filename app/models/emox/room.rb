@@ -44,13 +44,6 @@ module Emox
     has_many :memberships, -> { order(:position) }, class_name: "RoomMembership", dependent: :destroy, inverse_of: :room
     has_many :users, through: :memberships
     belongs_to :rule
-    belongs_to :bot_user, class_name: "User", optional: true
-
-    has_many :histories, dependent: :destroy do
-      def without_bot
-        where.not(user: proxy_association.owner.bot_user)
-      end
-    end
 
     before_validation do
       self.begin_at ||= Time.current
@@ -62,16 +55,6 @@ module Emox
       validates :begin_at
     end
 
-    after_create do
-      if bot_user
-        if memberships.collect(&:user).exclude?(bot_user)
-          raise "BOTが指定されたのにメンバーに含まれていない"
-        end
-        if memberships[Config[:leader_index]].user == bot_user
-          raise "BOTがリーダーになると進行できない"
-        end
-      end
-    end
     after_create_commit do
       Emox::RoomBroadcastJob.perform_later(self)
     end
@@ -86,14 +69,14 @@ module Emox
 
     def as_json_type4
       as_json({
-          only: [:id, :practice, :bot_user_id],
+          only: [:id],
           include: {
             rule: { only: [:key] },
             memberships: {
               only: [:id],
               include: {
                 user: {
-                  only: [:id, :name], methods: [:avatar_path],
+                  only: [:id],
                   include: {
                     emox_setting: {
                       only: [

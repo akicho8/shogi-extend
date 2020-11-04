@@ -249,6 +249,13 @@ export default {
       }
     },
 
+    login_required_basic() {
+      if (!this.g_current_user) {
+        this.login_url_jump()
+        return true
+      }
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     __assert__(value, message = null) {

@@ -2,7 +2,8 @@
 .EmoxMatching
   MainNavbar
     template(slot="brand")
-      NavbarItemHome(icon="chevron-left" @click="base.matching_cancel_handle")
+      b-navbar-item(@click.native="base.matching_cancel_handle")
+        b-icon(icon="chevron-left")
       b-navbar-item.has-text-weight-bold(tag="div") 対戦相手を待機中
   MainSection
     .container

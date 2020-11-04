@@ -1,15 +1,15 @@
 <template lang="pug">
 client-only
-  EmoxApp(:info="info")
+  EmoxApp
 </template>
 
 <script>
 export default {
   name: "emox",
-  async asyncData({ $axios, query }) {
-    const info = await $axios.$get("/api/emox.json", {params: query})
-    return { info }
-  },
+  // async asyncData({ $axios, query }) {
+  //   const info = await $axios.$get("/api/emox.json", {params: query})
+  //   return { info }
+  // },
   computed: {
     meta() {
       return {

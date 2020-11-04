@@ -36,7 +36,6 @@ module Emox
     belongs_to :rule
 
     # has_many :messages, class_name: "RoomMessage", dependent: :destroy
-    has_many :histories, dependent: :destroy
     has_many :memberships, -> { order(:position) }, class_name: "BattleMembership", dependent: :destroy, inverse_of: :battle
     has_many :users, through: :memberships
     belongs_to :parent, class_name: "Battle", optional: true # 連戦したときの前の部屋
@@ -71,10 +70,6 @@ module Emox
       Emox::BattleBroadcastJob.perform_later(self)
     end
 
-    def best_questions
-      Qgenerator.new(rule_info: room.rule.pure_info, users: users, fill: true).generate.collect(&:as_json_type3)
-    end
-
     def final_info
       final.pure_info
     end
@@ -96,7 +91,6 @@ module Emox
       as_json({
           only: [:id, :battle_pos],
           include: {
-            # rule: { only: [:key], methods: [:strategy_key, :time_limit_sec, :b_score_max_for_win] },
             final: { only: [:key], methods: [:name] },
             room: {},
             memberships: {
@@ -104,18 +98,11 @@ module Emox
               methods: [:location_key],
               include: {
                 user: {
-                  only: [:id, :name],
-                  methods: [:avatar_path, :rating, :skill_key],
-                  include: {
-                    emox_main_xrecord: {
-                      only: [:straight_win_count, :straight_lose_count],
-                    },
-                  },
+                  only: [:id],
                 },
               },
             },
           },
-          methods: [:best_questions],
         })
     end
 
@@ -129,25 +116,10 @@ module Emox
               methods: [:name, :lose_side]
             },
             memberships: {
-              only: [:id, :position, :straight_win_count, :straight_lose_count],
+              only: [:id, :position],
               include: {
                 user: {
-                  only: [:id, :name],
-                  methods: [:avatar_path],
-                  include: {
-                    emox_main_xrecord: {
-                      only: [
-                        :id,
-                        :straight_win_count, :straight_lose_count, :straight_win_max, :straight_lose_max,
-                        :rating, :rating_max, :rating_diff,
-                        :disconnect_count,
-                        :skill_point, :skill_last_diff,
-                      ],
-                      methods: [
-                        :skill_key,
-                      ]
-                    },
-                  },
+                  only: [:id],
                 },
                 judge: {
                   only: [:key, :name],

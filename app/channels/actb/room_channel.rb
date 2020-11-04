@@ -4,7 +4,7 @@ module Actb
 
     class << self
       def redis_key
-        :room_user_ids
+        :actb_room_user_ids
       end
     end
 

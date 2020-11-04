@@ -1,26 +1,26 @@
 <template lang="pug">
-.EmoxBattleQuestionSyVersus
-  EmoxBattleQuestionSyVersusMembership.mt-3(:base="base" :membership="base.opponent_membership")
+.EmoxBattleVersus
+  EmoxBattleVersusMembership.mt-3(:base="base" :membership="base.opponent_membership")
 
   MyShogiPlayer.mt-3(
     :run_mode="'play_mode'"
     :kifu_body="base.vs_share_sfen"
     :summary_show="false"
     :setting_button_show="false"
-    :theme="base.config.sp_theme"
-    :size="base.config.sp_size"
+    theme="real"
+    size="large"
     :human_side_key="current_human_side_key"
     :flip="current_flip"
     @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
   )
 
-  EmoxBattleQuestionSyVersusMembership.mt-3(:base="base" :membership="base.current_membership")
+  EmoxBattleVersusMembership.mt-3(:base="base" :membership="base.current_membership")
 
   .buttons.is-centered.are-small.mt-3
     b-button.has-text-weight-bold(@click="base.vs_func_toryo_handle(false)") 投了
     b-button.has-text-weight-bold(@click="base.vs_func_toryo_handle(true)" v-if="development_p") 相手投了
 
-  template(v-if="development_p")
+  template(v-if="development_p && base.chess_clock")
     .buttons.are-small.is-centered
       b-button(@click="base.chess_clock.generation_next(-1)") -1
       b-button(@click="base.chess_clock.generation_next(-60)") -60
@@ -32,7 +32,7 @@
       b-button(@click="base.chess_clock.params.every_plus = 5") フィッシャールール
       b-button(@click="base.chess_clock.params.every_plus = 0") 通常ルール
       b-button(@click="base.chess_clock.reset()") RESET
-      b-button(@click="base.chess_clock.value_set(3)") 両方残り3秒
+      b-button(@click="base.chess_clock.main_sec_set(3)") 両方残り3秒
     b-message
       | 1手毎に{{base.chess_clock.params.every_plus}}秒加算
 
@@ -42,7 +42,7 @@
 import { support } from "../support.js"
 
 export default {
-  name: "EmoxBattleQuestionSyVersus",
+  name: "EmoxBattleVersus",
   mixins: [
     support,
   ],
@@ -66,7 +66,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.EmoxBattleQuestionSyVersus
+.EmoxBattleVersus
   .membership_container
     justify-content: center
     align-items: center

@@ -18,7 +18,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/emoshogi"},
       title: "エモ将棋",
       new_p: false,
-      ogp_image_base: "emox",
+      og_image_key: "emox",
       description: "対人戦ができる",
       features: [
         # "自作の問題を作れる",

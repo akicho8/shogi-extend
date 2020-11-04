@@ -1,7 +1,7 @@
-import { ChessClock } from "./models/chess_clock.js"
+import { ChessClock   } from "@/components/models/ChessClock.js"
 import Location from "shogi-player/src/location.js"
 
-export const application_battle_sy_versus = {
+export const application_battle_versus = {
   data() {
     return {
       vs_share_sfen: "",
@@ -9,21 +9,43 @@ export const application_battle_sy_versus = {
     }
   },
 
-  created() {
-    this.chess_clock = new ChessClock({time_zero_callback: e => {
-      this.vs_func_time_zero_handle(e)
-    }})
+  beforeDestroy() {
+    this.chess_clock_free()
   },
 
   methods: {
+    chess_clock_free() {
+      if (this.chess_clock) {
+        this.chess_clock.timer_stop()
+        this.chess_clock = null
+      }
+    },
+
     vs_func_init() {
       // this.chess_clock.initial_boot_from(this.current_membership.location.code)
+      this.chess_clock_free()
+      this.chess_clock = new ChessClock({
+        initial_main_sec: 60*3,
+        initial_read_sec:0,
+        initial_extra_sec: 0,
+        every_plus:0,
+
+        time_zero_callback: e => {
+          // this.sound_play("lose")
+          this.toast_ng("時間切れ")
+          // this.$buefy.dialog.alert({
+          //   message: "時間切れ",
+          //   onConfirm: () => { this.stop_handle() },
+          // })
+          this.vs_func_time_zero_handle(e)
+        },
+      })
       this.chess_clock.initial_boot_from(0) // ▲から始まる
     },
 
     vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
       this.debug_alert(long_sfen)
-      this.chess_clock.single_clocks[this.current_membership.location.code].tap_and_auto_start_handle()
+      this.chess_clock.single_clocks[this.current_membership.location.code].simple_switch_handle()
       this.vs_func_play_board_share(long_sfen)
     },
 
@@ -47,10 +69,9 @@ export const application_battle_sy_versus = {
 
     vs_func_toryo_handle(ms_flip = false) {
       this.$buefy.dialog.confirm({
-        title: "投了",
-        message: `本当によろしいですか？`,
+        message: `本当に投了しますか？`,
         confirmText: "投了する",
-        cancelText: "考え直す",
+        cancelText: "もう少しねばる",
         type: "is-danger",
         hasIcon: false,
         trapFocus: true,
@@ -62,6 +83,7 @@ export const application_battle_sy_versus = {
       })
     },
     vs_func_toryo_handle_broadcasted(params) {
+      debugger
       if (params.membership_id === this.current_membership.id) {
       } else {
       }
