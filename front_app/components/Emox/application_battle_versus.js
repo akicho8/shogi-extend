@@ -64,6 +64,7 @@ export const application_battle_versus = {
         // 自分の操作を相手の盤面で動かす
         this.vs_share_sfen = params.vs_share_sfen
         // this.sound_play("piece_sound") // shogi-player で音が鳴らないのでここで鳴らす
+        this.chess_clock.single_clocks[this.opponent_membership.location.code].simple_switch_handle()
       }
     },
 
