@@ -1,5 +1,5 @@
 <template lang="pug">
-.EmoxLobbyDebug.box(v-if="development_p")
+.EmoxMatchingOperation.box(v-if="base.info && development_p")
   | 自分以外を
   .buttons.are-small.is-inline-block.mx-1
     template(v-for="row in base.RuleInfo.values")
@@ -24,7 +24,4 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.EmoxLobbyDebug
-  .image
-    img
 </style>

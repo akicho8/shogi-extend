@@ -16,7 +16,7 @@
   .block.has-text-centered.is-size-7(v-if="base.battle.final.key === 'f_disconnect' || base.battle.final.key === 'f_timeout'")
     | {{base.battle.final.name}}
 
-  .block.is-flex.is-justify-content-center
+  .block.is-flex.is-justify-content-center(v-if="development_p")
     b-button(tag="nuxt-link" :to="{name: 'share-board', query: {body: base.vs_share_sfen, image_view_point: 'black'}}" size="is-small" type="is-text") 棋譜
 
   .box.is-shadowless(v-if="development_p")
@@ -41,4 +41,8 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .EmoxResult
+  .is_top_left_fixed
+    position: fixed
+    top: 0.5rem
+    left: 0.5rem
 </style>

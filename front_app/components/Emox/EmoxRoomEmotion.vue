@@ -20,8 +20,29 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
+
 .EmoxRoomEmotion
   &.footer_nav
     border-top: 1px solid $grey-lighter
     background-color: change_color($white-ter, $alpha: 0.96)
+
+    z-index: 1
+
+    position: fixed
+    left: 0
+    bottom: 0
+
+    height: 64px
+    width: 100%
+
+    padding: 0 16px
+
+    justify-content: space-between
+    align-items: center
+
+    +desktop
+      justify-content: center
+      .button, .item
+        margin-left: 3rem
+        margin-right: 3rem
 </style>

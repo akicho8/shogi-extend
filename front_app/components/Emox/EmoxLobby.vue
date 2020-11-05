@@ -20,7 +20,7 @@
             b-button.has-text-weight-bold(@click="base.start_handle" type="is-primary")
               | START
 
-  EmoxLobbyDebug(:base="base")
+  EmoxMatchingOperation(:base="base")
 </template>
 
 <script>

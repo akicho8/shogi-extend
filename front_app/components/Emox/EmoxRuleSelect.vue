@@ -14,7 +14,7 @@
             div(v-if="user_count(row) >= 1 && development_p")
               b-tag(type="is-primary" rounded)
                 | {{user_count(row)}}
-  EmoxLobbyDebug(:base="base")
+  EmoxMatchingOperation(:base="base")
 </template>
 
 <script>

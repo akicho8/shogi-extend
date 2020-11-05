@@ -16,7 +16,7 @@
             div {{base.matching_interval_timer_count}}
             div ±{{base.matching_rate_threshold}}
 
-  EmoxLobbyDebug(:base="base")
+  EmoxMatchingOperation(:base="base")
 </template>
 
 <script>
