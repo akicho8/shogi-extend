@@ -10,7 +10,7 @@ export default {
     meta() {
       return {
         title: [this.$route.query.query, "将棋ウォーズ棋譜検索"],
-        description: "ウォーズの棋譜をぴよ将棋やKENTOで開いたりクリップボード経由で外部アプリに渡すような使い方ができます",
+        description: "将棋ウォーズの棋譜をぴよ将棋・KENTO・その他の外部アプリに橋渡しします。プレイヤーの段級位毎の勝率なども調べられます",
         og_image_key: "swars-search",
       }
     },
