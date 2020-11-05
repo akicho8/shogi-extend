@@ -130,8 +130,8 @@
               type="search"
               placeholder="ウォーズIDを入力"
               open-on-focus
+              clearable
               expanded
-              @focus="query = ''"
               @select="search_select_handle"
               @keydown.native.enter="search_enter_handle"
               ref="main_search_form"
