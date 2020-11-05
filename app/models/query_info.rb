@@ -53,6 +53,14 @@ class QueryInfo
     end
   end
 
+  def lookup_one_op(key)
+    if v = lookup_one(key)
+      if v.kind_of?(Hash)
+        v
+      end
+    end
+  end
+
   private
 
   def reset
@@ -65,21 +73,21 @@ class QueryInfo
     case
     when s.match?(/\A(https?:)/i)
       urls << s
-    when md = s.match(/\A(?<key>#{available_keys_regexp}):(?<value>\S+)/i)
-      key = md["key"].to_sym
-      values = md["value"].split(",")
+    when md = s.match(/\A(?<key>#{available_keys_regexp}):(?<value>\S+)/io) # foo:>=1
+      key = md["key"].to_sym           # :foo
+      vals = md["value"].split(",")    # [">=1"]
 
-      values = values.collect do |e|
-        if md = e.match(OPERATOR_SYNTAX_REGEXP)
+      vals = vals.collect do |e|
+        if md = e.match(OPERATOR_SYNTAX_REGEXP)          # ">=" と "1" に分離
           operator = OPERATORS.fetch(md["oprator"])
-          { operator: operator, value: md[:value].to_i }
+          { operator: operator, value: md[:value].to_i } # => { operator: :gteq, value: 1 }
         else
           e
         end
       end
 
       attributes[key] ||= []
-      attributes[key].concat(values)
+      attributes[key].concat(vals)
     else
       values.concat(s.split(","))
     end

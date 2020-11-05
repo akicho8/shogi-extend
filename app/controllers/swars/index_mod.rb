@@ -277,11 +277,9 @@ module Swars
           s = s.where(key: v)
         end
 
-        # [:gteq, :gt, :lt, :lteq, :eq].each do |key|
-        #   if v = query_info.lookup_one([:turn_max, key].join("_"))
-        #     s = s.where(current_model.arel_table[:turn_max].gteq(v))
-        #   end
-        # end
+        if e = query_info.lookup_one_op(:turn_max)
+          s = s.where(current_model.arel_table[:turn_max].public_send(e[:operator], e[:value]))
+        end
 
         if current_swars_user
           filtered = false

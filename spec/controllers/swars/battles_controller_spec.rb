@@ -68,14 +68,14 @@ RSpec.describe Swars::BattlesController, type: :controller do
       assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
     end
 
-    describe "turn_max_gteq" do
+    describe "turn_max:>=500" do
       it do
-        get :index, params: {query: "devuser1 turn_max_gteq:500"}
+        get :index, params: {query: "devuser1 turn_max:>=500"}
         assert { controller.current_scope.count == 0 }
         expect(response).to have_http_status(:ok)
       end
       it do
-        get :index, params: {query: "devuser1 turn_max_gteq:1"}
+        get :index, params: {query: "devuser1 turn_max:<=500"}
         assert { controller.current_scope.count == 1 }
         expect(response).to have_http_status(:ok)
       end

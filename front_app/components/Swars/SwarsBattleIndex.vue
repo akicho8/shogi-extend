@@ -46,9 +46,10 @@
             //- b-menu-item(label="勝ち" @click.stop="filter_research(`judge:win`)"  :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
             //- b-menu-item(label="負け" @click.stop="filter_research(`judge:lose`)" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
             //- b-menu-item(label="なし" @click.stop="filter_research(``)"           :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
-            b-menu-item(label="勝ち" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} judge:win`}}"  @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
-            b-menu-item(label="負け" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} judge:lose`}}" @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
-            b-menu-item(label="なし" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key}`}}"            @click.native="sound_play('click')" :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
+            b-menu-item(label="勝ち"      tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} judge:win`}}"      @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
+            b-menu-item(label="負け"      tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} judge:lose`}}"     @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
+            b-menu-item(label="150手以上" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} turn_max:>=150`}}" @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('turn_max:>=150')}")
+            b-menu-item(label="なし"      tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key}`}}"                @click.native="sound_play('click')" :class="{'has-text-weight-bold': !filter_match_p('judge:') && !filter_match_p('turn_max:')}")
 
         b-menu-list(label="一括取得")
           b-menu-item(
