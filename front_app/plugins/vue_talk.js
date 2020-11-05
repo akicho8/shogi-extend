@@ -41,43 +41,14 @@ export default {
     // private
 
     mp3_talk(data, options = {}) {
-      options = {
-        talk_method: "howler",
-        ...options,
-      }
-
-      // すぐに発声する場合
-      if (options.talk_method === "direct_audio") {
-        const audio = new Audio()
-        audio.src = data.mp3_path
-        audio.play()
-      }
-
-      // 最後に来た音声のみ発声(?)
-      if (false) {
-        if (!audio) {
-          audio = new Audio()
-        }
-        audio.src = data.mp3_path
-        audio.play()
-      }
-
-      // FIFO形式で順次発声
-      if (options.talk_method === "queue") {
-        audio_queue.media_push(data.mp3_path)
-      }
-
-      // Howler
-      if (options.talk_method === "howler") {
-        window.howl_object = new Howl({
-          src: data.mp3_path,
-          autoplay: true,
-          volume: options.volume || 1.0,
-          rate: options.rate || 1.6,
-        })
-        if (options.onend) {
-          window.howl_object.on("end", () => options.onend())
-        }
+      window.howl_object = new Howl({
+        src: data.mp3_path,
+        autoplay: true,
+        volume: options.volume || 1.0,
+        rate: options.rate || 1.6,
+      })
+      if (options.onend) {
+        window.howl_object.on("end", () => options.onend())
       }
     },
   },

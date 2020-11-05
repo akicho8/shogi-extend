@@ -296,7 +296,7 @@ module Api
             if last.skill_set
               last.skill_set.each do |e|
                 e.each do |e|
-                  talk(e.name, talk_method: :queue)
+                  talk(e.name)
                 end
               end
             end
