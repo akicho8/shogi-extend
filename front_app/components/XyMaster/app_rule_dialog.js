@@ -18,7 +18,7 @@ export const app_rule_dialog = {
         confirmText: "わかった",
         canCancel: ["outside", "escape"],
         type: "is-info",
-        hasIcon: true,
+        hasIcon: false,
         trapFocus: true,
         onConfirm: () => {
           this.talk_stop()
