@@ -24,7 +24,7 @@
     "chroma-js": "^2.1.0",
     "dayjs": "^1.9.3",
     "fabric": "^4.2.0",
-    "howler": "^2.2.0",
+    "howler": "^2.2.1",
     "js-memory-record": "^0.0.16",
     "lzma": "^2.3.2",
     "node-sass": "^4.14.1",
