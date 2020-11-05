@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 import { up_down_scroll_disable } from "../../models/up_down_scroll_disable.js"
 
 export default {
   name: "EmoxBattle",
   mixins: [
-    support,
+    support_child,
     up_down_scroll_disable,
   ],
   props: {

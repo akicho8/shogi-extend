@@ -39,16 +39,11 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "EmoxBattleVersus",
-  mixins: [
-    support,
-  ],
-  props: {
-    base: { type: Object, required: true, },
-  },
+  mixins: [support_child],
   computed: {
     current_human_side_key() {
       return this.base.current_membership.location_key

@@ -1,4 +1,2 @@
 export const support = {
-  methods: {
-  },
 }

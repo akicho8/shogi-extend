@@ -5,16 +5,11 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { child } from "./support_child.js"
 
 export default {
   name: "EmoxRoomEmotion",
-  mixins: [
-    support,
-  ],
-  props: {
-    base: { type: Object, required: true, },
-  },
+  mixins: [support_child],
 }
 </script>
 
