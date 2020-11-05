@@ -60,7 +60,7 @@
 
           b-menu-item(:disabled="menu_item_disabled" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
-              | 直近30件 ﾀﾞｳﾝﾛｰﾄﾞ
+              | 直近{{config.zip_dl_max_default}}件 ﾀﾞｳﾝﾛｰﾄﾞ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in ZipKifuInfo.values")
               b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")

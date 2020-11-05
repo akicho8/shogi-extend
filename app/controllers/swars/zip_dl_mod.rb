@@ -45,7 +45,7 @@ module Swars
     end
 
     def zip_dl_max
-      (params[:zip_dl_max].presence || AppConfig[:zip_dl_max_default]).to_i.clamp(0, AppConfig[:zip_dl_max])
+      (params[:zip_dl_max].presence || AppConfig[:zip_dl_max_default]).to_i.clamp(0, AppConfig[:zip_dl_max_of_max])
     end
 
     def kifu_format_info

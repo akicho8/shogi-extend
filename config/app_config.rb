@@ -5,8 +5,8 @@ AppConfig.deep_merge!({
     :swars_tag_search_function           =>  true,  # タグ検索
     :columns_detail_show                 =>  true,  # 「開戦」の手数を表示する？
 
-    :zip_dl_size                         =>  30,    # 一括ダウンロードするときの件数(初期値)
-    :zip_dl_max                          =>  30,    # 一括ダウンロードするときの件数(最大)
+    :zip_dl_max_default                  =>  50,    # 一括ダウンロードするときの件数(初期値)
+    :zip_dl_max_of_max                   =>  50,    # 一括ダウンロードするときの件数(最大)
 
     :per_page_list                       =>  [25],  # 1ページあたりの項目数選択肢リストの最初と最後を除いたもの
 

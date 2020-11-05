@@ -89,6 +89,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
     it "ZIPダウンロード" do
       get :index, params: { query: "devuser1", format: "zip" }
       expect(response).to have_http_status(:ok)
+      assert { response["Content-Disposition"].match?(/shogiwars-devuser1-.*-kif-utf8-1.zip/) }
       assert { response.media_type == "application/zip" }
     end
 
