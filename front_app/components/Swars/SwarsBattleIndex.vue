@@ -426,7 +426,7 @@ export default {
     zip_dl_handle(key) {
       this.sound_play("click")
       const params = {
-        ...this.$route.query,
+        query: this.query,
         zip_kifu_key: key,
       }
       const usp = new URLSearchParams()
