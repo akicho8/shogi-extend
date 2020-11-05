@@ -81,21 +81,24 @@ RSpec.describe Swars::BattlesController, type: :controller do
       end
     end
 
-    it "ウォーズの対局キーが含まれるURLで検索" do
-      get :index, params: {query: "https://shogiwars.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
-      assert { controller.current_scope.count == 1 }
-      expect(response).to have_http_status(:ok)
-
-      get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
-      assert { controller.current_scope.count == 1 }
-      expect(response).to have_http_status(:ok)
+    describe "ウォーズの対局キーが含まれるURLで検索" do
+      it "レコードあり" do
+        get :index, params: {query: "https://shogiwars.heroz.jp/games/devuser1-Yamada_Taro-20200101_123401?tw=1"}
+        assert { controller.current_scope.count == 1 }
+        expect(response).to have_http_status(:ok)
+      end
+      it "レコードなし" do
+        get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
+        assert { controller.current_scope.count == 0 }
+        expect(response).to have_http_status(:ok)
+      end
     end
 
     it "ZIPダウンロード" do
       get :index, params: { query: "devuser1", format: "zip" }
       expect(response).to have_http_status(:ok)
       assert { controller.current_scope.count == 1 }
-      assert { response["Content-Disposition"].match?(/shogiwars-devuser1-\d+_\d+-kif-utf8-1.zip/) }
+      assert { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
       assert { response.media_type == "application/zip" }
     end
 
