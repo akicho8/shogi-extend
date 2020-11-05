@@ -12,7 +12,7 @@
           .progress_container.has-text-centered
             b-progress(type="is-primary" size="is-small")
 
-          .has-text-centered.has-text-weight-bold.mt-3(v-if="base.debug_read_p")
+          .has-text-centered.has-text-weight-bold.mt-3(v-if="development_p")
             div {{base.matching_interval_timer_count}}
             div ±{{base.matching_rate_threshold}}
 

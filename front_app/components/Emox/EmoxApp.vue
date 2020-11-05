@@ -6,7 +6,7 @@
   EmoxBattle(:base="base"     v-if="mode === 'battle'")
   EmoxResult(:base="base"     v-if="mode === 'result'")
 
-  DebugPrint(:grep="/./" v-if="base.debug_read_p")
+  DebugPrint(:grep="/./" v-if="development_p")
 </template>
 
 <script>
@@ -51,11 +51,6 @@ export default {
       // 引数に画面遷移の指定があるとき何度も遷移してしまうのを伏せぐため
       redirect_counter: 0,
 
-      // デバッグ
-      debug_summary_p: false, // ちょっとした表示
-      debug_read_p:    false, // 表示系(安全)
-      debug_write_p:   false, // 更新系(危険)
-
       // リアクティブではないもの
       // $ac_school: null, // --> app/channels/emox/school_channel.rb
       // $ac_lobby:  null, // --> app/channels/emox/lobby_channel.rb
@@ -66,12 +61,6 @@ export default {
 
   fetchOnServer: false,
   fetch() {
-    if (this.development_p) {
-      this.debug_summary_p    = true
-      this.debug_read_p       = true
-      this.debug_write_p      = true
-    }
-
     return this.$axios.$get("/api/emox/resource_fetch.json", {params: this.$route.query}).then(e => {
       this.info        = e
       this.RuleInfo    = RuleInfo.memory_record_reset(e.RuleInfo)
@@ -123,7 +112,6 @@ export default {
     lobby_setup() {
       this.lobby_setup_without_cable()
 
-      this.debug_alert("lobby_setup")
       this.__assert__(this.$ac_lobby == null, "ロビーが解放されてないのに再び接続しようとしている")
       this.$ac_lobby = this.ac_subscription_create({channel: "Emox::LobbyChannel"})
     },

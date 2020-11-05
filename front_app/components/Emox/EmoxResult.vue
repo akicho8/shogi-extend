@@ -19,7 +19,7 @@
   .block.is-flex.is-justify-content-center
     b-button(tag="nuxt-link" :to="{name: 'share-board', query: {body: base.vs_share_sfen, image_view_point: 'black'}}" size="is-small" type="is-text") 棋譜
 
-  .box.is-shadowless(v-if="base.debug_read_p")
+  .box.is-shadowless(v-if="development_p")
     .buttons.is-centered.are-small
       b-button(@click="base.battle_unsubscribe") バトル切断(自分)
       b-button(@click="base.member_disconnect_handle(true)") バトル切断風にする(相手)

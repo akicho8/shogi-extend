@@ -1,5 +1,5 @@
 <template lang="pug">
-.EmoxLobbyDebug.box(v-if="base.debug_write_p && base.info")
+.EmoxLobbyDebug.box(v-if="development_p")
   | 自分以外を
   .buttons.are-small.is-inline-block.mx-1
     template(v-for="row in base.RuleInfo.values")
