@@ -425,6 +425,7 @@ export default {
     },
 
     zip_dl_handle(key) {
+      this.sidebar_p = false
       this.sound_play("click")
       const params = {
         query: this.query,
