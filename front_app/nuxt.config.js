@@ -260,6 +260,12 @@ const config = {
     // https://ja.nuxtjs.org/api/configuration-build/#transpile
     transpile: ["shogi-player"], // 外側にあるファイルは import 文を require に変換しないと node でパースできない
 
+    // オーディオファイルをロードするように Webpack の設定を拡張するには？
+    // https://ja.nuxtjs.org/faq/webpack-audio-files/
+    //
+    //   <audio :src="require('@/assets/water.mp3')" controls></audio>
+    //   <audio src="@/assets/water.mp3" controls></audio>
+    //
     loaders: {
       vue: {
         transformAssetUrls: {

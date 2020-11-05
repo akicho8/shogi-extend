@@ -68,28 +68,34 @@ RSpec.describe Swars::BattlesController, type: :controller do
       assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
     end
 
-    it "index + tag" do
-      get :index, params: {query: "turn_max_gteq:200"}
-      expect(response).to have_http_status(:ok)
-    end
-
-    it "index + modal_id" do
-      get :index, params: {modal_id: record.to_param}
-      expect(response).to have_http_status(:ok)
+    describe "turn_max_gteq" do
+      it do
+        get :index, params: {query: "devuser1 turn_max_gteq:500"}
+        assert { controller.current_scope.count == 0 }
+        expect(response).to have_http_status(:ok)
+      end
+      it do
+        get :index, params: {query: "devuser1 turn_max_gteq:1"}
+        assert { controller.current_scope.count == 1 }
+        expect(response).to have_http_status(:ok)
+      end
     end
 
     it "ウォーズの対局キーが含まれるURLで検索" do
       get :index, params: {query: "https://shogiwars.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
+      assert { controller.current_scope.count == 1 }
       expect(response).to have_http_status(:ok)
 
       get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
+      assert { controller.current_scope.count == 1 }
       expect(response).to have_http_status(:ok)
     end
 
     it "ZIPダウンロード" do
       get :index, params: { query: "devuser1", format: "zip" }
       expect(response).to have_http_status(:ok)
-      assert { response["Content-Disposition"].match?(/shogiwars-devuser1-.*-kif-utf8-1.zip/) }
+      assert { controller.current_scope.count == 1 }
+      assert { response["Content-Disposition"].match?(/shogiwars-devuser1-\d+_\d+-kif-utf8-1.zip/) }
       assert { response.media_type == "application/zip" }
     end
 
@@ -109,26 +115,10 @@ RSpec.describe Swars::BattlesController, type: :controller do
   end
 
   describe "show" do
-    # describe "ogp" do
-    #   it do
-    #     get :show, params: { id: record.to_param, turn: 12, flip: true }
-    #     expect(response).to have_http_status(:ok)
-    # 
-    #     doc = Nokogiri::HTML.parse(response.body)
-    #     assert { doc.at(%(meta[name="og:url"])) == nil }
-    #     assert { doc.at(%(meta[name="og:image"]))[:content] == "http://0.0.0.0:3000/w/devuser1-Yamada_Taro-20200101_123401.png?flip=true&turn=12" }
-    #   end
-    # end
-
     it "png" do
       get :show, params: {id: record.to_param, format: "png", width: "", turn: 999}
       expect(response).to have_http_status(:ok)
     end
-
-    # it "棋譜印刷" do
-    #   get :show, params: {id: record.to_param, formal_sheet: true, formal_sheet_debug: true}
-    #   expect(response).to have_http_status(:ok)
-    # end
 
     describe "KIF 表示/DL" do
       it "表示(UTF-8)" do
@@ -157,3 +147,9 @@ RSpec.describe Swars::BattlesController, type: :controller do
     end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> ............
+# >>
+# >> Finished in 8.72 seconds (files took 4.93 seconds to load)
+# >> 12 examples, 0 failures
+# >>

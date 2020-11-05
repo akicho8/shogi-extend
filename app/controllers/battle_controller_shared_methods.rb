@@ -82,7 +82,6 @@ module BattleControllerSharedMethods
         s = s.where(battled_at: v...v.tomorrow)
       end
 
-      s = other_scope_add(s)
       if v = query_info.lookup(:ids)
         s = s.where(id: v)
       end
@@ -113,18 +112,6 @@ module BattleControllerSharedMethods
 
       if v = query_info.lookup(:exclude_tag)
         s = s.tagged_with(v, exclude: true)
-      end
-
-      s
-    end
-
-    def other_scope_add(s)
-      if v = query_info.lookup_one(:turn_max_gteq)
-        s = s.where(current_model.arel_table[:turn_max].gteq(v))
-      end
-
-      if v = query_info.lookup_one(:turn_max_lt)
-        s = s.where(current_model.arel_table[:turn_max].lt(v))
       end
 
       s

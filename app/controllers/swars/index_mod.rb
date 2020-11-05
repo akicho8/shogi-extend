@@ -267,7 +267,7 @@ module Swars
 
     def current_scope
       @current_scope ||= -> {
-        s = Swars::Battle.all
+        s = current_model.all
 
         if v = query_info.lookup(:ids)
           s = s.where(id: v)
@@ -276,6 +276,12 @@ module Swars
         if v = primary_record_key # バトルが指定されている
           s = s.where(key: v)
         end
+
+        # [:gteq, :gt, :lt, :lteq, :eq].each do |key|
+        #   if v = query_info.lookup_one([:turn_max, key].join("_"))
+        #     s = s.where(current_model.arel_table[:turn_max].gteq(v))
+        #   end
+        # end
 
         if current_swars_user
           filtered = false

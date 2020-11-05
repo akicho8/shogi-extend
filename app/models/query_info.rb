@@ -1,4 +1,16 @@
+# -*- frozen_string_literal: true -*-
+
 class QueryInfo
+  OPERATORS = {
+    ">=" => :gteq,
+    ">"  => :gt,
+    "==" => :eq,
+    "<=" => :lteq,
+    "<"  => :lt,
+  }
+  OPRATOR_KEYS_REGEXP    = Regexp.union(OPERATORS.keys) # />=|>/
+  OPERATOR_SYNTAX_REGEXP = /\A(?<oprator>#{OPRATOR_KEYS_REGEXP})(?<value>[-\d]\d*)/o # foo:>=-1 にマッチ  # (?<value>[^<>=].*) でも良い
+
   class << self
     def parse(*args)
       new(*args).tap do |e|
@@ -55,8 +67,19 @@ class QueryInfo
       urls << s
     when md = s.match(/\A(?<key>#{available_keys_regexp}):(?<value>\S+)/i)
       key = md["key"].to_sym
+      values = md["value"].split(",")
+
+      values = values.collect do |e|
+        if md = e.match(OPERATOR_SYNTAX_REGEXP)
+          operator = OPERATORS.fetch(md["oprator"])
+          { operator: operator, value: md[:value].to_i }
+        else
+          e
+        end
+      end
+
       attributes[key] ||= []
-      attributes[key].concat(md["value"].split(","))
+      attributes[key].concat(values)
     else
       values.concat(s.split(","))
     end
