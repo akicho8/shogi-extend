@@ -196,10 +196,6 @@ module Swars
       (params[:page_max].presence || 1).to_i
     end
 
-    def slow_processing_error_redirect_url
-      [:swars, :battles, query: current_query, stop_processing_because_it_is_too_heavy: 1]
-    end
-
     def swars_tag_search_path(e)
       if AppConfig[:swars_tag_search_function]
         url_for([:swars, :battles, query: "tag:#{e}", only_path: true])
