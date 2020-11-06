@@ -35,6 +35,12 @@ module Swars
 
     scope :active_only, -> { where(processed_at: nil) }
 
+    before_validation on: :create do
+      if user
+        self.to_email ||= user.email
+      end
+    end
+
     with_options presence: true do
       validates :attachment_mode
       validates :target_user_key
@@ -65,17 +71,19 @@ module Swars
       end
     end
 
-    def zip_binary
+    def zip_io
       t = Time.current
 
-      zip_buffer = Zip::OutputStream.write_buffer do |zos|
+      io = Zip::OutputStream.write_buffer do |zos|
         zip_scope.each do |battle|
           if str = battle.to_xxx(kifu_format_info.key)
-            zos.put_next_entry("#{battle.key}.#{kifu_format_info.key}")
-            if current_body_encode == :sjis
-              str = str.tosjis
+            body_encodes.each do |encode|
+              zos.put_next_entry("#{encode}/#{battle.key}.#{kifu_format_info.key}")
+              if encode == :sjis
+                str = str.tosjis
+              end
+              zos.write(str)
             end
-            zos.write(str)
           end
         end
       end
@@ -83,8 +91,8 @@ module Swars
       sec = "%.2f s" % (Time.current - t)
       # slack_message(key: "ZIP #{sec}", body: zip_filename)
       SlackAgent.message_send(key: "ZIP #{sec}", body: zip_filename)
-      # send_data(zip_buffer.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
-      zip_buffer.string
+      # send_data(io.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
+      io
     end
 
     def zip_scope
@@ -101,10 +109,10 @@ module Swars
       parts << target_user.key
       parts << Time.current.strftime("%Y%m%d%H%M%S")
       parts << kifu_format_info.key
-      parts << current_body_encode
+      parts << body_encodes
       parts << zip_scope.count
-      str = parts.compact.join("-") + ".zip"
-      str.public_send("to#{current_body_encode}")
+      str = parts.flatten.compact.join("-") + ".zip"
+      str
     end
 
     private
@@ -121,8 +129,8 @@ module Swars
       "kif"
     end
 
-    def current_body_encode
-      "utf8"
+    def body_encodes
+      [:utf8, :sjis]
     end
   end
 end
