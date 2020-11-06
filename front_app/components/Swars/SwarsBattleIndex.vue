@@ -63,8 +63,8 @@
             template(slot="label" slot-scope="props")
               | 直近{{config.zip_dl_max_default}}件 ﾀﾞｳﾝﾛｰﾄﾞ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in ZipKifuInfo.values")
-              b-menu-item(@click="zip_dl_handle(e.key)" :label="e.name")
+            template(v-for="e in ZipDlInfo.values")
+              b-menu-item(@click="zip_dl_handle(e)" :label="e.name")
 
         b-menu-list(label="便利な使い方あれこれ")
           b-menu-item(
@@ -260,9 +260,17 @@ import SwarsBattleIndexCore from "./SwarsBattleIndexCore.js"
 
 import MemoryRecord from 'js-memory-record'
 
-class ZipKifuInfo extends MemoryRecord {
+class ZipDlInfo extends MemoryRecord {
+  static get define() {
+    return [
+      { name: "KIF",        zip_format_key: "kif",  body_encode: "utf8", },
+      { name: "KIF (SJIS)", zip_format_key: "kif",  body_encode: "sjis", },
+      { name: "KI2",        zip_format_key: "ki2",  body_encode: "utf8", },
+      { name: "CSA",        zip_format_key: "csa",  body_encode: "utf8", },
+      { name: "SFEN",       zip_format_key: "sfen", body_encode: "utf8", },
+    ]
+  }
 }
-ZipKifuInfo.memory_record_reset([])
 
 export default {
   name: "SwarsBattleIndex",
@@ -319,8 +327,6 @@ export default {
       // this.query = this.$route.query.query
 
       this.ls_setup() // config から visible_hash や display_key を設定
-
-      ZipKifuInfo.memory_record_reset(this.config.zip_kifu_info)
 
       this.notice_collector_run(this.config)
     })
@@ -424,12 +430,14 @@ export default {
       }
     },
 
-    zip_dl_handle(key) {
+    zip_dl_handle(e) {
       this.sidebar_p = false
       this.sound_play("click")
+
       const params = {
         query: this.query,
-        zip_kifu_key: key,
+        zip_format_key: e.zip_format_key,
+        body_encode: e.body_encode,
       }
       const usp = new URLSearchParams()
       _.each(params, (v, k) => usp.set(k, v))
@@ -485,7 +493,7 @@ export default {
 
     base()            { return this            },
     ExternalAppInfo() { return ExternalAppInfo },
-    ZipKifuInfo()     { return ZipKifuInfo     },
+    ZipDlInfo()       { return ZipDlInfo       },
   },
 }
 </script>

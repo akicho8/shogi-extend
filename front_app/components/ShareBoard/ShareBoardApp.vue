@@ -26,6 +26,7 @@ client-only
           b-menu-item(label="SFENコピー" @click="kifu_copy_handle('sfen')")
           b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
           b-menu-item(label="棋譜ダウンロード" :href="kif_download_url" @click="sound_play('click')")
+          b-menu-item(label="棋譜ダウンロード (SJIS)" :href="sjis_kif_download_url" @click="sound_play('click')")
         b-menu-list(label="検討")
           b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
           b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
@@ -424,6 +425,7 @@ export default {
     twitter_card_url()   { return this.permalink_for({format: "png"})                                                         },
     snapshot_image_url() { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
     kif_download_url()   { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
+    sjis_kif_download_url()   { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "sjis"})                              },
 
     // 外部アプリ
     piyo_shogi_app_with_params_url() {

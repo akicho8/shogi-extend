@@ -1,4 +1,4 @@
-class ZipKifuInfo
+class ZipFormatInfo
   include ApplicationMemoryRecord
   memory_record [
     { key: :kif,  },
@@ -6,12 +6,4 @@ class ZipKifuInfo
     { key: :csa,  },
     { key: :sfen, },
   ]
-
-  def name
-    key.upcase
-  end
-
-  def as_json(*)
-    super.merge(name: name)
-  end
 end
