@@ -28,12 +28,6 @@
             template(slot="label" slot-scope="props")
               | ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-          b-menu-item(@click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | 文字コード
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in EncodeInfo.values")
-              b-menu-item(:label="e.name" @click="body_encode_set(e.key)" :class="{'has-text-weight-bold': body_encode === e.key}")
             template(v-for="e in DlFormatTypeInfo.values")
               b-menu-item(:label="e.name" @click.prevent="kifu_dl_handle(e)" :href="kifu_dl_url(e)")
 
@@ -131,7 +125,6 @@ export default {
     return {
       // フォーム関連
       input_text: "",      // 入力した棋譜
-      body_encode: "utf8", // ダウンロードするファイルを shift_jis にする？
 
       // データ
       record:   null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
@@ -160,11 +153,6 @@ export default {
       this.bs_error = null
       this.swars_url_check()
     },
-    body_encode(v) {
-      if (v === "sjis") {
-        this.toast_ok("ダウンロード時のファイル文字コードを Shift_JIS に変更します (なんのこっちゃわからん場合は UTF-8 に戻してください)", {duration: 10 * 1000})
-      }
-    }
   },
   methods: {
     swars_url_check() {
@@ -190,10 +178,6 @@ export default {
     },
     app_open(url) {
       this.url_open(url, this.target_default)
-    },
-    body_encode_set(key) {
-      this.sound_play('click')
-      this.body_encode = key
     },
     sidebar_toggle() {
       this.sound_play('click')
@@ -263,9 +247,6 @@ export default {
     kifu_show_url(kifu_type, other_params = {}) {
       if (this.record) {
         const params = {...other_params}
-        if (this.body_encode === "sjis") {
-          params["body_encode"] = this.body_encode
-        }
         if (kifu_type === "png") {
           params["width"] = 1200
           params["turn"] = this.record.turn_max
