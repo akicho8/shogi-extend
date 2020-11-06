@@ -28,14 +28,14 @@
             template(slot="label" slot-scope="props")
               | ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in FormatTypeInfo.values")
-              b-menu-item(:label="e.name" @click.prevent="kifu_dl_handle(e.key)" :href="kifu_dl_url(e.key)")
           b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 文字コード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in EncodeInfo.values")
               b-menu-item(:label="e.name" @click="body_encode_set(e.key)" :class="{'has-text-weight-bold': body_encode === e.key}")
+            template(v-for="e in DlFormatTypeInfo.values")
+              b-menu-item(:label="e.name" @click.prevent="kifu_dl_handle(e)" :href="kifu_dl_url(e)")
 
         b-menu-list(label="ANOTHER")
           b-menu-item(label="対応フォーマット" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play('click')")
@@ -99,6 +99,20 @@ class FormatTypeInfo extends MemoryRecord {
 
   get name() {
     return this.key.toUpperCase()
+  }
+}
+
+class DlFormatTypeInfo extends MemoryRecord {
+  static get define() {
+    return [
+      { name: "KIF",        format_key: "kif",  body_encode: "utf8",  },
+      { name: "KIF (SJIS)", format_key: "kif",  body_encode: "sjis",  },
+      { name: "KI2",        format_key: "ki2",  body_encode: "utf8",  },
+      { name: "CSA",        format_key: "csa",  body_encode: "utf8",  },
+      { name: "SFEN",       format_key: "sfen", body_encode: "utf8",  },
+      { name: "BOD",        format_key: "bod",  body_encode: "utf8",  },
+      { name: "PNG",        format_key: "png",                        },
+    ]
   }
 }
 
@@ -217,8 +231,8 @@ export default {
     },
 
     // 「KIFダウンロード」
-    kifu_dl_handle(kifu_type) {
-      this.record_fetch(() => this.app_open(this.kifu_dl_url(kifu_type)))
+    kifu_dl_handle(e) {
+      this.record_fetch(() => this.app_open(this.kifu_dl_url(e)))
     },
 
     // 「表示」
@@ -270,8 +284,8 @@ export default {
       }
     },
 
-    kifu_dl_url(kifu_type) {
-      return this.kifu_show_url(kifu_type, {attachment: "true"})
+    kifu_dl_url(e) {
+      return this.kifu_show_url(e.format_key, {attachment: "true", body_encode: e.body_encode})
     },
 
     // private
@@ -336,6 +350,7 @@ export default {
     },
 
     FormatTypeInfo() { return FormatTypeInfo          },
+    DlFormatTypeInfo() { return DlFormatTypeInfo          },
     EncodeInfo()     { return EncodeInfo              },
     show_path()      { return `/x/${this.record.key}` },
     disabled_p()     { return !this.record            },
