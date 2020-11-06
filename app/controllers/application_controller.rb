@@ -32,8 +32,10 @@ class ApplicationController < ActionController::Base
   def user_name_required
     if request.format.html?
       if current_user
-        if current_user.name.blank?
-          redirect_to [:edit, current_user], notice: "名前を入力してください"
+        if current_user.auth_infos.exists?
+          if current_user.name.blank?
+            redirect_to [:edit, current_user], notice: "名前を入力してください"
+          end
         end
       end
     end
