@@ -59,7 +59,7 @@
             :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
-          b-menu-item(:disabled="menu_item_disabled" @click="sound_play('click')")
+          b-menu-item(:disabled="menu_item_disabled" :expanded.sync="dl_menu_item_expanded_p" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 直近{{config.zip_dl_max_default}}件 ﾀﾞｳﾝﾛｰﾄﾞ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -282,6 +282,7 @@ export default {
   data() {
     return {
       sidebar_p: false,
+      dl_menu_item_expanded_p: false, // ダウンロードメニューの開閉状態
       config: {},
     }
   },
@@ -289,6 +290,14 @@ export default {
   // watchQuery: ['query'],
   watch: {
     "$route.query": "$fetch",
+
+    // ダウンロードメニューを開いたときだけしゃべる
+    dl_menu_item_expanded_p(v) {
+      if (v) {
+        this.talk_stop()
+        this.toast_ok("Windows用のアプリで棋譜が読めない場合は文字コードが SJIS の KIF を試してみてください")
+      }
+    },
   },
 
   mounted() {
