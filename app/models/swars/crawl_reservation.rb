@@ -110,14 +110,14 @@ module Swars
     private
 
     def kifu_format_info
-      @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_kifu_info.key)
+      @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_format_info.key)
     end
 
-    def zip_kifu_info
-      ZipKifuInfo.fetch(zip_kifu_key)
+    def zip_format_info
+      ZipFormatInfo.fetch(zip_format_key)
     end
 
-    def zip_kifu_key
+    def zip_format_key
       "kif"
     end
 

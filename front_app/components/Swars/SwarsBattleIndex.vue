@@ -263,11 +263,11 @@ import MemoryRecord from 'js-memory-record'
 class ZipDlInfo extends MemoryRecord {
   static get define() {
     return [
-      { name: "KIF",        zip_kifu_key: "kif",  body_encode: "utf8", },
-      { name: "KIF (SJIS)", zip_kifu_key: "kif",  body_encode: "sjis", },
-      { name: "KI2",        zip_kifu_key: "ki2",  body_encode: "utf8", },
-      { name: "CSA",        zip_kifu_key: "csa",  body_encode: "utf8", },
-      { name: "SFEN",       zip_kifu_key: "sfen", body_encode: "utf8", },
+      { name: "KIF",        zip_format_key: "kif",  body_encode: "utf8", },
+      { name: "KIF (SJIS)", zip_format_key: "kif",  body_encode: "sjis", },
+      { name: "KI2",        zip_format_key: "ki2",  body_encode: "utf8", },
+      { name: "CSA",        zip_format_key: "csa",  body_encode: "utf8", },
+      { name: "SFEN",       zip_format_key: "sfen", body_encode: "utf8", },
     ]
   }
 }
@@ -436,7 +436,7 @@ export default {
 
       const params = {
         query: this.query,
-        zip_kifu_key: e.zip_kifu_key,
+        zip_format_key: e.zip_format_key,
         body_encode: e.body_encode,
       }
       const usp = new URLSearchParams()
