@@ -6,23 +6,12 @@ module Emox
   class RuleInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :versus1_rule, name: "3分", time_limit_sec: nil, },
-      { key: :versus2_rule, name: "5分", time_limit_sec: nil, },
+      { key: :fischer_m3_p5_rule, name: "フィッシャールール 3分 +5秒/手", initial_main_sec: 60*3, initial_read_sec:0, initial_extra_sec: 0, every_plus:5, },
     ]
 
     class << self
       def default_key
-        :versus1_rule
-      end
-
-      def as_json(*)
-        super({
-            only: [
-              :key,                  # PK
-              :name,                 # ルール名
-              :time_limit_sec,       # 問題が時間切れになるまでの秒数
-            ],
-          })
+        :fischer_m3_p5_rule
       end
     end
 

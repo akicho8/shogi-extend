@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { child } from "./support_child.js"
+import { support_child } from "./support_child.js"
 
 export default {
   mixins: [support_child],

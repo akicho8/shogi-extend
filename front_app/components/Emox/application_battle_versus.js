@@ -25,18 +25,12 @@ export const application_battle_versus = {
       // this.chess_clock.initial_boot_from(this.current_membership.location.code)
       this.chess_clock_free()
       this.chess_clock = new ChessClock({
-        initial_main_sec: 60*3,
-        initial_read_sec:0,
-        initial_extra_sec: 0,
-        every_plus:0,
-
+        initial_main_sec:  this.current_rule_info.initial_main_sec,
+        initial_read_sec:  this.current_rule_info.initial_read_sec,
+        initial_extra_sec: this.current_rule_info.initial_extra_sec,
+        every_plus:        this.current_rule_info.every_plus,
         time_zero_callback: e => {
-          // this.sound_play("lose")
           this.toast_ng("時間切れ")
-          // this.$buefy.dialog.alert({
-          //   message: "時間切れ",
-          //   onConfirm: () => { this.stop_handle() },
-          // })
           this.vs_func_time_zero_handle(e)
         },
       })
@@ -71,7 +65,7 @@ export const application_battle_versus = {
       this.$buefy.dialog.confirm({
         message: `本当に投了しますか？`,
         confirmText: "投了する",
-        cancelText: "もう少しねばる",
+        cancelText: "まだねばる",
         type: "is-danger",
         hasIcon: false,
         trapFocus: true,

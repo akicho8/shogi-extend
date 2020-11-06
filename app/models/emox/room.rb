@@ -51,7 +51,6 @@ module Emox
     before_validation do
       self.begin_at ||= Time.current
       self.rule ||= Rule.fetch(RuleInfo.default_key)
-      self.practice ||= false
     end
 
     with_options presence: true do
@@ -74,7 +73,9 @@ module Emox
       as_json({
           only: [:id],
           include: {
-            rule: { only: [:key] },
+            rule: {
+              only: [:key],
+            },
             memberships: {
               only: [:id],
               include: {

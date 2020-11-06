@@ -44,7 +44,6 @@ module Emox
     before_validation do
       if room
         self.rule ||= room.rule
-        self.practice ||= room.practice
       end
 
       if parent
