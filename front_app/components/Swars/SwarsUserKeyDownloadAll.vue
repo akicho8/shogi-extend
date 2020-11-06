@@ -31,7 +31,7 @@
         | 終わったら指定のメールアドレスに通知します。
         | その際に棋譜データも必要であればZIPファイルの添付を有効にしてください。
         | <br><br>
-        | ZIPファイルには文字コード UTF-8 と SJIS の両方を入れているので Windows アプリで読めない場合は SJIS の方を使ってください。
+        | ZIPファイルには文字コード UTF-8 と Shift_JIS の両方を入れています。Windows アプリで読めない場合は Shift_JIS の方を使ってください。
 
       b-field.mt-6(label="通知先メールアドレス" label-position="on-border")
         b-input(v-model.trim="to_email" required :disabled="!g_current_user")

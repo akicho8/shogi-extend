@@ -99,22 +99,13 @@ class FormatTypeInfo extends MemoryRecord {
 class DlFormatTypeInfo extends MemoryRecord {
   static get define() {
     return [
-      { name: "KIF",        format_key: "kif",  body_encode: "utf8",  },
-      { name: "KIF (SJIS)", format_key: "kif",  body_encode: "sjis",  },
-      { name: "KI2",        format_key: "ki2",  body_encode: "utf8",  },
-      { name: "CSA",        format_key: "csa",  body_encode: "utf8",  },
-      { name: "SFEN",       format_key: "sfen", body_encode: "utf8",  },
-      { name: "BOD",        format_key: "bod",  body_encode: "utf8",  },
-      { name: "PNG",        format_key: "png",                        },
-    ]
-  }
-}
-
-class EncodeInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "utf8", name: "UTF-8",     },
-      { key: "sjis", name: "Shift_JIS", },
+      { name: "KIF",             format_key: "kif",  body_encode: "UTF-8",     },
+      { name: "KIF (Shift_JIS)", format_key: "kif",  body_encode: "Shift_JIS", },
+      { name: "KI2",             format_key: "ki2",  body_encode: "UTF-8",     },
+      { name: "CSA",             format_key: "csa",  body_encode: "UTF-8",     },
+      { name: "SFEN",            format_key: "sfen", body_encode: "UTF-8",     },
+      { name: "BOD",             format_key: "bod",  body_encode: "UTF-8",     },
+      { name: "PNG",             format_key: "png",                            },
     ]
   }
 }
@@ -216,7 +207,7 @@ export default {
 
     // 「KIFダウンロード」
     kifu_dl_handle(e) {
-      this.record_fetch(() => this.app_open(this.kifu_dl_url(e)))
+      this.record_fetch(() => location.href = this.kifu_dl_url(e))
     },
 
     // 「表示」
@@ -330,11 +321,10 @@ export default {
       }
     },
 
-    FormatTypeInfo() { return FormatTypeInfo          },
-    DlFormatTypeInfo() { return DlFormatTypeInfo          },
-    EncodeInfo()     { return EncodeInfo              },
-    show_path()      { return `/x/${this.record.key}` },
-    disabled_p()     { return !this.record            },
+    FormatTypeInfo()   { return FormatTypeInfo          },
+    DlFormatTypeInfo() { return DlFormatTypeInfo        },
+    show_path()        { return `/x/${this.record.key}` },
+    disabled_p()       { return !this.record            },
 
     input_text_field_type() {
       if (this.bs_error) {

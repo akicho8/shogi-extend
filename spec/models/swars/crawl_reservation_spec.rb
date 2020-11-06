@@ -1,3 +1,25 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Crawl reservation (swars_crawl_reservations as Swars::CrawlReservation)
+#
+# |-----------------+-----------------+-------------+-------------+--------------+-------|
+# | name            | desc            | type        | opts        | refs         | index |
+# |-----------------+-----------------+-------------+-------------+--------------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |              |       |
+# | user_id         | User            | integer(8)  | NOT NULL    | => ::User#id | A     |
+# | target_user_key | Target user key | string(255) | NOT NULL    |              |       |
+# | to_email        | To email        | string(255) | NOT NULL    |              |       |
+# | attachment_mode | Attachment mode | string(255) | NOT NULL    |              | B     |
+# | processed_at    | Processed at    | datetime    |             |              |       |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |              |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |              |       |
+# |-----------------+-----------------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
 require 'rails_helper'
 
 module Swars
@@ -30,12 +52,12 @@ module Swars
 
       Zip::InputStream.open(record.zip_io) do |zis|
         entry = zis.get_next_entry
-        assert { entry.name == "utf8/battle1.kif" }
-        assert { NKF.guess(zis.read) == Encoding::UTF_8 }
+        assert { entry.name == "UTF-8/battle1.kif" }
+        assert { NKF.guess(zis.read).to_s == "UTF-8" }
 
         entry = zis.get_next_entry
-        assert { entry.name == "sjis/battle1.kif" }
-        assert { NKF.guess(zis.read) == Encoding::Shift_JIS }
+        assert { entry.name == "Shift_JIS/battle1.kif" }
+        assert { NKF.guess(zis.read).to_s == "Shift_JIS" }
       end
     end
   end

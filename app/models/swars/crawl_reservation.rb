@@ -79,8 +79,8 @@ module Swars
           if str = battle.to_xxx(kifu_format_info.key)
             body_encodes.each do |encode|
               zos.put_next_entry("#{encode}/#{battle.key}.#{kifu_format_info.key}")
-              if encode == :sjis
-                str = str.tosjis
+              if encode == "Shift_JIS"
+                str = str.encode(encode)
               end
               zos.write(str)
             end
@@ -107,10 +107,10 @@ module Swars
       parts = []
       parts << "shogiwars"
       parts << target_user.key
+      parts << zip_scope.count
       parts << Time.current.strftime("%Y%m%d%H%M%S")
       parts << kifu_format_info.key
-      parts << body_encodes
-      parts << zip_scope.count
+      # parts << body_encodes
       str = parts.flatten.compact.join("-") + ".zip"
       str
     end
@@ -130,7 +130,7 @@ module Swars
     end
 
     def body_encodes
-      [:utf8, :sjis]
+      ["UTF-8", "Shift_JIS"]
     end
   end
 end

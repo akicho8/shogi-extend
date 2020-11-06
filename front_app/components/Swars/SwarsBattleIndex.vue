@@ -263,11 +263,11 @@ import MemoryRecord from 'js-memory-record'
 class ZipDlInfo extends MemoryRecord {
   static get define() {
     return [
-      { name: "KIF",        zip_format_key: "kif",  body_encode: "utf8", },
-      { name: "KIF (SJIS)", zip_format_key: "kif",  body_encode: "sjis", },
-      { name: "KI2",        zip_format_key: "ki2",  body_encode: "utf8", },
-      { name: "CSA",        zip_format_key: "csa",  body_encode: "utf8", },
-      { name: "SFEN",       zip_format_key: "sfen", body_encode: "utf8", },
+      { name: "KIF",             zip_format_key: "kif",  body_encode: "UTF-8",     },
+      { name: "KIF (Shift_JIS)", zip_format_key: "kif",  body_encode: "Shift_JIS", },
+      { name: "KI2",             zip_format_key: "ki2",  body_encode: "UTF-8",     },
+      { name: "CSA",             zip_format_key: "csa",  body_encode: "UTF-8",     },
+      { name: "SFEN",            zip_format_key: "sfen", body_encode: "UTF-8",     },
     ]
   }
 }
@@ -295,7 +295,7 @@ export default {
     dl_menu_item_expanded_p(v) {
       if (v) {
         this.talk_stop()
-        this.toast_ok("Windows用のアプリで棋譜が読めない場合は文字コードが SJIS の KIF を試してみてください")
+        this.toast_ok("Windows用のアプリで棋譜が読めない場合は文字コードが Shift_JIS の KIF を試してみてください")
       }
     },
   },

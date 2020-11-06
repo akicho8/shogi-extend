@@ -19,8 +19,8 @@ module Api
               zos.put_next_entry("#{record.lineage_key}/#{record.id}_#{record.title}.kif")
 
               str = record.to_kif
-              if current_body_encode == :sjis
-                str = str.tosjis
+              if current_body_encode == "Shift_JIS"
+                str = str.encode(current_body_encode)
               end
 
               zos.write(str)
@@ -37,11 +37,12 @@ module Api
         parts = []
         parts << current_user.name
         parts << "将棋問題集"
+        parts << zip_scope.count
         parts << Time.current.strftime("%Y%m%d%H%M%S")
         parts << current_body_encode
-        parts << zip_scope.count
         str = parts.compact.join("_") + ".zip"
-        str.public_send("to#{current_body_encode}")
+        # str = str.public_send("to#{current_body_encode}")
+        str
       end
 
       def zip_scope

@@ -24,7 +24,7 @@ client-only
         b-menu-list(label="Export")
           b-menu-item(label="KIF コピー" @click="kifu_copy_handle('kif')")
           b-menu-item(label="KIF ダウンロード" :href="kif_download_url" @click="sound_play('click')")
-          b-menu-item(label="KIF ダウンロード (SJIS)" :href="sjis_kif_download_url" @click="sound_play('click')")
+          b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="shift_jis_kif_download_url" @click="sound_play('click')")
           b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
           b-menu-item(label="SFEN コピー" @click="kifu_copy_handle('sfen')")
         b-menu-list(label="検討")
@@ -420,12 +420,12 @@ export default {
     },
 
     // URL
-    current_url()        { return this.permalink_for()                                                                        },
-    json_debug_url()     { return this.permalink_for({format: "json"})                                                        },
-    twitter_card_url()   { return this.permalink_for({format: "png"})                                                         },
-    snapshot_image_url() { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
-    kif_download_url()   { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
-    sjis_kif_download_url()   { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "sjis"})                              },
+    current_url()                { return this.permalink_for()                                                                        },
+    json_debug_url()             { return this.permalink_for({format: "json"})                                                        },
+    twitter_card_url()           { return this.permalink_for({format: "png"})                                                         },
+    snapshot_image_url()         { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
+    kif_download_url()           { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
+    shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"})                              },
 
     // 外部アプリ
     piyo_shogi_app_with_params_url() {
@@ -470,6 +470,9 @@ export default {
 
 <style lang="sass">
 .ShareBoardApp-Sidebar
+  .sidebar-content
+    width: unset
+
   .menu-label:not(:first-child)
     margin-top: 2em
 

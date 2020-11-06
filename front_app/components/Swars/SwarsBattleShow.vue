@@ -26,7 +26,7 @@
                   span.ml-1 ダウンロード
                   b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
                 b-menu-item(label="KIF"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
-                b-menu-item(label="KIF (SJIS)"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true&body_encode=sjis`")
+                b-menu-item(label="KIF (Shift_JIS)"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true&body_encode=Shift_JIS`")
                 b-menu-item(label="KI2"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
                 b-menu-item(label="CSA"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
                 b-menu-item(label="SFEN" @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
