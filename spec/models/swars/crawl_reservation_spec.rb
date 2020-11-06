@@ -31,11 +31,11 @@ module Swars
       Zip::InputStream.open(record.zip_io) do |zis|
         entry = zis.get_next_entry
         assert { entry.name == "utf8/battle1.kif" }
-        NKF.guess(zis.read) == Encoding::UTF_8
+        assert { NKF.guess(zis.read) == Encoding::UTF_8 }
 
         entry = zis.get_next_entry
         assert { entry.name == "sjis/battle1.kif" }
-        NKF.guess(zis.read) == Encoding::Shift_JIS
+        assert { NKF.guess(zis.read) == Encoding::Shift_JIS }
       end
     end
   end
