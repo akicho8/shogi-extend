@@ -9,7 +9,6 @@
 # | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
 # | key                    | ユニークなハッシュ         | string(255) | NOT NULL            |      | A!    |
 # | name                   | 名前                       | string(255) | NOT NULL            |      |       |
-# | cpu_brain_key          | CPUの思考タイプ            | string(255) |                     |      |       |
 # | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
 # | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
 # | name_input_at          | Name input at              | datetime    |                     |      |       |
@@ -40,7 +39,6 @@ class CreateUsers < ActiveRecord::Migration[5.1]
     create_table :users, force: true do |t|
       t.string :key,                null: false, index: {unique: true}, comment: "キー"
       t.string :name,               null: false,              comment: "名前"
-      t.string :cpu_brain_key,      null: true,               comment: "CPUだったときの挙動"
       t.string :user_agent,         null: false,              comment: "ブラウザ情報"
       t.string :race_key,           null: false, index: true, comment: "種族"
       t.datetime :name_input_at,    null: true

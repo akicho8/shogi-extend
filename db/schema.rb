@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_03_121300) do
+ActiveRecord::Schema.define(version: 2020_11_07_095900) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -477,16 +477,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
     t.index ["user_id"], name: "index_cpu_battle_records_on_user_id"
   end
 
-  create_table "emox_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "自分"
-    t.bigint "question_id", null: false, comment: "出題"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_emox_bad_marks_on_question_id"
-    t.index ["user_id", "question_id"], name: "index_emox_bad_marks_on_user_id_and_question_id", unique: true
-    t.index ["user_id"], name: "index_emox_bad_marks_on_user_id"
-  end
-
   create_table "emox_battle_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "対戦"
     t.bigint "user_id", null: false, comment: "対戦者"
@@ -521,38 +511,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
     t.index ["rule_id"], name: "index_emox_battles_on_rule_id"
   end
 
-  create_table "emox_clip_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "自分"
-    t.bigint "question_id", null: false, comment: "出題"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_emox_clip_marks_on_question_id"
-    t.index ["user_id", "question_id"], name: "index_emox_clip_marks_on_user_id_and_question_id", unique: true
-    t.index ["user_id"], name: "index_emox_clip_marks_on_user_id"
-  end
-
-  create_table "emox_emotion_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false
-    t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["position"], name: "index_emox_emotion_folders_on_position"
-  end
-
-  create_table "emox_emotions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "所有者"
-    t.bigint "folder_id", null: false, comment: "フォルダ"
-    t.string "name", null: false, comment: "トリガー名"
-    t.string "message", null: false, comment: "表示用伝言"
-    t.string "voice", null: false, comment: "発声用文言"
-    t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["folder_id"], name: "index_emox_emotions_on_folder_id"
-    t.index ["position"], name: "index_emox_emotions_on_position"
-    t.index ["user_id"], name: "index_emox_emotions_on_user_id"
-  end
-
   create_table "emox_finals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
@@ -568,29 +526,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["type", "user_id"], name: "index_emox_folders_on_type_and_user_id", unique: true
     t.index ["user_id"], name: "index_emox_folders_on_user_id"
-  end
-
-  create_table "emox_good_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "自分"
-    t.bigint "question_id", null: false, comment: "出題"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_emox_good_marks_on_question_id"
-    t.index ["user_id", "question_id"], name: "index_emox_good_marks_on_user_id_and_question_id", unique: true
-    t.index ["user_id"], name: "index_emox_good_marks_on_user_id"
-  end
-
-  create_table "emox_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "自分"
-    t.bigint "question_id", null: false, comment: "出題"
-    t.bigint "room_id", comment: "対戦部屋"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "ox_mark_id", null: false, comment: "解答"
-    t.index ["ox_mark_id"], name: "index_emox_histories_on_ox_mark_id"
-    t.index ["question_id"], name: "index_emox_histories_on_question_id"
-    t.index ["room_id"], name: "index_emox_histories_on_room_id"
-    t.index ["user_id"], name: "index_emox_histories_on_user_id"
   end
 
   create_table "emox_judges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -657,28 +592,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
     t.index ["win_rate"], name: "index_emox_main_xrecords_on_win_rate"
   end
 
-  create_table "emox_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "question_id", null: false, comment: "問題"
-    t.integer "moves_count", null: false, comment: "N手"
-    t.string "moves_str", null: false, comment: "連続した指し手"
-    t.string "end_sfen", comment: "最後の局面"
-    t.string "moves_human_str", comment: "人間向け指し手"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["moves_count"], name: "index_emox_moves_answers_on_moves_count"
-    t.index ["question_id"], name: "index_emox_moves_answers_on_question_id"
-  end
-
-  create_table "emox_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "question_message_id", null: false, comment: "問題コメント"
-    t.bigint "user_id", null: false, comment: "通知先"
-    t.datetime "opened_at", comment: "開封日時"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_message_id"], name: "index_emox_notifications_on_question_message_id"
-    t.index ["user_id"], name: "index_emox_notifications_on_user_id"
-  end
-
   create_table "emox_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false, comment: "正解・不正解"
     t.integer "position", null: false
@@ -686,31 +599,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["key"], name: "index_emox_ox_marks_on_key"
     t.index ["position"], name: "index_emox_ox_marks_on_position"
-  end
-
-  create_table "emox_ox_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "question_id", null: false, comment: "問題"
-    t.integer "o_count", null: false, comment: "正解数"
-    t.integer "x_count", null: false, comment: "不正解数"
-    t.integer "ox_total", null: false, comment: "出題数"
-    t.float "o_rate", comment: "高評価率"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["o_count"], name: "index_emox_ox_records_on_o_count"
-    t.index ["o_rate"], name: "index_emox_ox_records_on_o_rate"
-    t.index ["ox_total"], name: "index_emox_ox_records_on_ox_total"
-    t.index ["question_id"], name: "index_emox_ox_records_on_question_id", unique: true
-    t.index ["x_count"], name: "index_emox_ox_records_on_x_count"
-  end
-
-  create_table "emox_question_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "発言者"
-    t.bigint "question_id", null: false, comment: "問題"
-    t.string "body", limit: 512, null: false, comment: "発言"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_emox_question_messages_on_question_id"
-    t.index ["user_id"], name: "index_emox_question_messages_on_user_id"
   end
 
   create_table "emox_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -887,14 +775,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["position"], name: "index_emox_source_abouts_on_position"
-  end
-
-  create_table "emox_vs_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "battle_id", null: false, comment: "対戦"
-    t.string "sfen_body", limit: 1536, null: false, comment: "棋譜"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["battle_id"], name: "index_emox_vs_records_on_battle_id"
   end
 
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -1117,7 +997,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false, comment: "キー"
     t.string "name", null: false, comment: "名前"
-    t.string "cpu_brain_key", comment: "CPUだったときの挙動"
     t.string "user_agent", null: false, comment: "ブラウザ情報"
     t.string "race_key", null: false, comment: "種族"
     t.datetime "name_input_at"
@@ -1212,8 +1091,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
   add_foreign_key "actb_settings", "users"
   add_foreign_key "actb_vs_records", "actb_battles", column: "battle_id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "emox_bad_marks", "emox_questions", column: "question_id"
-  add_foreign_key "emox_bad_marks", "users"
   add_foreign_key "emox_battle_memberships", "emox_battles", column: "battle_id"
   add_foreign_key "emox_battle_memberships", "emox_judges", column: "judge_id"
   add_foreign_key "emox_battle_memberships", "users"
@@ -1221,28 +1098,12 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
   add_foreign_key "emox_battles", "emox_finals", column: "final_id"
   add_foreign_key "emox_battles", "emox_rooms", column: "room_id"
   add_foreign_key "emox_battles", "emox_rules", column: "rule_id"
-  add_foreign_key "emox_clip_marks", "emox_questions", column: "question_id"
-  add_foreign_key "emox_clip_marks", "users"
-  add_foreign_key "emox_emotions", "emox_emotion_folders", column: "folder_id"
-  add_foreign_key "emox_emotions", "users"
   add_foreign_key "emox_folders", "users"
-  add_foreign_key "emox_good_marks", "emox_questions", column: "question_id"
-  add_foreign_key "emox_good_marks", "users"
-  add_foreign_key "emox_histories", "emox_ox_marks", column: "ox_mark_id"
-  add_foreign_key "emox_histories", "emox_questions", column: "question_id"
-  add_foreign_key "emox_histories", "emox_rooms", column: "room_id"
-  add_foreign_key "emox_histories", "users"
   add_foreign_key "emox_lobby_messages", "users"
   add_foreign_key "emox_main_xrecords", "emox_finals", column: "final_id"
   add_foreign_key "emox_main_xrecords", "emox_judges", column: "judge_id"
   add_foreign_key "emox_main_xrecords", "emox_skills", column: "skill_id"
   add_foreign_key "emox_main_xrecords", "users"
-  add_foreign_key "emox_moves_answers", "emox_questions", column: "question_id"
-  add_foreign_key "emox_notifications", "emox_question_messages", column: "question_message_id"
-  add_foreign_key "emox_notifications", "users"
-  add_foreign_key "emox_ox_records", "emox_questions", column: "question_id"
-  add_foreign_key "emox_question_messages", "emox_questions", column: "question_id"
-  add_foreign_key "emox_question_messages", "users"
   add_foreign_key "emox_questions", "emox_folders", column: "folder_id"
   add_foreign_key "emox_questions", "emox_lineages", column: "lineage_id"
   add_foreign_key "emox_questions", "emox_source_abouts", column: "source_about_id"
@@ -1260,7 +1121,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_121300) do
   add_foreign_key "emox_season_xrecords", "users"
   add_foreign_key "emox_settings", "emox_rules", column: "rule_id"
   add_foreign_key "emox_settings", "users"
-  add_foreign_key "emox_vs_records", "emox_battles", column: "battle_id"
   add_foreign_key "mute_infos", "users"
   add_foreign_key "mute_infos", "users", column: "target_user_id"
   add_foreign_key "swars_crawl_reservations", "users"

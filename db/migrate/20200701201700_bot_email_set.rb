@@ -5,13 +5,6 @@ class BotEmailSet < ActiveRecord::Migration[6.0]
       user.save!
     end
 
-    CpuBrainInfo.each do |e|
-      if user = User.robot_only.find_by(key: e.key)
-        user.email = "shogi.extend+cpu-#{e.key}@gmail.com"
-        user.save!
-      end
-    end
-
     [
       "shogi.extend@gmail.com",
       "shogi.extend+bot@gmail.com",

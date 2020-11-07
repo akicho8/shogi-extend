@@ -9,7 +9,6 @@
 # | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
 # | key                    | ユニークなハッシュ         | string(255) | NOT NULL            |      | A!    |
 # | name                   | 名前                       | string(255) | NOT NULL            |      |       |
-# | cpu_brain_key          | CPUの思考タイプ            | string(255) |                     |      |       |
 # | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
 # | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
 # | name_input_at          | Name input at              | datetime    |                     |      |       |
