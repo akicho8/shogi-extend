@@ -1352,6 +1352,8 @@ CREATE TABLE `free_battles` (
   `critical_turn` int(11) DEFAULT NULL COMMENT '開戦',
   `outbreak_turn` int(11) DEFAULT NULL COMMENT '中盤',
   `image_turn` int(11) DEFAULT NULL COMMENT '???',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_free_battles_on_key` (`key`),
   KEY `index_free_battles_on_turn_max` (`turn_max`),

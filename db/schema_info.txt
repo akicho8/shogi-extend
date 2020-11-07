@@ -512,6 +512,8 @@
 # | critical_turn | 開戦               | integer(4)     |             |            | H     |
 # | outbreak_turn | Outbreak turn      | integer(4)     |             |            | I     |
 # | image_turn    | OGP画像の局面      | integer(4)     |             |            |       |
+# | created_at    | 作成日時           | datetime       | NOT NULL    |            |       |
+# | updated_at    | 更新日時           | datetime       | NOT NULL    |            |       |
 # |---------------+--------------------+----------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
