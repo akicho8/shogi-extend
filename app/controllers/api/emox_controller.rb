@@ -55,7 +55,7 @@ module Api
 
       render json: {
         :mode         => "lobby",
-        :current_user => current_user&.as_json_type9x,
+        :current_user => current_user&.as_json_type20x,
         :config       => Emox::Config,
         :RuleInfo     => Emox::RuleInfo.as_json,
         :EmotionInfo  => Emox::EmotionInfo.as_json,

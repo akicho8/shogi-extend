@@ -20,18 +20,18 @@ module Emox
       end
 
       # for current_user, profile
-      def as_json_type9x
+      def as_json_type20x
         # 二つのブラウザで同期してしまう不具合回避のための値
         # 新しく開いた瞬間にトークンが変化するので古い方には送られなくなる(受信しても無視するしかなくなる)
         # ↑これはまずい、2連続アクセス(はてブ？などが後からGET)した場合に START できなくなる
         @session_lock_token = SecureRandom.hex
-        as_json_type9
+        as_json_type20
       end
 
       # rails r "tp User.first.emotions.destroy_all"
-      # rails r "tp User.first.as_json_type9"
+      # rails r "tp User.first.as_json_type20"
       # rails r "tp Emox::EmotionInfo.as_json"
-      def as_json_type9
+      def as_json_type20
         as_json({
             only: [
               :id,
