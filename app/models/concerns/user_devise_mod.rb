@@ -5,7 +5,7 @@ module UserDeviseMod
     has_many :auth_infos, dependent: :destroy
     accepts_nested_attributes_for :auth_infos
 
-    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :confirmable
+    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
     devise :omniauthable, omniauth_providers: [:google, :twitter, :github]
   end
 
@@ -22,6 +22,6 @@ module UserDeviseMod
   end
 
   def email_invalid?
-    email.blank?
+    email.blank? || email.include?("@localhost")
   end
 end

@@ -25,19 +25,27 @@ module UserCoreMod
       if Rails.env.test?
         self.name ||= "test-user#{self.class.count.next}"
       end
-      self.key          ||= SecureRandom.hex
-      self.name         ||= name.to_s.strip
-      self.email        ||= email.to_s.strip
-      self.user_agent   ||= ""
-      self.confirmed_at ||= Time.current
-    end
 
-    with_options presence: true do
-      validates :key
+      self.key ||= SecureRandom.hex
+      self.user_agent ||= ""
+      self.name ||= name.to_s.strip
+
+      if Rails.env.development?
+        self.name = name.gsub(/foo/, "bar")
+      end
+
+      if name.present?
+        self.name_input_at ||= Time.current
+      end
+
+      if email.blank?
+        self.email = "#{key}@localhost"
+        self.confirmed_at ||= Time.current
+      end
     end
 
     with_options allow_blank: true do
-      validates :email, uniqueness: true
+      validates :name, length: 1..64
     end
 
     after_create_commit do

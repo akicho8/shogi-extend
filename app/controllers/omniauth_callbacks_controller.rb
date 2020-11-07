@@ -51,6 +51,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         e.email         = auth.info.email # Twitterの場合は空文字列
         e.confirmed_at  = Time.current    # メール認証したことにする
         e.name          = user_name
+        e.name_input_at = Time.current
         e.user_agent    = request.user_agent
       end
 

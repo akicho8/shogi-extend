@@ -335,7 +335,7 @@ export default {
     handle_name_required() {
       if (this.config.user_name_required) {
         if (this.current_user) {
-          if (!this.current_user.name) {
+          if (!this.current_user.name_input_at) {
             this.warning_notice("名前を入力してください")
             this.$router.push({name: "settings-profile"})
             return true

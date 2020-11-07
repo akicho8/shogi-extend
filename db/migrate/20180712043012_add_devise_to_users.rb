@@ -70,7 +70,7 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.2]
       # 元のモデルにタイムスタンプが含まれていない場合は、コメントを外してください。
       # t.timestamps null: false
 
-      t.index :email,                unique: false
+      t.index :email,                unique: true
       t.index :reset_password_token, unique: true
       t.index :confirmation_token,   unique: true
       t.index :unlock_token,         unique: true

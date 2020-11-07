@@ -121,6 +121,7 @@ module Actb
               :key,
               :name,
               :permit_tag_list,
+              :name_input_at,
             ],
             include: {
               emotions: Actb::Emotion.json_type13,
@@ -298,6 +299,7 @@ module Actb
         {
           "ID"                 => id,
           "名前"               => name,
+          "名前確定日時"       => name_input_at&.to_s(:distance),
           "メールアドレス"     => email,
           "プロバイダ"         => auth_infos.collect(&:provider).join(" "),
           "Twitterアカウント"  => twitter_key,
