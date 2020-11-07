@@ -76,8 +76,14 @@ module Swars
       end
     end
 
+    # インポートする条件 (重要)
+    #
+    #   1. ウォーズIDが指定されている (Userレコードの有無は関係なし)
+    #   2. ページング中ではないこと
+    #   3. 人間であること
+    #
     def import_enable?
-      current_swars_user_key && params[:page].blank?
+      current_swars_user_key && params[:page].blank? && !request.from_crawler?
     end
 
     def js_index_options
