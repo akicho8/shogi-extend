@@ -163,9 +163,6 @@ gem "omniauth-twitter"
 gem "omniauth-facebook"
 gem "omniauth-github"
 
-# markdown
-gem "redcarpet"
-
 # 音声読み上げ
 gem "aws-sdk-polly"
 
