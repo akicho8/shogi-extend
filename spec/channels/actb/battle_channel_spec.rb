@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe Actb::BattleChannel, type: :channel do
   before(:context) do
     Actb.setup
+    Emox.setup
   end
 
   let_it_be(:user1) { User.create! }
