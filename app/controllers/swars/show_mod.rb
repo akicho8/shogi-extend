@@ -4,7 +4,7 @@ module Swars
 
     let :current_record do
       if v = params[:id].presence
-        if human_agent?
+        unless request.from_crawler?
           current_model.single_battle_import(key: v)
         end
         current_scope.find_by!(key: v)

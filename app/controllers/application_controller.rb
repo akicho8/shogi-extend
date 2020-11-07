@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
     end
 
     def slack_message(params = {})
-      SlackAgent.message_send(params.merge(ua: ua))
+      SlackAgent.message_send(params)
     end
 
     private
@@ -81,49 +81,6 @@ class ApplicationController < ActionController::Base
       @h ||= view_context
     end
     delegate :tag, :link_to, :icon_tag, :auto_link, to: :h
-  end
-
-  concerning :BotCheckMethods do
-    included do
-      helper_method :ua
-    end
-
-    let :ua do
-      @ua ||= UserAgent.parse(request.user_agent.to_s)
-    end
-
-    let :bot_agent? do
-      ua.bot? || request.user_agent.to_s.include?("Barkrowler")
-    end
-
-    let :human_agent? do
-      !bot_agent?
-    end
-  end
-
-  concerning :MobileMethods do
-    included do
-      helper_method :mobile_agent?
-    end
-
-    let :mobile_agent? do
-      ua.mobile?
-    end
-  end
-
-  concerning :ShowiPlayerMethods do
-    included do
-      helper_method :sp_theme_default
-    end
-
-    let :sp_theme_default do
-      # if mobile_agent?
-      #   "simple"
-      # else
-      #   "real"
-      # end
-      "simple"
-    end
   end
 
   concerning :AdminUserMethods do

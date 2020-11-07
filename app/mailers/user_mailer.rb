@@ -10,7 +10,6 @@ class UserMailer < ApplicationMailer
     }
 
     attrs[:provider_names] = user.provider_names
-    attrs[:ua_info] = user.ua_info
     attrs[:twitter_url] = user.twitter_url
     attrs[:avatar_url] = user.avatar_url
 

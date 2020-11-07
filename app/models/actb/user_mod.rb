@@ -300,14 +300,6 @@ module Actb
         actb_histories.with_today.with_ox_mark(:mistake).distinct.count(:question_id)
       end
 
-      def ua
-        @ua ||= UserAgent.parse(user_agent.to_s)
-      end
-
-      def ua_info
-        [ua.mobile? ? "モバイル" : "PC", ua.platform, ua.os, ua.browser, ua.version.to_s.to_i].compact.join(" ").gsub("Windows", "Win")
-      end
-
       # rails r "tp User.first.actb_info"
       def info
         {
@@ -321,7 +313,6 @@ module Actb
           "最終ログイン日時"   => current_sign_in_at&.to_s(:distance),
           "登録日時"           => created_at&.to_s(:distance),
           "IP"                 => current_sign_in_ip,
-          "USER_AGENT"         => ua_info,
           "タグ"               => permit_tag_list,
 
           "オンライン"         => Actb::SchoolChannel.active_users.include?(self) ? "○" : "",
