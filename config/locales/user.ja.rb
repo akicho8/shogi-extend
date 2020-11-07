@@ -19,7 +19,6 @@
           :email                 => "メールアドレス",
           :password              => "パスワード",
           :password_confirmation => "確認用パスワード",
-          :cpu_brain_key         => "CPUの思考タイプ",
           :race_key              => "種族",
         },
         profile: {

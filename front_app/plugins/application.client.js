@@ -1,5 +1,18 @@
+import SnsLoginContainer         from "@/components/SnsLoginContainer.vue"
+
 export default {
   methods: {
+    sns_login_modal_handle() {
+      this.$buefy.modal.open({
+        customClass: "my-modal-background-background-color-dark",
+        width: "20rem",
+        parent: this,
+        component: SnsLoginContainer,
+        animation: "",
+        onCancel: () => this.sound_play("click"),
+      })
+    },
+
     dialog_ok(message, options = {}) {
       options = {
         type: "info",

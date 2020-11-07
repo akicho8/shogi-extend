@@ -3,7 +3,7 @@
 #
 # 1. iPhone でダウンロードとしたときだけ文字化けする対策をしてはいけない
 #
-#   if mobile_agent?
+#   if request.from_smartphone?
 #     text_body = text_body.encode("Shift_JIS")
 #   end
 #   とすれば文字化けしなくなるが、ぴよ将棋で読めなくなる

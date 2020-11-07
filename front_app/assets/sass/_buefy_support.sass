@@ -27,7 +27,7 @@
     top: 0.6rem
     left: 0.6rem
     z-index: 2 // shogi-player の「○手目」のdivより下にあって押せない場合があるため指定する必要がある
-  
+
   &.is-full-screen
     // 上のスペース
     .modal-card-body
@@ -40,3 +40,11 @@
       // background-color: $scheme-main
       padding: 0.75rem
       justify-content: space-between
+
+//////// .modal-background の濃さを切り替える
+//
+//  this.$buefy.modal.open({customClass: "my-modal-background-background-color-dark"})
+//
+.my-modal-background-background-color-dark
+  .modal-background
+    background-color: change_color($black, $alpha: 0.7)

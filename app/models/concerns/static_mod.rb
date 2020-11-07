@@ -1,3 +1,18 @@
+# 静的レコードをARに反映するモジュール
+#
+#   class RuleInfo
+#     include ApplicationMemoryRecord
+#     memory_record [
+#       { key: :key1,  name: "名前1", },
+#     end
+#   end
+#
+#   class Rule < ApplicationRecord
+#     include StaticMod
+#   end
+#
+#
+
 module StaticMod
   extend ActiveSupport::Concern
   included do

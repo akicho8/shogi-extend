@@ -5,14 +5,22 @@ class BotEmailSet < ActiveRecord::Migration[6.0]
       user.save!
     end
 
-    if user = User.find_by(email: "pinpon.ikeda+ureshinobomb@gmail.com")
-      user.email = "pinpon.ikeda+kinakomochi@gmail.com"
-      user.save!
+    [
+      "shogi.extend@gmail.com",
+      "shogi.extend+bot@gmail.com",
+      "pinpon.ikeda+kinakomochi@gmail.com",
+      "shogi.extend+cpu-level1@gmail.com",
+    ].each do |email|
+      if user = User.find_by(email: email)
+        user.permit_tag_list = "staff"
+        user.save!
+      end
     end
-
-    CpuBrainInfo.each do |e|
-      if user = User.robot_only.find_by(key: e.key)
-        user.email = "shogi.extend+cpu-#{e.key}@gmail.com"
+    [
+      "pinpon.ikeda+splawarabimochi@gmail.com",
+    ].each do |email|
+      if user = User.find_by(email: email)
+        user.permit_tag_list = ""
         user.save!
       end
     end

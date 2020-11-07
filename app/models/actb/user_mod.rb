@@ -85,12 +85,12 @@ module Actb
     concerning :CurrentUserMethods do
       attr_accessor :session_lock_token
 
-      def session_lock_token_valid?(token)
+      def actb_session_lock_token_valid?(token)
         actb_setting.reload.session_lock_token == token
       end
 
-      # rails r "tp User.first.emotions_setup(reset: true)"
-      def emotions_setup(options = {})
+      # rails r "tp User.first.actb_emotions_setup(reset: true)"
+      def actb_emotions_setup(options = {})
         if options[:reset]
           emotions.destroy_all
         end
@@ -132,22 +132,16 @@ module Actb
               :skill_key,
               :description,
               :twitter_key,
-              :regular_p,
               :mute_user_ids,
-              :created_after_days,
+              :actb_created_after_days,
               :session_lock_token,
             ],
           })
       end
 
-      # レギュラー条件
-      def regular_p
-        actb_room_memberships.count >= 1 || actb_questions.active_only.count >= 1
-      end
-
       # アカウントを作ってからの日数
-      # rails r "p User.first.created_after_days"
-      def created_after_days
+      # rails r "p User.first.actb_created_after_days"
+      def actb_created_after_days
         ((Time.current - created_at) / 1.days).to_i
       end
     end
@@ -300,15 +294,7 @@ module Actb
         actb_histories.with_today.with_ox_mark(:mistake).distinct.count(:question_id)
       end
 
-      def ua
-        @ua ||= UserAgent.parse(user_agent.to_s)
-      end
-
-      def ua_info
-        [ua.mobile? ? "モバイル" : "PC", ua.platform, ua.os, ua.browser, ua.version.to_s.to_i].compact.join(" ").gsub("Windows", "Win")
-      end
-
-      # rails r "tp User.first.info"
+      # rails r "tp User.first.actb_info"
       def info
         {
           "ID"                 => id,
@@ -321,7 +307,6 @@ module Actb
           "最終ログイン日時"   => current_sign_in_at&.to_s(:distance),
           "登録日時"           => created_at&.to_s(:distance),
           "IP"                 => current_sign_in_ip,
-          "USER_AGENT"         => ua_info,
           "タグ"               => permit_tag_list,
 
           "オンライン"         => Actb::SchoolChannel.active_users.include?(self) ? "○" : "",

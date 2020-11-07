@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_31_150300) do
+ActiveRecord::Schema.define(version: 2020_11_07_095900) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -44,9 +44,9 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.datetime "begin_at", null: false, comment: "対戦開始日時"
     t.datetime "end_at", comment: "対戦終了日時"
     t.integer "battle_pos", null: false, comment: "連戦インデックス"
+    t.boolean "practice", comment: "練習バトル？"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "practice", comment: "練習バトル？"
     t.index ["battle_pos"], name: "index_actb_battles_on_battle_pos"
     t.index ["begin_at"], name: "index_actb_battles_on_begin_at"
     t.index ["end_at"], name: "index_actb_battles_on_end_at"
@@ -118,10 +118,10 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   create_table "actb_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
     t.bigint "question_id", null: false, comment: "出題"
+    t.bigint "room_id", comment: "対戦部屋"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "ox_mark_id", null: false, comment: "解答"
-    t.bigint "room_id", comment: "対戦部屋"
     t.index ["ox_mark_id"], name: "index_actb_histories_on_ox_mark_id"
     t.index ["question_id"], name: "index_actb_histories_on_question_id"
     t.index ["room_id"], name: "index_actb_histories_on_room_id"
@@ -197,9 +197,9 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.integer "moves_count", null: false, comment: "N手"
     t.string "moves_str", null: false, comment: "連続した指し手"
     t.string "end_sfen", comment: "最後の局面"
+    t.string "moves_human_str", comment: "人間向け指し手"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "moves_human_str", comment: "人間向け指し手"
     t.index ["moves_count"], name: "index_actb_moves_answers_on_moves_count"
     t.index ["question_id"], name: "index_actb_moves_answers_on_question_id"
   end
@@ -263,6 +263,10 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.string "source_media_name", comment: "出典メディア"
     t.string "source_media_url", comment: "出典URL"
     t.date "source_published_on", comment: "出典年月日"
+    t.bigint "source_about_id", comment: "所在"
+    t.integer "turn_max", comment: "最大手数"
+    t.boolean "mate_skip", comment: "詰みチェックをスキップする"
+    t.string "direction_message", comment: "メッセージ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.float "good_rate", comment: "高評価率"
@@ -272,10 +276,6 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.integer "bad_marks_count", default: 0, null: false, comment: "低評価数"
     t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
     t.integer "messages_count", default: 0, null: false, comment: "コメント数"
-    t.string "direction_message", comment: "メッセージ"
-    t.bigint "source_about_id", comment: "所在"
-    t.integer "turn_max", comment: "最大手数"
-    t.boolean "mate_skip", comment: "詰みチェックをスキップする"
     t.index ["bad_marks_count"], name: "index_actb_questions_on_bad_marks_count"
     t.index ["clip_marks_count"], name: "index_actb_questions_on_clip_marks_count"
     t.index ["difficulty_level"], name: "index_actb_questions_on_difficulty_level"
@@ -401,9 +401,9 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   create_table "actb_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
     t.bigint "rule_id", null: false, comment: "選択ルール"
+    t.string "session_lock_token", comment: "複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "session_lock_token", comment: "複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン"
     t.index ["rule_id"], name: "index_actb_settings_on_rule_id"
     t.index ["user_id"], name: "index_actb_settings_on_user_id"
   end
@@ -469,7 +469,7 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   end
 
   create_table "cpu_battle_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", comment: "ログインしているならそのユーザー"
     t.string "judge_key", null: false, comment: "結果"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -477,31 +477,452 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.index ["user_id"], name: "index_cpu_battle_records_on_user_id"
   end
 
+  create_table "emox_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_emox_bad_marks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_emox_bad_marks_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_emox_bad_marks_on_user_id"
+  end
+
+  create_table "emox_battle_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "battle_id", null: false, comment: "対戦"
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "judge_id", null: false, comment: "勝敗"
+    t.integer "position", null: false, comment: "順序"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_id", "user_id"], name: "index_emox_battle_memberships_on_battle_id_and_user_id", unique: true
+    t.index ["battle_id"], name: "index_emox_battle_memberships_on_battle_id"
+    t.index ["judge_id"], name: "index_emox_battle_memberships_on_judge_id"
+    t.index ["position"], name: "index_emox_battle_memberships_on_position"
+    t.index ["user_id"], name: "index_emox_battle_memberships_on_user_id"
+  end
+
+  create_table "emox_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "room_id", null: false, comment: "部屋"
+    t.bigint "parent_id", comment: "親"
+    t.bigint "rule_id", null: false, comment: "ルール"
+    t.bigint "final_id", null: false, comment: "結果"
+    t.datetime "begin_at", null: false, comment: "対戦開始日時"
+    t.datetime "end_at", comment: "対戦終了日時"
+    t.integer "battle_pos", null: false, comment: "連戦インデックス"
+    t.boolean "practice", comment: "練習バトル？"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_pos"], name: "index_emox_battles_on_battle_pos"
+    t.index ["begin_at"], name: "index_emox_battles_on_begin_at"
+    t.index ["end_at"], name: "index_emox_battles_on_end_at"
+    t.index ["final_id"], name: "index_emox_battles_on_final_id"
+    t.index ["parent_id"], name: "index_emox_battles_on_parent_id"
+    t.index ["room_id"], name: "index_emox_battles_on_room_id"
+    t.index ["rule_id"], name: "index_emox_battles_on_rule_id"
+  end
+
+  create_table "emox_clip_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_emox_clip_marks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_emox_clip_marks_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_emox_clip_marks_on_user_id"
+  end
+
+  create_table "emox_emotion_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_emox_emotion_folders_on_position"
+  end
+
+  create_table "emox_emotions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "所有者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.string "name", null: false, comment: "トリガー名"
+    t.string "message", null: false, comment: "表示用伝言"
+    t.string "voice", null: false, comment: "発声用文言"
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["folder_id"], name: "index_emox_emotions_on_folder_id"
+    t.index ["position"], name: "index_emox_emotions_on_position"
+    t.index ["user_id"], name: "index_emox_emotions_on_user_id"
+  end
+
+  create_table "emox_finals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_emox_finals_on_position"
+  end
+
+  create_table "emox_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "type", null: false, comment: "for STI"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["type", "user_id"], name: "index_emox_folders_on_type_and_user_id", unique: true
+    t.index ["user_id"], name: "index_emox_folders_on_user_id"
+  end
+
+  create_table "emox_good_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_emox_good_marks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_emox_good_marks_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_emox_good_marks_on_user_id"
+  end
+
+  create_table "emox_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
+    t.bigint "room_id", comment: "対戦部屋"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "ox_mark_id", null: false, comment: "解答"
+    t.index ["ox_mark_id"], name: "index_emox_histories_on_ox_mark_id"
+    t.index ["question_id"], name: "index_emox_histories_on_question_id"
+    t.index ["room_id"], name: "index_emox_histories_on_room_id"
+    t.index ["user_id"], name: "index_emox_histories_on_user_id"
+  end
+
+  create_table "emox_judges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_emox_judges_on_position"
+  end
+
+  create_table "emox_lineages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_emox_lineages_on_position"
+  end
+
+  create_table "emox_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.string "body", limit: 512, null: false, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_emox_lobby_messages_on_user_id"
+  end
+
+  create_table "emox_main_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "judge_id", null: false, comment: "直前の勝敗"
+    t.bigint "final_id", null: false, comment: "直前の結果"
+    t.integer "battle_count", null: false, comment: "対戦数"
+    t.integer "win_count", null: false, comment: "勝ち数"
+    t.integer "lose_count", null: false, comment: "負け数"
+    t.float "win_rate", null: false, comment: "勝率"
+    t.float "rating", null: false, comment: "レーティング"
+    t.float "rating_diff", null: false, comment: "直近レーティング変化"
+    t.float "rating_max", null: false, comment: "レーティング(最大)"
+    t.integer "straight_win_count", null: false, comment: "連勝数"
+    t.integer "straight_lose_count", null: false, comment: "連敗数"
+    t.integer "straight_win_max", null: false, comment: "連勝数(最大)"
+    t.integer "straight_lose_max", null: false, comment: "連敗数(最大)"
+    t.bigint "skill_id", null: false, comment: "ウデマエ"
+    t.float "skill_point", null: false, comment: "ウデマエの内部ポイント"
+    t.float "skill_last_diff", null: false, comment: "直近ウデマエ変化度"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "disconnect_count", null: false, comment: "切断数"
+    t.datetime "disconnected_at", comment: "最終切断日時"
+    t.index ["battle_count"], name: "index_emox_main_xrecords_on_battle_count"
+    t.index ["disconnect_count"], name: "index_emox_main_xrecords_on_disconnect_count"
+    t.index ["final_id"], name: "index_emox_main_xrecords_on_final_id"
+    t.index ["judge_id"], name: "index_emox_main_xrecords_on_judge_id"
+    t.index ["lose_count"], name: "index_emox_main_xrecords_on_lose_count"
+    t.index ["rating"], name: "index_emox_main_xrecords_on_rating"
+    t.index ["rating_diff"], name: "index_emox_main_xrecords_on_rating_diff"
+    t.index ["rating_max"], name: "index_emox_main_xrecords_on_rating_max"
+    t.index ["skill_id"], name: "index_emox_main_xrecords_on_skill_id"
+    t.index ["straight_lose_count"], name: "index_emox_main_xrecords_on_straight_lose_count"
+    t.index ["straight_lose_max"], name: "index_emox_main_xrecords_on_straight_lose_max"
+    t.index ["straight_win_count"], name: "index_emox_main_xrecords_on_straight_win_count"
+    t.index ["straight_win_max"], name: "index_emox_main_xrecords_on_straight_win_max"
+    t.index ["user_id"], name: "index_emox_main_xrecords_on_user_id", unique: true
+    t.index ["win_count"], name: "index_emox_main_xrecords_on_win_count"
+    t.index ["win_rate"], name: "index_emox_main_xrecords_on_win_rate"
+  end
+
+  create_table "emox_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "question_id", null: false, comment: "問題"
+    t.integer "moves_count", null: false, comment: "N手"
+    t.string "moves_str", null: false, comment: "連続した指し手"
+    t.string "end_sfen", comment: "最後の局面"
+    t.string "moves_human_str", comment: "人間向け指し手"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["moves_count"], name: "index_emox_moves_answers_on_moves_count"
+    t.index ["question_id"], name: "index_emox_moves_answers_on_question_id"
+  end
+
+  create_table "emox_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "question_message_id", null: false, comment: "問題コメント"
+    t.bigint "user_id", null: false, comment: "通知先"
+    t.datetime "opened_at", comment: "開封日時"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_message_id"], name: "index_emox_notifications_on_question_message_id"
+    t.index ["user_id"], name: "index_emox_notifications_on_user_id"
+  end
+
+  create_table "emox_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false, comment: "正解・不正解"
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_emox_ox_marks_on_key"
+    t.index ["position"], name: "index_emox_ox_marks_on_position"
+  end
+
+  create_table "emox_ox_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "question_id", null: false, comment: "問題"
+    t.integer "o_count", null: false, comment: "正解数"
+    t.integer "x_count", null: false, comment: "不正解数"
+    t.integer "ox_total", null: false, comment: "出題数"
+    t.float "o_rate", comment: "高評価率"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["o_count"], name: "index_emox_ox_records_on_o_count"
+    t.index ["o_rate"], name: "index_emox_ox_records_on_o_rate"
+    t.index ["ox_total"], name: "index_emox_ox_records_on_ox_total"
+    t.index ["question_id"], name: "index_emox_ox_records_on_question_id", unique: true
+    t.index ["x_count"], name: "index_emox_ox_records_on_x_count"
+  end
+
+  create_table "emox_question_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "発言者"
+    t.bigint "question_id", null: false, comment: "問題"
+    t.string "body", limit: 512, null: false, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_emox_question_messages_on_question_id"
+    t.index ["user_id"], name: "index_emox_question_messages_on_user_id"
+  end
+
+  create_table "emox_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.bigint "user_id", null: false, comment: "作成者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.bigint "lineage_id", null: false, comment: "種類"
+    t.string "init_sfen", null: false, comment: "問題"
+    t.integer "time_limit_sec", comment: "制限時間(秒)"
+    t.integer "difficulty_level", comment: "難易度"
+    t.string "title", comment: "タイトル"
+    t.string "description", limit: 512, comment: "説明"
+    t.string "hint_desc", comment: "ヒント"
+    t.string "source_author", comment: "作者"
+    t.string "source_media_name", comment: "出典メディア"
+    t.string "source_media_url", comment: "出典URL"
+    t.date "source_published_on", comment: "出典年月日"
+    t.bigint "source_about_id", comment: "所在"
+    t.integer "turn_max", comment: "最大手数"
+    t.boolean "mate_skip", comment: "詰みチェックをスキップする"
+    t.string "direction_message", comment: "メッセージ"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.float "good_rate", comment: "高評価率"
+    t.integer "moves_answers_count", default: 0, null: false, comment: "解答数"
+    t.integer "histories_count", default: 0, null: false, comment: "履歴数(出題数とは異なる)"
+    t.integer "good_marks_count", default: 0, null: false, comment: "高評価数"
+    t.integer "bad_marks_count", default: 0, null: false, comment: "低評価数"
+    t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
+    t.integer "messages_count", default: 0, null: false, comment: "コメント数"
+    t.index ["bad_marks_count"], name: "index_emox_questions_on_bad_marks_count"
+    t.index ["clip_marks_count"], name: "index_emox_questions_on_clip_marks_count"
+    t.index ["difficulty_level"], name: "index_emox_questions_on_difficulty_level"
+    t.index ["folder_id"], name: "index_emox_questions_on_folder_id"
+    t.index ["good_marks_count"], name: "index_emox_questions_on_good_marks_count"
+    t.index ["good_rate"], name: "index_emox_questions_on_good_rate"
+    t.index ["histories_count"], name: "index_emox_questions_on_histories_count"
+    t.index ["init_sfen"], name: "index_emox_questions_on_init_sfen"
+    t.index ["key"], name: "index_emox_questions_on_key"
+    t.index ["lineage_id"], name: "index_emox_questions_on_lineage_id"
+    t.index ["messages_count"], name: "index_emox_questions_on_messages_count"
+    t.index ["source_about_id"], name: "index_emox_questions_on_source_about_id"
+    t.index ["time_limit_sec"], name: "index_emox_questions_on_time_limit_sec"
+    t.index ["turn_max"], name: "index_emox_questions_on_turn_max"
+    t.index ["user_id"], name: "index_emox_questions_on_user_id"
+  end
+
+  create_table "emox_room_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "room_id", null: false, comment: "対戦部屋"
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.integer "position", null: false, comment: "順序"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_emox_room_memberships_on_position"
+    t.index ["room_id", "user_id"], name: "index_emox_room_memberships_on_room_id_and_user_id", unique: true
+    t.index ["room_id"], name: "index_emox_room_memberships_on_room_id"
+    t.index ["user_id"], name: "index_emox_room_memberships_on_user_id"
+  end
+
+  create_table "emox_room_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "room_id", null: false, comment: "対戦部屋"
+    t.string "body", limit: 512, null: false, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_emox_room_messages_on_room_id"
+    t.index ["user_id"], name: "index_emox_room_messages_on_user_id"
+  end
+
+  create_table "emox_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.datetime "begin_at", null: false, comment: "対戦開始日時"
+    t.datetime "end_at", comment: "対戦終了日時"
+    t.bigint "rule_id", null: false, comment: "ルール"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "battles_count", default: 0, null: false, comment: "連戦数"
+    t.boolean "practice", comment: "練習バトル？"
+    t.bigint "bot_user_id", comment: "練習相手"
+    t.index ["battles_count"], name: "index_emox_rooms_on_battles_count"
+    t.index ["begin_at"], name: "index_emox_rooms_on_begin_at"
+    t.index ["bot_user_id"], name: "index_emox_rooms_on_bot_user_id"
+    t.index ["end_at"], name: "index_emox_rooms_on_end_at"
+    t.index ["rule_id"], name: "index_emox_rooms_on_rule_id"
+  end
+
+  create_table "emox_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_emox_rules_on_position"
+  end
+
+  create_table "emox_season_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "judge_id", null: false, comment: "直前の勝敗"
+    t.bigint "final_id", null: false, comment: "直前の結果"
+    t.integer "battle_count", null: false, comment: "対戦数"
+    t.integer "win_count", null: false, comment: "勝ち数"
+    t.integer "lose_count", null: false, comment: "負け数"
+    t.float "win_rate", null: false, comment: "勝率"
+    t.float "rating", null: false, comment: "レーティング"
+    t.float "rating_diff", null: false, comment: "直近レーティング変化"
+    t.float "rating_max", null: false, comment: "レーティング(最大)"
+    t.integer "straight_win_count", null: false, comment: "連勝数"
+    t.integer "straight_lose_count", null: false, comment: "連敗数"
+    t.integer "straight_win_max", null: false, comment: "連勝数(最大)"
+    t.integer "straight_lose_max", null: false, comment: "連敗数(最大)"
+    t.bigint "skill_id", null: false, comment: "ウデマエ"
+    t.float "skill_point", null: false, comment: "ウデマエの内部ポイント"
+    t.float "skill_last_diff", null: false, comment: "直近ウデマエ変化度"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "disconnect_count", null: false, comment: "切断数"
+    t.datetime "disconnected_at", comment: "最終切断日時"
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "season_id", null: false, comment: "期"
+    t.integer "create_count", null: false, comment: "users.emox_season_xrecord.create_count は users.emox_season_xrecords.count と一致"
+    t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
+    t.index ["battle_count"], name: "index_emox_season_xrecords_on_battle_count"
+    t.index ["create_count"], name: "index_emox_season_xrecords_on_create_count"
+    t.index ["disconnect_count"], name: "index_emox_season_xrecords_on_disconnect_count"
+    t.index ["final_id"], name: "index_emox_season_xrecords_on_final_id"
+    t.index ["generation"], name: "index_emox_season_xrecords_on_generation"
+    t.index ["judge_id"], name: "index_emox_season_xrecords_on_judge_id"
+    t.index ["lose_count"], name: "index_emox_season_xrecords_on_lose_count"
+    t.index ["rating"], name: "index_emox_season_xrecords_on_rating"
+    t.index ["rating_diff"], name: "index_emox_season_xrecords_on_rating_diff"
+    t.index ["rating_max"], name: "index_emox_season_xrecords_on_rating_max"
+    t.index ["season_id"], name: "index_emox_season_xrecords_on_season_id"
+    t.index ["skill_id"], name: "index_emox_season_xrecords_on_skill_id"
+    t.index ["straight_lose_count"], name: "index_emox_season_xrecords_on_straight_lose_count"
+    t.index ["straight_lose_max"], name: "index_emox_season_xrecords_on_straight_lose_max"
+    t.index ["straight_win_count"], name: "index_emox_season_xrecords_on_straight_win_count"
+    t.index ["straight_win_max"], name: "index_emox_season_xrecords_on_straight_win_max"
+    t.index ["user_id", "season_id"], name: "index_emox_season_xrecords_on_user_id_and_season_id", unique: true
+    t.index ["user_id"], name: "index_emox_season_xrecords_on_user_id"
+    t.index ["win_count"], name: "index_emox_season_xrecords_on_win_count"
+    t.index ["win_rate"], name: "index_emox_season_xrecords_on_win_rate"
+  end
+
+  create_table "emox_seasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "name", null: false, comment: "レーティング"
+    t.integer "generation", null: false, comment: "世代"
+    t.datetime "begin_at", null: false, comment: "期間開始日時"
+    t.datetime "end_at", null: false, comment: "期間終了日時"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["begin_at"], name: "index_emox_seasons_on_begin_at"
+    t.index ["end_at"], name: "index_emox_seasons_on_end_at"
+    t.index ["generation"], name: "index_emox_seasons_on_generation"
+  end
+
+  create_table "emox_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "rule_id", null: false, comment: "選択ルール"
+    t.string "session_lock_token", comment: "複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["rule_id"], name: "index_emox_settings_on_rule_id"
+    t.index ["user_id"], name: "index_emox_settings_on_user_id"
+  end
+
+  create_table "emox_skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_emox_skills_on_position"
+  end
+
+  create_table "emox_source_abouts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_emox_source_abouts_on_position"
+  end
+
+  create_table "emox_vs_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "battle_id", null: false, comment: "対戦"
+    t.string "sfen_body", limit: 1536, null: false, comment: "棋譜"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_id"], name: "index_emox_vs_records_on_battle_id"
+  end
+
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false, comment: "URL識別子"
+    t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "kifu_url", comment: "入力した棋譜URL"
+    t.string "title"
     t.text "kifu_body", size: :medium, null: false, comment: "棋譜本文"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "battled_at", null: false, comment: "対局開始日時"
-    t.integer "outbreak_turn", comment: "仕掛手数"
     t.string "use_key", null: false
     t.datetime "accessed_at", null: false, comment: "最終参照日時"
+    t.bigint "user_id"
+    t.string "preset_key", null: false
+    t.text "description", null: false
+    t.string "sfen_body", limit: 8192, null: false
+    t.string "sfen_hash", null: false
+    t.integer "start_turn", comment: "???"
+    t.integer "critical_turn", comment: "開戦"
+    t.integer "outbreak_turn", comment: "中盤"
+    t.integer "image_turn", comment: "???"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.string "title"
-    t.text "description", null: false
-    t.integer "start_turn"
-    t.integer "critical_turn"
-    t.string "sfen_body", limit: 8192, null: false
-    t.integer "image_turn"
-    t.string "preset_key", null: false
-    t.string "sfen_hash", null: false
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
     t.index ["key"], name: "index_free_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_free_battles_on_outbreak_turn"
+    t.index ["preset_key"], name: "index_free_battles_on_preset_key"
     t.index ["start_turn"], name: "index_free_battles_on_start_turn"
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
     t.index ["use_key"], name: "index_free_battles_on_use_key"
@@ -520,10 +941,10 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
 
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
+    t.string "description", limit: 512, null: false, comment: "自己紹介"
+    t.string "twitter_key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "description", limit: 512, null: false
-    t.string "twitter_key", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
@@ -537,15 +958,15 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "accessed_at", null: false, comment: "最終参照日時"
-    t.integer "outbreak_turn", comment: "仕掛手数"
+    t.string "preset_key", null: false
+    t.string "sfen_body", limit: 8192, null: false
+    t.string "sfen_hash", null: false
+    t.integer "start_turn", comment: "???"
+    t.integer "critical_turn", comment: "開戦"
+    t.integer "outbreak_turn", comment: "中盤"
+    t.integer "image_turn", comment: "???"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "preset_key", null: false
-    t.integer "start_turn"
-    t.integer "critical_turn"
-    t.string "sfen_body", limit: 8192, null: false
-    t.integer "image_turn"
-    t.string "sfen_hash", null: false
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
@@ -582,24 +1003,23 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   create_table "swars_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "対局"
     t.bigint "user_id", null: false, comment: "対局者"
+    t.bigint "op_user_id", comment: "相手"
     t.bigint "grade_id", null: false, comment: "対局時の段級"
     t.string "judge_key", null: false, comment: "勝・敗・引き分け"
     t.string "location_key", null: false, comment: "▲△"
     t.integer "position", comment: "手番の順序"
+    t.integer "grade_diff", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "grade_diff", null: false
-    t.integer "think_max"
-    t.bigint "op_user_id", comment: "相手"
-    t.integer "think_last"
-    t.integer "think_all_avg"
-    t.integer "think_end_avg"
-    t.integer "two_serial_max"
+    t.integer "think_all_avg", comment: "指し手の平均秒数(全体)"
+    t.integer "think_end_avg", comment: "指し手の平均秒数(最後5手)"
+    t.integer "two_serial_max", comment: "2秒の指し手が連続した回数"
+    t.integer "think_last", comment: "最後の指し手の秒数"
+    t.integer "think_max", comment: "最大考慮秒数"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
-    t.index ["grade_diff"], name: "index_swars_memberships_on_grade_diff"
     t.index ["grade_id"], name: "index_swars_memberships_on_grade_id"
     t.index ["judge_key"], name: "index_swars_memberships_on_judge_key"
     t.index ["location_key"], name: "index_swars_memberships_on_location_key"
@@ -648,7 +1068,7 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   end
 
   create_table "tags", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.string "name"
+    t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
@@ -699,9 +1119,9 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false, comment: "キー"
     t.string "name", null: false, comment: "名前"
-    t.string "cpu_brain_key", comment: "CPUだったときの挙動"
     t.string "user_agent", null: false, comment: "ブラウザ情報"
     t.string "race_key", null: false, comment: "種族"
+    t.datetime "name_input_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", null: false
@@ -721,7 +1141,6 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.datetime "name_input_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["key"], name: "index_users_on_key", unique: true
@@ -794,6 +1213,55 @@ ActiveRecord::Schema.define(version: 2020_10_31_150300) do
   add_foreign_key "actb_settings", "users"
   add_foreign_key "actb_vs_records", "actb_battles", column: "battle_id"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "emox_bad_marks", "emox_questions", column: "question_id"
+  add_foreign_key "emox_bad_marks", "users"
+  add_foreign_key "emox_battle_memberships", "emox_battles", column: "battle_id"
+  add_foreign_key "emox_battle_memberships", "emox_judges", column: "judge_id"
+  add_foreign_key "emox_battle_memberships", "users"
+  add_foreign_key "emox_battles", "emox_battles", column: "parent_id"
+  add_foreign_key "emox_battles", "emox_finals", column: "final_id"
+  add_foreign_key "emox_battles", "emox_rooms", column: "room_id"
+  add_foreign_key "emox_battles", "emox_rules", column: "rule_id"
+  add_foreign_key "emox_clip_marks", "emox_questions", column: "question_id"
+  add_foreign_key "emox_clip_marks", "users"
+  add_foreign_key "emox_emotions", "emox_emotion_folders", column: "folder_id"
+  add_foreign_key "emox_emotions", "users"
+  add_foreign_key "emox_folders", "users"
+  add_foreign_key "emox_good_marks", "emox_questions", column: "question_id"
+  add_foreign_key "emox_good_marks", "users"
+  add_foreign_key "emox_histories", "emox_ox_marks", column: "ox_mark_id"
+  add_foreign_key "emox_histories", "emox_questions", column: "question_id"
+  add_foreign_key "emox_histories", "emox_rooms", column: "room_id"
+  add_foreign_key "emox_histories", "users"
+  add_foreign_key "emox_lobby_messages", "users"
+  add_foreign_key "emox_main_xrecords", "emox_finals", column: "final_id"
+  add_foreign_key "emox_main_xrecords", "emox_judges", column: "judge_id"
+  add_foreign_key "emox_main_xrecords", "emox_skills", column: "skill_id"
+  add_foreign_key "emox_main_xrecords", "users"
+  add_foreign_key "emox_moves_answers", "emox_questions", column: "question_id"
+  add_foreign_key "emox_notifications", "emox_question_messages", column: "question_message_id"
+  add_foreign_key "emox_notifications", "users"
+  add_foreign_key "emox_ox_records", "emox_questions", column: "question_id"
+  add_foreign_key "emox_question_messages", "emox_questions", column: "question_id"
+  add_foreign_key "emox_question_messages", "users"
+  add_foreign_key "emox_questions", "emox_folders", column: "folder_id"
+  add_foreign_key "emox_questions", "emox_lineages", column: "lineage_id"
+  add_foreign_key "emox_questions", "emox_source_abouts", column: "source_about_id"
+  add_foreign_key "emox_questions", "users"
+  add_foreign_key "emox_room_memberships", "emox_rooms", column: "room_id"
+  add_foreign_key "emox_room_memberships", "users"
+  add_foreign_key "emox_room_messages", "emox_rooms", column: "room_id"
+  add_foreign_key "emox_room_messages", "users"
+  add_foreign_key "emox_rooms", "emox_rules", column: "rule_id"
+  add_foreign_key "emox_rooms", "users", column: "bot_user_id"
+  add_foreign_key "emox_season_xrecords", "emox_finals", column: "final_id"
+  add_foreign_key "emox_season_xrecords", "emox_judges", column: "judge_id"
+  add_foreign_key "emox_season_xrecords", "emox_seasons", column: "season_id"
+  add_foreign_key "emox_season_xrecords", "emox_skills", column: "skill_id"
+  add_foreign_key "emox_season_xrecords", "users"
+  add_foreign_key "emox_settings", "emox_rules", column: "rule_id"
+  add_foreign_key "emox_settings", "users"
+  add_foreign_key "emox_vs_records", "emox_battles", column: "battle_id"
   add_foreign_key "mute_infos", "users"
   add_foreign_key "mute_infos", "users", column: "target_user_id"
   add_foreign_key "swars_crawl_reservations", "users"

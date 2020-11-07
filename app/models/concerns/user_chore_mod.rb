@@ -31,6 +31,7 @@ module UserChoreMod
           :id,
           :key,
           :name,
+          :permit_tag_list,
         ],
         methods: [
           :avatar_path,

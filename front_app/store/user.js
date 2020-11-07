@@ -5,6 +5,17 @@ export const state = () => ({
   g_user_counter: 0,
 })
 
+export const getters = {
+  staff_p(state) {
+    if (state.g_current_user) {
+      const v = state.g_current_user.permit_tag_list
+      if (v) {
+        return v.includes("staff")
+      }
+    }
+  },
+}
+
 export const mutations = {
   m_auth_user_set(state, payload) {
     state.g_current_user = payload

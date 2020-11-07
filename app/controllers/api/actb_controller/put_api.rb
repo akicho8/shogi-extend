@@ -1,7 +1,6 @@
 module Api
   class ActbController
     concern :PutApi do
-
       # 更新することでマッチング結果はこちらが対象になる
       # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_set_handle -d session_lock_token=xxx http://localhost:3000/api/actb.json
       def session_lock_token_set_handle
@@ -9,14 +8,15 @@ module Api
         # if current_user.actb_setting.session_lock_token
         #   return { error_message: "" }
         # end
+        current_user.create_actb_setting_if_blank
         current_user.actb_setting.update!(session_lock_token: params[:session_lock_token])
         { status: "success" }
       end
 
-      # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_valid_handle -d session_lock_token=xxx http://localhost:3000/api/actb.json
-      def session_lock_token_valid_handle
+      # curl -d _method=put -d _user_id=1 -d remote_action=actb_session_lock_token_valid_handle -d session_lock_token=xxx http://localhost:3000/api/actb.json
+      def actb_session_lock_token_valid_handle
         raise ArgumentError, params.inspect if params[:session_lock_token].blank?
-        if current_user.session_lock_token_valid?(params[:session_lock_token])
+        if current_user.actb_session_lock_token_valid?(params[:session_lock_token])
           { status: "success" }
         else
           { status: "session_lock_token_invalid" }
@@ -32,7 +32,7 @@ module Api
       # curl -d _method=put -d _user_id=1 -d remote_action=rule_key_set_handle -d rule_key=sy_marathon http://localhost:3000/api/actb.json
       def rule_key_set_handle
         raise ArgumentError, params.inspect if params[:session_lock_token].blank?
-        unless current_user.session_lock_token_valid?(params[:session_lock_token])
+        unless current_user.actb_session_lock_token_valid?(params[:session_lock_token])
           return { status: "session_lock_token_invalid" }
         end
         current_user.actb_setting.update!(rule: Actb::Rule.fetch(params[:rule_key]))
@@ -157,7 +157,7 @@ module Api
       end
 
       def emotions_reset_handle
-        current_user.emotions_setup(reset: true)
+        current_user.actb_emotions_setup(reset: true)
         { emotions: current_user.emotions.reload.as_json(Actb::Emotion.json_type13) }
       end
 

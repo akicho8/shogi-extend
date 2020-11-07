@@ -237,11 +237,11 @@ export default {
     },
 
     active_users_status_broadcasted(params) {
-      if (params.school_user_ids) {
-        this.school_user_ids = params.school_user_ids
+      if (params.actb_school_user_ids) {
+        this.school_user_ids = params.actb_school_user_ids
       }
-      if (params.room_user_ids) {
-        this.room_user_ids = params.room_user_ids
+      if (params.actb_room_user_ids) {
+        this.room_user_ids = params.actb_room_user_ids
       }
     },
 
@@ -315,7 +315,7 @@ export default {
     },
 
     async start_handle(practice_p) {
-      if (this.login_required2()) { return }
+      if (this.sns_login_required()) { return }
       if (this.handle_name_required()) { return }
 
       this.sound_play("click")
@@ -408,13 +408,6 @@ export default {
       }
     },
 
-    login_required2() {
-      if (!this.current_user) {
-        this.login_url_jump()
-        return true
-      }
-    },
-
     lobby_unsubscribe() {
       this.ac_unsubscribe("$ac_lobby")
     },
@@ -424,7 +417,7 @@ export default {
       if (this.mode === "builder") {
       } else {
         await this.reload_if_outdated()
-        if (this.login_required2()) { return }
+        if (this.sns_login_required()) { return }
         if (this.handle_name_required()) { return }
         this.mode = "builder"
       }
@@ -440,7 +433,7 @@ export default {
     history_handle() {
       if (this.mode === "history") {
       } else {
-        if (this.login_required2()) { return }
+        if (this.sns_login_required()) { return }
         this.mode = "history"
       }
     },
@@ -491,11 +484,6 @@ export default {
     // マッチング中のユーザー数
     matching_user_count() {
       return _.sumBy(Object.values(this.matching_user_ids_hash || {}), a => a.length) // sum { |k, v| v.size }
-    },
-
-    // ある程度使ってくれているユーザーか？
-    regular_p() {
-      return this.current_user && this.current_user.regular_p
     },
   },
 }

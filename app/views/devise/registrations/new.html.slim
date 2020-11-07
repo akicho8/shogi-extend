@@ -1,26 +1,27 @@
 = bulma_devise_error_messages!
 
 .columns
-  .column
-    .card
-      .card-content
-        .title.is-4
-          = t(".sign_up", default: "Sign up")
-        = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { role: "form" }) do |f|
-          .field
-            = f.label :email
-            .control
-              = f.email_field :email, autofocus: true, class: "input"
-          .field
-            = f.label :password
-            .control
-              = f.password_field :password, class: "input"
-          .field
-            = f.label :password_confirmation
-            .control
-              = f.password_field :password_confirmation, class: "input"
+  - if AppConfig[:email_pw_login]
+    .column
+      .card
+        .card-content
+          .title.is-4
+            = t(".sign_up", default: "Sign up")
+          = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { role: "form" }) do |f|
+            .field
+              = f.label :email
+              .control
+                = f.email_field :email, autofocus: true, class: "input"
+            .field
+              = f.label :password
+              .control
+                = f.password_field :password, class: "input"
+            .field
+              = f.label :password_confirmation
+              .control
+                = f.password_field :password_confirmation, class: "input"
 
-          = f.submit t(".sign_up", default: "Sign up"), class: "button is-primary"
+            = f.submit t(".sign_up", default: "Sign up"), class: "button is-primary"
 
   .column
     = render 'devise/shared/links'

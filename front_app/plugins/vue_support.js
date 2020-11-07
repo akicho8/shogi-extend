@@ -235,17 +235,41 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    login_url_build() {
-      const params = new URLSearchParams()
-      if (typeof location !== 'undefined') {
-        params.set("return_to", location.href)
+    login_url_build(params = {}) {
+      params = {
+        ...params,
       }
-      return this.$config.MY_SITE_URL + `/login?${params}`
+
+      if (!params.return_to) {
+        if (typeof location !== 'undefined') {
+          params.return_to = location.href
+        }
+      }
+
+      const usp = new URLSearchParams()
+      _.each(params, (v, k) => usp.set(k, v))
+
+      return this.$config.MY_SITE_URL + `/login?${usp}`
     },
 
-    login_url_jump() {
+    login_url_jump(params = {}) {
       if (typeof location !== 'undefined') {
-        location.href = this.login_url_build()
+        location.href = this.login_url_build(params)
+      }
+    },
+
+    // login_required_legacy(params = {}) {
+    //   if (!this.g_current_user) {
+    //     this.login_url_jump(params)
+    //     return true
+    //   }
+    // },
+
+    sns_login_required() {
+      if (!this.g_current_user) {
+        this.toast_ok("ログインしてください")
+        this.sns_login_modal_handle()
+        return true
       }
     },
 

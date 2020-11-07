@@ -175,8 +175,8 @@ gem "color"
 # 検索
 gem "ransack"
 
-# bot判定用
-gem "useragent"
+# BOT判定用
+gem "rack-user_agent"
 
 # 休日判定
 gem "holiday_jp"

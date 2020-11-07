@@ -52,13 +52,13 @@ export default {
       return Number(this.$route.query.max || this.max_defaut)
     },
     max_defaut() {
-      return 1000
+      return 10000
     },
     max_list() {
       if (this.development_p) {
         return [0, 1, 2, 1000, 5000]
       }
-      return [100, 250, 500, 1000, 2500, 5000, 10000]
+      return [100, 1000, 10000]
     },
   },
 }

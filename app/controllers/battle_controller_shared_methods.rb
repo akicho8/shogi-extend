@@ -175,8 +175,6 @@ module BattleControllerSharedMethods
 
       if request.format.json?
         if params[:time_chart_fetch]
-          # slack_message(key: "時間チャート", body: current_record.title)
-          # Rails.logger.debug(current_record.time_chart_params)
           render json: { time_chart_params: current_record.time_chart_params }
           return
         end
@@ -184,16 +182,6 @@ module BattleControllerSharedMethods
         render json: { sfen_body: current_record.sfen_body }
         return
       end
-
-      # if params[:formal_sheet]
-      #   if (Rails.env.production? || Rails.env.staging?) && !bot_agent?
-      #     slack_message(key: "棋譜用紙", body: current_record.title)
-      #   end
-      #
-      #   # if !request.user_agent.to_s.match?(/\b(Chrome)\b/) || params[:formal_sheet_debug]
-      #   #   flash.now[:warning] = "Safari では正しくレイアウトできてないので Google Chrome で開いてください"
-      #   # end
-      # end
 
       respond_to do |format|
         format.html

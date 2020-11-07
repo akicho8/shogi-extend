@@ -14,9 +14,9 @@
 # | begin_at   | Begin at   | datetime   | NOT NULL    |      | E     |
 # | end_at     | End at     | datetime   |             |      | F     |
 # | battle_pos | Battle pos | integer(4) | NOT NULL    |      | G     |
+# | practice   | Practice   | boolean    |             |      |       |
 # | created_at | 作成日時   | datetime   | NOT NULL    |      |       |
 # | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
-# | practice   | Practice   | boolean    |             |      |       |
 # |------------+------------+------------+-------------+------+-------|
 
 # user1 = User.create!

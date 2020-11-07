@@ -123,6 +123,13 @@ Rails.application.routes.draw do
     get "actb(.:format)", to: "actb#show",   format: nil # /actb.zip もある
     put "actb(.:format)", to: "actb#update", format: nil
 
+    get "emox/resource_fetch(.:format)",                  to: "emox#resource_fetch"
+    put "emox/session_lock_token_set_handle(.:format)",   to: "emox#session_lock_token_set_handle"
+    put "emox/session_lock_token_valid_handle(.:format)", to: "emox#session_lock_token_valid_handle"
+    put "emox/rule_key_set_handle(.:format)",             to: "emox#rule_key_set_handle"
+    put "emox/debug_matching_add_handle(.:format)",       to: "emox#debug_matching_add_handle"
+    put "emox/matching_users_clear_handle(.:format)",     to: "emox#matching_users_clear_handle"
+
     resource :session, only: [] do
       get :auth_user_fetch
       delete :auth_user_logout   # ログアウト

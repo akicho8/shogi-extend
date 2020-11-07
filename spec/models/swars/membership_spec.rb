@@ -9,19 +9,19 @@
 # | id             | ID             | integer(8)  | NOT NULL PK |                   |            |
 # | battle_id      | 対局共通情報   | integer(8)  | NOT NULL    |                   | A! B! C! D |
 # | user_id        | ユーザー       | integer(8)  | NOT NULL    | => User#id        | B! E       |
-# | grade_id       | 棋力           | integer(8)  | NOT NULL    |                   | F          |
-# | judge_key      | 結果           | string(255) | NOT NULL    |                   | G          |
-# | location_key   | 先手or後手     | string(255) | NOT NULL    |                   | A! H       |
-# | position       | 順序           | integer(4)  |             |                   | I          |
+# | op_user_id     | Op user        | integer(8)  |             | => Swars::User#id | C! F       |
+# | grade_id       | 棋力           | integer(8)  | NOT NULL    |                   | G          |
+# | judge_key      | 結果           | string(255) | NOT NULL    |                   | H          |
+# | location_key   | 先手or後手     | string(255) | NOT NULL    |                   | A! I       |
+# | position       | 順序           | integer(4)  |             |                   | J          |
+# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |                   |            |
 # | created_at     | 作成日時       | datetime    | NOT NULL    |                   |            |
 # | updated_at     | 更新日時       | datetime    | NOT NULL    |                   |            |
-# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |                   | J          |
-# | think_max      | Think max      | integer(4)  |             |                   |            |
-# | op_user_id     | Op user        | integer(8)  |             | => Swars::User#id | C! K       |
-# | think_last     | Think last     | integer(4)  |             |                   |            |
 # | think_all_avg  | Think all avg  | integer(4)  |             |                   |            |
 # | think_end_avg  | Think end avg  | integer(4)  |             |                   |            |
 # | two_serial_max | Two serial max | integer(4)  |             |                   |            |
+# | think_last     | Think last     | integer(4)  |             |                   |            |
+# | think_max      | Think max      | integer(4)  |             |                   |            |
 # |----------------+----------------+-------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------

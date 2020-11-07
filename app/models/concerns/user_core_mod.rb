@@ -1,4 +1,3 @@
-
 module UserCoreMod
   extend ActiveSupport::Concern
 
@@ -8,19 +7,6 @@ module UserCoreMod
 
       sysop
       bot
-
-      CpuBrainInfo.each do |e|
-        unless find_by(key: e.key)
-          create! do |o|
-            o.key           = e.key
-            o.race_key      = :robot
-            o.cpu_brain_key = e.key
-            o.name          = "CPU#{robot_only.count.next}号"
-            o.email         = "shogi.extend+cpu-#{e.key}@gmail.com"
-            o.confirmed_at  = Time.current
-          end
-        end
-      end
     end
   end
 

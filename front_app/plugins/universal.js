@@ -7,7 +7,7 @@ import vue_time       from "./vue_time.js"
 import vue_piyo_shogi from "./vue_piyo_shogi.js"
 import vue_head       from "./vue_head.js"
 
-import { mapState, mapMutations, mapActions } from "vuex"
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex"
 
 Vue.mixin({
   mixins: [
@@ -31,6 +31,9 @@ Vue.mixin({
   computed: {
     ...mapState("user", [
       "g_current_user",
+    ]),
+    ...mapGetters("user", [
+      "staff_p",
     ]),
     // ...mapState("swars", [
     //   "g_var1",

@@ -14,6 +14,19 @@ class ServiceInfo
       ],
     },
     {
+      display_p: Emox::Config[:emox_display_p],
+      nuxt_link_to: {path: "/emoshogi"},
+      title: "エモ将棋",
+      new_p: false,
+      og_image_key: "emox",
+      description: "対人戦をしたいときにどうぞ",
+      features: [
+        "フッターを押して気持ちを表現しよう",
+        "いろいろアレなんで匿名",
+        "実験的サービス",
+      ],
+    },
+    {
       display_p: true,
       nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",

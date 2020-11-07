@@ -9,9 +9,9 @@
 # | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
 # | key                    | ユニークなハッシュ         | string(255) | NOT NULL            |      | A!    |
 # | name                   | 名前                       | string(255) | NOT NULL            |      |       |
-# | cpu_brain_key          | CPUの思考タイプ            | string(255) |                     |      |       |
 # | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
 # | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
+# | name_input_at          | Name input at              | datetime    |                     |      |       |
 # | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
 # | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
 # | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
@@ -31,7 +31,6 @@
 # | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
 # | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
-# | name_input_at          | Name input at              | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
 module Api
