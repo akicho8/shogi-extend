@@ -84,19 +84,6 @@ module BattleControllerSharedMethods
       if v = query_info.lookup(:ids)
         s = s.where(id: v)
       end
-      if v = ransack_params
-        if true
-          s = s.merge(current_model.ransack(v).result)
-        else
-          # current_queries.each do |e|
-          #   m = current_model
-          #   w = m.where(["title LIKE BINARY ?", "%#{e}%"])
-          #   w = w.or(m.where(["description LIKE BINARY ?", "%#{e}%"]))
-          #   s = s.merge(w)
-          # end
-          # # raise s.to_sql.inspect
-        end
-      end
       s
     end
 
@@ -114,14 +101,6 @@ module BattleControllerSharedMethods
       end
 
       s
-    end
-
-    def ransack_params
-      if current_queries
-        {
-          title_or_description_cont_all: current_queries,
-        }
-      end
     end
 
     def table_columns_hash
@@ -220,10 +199,7 @@ module BattleControllerSharedMethods
           :piyo_shogi_base_params,
         ],
         ).tap do |a|
-        a[:show_path]          = polymorphic_path([ns_prefix, e]) # ← これはとりあえずいる kc_path などに渡している
-        # if editable_record?(e) || Rails.env.development?
-        #   a[:edit_path] = polymorphic_path([:edit, ns_prefix, e])
-        # end
+        a[:show_path] = polymorphic_path([ns_prefix, e]) # ← これはとりあえずいる kc_path などに渡している
       end
     end
   end
@@ -233,22 +209,4 @@ module BattleControllerSharedMethods
       (params[:edit_mode].presence || :basic).to_sym
     end
   end
-
-  # concerning :EditCustomMethods do
-  #   # private
-  #
-  #   # FIXME: これはやめて FreeBattle をつかうべき
-  #
-  #   # def turn_max
-  #   #   @turn_max ||= heavy_parsed_info.mediator.turn_info.turn_offset
-  #   # end
-  #   #
-  #   # def heavy_parsed_info
-  #   #   @heavy_parsed_info ||= Bioshogi::Parser.parse(current_input_text, typical_error_case: :embed, support_for_piyo_shogi_v4_1_5: false)
-  #   # end
-  #
-  #   # def current_input_text
-  #   #   params[:input_text] || current_record.sfen_body || ""
-  #   # end
-  # end
 end

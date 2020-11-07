@@ -376,9 +376,6 @@ module Swars
       "battled_at"
     end
 
-    def ransack_params
-    end
-
     let :table_column_list do
       list = []
       if Rails.env.development? || Rails.env.test?
