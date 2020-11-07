@@ -41,7 +41,6 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :name,               null: false,              comment: "名前"
       t.string :user_agent,         null: false,              comment: "ブラウザ情報"
       t.string :race_key,           null: false, index: true, comment: "種族"
-      t.datetime :name_input_at,    null: true
       t.timestamps                  null: false
     end
 

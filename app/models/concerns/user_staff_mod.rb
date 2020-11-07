@@ -22,7 +22,6 @@ module UserStaffMod
         e.password = Rails.application.credentials.sysop_password
         e.confirmed_at = Time.current
         e.permit_tag_list = "staff"
-        e.name_input_at = Time.current
       end
     end
   end

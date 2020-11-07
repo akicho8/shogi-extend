@@ -7,12 +7,24 @@ class DeleteRobot < ActiveRecord::Migration[6.0]
           e.destroy!
         end
       end
+
+      User.find_each do |e|
+        if e.email.to_s.include?("@localhost")
+          e.email = ""
+          e.save!(validate: false, touch: false)
+        end
+      end
+
       tp User
     end
 
     change_table :users do |t|
-      t.remove :cpu_brain_key      rescue nil
-      # t.remove :unconfirmed_email  rescue nil
+      t.remove :cpu_brain_key rescue nil
+      t.remove :name_input_at rescue nil
+      # t.remove_index :index_users_on_email
+
+      t.remove_index :email
+      t.index :email, unique: false
     end
   end
 end

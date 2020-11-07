@@ -16,17 +16,14 @@ module Api
       end
 
       user.name = params[:name]
-      user.name_input_at ||= Time.current
       user.profile.description = params[:profile_description]
       user.profile.twitter_key = params[:profile_twitter_key]
       user_save(user)
       return if performed?
 
-      if user.saved_change_to_attribute?(:name_input_at)
-        if v = user.saved_change_to_attribute(:name)
-          pair = v.join("→")
-          ApplicationMailer.developper_notice(subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
-        end
+      if v = user.saved_change_to_attribute(:name)
+        pair = v.join("→")
+        ApplicationMailer.developper_notice(subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
       end
 
       # 変更したかもしれないレコードたち

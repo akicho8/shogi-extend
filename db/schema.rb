@@ -999,7 +999,6 @@ ActiveRecord::Schema.define(version: 2020_11_07_095900) do
     t.string "name", null: false, comment: "名前"
     t.string "user_agent", null: false, comment: "ブラウザ情報"
     t.string "race_key", null: false, comment: "種族"
-    t.datetime "name_input_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", null: false
@@ -1019,7 +1018,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_095900) do
     t.string "unlock_token"
     t.datetime "locked_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email"], name: "index_users_on_email"
     t.index ["key"], name: "index_users_on_key", unique: true
     t.index ["race_key"], name: "index_users_on_race_key"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
