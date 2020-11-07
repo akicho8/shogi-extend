@@ -17,8 +17,8 @@ export const application_emotion = {
         if (params.message) {
           this.$buefy.toast.open({
             message: params.message,
-            position: params.position || "is-top",
-            type: params.type || "is-light",
+            position: (params.membership_id === this.room_my_membership.id) ? "is-top" : "is-top",
+            type: params.type || "is-primary",
             queue: false,
             duration: params.duration || 1000 * 2,
           })

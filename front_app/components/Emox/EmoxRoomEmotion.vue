@@ -1,7 +1,11 @@
 <template lang="pug">
 .EmoxRoomEmotion.footer_nav.is-flex.is-unselectable
   template(v-for="row in base.EmotionInfo.values")
-    .item.is-clickable.is-size-5(@click.stop="base.emotion_handle({message: row.message, voice: row.voice})") {{row.name}}
+    b-tooltip(:label="row.message")
+      .item.is-clickable.is-size-6.is-size-7-mobile.is-inline-flex.is-align-items-center.px-2(
+        @click.stop="base.emotion_handle(row)"
+        )
+        | {{row.name}}
 </template>
 
 <script>
@@ -35,9 +39,20 @@ export default {
     justify-content: space-between
     align-items: center
 
+    .b-tooltip
+      height: 100%
+      .item
+        height: 100%
+
     +desktop
       justify-content: center
-      .button, .item
+      .b-tooltip
         margin-left: 3rem
         margin-right: 3rem
+
+.STAGE-development
+  .b-tooltip
+    border: 1px dashed change_color($primary, $alpha: 0.5)
+    .item
+      border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>
