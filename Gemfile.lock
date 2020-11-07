@@ -153,7 +153,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-bootstrap-views (1.1.0)
     devise-i18n (1.9.0)
       devise (>= 4.7.1)
     devise-i18n-views (0.3.7)
@@ -478,7 +477,6 @@ DEPENDENCIES
   color
   database_cleaner
   devise
-  devise-bootstrap-views
   devise-i18n
   devise-i18n-views
   exception_notification
