@@ -131,7 +131,8 @@ export default {
 
     start_handle() {
       this.sound_play("click")
-      if (this.login_required_basic()) {
+
+      if (this.sns_login_required()) {
         return
       }
 

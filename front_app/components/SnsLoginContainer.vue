@@ -1,0 +1,40 @@
+<template lang="pug">
+.card.SnsLoginContainer
+  .card-content
+    .is-flex.is-justify-content-center.is-flex-direction-column
+      template(v-for="e in SocialMediaInfo.values")
+        b-button.has-text-weight-bold(rounded :type="`is-${e.key}`" :icon-left="e.key" tag="a" :href="sns_auth_url(e)")
+          span {{e.name}} でログインする
+</template>
+
+<script>
+import MemoryRecord from 'js-memory-record'
+
+class SocialMediaInfo extends MemoryRecord {
+  static get define() {
+    return [
+      { key: "twitter", name: "Twitter", },
+      { key: "google",  name: "Google",  },
+      { key: "github",  name: "GitHub",  },
+    ]
+  }
+}
+
+export default {
+  name: "SnsLoginContainer",
+  methods: {
+    sns_auth_url(e) {
+      return this.login_url_build({social_media_key: e.key})
+    },
+  },
+  computed: {
+    SocialMediaInfo() { return SocialMediaInfo },
+  },
+}
+</script>
+
+<style lang="sass">
+.SnsLoginContainer
+  .button:not(:first-child)
+    margin-top: 0.9rem
+</style>

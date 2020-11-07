@@ -315,7 +315,7 @@ export default {
     },
 
     async start_handle(practice_p) {
-      if (this.login_required2()) { return }
+      if (this.sns_login_required()) { return }
       if (this.handle_name_required()) { return }
 
       this.sound_play("click")
@@ -408,13 +408,6 @@ export default {
       }
     },
 
-    login_required2() {
-      if (!this.current_user) {
-        this.login_url_jump()
-        return true
-      }
-    },
-
     lobby_unsubscribe() {
       this.ac_unsubscribe("$ac_lobby")
     },
@@ -424,7 +417,7 @@ export default {
       if (this.mode === "builder") {
       } else {
         await this.reload_if_outdated()
-        if (this.login_required2()) { return }
+        if (this.sns_login_required()) { return }
         if (this.handle_name_required()) { return }
         this.mode = "builder"
       }
@@ -440,7 +433,7 @@ export default {
     history_handle() {
       if (this.mode === "history") {
       } else {
-        if (this.login_required2()) { return }
+        if (this.sns_login_required()) { return }
         this.mode = "history"
       }
     },
