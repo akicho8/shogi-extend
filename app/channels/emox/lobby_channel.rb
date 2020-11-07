@@ -21,7 +21,7 @@ module Emox
       current_user.reload # current_user.emox_setting.* を最新にするため
 
       # session_lock_token が変化していたら別のブラウザで対戦が開始されたことがわかる
-      unless current_user.session_lock_token_valid?(data[:session_lock_token])
+      unless current_user.emox_session_lock_token_valid?(data[:session_lock_token])
         ActionCable.server.broadcast("emox/lobby_channel", bc_action: :session_lock_token_invalid_narrowcasted, bc_params: data)
         return
       end
@@ -51,7 +51,7 @@ module Emox
     end
 
     def ordered_infos
-      matching_users_without_self.collect { |e| [(e.rating - current_user.rating).abs, e] }.sort
+      matching_users_without_self.collect { |e| [(0 - 0).abs, e] }.sort
     end
 
     def matching_users_without_self

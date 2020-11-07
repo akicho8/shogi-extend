@@ -85,12 +85,12 @@ module Actb
     concerning :CurrentUserMethods do
       attr_accessor :session_lock_token
 
-      def session_lock_token_valid?(token)
+      def actb_session_lock_token_valid?(token)
         actb_setting.reload.session_lock_token == token
       end
 
-      # rails r "tp User.first.emotions_setup(reset: true)"
-      def emotions_setup(options = {})
+      # rails r "tp User.first.actb_emotions_setup(reset: true)"
+      def actb_emotions_setup(options = {})
         if options[:reset]
           emotions.destroy_all
         end
@@ -133,15 +133,15 @@ module Actb
               :description,
               :twitter_key,
               :mute_user_ids,
-              :created_after_days,
+              :actb_created_after_days,
               :session_lock_token,
             ],
           })
       end
 
       # アカウントを作ってからの日数
-      # rails r "p User.first.created_after_days"
-      def created_after_days
+      # rails r "p User.first.actb_created_after_days"
+      def actb_created_after_days
         ((Time.current - created_at) / 1.days).to_i
       end
     end

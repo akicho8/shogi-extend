@@ -63,7 +63,7 @@ RSpec.describe User, type: :model do
     assert { User.create!.info }
   end
 
-  it "created_after_days" do
-    assert { User.create!.created_after_days === 0 }
+  it "actb_created_after_days" do
+    assert { User.create!.actb_created_after_days === 0 }
   end
 end

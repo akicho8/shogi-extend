@@ -53,6 +53,8 @@ class CreateFreeBattles < ActiveRecord::Migration[5.1]
       t.integer :critical_turn, null: true, index: true, comment: "開戦"
       t.integer :outbreak_turn, null: true, index: true, comment: "中盤"
       t.integer :image_turn,    null: true,              comment: "???"
+
+      t.timestamps              null: false
     end
   end
 end

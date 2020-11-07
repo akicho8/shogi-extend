@@ -15,7 +15,7 @@ module Emox
     concerning :CurrentUserMethods do
       attr_accessor :session_lock_token
 
-      def session_lock_token_valid?(token)
+      def emox_session_lock_token_valid?(token)
         emox_setting.reload.session_lock_token == token
       end
 

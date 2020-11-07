@@ -22,7 +22,7 @@
 # 【警告:リレーション欠如】Actb::EmotionFolderモデルで has_many :actb/emotions されていません
 #--------------------------------------------------------------------------------
 
-# -*- compile-command: "rails r 'Actb::EmotionFolder.setup; User.first.emotions_setup(reset: true);'" -*-
+# -*- compile-command: "rails r 'Actb::EmotionFolder.setup; User.first.actb_emotions_setup(reset: true);'" -*-
 
 module Actb
   class Emotion < ApplicationRecord

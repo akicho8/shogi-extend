@@ -30,7 +30,7 @@ RSpec.describe Actb::SchoolChannel, type: :channel do
     end
 
     it "オンラインリスト通知" do
-      expect { subscribe }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: { school_user_ids: [user1.id] })
+      expect { subscribe }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: { actb_school_user_ids: [user1.id] })
     end
   end
 
@@ -46,7 +46,7 @@ RSpec.describe Actb::SchoolChannel, type: :channel do
     end
 
     it "オフラインリスト通知" do
-      expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: { school_user_ids: [] })
+      expect { unsubscribe }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: { actb_school_user_ids: [] })
     end
   end
 end

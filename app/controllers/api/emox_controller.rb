@@ -77,7 +77,7 @@ module Api
     # curl -d _method=put -d _user_id=1 -d remote_action=session_lock_token_valid_handle -d session_lock_token=xxx http://localhost:3000/api/emox.json
     def session_lock_token_valid_handle
       raise ArgumentError, params.inspect if params[:session_lock_token].blank?
-      if current_user.session_lock_token_valid?(params[:session_lock_token])
+      if current_user.emox_session_lock_token_valid?(params[:session_lock_token])
         render json: { status: "success" }
       else
         render json: { status: "session_lock_token_invalid" }
@@ -93,7 +93,7 @@ module Api
     # curl -d _method=put -d _user_id=1 -d remote_action=rule_key_set_handle -d rule_key=sy_marathon http://localhost:3000/api/emox.json
     def rule_key_set_handle
       raise ArgumentError, params.inspect if params[:session_lock_token].blank?
-      unless current_user.session_lock_token_valid?(params[:session_lock_token])
+      unless current_user.emox_session_lock_token_valid?(params[:session_lock_token])
         render json: { status: "session_lock_token_invalid" }
         return
       end

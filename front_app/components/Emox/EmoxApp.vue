@@ -94,11 +94,11 @@ export default {
     },
 
     active_users_status_broadcasted(params) {
-      if (params.school_user_ids) {
-        this.school_user_ids = params.school_user_ids
+      if (params.emox_school_user_ids) {
+        this.school_user_ids = params.emox_school_user_ids
       }
-      if (params.room_user_ids) {
-        this.room_user_ids = params.room_user_ids
+      if (params.emox_room_user_ids) {
+        this.room_user_ids = params.emox_room_user_ids
       }
     },
 

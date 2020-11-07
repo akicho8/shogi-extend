@@ -2,6 +2,10 @@ ENV["SLACK_AGENT_DISABLE"] = "1"
 ENV["INSIDE_DB_SEEDS_TASK"] = "1"
 
 [
+  Emox::Rule,
+  Emox::Judge,
+  Emox::Final,
+
   Actb::OxMark,
   Actb::Season,
   Actb::Lineage,
@@ -12,10 +16,6 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   Actb::Skill,
   Actb::SourceAbout,
   Actb::Question,
-
-  Emox::Judge,
-  Emox::Rule,
-  Emox::Final,
 
   Actb,
   Emox,

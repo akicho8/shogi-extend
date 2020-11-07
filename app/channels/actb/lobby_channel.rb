@@ -44,7 +44,7 @@ module Actb
       current_user.reload # current_user.actb_setting.* を最新にするため
 
       # session_lock_token が変化していたら別のブラウザで対戦が開始されたことがわかる
-      unless current_user.session_lock_token_valid?(data[:session_lock_token])
+      unless current_user.actb_session_lock_token_valid?(data[:session_lock_token])
         ActionCable.server.broadcast("actb/lobby_channel", bc_action: :session_lock_token_invalid_narrowcasted, bc_params: data)
         return
       end

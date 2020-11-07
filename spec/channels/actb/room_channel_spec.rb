@@ -19,7 +19,7 @@ RSpec.describe Actb::RoomChannel, type: :channel do
 
   describe "#subscribe" do
     it "接続" do
-      expect { subscribe(room_id: current_room.id) }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: {room_user_ids: [user1.id]})
+      expect { subscribe(room_id: current_room.id) }.to have_broadcasted_to("actb/school_channel").with(bc_action: "active_users_status_broadcasted", bc_params: {actb_room_user_ids: [user1.id]})
       assert { subscription.confirmed? }
       assert { Actb::RoomChannel.active_users == [user1] }
     end

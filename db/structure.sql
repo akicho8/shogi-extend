@@ -1634,7 +1634,6 @@ CREATE TABLE `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'キー',
   `name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '名前',
-  `cpu_brain_key` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'CPUだったときの挙動',
   `user_agent` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'ブラウザ情報',
   `race_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '種族',
   `name_input_at` datetime DEFAULT NULL,
@@ -1715,6 +1714,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200701201700'),
 ('20200725112106'),
 ('20200920154202'),
-('20201103121300');
+('20201103121300'),
+('20201107095900');
 
 

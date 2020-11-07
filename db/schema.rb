@@ -916,6 +916,8 @@ ActiveRecord::Schema.define(version: 2020_11_07_095900) do
     t.integer "critical_turn", comment: "開戦"
     t.integer "outbreak_turn", comment: "中盤"
     t.integer "image_turn", comment: "???"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
     t.index ["key"], name: "index_free_battles_on_key", unique: true
