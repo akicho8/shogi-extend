@@ -11,8 +11,7 @@ class DeleteRobot < ActiveRecord::Migration[6.0]
     end
 
     change_table :users do |t|
-      t.remove :cpu_brain_key      rescue nil
-      # t.remove :unconfirmed_email  rescue nil
+      t.remove :cpu_brain_key
     end
   end
 end
