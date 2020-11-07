@@ -6,7 +6,7 @@
   EmoxBattle(:base="base"     v-if="mode === 'battle'")
   EmoxResult(:base="base"     v-if="mode === 'result'")
 
-  DebugPrint(:grep="/./" v-if="development_p")
+  DebugPrint(:grep="/./" v-if="development_p || true")
 </template>
 
 <script>
