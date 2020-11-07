@@ -160,7 +160,6 @@ gem "bcrypt"
 gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "omniauth-twitter"
-gem "omniauth-facebook"
 gem "omniauth-github"
 
 # 音声読み上げ
