@@ -3,7 +3,6 @@ module CurrentUserMod
 
   included do
     helper_method :sysop?
-    helper_method :editable_record?
     helper_method :current_user
   end
 
