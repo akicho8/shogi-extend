@@ -11,6 +11,8 @@ module UserCoreMod
   end
 
   included do
+    has_one :session_user, dependent: :destroy
+
     scope :random_order, -> { order(Arel.sql("rand()")) }
 
     before_validation on: :create do

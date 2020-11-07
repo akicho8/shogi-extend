@@ -26,5 +26,11 @@ class DeleteRobot < ActiveRecord::Migration[6.0]
       t.remove_index :email
       t.index :email, unique: false
     end
+
+    create_table :session_users, force: true do |t|
+      t.belongs_to :user
+      t.string :key, null: false, index: { unique: true }
+      t.timestamps   null: false
+    end
   end
 end
