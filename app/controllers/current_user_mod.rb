@@ -2,17 +2,9 @@ module CurrentUserMod
   extend ActiveSupport::Concern
 
   included do
-    helper_method :js_global
     helper_method :sysop?
     helper_method :editable_record?
     helper_method :current_user
-  end
-
-  # FIXME: セキュリティ的にだめ
-  def js_global
-    @js_global ||= {
-      :current_user => current_user && current_user.as_json(only: [:id, :name], methods: [:show_path, :avatar_path]),
-    }
   end
 
   let :sysop? do
