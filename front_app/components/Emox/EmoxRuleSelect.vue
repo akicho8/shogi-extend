@@ -25,7 +25,7 @@ export default {
   mixins: [support_child],
   methods: {
     user_count(rule) {
-      return this.base.matching_user_ids_hash[rule.key].length
+      return (this.base.matching_user_ids_hash[rule.key] || []).length
     },
   },
 }

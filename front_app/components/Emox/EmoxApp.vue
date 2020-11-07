@@ -39,7 +39,7 @@ export default {
 
       school_user_ids:        null, // オンラインのユーザーIDs
       room_user_ids:          null, // 対戦中のユーザーIDs
-      matching_user_ids_hash: null, // 対戦待ちユーザーIDsのハッシュでルール名がキー
+      matching_user_ids_hash: {}, // 対戦待ちユーザーIDsのハッシュでルール名がキー
 
       // リソース
       RuleInfo:   null,
@@ -212,7 +212,7 @@ export default {
 
     // マッチング中のユーザー数
     matching_user_count() {
-      return _.sumBy(Object.values(this.matching_user_ids_hash || {}), a => a.length) // sum { |k, v| v.size }
+      return _.sumBy(Object.values(this.matching_user_ids_hash), a => a.length) // sum { |k, v| v.size }
     },
   },
 }
