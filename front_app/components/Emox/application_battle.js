@@ -55,6 +55,8 @@ export const application_battle = {
 
       this.member_infos_hash = this.battle.memberships.reduce((a, e) => ({...a, [e.id]: new MemberInfo(e.id)}), {})
 
+      this.vs_share_sfen = "position startpos"
+
       this.__assert__(this.$ac_battle == null, "this.$ac_battle == null")
       this.$ac_battle = this.ac_subscription_create({channel: "Emox::BattleChannel", battle_id: this.battle.id}, {
         connected: () => {
