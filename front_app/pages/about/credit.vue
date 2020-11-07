@@ -93,6 +93,10 @@ export default {
   .apps
     li
       margin-top: 3rem
+      &.kento
+        .creator
+          font-size: $size-3 * 1.25
+
     .sub_text
       font-weight: normal
       font-size: $size-6

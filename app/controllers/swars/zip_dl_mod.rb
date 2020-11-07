@@ -12,8 +12,8 @@ module Swars
           zip_scope.each do |battle|
             if str = battle.to_xxx(kifu_format_info.key)
               zos.put_next_entry("#{battle.key}.#{kifu_format_info.key}")
-              if current_body_encode == :sjis
-                str = str.tosjis
+              if current_body_encode == "Shift_JIS"
+                str = str.encode(current_body_encode)
               end
               zos.write(str)
             end
@@ -36,12 +36,13 @@ module Swars
       if current_swars_user
         parts << current_swars_user.key
       end
+      parts << zip_scope.count
       parts << Time.current.strftime("%Y%m%d%H%M%S")
       parts << kifu_format_info.key
       parts << current_body_encode
-      parts << zip_scope.count
       str = parts.compact.join("-") + ".zip"
-      str.public_send("to#{current_body_encode}")
+      # str.public_send("to#{current_body_encode}")
+      str
     end
 
     def zip_dl_max
@@ -49,15 +50,15 @@ module Swars
     end
 
     def kifu_format_info
-      @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_kifu_info.key)
+      @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_format_info.key)
     end
 
-    def zip_kifu_info
-      ZipKifuInfo.fetch(zip_kifu_key)
+    def zip_format_info
+      ZipFormatInfo.fetch(zip_format_key)
     end
 
-    def zip_kifu_key
-      params[:zip_kifu_key].presence || "kif"
+    def zip_format_key
+      params[:zip_format_key].presence || "kif"
     end
   end
 end

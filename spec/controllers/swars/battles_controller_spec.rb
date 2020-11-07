@@ -94,12 +94,24 @@ RSpec.describe Swars::BattlesController, type: :controller do
       end
     end
 
-    it "ZIPダウンロード" do
-      get :index, params: { query: "devuser1", format: "zip" }
-      expect(response).to have_http_status(:ok)
-      assert { controller.current_scope.count == 1 }
-      assert { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
-      assert { response.media_type == "application/zip" }
+    describe "ZIPダウンロード" do
+      def test1(body_encode)
+        get :index, params: { query: "devuser1", format: "zip", body_encode: body_encode}
+        expect(response).to have_http_status(:ok)
+        assert { controller.current_scope.count == 1 }
+        assert { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
+        assert { response.media_type == "application/zip" }
+
+        Zip::InputStream.open(StringIO.new(response.body)) do |zis|
+          entry = zis.get_next_entry
+          assert { entry.name == "devuser1-Yamada_Taro-20200101_123401.kif" }
+          bin = zis.read
+          assert { NKF.guess(bin).to_s == body_encode }
+        end
+      end
+
+      it { test1("UTF-8")     }
+      it { test1("Shift_JIS") }
     end
 
     it "KENTO棋譜リストAPI" do
@@ -133,7 +145,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
       end
 
       it "表示(Shift_JIS)" do
-        get :show, params: { id: record.to_param, format: "kif", body_encode: "sjis" }
+        get :show, params: { id: record.to_param, format: "kif", body_encode: "Shift_JIS" }
         assert { response.media_type == "text/plain" }
         assert { response.body.encoding == Encoding::Shift_JIS }
         assert { response.header["Content-Type"] == "text/plain; charset=Shift_JIS" }
@@ -141,7 +153,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
       end
 
       it "ダウンロード(Shift_JIS)" do
-        get :show, params: { id: record.to_param, format: "kif", body_encode: "sjis", attachment: "true" }
+        get :show, params: { id: record.to_param, format: "kif", body_encode: "Shift_JIS", attachment: "true" }
         assert { response.media_type == "text/plain" }
         assert { response.body.encoding == Encoding::Shift_JIS }
         assert { response.header["Content-Type"] == "text/plain; charset=shift_jis" } # なぜかダウンロードのときだけ小文字に変換される
@@ -151,8 +163,8 @@ RSpec.describe Swars::BattlesController, type: :controller do
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ............
+# >> ..............
 # >>
-# >> Finished in 8.72 seconds (files took 4.93 seconds to load)
-# >> 12 examples, 0 failures
+# >> Finished in 9.23 seconds (files took 2.23 seconds to load)
+# >> 14 examples, 0 failures
 # >>

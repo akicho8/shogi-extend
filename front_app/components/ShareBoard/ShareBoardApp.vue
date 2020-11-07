@@ -22,10 +22,11 @@ client-only
           b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.run_mode === 'edit_mode'}")
           b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
         b-menu-list(label="Export")
-          b-menu-item(label="棋譜コピー" @click="kifu_copy_handle('kif')")
-          b-menu-item(label="SFENコピー" @click="kifu_copy_handle('sfen')")
+          b-menu-item(label="KIF コピー" @click="kifu_copy_handle('kif')")
+          b-menu-item(label="KIF ダウンロード" :href="kif_download_url" @click="sound_play('click')")
+          b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="shift_jis_kif_download_url" @click="sound_play('click')")
           b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
-          b-menu-item(label="棋譜ダウンロード" :href="kif_download_url" @click="sound_play('click')")
+          b-menu-item(label="SFEN コピー" @click="kifu_copy_handle('sfen')")
         b-menu-list(label="検討")
           b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
           b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
@@ -419,11 +420,12 @@ export default {
     },
 
     // URL
-    current_url()        { return this.permalink_for()                                                                        },
-    json_debug_url()     { return this.permalink_for({format: "json"})                                                        },
-    twitter_card_url()   { return this.permalink_for({format: "png"})                                                         },
-    snapshot_image_url() { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
-    kif_download_url()   { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
+    current_url()                { return this.permalink_for()                                                                        },
+    json_debug_url()             { return this.permalink_for({format: "json"})                                                        },
+    twitter_card_url()           { return this.permalink_for({format: "png"})                                                         },
+    snapshot_image_url()         { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
+    kif_download_url()           { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
+    shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"})                              },
 
     // 外部アプリ
     piyo_shogi_app_with_params_url() {
@@ -468,6 +470,9 @@ export default {
 
 <style lang="sass">
 .ShareBoardApp-Sidebar
+  .sidebar-content
+    width: unset
+
   .menu-label:not(:first-child)
     margin-top: 2em
 

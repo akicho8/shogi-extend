@@ -32,7 +32,6 @@ module Api
             :ref    => request.format.ref,
           },
           :accept            => request.accept,
-          :accept            => request.accept,
           :accept_charset    => request.accept_charset,
           :accept_encoding   => request.accept_encoding,
           :accept_language   => request.accept_language,

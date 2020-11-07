@@ -7,7 +7,7 @@ module ModulableCrud
       if Rails.env.development?
         before_action do
           unless request.get?
-            v = params.permit!.to_h.except(:utf8)
+            v = params.permit!.to_h
             begin
               Rails.cache.write(:before_post_params, v, expires_in: 1.minutes)
             rescue

@@ -4,14 +4,14 @@
 # 1. iPhone でダウンロードとしたときだけ文字化けする対策をしてはいけない
 #
 #   if request.from_smartphone?
-#     text_body = text_body.tosjis
+#     text_body = text_body.encode("Shift_JIS")
 #   end
 #   とすれば文字化けしなくなるが、ぴよ将棋で読めなくなる
 #
 # 2. 激指ではクリップボードは UTF8 でないと読めないのでこれを入れてはいけない
 #
-#   if filename_sjis?
-#     text_body = text_body.tosjis
+#   if filename_shift_jis?
+#     text_body = text_body.encode("Shift_JIS")
 #   end
 #
 module PngShowMod
