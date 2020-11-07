@@ -2,7 +2,7 @@ module Swars
   module Histogram
     # http://0.0.0.0:3000/api/swars_histogram.json
     class Base
-      DEFAULT_LIMIT     = 1000
+      DEFAULT_LIMIT     = 10000
       DEFAULT_LIMIT_MAX = 10000
       CHART_BAR_MAX     = 20
 
@@ -13,7 +13,7 @@ module Swars
       end
 
       def as_json(*)
-        Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hours : 0) do
+        Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.days : 0) do
           to_h
         end
       end
