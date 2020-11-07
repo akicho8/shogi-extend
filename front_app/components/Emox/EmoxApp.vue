@@ -213,11 +213,6 @@ export default {
     matching_user_count() {
       return _.sumBy(Object.values(this.matching_user_ids_hash || {}), a => a.length) // sum { |k, v| v.size }
     },
-
-    // ある程度使ってくれているユーザーか？
-    regular_p() {
-      return this.current_user && this.current_user.regular_p
-    },
   },
 }
 </script>

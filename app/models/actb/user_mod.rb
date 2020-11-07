@@ -131,17 +131,11 @@ module Actb
               :skill_key,
               :description,
               :twitter_key,
-              :regular_p,
               :mute_user_ids,
               :created_after_days,
               :session_lock_token,
             ],
           })
-      end
-
-      # レギュラー条件
-      def regular_p
-        actb_room_memberships.count >= 1 || actb_questions.active_only.count >= 1
       end
 
       # アカウントを作ってからの日数
