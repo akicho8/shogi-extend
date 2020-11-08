@@ -102,19 +102,19 @@ export default {
       }
     },
 
-    lobby_setup_without_cable() {
+    lobby_setup() {
       this.battle_unsubscribe()
       this.room_unsubscribe()
 
       this.mode = "lobby"
       this.room = null          // 対戦中ではないことを判定するため消しておく
-    },
-
-    lobby_setup() {
-      this.lobby_setup_without_cable()
 
       this.__assert__(this.$ac_lobby == null, "ロビーが解放されてないのに再び接続しようとしている")
-      this.$ac_lobby = this.ac_subscription_create({channel: "Emox::LobbyChannel"})
+      this.$ac_lobby = this.ac_subscription_create({channel: "Emox::LobbyChannel"}, {
+        disconnected: () => {
+          alert("ac_lobby 切断")
+        },
+      })
     },
 
     debug_matching_add_handle(rule) {
