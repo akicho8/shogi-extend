@@ -140,8 +140,6 @@ gem "codecov", require: false, group: :test
 
 gem "rack-cors", require: "rack/cors" # 別のドメインからJSONアクセスできるようにするための何か
 
-gem "ffi", "1.9.18"             # 1.9.19 が転けるのでとりあえず …… てか何のために入ってる？？？
-
 # application 用
 gem "slack-ruby-client"
 

@@ -172,7 +172,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (1.0.0.rc1)
       faraday (~> 1.0)
-    ffi (1.9.18)
+    ffi (1.13.1)
     foreman (0.87.0)
     get_process_mem (0.2.5)
       ffi (~> 1.0)
@@ -483,7 +483,6 @@ DEPENDENCIES
   factory_bot_rails
   faraday
   faraday_middleware
-  ffi (= 1.9.18)
   foreman
   holiday_jp
   html_format
