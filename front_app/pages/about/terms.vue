@@ -14,13 +14,12 @@
 <script>
 export default {
   name: "about-terms",
-  mounted() {
-    // this.talk_stop()
-    // this.talk("重いからって連打しちゃだめ (そんだけ)")
+  computed: {
+    meta() {
+      return {
+        title: "サービス利用規約",
+      }
+    },
   },
 }
 </script>
-
-<style lang="sass">
-.about-terms
-</style>

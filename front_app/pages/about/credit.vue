@@ -54,6 +54,13 @@ export default {
       this.back_to()
     },
   },
+  computed: {
+    meta() {
+      return {
+        title: "クレジット",
+      }
+    },
+  },
 }
 </script>
 
