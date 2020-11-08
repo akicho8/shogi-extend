@@ -15,7 +15,6 @@ module Actb
     :matching_pow_base               => 50, # gap < 2**(○+カウンター) ならマッチングする
     :matching_interval_second        => 3,  # カウンターをインクリメントする間隔(秒)
     :matching_forgo_second           => 10, # ○秒たったらマッチングを諦める(nullなら無限)
-    :matching_cancel_possible_second => 2,  # ○秒たったらマッチングを諦めることができる(nullなら諦めることができない)
 
     # -------------------------------------------------------------------------------- バトル中の設定
     # 共通
@@ -69,7 +68,6 @@ module Actb
         :matching_interval_second        => 4,        # カウンターをインクリメントする間隔(秒)
         :room_messages_window_height     => 5,        # 部屋での表示行数
         :matching_forgo_second           => 60*5,     # ○秒たったらマッチングを諦める(nullなら無限)
-        :matching_cancel_possible_second => 30,       # ○秒たったらマッチングを諦めることができる
         :action_cable_debug              => false,    # ActionCable関連デバッグモード
         :api_questions_fetch_per         => 50,       # 問題一覧での1ページあたりの表示件数
         :self_is_left_side_p             => true,     # 自分を左に表示
