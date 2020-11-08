@@ -110,11 +110,7 @@ export default {
       this.room = null          // 対戦中ではないことを判定するため消しておく
 
       this.__assert__(this.$ac_lobby == null, "ロビーが解放されてないのに再び接続しようとしている")
-      this.$ac_lobby = this.ac_subscription_create({channel: "Emox::LobbyChannel"}, {
-        disconnected: () => {
-          alert("ac_lobby 切断")
-        },
-      })
+      this.$ac_lobby = this.ac_subscription_create({channel: "Emox::LobbyChannel"})
     },
 
     debug_matching_add_handle(rule) {

@@ -28,6 +28,12 @@ export const application_matching = {
     // ロビーから切断されたあともタイマーの関係で一瞬呼ばれるので mode のチェックを追加
     matching_interval_timer_processing() {
       if (this.mode === "matching") {
+        if (this.tab_is_hidden_p()) {
+          this.matching_cancel_handle()
+          this.dialog_ng("タブが切り替わったのでキャンセルしました")
+          return
+        }
+
         if (this.matching_forgo_p) {
           this.matching_cancel_handle()
           this.toast_ng("対戦相手が見つかりません")

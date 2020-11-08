@@ -4,15 +4,6 @@ if (process.client) {
 
 export default {
   methods: {
-    tab_is_active_p() {
-      return !this.tab_is_hidden_p()
-    },
-
-    tab_is_hidden_p() {
-      // console.log("[hidden, visibilityState]", [document.hidden, document.visibilityState])
-      return document.hidden || document.visibilityState === "hidden"
-    },
-
     talk_stop() {
       if (window.howl_object) {
         window.howl_object.stop()
