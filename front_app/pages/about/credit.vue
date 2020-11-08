@@ -27,15 +27,11 @@
     li
       ExternalLink(beep href="http://mucho.girly.jp/bona/") 将棋ｱﾌﾟﾘ用ｸﾘｴﾃｨﾌﾞｺﾓﾝｽﾞ画像
     li
-      ExternalLink(beep href="https://www.pakutaso.com/") ぱくたそ
-    li
       ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
     li
       ExternalLink(beep href="https://www.irasutoya.com/") いらすとや
     li
       ExternalLink(beep href="https://www.beiz.jp/") BEIZ Graphics
-    li
-      ExternalLink(beep href="https://free-texture.net/seamless-pattern/tatami01.html") フリーテクスチャ素材館
     li
       ExternalLink(beep href="https://twitter.com/Shogi_Zuan") 将棋図案駒
 
