@@ -6,7 +6,7 @@ export const application_question_show = {
     ov_question_url(id) {
       const params = new URLSearchParams()
       params.set("question_id", id)
-      return `${this.$config.MY_SITE_URL}/actb?${params}`
+      return `${this.$config.MY_SITE_URL}/training?${params}`
     },
 
     ov_question_info_set(question_id) {
@@ -25,7 +25,10 @@ export const application_question_show = {
       this.$ov_question_modal = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
-        props: { ov_question_info },
+        props: {
+          ov_question_info: ov_question_info,
+          base: this.base,
+        },
         animation: "",
         onCancel: () => this.sound_play("click"),
         fullScreen: true,

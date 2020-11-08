@@ -5,7 +5,7 @@ export const application_user_show = {
     ov_user_url(id) {
       const params = new URLSearchParams()
       params.set("user_id", id)
-      return `/actb?${params}`
+      return `/training?${params}`
     },
 
     ov_user_info_set(user_id) {
@@ -21,7 +21,10 @@ export const application_user_show = {
       this.$ov_user_modal = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
-        props: { ov_user_info },
+        props: {
+          ov_user_info: ov_user_info,
+          base: this.base,
+        },
         animation: "",
         onCancel: () => this.sound_play("click"),
         canCancel: ["escape", "outside"],

@@ -131,7 +131,7 @@
     .box.question_description.has-background-white-ter.is-shadowless.is-size-7.mt-6(v-if="question.description")
       | {{question.description}}
 
-    the_question_show_message.mt-6(:question="question")
+    the_question_show_message.mt-6(:base="base" :question="question")
 </template>
 
 <script>
@@ -163,16 +163,16 @@ export default {
   },
 
   beforeCreate() {
-    window.history.pushState(this.$options.name, null, "")
+    // window.history.pushState(this.$options.name, null, "")
   },
 
   created() {
     // this.$ga.event("open", {event_category: "問題詳細", event_label: this.question.title, value: this.question.good_marks_count})
-    window.history.replaceState("", null, this.permalink_url)
+    // window.history.replaceState("", null, this.permalink_url)
   },
 
   beforeDestroy() {
-    window.history.back()
+    // window.history.back()
   },
 
   methods: {
