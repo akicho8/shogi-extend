@@ -11,19 +11,19 @@
     :slider_show="true"
     :controller_show="true"
     :setting_button_show="false"
-    :theme="app.config.sp_theme"
-    :size="app.config.sp_size"
+    :theme="base.config.sp_theme"
+    :size="base.config.sp_size"
     @update:play_mode_advanced_moves="bapp.play_mode_advanced_moves_set"
     )
 </template>
 
 <script>
-import { support } from "../support.js"
+import { builder_support } from "./builder_support.js"
 
 export default {
   name: "the_builder_edit_kensho",
   mixins: [
-    support,
+    builder_support,
   ],
   created() {
   },

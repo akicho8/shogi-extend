@@ -1,29 +1,29 @@
 <template lang="pug">
-.the_room_message.mt-4(v-if="app.config.room_messages_display_p")
-  .messages_box.has-background-light(ref="messages_box" :style="{height: `${app.config.room_messages_window_height}rem`}")
-    template(v-for="message in app.droped_room_messages")
-      message_row(:message="message")
+.the_room_message.mt-4(v-if="base.config.room_messages_display_p")
+  .messages_box.has-background-light(ref="messages_box" :style="{height: `${base.config.room_messages_window_height}rem`}")
+    template(v-for="message in base.droped_room_messages")
+      message_row(:base="base" :message="message")
   b-field.input_field
-    b-input(v-model="app.room_message_body" expanded @keypress.native.enter="app.room_speak_handle")
+    b-input(v-model="base.room_message_body" expanded @keypress.native.enter="base.room_speak_handle")
     p.control
-      button.button.is-primary(@click="app.room_speak_handle")
+      button.button.is-primary(@click="base.room_speak_handle")
         b-icon.play_icon(icon="play")
 </template>
 
 <script>
-import { support } from "./support.js"
-import message_row from "./components/message_row.vue"
+import { support_child } from "./support_child.js"
+import message_row from "./message_row.vue"
 
 export default {
   name: "the_room_message",
   mixins: [
-    support,
+    support_child,
   ],
   components: {
     message_row,
   },
   watch: {
-    "app.room_messages": {
+    "base.room_messages": {
       handler() { this.scroll_to_bottom(this.$refs.messages_box) },
       immediate: true,
     },

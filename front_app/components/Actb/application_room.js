@@ -58,9 +58,9 @@ export const application_room = {
 
     // room_setup connected
     // ↓
-    // app/channels/actb/room_channel.rb subscribed
+    // base/channels/actb/room_channel.rb subscribed
     // ↓
-    // app/jobs/actb/battle_broadcast_job.rb broadcast
+    // base/jobs/actb/battle_broadcast_job.rb broadcast
     // ↓
     battle_broadcasted(params) {
       if (
@@ -94,11 +94,11 @@ export const application_room = {
 
     room_speak(message_body) {
       // 受信をバトル側にしている理由は battle_id が自明だと都合が良いため
-      this.$ac_battle.perform("speak", {message_body: message_body}) // --> app/channels/actb/battle_channel.rb
+      this.$ac_battle.perform("speak", {message_body: message_body}) // --> base/channels/actb/battle_channel.rb
     },
 
     debug_say(message_body) {
-      if (this.app.config.action_cable_debug) {
+      if (this.base.config.action_cable_debug) {
         this.room_speak(message_body)
       }
     },
@@ -129,7 +129,7 @@ export const application_room = {
 
       delete params.ms_flip
 
-      this.$ac_room.perform(action, params) // --> app/channels/actb/room_channel.rb
+      this.$ac_room.perform(action, params) // --> base/channels/actb/room_channel.rb
     },
 
     ////////////////////////////////////////////////////////////////////////////////

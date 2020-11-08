@@ -5,7 +5,7 @@
   .mdi.mdi-close.maru_batu.batu(v-if="mi.latest_ox === 'timeout'")
 
   //////////////////////////////////////////////////////////////////////////////// ○連勝
-  .straight_win_straight_lose.is-size-8.has-text-weight-bold(v-if="app.debug_read_p")
+  .straight_win_straight_lose.is-size-8.has-text-weight-bold(v-if="base.debug_read_p")
     template(v-if="xrecord.straight_win_count >= 1")
       .straight_win_count {{xrecord.straight_win_count}}連勝中！
     template(v-else-if="xrecord.straight_lose_count >= 1")
@@ -20,10 +20,10 @@
     | {{membership.user.name}}
 
   //////////////////////////////////////////////////////////////////////////////// ルール毎に異なる
-  template(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_singleton' || app.current_strategy_key === 'sy_hybrid'")
+  template(v-if="base.current_strategy_key === 'sy_marathon' || base.current_strategy_key === 'sy_singleton' || base.current_strategy_key === 'sy_hybrid'")
     .question_progress.is-size-7.has-text-weight-bold
-      | {{mi.b_score}} / {{app.b_score_max_for_win}}
-    .question_progress_detail(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid' || app.debug_read_p")
+      | {{mi.b_score}} / {{base.b_score_max_for_win}}
+    .question_progress_detail(v-if="base.current_strategy_key === 'sy_marathon' || base.current_strategy_key === 'sy_hybrid' || base.debug_read_p")
       template(v-if="droped_ox_list.length === 0")
         | &nbsp;
       template(v-for="ox_mark_key in droped_ox_list")
@@ -37,25 +37,25 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "the_battle_membership",
   mixins: [
-    support,
+    support_child,
   ],
   props: {
     membership: { type: Object, required: true, },
   },
   computed: {
     mi() {
-      return this.app.member_infos_hash[this.membership.id]
+      return this.base.member_infos_hash[this.membership.id]
     },
     xrecord() {
       return this.membership.user.actb_main_xrecord
     },
     droped_ox_list() {
-      return this.mi.droped_ox_list(this.app.config.ox_status_line_take_n)
+      return this.mi.droped_ox_list(this.base.config.ox_status_line_take_n)
     },
   },
 }

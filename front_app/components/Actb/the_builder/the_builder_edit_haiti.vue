@@ -39,14 +39,14 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { builder_support } from "./builder_support.js"
 import any_source_read_modal from "../components/any_source_read_modal.vue"
 import haiti_kimeru_modal from "../components/haiti_kimeru_modal.vue"
 
 export default {
   name: "the_builder_edit_haiti",
   mixins: [
-    support,
+    builder_support,
   ],
   data() {
     return {

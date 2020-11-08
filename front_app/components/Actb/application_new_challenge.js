@@ -90,7 +90,7 @@ export const application_new_challenge = {
         if (e.status === "opponent_missing") {
           this.warning_notice(e.message)
         }
-      }) // --> app/models/frontend_script/actb_app_script/put_api.rb
+      }) // --> base/models/frontend_script/actb_app_script/put_api.rb
     },
 
     // snackbar 用のメッセージ
@@ -129,7 +129,7 @@ export const application_new_challenge = {
         message = `<div class="ml-2">${message}</div>`
       }
 
-      // app/javascript/ActbApp/application.sass で別定義あり
+      // base/javascript/ActbApp/application.sass で別定義あり
       return `<div class="ActbApp new_challenge_message is-flex">
                ${figure}${message}
               </div>`

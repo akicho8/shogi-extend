@@ -31,14 +31,14 @@
             b-tag(rounded v-if="bapp.valid_count >= 1" type="is-primary") OK
 
   ////////////////////////////////////////////////////////////////////////////////
-  the_builder_edit_haiti(  v-if="bapp.current_tab_info.key === 'haiti_mode'")
-  the_builder_edit_seikai( v-if="bapp.current_tab_info.key === 'seikai_mode'" ref="the_builder_edit_seikai")
-  the_builder_edit_form(   v-if="bapp.current_tab_info.key === 'form_mode'")
-  the_builder_edit_kensho( v-if="bapp.current_tab_info.key === 'kensho_mode'")
+  the_builder_edit_haiti(:base="base" :bapp="bapp"  v-if="bapp.current_tab_info.key === 'haiti_mode'")
+  the_builder_edit_seikai(:base="base" :bapp="bapp" v-if="bapp.current_tab_info.key === 'seikai_mode'" ref="the_builder_edit_seikai")
+  the_builder_edit_form(:base="base" :bapp="bapp"   v-if="bapp.current_tab_info.key === 'form_mode'")
+  the_builder_edit_kensho(:base="base" :bapp="bapp" v-if="bapp.current_tab_info.key === 'kensho_mode'")
 </template>
 
 <script>
-import { support } from "../support.js"
+import { builder_support } from "./builder_support.js"
 
 import the_builder_edit_haiti  from "./the_builder_edit_haiti.vue"
 import the_builder_edit_seikai from "./the_builder_edit_seikai.vue"
@@ -48,7 +48,7 @@ import the_builder_edit_kensho from "./the_builder_edit_kensho.vue"
 export default {
   name: "the_builder_edit",
   mixins: [
-    support,
+    builder_support,
   ],
   components: {
     the_builder_edit_haiti,

@@ -1,6 +1,6 @@
 * 構造
 
-  application (+ store)
+  application
   + room_message
   + header
   + lobby
@@ -9,7 +9,7 @@
   + result
   + builder (かなり疎結合)
 
-  ・support はすべてに mixin
+  ・support_child はすべてに mixin
   ・builder だけは完全分離で他は分離できないので基本indexにすべてのメソッドがある
   ・ライブラリではないので $parent をむしろ積極的に使っていく
 

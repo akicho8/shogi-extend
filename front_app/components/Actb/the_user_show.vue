@@ -12,7 +12,7 @@
       .skill_key.has-text-weight-bold.is-size-6.mt-1
         span.has-text-danger
           | {{ov_user_info.actb_main_xrecord.skill_key}}
-        span.has-text-danger.ml-1(v-if="app.config.rating_display_p")
+        span.has-text-danger.ml-1(v-if="base.config.rating_display_p")
           | {{rating_format(ov_user_info.actb_main_xrecord.rating)}}
 
       WinLoseCircle.mt-1(:info="win_lose_circle_params")
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "the_user_show",
@@ -83,7 +83,7 @@ export default {
     ov_user_info: { type: Object, required: true },
   },
   mixins: [
-    support,
+    support_child,
   ],
   methods: {
     delete_click_handle() {
@@ -107,7 +107,7 @@ export default {
       }
     },
     permalink_url() {
-      return this.app.ov_user_url(this.ov_user_info.id)
+      return this.base.ov_user_url(this.ov_user_info.id)
     },
     total_o_rate() {
       const o = this.ov_user_info.statistics.total_o_count

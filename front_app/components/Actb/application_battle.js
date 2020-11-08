@@ -59,7 +59,7 @@ export const application_battle = {
       }
 
       // this.debug_say(`**→ [${membership.user.name}][${action}] ` + JSON.stringify(params))
-      this.$ac_battle.perform(action, params) // --> app/channels/actb/battle_channel.rb
+      this.$ac_battle.perform(action, params) // --> base/channels/actb/battle_channel.rb
     },
 
     battle_unsubscribe() {
@@ -187,7 +187,7 @@ export const application_battle = {
     play_board_share(share_sfen) {
       this.ac_battle_perform("play_board_share", { // 戻値なし
         share_sfen: share_sfen,
-      }) // --> app/channels/actb/battle_channel.rb
+      }) // --> base/channels/actb/battle_channel.rb
     },
     play_board_share_broadcasted(params) {
       if (params.membership_id === this.current_membership.id) {
@@ -207,7 +207,7 @@ export const application_battle = {
       //   question_id: this.current_question.id,
       //   question_index: this.question_index,
       //   ox_mark_key: ox_mark_key,
-      // }) // --> app/channels/actb/battle_channel.rb
+      // }) // --> base/channels/actb/battle_channel.rb
 
     },
 
@@ -222,7 +222,7 @@ export const application_battle = {
         question_id: this.current_question.id,
         question_index: this.question_index,
         ox_mark_key: ox_mark_key,
-      }) // --> app/channels/actb/battle_channel.rb
+      }) // --> base/channels/actb/battle_channel.rb
     },
     // 状況を反映する
     kotae_sentaku_broadcasted(params) {
@@ -300,7 +300,7 @@ export const application_battle = {
     delay_and_judgement_run_or_next_trigger(ox_mark_info) {
       this.delay_block(ox_mark_info.delay_second, () => {
         if (this.battle_end_p || this.next_question_empty_p) {
-          this.ac_battle_perform("judgement_run", {member_infos_hash: this.member_infos_hash}) // --> app/channels/actb/battle_channel.rb
+          this.ac_battle_perform("judgement_run", {member_infos_hash: this.member_infos_hash}) // --> base/channels/actb/battle_channel.rb
         } else {
           this.next_trigger()
         }
@@ -315,7 +315,7 @@ export const application_battle = {
       this.ac_battle_perform("next_trigger", {
         question_index: this.question_index + 1, // 次に進めたい(希望)
         question_id: this.next_question.id,
-      }) // --> app/channels/actb/battle_channel.rb
+      }) // --> base/channels/actb/battle_channel.rb
     },
     next_trigger_broadcasted(params) {
       if (this.current_strategy_key === "sy_marathon") {
@@ -335,7 +335,7 @@ export const application_battle = {
       this.ac_battle_perform("answer_button_push_handle", {
         ms_flip: ms_flip,
         question_id: this.current_question.id,
-      }) // --> app/channels/actb/battle_channel.rb
+      }) // --> base/channels/actb/battle_channel.rb
     },
     answer_button_push_handle_broadcasted(params) {
       // 「わかった」を押した直後に時間切れとなった場合、時間切れ表示中に answer_button_push_handle_broadcasted が発生し、
@@ -357,7 +357,7 @@ export const application_battle = {
       } else {
         // 解答ボタンを押さなかった側
         // 元々誤答していたら解答権利復活させる
-        if (this.app.config.otetuki_release_p) {
+        if (this.base.config.otetuki_release_p) {
           if (this.current_mi.otetuki_p(params.question_id)) {
             this.current_mi.otetuki_off(params.question_id)
           }
@@ -373,7 +373,7 @@ export const application_battle = {
       this.ac_battle_perform("x2_play_timeout_handle", {
         ms_flip: ms_flip,
         question_id: this.current_question.id,
-      }) // --> app/channels/actb/battle_channel.rb
+      }) // --> base/channels/actb/battle_channel.rb
     },
     // sy_singleton での操作中の時間切れは不正解相当
     x2_play_timeout_handle_broadcasted(params) {
@@ -386,7 +386,7 @@ export const application_battle = {
       } else {
       }
 
-      if (this.app.config.otetuki_release_p) {
+      if (this.base.config.otetuki_release_p) {
         // 解答権が相手にうつる場合
       } else {
         // 両者がおてつきしたらリーダーがタイムアウトとみなして次の問題に移行させる
@@ -453,7 +453,7 @@ export const application_battle = {
         this.sound_play("pon")
         this.say("おしまい")
       } else {
-        this.sound_play(this.app.current_membership.judge.key)
+        this.sound_play(this.base.current_membership.judge.key)
       }
     },
 
@@ -485,7 +485,7 @@ export const application_battle = {
 
   computed: {
     leader_p() {
-      return this.battle.memberships[this.app.config.leader_index].id === this.current_membership.id
+      return this.battle.memberships[this.base.config.leader_index].id === this.current_membership.id
     },
     current_membership() {
       const v = this.battle.memberships.find(e => e.user.id === this.current_user.id)
@@ -550,7 +550,7 @@ export const application_battle = {
     // 自分が必ず左側にいる memberships
     // -1:左 +1:右
     ordered_memberships() {
-      if (this.app.config.self_is_left_side_p)  {
+      if (this.base.config.self_is_left_side_p)  {
         return _.sortBy(this.battle.memberships, e => e.user.id === this.current_user.id ? -1 : 0)
       } else {
         return this.battle.memberships

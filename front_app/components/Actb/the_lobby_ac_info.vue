@@ -1,19 +1,19 @@
 <template lang="pug">
 .the_lobby_ac_info
-  ul.is-flex.has-text-grey.is-size-7(v-if="app.debug_summary_p")
-    li.ml-1(v-if="development_p")               購読{{app.ac_subscription_names}}
-    li.ml-1(v-if="app.school_user_ids != null") オンライン{{app.school_user_ids.length}}人
-    li.ml-1(v-if="app.matching_user_ids_hash")  対戦待ち{{app.matching_user_count}}人
-    li.ml-1(v-if="app.room_user_ids != null")   対戦中{{app.room_user_ids.length}}人
+  ul.is-flex.has-text-grey.is-size-7(v-if="base.debug_summary_p")
+    li.ml-1(v-if="development_p")               購読{{base.ac_subscription_names}}
+    li.ml-1(v-if="base.school_user_ids != null") オンライン{{base.school_user_ids.length}}人
+    li.ml-1(v-if="base.matching_user_ids_hash")  対戦待ち{{base.matching_user_count}}人
+    li.ml-1(v-if="base.room_user_ids != null")   対戦中{{base.room_user_ids.length}}人
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "the_lobby_ac_info",
   mixins: [
-    support,
+    support_child,
   ],
 }
 </script>

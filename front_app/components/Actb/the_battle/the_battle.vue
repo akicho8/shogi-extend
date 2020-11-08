@@ -1,42 +1,42 @@
 <template lang="pug">
 .the_battle
-  DebugPrint(v-if="app.debug_read_p" :vars="['app.sub_mode', 'app.member_infos_hash', 'app.question_index', 'app.x_mode', 'app.battle.best_questions.length']" oneline)
+  DebugPrint(v-if="base.debug_read_p" :vars="['base.sub_mode', 'base.member_infos_hash', 'base.question_index', 'base.x_mode', 'base.battle.best_questions.length']" oneline)
 
-  a.delete.page_delete.is-large.is_top_left_fixed(@click="app.rensyu_yameru_handle" v-if="app.room.bot_user_id")
-  the_room_emotion
+  a.delete.page_delete.is-large.is_top_left_fixed(@click="base.rensyu_yameru_handle" v-if="base.room.bot_user_id")
+  the_room_emotion(:base="base")
 
-  template(v-if="app.current_strategy_key === 'sy_versus'")
-    the_battle_question_sy_versus
+  template(v-if="base.current_strategy_key === 'sy_versus'")
+    the_battle_question_sy_versus(:base="base")
 
   //////////////////////////////////////////////////////////////////////////////// ○vs○
-  template(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_singleton' || app.current_strategy_key === 'sy_hybrid'")
+  template(v-if="base.current_strategy_key === 'sy_marathon' || base.current_strategy_key === 'sy_singleton' || base.current_strategy_key === 'sy_hybrid'")
     .vs_container.is-flex
-      template(v-for="(membership, i) in app.ordered_memberships")
-        the_battle_membership(:membership="membership" :key="membership.id")
+      template(v-for="(membership, i) in base.ordered_memberships")
+        the_battle_membership(:base="base" :membership="membership" :key="membership.id")
         .is-1.has-text-weight-bold.is-size-4.has-text-grey-light.mx-1(v-if="i === 0") vs
     //////////////////////////////////////////////////////////////////////////////// 第○問
-    template(v-if="app.sub_mode === 'sm3_deden'")
+    template(v-if="base.sub_mode === 'sm3_deden'")
       .sm3_deden_container.has-text-centered.is-size-3
         .question_index
-          | 第{{app.question_index + 1}}問
+          | 第{{base.question_index + 1}}問
 
     //////////////////////////////////////////////////////////////////////////////// 時間切れ
-    template(v-if="app.sub_mode === 'sm6_timeout'")
+    template(v-if="base.sub_mode === 'sm6_timeout'")
       .sm6_timeout_container.has-text-centered.is-size-3
-        template(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid'")
+        template(v-if="base.current_strategy_key === 'sy_marathon' || base.current_strategy_key === 'sy_hybrid'")
           | 時間切れ
-        template(v-if="app.current_strategy_key === 'sy_singleton'")
-          template(v-if="app.otetuki_all_p")
+        template(v-if="base.current_strategy_key === 'sy_singleton'")
+          template(v-if="base.otetuki_all_p")
             | 両者不正解
           template(v-else)
             | 時間切れ
 
     //////////////////////////////////////////////////////////////////////////////// 問題
-    template(v-if="app.sub_mode === 'sm4_tactic' || app.sub_mode === 'sm5_correct'")
-      question_author(:question="app.current_question" :title_display_p="false")
-      the_battle_question_sy_marathon(v-if="app.current_strategy_key === 'sy_marathon' || app.current_strategy_key === 'sy_hybrid'")
-      the_battle_question_sy_singleton(v-if="app.current_strategy_key === 'sy_singleton'")
-      the_room_message
+    template(v-if="base.sub_mode === 'sm4_tactic' || base.sub_mode === 'sm5_correct'")
+      question_author(:question="base.current_question" :title_display_p="false")
+      the_battle_question_sy_marathon(:base="base" v-if="base.current_strategy_key === 'sy_marathon' || base.current_strategy_key === 'sy_hybrid'")
+      the_battle_question_sy_singleton(:base="base" v-if="base.current_strategy_key === 'sy_singleton'")
+      the_room_message(:base="base")
 
   //////////////////////////////////////////////////////////////////////////////// シミュレータ
 
@@ -44,26 +44,26 @@
     .columns
       .column
         .buttons.is-centered.are-small
-          b-button(@click="app.kotae_sentaku('correct')") O
-          b-button(@click="app.kotae_sentaku('timeout')") X (タイムアウト)
+          b-button(@click="base.kotae_sentaku('correct')") O
+          b-button(@click="base.kotae_sentaku('timeout')") X (タイムアウト)
         .buttons.is-centered.are-small
-          b-button(@click="app.answer_button_push_handle(false)") わかった(自分)
-          b-button(@click="app.kotae_sentaku('correct')") 正解(自分)
-          b-button(@click="app.x2_play_timeout_handle(false)") 駒操作中タイムアウト(自分)
+          b-button(@click="base.answer_button_push_handle(false)") わかった(自分)
+          b-button(@click="base.kotae_sentaku('correct')") 正解(自分)
+          b-button(@click="base.x2_play_timeout_handle(false)") 駒操作中タイムアウト(自分)
         .buttons.is-centered.are-small
-          b-button(@click="app.answer_button_push_handle(true)") わかった(相手)
-          b-button(@click="app.kotae_sentaku('correct', true)") 正解(相手)
-          b-button(@click="app.x2_play_timeout_handle(true)") 駒操作中タイムアウト(相手)
+          b-button(@click="base.answer_button_push_handle(true)") わかった(相手)
+          b-button(@click="base.kotae_sentaku('correct', true)") 正解(相手)
+          b-button(@click="base.x2_play_timeout_handle(true)") 駒操作中タイムアウト(相手)
         .buttons.is-centered.are-small
-          b-button(@click="app.battle_unsubscribe") 切断(自分)
-          b-button(@click="app.member_disconnect_handle(true)") 切断(相手)
+          b-button(@click="base.battle_unsubscribe") 切断(自分)
+          b-button(@click="base.member_disconnect_handle(true)") 切断(相手)
         .buttons.is-centered.are-small
-          b-button(@click="app.new_challenge_accept_handle") マッチングの人と対戦する
-          b-button(@click="app.new_challenge_accept_handle") 挑戦者発見
+          b-button(@click="base.new_challenge_accept_handle") マッチングの人と対戦する
+          b-button(@click="base.new_challenge_accept_handle") 挑戦者発見
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 import { up_down_scroll_disable } from "../up_down_scroll_disable.js"
 import dayjs from "dayjs"
 
@@ -78,7 +78,7 @@ import question_author                from "../components/question_author.vue"
 export default {
   name: "the_battle",
   mixins: [
-    support,
+    support_child,
     up_down_scroll_disable,
   ],
   components: {

@@ -2,13 +2,13 @@
 .the_question_show_message
   .articles_container.mx-4(ref="articles_container")
     article.media(v-for="message in new_question.messages")
-      figure.media-left.is-clickable(@click="app.ov_user_info_set(message.user.id)")
+      figure.media-left.is-clickable(@click="base.ov_user_info_set(message.user.id)")
         p.image.is-64x64.avatar_image
           img.is-rounded(:src="message.user.avatar_path")
       .media-content
         .content
           p
-            strong.is-clickable(@click="app.ov_user_info_set(message.user.id)")
+            strong.is-clickable(@click="base.ov_user_info_set(message.user.id)")
               | {{message.user.name}}
             br
             span(v-html="message_decorate(message.body)")
@@ -31,10 +31,10 @@
             a.level-item
               span.icon.is-small
                 i.fas.fa-heart
-    article.media(v-if="app.current_user")
-      figure.media-left.is-clickable(@click="app.ov_user_info_set(app.current_user.id)")
+    article.media(v-if="base.current_user")
+      figure.media-left.is-clickable(@click="base.ov_user_info_set(base.current_user.id)")
         p.image.is-64x64.avatar_image
-          img.is-rounded(:src="app.current_user.avatar_path")
+          img.is-rounded(:src="base.current_user.avatar_path")
       .media-content
         .field
           p.control
@@ -46,12 +46,12 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "the_question_show_message",
   mixins: [
-    support,
+    support_child,
   ],
   props: {
     question: { type: Object, required: true },
@@ -87,10 +87,10 @@ export default {
       this.message_body = ""
     },
     speak(message_body) {
-      this.$ac_question.perform("speak", {message_body: message_body}) // --> app/channels/actb/question_channel.rb
+      this.$ac_question.perform("speak", {message_body: message_body}) // --> base/channels/actb/question_channel.rb
     },
     speak_broadcasted(params) {
-      this.app.lobby_speak_broadcasted_shared_process(params)
+      this.base.lobby_speak_broadcasted_shared_process(params)
       this.new_question.messages.push(params.message)
     },
     ////////////////////////////////////////////////////////////////////////////////

@@ -12,7 +12,7 @@
 
       .question_title.is_line_break_on.is-flex.mt-4.mx-6
         span.has-text-weight-bold.is-size-5
-          template(v-if="current_user_is_owner_p || app.debug_force_edit_p")
+          template(v-if="current_user_is_owner_p || base.debug_force_edit_p")
             a(@click="edit_handle(question.id)")
               | {{question.title}}
           template(v-else)
@@ -25,7 +25,7 @@
         //- https://buefy.org/documentation/tag/
         b-field(grouped group-multiline position="is-centered")
           .control
-            b-tag.is-clickable(attached @click.native="app.ov_user_info_set(question.user.id)")
+            b-tag.is-clickable(attached @click.native="base.ov_user_info_set(question.user.id)")
               .is-flex
                 template(v-if="question.source_author || question.source_about_key === 'unknown'")
                   | 投稿
@@ -62,8 +62,8 @@
         :slider_show="true"
         :controller_show="true"
         :setting_button_show="false"
-        :theme="app.config.sp_theme"
-        :size="app.config.sp_size"
+        :theme="base.config.sp_theme"
+        :size="base.config.sp_size"
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
         )
 
@@ -73,7 +73,7 @@
           | {{question.moves_answers[tab_index - 1].moves_human_str}}
 
     .vote_container.is-flex.mt-4
-      the_history_row_vote(:row="new_ov_question_info")
+      the_history_row_vote(:base="base" :row="new_ov_question_info")
 
     .mt-6
       b-field(grouped group-multiline position="is-centered")
@@ -135,14 +135,14 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 import the_history_row_vote      from "./the_history/the_history_row_vote.vue"
 import the_question_show_message from "./the_question_show_message.vue"
 
 export default {
   name: "the_question_show",
   mixins: [
-    support,
+    support_child,
   ],
 
   props: {
@@ -178,11 +178,11 @@ export default {
   methods: {
     edit_handle(question_id) {
       this.$emit("close")
-      this.app.edit_question_id = question_id
-      if (this.app.$refs.builder) {
-        this.app.$refs.builder.question_edit()
+      this.base.edit_question_id = question_id
+      if (this.base.$refs.builder) {
+        this.base.$refs.builder.question_edit()
       } else {
-        this.app.builder_handle()
+        this.base.builder_handle()
       }
     },
 
@@ -237,7 +237,7 @@ export default {
       return this.new_ov_question_info.question
     },
     permalink_url() {
-      return this.app.ov_question_url(this.question.id)
+      return this.base.ov_question_url(this.question.id)
     },
     tweet_body() {
       return [
@@ -252,7 +252,7 @@ export default {
 
     // いまログインしている人はこの問題の投稿者か？
     current_user_is_owner_p() {
-      return this.app.current_user && this.app.current_user.id === this.question.user.id
+      return this.base.current_user && this.base.current_user.id === this.question.user.id
     },
   },
 }

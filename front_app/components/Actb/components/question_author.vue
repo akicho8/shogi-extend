@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "question_author",
   mixins: [
-    support,
+    support_child,
   ],
   props: {
     title_display_p: { type: Boolean, required: false, default: true, },

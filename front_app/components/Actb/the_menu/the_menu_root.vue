@@ -3,20 +3,20 @@
   .primary_header
     .header_center_title メニュー
   .menu_buttons
-    b-button(expanded tag="nuxt-link" :to="{name: 'settings-profile'}" :disabled="!app.current_user") プロフィール
-    b-button(expanded @click="app.emotion_index_handle" :disabled="!app.current_user" v-if="app.config.emotion_editable_p") エモーション
-    b-button(expanded tag="a" :href="question_zip_download_url" @click="sound_play('click')" :disabled="!app.current_user" v-if="development_p") 問題ダウンロード(直接)
-    b-button(expanded @click="zip_dl_count_fetch" :disabled="!app.current_user") 問題ダウンロード
-    b-button(expanded @click="app.menu_to('the_menu_etc')" ) その他
+    b-button(expanded tag="nuxt-link" :to="{name: 'settings-profile'}" :disabled="!base.current_user") プロフィール
+    b-button(expanded @click="base.emotion_index_handle" :disabled="!base.current_user" v-if="base.config.emotion_editable_p") エモーション
+    b-button(expanded tag="a" :href="question_zip_download_url" @click="sound_play('click')" :disabled="!base.current_user" v-if="development_p") 問題ダウンロード(直接)
+    b-button(expanded @click="zip_dl_count_fetch" :disabled="!base.current_user") 問題ダウンロード
+    b-button(expanded @click="base.menu_to('the_menu_etc')" ) その他
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "the_menu_root",
   mixins: [
-    support,
+    support_child,
   ],
   methods: {
     zip_dl_count_fetch() {

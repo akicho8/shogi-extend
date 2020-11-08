@@ -62,7 +62,7 @@ export const support = {
     },
 
     login_required_warning_notice() {
-      if (!this.app.current_user) {
+      if (!this.base.current_user) {
         this.warning_notice("ログインしてください")
         return true
       }
@@ -95,14 +95,14 @@ export const support = {
     //////////////////////////////////////////////////////////////////////////////// private
 
     permit_enable_type(tag) {
-      if (this.app.current_user) {
-        return this.app.current_user.permit_tag_list.includes(tag)
+      if (this.base.current_user) {
+        return this.base.current_user.permit_tag_list.includes(tag)
       }
     },
 
     permit_hidden_type(tag) {
-      if (this.app.current_user) {
-        if (this.app.current_user.permit_tag_list.includes(tag)) {
+      if (this.base.current_user) {
+        if (this.base.current_user.permit_tag_list.includes(tag)) {
           return false
         }
       }
@@ -110,16 +110,16 @@ export const support = {
     },
   },
   computed: {
-    ...Vuex.mapState([
-      "app",
-      "bapp",
-    ]),
-    ...Vuex.mapGetters([
-      "current_gvar1",
-    ]),
-    // ...mapState([
-    //   "fooKey",
+    // ...Vuex.mapState([
+    //   "base",
+    //   "bapp",
     // ]),
+    // ...Vuex.mapGetters([
+    //   "current_gvar1",
+    // ]),
+    // // ...mapState([
+    // //   "fooKey",
+    // // ]),
 
     permit_staff_p()               { return this.permit_enable_type("staff")                      },
     permit_lobby_message_p()       { return this.permit_hidden_type("lobby_message_hidden")       },

@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 
 export default {
   mixins: [
-    support,
+    support_child,
   ],
   props: {
     xrecord: { type: Object, required: true, },

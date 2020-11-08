@@ -12,7 +12,7 @@
 
   .secondary_header
     b-tabs.tabs_in_secondary(v-model="$parent.current_tabpos" expanded @input="tab_change_hook")
-      template(v-for="e in app.EmotionFolderInfo.values")
+      template(v-for="e in base.EmotionFolderInfo.values")
         b-tab-item
           template(slot="header")
             span
@@ -46,12 +46,12 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "the_emotion_index",
   mixins: [
-    support,
+    support_child,
   ],
   data() {
     return {
@@ -77,18 +77,18 @@ export default {
     // 上下並び替え
     move_to_handle(record, move_to) {
       this.api_put("emotion_move_to_handle", {record_id: record.id, move_to: move_to}, e => {
-        this.$set(this.app.current_user, "emotions", e.emotions)
+        this.$set(this.base.current_user, "emotions", e.emotions)
         this.sound_play("click")
       })
     },
     // 指定フォルダに入っているレコード(複数)を返す
     folder_records(folder) {
-      return this.app.current_user.emotions.filter(e => e.folder_key === folder.key)
+      return this.base.current_user.emotions.filter(e => e.folder_key === folder.key)
     },
     // 初期値に戻す
     reset_handle() {
       this.api_put("emotions_reset_handle", {}, e => {
-        this.$set(this.app.current_user, "emotions", e.emotions)
+        this.$set(this.base.current_user, "emotions", e.emotions)
         this.sound_play("click")
       })
 
@@ -103,7 +103,7 @@ export default {
       //   trapFocus: true,
       //   onConfirm: () => {
       //     this.api_put("emotions_reset_handle", {}, e => {
-      //       this.$set(this.app.current_user, "emotions", e.emotions)
+      //       this.$set(this.base.current_user, "emotions", e.emotions)
       //       this.sound_play("click")
       //     })
       //   },
@@ -112,13 +112,13 @@ export default {
     },
     destroy_all_handle() {
       this.api_put("emotions_destroy_all_handle", {}, e => {
-        this.$set(this.app.current_user, "emotions", e.emotions)
+        this.$set(this.base.current_user, "emotions", e.emotions)
         this.sound_play("click")
       })
     },
     import_handle() {
       this.api_put("emotions_import_handle", {}, e => {
-        this.$set(this.app.current_user, "emotions", e.emotions)
+        this.$set(this.base.current_user, "emotions", e.emotions)
         this.sound_play("click")
       })
     },
@@ -146,7 +146,7 @@ export default {
         this.$buefy.toast.open(`Moved ${this.dragging_row.name} from row ${this.dragging_row_index + 1} to ${dropped_on_row_index + 1}`)
       }
       this.api_put("emotion_insert_at_handle", {record_id: this.dragging_row.id, insert_at: dropped_on_row_index}, e => {
-        this.$set(this.app.current_user, "emotions", e.emotions)
+        this.$set(this.base.current_user, "emotions", e.emotions)
         // this.sound_play("click")
       })
     },

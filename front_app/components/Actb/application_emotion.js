@@ -5,7 +5,7 @@ export const application_emotion = {
   },
   methods: {
     emotion_handle(params) {
-      this.ac_room_perform("emotion_handle", params) // --> app/channels/actb/room_channel.rb
+      this.ac_room_perform("emotion_handle", params) // --> base/channels/actb/room_channel.rb
     },
     emotion_handle_broadcasted(params) {
       if (params.membership_id === this.room_my_membership.id) {

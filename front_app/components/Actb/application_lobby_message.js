@@ -32,7 +32,7 @@ export const application_lobby_message = {
 
     // 受信
     lobby_speak_broadcasted(params) {
-      if (this.app.current_user && this.app.current_user.mute_user_ids.includes(params.message.user.id)) {
+      if (this.base.current_user && this.base.current_user.mute_user_ids.includes(params.message.user.id)) {
         this.debug_alert(`skip: ${params.message.body}`)
         return
       }
@@ -62,8 +62,8 @@ export const application_lobby_message = {
       s = s.replace(/\s+/g, "")          // s = s.remove(" ")
       s = _.uniq(Array.from(s)).join("") // s = s.chars.uniq.join
       const retv = s.length === 1
-      if (this.app.current_user) {
-        if (this.app.current_user.created_after_days <= LOBBY_MESSAGE_BODY_NOIZE_CHECK_DAYS) {
+      if (this.base.current_user) {
+        if (this.base.current_user.created_after_days <= LOBBY_MESSAGE_BODY_NOIZE_CHECK_DAYS) {
           return retv
         }
       }

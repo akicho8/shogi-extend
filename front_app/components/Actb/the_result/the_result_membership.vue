@@ -1,7 +1,7 @@
 <template lang="pug">
 .the_result_membership.is-flex
   //////////////////////////////////////////////////////////////////////////////// ○連勝
-  .straight_win_straight_lose.is-size-8.has-text-weight-bold(v-if="!app.room.bot_user_id")
+  .straight_win_straight_lose.is-size-8.has-text-weight-bold(v-if="!base.room.bot_user_id")
     template(v-if="xrecord.straight_win_count >= 1")
       .straight_win_count {{xrecord.straight_win_count}}連勝中！
     template(v-else-if="xrecord.straight_lose_count >= 1")
@@ -16,12 +16,12 @@
     | {{membership.user.name}}
 
   ////////////////////////////////////////////////////////////////////////////////
-  .user_quest_index.has-text-weight-bold.is-size-4(v-if="app.debug_read_p && false")
-    | {{mi.b_score}} / {{app.b_score_max_for_win}}
+  .user_quest_index.has-text-weight-bold.is-size-4(v-if="base.debug_read_p && false")
+    | {{mi.b_score}} / {{base.b_score_max_for_win}}
 
   ////////////////////////////////////////////////////////////////////////////////
-  template(v-if="!app.room.bot_user_id")
-    .user_rating.has-text-weight-bold(v-if="app.config.rating_display_p")
+  template(v-if="!base.room.bot_user_id")
+    .user_rating.has-text-weight-bold(v-if="base.config.rating_display_p")
       | {{rating_format(xrecord.rating)}}
       span.skill_last_diff.has-text-danger(v-if="xrecord.skill_last_diff > 0")
         | (+{{rating_format(xrecord.skill_last_diff)}})
@@ -31,16 +31,16 @@
   the_result_membership_progress(:xrecord="xrecord")
 
   .battle_continue_container.has-text-weight-bold.mt-1
-    b-tag(type="is-warning" v-if="app.continue_tap_counts[membership.id]") 再戦希望
+    b-tag(type="is-warning" v-if="base.continue_tap_counts[membership.id]") 再戦希望
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 import the_result_membership_progress from "./the_result_membership_progress"
 
 export default {
   mixins: [
-    support,
+    support_child,
   ],
   components: {
     the_result_membership_progress,
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     mi() {
-      return this.app.member_infos_hash[this.membership.id]
+      return this.base.member_infos_hash[this.membership.id]
     },
     xrecord() {
       return this.membership.user.actb_main_xrecord

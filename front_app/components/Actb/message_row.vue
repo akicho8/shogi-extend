@@ -1,8 +1,8 @@
 <template lang="pug">
 .message_row.is-flex(v-if="show_p")
   .image.is-clickable.is-16x16.avatar_image
-    img.is-rounded(:src="message.user.avatar_path" @click="app.ov_user_info_set(message.user.id)")
-  .user_name.has-text-grey.is-size-7.is-clickable.has-text-weight-bold(@click="app.ov_user_info_set(message.user.id)")
+    img.is-rounded(:src="message.user.avatar_path" @click="base.ov_user_info_set(message.user.id)")
+  .user_name.has-text-grey.is-size-7.is-clickable.has-text-weight-bold(@click="base.ov_user_info_set(message.user.id)")
     | {{message.user.name}}
   .message_body.is-size-7.is_line_break_on
     span(v-html="message_decorate(message_body)" :class="{'has-text-primary': system_message_p, 'has-text-danger': debug_message_p}")
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "message_row",
@@ -19,15 +19,15 @@ export default {
     message: { type: Object, required: true, },
   },
   mixins: [
-    support,
+    support_child,
   ],
   computed: {
     // デバッグ用のメッセージはデバッグモードのアカウントのときだけ見れる
     show_p() {
-      // if (this.debug_message_p && !this.app.debug_read_p) {
+      // if (this.debug_message_p && !this.base.debug_read_p) {
       //   return false
       // }
-      if (this.app.current_user && this.app.current_user.mute_user_ids.includes(this.message.user.id)) {
+      if (this.base.current_user && this.base.current_user.mute_user_ids.includes(this.message.user.id)) {
         return false
       }
 
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "./support.sass"
 .message_row
   margin-top: 0.2rem
   align-items: flex-start

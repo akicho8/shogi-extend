@@ -1,26 +1,25 @@
 <template lang="pug">
 .ActbApp(:class="mode")
-  the_emotion(v-if="mode === 'emotion'")
-  the_lobby(        v-if="mode === 'lobby'")
-  the_rule_select(  v-if="mode === 'rule_select'")
-  the_matching(     v-if="mode === 'matching'")
-  the_battle(       v-if="mode === 'battle'")
-  the_result(       v-if="mode === 'result'")
+  the_emotion(:base="base" v-if="mode === 'emotion'")
+  the_lobby(:base="base"         v-if="mode === 'lobby'")
+  the_rule_select(:base="base"   v-if="mode === 'rule_select'")
+  the_matching(:base="base"      v-if="mode === 'matching'")
+  the_battle(:base="base"        v-if="mode === 'battle'")
+  the_result(:base="base"        v-if="mode === 'result'")
 
-  the_ranking(      v-if="mode === 'ranking'")
-  the_history(      v-if="mode === 'history'")
-  the_builder(      v-if="mode === 'builder'" ref="builder")
-  the_menu(         v-if="mode === 'menu'")
-  the_chess_clock(  v-if="mode === 'chess_clock'")
+  the_ranking(:base="base"       v-if="mode === 'ranking'")
+  the_history(:base="base"       v-if="mode === 'history'")
+  the_builder(:base="base"       v-if="mode === 'builder'" ref="builder")
+  the_menu(:base="base"          v-if="mode === 'menu'")
+  the_chess_clock(:base="base"   v-if="mode === 'chess_clock'")
 
-  details(v-if="app.debug_read_p")
+  details(v-if="base.debug_read_p")
     summary DEBUG
     DebugPrint(:grep="/./")
 </template>
 
 <script>
 import { support } from "./support.js"
-import { store   } from "./store.js"
 
 // Page Components
 import the_question_show from "./the_question_show.vue"
@@ -57,7 +56,6 @@ import { EmotionInfo               } from "./models/emotion_info.js"
 import { EmotionFolderInfo       } from "./models/emotion_folder_info.js"
 
 export default {
-  store,
   name: "ActbApp",
   mixins: [
     support,
@@ -130,25 +128,19 @@ export default {
       debug_write_p:   false, // 更新系(危険)
 
       // リアクティブではないもの
-      // $ac_school: null, // --> app/channels/actb/school_channel.rb
-      // $ac_lobby:  null, // --> app/channels/actb/lobby_channel.rb
-      // $ac_room:   null, // --> app/channels/actb/room_channel.rb
-      // $ac_battle: null, // --> app/channels/actb/battle_channel.rb
+      // $ac_school: null, // --> base/channels/actb/school_channel.rb
+      // $ac_lobby:  null, // --> base/channels/actb/lobby_channel.rb
+      // $ac_room:   null, // --> base/channels/actb/room_channel.rb
+      // $ac_battle: null, // --> base/channels/actb/battle_channel.rb
     }
-  },
-
-  beforeCreate() {
-    this.$store.state.app = this
   },
 
   async created() {
     if (this.development_p) {
-      if (this.permit_staff_p) {
-        this.debug_summary_p    = true
-        this.debug_force_edit_p = true
-        this.debug_read_p       = true
-        this.debug_write_p      = true
-      }
+      this.debug_summary_p    = true
+      this.debug_force_edit_p = true
+      this.debug_read_p       = true
+      this.debug_write_p      = true
     }
 
     await this.api_get("resource_fetch", {}, e => {
@@ -218,8 +210,8 @@ export default {
 
     reload_if_outdated() {
       return this.silent_api_get("revision_fetch", {}, e => {
-        if (this.app.config.revision === e.revision) {
-          this.debug_alert(`revision: ${this.app.config.revision} OK`)
+        if (this.base.config.revision === e.revision) {
+          this.debug_alert(`revision: ${this.base.config.revision} OK`)
         } else {
           this.ok_notice("新しいプログラムがあるので更新します", {onend: () => location.reload(true)})
         }
@@ -374,7 +366,7 @@ export default {
     matching_cancel_handle() {
       this.sound_play("click")
 
-      this.app.matching_interval_timer_clear()
+      this.base.matching_interval_timer_clear()
 
       this.__assert__(this.$ac_lobby, "ロビーの接続切れ")
       this.$ac_lobby.perform("matching_cancel")
@@ -387,7 +379,7 @@ export default {
     // メニュー内の切り替え
     menu_to(v) {
       this.sound_play("click")
-      this.app.menu_component = v
+      this.base.menu_component = v
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -460,6 +452,8 @@ export default {
   },
 
   computed: {
+    base() { return this },
+
     // current_user() {
     //   return this.info.current_user
     // },

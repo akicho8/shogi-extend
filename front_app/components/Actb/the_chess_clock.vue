@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_chess_clock
-  the_footer
+  the_footer(:base="base")
   .primary_header
     .header_center_title 対局時計
   .level.is-mobile
@@ -35,13 +35,13 @@
 import { ChessClock   } from "@/components/models/ChessClock.js"
 import Location from "shogi-player/src/location.js"
 
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 import the_footer from "./the_footer.vue"
 
 export default {
   name: "the_chess_clock",
   mixins: [
-    support,
+    support_child,
   ],
   components: {
     the_footer,

@@ -1,15 +1,15 @@
 <template lang="pug">
 .the_footer.footer_nav.is-flex(:class="{hidden_p: hidden_p}")
-  .item(@click="app.lobby_handle")
-    b-icon(:icon="app.mode === 'lobby'    ? 'home'        : 'home-outline'"  :class="{'has-text-primary': app.mode === 'lobby'}")
-  .item(@click="app.ranking_handle")
-    b-icon(:icon="app.mode === 'ranking'  ? 'crown'       : 'crown-outline'" :class="{'has-text-primary': app.mode === 'ranking'}")
-  .item(@click="app.history_handle")
-    b-icon(:icon="app.mode === 'history'  ? 'history'     : 'history'"       :class="{'has-text-primary': app.mode === 'history'}")
-  .item(@click="app.builder_handle")
-    b-icon(:icon="app.mode === 'builder'  ? 'plus-thick'  : 'plus'"          :class="{'has-text-primary': app.mode === 'builder'}")
-  .item(@click="app.menu_handle")
-    b-icon(:icon="app.mode === 'menu'     ? 'menu'        : 'menu'"          :class="{'has-text-primary': app.mode === 'menu'}")
+  .item(@click="base.lobby_handle")
+    b-icon(:icon="base.mode === 'lobby'    ? 'home'        : 'home-outline'"  :class="{'has-text-primary': base.mode === 'lobby'}")
+  .item(@click="base.ranking_handle")
+    b-icon(:icon="base.mode === 'ranking'  ? 'crown'       : 'crown-outline'" :class="{'has-text-primary': base.mode === 'ranking'}")
+  .item(@click="base.history_handle")
+    b-icon(:icon="base.mode === 'history'  ? 'history'     : 'history'"       :class="{'has-text-primary': base.mode === 'history'}")
+  .item(@click="base.builder_handle")
+    b-icon(:icon="base.mode === 'builder'  ? 'plus-thick'  : 'plus'"          :class="{'has-text-primary': base.mode === 'builder'}")
+  .item(@click="base.menu_handle")
+    b-icon(:icon="base.mode === 'menu'     ? 'menu'        : 'menu'"          :class="{'has-text-primary': base.mode === 'menu'}")
 
   b-dropdown(position="is-top-left" v-if="false")
     b-button(slot="trigger" icon-left="menu" @click="sound_play('click')")
@@ -17,12 +17,12 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "the_footer",
   mixins: [
-    support,
+    support_child,
   ],
   data() {
     return {
@@ -40,7 +40,7 @@ export default {
       const y = window.scrollY
       if (y >= 128) {
         const diff = y - (this._before_scroll_y || 0)
-        if (this.app.config.footer_hidden_function) {
+        if (this.base.config.footer_hidden_function) {
           this.hidden_p = (diff >= 1)
         }
       }

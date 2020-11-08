@@ -2,37 +2,37 @@
 .the_rule_select
   ////////////////////////////////////////////////////////////////////////////////
   .primary_header
-    b-icon.header_item.with_icon.ljust(icon="chevron-left" @click.native="app.rule_cancel_handle")
+    b-icon.header_item.with_icon.ljust(icon="chevron-left" @click.native="base.rule_cancel_handle")
     .header_center_title ルール選択
 
   .buttons.is-centered.rule_buttons
-    template(v-for="row in app.RuleInfo.values")
+    template(v-for="row in base.RuleInfo.values")
       template(v-if="rule_display_p(row)")
-        b-button(@click="app.rule_key_set_handle(row)" :class="{'is_active': app.matching_user_ids_hash[row.key].length >= 1}" expanded)
+        b-button(@click="base.rule_key_set_handle(row)" :class="{'is_active': base.matching_user_ids_hash[row.key].length >= 1}" expanded)
           span.has-text-weight-bold
             | {{row.name}}
-            template(v-if="app.debug_read_p")
-              | (待:{{app.matching_user_ids_hash[row.key].length}})
+            template(v-if="base.debug_read_p")
+              | (待:{{base.matching_user_ids_hash[row.key].length}})
           .description.is-size-8.has-text-grey.mt-1
             | {{row.description}}
-          .has-text-primary(v-if="app.matching_user_ids_hash[row.key].length >= 1")
+          .has-text-primary(v-if="base.matching_user_ids_hash[row.key].length >= 1")
             b-icon(icon="account")
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "the_rule_select",
   mixins: [
-    support,
+    support_child,
   ],
   methods: {
     rule_display_p(row) {
       if (this.development_p) {
         // return true
       }
-      if (!this.app.practice_p) {
+      if (!this.base.practice_p) {
         if (row.practice_only) {
           return false
         }

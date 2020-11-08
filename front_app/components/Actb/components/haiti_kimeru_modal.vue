@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.haiti_kimeru_modal(style="width: auto")
+.modal-card.haiti_kimeru_modal(:base="base" style="width: auto")
   header.modal-card-head
     p.modal-card-title 局面を確定させてください
   section.modal-card-body
@@ -20,12 +20,12 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "haiti_kimeru_modal",
   mixins: [
-    support,
+    support_child,
   ],
   props: {
     yomikonda_sfen: { type: String, required: true,              },

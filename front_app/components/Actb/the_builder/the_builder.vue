@@ -1,15 +1,15 @@
 <template lang="pug">
 .the_builder
-  the_builder_index(v-if="!question")
-  the_builder_edit(v-if="question" ref="the_builder_edit")
-  DebugPrint(v-if="app.debug_read_p")
+  the_builder_index(:base="base" :bapp="bapp" v-if="!question")
+  the_builder_edit(:base="base" :bapp="bapp" v-if="question" ref="the_builder_edit")
+  DebugPrint(v-if="base.debug_read_p")
 </template>
 
 <script>
 import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
-import { support } from "../support.js"
+import { builder_support } from "./builder_support.js"
 
 import the_builder_index from "./the_builder_index.vue"
 import the_builder_edit  from "./the_builder_edit.vue"
@@ -36,7 +36,7 @@ class TabInfo extends MemoryRecord {
 export default {
   name: "the_builder",
   mixins: [
-    support,
+    builder_support,
   ],
   components: {
     the_builder_index,
@@ -80,12 +80,8 @@ export default {
     }
   },
 
-  beforeCreate() {
-    this.$store.state.bapp = this
-  },
-
   async created() {
-    this.app.lobby_unsubscribe()
+    this.base.lobby_unsubscribe()
     this.sound_play("click")
 
     // 一覧用のリソース
@@ -95,12 +91,12 @@ export default {
     })
 
     // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
-    if (this.app.edit_question_id) {
+    if (this.base.edit_question_id) {
       this.question_edit()
       return
     }
 
-    if (this.app.info.warp_to === "builder_haiti" || this.app.info.warp_to === "builder_form") {
+    if (this.base.info.warp_to === "builder_haiti" || this.base.info.warp_to === "builder_form") {
       this.builder_new_handle()
       return
     }
@@ -111,9 +107,9 @@ export default {
   methods: {
     question_edit() {
       // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
-      if (this.app.edit_question_id) {
-        this.api_get("question_edit_fetch", {question_id: this.app.edit_question_id}, e => {
-          this.app.edit_question_id = null
+      if (this.base.edit_question_id) {
+        this.api_get("question_edit_fetch", {question_id: this.base.edit_question_id}, e => {
+          this.base.edit_question_id = null
           this.question_edit_for(new Question(e.question))
         })
       }
@@ -184,9 +180,9 @@ export default {
       }
 
       {
-        const limit = this.app.config.turm_max_limit
+        const limit = this.base.config.turm_max_limit
         if (limit && moves.length > limit) {
-          this.warning_notice(`${this.app.config.turm_max_limit}手以内にしてください`)
+          this.warning_notice(`${this.base.config.turm_max_limit}手以内にしてください`)
           return
         }
       }
@@ -263,7 +259,7 @@ export default {
           this.sound_play("click")
           this.ok_notice(`${before_save_button_name}しました`)
 
-          if (this.app.config.save_and_back_to_index) {
+          if (this.base.config.save_and_back_to_index) {
             this.builder_index_handle()
           }
         }
@@ -272,7 +268,7 @@ export default {
 
     // 「新規作成」ボタン
     builder_new_handle() {
-      const attributes = _.cloneDeep(this.app.info.question_default_attributes)
+      const attributes = _.cloneDeep(this.base.info.question_default_attributes)
       const question = new Question(attributes)
       this.question_edit_for(question)
     },
@@ -288,11 +284,11 @@ export default {
       this.answer_turn_offset = 0
       this.valid_count = 0
 
-      if (this.app.info.warp_to === "builder_haiti") {
+      if (this.base.info.warp_to === "builder_haiti") {
         this.haiti_mode_handle()
         return
       }
-      if (this.app.info.warp_to === "builder_form") {
+      if (this.base.info.warp_to === "builder_form") {
         this.form_mode_handle()
         return
       }
@@ -372,6 +368,8 @@ export default {
   },
 
   computed: {
+    bapp() { return this },
+
     TabInfo()     { return TabInfo     },
 
     current_tab_info() {

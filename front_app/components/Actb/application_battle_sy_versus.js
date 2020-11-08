@@ -49,7 +49,7 @@ export const application_battle_sy_versus = {
     vs_func_play_board_share(vs_share_sfen) {
       this.ac_battle_perform("vs_func_play_board_share", { // 戻値なし
         vs_share_sfen: vs_share_sfen,
-      }) // --> app/channels/actb/battle_channel.rb
+      }) // --> base/channels/actb/battle_channel.rb
     },
     vs_func_play_board_share_broadcasted(params) {
       if (params.membership_id === this.current_membership.id) {

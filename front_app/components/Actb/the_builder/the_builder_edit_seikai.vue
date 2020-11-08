@@ -41,12 +41,12 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { builder_support } from "./builder_support.js"
 
 export default {
   name: "the_builder_edit_seikai",
   mixins: [
-    support,
+    builder_support,
   ],
   created() {
   },

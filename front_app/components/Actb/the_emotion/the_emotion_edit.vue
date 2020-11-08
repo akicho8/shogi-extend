@@ -15,19 +15,19 @@
       b-input(v-model.trim="$parent.current_record.voice")
     b-field(label="フォルダ" custom-class="is-small")
       b-field.is-marginless
-        template(v-for="row in app.EmotionFolderInfo.values")
+        template(v-for="row in base.EmotionFolderInfo.values")
           b-radio-button(v-model="$parent.current_record.folder_key" :native-value="row.key" :type="row.type" size="is-small") {{row.name}}
     b-field
       b-button(icon-left="play" @click="$parent.play_handle($parent.current_record)" expanded)
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "the_emotion_edit",
   mixins: [
-    support,
+    support_child,
   ],
   methods: {
     // 保存 or 新規
@@ -39,7 +39,7 @@ export default {
           this.warning_notice(e.form_error_message)
         }
         if (e.emotions) {
-          this.$set(this.app.current_user, "emotions", e.emotions)
+          this.$set(this.base.current_user, "emotions", e.emotions)
           this.sound_play("click")
           this.ok_notice(`${before_save_button_name}しました`)
           this.$parent.current_component = "the_emotion_index"

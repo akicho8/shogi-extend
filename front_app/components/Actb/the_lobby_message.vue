@@ -1,22 +1,22 @@
 <template lang="pug">
-.the_lobby_message(v-if="app.current_user && permit_lobby_message_p")
+.the_lobby_message(:base="base" v-if="base.current_user && permit_lobby_message_p")
   .messages_box(ref="messages_box")
-    .message_line(v-for="message in app.lobby_messages")
-      message_row(:message="message")
-  .input_field.is-flex.mt-2(v-if="app.current_user && permit_lobby_message_input_p")
-    figure.media-left.is-clickable.ml-2.mr-0(@click="app.ov_user_info_set(app.current_user.id)")
+    .message_line(v-for="message in base.lobby_messages")
+      message_row(:base="base" :message="message")
+  .input_field.is-flex.mt-2(v-if="base.current_user && permit_lobby_message_input_p")
+    figure.media-left.is-clickable.ml-2.mr-0(@click="base.ov_user_info_set(base.current_user.id)")
       p.image.is-32x32.avatar_image
-        img.is-rounded(:src="app.current_user.avatar_path")
+        img.is-rounded(:src="base.current_user.avatar_path")
     b-field.ml-2
-      b-input(v-model="app.lobby_message_body" expanded @keypress.native.enter="app.lobby_speak_handle")
+      b-input(v-model="base.lobby_message_body" expanded @keypress.native.enter="base.lobby_speak_handle")
       p.control
-        button.button.is-primary(@click="app.lobby_speak_handle")
+        button.button.is-primary(@click="base.lobby_speak_handle")
           b-icon.play_icon(icon="play")
 </template>
 
 <script>
-import { support } from "./support.js"
-import message_row from "./components/message_row.vue"
+import { support_child } from "./support_child.js"
+import message_row from "./message_row.vue"
 
 export default {
   name: "the_lobby",
@@ -24,10 +24,10 @@ export default {
     message_row,
   },
   mixins: [
-    support,
+    support_child,
   ],
   watch: {
-    "app.lobby_messages": {
+    "base.lobby_messages": {
       handler() {
         this.scroll_to_bottom(this.$refs.messages_box)
       },

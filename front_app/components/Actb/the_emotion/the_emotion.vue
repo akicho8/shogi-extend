@@ -1,12 +1,12 @@
 <template lang="pug">
 .the_emotion
-  the_footer
-  component(:is="current_component")
+  the_footer(:base="base")
+  component(:base="base" :is="current_component")
   DebugPre {{$data}}
 </template>
 
 <script>
-import { support }       from "../support.js"
+import { support_child }       from "../support_child.js"
 import the_footer        from "../the_footer.vue"
 import the_emotion_index from "./the_emotion_index.vue"
 import the_emotion_edit  from "./the_emotion_edit.vue"
@@ -14,7 +14,7 @@ import the_emotion_edit  from "./the_emotion_edit.vue"
 export default {
   name: "the_emotion",
   mixins: [
-    support,
+    support_child,
   ],
   components: {
     the_footer,
@@ -32,20 +32,20 @@ export default {
   created() {
     this.sound_play("click")
 
-    const key = this.app.EmotionFolderInfo.fetch(0).key
+    const key = this.base.EmotionFolderInfo.fetch(0).key
     this.tab_select(key)
 
     this.current_component = "the_emotion_index"
-    if (this.app.current_user.emotions.length === 0) {
+    if (this.base.current_user.emotions.length === 0) {
       this.ok_notice("既存のエモーションを編集するには左上のメニューからインポートしてください")
     }
 
-    if (this.app.info.warp_to) {
-      if (this.app.info.warp_to === "emotion_index") {
+    if (this.base.info.warp_to) {
+      if (this.base.info.warp_to === "emotion_index") {
         this.current_component = "the_emotion_index"
       }
-      if (this.app.info.warp_to === "emotion_edit") {
-        this.edit_handle(this.app.current_user.emotions[0])
+      if (this.base.info.warp_to === "emotion_edit") {
+        this.edit_handle(this.base.current_user.emotions[0])
       }
       return
     }
@@ -53,11 +53,11 @@ export default {
   methods: {
     // 指定のタブを選択
     tab_select(key) {
-      this.current_tabpos = this.app.EmotionFolderInfo.fetch(key).code
+      this.current_tabpos = this.base.EmotionFolderInfo.fetch(key).code
     },
     // エモーションの再生
     play_handle(record) {
-      this.app.emotion_play(record)
+      this.base.emotion_play(record)
     },
     // 指定レコードの編集
     edit_handle(record) {
@@ -78,7 +78,7 @@ export default {
   computed: {
     // 現在のタブに対応するフォルダ
     current_folder() {
-      return this.app.EmotionFolderInfo.fetch(this.current_tabpos)
+      return this.base.EmotionFolderInfo.fetch(this.current_tabpos)
     },
     // 新規用のレコードの初期値(これをそのまま使うと破壊してしまうのでcloneすること)
     default_attributes() {

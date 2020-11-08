@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_history_row.is-flex(@click="app.ov_question_info_set(row.question.id)")
+.the_history_row.is-flex(@click="base.ov_question_info_set(row.question.id)")
   .left_block.is-flex
 
     .ox_mark
@@ -10,7 +10,7 @@
 
     img.board(:src="board_image_url")
 
-    figure.image.is-16x16.avatar_image(@click.stop="app.ov_user_info_set(row.question.user.id)")
+    figure.image.is-16x16.avatar_image(@click.stop="base.ov_user_info_set(row.question.user.id)")
       img.is-rounded(:src="row.question.user.avatar_path")
     .question_block.is-flex
       .uegawa
@@ -25,18 +25,18 @@
         .question_description.is-size-7(v-if="row.question.description")
           | {{string_truncate(row.question.description, {length: 18*2})}}
       .bottom_block.is-flex
-        the_history_row_vote(:row="row")
+        the_history_row_vote(:base="base" :row="row")
 </template>
 
 <script>
-import { support } from "../support.js"
+import { support_child } from "../support_child.js"
 
 import the_history_row_vote from "./the_history_row_vote.vue"
 
 export default {
   name: "the_history_row",
   mixins: [
-    support,
+    support_child,
   ],
   components: {
     the_history_row_vote,

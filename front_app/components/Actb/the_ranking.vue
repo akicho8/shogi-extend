@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_ranking
-  the_footer
+  the_footer(:base="base")
   .primary_header
     .header_center_title {{current_title}}
 
@@ -15,10 +15,10 @@
         b-tab-item.is-size-2(:label="tab_info.name")
 
   .the_ranking_rows(v-if="rank_data")
-    the_ranking_row(v-for="row in rank_data.rank_records" :row="row")
+    the_ranking_row(:base="base" v-for="row in rank_data.rank_records" :row="row")
 
     template(v-if="!rank_data.user_rank_in && rank_data.current_user_rank_record")
-      the_ranking_row.current_user_rank_record(:row="rank_data.current_user_rank_record")
+      the_ranking_row.current_user_rank_record(:base="base" :row="rank_data.current_user_rank_record")
 </template>
 
 <script>
@@ -38,14 +38,14 @@ class TabInfo extends MemoryRecord {
   }
 }
 
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 import the_ranking_row from "./the_ranking_row.vue"
 import the_footer from "./the_footer.vue"
 
 export default {
   name: "the_ranking",
   mixins: [
-    support,
+    support_child,
   ],
   components: {
     the_ranking_row,
@@ -63,7 +63,7 @@ export default {
   },
 
   created() {
-    this.app.lobby_unsubscribe()
+    this.base.lobby_unsubscribe()
 
     this.seasons_fetch()
 

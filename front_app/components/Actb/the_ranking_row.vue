@@ -1,5 +1,5 @@
 <template lang="pug">
-.the_ranking_row.is-flex(:class="{active: app.current_user && row.user.id === app.current_user.id}" @click="app.ov_user_info_set(row.user.id)")
+.the_ranking_row.is-flex(:class="{active: base.current_user && row.user.id === base.current_user.id}" @click="base.ov_user_info_set(row.user.id)")
   .rank_block
     .rank.is-size-5.has-text-weight-bold.has-text-right.has-text-primary
       | {{row.rank}}
@@ -8,9 +8,9 @@
   .name_with_rating
     .user_name.has-text-weight-bold.is_truncate
       | {{row.user.name}}
-      span.ml-1.has-text-primary.is_line_break_off(v-if="app.debug_read_p") {{row.user.skill_key}}
+      span.ml-1.has-text-primary.is_line_break_off(v-if="base.debug_read_p") {{row.user.skill_key}}
     .value
-      template(v-if="$parent.current_tab_info.key === 'rating' && (app.config.rating_display_p || development_p)")
+      template(v-if="$parent.current_tab_info.key === 'rating' && (base.config.rating_display_p || development_p)")
         | {{rating_format(row.user.actb_season_xrecord.rating)}}
       template(v-if="$parent.current_tab_info.key === 'straight_win_count'")
         | {{row.user.actb_season_xrecord.straight_win_count}}
@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "the_ranking_row",
   mixins: [
-    support,
+    support_child,
   ],
   props: {
     row: { type: Object, required: true },

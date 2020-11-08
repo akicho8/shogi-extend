@@ -1,6 +1,6 @@
 <template lang="pug">
 .the_builder_index
-  the_footer
+  the_footer(:base="base" :bapp="bapp")
 
   .primary_header
     .header_center_title
@@ -46,7 +46,7 @@
     :mobile-cards="false"
     hoverable
     :narrowed="false"
-    @click="row => false && app.ov_question_info_set(row.id)"
+    @click="row => false && base.ov_question_info_set(row.id)"
 
     paginated
     backend-pagination
@@ -68,7 +68,7 @@
 
     b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="QuestionIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="!!visible_hash.id")               {{row.id}}
     b-table-column(v-slot="{row}" custom-key="user_id"           field="user.id"           :label="QuestionIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="!!visible_hash.user_id")
-      a(@click.stop="app.ov_user_info_set(row.user.id)" :href="app.ov_user_url(row.user.id)")
+      a(@click.stop="base.ov_user_info_set(row.user.id)" :href="base.ov_user_url(row.user.id)")
         | {{row.user.name}}
 
     b-table-column(v-slot="{row}" custom-key="source_author"     field="source_author"     :label="QuestionIndexColumnInfo.fetch('source_author').short_name"       sortable         :visible="!!visible_hash.source_author")
@@ -84,11 +84,11 @@
           template(v-else)
             | {{row.source_author}}
       template(v-else)
-        a(@click.prevent.stop="app.ov_user_info_set(row.user.id)" :href="app.ov_user_url(row.user.id)")
+        a(@click.prevent.stop="base.ov_user_info_set(row.user.id)" :href="base.ov_user_url(row.user.id)")
           | {{row.user.name}}
 
     b-table-column(v-slot="{row}" custom-key="title"             field="title"             :label="QuestionIndexColumnInfo.fetch('title').short_name"            sortable         :visible="!!visible_hash.title")
-      a(@click.prevent.stop="app.ov_question_info_set(row.id)" :href="app.ov_question_url(row.id)")
+      a(@click.prevent.stop="base.ov_question_info_set(row.id)" :href="base.ov_question_url(row.id)")
         | {{string_truncate(row.title, {length: 20})}}
 
     b-table-column(v-slot="{row}" custom-key="histories_count"   field="histories_count"   :label="QuestionIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="!!visible_hash.histories_count")  {{row.histories_count}}
@@ -119,7 +119,7 @@
     b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="!!visible_hash.updated_at")       {{row_time_format(row.updated_at)}}
 
     b-table-column(v-slot="{row}" custom-key="operation" label="操作")
-      template(v-if="app.current_user.id === row.user.id || app.debug_force_edit_p")
+      template(v-if="base.current_user.id === row.user.id || base.debug_force_edit_p")
         a(@click.stop="bapp.question_edit_for(row)") 編集
 
     template(slot="empty")
@@ -169,7 +169,7 @@
 </template>
 
 <script>
-import { support } from "../support.js"
+import { builder_support } from "./builder_support.js"
 
 import ls_support from "@/components/models/ls_support.js"
 
@@ -198,7 +198,7 @@ class TabInfo extends MemoryRecord {
 export default {
   name: "the_builder_index",
   mixins: [
-    support,
+    builder_support,
     ls_support,
   ],
   components: {
