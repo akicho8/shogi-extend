@@ -115,11 +115,22 @@ export const application_battle = {
         return
       }
 
-      this.vs_func_init()
+      if (this.versus_mode_p) {
+        this.vs_func_init()
+      }
+
+      if (this.question_mode_p) {
+        this.__assert__(this.battle.best_questions.length >= 1, "対戦開始しようとしたが問題集が空")
+      }
 
       this.debug_alert("battle 接続")
 
       this.ok_notice("対戦開始")
+
+      if (this.question_mode_p) {
+        this.sub_mode = "sm2_readygo"
+        this.delay_block(this.config.readygo_delay, () => this.sm3_deden_trigger())
+      }
     },
 
     sm3_deden_trigger() {
