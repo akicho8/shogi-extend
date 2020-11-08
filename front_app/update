@@ -1,4 +1,5 @@
 #!/bin/sh
+ncu /lodash/ -u
 ncu /howl/ -u
 ncu /chart/ -u
 ncu /buefy/ -u
