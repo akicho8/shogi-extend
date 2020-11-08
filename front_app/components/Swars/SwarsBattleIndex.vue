@@ -295,7 +295,7 @@ export default {
     dl_menu_item_expanded_p(v) {
       if (v) {
         this.talk_stop()
-        this.toast_ok("Windows用のアプリで棋譜が読めない場合は文字コードが Shift_JIS の KIF を試してみてください")
+        this.toast_ok("Windowsのアプリで棋譜が読めないときは Shift_JIS のほうを試してみてください")
       }
     },
   },
