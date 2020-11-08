@@ -21,7 +21,6 @@ module Actb
     :leader_index                    => 1,        # シングルトンとハイブリッドルールのときの memberships のインデックス○をリーダーにする。:0 =>左側 1:右側
     :self_is_left_side_p             => false,    # 自分を左に表示
     :ox_status_line_take_n           => 8,        # 上の○×行は最新何個表示する？
-    :readygo_delay                   => 2.2,      # 「対戦開始！」の待ち
     :deden_delay                     => 0.8,      # 「デデン」の待ち
     :sp_theme                        => "real",   # 将棋盤のタイプ
     :sp_size                         => "large",  # 将棋盤の大きさ
