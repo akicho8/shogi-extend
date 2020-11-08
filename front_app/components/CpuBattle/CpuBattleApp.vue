@@ -155,7 +155,7 @@ import Location        from "shogi-player/src/location.js"
 
 import { cpu_battle_force_chart } from "./cpu_battle_force_chart.js"
 
-const BG_VARIANT_AVAILABLE_LIST = ["a", "g", "l", "n", "p", "q"] // 有効な背景の種類
+const BG_VARIANT_AVAILABLE_LIST = ["a", "b", "c", "d", "e", "f"] // 有効な背景の種類
 
 export default {
   name: "CpuBattleApp",

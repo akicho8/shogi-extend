@@ -70,7 +70,7 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring-commands-rspec"
 
-  gem "capistrano", "3.11.0"
+  gem "capistrano"
   gem "capistrano-rails"        # capistrano + capistrano-bundler
   gem "capistrano-passenger"
   gem "capistrano-rbenv"
@@ -81,11 +81,8 @@ group :development, :test do
 
   gem "rspec-rails"
   gem "rails-controller-testing" # controller で assigns を使うため
-  # gem "test-unit"      # 入れなくても rspec-rails が minitest などを入れているせいで assert は使える (が、そのせいで test-unit 経由で power_assert が使えない)
-  # gem "minitest-power_assert"
-  gem "rspec-power_assert"      # なのでこっちを使う(が、assert の名前では使えない)
+  gem "rspec-power_assert"
   gem "factory_bot_rails"
-  # gem "webmock" # rack-proxy と干渉するため外す
 
   gem "test-prof"               # for let_it_be
 end
@@ -123,13 +120,11 @@ end
 gem "bioshogi", github: "akicho8/bioshogi"
 gem "rmagick"                   # for Bioshogi to_img method (mini-magickに変更したい)
 
-# for Swars::Agent
-gem "nokogiri"
+gem "nokogiri" # for Swars::Agent
 
 gem "faraday"                   # 主に「なんでも棋譜変換」用
 gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
 
-# gem "acts-as-taggable-on", github: "mbleigh/acts-as-taggable-on", branch: "master"
 gem "acts-as-taggable-on"
 
 gem "rubyzip", require: "zip" # KIF一括ダウンロード用
