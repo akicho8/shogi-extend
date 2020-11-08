@@ -3,7 +3,7 @@
   .card-content
     .is-flex.is-justify-content-center.is-flex-direction-column
       template(v-for="e in SocialMediaInfo.values")
-        b-button.has-text-weight-bold(rounded :type="`is-${e.key}`" :icon-left="e.key" tag="a" :href="sns_auth_url(e)")
+        b-button.has-text-weight-bold(rounded :type="`is-${e.key}`" :icon-left="e.key" tag="a" :href="sns_auth_url(e)" @click="sound_play('click')")
           span {{e.name}} でログインする
 </template>
 
