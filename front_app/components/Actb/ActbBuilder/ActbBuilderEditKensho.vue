@@ -1,0 +1,37 @@
+<template lang="pug">
+.ActbBuilderEditKensho
+  .has-text-centered(v-if="bapp.question.direction_message")
+    | {{bapp.question.direction_message}}
+
+  MyShogiPlayer(
+    :run_mode="'play_mode'"
+    :kifu_body="bapp.question.init_sfen"
+    :flip_if_white="true"
+    :start_turn="0"
+    :slider_show="true"
+    :controller_show="true"
+    :setting_button_show="false"
+    :theme="base.config.sp_theme"
+    :size="base.config.sp_size"
+    @update:play_mode_advanced_moves="bapp.play_mode_advanced_moves_set"
+    )
+</template>
+
+<script>
+import { builder_support } from "./builder_support.js"
+
+export default {
+  name: "ActbBuilderEditKensho",
+  mixins: [
+    builder_support,
+  ],
+  created() {
+  },
+}
+</script>
+
+<style lang="sass">
+@import "../support.sass"
+.ActbBuilderEditKensho
+  margin-top: 1.5rem
+</style>

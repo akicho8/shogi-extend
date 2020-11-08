@@ -1,17 +1,16 @@
 <template lang="pug">
 .ActbApp(:class="mode")
-  the_emotion(:base="base" v-if="mode === 'emotion'")
-  the_lobby(:base="base"         v-if="mode === 'lobby'")
-  the_rule_select(:base="base"   v-if="mode === 'rule_select'")
-  the_matching(:base="base"      v-if="mode === 'matching'")
-  the_battle(:base="base"        v-if="mode === 'battle'")
-  the_result(:base="base"        v-if="mode === 'result'")
-
-  the_ranking(:base="base"       v-if="mode === 'ranking'")
-  the_history(:base="base"       v-if="mode === 'history'")
-  the_builder(:base="base"       v-if="mode === 'builder'" ref="builder")
-  the_menu(:base="base"          v-if="mode === 'menu'")
-  the_chess_clock(:base="base"   v-if="mode === 'chess_clock'")
+  ActbEmotionApp( :base="base" v-if="mode === 'emotion'")
+  ActbLobby(      :base="base" v-if="mode === 'lobby'")
+  ActbRuleSelect( :base="base" v-if="mode === 'rule_select'")
+  ActbMatching(   :base="base" v-if="mode === 'matching'")
+  ActbBattleApp(  :base="base" v-if="mode === 'battle'")
+  ActbResultApp(  :base="base" v-if="mode === 'result'")
+  ActbRanking(    :base="base" v-if="mode === 'ranking'")
+  ActbHistoryApp( :base="base" v-if="mode === 'history'")
+  ActbBuilderApp( :base="base" v-if="mode === 'builder'" ref="builder")
+  ActbMenuApp(    :base="base" v-if="mode === 'menu'")
+  ActbChessClock( :base="base" v-if="mode === 'chess_clock'")
 
   details(v-if="base.debug_read_p")
     summary DEBUG
@@ -21,25 +20,10 @@
 <script>
 import { support } from "./support.js"
 
-// Page Components
-import the_question_show from "./the_question_show.vue"
-import the_user_show     from "./the_user_show.vue"
-import the_lobby         from "./the_lobby.vue"
-import the_rule_select   from "./the_rule_select.vue"
-import the_emotion       from "./the_emotion/the_emotion.vue"
-import the_matching      from "./the_matching.vue"
-import the_battle        from "./the_battle/the_battle.vue"
-import the_result        from "./the_result/the_result.vue"
-import the_builder       from "./the_builder/the_builder.vue"
-import the_ranking       from "./the_ranking.vue"
-import the_history       from "./the_history/the_history.vue"
-import the_menu          from "./the_menu/the_menu.vue"
-import the_chess_clock   from "./the_chess_clock.vue"
-
 // Mixins
 import { application_room          } from "./application_room.js"
-import { application_emotion          } from "./application_emotion.js"
-import { application_lobby_message   } from "./application_lobby_message.js"
+import { application_emotion       } from "./application_emotion.js"
+import { application_lobby_message } from "./application_lobby_message.js"
 import { application_battle        } from "./application_battle.js"
 import { application_matching      } from "./application_matching.js"
 import { application_history       } from "./application_history.js"
@@ -47,13 +31,13 @@ import { application_history_vote  } from "./application_history_vote.js"
 import { application_notification  } from "./application_notification.js"
 import { application_new_challenge } from "./application_new_challenge.js"
 import { application_question_show } from "./application_question_show.js"
-import { application_user_show }     from "./application_user_show.js"
+import { application_user_show     } from "./application_user_show.js"
 import { config                    } from "./config.js"
 import { RuleInfo                  } from "./models/rule_info.js"
 import { OxMarkInfo                } from "./models/ox_mark_info.js"
 import { SkillInfo                 } from "./models/skill_info.js"
 import { EmotionInfo               } from "./models/emotion_info.js"
-import { EmotionFolderInfo       } from "./models/emotion_folder_info.js"
+import { EmotionFolderInfo         } from "./models/emotion_folder_info.js"
 
 export default {
   name: "ActbApp",
@@ -75,21 +59,6 @@ export default {
 
     application_history,
   ],
-  components: {
-    the_question_show,
-    the_user_show,
-    the_lobby,
-    the_rule_select,
-    the_emotion,
-    the_matching,
-    the_battle,
-    the_result,
-    the_builder,
-    the_ranking,
-    the_history,
-    the_menu,
-    the_chess_clock,
-  },
   props: {
     info: { required: true },
   },
@@ -432,9 +401,9 @@ export default {
 
     menu_handle() {
       if (this.mode === "menu") {
-        if (this.menu_component === "the_menu_root") {
+        if (this.menu_component === "ActbMenuRoot") {
         } else {
-          this.menu_to("the_menu_root")
+          this.menu_to("ActbMenuRoot")
         }
       } else {
         this.lobby_unsubscribe()

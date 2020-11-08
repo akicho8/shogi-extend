@@ -1,5 +1,6 @@
-import the_question_show from "./the_question_show.vue"
+
 import { Question } from "./models/question.js"
+import ActbQuestionShow from "./ActbQuestionShow.vue"
 
 export const application_question_show = {
   methods: {
@@ -33,7 +34,7 @@ export const application_question_show = {
         onCancel: () => this.sound_play("click"),
         fullScreen: true,
         canCancel: ["escape", "outside"],
-        component: the_question_show,
+        component: ActbQuestionShow,
       })
     },
 

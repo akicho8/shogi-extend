@@ -1,4 +1,4 @@
-import the_user_show from "./the_user_show.vue"
+import ActbUserShow from "./ActbUserShow.vue"
 
 export const application_user_show = {
   methods: {
@@ -28,7 +28,7 @@ export const application_user_show = {
         animation: "",
         onCancel: () => this.sound_play("click"),
         canCancel: ["escape", "outside"],
-        component: the_user_show,
+        component: ActbUserShow,
       })
     },
 
