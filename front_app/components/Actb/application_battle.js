@@ -125,7 +125,7 @@ export const application_battle = {
     sm3_deden_trigger() {
       this.sound_play("deden")
       this.sub_mode = "sm3_deden"
-      this.delay(this.config.deden_delay, () => this.sm4_tactic_trigger())
+      this.delay_block(this.config.deden_delay, () => this.sm4_tactic_trigger())
     },
 
     sm4_tactic_trigger() {
@@ -280,14 +280,14 @@ export const application_battle = {
     itteijikan_maru_hyouji(mi, ox_mark_info) {
       this.delay_stop(mi.delay_id) // 前のが動いている場合があるので止める
       mi.latest_ox = ox_mark_info.key
-      mi.delay_id = this.delay(ox_mark_info.delay_second, () => {
+      mi.delay_id = this.delay_block(ox_mark_info.delay_second, () => {
         mi.delay_id = null
         mi.latest_ox = null
       })
     },
 
     delay_and_judgement_run_or_next_trigger(ox_mark_info) {
-      this.delay(ox_mark_info.delay_second, () => {
+      this.delay_block(ox_mark_info.delay_second, () => {
         if (this.battle_end_p || this.next_question_empty_p) {
           this.ac_battle_perform("judgement_run", {member_infos_hash: this.member_infos_hash}) // --> app/channels/actb/battle_channel.rb
         } else {
@@ -414,7 +414,7 @@ export const application_battle = {
       if (params.membership_id === this.current_membership.id) {
         // 自分が先に再戦希望して、それが練習モードであれば、相手の再戦希望を押してあげる
         if (this.room.bot_user_id) {
-          this.delay(3, () => this.battle_continue_handle(true))
+          this.delay_block(3, () => this.battle_continue_handle(true))
         }
       } else {
         // 相手から通知が来た

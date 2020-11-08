@@ -37,16 +37,6 @@ export const support = {
       }
     },
 
-    delay(seconds, block) {
-      return setTimeout(block, 1000 * seconds)
-    },
-
-    delay_stop(delay_id) {
-      if (delay_id) {
-        clearTimeout(delay_id)
-      }
-    },
-
     // { xxx: true, yyy: false } 形式に変換
     as_visible_hash(v) {
       return _.reduce(v, (a, e) => ({...a, [e.key]: e.visible}), {})
