@@ -52,19 +52,19 @@
             b-menu-item(label="なし"      tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key}`}}"                @click.native="sound_play('click')" :class="{'has-text-weight-bold': !filter_match_p('judge:') && !filter_match_p('turn_max:')}")
 
         b-menu-list(label="一括取得")
-          b-menu-item(
-            label="古い棋譜を取得"
-            @click.native="config.current_swars_user_key && sound_play('click')"
-            tag="nuxt-link"
-            :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
-            :disabled="menu_item_disabled")
-
           b-menu-item(:disabled="menu_item_disabled" :expanded.sync="dl_menu_item_expanded_p" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 直近{{config.zip_dl_max_default}}件 ﾀﾞｳﾝﾛｰﾄﾞ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in ZipDlInfo.values")
               b-menu-item(@click="zip_dl_handle(e)" :label="e.name")
+
+          b-menu-item(
+            label="古い棋譜を取得"
+            @click.native="config.current_swars_user_key && sound_play('click')"
+            tag="nuxt-link"
+            :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
+            :disabled="menu_item_disabled")
 
         b-menu-list(label="便利な使い方あれこれ")
           b-menu-item(
@@ -263,12 +263,16 @@ import MemoryRecord from 'js-memory-record'
 class ZipDlInfo extends MemoryRecord {
   static get define() {
     return [
-      { name: "KIF",             zip_format_key: "kif",  body_encode: "UTF-8",     },
-      { name: "KIF (Shift_JIS)", zip_format_key: "kif",  body_encode: "Shift_JIS", },
-      { name: "KI2",             zip_format_key: "ki2",  body_encode: "UTF-8",     },
-      { name: "CSA",             zip_format_key: "csa",  body_encode: "UTF-8",     },
-      { name: "SFEN",            zip_format_key: "sfen", body_encode: "UTF-8",     },
+      { name: "KIF",             format_key: "kif",  body_encode: "UTF-8",     },
+      { name: "KIF (Shift_JIS)", format_key: "kif",  body_encode: "Shift_JIS", },
+      { name: "KI2",             format_key: "ki2",  body_encode: "UTF-8",     },
+      { name: "CSA",             format_key: "csa",  body_encode: "UTF-8",     },
+      { name: "SFEN",            format_key: "sfen", body_encode: "UTF-8",     },
     ]
+  }
+
+  get format_key_upcase() {
+    return this.format_key.toUpperCase()
   }
 }
 
@@ -439,19 +443,31 @@ export default {
       }
     },
 
+    // 棋譜ダウンロード
     zip_dl_handle(e) {
       this.sidebar_p = false
       this.sound_play("click")
 
+      this.toast_ok(`${e.body_encode} の ${e.format_key_upcase} をダウンロードしています`)
+
       const params = {
         query: this.query,
-        zip_format_key: e.zip_format_key,
+        zip_format_key: e.format_key,
         body_encode: e.body_encode,
       }
+
       const usp = new URLSearchParams()
       _.each(params, (v, k) => usp.set(k, v))
       const url = this.$config.MY_SITE_URL + `/w.zip?${usp}`
       location.href = url
+
+      this.delay_block(3, () => {
+        this.toast_ok(`たぶんダウンロード完了しました`, {
+          onend: () => {
+            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を取得」のほうを使ってください`)
+          },
+        })
+      })
     },
 
     cb_toggle_handle(column) {

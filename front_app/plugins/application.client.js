@@ -42,17 +42,17 @@ export default {
 
     toast_ok(message, options = {}) {
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-primary", queue: false, ...options})
-      this.talk(message)
+      this.talk(message, options)
     },
 
     toast_warn(message, options = {}) {
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-warning", queue: false, ...options})
-      this.talk(message)
+      this.talk(message, options)
     },
 
     toast_ng(message, options = {}) {
       this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger", queue: false, ...options})
-      this.talk(message)
+      this.talk(message, options)
     },
 
     error_message_dialog(message) {

@@ -9,13 +9,21 @@ import { isMobile } from "../components/models/isMobile.js"
 import Autolinker from 'autolinker'
 
 export default {
-  data() {
-    return {
-      call_logs: [],
-    }
-  },
-
   methods: {
+    ////////////////////////////////////////////////////////////////////////////////
+
+    delay_block(seconds, block) {
+      return setTimeout(block, 1000 * seconds)
+    },
+
+    delay_stop(delay_id) {
+      if (delay_id) {
+        clearTimeout(delay_id)
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     ga_click(category) {
       if (this.$ga) {
         if (this.development_p) {
@@ -80,18 +88,6 @@ export default {
         console.log(...args)
       }
     },
-
-    // call_log(key) {
-    //   let mark = ""
-    //   if (process.server) {
-    //     mark = "server"
-    //   } else {
-    //     mark = "client"
-    //   }
-    //   const log = `●[fetch][${key}] ${mark}`
-    //   this.call_logs.push(log)
-    //   this.clog(log)
-    // },
 
     // 1つ前に戻れるなら戻る
     // 戻れないならトップに戻る
