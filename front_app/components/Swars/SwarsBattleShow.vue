@@ -164,11 +164,8 @@ export default {
   },
 
   watch: {
-    sidebar_p() {
-      this.sound_play('click')
-    },
     new_turn() { this.url_replace() },
-    new_flip()    { this.url_replace() },
+    new_flip() { this.url_replace() },
   },
 
   methods: {
@@ -196,6 +193,7 @@ export default {
     },
 
     sidebar_toggle() {
+      this.sound_play('click')
       this.sidebar_p = !this.sidebar_p
     },
 
