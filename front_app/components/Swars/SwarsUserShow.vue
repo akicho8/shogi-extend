@@ -55,8 +55,9 @@
     .top_container
       ////////////////////////////////////////////////////////////////////////////////
       // 名前
-      .has-text-weight-bold.has-text-centered.mt-2.is-clickable(@click="name_click_handle")
-        | {{info.user.key}}
+      .is-flex.is-justify-content-center.mt-2
+        .has-text-weight-bold.is-clickable(@click="name_click_handle")
+          | {{info.user.key}}
       // 段級位
       .is-flex.rule_container
         .rule_one(v-for="(row, key) in info.rules_hash")
