@@ -3,8 +3,7 @@
 .SwarsUserShowWrapper
   b-loading(:active="$fetchState.pending")
   .SwarsUserShow(v-if="!$fetchState.pending && info" :key="info ? info.key : ''")
-    // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
-    .delete.page_delete.is-large(@click="back_handle")
+    PageCloseButton(@click="back_handle")
 
     b-dropdown.top_right_menu(position="is-bottom-left" @click.native="sound_play('click')")
       b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
@@ -337,11 +336,6 @@ export default {
 
 <style lang="sass">
 .SwarsUserShow
-  .delete.page_delete
-    position: absolute
-    top: 0.6rem
-    left: 0.6rem
-
   .top_right_menu
     position: absolute
     top: 0.9rem

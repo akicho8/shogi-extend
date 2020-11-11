@@ -1,6 +1,6 @@
 <template lang="pug">
 .ActbResultApp
-  a.delete.page_delete.is-large.is_top_left_fixed(@click="base.room_leave_handle")
+  PageCloseButton(@click="base.room_leave_handle")
   ActbRoomEmotion(:base="base")
 
   template(v-if="base.room.bot_user_id")

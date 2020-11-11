@@ -1,6 +1,6 @@
 <template lang="pug">
 .EmoxResult
-  a.delete.page_delete.is-large.is_top_left_fixed(@click="base.room_leave_handle")
+  PageCloseButton(@click="base.room_leave_handle")
 
   .block.has-text-centered.is-size-3.has-text-weight-bold.mt-6
     template(v-if="base.current_membership.judge.key === 'win'")

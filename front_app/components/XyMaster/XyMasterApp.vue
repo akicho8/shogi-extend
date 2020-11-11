@@ -21,15 +21,16 @@
       b-navbar-item(@click="rebuild_handle") リビルド
 
   MainSection(:class="mode")
+    template(v-if="mode === 'run' || mode === 'ready'")
+      .restart_button
+        b-button(@click="restart_handle" type="" size="" icon-left="restart")
+      PageCloseButton(@click="stop_handle")
     .container
       .columns
         .column.is-paddingless
           .buttons.is-centered.mb-0
             template(v-if="mode === 'stop' || mode === 'goal'")
               button.button.is-primary(@click="start_handle") START
-            template(v-if="mode === 'run' || mode === 'ready'")
-              b-button.restart_button(@click="restart_handle" type="" size="" icon-left="restart")
-              a.delete.is-large(tag="a" @click="stop_handle")
 
             template(v-if="mode === 'stop' || mode === 'goal'")
               b-dropdown.is-pulled-left(v-model="xy_rule_key" @click.native="sound_play('click')")
@@ -752,12 +753,10 @@ $board_color: hsl(0, 0%, 60%)
 
   .restart_button
     position: fixed
-    top: 0.5rem
-    right: 0.2rem
-  a.delete
-    position: fixed
-    top: 0.5rem
-    left: 0.5rem
+    top: 0
+    right: 0
+    .button
+      margin: 0.7rem
 
   .MainSection
     +mobile

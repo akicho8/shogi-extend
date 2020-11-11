@@ -2,7 +2,7 @@
 .actb.ActbQuestionShow.modal-card
   .modal-card-body.box
     //- // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
-    .delete.page_delete.is-large(@click="delete_click_handle")
+    PageCloseButton(@click="delete_click_handle")
 
     //- b-button.right_top(icon-left="twitter" size="is-small" type="is-twitter") Tweet
 

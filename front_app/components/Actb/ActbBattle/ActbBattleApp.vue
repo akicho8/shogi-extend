@@ -2,7 +2,7 @@
 .ActbBattleApp
   DebugPrint(v-if="base.debug_read_p" :vars="['base.sub_mode', 'base.member_infos_hash', 'base.question_index', 'base.x_mode', 'base.battle.best_questions.length']" oneline)
 
-  a.delete.page_delete.is-large.is_top_left_fixed(@click="base.rensyu_yameru_handle" v-if="base.room.bot_user_id")
+  PageCloseButton(@click="base.rensyu_yameru_handle" v-if="base.room.bot_user_id")
   ActbRoomEmotion(:base="base")
 
   template(v-if="base.current_strategy_key === 'sy_versus'")
@@ -89,6 +89,4 @@ export default {
   .vs_container
     justify-content: center
     align-items: center
-  .page_delete
-    z-index: 1          // mobile だと flex の領域に負けて押せない対策
 </style>

@@ -31,6 +31,4 @@ export default {
   .vs_container
     justify-content: center
     align-items: center
-  .page_delete
-    z-index: 1          // mobile だと flex の領域に負けて押せない対策
 </style>
