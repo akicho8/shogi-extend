@@ -5,12 +5,9 @@
   .SwarsUserShow(v-if="!$fetchState.pending && info" :key="info ? info.key : ''")
     PageCloseButton(@click="back_handle")
 
-    b-dropdown.top_right_menu(position="is-bottom-left" @click.native="sound_play('click')")
-      b-icon.has-text-grey-light(slot="trigger" icon="dots-vertical")
-
+    DotsMenuButton
       // この下のアイテムはすべてクリック音を設定してない
       // なんか変な気もするけど押したときに伝搬して b-dropdown で鳴る
-
       b-dropdown-item(@click="search_handle")
         b-icon(icon="magnify" size="is-small")
         | 棋譜検索
@@ -336,16 +333,6 @@ export default {
 
 <style lang="sass">
 .SwarsUserShow
-  .top_right_menu
-    position: absolute
-    top: 0.9rem
-    right: 0.75rem
-    .dropdown-trigger
-      cursor: pointer
-    .dropdown-item
-      .icon
-        margin-right: 0.5rem
-
   .top_container
     padding-bottom: 0.2rem // アイコンの下の隙間
     border-bottom: 1px solid $grey-lighter

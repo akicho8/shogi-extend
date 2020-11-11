@@ -1,6 +1,6 @@
 <template lang="pug">
 .PageCloseButton
-  .delete_wrapper(v-on="$listeners")
+  .delete_wrapper.is-clickable(v-on="$listeners")
     .delete.is-medium(v-bind="$attrs")
       slot
 </template>
@@ -17,7 +17,10 @@ export default {
   top: 0
   left: 0
   .delete_wrapper
-    padding-left: 0.7rem
-    padding-top:  0.7rem
-    z-index: 2 // shogi-player の「○手目」のdivより下にあって押せない場合があるため指定する(が、必要なくなっているかもしれない)
+    padding: 0.6rem
+
+.STAGE-development
+  .PageCloseButton
+    .delete_wrapper
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
