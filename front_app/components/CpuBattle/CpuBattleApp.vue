@@ -5,9 +5,9 @@
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'cpu-battle'}") CPU対戦
   MainSection
-    .container
-      .columns
-        .column.is_shogi_player
+    .container.is-fluid
+      .columns.is-multiline.is-gapless
+        .column.is_shogi_player.is_left_column
           template(v-if="mode === 'playing' || mode === 'standby'")
             nav.level.is-mobile
               .level-item
@@ -45,10 +45,10 @@
               :sfen_show="false"
               :slider_show="development_p || mode === 'standby'"
               :controller_show="development_p || mode === 'standby'"
-              :size="'large'"
+              :size="'medium'"
               :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
               :flip.sync="flip"
-              :setting_button_show="development_p"
+              :setting_button_show="false"
               :summary_show="development_p"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               ref="main_sp"
@@ -58,45 +58,44 @@
               .mx-1.is-size-7.has-text-grey CPUの成績
               .mx-1.is-size-6.has-text-weight-bold {{judge_group.lose || 0}}勝{{judge_group.win || 0}}敗
 
-        .column.is-two-fifths
-          template(v-if="mode === 'standby'")
-            .box
-              .content
-                h4 設定
-              b-field(label="強さ" custom-class="is-small")
-                .block
-                  template(v-for="e in CpuBrainInfo.values")
-                    b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
-                      | {{e.name}}
+        .column.is-one-third
+          .box(v-if="mode === 'standby'")
+            .content
+              h4 設定
+            b-field(label="強さ" custom-class="is-small")
+              .block
+                template(v-for="e in CpuBrainInfo.values")
+                  b-radio(v-model="cpu_brain_key" :native-value="e.key" size="is-small")
+                    | {{e.name}}
 
-              b-field(label="戦法" custom-class="is-small")
-                .block
-                  template(v-for="e in CpuStrategyInfo.values")
-                    b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
-                      | {{e.name}}
+            b-field(label="戦法" custom-class="is-small")
+              .block
+                template(v-for="e in CpuStrategyInfo.values")
+                  b-radio(v-model="cpu_strategy_key" :native-value="e.key" size="is-small")
+                    | {{e.name}}
 
-              b-field(label="手合" custom-class="is-small")
-                .block
-                  template(v-for="e in CpuPresetInfo.values")
-                    b-radio(v-model="cpu_preset_key" :native-value="e.key" size="is-small")
-                      | {{e.name}}
-              hr
-              b-field(label="スタイル" custom-class="is-small")
-                .block
-                  template(v-for="e in BoardStyleInfo.values")
-                    b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
-                      | {{e.name}}
-              b-button(@click="bg_variant_reset_handle" size="is-small")
-                | ランダム盤
+            b-field(label="手合" custom-class="is-small")
+              .block
+                template(v-for="e in CpuPresetInfo.values")
+                  b-radio(v-model="cpu_preset_key" :native-value="e.key" size="is-small")
+                    | {{e.name}}
+            hr
+            b-field(label="スタイル" custom-class="is-small")
+              .block
+                template(v-for="e in BoardStyleInfo.values")
+                  b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
+                    | {{e.name}}
+            b-button(@click="bg_variant_reset_handle" size="is-small")
+              | ランダム盤
 
-              template(v-if="development_p")
-                | &nbsp;
-                | &nbsp;
-                b-tooltip(label="指し手の読み上げ")
-                  template(v-if="yomiage_mode")
-                    b-button(@click="yomiage_mode_set(false)" size="is-small" icon-left="volume-high")
-                  template(v-if="!yomiage_mode")
-                    b-button(@click="yomiage_mode_set(true)" size="is-small" icon-left="volume-off")
+            template(v-if="development_p")
+              | &nbsp;
+              | &nbsp;
+              b-tooltip(label="指し手の読み上げ")
+                template(v-if="yomiage_mode")
+                  b-button(@click="yomiage_mode_set(false)" size="is-small" icon-left="volume-high")
+                template(v-if="!yomiage_mode")
+                  b-button(@click="yomiage_mode_set(true)" size="is-small" icon-left="volume-off")
 
           template(v-if="mode === 'playing'")
             template(v-if="candidate_rows")
@@ -164,9 +163,6 @@ export default {
   ],
   props: {
     config: { type: Object, required: true },
-  },
-  components: {
-    // shogi_player,
   },
   data() {
     return {
@@ -522,15 +518,19 @@ export default {
 .CpuBattleApp
   min-height: 100vh
 
-  +mobile
-    .MainSection
-      padding: 2.8rem 0.5rem 0
-    .column
-      padding: 0
-      margin: 1.25rem
-      &.is_shogi_player
-        padding: 0
-        margin: 0
+  .MainSection
+    padding: 2.8rem 0 0
+    .container.is-fluid
+      padding-left: 0
+      padding-right: 0
+
+    +desktop
+      .container.is-fluid
+        padding-left: 1.8rem
+        padding-right: 1.8rem
+        .column
+          margin-left: 1rem
+          margin-right: 1rem
 
   .table_format_area
     line-height: 100%
