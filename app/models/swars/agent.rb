@@ -102,7 +102,6 @@ module Swars
       def fetch
         url = url_build
 
-
         if run_remote?
           html = html_fetch(url)
         else
@@ -224,6 +223,7 @@ module Swars
 end
 
 if $0 == __FILE__
+  tp Swars::Agent::Index.fetch(run_remote: true, gtype: "", user_key: "shuei299792458", page_index: 0)
   tp Swars::Agent::Index.fetch(run_remote: true, gtype: "",   user_key: "kinakom0chi", page_index: 0)
   tp Swars::Agent::Index.fetch(run_remote: true, gtype: "sb", user_key: "kinakom0chi", page_index: 0)
   tp Swars::Agent::Index.fetch(run_remote: true, gtype: "s1", user_key: "kinakom0chi", page_index: 0)

@@ -140,6 +140,7 @@ module Swars
           end
         end
 
+        # Battle.user_import(user_key: "shuei299792458")
         # Battle.user_import(user_key: "DarkPonamin9")
         # Battle.user_import(user_key: "micro77")
         # Battle.user_import(user_key: "micro77", page_max: 3)
@@ -250,6 +251,13 @@ module Swars
           end
 
           info = Agent::Record.fetch(params)
+
+          # 手数が1024以上になると DRAW_PLY_LIMIT が入る
+          # 2020-11上旬に新しくウォーズに入った仕様っぽい
+          # これを取り込んでもあまり意味がないので弾く
+          if info[:__final_key] == "DRAW_PLY_LIMIT"
+            return
+          end
 
           # 対局中や引き分けのときは棋譜がないのでスキップ
           unless info[:fetch_successed]
