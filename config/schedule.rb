@@ -15,9 +15,9 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 every("5 3 * * *") do
   runner [
     # "Swars::Battle.rule_key_bugfix_process",
+    "Swars::Crawler::ExpertCrawler.run",
     "Swars::Crawler::ReservationCrawler.run",
     # "Swars::Crawler::RegularCrawler.run",
-    # "Swars::Crawler::ExpertCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
 
     "XyRecord.entry_name_blank_scope.destroy_all",
