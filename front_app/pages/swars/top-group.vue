@@ -5,7 +5,7 @@ client-only
       template(slot="brand")
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-top-group'}")
-          | 将棋ウォーズイベント上位プレイヤー
+          | 将棋ウォーズイベント上位の成績
     MainSection
       .container
         .columns
@@ -28,12 +28,12 @@ export default {
     return { records }
   },
   mounted() {
-    this.ga_click(`将棋ウォーズイベント上位プレイヤー`)
+    this.ga_click(`将棋ウォーズイベント上位の成績`)
   },
   computed: {
     meta() {
       return {
-        title: "将棋ウォーズイベント上位プレイヤー",
+        title: "将棋ウォーズイベント上位の成績",
         og_image_key: "swars-top-group",
       }
     },

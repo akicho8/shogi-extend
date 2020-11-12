@@ -8,9 +8,9 @@ class ServiceInfo
       og_image_key: "swars-search",
       description: "他のアプリで検討したいときにどうぞ",
       features: [
-        "ぴよ将棋やKENTOですぐ読み込める",
-        "激指には棋譜コピーで転送しよう",
-        "段級位毎の勝率表示などもある",
+        "ぴよ将棋やKENTOですぐ検討できる",
+        "激指にはコピーしたあと張り付け(CTRL+V)でOK",
+        "プレイヤーの傾向がわかる分析機能あり",
       ],
     },
     {
@@ -109,7 +109,7 @@ class ServiceInfo
     {
       display_p: true,
       nuxt_link_to: {path: "/swars/top-group"},
-      title: "将棋ウォーズイベント上位プレイヤー",
+      title: "将棋ウォーズイベント上位の成績",
       og_image_key: "swars-top-group",
       description: "上位プレイヤーの棋譜を見たいときにどうぞ",
       features: [
