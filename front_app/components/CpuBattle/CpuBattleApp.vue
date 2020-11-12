@@ -541,4 +541,12 @@ export default {
     progress
       margin-left: 0.25rem
       width: 100%
+
+.STAGE-development
+  .MainSection
+    border: 1px dashed change_color($primary, $alpha: 0.5)
+    .container
+      border: 1px dashed change_color($danger, $alpha: 0.5)
+      .column
+        border: 1px dashed change_color($success, $alpha: 0.5)
 </style>
