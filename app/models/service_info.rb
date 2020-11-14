@@ -8,9 +8,9 @@ class ServiceInfo
       og_image_key: "swars-search",
       description: "他のアプリで検討したいときにどうぞ",
       features: [
-        "ぴよ将棋やKENTOですぐ検討できる",
-        "激指や ShogiGUI にはコピーして張り付け(CTRL+V)",
-        "プレイヤーの傾向がわかる分析機能あり",
+        "ぴよ将棋や KENTO ですぐ検討できる",
+        "激指や ShogiGUI にはコピーして張り付け (CTRL+V)",
+        "プレイヤー戦力分析機能あり",
       ],
     },
     {
@@ -18,7 +18,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/xy"},
       title: "符号の鬼",
       og_image_key: "xy",
-      description: "符号がぺらぺらになりたい方向け",
+      description: "符号マスター養成所",
       features: [
         "タップするルールはスマホ用",
         "100問正解するまでの時間を競う",
@@ -77,7 +77,7 @@ class ServiceInfo
       description: "大会などで時計が足りないときにどうぞ",
       features: [
         "一般的なネット対局のプリセットを用意",
-        "将棋倶楽部24の猶予時間対応",
+        "将棋倶楽部24の猶予時間に対応",
         "フィッシャールール対応",
       ],
     },
@@ -147,11 +147,10 @@ class ServiceInfo
       title: "エモ将棋",
       new_p: false,
       og_image_key: "emox",
-      description: "対人戦をしたいときにどうぞ",
+      description: "気持ちを伝えながら指すオンライン対戦",
       features: [
-        "フッターにある字を押して気持ちを伝えながら指そう",
+        "フッターにある字を押してみよう",
         "いろいろアレなんで匿名",
-        "実験的サービス",
       ],
     },
     {
