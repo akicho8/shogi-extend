@@ -51,8 +51,9 @@ export default {
         margin-right: 3rem
 
 .STAGE-development
-  .b-tooltip
-    border: 1px dashed change_color($primary, $alpha: 0.5)
-    .item
-      border: 1px dashed change_color($danger, $alpha: 0.5)
+  .EmoxRoomEmotion
+    .b-tooltip
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+      .item
+        border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>
