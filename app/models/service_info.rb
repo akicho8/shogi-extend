@@ -9,21 +9,32 @@ class ServiceInfo
       description: "他のアプリで検討したいときにどうぞ",
       features: [
         "ぴよ将棋やKENTOですぐ検討できる",
-        "激指にはコピーして張り付け(CTRL+V)",
+        "激指や ShogiGUI にはコピーして張り付け(CTRL+V)",
         "プレイヤーの傾向がわかる分析機能あり",
       ],
     },
     {
-      display_p: Emox::Config[:emox_display_p],
-      nuxt_link_to: {path: "/emoshogi"},
-      title: "エモ将棋",
-      new_p: false,
-      og_image_key: "emox",
-      description: "対人戦をしたいときにどうぞ",
+      display_p: true,
+      nuxt_link_to: {path: "/xy"},
+      title: "符号の鬼",
+      og_image_key: "xy",
+      description: "符号がぺらぺらになりたい方向け",
       features: [
-        "フッターにある字を押して気持ちを伝えながら指そう",
-        "いろいろアレなんで匿名",
-        "実験的サービス",
+        "タップするルールはスマホ用",
+        "100問正解するまでの時間を競う",
+        "1分半切ったら卒業",
+      ],
+    },
+    {
+      display_p: true,
+      nuxt_link_to: {path: "/adapter"},
+      title: "なんでも棋譜変換",
+      og_image_key: "adapter",
+      description: "棋譜が読み込めないときに放り込もう",
+      features: [
+        "変則的な将棋倶楽部24の棋譜を正規化",
+        "将棋クエストのCSA形式をKIFに変換",
+        "KIF・KI2・SFEN・BOD 形式の相互変換",
       ],
     },
     {
@@ -41,30 +52,6 @@ class ServiceInfo
         # "棋譜や視点の情報はすべてURLに含まれている",
         # "そのため分岐しても前の状態に影響を与えない",
         # "部屋を立てるとリアルタイムに盤面を共有する",
-      ],
-    },
-    {
-      display_p: true,
-      nuxt_link_to: {path: "/adapter"},
-      title: "なんでも棋譜変換",
-      og_image_key: "adapter",
-      description: "棋譜が読み込めないときに放り込もう",
-      features: [
-        "変則的な将棋倶楽部24の棋譜を正規化",
-        "将棋クエストのCSA形式をKIFに変換",
-        "KIF・KI2・SFEN・BOD 形式の相互変換",
-      ],
-    },
-    {
-      display_p: true,
-      nuxt_link_to: {path: "/xy"},
-      title: "符号の鬼",
-      og_image_key: "xy",
-      description: "符号がぺらぺらになりたい方向け",
-      features: [
-        "タップするルールはスマホ用",
-        "100問正解するまでの時間を競う",
-        "1分半切ったら卒業",
       ],
     },
     {
@@ -113,8 +100,7 @@ class ServiceInfo
       og_image_key: "swars-top-group",
       description: "上位プレイヤーの棋譜を見たいときにどうぞ",
       features: [
-        "棋士団戦の期間は幽霊団員も出てきてしまう",
-        "名前タップで検索できる",
+        "名前タップで棋譜検索",
       ],
     },
     {
@@ -124,7 +110,7 @@ class ServiceInfo
       og_image_key: "swars-professional",
       description: "プロの棋譜を見たいときにどうぞ",
       features: [
-        "名前タップで棋譜検索に飛ぶ",
+        "名前タップで棋譜検索",
         "なぜか電脳少女シロもいる",
       ],
     },
@@ -148,11 +134,24 @@ class ServiceInfo
       description: "ネット対戦で心をやられたときにどうぞ",
       features: [
         "自作の将棋AI",
-        "作者に似てめちゃくちゃ弱い",
         "見掛け倒しなアヒル戦法や右四間飛車を指す",
+        "作者に似てめちゃくちゃ弱い",
         # "コンピュータ将棋が初めて生まれたときぐらいのアリゴリズムで動いている",
         # # "CPUは矢倉・右四間飛車・嬉野流・アヒル戦法・振り飛車・英春流かまいたち戦法を指せます",
         # "将棋に特化したプログラムであって別にAIではない",
+      ],
+    },
+    {
+      display_p: Emox::Config[:emox_display_p],
+      nuxt_link_to: {path: "/emoshogi"},
+      title: "エモ将棋",
+      new_p: false,
+      og_image_key: "emox",
+      description: "対人戦をしたいときにどうぞ",
+      features: [
+        "フッターにある字を押して気持ちを伝えながら指そう",
+        "いろいろアレなんで匿名",
+        "実験的サービス",
       ],
     },
     {
@@ -165,7 +164,7 @@ class ServiceInfo
       features: [
         "自作の問題を作れる",
         "アヒル戦法の誰得問題集がある",
-        "過疎っている",
+        "もう誰もやってない",
         # "思ったより面白くない",
         # "自作の問題を作れる",
         # "対戦は 23:00 - 23:15 のみ",
