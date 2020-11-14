@@ -827,8 +827,10 @@ $board_color: hsl(0, 0%, 60%)
               background: darken($board_color, 20%)
 
   .xy_scope_info_field
-    +mobile
-      justify-content: center
+    .field
+      +mobile
+        justify-content: center
+
   .time_container
     margin-top: 0.3rem
   .tweet_box_container
