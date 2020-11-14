@@ -8,19 +8,19 @@ client-only
         b-navbar-item.has-text-weight-bold.is-size-7-mobile(tag="div") {{page_title}}
     MainSection
       .container
-        b-field(label="1. URLをコピー").mt-3
+        b-field.block(label="1. URLをコピー")
           .control
             b-button(icon-left="clipboard-plus-outline" @click="clipboard_copy_handle")
           b-input(type="text" :value="kento_api_url" expanded readonly)
 
-        b-field(label="2. KENTO側で設定").mt-6
+        b-field.block(label="2. KENTO側で設定")
           .control
             b-button(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new" @click="sound_play('click')") 移動
 
         .image.box.mt-5
           img(src="~/assets/kento_settings_api.png")
 
-        p.mt-6.mb-0
+        .block
           | これでKENTO側でも棋譜一覧が出るようになります
 </template>
 
@@ -66,6 +66,13 @@ export default {
   .MainSection
     &:first-of-type
       padding-top: 2.6rem
+
+    .container
+      max-width: 65ch
+
+    .block:not(:first-child)
+      margin-top: 2rem
+
   .image
     max-width: 400px
 </style>
