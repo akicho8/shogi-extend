@@ -43,13 +43,13 @@
             template(slot="label" slot-scope="props")
               | フィルタ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            //- b-menu-item(label="勝ち" @click.stop="filter_research(`judge:win`)"  :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
-            //- b-menu-item(label="負け" @click.stop="filter_research(`judge:lose`)" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
-            //- b-menu-item(label="なし" @click.stop="filter_research(``)"           :class="{'has-text-weight-bold': !filter_match_p('judge:')}")
-            b-menu-item(label="勝ち"      tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} judge:win`}}"      @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:win')}")
-            b-menu-item(label="負け"      tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} judge:lose`}}"     @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('judge:lose')}")
-            b-menu-item(label="150手以上" tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key} turn_max:>=150`}}" @click.native="sound_play('click')" :class="{'has-text-weight-bold': filter_match_p('turn_max:>=150')}")
-            b-menu-item(label="なし"      tag="nuxt-link" :to="{name: 'swars-search', query: {query: `${config.current_swars_user_key}`}}"                @click.native="sound_play('click')" :class="{'has-text-weight-bold': !filter_match_p('judge:') && !filter_match_p('turn_max:')}")
+            SwarsBattleIndexFilterMenuItem(:base="base" label="勝ち"            q="judge:win")
+            SwarsBattleIndexFilterMenuItem(:base="base" label="負け"            q="judge:lose")
+            SwarsBattleIndexFilterMenuItem(:base="base" label="150手以上で勝ち" q="turn_max:>=150 judge:win")
+            SwarsBattleIndexFilterMenuItem(:base="base" label="150手以上で負け" q="turn_max:>=150 judge:lose")
+            SwarsBattleIndexFilterMenuItem(:base="base" label="50手以下で勝ち"  q="turn_max:<=50 judge:win")
+            SwarsBattleIndexFilterMenuItem(:base="base" label="50手以下で負け"  q="turn_max:<=50 judge:lose")
+            SwarsBattleIndexFilterMenuItem(:base="base" label="なし"            q="")
 
         b-menu-list(label="一括取得")
           b-menu-item(:disabled="menu_item_disabled" :expanded.sync="dl_menu_item_expanded_p" @click="sound_play('click')")
@@ -418,13 +418,6 @@ export default {
       this.query = new_query
 
       this.interactive_search({query: new_query})
-    },
-
-    filter_match_p(str) {
-      const query = this.$route.query.query
-      if (query) {
-        return query.includes(str)
-      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
