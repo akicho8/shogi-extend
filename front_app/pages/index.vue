@@ -85,6 +85,7 @@ export default {
   },
   methods: {
     title_click() {
+      this.sound_play("click")
       this.toast_ok("SHOGI-EXTEND は将棋の便利ツールを提供するサイトです")
     },
   },
