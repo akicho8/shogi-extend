@@ -116,7 +116,7 @@
                   b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!curent_scope.date_visible") {{time_default_format(props.row.created_at)}}
 
           .has-text-centered-mobile
-            b-switch(v-model="entry_name_unique") プレイヤー別順位
+            b-switch(v-model="entry_name_unique" @input="sound_play('click')") プレイヤー別順位
 
       .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
         .column
