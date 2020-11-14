@@ -104,7 +104,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
 
         Zip::InputStream.open(StringIO.new(response.body)) do |zis|
           entry = zis.get_next_entry
-          assert { entry.name == "devuser1-Yamada_Taro-20200101_123401.kif" }
+          assert { entry.name == "devuser1/devuser1-Yamada_Taro-20200101_123401.kif" }
           bin = zis.read
           assert { NKF.guess(bin).to_s == body_encode }
         end
@@ -163,8 +163,8 @@ RSpec.describe Swars::BattlesController, type: :controller do
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..............
-# >>
-# >> Finished in 9.23 seconds (files took 2.23 seconds to load)
-# >> 14 examples, 0 failures
-# >>
+# >> ...............
+# >> 
+# >> Finished in 12.41 seconds (files took 3.08 seconds to load)
+# >> 15 examples, 0 failures
+# >> 

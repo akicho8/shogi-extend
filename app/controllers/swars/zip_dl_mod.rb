@@ -11,7 +11,7 @@ module Swars
         zip_buffer = Zip::OutputStream.write_buffer do |zos|
           zip_scope.each do |battle|
             if str = battle.to_xxx(kifu_format_info.key)
-              zos.put_next_entry("#{battle.key}.#{kifu_format_info.key}")
+              zos.put_next_entry("#{current_swars_user.key}/#{battle.key}.#{kifu_format_info.key}")
               if current_body_encode == "Shift_JIS"
                 str = str.encode(current_body_encode)
               end

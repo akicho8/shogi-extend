@@ -78,7 +78,7 @@ module Swars
         zip_scope.each do |battle|
           if str = battle.to_xxx(kifu_format_info.key)
             body_encodes.each do |encode|
-              zos.put_next_entry("#{encode}/#{battle.key}.#{kifu_format_info.key}")
+              zos.put_next_entry("#{target_user.key}/#{encode}/#{battle.key}.#{kifu_format_info.key}")
               if encode == "Shift_JIS"
                 str = str.encode(encode)
               end

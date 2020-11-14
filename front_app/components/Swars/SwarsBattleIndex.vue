@@ -299,7 +299,7 @@ export default {
     dl_menu_item_expanded_p(v) {
       if (v) {
         this.talk_stop()
-        this.toast_ok("Windowsのアプリで棋譜が読めないときは Shift_JIS のほうを試してみてください")
+        this.toast_ok("Windowsアプリで棋譜が読めないときは Shift_JIS のほうを試してみてください")
       }
     },
   },

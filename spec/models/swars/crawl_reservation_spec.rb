@@ -26,6 +26,7 @@ module Swars
   RSpec.describe CrawlReservation, type: :model do
     before do
       Actb.setup
+      Emox.setup
       Swars.setup
     end
 
@@ -52,11 +53,11 @@ module Swars
 
       Zip::InputStream.open(record.zip_io) do |zis|
         entry = zis.get_next_entry
-        assert { entry.name == "UTF-8/battle1.kif" }
+        assert { entry.name == "user1/UTF-8/battle1.kif" }
         assert { NKF.guess(zis.read).to_s == "UTF-8" }
 
         entry = zis.get_next_entry
-        assert { entry.name == "Shift_JIS/battle1.kif" }
+        assert { entry.name == "user1/Shift_JIS/battle1.kif" }
         assert { NKF.guess(zis.read).to_s == "Shift_JIS" }
       end
     end
