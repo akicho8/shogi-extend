@@ -2,7 +2,7 @@
 .service-infos.has-background-white-bis
   MainNavbar
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'index'}")
+      b-navbar-item(tag="nuxt-link" :to="{name: 'index'}" @click.native="title_click")
         h1.has-text-weight-bold SHOGI-EXTEND
     template(slot="end")
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}" v-if="development_p")
@@ -79,10 +79,14 @@ export default {
     }
   },
   fetch() {
-    // this.call_log("index")
     return this.$axios.$get("/api/service_infos.json").then(config => {
       this.config = config
     })
+  },
+  methods: {
+    title_click() {
+      this.toast_ok("SHOGI-EXTEND は将棋の便利ツールを提供するサイトです")
+    },
   },
   computed: {
     // 内容は nuxt.config.js と同じだけど設定は必要
@@ -103,7 +107,7 @@ export default {
     padding-bottom: 2rem
 
   .footer
-    color: $grey
+    gcolor: $grey
     a
       color: inherit
 </style>
