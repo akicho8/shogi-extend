@@ -147,7 +147,7 @@ class ServiceInfo
       title: "エモ将棋",
       new_p: false,
       og_image_key: "emox",
-      description: "気持ちを伝えながら指すオンライン対戦",
+      description: "気持ちを伝えながら指す対人戦将棋",
       features: [
         "フッターにある字を押してみよう",
         "いろいろアレなんで匿名",
@@ -159,7 +159,7 @@ class ServiceInfo
       title: "将棋トレーニングバトル",
       new_p: false,
       og_image_key: "actb",
-      description: "将棋の問題を解く力を競う対戦ゲーム",
+      description: "将棋の問題を解く力を競う対人戦ゲーム",
       features: [
         "自作の問題を作れる",
         "アヒル戦法の誰得問題集がある",
