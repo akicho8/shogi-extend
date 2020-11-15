@@ -10,7 +10,7 @@
           b-menu-item(@click="board_show_handle" label="共有将棋盤に転送")
 
         b-menu-list(label="Export")
-          b-menu-item(@click="kifu_paper_handle" label="棋譜印刷 (PDF)")
+          b-menu-item(@click="kifu_paper_handle" label="棋譜用紙 (PDF)")
           b-menu-item(:expanded="false" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 表示
@@ -193,7 +193,7 @@ export default {
       this.$nextTick(() => this.validate_handle())
     },
 
-    // 「棋譜印刷」
+    // 「棋譜用紙」
     kifu_paper_handle() {
       this.record_fetch(() => {
         this.$router.push({
