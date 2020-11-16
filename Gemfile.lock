@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 33da4b381ce42dc00586445f621df5e8426d5299
+  revision: 2d44f1519b79e073037d35bd4d9f4101145eebab
   specs:
     bioshogi (0.0.1)
       actionview
@@ -158,7 +158,7 @@ GEM
     devise-i18n-views (0.3.7)
     diff-lcs (1.4.4)
     docile (1.3.2)
-    erubi (1.9.0)
+    erubi (1.10.0)
     exception_notification (4.4.0)
       actionmailer (>= 4.0, < 7)
       activesupport (>= 4.0, < 7)
@@ -421,7 +421,7 @@ GEM
     timecop (0.9.1)
     tree_support (0.1.9)
       activesupport
-    tzinfo (1.2.7)
+    tzinfo (1.2.8)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
