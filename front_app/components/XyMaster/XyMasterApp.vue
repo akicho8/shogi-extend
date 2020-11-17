@@ -22,8 +22,7 @@
 
   MainSection(:class="mode")
     template(v-if="mode === 'run' || mode === 'ready'")
-      .restart_button
-        b-button(@click="restart_handle" type="" size="" icon-left="restart")
+      b-button.restart_button(@click="restart_handle" size="is-medium" icon-left="restart" type="is-text")
       PageCloseButton(@click="stop_handle")
     .container
       .columns
@@ -755,8 +754,6 @@ $board_color: hsl(0, 0%, 60%)
     position: fixed
     top: 0
     right: 0
-    .button
-      margin: 0.7rem
 
   .MainSection
     +mobile
