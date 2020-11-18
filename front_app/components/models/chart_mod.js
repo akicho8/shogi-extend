@@ -1,4 +1,11 @@
-// クラスにする
+// 使い方
+//
+//   this.$axios.$get("/api/xy.json", {params: params}).then(data => {
+//     this.chart_setup(CHART_CONFIG_DEFAULT)
+//     this._chart_config.data = {datasets: data.chartjs_datasets}
+//     this.chart_create()
+//   })
+//
 import _ from "lodash"
 
 export default {

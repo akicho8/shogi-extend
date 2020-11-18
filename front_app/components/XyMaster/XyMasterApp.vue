@@ -124,7 +124,7 @@
               .column
                 .has-text-centered
                   b-field.is-inline-flex
-                    b-button(@click="chart_show" size="is-small")
+                    b-button(@click="chart_reshow" size="is-small")
                       | 更新
             .column
               .has-text-centered
@@ -140,10 +140,11 @@
                       | {{e.name}}
           .columns.is-centered
             .column.is-half
-              canvas#chart_canvas(ref="chart_canvas")
+              canvas#main_canvas(ref="main_canvas")
               template(v-if="config.count_all_gteq > 1")
                 .has-text-centered
                   | {{config.count_all_gteq}}回以上やるとチャートに登場します
+  DebugPre {{$data}}
 </template>
 
 <script>
@@ -205,8 +206,8 @@ export default {
       xy_record:          null, // ゲームが終わたっときにランクなどが入っている
       current_pages:      null, // b-table のページ
       latest_rule:        null, // 最後に挑戦した最新のルール
-      interval_counter: new IntervalCounter(this.countdown_callback, {early: true, interval: COUNTDOWN_INTERVAL}),
-      interval_frame:   new IntervalFrame(v => this.micro_seconds += v),
+      interval_counter: new IntervalCounter(this.countdown_func, {early: true, interval: COUNTDOWN_INTERVAL}),
+      interval_frame:   new IntervalFrame(this.time_add_func),
     }
   },
 
@@ -258,6 +259,13 @@ export default {
 
       // タブインデックスからルールのキーを求めてプルダウンの方にも反映する
       this.xy_rule_key = XyRuleInfo.fetch(v).key
+    },
+
+    spent_sec() {
+      if (this.time_over_p) {
+        this.stop_handle()
+        this.toast_ok("時間切れ")
+      }
     },
   },
 
@@ -363,12 +371,16 @@ export default {
       this.interval_counter.start()
     },
 
-    countdown_callback(counter) {
+    countdown_func(counter) {
       this.countdown_counter = counter
       if (this.countdown === 0) {
         this.interval_counter.stop()
         this.go_handle()
       }
+    },
+
+    time_add_func(v) {
+      this.micro_seconds += v
     },
 
     go_handle() {
@@ -438,7 +450,7 @@ export default {
       // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
       this.xy_chart_rule_key = this.xy_rule_key
       this.xy_chart_scope_key = "chart_scope_recently"
-      this.chart_show()
+      this.chart_reshow()
     },
 
     data_update(params) {
@@ -470,7 +482,7 @@ export default {
         // if (this.current_rank > this.config.rank_max) {
         //   message += `ランキング外です。`
         // }
-        this.talk(message, {rate: 1.2})
+        this.talk(message)
       }
     },
 
@@ -633,6 +645,10 @@ export default {
       return this.latest_rule.o_count_max
     },
 
+    time_over_p() {
+      return this.spent_sec >= this.current_rule.time_limit
+    },
+
     $_ls_hash() {
       return {
         xy_scope_key:      this.xy_scope_key,
@@ -694,8 +710,8 @@ export default {
 
     // ログインしているとユーザー名がわかる
     current_user_name() {
-      if (this.config.current_user) {
-        return this.config.current_user.name
+      if (this.g_current_user) {
+        return this.g_current_user.name
       }
     },
 
@@ -838,7 +854,7 @@ $board_color: hsl(0, 0%, 60%)
     margin-top: 0.75rem
   .chart_box_container
     margin-top: 4rem
-  #chart_canvas
+  #main_canvas
     margin: 0 auto
   .navbar-item
     img

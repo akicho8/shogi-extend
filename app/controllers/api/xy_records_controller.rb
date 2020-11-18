@@ -74,7 +74,6 @@ module Api
         :rank_max            => XyRuleInfo.rank_max,
         :count_all_gteq      => XyRuleInfo.count_all_gteq,
         :description         => XyRuleInfo.description,
-        :current_user        => current_user&.as_json(only: [:id, :name], methods: [:avatar_path]),
       }
     end
 

@@ -58,9 +58,9 @@ const CHART_CONFIG_DEFAULT = {
           labelString: "タイム",
         },
         ticks: {
-          maxTicksLimit: 7, // 最大横N個の目盛りにする
-          // suggestedMax: 30,
-          // suggestedMin: 0,
+          // maxTicksLimit: 7, // 最大横N個の目盛りにする
+          // suggestedMax: 1,
+          // suggestedMin: 1,
           // stepSize: 15,
           // max: 60*3,
           callback(value, index, values) {
@@ -113,18 +113,22 @@ const CHART_CONFIG_DEFAULT = {
 
 import dayjs from "dayjs"
 
+import chart_mod from '@/components/models/chart_mod.js'
+
 export const app_chart = {
+  mixins: [
+    chart_mod,
+  ],
+
   data() {
     return {
       xy_chart_rule_key: null,
       xy_chart_scope_key: null,
-      xy_chart_counter: 0,
     }
   },
 
-  beforeDestroy() {
-    this.chart_destroy()
-  },
+  // this.chart_setup(CHART_CONFIG_DEFAULT)
+  // this._chart_config.data = this.time_chart_params
 
   watch: {
     xy_chart_rule_key() {
@@ -140,31 +144,22 @@ export const app_chart = {
 
   methods: {
     chart_reshow() {
-      this.chart_destroy()
-      this.chart_show()
-    },
-
-    chart_show() {
-      if (!window.chart_instance) {
-        const params = {
-          xy_chart_scope_key: this.xy_chart_scope_key,
-          xy_chart_rule_key:  this.xy_chart_rule_key,
-        }
-        this.$axios.$get("/api/xy.json", {params: params}).then(data => {
-          window.chart_instance = new Chart(this.$refs.chart_canvas, this.chart_options_build(data.chartjs_datasets))
-        })
+      const params = {
+        xy_chart_scope_key: this.xy_chart_scope_key,
+        xy_chart_rule_key:  this.xy_chart_rule_key,
       }
-    },
+      this.$axios.$get("/api/xy.json", {params: params}).then(data => {
+        this.chart_setup(CHART_CONFIG_DEFAULT)
+        this._chart_config.data = {datasets: data.chartjs_datasets}
 
-    chart_destroy() {
-      if (window.chart_instance) {
-        window.chart_instance.destroy()
-        window.chart_instance = null
-      }
-    },
+        // 他のオプションを設定
+        this._chart_config.options.scales.yAxes[0].ticks.maxTicksLimit = 8                            // Y軸の横線は7つ
+        this._chart_config.options.scales.yAxes[0].ticks.mix           = this.current_rule.chart_y_ticks_min
+        this._chart_config.options.scales.yAxes[0].ticks.max           = this.current_rule.chart_y_ticks_max // 8分とかは除外するため
+        this._chart_config.options.scales.yAxes[0].ticks.stepSize      = 10
 
-    chart_options_build(datasets) {
-      return Object.assign({}, {data: {datasets: datasets}}, CHART_CONFIG_DEFAULT)
+        this.chart_create()
+      })
     },
   },
 

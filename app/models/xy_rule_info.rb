@@ -7,10 +7,10 @@ class XyRuleInfo
     # { key: "xy_rule1",     name: "1問",      o_count_max:   1, flip: false, input_mode: "keyboard", },
     # { key: "xy_rule10",    name: "10問",     o_count_max:  10, flip: false, input_mode: "keyboard", },
     # { key: "xy_rule30",    name: "30問",     o_count_max:  30, flip: false, input_mode: "keyboard", },
-    { key: "xy_rule100t",  name: "☗100問TAP", o_count_max: 100, flip: false, input_mode: "tap", },
-    { key: "xy_rule100tw", name: "☖100問TAP", o_count_max: 100, flip: true,  input_mode: "tap", },
-    { key: "xy_rule100",   name: "☗100問",    o_count_max: 100, flip: false, input_mode: "keyboard", },
-    { key: "xy_rule100w",  name: "☖100問",    o_count_max: 100, flip: true,  input_mode: "keyboard", },
+    { key: "xy_rule100t",  name: "☗100問TAP", o_count_max: 100, flip: false, input_mode: "tap",      time_limit: 60*5, chart_y_ticks_min: 50, chart_y_ticks_max: 60*3+40, },
+    { key: "xy_rule100tw", name: "☖100問TAP", o_count_max: 100, flip: true,  input_mode: "tap",      time_limit: 60*5, chart_y_ticks_min: 50, chart_y_ticks_max: 60*3+40, },
+    { key: "xy_rule100",   name: "☗100問",    o_count_max: 100, flip: false, input_mode: "keyboard", time_limit: 60*5, chart_y_ticks_min: 50, chart_y_ticks_max: 60*3+40, },
+    { key: "xy_rule100w",  name: "☖100問",    o_count_max: 100, flip: true,  input_mode: "keyboard", time_limit: 60*5, chart_y_ticks_min: 50, chart_y_ticks_max: 60*3+40, },
   ]
 
   cattr_accessor(:rank_max) { (Rails.env.production? || Rails.env.staging?) ? 100 : 100 }  # 位まで表示
@@ -224,18 +224,28 @@ class XyRuleInfo
       def chartjs_datasets(params)
         DbCop.mysql_convert_tz_with_time_zone_validate!
 
-        xy_rule_key = params[:xy_chart_rule_key]
+        xy_rule_info = XyRuleInfo.fetch(params[:xy_chart_rule_key])
         xy_chart_scope_info = XyChartScopeInfo.fetch(params[:xy_chart_scope_key])
 
         scope = XyRecord.all
-        scope = scope.where(xy_rule_key: xy_rule_key)
+
+        # 指定のルールに絞る
+        scope = scope.where(xy_rule_key: xy_rule_info.key)
+
+        # 最近 / 全体 スコープ適用
         if v = xy_chart_scope_info.date_gteq
           scope = scope.where(XyRecord.arel_table[:created_at].gteq(v.ago))
         end
 
+        # 100問を8分以上かけたような記録を除外する
+        # チャートに含めると本来見たい1分台が重なってしまってしまうため
+        # if v = time_limit
+        #   scope = scope.where(XyRecord.arel_table[:spent_sec].lt(xy_rule_info.o_count_max * v))
+        # end
+
         # 指定のルールで今日プレイした人だけに絞る
         if true
-          entry_names = XyRecord.where(xy_rule_key: xy_rule_key).where(XyRecord.arel_table[:created_at].gteq(Time.current.midnight)).group(:entry_name).count.keys
+          entry_names = XyRecord.where(xy_rule_key: xy_rule_info.key).where(XyRecord.arel_table[:created_at].gteq(Time.current.midnight)).group(:entry_name).count.keys
           scope = scope.where(entry_name: entry_names)
         end
 
