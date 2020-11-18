@@ -1,26 +1,28 @@
 <template lang="pug">
-.PageCloseButton
-  .delete_wrapper.is-clickable(v-on="$listeners")
-    .delete.is-medium(v-bind="$attrs")
-      slot
+.PageCloseButton.delete.is-medium.is-clickable(v-bind="$attrs" v-on="$listeners" :class="position")
+  slot
 </template>
 
 <script>
 export default {
   name: "PageCloseButton",
+  props: {
+    position: { type: String, default: "is_fixed", },
+  },
 }
 </script>
 
 <style lang="sass">
 .PageCloseButton
-  position: absolute
-  top: 0
-  left: 0
-  .delete_wrapper
-    padding: 0.6rem
+  &.is_absolute
+    position: absolute
+  &.is_fixed
+    position: fixed
+  top: 0.6rem
+  left: 0.6rem
 
 .STAGE-development
   .PageCloseButton
-    .delete_wrapper
+    .delete
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
