@@ -58,7 +58,7 @@ const CHART_CONFIG_DEFAULT = {
           labelString: "タイム",
         },
         ticks: {
-          // maxTicksLimit: 7, // 最大横N個の目盛りにする
+          maxTicksLimit: 7, // 最大横N個の目盛りにする
           // suggestedMax: 1,
           // suggestedMin: 1,
           // stepSize: 15,
@@ -151,13 +151,6 @@ export const app_chart = {
       this.$axios.$get("/api/xy.json", {params: params}).then(data => {
         this.chart_setup(CHART_CONFIG_DEFAULT)
         this._chart_config.data = {datasets: data.chartjs_datasets}
-
-        // 他のオプションを設定
-        this._chart_config.options.scales.yAxes[0].ticks.maxTicksLimit = 8                            // Y軸の横線は7つ
-        this._chart_config.options.scales.yAxes[0].ticks.mix           = this.current_rule.chart_y_ticks_min
-        this._chart_config.options.scales.yAxes[0].ticks.max           = this.current_rule.chart_y_ticks_max // 8分とかは除外するため
-        this._chart_config.options.scales.yAxes[0].ticks.stepSize      = 10
-
         this.chart_create()
       })
     },
