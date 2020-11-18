@@ -54,11 +54,11 @@
                       b-icon(icon="close" type="is-danger" size="is-small")
                     p.title {{x_count}}
 
-            .tap_digits_container(v-if="tap_method_p")
+            .tap_digits_container.is-unselectable(v-if="tap_method_p")
               .value
                 | {{kanji_human}}
 
-            .shogi_player_container
+            .shogi_player_container.is-unselectable
               template(v-if="mode === 'ready'")
                 .countdown_wrap(@click.prevent.stop.capture)
                   .countdown
@@ -78,7 +78,7 @@
                 :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
               )
 
-            .time_container
+            .time_container.is-unselectable
               .fixed_font.is-size-2
                 | {{time_format}}
 
