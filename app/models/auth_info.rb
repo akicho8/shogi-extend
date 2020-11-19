@@ -57,13 +57,16 @@ class AuthInfo < ApplicationRecord
           end
         end
       end
-      if v = meta_info.dig("info", "email")
-        if user.email_invalid?
-          user.email = v
-          user.skip_reconfirmation! # email に設定した内容が unconfirmed_email に退避されるのを防ぐ
-          user.save!
-        end
-      end
+      #
+      # OmniauthCallbacksController で毎回ログイン時に設定するように変更したので不要
+      #
+      # if v = meta_info.dig("info", "email")
+      #   if user.email_invalid?
+      #     user.email = v
+      #     user.skip_reconfirmation! # email に設定した内容が unconfirmed_email に退避されるのを防ぐ
+      #     user.save!
+      #   end
+      # end
     end
   end
 

@@ -72,6 +72,15 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     end
 
+    # ユーザーのメールアドレスが空だったり初期値なら設定する
+    if user.valid?
+      if user.email_invalid?
+        user.email = auth.info.email
+        user.skip_reconfirmation!
+        user.save!
+      end
+    end
+
     # ユーザーに認証情報が含まれていなければ追加する
     if user.valid?
       unless user.auth_infos.find_by(provider: auth.provider)

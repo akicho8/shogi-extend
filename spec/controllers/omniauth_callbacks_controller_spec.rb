@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe OmniauthCallbacksController, type: :controller do
   before(:context) do
     Actb.setup
+    Emox.setup
   end
 
   describe "Google" do
@@ -100,9 +101,9 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
           "provider" => 'github',
           "uid"      => '(uid)',
           "info"     => {
-            "nickname" => "(nickname_is_github_account)",
+            "nickname" => "(nickname_is_github_account)", # @xxx の部分
             "email"    => "alice@localhost",
-            "name"     => "alice",
+            "name"     => "Yamada Taro",
             "image"    => "https://www.shogi-extend.com/foo.png",
           },
         })
@@ -113,7 +114,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     let(:record) { User.first }
 
     it "名前がある" do
-      assert { record.name == "alice" }
+      assert { record.name == "Yamada Taro" }
     end
 
     it "プロフィール画像を登録している" do
@@ -134,7 +135,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
 
     it "メール" do
       assert { ActionMailer::Base.deliveries.count == 1 }
-      assert { ActionMailer::Base.deliveries.last.subject == "[SHOGI-EXTEND][test] aliceさんがgithubで登録されました" }
+      assert { ActionMailer::Base.deliveries.last.subject == "[SHOGI-EXTEND][test] Yamada Taroさんがgithubで登録されました" }
     end
   end
 end
