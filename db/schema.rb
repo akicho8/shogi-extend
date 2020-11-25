@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_07_095900) do
+ActiveRecord::Schema.define(version: 2020_11_25_220100) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1048,6 +1048,20 @@ ActiveRecord::Schema.define(version: 2020_11_07_095900) do
     t.index ["user_key"], name: "index_swars_users_on_user_key", unique: true
   end
 
+  create_table "swars_zip_dl_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "登録者"
+    t.bigint "swars_user_id", null: false, comment: "対象者"
+    t.string "query", null: false, comment: "クエリ全体(予備)"
+    t.integer "dl_count", null: false, comment: "ダウンロード数(記録用)"
+    t.datetime "begin_at", null: false, comment: "スコープ(開始・記録用)"
+    t.datetime "end_at", null: false, comment: "スコープ(終了)"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["end_at"], name: "index_swars_zip_dl_logs_on_end_at"
+    t.index ["swars_user_id"], name: "index_swars_zip_dl_logs_on_swars_user_id"
+    t.index ["user_id"], name: "index_swars_zip_dl_logs_on_user_id"
+  end
+
   create_table "taggings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -1149,7 +1163,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_095900) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "user_id"
     t.string "entry_name", null: false
     t.string "summary"
@@ -1265,4 +1279,6 @@ ActiveRecord::Schema.define(version: 2020_11_07_095900) do
   add_foreign_key "mute_infos", "users"
   add_foreign_key "mute_infos", "users", column: "target_user_id"
   add_foreign_key "swars_crawl_reservations", "users"
+  add_foreign_key "swars_zip_dl_logs", "swars_users"
+  add_foreign_key "swars_zip_dl_logs", "users"
 end

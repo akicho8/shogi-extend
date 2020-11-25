@@ -2,7 +2,7 @@
 //
 // 使う側で書くこと
 //
-//   import ls_support from "ls_support.js"
+//   import ls_support from "@/components/models/ls_support.js"
 //
 //   {
 //     mixins: [ls_support],
@@ -11,6 +11,10 @@
 //       return {
 //         my_var1: null, // ここの値は意味ないので null でよい
 //       }
+//     },
+//
+//     created() {
+//       this.ls_setup() // fetch() のなかで呼ぶなど臨機応変に。
 //     },
 //
 //     computed: {

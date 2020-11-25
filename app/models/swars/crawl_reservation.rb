@@ -89,9 +89,8 @@ module Swars
       end
 
       sec = "%.2f s" % (Time.current - t)
-      # slack_message(key: "ZIP #{sec}", body: zip_filename)
       SlackAgent.message_send(key: "ZIP #{sec}", body: zip_filename)
-      # send_data(io.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
+
       io
     end
 

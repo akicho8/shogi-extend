@@ -271,6 +271,7 @@ module Swars
       ["meta_info", "csa_seq"]
     end
 
+    # FIXME: モデルに移動
     def current_scope
       @current_scope ||= -> {
         s = current_model.all

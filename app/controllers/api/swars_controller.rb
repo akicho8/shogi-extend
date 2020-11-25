@@ -36,39 +36,55 @@
 
 module Api
   class SwarsController < ::Api::ApplicationController
-    # curl -d _method=post http://0.0.0.0:3000/api/swars/users/devuser1/download_set
-    # http://0.0.0.0:3000/api/swars/users/devuser1/download_set
-    def download_set
-      no = ::Swars::CrawlReservation.active_only.count
-      record = current_user.swars_crawl_reservations.create(crawl_reservation_params)
-      if record.errors.present?
-        error_messages = record.errors.full_messages.join(" ")
-        render json: { notice_collector: NoticeCollector.single(:warning, error_messages, method: "dialog") }
-        return
+    concerning :CrawlReservationMethods do
+      # curl -d _method=post http://0.0.0.0:3000/api/swars/users/devuser1/download_set
+      # http://0.0.0.0:3000/api/swars/users/devuser1/download_set
+      def download_set
+        no = ::Swars::CrawlReservation.active_only.count
+        record = current_user.swars_crawl_reservations.create(crawl_reservation_params)
+        if record.errors.present?
+          error_messages = record.errors.full_messages.join(" ")
+          render json: { notice_collector: NoticeCollector.single(:warning, error_messages, method: "dialog") }
+          return
+        end
+        notice_collector = NoticeCollector.single(:success, "予約しました(#{no}件待ち)", method: "dialog")
+        n = ::Swars::CrawlReservation.active_only.count
+        slack_message(key: "棋譜取得の予約(#{n})", body: record.to_t)
+        render json: { notice_collector: notice_collector }
       end
-      notice_collector = NoticeCollector.single(:success, "予約しました(#{no}件待ち)", method: "dialog")
-      n = ::Swars::CrawlReservation.active_only.count
-      slack_message(key: "棋譜取得の予約(#{n})", body: record.to_t)
-      render json: { notice_collector: notice_collector }
+
+      def crawler_run
+        before_count = ::Swars::CrawlReservation.active_only.count
+        Swars::Crawler::ReservationCrawler.new.run
+        after_count = ::Swars::CrawlReservation.active_only.count
+        notice_collector = NoticeCollector.single(:success, "取得処理実行完了(#{before_count}→#{after_count})")
+        render json: { notice_collector: notice_collector }
+      end
+
+      private
+
+      def crawl_reservation_params
+        params.permit![:crawl_reservation]
+      end
     end
 
-    def crawler_run
-      before_count = ::Swars::CrawlReservation.active_only.count
-      Swars::Crawler::ReservationCrawler.new.run
-      after_count = ::Swars::CrawlReservation.active_only.count
-      notice_collector = NoticeCollector.single(:success, "取得処理実行完了(#{before_count}→#{after_count})")
-      render json: { notice_collector: notice_collector }
-    end
+    # concerning :SwarsUserKeyDirectDownloadMethods do
+    #   # GET http://0.0.0.0:3000/api/swars/download_config_fetch?query=Yamada_Taro
+    #   def download_config_fetch
+    #     render json: zip_dl_cop.to_config
+    #   end
+    # 
+    #   def zip_dl_cop
+    #     @zip_dl_cop ||= Swars::ZipDlMan.new(params.to_unsafe_h.merge({
+    #           :current_user => current_user,
+    #         }))
+    #   end
+    # end
 
+    # 未使用
     # curl http://0.0.0.0:3000/api/swars/remember_swars_user_keys_fetch
     def remember_swars_user_keys_fetch
       render json: session[:remember_swars_user_keys]
-    end
-
-    private
-
-    def crawl_reservation_params
-      params.permit![:crawl_reservation]
     end
   end
 end

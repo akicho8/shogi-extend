@@ -66,6 +66,13 @@
             :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
+          b-menu-item(
+            label="古い棋譜を取得2"
+            @click.native="config.current_swars_user_key && sound_play('click')"
+            tag="nuxt-link"
+            :to="{name: 'swars-users-key-direct-download', params: {key: config.current_swars_user_key}}"
+            :disabled="menu_item_disabled")
+
         b-menu-list(label="便利な使い方あれこれ")
           b-menu-item(
             label="検索初期値の設定"

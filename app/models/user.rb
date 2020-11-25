@@ -48,4 +48,5 @@ class User < ApplicationRecord
   include ::Actb::UserMod
   include ::Emox::UserMod
   include UserCrawlReservationMod
+  include UserZipDlLogMod
 end

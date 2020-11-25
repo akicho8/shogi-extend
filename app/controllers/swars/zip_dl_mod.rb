@@ -5,60 +5,30 @@ module Swars
     private
 
     def zip_dl_perform
+      # あらかじめいろんなスコープでダウンロードできる数などを返す
+      # GET http://0.0.0.0:3000/w.json?query=Yamada_Taro&download_config_fetch=true
+      if params[:download_config_fetch]
+        render json: zip_dl_cop.to_config
+        return
+      end
+
+      if params[:swars_zip_dl_logs_destroy_all] && Rails.env.development?
+        current_user.swars_zip_dl_logs.destroy_all
+        return
+      end
+
+      # 特定のスコープでダウンロードする
+      # GET http://0.0.0.0:3000/w.zip?query=Yamada_Taro
       if request.format.zip?
-        t = Time.current
-
-        zip_buffer = Zip::OutputStream.write_buffer do |zos|
-          zip_scope.each do |battle|
-            if str = battle.to_xxx(kifu_format_info.key)
-              zos.put_next_entry("#{current_swars_user.key}/#{battle.key}.#{kifu_format_info.key}")
-              if current_body_encode == "Shift_JIS"
-                str = str.encode(current_body_encode)
-              end
-              zos.write(str)
-            end
-          end
-        end
-
-        sec = "%.2f s" % (Time.current - t)
-        slack_message(key: "ZIP #{sec}", body: zip_filename)
-        send_data(zip_buffer.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
+        send_data(zip_dl_cop.zip_io.string, type: Mime[params[:format]], filename: zip_dl_cop.zip_filename, disposition: "attachment")
       end
     end
 
-    def zip_scope
-      current_index_scope.order(battled_at: "desc").limit(zip_dl_max)
-    end
-
-    def zip_filename
-      parts = []
-      parts << "shogiwars"
-      if current_swars_user
-        parts << current_swars_user.key
-      end
-      parts << zip_scope.count
-      parts << Time.current.strftime("%Y%m%d%H%M%S")
-      parts << kifu_format_info.key
-      parts << current_body_encode
-      str = parts.compact.join("-") + ".zip"
-      # str.public_send("to#{current_body_encode}")
-      str
-    end
-
-    def zip_dl_max
-      (params[:zip_dl_max].presence || AppConfig[:zip_dl_max_default]).to_i.clamp(0, AppConfig[:zip_dl_max_of_max])
-    end
-
-    def kifu_format_info
-      @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_format_info.key)
-    end
-
-    def zip_format_info
-      ZipFormatInfo.fetch(zip_format_key)
-    end
-
-    def zip_format_key
-      params[:zip_format_key].presence || "kif"
+    def zip_dl_cop
+      @zip_dl_cop ||= Swars::ZipDlMan.new(params.to_unsafe_h.merge({
+            :current_user        => current_user,
+            :current_index_scope => current_index_scope,
+          }))
     end
   end
 end

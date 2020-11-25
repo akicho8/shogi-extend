@@ -39,6 +39,16 @@ module Swars
     include ImportMethods
     include ConvertHookMethods
 
+    class << self
+      def create_with_members!(users, attributes = {})
+        create!(attributes) do |e|
+          users.each do |user|
+            e.memberships.build(user: user)
+          end
+        end
+      end
+    end
+
     belongs_to :win_user, class_name: "Swars::User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
 
     has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
