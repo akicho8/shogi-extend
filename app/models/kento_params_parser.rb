@@ -3,7 +3,7 @@
 # https://www.kento-shogi.com/?branch=6i7h.8c8d&branchFrom=2&moves=3i4h.3c3d.5g5f.7a6b.4h5g.5c5d.2g2f.6b5c.2f2e.2b3c.1g1f.3a2b.9g9f.9c9d.1f1e.8c8d.6i7h.8d8e.5i6i.8e8f.8g8f.8b8f.P%2A8g.8f8b.4i5h.5a6b.6g6f.4a5b.5h6g.6b7b.7g7f.5b6b.8h7g.7c7d.7i8h.6b7c.8g8f.8b8c.8h8g.7b8b.6i7i.6a7b.3g3f.5c6d.5g4f.5d5e.5f5e.6d5e.4f5e.3c5e.2h5h.P%2A5d.S%2A4f.5e4f.4g4f.S%2A5e.6f6e.S%2A4g.5h2h.2b3c.B%2A3b.4g5f%2B.6g5f.5e5f.3b2a%2B.3c4d.2a4c.4d5e.4c5d.5e4f.7g1a%2B.4f5g%2B.P%2A5i.5f6g%2B.S%2A6i.P%2A5h.5i5h.G%2A6h.6i6h.6g5h.6h5g.5h5g.P%2A5h.5g5f.L%2A5g.S%2A6g.5g5f.6g5f%2B.5d4e.P%2A5e.N%2A6h.L%2A8d.6h5f.5e5f.4e5f.8d8f.8g8f.8c8f.L%2A8g.8f8g%2B.7h8g.L%2A8c.P%2A8f.P%2A5e.1a5e.9d9e.9f9e.S%2A8d.R%2A4b.8d9e.9i9e.9a9e.P%2A9g.L%2A8d.S%2A6a.6c6d.6a7b%2B.7c7b.5e6d.S%2A7c.6d7c.8a7c.G%2A9b.8b9b.4b7b%2B.9b9c.S%2A8b.9c9d.G%2A9c#2
 # hash # => {"initpos"=>"lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1", "moves"=>"7a6b.7g7f.5c5d.2g2f.6b5c.3i4h.4a3b.4i5h.6c6d.5i6h.7c7d.7i7h.5a6b.2f2e.6b6c.7h7g.6a6b.7g6f.8a7c.9g9f.9c9d.7f7e.6d6e.6f7g.7d7e.7g8f.5c6d.5g5f.3a4b.4h5g.4b5c.5g4f.8c8d.6g6f.7e7f.2e2d.2c2d.2h2d.P*2c.2d2e.8d8e.8f9g.6e6f.8h6f.4c4d.8g8f.3c3d.8f8e.2a3c.2e2h.7f7g+.8i7g.P*7f.9g8f.7f7g+.8f7g.6d6e.6f4h.P*8f.P*6f.6e5f.P*5g.4d4e.5g5f.4e4f.4g4f.8f8g+.7g7f.N*6d.7f7e.6d5f.6h5g.5f4h+.5g4h.8g7g.P*7d.7c8e.P*2d.2c2d.2h2d.P*2c.2d2h.P*4e.4f4e.P*4f.S*4d.3c4e.4d5c+.6c5c.P*2d.B*5f.S*3f.S*4g.3f4g.S*5g.5h5g.4e5g+.4h3h.4f4g+.3h2g.4g3h.2h3h.5f3h+.2g3h.R*4h.3h2g.S*3h.2g1f.4h4f+.S*3f.1c1d.S*2f.G*1e.2f1e.1d1e"}
 
-class KentoUrlInfo
+class KentoParamsParser
   def self.parse(url)
     new(url)
   end

@@ -110,13 +110,13 @@ class UrlEmbedKifuParser
 
         # 棋王戦
         # http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html
-        if uri.host == "live.shogi.or.jp"
+        if uri.host.end_with?("live.shogi.or.jp")
           uri.path = uri.path.sub(/html\z/, "kif")
           @body = http_get_body(uri.to_s)
           return
         end
 
-        if uri.host == "shogidb2.com"
+        if uri.host.end_with?("shogidb2.com")
           sfen = nil
           if uri.fragment
             sfen = Rack::Utils.unescape(uri.fragment) # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2"
@@ -131,8 +131,8 @@ class UrlEmbedKifuParser
           end
         end
 
-        if uri.host == "www.kento-shogi.com"
-          @body = KentoUrlInfo.parse(url).to_sfen
+        if uri.host.end_with?("kento-shogi.com")
+          @body = KentoParamsParser.parse(url).to_sfen
           return
         end
 
