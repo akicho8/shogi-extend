@@ -1,5 +1,5 @@
 module Swars
-  class ZipDlMan
+  class ZipDlCop
     include EncodeMod
 
     attr_accessor :params
@@ -11,7 +11,7 @@ module Swars
     def to_config
       config = {}
       config[:form_params_default] = {
-        :zip_scope_key  => "latest",
+        :zip_scope_key  => "today",
         :zip_format_key => "kif",
         :encode_key     => "UTF-8",
         :zip_dl_max     => AppConfig[:zip_dl_max_default],
@@ -24,14 +24,14 @@ module Swars
           :count => s.count,
           :last  => s.last,
         }
+      end
 
-        config[:scope_info] = ZipDlScopeInfo.collect do |e|
-          {
+      config[:scope_info] = ZipDlScopeInfo.inject({}) do |a, e|
+        a.merge(e.key => {
             :key   => e.key,
             :name  => instance_eval(&e.name),
             :count => instance_eval(&e.scope).count,
-          }
-        end
+          })
       end
 
       config
@@ -75,12 +75,20 @@ module Swars
 
     # 続きから進められるようにダウンロード範囲を記録する
     def swars_zip_dl_logs_create!
-      swars_zip_dl_logs_create2(zip_scope)
+      log_create(zip_scope)
     end
 
+    # 古い1件をダウンロードしたことにする
+    def oldest_log_create
+      scope = current_index_scope.order(battled_at: :asc).limit(1)
+      log_create(scope)
+    end
+
+    private
+
     # 続きから進められるようにダウンロード範囲を記録する
-    def swars_zip_dl_logs_create2(s)
-      if s.exists?
+    def log_create(s)
+      if s.exists? && current_user
         a = s.first.battled_at
         b = s.last.battled_at
         a, b = [a, b].sort
@@ -93,14 +101,6 @@ module Swars
         end
       end
     end
-
-    # 古い1件をダウンロードしたことにする
-    def huruinowo_dl
-      scope = current_index_scope.order(battled_at: :asc).limit(1)
-      swars_zip_dl_logs_create2(scope)
-    end
-
-    private
 
     def zip_scope
       instance_eval(&zip_dl_scope_info.scope)
@@ -124,10 +124,7 @@ module Swars
 
     def continue_begin_at
       if current_user
-        s = current_user.swars_zip_dl_logs
-        s = s.where(swars_user: swars_user)
-        s = s.order(:end_at)
-        if e = s.last
+        if e = swars_zip_dl_logs.order(:end_at).last
           e.end_at
         end
       end
@@ -146,7 +143,7 @@ module Swars
     end
 
     def current_user
-      params[:current_user] or raise ArgumentError
+      params[:current_user]
     end
 
     def swars_user

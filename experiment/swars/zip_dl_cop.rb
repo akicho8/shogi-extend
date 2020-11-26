@@ -25,7 +25,7 @@ test1(1)  # 2回目
 test1(2)  # 2回目
 test1(3)  # 3回目
 
-zip_dl_cop = Swars::ZipDlMan.new({
+zip_dl_cop = Swars::ZipDlCop.new({
     :current_user        => current_user,
     :current_index_scope => @user1.battles,
     :query               => "alice",
@@ -36,7 +36,7 @@ zip_dl_cop = Swars::ZipDlMan.new({
 zip_dl_cop.to_config             # => {:form_params_default=>{:zip_scope_key=>"latest", :zip_format_key=>"kif", :encode_key=>"UTF-8", :zip_dl_max=>50}, :swars_zip_dl_logs=>{:count=>0, :last=>nil}, :scope_info=>[{:key=>:latest, :name=>"直近", :count=>2}, {:key=>:today, :name=>"本日分", :count=>2}, {:key=>:continue, :name=>"前回の続きから", :count=>0}, {:key=>:oldest, :name=>"一番古い1件", :count=>1}]}
 zip_dl_cop.zip_filename          # => "shogiwars-alice-0-20200101000000-kif-UTF-8.zip"
 
-record = zip_dl_cop.huruinowo_dl # 一番古いもの1件ダウンロードしたことにする
+record = zip_dl_cop.oldest_log_create # 一番古いもの1件ダウンロードしたことにする
 record.user == current_user      # => true
 record.swars_user == @user1      # => true
 record.begin_at.sec == 0         # => true

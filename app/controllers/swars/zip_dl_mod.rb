@@ -25,7 +25,7 @@ module Swars
     end
 
     def zip_dl_cop
-      @zip_dl_cop ||= Swars::ZipDlMan.new(params.to_unsafe_h.merge({
+      @zip_dl_cop ||= Swars::ZipDlCop.new(params.to_unsafe_h.merge({
             :current_user        => current_user,
             :current_index_scope => current_index_scope,
           }))

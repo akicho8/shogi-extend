@@ -52,25 +52,25 @@
             SwarsBattleIndexFilterMenuItem(:base="base" label="なし"            q="")
 
         b-menu-list(label="一括取得")
-          b-menu-item(:disabled="menu_item_disabled" :expanded.sync="dl_menu_item_expanded_p" @click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | 直近{{config.zip_dl_max_default}}件 ﾀﾞｳﾝﾛｰﾄﾞ
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in ZipDlInfo.values")
-              b-menu-item(@click="zip_dl_handle(e)" :label="e.name")
+          //- b-menu-item(:disabled="menu_item_disabled" :expanded.sync="dl_menu_item_expanded_p" @click="sound_play('click')")
+          //-   template(slot="label" slot-scope="props")
+          //-     | 直近{{config.zip_dl_max_default}}件 ﾀﾞｳﾝﾛｰﾄﾞ
+          //-     b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+          //-   template(v-for="e in ZipDlInfo.values")
+          //-     b-menu-item(@click="zip_dl_handle(e)" :label="e.name")
 
           b-menu-item(
-            label="古い棋譜を取得"
-            @click.native="config.current_swars_user_key && sound_play('click')"
-            tag="nuxt-link"
-            :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
-            :disabled="menu_item_disabled")
-
-          b-menu-item(
-            label="古い棋譜を取得2"
+            label="ZIPダウンロード"
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-direct-download', params: {key: config.current_swars_user_key}}"
+            :disabled="menu_item_disabled")
+
+          b-menu-item(
+            label="古い棋譜を夜中に取得"
+            @click.native="config.current_swars_user_key && sound_play('click')"
+            tag="nuxt-link"
+            :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
         b-menu-list(label="便利な使い方あれこれ")
@@ -464,7 +464,7 @@ export default {
       this.delay_block(3, () => {
         this.toast_ok(`たぶんダウンロード完了しました`, {
           onend: () => {
-            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を取得」のほうを使ってください`)
+            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を夜中に取得」のほうを使ってください`)
           },
         })
       })

@@ -24,7 +24,7 @@ module Swars
       test1(2)  #2 2回目
       test1(3)  #3 3回目
 
-      zip_dl_cop = ZipDlMan.new({
+      zip_dl_cop = ZipDlCop.new({
           :current_user        => current_user,   # ログインしている人
           :current_index_scope => user1.battles, # 対象レコードたち
           :query               => "alice",        # デバッグ用にいれておく。いまのところ user1.name と同一
@@ -36,7 +36,7 @@ module Swars
       assert { zip_dl_cop.zip_filename == "shogiwars-alice-0-20000101000000-kif-UTF-8.zip" }
 
       # 1回目
-      record = zip_dl_cop.huruinowo_dl            # 一番古いもの1件ダウンロードしたことにする
+      record = zip_dl_cop.oldest_log_create            # 一番古いもの1件ダウンロードしたことにする
       assert { record.user == current_user      } # ログインしている人
       assert { record.swars_user == user1       } # 対象者
       assert { record.dl_count == 1             } # 1件だけ

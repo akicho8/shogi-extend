@@ -112,7 +112,7 @@ export default {
       }
     },
     page_title() {
-      return `${this.$route.params.key}さんの古い棋譜を取得`
+      return `${this.$route.params.key}さんの古い棋譜を夜中に取得`
     },
   },
 }

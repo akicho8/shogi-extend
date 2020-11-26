@@ -14,14 +14,14 @@
     .container
       template(v-if="!g_current_user")
         b-notification(type="is-warning")
-          | この機能を使う場合はいったんログインしてください
+          | ログインしていると「前回の続きから」を使えます
 
       b-field(label="範囲" custom-class="is-small")
         template(v-for="e in config.scope_info")
           b-radio-button(v-model="zip_scope_key" :native-value="e.key" @input="sound_play('click')")
             | {{e.name}} ({{e.count}})
 
-      b-field(label="書式" custom-class="is-small")
+      b-field(label="フォーマット" custom-class="is-small")
         template(v-for="e in ZipDlInfo.values")
           b-radio-button(v-model="zip_format_key" :native-value="e.key" @input="sound_play('click')")
             | {{e.name}}
@@ -37,7 +37,7 @@
           b-radio-button(v-model="zip_dl_max" :native-value="1" @input="sound_play('click')") 1
           b-radio-button(v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
 
-      .buttons.mt-5
+      .buttons
         b-button(@click="download_handle") ダウンロード
         b-button(@click="swars_zip_dl_logs_destroy_all" v-if="development_p") クリア
 
@@ -102,23 +102,21 @@ export default {
   },
   fetchOnServer: false,
   fetch() {
-    if (this.g_current_user) {
-      const params = {
-        query: this.target_user_key,
-        download_config_fetch: "true",
-      }
-      return this.$axios.$get("/w.json", {params: params}).then(e => {
-        this.config = e
-        this.ls_setup()
-      })
+    const params = {
+      query: this.target_user_key,
+      download_config_fetch: "true",
     }
+    return this.$axios.$get("/w.json", {params: params}).then(e => {
+      this.config = e
+      this.ls_setup()
+    })
   },
   methods: {
     download_handle() {
-      if (!this.g_current_user) {
-        this.toast_warn("ログインしてください")
-        return
-      }
+      // if (!this.g_current_user) {
+      //   this.toast_warn("ログインしてください")
+      //   return
+      // }
 
       this.sidebar_p = false
       this.sound_play("click")
@@ -138,25 +136,13 @@ export default {
       const url = this.$config.MY_SITE_URL + `/w.zip?${usp}`
       location.href = url
 
-      // this.delay_block(3, () => {
-      //   this.toast_ok(`たぶんダウンロード完了しました`, {
-      //     onend: () => {
-      //       this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を取得」のほうを使ってください`)
-      //     },
-      //   })
-      // })
-
-      // const params = {
-      //   crawl_reservation: {
-      //     target_user_key: this.$route.params.key,
-      //     config:        this.config,
-      //     attachment_mode: this.attachment_mode,
-      //   },
-      // }
-      // this.loading_p = true
-      // const retv = await this.$axios.$post("/api/swars/download_set", params)
-      // this.loading_p = false
-      // this.notice_collector_run(retv)
+      this.delay_block(3, () => {
+        this.toast_ok(`たぶんダウンロード完了しました`, {
+          onend: () => {
+            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を夜中に取得」のほうを使ってください`)
+          },
+        })
+      })
     },
 
     swars_zip_dl_logs_destroy_all() {
@@ -210,16 +196,23 @@ export default {
 <style lang="sass">
 .SwarsUserKeyDirectDownload
   .MainSection
+    +mobile
+      padding: 1.4rem 1.5rem
+
     .container
       max-width: 65ch
-    .notification
-      padding-right: 1.25rem // notification はクローズボタンを考慮して右のpaddingが広くなっているため左と同じにする
+
+    // .notification
+    //   padding-right: 1.25rem // notification はクローズボタンを考慮して右のpaddingが広くなっているため左と同じにする
 
     // .block:not(:first-child)
     //   margin-top: 1.5rem;
 
     .field:not(:last-child)
-      margin-bottom: 1rem
+      margin-bottom: 1.75rem
+
+    .buttons
+      margin-top: 2.6rem
 
     .zip_dl_max
       max-width: 3rem
