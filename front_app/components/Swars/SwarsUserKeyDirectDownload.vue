@@ -13,33 +13,36 @@
   MainSection(v-if="config")
     .container
       template(v-if="!g_current_user")
-        b-notification(type="is-warning")
-          | ログインしていると「前回の続きから」を使えます
+        b-notification(type="is-info is-light")
+          .is-size-7-mobile
+            | ログインしていると「前回の続きから」を選択できます
 
       b-field(label="範囲" custom-class="is-small")
         template(v-for="e in config.scope_info")
-          b-radio-button(v-model="zip_scope_key" :native-value="e.key" @input="sound_play('click')")
+          b-radio-button(size="is-small" v-model="zip_scope_key" :native-value="e.key" @input="sound_play('click')" :disabled="e.key === 'continue' && !g_current_user")
             | {{e.name}} ({{e.count}})
 
       b-field(label="フォーマット" custom-class="is-small")
         template(v-for="e in ZipDlInfo.values")
-          b-radio-button(v-model="zip_format_key" :native-value="e.key" @input="sound_play('click')")
+          b-radio-button(size="is-small" v-model="zip_format_key" :native-value="e.key" @input="sound_play('click')")
             | {{e.name}}
 
       b-field(label="文字コード" custom-class="is-small")
         template(v-for="e in EncodeInfo.values")
-          b-radio-button(v-model="encode_key" :native-value="e.key" @input="sound_play('click')")
+          b-radio-button(size="is-small" v-model="encode_key" :native-value="e.key" @input="sound_play('click')")
             | {{e.name}}
 
-      template(v-if="development_p")
-        b-field.zip_dl_max(label="最大件数" custom-class="is-small")
-          b-radio-button(v-model="zip_dl_max" :native-value="0" @input="sound_play('click')") 0
-          b-radio-button(v-model="zip_dl_max" :native-value="1" @input="sound_play('click')") 1
-          b-radio-button(v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
+      b-field.zip_dl_max(label="件数最大" custom-class="is-small")
+        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play('click')" v-if="development_p") 0
+        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')" v-if="development_p") 1
+        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
+
+      hr
 
       .buttons
-        b-button(@click="download_handle") ダウンロード
+        b-button(@click="download_handle" :loading="loading_p") ダウンロード
         b-button(@click="swars_zip_dl_logs_destroy_all" v-if="development_p") クリア
+        b-button(@click="oldest_log_create_handle" v-if="development_p") 古い1件をDLしたことにする
 
   DebugPre {{$data}}
   //- DebugPre(v-if="!$fetchState.pending") {{ls_default}}
@@ -113,15 +116,13 @@ export default {
   },
   methods: {
     download_handle() {
-      // if (!this.g_current_user) {
-      //   this.toast_warn("ログインしてください")
-      //   return
-      // }
+      if (this.current_scope_info.count === 0) {
+        this.toast_warn("ダウンロードするデータがありません")
+        return
+      }
 
       this.sidebar_p = false
       this.sound_play("click")
-
-      // this.toast_ok(`${e.encode_key} の ${e.zip_format_key_upcase} をダウンロードしています`)
 
       const params = {
         query:           this.target_user_key,
@@ -136,27 +137,32 @@ export default {
       const url = this.$config.MY_SITE_URL + `/w.zip?${usp}`
       location.href = url
 
+      this.loading_p = true
       this.delay_block(3, () => {
+        this.loading_p = false
+        this.$fetch()
+
         this.toast_ok(`たぶんダウンロード完了しました`, {
           onend: () => {
-            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を夜中に取得」のほうを使ってください`)
+            this.toast_ok(`もっとたくさん取得したいときは「古い棋譜を夜中に取得」のほうを使ってください`)
           },
         })
       })
     },
 
-    swars_zip_dl_logs_destroy_all() {
-      this.$axios.$get("/w.json", {params: {swars_zip_dl_logs_destroy_all: "true"}})
+    async swars_zip_dl_logs_destroy_all() {
+      await this.$axios.$get("/w.json", {params: {swars_zip_dl_logs_destroy_all: "true"}})
+      this.$fetch()
     },
 
-    async crawler_run_handle_handle() {
-      const retv = await this.$axios.$post("/api/swars/crawler_run")
-      this.notice_collector_run(retv)
+    async oldest_log_create_handle() {
+      await this.$axios.$get("/w.json", {params: {query: this.target_user_key, oldest_log_create: "true"}})
+      this.$fetch()
     },
 
     back_handle() {
       this.sound_play('click')
-      this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
+      this.back_to({name: "swars-search", query: {query: this.target_user_key}})
     },
   },
   computed: {
@@ -165,6 +171,8 @@ export default {
     EncodeInfo() { return EncodeInfo },
 
     target_user_key() { return this.$route.params.key },
+
+    current_scope_info() { return this.config.scope_info[this.zip_scope_key] },
 
     meta() {
       return {
@@ -209,10 +217,10 @@ export default {
     //   margin-top: 1.5rem;
 
     .field:not(:last-child)
-      margin-bottom: 1.75rem
+      margin-bottom: 1.5rem
 
-    .buttons
-      margin-top: 2.6rem
+    // .buttons
+    //   // margin-top: 1.0rem
 
     .zip_dl_max
       max-width: 3rem

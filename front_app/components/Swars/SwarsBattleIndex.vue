@@ -60,7 +60,7 @@
           //-     b-menu-item(@click="zip_dl_handle(e)" :label="e.name")
 
           b-menu-item(
-            label="ZIPダウンロード"
+            label="すぐにダウンロード"
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-direct-download', params: {key: config.current_swars_user_key}}"

@@ -3,20 +3,6 @@ module Swars
     include ApplicationMemoryRecord
     memory_record [
       {
-        key: :today,
-        name: proc {
-          "本日分"
-        },
-        scope: proc {
-          s = current_index_scope
-          t = Time.current.midnight
-          s = s.where(battled_at: t...t.tomorrow)
-          s = s.order(battled_at: :asc)
-          s = s.limit(zip_dl_max)
-        },
-      },
-
-      {
         key: :latest,
         name: proc {
           "直近"
@@ -29,9 +15,31 @@ module Swars
       },
 
       {
+        key: :today,
+        name: proc {
+          "本日"
+        },
+        scope: proc {
+          s = current_index_scope
+          t = Time.current.midnight
+          s = s.where(battled_at: t...t.tomorrow)
+          s = s.order(battled_at: :asc)
+          s = s.limit(zip_dl_max)
+        },
+      },
+
+      {
         key: :continue,
         name: proc {
-          "前回の続きから"
+          if current_user
+            if continue_begin_at
+              continue_begin_at.to_s(:battle_time) + " 以降"
+            else
+              "前回の続きから" # 前回どこまでかまだ記録していない不明
+            end
+          else
+            "前回の続きから"
+          end
         },
         scope: proc {
           s = current_index_scope

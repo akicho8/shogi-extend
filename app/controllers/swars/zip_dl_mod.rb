@@ -12,9 +12,15 @@ module Swars
         return
       end
 
-      if params[:swars_zip_dl_logs_destroy_all] && Rails.env.development?
-        current_user.swars_zip_dl_logs.destroy_all
-        return
+      if Rails.env.development? && current_user
+        if params[:swars_zip_dl_logs_destroy_all]
+          current_user.swars_zip_dl_logs.destroy_all
+          return
+        end
+        if params[:oldest_log_create]
+          zip_dl_cop.oldest_log_create
+          return
+        end
       end
 
       # 特定のスコープでダウンロードする
