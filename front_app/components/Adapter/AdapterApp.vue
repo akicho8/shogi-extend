@@ -7,7 +7,7 @@
     .mx-4.my-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item(@click="board_show_handle" label="共有将棋盤に転送")
+          b-menu-item(@click="share_board_open_handle" label="共有将棋盤に転送")
 
         b-menu-list(label="Export")
           b-menu-item(@click="kifu_paper_handle" label="棋譜用紙 (PDF)")
@@ -80,6 +80,9 @@
 </template>
 
 <script>
+const AUTO_APP_TO = true
+
+import _ from "lodash"
 import MemoryRecord from 'js-memory-record'
 
 class FormatTypeInfo extends MemoryRecord {
@@ -135,7 +138,17 @@ export default {
     if (this.$route.query.body) {
       this.input_text = this.$route.query.body
       this.change_counter += 1
-      this.validate_handle()
+
+      if (AUTO_APP_TO) {
+        let v = this.$route.query.app_to
+        if (v) {
+          v = _.snakeCase(v)
+          const app_to = this[`${v}_open_handle`] // piyo_shogi_open_handle, kento_open_handle, share_board_open_handle
+          app_to()
+        } else {
+          this.validate_handle()
+        }
+      }
     }
 
     this.input_text_focus()
@@ -222,7 +235,7 @@ export default {
     },
 
     // 「盤面」
-    board_show_handle() {
+    share_board_open_handle() {
       this.record_fetch(() => {
         // https://router.vuejs.org/guide/essentials/navigation.html#programmatic-navigation
         this.$router.push({
