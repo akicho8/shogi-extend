@@ -3,7 +3,7 @@ module Api
     # curl -d _method=post http://0.0.0.0:3000/api/adapter/record_create.json
     def record_create
       record = FreeBattle.create!(kifu_body: params[:input_text])
-      render json: { record: record.as_json(methods: :all_kifs) }
+      render json: { record: record.as_json(methods: [:all_kifs, :display_turn, :piyo_shogi_base_params]) }
     end
 
     # curl http://0.0.0.0:3000/api/adapter/formal_sheet.json?key=xxx

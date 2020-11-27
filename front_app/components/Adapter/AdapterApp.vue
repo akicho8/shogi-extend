@@ -190,12 +190,30 @@ export default {
       this.sound_play("click")
       this.sidebar_p = !this.sidebar_p
     },
+
+    //////////////////////////////////////////////////////////////////////////////// open_handle 3種
     piyo_shogi_open_handle() {
       this.record_fetch(() => this.app_open(this.piyo_shogi_app_with_params_url))
     },
     kento_open_handle() {
       this.record_fetch(() => this.app_open(this.kento_app_with_params_url))
     },
+    share_board_open_handle() {
+      this.record_fetch(() => {
+        // https://router.vuejs.org/guide/essentials/navigation.html#programmatic-navigation
+        this.$router.push({
+          name: "share-board",
+          query: {
+            body: this.record.all_kifs.sfen,
+            turn: this.fixed_turn,
+            image_view_point: "black",
+            // title: "共有将棋盤 (棋譜変換後の確認)",
+          },
+        })
+      })
+    },
+    ////////////////////////////////////////////////////////////////////////////////
+
     kifu_copy_handle(kifu_type) {
       this.record_fetch(() => this.simple_clipboard_copy(this.record.all_kifs[kifu_type]))
     },
@@ -231,21 +249,6 @@ export default {
       this.record_fetch(() => {
         const url = this.kifu_show_url(kifu_type)
         this.window_popup(url)
-      })
-    },
-
-    // 「盤面」
-    share_board_open_handle() {
-      this.record_fetch(() => {
-        // https://router.vuejs.org/guide/essentials/navigation.html#programmatic-navigation
-        this.$router.push({
-          name: "share-board",
-          query: {
-            body: this.record.all_kifs.sfen,
-            image_view_point: "black",
-            // title: "共有将棋盤 (棋譜変換後の確認)",
-          },
-        })
       })
     },
 
@@ -315,6 +318,9 @@ export default {
 
         if (e.record) {
           this.record = e.record
+          this.__assert__(this.record.display_turn != null, "this.record.display_turn != null")
+          this.__assert__(this.record.turn_max != null, "this.record.turn_max != null")
+          this.__assert__(this.record.piyo_shogi_base_params != null, "this.record.piyo_shogi_base_params != null")
           callback()
         }
       }).finally(() => {
@@ -356,7 +362,13 @@ export default {
       return `<div class="mt-2">正しいのに読み込めないときは ${tag} までご一報ください</div>`
     },
 
-    //////////////////////////////////////////////////////////////////////////////// piyo_shogi
+    //////////////////////////////////////////////////////////////////////////////// piyo_shogi / kento
+
+    // piyo_shogi, kento, share_board で表示する局面(手数)
+    // 中盤開始局面にする場合は this.record.display_turn を渡す
+    fixed_turn() {
+      return this.record.turn_max // 最終局面
+    },
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
@@ -364,7 +376,7 @@ export default {
           ...this.record.piyo_shogi_base_params,
           path: this.show_path,
           sfen: this.record.sfen_body,
-          turn: this.record.display_turn,
+          turn: this.fixed_turn,
           flip: this.record.flip,
         })
       }
@@ -374,7 +386,7 @@ export default {
       if (this.record) {
         return this.kento_full_url({
           sfen: this.record.sfen_body,
-          turn: this.record.display_turn,
+          turn: this.fixed_turn,
           flip: this.record.flip,
         })
       }

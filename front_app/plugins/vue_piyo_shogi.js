@@ -9,12 +9,16 @@ export default {
     // app のとき path があれば kif の URL を渡す
     piyo_shogi_auto_url(params) {
       if (this.piyo_shogi_app_p) {
+        // モバイル版
         if (params.path) {
+          // KIFファイルを渡す方法
           return this.piyo_shog_native_url(params)
         } else {
+          // SFENを引数に渡す方法
           return this.piyo_shogi_sfen_url(params)
         }
       } else {
+        // SFENを引数に渡す方法
         return this.piyo_shogi_sfen_url(params)
       }
     },
@@ -70,11 +74,12 @@ export default {
   },
 
   computed: {
-    // アプリ版「ぴよ将棋」が起動できるか？
+    // モバイルアプリ版が起動できるか？
     piyo_shogi_app_p() {
       return isMobile.iOS() || isMobile.Android()
     },
 
+    // モバイル or WEB に合わせたプレフィクス
     piyo_shogi_url_prefix() {
       if (this.piyo_shogi_app_p) {
         return "piyoshogi://"
