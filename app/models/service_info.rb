@@ -131,7 +131,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/cpu-battle"},
       title: "CPU対戦",
       og_image_key: "cpu-battle",
-      description: "ネット対戦で心をやられたときにどうぞ",
+      description: "ネット将棋で心をやられたときにどうぞ",
       features: [
         "自作の将棋AI",
         "見掛け倒しなアヒル戦法や右四間飛車を指す",
@@ -151,6 +151,7 @@ class ServiceInfo
       features: [
         "フッターにある字を押してみよう",
         "いろいろアレなんで匿名",
+        "もう誰もやってない",
       ],
     },
     {
@@ -163,7 +164,7 @@ class ServiceInfo
       features: [
         "自作の問題を作れる",
         "アヒル戦法の誰得問題集がある",
-        "もう誰もやってない",
+        "一瞬盛り上がったがもう誰もやってない",
         # "思ったより面白くない",
         # "自作の問題を作れる",
         # "対戦は 23:00 - 23:15 のみ",

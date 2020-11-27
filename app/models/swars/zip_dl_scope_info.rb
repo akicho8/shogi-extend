@@ -3,21 +3,40 @@ module Swars
     include ApplicationMemoryRecord
     memory_record [
       {
-        key: :latest,
+        key: :zdsk_inherit,
         name: proc {
-          "直近"
+          "そのまま"
+        },
+        message: proc {
+          "一覧で表示した通りに上から最大#{zip_dl_max}件を取得します"
         },
         scope: proc {
           s = current_index_scope
-          s = s.order(battled_at: :desc)
+          s = sort_scope(s)
           s = s.limit(zip_dl_max)
         },
       },
 
+      # {
+      #   key: :zdsk_latest,
+      #   name: proc {
+      #     "直近"
+      #   },
+      #   scope: proc {
+      #     s = current_index_scope
+      #     s = s.order(battled_at: :desc)
+      #     s = s.limit(zip_dl_max)
+      #   },
+      # },
+      #
+
       {
-        key: :today,
+        key: :zdsk_today,
         name: proc {
           "本日"
+        },
+        message: proc {
+          "さらに本日分に絞ります"
         },
         scope: proc {
           s = current_index_scope
@@ -29,16 +48,19 @@ module Swars
       },
 
       {
-        key: :continue,
+        key: :zdsk_continue,
         name: proc {
+          "前回の続きから"
+        },
+        message: proc {
           if current_user
             if continue_begin_at
-              continue_begin_at.to_s(:battle_time) + " 以降"
+              "さらに " + continue_begin_at.to_s(:battle_time) + " 以降を対象にします"
             else
-              "前回の続きから" # 前回どこまでかまだ記録していない不明
+              "前回がいつなのかわかってないので「前回の続きから」以外の方法で一度ダウンロードしてください"
             end
           else
-            "前回の続きから"
+            "この機能を使うにはログインが必要です"
           end
         },
         scope: proc {
@@ -54,7 +76,7 @@ module Swars
       },
 
       # {
-      #   key: :oldest,
+      #   key: :zdsk_oldest,
       #   name: proc {
       #     "一番古い1件"
       #   },

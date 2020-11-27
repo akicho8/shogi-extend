@@ -14,7 +14,6 @@ module BattleControllerSharedMethods
       s = current_index_scope
       s = s.select(current_model.column_names - exclude_column_names)
       s = sort_scope(s)
-      s = s.order(id: :desc) # 順序揺れ防止策
       s = page_scope(s)
     end
 
@@ -50,10 +49,6 @@ module BattleControllerSharedMethods
   end
 
   concerning :QueryMethods do
-    included do
-      helper_method :current_query
-    end
-
     let :current_query do
       params[:query].presence
     end

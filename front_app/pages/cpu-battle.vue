@@ -15,7 +15,7 @@ export default {
     meta() {
       return {
         title: "CPU対戦",
-        description: "ネット対戦で心をやられたときにどうぞ",
+        description: "ネット将棋で心をやられたときにどうぞ",
         og_image_key: "cpu-battle",
       }
     },

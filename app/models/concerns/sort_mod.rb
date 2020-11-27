@@ -4,6 +4,7 @@ module SortMod
   def sort_scope(s)
     if sort_column && sort_order
       s = s.order(sort_column => sort_order)
+      s = s.order(id: :desc) # 順序揺れ防止策
     end
     s
   end

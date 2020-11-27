@@ -132,11 +132,15 @@ export default {
     // url_open(url, this.target_default) で呼ぶとPCの場合はWindowを開く
     url_open(url, target = null) {
       if (target === "_blank") {
-        return window.open(url, "_blank")
+        return this.other_window_open(url)
       }
 
       // this.process_now()
       location.href = url
+    },
+
+    other_window_open(url) {
+      window.open(url, "_blank")
     },
 
     sp_turn_slider_auto_focus() {

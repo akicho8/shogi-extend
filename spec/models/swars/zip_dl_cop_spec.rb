@@ -26,17 +26,18 @@ module Swars
 
       zip_dl_cop = ZipDlCop.new({
           :current_user        => current_user,   # ログインしている人
-          :current_index_scope => user1.battles, # 対象レコードたち
+          :current_index_scope => user1.battles,  # 対象レコードたち
+          :swars_user          => user1,          # 対象者のキー
           :query               => "alice",        # デバッグ用にいれておく。いまのところ user1.name と同一
           :zip_dl_max          => 2,              # 一度にダウンロードする数
-          :zip_scope_key       => :continue,      # 前回の続きから
+          :zip_dl_scope_key    => :zdsk_continue, # 前回の続きから
         })
 
-      assert { zip_dl_cop.to_config == {:form_params_default=>{:zip_scope_key=>"latest", :zip_format_key=>"kif", :encode_key=>"UTF-8", :zip_dl_max=>50}, :swars_zip_dl_logs=>{:count=>0, :last=>nil}, :scope_info=>[{:key=>:latest, :name=>"直近", :count=>2}, {:key=>:today, :name=>"本日分", :count=>2}, {:key=>:continue, :name=>"前回の続きから", :count=>0}, {:key=>:oldest, :name=>"一番古い1件", :count=>1}]} }
+      assert { zip_dl_cop.to_config == {:form_params_default=>{:zip_dl_scope_key=>"latest", :zip_dl_format_key=>"kif", :encode_key=>"UTF-8", :zip_dl_max=>50}, :swars_zip_dl_logs=>{:count=>0, :last=>nil}, :scope_info=>[{:key=>:latest, :name=>"直近", :count=>2}, {:key=>:today, :name=>"本日分", :count=>2}, {:key=>:continue, :name=>"前回の続きから", :count=>0}, {:key=>:oldest, :name=>"一番古い1件", :count=>1}]} }
       assert { zip_dl_cop.zip_filename == "shogiwars-alice-0-20000101000000-kif-UTF-8.zip" }
 
       # 1回目
-      record = zip_dl_cop.oldest_log_create            # 一番古いもの1件ダウンロードしたことにする
+      record = zip_dl_cop.oldest_log_create       # 一番古いもの1件ダウンロードしたことにする
       assert { record.user == current_user      } # ログインしている人
       assert { record.swars_user == user1       } # 対象者
       assert { record.dl_count == 1             } # 1件だけ
@@ -60,8 +61,20 @@ module Swars
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .
+# >> F
 # >> 
-# >> Finished in 1.98 seconds (files took 2.21 seconds to load)
-# >> 1 example, 0 failures
+# >> Failures:
+# >> 
+# >>   1) Swars::Battle works
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:36:in `block (2 levels) in <module:Swars>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 1.97 seconds (files took 2.44 seconds to load)
+# >> 1 example, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:15 # Swars::Battle works
 # >> 

@@ -1,6 +1,7 @@
 module Swars
   class ZipDlCop
     include EncodeMod
+    include SortMod
 
     attr_accessor :params
 
@@ -11,8 +12,8 @@ module Swars
     def to_config
       config = {}
       config[:form_params_default] = {
-        :zip_scope_key  => "latest",
-        :zip_format_key => "kif",
+        :zip_dl_scope_key  => "zdsk_inherit",
+        :zip_dl_format_key => "kif",
         :encode_key     => "UTF-8",
         :zip_dl_max     => AppConfig[:zip_dl_max_default],
       }
@@ -28,9 +29,10 @@ module Swars
 
       config[:scope_info] = ZipDlScopeInfo.inject({}) do |a, e|
         a.merge(e.key => {
-            :key   => e.key,
-            :name  => instance_eval(&e.name),
-            :count => instance_eval(&e.scope).count,
+            :key     => e.key,
+            :name    => instance_eval(&e.name),
+            :count   => instance_eval(&e.scope).count,
+            :message => instance_eval(&e.message),
           })
       end
 
@@ -41,7 +43,7 @@ module Swars
       t = Time.current
 
       io = Zip::OutputStream.write_buffer do |zos|
-        zip_scope.each do |battle|
+        zip_dl_scope.each do |battle|
           if str = battle.to_xxx(kifu_format_info.key)
             zos.put_next_entry("#{swars_user.key}/#{battle.key}.#{kifu_format_info.key}")
             if current_body_encode == "Shift_JIS"
@@ -65,7 +67,7 @@ module Swars
       parts = []
       parts << "shogiwars"
       parts << swars_user.key
-      parts << zip_scope.count
+      parts << zip_dl_scope.count
       parts << Time.current.strftime("%Y%m%d%H%M%S")
       parts << kifu_format_info.key
       parts << current_body_encode
@@ -75,7 +77,7 @@ module Swars
 
     # 続きから進められるようにダウンロード範囲を記録する
     def swars_zip_dl_logs_create!
-      log_create(zip_scope)
+      log_create(zip_dl_scope)
     end
 
     # 古い1件をダウンロードしたことにする
@@ -102,7 +104,7 @@ module Swars
       end
     end
 
-    def zip_scope
+    def zip_dl_scope
       instance_eval(&zip_dl_scope_info.scope)
     end
 
@@ -111,15 +113,15 @@ module Swars
     end
 
     def kifu_format_info
-      @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_format_info.key)
+      @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_dl_format_info.key)
     end
 
-    def zip_format_info
-      ZipFormatInfo.fetch(zip_format_key)
+    def zip_dl_format_info
+      ZipDlFormatInfo.fetch(zip_dl_format_key)
     end
 
-    def zip_format_key
-      params[:zip_format_key].presence || "kif"
+    def zip_dl_format_key
+      params[:zip_dl_format_key].presence || "kif"
     end
 
     def continue_begin_at
@@ -135,11 +137,11 @@ module Swars
     end
 
     def zip_dl_scope_info
-      ZipDlScopeInfo.fetch(zip_scope_key)
+      ZipDlScopeInfo.fetch(zip_dl_scope_key)
     end
 
-    def zip_scope_key
-      (params[:zip_scope_key].presence || :latest).to_sym
+    def zip_dl_scope_key
+      (params[:zip_dl_scope_key].presence || "zdsk_inherit").to_sym
     end
 
     def current_user
@@ -147,14 +149,13 @@ module Swars
     end
 
     def swars_user
-      @swars_user ||= User.find_by!(key: swars_user_key)
+      # @swars_user ||= User.find_by!(key: swars_user_key)
+      params[:swars_user] or raise ArgumentError
     end
 
-    # いまのところ query はユーザー名しか入っていない前提とする
-    # 本当は query からスコープを作りたいのだけどコントローラーに書いたところが他からアクセスできないのでいまのところこうなっている
-    def swars_user_key
-      params[:query].split.first.presence or raise ArgumentError
-    end
+    # def swars_user_key
+    #   params[:swars_user_key] or raise ArgumentError
+    # end
 
     # swars_user.battles としてもよいが query から構築したスコープを使いたい
     def current_index_scope

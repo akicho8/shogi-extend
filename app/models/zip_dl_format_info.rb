@@ -1,4 +1,4 @@
-class ZipFormatInfo
+class ZipDlFormatInfo
   include ApplicationMemoryRecord
   memory_record [
     { key: :kif,  },

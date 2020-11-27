@@ -17,14 +17,32 @@
           .is-size-7-mobile
             | ログインしていると「前回の続きから」を選択できます
 
-      b-field(label="範囲" custom-class="is-small")
+      //- b-notification(:closable="false" type="is-primary is-light")
+      //-   .is-size-7-mobile
+      //-     span 検索条件:
+      //-     span.has-text-weight-bold.ml-1 {{current_params.query}}<br>
+      //-     span 並び替え:
+      //-     span.ml-1 {{Dictionary.fetch(current_params.sort_column).name}}{{Dictionary.fetch(current_params.sort_order).name}}
+
+      //- .level.is-mobile.has-background-primary-light.py-4.box
+      .level.is-mobile.has-background-primary-light.py-5.box.is-shadowless
+        .level-item.has-text-centered
+          div
+            p.heading 検索条件
+            p.title {{current_params.query}}
+        .level-item.has-text-centered
+          div
+            p.heading 順序
+            p.title {{Dictionary.fetch(current_params.sort_column).name}}{{Dictionary.fetch(current_params.sort_order).name}}
+
+      b-field(label="対象" custom-class="is-small" :message="current_scope_info.message")
         template(v-for="e in config.scope_info")
-          b-radio-button(size="is-small" v-model="zip_scope_key" :native-value="e.key" @input="input1_handle")
+          b-radio-button(size="is-small" v-model="zip_dl_scope_key" :native-value="e.key" @input="input1_handle")
             | {{e.name}} ({{e.count}})
 
       b-field(label="フォーマット" custom-class="is-small")
         template(v-for="e in ZipDlInfo.values")
-          b-radio-button(size="is-small" v-model="zip_format_key" :native-value="e.key" @input="input2_handle")
+          b-radio-button(size="is-small" v-model="zip_dl_format_key" :native-value="e.key" @input="input2_handle")
             | {{e.name}}
 
       b-field(label="文字コード" custom-class="is-small")
@@ -36,6 +54,8 @@
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play('click')") 0
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')") 1
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
+
+      hr
 
       .buttons
         b-button(@click="download_handle" :loading="loading_p" icon-left="download") ダウンロード
@@ -49,18 +69,19 @@
 <script>
 import ls_support from "@/components/models/ls_support.js"
 import { isMobile } from "@/components/models/isMobile.js"
+import { Dictionary } from "@/components/models/Dictionary.js"
 
 import MemoryRecord from 'js-memory-record'
 
-class ScopeInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "latest",    name: "直近",           },
-      { key: "today",     name: "本日分",         },
-      { key: "continue",  name: "前回の続きから", },
-    ]
-  }
-}
+// class ScopeInfo extends MemoryRecord {
+//   static get define() {
+//     return [
+//       { key: "latest",    name: "直近",           },
+//       { key: "today",     name: "本日分",         },
+//       { key: "continue",  name: "前回の続きから", },
+//     ]
+//   }
+// }
 
 class ZipDlInfo extends MemoryRecord {
   static get define() {
@@ -92,8 +113,8 @@ export default {
   data() {
     return {
       // for ls_support
-      zip_scope_key:  null,
-      zip_format_key: null,
+      zip_dl_scope_key:  null,
+      zip_dl_format_key: null,
       encode_key: null,
       zip_dl_max: null,
 
@@ -101,24 +122,36 @@ export default {
       loading_p: false,
     }
   },
+
   fetchOnServer: false,
   fetch() {
+    if (true) {
+      const e = this.current_params
+      if (e.query && e.sort_column && e.sort_order) {
+      } else {
+        this.$nuxt.error({statusCode: 500, message: "パラメータが足りません"})
+        return
+      }
+    }
+
     const params = {
-      query: this.target_user_key,
+      ...this.current_params,
       download_config_fetch: "true",
     }
     return this.$axios.$get("/w.json", {params: params}).then(e => {
       this.config = e
+      // this.ls_reset()
       this.ls_setup()
     })
   },
+
   methods: {
     input1_handle(v) {
       this.sound_play('click')
-      if (v === "continue") {
+      if (v === "zdsk_continue") {
         if (!this.g_current_user) {
-          this.talk_stop()
-          this.toast_ok("前回の続きからダウンロードするにはいったんログインして、そのあと初回だけ「前回の続きから」以外の方法でダウンロードしてください。そうすると使えるようになります")
+          // this.talk_stop()
+          // this.toast_ok("前回の続きからダウンロードするにはいったんログインして、そのあと初回だけ「前回の続きから」以外の方法でダウンロードしてください。そうすると使えるようになります")
         }
       }
     },
@@ -133,7 +166,7 @@ export default {
       this.sound_play('click')
       if (v === "Shift_JIS") {
         this.talk_stop()
-        this.toast_ok("ShogiGUI で連続棋譜解析する場合はそれ")
+        this.toast_ok("ShogiGUI で連続棋譜解析する場合はこっち")
       }
     },
 
@@ -147,29 +180,40 @@ export default {
       this.sound_play("click")
 
       const params = {
-        query:           this.target_user_key,
-        zip_scope_key:   this.zip_scope_key,
-        zip_format_key:  this.zip_format_key,
-        body_encode:     this.encode_key,
-        zip_dl_max:      this.zip_dl_max,
+        ...this.current_params,
+        zip_dl_scope_key:  this.zip_dl_scope_key,
+        zip_dl_format_key: this.zip_dl_format_key,
+        zip_dl_max:        this.zip_dl_max,
+        body_encode:       this.encode_key,
       }
 
       const usp = new URLSearchParams()
       _.each(params, (v, k) => usp.set(k, v))
       const url = this.$config.MY_SITE_URL + `/w.zip?${usp}`
-      location.href = url
 
-      this.loading_p = true
-      this.delay_block(3, () => {
-        this.loading_p = false
-        this.$fetch()
+      if (false) {
+        // この順で実行するとなんと location.href が無かったことにされる
+        location.href = url
+        this.back_handle()
+      } else {
+        // 別枠でダウンロードさせるとこちら側は自由に動ける
+        this.other_window_open(url)
+        this.back_handle() // 連打対策も兼ねて一覧に戻す
+      }
 
-        this.toast_ok(`たぶんダウンロード完了しました`, {
-          onend: () => {
-            this.toast_ok(`もっとたくさん取得したいときは「古い棋譜を夜中に取得」のほうを使ってください`)
-          },
+      if (false) {
+        this.loading_p = true
+        this.delay_block(3, () => {
+          this.loading_p = false
+          this.$fetch()
+
+          this.toast_ok(`たぶんダウンロード完了しました`, {
+            onend: () => {
+              this.toast_ok(`もっとたくさん取得したいときは「古い棋譜を補完」のほうを使ってください`)
+            },
+          })
         })
-      })
+      }
     },
 
     async swars_zip_dl_logs_destroy_all() {
@@ -178,23 +222,25 @@ export default {
     },
 
     async oldest_log_create_handle() {
-      await this.$axios.$get("/w.json", {params: {query: this.target_user_key, oldest_log_create: "true"}})
+      await this.$axios.$get("/w.json", {params: {...this.current_params, oldest_log_create: "true"}})
       this.$fetch()
     },
 
     back_handle() {
       this.sound_play('click')
-      this.back_to({name: "swars-search", query: {query: this.target_user_key}})
+      this.back_to({name: "swars-search", query: this.current_params})
     },
   },
   computed: {
-    ScopeInfo() { return ScopeInfo },
+
+    // ScopeInfo() { return ScopeInfo },
     ZipDlInfo() { return ZipDlInfo },
     EncodeInfo() { return EncodeInfo },
+    Dictionary() { return Dictionary },
 
-    target_user_key() { return this.$route.params.key },
+    current_params() { return this.$route.query },
 
-    current_scope_info() { return this.config.scope_info[this.zip_scope_key] },
+    current_scope_info() { return this.config.scope_info[this.zip_dl_scope_key] },
 
     meta() {
       return {
@@ -204,7 +250,8 @@ export default {
       }
     },
     page_title() {
-      return `${this.target_user_key}さんの棋譜をダウンロード`
+      // return `${this.current_params.query} - 棋譜ダウンロード`
+      return `棋譜ダウンロード`
     },
 
     //////////////////////////////////////////////////////////////////////////////// for ls_support
@@ -214,8 +261,8 @@ export default {
     ls_default() {
       return {
         ...this.config.form_params_default,
-        // zip_scope_key: "latest",
-        // zip_format_key: "kif",
+        // zip_dl_scope_key: "latest",
+        // zip_dl_format_key: "kif",
         // encode_key: "UTF-8",
       }
     },
@@ -242,7 +289,9 @@ export default {
       margin-bottom: 1.5rem
 
     .buttons
-      margin-top: 2.5rem
+      // margin-top: 2.5rem
+      +mobile
+        justify-content: center
 
     .zip_dl_max
       max-width: 3rem

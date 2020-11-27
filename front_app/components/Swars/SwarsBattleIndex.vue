@@ -3,6 +3,7 @@
   b-loading(:active="$fetchState.pending")
 
   DebugBox
+    p current_route_query: {{current_route_query}}
     p $route.query: {{$route.query}}
     p g_current_user: {{g_current_user && g_current_user.id}}
     p visible_hash: {{visible_hash}}
@@ -60,14 +61,14 @@
           //-     b-menu-item(@click="zip_dl_handle(e)" :label="e.name")
 
           b-menu-item(
-            label="すぐにダウンロード"
+            label="ダウンロード"
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
-            :to="{name: 'swars-users-key-direct-download', params: {key: config.current_swars_user_key}}"
+            :to="{name: 'swars-direct-download', query: current_route_query}"
             :disabled="menu_item_disabled")
 
           b-menu-item(
-            label="古い棋譜を夜中に取得"
+            label="古い棋譜を補完"
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
@@ -451,9 +452,12 @@ export default {
       this.toast_ok(`${e.body_encode} の ${e.format_key_upcase} をダウンロードしています`)
 
       const params = {
-        query: this.query,
-        zip_format_key: e.format_key,
-        body_encode: e.body_encode,
+        query:          this.query,
+        zip_dl_format_key: e.format_key,
+        body_encode:    e.body_encode,
+        // zip_dl_scope_key:  "latest",
+        sort_column: this.$route.query.sort_column || this.config.sort_column,
+        sort_order:  this.$route.query.sort_order || this.config.sort_order,
       }
 
       const usp = new URLSearchParams()
@@ -464,7 +468,7 @@ export default {
       this.delay_block(3, () => {
         this.toast_ok(`たぶんダウンロード完了しました`, {
           onend: () => {
-            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を夜中に取得」のほうを使ってください`)
+            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を補完」のほうを使ってください`)
           },
         })
       })
@@ -500,6 +504,15 @@ export default {
   },
 
   computed: {
+    current_route_query() {
+      return {
+        query:       this.query,
+        sort_column: this.config.sort_column,
+        sort_order:  this.config.sort_order,
+        ...this.$route.query,
+      }
+    },
+
     menu_item_disabled() {
       return !this.config.current_swars_user_key
     },
