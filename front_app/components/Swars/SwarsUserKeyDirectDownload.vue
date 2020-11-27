@@ -37,10 +37,8 @@
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')") 1
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
 
-      hr
-
       .buttons
-        b-button(@click="download_handle" :loading="loading_p" icon-left="download") 最大{{zip_dl_max}}件ダウンロード
+        b-button(@click="download_handle" :loading="loading_p" icon-left="download") ダウンロード
         b-button(@click="swars_zip_dl_logs_destroy_all" v-if="development_p") クリア
         b-button(@click="oldest_log_create_handle" v-if="development_p") 古い1件をDLしたことにする
 
@@ -243,8 +241,8 @@ export default {
     .field:not(:last-child)
       margin-bottom: 1.5rem
 
-    // .buttons
-    //   // margin-top: 1.0rem
+    .buttons
+      margin-top: 2.5rem
 
     .zip_dl_max
       max-width: 3rem

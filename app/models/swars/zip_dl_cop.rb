@@ -11,7 +11,7 @@ module Swars
     def to_config
       config = {}
       config[:form_params_default] = {
-        :zip_scope_key  => "today",
+        :zip_scope_key  => "latest",
         :zip_format_key => "kif",
         :encode_key     => "UTF-8",
         :zip_dl_max     => AppConfig[:zip_dl_max_default],
