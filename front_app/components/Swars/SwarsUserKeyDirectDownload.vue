@@ -12,35 +12,35 @@
 
   MainSection(v-if="config")
     .container
-      template(v-if="!g_current_user")
+      template(v-if="!g_current_user && false")
         b-notification(type="is-info is-light")
           .is-size-7-mobile
             | ログインしていると「前回の続きから」を選択できます
 
       b-field(label="範囲" custom-class="is-small")
         template(v-for="e in config.scope_info")
-          b-radio-button(size="is-small" v-model="zip_scope_key" :native-value="e.key" @input="sound_play('click')" :disabled="e.key === 'continue' && !g_current_user")
+          b-radio-button(size="is-small" v-model="zip_scope_key" :native-value="e.key" @input="input1_handle")
             | {{e.name}} ({{e.count}})
 
       b-field(label="フォーマット" custom-class="is-small")
         template(v-for="e in ZipDlInfo.values")
-          b-radio-button(size="is-small" v-model="zip_format_key" :native-value="e.key" @input="sound_play('click')")
+          b-radio-button(size="is-small" v-model="zip_format_key" :native-value="e.key" @input="input2_handle")
             | {{e.name}}
 
       b-field(label="文字コード" custom-class="is-small")
         template(v-for="e in EncodeInfo.values")
-          b-radio-button(size="is-small" v-model="encode_key" :native-value="e.key" @input="sound_play('click')")
+          b-radio-button(size="is-small" v-model="encode_key" :native-value="e.key" @input="input3_handle")
             | {{e.name}}
 
-      b-field.zip_dl_max(label="件数最大" custom-class="is-small")
-        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play('click')" v-if="development_p") 0
-        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')" v-if="development_p") 1
+      b-field.zip_dl_max(label="件数最大" custom-class="is-small" v-if="development_p")
+        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play('click')") 0
+        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')") 1
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
 
       hr
 
       .buttons
-        b-button(@click="download_handle" :loading="loading_p") ダウンロード
+        b-button(@click="download_handle" :loading="loading_p" icon-left="download") 最大{{zip_dl_max}}件ダウンロード
         b-button(@click="swars_zip_dl_logs_destroy_all" v-if="development_p") クリア
         b-button(@click="oldest_log_create_handle" v-if="development_p") 古い1件をDLしたことにする
 
@@ -115,6 +115,30 @@ export default {
     })
   },
   methods: {
+    input1_handle(v) {
+      this.sound_play('click')
+      if (v === "continue") {
+        if (!this.g_current_user) {
+          this.talk_stop()
+          this.toast_ok("前回の続きからダウンロードするにはいったんログインして、そのあと初回だけ「前回の続きから」以外の方法でダウンロードしてください。そうすると使えるようになります")
+        }
+      }
+    },
+    input2_handle(v) {
+      this.sound_play('click')
+      if (v === "sfen") {
+        this.talk_stop()
+        this.toast_ok("よくわからない場合は KIF にしてください")
+      }
+    },
+    input3_handle(v) {
+      this.sound_play('click')
+      if (v === "Shift_JIS") {
+        this.talk_stop()
+        this.toast_ok("ShogiGUI で連続棋譜解析する場合はそれ")
+      }
+    },
+
     download_handle() {
       if (this.current_scope_info.count === 0) {
         this.toast_warn("ダウンロードするデータがありません")
