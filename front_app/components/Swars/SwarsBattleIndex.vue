@@ -16,7 +16,7 @@
 
       b-menu
         b-menu-list(label="Action")
-          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" icon="account" label="プレイヤー情報" :disabled="menu_item_disabled")
+          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" label="プレイヤー情報" :disabled="menu_item_disabled")
 
         b-menu-list(label="表示形式")
           b-menu-item(@click.stop="display_key_set('table')")
