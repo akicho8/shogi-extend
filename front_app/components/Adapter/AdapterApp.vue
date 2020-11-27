@@ -11,12 +11,14 @@
 
         b-menu-list(label="Export")
           b-menu-item(@click="kifu_paper_handle" label="棋譜用紙 (PDF)")
+
           b-menu-item(:expanded="false" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 表示
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
               b-menu-item(:label="e.name" @click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)")
+
           b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | コピー
@@ -24,6 +26,7 @@
             template(v-for="e in FormatTypeInfo.values")
               template(v-if="e.clipboard_copyable")
                 b-menu-item(:label="e.name" @click="kifu_copy_handle(e.key)")
+
           b-menu-item(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | ダウンロード
@@ -63,7 +66,7 @@
 
       .columns(v-if="record")
         .column
-          pre.box.has-background-success-light
+          pre.box.has-background-white-ter
             | {{record.all_kifs.kif}}
 
       .columns(v-if="development_p")
@@ -162,7 +165,7 @@ export default {
     },
     clear_handle() {
       if (this.input_text) {
-        this.sound_play('click')
+        this.sound_play("click")
         this.input_text = ""
         this.input_text_focus()
       }
@@ -171,7 +174,7 @@ export default {
       this.url_open(url, this.target_default)
     },
     sidebar_toggle() {
-      this.sound_play('click')
+      this.sound_play("click")
       this.sidebar_p = !this.sidebar_p
     },
     piyo_shogi_open_handle() {
@@ -340,7 +343,7 @@ export default {
       return `<div class="mt-2">正しいのに読み込めないときは ${tag} までご一報ください</div>`
     },
 
-    //////////////////////////////////////////////////////////////////////////////// piyoshogi
+    //////////////////////////////////////////////////////////////////////////////// piyo_shogi
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
