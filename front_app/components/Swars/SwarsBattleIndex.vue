@@ -61,7 +61,7 @@
           //-     b-menu-item(@click="zip_dl_handle(e)" :label="e.name")
 
           b-menu-item(
-            label="ダウンロード"
+            label="棋譜ダウンロード"
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-direct-download', query: current_route_query}"
