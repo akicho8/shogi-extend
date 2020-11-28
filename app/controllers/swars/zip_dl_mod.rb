@@ -26,7 +26,7 @@ module Swars
       # 特定のスコープでダウンロードする
       # GET http://0.0.0.0:3000/w.zip?query=Yamada_Taro
       if request.format.zip?
-        send_data(zip_dl_cop.zip_io.string, type: Mime[params[:format]], filename: zip_dl_cop.zip_filename, disposition: "attachment")
+        send_data(zip_dl_cop.to_zip.string, type: Mime[params[:format]], filename: zip_dl_cop.zip_filename, disposition: "attachment")
       end
     end
 

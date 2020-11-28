@@ -97,7 +97,7 @@ class UserMailer < ApplicationMailer
     end
 
     if record.attachment_mode == "with_zip"
-      attachments[record.zip_filename] = record.zip_io.string
+      attachments[record.zip_filename] = record.to_zip.string
     end
 
     mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)

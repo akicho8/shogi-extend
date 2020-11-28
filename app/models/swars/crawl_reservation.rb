@@ -71,7 +71,7 @@ module Swars
       end
     end
 
-    def zip_io
+    def to_zip
       t = Time.current
 
       io = Zip::OutputStream.write_buffer do |zos|

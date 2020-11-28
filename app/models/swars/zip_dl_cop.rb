@@ -1,3 +1,23 @@
+# 続きからダウンロード関連
+#
+# UI
+# front_app/components/Swars/SwarsBattleDownload.vue
+#
+# ダウンロード記録
+# app/models/swars/zip_dl_log.rb
+#
+# スコープ別の処理
+# app/models/swars/zip_dl_scope_info.rb
+#
+# Controller
+# app/controllers/swars/zip_dl_mod.rb
+#
+# Experiment
+# experiment/swars/zip_dl_cop.rb
+#
+# Test
+# spec/models/swars/zip_dl_cop_spec.rb
+
 module Swars
   class ZipDlCop
     include EncodeMod
@@ -14,8 +34,8 @@ module Swars
       config[:form_params_default] = {
         :zip_dl_scope_key  => "zdsk_inherit",
         :zip_dl_format_key => "kif",
-        :encode_key     => "UTF-8",
-        :zip_dl_max     => AppConfig[:zip_dl_max_default],
+        :zip_dl_max        => AppConfig[:zip_dl_max_default],
+        :encode_key        => "UTF-8",
       }
 
       if current_user
@@ -39,7 +59,7 @@ module Swars
       config
     end
 
-    def zip_io
+    def to_zip
       t = Time.current
 
       io = Zip::OutputStream.write_buffer do |zos|
@@ -149,15 +169,9 @@ module Swars
     end
 
     def swars_user
-      # @swars_user ||= User.find_by!(key: swars_user_key)
       params[:swars_user] or raise ArgumentError
     end
 
-    # def swars_user_key
-    #   params[:swars_user_key] or raise ArgumentError
-    # end
-
-    # swars_user.battles としてもよいが query から構築したスコープを使いたい
     def current_index_scope
       params[:current_index_scope] or raise ArgumentError
     end
