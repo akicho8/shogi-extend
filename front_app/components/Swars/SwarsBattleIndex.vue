@@ -130,7 +130,7 @@
       .columns
         .column
           b-field
-            b-autocomplete(
+            b-autocomplete#query(
               max-height="50vh"
               size="is-medium"
               v-model.trim="query"
