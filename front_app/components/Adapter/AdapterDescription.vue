@@ -3,7 +3,7 @@
   MainNavbar
     template(slot="brand")
       NavbarItemHome(icon="chevron-left" :to="{name: 'adapter'}")
-      b-navbar-item.has-text-weight-bold(tag="div") 対応フォーマット
+      b-navbar-item.has-text-weight-bold(tag="div") 対応フォーマットの確認
 
   MainSection
     .container
@@ -26,12 +26,12 @@ import { AdapterTestInfo } from "@/components/models/AdapterTestInfo.js"
 export default {
   name: "AdapterDescription",
   mounted() {
-    this.ga_click("対応フォーマット")
+    this.ga_click("対応フォーマットの確認")
   },
   computed: {
     meta() {
       return {
-        title: ["対応フォーマット", "なんでも棋譜変換"],
+        title: ["対応フォーマットの確認", "なんでも棋譜変換"],
       }
     },
     AdapterTestInfo() { return AdapterTestInfo },

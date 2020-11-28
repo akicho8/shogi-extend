@@ -35,7 +35,7 @@
               b-menu-item(:label="e.name" @click.prevent="kifu_dl_handle(e)" :href="kifu_dl_url(e)")
 
         b-menu-list(label="ANOTHER")
-          b-menu-item(label="対応フォーマット" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play('click')")
+          b-menu-item(label="対応フォーマットの確認" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play('click')")
 
   MainNavbar
     template(slot="brand")
