@@ -1366,23 +1366,6 @@ CREATE TABLE `free_battles` (
   KEY `index_free_battles_on_outbreak_turn` (`outbreak_turn`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `mute_infos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mute_infos` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL COMMENT 'オーナー',
-  `target_user_id` bigint(20) NOT NULL COMMENT '対象',
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `index_mute_infos_on_user_id_and_target_user_id` (`user_id`,`target_user_id`),
-  KEY `index_mute_infos_on_user_id` (`user_id`),
-  KEY `index_mute_infos_on_target_user_id` (`target_user_id`),
-  CONSTRAINT `fk_rails_1f6612f566` FOREIGN KEY (`target_user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `fk_rails_dc31a836d4` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `profiles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1534,6 +1517,27 @@ CREATE TABLE `swars_users` (
   KEY `index_swars_users_on_grade_id` (`grade_id`),
   KEY `index_swars_users_on_last_reception_at` (`last_reception_at`),
   KEY `index_swars_users_on_updated_at` (`updated_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `swars_zip_dl_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `swars_zip_dl_logs` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '登録者',
+  `swars_user_id` bigint(20) NOT NULL COMMENT '対象者',
+  `query` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'クエリ全体(予備)',
+  `dl_count` int(11) NOT NULL COMMENT 'ダウンロード数(記録用)',
+  `begin_at` datetime NOT NULL COMMENT 'スコープ(開始・記録用)',
+  `end_at` datetime NOT NULL COMMENT 'スコープ(終了)',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_swars_zip_dl_logs_on_user_id` (`user_id`),
+  KEY `index_swars_zip_dl_logs_on_swars_user_id` (`swars_user_id`),
+  KEY `index_swars_zip_dl_logs_on_end_at` (`end_at`),
+  CONSTRAINT `fk_rails_5edb845d8e` FOREIGN KEY (`swars_user_id`) REFERENCES `swars_users` (`id`),
+  CONSTRAINT `fk_rails_ffe7d8a4c6` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `taggings`;
@@ -1714,9 +1718,9 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200321005132'),
 ('20200621164300'),
 ('20200701201700'),
-('20200725112106'),
 ('20200920154202'),
 ('20201103121300'),
-('20201107095900');
+('20201107095900'),
+('20201125220100');
 
 

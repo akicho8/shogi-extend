@@ -929,16 +929,6 @@ ActiveRecord::Schema.define(version: 2020_11_25_220100) do
     t.index ["user_id"], name: "index_free_battles_on_user_id"
   end
 
-  create_table "mute_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "オーナー"
-    t.bigint "target_user_id", null: false, comment: "対象"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["target_user_id"], name: "index_mute_infos_on_target_user_id"
-    t.index ["user_id", "target_user_id"], name: "index_mute_infos_on_user_id_and_target_user_id", unique: true
-    t.index ["user_id"], name: "index_mute_infos_on_user_id"
-  end
-
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "description", limit: 512, null: false, comment: "自己紹介"
@@ -1163,7 +1153,7 @@ ActiveRecord::Schema.define(version: 2020_11_25_220100) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+  create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
     t.string "entry_name", null: false
     t.string "summary"
@@ -1276,8 +1266,6 @@ ActiveRecord::Schema.define(version: 2020_11_25_220100) do
   add_foreign_key "emox_settings", "emox_rules", column: "rule_id"
   add_foreign_key "emox_settings", "users"
   add_foreign_key "emox_vs_records", "emox_battles", column: "battle_id"
-  add_foreign_key "mute_infos", "users"
-  add_foreign_key "mute_infos", "users", column: "target_user_id"
   add_foreign_key "swars_crawl_reservations", "users"
   add_foreign_key "swars_zip_dl_logs", "swars_users"
   add_foreign_key "swars_zip_dl_logs", "users"
