@@ -29,7 +29,7 @@
         template(v-for="e in config.scope_info")
           b-radio-button(size="is-small" v-model="zip_dl_scope_key" :native-value="e.key" @input="zip_dl_scope_key_change_handle")
             | {{e.name}}
-            template(v-if="e.count >= 1")
+            template(v-if="e.count >= 1 || true")
               b-tag.has-text-weight-bold.ml-1(rounded type="is-primary is-light") {{e.count}}
 
       b-field(label="フォーマット" custom-class="is-small")
