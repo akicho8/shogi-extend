@@ -34,7 +34,7 @@ zip_dl_cop = Swars::ZipDlCop.new({
     :zip_dl_scope_key    => :zdsk_continue,
   })
 
-zip_dl_cop.to_config             # => {:form_params_default=>{:zip_dl_scope_key=>"zdsk_inherit", :zip_dl_format_key=>"kif", :encode_key=>"UTF-8", :zip_dl_max=>50}, :swars_zip_dl_logs=>{:count=>0, :last=>nil}, :scope_info=>{:zdsk_inherit=>{:key=>:zdsk_inherit, :name=>"そのまま", :count=>2, :message=>"一覧で表示した通りに上から最大2件を取得します"}, :zdsk_today=>{:key=>:zdsk_today, :name=>"本日", :count=>2, :message=>"さらに本日分に絞ります"}, :zdsk_continue=>{:key=>:zdsk_continue, :name=>"前回の続きから", :count=>0, :message=>"前回がいつなのかわかってないので「前回の続きから」以外の方法で一度ダウンロードしてください"}}}
+zip_dl_cop.to_config             # => {:form_params_default=>{:zip_dl_scope_key=>"zdsk_inherit", :zip_dl_format_key=>"kif", :body_encode=>"UTF-8", :zip_dl_max=>50}, :swars_zip_dl_logs=>{:count=>0, :last=>nil}, :scope_info=>{:zdsk_inherit=>{:key=>:zdsk_inherit, :name=>"そのまま", :count=>2, :message=>"一覧で表示した通りに上から最大2件を取得します"}, :zdsk_today=>{:key=>:zdsk_today, :name=>"本日", :count=>2, :message=>"さらに本日分に絞ります"}, :zdsk_continue=>{:key=>:zdsk_continue, :name=>"前回の続きから", :count=>0, :message=>"前回がいつなのかわかってないので「前回の続きから」以外の方法で一度ダウンロードしてください"}}}
 zip_dl_cop.zip_filename          # => "shogiwars-alice-0-20200101000000-kif-UTF-8.zip"
 
 record = zip_dl_cop.oldest_log_create # 一番古いもの1件ダウンロードしたことにする

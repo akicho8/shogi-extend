@@ -33,7 +33,7 @@ module Swars
           :zip_dl_scope_key    => :zdsk_continue, # 前回の続きから
         })
 
-      assert { zip_dl_cop.to_config == {:form_params_default=>{:zip_dl_scope_key=>"latest", :zip_dl_format_key=>"kif", :encode_key=>"UTF-8", :zip_dl_max=>50}, :swars_zip_dl_logs=>{:count=>0, :last=>nil}, :scope_info=>[{:key=>:latest, :name=>"直近", :count=>2}, {:key=>:today, :name=>"本日分", :count=>2}, {:key=>:continue, :name=>"前回の続きから", :count=>0}, {:key=>:oldest, :name=>"一番古い1件", :count=>1}]} }
+      assert { zip_dl_cop.to_config == {:form_params_default=>{:zip_dl_scope_key=>"latest", :zip_dl_format_key=>"kif", :body_encode=>"UTF-8", :zip_dl_max=>50}, :swars_zip_dl_logs=>{:count=>0, :last=>nil}, :scope_info=>[{:key=>:latest, :name=>"直近", :count=>2}, {:key=>:today, :name=>"本日分", :count=>2}, {:key=>:continue, :name=>"前回の続きから", :count=>0}, {:key=>:oldest, :name=>"一番古い1件", :count=>1}]} }
       assert { zip_dl_cop.zip_filename == "shogiwars-alice-0-20000101000000-kif-UTF-8.zip" }
 
       # 1回目

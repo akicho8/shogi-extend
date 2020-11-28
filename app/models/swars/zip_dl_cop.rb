@@ -35,7 +35,7 @@ module Swars
         :zip_dl_scope_key  => "zdsk_inherit",
         :zip_dl_format_key => "kif",
         :zip_dl_max        => AppConfig[:zip_dl_max_default],
-        :encode_key        => "UTF-8",
+        :body_encode        => "UTF-8",
       }
 
       if current_user
