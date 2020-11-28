@@ -1,5 +1,3 @@
-const LOBBY_MESSAGE_BODY_NOIZE_CHECK_DAYS = 2 * 7
-
 export const application_lobby_message = {
   data() {
     return {
@@ -11,18 +9,8 @@ export const application_lobby_message = {
   methods: {
     // 送信ボタンが押されたとき
     lobby_speak_handle() {
-      if (this.lobby_speak_reject()) { return }
       this.lobby_speak(this.lobby_message_body)
       this.lobby_message_body = ""
-    },
-
-    // ゴミを除去
-    lobby_speak_reject() {
-      if (this.lobby_message_body_is_noize_p) {
-        this.lobby_message_body = ""
-        this.warning_notice("ゴミを投函しないでください")
-        return
-      }
     },
 
     // 発言
@@ -45,22 +33,6 @@ export const application_lobby_message = {
         if (plain_text) {
           this.say(plain_text)
           this.$buefy.toast.open({message: `${message.user.name}: ${plain_text}`, position: "is-top", queue: false})
-        }
-      }
-    },
-  },
-
-  computed: {
-    // 入力された文字列はゴミか？
-    // ゴミを投函するのは新規ユーザーだけなので最初の2週間だけチェックする
-    lobby_message_body_is_noize_p() {
-      let s = this.lobby_message_body || ""
-      s = s.replace(/\s+/g, "")          // s = s.remove(" ")
-      s = _.uniq(Array.from(s)).join("") // s = s.chars.uniq.join
-      const retv = s.length === 1
-      if (this.base.current_user) {
-        if (this.base.current_user.created_after_days <= LOBBY_MESSAGE_BODY_NOIZE_CHECK_DAYS) {
-          return retv
         }
       }
     },
