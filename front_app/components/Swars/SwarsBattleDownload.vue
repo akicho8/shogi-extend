@@ -140,12 +140,15 @@ export default {
   methods: {
     back_handle() {
       this.sound_play("click")
+      this.back_handle2()
+    },
+    back_handle2() {
       this.back_to({name: "swars-search", query: this.current_params})
     },
 
     zip_dl_scope_key_change_handle(v) {
       this.sound_play("click")
-      this.talk(v)
+      this.talk(this.current_scope_info.message)
 
       if (v === "zdsk_continue") {
         if (!this.g_current_user) {
@@ -194,11 +197,11 @@ export default {
       if (false) {
         // この順で実行するとなんと location.href が無かったことにされる
         location.href = url
-        this.back_handle()
+        this.back_handle2()
       } else {
         // 別枠でダウンロードさせるとこちら側は自由に動ける
         this.other_window_open(url)
-        this.back_handle() // 連打対策も兼ねて一覧に戻す
+        this.back_handle2() // 連打対策も兼ねて一覧に戻す
       }
 
       if (false) {
