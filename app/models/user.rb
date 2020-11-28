@@ -38,7 +38,6 @@ class User < ApplicationRecord
   include UserAvatarMod
   include UserProfileMod
   include UserDeviseMod
-  include UserMuteMod
   include UserTagMod
   include UserRaceMod
   include UserFreeBattleMod
@@ -48,4 +47,5 @@ class User < ApplicationRecord
   include ::Actb::UserMod
   include ::Emox::UserMod
   include UserCrawlReservationMod
+  include UserZipDlLogMod
 end

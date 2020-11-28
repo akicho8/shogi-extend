@@ -6,7 +6,6 @@ module Api
     def config_params
       {
         sp_params: sp_params,
-        sp_volume: AppConfig[:volume],
 
         cpu_brain_infos: CpuBrainInfo,
         cpu_brain_key: current_cpu_brain_key,

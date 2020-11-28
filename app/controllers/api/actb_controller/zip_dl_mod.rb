@@ -15,7 +15,7 @@ module Api
           t = Time.current
 
           zip_buffer = Zip::OutputStream.write_buffer do |zos|
-            zip_scope.each do |record|
+            zip_dl_scope.each do |record|
               zos.put_next_entry("#{record.lineage_key}/#{record.id}_#{record.title}.kif")
 
               str = record.to_kif
@@ -37,7 +37,7 @@ module Api
         parts = []
         parts << current_user.name
         parts << "将棋問題集"
-        parts << zip_scope.count
+        parts << zip_dl_scope.count
         parts << Time.current.strftime("%Y%m%d%H%M%S")
         parts << current_body_encode
         str = parts.compact.join("_") + ".zip"
@@ -45,7 +45,7 @@ module Api
         str
       end
 
-      def zip_scope
+      def zip_dl_scope
         # Actb::Question.all
         s = current_user.actb_questions
         # s = s.active_only

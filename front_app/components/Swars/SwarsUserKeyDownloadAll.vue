@@ -13,7 +13,7 @@
   MainSection
     .container
       template(v-if="!g_current_user")
-        b-notification(type="is-warning")
+        b-notification(type="is-warning" :closable="false")
           | この機能を使う場合はいったんログインしてください
 
       b-notification(:closable="false")
@@ -112,7 +112,7 @@ export default {
       }
     },
     page_title() {
-      return `${this.$route.params.key}さんの古い棋譜を取得`
+      return `${this.$route.params.key}さんの古い棋譜を補完`
     },
   },
 }

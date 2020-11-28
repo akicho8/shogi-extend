@@ -69,7 +69,7 @@ class UserMailer < ApplicationMailer
 
     out = []
     out << "追加: #{diff_count} 件"
-    out << "全体: #{record.zip_scope.count} 件"
+    out << "全体: #{record.zip_dl_scope.count} 件"
     out << ""
 
     out << "#{record.target_user.key}さんの棋譜"
@@ -97,7 +97,7 @@ class UserMailer < ApplicationMailer
     end
 
     if record.attachment_mode == "with_zip"
-      attachments[record.zip_filename] = record.zip_io.string
+      attachments[record.zip_filename] = record.to_zip.string
     end
 
     mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_07_095900) do
+ActiveRecord::Schema.define(version: 2020_11_25_220100) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -929,16 +929,6 @@ ActiveRecord::Schema.define(version: 2020_11_07_095900) do
     t.index ["user_id"], name: "index_free_battles_on_user_id"
   end
 
-  create_table "mute_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "オーナー"
-    t.bigint "target_user_id", null: false, comment: "対象"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["target_user_id"], name: "index_mute_infos_on_target_user_id"
-    t.index ["user_id", "target_user_id"], name: "index_mute_infos_on_user_id_and_target_user_id", unique: true
-    t.index ["user_id"], name: "index_mute_infos_on_user_id"
-  end
-
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "description", limit: 512, null: false, comment: "自己紹介"
@@ -1046,6 +1036,20 @@ ActiveRecord::Schema.define(version: 2020_11_07_095900) do
     t.index ["last_reception_at"], name: "index_swars_users_on_last_reception_at"
     t.index ["updated_at"], name: "index_swars_users_on_updated_at"
     t.index ["user_key"], name: "index_swars_users_on_user_key", unique: true
+  end
+
+  create_table "swars_zip_dl_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "登録者"
+    t.bigint "swars_user_id", null: false, comment: "対象者"
+    t.string "query", null: false, comment: "クエリ全体(予備)"
+    t.integer "dl_count", null: false, comment: "ダウンロード数(記録用)"
+    t.datetime "begin_at", null: false, comment: "スコープ(開始・記録用)"
+    t.datetime "end_at", null: false, comment: "スコープ(終了)"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["end_at"], name: "index_swars_zip_dl_logs_on_end_at"
+    t.index ["swars_user_id"], name: "index_swars_zip_dl_logs_on_swars_user_id"
+    t.index ["user_id"], name: "index_swars_zip_dl_logs_on_user_id"
   end
 
   create_table "taggings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -1262,7 +1266,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_095900) do
   add_foreign_key "emox_settings", "emox_rules", column: "rule_id"
   add_foreign_key "emox_settings", "users"
   add_foreign_key "emox_vs_records", "emox_battles", column: "battle_id"
-  add_foreign_key "mute_infos", "users"
-  add_foreign_key "mute_infos", "users", column: "target_user_id"
   add_foreign_key "swars_crawl_reservations", "users"
+  add_foreign_key "swars_zip_dl_logs", "swars_users"
+  add_foreign_key "swars_zip_dl_logs", "users"
 end

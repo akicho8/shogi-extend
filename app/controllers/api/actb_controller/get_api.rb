@@ -143,7 +143,7 @@ module Api
       def zip_dl_count_fetch
         count = 0
         if current_user
-          count = zip_scope.count
+          count = zip_dl_scope.count
         end
         { count: count }
       end

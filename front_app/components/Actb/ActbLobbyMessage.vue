@@ -1,9 +1,9 @@
 <template lang="pug">
-.ActbLobbyMessage(:base="base" v-if="base.current_user && permit_lobby_message_p")
+.ActbLobbyMessage(:base="base" v-if="true || base.current_user && permit_lobby_message_p")
   .messages_box(ref="messages_box")
     .message_line(v-for="message in base.lobby_messages")
       ActbMessageRow(:base="base" :message="message")
-  .input_field.is-flex.mt-2(v-if="base.current_user && permit_lobby_message_input_p")
+  .input_field.is-flex.mt-2(v-if="base.current_user")
     figure.media-left.is-clickable.ml-2.mr-0(@click="base.ov_user_info_set(base.current_user.id)")
       p.image.is-32x32.avatar_image
         img.is-rounded(:src="base.current_user.avatar_path")

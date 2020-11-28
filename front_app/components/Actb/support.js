@@ -122,8 +122,5 @@ export const support = {
     // // ]),
 
     permit_staff_p()               { return this.permit_enable_type("staff")                      },
-    permit_lobby_message_p()       { return this.permit_hidden_type("lobby_message_hidden")       },
-    permit_lobby_message_input_p() { return this.permit_hidden_type("lobby_message_input_hidden") },
-    permit_question_new_p()        { return this.permit_hidden_type("question_new_hidden")        },
   },
 }

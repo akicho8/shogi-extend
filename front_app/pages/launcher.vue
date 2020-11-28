@@ -49,6 +49,7 @@ export default {
         { title: "将棋ウォーズショートカット kento",      to: { name: 'swars-users-key-direct-open-external_app_key', params: { key: "devuser1", external_app_key: "kento",        }}},
         { title: "将棋ウォーズショートカット piyo_shogi", to: { name: 'swars-users-key-direct-open-external_app_key', params: { key: "devuser1", external_app_key: "piyo_shogi", }}},
         { title: "将棋ウォーズショート一括DL",         to: { name: 'swars-users-key-download-all', params: { key: "devuser1", }}},
+        { title: "将棋ウォーズショート一括DL2",        to: { name: 'swars-direct-download', params: { query: "devuser1", }}},
 
         { title: "将棋ウォーズプレイヤー情報",         to: { name: "swars-users-key",   params: {key: "devuser1"}, }, },
         { title: "将棋ウォーズ棋譜検索",               to: { name: "swars-search",                   }, },

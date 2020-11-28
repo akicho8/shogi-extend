@@ -3,6 +3,7 @@
   b-loading(:active="$fetchState.pending")
 
   DebugBox
+    p current_route_query: {{current_route_query}}
     p $route.query: {{$route.query}}
     p g_current_user: {{g_current_user && g_current_user.id}}
     p visible_hash: {{visible_hash}}
@@ -16,7 +17,7 @@
 
       b-menu
         b-menu-list(label="Action")
-          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" icon="account" label="プレイヤー情報" :disabled="menu_item_disabled")
+          b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" label="プレイヤー情報" :disabled="menu_item_disabled")
 
         b-menu-list(label="表示形式")
           b-menu-item(@click.stop="display_key_set('table')")
@@ -52,15 +53,22 @@
             SwarsBattleIndexFilterMenuItem(:base="base" label="なし"            q="")
 
         b-menu-list(label="一括取得")
-          b-menu-item(:disabled="menu_item_disabled" :expanded.sync="dl_menu_item_expanded_p" @click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | 直近{{config.zip_dl_max_default}}件 ﾀﾞｳﾝﾛｰﾄﾞ
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in ZipDlInfo.values")
-              b-menu-item(@click="zip_dl_handle(e)" :label="e.name")
+          //- b-menu-item(:disabled="menu_item_disabled" :expanded.sync="dl_menu_item_expanded_p" @click="sound_play('click')")
+          //-   template(slot="label" slot-scope="props")
+          //-     | 直近{{config.zip_dl_max_default}}件 ﾀﾞｳﾝﾛｰﾄﾞ
+          //-     b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+          //-   template(v-for="e in ZipDlInfo.values")
+          //-     b-menu-item(@click="zip_dl_handle(e)" :label="e.name")
 
           b-menu-item(
-            label="古い棋譜を取得"
+            label="ダウンロード"
+            @click.native="config.current_swars_user_key && sound_play('click')"
+            tag="nuxt-link"
+            :to="{name: 'swars-direct-download', query: current_route_query}"
+            :disabled="menu_item_disabled")
+
+          b-menu-item(
+            label="古い棋譜を補完"
             @click.native="config.current_swars_user_key && sound_play('click')"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-download-all', params: {key: config.current_swars_user_key}}"
@@ -122,7 +130,7 @@
       .columns
         .column
           b-field
-            b-autocomplete(
+            b-autocomplete#query(
               max-height="50vh"
               size="is-medium"
               v-model.trim="query"
@@ -444,9 +452,12 @@ export default {
       this.toast_ok(`${e.body_encode} の ${e.format_key_upcase} をダウンロードしています`)
 
       const params = {
-        query: this.query,
-        zip_format_key: e.format_key,
-        body_encode: e.body_encode,
+        query:          this.query,
+        zip_dl_format_key: e.format_key,
+        body_encode:    e.body_encode,
+        // zip_dl_scope_key:  "latest",
+        sort_column: this.$route.query.sort_column || this.config.sort_column,
+        sort_order:  this.$route.query.sort_order || this.config.sort_order,
       }
 
       const usp = new URLSearchParams()
@@ -457,7 +468,7 @@ export default {
       this.delay_block(3, () => {
         this.toast_ok(`たぶんダウンロード完了しました`, {
           onend: () => {
-            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を取得」のほうを使ってください`)
+            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を補完」のほうを使ってください`)
           },
         })
       })
@@ -493,6 +504,15 @@ export default {
   },
 
   computed: {
+    current_route_query() {
+      return {
+        query:       this.query,
+        sort_column: this.config.sort_column,
+        sort_order:  this.config.sort_order,
+        ...this.$route.query,
+      }
+    },
+
     menu_item_disabled() {
       return !this.config.current_swars_user_key
     },

@@ -11,7 +11,7 @@
         | 問題一覧
 
     ////////////////////////////////////////////////////////////////////////////////
-    b-icon.header_item.with_icon.rjust(icon="plus" @click.native="bapp.builder_new_handle" v-if="permit_question_new_p")
+    b-icon.header_item.with_icon.rjust(icon="plus" @click.native="bapp.builder_new_handle")
     //////////////////////////////////////////////////////////////////////////////// メニューで開くタイプ
     b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
       b-icon(slot="trigger" icon="menu")

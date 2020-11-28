@@ -71,11 +71,11 @@ module Swars
       end
     end
 
-    def zip_io
+    def to_zip
       t = Time.current
 
       io = Zip::OutputStream.write_buffer do |zos|
-        zip_scope.each do |battle|
+        zip_dl_scope.each do |battle|
           if str = battle.to_xxx(kifu_format_info.key)
             body_encodes.each do |encode|
               zos.put_next_entry("#{target_user.key}/#{encode}/#{battle.key}.#{kifu_format_info.key}")
@@ -89,13 +89,12 @@ module Swars
       end
 
       sec = "%.2f s" % (Time.current - t)
-      # slack_message(key: "ZIP #{sec}", body: zip_filename)
       SlackAgent.message_send(key: "ZIP #{sec}", body: zip_filename)
-      # send_data(io.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
+
       io
     end
 
-    def zip_scope
+    def zip_dl_scope
       target_user.battles
     end
 
@@ -107,7 +106,7 @@ module Swars
       parts = []
       parts << "shogiwars"
       parts << target_user.key
-      parts << zip_scope.count
+      parts << zip_dl_scope.count
       parts << Time.current.strftime("%Y%m%d%H%M%S")
       parts << kifu_format_info.key
       # parts << body_encodes
@@ -118,14 +117,14 @@ module Swars
     private
 
     def kifu_format_info
-      @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_format_info.key)
+      @kifu_format_info ||= Bioshogi::KifuFormatInfo.fetch(zip_dl_format_info.key)
     end
 
-    def zip_format_info
-      ZipFormatInfo.fetch(zip_format_key)
+    def zip_dl_format_info
+      ZipDlFormatInfo.fetch(zip_dl_format_key)
     end
 
-    def zip_format_key
+    def zip_dl_format_key
       "kif"
     end
 

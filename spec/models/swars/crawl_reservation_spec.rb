@@ -49,9 +49,9 @@ module Swars
         })
 
       assert { record.persisted? }
-      assert { record.zip_io     }
+      assert { record.to_zip     }
 
-      Zip::InputStream.open(record.zip_io) do |zis|
+      Zip::InputStream.open(record.to_zip) do |zis|
         entry = zis.get_next_entry
         assert { entry.name == "user1/UTF-8/battle1.kif" }
         assert { NKF.guess(zis.read).to_s == "UTF-8" }

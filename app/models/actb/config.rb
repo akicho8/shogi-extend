@@ -1,6 +1,6 @@
 module Actb
   Config = {
-    :revision                        => 24,
+    :revision                        => 25,
     :actb_display_p                  => true,
 
     # -------------------------------------------------------------------------------- 共通
@@ -8,7 +8,7 @@ module Actb
     :action_cable_debug              => true, # ActionCable関連デバッグモード
     :user_name_required              => true, # 「名無し」であれば名前を入力してもらう
     :emotion_editable_p              => true, # エモーション編集機能有効化
-    :o_ucount_notify_func_p         => true, # 何問解いたか通知
+    :o_ucount_notify_func_p          => true, # 何問解いたか通知
 
     # -------------------------------------------------------------------------------- マッチング
     :matching_gap_base               => 7,  # ○**カウンター
@@ -55,7 +55,7 @@ module Actb
 
     # -------------------------------------------------------------------------------- API
     :api_questions_fetch_per         => 5,  # 問題一覧での1ページあたりの表示件数
-    :api_lobby_message_max           => 50, # ロビーのメッセージ表示件数
+    :api_lobby_message_max           => 100, # ロビーのメッセージ表示件数
     :api_history_fetch_max           => 50, # 履歴表示件数
     :api_clip_fetch_max              => 50, # 保存表示件数
   }
@@ -75,7 +75,7 @@ module Actb
         :marathon_giveup_effective_seconds            => 15,       # 「あきらめる」がでるまでの秒数(マラソン)
         :sp_theme                        => "real",   # 将棋盤のタイプ
         :emotion_editable_p              => false,    # エモーション編集機能有効化
-        :o_ucount_notify_func_p         => false,    # 何問解いたか通知
+        :o_ucount_notify_func_p          => false,    # 何問解いたか通知
       })
   end
 end
