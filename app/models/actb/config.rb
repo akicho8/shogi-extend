@@ -55,7 +55,7 @@ module Actb
 
     # -------------------------------------------------------------------------------- API
     :api_questions_fetch_per         => 5,  # 問題一覧での1ページあたりの表示件数
-    :api_lobby_message_max           => 50, # ロビーのメッセージ表示件数
+    :api_lobby_message_max           => 100, # ロビーのメッセージ表示件数
     :api_history_fetch_max           => 50, # 履歴表示件数
     :api_clip_fetch_max              => 50, # 保存表示件数
   }
