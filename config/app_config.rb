@@ -1,6 +1,5 @@
 AppConfig.deep_merge!({
     :app_name                            =>  "SHOGI-EXTEND",
-    :volume                              =>  0.5,
 
     :swars_tag_search_function           =>  true,  # タグ検索
     :columns_detail_show                 =>  true,  # 「開戦」の手数を表示する？
