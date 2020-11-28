@@ -43,7 +43,6 @@ module BackendScript
       row["ID"] = user_link_to(user.id, user)
       row.merge("操作" => [
           h.link_to("タグ", UserTagEditScript.script_link_path(target_user_ids: user.id)),
-          h.link_to("ミュート", UserMuteScript.script_link_path(target_user_ids: user.id)),
           h.link_to("削除", UserDestroyScript.script_link_path(target_user_ids: user.id)),
         ].join(" ").html_safe)
     end

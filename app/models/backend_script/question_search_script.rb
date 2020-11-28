@@ -60,7 +60,6 @@ module BackendScript
       row["共有将棋盤"] = h.link_to("盤", row["共有将棋盤"])
 
       row.update("操作" => [
-          # h.link_to("ミュート", QuestionMuteScript.script_link_path(target_user_ids: user.id)),
           h.link_to("削除", QuestionDestroyScript.script_link_path(target_question_ids: question.id)),
         ].join(" ").html_safe)
       row

@@ -132,7 +132,6 @@ module Actb
               :skill_key,
               :description,
               :twitter_key,
-              :mute_user_ids,
               :actb_created_after_days,
               :session_lock_token,
             ],

@@ -1,5 +1,5 @@
 <template lang="pug">
-.ActbMessageRow.is-flex(v-if="show_p")
+.ActbMessageRow.is-flex
   .image.is-clickable.is-16x16.avatar_image
     img.is-rounded(:src="message.user.avatar_path" @click="base.ov_user_info_set(message.user.id)")
   .user_name.has-text-grey.is-size-7.is-clickable.has-text-weight-bold(@click="base.ov_user_info_set(message.user.id)")
@@ -22,18 +22,6 @@ export default {
     support_child,
   ],
   computed: {
-    // デバッグ用のメッセージはデバッグモードのアカウントのときだけ見れる
-    show_p() {
-      // if (this.debug_message_p && !this.base.debug_read_p) {
-      //   return false
-      // }
-      if (this.base.current_user && this.base.current_user.mute_user_ids.includes(this.message.user.id)) {
-        return false
-      }
-
-      return true
-    },
-
     system_message_p() {
       return this.mark_level === 1
     },

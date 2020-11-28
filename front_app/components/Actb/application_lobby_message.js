@@ -32,10 +32,6 @@ export const application_lobby_message = {
 
     // 受信
     lobby_speak_broadcasted(params) {
-      if (this.base.current_user && this.base.current_user.mute_user_ids.includes(params.message.user.id)) {
-        this.debug_alert(`skip: ${params.message.body}`)
-        return
-      }
       this.lobby_speak_broadcasted_shared_process(params)
       this.lobby_messages.push(params.message)
     },

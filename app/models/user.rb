@@ -38,7 +38,6 @@ class User < ApplicationRecord
   include UserAvatarMod
   include UserProfileMod
   include UserDeviseMod
-  include UserMuteMod
   include UserTagMod
   include UserRaceMod
   include UserFreeBattleMod
