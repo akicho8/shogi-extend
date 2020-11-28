@@ -14,8 +14,8 @@ export class Dictionary extends MemoryRecord {
       { key: "rule_info",        name: "種類", },
       { key: "preset_info",      name: "手合", },
       { key: "battled_at",       name: "日時", },
-      { key: "asc",              name: "↓",   },
-      { key: "desc",             name: "↑",   },
+      { key: "asc",              name: "昇順", },
+      { key: "desc",             name: "降順", },
     ]
   }
 }

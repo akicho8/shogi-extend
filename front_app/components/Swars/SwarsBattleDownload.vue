@@ -1,6 +1,7 @@
 <template lang="pug">
 .SwarsBattleDownload
   b-loading(:active="$fetchState.pending")
+
   MainNavbar
     template(slot="brand")
       b-navbar-item(@click="back_handle")
@@ -12,47 +13,38 @@
 
   MainSection(v-if="config")
     .container
-      template(v-if="!g_current_user && false")
-        b-notification(type="is-info is-light")
-          .is-size-7-mobile
-            | ログインしていると「前回の続きから」を選択できます
-
-      //- b-notification(:closable="false" type="is-primary is-light")
-      //-   .is-size-7-mobile
-      //-     span 検索条件:
-      //-     span.has-text-weight-bold.ml-1 {{current_params.query}}<br>
-      //-     span 並び替え:
-      //-     span.ml-1 {{Dictionary.fetch(current_params.sort_column).name}}{{Dictionary.fetch(current_params.sort_order).name}}
-
-      //- .level.is-mobile.has-background-primary-light.py-4.box
-      .level.is-mobile.has-background-primary-light.py-5.box.is-shadowless
+      .level.has-background-primary-light.py-5.box.is-shadowless
         .level-item.has-text-centered
           div
-            p.heading 検索条件
-            p.title {{current_params.query}}
+            p.heading 検索キーワード
+            p.title.is-size-6-mobile
+              | {{current_params.query}}
         .level-item.has-text-centered
           div
             p.heading 順序
-            p.title {{Dictionary.fetch(current_params.sort_column).name}}{{Dictionary.fetch(current_params.sort_order).name}}
+            p.title.is-size-6-mobile
+              | {{Dictionary.fetch(current_params.sort_column).name}}{{Dictionary.fetch(current_params.sort_order).name}}
 
       b-field(label="対象" custom-class="is-small" :message="current_scope_info.message")
         template(v-for="e in config.scope_info")
-          b-radio-button(size="is-small" v-model="zip_dl_scope_key" :native-value="e.key" @input="input1_handle")
-            | {{e.name}} ({{e.count}})
+          b-radio-button(size="is-small" v-model="zip_dl_scope_key" :native-value="e.key" @input="zip_dl_scope_key_change_handle")
+            | {{e.name}}
+            template(v-if="e.count >= 1")
+              b-tag.has-text-weight-bold.ml-1(rounded type="is-primary is-light") {{e.count}}
 
       b-field(label="フォーマット" custom-class="is-small")
-        template(v-for="e in ZipDlInfo.values")
-          b-radio-button(size="is-small" v-model="zip_dl_format_key" :native-value="e.key" @input="input2_handle")
+        template(v-for="e in ZipDlFormatInfo.values")
+          b-radio-button(size="is-small" v-model="zip_dl_format_key" :native-value="e.key" @input="zip_dl_format_key_change_handle")
             | {{e.name}}
 
       b-field(label="文字コード" custom-class="is-small")
-        template(v-for="e in EncodeInfo.values")
-          b-radio-button(size="is-small" v-model="encode_key" :native-value="e.key" @input="input3_handle")
+        template(v-for="e in BodyEncodeInfo.values")
+          b-radio-button(size="is-small" v-model="body_encode" :native-value="e.key" @input="body_encode_change_handle")
             | {{e.name}}
 
       b-field.zip_dl_max(label="件数最大" custom-class="is-small" v-if="development_p")
-        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play('click')") 0
-        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')") 1
+        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play('click')")   0
+        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')")   1
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
 
       hr
@@ -71,7 +63,7 @@ import ls_support from "@/components/models/ls_support.js"
 import { isMobile } from "@/components/models/isMobile.js"
 import { Dictionary } from "@/components/models/Dictionary.js"
 
-import MemoryRecord from 'js-memory-record'
+import MemoryRecord from "js-memory-record"
 
 // class ScopeInfo extends MemoryRecord {
 //   static get define() {
@@ -83,7 +75,7 @@ import MemoryRecord from 'js-memory-record'
 //   }
 // }
 
-class ZipDlInfo extends MemoryRecord {
+class ZipDlFormatInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "kif",  },
@@ -98,7 +90,7 @@ class ZipDlInfo extends MemoryRecord {
   }
 }
 
-class EncodeInfo extends MemoryRecord {
+class BodyEncodeInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "UTF-8",     },
@@ -115,7 +107,7 @@ export default {
       // for ls_support
       zip_dl_scope_key:  null,
       zip_dl_format_key: null,
-      encode_key: null,
+      body_encode: null,
       zip_dl_max: null,
 
       config: null,
@@ -146,45 +138,53 @@ export default {
   },
 
   methods: {
-    input1_handle(v) {
-      this.sound_play('click')
+    back_handle() {
+      this.sound_play("click")
+      this.back_to({name: "swars-search", query: this.current_params})
+    },
+
+    zip_dl_scope_key_change_handle(v) {
+      this.sound_play("click")
+      this.talk(v)
+
       if (v === "zdsk_continue") {
         if (!this.g_current_user) {
-          // this.talk_stop()
-          // this.toast_ok("前回の続きからダウンロードするにはいったんログインして、そのあと初回だけ「前回の続きから」以外の方法でダウンロードしてください。そうすると使えるようになります")
+          if (false) {
+            this.talk_stop()
+            this.toast_ok("前回の続きからダウンロードするにはいったんログインして、そのあと初回だけ「前回の続きから」以外の方法でダウンロードしてください。そうすると使えるようになります")
+          }
         }
       }
     },
-    input2_handle(v) {
-      this.sound_play('click')
-      if (v === "sfen") {
-        this.talk_stop()
+    zip_dl_format_key_change_handle(v) {
+      this.sound_play("click")
+      this.talk(v)
+      if (v === "sfen" && false) {
         this.toast_ok("よくわからない場合は KIF にしてください")
       }
     },
-    input3_handle(v) {
-      this.sound_play('click')
-      if (v === "Shift_JIS") {
-        this.talk_stop()
+    body_encode_change_handle(v) {
+      this.sound_play("click")
+      this.talk(v)
+      if (v === "Shift_JIS" && false) {
         this.toast_ok("ShogiGUI で連続棋譜解析する場合はこっち")
       }
     },
 
     download_handle() {
+      this.sound_play("click")
+
       if (this.current_scope_info.count === 0) {
-        this.toast_warn("ダウンロードするデータがありません")
+        this.toast_warn("データがありません")
         return
       }
-
-      this.sidebar_p = false
-      this.sound_play("click")
 
       const params = {
         ...this.current_params,
         zip_dl_scope_key:  this.zip_dl_scope_key,
         zip_dl_format_key: this.zip_dl_format_key,
         zip_dl_max:        this.zip_dl_max,
-        body_encode:       this.encode_key,
+        body_encode:       this.body_encode,
       }
 
       const usp = new URLSearchParams()
@@ -216,6 +216,8 @@ export default {
       }
     },
 
+    //////////////////////////////////////////////////////////////////////////////// デバッグ用
+
     async swars_zip_dl_logs_destroy_all() {
       await this.$axios.$get("/w.json", {params: {swars_zip_dl_logs_destroy_all: "true"}})
       this.$fetch()
@@ -225,23 +227,8 @@ export default {
       await this.$axios.$get("/w.json", {params: {...this.current_params, oldest_log_create: "true"}})
       this.$fetch()
     },
-
-    back_handle() {
-      this.sound_play('click')
-      this.back_to({name: "swars-search", query: this.current_params})
-    },
   },
   computed: {
-
-    // ScopeInfo() { return ScopeInfo },
-    ZipDlInfo() { return ZipDlInfo },
-    EncodeInfo() { return EncodeInfo },
-    Dictionary() { return Dictionary },
-
-    current_params() { return this.$route.query },
-
-    current_scope_info() { return this.config.scope_info[this.zip_dl_scope_key] },
-
     meta() {
       return {
         title: this.page_title,
@@ -249,22 +236,25 @@ export default {
         og_description: "",
       }
     },
+
     page_title() {
-      // return `${this.current_params.query} - 棋譜ダウンロード`
       return `棋譜ダウンロード`
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    ZipDlFormatInfo() { return ZipDlFormatInfo },
+    BodyEncodeInfo()  { return BodyEncodeInfo  },
+    Dictionary()      { return Dictionary      },
+
+    current_params()     { return this.$route.query },
+    current_scope_info() { return this.config.scope_info[this.zip_dl_scope_key] },
 
     //////////////////////////////////////////////////////////////////////////////// for ls_support
     ls_storage_key() {
       return "swars_download_params"
     },
     ls_default() {
-      return {
-        ...this.config.form_params_default,
-        // zip_dl_scope_key: "latest",
-        // zip_dl_format_key: "kif",
-        // encode_key: "UTF-8",
-      }
+      return { ...this.config.form_params_default }
     },
   },
 }
@@ -279,21 +269,21 @@ export default {
     .container
       max-width: 65ch
 
-    // .notification
-    //   padding-right: 1.25rem // notification はクローズボタンを考慮して右のpaddingが広くなっているため左と同じにする
-
-    // .block:not(:first-child)
-    //   margin-top: 1.5rem;
-
     .field:not(:last-child)
       margin-bottom: 1.5rem
 
     .buttons
-      // margin-top: 2.5rem
       +mobile
         justify-content: center
 
+    // buefy の不具合で b-radio-button が1つのとき最大横幅になる対策
     .zip_dl_max
       max-width: 3rem
 
+    .level
+      .title
+        font-size: $size-5
+
+    .tag
+      font-size: 0.6rem
 </style>
