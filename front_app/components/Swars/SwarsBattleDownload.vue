@@ -1,5 +1,5 @@
 <template lang="pug">
-.SwarsUserKeyDirectDownload
+.SwarsBattleDownload
   b-loading(:active="$fetchState.pending")
   MainNavbar
     template(slot="brand")
@@ -108,7 +108,7 @@ class EncodeInfo extends MemoryRecord {
 }
 
 export default {
-  name: "SwarsUserKeyDirectDownload",
+  name: "SwarsBattleDownload",
   mixins: [ls_support],
   data() {
     return {
@@ -271,7 +271,7 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsUserKeyDirectDownload
+.SwarsBattleDownload
   .MainSection
     +mobile
       padding: 1.4rem 1.5rem
