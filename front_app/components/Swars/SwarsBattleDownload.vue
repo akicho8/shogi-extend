@@ -82,10 +82,10 @@ import MemoryRecord from "js-memory-record"
 class ZipDlFormatInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "kif",  message: "一般的な形式",         },
-      { key: "ki2",  message: "人間向けの形式",       },
+      { key: "kif",  message: "一般的",               },
+      { key: "ki2",  message: "人間向け",             },
       { key: "csa",  message: "コンピュータ将棋用",   },
-      { key: "sfen", message: "コンピュータ将棋用",   },
+      { key: "sfen", message: "表記揺れが起きにくい", },
     ]
   }
 

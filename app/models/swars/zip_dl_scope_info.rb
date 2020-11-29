@@ -54,7 +54,7 @@ module Swars
           "そのまま"
         },
         message: proc {
-          "一覧で表示した通りに上から順に最大#{zip_dl_max}件を取得する"
+          "一覧で表示した通りに画面の上から順に最大#{zip_dl_max}件を取得する"
         },
         scope: proc {
           s = current_index_scope
