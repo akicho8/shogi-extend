@@ -25,19 +25,19 @@
             p.title.is-size-6-mobile
               | {{Dictionary.fetch(current_params.sort_column).name}}{{Dictionary.fetch(current_params.sort_order).name}}
 
-      b-field(label="対象" custom-class="is-small" :message="current_scope_info.message")
+      b-field(label="範囲" custom-class="is-small" :message="current_zip_dl_scope_info.message")
         template(v-for="e in config.scope_info")
           b-radio-button(size="is-small" v-model="zip_dl_scope_key" :native-value="e.key" @input="zip_dl_scope_key_change_handle")
             | {{e.name}}
             template(v-if="e.count >= 1 || true")
               b-tag.has-text-weight-bold.ml-1(rounded type="is-primary is-light") {{e.count}}
 
-      b-field(label="フォーマット" custom-class="is-small")
+      b-field(label="フォーマット" custom-class="is-small" :message="current_zip_dl_format_info.message")
         template(v-for="e in ZipDlFormatInfo.values")
           b-radio-button(size="is-small" v-model="zip_dl_format_key" :native-value="e.key" @input="zip_dl_format_key_change_handle")
             | {{e.name}}
 
-      b-field(label="文字コード" custom-class="is-small")
+      b-field(label="文字コード" custom-class="is-small" :message="current_body_encode_info.message")
         template(v-for="e in BodyEncodeInfo.values")
           b-radio-button(size="is-small" v-model="body_encode" :native-value="e.key" @input="body_encode_change_handle")
             | {{e.name}}
@@ -47,6 +47,10 @@
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')")   1
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
 
+      b-field(label="ZIPの構造" custom-class="is-small" :message="current_asdf_info.message")
+        template(v-for="e in AsdfInfo.values")
+          b-radio-button(size="is-small" v-model="asdf_key" :native-value="e.key" @input="asdf_key_change_handle")
+            | {{e.name}}
       hr
 
       .buttons
@@ -78,10 +82,10 @@ import MemoryRecord from "js-memory-record"
 class ZipDlFormatInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "kif",  },
-      { key: "ki2",  },
-      { key: "csa",  },
-      { key: "sfen", },
+      { key: "kif",  message: "一般的な形式",         },
+      { key: "ki2",  message: "人間向けの形式",       },
+      { key: "csa",  message: "コンピュータ将棋用",   },
+      { key: "sfen", message: "コンピュータ将棋用",   },
     ]
   }
 
@@ -93,8 +97,17 @@ class ZipDlFormatInfo extends MemoryRecord {
 class BodyEncodeInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "UTF-8",     },
-      { key: "Shift_JIS", },
+      { key: "UTF-8",     message: "一般的な文字コード",                                            },
+      { key: "Shift_JIS", message: "一部の古いWindowsアプリでは Shift_JIS しか対応していない場合がある", },
+    ]
+  }
+}
+
+class AsdfInfo extends MemoryRecord {
+  static get define() {
+    return [
+      { key: "date", name: "対局日毎",   message: "「ウォーズID/2020-01-01/ファイル」のような構造で格納する", },
+      { key: "all",  name: "ごちゃまぜ", message: "「ウォーズID/ファイル」のような構造で格納する",            },
     ]
   }
 }
@@ -109,6 +122,7 @@ export default {
       zip_dl_format_key: null,
       body_encode: null,
       zip_dl_max: null,
+      asdf_key: null,
 
       config: null,
       loading_p: false,
@@ -148,7 +162,7 @@ export default {
 
     zip_dl_scope_key_change_handle(v) {
       this.sound_play("click")
-      this.talk(this.current_scope_info.message)
+      this.talk(this.current_zip_dl_scope_info.name)
 
       if (v === "zdsk_continue") {
         if (!this.g_current_user) {
@@ -173,11 +187,18 @@ export default {
         this.toast_ok("ShogiGUI で連続棋譜解析する場合はこっち")
       }
     },
+    asdf_key_change_handle(v) {
+      this.sound_play("click")
+      this.talk(v)
+      // if (v === "Shift_JIS" && false) {
+      //   this.toast_ok("ShogiGUI で連続棋譜解析する場合はこっち")
+      // }
+    },
 
     download_handle() {
       this.sound_play("click")
 
-      if (this.current_scope_info.count === 0) {
+      if (this.current_zip_dl_scope_info.count === 0) {
         this.toast_warn("データがありません")
         return
       }
@@ -187,6 +208,7 @@ export default {
         zip_dl_scope_key:  this.zip_dl_scope_key,
         zip_dl_format_key: this.zip_dl_format_key,
         zip_dl_max:        this.zip_dl_max,
+        asdf_key:          this.asdf_key,
         body_encode:       this.body_encode,
       }
 
@@ -247,10 +269,14 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
     ZipDlFormatInfo() { return ZipDlFormatInfo },
     BodyEncodeInfo()  { return BodyEncodeInfo  },
+    AsdfInfo()        { return AsdfInfo        },
     Dictionary()      { return Dictionary      },
 
-    current_params()     { return this.$route.query },
-    current_scope_info() { return this.config.scope_info[this.zip_dl_scope_key] },
+    current_params()             { return this.$route.query                             },
+    current_zip_dl_scope_info()  { return this.config.scope_info[this.zip_dl_scope_key] },
+    current_zip_dl_format_info() { return ZipDlFormatInfo.fetch(this.zip_dl_format_key) },
+    current_asdf_info()          { return AsdfInfo.fetch(this.asdf_key)                 },
+    current_body_encode_info()   { return BodyEncodeInfo.fetch(this.body_encode)        },
 
     //////////////////////////////////////////////////////////////////////////////// for ls_support
     ls_storage_key() {

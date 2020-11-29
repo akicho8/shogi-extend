@@ -38,6 +38,7 @@ module Swars
 
       # 1回目
       record = zip_dl_cop.oldest_log_create       # 一番古いもの1件ダウンロードしたことにする
+      assert { zip_dl_cop.zip_filename == "shogiwars-alice-2-20000101000002-kif-UTF-8.zip" } # 現在日時ではなく battled_at からファイル名を作っている
       assert { record.user == current_user      } # ログインしている人
       assert { record.swars_user == user1       } # 対象者
       assert { record.dl_count == 1             } # 1件だけ
@@ -61,20 +62,8 @@ module Swars
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> F
+# >> .
 # >> 
-# >> Failures:
-# >> 
-# >>   1) Swars::Battle works
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:36:in `block (2 levels) in <module:Swars>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >> 
-# >> Finished in 1.97 seconds (files took 2.44 seconds to load)
-# >> 1 example, 1 failure
-# >> 
-# >> Failed examples:
-# >> 
-# >> rspec -:15 # Swars::Battle works
+# >> Finished in 2.08 seconds (files took 2.22 seconds to load)
+# >> 1 example, 0 failures
 # >> 

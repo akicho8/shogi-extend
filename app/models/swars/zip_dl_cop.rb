@@ -35,7 +35,8 @@ module Swars
         :zip_dl_scope_key  => "zdsk_inherit",
         :zip_dl_format_key => "kif",
         :zip_dl_max        => AppConfig[:zip_dl_max_default],
-        :body_encode        => "UTF-8",
+        :asdf_key          => "date",
+        :body_encode       => "UTF-8",
       }
 
       if current_user
@@ -65,7 +66,14 @@ module Swars
       io = Zip::OutputStream.write_buffer do |zos|
         zip_dl_scope.each do |battle|
           if str = battle.to_xxx(kifu_format_info.key)
-            zos.put_next_entry("#{swars_user.key}/#{battle.key}.#{kifu_format_info.key}")
+            path = []
+            path << swars_user.key
+            if asdf_key == :date
+              path << battle.battled_at.strftime("%Y-%m-%d")
+            end
+            path << "#{battle.key}.#{kifu_format_info.key}"
+            path = path.join("/")
+            zos.put_next_entry(path)
             if current_body_encode == "Shift_JIS"
               str = str.encode(current_body_encode)
             end
@@ -83,12 +91,13 @@ module Swars
       io
     end
 
+    # 何度DLしても同じデータならファイル名は同じになるようにしている
     def zip_filename
       parts = []
       parts << "shogiwars"
       parts << swars_user.key
       parts << zip_dl_scope.count
-      parts << Time.current.strftime("%Y%m%d%H%M%S")
+      parts << (zip_dl_scope.to_a.collect(&:battled_at).max || Time.current).strftime("%Y%m%d%H%M%S")
       parts << kifu_format_info.key
       parts << current_body_encode
       str = parts.compact.join("-") + ".zip"
@@ -174,6 +183,10 @@ module Swars
 
     def current_index_scope
       params[:current_index_scope] or raise ArgumentError
+    end
+
+    def asdf_key
+      (params[:asdf_key].presence || "date").to_sym
     end
   end
 end
