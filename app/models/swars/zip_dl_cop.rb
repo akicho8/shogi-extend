@@ -35,7 +35,7 @@ module Swars
         :zip_dl_scope_key  => "zdsk_inherit",
         :zip_dl_format_key => "kif",
         :zip_dl_max        => AppConfig[:zip_dl_max_default],
-        :asdf_key          => "date",
+        :zip_dl_structure_key          => "date",
         :body_encode       => "UTF-8",
       }
 
@@ -68,7 +68,7 @@ module Swars
           if str = battle.to_xxx(kifu_format_info.key)
             path = []
             path << swars_user.key
-            if asdf_key == :date
+            if zip_dl_structure_key == :date
               path << battle.battled_at.strftime("%Y-%m-%d")
             end
             path << "#{battle.key}.#{kifu_format_info.key}"
@@ -185,8 +185,8 @@ module Swars
       params[:current_index_scope] or raise ArgumentError
     end
 
-    def asdf_key
-      (params[:asdf_key].presence || "date").to_sym
+    def zip_dl_structure_key
+      (params[:zip_dl_structure_key].presence || "date").to_sym
     end
   end
 end

@@ -47,9 +47,9 @@
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')")   1
         b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
 
-      b-field(label="ZIPの構造" custom-class="is-small" :message="current_asdf_info.message")
-        template(v-for="e in AsdfInfo.values")
-          b-radio-button(size="is-small" v-model="asdf_key" :native-value="e.key" @input="asdf_key_change_handle")
+      b-field(label="ZIPの構造" custom-class="is-small" :message="current_zip_dl_structure_info.message")
+        template(v-for="e in ZipDlStructureInfo.values")
+          b-radio-button(size="is-small" v-model="zip_dl_structure_key" :native-value="e.key" @input="zip_dl_structure_key_change_handle")
             | {{e.name}}
       hr
 
@@ -103,7 +103,7 @@ class BodyEncodeInfo extends MemoryRecord {
   }
 }
 
-class AsdfInfo extends MemoryRecord {
+class ZipDlStructureInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "date", name: "対局日毎",   message: "「ウォーズID/2020-01-01/ファイル」のような構造で格納する", },
@@ -122,7 +122,7 @@ export default {
       zip_dl_format_key: null,
       body_encode: null,
       zip_dl_max: null,
-      asdf_key: null,
+      zip_dl_structure_key: null,
 
       config: null,
       loading_p: false,
@@ -187,7 +187,7 @@ export default {
         this.toast_ok("ShogiGUI で連続棋譜解析する場合はこっち")
       }
     },
-    asdf_key_change_handle(v) {
+    zip_dl_structure_key_change_handle(v) {
       this.sound_play("click")
       this.talk(v)
       // if (v === "Shift_JIS" && false) {
@@ -208,7 +208,7 @@ export default {
         zip_dl_scope_key:  this.zip_dl_scope_key,
         zip_dl_format_key: this.zip_dl_format_key,
         zip_dl_max:        this.zip_dl_max,
-        asdf_key:          this.asdf_key,
+        zip_dl_structure_key:          this.zip_dl_structure_key,
         body_encode:       this.body_encode,
       }
 
@@ -269,13 +269,13 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
     ZipDlFormatInfo() { return ZipDlFormatInfo },
     BodyEncodeInfo()  { return BodyEncodeInfo  },
-    AsdfInfo()        { return AsdfInfo        },
+    ZipDlStructureInfo()        { return ZipDlStructureInfo        },
     Dictionary()      { return Dictionary      },
 
     current_params()             { return this.$route.query                             },
     current_zip_dl_scope_info()  { return this.config.scope_info[this.zip_dl_scope_key] },
     current_zip_dl_format_info() { return ZipDlFormatInfo.fetch(this.zip_dl_format_key) },
-    current_asdf_info()          { return AsdfInfo.fetch(this.asdf_key)                 },
+    current_zip_dl_structure_info()          { return ZipDlStructureInfo.fetch(this.zip_dl_structure_key)                 },
     current_body_encode_info()   { return BodyEncodeInfo.fetch(this.body_encode)        },
 
     //////////////////////////////////////////////////////////////////////////////// for ls_support
