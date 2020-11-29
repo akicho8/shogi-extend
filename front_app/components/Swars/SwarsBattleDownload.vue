@@ -97,8 +97,8 @@ class ZipDlFormatInfo extends MemoryRecord {
 class BodyEncodeInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "UTF-8",     message: "一般的な文字コード",                                            },
-      { key: "Shift_JIS", message: "一部の古いWindowsアプリでは Shift_JIS しか対応していない場合がある", },
+      { key: "UTF-8",     message: "一般的な文字コード",                                         },
+      { key: "Shift_JIS", message: "ShogiGUIでは常にこちらで、激指で連続棋譜解析するときもこちら", },
     ]
   }
 }
@@ -175,24 +175,21 @@ export default {
     },
     zip_dl_format_key_change_handle(v) {
       this.sound_play("click")
-      this.talk(v)
+      this.talk(this.current_zip_dl_format_info.name)
       if (v === "sfen" && false) {
         this.toast_ok("よくわからない場合は KIF にしてください")
       }
     },
     body_encode_change_handle(v) {
       this.sound_play("click")
-      this.talk(v)
+      this.talk(this.current_body_encode_info.name)
       if (v === "Shift_JIS" && false) {
         this.toast_ok("ShogiGUI で連続棋譜解析する場合はこっち")
       }
     },
     zip_dl_structure_key_change_handle(v) {
       this.sound_play("click")
-      this.talk(v)
-      // if (v === "Shift_JIS" && false) {
-      //   this.toast_ok("ShogiGUI で連続棋譜解析する場合はこっち")
-      // }
+      this.talk(this.current_zip_dl_structure_info.name)
     },
 
     download_handle() {
