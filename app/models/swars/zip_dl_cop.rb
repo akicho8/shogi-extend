@@ -63,7 +63,19 @@ module Swars
     def to_zip
       t = Time.current
 
-      io = Zip::OutputStream.write_buffer do |zos|
+      io = to_zip_output_stream
+
+      sec = "%.2f s" % (Time.current - t)
+      SlackAgent.message_send(key: "ZIP #{sec}", body: zip_filename)
+
+      # 前回から続きのスコープが変化すると zip_filename にも影響するので最後の最後に呼ぶ
+      swars_zip_dl_logs_create!
+
+      io
+    end
+
+    def to_zip_output_stream
+      Zip::OutputStream.write_buffer do |zos|
         zip_dl_scope.each do |battle|
           if str = battle.to_xxx(kifu_format_info.key)
             path = []
@@ -73,10 +85,10 @@ module Swars
             end
             path << "#{battle.key}.#{kifu_format_info.key}"
             path = path.join("/")
-            time = Zip::DOSTime.from_time(battle.battled_at)
 
-            zip_entry = Zip::Entry.new(zos, path, nil, nil, nil, nil, nil, nil, time)
-            zos.put_next_entry(zip_entry)
+            entry = Zip::Entry.new(zos, path)
+            entry.time = Zip::DOSTime.from_time(battle.battled_at)
+            zos.put_next_entry(entry)
 
             if current_body_encode == "Shift_JIS"
               str = str.encode(current_body_encode)
@@ -85,14 +97,6 @@ module Swars
           end
         end
       end
-
-      sec = "%.2f s" % (Time.current - t)
-      SlackAgent.message_send(key: "ZIP #{sec}", body: zip_filename)
-
-      # 前回から続きのスコープが変化すると zip_filename にも影響するので最後の最後に呼ぶ
-      swars_zip_dl_logs_create!
-
-      io
     end
 
     # 何度DLしても同じデータならファイル名は同じになるようにしている
