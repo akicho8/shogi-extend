@@ -16,7 +16,10 @@ module Api
 
           zip_buffer = Zip::OutputStream.write_buffer do |zos|
             zip_dl_scope.each do |record|
-              zos.put_next_entry("#{record.lineage_key}/#{record.id}_#{record.title}.kif")
+              path = "#{record.lineage_key}/#{record.id}_#{record.title}.kif"
+              time = Zip::DOSTime.from_time(record.created_at)
+              zip_entry = Zip::Entry.new(zos, path, nil, nil, nil, nil, nil, nil, time)
+              zos.put_next_entry(zip_entry)
 
               str = record.to_kif
               if current_body_encode == "Shift_JIS"

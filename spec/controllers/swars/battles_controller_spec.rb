@@ -105,6 +105,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
         Zip::InputStream.open(StringIO.new(response.body)) do |zis|
           entry = zis.get_next_entry
           assert { entry.name == "devuser1/2020-01-01/devuser1-Yamada_Taro-20200101_123401.kif" }
+          p entry.
           bin = zis.read
           assert { NKF.guess(bin).to_s == body_encode }
         end

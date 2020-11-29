@@ -73,7 +73,11 @@ module Swars
             end
             path << "#{battle.key}.#{kifu_format_info.key}"
             path = path.join("/")
-            zos.put_next_entry(path)
+            time = Zip::DOSTime.from_time(battle.battled_at)
+
+            zip_entry = Zip::Entry.new(zos, path, nil, nil, nil, nil, nil, nil, time)
+            zos.put_next_entry(zip_entry)
+
             if current_body_encode == "Shift_JIS"
               str = str.encode(current_body_encode)
             end

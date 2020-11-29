@@ -78,7 +78,11 @@ module Swars
         zip_dl_scope.each do |battle|
           if str = battle.to_xxx(kifu_format_info.key)
             body_encodes.each do |encode|
-              zos.put_next_entry("#{target_user.key}/#{encode}/#{battle.key}.#{kifu_format_info.key}")
+              path = "#{target_user.key}/#{encode}/#{battle.key}.#{kifu_format_info.key}"
+              time = Zip::DOSTime.from_time(battle.battled_at)
+              zip_entry = Zip::Entry.new(zos, path, nil, nil, nil, nil, nil, nil, time)
+              zos.put_next_entry(zip_entry)
+
               if encode == "Shift_JIS"
                 str = str.encode(encode)
               end
