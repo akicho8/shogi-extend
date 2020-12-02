@@ -37,47 +37,53 @@ module Swars
     end
 
     describe "切断マン" do
-      before do
+      def test1
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597]], final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
+        @black.memberships.first.first_matched_medal_key_and_message
       end
 
       it do
-        assert { @black.memberships.first.first_matched_medal.key == :"切断マン" }
+        test1                   # => [:切断マン, "悔しかったので切断した"]
+        assert { test1 == [:切断マン, "悔しかったので切断した"] }
       end
     end
 
     describe "絶対投了しないマン" do
-      before do
+      def test1
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597]], final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
+        @black.memberships.first.first_matched_medal_key_and_message
       end
 
       it do
-        assert { @black.memberships.first.first_matched_medal.key == :"絶対投了しないマン" }
+        test1                   # => [:絶対投了しないマン, "悔しかったので時間切れになるまで9分59秒放置した"]
+        assert { test1 == [:絶対投了しないマン, "悔しかったので時間切れになるまで9分59秒放置した"] }
       end
     end
 
     describe "1手詰じらしマン" do
-      before do
+      def test1
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 1]], final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
+        @black.memberships.first.first_matched_medal_key_and_message
       end
 
       it do
-        assert { @black.memberships.first.first_matched_medal.key == :"1手詰じらしマン" }
+        test1                   # => [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"]
+        assert { test1 == [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"] }
       end
     end
 
@@ -91,13 +97,14 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-
-        @black.memberships.first.first_matched_medal.key
+        @black.memberships.first.first_matched_medal_key_and_message
       end
 
       it do
-        assert { test(2.5) == :"長考マン"   }
-        assert { test(3.0) == :"大長考マン" }
+        test(2.5)             # => [:長考マン, "考えすぎて負けた。ちなみに一番長かったのは2分30秒"]
+        test(3.0)             # => [:大長考マン, "対局放棄に近い、ありえないほどの長考をした。ちなみに3分"]
+        assert { test(2.5) == [:長考マン, "考えすぎて負けた。ちなみに一番長かったのは2分30秒"] }
+        assert { test(3.0) == [:大長考マン, "対局放棄に近い、ありえないほどの長考をした。ちなみに3分"] }
       end
     end
 
@@ -113,12 +120,14 @@ module Swars
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
-        @black.memberships.first.first_matched_medal.key
+        @black.memberships.first.first_matched_medal_key_and_message
       end
 
       it do
-        assert { test(4) == :"ただの千日手" }
-        assert { test(3) == :"開幕千日手"   }
+        test(4)                 # => [:ただの千日手, "千日手"]
+        test(3)                 # => [:開幕千日手, "最初から千日手にした"]
+        assert { test(4) == [:ただの千日手, "千日手"]             }
+        assert { test(3) == [:開幕千日手, "最初から千日手にした"] }
       end
     end
 
@@ -130,18 +139,19 @@ module Swars
         end
       end
 
-      before do
+      def test1
         @black = User.create!
         @white = User.create!
-
         Swars::Battle.create!(csa_seq: csa_seq_generate(20), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
+        @black.memberships.first.first_matched_medal_key_and_message
       end
 
       it do
-        assert { @black.memberships.first.first_matched_medal.key == :"切れ負けマン" }
+        test1                   # => [:切れ負けマン, "時間切れで負けた"]
+        assert { test1 == [:切れ負けマン, "時間切れで負けた"] }
       end
     end
 
@@ -160,11 +170,12 @@ module Swars
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        @black.memberships.first.first_matched_medal.key
+        @black.memberships.first.first_matched_medal_key_and_message
       end
 
       it do
-        assert { test(20) == :"棋神マン" }
+        test(20)                # => [:棋神マン, "棋神召喚疑惑あり"]
+        assert { test(20) == [:棋神マン, "棋神召喚疑惑あり"] }
       end
     end
 
@@ -232,6 +243,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .........
 # >> 
-# >> Finished in 10.85 seconds (files took 2.31 seconds to load)
+# >> Finished in 12.15 seconds (files took 2.68 seconds to load)
 # >> 9 examples, 0 failures
 # >> 

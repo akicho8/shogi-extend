@@ -181,6 +181,40 @@ module Swars
         end
         info.medal_params_build(self)
       end
+
+      def first_matched_medal_key_and_message
+        [
+          first_matched_medal.key,
+          medal_params[:message],
+        ]
+      end
+
+      def think_last_s
+        seconds_to_human(think_last)
+      end
+
+      def think_max_s
+        seconds_to_human(think_max)
+      end
+
+      private
+
+      def seconds_to_human(seconds)
+        seconds ||= 0
+        if seconds.zero?
+          "0秒"
+        else
+          m, s = seconds.divmod(60)
+          a = []
+          if m.positive?
+            a << "#{m}分"
+          end
+          if s.positive?
+            a << "#{s}秒"
+          end
+          a.join
+        end
+      end
     end
 
     concerning :SummaryMethods do
