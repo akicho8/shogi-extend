@@ -28,11 +28,13 @@
     "js-memory-record": "^0.0.16",
     "lodash": "^4.17.20",
     "lzma": "^2.3.2",
+    "node-sass": "^4.14.1",
     "nuxt": "^2.14.7",
     "nuxt-buefy": "^0.4.4",
     "pug": "^3.0.0",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
+    "sass-loader": "^10.0.3",
     "secure-ls": "^1.2.6",
     "shogi-player": "^0.0.218",
     "striptags": "^3.1.1",
@@ -44,10 +46,7 @@
     "@nuxtjs/style-resources": "^1.0.0",
     "@vue/test-utils": "^1.1.0",
     "babel-jest": "^26.6.0",
-    "fibers": "^5.0.0",
     "jest": "^26.6.0",
-    "sass": "^1.30.0",
-    "sass-loader": "^10.1.0",
     "vue-jest": "^4.0.0-0"
   }
 }
