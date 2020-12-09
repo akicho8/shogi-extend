@@ -157,14 +157,6 @@ const config = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    // client only
-    "~/plugins/mixin_mod.client.js",
-    "~/plugins/chart_init.client.js",
-    "~/plugins/local_storage_persistedstate.client.js",
-
-    // 両方
-    "~/plugins/axios_mod.js",
-    "~/plugins/universal.js",
   ],
   /*
   ** Auto import components
@@ -175,18 +167,6 @@ const config = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // https://github.com/nuxt-community/analytics-module
-    [
-      '@nuxtjs/google-analytics',
-      {
-        id: 'UA-109851345-1',
-        // // コメントアウトすると開発環境で確認できる
-        // debug: {
-        //   enabled: true,
-        //   sendHitTask: true,
-        // },
-      },
-    ],
   ],
   /*
   ** Nuxt.js modules
@@ -257,7 +237,7 @@ const config = {
     },
 
     // https://ja.nuxtjs.org/api/configuration-build/#transpile
-    transpile: ["shogi-player"], // 外側にあるファイルは import 文を require に変換しないと node でパースできない
+    // transpile: ["shogi-player"], // 外側にあるファイルは import 文を require に変換しないと node でパースできない
 
     // オーディオファイルをロードするように Webpack の設定を拡張するには？
     // https://ja.nuxtjs.org/faq/webpack-audio-files/
