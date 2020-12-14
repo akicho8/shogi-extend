@@ -5,7 +5,7 @@ components(:is="tag" v-bind="$attrs" v-on="$listeners" :target="target_default" 
 
 <script>
 export default {
-  name: "NormalLink",
+  name: "ExternalLink",
   props: {
     tag:  { type: String,  default: "a",   },
     beep: { type: Boolean, default: false, },
@@ -21,5 +21,5 @@ export default {
 </script>
 
 <style lang="sass">
-.NormalLink
+.ExternalLink
 </style>
