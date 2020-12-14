@@ -152,8 +152,8 @@ import _ from "lodash"
 import dayjs from "dayjs"
 
 import MemoryRecord from 'js-memory-record'
-import Soldier      from "shogi-player/src/soldier.js"
-import Place        from "shogi-player/src/place.js"
+import Soldier      from "shogi-player/components/models/soldier.js"
+import Place        from "shogi-player/components/models/place.js"
 
 import { isMobile        } from "@/components/models/isMobile.js"
 import { IntervalCounter } from '@/components/models/IntervalCounter.js'

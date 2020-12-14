@@ -1,6 +1,6 @@
 // 汎用コード
 
-import SfenParser from "shogi-player/src/sfen_parser"
+import SfenParser from "shogi-player/components/models/sfen_parser"
 
 const strip_tags = require('striptags')
 

@@ -13,7 +13,7 @@ import mp3_bubuu         from "@/static/sound_effect/soundeffect_lab/bubuu.mp3"
 import mp3_draw          from "@/static/sound_effect/soundeffect_lab/stupid5.mp3"
 import mp3_new_challenge from "@/static/sound_effect/soundeffect_lab/decision5.mp3"
 import wav_pon           from "@/assets/UniversalSoundFX/CARTOON/POP_Mouth_mono.wav"
-import wav_piece_sound   from "shogi-player/src/assets/Universal_Sound_FX/TABLE_TENNIS_Racket_Ball_Hit_07_Hard_mono.wav"
+import wav_piece_sound   from "shogi-player/assets/Universal_Sound_FX/TABLE_TENNIS_Racket_Ball_Hit_07_Hard_mono.wav"
 
 import MemoryRecord from 'js-memory-record'
 

@@ -7,7 +7,7 @@ ShogiPlayer(
 </template>
 
 <script>
-import ShogiPlayer from "shogi-player/src/components/ShogiPlayer.vue"
+import ShogiPlayer from "shogi-player/components/ShogiPlayer.vue"
 
 export default {
   name: "MyShogiPlayer",
@@ -30,8 +30,8 @@ export default {
 // TODO: ShogiPlayer.sass からの相対パスで画像が参照できるはずだけど謎のエラーがでる。
 // なので仕方なく $sp_assets_dir にここからの相対パスを設定して向こう側で参照するようにしている。
 // どうにかしたい。
-$sp_assets_dir: "../node_modules/shogi-player/src/assets"
-@import "../node_modules/shogi-player/src/components/ShogiPlayer.sass"
+$sp_assets_dir: "../node_modules/shogi-player/assets"
+@import "../node_modules/shogi-player/components/ShogiPlayer.sass"
 
 // bulma の .table のなかにあると td の padding が影響してしまう
 .table

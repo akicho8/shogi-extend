@@ -36,7 +36,7 @@
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^10.0.3",
     "secure-ls": "^1.2.6",
-    "shogi-player": "^0.0.218",
+    "shogi-player": "/Users/ikeda/src/shogi-player",
     "striptags": "^3.1.1",
     "url-safe-base64": "^1.1.1",
     "vuex-persistedstate": "^3.1.0"

@@ -141,7 +141,6 @@
 
 <script>
 import _ from "lodash"
-// import shogi_player from "shogi-player/src/components/ShogiPlayer.vue"
 
 // static
 import { CpuBrainInfo    } from "./models/CpuBrainInfo.js"
@@ -149,8 +148,8 @@ import { CpuStrategyInfo } from "./models/CpuStrategyInfo.js"
 import { CpuPresetInfo   } from "./models/CpuPresetInfo.js"
 import { BoardStyleInfo  } from "./models/BoardStyleInfo.js"
 
-import PresetInfo      from "shogi-player/src/preset_info.js"
-import Location        from "shogi-player/src/location.js"
+import PresetInfo      from "shogi-player/components/models/preset_info.js"
+import Location        from "shogi-player/components/models/location.js"
 
 import { cpu_battle_force_chart } from "./cpu_battle_force_chart.js"
 
