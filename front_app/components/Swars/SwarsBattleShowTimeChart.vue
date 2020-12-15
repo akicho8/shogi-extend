@@ -1,13 +1,15 @@
 <template lang="pug">
 .SwarsBattleShowTimeChart
   canvas#main_canvas.is-unselectable(ref="main_canvas")
-  .has-text-centered.mt-4
-    b-switch(v-model="zoom_p")
-      b-icon(icon="magnify-plus-outline")
+  b-field.zoom_button(position="is-centered")
+    b-radio-button(v-model="zoom_p" :native-value="true" size="is-small") 拡大
+    b-radio-button(v-model="zoom_p" :native-value="false" size="is-small") 縮小
 </template>
 
 <script>
 const TOOLTIP_ENABLE = true
+// const TICKS_FONT_COLOR = "rgba(255,255,255,0.75)"
+const TICKS_FONT_COLOR = "rgba(0, 0, 0, 0.75)"
 
 const CHART_CONFIG_DEFAULT = {
   type: "line",
@@ -34,6 +36,15 @@ const CHART_CONFIG_DEFAULT = {
       text: "消費時間",
     },
 
+    layout: {
+      padding: {
+        left:   25,
+        right:  30,
+        top:    50,
+        bottom: 25,
+      },
+    },
+
     // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
     // https://qiita.com/muuuuminn/items/2e977add604dcec920d3
     scales: {
@@ -56,6 +67,7 @@ const CHART_CONFIG_DEFAULT = {
           maxRotation: 0,   // 表示角度水平
           maxTicksLimit: 5, // 最大横N個の目盛りにする
           // callback(value, index, values) { return value + "" }, // 単位をつける
+          fontColor: TICKS_FONT_COLOR,
         },
         gridLines: {
           display: false,    // x軸の中間の縦線
@@ -63,6 +75,7 @@ const CHART_CONFIG_DEFAULT = {
       }],
       yAxes: [{
         ticks: {
+          fontColor: TICKS_FONT_COLOR,
           reverse: false,       // 反転する？ (this.flip を 外から設定して判定する)
 
           stepSize: 30,         // N秒毎の表示
@@ -356,6 +369,8 @@ export default {
   created() {
     this.chart_setup(CHART_CONFIG_DEFAULT)
     this._chart_config.data = this.time_chart_params
+    // this._chart_config.my_custom_background_color = "rgba(0, 0, 0, 0.75)"
+    // this._chart_config.my_custom_background_color = "rgba(#C6E1B8, 0.1)"
 
     this.chart_flip_set()
 
@@ -559,4 +574,7 @@ export default {
 
 <style lang="sass">
 .SwarsBattleShowTimeChart
+  .zoom_button
+    padding: 2rem
 </style>
+
