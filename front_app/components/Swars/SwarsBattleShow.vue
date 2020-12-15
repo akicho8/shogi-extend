@@ -52,9 +52,10 @@
 
       MainSection
         .container.is-fluid
-          .columns.is-multiline.is-mobile
-            .column.is-half-desktop.is_left_column
+          .columns.is-centered
+            .column.is-half-desktop
               MyShogiPlayer(
+                sp_layout="is_horizontal"
                 :run_mode.sync="run_mode"
                 :debug_mode="false"
                 :start_turn="start_turn"
@@ -63,16 +64,20 @@
                 :slider_show="true"
                 :sfen_show="false"
                 :controller_show="true"
-                :theme="'real'"
-                :size="'medium'"
                 :setting_button_show="false"
                 :flip.sync="new_flip"
                 :player_info="player_info"
                 @update:start_turn="real_turn_set"
                 ref="main_sp"
               )
+              .is-flex.is-justify-content-center
+                PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
+                KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
+                KifCopyButton(@click="kifu_copy_handle")
+                TweetButton(:body="permalink_url")
 
-            .column.is-half-desktop.is_right_column
+          .columns.is-centered
+            .column.is-half-desktop
               SwarsBattleShowTimeChart(
                 v-if="record && time_chart_params"
                 :record="record"
@@ -82,14 +87,10 @@
                 :flip="new_flip"
                 ref="SwarsBattleShowTimeChart"
               )
-          .columns
-            .column.is-half-desktop.is_buttons_column
-              .buttons.is-centered
-                PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
-                KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
-                KifCopyButton(@click="kifu_copy_handle")
-                TweetButton(:body="permalink_url")
-                //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
+          //- .columns
+          //-   .column.is-half-desktop.is_buttons_column
+          //-     .buttons.is-centered
+          //-       //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
 
           //-   DebugPre
           //-     | start_turn: {{start_turn}}
