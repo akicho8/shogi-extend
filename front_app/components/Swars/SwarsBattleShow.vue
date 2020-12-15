@@ -37,72 +37,64 @@
               b-menu-item(label="ぴよ将棋" @click="short_url_copy('piyo_shogi')")
               b-menu-item(label="KENTO"    @click="short_url_copy('kento')")
 
-      MainNavbar(wrapper-class="container is-fluid")
-        template(slot="brand")
-          b-navbar-item(@click="back_handle")
-            b-icon(icon="chevron-left")
-          b-navbar-item.has-text-weight-bold.is-size-7-mobile(
-            tag="nuxt-link"
-            :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}"
-            )
+      PageCloseButton(@click="back_handle" position="is_absolute")
+      b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text" size="is-medium")
+
+      .FirstPage
+        .MyShogiPlayerWrap
+          .battle_title.is-inline-block.has-text-centered.is-size-7-mobile.has-text-weight-bold
             | {{record.title}}
-        template(slot="end")
-          b-navbar-item(@click="sidebar_toggle")
-            b-icon(icon="menu")
+          MyShogiPlayer.is_sp_size_large(
+            sp_layer="is_layer_off"
+            sp_layout="is_horizontal"
+            sp_fullheight="is_fullheight_off"
+            :run_mode.sync="run_mode"
+            :debug_mode="false"
+            :start_turn="start_turn"
+            :kifu_body="record.sfen_body"
+            :key_event_capture="true"
+            :slider_show="true"
+            :sfen_show="false"
+            :controller_show="true"
+            :setting_button_show="false"
+            :flip.sync="new_flip"
+            :player_info="player_info"
+            @update:start_turn="real_turn_set"
+            ref="main_sp"
+          )
+        .buttons.is-centered.app_buttons
+          PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
+          KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
+          KifCopyButton(@click="kifu_copy_handle")
+          TweetButton(:body="permalink_url")
 
-      MainSection
-        .container.is-fluid
-          .columns.is-centered
-            .column.is-half-desktop
-              MyShogiPlayer(
-                sp_layout="is_horizontal"
-                :run_mode.sync="run_mode"
-                :debug_mode="false"
-                :start_turn="start_turn"
-                :kifu_body="record.sfen_body"
-                :key_event_capture="true"
-                :slider_show="true"
-                :sfen_show="false"
-                :controller_show="true"
-                :setting_button_show="false"
-                :flip.sync="new_flip"
-                :player_info="player_info"
-                @update:start_turn="real_turn_set"
-                ref="main_sp"
-              )
-              .is-flex.is-justify-content-center
-                PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
-                KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
-                KifCopyButton(@click="kifu_copy_handle")
-                TweetButton(:body="permalink_url")
+      //- .columns.is-centered
+      //-   .column.is-half-desktop
+      SwarsBattleShowTimeChart(
+        v-if="record && time_chart_params"
+        :record="record"
+        :time_chart_params="time_chart_params"
+        @update:turn="turn_set_from_chart"
+        :chart_turn="new_turn"
+        :flip="new_flip"
+        ref="SwarsBattleShowTimeChart"
+      )
+      //- .columns
+      //-   .column.is-half-desktop.is_buttons_column
+      //-     .buttons.is-centered
+      //-       //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
 
-          .columns.is-centered
-            .column.is-half-desktop
-              SwarsBattleShowTimeChart(
-                v-if="record && time_chart_params"
-                :record="record"
-                :time_chart_params="time_chart_params"
-                @update:turn="turn_set_from_chart"
-                :chart_turn="new_turn"
-                :flip="new_flip"
-                ref="SwarsBattleShowTimeChart"
-              )
-          //- .columns
-          //-   .column.is-half-desktop.is_buttons_column
-          //-     .buttons.is-centered
-          //-       //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
-
-          //-   DebugPre
-          //-     | start_turn: {{start_turn}}
-          //-     | new_turn: {{new_turn}}
-          //-     | record.turn: {{record.turn}}
-          //-     | record.display_turn: {{record.display_turn}}
-          //-     | record.critical_turn: {{record.critical_turn}}
-          //-     | record.outbreak_turn: {{record.outbreak_turn}}
-          //-     | record.turn_max: {{record.turn_max}}
-          //-     | record.turn: {{record.turn}}
-          //-     | new_flip: {{new_flip}}
-  DebugPre {{record}}
+      //-   DebugPre
+      //-     | start_turn: {{start_turn}}
+      //-     | new_turn: {{new_turn}}
+      //-     | record.turn: {{record.turn}}
+      //-     | record.display_turn: {{record.display_turn}}
+      //-     | record.critical_turn: {{record.critical_turn}}
+      //-     | record.outbreak_turn: {{record.outbreak_turn}}
+      //-     | record.turn_max: {{record.turn_max}}
+      //-     | record.turn: {{record.turn}}
+      //-     | new_flip: {{new_flip}}
+  //- DebugPre {{record}}
 </template>
 
 <script>
@@ -324,6 +316,7 @@ export default {
     },
 
     player_info() {
+      return null
       return this.record.player_info
     },
 
@@ -392,23 +385,55 @@ export default {
 </script>
 
 <style lang="sass">
+$button_z_index: 2
+
 .SwarsBattleShow-Sidebar
   .menu-label:not(:first-child)
     margin-top: 2em
 
 .SwarsBattleShow
-  .container.is-fluid
-    padding: 0
-    +widescreen
-      padding-left: 2rem
-      padding-right: 2rem
+  //////////////////////////////////////////////////////////////////////////////// ヘッダー
+  .delete
+    z-index: $button_z_index
 
-  .is_left_column
-    padding: 0
+  .sidebar_toggle_button
+    position: absolute
+    top: 0
+    right: 0
+    z-index: $button_z_index
 
-  .is_right_column
+  //////////////////////////////////////////////////////////////////////////////// 1ページ目
+  .FirstPage
+    background-color: #C6E1B8
+
+  //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の上
+  .battle_title
+    border-radius: 3px
+    padding: 0.5rem
+    background-color: rgba(255, 255, 255, 0.75)
+
+  //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
+  .TurnShowOrEdit
+    padding: 0.5rem ! important
+
+  .MyShogiPlayerWrap
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    height: 100vh               // app_buttons を画面外にする
+
+  .MyShogiPlayer
+    width: 100%
+    +tablet
+      width: calc(100vmin * 0.65)
     +desktop
-      margin-top: 0.8rem
+      width: calc(100vmin * 0.75)
+
+  //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の下のボタンたち (画面外)
+  .app_buttons
+    margin: 0
+    padding-bottom: 2rem
 
 .STAGE-development
   .SwarsBattleShow
