@@ -1,6 +1,7 @@
 <template lang="pug">
-.PageCloseButton.delete.is-medium.is-clickable(v-bind="$attrs" v-on="$listeners" :class="position")
-  slot
+.PageCloseButton.is-clickable(v-bind="$attrs" v-on="$listeners" :class="position")
+  .delete.is-medium
+    slot
 </template>
 
 <script>
@@ -18,11 +19,11 @@ export default {
     position: absolute
   &.is_fixed
     position: fixed
-  top: 0.6rem
-  left: 0.6rem
+  top: 0
+  left: 0
+  padding: 0.5rem
 
 .STAGE-development
   .PageCloseButton
-    .delete
-      border: 1px dashed change_color($primary, $alpha: 0.5)
+    border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
