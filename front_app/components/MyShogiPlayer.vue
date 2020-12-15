@@ -37,7 +37,7 @@ $sp_assets_dir: "../node_modules/shogi-player/assets"
   // --sp_body_width: 35vw
   --sp_dimension: 9
   // 背景
-  --sp_ground_color: #C6E1B8
+  --sp_ground_color: transparent
   --sp_ground_image: none
   --sp_ground_blur: 0
   --sp_ground_grayscale: 0
