@@ -8,8 +8,12 @@ window.Chart = Chart
 // http://wordpress.ideacompo.com/?p=12888
 Chart.plugins.register({
   beforeDraw(c) {
+    let color = "rgb(255, 255, 255)"
+    if (c.config.my_custom_background_color) {
+      color = c.config.my_custom_background_color
+    }
     const ctx = c.chart.ctx
-    ctx.fillStyle = "rgba(255, 255, 255, 1)"
+    ctx.fillStyle = color
     ctx.fillRect(0, 0, c.chart.width, c.chart.height)
   }
 })
