@@ -40,11 +40,11 @@
       PageCloseButton(@click="back_handle" position="is_absolute")
       b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text" size="is-medium")
 
-      .FirstPage
+      .SpSection
         .MyShogiPlayerWrap
           .battle_title.is-inline-block.has-text-centered.is-size-7-mobile.has-text-weight-bold
             | {{record.title}}
-          MyShogiPlayer.is_sp_size_large(
+          MyShogiPlayer(
             sp_layer="is_layer_off"
             sp_layout="is_horizontal"
             sp_fullheight="is_fullheight_off"
@@ -403,7 +403,7 @@ $button_z_index: 2
     z-index: $button_z_index
 
   //////////////////////////////////////////////////////////////////////////////// 1ページ目
-  .FirstPage
+  .SpSection
     background-color: #C6E1B8
 
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の上
@@ -411,11 +411,9 @@ $button_z_index: 2
     border-radius: 3px
     padding: 0.5rem
     background-color: rgba(255, 255, 255, 0.75)
+    margin: 12px 0
 
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
-  .TurnShowOrEdit
-    padding: 0.5rem ! important
-
   .MyShogiPlayerWrap
     display: flex
     justify-content: center

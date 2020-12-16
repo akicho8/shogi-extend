@@ -1,6 +1,6 @@
 <template lang="pug">
 .XyMasterApp(:class="[mode, `current_rule_input_mode-${current_rule.input_mode}`]")
-  MainNavbar(v-if="mode === 'stop' || mode === 'goal'")
+  MainNavbar(v-if="mode === 'is_mode_stop' || mode === 'is_mode_goal'")
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'xy'}") 符号の鬼
@@ -21,17 +21,17 @@
       b-navbar-item(@click="rebuild_handle") リビルド
 
   MainSection(:class="mode")
-    template(v-if="mode === 'run' || mode === 'ready'")
+    template(v-if="mode === 'is_mode_run' || mode === 'is_mode_ready'")
       b-button.restart_button(@click="restart_handle" size="is-medium" icon-left="restart" type="is-text")
-      PageCloseButton(@click="stop_handle")
+      PageCloseButton(@click="stop_handle" position="is_absolute")
     .container
       .columns
         .column.is-paddingless
           .buttons.is-centered.mb-0
-            template(v-if="mode === 'stop' || mode === 'goal'")
+            template(v-if="mode === 'is_mode_stop' || mode === 'is_mode_goal'")
               button.button.is-primary(@click="start_handle") START
 
-            template(v-if="mode === 'stop' || mode === 'goal'")
+            template(v-if="mode === 'is_mode_stop' || mode === 'is_mode_goal'")
               b-dropdown.is-pulled-left(v-model="xy_rule_key" @click.native="sound_play('click')")
                 button.button(slot="trigger")
                   span {{current_rule.name}}
@@ -40,27 +40,14 @@
                   b-dropdown-item(:value="e.key") {{e.name}}
 
               b-button(@click="rule_display" icon-right="help")
-          .has-text-centered
-            .level_container(v-if="mode === 'goal' && false")
-              .level.is-mobile
-                .level-item.has-text-centered
-                  div
-                    p.heading
-                      b-icon(icon="checkbox-blank-circle-outline" type="is-info" size="is-small")
-                    p.title {{o_count}}
-                .level-item.has-text-centered
-                  div
-                    p.heading
-                      b-icon(icon="close" type="is-danger" size="is-small")
-                    p.title {{x_count}}
 
-            .tap_digits_container.is-unselectable(v-if="tap_method_p")
-              .value
-                | {{kanji_human}}
+          .FullScreen
+            .tap_digits_container.is-unselectable.has-text-centered(v-if="tap_method_p")
+              | {{kanji_human}}
 
             .shogi_player_container.is-unselectable
-              template(v-if="mode === 'ready'")
-                .countdown_wrap(@click.prevent.stop.capture)
+              template(v-if="mode === 'is_mode_ready'")
+                .countdown_wrap(@click.prevent.is_mode_stop.capture)
                   .countdown
                     | {{countdown}}
               MyShogiPlayer(
@@ -69,8 +56,6 @@
                 :summary_show="false"
                 :hidden_if_piece_stand_blank="true"
                 :setting_button_show="false"
-                :theme="'simple'"
-                :size="sp_size"
                 :flip="current_rule.flip"
                 :board_piece_back_user_class="board_piece_back_user_class"
                 :overlay_navi="false"
@@ -78,18 +63,17 @@
                 :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
               )
 
-            .time_container.is-unselectable
-              .fixed_font.is-size-2
-                | {{time_format}}
+            .time_container.is-unselectable.fixed_font.is-size-2
+              | {{time_format}}
 
-            template(v-if="mode === 'goal'")
-              .tweet_box_container
-                .box
-                  .summary
-                    | {{summary}}
-                  TweetButton.mt-2(:body="tweet_body")
+          template(v-if="mode === 'is_mode_goal'")
+            .tweet_box_container
+              .box
+                .summary
+                  | {{summary}}
+                TweetButton.mt-2(:body="tweet_body")
 
-        .column.is-5(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
+        .column.is-5(v-if="(mode === 'is_mode_stop' || mode === 'is_mode_goal') && xy_records_hash")
           b-field.xy_scope_info_field
             template(v-for="e in XyScopeInfo.values")
               b-radio-button(v-model="xy_scope_key" :native-value="e.key" @input="sound_play('click')")
@@ -117,7 +101,7 @@
           .has-text-centered-mobile
             b-switch(v-model="entry_name_unique" @input="sound_play('click')") プレイヤー別順位
 
-      .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
+      .columns.is-centered.chart_box_container(v-show="(mode === 'is_mode_stop' || mode === 'is_mode_goal')")
         .column
           .columns
             template(v-if="development_p")
@@ -189,7 +173,7 @@ export default {
   },
   data() {
     return {
-      mode: "stop",
+      mode: "is_mode_stop",
       countdown_counter:  null, // カウントダウン用カウンター
       before_place:       null, // 前のセル
       current_place:      null, // 今のセル
@@ -282,7 +266,7 @@ export default {
 
     // こっちは prevent.stop されてないので自分で呼ぶ
     board_cell_pointerdown_user_handle(place, event) {
-      if (this.mode === "run") {
+      if (this.mode === "is_mode_run") {
         if (this.tap_method_p) {
           this.input_valid(place.x, place.y)
         } else {
@@ -299,7 +283,7 @@ export default {
 
     board_piece_back_user_class(place) {
       if (!this.tap_method_p) {
-        if (this.mode === "run") {
+        if (this.mode === "is_mode_run") {
         }
       }
     },
@@ -363,7 +347,7 @@ export default {
 
     start_handle() {
       this.sound_play("click")
-      this.mode = "ready"
+      this.mode = "is_mode_ready"
       this.init_other_variables()
       this.latest_rule = this.current_rule
       this.talk_stop()
@@ -384,7 +368,7 @@ export default {
     },
 
     go_handle() {
-      this.mode = "run"
+      this.mode = "is_mode_run"
       this.interval_frame.start()
       this.place_next_set()
       this.sound_play("start")
@@ -393,7 +377,7 @@ export default {
 
     stop_handle() {
       this.sound_play("click")
-      this.mode = "stop"
+      this.mode = "is_mode_stop"
       this.timer_stop()
       this.interval_counter.stop()
     },
@@ -404,7 +388,7 @@ export default {
     },
 
     goal_handle() {
-      this.mode = "goal"
+      this.mode = "is_mode_goal"
       this.timer_stop()
       this.talk("おわりました")
 
@@ -492,7 +476,7 @@ export default {
     },
 
     keydown_handle_core(e) {
-      if (this.mode != "run") {
+      if (this.mode != "is_mode_run") {
         return
       }
       if (this.tap_method_p) {
@@ -523,7 +507,7 @@ export default {
         this.sound_play("o")
         this.o_count++
         this.goal_check()
-        if (this.mode === "run") {
+        if (this.mode === "is_mode_run") {
           this.place_next_set()
         }
       } else {
@@ -596,7 +580,7 @@ export default {
 
   computed: {
     sp_size() {
-      if (this.mode === "ready" || this.mode === "run") {
+      if (this.mode === "is_mode_ready" || this.mode === "is_mode_run") {
         if (!isMobile.any()) {
           return "large"
         }
@@ -732,7 +716,7 @@ export default {
     },
 
     kanji_human() {
-      if (this.mode === "run") {
+      if (this.mode === "is_mode_run") {
         if (this.current_place) {
           const place = Place.fetch([this.current_place.x, this.current_place.y])
           return place.kanji_human
@@ -761,83 +745,74 @@ export default {
 </script>
 
 <style lang="sass">
-$board_color: hsl(0, 0%, 60%)
-
 .XyMasterApp
   touch-action: manipulation
 
   .restart_button
-    position: fixed
+    position: absolute
     top: 0
     right: 0
 
-  .MainSection
-    +mobile
-      padding: 2.0rem 0.5rem
-      &.run, &.ready
-        padding: 1.5rem 0.5rem
+  &.is_mode_run, &.is_mode_ready
+    .MainSection
+      padding: 0
 
-  // .level_container
-  //   width: 10rem
-  //   margin: 0 auto
-  //   .title
-  //     font-size: $size-7
-  //     font-weight: normal
-  //     position: relative
-  //     top: -0.2rem
+  .FullScreen
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+  &.is_mode_run, &.is_mode_ready
+    .FullScreen
+      height: 100vh
 
   .tap_digits_container
-    margin-top: 0.8rem
-    .value
-      margin: 0 auto
-      background-color: hsl(0, 0%, 95%)
-      border-radius: 0.5rem
-      padding: 0.3rem
-      width: 5rem
-      font-weight: bold
-      font-size: 1.75rem
+    display: inline-block
+    margin: 0.75rem
+    background-color: hsl(0, 0%, 95%)
+    border-radius: 0.5rem
+    padding: 0.3rem
+    width: 5rem
+    font-weight: bold
+    font-size: 1.75rem
+
   .shogi_player_container
+    width: 100%
     position: relative
     .countdown_wrap
-      z-index: 1
-      position: absolute
-      top: 0%
-      bottom: 0%
-      left: 0%
-      right: 0%
+      z-index: 2
+      @extend %overlay
       margin: auto
-      // border: 1px dotted blue
 
       display: flex
       justify-content: center
       align-items: center
+
       .countdown
         font-size: 24rem
         color: $primary
         -webkit-text-stroke: 1px $white
         text-shadow: change_color($black, $alpha: 0.1) 0px 0px 8px
-    .shogi-player
-      margin-top: 1.25em
-      .font_size_base
-        // モバイルのときに画面幅に合わせて盤面を大きくする
-        +mobile
-          font-size: 6.2vmin        // このサイズでぎりぎり升目が正方形を保ったまま最大幅になる
-          // table
-          //   width: inherit      // 升目が正方形になるように戻す
 
-      .current_place
-        border: 0.1em solid darken($orange, 0)
-      .piece_back
-        &:hover
-          background-color: hsl(0, 0%, 92%)
-      .board_inner
-        border: 1px solid darken($board_color, 0%)
-        background-color: $board_color
-        // 星
-        tr:nth-child(3n+4)
-          td:nth-child(3n+4)
-            &:after
-              background: darken($board_color, 20%)
+  .shogi_player_container
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+
+  .MyShogiPlayer
+    width: 100%
+    +tablet
+      width: calc(100vmin * 0.65)
+    +desktop
+      width: calc(100vmin * 0.50)
+
+  .MyShogiPlayer
+    --sp_board_padding: 0
+    --sp_ground_color: transparent
+    --sp_board_color: transparent
+    --sp_grid_stroke: 1
+    --sp_grid_outer_stroke: 2
 
   .xy_scope_info_field
     .field
@@ -845,7 +820,7 @@ $board_color: hsl(0, 0%, 60%)
         justify-content: center
 
   .time_container
-    margin-top: 0.3rem
+    margin: 0
   .tweet_box_container
     margin-top: 0.75rem
   .summary
@@ -861,9 +836,4 @@ $board_color: hsl(0, 0%, 60%)
       max-height: none
       width: 32px
       height: 32px
-
-  &.run, &.ready
-    &.current_rule_input_mode-keyboard
-      .shogi-player
-        margin-top: 3rem
 </style>

@@ -77,7 +77,7 @@ $sp_assets_dir: "../node_modules/shogi-player/assets"
   --sp_stand_piece_w: 47px
   --sp_stand_piece_h: 50px
   // 駒箱
-  --sp_piece_box_margin_top: 10px
+  --sp_common_gap: 12px
   --sp_piece_box_piece_w: 38px
   --sp_piece_box_piece_h: 46px
   --sp_piece_box_piece_rate: 90%
