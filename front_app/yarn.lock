@@ -3972,11 +3972,6 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-clamp@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/clamp/-/clamp-1.0.1.tgz#66a0e64011816e37196828fdc8c8c147312c8634"
-  integrity sha1-ZqDmQBGBbjcZaCj9yMjBRzEshjQ=
-
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -7602,11 +7597,6 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
 
-lodash.throttle@^4.0.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
-  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
-
 lodash.unionby@^4.8.0:
   version "4.8.0"
   resolved "https://registry.yarnpkg.com/lodash.unionby/-/lodash.unionby-4.8.0.tgz#883f098ff78f564a727b7508e09cdd539734bb83"
@@ -7736,16 +7726,6 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
-
-marked@^1.2.5:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.6.tgz#fa55cf38ab3585005c9fb3c1ebfb3d4590c29fdc"
-  integrity sha512-7vVuSEZ8g/HH3hK/BH/+7u/NJj7x9VY4EHzujLDcqAQLiOUeFJYAsfSAyoWtR17lKrx7b08qyIno4lffwrzTaA==
-
-material-colors@^1.0.0:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/material-colors/-/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
-  integrity sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -9947,14 +9927,6 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-raw-loader@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-4.0.2.tgz#1aac6b7d1ad1501e66efdac1522c73e59a584eb6"
-  integrity sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==
-  dependencies:
-    loader-utils "^2.0.0"
-    schema-utils "^3.0.0"
-
 rc9@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/rc9/-/rc9-1.0.0.tgz#b72c6665d0cd5e1af2f59d8f2e9da81f6187f9a3"
@@ -10648,28 +10620,11 @@ shellwords@^0.1.1:
 "shogi-player@file:../../shogi-player":
   version "0.0.218"
   dependencies:
-    "@nuxtjs/axios" "^5.12.2"
-    "@nuxtjs/proxy" "^2.0.1"
-    "@nuxtjs/pwa" "^3.2.2"
-    "@nuxtjs/sitemap" "^2.4.0"
-    autolinker "^3.14.1"
     buefy "^0.9.4"
     bulma "^0.9.1"
-    chroma-js "^2.1.0"
-    dayjs "^1.9.3"
     howler "^2.2.1"
     js-memory-record "^0.0.16"
     lodash "^4.17.20"
-    marked "^1.2.5"
-    nuxt "^2.14.7"
-    nuxt-buefy "^0.4.4"
-    pug "^3.0.0"
-    pug-loader "^2.4.0"
-    pug-plain-loader "^1.0.0"
-    raw-loader "^4.0.2"
-    secure-ls "^1.2.6"
-    striptags "^3.1.1"
-    vue-color "^2.7.1"
     xregexp "^4.3.0"
 
 shvl@^2.0.0:
@@ -11352,11 +11307,6 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tinycolor2@^1.1.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
-  integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
-
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -11832,16 +11782,6 @@ vue-client-only@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.0.0.tgz#ddad8d675ee02c761a14229f0e440e219de1da1c"
   integrity sha512-arhk1wtWAfLsJyxGMoEYhoBowM87/i6HLSG2LH/03Yog6i2d9JEN1peMP0Ceis+/n9DxdenGYZZTxbPPJyHciA==
-
-vue-color@^2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/vue-color/-/vue-color-2.7.1.tgz#ca035109ea0010f0d60b889b97d63d37ac712f2d"
-  integrity sha512-u3yl46B2eEej9zfAOIRRSphX1QfeNQzMwO82EIA+aoi0AKX3o1KcfsmMzm4BFkkj2ukCxLVfQ41k7g1gSI7SlA==
-  dependencies:
-    clamp "^1.0.1"
-    lodash.throttle "^4.0.0"
-    material-colors "^1.0.0"
-    tinycolor2 "^1.1.2"
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
