@@ -33,8 +33,8 @@ export default {
 // TODO: ShogiPlayer.sass からの相対パスで画像が参照できるはずだけど謎のエラーがでる。
 // なので仕方なく $sp_assets_dir にここからの相対パスを設定して向こう側で参照するようにしている。
 // どうにかしたい。
-$sp_assets_dir: "../node_modules/shogi-player/assets"
-@import "../node_modules/shogi-player/components/ShogiPlayer.sass"
+// $sp_assets_dir: "../node_modules/shogi-player/assets"
+// @import "../node_modules/shogi-player/components/ShogiPlayer.sass"
 
 .MyShogiPlayer
   width: 100%

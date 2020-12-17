@@ -39,6 +39,7 @@
     "shogi-player": "/Users/ikeda/src/shogi-player",
     "striptags": "^3.1.1",
     "url-safe-base64": "^1.1.1",
+    "vue-color": "^2.8.0",
     "vuex-persistedstate": "^3.1.0"
   },
   "devDependencies": {
