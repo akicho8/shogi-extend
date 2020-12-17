@@ -40,6 +40,7 @@
     "striptags": "^3.1.1",
     "url-safe-base64": "^1.1.1",
     "vue-color": "^2.8.0",
+    "babel-core": "^6.26.3",
     "vuex-persistedstate": "^3.1.0"
   },
   "devDependencies": {
