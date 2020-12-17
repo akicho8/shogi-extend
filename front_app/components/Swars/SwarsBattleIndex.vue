@@ -153,26 +153,24 @@
               // widescreen 1/5 (is-one-fifth-widescreen)
               // desktop    1/4 (is-one-quarter-desktop)
               // table      1/4 (is-one-quarter-tablet)
-              .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered.px-0
-                SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[1]")
-                a(@click="show_handle(e)")
-                  MyShogiPlayer(
-                    :run_mode="'view_mode'"
-                    :debug_mode="false"
-                    :start_turn="sp_start_turn(e)"
-                    :kifu_body="e.sfen_body"
-                    :theme="'simple'"
-                    :size="'x-small'"
-                    :sound_effect="false"
-                    :vlayout="true"
-                    :setting_button_show="false"
-                    :summary_show="false"
-                    :operation_disable="true"
-                    :overlay_navi="false"
-                    :flip="e.flip"
-                  )
+              .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click="show_handle(e)")
+                //- SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[1]")
+                MyShogiPlayer(
+                  :player_info="e.player_info"
+                  sp_layout="is_vertical"
+                  :run_mode="'view_mode'"
+                  :debug_mode="false"
+                  :start_turn="sp_start_turn(e)"
+                  :kifu_body="e.sfen_body"
+                  :sound_effect="false"
+                  :setting_button_show="false"
+                  :summary_show="false"
+                  :operation_disable="true"
+                  :overlay_navi="false"
+                  :flip="e.flip"
+                )
                 // :hidden_if_piece_stand_blank="display_key === 'critical'"
-                SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
+                //- SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
           //- v-if="$route.query.query || config.records.length >= 1"
           template(v-if="display_key === 'table'")
@@ -551,4 +549,12 @@ export default {
     margin-top: 1.5rem
     +mobile
       margin-top: 1rem
+
+  +tablet
+    // --sp_shadow_offset: 0
+    // --sp_shadow_blur: 0
+    // --sp_grid_color: rgba(0, 0, 0, 0.2)
+    --sp_stand_piece_w: 20px
+    --sp_stand_piece_h: 25px
+    --sp_piece_count_gap_bottom: 70%
 </style>

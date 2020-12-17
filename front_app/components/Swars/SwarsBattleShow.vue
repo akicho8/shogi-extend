@@ -422,11 +422,12 @@ $button_z_index: 2
     height: 100vh               // app_buttons を画面外にする
 
   .MyShogiPlayer
-    width: 100%
+    // --sp_stand_piece_h_mobile: 56px
+    // --sp_piece_count_gap_bottom: 32%
     +tablet
-      width: calc(100vmin * 0.65)
+      max-width: calc(100vmin * 0.65)
     +desktop
-      width: calc(100vmin * 0.75)
+      max-width: calc(100vmin * 0.75)
 
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の下のボタンたち (画面外)
   .app_buttons

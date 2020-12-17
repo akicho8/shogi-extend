@@ -242,9 +242,9 @@ module BattleModelMod
     decorator = mini_battle_decorator
     Bioshogi::Location.inject({}) { |a, e|
       name = decorator.player_name_for(e.key)
-      if name
-        name = name[0...3]
-      end
+      # if name
+      #   name = name[0...3]
+      # end
       a.merge(e.key => {name: name})
     }
   end
