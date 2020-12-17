@@ -1,4 +1,4 @@
-import MemoryRecord from 'js-memory-record'
+import MemoryRecord from 'js-memory-record/src/memory_record.js'
 
 // https://gka.github.io/chroma.js/#quick-start
 import chroma from 'chroma-js'

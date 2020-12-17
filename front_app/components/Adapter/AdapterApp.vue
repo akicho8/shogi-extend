@@ -83,7 +83,7 @@
 const AUTO_APP_TO = true
 
 import _ from "lodash"
-import MemoryRecord from 'js-memory-record'
+import MemoryRecord from 'js-memory-record/src/memory_record.js'
 
 class FormatTypeInfo extends MemoryRecord {
   static get define() {

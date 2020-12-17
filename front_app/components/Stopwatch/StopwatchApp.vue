@@ -119,7 +119,7 @@ import StopwatchPermalinkModal from './StopwatchPermalinkModal.vue'
 import StopwatchHistoryModal   from './StopwatchHistoryModal.vue'
 import StopwatchKeyboardModal  from './StopwatchKeyboardModal.vue'
 
-import MemoryRecord from 'js-memory-record'
+import MemoryRecord from 'js-memory-record/src/memory_record.js'
 
 class AnswerInfo extends MemoryRecord {
   static get define() {

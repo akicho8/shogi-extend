@@ -173,7 +173,7 @@ import ls_support from "@/components/models/ls_support.js"
 
 import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
 
-import MemoryRecord from 'js-memory-record'
+import MemoryRecord from 'js-memory-record/src/memory_record.js'
 
 // 「全体」があったりして構造が異なるのでサーバー側で定義したものを利用していない
 class TabInfo extends MemoryRecord {

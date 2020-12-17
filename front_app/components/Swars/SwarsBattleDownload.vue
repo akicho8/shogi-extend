@@ -67,7 +67,7 @@ import ls_support from "@/components/models/ls_support.js"
 import { isMobile } from "@/components/models/isMobile.js"
 import { Dictionary } from "@/components/models/Dictionary.js"
 
-import MemoryRecord from "js-memory-record"
+import MemoryRecord from "js-memory-record/src/memory_record.js"
 
 // class ScopeInfo extends MemoryRecord {
 //   static get define() {

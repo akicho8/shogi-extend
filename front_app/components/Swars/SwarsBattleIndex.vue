@@ -264,7 +264,7 @@ import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
 import SwarsBattleIndexCore from "./SwarsBattleIndexCore.js"
 //- import SwarsBattleIndexHistory from "./SwarsBattleIndexHistory.js"
 
-import MemoryRecord from 'js-memory-record'
+import MemoryRecord from 'js-memory-record/src/memory_record.js'
 
 class ZipDlInfo extends MemoryRecord {
   static get define() {

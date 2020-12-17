@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import MemoryRecord from 'js-memory-record'
+import MemoryRecord from 'js-memory-record/src/memory_record.js'
 
 class TabInfo extends MemoryRecord {
   static get define() {

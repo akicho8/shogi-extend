@@ -1,4 +1,4 @@
-import MemoryRecord from 'js-memory-record'
+import MemoryRecord from 'js-memory-record/src/memory_record.js'
 
 export class Dictionary extends MemoryRecord {
   static get define() {

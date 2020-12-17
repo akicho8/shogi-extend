@@ -1,6 +1,6 @@
 import { Question} from "./models/question.js"
 
-import MemoryRecord from 'js-memory-record'
+import MemoryRecord from 'js-memory-record/src/memory_record.js'
 
 class HistoryTabInfo extends MemoryRecord {
   static get define() {
