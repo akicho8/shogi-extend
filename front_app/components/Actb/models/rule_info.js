@@ -1,4 +1,4 @@
-import MemoryRecord from 'js-memory-record/src/memory_record.js'
+import MemoryRecord from 'js-memory-record'
 import { TimeSupport } from "./time_support.js"
 
 import dayjs from "dayjs"

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import MemoryRecord from 'js-memory-record/src/memory_record.js'
+import MemoryRecord from 'js-memory-record'
 
 class SocialMediaInfo extends MemoryRecord {
   static get define() {

@@ -1,4 +1,4 @@
-import MemoryRecord from "js-memory-record/src/memory_record.js"
+import MemoryRecord from "js-memory-record"
 
 export class CpuBrainInfo extends MemoryRecord {
 }

@@ -70,7 +70,7 @@ const FID_29F7F1E2AEACD6AB83035EFEDAA7977F = `
  3 反則勝ち
 `
 
-import MemoryRecord from 'js-memory-record/src/memory_record.js'
+import MemoryRecord from 'js-memory-record'
 
 export class AdapterTestInfo extends MemoryRecord {
   static get define() {

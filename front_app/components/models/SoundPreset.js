@@ -15,7 +15,7 @@ import mp3_new_challenge from "@/static/sound_effect/soundeffect_lab/decision5.m
 import wav_pon           from "@/assets/UniversalSoundFX/CARTOON/POP_Mouth_mono.wav"
 import wav_piece_sound   from "shogi-player/assets/Universal_Sound_FX/TABLE_TENNIS_Racket_Ball_Hit_07_Hard_mono.wav"
 
-import MemoryRecord from 'js-memory-record/src/memory_record.js'
+import MemoryRecord from 'js-memory-record'
 
 export class SoundPreset extends MemoryRecord {
   static get define() {
