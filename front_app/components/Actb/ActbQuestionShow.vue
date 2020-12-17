@@ -62,8 +62,6 @@
         :slider_show="true"
         :controller_show="true"
         :setting_button_show="false"
-        :theme="base.config.sp_theme"
-        :size="base.config.sp_size"
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
         )
 

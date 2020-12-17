@@ -22,8 +22,6 @@ module Actb
     :self_is_left_side_p             => false,    # 自分を左に表示
     :ox_status_line_take_n           => 8,        # 上の○×行は最新何個表示する？
     :deden_delay                     => 0.8,      # 「デデン」の待ち
-    :sp_theme                        => "real",   # 将棋盤のタイプ
-    :sp_size                         => "large",  # 将棋盤の大きさ
 
     # シングルトンモード
     :otetuki_release_p               => false, # おてつき解除可能か？

@@ -9,8 +9,6 @@
     :slider_show="true"
     :controller_show="true"
     :setting_button_show="false"
-    :theme="'simple'"
-    :size="'default'"
     @update:turn_offset="bapp.turn_offset_set"
     @update:mediator_snapshot_sfen="bapp.mediator_snapshot_sfen_set"
     ref="main_sp"
@@ -33,8 +31,6 @@
           :slider_show="true"
           :controller_show="true"
           :setting_button_show="false"
-          :theme="'simple'"
-          :size="'default'"
           )
         .delete_button.is-clickable(@click="bapp.moves_answer_delete_handle(i)")
           b-icon(type="is-danger" icon="trash-can-outline" size="is-small")

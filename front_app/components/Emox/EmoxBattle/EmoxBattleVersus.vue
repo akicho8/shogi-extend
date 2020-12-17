@@ -2,17 +2,16 @@
 .EmoxBattleVersus
   EmoxBattleVersusMembership.mt-3(:base="base" :membership="base.opponent_membership")
 
-  MyShogiPlayer.mt-3(
-    :run_mode="'play_mode'"
-    :kifu_body="base.vs_share_sfen"
-    :summary_show="false"
-    :setting_button_show="false"
-    theme="real"
-    size="large"
-    :human_side_key="current_human_side_key"
-    :flip="current_flip"
-    @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
-  )
+  .MyShogiPlayerWrap
+    MyShogiPlayer.mt-3(
+      :run_mode="'play_mode'"
+      :kifu_body="base.vs_share_sfen"
+      :summary_show="false"
+      :setting_button_show="false"
+      :human_side_key="current_human_side_key"
+      :flip="current_flip"
+      @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
+    )
 
   EmoxBattleVersusMembership.mt-3(:base="base" :membership="base.current_membership")
 
@@ -58,4 +57,12 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .EmoxBattleVersus
+  .MyShogiPlayerWrap
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    width: 100%
+    .MyShogiPlayer
+      max-width: 640px
 </style>

@@ -11,8 +11,6 @@
       :slider_show="true"
       :controller_show="true"
       :setting_button_show="false"
-      :theme="'simple'"
-      :size="'default'"
       @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
       )
   footer.modal-card-foot

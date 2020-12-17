@@ -7,8 +7,6 @@
     :slider_show="true"
     :controller_show="true"
     :setting_button_show="false"
-    :theme="'simple'"
-    :size="'default'"
     :sound_effect="false"
     @update:edit_mode_snapshot_sfen="bapp.edit_mode_snapshot_sfen"
     ref="main_sp"

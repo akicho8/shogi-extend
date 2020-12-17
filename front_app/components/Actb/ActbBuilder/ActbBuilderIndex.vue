@@ -145,8 +145,6 @@
             :slider_show="false"
             :controller_show="false"
             :setting_button_show="false"
-            :theme="'simple'"
-            :size="'default'"
             :sound_effect="false"
             :operation_disable="true"
             )

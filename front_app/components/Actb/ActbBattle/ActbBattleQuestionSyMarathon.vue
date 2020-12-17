@@ -14,9 +14,6 @@
     :setting_button_show="false"
     :controller_show="true"
     :human_side_key="'both'"
-    :theme="base.config.sp_theme"
-    :size="base.config.sp_size"
-    :vlayout="false"
     @update:turn_offset="v => base.share_turn_offset = v"
     @update:play_mode_advanced_full_moves_sfen="base.play_mode_advanced_full_moves_sfen_set"
   )

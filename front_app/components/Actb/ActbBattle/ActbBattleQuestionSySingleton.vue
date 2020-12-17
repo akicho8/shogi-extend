@@ -13,8 +13,6 @@
       :flip_if_white="true"
       :summary_show="false"
       :setting_button_show="false"
-      :theme="base.config.sp_theme"
-      :size="base.config.sp_size"
       :human_side_key="'none'"
     )
     .wakatta_button.has-text-centered.mt-3
@@ -35,8 +33,6 @@
       :setting_button_show="false"
       :human_side_key="'both'"
       :controller_show="false"
-      :theme="base.config.sp_theme"
-      :size="base.config.sp_size"
       @update:turn_offset="base.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="base.play_mode_advanced_full_moves_sfen_set"
     )
@@ -56,8 +52,6 @@
       :sound_effect="false"
       :human_side_key="'none'"
       :controller_show="false"
-      :theme="base.config.sp_theme"
-      :size="base.config.sp_size"
       @update:turn_offset="v => base.share_turn_offset = v"
     )
     .mt-3.has-text-centered

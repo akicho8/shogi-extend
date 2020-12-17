@@ -7,8 +7,6 @@
     :kifu_body="base.vs_share_sfen"
     :summary_show="false"
     :setting_button_show="false"
-    :theme="base.config.sp_theme"
-    :size="base.config.sp_size"
     :human_side_key="current_human_side_key"
     :flip="current_flip"
     @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
