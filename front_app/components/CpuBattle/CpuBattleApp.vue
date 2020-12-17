@@ -7,7 +7,7 @@
   MainSection
     .container.is-fluid
       .columns.is-multiline.is-gapless
-        .column.is_shogi_player.is_left_column
+        .column.is_left_column
           template(v-if="mode === 'playing' || mode === 'standby'")
             nav.level.is-mobile
               .level-item
@@ -34,12 +34,9 @@
                       b-button(@click="judge_dialog_display({judge_key: 'lose', message: 'まけ'})")
                         | lose
 
-          .has-text-centered
             MyShogiPlayer(
               :kifu_body="current_sfen"
               :human_side_key="human_side_key"
-              :theme="sp_params.theme"
-              :bg_variant.sync="bg_variant"
               :piece_variant="sp_params.piece_variant"
               :key_event_capture="false"
               :sfen_show="false"
@@ -54,7 +51,7 @@
               ref="main_sp"
             )
 
-            .mt-3(v-if="mode === 'standby'")
+            .has-text-centered.mt-3(v-if="mode === 'standby'")
               .mx-1.is-size-7.has-text-grey CPUの成績
               .mx-1.is-size-6.has-text-weight-bold {{judge_group.lose || 0}}勝{{judge_group.win || 0}}敗
 
@@ -79,14 +76,15 @@
                 template(v-for="e in CpuPresetInfo.values")
                   b-radio(v-model="cpu_preset_key" :native-value="e.key" size="is-small")
                     | {{e.name}}
-            hr
-            b-field(label="スタイル" custom-class="is-small")
-              .block
-                template(v-for="e in BoardStyleInfo.values")
-                  b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
-                    | {{e.name}}
-            b-button(@click="bg_variant_reset_handle" size="is-small")
-              | ランダム盤
+            template(v-if="development_p")
+              hr
+              b-field(label="スタイル" custom-class="is-small")
+                .block
+                  template(v-for="e in BoardStyleInfo.values")
+                    b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
+                      | {{e.name}}
+              b-button(@click="bg_variant_reset_handle" size="is-small")
+                | ランダム盤
 
             template(v-if="development_p")
               | &nbsp;
@@ -518,18 +516,28 @@ export default {
   min-height: 100vh
 
   .MainSection
-    padding: 2.8rem 0 0
-    .container.is-fluid
-      padding-left: 0
-      padding-right: 0
-
-    +desktop
+    +tablet
+      padding: 2.8rem 0 0
       .container.is-fluid
         padding-left: 1.8rem
         padding-right: 1.8rem
         .column
           margin-left: 1rem
           margin-right: 1rem
+    +mobile
+      padding: 1rem 0 0
+      .container
+        padding: 0
+
+  .is_left_column
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+
+  .MyShogiPlayer
+    +tablet
+      max-width: 640px - 32px * 2 - 16px - 16px
 
   .table_format_area
     line-height: 100%

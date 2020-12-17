@@ -37,7 +37,9 @@ $sp_assets_dir: "../node_modules/shogi-player/assets"
 @import "../node_modules/shogi-player/components/ShogiPlayer.sass"
 
 .MyShogiPlayer
-  // --sp_body_width: 35vw
+  width: 100%
+
+  // --sp_body_max_width: 35vw
   // --sp_dimension: 9
   // 背景
   --sp_ground_color: transparent
@@ -96,6 +98,10 @@ $sp_assets_dir: "../node_modules/shogi-player/assets"
     .shogi-player
       td, th
         padding: 0
+
+.STAGE-development
+  .MyShogiPlayer
+    border: 1px dashed change_color($primary, $alpha: 0.5)
 
 // // 左右キーが効くように常にスライダーにフォーカスさせているけど、
 // // これがスマホだととても目立つし、スマホだと役にたたないため、色を消す(重要)
