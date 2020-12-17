@@ -63,27 +63,25 @@ client-only
 
     MainSection
       .container
-        .columns
-          .column.is_shogi_player
+        .columns.is-centered
+          .column.is-8-tablet.is-6-desktop
             .turn_container.has-text-centered(v-if="run_mode === 'play_mode'")
               span.turn_offset.has-text-weight-bold {{turn_offset}}
               template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
                 span.mx-1.has-text-grey /
                 span.has-text-grey {{turn_offset_max}}
 
-            MyShogiPlayer.mt-3(
+            MyShogiPlayer(
+              sp_bg_variant="is_bg_variant_a"
               :run_mode="run_mode"
               :debug_mode="false"
               :start_turn="turn_offset"
               :kifu_body="current_sfen"
               :summary_show="false"
               :slider_show="true"
-              :setting_button_show="development_p"
-              :size="'large'"
               :sound_effect="true"
               :controller_show="true"
               :human_side_key="'both'"
-              :theme="'real'"
               :flip.sync="board_flip"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
@@ -479,14 +477,8 @@ export default {
 .ShareBoardApp
   +mobile
     .MainSection
-      padding-top: 2rem
-      padding-left: 0.5rem
-      padding-right: 0.5rem
-      padding-bottom: 0
+      padding: 2rem 0 0
     .column
       padding: 0
-      margin: 1.25rem
-      &.is_shogi_player
-        padding: 0
-        margin:  0
+      margin: 0
 </style>

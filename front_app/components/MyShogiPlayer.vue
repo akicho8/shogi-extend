@@ -1,6 +1,6 @@
 <template lang="pug">
 ShogiPlayer.MyShogiPlayer(
-  v-bind="{...default_params, ...$attrs}"
+  v-bind="component_params"
   v-on="$listeners"
   ref="pure_sp"
   )
@@ -16,10 +16,13 @@ export default {
     ShogiPlayer,
   },
   computed: {
-    default_params() {
+    component_params() {
       return {
+        sp_layout: "is_horizontal",
+        setting_button_show: this.development_p,
         sound_effect: true,
         volume: 0.5,
+        ...this.$attrs,
       }
     }
   },
@@ -35,7 +38,7 @@ $sp_assets_dir: "../node_modules/shogi-player/assets"
 
 .MyShogiPlayer
   // --sp_body_width: 35vw
-  --sp_dimension: 9
+  // --sp_dimension: 9
   // 背景
   --sp_ground_color: transparent
   --sp_ground_image: none
