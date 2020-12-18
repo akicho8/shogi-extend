@@ -60,36 +60,6 @@ module Swars
         #   import(...)
         # end
 
-        # 参照されていないレコードを消していく
-        # rails r 'Swars::Battle.old_record_destroy(time_limit: 0)'
-        def old_record_destroy(params = {})
-          params = {
-            expires_in: 3.months, # 3ヶ月前のものは消す
-            time_limit: 2.hours,  # 最大処理時間(朝4時に実行して6時には必ず終了させる)
-          }.merge(params)
-
-          t = Time.current
-
-          s = all
-          s = s.where(arel_table[:accessed_at].lteq(params[:expires_in].seconds.ago))
-          s.find_in_batches(batch_size: 100) do |g|
-            if params[:time_limit] && params[:time_limit] <= (Time.current - t)
-              break
-            end
-            g.each do |e|
-              if e.memberships.any? { |e| e.grade.key == "十段" }
-                next
-              end
-
-              begin
-                e.destroy
-              rescue ActiveRecord::Deadlocked => error
-                Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, error])
-              end
-            end
-          end
-        end
-
         # cap production rails:runner CODE='Swars::Battle.remake'
         def remake(params = {})
           params = {

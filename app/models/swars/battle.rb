@@ -37,6 +37,7 @@ module Swars
   class Battle < ApplicationRecord
     include BattleModelMod
     include ImportMethods
+    include KillMethods
     include ConvertHookMethods
 
     class << self
