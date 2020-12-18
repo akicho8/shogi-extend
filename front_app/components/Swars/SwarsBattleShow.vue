@@ -37,13 +37,14 @@
               b-menu-item(label="ぴよ将棋" @click="short_url_copy('piyo_shogi')")
               b-menu-item(label="KENTO"    @click="short_url_copy('kento')")
 
-      PageCloseButton(@click="back_handle" position="is_absolute")
-      b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text" size="is-medium")
+      //- PageCloseButton(@click="back_handle" position="is_absolute" size="is-medium")
+      //- b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text")
 
-      .SpSection
+      .FirstView
+        //- .battle_title_container
+        //-   span.battle_title.is-size-7.has-text-weight-bold
+        //-     | {{record.title}}
         .MyShogiPlayerWrap
-          .battle_title.is-inline-block.has-text-centered.is-size-7-mobile.has-text-weight-bold
-            | {{record.title}}
           MyShogiPlayer(
             sp_layer="is_layer_off"
             sp_layout="is_horizontal"
@@ -55,6 +56,7 @@
             :key_event_capture="true"
             :slider_show="true"
             :sfen_show="false"
+            :summary_show="false"
             :controller_show="true"
             :setting_button_show="false"
             :flip.sync="new_flip"
@@ -62,11 +64,6 @@
             @update:start_turn="real_turn_set"
             ref="main_sp"
           )
-        .buttons.is-centered.app_buttons
-          PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
-          KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
-          KifCopyButton(@click="kifu_copy_handle")
-          TweetButton(:body="permalink_url")
 
       //- .columns.is-centered
       //-   .column.is-half-desktop
@@ -79,6 +76,23 @@
         :flip="new_flip"
         ref="SwarsBattleShowTimeChart"
       )
+
+      .app_buttons_container
+        .buttons.is-centered
+          PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
+          KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
+          KifCopyButton(@click="kifu_copy_handle")
+        .buttons.is-centered
+          b-button(@click="back_handle" icon-left="chevron-left" size="is-small")
+          TweetButton(:body="permalink_url")
+          b-button(icon-left="menu" @click="sidebar_toggle" size="is-small")
+
+      .battle_title_container.has-background-grey-lighter.py-6.battle_title.has-text-grey-dark.has-text-weight-bold.is-size-7-mobile
+        //- | {{record.title}}
+        p ☗{{record.piyo_shogi_base_params.sente_name}} vs ☖{{record.piyo_shogi_base_params.gote_name}}
+        p {{record.description}}
+        p {{record.piyo_shogi_base_params.game_name}}
+
       //- .columns
       //-   .column.is-half-desktop.is_buttons_column
       //-     .buttons.is-centered
@@ -94,7 +108,7 @@
       //-     | record.turn_max: {{record.turn_max}}
       //-     | record.turn: {{record.turn}}
       //-     | new_flip: {{new_flip}}
-  //- DebugPre {{record}}
+  DebugPre {{record}}
 </template>
 
 <script>
@@ -403,15 +417,12 @@ $button_z_index: 2
     z-index: $button_z_index
 
   //////////////////////////////////////////////////////////////////////////////// 1ページ目
-  .SpSection
-    background-color: #C6E1B8
-
-  //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の上
-  .battle_title
-    border-radius: 3px
-    padding: 0.5rem
-    background-color: rgba(255, 255, 255, 0.75)
-    margin: 12px 0
+  .FirstView
+    background-color: hsl(99.5, 40.6, 80.2)
+    +tablet
+      padding: 2rem 0
+    +mobile
+      padding: 0 0 1.5rem
 
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
   .MyShogiPlayerWrap
@@ -419,20 +430,36 @@ $button_z_index: 2
     justify-content: center
     align-items: center
     flex-direction: column
-    height: 100vh               // app_buttons を画面外にする
+    // height: 100vh               // app_buttons_container を画面外にする
 
   .MyShogiPlayer
-    // --sp_stand_piece_h_mobile: 56px
-    // --sp_piece_count_gap_bottom: 32%
+    --sp_stand_piece_w_mobile: 30px
+    --sp_stand_piece_h_mobile: 40px
+    +mobile
+      --sp_board_radius: 0                      // 角丸を取る
+      --sp_grid_outer_color: rgba(0, 0, 0, 0.4) // スマホだと少し薄すくる
+      --sp_grid_color:       rgba(0, 0, 0, 0.3) // スマホだと少し薄すくる
+      --sp_piece_count_gap_bottom: 38%
     +tablet
       max-width: calc(100vmin * 0.65)
     +desktop
       max-width: calc(100vmin * 0.75)
+    .NavigateBlock
+      +mobile
+        margin-top: 14px ! important
 
-  //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の下のボタンたち (画面外)
-  .app_buttons
-    margin: 0
-    padding-bottom: 2rem
+  //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の下のボタンたち
+  .app_buttons_container
+    background-color: $white-ter
+    margin: 0.5rem 0 0
+    padding: 3rem 0
+
+  ////////////////////////////////////////////////////////////////////////////////
+  .battle_title_container
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
 
 .STAGE-development
   .SwarsBattleShow

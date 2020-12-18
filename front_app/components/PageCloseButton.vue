@@ -1,6 +1,6 @@
 <template lang="pug">
-.PageCloseButton.is-clickable(v-bind="$attrs" v-on="$listeners" :class="position")
-  .delete.is-medium
+.PageCloseButton.is-clickable(v-bind="$attrs" v-on="$listeners" :class="[position, size]")
+  .delete(:class="size")
     slot
 </template>
 
@@ -8,7 +8,8 @@
 export default {
   name: "PageCloseButton",
   props: {
-    position: { type: String, default: "is_fixed", },
+    position: { type: String, default: "is_fixed",  },
+    size:     { type: String, default: "is-medium", },
   },
 }
 </script>
@@ -21,7 +22,8 @@ export default {
     position: fixed
   top: 0
   left: 0
-  padding: 0.5rem
+  &.is-medium
+    padding: 0.5rem
 
 .STAGE-development
   .PageCloseButton

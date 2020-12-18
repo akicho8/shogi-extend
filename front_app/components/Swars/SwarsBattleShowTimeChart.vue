@@ -1,9 +1,11 @@
 <template lang="pug">
 .SwarsBattleShowTimeChart
-  canvas#main_canvas.is-unselectable(ref="main_canvas")
+  .canvas_center
+    .canvas_wrap
+      canvas#main_canvas.is-unselectable(ref="main_canvas")
   b-field.zoom_button(position="is-centered")
-    b-radio-button(v-model="zoom_p" :native-value="true" size="is-small") 拡大
-    b-radio-button(v-model="zoom_p" :native-value="false" size="is-small") 縮小
+    b-radio-button(v-model="zoom_p" :native-value="true" size="is-small") +
+    b-radio-button(v-model="zoom_p" :native-value="false" size="is-small") -
 </template>
 
 <script>
@@ -574,7 +576,19 @@ export default {
 
 <style lang="sass">
 .SwarsBattleShowTimeChart
+  padding-bottom: 2rem
+  .canvas_center
+    display: flex
+    justify-content: center
+    align-items: center
+    .canvas_wrap
+      width: 100%
+      max-width: 640px
   .zoom_button
-    padding: 2rem
-</style>
+    //- padding: 2rem
 
+.STAGE-development
+  .SwarsBattleShowTimeChart
+    .zoom_button
+      border: 1px dashed change_color($primary, $alpha: 0.2)
+</style>
