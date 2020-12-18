@@ -318,7 +318,7 @@ module Swars
             filtered = true
           end
           if v = query_info.lookup_one(:"vs-grade") # 段級
-            grade = Grade.find_by!(key: v)
+            grade = Grade.fetch(v)
             m = sampled_memberships(current_swars_user.op_memberships)
             m = m.where(grade: grade)
             s = s.where(id: m.pluck(:battle_id))

@@ -147,7 +147,7 @@ module Swars
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ..................
-# >> 
+# >>
 # >> Finished in 6.32 seconds (files took 3 seconds to load)
 # >> 18 examples, 0 failures
-# >> 
+# >>

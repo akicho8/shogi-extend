@@ -71,9 +71,9 @@ module Swars
           t = Time.current
 
           s = all
-          s = s.where(arel_table[:accessed_at].lteq(params[:expires_in].ago))
+          s = s.where(arel_table[:accessed_at].lteq(params[:expires_in].seconds.ago))
           s.find_in_batches(batch_size: 100) do |g|
-            if params[:time_limit] <= (Time.current - t)
+            if params[:time_limit] && params[:time_limit] <= (Time.current - t)
               break
             end
             g.each do |e|
@@ -272,7 +272,7 @@ module Swars
 
           users = info[:user_infos].collect do |e|
             User.find_or_initialize_by(user_key: e[:user_key]).tap do |user|
-              grade = Grade.find_by!(key: e[:grade_key])
+              grade = Grade.fetch(e[:grade_key])
               user.grade = grade # 常にランクを更新する
               begin
                 user.save!
@@ -301,7 +301,7 @@ module Swars
 
           info[:user_infos].each.with_index do |e, i|
             user = User.find_by!(user_key: e[:user_key])
-            grade = Grade.find_by!(key: e[:grade_key])
+            grade = Grade.fetch(e[:grade_key])
 
             if winner_index
               judge_key = (i == winner_index) ? :win : :lose

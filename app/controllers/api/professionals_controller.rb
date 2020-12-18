@@ -52,7 +52,7 @@ module Api
     def rows
       user_infos_hash = user_infos_fetch.inject({}) { |a, e| a.merge(e[:key].downcase => e) }
 
-      grade = Swars::Grade.find_by!(key: "十段")
+      grade = Swars::Grade.fetch("十段")
 
       if Rails.env.development? || Rails.env.test?
         grade = Swars::Grade.all

@@ -25,9 +25,21 @@ module Swars
           record.save!
         end
       end
+
+      def fetch(key)
+        find_by!(key: key)
+      end
+
+      def lookup(key)
+        find_by(key: key)
+      end
     end
 
-    has_many :users, dependent: :destroy
+    with_options dependent: :destroy do
+      has_many :users
+      has_many :memberships
+      has_many :battles, through: :memberships
+    end
 
     default_scope { order(:priority) }
 
