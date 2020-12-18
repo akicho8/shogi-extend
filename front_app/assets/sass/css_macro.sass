@@ -12,3 +12,9 @@
   @at-root .#{$button_class}:hover
     .left_icon
       transform: rotate(360deg * 2 * -1)
+
+// .buttons で横マージンが入るのはいいけど下マージンは余計
+=bulma_buttons_button_bottom_marginless
+  .buttons
+    .button
+      margin-bottom: 0

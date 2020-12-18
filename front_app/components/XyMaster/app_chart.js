@@ -133,12 +133,12 @@ export const app_chart = {
   watch: {
     xy_chart_rule_key() {
       this.chart_reshow()
-      this.data_save_to_local_storage()
+      // this.data_save_to_local_storage()
     },
 
     xy_chart_scope_key() {
       this.chart_reshow()
-      this.data_save_to_local_storage()
+      // this.data_save_to_local_storage()
     },
   },
 

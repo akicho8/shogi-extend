@@ -9,8 +9,8 @@
     padding: 1.0rem 0.8rem
 .STAGE-development
   .MainSection.section
-    +touch
-      border: 2px dashed $primary
     +mobile
-      border: 2px dashed $danger
+      border: 1px dashed $danger
+    +tablet
+      border: 1px dashed $primary
 </style>

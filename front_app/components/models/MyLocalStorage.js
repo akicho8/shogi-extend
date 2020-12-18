@@ -21,7 +21,14 @@ export class MyLocalStorage {
   static lookup(key) {
     const json = this.core.getItem(key)
     if (json) {
-      return JSON.parse(json)
+      try {
+        return JSON.parse(json)
+      } catch (e) {
+        const message = `${this.name}.lookup(${JSON.stringify(key)}) # => ${JSON.stringify(json)}`
+        console.error(message)
+        alert(message)
+        console.error(e)
+      }
     }
   }
 
