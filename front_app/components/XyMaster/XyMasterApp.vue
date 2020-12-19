@@ -60,7 +60,7 @@
 
           XyMasterSlider(:base="base")
 
-          .box.tweet_box_container(v-if="mode === 'is_mode_goal'")
+          .box.tweet_box_container.has-text-centered(v-if="mode === 'is_mode_goal'")
             | {{summary}}
             TweetButton.mt-2(:body="tweet_body")
 
@@ -705,7 +705,7 @@ export default {
   .MyShogiPlayerWrap
     width: 100%
 
-    position: relative
+    position: relative          // カウントダウン領域の基点にするため
 
     display: flex
     justify-content: center
@@ -730,10 +730,4 @@ export default {
   .tweet_box_container
     margin-top: 0.75rem
     white-space: pre-wrap
-
-  .navbar-item
-    img
-      max-height: none
-      width: 32px
-      height: 32px
 </style>
