@@ -31,6 +31,14 @@ client-only
           b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
           b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
 
+    b-navbar(type="is-dark" wrapper-class="container")
+      template(slot="start")
+        NavbarItemHome
+        b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
+      template(slot="end")
+        b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
+          b-icon(icon="menu")
+
     MainNavbar
       template(slot="brand")
         NavbarItemHome
@@ -57,7 +65,7 @@ client-only
         //-         | リアルタイム共有
         //-         .has-text-danger.ml-1(v-if="room_code") {{room_code}}
 
-    MainNavbar(type="is-dark" fixed-bottom v-if="development_p")
+    b-navbar(type="is-dark" fixed-bottom v-if="development_p")
       template(slot="start")
         b-navbar-item(@click="reset_handle") 盤面リセット
 
@@ -71,8 +79,8 @@ client-only
                 span.mx-1.has-text-grey /
                 span.has-text-grey {{turn_offset_max}}
 
+            // sp_bg_variant="is_bg_variant_a"
             MyShogiPlayer(
-              sp_bg_variant="is_bg_variant_a"
               :run_mode="run_mode"
               :debug_mode="false"
               :start_turn="turn_offset"
@@ -98,7 +106,7 @@ client-only
               | {{room_code}}
 
         .columns(v-if="development_p")
-          .column
+          .column.is-clipped
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
             .block
@@ -119,7 +127,7 @@ const RUN_MODE_DEFAULT = "play_mode"
 
 import _ from "lodash"
 
-import { support } from "./support.js"
+import { support_parent } from "./support_parent.js"
 
 import { app_room      } from "./app_room.js"
 import { app_room_init } from "./app_room_init.js"
@@ -130,7 +138,7 @@ import AnySourceReadModal         from "@/components/AnySourceReadModal.vue"
 export default {
   name: "ShareBoardApp",
   mixins: [
-    support,
+    support_parent,
     app_room,
     app_room_init,
   ],
@@ -467,6 +475,13 @@ export default {
 </script>
 
 <style lang="sass">
+@import "./support.sass"
+
+.STAGE-development
+  .ShareBoardApp
+    .column, .MyShogiPlayer
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+
 .ShareBoardApp-Sidebar
   .sidebar-content
     width: unset
@@ -478,7 +493,4 @@ export default {
   +mobile
     .MainSection
       padding: 2rem 0 0
-    .column
-      padding: 0
-      margin: 0
 </style>
