@@ -727,11 +727,16 @@ export default {
     .MyShogiPlayer
       // --sp_board_padding: 0            // 盤の隙間なし
       // --sp_ground_color: transparent   // 畳の色
-      --sp_board_color: hsla(0, 0%, 0%, 0.05)       // 盤の色
+      --sp_grid_outer_stroke: 0
+      // --sp_grid_outer_color: rgba(0, 0, 0, 0.4)  // グリッド外枠色
+      --sp_grid_color:       rgba(0, 0, 0, 0.3)  // グリッド色
+      // --sp_grid_stroke: 1              // グリッド太さ
+      --sp_board_color: hsla(0, 0%, 0%, 0.025)       // 盤の色
+      // --sp_grid_color: hsla(0, 0%, 0%, 0.025)       // 盤の色
       // --sp_grid_stroke: 1              // グリッド太さ
       // --sp_grid_outer_stroke: 0        // グリッド外枠太さ
       --sp_board_aspect_ratio: 100.0   // 盤を正方形化
-      --sp_grid_star: 16%              // 星の大きさ
+      --sp_grid_star: 20%              // 星の大きさ
 
   .tweet_box_container
     margin-top: 0.75rem
