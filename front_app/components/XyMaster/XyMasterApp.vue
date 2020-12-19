@@ -36,7 +36,7 @@
               template(v-for="e in XyRuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
 
-            b-button(@click="rule_display" icon-right="help")
+            b-button(@click="rule_dialog_show" icon-right="help")
 
           .DigitBoardTime.is-unselectable
             .xy_human_container.has-text-weight-bold.is-inline-block.has-background-white-ter(v-if="tap_method_p")
@@ -54,14 +54,12 @@
                 :board_piece_back_user_class="board_piece_back_user_class"
                 :overlay_navi="false"
                 :board_cell_pointerdown_user_handle="board_cell_pointerdown_user_handle"
-                :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
               )
 
             .time_container.fixed_font.is-size-3
               | {{time_format}}
 
-          .AdjustSlider.is-hidden-desktop(v-if="idol_p")
-            b-slider(v-model="touch_board_width" :min="0" :max="1" :step="0.001" size="is-small")
+          XyMasterAdjustSlider(:base="base")
 
           .box.tweet_box_container(v-if="mode === 'is_mode_goal'")
             | {{summary}}
@@ -178,7 +176,7 @@ export default {
 
   mounted() {
     this.ga_click("符号の鬼")
-    this.$refs.main_sp.$refs.pure_sp.api_board_clear()
+    this.sp_object().api_board_clear()
   },
 
   beforeDestroy() {
@@ -187,12 +185,8 @@ export default {
   },
 
   watch: {
-    // entry_name() { this.data_save_to_local_storage() },
-    // current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
-
     xy_scope_key() {
       this.xy_records_hash_update()
-      // this.data_save_to_local_storage()
     },
 
     entry_name_unique() {
@@ -201,7 +195,6 @@ export default {
 
     xy_rule_key(v) {
       this.current_rule_index = this.current_rule.code
-      // this.data_save_to_local_storage()
     },
 
     current_rule_index(v) {
@@ -228,10 +221,6 @@ export default {
       const x = DIMENSION - place.x
       const y = place.y + 1
       this.talk(`${x} ${y}`, {rate: 2.0})
-    },
-
-    // こっちは Vue のほうで prevent.stop されている
-    board_cell_left_click_user_handle(place, event) {
     },
 
     // こっちは prevent.stop されてないので自分で呼ぶ
@@ -277,33 +266,8 @@ export default {
       this.xy_chart_rule_key = null
       this.entry_name        = null
       this.current_pages     = null
-      this.touch_board_width          = null
+      this.touch_board_width = null
     },
-
-    // data_restore_from_hash(e) {
-    //   this.xy_rule_key = e.xy_rule_key
-    //   if (!XyRuleInfo.lookup(this.xy_rule_key)) {
-    //     this.xy_rule_key = this.default_xy_rule_key
-    //   }
-    //
-    //   this.xy_scope_key = e.xy_scope_key
-    //   if (!XyScopeInfo.lookup(this.xy_scope_key)) {
-    //     this.xy_scope_key = "xy_scope_today"
-    //   }
-    //
-    //   this.xy_chart_scope_key = e.xy_chart_scope_key
-    //   if (!XyChartScopeInfo.lookup(this.xy_chart_scope_key)) {
-    //     this.xy_chart_scope_key = "chart_scope_recently"
-    //   }
-    //
-    //   this.xy_chart_rule_key = e.xy_chart_rule_key
-    //   if (!XyRuleInfo.lookup(this.xy_chart_rule_key)) {
-    //     this.xy_chart_rule_key = this.default_xy_rule_key
-    //   }
-    //
-    //   // this.entry_name = this.current_user_name || e.entry_name
-    //   // this.current_pages = e.current_pages || {}
-    // },
 
     init_other_variables() {
       this.countdown_counter = 0
@@ -322,7 +286,7 @@ export default {
       this.init_other_variables()
       this.latest_rule = this.current_rule
       this.talk_stop()
-      this.$refs.main_sp.$refs.pure_sp.api_flip_set(this.current_rule.flip)
+      this.sp_object().api_flip_set(this.current_rule.flip)
       this.interval_counter.start()
     },
 
@@ -443,7 +407,7 @@ export default {
 
     timer_stop() {
       this.interval_frame.stop()
-      this.$refs.main_sp.$refs.pure_sp.api_board_clear()
+      this.sp_object().api_board_clear()
     },
 
     keydown_handle_core(e) {
@@ -519,8 +483,8 @@ export default {
       if (!this.tap_method_p) {
         const soldier = Soldier.random()
         soldier.place = Place.fetch([p.x, p.y])
-        this.$refs.main_sp.$refs.pure_sp.api_board_clear()
-        this.$refs.main_sp.$refs.pure_sp.api_place_on(soldier)
+        this.sp_object().api_board_clear()
+        this.sp_object().api_place_on(soldier)
       }
 
       this.current_place = p
@@ -547,10 +511,18 @@ export default {
     magic_number() {
       return dayjs().format("YYMMDDHHmm")
     },
+
+    // computed 側にすると動かなくなるので注意
+    sp_object() {
+      return this.$refs.main_sp.$refs.pure_sp
+    },
   },
 
   computed: {
-    base() { return this },
+    base()             { return this                             },
+    XyScopeInfo()      { return XyScopeInfo                      },
+    XyChartScopeInfo() { return XyChartScopeInfo                 },
+    XyRuleInfo()       { return XyRuleInfo                       },
 
     component_style() {
       return {
@@ -561,6 +533,7 @@ export default {
     idol_p() {
       return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal'
     },
+
     playing_p() {
       return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready'
     },
@@ -701,10 +674,6 @@ export default {
       return this.xy_record.rank_info[this.xy_scope_key].rank
     },
 
-    XyScopeInfo()      { return XyScopeInfo      },
-    XyChartScopeInfo() { return XyChartScopeInfo },
-    XyRuleInfo()       { return XyRuleInfo       },
-
     //////////////////////////////////////////////////////////////////////////////// for ls_support
     ls_storage_key() {
       return "new_xy_master" // "xy_master" は stopwatch のライブラリを使っているためデータ構造が合わない
@@ -727,8 +696,6 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-
-$xy_board_top_bottom_gap: 0.75rem
 
 .STAGE-development
   .XyMasterApp
@@ -764,35 +731,28 @@ $xy_board_top_bottom_gap: 0.75rem
 
   .MyShogiPlayerWrap
     width: 100%
+
     position: relative
 
-  .MyShogiPlayerWrap
     display: flex
     justify-content: center
     align-items: center
     flex-direction: column
 
-  .MyShogiPlayer
-    +touch
-      width: calc(var(--touch_board_width) * 100%)
-    +desktop
-      width: calc(100vmin * 0.50)
+    .MyShogiPlayer
+      +touch
+        width: calc(var(--touch_board_width) * 100%)
+      +desktop
+        width: calc(100vmin * 0.50)
 
-  .MyShogiPlayer
-    --sp_board_padding: 0            // 盤の隙間なし
-    --sp_ground_color: transparent   // 畳の色
-    --sp_board_color: transparent    // 盤の色
-    --sp_grid_stroke: 1              // グリッド太さ
-    --sp_grid_outer_stroke: 0        // グリッド外枠太さ
-    --sp_board_aspect_ratio: 100.0   // 盤を正方形化
-    --sp_grid_star: 16%              // 星の大きさ
-
-  .AdjustSlider
-    display: flex
-    justify-content: center
-    align-items: center
-    .b-slider
-      width: 50%
+    .MyShogiPlayer
+      --sp_board_padding: 0            // 盤の隙間なし
+      --sp_ground_color: transparent   // 畳の色
+      --sp_board_color: transparent    // 盤の色
+      --sp_grid_stroke: 1              // グリッド太さ
+      --sp_grid_outer_stroke: 0        // グリッド外枠太さ
+      --sp_board_aspect_ratio: 100.0   // 盤を正方形化
+      --sp_grid_star: 16%              // 星の大きさ
 
   .tweet_box_container
     margin-top: 0.75rem

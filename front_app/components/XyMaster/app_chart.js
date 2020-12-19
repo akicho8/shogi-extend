@@ -127,19 +127,9 @@ export const app_chart = {
     }
   },
 
-  // this.chart_setup(CHART_CONFIG_DEFAULT)
-  // this._chart_config.data = this.time_chart_params
-
   watch: {
-    xy_chart_rule_key() {
-      this.chart_reshow()
-      // this.data_save_to_local_storage()
-    },
-
-    xy_chart_scope_key() {
-      this.chart_reshow()
-      // this.data_save_to_local_storage()
-    },
+    xy_chart_rule_key()  { this.chart_reshow() },
+    xy_chart_scope_key() { this.chart_reshow() },
   },
 
   methods: {
