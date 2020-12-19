@@ -44,10 +44,10 @@ RSpec.describe XyRecord, type: :model do
       XyRuleInfo.redis.flushdb
       XyRuleInfo[:xy_rule100].aggregate
 
-      assert { build(xy_scope_key: "xy_scope_all",   entry_name_unique: "false") == [1, 1, 2, 2, 3, 3] }
-      assert { build(xy_scope_key: "xy_scope_all",   entry_name_unique: "true")  == [1, 1]             }
-      assert { build(xy_scope_key: "xy_scope_today", entry_name_unique: "false") == [2, 2, 3, 3]       }
-      assert { build(xy_scope_key: "xy_scope_today", entry_name_unique: "true")  == [2, 2]             }
+      assert { build(xy_scope_key: "xy_scope_all",   entry_name_uniq_p: "false") == [1, 1, 2, 2, 3, 3] }
+      assert { build(xy_scope_key: "xy_scope_all",   entry_name_uniq_p: "true")  == [1, 1]             }
+      assert { build(xy_scope_key: "xy_scope_today", entry_name_uniq_p: "false") == [2, 2, 3, 3]       }
+      assert { build(xy_scope_key: "xy_scope_today", entry_name_uniq_p: "true")  == [2, 2]             }
     end
   end
 
@@ -58,7 +58,7 @@ RSpec.describe XyRecord, type: :model do
     XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 40, x_count: 0)
     XyRuleInfo.rebuild
     r = XyRecord.last
-    assert { r.rank(xy_scope_key: "xy_scope_all", entry_name_unique: "true") == 2 } # 全体だと40は2位
+    assert { r.rank(xy_scope_key: "xy_scope_all", entry_name_uniq_p: "true") == 2 } # 全体だと40は2位
   end
 
   it "自己ベスト更新" do

@@ -6,8 +6,8 @@ XyRuleInfo[:xy_rule1].aggregate
 
 tp XyRecord.where(xy_rule_key: "xy_rule1").order(spent_sec: "asc").limit(10).collect { |e| e.attributes.slice("entry_name", "spent_sec").merge(score: e.score, rank: e.rank(xy_scope_key: "xy_scope_all")) }
 
-# # tp XyRuleInfo.xy_records_hash(xy_scope_key: "xy_scope_today", entry_name_unique: "true")
-# tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_unique: "true")
+# # tp XyRuleInfo.xy_records_hash(xy_scope_key: "xy_scope_today", entry_name_uniq_p: "true")
+# tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_uniq_p: "true")
 #
 # # tp XyRuleInfo.redis.keys
 #

@@ -91,9 +91,14 @@ import { app_rule_dialog } from "./app_rule_dialog.js"
 
 import ls_support from "@/components/models/ls_support.js"
 
-class XyRuleInfo extends MemoryRecord {}
-class XyScopeInfo extends MemoryRecord {}
-class XyChartScopeInfo extends MemoryRecord {}
+class XyRuleInfo extends MemoryRecord {
+}
+
+class XyScopeInfo extends MemoryRecord {
+}
+
+class XyChartScopeInfo extends MemoryRecord {
+}
 
 const COUNTDOWN_INTERVAL = 0.5  // カウントダウンはN秒毎に進む
 const COUNTDOWN_MAX      = 3    // カウントダウンはNから開始する
@@ -123,7 +128,7 @@ export default {
       x_count:            null, // 不正解数
       key_queue:          null, // PCモードでの押したキー
       micro_seconds:      null, // 経過時間
-      entry_name_unique: false, // プレイヤー別順位ON/OFF
+      entry_name_uniq_p: false, // プレイヤー別順位ON/OFF
       xy_rule_key:        null, // ../../../app/models/xy_rule_info.rb のキー
       xy_scope_key:       null, // ../../../app/models/xy_scope_info.rb のキー
       entry_name:         null, // ランキングでの名前を保持しておく
@@ -162,7 +167,7 @@ export default {
       this.xy_records_hash_update()
     },
 
-    entry_name_unique() {
+    entry_name_uniq_p() {
       this.xy_records_hash_update()
     },
 
@@ -225,7 +230,7 @@ export default {
         const params = {
           xy_records_hash_fetch: true,
           xy_scope_key: this.xy_scope_key,
-          entry_name_unique: this.entry_name_unique,
+          entry_name_uniq_p: this.entry_name_uniq_p,
         }
         return this.$axios.$get("/api/xy.json", {params: params}).then(e => {
           this.xy_records_hash = e
@@ -328,7 +333,7 @@ export default {
       }
       const data = await this.$axios.$post("/api/xy", params)
 
-      this.entry_name_unique = false // 「プレイヤー別順位」の解除
+      this.entry_name_uniq_p = false // 「プレイヤー別順位」の解除
       this.data_update(data)         // ランキングに反映
 
       // ランク内ならランキングのページをそのページに移動する
