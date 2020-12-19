@@ -16,6 +16,7 @@ export default {
 
 <style lang="sass">
 .PageCloseButton
+  z-index: 2
   &.is_absolute
     position: absolute
   &.is_fixed

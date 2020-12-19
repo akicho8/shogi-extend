@@ -407,9 +407,6 @@ $button_z_index: 2
 
 .SwarsBattleShow
   //////////////////////////////////////////////////////////////////////////////// ヘッダー
-  .delete
-    z-index: $button_z_index
-
   .sidebar_toggle_button
     position: absolute
     top: 0
