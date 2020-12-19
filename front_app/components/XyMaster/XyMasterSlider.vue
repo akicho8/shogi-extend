@@ -1,5 +1,5 @@
 <template lang="pug">
-.XyMasterAdjustSlider.is-hidden-desktop(v-if="base.idol_p")
+.XyMasterSlider.is-hidden-desktop(v-if="base.idol_p")
   b-slider(v-model="base.touch_board_width" :min="0" :max="1" :step="0.001" size="is-small")
 </template>
 
@@ -7,17 +7,17 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XyMasterAdjustSlider",
+  name: "XyMasterSlider",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 .STAGE-development
-  .XyMasterAdjustSlider
+  .XyMasterSlider
     border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.XyMasterAdjustSlider
+.XyMasterSlider
   display: flex
   justify-content: center
   align-items: center

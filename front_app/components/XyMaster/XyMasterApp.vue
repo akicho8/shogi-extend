@@ -6,9 +6,8 @@
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'xy'}") 符号の鬼
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
-        b-navbar-item(@click="data_restore_from_hash({})") 変数の初期化
         b-navbar-item(@click="ls_reset") ブラウザに記憶した情報の削除
-        b-navbar-item(@click="persistense_variables_init") 保存可能な変数のリセット
+        b-navbar-item(@click="var_init") 保存可能な変数のリセット
         b-navbar-item ランキングタブの各表示ページ:{{current_pages}}
 
       NavbarItemLogin
@@ -25,7 +24,7 @@
     XyMasterRestart(:base="base" v-if="playing_p")
     .container
       .columns
-        .column.MainColumn
+        .column
           .buttons.is-centered.mb-0(v-if="idol_p")
             b-button(@click="start_handle" type="is-primary") START
 
@@ -59,7 +58,7 @@
             .time_container.fixed_font.is-size-3
               | {{time_format}}
 
-          XyMasterAdjustSlider(:base="base")
+          XyMasterSlider(:base="base")
 
           .box.tweet_box_container(v-if="mode === 'is_mode_goal'")
             | {{summary}}
@@ -67,33 +66,7 @@
 
         XyMasterRanking(:base="base")
 
-      .columns.is-centered(v-show="idol_p")
-        .column.chart_box_container
-          .columns
-            template(v-if="development_p")
-              .column
-                .has-text-centered
-                  b-field.is-inline-flex
-                    b-button(@click="chart_reshow" size="is-small")
-                      | 更新
-            .column
-              .has-text-centered
-                b-field.is-inline-flex
-                  template(v-for="e in XyRuleInfo.values")
-                    b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
-                      | {{e.name}}
-            .column
-              .has-text-centered
-                b-field.is-inline-flex
-                  template(v-for="e in XyChartScopeInfo.values")
-                    b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
-                      | {{e.name}}
-          .columns.is-centered
-            .column.is-half
-              canvas#main_canvas(ref="main_canvas")
-              template(v-if="config.count_all_gteq > 1")
-                .has-text-centered
-                  | {{config.count_all_gteq}}回以上やるとチャートに登場します
+      XyMasterChart(:base="base" ref="XyMasterChart")
   DebugPre {{$data}}
 </template>
 
@@ -260,7 +233,7 @@ export default {
       }
     },
 
-    persistense_variables_init() {
+    var_init() {
       this.xy_scope_key      = null
       this.xy_rule_key       = null
       this.xy_chart_rule_key = null
@@ -369,7 +342,7 @@ export default {
       // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
       this.xy_chart_rule_key = this.xy_rule_key
       this.xy_chart_scope_key = "chart_scope_recently"
-      this.chart_reshow()
+      this.chart_data_get_and_show()
     },
 
     data_update(params) {
@@ -501,7 +474,7 @@ export default {
     },
 
     time_format_from_msec(v) {
-      return dayjs.unix(v).format("mm:ss.SSS")
+      return dayjs.unix(v).format("m:ss.SSS")
     },
 
     time_default_format(v) {
@@ -757,12 +730,6 @@ export default {
   .tweet_box_container
     margin-top: 0.75rem
     white-space: pre-wrap
-
-  .chart_box_container
-    margin-top: $xy_common_gap
-
-  #main_canvas
-    margin: 0 auto
 
   .navbar-item
     img
