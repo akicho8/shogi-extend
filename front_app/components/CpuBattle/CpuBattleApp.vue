@@ -19,7 +19,7 @@
       b-navbar-item.has-text-weight-bold(@click="start_handle" v-if="mode === 'standby'") 対局開始
       b-navbar-item.has-text-weight-bold(@click="give_up_handle" :loading="give_up_processing" v-if="mode === 'playing'") 投了
 
-  MainSection
+  MainSection.is_mobile_padding_zero
     .container
       .columns
         .column
@@ -440,10 +440,6 @@ export default {
 
 <style lang="sass">
 .CpuBattleApp
-  .MainSection
-    +mobile
-      padding: 0
-
   .MyShogiPlayerWrap
     display: flex
     align-items: center

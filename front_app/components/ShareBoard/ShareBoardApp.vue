@@ -72,7 +72,7 @@ client-only
       template(slot="start")
         b-navbar-item(@click="reset_handle") 盤面リセット
 
-    MainSection
+    MainSection.is_mobile_padding_zero
       .container
         .columns.is-centered
           .column.is-8-tablet.is-5-desktop
@@ -496,10 +496,4 @@ export default {
 
   .menu-label:not(:first-child)
     margin-top: 2em
-
-.ShareBoardApp
-  // background-color: change_color($primary, $alpha: 0.1)
-  +mobile
-    .MainSection
-      padding: 0
 </style>

@@ -29,17 +29,7 @@ export default {
 <style lang="sass">
 .navbar.MainNavbar
   +touch
-    // touch以下で is-spaced の左右の padding が外れ navbar-item が画面端にくっついてしまうため少し隙間を入れる
-    padding-left: 24px
-    padding-right: 24px
-  +mobile
-    // さらにモバイル時はさらに上下の隙間がもったいないので is-spaced の上下を無効にする
-    padding-top: 0
-    padding-bottom: 0
-    // モバイルだと左右隙間が開きすぎているように見えるのでもっと端に寄せる
-    // 微調整ではなく0にしたい
-    padding-left: 12px
-    padding-right: 12px
+    padding: 0 // is-spaced を無効化
 
 .STAGE-development
   .navbar.MainNavbar
