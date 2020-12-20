@@ -4,7 +4,7 @@
     | {{base.main_time_as_string}}
     template(v-if="base.debug_read_p")
       | ({{base.share_turn_offset}})
-  MyShogiPlayer(
+  CustomShogiPlayer(
     :sp_mobile_style="'is_mobile_style_off'"
     :key="`quest_${base.question_index}`"
     ref="main_sp"

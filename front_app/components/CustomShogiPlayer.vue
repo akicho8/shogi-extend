@@ -1,5 +1,5 @@
 <template lang="pug">
-ShogiPlayer.MyShogiPlayer(
+ShogiPlayer.CustomShogiPlayer(
   v-bind="component_params"
   v-on="$listeners"
   ref="sp_object"
@@ -10,7 +10,7 @@ ShogiPlayer.MyShogiPlayer(
 import ShogiPlayer from "shogi-player/components/ShogiPlayer.vue"
 
 export default {
-  name: "MyShogiPlayer",
+  name: "CustomShogiPlayer",
   inheritAttrs: false,
   components: {
     ShogiPlayer,
@@ -45,7 +45,7 @@ export default {
 // $sp_assets_dir: "../node_modules/shogi-player/assets"
 // @import "../node_modules/shogi-player/components/ShogiPlayer.sass"
 
-.MyShogiPlayer
+.CustomShogiPlayer
   width: 100%
 
 // bulma の .table のなかにあると td の padding が影響してしまう
@@ -56,6 +56,6 @@ export default {
         padding: 0
 
 .STAGE-development
-  .MyShogiPlayer
+  .CustomShogiPlayer
     // border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

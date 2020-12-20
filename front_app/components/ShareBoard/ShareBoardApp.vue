@@ -83,7 +83,7 @@ client-only
                 span.has-text-grey {{turn_offset_max}}
 
             // sp_bg_variant="is_bg_variant_a"
-            MyShogiPlayer(
+            CustomShogiPlayer(
               :run_mode="run_mode"
               :start_turn="turn_offset"
               :kifu_body="current_sfen"
@@ -487,7 +487,7 @@ export default {
 
 .STAGE-development
   .ShareBoardApp
-    .column, .MyShogiPlayer
+    .column, .CustomShogiPlayer
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .ShareBoardApp-Sidebar

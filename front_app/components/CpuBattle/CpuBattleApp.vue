@@ -23,8 +23,8 @@
     .container
       .columns
         .column
-          .MyShogiPlayerWrap
-            MyShogiPlayer(
+          .CustomShogiPlayerWrap
+            CustomShogiPlayer(
               :kifu_body="current_sfen"
               :human_side_key="human_side_key"
               :key_event_capture="false"
@@ -440,13 +440,13 @@ export default {
 
 <style lang="sass">
 .CpuBattleApp
-  .MyShogiPlayerWrap
+  .CustomShogiPlayerWrap
     display: flex
     align-items: center
     justify-content: center
     flex-direction: column
 
-  .MyShogiPlayer
+  .CustomShogiPlayer
     +tablet
       max-width: 640px - 32px * 3
 
@@ -462,6 +462,6 @@ export default {
 
 .STAGE-development
   .CpuBattleApp
-    .container, .column, .MyShogiPlayer
+    .container, .column, .CustomShogiPlayer
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

@@ -53,7 +53,7 @@
         b-tab-item(:label="`${i === 0 ? '解' : ''}${i + 1}`")
 
     .sp_container
-      MyShogiPlayer(
+      CustomShogiPlayer(
         :sp_mobile_style="'is_mobile_style_off'"
         :run_mode="'play_mode'"
         :kifu_body="selected_sfen"

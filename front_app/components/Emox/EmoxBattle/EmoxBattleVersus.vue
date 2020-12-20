@@ -9,8 +9,8 @@
 
   MainSection.is_mobile_padding_zero
     .container
-      .MyShogiPlayerWrap
-        MyShogiPlayer(
+      .CustomShogiPlayerWrap
+        CustomShogiPlayer(
           :run_mode="'play_mode'"
           :kifu_body="base.vs_share_sfen"
           :summary_show="false"
@@ -80,17 +80,17 @@ export default {
     .navbar > .container .navbar-menu, .container > .navbar .navbar-menu
       margin-right: 0
 
-  .MyShogiPlayerWrap
+  .CustomShogiPlayerWrap
     display: flex
     align-items: center
     justify-content: center
     flex-direction: column
     width: 100%
 
-    .MyShogiPlayer
+    .CustomShogiPlayer
       max-width: 640px
 
 .STAGE-development
-  .MyShogiPlayerWrap, .MyShogiPlayer
+  .CustomShogiPlayerWrap, .CustomShogiPlayer
     border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

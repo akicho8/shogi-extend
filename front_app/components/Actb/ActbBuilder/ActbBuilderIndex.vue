@@ -136,7 +136,7 @@
           //- <p class="image is-64x64">
           //-   <img src="/static/img/placeholder-128x128.png">
           //- </p>
-          MyShogiPlayer(
+          CustomShogiPlayer(
             :sp_mobile_style="'is_mobile_style_off'"
             :run_mode="'view_mode'"
             :kifu_body="props.row.init_sfen"
@@ -336,7 +336,7 @@ export default {
           // 行が上下が広がってしまうのを防ぐ
           height: auto
 
-    // モバイルでは MyShogiPlayer を横幅最大にしたいので横のパディングを取る
+    // モバイルでは CustomShogiPlayer を横幅最大にしたいので横のパディングを取る
     +mobile
       .detail
         td, .detail-container

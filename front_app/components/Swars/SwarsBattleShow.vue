@@ -44,8 +44,8 @@
         //- .battle_title_container
         //-   span.battle_title.is-size-7.has-text-weight-bold
         //-     | {{record.title}}
-        .MyShogiPlayerWrap
-          MyShogiPlayer(
+        .CustomShogiPlayerWrap
+          CustomShogiPlayer(
             sp_layer="is_layer_off"
             sp_layout="is_horizontal"
             sp_fullheight="is_fullheight_off"
@@ -422,14 +422,14 @@ $button_z_index: 2
       padding: 0 0 1.5rem
 
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
-  .MyShogiPlayerWrap
+  .CustomShogiPlayerWrap
     display: flex
     justify-content: center
     align-items: center
     flex-direction: column
     // height: 100vh               // app_buttons_container を画面外にする
 
-  .MyShogiPlayer
+  .CustomShogiPlayer
     --sp_stand_piece_w_mobile: 30px
     --sp_stand_piece_h_mobile: 40px
     +mobile

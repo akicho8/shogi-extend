@@ -1,6 +1,6 @@
 <template lang="pug">
 .ActbBuilderEditHaiti.mt-4
-  MyShogiPlayer(
+  CustomShogiPlayer(
     :sp_mobile_style="'is_mobile_style_off'"
     :run_mode="'edit_mode'"
     :kifu_body="new_kifu_body"

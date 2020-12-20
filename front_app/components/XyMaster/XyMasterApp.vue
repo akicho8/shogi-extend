@@ -41,9 +41,9 @@
             .xy_human_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p")
               | {{xy_human}}
 
-            .MyShogiPlayerWrap
+            .CustomShogiPlayerWrap
               XyMasterCountdown(:base="base")
-              MyShogiPlayer(
+              CustomShogiPlayer(
                 ref="main_sp"
                 :kifu_body="'position sfen 9/9/9/9/9/9/9/9/9 b - 1'"
                 :summary_show="false"
@@ -677,7 +677,7 @@ export default {
 
 .STAGE-development
   .XyMasterApp
-    .column, .buttons, .MyShogiPlayerWrap, .time_container, .xy_human_container
+    .column, .buttons, .CustomShogiPlayerWrap, .time_container, .xy_human_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .XyMasterApp
@@ -708,7 +708,7 @@ export default {
       line-height: 100%
       margin-top: $xy_board_top_bottom_gap
 
-  .MyShogiPlayerWrap
+  .CustomShogiPlayerWrap
     width: 100%
 
     position: relative          // カウントダウン領域の基点にするため
@@ -718,13 +718,13 @@ export default {
     align-items: center
     flex-direction: column
 
-    .MyShogiPlayer
+    .CustomShogiPlayer
       +touch
         width: calc(var(--touch_board_width) * 100%)
       +desktop
         width: calc(100vmin * 0.50)
 
-    .MyShogiPlayer
+    .CustomShogiPlayer
       // --sp_board_padding: 0            // 盤の隙間なし
       // --sp_ground_color: transparent   // 畳の色
       --sp_grid_outer_stroke: 0
