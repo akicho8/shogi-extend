@@ -1,42 +1,42 @@
 <template lang="pug">
 .CpuBattleApp
-  b-navbar(fixed-bottom v-if="development_p && (mode === 'playing' || mode === 'standby')")
-    b-navbar-item(type="is-primary" @click="start_handle" :rounded="true" v-if="mode === 'standby'") 対局開始
-    b-navbar-item(@click="give_up_handle" :rounded="true" :loading="give_up_processing" v-if="mode === 'playing'") 投了
-    b-navbar-item(@click="candidate_handle" :loading="candidate_processing") 形勢判断
-    b-navbar-item(@click="break_handle") 終了
-    b-navbar-item(@click="restart_handle") 再挑戦
-    b-navbar-item(@click="one_hand_exec") 1手指す
-    b-navbar-item(@click="retract_a_move") 待った
-    b-navbar-item(@click="judge_dialog_display({judge_key: 'win', message: 'かち'})") win
-    b-navbar-item(@click="judge_dialog_display({judge_key: 'lose', message: 'まけ'})") lose
+  b-navbar(type="is-dark" fixed-bottom v-if="development_p && (mode === 'playing' || mode === 'standby')")
+    template(slot="start")
+      b-navbar-item(@click="candidate_handle" :loading="candidate_processing") 形勢判断
+      b-navbar-item(@click="break_handle") 終了
+      b-navbar-item(@click="restart_handle") 再挑戦
+      b-navbar-item(@click="one_hand_exec") 1手指す
+      b-navbar-item(@click="retract_a_move") 待った
+      b-navbar-item(@click="judge_dialog_display({judge_key: 'win', message: 'かち'})") win
+      b-navbar-item(@click="judge_dialog_display({judge_key: 'lose', message: 'まけ'})") lose
 
   MainNavbar
     template(slot="brand")
-      NavbarItemHome
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'cpu-battle'}") CPU対戦
+      template(v-if="mode === 'standby'")
+        NavbarItemHome
+        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'cpu-battle'}") CPU対戦
     template(slot="end")
       b-navbar-item.has-text-weight-bold(@click="start_handle" v-if="mode === 'standby'") 対局開始
+      b-navbar-item.has-text-weight-bold(@click="give_up_handle" :loading="give_up_processing" v-if="mode === 'playing'") 投了
 
   MainSection
     .container
       .columns
-        .column.MyShogiPlayerWrap
-          MyShogiPlayer(
-            :kifu_body="current_sfen"
-            :human_side_key="human_side_key"
-            :key_event_capture="false"
-            :sfen_show="false"
-            :slider_show="development_p || mode === 'standby'"
-            :controller_show="development_p || mode === 'standby'"
-            :size="'medium'"
-            :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
-            :flip.sync="flip"
-            :summary_show="false"
-            @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
-            ref="main_sp"
-          )
-
+        .column
+          .MyShogiPlayerWrap
+            MyShogiPlayer(
+              :kifu_body="current_sfen"
+              :human_side_key="human_side_key"
+              :key_event_capture="false"
+              :sfen_show="false"
+              :slider_show="mode === 'standby'"
+              :controller_show="mode === 'standby'"
+              :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
+              :flip.sync="flip"
+              :summary_show="false"
+              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+              ref="main_sp"
+            )
           .has-text-centered.mt-3(v-if="mode === 'standby'")
             .mx-1.is-size-7.has-text-grey CPUの成績
             .mx-1.is-size-6.has-text-weight-bold {{judge_group.lose || 0}}勝{{judge_group.win || 0}}敗
@@ -440,21 +440,9 @@ export default {
 
 <style lang="sass">
 .CpuBattleApp
-  min-height: 100vh
-
   .MainSection
-    +tablet
-      padding: 2.8rem 0 0
-      .container.is-fluid
-        padding-left: 1.8rem
-        padding-right: 1.8rem
-        .column
-          margin-left: 1rem
-          margin-right: 1rem
     +mobile
-      padding: 1rem 0 0
-      .container
-        padding: 0
+      padding: 0
 
   .MyShogiPlayerWrap
     display: flex
@@ -464,7 +452,7 @@ export default {
 
   .MyShogiPlayer
     +tablet
-      max-width: 640px - 32px * 2 - 16px - 16px
+      max-width: 640px - 32px * 3
 
   .table_format_area
     line-height: 100%
