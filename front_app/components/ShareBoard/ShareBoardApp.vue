@@ -22,6 +22,7 @@ client-only
           b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.run_mode === 'edit_mode'}")
           b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
         b-menu-list(label="Export")
+          b-menu-item(label="局面URLコピー" @click="current_url_copy_handle")
           b-menu-item(label="KIF コピー" @click="kifu_copy_handle('kif')")
           b-menu-item(label="KIF ダウンロード" :href="kif_download_url" @click="sound_play('click')")
           b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="shift_jis_kif_download_url" @click="sound_play('click')")
@@ -224,6 +225,12 @@ export default {
     kifu_copy_handle(fomrat) {
       this.sound_play("click")
       this.general_kifu_copy(this.current_body, {to_format: fomrat})
+    },
+
+    // 局面URLコピー
+    current_url_copy_handle() {
+      this.sound_play("click")
+      this.clipboard_copy({text: this.current_url})
     },
 
     // ツイートする
