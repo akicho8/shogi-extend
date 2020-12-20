@@ -1,59 +1,45 @@
 <template lang="pug">
 .CpuBattleApp
+  b-navbar(fixed-bottom v-if="development_p && (mode === 'playing' || mode === 'standby')")
+    b-navbar-item(type="is-primary" @click="start_handle" :rounded="true" v-if="mode === 'standby'") 対局開始
+    b-navbar-item(@click="give_up_handle" :rounded="true" :loading="give_up_processing" v-if="mode === 'playing'") 投了
+    b-navbar-item(@click="candidate_handle" :loading="candidate_processing") 形勢判断
+    b-navbar-item(@click="break_handle") 終了
+    b-navbar-item(@click="restart_handle") 再挑戦
+    b-navbar-item(@click="one_hand_exec") 1手指す
+    b-navbar-item(@click="retract_a_move") 待った
+    b-navbar-item(@click="judge_dialog_display({judge_key: 'win', message: 'かち'})") win
+    b-navbar-item(@click="judge_dialog_display({judge_key: 'lose', message: 'まけ'})") lose
+
   MainNavbar
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'cpu-battle'}") CPU対戦
+    template(slot="end")
+      b-navbar-item.has-text-weight-bold(@click="start_handle" v-if="mode === 'standby'") 対局開始
+
   MainSection
-    .container.is-fluid
-      .columns.is-multiline.is-gapless
-        .column.is_left_column
-          template(v-if="mode === 'playing' || mode === 'standby'")
-            nav.level.is-mobile
-              .level-item
-                .buttons
-                  template(v-if="mode === 'standby'")
-                    b-button(type="is-primary" @click="start_handle" :rounded="true")
-                      | 対局開始
-                  template(v-if="mode === 'playing'")
-                    b-button(@click="give_up_handle" :rounded="true" :loading="give_up_processing")
-                      | 投了
-                    template(v-if="development_p")
-                      b-button(@click="candidate_handle" :loading="candidate_processing")
-                        | 形勢判断
-                      b-button(@click="break_handle")
-                        | 終了
-                      b-button(@click="restart_handle")
-                        | 再挑戦
-                      b-button(@click="one_hand_exec")
-                        | 1手指す
-                      b-button(@click="retract_a_move")
-                        | 待った
-                      b-button(@click="judge_dialog_display({judge_key: 'win', message: 'かち'})")
-                        | win
-                      b-button(@click="judge_dialog_display({judge_key: 'lose', message: 'まけ'})")
-                        | lose
+    .container
+      .columns
+        .column.MyShogiPlayerWrap
+          MyShogiPlayer(
+            :kifu_body="current_sfen"
+            :human_side_key="human_side_key"
+            :key_event_capture="false"
+            :sfen_show="false"
+            :slider_show="development_p || mode === 'standby'"
+            :controller_show="development_p || mode === 'standby'"
+            :size="'medium'"
+            :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
+            :flip.sync="flip"
+            :summary_show="false"
+            @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+            ref="main_sp"
+          )
 
-            MyShogiPlayer(
-              :kifu_body="current_sfen"
-              :human_side_key="human_side_key"
-              :piece_variant="sp_params.piece_variant"
-              :key_event_capture="false"
-              :sfen_show="false"
-              :slider_show="development_p || mode === 'standby'"
-              :controller_show="development_p || mode === 'standby'"
-              :size="'medium'"
-              :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
-              :flip.sync="flip"
-              :setting_button_show="false"
-              :summary_show="development_p"
-              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
-              ref="main_sp"
-            )
-
-            .has-text-centered.mt-3(v-if="mode === 'standby'")
-              .mx-1.is-size-7.has-text-grey CPUの成績
-              .mx-1.is-size-6.has-text-weight-bold {{judge_group.lose || 0}}勝{{judge_group.win || 0}}敗
+          .has-text-centered.mt-3(v-if="mode === 'standby'")
+            .mx-1.is-size-7.has-text-grey CPUの成績
+            .mx-1.is-size-6.has-text-weight-bold {{judge_group.lose || 0}}勝{{judge_group.win || 0}}敗
 
         .column.is-one-third
           .box(v-if="mode === 'standby'")
@@ -76,24 +62,6 @@
                 template(v-for="e in CpuPresetInfo.values")
                   b-radio(v-model="cpu_preset_key" :native-value="e.key" size="is-small")
                     | {{e.name}}
-            template(v-if="development_p")
-              hr
-              b-field(label="スタイル" custom-class="is-small")
-                .block
-                  template(v-for="e in BoardStyleInfo.values")
-                    b-radio(v-model="sp_params.board_style_key" :native-value="e.key"  size="is-small")
-                      | {{e.name}}
-              b-button(@click="bg_variant_reset_handle" size="is-small")
-                | ランダム盤
-
-            template(v-if="development_p")
-              | &nbsp;
-              | &nbsp;
-              b-tooltip(label="指し手の読み上げ")
-                template(v-if="yomiage_mode")
-                  b-button(@click="yomiage_mode_set(false)" size="is-small" icon-left="volume-high")
-                template(v-if="!yomiage_mode")
-                  b-button(@click="yomiage_mode_set(true)" size="is-small" icon-left="volume-off")
 
           template(v-if="mode === 'playing'")
             template(v-if="candidate_rows")
@@ -144,14 +112,11 @@ import _ from "lodash"
 import { CpuBrainInfo    } from "./models/CpuBrainInfo.js"
 import { CpuStrategyInfo } from "./models/CpuStrategyInfo.js"
 import { CpuPresetInfo   } from "./models/CpuPresetInfo.js"
-import { BoardStyleInfo  } from "./models/BoardStyleInfo.js"
 
 import PresetInfo      from "shogi-player/components/models/preset_info.js"
 import Location        from "shogi-player/components/models/location.js"
 
 import { cpu_battle_force_chart } from "./cpu_battle_force_chart.js"
-
-const BG_VARIANT_AVAILABLE_LIST = ["a", "b", "c", "d", "e", "f"] // 有効な背景の種類
 
 export default {
   name: "CpuBattleApp",
@@ -174,7 +139,6 @@ export default {
       cpu_strategy_key: this.config.cpu_strategy_key, // 戦法
       cpu_preset_key:   this.config.cpu_preset_key,   // 手合
       cpu_strategy_random_number: null,               // オールラウンド時の戦法選択用乱数
-      yomiage_mode: true,
 
       // 候補手
       candidate_report: null, // テキスト
@@ -187,8 +151,6 @@ export default {
       // shogi-player 用パラメータ
       current_sfen: null,               // 譜面
       flip: null,                       // 駒落ちなら反転させる
-      sp_params: this.config.sp_params, // スタイル(createdで反映させるとwatchが反応してしまう)
-      bg_variant: null,                 // 背景の種類
       human_side_key: null,             // 人間が操作する側を絞る
     }
   },
@@ -198,13 +160,9 @@ export default {
     CpuStrategyInfo.memory_record_reset(this.config.cpu_strategy_infos)
     CpuPresetInfo.memory_record_reset(this.config.cpu_preset_infos)
 
-    this.board_style_info_reflection()
-
     this.mode = "standby"
 
     this.current_sfen_set()
-
-    this.bg_variant = "a"
 
     this.give_up_processing = false
     this.candidate_processing = false
@@ -221,10 +179,8 @@ export default {
     CpuBrainInfo()    { return CpuBrainInfo    },
     CpuStrategyInfo() { return CpuStrategyInfo },
     CpuPresetInfo()   { return CpuPresetInfo   },
-    BoardStyleInfo()  { return BoardStyleInfo  },
     Location()        { return Location        },
 
-    board_style_info()  { return BoardStyleInfo.fetch(this.sp_params.board_style_key) },
     cpu_brain_info()    { return CpuBrainInfo.fetch(this.cpu_brain_key)               },
     cpu_strategy_info() { return CpuStrategyInfo.fetch(this.cpu_strategy_key)         },
     cpu_preset_info()   { return CpuPresetInfo.fetch(this.cpu_preset_key)             },
@@ -254,7 +210,6 @@ export default {
         cpu_strategy_key:           this.cpu_strategy_key,
         cpu_strategy_random_number: this.cpu_strategy_random_number,
         cpu_preset_key:             this.cpu_preset_key,
-        yomiage_mode:               this.yomiage_mode,
       }
     },
   },
@@ -271,12 +226,6 @@ export default {
     cpu_preset_key() {
       this.current_sfen_set()
       this.talk(`${this.cpu_preset_info.name}に変更しました`)
-    },
-
-    // 盤面
-    "sp_params.board_style_key": function() {
-      this.board_style_info_reflection()
-      this.talk(`${this.board_style_info.name}に変更しました`)
     },
   },
 
@@ -360,26 +309,6 @@ export default {
       this.$refs.main_sp.$refs.pure_sp.api_retract_a_move()
     },
 
-    // 背景ランダム設定
-    bg_variant_reset_handle() {
-      while (true) {
-        let v = _.sample(BG_VARIANT_AVAILABLE_LIST)
-        if (this.bg_variant !== v) {
-          this.sound_play("click")
-          this.bg_variant = v
-          break
-        }
-      }
-    },
-
-    yomiage_mode_set(mode) {
-      this.yomiage_mode = mode
-    },
-
-    board_style_info_reflection() {
-      this.board_style_info.func(this.sp_params)
-    },
-
     easy_dialog(params) {
       params = {
         ...params,
@@ -431,9 +360,7 @@ export default {
       if (this.mode === "playing") {
         // CPUの指し手を読み上げる
         if (e["yomiage"]) {
-          if (this.yomiage_mode) {
-            this.talk(e["yomiage"])
-          }
+          this.talk(e["yomiage"])
         }
 
         // 指した後の局面を反映
@@ -529,7 +456,7 @@ export default {
       .container
         padding: 0
 
-  .is_left_column
+  .MyShogiPlayerWrap
     display: flex
     align-items: center
     justify-content: center
@@ -551,10 +478,6 @@ export default {
 
 .STAGE-development
   .CpuBattleApp
-    .MainSection
+    .container, .column, .MyShogiPlayer
       border: 1px dashed change_color($primary, $alpha: 0.5)
-      .container
-        border: 1px dashed change_color($danger, $alpha: 0.5)
-        .column
-          border: 1px dashed change_color($success, $alpha: 0.5)
 </style>
