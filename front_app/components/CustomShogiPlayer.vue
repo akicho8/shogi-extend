@@ -11,7 +11,7 @@ import ShogiPlayer from "shogi-player/components/ShogiPlayer.vue"
 
 export default {
   name: "CustomShogiPlayer",
-  inheritAttrs: false,
+  inheritAttrs: false, // すべて $attrs に入れるため
   components: {
     ShogiPlayer,
   },
@@ -39,23 +39,13 @@ export default {
 </script>
 
 <style lang="sass">
-// TODO: ShogiPlayer.sass からの相対パスで画像が参照できるはずだけど謎のエラーがでる。
-// なので仕方なく $sp_assets_dir にここからの相対パスを設定して向こう側で参照するようにしている。
-// どうにかしたい。
-// $sp_assets_dir: "../node_modules/shogi-player/assets"
-// @import "../node_modules/shogi-player/components/ShogiPlayer.sass"
-
 .CustomShogiPlayer
   width: 100%
 
 // bulma の .table のなかにあると td の padding が影響してしまう
 .table
   .detail-container
-    .shogi-player
+    .CustomShogiPlayer
       td, th
         padding: 0
-
-.STAGE-development
-  .CustomShogiPlayer
-    // border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
