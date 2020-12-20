@@ -1,23 +1,31 @@
 <template lang="pug">
 .EmoxBattleVersus
-  EmoxBattleVersusMembership.mt-3(:base="base" :membership="base.opponent_membership")
+  //- EmoxBattleVersusMembership.mt-3(:base="base" :membership="base.opponent_membership")
 
-  .MyShogiPlayerWrap
-    MyShogiPlayer.mt-3(
-      :run_mode="'play_mode'"
-      :kifu_body="base.vs_share_sfen"
-      :summary_show="false"
-      :setting_button_show="false"
-      :human_side_key="current_human_side_key"
-      :flip="current_flip"
-      @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
-    )
+  b-navbar(type="is-primary" wrapper-class="container")
+    template(slot="end")
+      b-navbar-item.has-text-weight-bold(@click="base.vs_func_toryo_handle(false)") 投了
+      b-navbar-item.has-text-weight-bold(@click="base.vs_func_toryo_handle(true)" v-if="development_p") 相手投了
 
-  EmoxBattleVersusMembership.mt-3(:base="base" :membership="base.current_membership")
+  MainSection.is_mobile_padding_zero
+    .container
+      .MyShogiPlayerWrap
+        MyShogiPlayer(
+          :run_mode="'play_mode'"
+          :kifu_body="base.vs_share_sfen"
+          :summary_show="false"
+          :setting_button_show="false"
+          :human_side_key="current_human_side_key"
+          :flip="current_flip"
+          @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
+          :player_info="player_info"
+        )
 
-  .buttons.is-centered.are-small.mt-3
-    b-button.has-text-weight-bold(@click="base.vs_func_toryo_handle(false)") 投了
-    b-button.has-text-weight-bold(@click="base.vs_func_toryo_handle(true)" v-if="development_p") 相手投了
+      //- EmoxBattleVersusMembership.mt-3(:base="base" :membership="base.current_membership")
+
+      //- .buttons.is-centered.are-small.mt-3
+      //-   b-button.has-text-weight-bold(@click="base.vs_func_toryo_handle(false)") 投了
+      //-   b-button.has-text-weight-bold(@click="base.vs_func_toryo_handle(true)" v-if="development_p") 相手投了
 
   template(v-if="development_p && base.chess_clock")
     .buttons.are-small.is-centered
@@ -39,6 +47,7 @@
 
 <script>
 import { support_child } from "../support_child.js"
+import Location from "shogi-player/components/models/location.js"
 
 export default {
   name: "EmoxBattleVersus",
@@ -50,6 +59,16 @@ export default {
     current_flip() {
       return this.base.current_membership.location_key === "white"
     },
+    player_info() {
+      if (this.base.chess_clock) {
+        return this.base.chess_clock.single_clocks.reduce((a, e, i) => {
+          return {
+            ...a,
+            [Location.fetch(i).key]: {time: e.to_time_format},
+          }
+        }, {})
+      }
+    },
   },
 }
 </script>
@@ -57,12 +76,21 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .EmoxBattleVersus
+  +mobile
+    .navbar > .container .navbar-menu, .container > .navbar .navbar-menu
+      margin-right: 0
+
   .MyShogiPlayerWrap
     display: flex
     align-items: center
     justify-content: center
     flex-direction: column
     width: 100%
+
     .MyShogiPlayer
       max-width: 640px
+
+.STAGE-development
+  .MyShogiPlayerWrap, .MyShogiPlayer
+    border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

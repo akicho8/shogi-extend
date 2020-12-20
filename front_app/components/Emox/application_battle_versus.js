@@ -21,6 +21,10 @@ export const application_battle_versus = {
       }
     },
 
+    membership_clock_time_format(membership) {
+      return this.chess_clock.single_clocks[membership.position].to_time_format
+    },
+
     vs_func_init() {
       // this.chess_clock.initial_boot_from(this.current_membership.location.code)
       this.chess_clock_free()
