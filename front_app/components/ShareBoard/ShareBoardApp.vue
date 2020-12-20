@@ -32,18 +32,20 @@ client-only
           b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
           b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
 
-    b-navbar(type="is-dark" wrapper-class="container")
-      template(slot="start")
-        NavbarItemHome
-        b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
-      template(slot="end")
-        b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
-          b-icon(icon="menu")
+    //- b-navbar(type="is-dark" wrapper-class="container")
+    //-   template(slot="start")
+    //-     NavbarItemHome
+    //-     b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
+    //-   template(slot="end")
+    //-     b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
+    //-       b-icon(icon="menu")
 
     MainNavbar
       template(slot="brand")
         NavbarItemHome
-        b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
+        b-navbar-item.has-text-weight-bold(@click="title_edit")
+          | {{current_title}}
+          span.mx-1(v-if="run_mode === 'play_mode'") \#{{turn_offset}}
       template(slot="end")
         b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
           b-icon(icon="menu")
@@ -73,8 +75,8 @@ client-only
     MainSection
       .container
         .columns.is-centered
-          .column.is-8-tablet.is-6-desktop
-            .turn_container.has-text-centered(v-if="run_mode === 'play_mode'")
+          .column.is-8-tablet.is-5-desktop
+            .turn_container.has-text-centered(v-if="run_mode === 'play_mode' && false")
               span.turn_offset.has-text-weight-bold {{turn_offset}}
               template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
                 span.mx-1.has-text-grey /
@@ -83,7 +85,6 @@ client-only
             // sp_bg_variant="is_bg_variant_a"
             MyShogiPlayer(
               :run_mode="run_mode"
-              :debug_mode="false"
               :start_turn="turn_offset"
               :kifu_body="current_sfen"
               :summary_show="false"
@@ -497,7 +498,8 @@ export default {
     margin-top: 2em
 
 .ShareBoardApp
+  // background-color: change_color($primary, $alpha: 0.1)
   +mobile
     .MainSection
-      padding: 2rem 0 0
+      padding: 0
 </style>
