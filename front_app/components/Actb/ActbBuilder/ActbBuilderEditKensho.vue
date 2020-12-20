@@ -4,6 +4,7 @@
     | {{bapp.question.direction_message}}
 
   MyShogiPlayer(
+    :sp_mobile_style="'is_mobile_style_off'"
     :run_mode="'play_mode'"
     :kifu_body="bapp.question.init_sfen"
     :flip_if_white="true"

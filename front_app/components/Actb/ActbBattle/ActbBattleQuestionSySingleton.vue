@@ -8,6 +8,7 @@
     .status_line2.has-text-centered.has-text-weight-bold
       | {{base.main_time_as_string}}
     MyShogiPlayer(
+      :sp_mobile_style="'is_mobile_style_off'"
       :run_mode="'play_mode'"
       :kifu_body="base.current_question.init_sfen"
       :flip_if_white="true"
@@ -16,7 +17,7 @@
       :human_side_key="'none'"
     )
     .wakatta_button.has-text-centered.mt-3
-      b-button.has-text-weight-bold(@click="base.answer_button_push_handle(false)" type="is-primary" size="is-large" :disabled="base.current_mi.otetuki_p(base.current_question.id)") わかった
+      b-button.has-text-weight-bold(@click="base.answer_button_push_handle(false)" type="is-primary" size="is-medium" :disabled="base.current_mi.otetuki_p(base.current_question.id)") わかった
       b-button.has-text-weight-bold(@click="base.skip_handle(false)" v-if="false") SKIP
 
   template(v-if="base.x_mode === 'x2_play'")
@@ -25,6 +26,7 @@
       template(v-if="base.debug_read_p")
         | ({{base.share_turn_offset}})
     MyShogiPlayer(
+      :sp_mobile_style="'is_mobile_style_off'"
       :key="`quest_${base.question_index}`"
       :run_mode="'play_mode'"
       :kifu_body="base.current_question.init_sfen"
@@ -37,12 +39,13 @@
       @update:play_mode_advanced_full_moves_sfen="base.play_mode_advanced_full_moves_sfen_set"
     )
     .mt-3.has-text-centered
-      b-button(@click="base.x2_play_timeout_handle(false)" size="is-large" :disabled="base.ops_interval_total < base.config.singleton_giveup_effective_seconds") あきらめる
+      b-button(@click="base.x2_play_timeout_handle(false)" size="is-medium" :disabled="base.ops_interval_total < base.config.singleton_giveup_effective_seconds") あきらめる
 
   template(v-if="base.x_mode === 'x3_see'")
     .status_line2.has-text-centered.has-text-weight-bold
       | 相手が操作中 ({{base.share_turn_offset}}手目)
     MyShogiPlayer(
+      :sp_mobile_style="'is_mobile_style_off'"
       :run_mode="'play_mode'"
       :kifu_body="base.share_sfen"
       :flip_if_white="true"

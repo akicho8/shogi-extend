@@ -1,5 +1,5 @@
 <template lang="pug">
-.actb.ActbQuestionShow.modal-card
+.ActbApp.ActbQuestionShow.modal-card
   .modal-card-body.box
     //- // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     PageCloseButton(@click="delete_click_handle" position="is_absolute")
@@ -54,6 +54,7 @@
 
     .sp_container
       MyShogiPlayer(
+        :sp_mobile_style="'is_mobile_style_off'"
         :run_mode="'play_mode'"
         :kifu_body="selected_sfen"
         :flip_if_white="true"

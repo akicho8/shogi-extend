@@ -15,6 +15,11 @@ export default {
   components: {
     ShogiPlayer,
   },
+  methods: {
+    sp_object() {
+      return this.$refs.pure_sp
+    },
+  },
   computed: {
     component_params() {
       return {
