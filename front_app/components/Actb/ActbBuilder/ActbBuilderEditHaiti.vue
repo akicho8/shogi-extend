@@ -14,21 +14,21 @@
     )
   .footer_buttons
     .buttons.has-addons.is-centered.are-small.mt-3
-      b-button(@click="$refs.main_sp.$refs.pure_sp.mediator.shuffle_apply(3)") 3
-      b-button(@click="$refs.main_sp.$refs.pure_sp.mediator.shuffle_apply(4)") 4
-      b-button(@click="$refs.main_sp.$refs.pure_sp.mediator.shuffle_apply(5)") 5
-      b-button(@click="$refs.main_sp.$refs.pure_sp.mediator.shuffle_apply(6)") 6
+      b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(3)") 3
+      b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(4)") 4
+      b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(5)") 5
+      b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(6)") 6
       .ml-1
-      b-button(icon-left="arrow-left"  @click="$refs.main_sp.$refs.pure_sp.mediator.slide_xy(-1, 0)")
-      b-button(icon-left="arrow-down"  @click="$refs.main_sp.$refs.pure_sp.mediator.slide_xy(0, 1)")
-      b-button(icon-left="arrow-up"    @click="$refs.main_sp.$refs.pure_sp.mediator.slide_xy(0, -1)")
-      b-button(icon-left="arrow-right" @click="$refs.main_sp.$refs.pure_sp.mediator.slide_xy(1, 0)")
+      b-button(icon-left="arrow-left"  @click="$refs.main_sp.sp_object().mediator.slide_xy(-1, 0)")
+      b-button(icon-left="arrow-down"  @click="$refs.main_sp.sp_object().mediator.slide_xy(0, 1)")
+      b-button(icon-left="arrow-up"    @click="$refs.main_sp.sp_object().mediator.slide_xy(0, -1)")
+      b-button(icon-left="arrow-right" @click="$refs.main_sp.sp_object().mediator.slide_xy(1, 0)")
 
     .buttons.is-centered.are-small.is-marginless.mt-3
       PiyoShogiButton(:href="piyo_shogi_app_with_params_url" :icon_only="true")
-      b-button(@click="$refs.main_sp.$refs.pure_sp.mediator.king_formation_auto_set()") 玉
+      b-button(@click="$refs.main_sp.sp_object().mediator.king_formation_auto_set()") 玉
       KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank" :icon_only="true")
-      b-button(@click="$refs.main_sp.$refs.pure_sp.mediator.king_formation_auto_unset()") 収
+      b-button(@click="$refs.main_sp.sp_object().mediator.king_formation_auto_unset()") 収
       KifCopyButton(@click="kifu_copy_handle") コピー
       b-button(tag="a" href="http://www.kukiminsho.com/tdb/searches/" target="_blank" size="is-small" v-if="development_p") 同
 
@@ -138,7 +138,7 @@ export default {
 
     // 駒箱に足りない駒を補充
     piece_box_piece_couns_adjust() {
-      // this.$nextTick(() => this.$refs.main_sp.$refs.pure_sp.mediator.piece_box_piece_couns_adjust())
+      // this.$nextTick(() => this.$refs.main_sp.sp_object().mediator.piece_box_piece_couns_adjust())
     },
 
   },

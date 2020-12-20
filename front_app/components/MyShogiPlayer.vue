@@ -2,7 +2,7 @@
 ShogiPlayer.MyShogiPlayer(
   v-bind="component_params"
   v-on="$listeners"
-  ref="pure_sp"
+  ref="sp_object"
   )
 </template>
 
@@ -17,19 +17,23 @@ export default {
   },
   methods: {
     sp_object() {
-      return this.$refs.pure_sp
+      const v = this.$refs.sp_object
+      this.__assert__(v)
+      return v
     },
   },
   computed: {
     component_params() {
+      return {...this.default_params, ...this.$attrs}
+    },
+    default_params() {
       return {
         sp_layout: "is_horizontal",
         setting_button_show: this.development_p,
         sound_effect: true,
         volume: 0.5,
-        ...this.$attrs,
       }
-    }
+    },
   },
 }
 </script>

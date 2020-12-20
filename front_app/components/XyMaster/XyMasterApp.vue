@@ -492,7 +492,7 @@ export default {
 
     // computed 側にすると動かなくなるので注意
     sp_object() {
-      return this.$refs.main_sp.$refs.pure_sp
+      return this.$refs.main_sp.sp_object()
     },
   },
 

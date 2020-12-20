@@ -238,8 +238,8 @@ export default {
       this.current_sfen = this.preset_info.sfen                     // 手合割に対応する盤面設定
       this.flip = (this.preset_info.first_location_key === "white") // 駒落ちなら反転して上手を持つ
       this.human_side_key = this.preset_info.first_location_key     // 人間側だけの操作にする
-      // this.$nextTick(() => this.$refs.main_sp.$refs.pure_sp.current_turn_set(0))  // 0手目の局面に戻す
-      // this.$nextTick(() => this.$refs.main_sp.$refs.pure_sp.api_board_turn_set(0))  // 0手目の局面に戻す
+      // this.$nextTick(() => this.$refs.main_sp.sp_object().current_turn_set(0))  // 0手目の局面に戻す
+      // this.$nextTick(() => this.$refs.main_sp.sp_object().api_board_turn_set(0))  // 0手目の局面に戻す
     },
 
     // 再挑戦
@@ -301,12 +301,12 @@ export default {
 
     // 1手実行
     one_hand_exec() {
-      this.play_mode_advanced_full_moves_sfen_set(this.$refs.main_sp.$refs.pure_sp.play_mode_full_moves_sfen)
+      this.play_mode_advanced_full_moves_sfen_set(this.$refs.main_sp.sp_object().play_mode_full_moves_sfen)
     },
 
     // 待った
     retract_a_move() {
-      this.$refs.main_sp.$refs.pure_sp.api_retract_a_move()
+      this.$refs.main_sp.sp_object().api_retract_a_move()
     },
 
     easy_dialog(params) {
@@ -325,8 +325,8 @@ export default {
 
       // standby にすると shogi-player を view_mode に切り替える
       // そのとき局面が0手目になってしまうので、最後の局面にする
-      this.$nextTick(() => this.$refs.main_sp.$refs.pure_sp.api_board_turn_set(10000))
-      // this.$nextTick(() => this.$refs.main_sp.$refs.pure_sp.current_turn_set(10000))
+      this.$nextTick(() => this.$refs.main_sp.sp_object().api_board_turn_set(10000))
+      // this.$nextTick(() => this.$refs.main_sp.sp_object().current_turn_set(10000))
     },
 
     give_up_handle() {

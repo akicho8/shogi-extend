@@ -97,7 +97,7 @@ const CHART_CONFIG_DEFAULT = {
         const datasets = chart_element._chart.config.data.datasets
         const xy_info = datasets[chart_element._datasetIndex].data[chart_element._index]
         if (__vm__.mode === "standby") {
-          __vm__.$refs.main_sp.$refs.pure_sp.api_board_turn_set(xy_info.x)
+          __vm__.$refs.main_sp.sp_object().api_board_turn_set(xy_info.x)
         }
       }
     },
