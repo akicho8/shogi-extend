@@ -35,15 +35,24 @@ export default {
   .navbar.MainNavbar
     border: 1px dashed $primary
     .navbar-item
-      border: 1px dashed $danger
-    +touch
-      background: $purple
-    +mobile
-      background: $green
-    +desktop
-      background: $blue
-    +widescreen
-      background: $danger
-    +fullhd
-      background: $turquoise
+      border: 1px dashed change_color($white, $alpha: 0.2)
+    position: relative
+    &:after
+      position: absolute
+      @extend %overlay
+      z-index: -1
+      display: flex
+      align-items: center
+      justify-content: center
+      font-size: $size-7
+      +touch
+        content: "touch"
+      +mobile
+        content: "mobile"
+      +desktop
+        content: "desktop"
+      +widescreen
+        content: "widescreen"
+      +fullhd
+        content: "fullhd"
 </style>
