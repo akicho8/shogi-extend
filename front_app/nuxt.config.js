@@ -193,7 +193,15 @@ const config = {
   */
   modules: [
     // Doc: https://buefy.github.io/#/documentation
-    ['nuxt-buefy', {css: false}],
+    // ~/src/shogi-extend/front_app/node_modules/nuxt-buefy/lib/module.js
+    [
+      'nuxt-buefy',
+      {
+        css: false,
+        // materialDesignIconsHRef: '//cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css',
+        materialDesignIconsHRef: "https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css",
+      }
+    ],
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
