@@ -47,6 +47,10 @@ client-only
           | {{current_title}}
           span.mx-1(v-if="run_mode === 'play_mode'") \#{{turn_offset}}
       template(slot="end")
+        b-navbar-item.has-text-weight-bold(@click="tweet_handle" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
+          b-icon(icon="twitter")
+        b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
+          | 編集完了
         b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
           b-icon(icon="menu")
 
@@ -100,9 +104,9 @@ client-only
               @update:turn_offset_max="v => turn_offset_max = v"
             )
 
-            .buttons.is-centered.mt-5
-              TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
-              b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
+            //- .buttons.is-centered.mt-5
+            //-   TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
+            //-   b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
 
             .room_code.is-clickable(@click="room_code_edit" v-if="false")
               | {{room_code}}
@@ -238,6 +242,11 @@ export default {
     // tweet_handle() {
     //   this.tweet_window_popup({url: this.current_url, text: this.tweet_hash_tag})
     // },
+
+    tweet_handle() {
+      this.sound_play("click")
+      this.tweet_window_popup({text: this.tweet_body})
+    },
 
     // 操作←→編集 切り替え
     mode_toggle_handle() {
