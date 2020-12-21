@@ -27,6 +27,9 @@ chdir APP_ROOT do
   #   cp 'config/database.yml.sample', 'config/database.yml'
   # end
 
+  system! "rm -fr front_app/node_modules"
+  system! "cd front_app && yarn"
+
   system! "rm -fr public/system"
   system! 'rails dev:cache'
 
