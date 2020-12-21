@@ -1,17 +1,18 @@
 <template lang="pug">
-.SwarsBattleShowTimeChart
+.SwarsBattleShowTimeChart.is-unselectable
   .canvas_center
     .canvas_wrap
-      canvas#main_canvas.is-unselectable(ref="main_canvas")
+      canvas#main_canvas(ref="main_canvas")
   b-field.zoom_button(position="is-centered")
-    b-radio-button(v-model="zoom_p" :native-value="true" size="is-small") +
     b-radio-button(v-model="zoom_p" :native-value="false" size="is-small") -
+    b-radio-button(v-model="zoom_p" :native-value="true" size="is-small") +
 </template>
 
 <script>
-const TOOLTIP_ENABLE = true
+const TOOLTIP_ENABLE = false
 // const TICKS_FONT_COLOR = "rgba(255,255,255,0.75)"
 const TICKS_FONT_COLOR = "rgba(0, 0, 0, 0.75)"
+const FONT_SIZE = 8
 
 const CHART_CONFIG_DEFAULT = {
   type: "line",
@@ -40,10 +41,14 @@ const CHART_CONFIG_DEFAULT = {
 
     layout: {
       padding: {
-        left:   25,
-        right:  30,
-        top:    50,
-        bottom: 25,
+        // left:   25,
+        // right:  30,
+        // top:    50,
+        // bottom: 25,
+        left:   20,
+        right:  25,
+        top:    30,
+        bottom: 16,
       },
     },
 
@@ -70,6 +75,7 @@ const CHART_CONFIG_DEFAULT = {
           maxTicksLimit: 5, // 最大横N個の目盛りにする
           // callback(value, index, values) { return value + "" }, // 単位をつける
           fontColor: TICKS_FONT_COLOR,
+          fontSize: FONT_SIZE,
         },
         gridLines: {
           display: false,    // x軸の中間の縦線
@@ -77,6 +83,7 @@ const CHART_CONFIG_DEFAULT = {
       }],
       yAxes: [{
         ticks: {
+          fontSize: FONT_SIZE,
           fontColor: TICKS_FONT_COLOR,
           reverse: false,       // 反転する？ (this.flip を 外から設定して判定する)
 
@@ -562,10 +569,10 @@ export default {
         s += "0"
       } else {
         if (min >= 1) {
-          s += `${min}分`
+          s += `${min}m`
         }
         if (sec >= 1) {
-          s += `${sec}秒`
+          s += `${sec}s`
         }
       }
       return s
@@ -576,7 +583,7 @@ export default {
 
 <style lang="sass">
 .SwarsBattleShowTimeChart
-  padding-bottom: 2rem
+  padding-bottom: 1.5rem
   .canvas_center
     display: flex
     justify-content: center

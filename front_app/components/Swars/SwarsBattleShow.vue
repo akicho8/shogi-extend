@@ -40,7 +40,7 @@
       //- PageCloseButton(@click="back_handle" position="is_absolute" size="is-medium")
       //- b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text")
 
-      .FirstView
+      .FirstView.is-unselectable
         //- .battle_title_container
         //-   span.battle_title.is-size-7.has-text-weight-bold
         //-     | {{record.title}}
@@ -448,7 +448,7 @@ $button_z_index: 2
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の下のボタンたち
   .app_buttons_container
     background-color: $white-ter
-    margin: 0.5rem 0 0
+    margin: 0 0 0
     padding: 3rem 0
 
   ////////////////////////////////////////////////////////////////////////////////
