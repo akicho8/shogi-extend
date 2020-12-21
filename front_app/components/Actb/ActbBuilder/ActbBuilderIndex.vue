@@ -137,7 +137,7 @@
           //-   <img src="/static/img/placeholder-128x128.png">
           //- </p>
           CustomShogiPlayer(
-            :sp_mobile_style="'is_mobile_style_off'"
+            :sp_mobile_vertical="'is_mobile_vertical_off'"
             :run_mode="'view_mode'"
             :kifu_body="props.row.init_sfen"
             :flip_if_white="true"

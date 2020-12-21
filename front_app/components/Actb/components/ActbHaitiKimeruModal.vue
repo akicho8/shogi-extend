@@ -4,7 +4,7 @@
     p.modal-card-title 局面を確定させてください
   section.modal-card-body
     CustomShogiPlayer(
-      :sp_mobile_style="'is_mobile_style_off'"
+      :sp_mobile_vertical="'is_mobile_vertical_off'"
       :run_mode="'view_mode'"
       :kifu_body="yomikonda_sfen"
       :start_turn="start_turn"

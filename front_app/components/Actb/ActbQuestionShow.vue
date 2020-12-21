@@ -54,7 +54,7 @@
 
     .sp_container
       CustomShogiPlayer(
-        :sp_mobile_style="'is_mobile_style_off'"
+        :sp_mobile_vertical="'is_mobile_vertical_off'"
         :run_mode="'play_mode'"
         :kifu_body="selected_sfen"
         :flip_if_white="true"

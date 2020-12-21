@@ -8,7 +8,7 @@
     .status_line2.has-text-centered.has-text-weight-bold
       | {{base.main_time_as_string}}
     CustomShogiPlayer(
-      :sp_mobile_style="'is_mobile_style_off'"
+      :sp_mobile_vertical="'is_mobile_vertical_off'"
       :run_mode="'play_mode'"
       :kifu_body="base.current_question.init_sfen"
       :flip_if_white="true"
@@ -26,7 +26,7 @@
       template(v-if="base.debug_read_p")
         | ({{base.share_turn_offset}})
     CustomShogiPlayer(
-      :sp_mobile_style="'is_mobile_style_off'"
+      :sp_mobile_vertical="'is_mobile_vertical_off'"
       :key="`quest_${base.question_index}`"
       :run_mode="'play_mode'"
       :kifu_body="base.current_question.init_sfen"
@@ -45,7 +45,7 @@
     .status_line2.has-text-centered.has-text-weight-bold
       | 相手が操作中 ({{base.share_turn_offset}}手目)
     CustomShogiPlayer(
-      :sp_mobile_style="'is_mobile_style_off'"
+      :sp_mobile_vertical="'is_mobile_vertical_off'"
       :run_mode="'play_mode'"
       :kifu_body="base.share_sfen"
       :flip_if_white="true"

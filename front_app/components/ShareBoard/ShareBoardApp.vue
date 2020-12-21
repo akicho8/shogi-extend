@@ -47,7 +47,7 @@ client-only
           | {{current_title}}
           span.mx-1(v-if="run_mode === 'play_mode'") \#{{turn_offset}}
       template(slot="end")
-        b-navbar-item.has-text-weight-bold(@click="tweet_handle" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
+        b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="run_mode === 'play_mode'")
           b-icon(icon="twitter")
         b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
           | 編集完了
@@ -104,9 +104,9 @@ client-only
               @update:turn_offset_max="v => turn_offset_max = v"
             )
 
-            //- .buttons.is-centered.mt-5
-            //-   TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
-            //-   b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
+            .buttons.is-centered.mt-4
+              TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
+              //- b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
 
             .room_code.is-clickable(@click="room_code_edit" v-if="false")
               | {{room_code}}
