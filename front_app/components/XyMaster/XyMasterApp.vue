@@ -694,15 +694,11 @@ export default {
     justify-content: center
     align-items: center
     flex-direction: column
-
     margin-top: $xy_common_gap
 
     .xy_human_container
       margin-bottom: $xy_board_top_bottom_gap
-      // border-radius: 0.5rem
-      // padding: 0.3rem 0.5rem
       font-size: 2rem
-      // background-color: hsla(0, 0%, 0%, 0.05)
 
     .time_container
       line-height: 100%
@@ -724,20 +720,15 @@ export default {
       +desktop
         width: calc(100vmin * 0.50)
 
-    .CustomShogiPlayer
-      --sp_board_padding: 0            // 盤の隙間なし
-      // --sp_ground_color: transparent   // 畳の色
-      --sp_board_color: hsla(0, 0%, 0%, 0)       // 盤の色
-      --sp_grid_outer_stroke: 2
-      --sp_grid_stroke: 1              // グリッド太さ
-      --sp_grid_outer_color: hsl(0, 0%, 64%)  // グリッド外枠色
-      --sp_grid_color:       hsl(0, 0%, 73%)  // グリッド色
-      // --sp_grid_color: hsla(0, 0%, 0%, 0.025)       // 盤の色
-      // --sp_grid_stroke: 1              // グリッド太さ
-      // --sp_grid_outer_stroke: 0        // グリッド外枠太さ
-      --sp_board_aspect_ratio: 100.0   // 盤を正方形化
-      --sp_grid_star_size: 16%              // 星の大きさ
-      --sp_grid_star_color: hsl(0, 0%, 50%) // 星の色
+    --sp_board_padding: 0                  // 盤の隙間なし
+    --sp_board_color: hsla(0, 0%, 0%, 0)   // 盤の色
+    --sp_grid_outer_stroke: 2              // 外枠の太さ
+    --sp_grid_stroke: 1                    // グリッド太さ
+    --sp_grid_outer_color: hsl(0, 0%, 64%) // グリッド外枠色
+    --sp_grid_color:       hsl(0, 0%, 73%) // グリッド色
+    --sp_board_aspect_ratio: 100.0         // 盤を正方形化
+    --sp_grid_star_size: 16%               // 星の大きさ
+    --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
 
   .tweet_box_container
     margin-top: 0.75rem
