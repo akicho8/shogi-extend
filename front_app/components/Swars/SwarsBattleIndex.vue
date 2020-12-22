@@ -544,8 +544,7 @@ export default {
 .SwarsBattleIndex
   .container
     +mobile
-      padding-left: 0 ! important
-      padding-right: 0 ! important
+      padding: 0
 
   .b-table
     margin-top: 1.5rem
@@ -559,4 +558,8 @@ export default {
     --sp_stand_piece_w: 20px
     --sp_stand_piece_h: 25px
     --sp_piece_count_gap_bottom: 70%
+
+.STAGE-development
+  .column
+    border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
