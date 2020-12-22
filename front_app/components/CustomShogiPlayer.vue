@@ -43,8 +43,8 @@ export default {
   width: 100%
 
   +mobile
-    --sp_stand_piece_w: 36px // 駒台のセル(W)
-    --sp_stand_piece_h: 40px // 駒台のセル(H)
+    --sp_stand_piece_w: 28px // 駒台のセル(W)
+    --sp_stand_piece_h: 32px // 駒台のセル(H)
 
 // bulma の .table のなかにあると td の padding が影響してしまう
 .table
