@@ -10802,10 +10802,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shogi-player@^0.0.225:
-  version "0.0.225"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.225.tgz#1df50632c4b9bd7b419c8a42fe2c0cae69310eb8"
-  integrity sha512-nr8IXNLbTR6wZo268iFjTSM3j+aNqXlm0B9Tq7DGy5SMMC9+WA25ocb5iUnOT3MzfEKrfuJVNe7PxT2RJzTDpA==
+shogi-player@^0.0.226:
+  version "0.0.226"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.226.tgz#4daf24ffffed364cb519f1388d4cf702a91e550d"
+  integrity sha512-WD/DXNSMRnZfkmiRJLbwVwyh2mq7TC7cljUGe8O4SNVVwpkxPc9xgkVnDmJLnP/kbf/4RluhdtJHOdC8wEyziA==
   dependencies:
     buefy "^0.9.4"
     bulma "^0.9.1"
