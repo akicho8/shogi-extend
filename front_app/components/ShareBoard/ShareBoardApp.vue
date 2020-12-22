@@ -88,6 +88,9 @@ client-only
 
             // sp_bg_variant="is_bg_variant_a"
             CustomShogiPlayer(
+              :sp_layer="development_p ? 'is_layer_on' : 'is_layer_off'"
+              :sp_layout="run_mode === 'edit_mode' ? 'is_horizontal' : 'is_vertical'"
+              :sp_mobile_vertical="'is_mobile_vertical_off'"
               :run_mode="run_mode"
               :start_turn="turn_offset"
               :kifu_body="current_sfen"
@@ -496,8 +499,11 @@ export default {
 
 .STAGE-development
   .ShareBoardApp
-    .column, .CustomShogiPlayer
-      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .CustomShogiPlayer
+    .ShogiPlayerGround
+    .ShogiPlayerWidth
+    .Membership
+      border: 1px dashed change_color($success, $alpha: 0.5)
 
 .ShareBoardApp-Sidebar
   .sidebar-content
@@ -505,4 +511,15 @@ export default {
 
   .menu-label:not(:first-child)
     margin-top: 2em
+
+.ShareBoardApp
+  +mobile
+    --sp_stand_piece_w: 36px // 駒台のセル(W)
+    --sp_stand_piece_h: 40px // 駒台のセル(H)
+
+  .MainSection
+    padding: 0
+
+  .EditToolBlock
+    margin: 0.75rem 0 0
 </style>

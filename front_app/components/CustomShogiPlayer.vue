@@ -29,7 +29,7 @@ export default {
     default_params() {
       return {
         sp_layout: "is_horizontal",
-        setting_button_show: this.development_p,
+        // setting_button_show: this.development_p,
         sound_effect: true,
         volume: 0.5,
       }
