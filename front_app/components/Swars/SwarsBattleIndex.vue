@@ -8,12 +8,14 @@
     p g_current_user: {{g_current_user && g_current_user.id}}
     p visible_hash: {{visible_hash}}
 
-  b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right v-model="sidebar_p" v-if="config")
+  b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right overlay v-model="sidebar_p" v-if="config")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
       //-   b-icon.is-clickable(icon="menu" @click.native="sidebar_p = false")
       //-   .my_title.has-text-centered
       //-     nuxt-link.has-text-weight-bold.has-text-dark(:to="{name: 'index'}") SHOGI-EXTEND
+
+      //- a.delete(@click="sidebar_toggle")
 
       b-menu
         b-menu-list(label="Action")
