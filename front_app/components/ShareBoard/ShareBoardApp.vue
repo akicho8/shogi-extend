@@ -513,10 +513,6 @@ export default {
     margin-top: 2em
 
 .ShareBoardApp
-  +mobile
-    --sp_stand_piece_w: 36px // 駒台のセル(W)
-    --sp_stand_piece_h: 40px // 駒台のセル(H)
-
   .MainSection
     padding: 0
 
