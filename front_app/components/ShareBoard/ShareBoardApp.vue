@@ -89,8 +89,6 @@ client-only
             // sp_bg_variant="is_bg_variant_a"
             CustomShogiPlayer(
               :sp_layer="development_p ? 'is_layer_on' : 'is_layer_off'"
-              :sp_layout="run_mode === 'edit_mode' ? 'is_horizontal' : 'is_vertical'"
-              :sp_mobile_vertical="'is_mobile_vertical_off'"
               :run_mode="run_mode"
               :start_turn="turn_offset"
               :kifu_body="current_sfen"
@@ -514,8 +512,9 @@ export default {
 
 .ShareBoardApp
   .MainSection
-    padding: 0
+    +mobile
+      padding: 0
 
   .EditToolBlock
-    margin: 0.75rem 0 0
+    margin-top: 12px
 </style>
