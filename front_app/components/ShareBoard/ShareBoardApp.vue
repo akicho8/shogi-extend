@@ -88,7 +88,7 @@ client-only
 
             // sp_bg_variant="is_bg_variant_a"
             CustomShogiPlayer(
-              :sp_layer="development_p ? 'is_layer_on' : 'is_layer_off'"
+              :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
               :run_mode="run_mode"
               :start_turn="turn_offset"
               :kifu_body="current_sfen"
