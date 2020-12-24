@@ -283,11 +283,16 @@ const config = {
 
     extend (config, ctx) {
       config.module.rules.push({
-        test: /\.(kif|ogg|mp3|wav|mpe?g)$/i,
+        test: /\.(ogg|mp3|wav|mpe?g)$/i,
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]'
         },
+      })
+      config.module.rules.push({
+        test: /\.(txt|md|kif|ki2|csa|sfen)$/,
+        loader: 'raw-loader',
+        // exclude: /(node_modules)/,
       })
     },
   },
