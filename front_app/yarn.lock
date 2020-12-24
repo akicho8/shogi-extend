@@ -8998,6 +8998,11 @@ path-type@^4.0.0:
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
+pattern.css@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pattern.css/-/pattern.css-1.0.0.tgz#91ee9e4ca99300c8ab1a47348e325333840d9f4b"
+  integrity sha512-2bW2rCCdLGgvJPpiSJGrg44onxRWTMQpn6tooAayomsCHiso3nehlp5OugNYHSXxYuFfQ1vtDXtGbq6H206qLw==
+
 pbkdf2@^3.0.3:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.1.1.tgz#cb8724b0fada984596856d1a6ebafd3584654b94"
@@ -10802,10 +10807,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shogi-player@^0.0.226:
-  version "0.0.226"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.226.tgz#4daf24ffffed364cb519f1388d4cf702a91e550d"
-  integrity sha512-WD/DXNSMRnZfkmiRJLbwVwyh2mq7TC7cljUGe8O4SNVVwpkxPc9xgkVnDmJLnP/kbf/4RluhdtJHOdC8wEyziA==
+shogi-player@^0.0.228:
+  version "0.0.228"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.228.tgz#47871a9c2532c1c8ea47aff85f5934cb5103dc47"
+  integrity sha512-NPrUAW6d/IFJNeNtGDb0x97ndjas+3I9kQn2PinxYMWVj4ewMECiCNDiDeuo4oNUfXdrDexpQobejTVotRLmcw==
   dependencies:
     buefy "^0.9.4"
     bulma "^0.9.1"
