@@ -48,7 +48,7 @@ client-only
           span.mx-1(v-if="run_mode === 'play_mode'") \#{{turn_offset}}
       template(slot="end")
         b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="run_mode === 'play_mode'")
-          b-icon(icon="twitter")
+          b-icon(icon="twitter" type="is-white")
         b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
           | 編集完了
         b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")

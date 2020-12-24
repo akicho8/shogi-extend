@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar.MainNavbar(v-bind="navbar_attrs" v-on="$listeners")
+b-navbar.MainNavbar(v-bind="component_attrs" v-on="$listeners")
   // FIXMME: これどうにかなんないの？
   template(slot="brand")
     slot(name="brand")
@@ -13,7 +13,7 @@ b-navbar.MainNavbar(v-bind="navbar_attrs" v-on="$listeners")
 export default {
   name: "MainNavbar",
   computed: {
-    navbar_attrs() {
+    component_attrs() {
       return {
         "type": "is-primary",
         "mobile-burger": false,

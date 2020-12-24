@@ -40,6 +40,38 @@
       //- PageCloseButton(@click="back_handle" position="is_absolute" size="is-medium")
       //- b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text")
 
+      MainNavbar(wrapper-class="container" type="is-black" :spaced="false" centered)
+        template(slot="brand")
+          b-navbar-item(@click="back_handle")
+            b-icon(icon="chevron-left")
+          b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}")
+            | 対局詳細 \#{{new_turn}}
+            //- span.has-text-grey-dark ☗
+            //- span {{record.piyo_shogi_base_params.sente_name}}
+            //- span.mx-1 vs
+            //- span.has-text-grey-lighter ☗
+            //- span {{record.piyo_shogi_base_params.gote_name}}
+        //- template(slot="start")
+        //-   b-navbar-item.has-text-weight-bold(tag="div")
+        //-     | \#{{new_turn}}
+        template(slot="end")
+          b-navbar-item.has-text-weight-bold(@click="tweet_handle")
+            b-icon(icon="twitter" type="is-twitter")
+          b-navbar-item(@click="sidebar_toggle")
+            b-icon(icon="menu")
+
+      //- MainNavbar
+      //-   template(slot="brand")
+      //-     NavbarItemHome
+      //-       b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="run_mode === 'play_mode'")
+      //-   template(slot="end")
+      //-     b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="run_mode === 'play_mode'")
+      //-       b-icon(icon="twitter")
+      //-     b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
+      //-       | 編集完了
+      //-     b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
+      //-       b-icon(icon="menu")
+
       .FirstView.is-unselectable
         //- .battle_title_container
         //-   span.battle_title.is-size-7.has-text-weight-bold
@@ -82,14 +114,19 @@
           PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
           KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
           KifCopyButton(@click="kifu_copy_handle")
-        .buttons.is-centered
+        .buttons.is-centered(v-if="false")
           b-button(@click="back_handle" icon-left="chevron-left" size="is-small")
           TweetButton(:body="permalink_url")
           b-button(icon-left="menu" @click="sidebar_toggle" size="is-small")
 
       .battle_title_container.has-background-grey-lighter.py-6.battle_title.has-text-grey-dark.has-text-weight-bold.is-size-7-mobile
         //- | {{record.title}}
-        p ☗{{record.piyo_shogi_base_params.sente_name}} vs ☖{{record.piyo_shogi_base_params.gote_name}}
+        p
+          span.has-text-black ☗
+          | {{record.piyo_shogi_base_params.sente_name}}
+          span.mx-1 vs
+          span.has-text-white ☗
+          | {{record.piyo_shogi_base_params.gote_name}}
         p {{record.description}}
         p {{record.piyo_shogi_base_params.game_name}}
 
@@ -176,6 +213,11 @@ export default {
   },
 
   methods: {
+    tweet_handle() {
+      this.sound_play('click')
+      this.tweet_window_popup({text: this.permalink_url})
+    },
+
     short_url_copy(method) {
       this.sound_play('click')
       this.clipboard_copy({text: this.short_url(method)})
@@ -417,9 +459,9 @@ $button_z_index: 2
   .FirstView
     background-color: hsl(99.5, 40.6, 80.2)
     +tablet
-      padding: 2rem 0
+      padding: 3rem 0
     +mobile
-      padding: 0 0 1.5rem
+      padding: 0.5rem 0 1.5rem // 画像化するときに切り取りやすいように少しあける
 
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
   .CustomShogiPlayerWrap
@@ -430,17 +472,14 @@ $button_z_index: 2
     // height: 100vh               // app_buttons_container を画面外にする
 
   .CustomShogiPlayer
-    --sp_stand_piece_w_mobile: 30px
-    --sp_stand_piece_h_mobile: 40px
     +mobile
-      --sp_board_radius: 0                      // 角丸を取る
-      --sp_grid_outer_color: rgba(0, 0, 0, 0.4) // スマホだと少し薄すくる
-      --sp_grid_color:       rgba(0, 0, 0, 0.3) // スマホだと少し薄すくる
+      --sp_board_radius: 0 // 角丸を取る
       --sp_piece_count_gap_bottom: 38%
     +tablet
       max-width: calc(100vmin * 0.65)
     +desktop
       max-width: calc(100vmin * 0.75)
+    // 駒数とコントローラーの隙間
     .NavigateBlock
       +mobile
         margin-top: 14px ! important
@@ -453,6 +492,7 @@ $button_z_index: 2
 
   ////////////////////////////////////////////////////////////////////////////////
   .battle_title_container
+    line-height: 1.8
     display: flex
     align-items: center
     justify-content: center

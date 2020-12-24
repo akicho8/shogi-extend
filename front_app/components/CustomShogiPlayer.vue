@@ -47,6 +47,8 @@ export default {
     --sp_piece_box_piece_w: 28px // 駒箱のセル(W)
     --sp_piece_box_piece_h: 32px // 駒箱のセル(H)
     --sp_piece_count_gap_right: 40%
+    --sp_grid_outer_color: rgba(0, 0, 0, 0.4) // スマホだと少し薄すくる
+    --sp_grid_color:       rgba(0, 0, 0, 0.3) // スマホだと少し薄すくる
 
 // bulma の .table のなかにあると td の padding が影響してしまう
 .table

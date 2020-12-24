@@ -551,11 +551,9 @@ export default {
     +mobile
       margin-top: 1rem
 
+  // 小さな盤面をたくさん表示
   +tablet
     .CustomShogiPlayer
-      // --sp_shadow_offset: 0
-      // --sp_shadow_blur: 0
-      // --sp_grid_color: rgba(0, 0, 0, 0.2)
       --sp_stand_piece_w: 20px
       --sp_stand_piece_h: 25px
       --sp_piece_count_gap_bottom: 70%
