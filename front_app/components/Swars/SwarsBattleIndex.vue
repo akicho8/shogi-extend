@@ -552,11 +552,11 @@ export default {
       margin-top: 1rem
 
   // 小さな盤面をたくさん表示
-  +tablet
-    .CustomShogiPlayer
-      --sp_stand_piece_w: 20px
-      --sp_stand_piece_h: 25px
-      --sp_piece_count_gap_bottom: 70%
+  .CustomShogiPlayer
+    --sp_piece_count_font_size: 8px
+    --sp_stand_piece_w: 20px
+    --sp_stand_piece_h: 25px
+    --sp_piece_count_gap_bottom: 64%
 
 .STAGE-development
   .column

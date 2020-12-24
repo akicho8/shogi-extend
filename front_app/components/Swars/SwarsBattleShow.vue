@@ -473,16 +473,11 @@ $button_z_index: 2
 
   .CustomShogiPlayer
     +mobile
-      --sp_board_radius: 0 // 角丸を取る
       --sp_piece_count_gap_bottom: 48%
     +tablet
       max-width: calc(100vmin * 0.65)
     +desktop
       max-width: calc(100vmin * 0.75)
-    // 駒数とコントローラーの隙間
-    .NavigateBlock
-      +mobile
-        margin-top: 14px ! important
 
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の下のボタンたち
   .app_buttons_container

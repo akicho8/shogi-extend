@@ -511,9 +511,9 @@ export default {
     margin-top: 2em
 
 .ShareBoardApp
-  .MainSection
+  .MainSection.section
     +mobile
-      padding: 0
+      padding: 0.75rem 0 0
 
   .EditToolBlock
     margin-top: 12px
