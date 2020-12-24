@@ -727,7 +727,7 @@ export default {
       --sp_grid_stroke: 1                    // グリッド太さ
       --sp_grid_outer_color: hsl(0, 0%, 64%) // グリッド外枠色
       --sp_grid_color:       hsl(0, 0%, 73%) // グリッド色
-      --sp_board_aspect_ratio: 100.0         // 盤を正方形化
+      --sp_board_aspect_ratio: 1.0           // 盤を正方形化
       --sp_grid_star_size: 16%               // 星の大きさ
       --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
 
