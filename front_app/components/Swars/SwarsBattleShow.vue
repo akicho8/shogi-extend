@@ -461,7 +461,7 @@ $button_z_index: 2
     +tablet
       padding: 3rem 0
     +mobile
-      padding: 0.5rem 0 1.5rem // 画像化するときに切り取りやすいように少しあける
+      padding: 0.75rem 0 1.5rem // 画像化するときに切り取りやすいように少しあける
 
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer
   .CustomShogiPlayerWrap
@@ -474,7 +474,7 @@ $button_z_index: 2
   .CustomShogiPlayer
     +mobile
       --sp_board_radius: 0 // 角丸を取る
-      --sp_piece_count_gap_bottom: 38%
+      --sp_piece_count_gap_bottom: 48%
     +tablet
       max-width: calc(100vmin * 0.65)
     +desktop
