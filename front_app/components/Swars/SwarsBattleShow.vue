@@ -125,9 +125,9 @@
           | {{record.piyo_shogi_base_params.game_name}}
           span.mx-1(v-if="record.preset_info.name !== '平手'") {{record.preset_info.name}}
         p
-          SwarsBattleShowUserLink(:membership="record.memberships[0]")
+          SwarsBattleShowUserLink(:membership="record.memberships[0]" :with_mark="true" :with_judge="true")
           span.mx-1 vs
-          SwarsBattleShowUserLink(:membership="record.memberships[1]")
+          SwarsBattleShowUserLink(:membership="record.memberships[1]" :with_mark="true" :with_judge="true")
         p {{record.description}}
         p {{record.turn_max}}手まで (最後は{{record.final_info.name}})
 
