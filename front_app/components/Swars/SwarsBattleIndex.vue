@@ -167,7 +167,7 @@
                   :kifu_body="e.sfen_body"
                   :sound_effect="false"
                   :setting_button_show="false"
-                  :summary_show="false"
+                  :sp_summary="is_summary_off"
                   :operation_disable="true"
                   :overlay_navi="false"
                   :flip="e.flip"

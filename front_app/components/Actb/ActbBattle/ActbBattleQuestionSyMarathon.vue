@@ -11,7 +11,7 @@
     :run_mode="'play_mode'"
     :kifu_body="base.current_question.init_sfen"
     :flip_if_white="true"
-    :summary_show="false"
+    :sp_summary="is_summary_off"
     :setting_button_show="false"
     :controller_show="true"
     :human_side_key="'both'"

@@ -92,7 +92,7 @@ client-only
               :run_mode="run_mode"
               :start_turn="turn_offset"
               :kifu_body="current_sfen"
-              :summary_show="false"
+              :sp_summary="is_summary_off"
               :slider_show="true"
               :sound_effect="true"
               :controller_show="true"

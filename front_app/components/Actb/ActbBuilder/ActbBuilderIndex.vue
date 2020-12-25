@@ -142,7 +142,7 @@
             :kifu_body="props.row.init_sfen"
             :flip_if_white="true"
             :start_turn="0"
-            :summary_show="false"
+            :sp_summary="is_summary_off"
             :slider_show="false"
             :controller_show="false"
             :setting_button_show="false"

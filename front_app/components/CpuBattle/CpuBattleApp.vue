@@ -33,7 +33,7 @@
               :controller_show="mode === 'standby'"
               :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
               :flip.sync="flip"
-              :summary_show="false"
+              :sp_summary="is_summary_off"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               ref="main_sp"
             )

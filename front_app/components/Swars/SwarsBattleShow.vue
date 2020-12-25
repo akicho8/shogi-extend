@@ -89,7 +89,7 @@
             :key_event_capture="true"
             :slider_show="true"
             :sfen_show="false"
-            :summary_show="false"
+            :sp_summary="is_summary_off"
             :controller_show="true"
             :setting_button_show="false"
             :flip.sync="new_flip"
