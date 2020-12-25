@@ -7,7 +7,8 @@
         .mx-4.my-4
           b-menu
             b-menu-list(label="Action")
-              b-menu-item(label="共有将棋盤に転送" tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}" @click.native="sound_play('click')")
+              b-menu-item(label="共有将棋盤に転送"       tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}" @click.native="sound_play('click')")
+              b-menu-item(label="スタイルエディタに転送" tag="nuxt-link" :to="{name: 'style-editor', query: style_editor_query}" @click.native="sound_play('click')")
 
             b-menu-list(label="export")
               b-menu-item(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}" @click.native="sound_play('click')")
@@ -196,7 +197,7 @@ export default {
       this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: {basic_fetch: true}}).then(e => {
         this.record = e
         this.record_setup()
-        this.lazy_slider_focus()
+        this.slider_focus()
       }),
       this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: {time_chart_fetch: true}}).then(e => {
         this.time_chart_params = e.time_chart_params
@@ -307,7 +308,8 @@ export default {
     // SwarsBattleShowTimeChart でチャートをクリックしたときに変更する
     turn_set_from_chart(v) {
       this.$refs.main_sp.sp_object().api_board_turn_set(v) // 直接 shogi-player に設定
-      this.new_turn = v                      // KENTO用に設定 (shogi-playerからイベントが来ないため)
+      this.new_turn = v                                    // KENTO用に設定 (shogi-playerからイベントが来ないため)
+      this.slider_focus()                             // チャートを動かした直後も左右キーが使えるようにする
     },
 
     // shogi-player の局面が変化したときの手数を取り出す
@@ -316,17 +318,9 @@ export default {
     },
 
     // this.$nextTick(() => this.slider_focus()) の方法だと失敗する
-    lazy_slider_focus() {
-      setTimeout(() => this.slider_focus(), 1)
-    },
-
-    // $el は使えるタイミング難しいため普通に document から探す
     slider_focus() {
-      if (typeof document !== 'undefined') {
-        const dom = document.querySelector(".turn_slider")
-        if (dom) {
-          dom.focus()
-        }
+      if (this.$refs.main_sp) {
+        this.$refs.main_sp.sp_object().api_turn_slider_focus()
       }
     },
   },
@@ -437,6 +431,27 @@ export default {
         image_view_point: this.new_flip ? "white" : "black",
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // { black: "alice", white: "bob" }
+    player_info_hash() {
+      return this.record.memberships.reduce((a, m) => {
+        return {
+          ...a,
+          [m.location.key]: `${m.user.key} ${m.grade_info.name}`,
+        }
+      }, {})
+    },
+
+    style_editor_query() {
+      return {
+        body: this.record.sfen_body,
+        turn: this.new_turn,
+        flip: this.new_flip,
+        ...this.player_info_hash,
+      }
+    }
   },
 }
 </script>

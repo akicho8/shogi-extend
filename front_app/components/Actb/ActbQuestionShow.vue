@@ -187,7 +187,7 @@ export default {
 
     tab_change_handle() {
       // this.sound_play("click")
-      this.sp_turn_slider_auto_focus()
+      this.sp_turn_slider_auto_focus() // FIXME: 動いてない
     },
 
     play_mode_advanced_moves_set(moves) {

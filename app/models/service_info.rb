@@ -178,7 +178,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/style-editor"},
       title: "将棋盤スタイルエディタ",
       og_image_key: "style-editor",
-      description: "将棋盤のスタイルを試行錯誤するツール",
+      description: "将棋盤のスタイルをいじくるツール",
       features: [
         "CSSを編集して確認するのが面倒すぎたので作成",
       ],
