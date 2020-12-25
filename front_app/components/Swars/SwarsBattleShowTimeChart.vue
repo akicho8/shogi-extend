@@ -14,8 +14,15 @@ const TOOLTIP_ENABLE = false
 const TICKS_FONT_COLOR = "rgba(0, 0, 0, 0.75)"
 const FONT_SIZE = 8
 
+// import PaletteBlackWhiteInfo from "@/components/models/PaletteBlackWhiteInfo.js"
+//
+// function color_select(context, alpha) {
+//   // https://www.chartjs.org/docs/latest/general/options.html#option-context
+//   return PaletteBlackWhiteInfo.fetch(context.datasetIndex).alpha(alpha)
+// }
+
 const CHART_CONFIG_DEFAULT = {
-  type: "line",
+  type: "line",                 // barはデータ構造上うまくいかない
   options: {
     aspectRatio: 1.6, // 大きいほど横長方形になる
 
@@ -57,8 +64,11 @@ const CHART_CONFIG_DEFAULT = {
     scales: {
       xAxes: [{
         // http://www.kogures.com/hitoshi/javascript/chartjs/bar-width.html
-        // categoryPercentage: 0.8, // 目盛り線の幅に対する棒（複数棒）の占める幅の割合
-        // barPercentage: 0.9,      // categoryPercentageに対する単独棒の幅。1にすると複数棒間間隔がなくなり、1より小さくすると棒が細くなり間隔が広がる
+        // categoryPercentage: 1.0, // 目盛り線の幅に対する棒（複数棒）の占める幅の割合
+        // barPercentage: 1.0,      // categoryPercentageに対する単独棒の幅。1にすると複数棒間間隔がなくなり、1より小さくすると棒が細くなり間隔が広がる
+        // // minBarLength: 8,
+        // // barThickness: "flex",
+        // barThickness: 10,
 
         scaleLabel: {
           display: false,
@@ -78,7 +88,8 @@ const CHART_CONFIG_DEFAULT = {
           fontSize: FONT_SIZE,
         },
         gridLines: {
-          display: false,    // x軸の中間の縦線
+          display: true,    // x軸の中間の縦線
+          offsetGridLines: false,
         },
       }],
       yAxes: [{
@@ -134,18 +145,28 @@ const CHART_CONFIG_DEFAULT = {
         },
         gridLines: {
           display: true,
+          offsetGridLines: false,
           // zeroLineWidth: 0,
         },
       }],
     },
 
-    elements: {
-      line: {
-        // 折れ線グラフのすべてに線に適用する設定なのでこれがあると dataset 毎に設定しなくてよい
-        // または app/javascript/packs/application.js で指定する
-        // background-color
-      },
-    },
+    // elements: {
+    //   line: {
+    //     fill: true,
+    //     // 折れ線グラフのすべてに線に適用する設定なのでこれがあると dataset 毎に設定しなくてよい
+    //     // または app/javascript/packs/application.js で指定する
+    //     // background-color
+    //     tension: 0,
+    //     backgroundColor: function(context) { return color_select(context, 0.3) },
+    //     borderColor:     function(context) { return color_select(context, 1.0) },
+    //     borderWidth: 1,
+    //   },
+    //   point: {
+    //     backgroundColor: function(context) { return color_select(context, 0.3) },
+    //     borderColor:     function(context) { return color_select(context, 1.0) },
+    //   },
+    // },
 
     // https://tr.you84815.space/chartjs/configuration/tooltip.html
     legend: {
