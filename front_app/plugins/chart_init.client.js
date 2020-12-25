@@ -54,4 +54,4 @@ Chart.defaults.global.elements.point.borderColor     = function(context) { retur
 // https://www.chartjs.org/docs/latest/configuration/elements.html#rectangle-configuration
 Chart.defaults.global.elements.rectangle.backgroundColor = function(context) { return color_select(context, 0.3) }
 Chart.defaults.global.elements.rectangle.borderColor     = function(context) { return color_select(context, 1.0) }
-Chart.defaults.global.elements.rectangle.borderWidth     = 1
+Chart.defaults.global.elements.rectangle.borderWidth     = 0
