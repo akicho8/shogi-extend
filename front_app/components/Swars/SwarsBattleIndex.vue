@@ -157,6 +157,7 @@
               // table      1/4 (is-one-quarter-tablet)
               .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click="show_handle(e)")
                 //- SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[1]")
+
                 CustomShogiPlayer(
                   :player_info="e.player_info"
                   sp_layout="is_vertical"

@@ -141,6 +141,15 @@ module Swars
       BattleDecorator::SwarsBattleDecorator
     end
 
+    def player_info
+      memberships.inject({}) { |a, e|
+        a.merge(e.location.key => {
+            :name  => e.user.key,
+            :class => e.judge_info.css_class,
+          })
+      }
+    end
+
     # 将棋ウォーズの形式はCSAなのでパーサーを明示すると理論上は速くなる
     def parser_class
       if kifu_body_for_test || tactic_key

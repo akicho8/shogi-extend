@@ -238,16 +238,18 @@ module BattleModelMod
   def battle_decorator_class
   end
 
-  def player_info
-    decorator = mini_battle_decorator
-    Bioshogi::Location.inject({}) { |a, e|
-      name = decorator.player_name_for(e.key)
-      # if name
-      #   name = name[0...3]
-      # end
-      a.merge(e.key => {name: name})
-    }
-  end
+  # def player_info
+  #   decorator = mini_battle_decorator
+  #   Bioshogi::Location.inject({}) { |a, e|
+  #     name = decorator.player_name_for(e.key)
+  #     if false
+  #       if name
+  #         name = name[0...3]
+  #       end
+  #     end
+  #     a.merge(e.key => {name: name, :class => "has-text-weight-normal"})
+  #   }
+  # end
 
   # FIXME: self に依存させないようにして全部 KifuParser に委譲すること
   concerning :KifuConvertMethods do
