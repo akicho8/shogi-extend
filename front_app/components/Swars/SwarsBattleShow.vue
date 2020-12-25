@@ -122,13 +122,14 @@
       .battle_title_container.has-background-grey-lighter.py-6.battle_title.has-text-grey-dark.has-text-weight-bold.is-size-7-mobile
         //- | {{record.title}}
         p
-          span.has-text-black ☗
-          | {{record.piyo_shogi_base_params.sente_name}}
+          | {{record.piyo_shogi_base_params.game_name}}
+          span.mx-1(v-if="record.preset_info.name !== '平手'") {{record.preset_info.name}}
+        p
+          SwarsBattleShowUserLink(:membership="record.memberships[0]")
           span.mx-1 vs
-          span.has-text-white ☗
-          | {{record.piyo_shogi_base_params.gote_name}}
+          SwarsBattleShowUserLink(:membership="record.memberships[1]")
         p {{record.description}}
-        p {{record.piyo_shogi_base_params.game_name}}
+        p {{record.turn_max}}手まで (最後は{{record.final_info.name}})
 
       //- .columns
       //-   .column.is-half-desktop.is_buttons_column

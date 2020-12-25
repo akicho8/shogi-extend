@@ -156,7 +156,7 @@
               // desktop    1/4 (is-one-quarter-desktop)
               // table      1/4 (is-one-quarter-tablet)
               .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click="show_handle(e)")
-                //- SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[1]")
+                //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[1]")
 
                 CustomShogiPlayer(
                   :player_info="e.player_info"
@@ -173,7 +173,7 @@
                   :flip="e.flip"
                 )
                 // :hidden_if_piece_stand_blank="display_key === 'critical'"
-                //- SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
+                //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
           //- v-if="$route.query.query || config.records.length >= 1"
           template(v-if="display_key === 'table'")
