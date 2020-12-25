@@ -28,8 +28,7 @@ export default {
 
 <style lang="sass">
 .SwarsBattleShowUserLink
+  font-weight: normal
   &.is-win
     font-weight: bold
-  &.is-lose
-    font-weight: normal
 </style>
