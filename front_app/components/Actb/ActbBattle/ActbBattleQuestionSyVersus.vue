@@ -6,7 +6,7 @@
     :sp_mobile_vertical="'is_mobile_vertical_off'"
     :run_mode="'play_mode'"
     :kifu_body="base.vs_share_sfen"
-    :sp_summary="is_summary_off"
+    sp_summary="is_summary_off"
     :setting_button_show="false"
     :human_side_key="current_human_side_key"
     :flip="current_flip"

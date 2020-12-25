@@ -29,11 +29,11 @@
               :human_side_key="human_side_key"
               :key_event_capture="false"
               :sfen_show="false"
-              :slider_show="mode === 'standby'"
+              :sp_slider="mode === 'standby' ? 'is_slider_on' : 'is_slider_off'"
               :controller_show="mode === 'standby'"
               :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
               :flip.sync="flip"
-              :sp_summary="is_summary_off"
+              sp_summary="is_summary_off"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               ref="main_sp"
             )

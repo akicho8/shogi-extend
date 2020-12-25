@@ -9,7 +9,7 @@
       :kifu_body="yomikonda_sfen"
       :start_turn="start_turn"
       :key_event_capture="false"
-      :slider_show="true"
+      sp_slider="is_slider_on"
       :controller_show="true"
       :setting_button_show="false"
       @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"

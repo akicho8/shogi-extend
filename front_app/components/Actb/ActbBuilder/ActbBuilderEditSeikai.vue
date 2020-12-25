@@ -7,7 +7,7 @@
     :flip_if_white="true"
     :start_turn="0"
     :key_event_capture="false"
-    :slider_show="true"
+    sp_slider="is_slider_on"
     :controller_show="true"
     :setting_button_show="false"
     @update:turn_offset="bapp.turn_offset_set"
@@ -30,7 +30,7 @@
           :start_turn="-1"
           :debug_mode="false"
           :key_event_capture="false"
-          :slider_show="true"
+          sp_slider="is_slider_on"
           :controller_show="true"
           :setting_button_show="false"
           )

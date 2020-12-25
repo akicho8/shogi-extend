@@ -5,7 +5,7 @@
     :run_mode="'edit_mode'"
     :kifu_body="new_kifu_body"
     :start_turn="-1"
-    :slider_show="true"
+    sp_slider="is_slider_on"
     :controller_show="true"
     :setting_button_show="false"
     :sound_effect="false"

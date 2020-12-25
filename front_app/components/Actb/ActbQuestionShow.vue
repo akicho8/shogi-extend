@@ -60,7 +60,7 @@
         :flip_if_white="true"
         :start_turn="-1"
         :key_event_capture="false"
-        :slider_show="true"
+        sp_slider="is_slider_on"
         :controller_show="true"
         :setting_button_show="false"
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"

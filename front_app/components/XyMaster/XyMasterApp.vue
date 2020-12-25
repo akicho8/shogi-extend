@@ -46,7 +46,7 @@
               CustomShogiPlayer(
                 ref="main_sp"
                 :kifu_body="'position sfen 9/9/9/9/9/9/9/9/9 b - 1'"
-                :sp_summary="is_summary_off"
+                sp_summary="is_summary_off"
                 :hidden_if_piece_stand_blank="true"
                 :setting_button_show="false"
                 :flip="current_rule.flip"

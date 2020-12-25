@@ -9,7 +9,7 @@
     :kifu_body="bapp.question.init_sfen"
     :flip_if_white="true"
     :start_turn="0"
-    :slider_show="true"
+    sp_slider="is_slider_on"
     :controller_show="true"
     :setting_button_show="false"
     @update:play_mode_advanced_moves="bapp.play_mode_advanced_moves_set"
