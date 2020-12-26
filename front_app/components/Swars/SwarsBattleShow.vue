@@ -64,13 +64,13 @@
       //- MainNavbar
       //-   template(slot="brand")
       //-     NavbarItemHome
-      //-       b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="run_mode === 'play_mode'")
+      //-       b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
       //-   template(slot="end")
-      //-     b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="run_mode === 'play_mode'")
+      //-     b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
       //-       b-icon(icon="twitter")
-      //-     b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
+      //-     b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
       //-       | 編集完了
-      //-     b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
+      //-     b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
       //-       b-icon(icon="menu")
 
       .FirstView.is-unselectable
@@ -82,7 +82,7 @@
             sp_layer="is_layer_off"
             sp_layout="is_horizontal"
             sp_fullheight="is_fullheight_off"
-            :run_mode.sync="run_mode"
+            :sp_run_mode.sync="sp_run_mode"
             :sp_turn="sp_turn"
             :kifu_body="record.sfen_body"
             :sp_key_event_capture_enabled="true"
@@ -157,7 +157,7 @@ export default {
     return {
       record: null,            // 属性がたくさん入ってる
 
-      run_mode: null,          // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
+      sp_run_mode: null,          // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
       new_turn: null,       // KENTOに渡すための手番
       new_vpoint: null,          // 視点
 
@@ -260,7 +260,7 @@ export default {
       this.new_turn = this.sp_turn
 
       // 継盤解除
-      this.run_mode = "view_mode"
+      this.sp_run_mode = "view_mode"
 
       // 最初の上下反転状態
       this.new_vpoint = this.default_vpoint
@@ -269,7 +269,7 @@ export default {
       // これは勝手にやらない方がいい？
       if (true) {
         if (this.record.turn_max === 0) {
-          this.run_mode = "play_mode"
+          this.sp_run_mode = "play_mode"
         }
       }
     },

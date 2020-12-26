@@ -1,8 +1,8 @@
 <template lang="pug">
 .ActbBuilderEditSeikai
   CustomShogiPlayer(
-    :sp_mobile_vertical="'is_mobile_vertical_off'"
-    :run_mode="'play_mode'"
+    sp_mobile_vertical="is_mobile_vertical_off"
+    sp_run_mode="play_mode"
     :kifu_body="bapp.question.init_sfen"
     :sp_flip_if_white="true"
     :sp_turn="0"
@@ -21,8 +21,8 @@
     template(v-for="(e, i) in bapp.question.moves_answers")
       b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
         CustomShogiPlayer(
-          :sp_mobile_vertical="'is_mobile_vertical_off'"
-          :run_mode="'view_mode'"
+          sp_mobile_vertical="is_mobile_vertical_off"
+          sp_run_mode="view_mode"
           :kifu_body="bapp.full_sfen_build(e)"
           :sp_flip_if_white="true"
           :sp_turn="-1"

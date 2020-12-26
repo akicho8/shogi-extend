@@ -6,7 +6,7 @@ client-only
       p SFEN: {{current_sfen}}
       p タイトル: {{current_title}}
       p 視点: {{image_vpoint}}
-      p モード: {{run_mode}}
+      p モード: {{sp_run_mode}}
       p 視点: {{board_vpoint}}
       p URL: {{current_url}}
       p サイドバー {{sidebar_p}}
@@ -19,7 +19,7 @@ client-only
           b-menu-item(label="盤面リセット" @click="reset_handle")
         b-menu-list(label="Edit")
           b-menu-item(label="タイトル変更" @click="title_edit")
-          b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.run_mode === 'edit_mode'}")
+          b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.sp_run_mode === 'edit_mode'}")
           b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
         b-menu-list(label="Export")
           b-menu-item(label="局面URLコピー" @click="current_url_copy_handle")
@@ -37,7 +37,7 @@ client-only
     //-     NavbarItemHome
     //-     b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
     //-   template(slot="end")
-    //-     b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
+    //-     b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
     //-       b-icon(icon="menu")
 
     MainNavbar
@@ -45,16 +45,16 @@ client-only
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(@click="title_edit")
           | {{current_title}}
-          span.mx-1(v-if="run_mode === 'play_mode'") \#{{turn_offset}}
+          span.mx-1(v-if="sp_run_mode === 'play_mode'") \#{{turn_offset}}
       template(slot="end")
-        b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="run_mode === 'play_mode'")
+        b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="twitter" type="is-white")
-        b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'")
+        b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
           | 編集完了
-        b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
+        b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="menu")
 
-        //- template(v-if="run_mode === 'play_mode'")
+        //- template(v-if="sp_run_mode === 'play_mode'")
         //-   b-navbar-item(@click="reset_handle") 盤面リセット
         //-   b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
         //-   b-navbar-item(@click="kifu_copy_handle('kif')") 棋譜コピー
@@ -67,7 +67,7 @@ client-only
         //-     b-navbar-item(:href="kif_download_url" @click="sound_play('click')") 棋譜ダウンロード
         //-     b-navbar-item(@click="title_edit") タイトル編集
         //-     b-navbar-item(@click="kifu_copy_handle('sfen')") SFENコピー
-        //-     template(v-if="run_mode === 'play_mode'")
+        //-     template(v-if="sp_run_mode === 'play_mode'")
         //-       b-navbar-item(@click="room_code_edit")
         //-         | リアルタイム共有
         //-         .has-text-danger.ml-1(v-if="room_code") {{room_code}}
@@ -80,7 +80,7 @@ client-only
       .container
         .columns.is-centered
           .column.is-8-tablet.is-5-desktop
-            .turn_container.has-text-centered(v-if="run_mode === 'play_mode' && false")
+            .turn_container.has-text-centered(v-if="sp_run_mode === 'play_mode' && false")
               span.turn_offset.has-text-weight-bold {{turn_offset}}
               template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
                 span.mx-1.has-text-grey /
@@ -89,7 +89,7 @@ client-only
             // sp_bg_variant="is_bg_variant_a"
             CustomShogiPlayer(
               :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
-              :run_mode="run_mode"
+              :sp_run_mode="sp_run_mode"
               :sp_turn="turn_offset"
               :kifu_body="current_sfen"
               sp_summary="is_summary_off"
@@ -106,8 +106,8 @@ client-only
             )
 
             .buttons.is-centered.mt-4
-              TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
-              //- b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
+              TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="sp_run_mode === 'play_mode'")
+              //- b-button(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'") 編集完了
 
             .room_code.is-clickable(@click="room_code_edit" v-if="false")
               | {{room_code}}
@@ -170,7 +170,7 @@ export default {
       turn_offset_max: null,                         // 最後の手数
 
       record: this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
-      run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
+      sp_run_mode: this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_sfen: null,     // 局面編集モードの局面
 
       sidebar_p: false,
@@ -179,7 +179,7 @@ export default {
   mounted() {
     // どれかが変更されたらURLを更新
     this.$watch(() => [
-      this.run_mode,
+      this.sp_run_mode,
       this.current_sfen,
       this.edit_mode_sfen,      // 編集モード中でもURLを変更したいため
       this.turn_offset,
@@ -222,7 +222,7 @@ export default {
     // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
     edit_mode_snapshot_sfen_set(v) {
-      if (this.run_mode === "edit_mode") { // 操作モードでも呼ばれるから
+      if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから
         this.edit_mode_sfen = v
       }
     },
@@ -254,19 +254,19 @@ export default {
       this.sidebar_p = false
       this.sound_play("click")
 
-      if (this.run_mode === "play_mode") {
+      if (this.sp_run_mode === "play_mode") {
         if (this.image_vpoint === "self") {
           this.toast_ok(`
 局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、
 詰将棋を公開する場合は<b>視点設定</b>を<b>常に☗(先手)</b>に変更することおすすめします`, {duration: 1000 * 10})
         }
 
-        this.run_mode = "edit_mode"
+        this.sp_run_mode = "edit_mode"
         if (true) {
           this.board_vpoint = "black" // ▲視点にしておく(お好み)
         }
       } else {
-        this.run_mode = "play_mode"
+        this.sp_run_mode = "play_mode"
 
         // 局面編集から操作モードに戻した瞬間に局面編集モードでの局面を反映しURLを更新する
         // 局面編集モードでの変化をそのまま current_sfen に反映しない理由は駒箱の駒が消えるため
@@ -425,9 +425,9 @@ export default {
 
     current_url_params() {
       const params = {
-        body:             this.current_body, // 編集モードでもURLを更新するため
-        turn:             this.turn_offset,
-        title:            this.current_title,
+        body:         this.current_body, // 編集モードでもURLを更新するため
+        turn:         this.turn_offset,
+        title:        this.current_title,
         image_vpoint: this.image_vpoint,
       }
 
@@ -436,8 +436,8 @@ export default {
       }
 
       // 編集モードでの状態を維持したいのでURLに含めておく
-      if (this.run_mode !== "play_mode") {
-        params["run_mode"] = this.run_mode
+      if (this.sp_run_mode !== "play_mode") {
+        params["sp_run_mode"] = this.sp_run_mode
       }
 
       return params

@@ -29,7 +29,7 @@
               :sp_human_side="sp_human_side"
               :sp_slider="mode === 'standby' ? 'is_slider_on' : 'is_slider_off'"
               :sp_controller="mode === 'standby' ? 'is_controller_on' : 'is_controller_off'"
-              :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
+              :sp_run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
               :sp_vpoint.sync="sp_vpoint"
               sp_summary="is_summary_off"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"

@@ -161,7 +161,7 @@
                 CustomShogiPlayer(
                   :player_info="e.player_info"
                   sp_layout="is_vertical"
-                  :run_mode="'view_mode'"
+                  sp_run_mode="view_mode"
                   :sp_turn="sp_start_turn(e)"
                   :kifu_body="e.sfen_body"
                   :sp_sound_enabled="false"

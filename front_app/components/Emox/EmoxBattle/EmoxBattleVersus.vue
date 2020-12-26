@@ -11,7 +11,7 @@
     .container
       .CustomShogiPlayerWrap
         CustomShogiPlayer(
-          :run_mode="'play_mode'"
+          sp_run_mode="play_mode"
           :kifu_body="base.vs_share_sfen"
           sp_summary="is_summary_off"
           :sp_human_side="sp_human_side"

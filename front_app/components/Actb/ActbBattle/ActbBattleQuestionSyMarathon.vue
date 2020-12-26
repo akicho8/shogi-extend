@@ -5,10 +5,10 @@
     template(v-if="base.debug_read_p")
       | ({{base.share_turn_offset}})
   CustomShogiPlayer(
-    :sp_mobile_vertical="'is_mobile_vertical_off'"
+    sp_mobile_vertical="is_mobile_vertical_off"
     :key="`quest_${base.question_index}`"
     ref="main_sp"
-    :run_mode="'play_mode'"
+    sp_run_mode="play_mode"
     :kifu_body="base.current_question.init_sfen"
     :sp_flip_if_white="true"
     sp_summary="is_summary_off"

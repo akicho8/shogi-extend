@@ -3,10 +3,10 @@
   ActbBattleQuestionSyVersusMembership.mt-3(:membership="base.opponent_membership")
 
   CustomShogiPlayer.mt-3(
-    :sp_mobile_vertical="'is_mobile_vertical_off'"
-    :run_mode="'play_mode'"
-    :kifu_body="base.vs_share_sfen"
+    sp_mobile_vertical="is_mobile_vertical_off"
+    sp_run_mode="play_mode"
     sp_summary="is_summary_off"
+    :kifu_body="base.vs_share_sfen"
     :sp_human_side="sp_human_side"
     :sp_vpoint="sp_vpoint"
     @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"

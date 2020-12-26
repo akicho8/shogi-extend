@@ -1,8 +1,8 @@
 <template lang="pug">
 .ActbBuilderEditHaiti.mt-4
   CustomShogiPlayer(
-    :sp_mobile_vertical="'is_mobile_vertical_off'"
-    :run_mode="'edit_mode'"
+    sp_mobile_vertical="is_mobile_vertical_off"
+    sp_run_mode="edit_mode"
     :kifu_body="new_kifu_body"
     :sp_turn="-1"
     sp_slider="is_slider_on"
