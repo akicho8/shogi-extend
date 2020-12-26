@@ -7,7 +7,6 @@
     :run_mode="'play_mode'"
     :kifu_body="base.vs_share_sfen"
     sp_summary="is_summary_off"
-    :setting_button_show="false"
     :human_side_key="current_human_side_key"
     :flip="current_flip"
     @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"

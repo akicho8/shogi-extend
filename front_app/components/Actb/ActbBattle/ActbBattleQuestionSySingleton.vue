@@ -11,9 +11,8 @@
       :sp_mobile_vertical="'is_mobile_vertical_off'"
       :run_mode="'play_mode'"
       :kifu_body="base.current_question.init_sfen"
-      :flip_if_white="true"
+      :sp_flip_if_white="true"
       sp_summary="is_summary_off"
-      :setting_button_show="false"
       :human_side_key="'none'"
     )
     .wakatta_button.has-text-centered.mt-3
@@ -30,11 +29,9 @@
       :key="`quest_${base.question_index}`"
       :run_mode="'play_mode'"
       :kifu_body="base.current_question.init_sfen"
-      :flip_if_white="true"
+      :sp_flip_if_white="true"
       sp_summary="is_summary_off"
-      :setting_button_show="false"
       :human_side_key="'both'"
-      :controller_show="false"
       @update:turn_offset="base.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="base.play_mode_advanced_full_moves_sfen_set"
     )
@@ -48,13 +45,11 @@
       :sp_mobile_vertical="'is_mobile_vertical_off'"
       :run_mode="'play_mode'"
       :kifu_body="base.share_sfen"
-      :flip_if_white="true"
+      :sp_flip_if_white="true"
       :start_turn="-1"
       sp_summary="is_summary_off"
-      :setting_button_show="false"
       :sound_effect="false"
       :human_side_key="'none'"
-      :controller_show="false"
       @update:turn_offset="v => base.share_turn_offset = v"
     )
     .mt-3.has-text-centered

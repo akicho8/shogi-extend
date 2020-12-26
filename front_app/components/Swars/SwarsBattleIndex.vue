@@ -162,17 +162,14 @@
                   :player_info="e.player_info"
                   sp_layout="is_vertical"
                   :run_mode="'view_mode'"
-                  :debug_mode="false"
                   :start_turn="sp_start_turn(e)"
                   :kifu_body="e.sfen_body"
                   :sound_effect="false"
-                  :setting_button_show="false"
                   sp_summary="is_summary_off"
-                  :operation_disable="true"
-                  :overlay_navi="false"
+                  :sp_op_disabled="true"
                   :flip="e.flip"
                 )
-                // :hidden_if_piece_stand_blank="display_key === 'critical'"
+                // :sp_hidden_if_piece_stand_blank="display_key === 'critical'"
                 //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
           //- v-if="$route.query.query || config.records.length >= 1"

@@ -8,10 +8,8 @@
       :run_mode="'view_mode'"
       :kifu_body="yomikonda_sfen"
       :start_turn="start_turn"
-      :key_event_capture="false"
       sp_slider="is_slider_on"
-      :controller_show="true"
-      :setting_button_show="false"
+      sp_controller="is_controller_on"
       @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
       )
   footer.modal-card-foot

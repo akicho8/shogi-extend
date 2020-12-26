@@ -27,10 +27,8 @@
             CustomShogiPlayer(
               :kifu_body="current_sfen"
               :human_side_key="human_side_key"
-              :key_event_capture="false"
-              :sfen_show="false"
               :sp_slider="mode === 'standby' ? 'is_slider_on' : 'is_slider_off'"
-              :controller_show="mode === 'standby'"
+              :sp_controller="mode === 'standby' ? 'is_controller_on' : 'is_controller_off'"
               :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
               :flip.sync="flip"
               sp_summary="is_summary_off"

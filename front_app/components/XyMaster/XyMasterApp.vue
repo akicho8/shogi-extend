@@ -47,11 +47,9 @@
                 ref="main_sp"
                 :kifu_body="'position sfen 9/9/9/9/9/9/9/9/9 b - 1'"
                 sp_summary="is_summary_off"
-                :hidden_if_piece_stand_blank="true"
-                :setting_button_show="false"
+                :sp_hidden_if_piece_stand_blank="true"
                 :flip="current_rule.flip"
                 :board_piece_back_user_class="board_piece_back_user_class"
-                :overlay_navi="false"
                 :board_cell_pointerdown_user_handle="board_cell_pointerdown_user_handle"
               )
 

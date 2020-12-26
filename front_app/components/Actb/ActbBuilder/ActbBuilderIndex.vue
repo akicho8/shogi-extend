@@ -140,11 +140,11 @@
             :sp_mobile_vertical="'is_mobile_vertical_off'"
             :run_mode="'view_mode'"
             :kifu_body="props.row.init_sfen"
-            :flip_if_white="true"
+            :sp_flip_if_white="true"
             :start_turn="0"
             sp_summary="is_summary_off"
             :sound_effect="false"
-            :operation_disable="true"
+            :sp_op_disabled="true"
             )
         .media-content
           .content

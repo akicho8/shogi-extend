@@ -95,7 +95,7 @@ client-only
               sp_summary="is_summary_off"
               sp_slider="is_slider_on"
               :sound_effect="true"
-              :controller_show="true"
+              sp_controller="is_controller_on"
               :human_side_key="'both'"
               :flip.sync="board_flip"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
