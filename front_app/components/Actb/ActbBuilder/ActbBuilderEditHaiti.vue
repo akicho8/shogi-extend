@@ -3,7 +3,7 @@
   CustomShogiPlayer(
     sp_mobile_vertical="is_mobile_vertical_off"
     sp_run_mode="edit_mode"
-    :kifu_body="new_kifu_body"
+    :sp_body="sp_body"
     :sp_turn="-1"
     sp_slider="is_slider_on"
     sp_controller="is_controller_on"
@@ -50,13 +50,13 @@ export default {
   data() {
     return {
       yomikonda_sfen: null,
-      new_kifu_body: null,
+      sp_body: null,
     }
   },
 
   created() {
     // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
-    this.new_kifu_body = this.bapp.question.init_sfen
+    this.sp_body = this.bapp.question.init_sfen
     this.piece_box_piece_couns_adjust()
   },
 
@@ -119,13 +119,13 @@ export default {
       })
     },
 
-    // new_kifu_body は常に今の状態を表わしているわけではない
+    // sp_body は常に今の状態を表わしているわけではない
     // 最初の状態しか入っていない
     // なので更新したと思っても最初の状態と変化していないので盤面に反映されない
     // こういうときは引数を渡して変化したかどうかとかそんなまわりくどいことはせずに
     // 直接更新すればいい
     kyokumen_set(str) {
-      this.new_kifu_body = str
+      this.sp_body = str
       this.piece_box_piece_couns_adjust()
     },
 

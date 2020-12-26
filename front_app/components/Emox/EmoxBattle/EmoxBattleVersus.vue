@@ -12,7 +12,7 @@
       .CustomShogiPlayerWrap
         CustomShogiPlayer(
           sp_run_mode="play_mode"
-          :kifu_body="base.vs_share_sfen"
+          :sp_body="base.vs_share_sfen"
           sp_summary="is_summary_off"
           :sp_human_side="sp_human_side"
           :sp_vpoint="sp_vpoint"

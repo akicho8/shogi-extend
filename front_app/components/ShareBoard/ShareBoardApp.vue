@@ -91,7 +91,7 @@ client-only
               :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
               :sp_turn="turn_offset"
-              :kifu_body="current_sfen"
+              :sp_body="current_sfen"
               sp_summary="is_summary_off"
               sp_slider="is_slider_on"
               :sp_sound_enabled="true"

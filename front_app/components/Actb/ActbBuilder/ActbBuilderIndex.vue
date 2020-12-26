@@ -139,7 +139,7 @@
           CustomShogiPlayer(
             sp_mobile_vertical="is_mobile_vertical_off"
             sp_run_mode="view_mode"
-            :kifu_body="props.row.init_sfen"
+            :sp_body="props.row.init_sfen"
             :sp_flip_if_white="true"
             :sp_turn="0"
             sp_summary="is_summary_off"

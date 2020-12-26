@@ -45,7 +45,7 @@
               XyMasterCountdown(:base="base")
               CustomShogiPlayer(
                 ref="main_sp"
-                :kifu_body="'position sfen 9/9/9/9/9/9/9/9/9 b - 1'"
+                sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
                 sp_summary="is_summary_off"
                 :sp_hidden_if_piece_stand_blank="true"
                 :sp_vpoint="current_rule.vpoint"

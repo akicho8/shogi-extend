@@ -84,7 +84,7 @@
             sp_fullheight="is_fullheight_off"
             :sp_run_mode.sync="sp_run_mode"
             :sp_turn="sp_turn"
-            :kifu_body="record.sfen_body"
+            :sp_body="record.sfen_body"
             :sp_key_event_capture_enabled="true"
             sp_slider="is_slider_on"
             sp_summary="is_summary_off"

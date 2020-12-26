@@ -25,7 +25,7 @@
         .column
           .CustomShogiPlayerWrap
             CustomShogiPlayer(
-              :kifu_body="current_sfen"
+              :sp_body="sp_body"
               :sp_human_side="sp_human_side"
               :sp_slider="mode === 'standby' ? 'is_slider_on' : 'is_slider_off'"
               :sp_controller="mode === 'standby' ? 'is_controller_on' : 'is_controller_off'"
@@ -147,7 +147,7 @@ export default {
       think_text:         null, // 思考内容テキスト
 
       // shogi-player 用パラメータ
-      current_sfen: null,               // 譜面
+      sp_body: null,               // 譜面
       sp_vpoint: null,                  // 駒落ちなら反転させる
       sp_human_side: null,             // 人間が操作する側を絞る
     }
@@ -160,7 +160,7 @@ export default {
 
     this.mode = "standby"
 
-    this.current_sfen_set()
+    this.sp_body_set()
 
     this.give_up_processing = false
     this.candidate_processing = false
@@ -222,7 +222,7 @@ export default {
     },
 
     cpu_preset_key() {
-      this.current_sfen_set()
+      this.sp_body_set()
       this.talk(`${this.cpu_preset_info.name}に変更しました`)
     },
   },
@@ -232,8 +232,8 @@ export default {
       this.cpu_strategy_random_number = Math.floor(Math.random() * 256) // オールラウンドの戦法が決まる乱数
     },
 
-    current_sfen_set() {
-      this.current_sfen   = this.preset_info.sfen                   // 手合割に対応する盤面設定
+    sp_body_set() {
+      this.sp_body   = this.preset_info.sfen                   // 手合割に対応する盤面設定
       this.sp_vpoint      = this.preset_info.first_location_key     // 駒落ちなら反転して上手を持つ
       this.sp_human_side = this.preset_info.first_location_key     // 人間側だけの操作にする
 
@@ -252,7 +252,7 @@ export default {
 
       this.sound_play("click")
 
-      this.current_sfen_set()
+      this.sp_body_set()
 
       // オールラウンドの戦型選択
       this.cpu_strategy_random_number_reset()
@@ -341,7 +341,7 @@ export default {
         return
       }
       this.candidate_processing = true
-      this.post_apply({candidate_sfen: this.current_sfen})
+      this.post_apply({candidate_sfen: this.sp_body})
     },
 
     play_mode_advanced_full_moves_sfen_set(long_sfen) {
@@ -364,7 +364,7 @@ export default {
 
         // 指した後の局面を反映
         if (e["current_sfen"]) {
-          this.current_sfen = e["current_sfen"]
+          this.sp_body = e["current_sfen"]
         }
 
         // if (e["hand"]) {

@@ -6,7 +6,7 @@
     CustomShogiPlayer(
       sp_mobile_vertical="is_mobile_vertical_off"
       sp_run_mode="view_mode"
-      :kifu_body="yomikonda_sfen"
+      :sp_body="yomikonda_sfen"
       :sp_turn="sp_turn"
       sp_slider="is_slider_on"
       sp_controller="is_controller_on"

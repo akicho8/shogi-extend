@@ -56,7 +56,7 @@
       CustomShogiPlayer(
         sp_mobile_vertical="is_mobile_vertical_off"
         sp_run_mode="play_mode"
-        :kifu_body="selected_sfen"
+        :sp_body="selected_sfen"
         :sp_flip_if_white="true"
         :sp_turn="-1"
         sp_slider="is_slider_on"
