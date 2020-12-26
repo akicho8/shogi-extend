@@ -1,16 +1,23 @@
 <template lang="pug">
 client-only
-  //- StyleEditor(v-bind="style_editor_params")
-  StyleEditor
+  .page-style-editor
+    StyleEditor
+    b-button.close_button(icon-left="chevron-left" @click="back_handle" type="is-text")
 </template>
 
 <script>
 import StyleEditor from "shogi-player/components/StyleEditor.vue"
 
 export default {
-  name: "style-editor",
+  name: "page-style-editor",
   components: {
     StyleEditor,
+  },
+  methods: {
+    back_handle() {
+      this.sound_play("click")
+      this.back_to()
+    },
   },
   computed: {
     meta() {
@@ -20,24 +27,14 @@ export default {
         og_image_key: "style-editor",
       }
     },
-    // style_editor_params() {
-    //   return {
-    //     kifu_body: this.$route.query.body,
-    //     player_info: this.player_info,
-    //   }
-    // },
-    // player_info() {
-    //   const { white, black } = this.$route.query
-    //   if (white || black) {
-    //     return {
-    //       black: { name: black, },
-    //       white: { name: white, },
-    //     }
-    //   }
-    // },
   },
 }
 </script>
 
 <style lang="sass">
+.page-style-editor
+  .close_button
+    position: absolute
+    top: 0
+    left: 0
 </style>
