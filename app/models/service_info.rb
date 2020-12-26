@@ -180,7 +180,6 @@ class ServiceInfo
       og_image_key: "style-editor",
       description: "将棋盤のスタイルをいじくるツール",
       features: [
-        "CSSを編集して確認するのが面倒すぎたので作成",
       ],
     },
   ]
