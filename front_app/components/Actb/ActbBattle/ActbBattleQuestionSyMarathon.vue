@@ -13,7 +13,7 @@
     :sp_flip_if_white="true"
     sp_summary="is_summary_off"
     sp_controller="is_controller_on"
-    :human_side_key="'both'"
+    sp_human_side="both"
     @update:turn_offset="v => base.share_turn_offset = v"
     @update:play_mode_advanced_full_moves_sfen="base.play_mode_advanced_full_moves_sfen_set"
   )

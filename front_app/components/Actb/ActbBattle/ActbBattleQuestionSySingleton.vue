@@ -13,7 +13,7 @@
       :kifu_body="base.current_question.init_sfen"
       :sp_flip_if_white="true"
       sp_summary="is_summary_off"
-      :human_side_key="'none'"
+      sp_human_side="none"
     )
     .wakatta_button.has-text-centered.mt-3
       b-button.has-text-weight-bold(@click="base.answer_button_push_handle(false)" type="is-primary" size="is-medium" :disabled="base.current_mi.otetuki_p(base.current_question.id)") わかった
@@ -31,7 +31,7 @@
       :kifu_body="base.current_question.init_sfen"
       :sp_flip_if_white="true"
       sp_summary="is_summary_off"
-      :human_side_key="'both'"
+      sp_human_side="both"
       @update:turn_offset="base.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="base.play_mode_advanced_full_moves_sfen_set"
     )
@@ -49,7 +49,7 @@
       :start_turn="-1"
       sp_summary="is_summary_off"
       :sound_effect="false"
-      :human_side_key="'none'"
+      sp_human_side="none"
       @update:turn_offset="v => base.share_turn_offset = v"
     )
     .mt-3.has-text-centered

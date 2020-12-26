@@ -14,8 +14,8 @@
           :run_mode="'play_mode'"
           :kifu_body="base.vs_share_sfen"
           sp_summary="is_summary_off"
-          :human_side_key="current_human_side_key"
-          :sp_vpoint="current_vpoint"
+          :sp_human_side="sp_human_side"
+          :sp_vpoint="sp_vpoint"
           @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
           :player_info="player_info"
         )
@@ -52,11 +52,11 @@ export default {
   name: "EmoxBattleVersus",
   mixins: [support_child],
   computed: {
-    current_human_side_key() {
+    sp_human_side() {
       return this.base.current_membership.location_key
     },
-    current_flip() {
-      return this.base.current_membership.location_key === "white"
+    sp_vpoint() {
+      return this.base.current_membership.location_key
     },
     player_info() {
       if (this.base.chess_clock) {

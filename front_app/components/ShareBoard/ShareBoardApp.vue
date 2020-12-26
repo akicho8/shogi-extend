@@ -96,7 +96,7 @@ client-only
               sp_slider="is_slider_on"
               :sound_effect="true"
               sp_controller="is_controller_on"
-              :human_side_key="'both'"
+              :sp_human_side="'both'"
               :sp_vpoint.sync="board_vpoint"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
