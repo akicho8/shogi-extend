@@ -46,7 +46,7 @@
       :run_mode="'play_mode'"
       :kifu_body="base.share_sfen"
       :sp_flip_if_white="true"
-      :start_turn="-1"
+      :sp_turn="-1"
       sp_summary="is_summary_off"
       :sound_effect="false"
       sp_human_side="none"

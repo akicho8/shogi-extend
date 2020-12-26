@@ -141,7 +141,7 @@
             :run_mode="'view_mode'"
             :kifu_body="props.row.init_sfen"
             :sp_flip_if_white="true"
-            :start_turn="0"
+            :sp_turn="0"
             sp_summary="is_summary_off"
             :sound_effect="false"
             :sp_op_disabled="true"

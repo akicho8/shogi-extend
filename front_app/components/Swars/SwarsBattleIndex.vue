@@ -162,7 +162,7 @@
                   :player_info="e.player_info"
                   sp_layout="is_vertical"
                   :run_mode="'view_mode'"
-                  :start_turn="sp_start_turn(e)"
+                  :sp_turn="sp_start_turn(e)"
                   :kifu_body="e.sfen_body"
                   :sound_effect="false"
                   sp_summary="is_summary_off"

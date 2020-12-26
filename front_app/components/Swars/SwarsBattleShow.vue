@@ -83,7 +83,7 @@
             sp_layout="is_horizontal"
             sp_fullheight="is_fullheight_off"
             :run_mode.sync="run_mode"
-            :start_turn="start_turn"
+            :sp_turn="sp_turn"
             :kifu_body="record.sfen_body"
             :sp_key_event_capture_enabled="true"
             sp_slider="is_slider_on"
@@ -91,7 +91,7 @@
             sp_controller="is_controller_on"
             :vpoint.sync="new_vpoint"
             :player_info="player_info"
-            @update:start_turn="real_turn_set"
+            @update:sp_turn="real_turn_set"
             ref="main_sp"
           )
 
@@ -257,7 +257,7 @@ export default {
     // バトル情報がセットされたタイミングまたは変更されたタイミング
     record_setup() {
       // 開始手数を保存 (KENTOに渡すためでもある)
-      this.new_turn = this.start_turn
+      this.new_turn = this.sp_turn
 
       // 継盤解除
       this.run_mode = "view_mode"
@@ -283,8 +283,8 @@ export default {
     // },
 
     // 開始局面
-    // turn start_turn critical_turn の順に見る
-    start_turn_for(record) {
+    // turn sp_turn critical_turn の順に見る
+    sp_turn_for(record) {
       const turn = this.$route.query.turn
       if (turn != null) {
         return Number(turn)
@@ -355,8 +355,8 @@ export default {
       return `${this.record.title} ${this.new_turn}手目`
     },
 
-    start_turn() {
-      return this.start_turn_for(this.record)
+    sp_turn() {
+      return this.sp_turn_for(this.record)
     },
 
     player_info() {

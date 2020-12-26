@@ -5,7 +5,7 @@
     :run_mode="'play_mode'"
     :kifu_body="bapp.question.init_sfen"
     :sp_flip_if_white="true"
-    :start_turn="0"
+    :sp_turn="0"
     sp_slider="is_slider_on"
     sp_controller="is_controller_on"
     @update:turn_offset="bapp.turn_offset_set"
@@ -25,7 +25,7 @@
           :run_mode="'view_mode'"
           :kifu_body="bapp.full_sfen_build(e)"
           :sp_flip_if_white="true"
-          :start_turn="-1"
+          :sp_turn="-1"
           sp_slider="is_slider_on"
           sp_controller="is_controller_on"
           )

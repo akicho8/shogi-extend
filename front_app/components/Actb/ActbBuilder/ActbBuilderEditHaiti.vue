@@ -4,7 +4,7 @@
     :sp_mobile_vertical="'is_mobile_vertical_off'"
     :run_mode="'edit_mode'"
     :kifu_body="new_kifu_body"
-    :start_turn="-1"
+    :sp_turn="-1"
     sp_slider="is_slider_on"
     sp_controller="is_controller_on"
     :sound_effect="false"
@@ -80,8 +80,8 @@ export default {
                 this.kyokumen_set(e.body)
               } else {
                 // moves があるので局面を確定してもらう
-                const start_turn = this.start_turn_guess(any_source) // URLから現在の手数を推測
-                this.kyokumen_kimeru_handle({yomikonda_sfen: e.body, start_turn: start_turn})
+                const sp_turn = this.sp_turn_guess(any_source) // URLから現在の手数を推測
+                this.kyokumen_kimeru_handle({yomikonda_sfen: e.body, sp_turn: sp_turn})
               }
             })
           },

@@ -58,7 +58,7 @@
         :run_mode="'play_mode'"
         :kifu_body="selected_sfen"
         :sp_flip_if_white="true"
-        :start_turn="-1"
+        :sp_turn="-1"
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
