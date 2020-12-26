@@ -96,7 +96,7 @@ const CHART_CONFIG_DEFAULT = {
         ticks: {
           fontSize: FONT_SIZE,
           fontColor: TICKS_FONT_COLOR,
-          reverse: false,       // 反転する？ (this.vpoint を 外から設定して判定する)
+          reverse: false,       // 反転する？ (this.sp_vpoint を 外から設定して判定する)
 
           stepSize: 30,         // N秒毎の表示
           maxTicksLimit: 7,     // 縦の最大目盛り数
@@ -386,7 +386,7 @@ export default {
 
   props: {
     record:            { required: true, }, // バトル情報
-    vpoint:            { required: true, }, // 視点
+    sp_vpoint:         { required: true, }, // 視点
     time_chart_params: { required: true, }, // 表示する内容
   },
 
@@ -438,8 +438,8 @@ export default {
       this.chart_update()
     },
 
-    vpoint(v, ov) {
-      this.debug_alert(`vpoint: ${ov} -> ${v}`)
+    sp_vpoint(v, ov) {
+      this.debug_alert(`sp_vpoint: ${ov} -> ${v}`)
       this.chart_flip_set()
       this.chart_update()
     },
@@ -577,7 +577,7 @@ export default {
 
     // flip 状態をチャートに反映
     chart_flip_set() {
-      this._chart_config.options.scales.yAxes[0].ticks.reverse = (this.vpoint === "while")
+      this._chart_config.options.scales.yAxes[0].ticks.reverse = (this.sp_vpoint === "while")
     },
 
     // 61 -> 1分1秒

@@ -159,7 +159,7 @@
                 //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[1]")
 
                 CustomShogiPlayer(
-                  :player_info="e.player_info"
+                  :sp_player_info="e.player_info"
                   sp_layout="is_vertical"
                   sp_run_mode="view_mode"
                   :sp_turn="sp_start_turn(e)"

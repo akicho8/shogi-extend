@@ -17,7 +17,7 @@
           :sp_human_side="sp_human_side"
           :sp_vpoint="sp_vpoint"
           @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
-          :player_info="player_info"
+          :sp_player_info="sp_player_info"
         )
 
       //- EmoxBattleVersusMembership.mt-3(:base="base" :membership="base.current_membership")
@@ -58,7 +58,7 @@ export default {
     sp_vpoint() {
       return this.base.current_membership.location_key
     },
-    player_info() {
+    sp_player_info() {
       if (this.base.chess_clock) {
         return this.base.chess_clock.single_clocks.reduce((a, e, i) => {
           return {

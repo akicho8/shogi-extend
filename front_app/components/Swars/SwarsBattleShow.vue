@@ -89,8 +89,8 @@
             sp_slider="is_slider_on"
             sp_summary="is_summary_off"
             sp_controller="is_controller_on"
-            :vpoint.sync="new_vpoint"
-            :player_info="player_info"
+            :sp_vpoint.sync="new_vpoint"
+            :sp_player_info="player_info"
             @update:sp_turn="real_turn_set"
             ref="main_sp"
           )
@@ -103,7 +103,7 @@
         :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
         :chart_turn="new_turn"
-        :vpoint="new_vpoint"
+        :sp_vpoint="new_vpoint"
         ref="SwarsBattleShowTimeChart"
       )
 
