@@ -1,19 +1,19 @@
 <template lang="pug">
-.modal-card.ImageVpointSettingModal(style="width:auto")
+.modal-card.AbstractVpointKeySelectModal(style="width:auto")
   header.modal-card-head
     p.modal-card-title 視点設定
   section.modal-card-body
     .field.my-1
-      b-radio(size="is-small" v-model="new_image_vpoint" native-value="self")
+      b-radio(size="is-small" v-model="new_abstract_vpoint_key" native-value="self")
         | 1手指し継いだとき自分の視点 (リレー将棋向け・初期値)
     .field.my-1
-      b-radio(size="is-small" v-model="new_image_vpoint" native-value="opponent")
+      b-radio(size="is-small" v-model="new_abstract_vpoint_key" native-value="opponent")
         | 1手指し継いだとき相手の視点 (リレー将棋向け)
     .field.my-1
-      b-radio(size="is-small" v-model="new_image_vpoint" native-value="black")
+      b-radio(size="is-small" v-model="new_abstract_vpoint_key" native-value="black")
         | 常に☗ (詰将棋向け)
     .field.my-1
-      b-radio(size="is-small" v-model="new_image_vpoint" native-value="white")
+      b-radio(size="is-small" v-model="new_abstract_vpoint_key" native-value="white")
         | 常に☖ (逃れ将棋向け)
     .preview_image_container.is-flex.mt-3
       .preview_image.is-flex
@@ -31,18 +31,18 @@
 
 <script>
 export default {
-  name: "ImageVpointSettingModal",
+  name: "AbstractVpointKeySelectModal",
   props: {
-    image_vpoint: { type: String,   required: true, },
-    permalink_for:    { type: Function, required: true, },
+    abstract_vpoint_key:  { type: String,   required: true, },
+    permalink_for: { type: Function, required: true, },
   },
   data() {
     return {
-      new_image_vpoint: this.image_vpoint,
+      new_abstract_vpoint_key: this.abstract_vpoint_key,
     }
   },
   watch: {
-    new_image_vpoint(v) {
+    new_abstract_vpoint_key(v) {
       this.sound_play("click")
     },
   },
@@ -53,12 +53,12 @@ export default {
     },
     submit_handle() {
       this.close_handle()
-      this.$emit("update:image_vpoint", this.new_image_vpoint)
+      this.$emit("update:abstract_vpoint_key", this.new_abstract_vpoint_key)
     },
     preview_url(options = {}) {
       return this.permalink_for({
         format: "png",
-        image_vpoint: this.new_image_vpoint,
+        abstract_vpoint_key: this.new_abstract_vpoint_key,
         disposition: "inline",
         ...options,
       })
@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="sass">
-.ImageVpointSettingModal
+.AbstractVpointKeySelectModal
   .preview_image_container
     justify-content: center
     .preview_image

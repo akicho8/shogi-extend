@@ -8,7 +8,7 @@
 # | 駒落ち | △(1) |    1 |    2 | true  | △が指したので反転する               |
 # | 駒落ち | △(1) |    2 |    3 |       | ▲が指したので反転しない             |
 # |--------+-------+------+------+-------+--------------------------------------|
-class ImageViewPointInfo
+class AbstractVpointInfo
   include ApplicationMemoryRecord
   memory_record [
     { key: :self,     name: "自分", image_vpoint: -> e { e.even? ? :white : :black }, board_vpoint: -> e { e.odd? ? :white : :black } },

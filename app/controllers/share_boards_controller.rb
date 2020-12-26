@@ -157,10 +157,10 @@ class ShareBoardsController < ApplicationController
     def current_json
       attrs = current_record.as_json(only: [:sfen_body, :turn_max])
       attrs = attrs.merge({
-          :initial_turn     => initial_turn,
-          :board_vpoint       => board_vpoint,
-          :image_vpoint => image_vpoint,
-          :title            => current_title,
+          :initial_turn        => initial_turn,
+          :board_vpoint        => board_vpoint,
+          :abstract_vpoint_key => abstract_vpoint_key,
+          :title               => current_title,
         })
 
       # リアルタイム共有
@@ -183,13 +183,13 @@ class ShareBoardsController < ApplicationController
 
     def board_vpoint
       if v = params[:board_vpoint].presence
-        return boolean_for(v)
+        return v
       end
       # # 次に指す人の視点で開くなら
       # if true
       #   number_of_turns_in_consideration_of_the_frame_dropping.odd?
       # end
-      image_vpoint_info.board_vpoint.call(number_of_turns_in_consideration_of_the_frame_dropping)
+      abstract_vpoint_info.board_vpoint.call(number_of_turns_in_consideration_of_the_frame_dropping)
     end
 
     def image_vpoint
@@ -202,15 +202,15 @@ class ShareBoardsController < ApplicationController
       if v = params[:image_vpoint].presence
         return v
       end
-      image_vpoint_info.image_vpoint.call(number_of_turns_in_consideration_of_the_frame_dropping)
+      abstract_vpoint_info.image_vpoint.call(number_of_turns_in_consideration_of_the_frame_dropping)
     end
 
-    def image_vpoint_info
-      ImageViewPointInfo.fetch(image_vpoint)
+    def abstract_vpoint_info
+      AbstractVpointInfo.fetch(abstract_vpoint_key)
     end
 
-    def image_vpoint
-      ImageViewPointInfo.valid_key(params[:image_vpoint], :self)
+    def abstract_vpoint_key
+      AbstractVpointInfo.valid_key(params[:abstract_vpoint_key], :self)
     end
 
     # 駒落ちを考慮した擬似ターン数
