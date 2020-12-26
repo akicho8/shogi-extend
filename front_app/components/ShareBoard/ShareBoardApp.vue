@@ -139,7 +139,7 @@ import { support_parent } from "./support_parent.js"
 import { app_room      } from "./app_room.js"
 import { app_room_init } from "./app_room_init.js"
 
-import ImageViewPointSettingModal from "./ImageViewPointSettingModal.vue"
+import ImageVpointSettingModal from "./ImageVpointSettingModal.vue"
 import AnySourceReadModal         from "@/components/AnySourceReadModal.vue"
 
 export default {
@@ -336,7 +336,7 @@ export default {
       this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
-        component: ImageViewPointSettingModal,
+        component: ImageVpointSettingModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
@@ -391,7 +391,7 @@ export default {
         url = new URL(this.$config.MY_SITE_URL + `/share-board`)
       }
 
-      // ImageViewPointSettingModal から新しい image_vpoint が渡されるので params で上書きすること
+      // ImageVpointSettingModal から新しい image_vpoint が渡されるので params で上書きすること
       params = {
         ...this.current_url_params,
         ...params,

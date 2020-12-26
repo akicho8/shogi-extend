@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.ImageViewPointSettingModal(style="width:auto")
+.modal-card.ImageVpointSettingModal(style="width:auto")
   header.modal-card-head
     p.modal-card-title 視点設定
   section.modal-card-body
@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: "ImageViewPointSettingModal",
+  name: "ImageVpointSettingModal",
   props: {
     image_vpoint: { type: String,   required: true, },
     permalink_for:    { type: Function, required: true, },
@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="sass">
-.ImageViewPointSettingModal
+.ImageVpointSettingModal
   .preview_image_container
     justify-content: center
     .preview_image
