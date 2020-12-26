@@ -15,7 +15,7 @@
           :kifu_body="base.vs_share_sfen"
           sp_summary="is_summary_off"
           :human_side_key="current_human_side_key"
-          :flip="current_flip"
+          :sp_vpoint="current_vpoint"
           @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
           :player_info="player_info"
         )

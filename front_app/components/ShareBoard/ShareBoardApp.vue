@@ -5,9 +5,9 @@ client-only
       p 手数: {{turn_offset}} / {{turn_offset_max}}
       p SFEN: {{current_sfen}}
       p タイトル: {{current_title}}
-      p 視点: {{image_view_point}}
+      p 視点: {{image_vpoint}}
       p モード: {{run_mode}}
-      p 反転: {{board_flip}}
+      p 視点: {{board_vpoint}}
       p URL: {{current_url}}
       p サイドバー {{sidebar_p}}
 
@@ -15,7 +15,7 @@ client-only
       .mx-5.my-5
         b-menu-list(label="Action")
           b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
-          b-menu-item(label="視点設定" @click="image_view_point_setting_handle")
+          b-menu-item(label="視点設定" @click="image_vpoint_setting_handle")
           b-menu-item(label="盤面リセット" @click="reset_handle")
         b-menu-list(label="Edit")
           b-menu-item(label="タイトル変更" @click="title_edit")
@@ -59,7 +59,7 @@ client-only
         //-   b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
         //-   b-navbar-item(@click="kifu_copy_handle('kif')") 棋譜コピー
         //-   b-navbar-item(@click="mode_toggle_handle") 局面編集
-        //-   b-navbar-item(@click="image_view_point_setting_handle") 視点設定
+        //-   b-navbar-item(@click="image_vpoint_setting_handle") 視点設定
         //-   b-navbar-dropdown(hoverable arrowless right label="その他")
         //-     b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
         //-     b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
@@ -97,7 +97,7 @@ client-only
               :sound_effect="true"
               sp_controller="is_controller_on"
               :human_side_key="'both'"
-              :flip.sync="board_flip"
+              :sp_vpoint.sync="board_vpoint"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
               @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
@@ -163,10 +163,10 @@ export default {
       current_sfen:     this.config.record.sfen_body,        // 渡している棋譜
       current_title:    this.config.record.title,            // 現在のタイトル
       turn_offset:      this.config.record.initial_turn,     // 現在の手数
-      image_view_point: this.config.record.image_view_point, // Twitter画像の向き
+      image_vpoint: this.config.record.image_vpoint, // Twitter画像の向き
 
       // urlには反映しない
-      board_flip: this.config.record.board_flip,       // 反転用
+      board_vpoint: this.config.record.board_vpoint,       // 反転用
       turn_offset_max: null,                         // 最後の手数
 
       record: this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
@@ -184,7 +184,7 @@ export default {
       this.edit_mode_sfen,      // 編集モード中でもURLを変更したいため
       this.turn_offset,
       this.current_title,
-      this.image_view_point,
+      this.image_vpoint,
       this.room_code,
     ], () => {
       // 両方エラーになってしまう
@@ -255,7 +255,7 @@ export default {
       this.sound_play("click")
 
       if (this.run_mode === "play_mode") {
-        if (this.image_view_point === "self") {
+        if (this.image_vpoint === "self") {
           this.toast_ok(`
 局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、
 詰将棋を公開する場合は<b>視点設定</b>を<b>常に☗(先手)</b>に変更することおすすめします`, {duration: 1000 * 10})
@@ -263,7 +263,7 @@ export default {
 
         this.run_mode = "edit_mode"
         if (true) {
-          this.board_flip = false // ▲視点にしておく(お好み)
+          this.board_vpoint = "black" // ▲視点にしておく(お好み)
         }
       } else {
         this.run_mode = "play_mode"
@@ -332,7 +332,7 @@ export default {
     },
 
     // 視点設定変更
-    image_view_point_setting_handle() {
+    image_vpoint_setting_handle() {
       this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
@@ -342,13 +342,13 @@ export default {
         hasModalCard: true,
         animation: "",
         props: {
-          image_view_point: this.image_view_point,
+          image_vpoint: this.image_vpoint,
           permalink_for: this.permalink_for,
         },
         onCancel: () => this.sound_play("click"),
         events: {
-          "update:image_view_point": v => {
-            this.image_view_point = v
+          "update:image_vpoint": v => {
+            this.image_vpoint = v
           }
         },
       })
@@ -374,7 +374,7 @@ export default {
                 this.toast_ok("正常に読み込みました")
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max
-                this.board_flip = false
+                this.board_vpoint = "black"
               }
             })
           },
@@ -391,7 +391,7 @@ export default {
         url = new URL(this.$config.MY_SITE_URL + `/share-board`)
       }
 
-      // ImageViewPointSettingModal から新しい image_view_point が渡されるので params で上書きすること
+      // ImageViewPointSettingModal から新しい image_vpoint が渡されるので params で上書きすること
       params = {
         ...this.current_url_params,
         ...params,
@@ -428,7 +428,7 @@ export default {
         body:             this.current_body, // 編集モードでもURLを更新するため
         turn:             this.turn_offset,
         title:            this.current_title,
-        image_view_point: this.image_view_point,
+        image_vpoint: this.image_vpoint,
       }
 
       if (this.room_code) {
@@ -447,7 +447,7 @@ export default {
     current_url()                { return this.permalink_for()                                                                        },
     json_debug_url()             { return this.permalink_for({format: "json"})                                                        },
     twitter_card_url()           { return this.permalink_for({format: "png"})                                                         },
-    snapshot_image_url()         { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
+    snapshot_image_url()         { return this.permalink_for({format: "png", image_vpoint: this.board_vpoint, disposition: "attachment"}) },
     kif_download_url()           { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
     shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"})                              },
 
@@ -457,7 +457,7 @@ export default {
         path: this.current_url,
         sfen: this.current_sfen,
         turn: this.turn_offset,
-        flip: this.board_flip,
+        vpoint: this.board_vpoint,
         game_name: this.current_title,
       })
     },
@@ -466,7 +466,7 @@ export default {
       return this.kento_full_url({
         sfen: this.current_sfen,
         turn: this.turn_offset,
-        flip: this.board_flip,
+        vpoint: this.board_vpoint,
       })
     },
 

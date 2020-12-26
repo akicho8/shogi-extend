@@ -206,7 +206,7 @@ export default {
           query: {
             body: this.record.all_kifs.sfen,
             turn: this.fixed_turn,
-            image_view_point: "black",
+            image_vpoint: "black",
             // title: "共有将棋盤 (棋譜変換後の確認)",
           },
         })
@@ -377,7 +377,7 @@ export default {
           path: this.show_path,
           sfen: this.record.sfen_body,
           turn: this.fixed_turn,
-          flip: this.record.flip,
+          vpoint: this.record.vpoint,
         })
       }
     },
@@ -387,7 +387,7 @@ export default {
         return this.kento_full_url({
           sfen: this.record.sfen_body,
           turn: this.fixed_turn,
-          flip: this.record.flip,
+          vpoint: this.record.vpoint,
         })
       }
     },

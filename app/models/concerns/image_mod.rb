@@ -51,17 +51,17 @@ module ImageMod
     end
   end
 
-  def modal_on_index_path(params = {})
-    params = {
-      modal_id: to_param,
-      only_path: true,
-    }.merge(params)
-
-    params[:turn] = adjust_turn(params[:turn])
-    params[:flip] = adjust_flip(params[:flip])
-
-    Rails.application.routes.url_helpers.url_for([self.class, params])
-  end
+  # def modal_on_index_path(params = {})
+  #   params = {
+  #     modal_id: to_param,
+  #     only_path: true,
+  #   }.merge(params)
+  #
+  #   params[:turn] = adjust_turn(params[:turn])
+  #   params[:flip] = adjust_flip(params[:flip])
+  #
+  #   Rails.application.routes.url_helpers.url_for([self.class, params])
+  # end
 
   private
 

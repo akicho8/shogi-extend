@@ -4,16 +4,16 @@
     p.modal-card-title 視点設定
   section.modal-card-body
     .field.my-1
-      b-radio(size="is-small" v-model="new_image_view_point" native-value="self")
+      b-radio(size="is-small" v-model="new_image_vpoint" native-value="self")
         | 1手指し継いだとき自分の視点 (リレー将棋向け・初期値)
     .field.my-1
-      b-radio(size="is-small" v-model="new_image_view_point" native-value="opponent")
+      b-radio(size="is-small" v-model="new_image_vpoint" native-value="opponent")
         | 1手指し継いだとき相手の視点 (リレー将棋向け)
     .field.my-1
-      b-radio(size="is-small" v-model="new_image_view_point" native-value="black")
+      b-radio(size="is-small" v-model="new_image_vpoint" native-value="black")
         | 常に☗ (詰将棋向け)
     .field.my-1
-      b-radio(size="is-small" v-model="new_image_view_point" native-value="white")
+      b-radio(size="is-small" v-model="new_image_vpoint" native-value="white")
         | 常に☖ (逃れ将棋向け)
     .preview_image_container.is-flex.mt-3
       .preview_image.is-flex
@@ -33,16 +33,16 @@
 export default {
   name: "ImageViewPointSettingModal",
   props: {
-    image_view_point: { type: String,   required: true, },
+    image_vpoint: { type: String,   required: true, },
     permalink_for:    { type: Function, required: true, },
   },
   data() {
     return {
-      new_image_view_point: this.image_view_point,
+      new_image_vpoint: this.image_vpoint,
     }
   },
   watch: {
-    new_image_view_point(v) {
+    new_image_vpoint(v) {
       this.sound_play("click")
     },
   },
@@ -53,12 +53,12 @@ export default {
     },
     submit_handle() {
       this.close_handle()
-      this.$emit("update:image_view_point", this.new_image_view_point)
+      this.$emit("update:image_vpoint", this.new_image_vpoint)
     },
     preview_url(options = {}) {
       return this.permalink_for({
         format: "png",
-        image_view_point: this.new_image_view_point,
+        image_vpoint: this.new_image_vpoint,
         disposition: "inline",
         ...options,
       })
@@ -66,10 +66,10 @@ export default {
   },
   computed: {
     ogp_image_url() {
-      return this.preview_url({title: "ogp_image", __board_flip_as_image_flip__: false})
+      return this.preview_url({title: "ogp_image", __board_vpoint_as_image_vpoint__: false})
     },
     opened_image_url() {
-      return this.preview_url({title: "opened_image", __board_flip_as_image_flip__: true})
+      return this.preview_url({title: "opened_image", __board_vpoint_as_image_vpoint__: true})
     },
   },
 }

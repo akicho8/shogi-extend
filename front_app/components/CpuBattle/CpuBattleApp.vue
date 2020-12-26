@@ -30,7 +30,7 @@
               :sp_slider="mode === 'standby' ? 'is_slider_on' : 'is_slider_off'"
               :sp_controller="mode === 'standby' ? 'is_controller_on' : 'is_controller_off'"
               :run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
-              :flip.sync="flip"
+              :sp_vpoint.sync="sp_vpoint"
               sp_summary="is_summary_off"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               ref="main_sp"
@@ -148,7 +148,7 @@ export default {
 
       // shogi-player 用パラメータ
       current_sfen: null,               // 譜面
-      flip: null,                       // 駒落ちなら反転させる
+      sp_vpoint: null,                  // 駒落ちなら反転させる
       human_side_key: null,             // 人間が操作する側を絞る
     }
   },
@@ -233,9 +233,10 @@ export default {
     },
 
     current_sfen_set() {
-      this.current_sfen = this.preset_info.sfen                     // 手合割に対応する盤面設定
-      this.flip = (this.preset_info.first_location_key === "white") // 駒落ちなら反転して上手を持つ
+      this.current_sfen   = this.preset_info.sfen                   // 手合割に対応する盤面設定
+      this.sp_vpoint      = this.preset_info.first_location_key     // 駒落ちなら反転して上手を持つ
       this.human_side_key = this.preset_info.first_location_key     // 人間側だけの操作にする
+
       // this.$nextTick(() => this.$refs.main_sp.sp_object().current_turn_set(0))  // 0手目の局面に戻す
       // this.$nextTick(() => this.$refs.main_sp.sp_object().api_board_turn_set(0))  // 0手目の局面に戻す
     },
@@ -280,9 +281,9 @@ export default {
       if (!this.development_p) {
         if (this.preset_info.first_location_key === "black") {
           this.human_side_key = _.sample(Location.keys) // 振り駒をして
+          this.sp_vpoint = this.human_side_key          // 視点を合わせて
           if (this.human_side_key === "white") {        // 後手番なら
-            this.flip = true                            // 盤面反転して
-            this.$nextTick(() => this.one_hand_exec())  // 相手に初手を指させる
+            this.$nextTick(() => this.one_hand_exec())  // 先手に初手を指させる
           }
         }
       }

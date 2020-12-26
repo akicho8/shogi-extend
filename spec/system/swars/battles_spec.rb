@@ -111,8 +111,8 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       doc_image
     end
 
-    it "画像 + turn + flip" do
-      visit "http://localhost:4000/swars/battles/#{record.to_param}.png?turn=-1&flip=true"
+    it "画像 + turn + vpoint" do
+      visit "http://localhost:4000/swars/battles/#{record.to_param}.png?turn=-1&vpoint=white"
       doc_image
     end
 

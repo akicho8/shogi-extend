@@ -21,7 +21,7 @@
                 b-menu-item(label="CSA"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
                 b-menu-item(label="SFEN" @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
                 b-menu-item(label="BOD"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${new_turn}`")
-                b-menu-item(label="PNG"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&flip=${new_flip}&width=`")
+                b-menu-item(label="PNG"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&vpoint=${new_vpoint}&width=`")
               b-menu-item(@click="sound_play('click')")
                 template(slot="label" slot-scope="props")
                   span.ml-1 ダウンロード
@@ -32,7 +32,7 @@
                 b-menu-item(label="CSA"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
                 b-menu-item(label="SFEN" @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
                 b-menu-item(label="BOD"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
-                b-menu-item(label="PNG"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&flip=${new_flip}&width=`")
+                b-menu-item(label="PNG"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&vpoint=${new_vpoint}&width=`")
 
             b-menu-list(label="短かめの直リンコピー")
               b-menu-item(label="ぴよ将棋" @click="short_url_copy('piyo_shogi')")
@@ -45,7 +45,7 @@
         template(slot="brand")
           b-navbar-item(@click="back_handle")
             b-icon(icon="chevron-left")
-          b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, flip: new_flip}}")
+          b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, vpoint: new_vpoint}}")
             | 対局詳細 \#{{new_turn}}
             //- span.has-text-grey-dark ☗
             //- span {{record.piyo_shogi_base_params.sente_name}}
@@ -89,7 +89,7 @@
             sp_slider="is_slider_on"
             sp_summary="is_summary_off"
             sp_controller="is_controller_on"
-            :flip.sync="new_flip"
+            :vpoint.sync="new_vpoint"
             :player_info="player_info"
             @update:start_turn="real_turn_set"
             ref="main_sp"
@@ -103,7 +103,7 @@
         :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
         :chart_turn="new_turn"
-        :flip="new_flip"
+        :vpoint="new_vpoint"
         ref="SwarsBattleShowTimeChart"
       )
 
@@ -143,7 +143,7 @@
       //-     | record.outbreak_turn: {{record.outbreak_turn}}
       //-     | record.turn_max: {{record.turn_max}}
       //-     | record.turn: {{record.turn}}
-      //-     | new_flip: {{new_flip}}
+      //-     | new_vpoint: {{new_vpoint}}
   DebugPre {{record}}
 </template>
 
@@ -159,7 +159,7 @@ export default {
 
       run_mode: null,          // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
       new_turn: null,       // KENTOに渡すための手番
-      new_flip: null,          // 上下反転している？
+      new_vpoint: null,          // 視点
 
       time_chart_p: false,     // 時間チャートを表示する？
       time_chart_params: null, // 時間チャートのデータ
@@ -208,7 +208,7 @@ export default {
 
   watch: {
     new_turn() { this.url_replace() },
-    new_flip() { this.url_replace() },
+    new_vpoint() { this.url_replace() },
   },
 
   methods: {
@@ -231,7 +231,7 @@ export default {
       this.$router.replace({query: {
         ...this.$route.query,
         turn: this.new_turn,
-        flip: this.new_flip,
+        vpoint: this.new_vpoint,
       }}, () => {}, () => {})
     },
 
@@ -263,7 +263,7 @@ export default {
       this.run_mode = "view_mode"
 
       // 最初の上下反転状態
-      this.new_flip = this.default_flip
+      this.new_vpoint = this.default_vpoint
 
       // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
       // これは勝手にやらない方がいい？
@@ -340,18 +340,14 @@ export default {
       return this.$route.query.turn_key
     },
 
-    default_flip() {
-      const v = this.$route.query.flip
-      if (v === "true") {
-        return true
-      }
-      return this.record.flip
+    default_vpoint() {
+      return this.$route.query.vpoint || "black"
     },
 
     og_image() {
       const params = new URLSearchParams()
       params.set("turn", this.new_turn)
-      params.set("flip", this.new_flip)
+      params.set("vpoint", this.new_vpoint)
       return `${this.record.show_path}.png?${params}`
     },
 
@@ -378,7 +374,7 @@ export default {
 
       const params = new URLSearchParams()
       params.set("turn", this.new_turn)
-      params.set("flip", this.new_flip)
+      params.set("vpoint", this.new_vpoint)
 
       return `${url}/swars/battles/${this.record.key}?${params}`
     },
@@ -387,7 +383,7 @@ export default {
     //   const params = new URLSearchParams()
     //   params.set("attachment", true)
     //   params.set("turn", this.new_turn)
-    //   params.set("flip", this.new_flip)
+    //   params.set("vpoint", this.new_vpoint)
     //   return `${this.$config.MY_SITE_URL}/w/${this.record.key}.png?${params}`
     // },
 
@@ -396,7 +392,7 @@ export default {
         path: this.record.show_path,
         sfen: this.record.sfen_body,
         turn: this.new_turn,
-        flip: this.new_flip,
+        vpoint: this.new_vpoint,
         ...this.record.piyo_shogi_base_params,
       })
     },
@@ -405,7 +401,7 @@ export default {
       return this.kento_full_url({
         sfen: this.record.sfen_body,
         turn: this.new_turn,
-        flip: this.new_flip,
+        vpoint: this.new_vpoint,
       })
     },
 
@@ -425,7 +421,7 @@ export default {
 
         body:  this.record.sfen_body,
         turn:  this.new_turn,
-        image_view_point: this.new_flip ? "white" : "black",
+        image_vpoint: this.new_vpoint,
       }
     },
 
@@ -445,7 +441,7 @@ export default {
       return {
         body: this.record.sfen_body,
         turn: this.new_turn,
-        flip: this.new_flip,
+        vpoint: this.new_vpoint,
         ...this.player_info_hash,
       }
     }

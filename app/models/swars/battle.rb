@@ -351,25 +351,25 @@ module Swars
       end
 
       def left_right_memberships(current_swars_user)
-        flip = false
+        vpoint = :blank
         a = memberships.to_a
         if current_swars_user
           labels = labels_type1
           if a.last.user == current_swars_user
-            flip = true
+            vpoint = :white
           end
         else
           labels = labels_type2
           if win_user_id
             if a.last.judge_key == "win"
-              flip = true
+              vpoint = :white
             end
           end
         end
-        if flip
+        if vpoint
           a = a.reverse
         end
-        [flip, labels.zip(a)]
+        [vpoint, labels.zip(a)]
       end
     end
   end

@@ -20,8 +20,8 @@
 #
 # url
 #   http://localhost:3000/share-board
-#   http://localhost:3000/share-board?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&image_view_point=self
-#   http://localhost:3000/share-board.png?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&image_view_point=black
+#   http://localhost:3000/share-board?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&image_vpoint=self
+#   http://localhost:3000/share-board.png?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&image_vpoint=black
 #
 # ・指したら record を nil に設定している→やめ
 # ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる→やめ
@@ -75,7 +75,7 @@ class ShareBoardsController < ApplicationController
       # Twitter画像
       # http://localhost:3000/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
       if request.format.png?
-        png = current_record.to_dynamic_png(params.merge(turn: initial_turn, flip: image_flip))
+        png = current_record.to_dynamic_png(params.merge(turn: initial_turn, vpoint: image_vpoint))
         send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
         return
       end
@@ -116,10 +116,10 @@ class ShareBoardsController < ApplicationController
     # http://0.0.0.0:3000/api/share_board.json?turn=1&title=%E3%81%82%E3%81%84%E3%81%88%E3%81%86%E3%81%8A
     def current_og_image_path
       # if true
-      #   # params[:image_flip] が渡せていないけどこれでいい
-      #   # url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png", turn: initial_turn, image_view_point: image_view_point])
+      #   # params[:image_vpoint] が渡せていないけどこれでいい
+      #   # url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png", turn: initial_turn, image_vpoint: image_vpoint])
       # else
-      #   # params[:image_flip] をそのまま渡すために params にマージしないといけない
+      #   # params[:image_vpoint] をそのまま渡すために params にマージしないといけない
       #   # url_for([:share_board, params.to_unsafe_h.merge(body: current_record.sfen_body, format: "png")])
       # end
 
@@ -128,7 +128,7 @@ class ShareBoardsController < ApplicationController
           :turn             => initial_turn,
           :title            => current_title,
           :body             => current_record.sfen_body,
-          :image_view_point => image_view_point,
+          :image_vpoint => image_vpoint,
         })
 
       "/share-board.png?#{args.to_query}"
@@ -158,8 +158,8 @@ class ShareBoardsController < ApplicationController
       attrs = current_record.as_json(only: [:sfen_body, :turn_max])
       attrs = attrs.merge({
           :initial_turn     => initial_turn,
-          :board_flip       => board_flip,
-          :image_view_point => image_view_point,
+          :board_vpoint       => board_vpoint,
+          :image_vpoint => image_vpoint,
           :title            => current_title,
         })
 
@@ -181,36 +181,36 @@ class ShareBoardsController < ApplicationController
       current_record.adjust_turn(v)
     end
 
-    def board_flip
-      if v = params[:board_flip].presence
+    def board_vpoint
+      if v = params[:board_vpoint].presence
         return boolean_for(v)
       end
       # # 次に指す人の視点で開くなら
       # if true
       #   number_of_turns_in_consideration_of_the_frame_dropping.odd?
       # end
-      image_view_point_info.board_flip.call(number_of_turns_in_consideration_of_the_frame_dropping)
+      image_vpoint_info.board_vpoint.call(number_of_turns_in_consideration_of_the_frame_dropping)
     end
 
-    def image_flip
+    def image_vpoint
       # 視点設定用
-      # ビュー側で確認用画像を表示するため board_flip の結果で画像をflipする
-      if params[:__board_flip_as_image_flip__] == "true"
-        return board_flip
+      # ビュー側で確認用画像を表示するため board_vpoint の結果で画像をflipする
+      if params[:__board_vpoint_as_image_vpoint__] == "true"
+        return board_vpoint
       end
 
-      if v = params[:image_flip].presence
-        return boolean_for(v)
+      if v = params[:image_vpoint].presence
+        return v
       end
-      image_view_point_info.image_flip.call(number_of_turns_in_consideration_of_the_frame_dropping)
+      image_vpoint_info.image_vpoint.call(number_of_turns_in_consideration_of_the_frame_dropping)
     end
 
-    def image_view_point_info
-      ImageViewPointInfo.fetch(image_view_point)
+    def image_vpoint_info
+      ImageViewPointInfo.fetch(image_vpoint)
     end
 
-    def image_view_point
-      ImageViewPointInfo.valid_key(params[:image_view_point], :self)
+    def image_vpoint
+      ImageViewPointInfo.valid_key(params[:image_vpoint], :self)
     end
 
     # 駒落ちを考慮した擬似ターン数

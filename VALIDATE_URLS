@@ -54,9 +54,9 @@
   "https://www.shogi-extend.com/share-board.ki2",
   "https://www.shogi-extend.com/share-board.csa",
   "https://www.shogi-extend.com/share-board.sfen",
-  "https://www.shogi-extend.com/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7g7f&turn=1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&image_view_point=self&room_code=&image_flip=false&disposition=inline",
-  "https://www.shogi-extend.com/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7g7f&turn=1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&image_view_point=self&room_code=&image_flip=false&disposition=inline",
-  "https://www.shogi-extend.com/share-board.png?body=position%2Bsfen%2Blnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%2Bb%2B-%2B1%2Bmoves%2B7g7f%2B8c8d%2B2h7h%2B8d8e%2B8h7g%2B7a7b%2B7i6h%2B5a4b%2B5i4h%2B4b3b%2B3i3h%2B3c3d%2B6g6f%2B7b8c%2B6h6g%2B8c8d%2B4h3i%2B7c7d%2B1g1f%2B1c1d%2B3i2h%2B9c9d%2B9g9f%2B6a5b%2B6i5h%2B5c5d%2B6g5f%2B3a4b%2B6f6e&image_view_point=self&title=GW%E3%81%AE%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&turn=29", # 二重エスケープされてしまったもの
+  "https://www.shogi-extend.com/share-board.kif?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7g7f&turn=1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&image_vpoint=self&room_code=&image_vpoint=black&disposition=inline",
+  "https://www.shogi-extend.com/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7g7f&turn=1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&image_vpoint=self&room_code=&image_vpoint=black&disposition=inline",
+  "https://www.shogi-extend.com/share-board.png?body=position%2Bsfen%2Blnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%2Bb%2B-%2B1%2Bmoves%2B7g7f%2B8c8d%2B2h7h%2B8d8e%2B8h7g%2B7a7b%2B7i6h%2B5a4b%2B5i4h%2B4b3b%2B3i3h%2B3c3d%2B6g6f%2B7b8c%2B6h6g%2B8c8d%2B4h3i%2B7c7d%2B1g1f%2B1c1d%2B3i2h%2B9c9d%2B9g9f%2B6a5b%2B6i5h%2B5c5d%2B6g5f%2B3a4b%2B6f6e&image_vpoint=self&title=GW%E3%81%AE%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&turn=29", # 二重エスケープされてしまったもの
   "https://www.shogi-extend.com/stopwatch",
   "https://www.shogi-extend.com/training",
   "https://www.shogi-extend.com/training?question_id=1",

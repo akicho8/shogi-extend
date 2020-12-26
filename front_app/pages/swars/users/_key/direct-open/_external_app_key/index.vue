@@ -95,7 +95,7 @@ export default {
           path: this.record.show_path,
           sfen: this.record.sfen_body,
           turn: this.record.display_turn,
-          flip: this.record.flip,
+          vpoint: this.record.vpoint,
           ...this.record.piyo_shogi_base_params,
         })
       }
@@ -105,7 +105,7 @@ export default {
         return this.kento_full_url({
           sfen: this.record.sfen_body,
           turn: this.record.display_turn,
-          flip: false,
+          vpoint: "black",
         })
       }
     },
