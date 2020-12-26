@@ -4,13 +4,13 @@
 class XyRuleInfo
   include ApplicationMemoryRecord
   memory_record [
-    # { key: "xy_rule1",     name: "1問",      o_count_max:   1, vpoint: :black, input_mode: "keyboard", },
-    # { key: "xy_rule10",    name: "10問",     o_count_max:  10, vpoint: :black, input_mode: "keyboard", },
-    # { key: "xy_rule30",    name: "30問",     o_count_max:  30, vpoint: :black, input_mode: "keyboard", },
-    { key: "xy_rule100t",  name: "☗100問TAP", o_count_max: 100, vpoint: :black,  input_mode: "tap",      time_limit: 60*5, },
-    { key: "xy_rule100tw", name: "☖100問TAP", o_count_max: 100, vpoint: :white,  input_mode: "tap",      time_limit: 60*5, },
-    { key: "xy_rule100",   name: "☗100問",    o_count_max: 100, vpoint: :black,  input_mode: "keyboard", time_limit: 60*5, },
-    { key: "xy_rule100w",  name: "☖100問",    o_count_max: 100, vpoint: :white,  input_mode: "keyboard", time_limit: 60*5, },
+    # { key: "xy_rule1",     name: "1問",      o_count_max:   1, viewpoint: :black, input_mode: "keyboard", },
+    # { key: "xy_rule10",    name: "10問",     o_count_max:  10, viewpoint: :black, input_mode: "keyboard", },
+    # { key: "xy_rule30",    name: "30問",     o_count_max:  30, viewpoint: :black, input_mode: "keyboard", },
+    { key: "xy_rule100t",  name: "☗100問TAP", o_count_max: 100, viewpoint: :black,  input_mode: "tap",      time_limit: 60*5, },
+    { key: "xy_rule100tw", name: "☖100問TAP", o_count_max: 100, viewpoint: :white,  input_mode: "tap",      time_limit: 60*5, },
+    { key: "xy_rule100",   name: "☗100問",    o_count_max: 100, viewpoint: :black,  input_mode: "keyboard", time_limit: 60*5, },
+    { key: "xy_rule100w",  name: "☖100問",    o_count_max: 100, viewpoint: :white,  input_mode: "keyboard", time_limit: 60*5, },
   ]
 
   cattr_accessor(:rank_max) { (Rails.env.production? || Rails.env.staging?) ? 100 : 100 }  # 位まで表示

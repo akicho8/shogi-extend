@@ -15,7 +15,7 @@
           :sp_body="base.vs_share_sfen"
           sp_summary="is_summary_off"
           :sp_human_side="sp_human_side"
-          :sp_vpoint="sp_vpoint"
+          :sp_viewpoint="sp_viewpoint"
           @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
           :sp_player_info="sp_player_info"
         )
@@ -55,7 +55,7 @@ export default {
     sp_human_side() {
       return this.base.current_membership.location_key
     },
-    sp_vpoint() {
+    sp_viewpoint() {
       return this.base.current_membership.location_key
     },
     sp_player_info() {

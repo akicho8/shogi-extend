@@ -8,7 +8,7 @@
     sp_summary="is_summary_off"
     :sp_body="base.vs_share_sfen"
     :sp_human_side="sp_human_side"
-    :sp_vpoint="sp_vpoint"
+    :sp_viewpoint="sp_viewpoint"
     @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
   )
 
@@ -53,7 +53,7 @@ export default {
         return this.base.current_membership.location_key
       }
     },
-    sp_vpoint() {
+    sp_viewpoint() {
       return this.base.current_membership.location_key
     },
   },

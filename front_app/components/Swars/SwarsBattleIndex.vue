@@ -167,7 +167,7 @@
                   :sp_sound_enabled="false"
                   sp_summary="is_summary_off"
                   :sp_op_disabled="true"
-                  :sp_vpoint="e.vpoint"
+                  :sp_viewpoint="e.viewpoint"
                 )
                 // :sp_hidden_if_piece_stand_blank="display_key === 'critical'"
                 //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[0]")

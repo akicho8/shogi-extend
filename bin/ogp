@@ -5,7 +5,7 @@
 # ogp
 # ogp -e production
 
-URESINORYU = "body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_vpoint=self"
+URESINORYU = "body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_viewpoint=self"
 
 LIST_ALL = [
   { url: "/users/1",                                                                 validations: { "title" => /さん/,                                                                                                                                      }},
@@ -192,7 +192,7 @@ end
 # >> http://localhost:4000/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0
 # >> http://localhost:4000/adapter
 # >> http://localhost:4000/share-board
-# >> http://localhost:4000/share-board?body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_vpoint=self
+# >> http://localhost:4000/share-board?body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_viewpoint=self
 # >> http://localhost:4000/stopwatch
 # >> http://localhost:4000/cpu-battle
 # >> http://localhost:4000/actb

@@ -196,17 +196,17 @@ module BattleModelMod
     turn.clamp(0, turn_max)
   end
 
-  def adjust_vpoint(vpoint = nil)
-    vpoint.presence || "blank"
+  def adjust_viewpoint(viewpoint = nil)
+    viewpoint.presence || "blank"
   end
 
   def to_twitter_card_params(params = {})
     turn = adjust_turn(params[:turn])
-    vpoint = adjust_vpoint(params[:vpoint])
+    viewpoint = adjust_viewpoint(params[:viewpoint])
 
     {}.tap do |e|
       e[:title]       = params[:title].presence || twitter_card_title || "#{turn}手目"
-      e[:image]       = twitter_card_image_url(turn: turn, vpoint: vpoint)
+      e[:image]       = twitter_card_image_url(turn: turn, viewpoint: viewpoint)
       e[:description] = params[:description].presence || twitter_card_description
     end
   end
@@ -221,8 +221,8 @@ module BattleModelMod
 
   def twitter_card_image_url(options = {})
     turn = adjust_turn(options[:turn])
-    vpoint = adjust_vpoint(options[:vpoint])
-    Rails.application.routes.url_helpers.polymorphic_url(self, {format: "png", turn: turn, vpoint: vpoint})
+    viewpoint = adjust_viewpoint(options[:viewpoint])
+    Rails.application.routes.url_helpers.polymorphic_url(self, {format: "png", turn: turn, viewpoint: viewpoint})
   end
 
   def battle_decorator(params = {})

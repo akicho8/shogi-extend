@@ -52,12 +52,12 @@ RSpec.describe ShareBoardsController, type: :controller do
   end
 
   it "Twitterカード用の画像パス" do
-    get :show, params: { body: "68銀", abstract_vpoint_key: "white", format: "json" }
-    assert { controller.current_og_image_path == "/share-board.png?abstract_vpoint_key=white&body=position+startpos+moves+7i6h&image_vpoint=white&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=1" }
+    get :show, params: { body: "68銀", abstract_viewpoint_key: "white", format: "json" }
+    assert { controller.current_og_image_path == "/share-board.png?abstract_viewpoint_key=white&body=position+startpos+moves+7i6h&image_viewpoint=white&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=1" }
   end
 
-  it "abstract_vpoint_key の値がおかしいときにエラーにしない" do
-    get :show, params: { body: "68銀", abstract_vpoint_key: "xxxx", format: "json" }
+  it "abstract_viewpoint_key の値がおかしいときにエラーにしない" do
+    get :show, params: { body: "68銀", abstract_viewpoint_key: "xxxx", format: "json" }
     expect(response).to have_http_status(:ok)
   end
 end

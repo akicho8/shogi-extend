@@ -89,7 +89,7 @@ RSpec.describe FreeBattle, type: :model do
       it do
         assert { value[:title]       == "5手目"                                                      }
         assert { value[:url]         == nil                                                          }
-        assert { value[:image]       == "http://0.0.0.0:3000/x/free_battle1.png?vpoint=black&turn=5" }
+        assert { value[:image]       == "http://0.0.0.0:3000/x/free_battle1.png?viewpoint=black&turn=5" }
         assert { value[:description] == nil                                                          }
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe FreeBattle, type: :model do
     end
 
     # it "modal_on_index_path" do
-    #   assert { record.modal_on_index_path == "/x?vpoint=black&modal_id=free_battle1&turn=5" }
+    #   assert { record.modal_on_index_path == "/x?viewpoint=black&modal_id=free_battle1&turn=5" }
     # end
 
     it "adjust_turn" do

@@ -1,19 +1,19 @@
 <template lang="pug">
-.modal-card.AbstractVpointKeySelectModal(style="width:auto")
+.modal-card.AbstractViewpointSelectModal(style="width:auto")
   header.modal-card-head
     p.modal-card-title 視点設定
   section.modal-card-body
     .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_vpoint_key" native-value="self")
+      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="self")
         | 1手指し継いだとき自分の視点 (リレー将棋向け・初期値)
     .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_vpoint_key" native-value="opponent")
+      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="opponent")
         | 1手指し継いだとき相手の視点 (リレー将棋向け)
     .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_vpoint_key" native-value="black")
+      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="black")
         | 常に☗ (詰将棋向け)
     .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_vpoint_key" native-value="white")
+      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="white")
         | 常に☖ (逃れ将棋向け)
     .preview_image_container.is-flex.mt-3
       .preview_image.is-flex
@@ -31,18 +31,18 @@
 
 <script>
 export default {
-  name: "AbstractVpointKeySelectModal",
+  name: "AbstractViewpointSelectModal",
   props: {
-    abstract_vpoint_key:  { type: String,   required: true, },
+    abstract_viewpoint:  { type: String,   required: true, },
     permalink_for: { type: Function, required: true, },
   },
   data() {
     return {
-      new_abstract_vpoint_key: this.abstract_vpoint_key,
+      new_abstract_viewpoint: this.abstract_viewpoint,
     }
   },
   watch: {
-    new_abstract_vpoint_key(v) {
+    new_abstract_viewpoint(v) {
       this.sound_play("click")
     },
   },
@@ -53,12 +53,12 @@ export default {
     },
     submit_handle() {
       this.close_handle()
-      this.$emit("update:abstract_vpoint_key", this.new_abstract_vpoint_key)
+      this.$emit("update:abstract_viewpoint", this.new_abstract_viewpoint)
     },
     preview_url(options = {}) {
       return this.permalink_for({
         format: "png",
-        abstract_vpoint_key: this.new_abstract_vpoint_key,
+        abstract_viewpoint: this.new_abstract_viewpoint,
         disposition: "inline",
         ...options,
       })
@@ -66,17 +66,17 @@ export default {
   },
   computed: {
     ogp_image_url() {
-      return this.preview_url({title: "ogp_image", __board_vpoint_as_image_vpoint__: false})
+      return this.preview_url({title: "ogp_image", __board_viewpoint_as_image_viewpoint__: false})
     },
     opened_image_url() {
-      return this.preview_url({title: "opened_image", __board_vpoint_as_image_vpoint__: true})
+      return this.preview_url({title: "opened_image", __board_viewpoint_as_image_viewpoint__: true})
     },
   },
 }
 </script>
 
 <style lang="sass">
-.AbstractVpointKeySelectModal
+.AbstractViewpointSelectModal
   .preview_image_container
     justify-content: center
     .preview_image

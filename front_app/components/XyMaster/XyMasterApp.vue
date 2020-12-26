@@ -48,7 +48,7 @@
                 sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
                 sp_summary="is_summary_off"
                 :sp_hidden_if_piece_stand_blank="true"
-                :sp_vpoint="current_rule.vpoint"
+                :sp_viewpoint="current_rule.viewpoint"
                 :sp_board_piece_back_user_class="sp_board_piece_back_user_class"
                 :sp_board_cell_pointerdown_user_handle="sp_board_cell_pointerdown_user_handle"
               )
@@ -262,7 +262,7 @@ export default {
       this.init_other_variables()
       this.latest_rule = this.current_rule
       this.talk_stop()
-      this.sp_object().api_vpoint_set(this.current_rule.vpoint)
+      this.sp_object().api_viewpoint_set(this.current_rule.viewpoint)
       this.interval_counter.start()
     },
 

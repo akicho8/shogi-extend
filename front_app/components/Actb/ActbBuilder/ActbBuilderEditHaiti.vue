@@ -143,8 +143,8 @@ export default {
   },
 
   computed: {
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.bapp.question.init_sfen, turn: 0, vpoint: "black"}) },
-    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.bapp.question.init_sfen, turn: 0, vpoint: "black"}) },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.bapp.question.init_sfen, turn: 0, viewpoint: "black"}) },
+    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.bapp.question.init_sfen, turn: 0, viewpoint: "black"}) },
   },
 }
 </script>

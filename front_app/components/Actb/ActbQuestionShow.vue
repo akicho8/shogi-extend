@@ -239,8 +239,8 @@ export default {
       ].join(" ")
     },
 
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.selected_sfen, turn: -1, vpoint: "black", game_name: this.question.title}) },
-    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.selected_sfen, turn: -1, vpoint: "black"})   },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.selected_sfen, turn: -1, viewpoint: "black", game_name: this.question.title}) },
+    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.selected_sfen, turn: -1, viewpoint: "black"})   },
 
     // いまログインしている人はこの問題の投稿者か？
     current_user_is_owner_p() {

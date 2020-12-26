@@ -16,13 +16,13 @@ module Swars
     def js_record_for(e)
       a = super
 
-      vpoint, memberships = e.left_right_memberships(current_swars_user)
+      viewpoint, memberships = e.left_right_memberships(current_swars_user)
 
       if current_swars_user
         a[:judge] = { key: memberships.first.last.judge_key }
       end
 
-      a[:vpoint] = vpoint
+      a[:viewpoint] = viewpoint
 
       # a[:time_chart_params] = e.time_chart_params
 

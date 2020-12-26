@@ -30,7 +30,7 @@
               :sp_slider="mode === 'standby' ? 'is_slider_on' : 'is_slider_off'"
               :sp_controller="mode === 'standby' ? 'is_controller_on' : 'is_controller_off'"
               :sp_run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
-              :sp_vpoint.sync="sp_vpoint"
+              :sp_viewpoint.sync="sp_viewpoint"
               sp_summary="is_summary_off"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               ref="main_sp"
@@ -148,7 +148,7 @@ export default {
 
       // shogi-player 用パラメータ
       sp_body: null,               // 譜面
-      sp_vpoint: null,                  // 駒落ちなら反転させる
+      sp_viewpoint: null,                  // 駒落ちなら反転させる
       sp_human_side: null,             // 人間が操作する側を絞る
     }
   },
@@ -234,7 +234,7 @@ export default {
 
     sp_body_set() {
       this.sp_body   = this.preset_info.sfen                   // 手合割に対応する盤面設定
-      this.sp_vpoint      = this.preset_info.first_location_key     // 駒落ちなら反転して上手を持つ
+      this.sp_viewpoint      = this.preset_info.first_location_key     // 駒落ちなら反転して上手を持つ
       this.sp_human_side = this.preset_info.first_location_key     // 人間側だけの操作にする
 
       // this.$nextTick(() => this.$refs.main_sp.sp_object().current_turn_set(0))  // 0手目の局面に戻す
@@ -281,7 +281,7 @@ export default {
       if (!this.development_p) {
         if (this.preset_info.first_location_key === "black") {
           this.sp_human_side = _.sample(Location.keys) // 振り駒をして
-          this.sp_vpoint = this.sp_human_side          // 視点を合わせて
+          this.sp_viewpoint = this.sp_human_side          // 視点を合わせて
           if (this.sp_human_side === "white") {        // 後手番なら
             this.$nextTick(() => this.one_hand_exec())  // 先手に初手を指させる
           }

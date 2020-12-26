@@ -3,7 +3,7 @@ module BattleControllerBaseMethods
 
   included do
     helper_method :current_turn
-    helper_method :current_vpoint
+    helper_method :current_viewpoint
   end
 
   let :current_turn do
@@ -12,7 +12,7 @@ module BattleControllerBaseMethods
     end
   end
 
-  let :current_vpoint do
-    (params[:vpoint].presence || :blank).to_sym
+  let :current_viewpoint do
+    (params[:viewpoint].presence || :blank).to_sym
   end
 end
