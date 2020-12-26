@@ -49,8 +49,8 @@
                 sp_summary="is_summary_off"
                 :sp_hidden_if_piece_stand_blank="true"
                 :sp_vpoint="current_rule.vpoint"
-                :board_piece_back_user_class="board_piece_back_user_class"
-                :board_cell_pointerdown_user_handle="board_cell_pointerdown_user_handle"
+                :sp_board_piece_back_user_class="sp_board_piece_back_user_class"
+                :sp_board_cell_pointerdown_user_handle="sp_board_cell_pointerdown_user_handle"
               )
 
             .time_container.fixed_font.is-size-3
@@ -200,7 +200,7 @@ export default {
     },
 
     // こっちは prevent.stop されてないので自分で呼ぶ
-    board_cell_pointerdown_user_handle(place, event) {
+    sp_board_cell_pointerdown_user_handle(place, event) {
       if (this.mode === "is_mode_run") {
         if (this.tap_method_p) {
           this.input_valid(place.x, place.y)
@@ -216,7 +216,7 @@ export default {
       return true
     },
 
-    board_piece_back_user_class(place) {
+    sp_board_piece_back_user_class(place) {
       if (!this.tap_method_p) {
         if (this.mode === "is_mode_run") {
         }
