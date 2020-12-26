@@ -164,7 +164,7 @@
                   :run_mode="'view_mode'"
                   :sp_turn="sp_start_turn(e)"
                   :kifu_body="e.sfen_body"
-                  :sound_effect="false"
+                  :sp_sound_enabled="false"
                   sp_summary="is_summary_off"
                   :sp_op_disabled="true"
                   :sp_vpoint="e.vpoint"

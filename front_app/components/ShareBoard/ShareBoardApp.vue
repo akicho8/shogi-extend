@@ -94,7 +94,7 @@ client-only
               :kifu_body="current_sfen"
               sp_summary="is_summary_off"
               sp_slider="is_slider_on"
-              :sound_effect="true"
+              :sp_sound_enabled="true"
               sp_controller="is_controller_on"
               sp_human_side="both"
               :sp_vpoint.sync="board_vpoint"

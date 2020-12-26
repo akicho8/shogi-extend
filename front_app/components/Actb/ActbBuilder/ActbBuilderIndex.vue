@@ -143,7 +143,7 @@
             :sp_flip_if_white="true"
             :sp_turn="0"
             sp_summary="is_summary_off"
-            :sound_effect="false"
+            :sp_sound_enabled="false"
             :sp_op_disabled="true"
             )
         .media-content

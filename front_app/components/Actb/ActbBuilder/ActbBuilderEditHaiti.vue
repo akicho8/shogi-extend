@@ -7,7 +7,7 @@
     :sp_turn="-1"
     sp_slider="is_slider_on"
     sp_controller="is_controller_on"
-    :sound_effect="false"
+    :sp_sound_enabled="false"
     @update:edit_mode_snapshot_sfen="bapp.edit_mode_snapshot_sfen"
     ref="main_sp"
     )

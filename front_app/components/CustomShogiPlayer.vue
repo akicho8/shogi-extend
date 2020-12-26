@@ -30,7 +30,7 @@ export default {
       return {
         sp_layout: "is_horizontal",
         // sp_setting: this.development_p,
-        sound_effect: true,
+        sp_sound_enabled: true,
         volume: 0.5,
       }
     },

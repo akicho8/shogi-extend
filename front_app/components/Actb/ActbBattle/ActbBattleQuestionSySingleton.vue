@@ -48,7 +48,7 @@
       :sp_flip_if_white="true"
       :sp_turn="-1"
       sp_summary="is_summary_off"
-      :sound_effect="false"
+      :sp_sound_enabled="false"
       sp_human_side="none"
       @update:turn_offset="v => base.share_turn_offset = v"
     )
