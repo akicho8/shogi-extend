@@ -114,6 +114,8 @@
           b-menu-item(label="棋譜の不整合"     @click="$router.push({query: {query: 'Yamada_Taro', error_capture_test: true, force: true}})")
           b-menu-item(label="棋譜の再取得"     @click="$router.push({query: {query: 'Yamada_Taro', destroy_all: true, force: true}})")
           b-menu-item(label="棋譜の普通に取得" @click="$router.push({query: {query: 'Yamada_Taro'}})")
+          b-menu-item(label="☗を左に表示"     @click="$router.push({query: {query: 'Yamada_Taro', viewpoint: 'black'}})")
+          b-menu-item(label="☖を左に表示"     @click="$router.push({query: {query: 'Yamada_Taro', viewpoint: 'white'}})")
           b-menu-item(label="全レコード表示"   @click="$router.push({query: {query: '', all: 'true', per: 50, debug: 'true'}})")
 
   MainNavbar(wrapper-class="container is-fluid")
@@ -205,7 +207,12 @@
               b-table-column(v-slot="{row}" field="id" :label="config.table_columns_hash['id'].label" :visible="!!visible_hash.id" sortable numeric v-if="config.table_columns_hash.id")
                 a(@click="show_handle(row)") \#{{row.id}}
 
-              template(v-if="config.current_swars_user_key")
+              template(v-if="config.viewpoint")
+                b-table-column(v-slot="{row}" :label="l_column_label")
+                  SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
+                b-table-column(v-slot="{row}" :label="r_column_label")
+                  SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
+              template(v-else-if="config.current_swars_user_key")
                 b-table-column(v-slot="{row}" label="自分")
                   SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
                 b-table-column(v-slot="{row}" label="相手")
@@ -246,7 +253,7 @@
                   PiyoShogiButton(type="button" :href="piyo_shogi_app_with_params_url(row)" @click="sound_play('click')")
                   KentoButton(tag="a" :href="kento_app_with_params_url(row)" @click="sound_play('click')")
                   KifCopyButton(@click="kifu_copy_handle(row)")
-                  DetailButton(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}}" @click.native="sound_play('click')") 詳細
+                  DetailButton(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location.key}}" @click.native="sound_play('click')") 詳細
 
     client-only
       DebugPre {{config}}
@@ -260,6 +267,8 @@ import { support } from "./support.js"
 
 import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
 import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
+
+import Location from "shogi-player/components/models/location.js"
 
 import SwarsBattleIndexCore from "./SwarsBattleIndexCore.js"
 //- import SwarsBattleIndexHistory from "./SwarsBattleIndexHistory.js"
@@ -526,6 +535,10 @@ export default {
         })
       }
     },
+
+    current_viewpoint_location() { return Location.fetch(this.config.viewpoint)     },
+    l_column_label()             { return this.current_viewpoint_location.name      },
+    r_column_label()             { return this.current_viewpoint_location.flip.name },
 
     base()            { return this            },
     ExternalAppInfo() { return ExternalAppInfo },

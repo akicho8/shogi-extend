@@ -163,9 +163,17 @@ export default {
     // http://0.0.0.0:4000/swars/battles/devuser1-Yamada_Taro-20200101_123401
     // const record = await $axios.$get(`/w/${params.key}.json`, {params: {ogp_only: true, basic_fetch: true, ...query}})
 
+    const params = {
+      basic_fetch: true,
+      // memberships の順序を [black, white] に固定する
+      // これを入れないと viewpoint と対象者が設定されなかったとき処理で、勝った方が左になる
+      // この挙動は下の表示で確認できる
+      viewpoint: "black",
+    }
+
     // 重要なのはこっちなので待つ
     return Promise.all([
-      this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: {basic_fetch: true}}).then(e => {
+      this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: params}).then(e => {
         this.record = e
         this.record_setup()
         this.slider_focus()

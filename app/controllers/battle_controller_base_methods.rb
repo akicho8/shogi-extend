@@ -13,6 +13,8 @@ module BattleControllerBaseMethods
   end
 
   let :current_viewpoint do
-    (params[:viewpoint].presence || :blank).to_sym
+    if v = params[:viewpoint].presence
+      v.to_sym
+    end
   end
 end

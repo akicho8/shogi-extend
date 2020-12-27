@@ -345,31 +345,20 @@ module Swars
     end
 
     concerning :ViewHelper do
-      included do
-        cattr_accessor(:labels_type1) { ["自分", "相手"] }
-        cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
-      end
-
       def left_right_memberships(current_swars_user)
-        viewpoint = :blank
         a = memberships.to_a
         if current_swars_user
-          labels = labels_type1
-          if a.last.user == current_swars_user
-            viewpoint = :white
+          if a.last.user == current_swars_user # 対象者がいるときは対象者を左
+            a = a.reverse
           end
         else
-          labels = labels_type2
           if win_user_id
-            if a.last.judge_key == "win"
-              viewpoint = :white
+            if a.last.judge_key == "win" # 対象者がいないときは勝った方を左
+              a = a.reverse
             end
           end
         end
-        if viewpoint
-          a = a.reverse
-        end
-        [viewpoint, labels.zip(a)]
+        a
       end
     end
   end
