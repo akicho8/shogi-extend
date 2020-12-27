@@ -386,7 +386,7 @@ export default {
 
   props: {
     record:            { required: true, }, // バトル情報
-    sp_viewpoint:         { required: true, }, // 視点
+    sp_viewpoint:      { required: true, }, // 視点
     time_chart_params: { required: true, }, // 表示する内容
   },
 
@@ -577,7 +577,7 @@ export default {
 
     // flip 状態をチャートに反映
     chart_flip_set() {
-      this._chart_config.options.scales.yAxes[0].ticks.reverse = (this.sp_viewpoint === "while")
+      this._chart_config.options.scales.yAxes[0].ticks.reverse = (this.sp_viewpoint === "white")
     },
 
     // 61 -> 1分1秒
