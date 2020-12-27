@@ -32,7 +32,8 @@ export default {
       url.pathname = url.pathname + ".kif"
 
       const a = {...params, url: url}
-      const url2 = this.piyo_shogi_url_build(a, ["num", "url"])
+      const ordered_keys = ["viewpoint", "num", "url"]
+      const url2 = this.piyo_shogi_url_build(a, ordered_keys) // 最後を url=xxx.kif にしないと動かない。順序重要。
       return url2
     },
 
@@ -40,29 +41,31 @@ export default {
     // 常にSFENを渡す
     piyo_shogi_sfen_url(params) {
       this.__assert__(params.sfen, "params.sfen")
-      return this.piyo_shogi_url_build(params, ["num", "sente_name", "gote_name", "game_name", "sfen"])
+      const ordered_keys = ["viewpoint", "num", "sente_name", "gote_name", "game_name", "sfen"]
+      return this.piyo_shogi_url_build(params, ordered_keys)
     },
 
     //////////////////////////////////////////////////////////////////////////////// private
 
-    piyo_shogi_url_build(params, keys) {
+    piyo_shogi_url_build(params, ordered_keys) {
       params = {...params, num: params.turn} // turn -> num
 
       return [
         this.piyo_shogi_url_prefix,
         "?",
-        this.piyo_shogi_url_params_build(params, keys),
+        this.piyo_shogi_url_params_build(params, ordered_keys),
       ].join("")
     },
 
-    piyo_shogi_url_params_build(params, keys, encode) {
+    piyo_shogi_url_params_build(params, ordered_keys) {
       const values = []
-      keys.forEach(e => {
+      ordered_keys.forEach(e => {
         let v = params[e]
         if (v != null) {
           if (this.piyo_shogi_app_p) {
-            // 「ぴよ将棋」のアプリ版はエンコードするとまったく読めなくなる
-            // そして .kif が最後に来るように調整しないといけない
+            // 注意点
+            // ・「ぴよ将棋」のアプリ版はエンコードするとまったく読めなくなる
+            // ・URLの最後に ".kif" の文字列が来ないといけない
           } else {
             v = encodeURIComponent(v)
           }

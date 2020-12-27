@@ -389,9 +389,9 @@ export default {
 
     piyo_shogi_app_with_params_url() {
       return this.piyo_shogi_auto_url({
-        path: this.record.show_path,
-        sfen: this.record.sfen_body,
-        turn: this.new_turn,
+        path:      this.record.show_path,
+        sfen:      this.record.sfen_body,
+        turn:      this.new_turn,
         viewpoint: this.new_viewpoint,
         ...this.record.piyo_shogi_base_params,
       })
@@ -399,8 +399,8 @@ export default {
 
     kento_app_with_params_url() {
       return this.kento_full_url({
-        sfen: this.record.sfen_body,
-        turn: this.new_turn,
+        sfen:      this.record.sfen_body,
+        turn:      this.new_turn,
         viewpoint: this.new_viewpoint,
       })
     },

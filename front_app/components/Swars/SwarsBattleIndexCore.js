@@ -41,11 +41,21 @@ export default {
     },
 
     piyo_shogi_app_with_params_url(record) {
-      return this.piyo_shogi_auto_url({path: record.show_path, sfen: record.sfen_body, turn: this.sp_start_turn(record), viewpoint: record.viewpoint, ...record.piyo_shogi_base_params})
+      return this.piyo_shogi_auto_url({
+        path: record.show_path,
+        sfen: record.sfen_body,
+        turn: this.sp_start_turn(record),
+        viewpoint: record.viewpoint,
+        ...record.piyo_shogi_base_params,
+      })
     },
 
     kento_app_with_params_url(record) {
-      return this.kento_full_url({sfen: record.sfen_body, turn: this.sp_start_turn(record), viewpoint: record.viewpoint})
+      return this.kento_full_url({
+        sfen: record.sfen_body,
+        turn: this.sp_start_turn(record),
+        viewpoint: record.viewpoint,
+      })
     },
   },
 
