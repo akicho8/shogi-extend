@@ -23,7 +23,16 @@ export default {
   methods: {
     show_handle(row) {
       this.sound_play("click")
-      this.$router.push({name: "swars-battles-key", params: {key: row.key}, query: {turn_key: this.display_key}})
+      this.$router.push({
+        name: "swars-battles-key",
+        params: {
+          key: row.key
+        },
+        query: {
+          turn_key: this.display_key,
+          viewpoint: row.memberships[0].location.key,
+        },
+      })
     },
 
     // 開始局面
