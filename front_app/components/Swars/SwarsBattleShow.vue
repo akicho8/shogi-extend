@@ -16,25 +16,26 @@
                 template(slot="label" slot-scope="props")
                   span.ml-1 表示
                   b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-                b-menu-item(label="KIF"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
-                b-menu-item(label="KI2"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
-                b-menu-item(label="CSA"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
-                b-menu-item(label="SFEN" @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
-                b-menu-item(label="BOD"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${new_turn}`")
-                b-menu-item(label="PNG"  @click.native="sound_play('click')" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&viewpoint=${new_viewpoint}&width=`")
+                b-menu-item(label="KIF"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
+                b-menu-item(label="KI2"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
+                b-menu-item(label="CSA"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
+                b-menu-item(label="SFEN" @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
+                b-menu-item(label="BOD"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${new_turn}`")
+                b-menu-item(label="PNG"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&viewpoint=${new_viewpoint}&width=`")
               b-menu-item(@click="sound_play('click')")
                 template(slot="label" slot-scope="props")
                   span.ml-1 ダウンロード
                   b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-                b-menu-item(label="KIF"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
-                b-menu-item(label="KIF (Shift_JIS)"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true&body_encode=Shift_JIS`")
-                b-menu-item(label="KI2"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
-                b-menu-item(label="CSA"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
-                b-menu-item(label="SFEN" @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
-                b-menu-item(label="BOD"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
-                b-menu-item(label="PNG"  @click.native="sound_play('click')" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&viewpoint=${new_viewpoint}&width=`")
+                b-menu-item(label="KIF"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
+                b-menu-item(label="KIF (Shift_JIS)"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true&body_encode=Shift_JIS`")
+                b-menu-item(label="KI2"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
+                b-menu-item(label="CSA"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
+                b-menu-item(label="SFEN" @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
+                b-menu-item(label="BOD"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
+                b-menu-item(label="PNG"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&viewpoint=${new_viewpoint}&width=`")
 
             b-menu-list(label="短かめの直リンコピー")
+              b-menu-item(label="この画面" @click="current_url_copy")
               b-menu-item(label="ぴよ将棋" @click="short_url_copy('piyo_shogi')")
               b-menu-item(label="KENTO"    @click="short_url_copy('kento')")
 
@@ -194,13 +195,23 @@ export default {
   },
 
   methods: {
+    sidebar_close() {
+      this.sound_play("click")
+      this.sidebar_p = false
+    },
+
     tweet_handle() {
-      this.sound_play('click')
+      this.sound_play("click")
       this.tweet_window_popup({text: this.permalink_url})
     },
 
+    current_url_copy() {
+      this.sidebar_close()
+      this.clipboard_copy({text: this.permalink_url})
+    },
+
     short_url_copy(method) {
-      this.sound_play('click')
+      this.sidebar_close()
       this.clipboard_copy({text: this.short_url(method)})
     },
 
@@ -218,17 +229,17 @@ export default {
     },
 
     kifu_copy_handle() {
-      this.sound_play('click')
+      this.sound_play("click")
       this.kif_clipboard_copy({kc_path: this.record.show_path})
     },
 
     sidebar_toggle() {
-      this.sound_play('click')
+      this.sound_play("click")
       this.sidebar_p = !this.sidebar_p
     },
 
     back_handle() {
-      this.sound_play('click')
+      this.sound_play("click")
       this.back_to({name: "swars-search"})
     },
 
