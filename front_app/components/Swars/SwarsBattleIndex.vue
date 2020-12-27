@@ -157,7 +157,7 @@
               // widescreen 1/5 (is-one-fifth-widescreen)
               // desktop    1/4 (is-one-quarter-desktop)
               // table      1/4 (is-one-quarter-tablet)
-              .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click="show_handle(e)")
+              .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click.stop="show_handle(e)")
                 //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[1]")
                 CustomShogiPlayer(
                   :sp_player_info="e.player_info"
