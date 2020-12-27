@@ -403,7 +403,7 @@ export default {
 
         body:  this.record.sfen_body,
         turn:  this.new_turn,
-        image_viewpoint: this.new_viewpoint,
+        abstract_viewpoint_key: this.new_viewpoint,
       }
     },
 

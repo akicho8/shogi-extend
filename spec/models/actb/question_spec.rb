@@ -146,11 +146,11 @@ module Actb
     end
 
     it "share_board_png_url" do
-      assert { question1.share_board_png_url == "http://0.0.0.0:3000/share-board.png?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&image_viewpoint=black&turn=0" }
+      assert { question1.share_board_png_url == "http://0.0.0.0:3000/share-board.png?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&abstract_viewpoint_key=black&turn=0" }
     end
 
     it "share_board_url" do
-      assert { question1.share_board_url == "http://0.0.0.0:3000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&image_viewpoint=black&title=#{question1.title}&turn=0" }
+      assert { question1.share_board_url == "http://0.0.0.0:3000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&abstract_viewpoint_key=black&title=#{question1.title}&turn=0" }
     end
 
     it "公開フォルダに移動させたタイミングで投稿通知" do

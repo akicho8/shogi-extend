@@ -7,7 +7,7 @@ client-only
       p タイトル: {{current_title}}
       p 視点: {{abstract_viewpoint_key}}
       p モード: {{sp_run_mode}}
-      p 視点: {{board_viewpoint}}
+      p 視点: {{sp_viewpoint}}
       p URL: {{current_url}}
       p サイドバー {{sidebar_p}}
 
@@ -18,8 +18,8 @@ client-only
           b-menu-item(label="視点設定" @click="abstract_viewpoint_key_setting_handle")
           b-menu-item(label="盤面リセット" @click="reset_handle")
         b-menu-list(label="Edit")
-          b-menu-item(label="タイトル変更" @click="title_edit")
           b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.sp_run_mode === 'edit_mode'}")
+          b-menu-item(label="タイトル変更" @click="title_edit")
           b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
         b-menu-list(label="Export")
           b-menu-item(label="局面URLコピー" @click="current_url_copy_handle")
@@ -93,7 +93,7 @@ client-only
               :sp_turn="turn_offset"
               :sp_body="current_sfen"
               :sp_sound_enabled="true"
-              :sp_viewpoint.sync="board_viewpoint"
+              :sp_viewpoint.sync="sp_viewpoint"
               sp_summary="is_summary_off"
               sp_slider="is_slider_on"
               sp_controller="is_controller_on"
@@ -166,7 +166,7 @@ export default {
       abstract_viewpoint_key: this.config.record.abstract_viewpoint_key, // Twitter画像の向き
 
       // urlには反映しない
-      board_viewpoint: this.config.record.board_viewpoint,       // 反転用
+      sp_viewpoint: this.config.record.board_viewpoint,       // 反転用
       turn_offset_max: null,                         // 最後の手数
 
       record: this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
@@ -263,7 +263,7 @@ export default {
 
         this.sp_run_mode = "edit_mode"
         if (true) {
-          this.board_viewpoint = "black" // ▲視点にしておく(お好み)
+          this.sp_viewpoint = "black" // ▲視点にしておく(お好み)
         }
       } else {
         this.sp_run_mode = "play_mode"
@@ -374,7 +374,7 @@ export default {
                 this.toast_ok("正常に読み込みました")
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max
-                this.board_viewpoint = "black"
+                this.sp_viewpoint = "black"
               }
             })
           },
@@ -447,7 +447,7 @@ export default {
     current_url()                { return this.permalink_for()                                                                        },
     json_debug_url()             { return this.permalink_for({format: "json"})                                                        },
     twitter_card_url()           { return this.permalink_for({format: "png"})                                                         },
-    snapshot_image_url()         { return this.permalink_for({format: "png", image_viewpoint: this.board_viewpoint, disposition: "attachment"}) },
+    snapshot_image_url()         { return this.permalink_for({format: "png", image_viewpoint: this.sp_viewpoint, disposition: "attachment"}) }, // abstract_viewpoint_key より image_viewpoint の方が優先される
     kif_download_url()           { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
     shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"})                              },
 
@@ -457,7 +457,7 @@ export default {
         path: this.current_url,
         sfen: this.current_sfen,
         turn: this.turn_offset,
-        viewpoint: this.board_viewpoint,
+        viewpoint: this.sp_viewpoint,
         game_name: this.current_title,
       })
     },
@@ -466,7 +466,7 @@ export default {
       return this.kento_full_url({
         sfen: this.current_sfen,
         turn: this.turn_offset,
-        viewpoint: this.board_viewpoint,
+        viewpoint: this.sp_viewpoint,
       })
     },
 
