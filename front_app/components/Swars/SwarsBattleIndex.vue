@@ -159,7 +159,6 @@
               // table      1/4 (is-one-quarter-tablet)
               .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click="show_handle(e)")
                 //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[1]")
-
                 CustomShogiPlayer(
                   :sp_player_info="e.player_info"
                   sp_layout="is_vertical"
@@ -169,7 +168,7 @@
                   :sp_sound_enabled="false"
                   sp_summary="is_summary_off"
                   :sp_op_disabled="true"
-                  :sp_viewpoint="e.viewpoint"
+                  :sp_viewpoint="e.memberships[0].location.key"
                 )
                 // :sp_hidden_if_piece_stand_blank="display_key === 'critical'"
                 //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[0]")
