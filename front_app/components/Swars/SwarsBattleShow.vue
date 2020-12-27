@@ -46,7 +46,7 @@
           b-navbar-item(@click="back_handle")
             b-icon(icon="chevron-left")
           b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, viewpoint: new_viewpoint}}")
-            | 詳細 \#{{new_turn}}
+            | \#{{new_turn}}
         template(slot="end")
           b-navbar-item.has-text-weight-bold(@click="tweet_handle")
             b-icon(icon="twitter")
@@ -442,7 +442,7 @@ $button_z_index: 2
   .FirstView
     // background-color: hsl(99.5, 40.6, 80.2)
     +tablet
-      padding: 3rem 0
+      padding: 3rem 0 0.75rem
     +mobile
       padding: 0.75rem 0 1.5rem // 画像化するときに切り取りやすいように少しあける
 
@@ -478,6 +478,6 @@ $button_z_index: 2
 
 .STAGE-development
   .SwarsBattleShow
-    .column
+    .column, .FirstView
       border: 1px dashed change_color($primary, $alpha: 0.2)
 </style>
