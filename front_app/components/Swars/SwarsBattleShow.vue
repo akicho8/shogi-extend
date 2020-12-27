@@ -41,42 +41,19 @@
       //- PageCloseButton(@click="back_handle" position="is_absolute" size="is-medium")
       //- b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text")
 
-      MainNavbar(wrapper-class="container" type="is-black" :spaced="false" centered)
+      MainNavbar
         template(slot="brand")
           b-navbar-item(@click="back_handle")
             b-icon(icon="chevron-left")
           b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, viewpoint: new_viewpoint}}")
             | 対局詳細 \#{{new_turn}}
-            //- span.has-text-grey-dark ☗
-            //- span {{record.piyo_shogi_base_params.sente_name}}
-            //- span.mx-1 vs
-            //- span.has-text-grey-lighter ☗
-            //- span {{record.piyo_shogi_base_params.gote_name}}
-        //- template(slot="start")
-        //-   b-navbar-item.has-text-weight-bold(tag="div")
-        //-     | \#{{new_turn}}
         template(slot="end")
           b-navbar-item.has-text-weight-bold(@click="tweet_handle")
-            b-icon(icon="twitter" type="is-twitter")
+            b-icon(icon="twitter")
           b-navbar-item(@click="sidebar_toggle")
             b-icon(icon="menu")
 
-      //- MainNavbar
-      //-   template(slot="brand")
-      //-     NavbarItemHome
-      //-       b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
-      //-   template(slot="end")
-      //-     b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
-      //-       b-icon(icon="twitter")
-      //-     b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
-      //-       | 編集完了
-      //-     b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
-      //-       b-icon(icon="menu")
-
       .FirstView.is-unselectable
-        //- .battle_title_container
-        //-   span.battle_title.is-size-7.has-text-weight-bold
-        //-     | {{record.title}}
         .CustomShogiPlayerWrap
           CustomShogiPlayer(
             sp_layer="is_layer_off"
@@ -117,8 +94,7 @@
           TweetButton(:body="permalink_url")
           b-button(icon-left="menu" @click="sidebar_toggle" size="is-small")
 
-      .battle_title_container.has-background-grey-lighter.py-6.battle_title.has-text-grey-dark.has-text-weight-bold.is-size-7-mobile
-        //- | {{record.title}}
+      .battle_title_container.has-background-grey-lighter.py-6.battle_title.has-text-grey-dark.is-size-7-mobile
         p
           | {{record.piyo_shogi_base_params.game_name}}
           span.mx-1(v-if="record.preset_info.name !== '平手'") {{record.preset_info.name}}
@@ -466,7 +442,7 @@ $button_z_index: 2
 
   //////////////////////////////////////////////////////////////////////////////// 1ページ目
   .FirstView
-    background-color: hsl(99.5, 40.6, 80.2)
+    // background-color: hsl(99.5, 40.6, 80.2)
     +tablet
       padding: 3rem 0
     +mobile
