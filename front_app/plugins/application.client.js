@@ -50,7 +50,7 @@ export default {
     },
 
     toast_ok(message, options = {}) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-primary", queue: false, ...options})
+      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-dark", queue: false, ...options})
       this.talk(message, options)
     },
 
