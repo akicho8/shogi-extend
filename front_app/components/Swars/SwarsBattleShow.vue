@@ -46,7 +46,7 @@
           b-navbar-item(@click="back_handle")
             b-icon(icon="chevron-left")
           b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, viewpoint: new_viewpoint}}")
-            | 対局詳細 \#{{new_turn}}
+            | 詳細 \#{{new_turn}}
         template(slot="end")
           b-navbar-item.has-text-weight-bold(@click="tweet_handle")
             b-icon(icon="twitter")
@@ -72,8 +72,6 @@
             ref="main_sp"
           )
 
-      //- .columns.is-centered
-      //-   .column.is-half-desktop
       SwarsBattleShowTimeChart(
         v-if="record && time_chart_params"
         :record="record"
