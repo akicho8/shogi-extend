@@ -197,7 +197,7 @@ module BattleModelMod
   end
 
   def adjust_viewpoint(viewpoint = nil)
-    viewpoint.presence || "blank"
+    viewpoint.presence || "black"
   end
 
   def to_twitter_card_params(params = {})

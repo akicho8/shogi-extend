@@ -15,6 +15,9 @@
       template(v-if="mode === 'standby'")
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'cpu-battle'}") CPU対戦
+      template(v-if="development_p")
+        b-navbar-item \#{{turn_offset}}
+
     template(slot="end")
       b-navbar-item.has-text-weight-bold(@click="start_handle" v-if="mode === 'standby'") 対局開始
       b-navbar-item.has-text-weight-bold(@click="give_up_handle" :loading="give_up_processing" v-if="mode === 'playing'") 投了
@@ -145,6 +148,7 @@ export default {
       // デバッグ用
       pressure_rate_hash: null, // 終盤度
       think_text:         null, // 思考内容テキスト
+      turn_offset: null, // 手数
 
       // shogi-player 用パラメータ
       sp_body: null,               // 譜面
@@ -365,6 +369,11 @@ export default {
         // 指した後の局面を反映
         if (e["current_sfen"]) {
           this.sp_body = e["current_sfen"]
+        }
+
+        // 何かとのときに使う用
+        if (e["turn_offset"]) {
+          this.turn_offset = e["turn_offset"]
         }
 
         // if (e["hand"]) {
