@@ -133,7 +133,7 @@ class KifuParser
         path: "/share-board",
         query: {
           body: @core.to_sfen,
-          abstract_viewpoint_key: :black,
+          abstract_viewpoint: :black,
         },
       })
   end

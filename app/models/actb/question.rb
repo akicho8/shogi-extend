@@ -288,12 +288,12 @@ module Actb
     end
 
     def share_board_params
-      { body: main_sfen, turn: 0, abstract_viewpoint_key: "black" }
+      { body: main_sfen, turn: 0, abstract_viewpoint: "black" }
     end
 
     # Twitter画像が表示できる url_for にそのまま渡すパラメータ
     def shared_image_params
-      [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, abstract_viewpoint_key: "black"]
+      [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, abstract_viewpoint: "black"]
     end
 
     def title_with_author

@@ -17,7 +17,7 @@
     | {{base.battle.final.name}}
 
   .block.is-flex.is-justify-content-center(v-if="development_p")
-    b-button(tag="nuxt-link" :to="{name: 'share-board', query: {body: base.vs_share_sfen, abstract_viewpoint_key: 'black'}}" size="is-small" type="is-text") 棋譜
+    b-button(tag="nuxt-link" :to="{name: 'share-board', query: {body: base.vs_share_sfen, abstract_viewpoint: 'black'}}" size="is-small" type="is-text") 棋譜
 
   .box.is-shadowless(v-if="development_p")
     .buttons.is-centered.are-small

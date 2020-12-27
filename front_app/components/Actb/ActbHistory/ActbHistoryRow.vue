@@ -49,7 +49,7 @@ export default {
       const params = {
         format: "png",
         body: this.row.question.init_sfen,
-        abstract_viewpoint_key: "black",
+        abstract_viewpoint: "black",
       }
       const url = new URL(this.as_full_url("/share-board"))
       _.each(params, (v, k) => url.searchParams.set(k, v))

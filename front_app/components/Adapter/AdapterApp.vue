@@ -207,7 +207,7 @@ export default {
           query: {
             body: this.record.all_kifs.sfen,
             turn: this.fixed_turn,
-            abstract_viewpoint_key: "black",
+            abstract_viewpoint: "black",
             // title: "共有将棋盤 (棋譜変換後の確認)",
           },
         })

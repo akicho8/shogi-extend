@@ -20,8 +20,8 @@
 #
 # url
 #   http://localhost:3000/share-board
-#   http://localhost:3000/share-board?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&abstract_viewpoint_key=self
-#   http://localhost:3000/share-board.png?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&abstract_viewpoint_key=black
+#   http://localhost:3000/share-board?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&abstract_viewpoint=self
+#   http://localhost:3000/share-board.png?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&abstract_viewpoint=black
 #
 # ・指したら record を nil に設定している→やめ
 # ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる→やめ
@@ -128,7 +128,7 @@ class ShareBoardsController < ApplicationController
           :turn             => initial_turn,
           :title            => current_title,
           :body             => current_record.sfen_body,
-          :abstract_viewpoint_key => abstract_viewpoint_key,
+          :abstract_viewpoint => abstract_viewpoint,
         })
 
       "/share-board.png?#{args.to_query}"
@@ -159,7 +159,7 @@ class ShareBoardsController < ApplicationController
       attrs = attrs.merge({
           :initial_turn        => initial_turn,
           :board_viewpoint        => board_viewpoint,
-          :abstract_viewpoint_key => abstract_viewpoint_key,
+          :abstract_viewpoint => abstract_viewpoint,
           :title               => current_title,
         })
 
@@ -206,11 +206,11 @@ class ShareBoardsController < ApplicationController
     end
 
     def abstract_viewpoint_info
-      AbstractViewpointInfo.fetch(abstract_viewpoint_key)
+      AbstractViewpointInfo.fetch(abstract_viewpoint)
     end
 
-    def abstract_viewpoint_key
-      AbstractViewpointInfo.valid_key(params[:abstract_viewpoint_key], :self)
+    def abstract_viewpoint
+      AbstractViewpointInfo.valid_key(params[:abstract_viewpoint], :self)
     end
 
     # 駒落ちを考慮した擬似ターン数

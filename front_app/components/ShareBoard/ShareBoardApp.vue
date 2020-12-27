@@ -5,7 +5,7 @@ client-only
       p 手数: {{turn_offset}} / {{turn_offset_max}}
       p SFEN: {{current_sfen}}
       p タイトル: {{current_title}}
-      p 視点: {{abstract_viewpoint_key}}
+      p 視点: {{abstract_viewpoint}}
       p モード: {{sp_run_mode}}
       p 視点: {{sp_viewpoint}}
       p URL: {{current_url}}
@@ -15,7 +15,7 @@ client-only
       .mx-5.my-5
         b-menu-list(label="Action")
           b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
-          b-menu-item(label="視点設定" @click="abstract_viewpoint_key_setting_handle")
+          b-menu-item(label="視点設定" @click="abstract_viewpoint_setting_handle")
           b-menu-item(label="盤面リセット" @click="reset_handle")
         b-menu-list(label="Edit")
           b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.sp_run_mode === 'edit_mode'}")
@@ -59,7 +59,7 @@ client-only
         //-   b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
         //-   b-navbar-item(@click="kifu_copy_handle('kif')") 棋譜コピー
         //-   b-navbar-item(@click="mode_toggle_handle") 局面編集
-        //-   b-navbar-item(@click="abstract_viewpoint_key_setting_handle") 視点設定
+        //-   b-navbar-item(@click="abstract_viewpoint_setting_handle") 視点設定
         //-   b-navbar-dropdown(hoverable arrowless right label="その他")
         //-     b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
         //-     b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
@@ -163,7 +163,7 @@ export default {
       current_sfen:        this.config.record.sfen_body,           // 渡している棋譜
       current_title:       this.config.record.title,               // 現在のタイトル
       turn_offset:         this.config.record.initial_turn,        // 現在の手数
-      abstract_viewpoint_key: this.config.record.abstract_viewpoint_key, // Twitter画像の向き
+      abstract_viewpoint: this.config.record.abstract_viewpoint, // Twitter画像の向き
 
       // urlには反映しない
       sp_viewpoint: this.config.record.board_viewpoint,       // 反転用
@@ -184,7 +184,7 @@ export default {
       this.edit_mode_sfen,      // 編集モード中でもURLを変更したいため
       this.turn_offset,
       this.current_title,
-      this.abstract_viewpoint_key,
+      this.abstract_viewpoint,
       this.room_code,
     ], () => {
       // 両方エラーになってしまう
@@ -255,7 +255,7 @@ export default {
       this.sound_play("click")
 
       if (this.sp_run_mode === "play_mode") {
-        if (this.abstract_viewpoint_key === "self") {
+        if (this.abstract_viewpoint === "self") {
           this.toast_ok(`
 局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、
 詰将棋を公開する場合は視点設定を先手固定に変更するのがおすすめです`, {duration: 1000 * 10})
@@ -332,7 +332,7 @@ export default {
     },
 
     // 視点設定変更
-    abstract_viewpoint_key_setting_handle() {
+    abstract_viewpoint_setting_handle() {
       this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
@@ -342,13 +342,13 @@ export default {
         hasModalCard: true,
         animation: "",
         props: {
-          abstract_viewpoint_key: this.abstract_viewpoint_key,
+          abstract_viewpoint: this.abstract_viewpoint,
           permalink_for: this.permalink_for,
         },
         onCancel: () => this.sound_play("click"),
         events: {
-          "update:abstract_viewpoint_key": v => {
-            this.abstract_viewpoint_key = v
+          "update:abstract_viewpoint": v => {
+            this.abstract_viewpoint = v
           }
         },
       })
@@ -391,7 +391,7 @@ export default {
         url = new URL(this.$config.MY_SITE_URL + `/share-board`)
       }
 
-      // AbstractViewpointKeySelectModal から新しい abstract_viewpoint_key が渡されるので params で上書きすること
+      // AbstractViewpointKeySelectModal から新しい abstract_viewpoint が渡されるので params で上書きすること
       params = {
         ...this.current_url_params,
         ...params,
@@ -428,7 +428,7 @@ export default {
         body:         this.current_body, // 編集モードでもURLを更新するため
         turn:         this.turn_offset,
         title:        this.current_title,
-        abstract_viewpoint_key: this.abstract_viewpoint_key,
+        abstract_viewpoint: this.abstract_viewpoint,
       }
 
       if (this.room_code) {
@@ -447,7 +447,7 @@ export default {
     current_url()                { return this.permalink_for()                                                                        },
     json_debug_url()             { return this.permalink_for({format: "json"})                                                        },
     twitter_card_url()           { return this.permalink_for({format: "png"})                                                         },
-    snapshot_image_url()         { return this.permalink_for({format: "png", image_viewpoint: this.sp_viewpoint, disposition: "attachment"}) }, // abstract_viewpoint_key より image_viewpoint の方が優先される
+    snapshot_image_url()         { return this.permalink_for({format: "png", image_viewpoint: this.sp_viewpoint, disposition: "attachment"}) }, // abstract_viewpoint より image_viewpoint の方が優先される
     kif_download_url()           { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
     shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"})                              },
 
