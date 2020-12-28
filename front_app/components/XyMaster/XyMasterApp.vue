@@ -39,7 +39,10 @@
 
           .DigitBoardTime.is-unselectable
             .xy_human_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p")
-              | {{xy_human}}
+              template(v-if="mode === 'is_mode_ready'")
+                | ？？
+              template(v-if="mode === 'is_mode_run'")
+                | {{xy_human}}
 
             .CustomShogiPlayerWrap
               XyMasterCountdown(:base="base")
@@ -628,15 +631,28 @@ export default {
       return this.current_rule.input_mode === "keyboard"
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     xy_human() {
-      if (this.mode === "is_mode_run") {
-        if (this.current_place) {
-          const place = Place.fetch([this.current_place.x, this.current_place.y])
-          return place.kanji_human
-        }
+      if (this.current_place_info) {
+        return this.current_place_info.kanji_human
       }
-      return "？？"
     },
+
+    current_place_info() {
+      if (this.current_place_xy) {
+        return Place.fetch(this.current_place_xy)
+      }
+    },
+
+    current_place_xy() {
+      if (this.current_place) {
+        const { x, y } = this.current_place
+        return [x, y]
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     default_xy_rule_key() {
       if (isMobile.any()) {
