@@ -19,6 +19,9 @@ export default {
       this.back_to()
     },
   },
+  mounted() {
+    this.ga_click("スタイルエディタ")
+  },
   computed: {
     meta() {
       return {
