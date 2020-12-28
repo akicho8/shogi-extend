@@ -17,7 +17,7 @@ LIST_ALL = [
   { url: "/swars/search?query=Yamada_Taro",                                          validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
   { url: "/swars/users/Yamada_Taro/",                                                validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
   { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/",                     validations: { "og:image" => /Yamada_Taro.*png.*turn/                                                                                                                                                                }},
-  { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&flip=false", validations: { "og:image" => /Yamada_Taro.*png.*turn=100/,                                                                                                                                                                }},
+  { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&viewpoint=black", validations: { "og:image" => /Yamada_Taro.*png.*turn=100/,                                                                                                                                                                }},
   { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet",         validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
   { url: "/swars/users/Yamada_Taro/direct-open/kento",                               validations: { "title" => /KENTO/, "mombile_icon" => /kento/,                                                                                                                          }},
   { url: "/swars/users/Yamada_Taro/direct-open/piyo_shogi",                          validations: { "title" => /ぴよ/,  "mombile_icon" => /piyo_shogi/,                                                                                                                     }},
@@ -37,6 +37,7 @@ LIST_ALL = [
   { url: "/stopwatch",                                                               validations: { "title" => /ストップウォッチ/,                                                                                                                                  }},
   { url: "/cpu-battle",                                                              validations: { "title" => /対戦/,                                                                                                                                              }},
   { url: "/training",                                                                validations: { "title" => /トレーニング/,                                                                                                                                      }},
+  { url: "/style-editor",                                                            validations: { "title" => /スタイルエディタ/,                                                                                                                                   }},
 ]
 
 require "bundler/setup"
@@ -176,7 +177,7 @@ end
 # >> http://localhost:4000/swars/search?query=Yamada_Taro
 # >> http://localhost:4000/swars/users/Yamada_Taro/
 # >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/
-# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&flip=false
+# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&viewpoint=black
 # >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet
 # >> http://localhost:4000/swars/users/Yamada_Taro/direct-open/kento
 # >> http://localhost:4000/swars/users/Yamada_Taro/direct-open/piyo_shogi
