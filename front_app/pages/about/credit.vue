@@ -22,7 +22,6 @@
 
   .section_title.texture TEXTURE
   ul
-    li: ExternalLink(beep href="http://sozai.7gates.net/docs/japanese-chess/") 無料素材倶楽部
     li: ExternalLink(beep href="http://mucho.girly.jp/bona/") 将棋ｱﾌﾟﾘ用ｸﾘｴﾃｨﾌﾞｺﾓﾝｽﾞ画像
     li: ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
     li: ExternalLink(beep href="https://www.irasutoya.com/") いらすとや
@@ -33,7 +32,6 @@
     li: ExternalLink(beep href="https://studio.beatnix.co.jp/") コドモとアプリ
     li: ExternalLink(beep href="https://github.com/orangain/shogi-piece-images") orangain/shogi-piece-images
     li: ExternalLink(beep href="http://putiya.com/") プチッチ
-    //- li: ExternalLink(beep href="https://www.photolibrary.jp/") 写真素材 - フォトライブラリー photolibrary
 
   .section_title SOUND EFFECT
   ul
