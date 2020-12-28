@@ -1,5 +1,5 @@
 import { ChessClock   } from "@/components/models/ChessClock.js"
-import Location from "shogi-player/components/models/location.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 export const application_battle_sy_versus = {
   data() {

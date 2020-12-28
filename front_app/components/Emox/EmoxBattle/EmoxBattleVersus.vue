@@ -46,7 +46,7 @@
 
 <script>
 import { support_child } from "../support_child.js"
-import Location from "shogi-player/components/models/location.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 export default {
   name: "EmoxBattleVersus",

@@ -1,4 +1,4 @@
-import Location from "shogi-player/components/models/location.js"
+import { Location } from "shogi-player/components/models/location.js"
 import dayjs from "dayjs"
 
 const ONE_MIN = 60

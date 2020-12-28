@@ -1,4 +1,4 @@
-import PaletteInfo from "@/components/models/PaletteInfo.js"
+import { PaletteInfo } from "@/components/models/PaletteInfo.js"
 window.PaletteInfo = PaletteInfo
 
 import Chart from "chart.js"

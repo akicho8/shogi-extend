@@ -374,7 +374,7 @@ const CHART_CONFIG_DEFAULT = {
 }
 
 import SwarsBattleShowTimeChartVerticalLine from './SwarsBattleShowTimeChartVerticalLine.js'
-import PaletteInfo from "@/components/models/PaletteInfo.js"
+import { PaletteInfo } from "@/components/models/PaletteInfo.js"
 import chart_mod from '@/components/models/chart_mod.js'
 
 export default {

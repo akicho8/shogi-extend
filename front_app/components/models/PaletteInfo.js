@@ -3,7 +3,7 @@ import MemoryRecord from 'js-memory-record'
 // https://gka.github.io/chroma.js/#quick-start
 import chroma from 'chroma-js'
 
-export default class PaletteInfo extends MemoryRecord {
+export class PaletteInfo extends MemoryRecord {
   static get define() {
     return [
       // https://bulma.io/documentation/modifiers/color-helpers/

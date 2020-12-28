@@ -267,7 +267,7 @@ import { support } from "./support.js"
 import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
 import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
 
-import Location from "shogi-player/components/models/location.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 import SwarsBattleIndexCore from "./SwarsBattleIndexCore.js"
 //- import SwarsBattleIndexHistory from "./SwarsBattleIndexHistory.js"
