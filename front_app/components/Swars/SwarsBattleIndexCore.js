@@ -29,7 +29,7 @@ export default {
           key: row.key
         },
         query: {
-          turn_key: this.display_key,
+          scene: this.display_key,
           viewpoint: row.memberships[0].location.key,
         },
       })

@@ -126,7 +126,7 @@
 export default {
   name: "SwarsBattleShow",
   props: {
-    // turn_key:     { default: "default",           }, // どの局面から開始するか (一覧のturn_keyとは若干型が違う)
+    // scene:     { default: "default",           }, // どの局面から開始するか (一覧のturn_keyとは若干型が違う)
   },
   data() {
     return {
@@ -285,11 +285,11 @@ export default {
 
       // Indexのコードと同じだけど共通化はするな
       let v = null
-      if (this.turn_key === "critical") {
+      if (this.scene === "critical") {
         v = record.critical_turn
-      } else if (this.turn_key === "outbreak") {
+      } else if (this.scene === "outbreak") {
         v = record.outbreak_turn
-      } else if (this.turn_key === "last") {
+      } else if (this.scene === "last") {
         v = record.turn_max
       }
       return v || record.display_turn
@@ -329,8 +329,8 @@ export default {
       }
     },
 
-    turn_key() {
-      return this.$route.query.turn_key
+    scene() {
+      return this.$route.query.scene
     },
 
     default_viewpoint() {
