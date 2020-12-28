@@ -8,12 +8,14 @@
     p g_current_user: {{g_current_user && g_current_user.id}}
     p visible_hash: {{visible_hash}}
 
-  b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right v-model="sidebar_p" v-if="config")
+  b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right overlay v-model="sidebar_p" v-if="config")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
       //-   b-icon.is-clickable(icon="menu" @click.native="sidebar_p = false")
       //-   .my_title.has-text-centered
       //-     nuxt-link.has-text-weight-bold.has-text-dark(:to="{name: 'index'}") SHOGI-EXTEND
+
+      //- a.delete(@click="sidebar_toggle")
 
       b-menu
         b-menu-list(label="Action")
@@ -112,6 +114,8 @@
           b-menu-item(label="棋譜の不整合"     @click="$router.push({query: {query: 'Yamada_Taro', error_capture_test: true, force: true}})")
           b-menu-item(label="棋譜の再取得"     @click="$router.push({query: {query: 'Yamada_Taro', destroy_all: true, force: true}})")
           b-menu-item(label="棋譜の普通に取得" @click="$router.push({query: {query: 'Yamada_Taro'}})")
+          b-menu-item(label="☗を左に表示"     @click="$router.push({query: {query: 'Yamada_Taro', viewpoint: 'black'}})")
+          b-menu-item(label="☖を左に表示"     @click="$router.push({query: {query: 'Yamada_Taro', viewpoint: 'white'}})")
           b-menu-item(label="全レコード表示"   @click="$router.push({query: {query: '', all: 'true', per: 50, debug: 'true'}})")
 
   MainNavbar(wrapper-class="container is-fluid")
@@ -153,26 +157,21 @@
               // widescreen 1/5 (is-one-fifth-widescreen)
               // desktop    1/4 (is-one-quarter-desktop)
               // table      1/4 (is-one-quarter-tablet)
-              .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.has-text-centered.px-0
-                SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[1]")
-                a(@click="show_handle(e)")
-                  MyShogiPlayer(
-                    :run_mode="'view_mode'"
-                    :debug_mode="false"
-                    :start_turn="sp_start_turn(e)"
-                    :kifu_body="e.sfen_body"
-                    :theme="'simple'"
-                    :size="'x-small'"
-                    :sound_effect="false"
-                    :vlayout="true"
-                    :setting_button_show="false"
-                    :summary_show="false"
-                    :operation_disable="true"
-                    :overlay_navi="false"
-                    :flip="e.flip"
-                  )
-                // :hidden_if_piece_stand_blank="display_key === 'critical'"
-                SwarsBattleIndexMembershipUserLinkTo.is_line_break_on.is-size-7(:membership="e.memberships[0]")
+              .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click.stop="show_handle(e)")
+                //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[1]")
+                CustomShogiPlayer(
+                  :sp_player_info="e.player_info"
+                  sp_layout="is_vertical"
+                  sp_run_mode="view_mode"
+                  :sp_turn="sp_start_turn(e)"
+                  :sp_body="e.sfen_body"
+                  :sp_sound_enabled="false"
+                  sp_summary="is_summary_off"
+                  :sp_op_disabled="true"
+                  :sp_viewpoint="e.memberships[0].location.key"
+                )
+                // :sp_hidden_if_piece_stand_blank="display_key === 'critical'"
+                //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
           //- v-if="$route.query.query || config.records.length >= 1"
           template(v-if="display_key === 'table'")
@@ -207,7 +206,12 @@
               b-table-column(v-slot="{row}" field="id" :label="config.table_columns_hash['id'].label" :visible="!!visible_hash.id" sortable numeric v-if="config.table_columns_hash.id")
                 a(@click="show_handle(row)") \#{{row.id}}
 
-              template(v-if="config.current_swars_user_key")
+              template(v-if="config.viewpoint")
+                b-table-column(v-slot="{row}" :label="l_column_label")
+                  SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
+                b-table-column(v-slot="{row}" :label="r_column_label")
+                  SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
+              template(v-else-if="config.current_swars_user_key")
                 b-table-column(v-slot="{row}" label="自分")
                   SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
                 b-table-column(v-slot="{row}" label="相手")
@@ -248,7 +252,7 @@
                   PiyoShogiButton(type="button" :href="piyo_shogi_app_with_params_url(row)" @click="sound_play('click')")
                   KentoButton(tag="a" :href="kento_app_with_params_url(row)" @click="sound_play('click')")
                   KifCopyButton(@click="kifu_copy_handle(row)")
-                  DetailButton(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}}" @click.native="sound_play('click')") 詳細
+                  DetailButton(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location.key}}" @click.native="sound_play('click')") 詳細
 
     client-only
       DebugPre {{config}}
@@ -262,6 +266,8 @@ import { support } from "./support.js"
 
 import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
 import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
+
+import { Location } from "shogi-player/components/models/location.js"
 
 import SwarsBattleIndexCore from "./SwarsBattleIndexCore.js"
 //- import SwarsBattleIndexHistory from "./SwarsBattleIndexHistory.js"
@@ -529,6 +535,10 @@ export default {
       }
     },
 
+    current_viewpoint_location() { return Location.fetch(this.config.viewpoint)     },
+    l_column_label()             { return this.current_viewpoint_location.name      },
+    r_column_label()             { return this.current_viewpoint_location.flip.name },
+
     base()            { return this            },
     ExternalAppInfo() { return ExternalAppInfo },
     ZipDlInfo()       { return ZipDlInfo       },
@@ -544,11 +554,21 @@ export default {
 .SwarsBattleIndex
   .container
     +mobile
-      padding-left: 0 ! important
-      padding-right: 0 ! important
+      padding: 0
 
   .b-table
     margin-top: 1.5rem
     +mobile
       margin-top: 1rem
+
+  // 小さな盤面をたくさん表示
+  .CustomShogiPlayer
+    --sp_piece_count_font_size: 8px
+    --sp_stand_piece_w: 20px
+    --sp_stand_piece_h: 25px
+    --sp_piece_count_gap_bottom: 64%
+
+.STAGE-development
+  .column
+    border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

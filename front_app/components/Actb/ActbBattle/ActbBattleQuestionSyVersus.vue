@@ -2,15 +2,13 @@
 .ActbBattleQuestionSyVersus
   ActbBattleQuestionSyVersusMembership.mt-3(:membership="base.opponent_membership")
 
-  MyShogiPlayer.mt-3(
-    :run_mode="'play_mode'"
-    :kifu_body="base.vs_share_sfen"
-    :summary_show="false"
-    :setting_button_show="false"
-    :theme="base.config.sp_theme"
-    :size="base.config.sp_size"
-    :human_side_key="current_human_side_key"
-    :flip="current_flip"
+  CustomShogiPlayer.mt-3(
+    sp_mobile_vertical="is_mobile_vertical_off"
+    sp_run_mode="play_mode"
+    sp_summary="is_summary_off"
+    :sp_body="base.vs_share_sfen"
+    :sp_human_side="sp_human_side"
+    :sp_viewpoint="sp_viewpoint"
     @update:play_mode_advanced_full_moves_sfen="base.vs_func_play_mode_advanced_full_moves_sfen_set"
   )
 
@@ -48,15 +46,15 @@ export default {
   ],
 
   computed: {
-    current_human_side_key() {
+    sp_human_side() {
       if (this.base.room.bot_user_id) {
         return "both"
       } else {
         return this.base.current_membership.location_key
       }
     },
-    current_flip() {
-      return this.base.current_membership.location_key === "white"
+    sp_viewpoint() {
+      return this.base.current_membership.location_key
     },
   },
 }

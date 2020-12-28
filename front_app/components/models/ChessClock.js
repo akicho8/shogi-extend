@@ -1,5 +1,5 @@
 import { SingleClock } from "./SingleClock.js"
-import Location from "shogi-player/src/location.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 export class ChessClock {
   constructor(params = {}) {

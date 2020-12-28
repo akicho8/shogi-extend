@@ -2,7 +2,7 @@
 .SwarsBattleIndexMembership
   .icon_with_name.is-inline-block
     MembershipMedal(:params="m.medal_params" v-if="m.medal_params")
-    SwarsBattleIndexMembershipUserLinkTo(:membership="m")
+    SwarsBattleShowUserLink(:membership="m")
   b-taglist
     template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
       template(v-if="base.visible_hash[key]")

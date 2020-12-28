@@ -1,16 +1,28 @@
 <template lang="pug">
-.SwarsBattleShowTimeChart
-  canvas#main_canvas.is-unselectable(ref="main_canvas")
-  .has-text-centered.mt-4
-    b-switch(v-model="zoom_p")
-      b-icon(icon="magnify-plus-outline")
+.SwarsBattleShowTimeChart.is-unselectable
+  .canvas_center
+    .canvas_wrap
+      canvas#main_canvas(ref="main_canvas")
+  b-field.zoom_button(position="is-centered")
+    b-radio-button(v-model="zoom_p" :native-value="false" size="is-small") -
+    b-radio-button(v-model="zoom_p" :native-value="true" size="is-small") +
 </template>
 
 <script>
-const TOOLTIP_ENABLE = true
+const TOOLTIP_ENABLE = false
+// const TICKS_FONT_COLOR = "rgba(255,255,255,0.75)"
+const TICKS_FONT_COLOR = "rgba(0, 0, 0, 0.75)"
+const FONT_SIZE = 8
+
+// import PaletteBlackWhiteInfo from "@/components/models/PaletteBlackWhiteInfo.js"
+//
+// function color_select(context, alpha) {
+//   // https://www.chartjs.org/docs/latest/general/options.html#option-context
+//   return PaletteBlackWhiteInfo.fetch(context.datasetIndex).alpha(alpha)
+// }
 
 const CHART_CONFIG_DEFAULT = {
-  type: "line",
+  type: "line",                 // barはデータ構造上うまくいかない
   options: {
     aspectRatio: 1.6, // 大きいほど横長方形になる
 
@@ -34,13 +46,29 @@ const CHART_CONFIG_DEFAULT = {
       text: "消費時間",
     },
 
+    layout: {
+      padding: {
+        // left:   25,
+        // right:  30,
+        // top:    50,
+        // bottom: 25,
+        left:   20,
+        right:  25,
+        top:    30,
+        bottom: 16,
+      },
+    },
+
     // https://qiita.com/Haruka-Ogawa/items/59facd24f2a8bdb6d369#3-5-%E6%95%A3%E5%B8%83%E5%9B%B3
     // https://qiita.com/muuuuminn/items/2e977add604dcec920d3
     scales: {
       xAxes: [{
         // http://www.kogures.com/hitoshi/javascript/chartjs/bar-width.html
-        // categoryPercentage: 0.8, // 目盛り線の幅に対する棒（複数棒）の占める幅の割合
-        // barPercentage: 0.9,      // categoryPercentageに対する単独棒の幅。1にすると複数棒間間隔がなくなり、1より小さくすると棒が細くなり間隔が広がる
+        // categoryPercentage: 1.0, // 目盛り線の幅に対する棒（複数棒）の占める幅の割合
+        // barPercentage: 1.0,      // categoryPercentageに対する単独棒の幅。1にすると複数棒間間隔がなくなり、1より小さくすると棒が細くなり間隔が広がる
+        // // minBarLength: 8,
+        // // barThickness: "flex",
+        // barThickness: 10,
 
         scaleLabel: {
           display: false,
@@ -56,14 +84,19 @@ const CHART_CONFIG_DEFAULT = {
           maxRotation: 0,   // 表示角度水平
           maxTicksLimit: 5, // 最大横N個の目盛りにする
           // callback(value, index, values) { return value + "" }, // 単位をつける
+          fontColor: TICKS_FONT_COLOR,
+          fontSize: FONT_SIZE,
         },
         gridLines: {
-          display: false,    // x軸の中間の縦線
+          display: true,    // x軸の中間の縦線
+          offsetGridLines: false,
         },
       }],
       yAxes: [{
         ticks: {
-          reverse: false,       // 反転する？ (this.flip を 外から設定して判定する)
+          fontSize: FONT_SIZE,
+          fontColor: TICKS_FONT_COLOR,
+          reverse: false,       // 反転する？ (this.sp_viewpoint を 外から設定して判定する)
 
           stepSize: 30,         // N秒毎の表示
           maxTicksLimit: 7,     // 縦の最大目盛り数
@@ -112,18 +145,28 @@ const CHART_CONFIG_DEFAULT = {
         },
         gridLines: {
           display: true,
+          offsetGridLines: false,
           // zeroLineWidth: 0,
         },
       }],
     },
 
-    elements: {
-      line: {
-        // 折れ線グラフのすべてに線に適用する設定なのでこれがあると dataset 毎に設定しなくてよい
-        // または app/javascript/packs/application.js で指定する
-        // background-color
-      },
-    },
+    // elements: {
+    //   line: {
+    //     fill: true,
+    //     // 折れ線グラフのすべてに線に適用する設定なのでこれがあると dataset 毎に設定しなくてよい
+    //     // または app/javascript/packs/application.js で指定する
+    //     // background-color
+    //     tension: 0,
+    //     backgroundColor: function(context) { return color_select(context, 0.3) },
+    //     borderColor:     function(context) { return color_select(context, 1.0) },
+    //     borderWidth: 1,
+    //   },
+    //   point: {
+    //     backgroundColor: function(context) { return color_select(context, 0.3) },
+    //     borderColor:     function(context) { return color_select(context, 1.0) },
+    //   },
+    // },
 
     // https://tr.you84815.space/chartjs/configuration/tooltip.html
     legend: {
@@ -331,7 +374,7 @@ const CHART_CONFIG_DEFAULT = {
 }
 
 import SwarsBattleShowTimeChartVerticalLine from './SwarsBattleShowTimeChartVerticalLine.js'
-import PaletteInfo from "@/components/models/PaletteInfo.js"
+import { PaletteInfo } from "@/components/models/PaletteInfo.js"
 import chart_mod from '@/components/models/chart_mod.js'
 
 export default {
@@ -343,7 +386,7 @@ export default {
 
   props: {
     record:            { required: true, }, // バトル情報
-    flip:              { required: true, }, // フリップしたか？
+    sp_viewpoint:      { required: true, }, // 視点
     time_chart_params: { required: true, }, // 表示する内容
   },
 
@@ -356,6 +399,8 @@ export default {
   created() {
     this.chart_setup(CHART_CONFIG_DEFAULT)
     this._chart_config.data = this.time_chart_params
+    // this._chart_config.my_custom_background_color = "rgba(0, 0, 0, 0.75)"
+    // this._chart_config.my_custom_background_color = "rgba(#C6E1B8, 0.1)"
 
     this.chart_flip_set()
 
@@ -393,8 +438,8 @@ export default {
       this.chart_update()
     },
 
-    flip(v, ov) {
-      this.debug_alert(`flip: ${ov} -> ${v}`)
+    sp_viewpoint(v, ov) {
+      this.debug_alert(`sp_viewpoint: ${ov} -> ${v}`)
       this.chart_flip_set()
       this.chart_update()
     },
@@ -532,7 +577,7 @@ export default {
 
     // flip 状態をチャートに反映
     chart_flip_set() {
-      this._chart_config.options.scales.yAxes[0].ticks.reverse = this.flip
+      this._chart_config.options.scales.yAxes[0].ticks.reverse = (this.sp_viewpoint === "white")
     },
 
     // 61 -> 1分1秒
@@ -545,10 +590,10 @@ export default {
         s += "0"
       } else {
         if (min >= 1) {
-          s += `${min}分`
+          s += `${min}m`
         }
         if (sec >= 1) {
-          s += `${sec}秒`
+          s += `${sec}s`
         }
       }
       return s
@@ -559,4 +604,19 @@ export default {
 
 <style lang="sass">
 .SwarsBattleShowTimeChart
+  padding-bottom: 1.5rem
+  .canvas_center
+    display: flex
+    justify-content: center
+    align-items: center
+    .canvas_wrap
+      width: 100%
+      max-width: 640px
+  .zoom_button
+    //- padding: 2rem
+
+.STAGE-development
+  .SwarsBattleShowTimeChart
+    .zoom_button
+      border: 1px dashed change_color($primary, $alpha: 0.2)
 </style>

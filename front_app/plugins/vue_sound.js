@@ -1,4 +1,4 @@
-import { SoundPreset } from "@/components/models/SoundPreset.js"
+import { SoundPreset } from "@/components/models/sound_preset.js"
 import { Howl, Howler } from "howler"
 
 export default {

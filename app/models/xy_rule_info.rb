@@ -4,13 +4,13 @@
 class XyRuleInfo
   include ApplicationMemoryRecord
   memory_record [
-    # { key: "xy_rule1",     name: "1問",      o_count_max:   1, flip: false, input_mode: "keyboard", },
-    # { key: "xy_rule10",    name: "10問",     o_count_max:  10, flip: false, input_mode: "keyboard", },
-    # { key: "xy_rule30",    name: "30問",     o_count_max:  30, flip: false, input_mode: "keyboard", },
-    { key: "xy_rule100t",  name: "☗100問TAP", o_count_max: 100, flip: false, input_mode: "tap",      time_limit: 60*5, },
-    { key: "xy_rule100tw", name: "☖100問TAP", o_count_max: 100, flip: true,  input_mode: "tap",      time_limit: 60*5, },
-    { key: "xy_rule100",   name: "☗100問",    o_count_max: 100, flip: false, input_mode: "keyboard", time_limit: 60*5, },
-    { key: "xy_rule100w",  name: "☖100問",    o_count_max: 100, flip: true,  input_mode: "keyboard", time_limit: 60*5, },
+    # { key: "xy_rule1",     name: "1問",      o_count_max:   1, viewpoint: :black, input_mode: "keyboard", },
+    # { key: "xy_rule10",    name: "10問",     o_count_max:  10, viewpoint: :black, input_mode: "keyboard", },
+    # { key: "xy_rule30",    name: "30問",     o_count_max:  30, viewpoint: :black, input_mode: "keyboard", },
+    { key: "xy_rule100t",  name: "☗100問TAP", o_count_max: 100, viewpoint: :black,  input_mode: "tap",      time_limit: 60*5, },
+    { key: "xy_rule100tw", name: "☖100問TAP", o_count_max: 100, viewpoint: :white,  input_mode: "tap",      time_limit: 60*5, },
+    { key: "xy_rule100",   name: "☗100問",    o_count_max: 100, viewpoint: :black,  input_mode: "keyboard", time_limit: 60*5, },
+    { key: "xy_rule100w",  name: "☖100問",    o_count_max: 100, viewpoint: :white,  input_mode: "keyboard", time_limit: 60*5, },
   ]
 
   cattr_accessor(:rank_max) { (Rails.env.production? || Rails.env.staging?) ? 100 : 100 }  # 位まで表示
@@ -80,7 +80,7 @@ class XyRuleInfo
   def xy_records(params)
     # current_clean
     # aggregate
-    if params[:entry_name_unique].to_s == "true"
+    if params[:entry_name_uniq_p].to_s == "true"
       entry_names = redis.zrevrange(key_select(params), 0, rank_max - 1)
       if entry_names.empty?
         return []
@@ -201,7 +201,7 @@ class XyRuleInfo
 
   def key_select(params)
     key = table_key_for(params)
-    if params[:entry_name_unique].to_s == "true"
+    if params[:entry_name_uniq_p].to_s == "true"
       key = as_unique_key(key)
     end
     key

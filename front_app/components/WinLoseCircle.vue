@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import PaletteInfo from "@/components/models/PaletteInfo.js"
+import { PaletteInfo } from "@/components/models/PaletteInfo.js"
 
 const CHART_CONFIG_DEFAULT = {
   type: 'doughnut',

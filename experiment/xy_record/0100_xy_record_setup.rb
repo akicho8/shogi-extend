@@ -17,7 +17,7 @@ XyRuleInfo.rebuild
 
 r = XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 2, x_count: 0)
 
-r.rank(xy_scope_key: "xy_scope_today", entry_name_unique: "true")    # => 2
+r.rank(xy_scope_key: "xy_scope_today", entry_name_uniq_p: "true")    # => 2
 r.rank_info                     # => {:xy_scope_today=>{:rank=>11, :page=>1}, :xy_scope_all=>{:rank=>21, :page=>2}}
 
 # XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 10, x_count: 0)
@@ -26,10 +26,10 @@ r.rank_info                     # => {:xy_scope_today=>{:rank=>11, :page=>1}, :x
 # XyRecord.create!(xy_rule_key: "xy_rule100t", entry_name: "x", spent_sec: 40, x_count: 0)
 # XyRuleInfo.rebuild
 #
-# XyRecord.last.rank(xy_scope_key: "xy_scope_all", entry_name_unique: "true")    # => 2
+# XyRecord.last.rank(xy_scope_key: "xy_scope_all", entry_name_uniq_p: "true")    # => 2
 #
-# tp XyRuleInfo[:xy_rule100t].xy_records(xy_scope_key: "xy_scope_all", entry_name_unique: "true")
-# tp XyRuleInfo[:xy_rule100t].xy_records(xy_scope_key: "xy_scope_today", entry_name_unique: "true")
+# tp XyRuleInfo[:xy_rule100t].xy_records(xy_scope_key: "xy_scope_all", entry_name_uniq_p: "true")
+# tp XyRuleInfo[:xy_rule100t].xy_records(xy_scope_key: "xy_scope_today", entry_name_uniq_p: "true")
 #
 tp XyRecord
 # >> |------+-------------------+------------+---------+-------------+---------+-----------+---------------------------+---------------------------|

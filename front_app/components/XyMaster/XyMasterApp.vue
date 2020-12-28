@@ -1,149 +1,70 @@
 <template lang="pug">
-.XyMasterApp(:class="[mode, `current_rule_input_mode-${current_rule.input_mode}`]")
-  MainNavbar(v-if="mode === 'stop' || mode === 'goal'")
+.XyMasterApp(:class="mode" :style="component_style")
+  MainNavbar(v-if="idol_p")
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'xy'}") 符号の鬼
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
-        b-navbar-item(@click="data_restore_from_hash({})") 変数の初期化
-        b-navbar-item(@click="storage_clear") ブラウザに記憶した情報の削除
-        b-navbar-item(@click="persistense_variables_init") 保存可能な変数のリセット
+        b-navbar-item(@click="ls_reset") ブラウザに記憶した情報の削除
+        b-navbar-item(@click="var_init") 保存可能な変数のリセット
         b-navbar-item ランキングタブの各表示ページ:{{current_pages}}
 
       NavbarItemLogin
       NavbarItemProfileLink
 
-  MainNavbar(type="is-dark" fixed-bottom v-if="development_p")
+  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
       b-navbar-item(@click="reset_all_handle") リセット
       b-navbar-item(@click="goal_handle") ゴール
       b-navbar-item(@click="rebuild_handle") リビルド
 
-  MainSection(:class="mode")
-    template(v-if="mode === 'run' || mode === 'ready'")
-      b-button.restart_button(@click="restart_handle" size="is-medium" icon-left="restart" type="is-text")
-      PageCloseButton(@click="stop_handle")
+  MainSection
+    PageCloseButton(@click="stop_handle" position="is_absolute" v-if="playing_p")
+    XyMasterRestart(:base="base" v-if="playing_p")
     .container
       .columns
-        .column.is-paddingless
-          .buttons.is-centered.mb-0
-            template(v-if="mode === 'stop' || mode === 'goal'")
-              button.button.is-primary(@click="start_handle") START
+        .column
+          .buttons.is-centered.mb-0(v-if="idol_p")
+            b-button(@click="start_handle" type="is-primary") START
 
-            template(v-if="mode === 'stop' || mode === 'goal'")
-              b-dropdown.is-pulled-left(v-model="xy_rule_key" @click.native="sound_play('click')")
-                button.button(slot="trigger")
-                  span {{current_rule.name}}
-                  b-icon(icon="menu-down")
-                template(v-for="e in XyRuleInfo.values")
-                  b-dropdown-item(:value="e.key") {{e.name}}
+            b-dropdown.is-pulled-left(v-model="xy_rule_key" @click.native="sound_play('click')")
+              button.button(slot="trigger")
+                span {{current_rule.name}}
+                b-icon(icon="menu-down")
+              template(v-for="e in XyRuleInfo.values")
+                b-dropdown-item(:value="e.key") {{e.name}}
 
-              b-button(@click="rule_display" icon-right="help")
-          .has-text-centered
-            .level_container(v-if="mode === 'goal' && false")
-              .level.is-mobile
-                .level-item.has-text-centered
-                  div
-                    p.heading
-                      b-icon(icon="checkbox-blank-circle-outline" type="is-info" size="is-small")
-                    p.title {{o_count}}
-                .level-item.has-text-centered
-                  div
-                    p.heading
-                      b-icon(icon="close" type="is-danger" size="is-small")
-                    p.title {{x_count}}
+            b-button(@click="rule_dialog_show" icon-right="help")
 
-            .tap_digits_container.is-unselectable(v-if="tap_method_p")
-              .value
-                | {{kanji_human}}
+          .DigitBoardTime.is-unselectable
+            .xy_human_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p")
+              | {{xy_human}}
 
-            .shogi_player_container.is-unselectable
-              template(v-if="mode === 'ready'")
-                .countdown_wrap(@click.prevent.stop.capture)
-                  .countdown
-                    | {{countdown}}
-              MyShogiPlayer(
+            .CustomShogiPlayerWrap
+              XyMasterCountdown(:base="base")
+              CustomShogiPlayer(
                 ref="main_sp"
-                :kifu_body="''"
-                :summary_show="false"
-                :hidden_if_piece_stand_blank="true"
-                :setting_button_show="false"
-                :theme="'simple'"
-                :size="sp_size"
-                :flip="current_rule.flip"
-                :board_piece_back_user_class="board_piece_back_user_class"
-                :overlay_navi="false"
-                :board_cell_pointerdown_user_handle="board_cell_pointerdown_user_handle"
-                :board_cell_left_click_user_handle="board_cell_left_click_user_handle"
+                sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
+                sp_summary="is_summary_off"
+                :sp_hidden_if_piece_stand_blank="true"
+                :sp_viewpoint="current_rule.viewpoint"
+                :sp_board_piece_back_user_class="sp_board_piece_back_user_class"
+                :sp_board_cell_pointerdown_user_handle="sp_board_cell_pointerdown_user_handle"
               )
 
-            .time_container.is-unselectable
-              .fixed_font.is-size-2
-                | {{time_format}}
+            .time_container.fixed_font.is-size-3
+              | {{time_format}}
 
-            template(v-if="mode === 'goal'")
-              .tweet_box_container
-                .box
-                  .summary
-                    | {{summary}}
-                  TweetButton.mt-2(:body="tweet_body")
+          XyMasterSlider(:base="base")
 
-        .column.is-5(v-if="(mode === 'stop' || mode === 'goal') && xy_records_hash")
-          b-field.xy_scope_info_field
-            template(v-for="e in XyScopeInfo.values")
-              b-radio-button(v-model="xy_scope_key" :native-value="e.key" @input="sound_play('click')")
-                | {{e.name}}
+          .box.tweet_box_container.has-text-centered(v-if="mode === 'is_mode_goal'")
+            | {{summary}}
+            TweetButton.mt-2(:body="tweet_body")
 
-          b-tabs(v-model="current_rule_index" expanded @input="sound_play('click')")
-            template(v-for="xy_rule_info in XyRuleInfo.values")
-              b-tab-item(:label="xy_rule_info.name" :value="xy_rule_info.key")
-                b-table(
-                  :data="xy_records_hash[xy_rule_info.key]"
-                  :paginated="true"
-                  :per-page="config.per_page"
-                  :current-page.sync="current_pages[current_rule_index]"
-                  :pagination-simple="false"
-                  :mobile-cards="false"
-                  :row-class="(row, index) => row.id === (xy_record && xy_record.id) && 'is-selected'"
-                  :narrowed="true"
-                  default-sort-direction="desc"
-                  )
-                  b-table-column(v-slot="props" field="rank"       label="順位"  numeric centered :width="1") {{props.row.rank}}
-                  b-table-column(v-slot="props" field="entry_name" label="名前"  sortable) {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
-                  b-table-column(v-slot="props" field="spent_sec"  label="タイム") {{time_format_from_msec(props.row.spent_sec)}}
-                  b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!curent_scope.date_visible") {{time_default_format(props.row.created_at)}}
+        XyMasterRanking(:base="base")
 
-          .has-text-centered-mobile
-            b-switch(v-model="entry_name_unique" @input="sound_play('click')") プレイヤー別順位
-
-      .columns.is-centered.chart_box_container(v-show="(mode === 'stop' || mode === 'goal')")
-        .column
-          .columns
-            template(v-if="development_p")
-              .column
-                .has-text-centered
-                  b-field.is-inline-flex
-                    b-button(@click="chart_reshow" size="is-small")
-                      | 更新
-            .column
-              .has-text-centered
-                b-field.is-inline-flex
-                  template(v-for="e in XyRuleInfo.values")
-                    b-radio-button(v-model="xy_chart_rule_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
-                      | {{e.name}}
-            .column
-              .has-text-centered
-                b-field.is-inline-flex
-                  template(v-for="e in XyChartScopeInfo.values")
-                    b-radio-button(v-model="xy_chart_scope_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
-                      | {{e.name}}
-          .columns.is-centered
-            .column.is-half
-              canvas#main_canvas(ref="main_canvas")
-              template(v-if="config.count_all_gteq > 1")
-                .has-text-centered
-                  | {{config.count_all_gteq}}回以上やるとチャートに登場します
+      XyMasterChart(:base="base" ref="XyMasterChart")
   DebugPre {{$data}}
 </template>
 
@@ -152,23 +73,30 @@ import _ from "lodash"
 import dayjs from "dayjs"
 
 import MemoryRecord from 'js-memory-record'
-import Soldier      from "shogi-player/src/soldier.js"
-import Place        from "shogi-player/src/place.js"
+import { Soldier } from "shogi-player/components/models/soldier.js"
+import { Place } from "shogi-player/components/models/place.js"
 
 import { isMobile        } from "@/components/models/isMobile.js"
 import { IntervalCounter } from '@/components/models/IntervalCounter.js'
 import { IntervalFrame   } from '@/components/models/IntervalFrame.js'
+
+import { support_parent } from "./support_parent.js"
 
 import { app_chart       } from "./app_chart.js"
 import { app_keyboard    } from "./app_keyboard.js"
 import { app_debug       } from "./app_debug.js"
 import { app_rule_dialog } from "./app_rule_dialog.js"
 
-import stopwatch_data_retention from '../Stopwatch/stopwatch_data_retention.js'
+import ls_support from "@/components/models/ls_support.js"
 
-class XyRuleInfo extends MemoryRecord {}
-class XyScopeInfo extends MemoryRecord {}
-class XyChartScopeInfo extends MemoryRecord {}
+class XyRuleInfo extends MemoryRecord {
+}
+
+class XyScopeInfo extends MemoryRecord {
+}
+
+class XyChartScopeInfo extends MemoryRecord {
+}
 
 const COUNTDOWN_INTERVAL = 0.5  // カウントダウンはN秒毎に進む
 const COUNTDOWN_MAX      = 3    // カウントダウンはNから開始する
@@ -178,7 +106,8 @@ const CONGRATS_LTEQ      = 10   // N位以内ならおめでとう
 export default {
   name: "XyMasterApp",
   mixins: [
-    stopwatch_data_retention,
+    support_parent,
+    ls_support,
     app_keyboard,
     app_debug,
     app_rule_dialog,
@@ -189,7 +118,7 @@ export default {
   },
   data() {
     return {
-      mode: "stop",
+      mode: "is_mode_stop",
       countdown_counter:  null, // カウントダウン用カウンター
       before_place:       null, // 前のセル
       current_place:      null, // 今のセル
@@ -197,7 +126,7 @@ export default {
       x_count:            null, // 不正解数
       key_queue:          null, // PCモードでの押したキー
       micro_seconds:      null, // 経過時間
-      entry_name_unique: false, // プレイヤー別順位ON/OFF
+      entry_name_uniq_p: false, // プレイヤー別順位ON/OFF
       xy_rule_key:        null, // ../../../app/models/xy_rule_info.rb のキー
       xy_scope_key:       null, // ../../../app/models/xy_scope_info.rb のキー
       entry_name:         null, // ランキングでの名前を保持しておく
@@ -208,6 +137,7 @@ export default {
       latest_rule:        null, // 最後に挑戦した最新のルール
       interval_counter: new IntervalCounter(this.countdown_func, {early: true, interval: COUNTDOWN_INTERVAL}),
       interval_frame:   new IntervalFrame(this.time_add_func),
+      touch_board_width: null, // touchデバイスでの将棋盤の幅(%)
     }
   },
 
@@ -216,14 +146,13 @@ export default {
     XyScopeInfo.memory_record_reset(this.config.xy_scope_info)
     XyChartScopeInfo.memory_record_reset(this.config.xy_chart_scope_info)
 
-    this.data_restore_from_url_or_storage()
-
+    this.ls_setup()
     this.init_other_variables()
   },
 
   mounted() {
     this.ga_click("符号の鬼")
-    this.$refs.main_sp.$refs.pure_sp.api_board_clear()
+    this.sp_object().api_board_clear()
   },
 
   beforeDestroy() {
@@ -232,22 +161,16 @@ export default {
   },
 
   watch: {
-    entry_name() { this.data_save_to_local_storage() },
-
-    current_pages: { handler() { this.data_save_to_local_storage() }, deep: true },
-
     xy_scope_key() {
       this.xy_records_hash_update()
-      this.data_save_to_local_storage()
     },
 
-    entry_name_unique() {
+    entry_name_uniq_p() {
       this.xy_records_hash_update()
     },
 
     xy_rule_key(v) {
       this.current_rule_index = this.current_rule.code
-      this.data_save_to_local_storage()
     },
 
     current_rule_index(v) {
@@ -276,13 +199,9 @@ export default {
       this.talk(`${x} ${y}`, {rate: 2.0})
     },
 
-    // こっちは Vue のほうで prevent.stop されている
-    board_cell_left_click_user_handle(place, event) {
-    },
-
     // こっちは prevent.stop されてないので自分で呼ぶ
-    board_cell_pointerdown_user_handle(place, event) {
-      if (this.mode === "run") {
+    sp_board_cell_pointerdown_user_handle(place, event) {
+      if (this.mode === "is_mode_run") {
         if (this.tap_method_p) {
           this.input_valid(place.x, place.y)
         } else {
@@ -297,9 +216,9 @@ export default {
       return true
     },
 
-    board_piece_back_user_class(place) {
+    sp_board_piece_back_user_class(place) {
       if (!this.tap_method_p) {
-        if (this.mode === "run") {
+        if (this.mode === "is_mode_run") {
         }
       }
     },
@@ -309,7 +228,7 @@ export default {
         const params = {
           xy_records_hash_fetch: true,
           xy_scope_key: this.xy_scope_key,
-          entry_name_unique: this.entry_name_unique,
+          entry_name_uniq_p: this.entry_name_uniq_p,
         }
         return this.$axios.$get("/api/xy.json", {params: params}).then(e => {
           this.xy_records_hash = e
@@ -317,37 +236,13 @@ export default {
       }
     },
 
-    persistense_variables_init() {
-      // this.xy_rule_key      = null
-      // this.xy_chart_rule_key     = null
-      this.entry_name       = null
-      this.current_pages    = null
-      this.data_restore_from_hash({})
-    },
-
-    data_restore_from_hash(e) {
-      this.xy_rule_key = e.xy_rule_key
-      if (!XyRuleInfo.lookup(this.xy_rule_key)) {
-        this.xy_rule_key = this.default_xy_rule_key
-      }
-
-      this.xy_scope_key = e.xy_scope_key
-      if (!XyScopeInfo.lookup(this.xy_scope_key)) {
-        this.xy_scope_key = "xy_scope_today"
-      }
-
-      this.xy_chart_scope_key = e.xy_chart_scope_key
-      if (!XyChartScopeInfo.lookup(this.xy_chart_scope_key)) {
-        this.xy_chart_scope_key = "chart_scope_recently"
-      }
-
-      this.xy_chart_rule_key = e.xy_chart_rule_key
-      if (!XyRuleInfo.lookup(this.xy_chart_rule_key)) {
-        this.xy_chart_rule_key = this.default_xy_rule_key
-      }
-
-      this.entry_name = this.current_user_name || e.entry_name
-      this.current_pages = e.current_pages || {}
+    var_init() {
+      this.xy_scope_key      = null
+      this.xy_rule_key       = null
+      this.xy_chart_rule_key = null
+      this.entry_name        = null
+      this.current_pages     = null
+      this.touch_board_width = null
     },
 
     init_other_variables() {
@@ -363,11 +258,11 @@ export default {
 
     start_handle() {
       this.sound_play("click")
-      this.mode = "ready"
+      this.mode = "is_mode_ready"
       this.init_other_variables()
       this.latest_rule = this.current_rule
       this.talk_stop()
-      this.$refs.main_sp.$refs.pure_sp.api_flip_set(this.current_rule.flip)
+      this.sp_object().api_viewpoint_set(this.current_rule.viewpoint)
       this.interval_counter.start()
     },
 
@@ -384,7 +279,7 @@ export default {
     },
 
     go_handle() {
-      this.mode = "run"
+      this.mode = "is_mode_run"
       this.interval_frame.start()
       this.place_next_set()
       this.sound_play("start")
@@ -393,7 +288,7 @@ export default {
 
     stop_handle() {
       this.sound_play("click")
-      this.mode = "stop"
+      this.mode = "is_mode_stop"
       this.timer_stop()
       this.interval_counter.stop()
     },
@@ -404,7 +299,7 @@ export default {
     },
 
     goal_handle() {
-      this.mode = "goal"
+      this.mode = "is_mode_goal"
       this.timer_stop()
       this.talk("おわりました")
 
@@ -436,7 +331,7 @@ export default {
       }
       const data = await this.$axios.$post("/api/xy", params)
 
-      this.entry_name_unique = false // 「プレイヤー別順位」の解除
+      this.entry_name_uniq_p = false // 「プレイヤー別順位」の解除
       this.data_update(data)         // ランキングに反映
 
       // ランク内ならランキングのページをそのページに移動する
@@ -450,7 +345,7 @@ export default {
       // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
       this.xy_chart_rule_key = this.xy_rule_key
       this.xy_chart_scope_key = "chart_scope_recently"
-      this.chart_reshow()
+      this.chart_data_get_and_show()
     },
 
     data_update(params) {
@@ -488,11 +383,11 @@ export default {
 
     timer_stop() {
       this.interval_frame.stop()
-      this.$refs.main_sp.$refs.pure_sp.api_board_clear()
+      this.sp_object().api_board_clear()
     },
 
     keydown_handle_core(e) {
-      if (this.mode != "run") {
+      if (this.mode != "is_mode_run") {
         return
       }
       if (this.tap_method_p) {
@@ -523,7 +418,7 @@ export default {
         this.sound_play("o")
         this.o_count++
         this.goal_check()
-        if (this.mode === "run") {
+        if (this.mode === "is_mode_run") {
           this.place_next_set()
         }
       } else {
@@ -564,8 +459,8 @@ export default {
       if (!this.tap_method_p) {
         const soldier = Soldier.random()
         soldier.place = Place.fetch([p.x, p.y])
-        this.$refs.main_sp.$refs.pure_sp.api_board_clear()
-        this.$refs.main_sp.$refs.pure_sp.api_place_on(soldier)
+        this.sp_object().api_board_clear()
+        this.sp_object().api_place_on(soldier)
       }
 
       this.current_place = p
@@ -582,7 +477,7 @@ export default {
     },
 
     time_format_from_msec(v) {
-      return dayjs.unix(v).format("mm:ss.SSS")
+      return dayjs.unix(v).format("m:ss.SSS")
     },
 
     time_default_format(v) {
@@ -592,15 +487,31 @@ export default {
     magic_number() {
       return dayjs().format("YYMMDDHHmm")
     },
+
+    // computed 側にすると動かなくなるので注意
+    sp_object() {
+      return this.$refs.main_sp.sp_object()
+    },
   },
 
   computed: {
-    sp_size() {
-      if (this.mode === "ready" || this.mode === "run") {
-        if (!isMobile.any()) {
-          return "large"
-        }
+    base()             { return this                             },
+    XyScopeInfo()      { return XyScopeInfo                      },
+    XyChartScopeInfo() { return XyChartScopeInfo                 },
+    XyRuleInfo()       { return XyRuleInfo                       },
+
+    component_style() {
+      return {
+        "--touch_board_width": this.touch_board_width,
       }
+    },
+
+    idol_p() {
+      return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal'
+    },
+
+    playing_p() {
+      return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready'
     },
 
     countdown() {
@@ -647,20 +558,6 @@ export default {
 
     time_over_p() {
       return this.spent_sec >= this.current_rule.time_limit
-    },
-
-    $_ls_hash() {
-      return {
-        xy_scope_key:      this.xy_scope_key,
-        xy_rule_key:       this.xy_rule_key,
-        xy_chart_rule_key: this.xy_chart_rule_key,
-        entry_name:        this.entry_name,
-        current_pages:     this.current_pages,
-      }
-    },
-
-    ls_key() {
-      return "xy_master"
     },
 
     tweet_url() {
@@ -731,8 +628,8 @@ export default {
       return this.current_rule.input_mode === "keyboard"
     },
 
-    kanji_human() {
-      if (this.mode === "run") {
+    xy_human() {
+      if (this.mode === "is_mode_run") {
         if (this.current_place) {
           const place = Place.fetch([this.current_place.x, this.current_place.y])
           return place.kanji_human
@@ -753,117 +650,86 @@ export default {
       return this.xy_record.rank_info[this.xy_scope_key].rank
     },
 
-    XyScopeInfo()      { return XyScopeInfo      },
-    XyChartScopeInfo() { return XyChartScopeInfo },
-    XyRuleInfo()       { return XyRuleInfo       },
+    //////////////////////////////////////////////////////////////////////////////// for ls_support
+    ls_storage_key() {
+      return "new_xy_master" // "xy_master" は stopwatch のライブラリを使っているためデータ構造が合わない
+    },
+    ls_default() {
+      return {
+        xy_rule_key:        this.default_xy_rule_key,
+        xy_chart_rule_key:  this.default_xy_rule_key,
+        xy_scope_key:       "xy_scope_today",
+        xy_chart_scope_key: "chart_scope_recently",
+        entry_name:         this.current_user_name,
+        current_pages:      {},
+        touch_board_width:  0.9,
+      }
+    },
+    ////////////////////////////////////////////////////////////////////////////////
   },
 }
 </script>
 
 <style lang="sass">
-$board_color: hsl(0, 0%, 60%)
+@import "./support.sass"
+
+.STAGE-development
+  .XyMasterApp
+    .column, .buttons, .CustomShogiPlayerWrap, .time_container, .xy_human_container
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .XyMasterApp
   touch-action: manipulation
 
-  .restart_button
-    position: fixed
-    top: 0
-    right: 0
+  +bulma_buttons_button_bottom_marginless
 
   .MainSection
     +mobile
-      padding: 2.0rem 0.5rem
-      &.run, &.ready
-        padding: 1.5rem 0.5rem
+      padding: $xy_common_gap 0 0
 
-  // .level_container
-  //   width: 10rem
-  //   margin: 0 auto
-  //   .title
-  //     font-size: $size-7
-  //     font-weight: normal
-  //     position: relative
-  //     top: -0.2rem
+  .DigitBoardTime
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    margin-top: $xy_common_gap
 
-  .tap_digits_container
-    margin-top: 0.8rem
-    .value
-      margin: 0 auto
-      background-color: hsl(0, 0%, 95%)
-      border-radius: 0.5rem
-      padding: 0.3rem
-      width: 5rem
-      font-weight: bold
-      font-size: 1.75rem
-  .shogi_player_container
-    position: relative
-    .countdown_wrap
-      z-index: 1
-      position: absolute
-      top: 0%
-      bottom: 0%
-      left: 0%
-      right: 0%
-      margin: auto
-      // border: 1px dotted blue
+    .xy_human_container
+      margin-bottom: $xy_board_top_bottom_gap
+      font-size: 2rem
 
-      display: flex
-      justify-content: center
-      align-items: center
-      .countdown
-        font-size: 24rem
-        color: $primary
-        -webkit-text-stroke: 1px $white
-        text-shadow: change_color($black, $alpha: 0.1) 0px 0px 8px
-    .shogi-player
-      margin-top: 1.25em
-      .font_size_base
-        // モバイルのときに画面幅に合わせて盤面を大きくする
-        +mobile
-          font-size: 6.2vmin        // このサイズでぎりぎり升目が正方形を保ったまま最大幅になる
-          // table
-          //   width: inherit      // 升目が正方形になるように戻す
+    .time_container
+      line-height: 100%
+      margin-top: $xy_board_top_bottom_gap
 
-      .current_place
-        border: 0.1em solid darken($orange, 0)
-      .piece_back
-        &:hover
-          background-color: hsl(0, 0%, 92%)
-      .board_inner
-        border: 1px solid darken($board_color, 0%)
-        background-color: $board_color
-        // 星
-        tr:nth-child(3n+4)
-          td:nth-child(3n+4)
-            &:after
-              background: darken($board_color, 20%)
+  .CustomShogiPlayerWrap
+    width: 100%
 
-  .xy_scope_info_field
-    .field
-      +mobile
-        justify-content: center
+    position: relative          // カウントダウン領域の基点にするため
 
-  .time_container
-    margin-top: 0.3rem
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+
+    .CustomShogiPlayer
+      +touch
+        width: calc(var(--touch_board_width) * 100%)
+      +desktop
+        width: calc(100vmin * 0.50)
+
+    .CustomShogiPlayer
+      --sp_board_padding: 0                  // 盤の隙間なし
+      --sp_board_color: hsla(0, 0%, 0%, 0)   // 盤の色
+      --sp_grid_outer_stroke: 2              // 外枠の太さ
+      --sp_grid_stroke: 1                    // グリッド太さ
+      --sp_grid_outer_color: hsl(0, 0%, 64%) // グリッド外枠色
+      --sp_grid_color:       hsl(0, 0%, 73%) // グリッド色
+      --sp_board_aspect_ratio: 1.0           // 盤を正方形化
+      --sp_grid_star_size: 16%               // 星の大きさ
+      --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
+
   .tweet_box_container
     margin-top: 0.75rem
-  .summary
     white-space: pre-wrap
-  .tweet_button_container
-    margin-top: 0.75rem
-  .chart_box_container
-    margin-top: 4rem
-  #main_canvas
-    margin: 0 auto
-  .navbar-item
-    img
-      max-height: none
-      width: 32px
-      height: 32px
-
-  &.run, &.ready
-    &.current_rule_input_mode-keyboard
-      .shogi-player
-        margin-top: 3rem
 </style>

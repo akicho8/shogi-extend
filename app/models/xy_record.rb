@@ -99,7 +99,7 @@ class XyRecord < ApplicationRecord
 
   def rank_info
     XyScopeInfo.inject({}) do |a, e|
-      args = {xy_scope_key: e.key, entry_name_unique: false}
+      args = {xy_scope_key: e.key, entry_name_uniq_p: false}
       a.merge(e.key => { rank: rank(args), page: ranking_page(args) })
     end
   end

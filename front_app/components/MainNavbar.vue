@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar.MainNavbar(v-bind="navbar_attrs" v-on="$listeners")
+b-navbar.MainNavbar(v-bind="component_attrs" v-on="$listeners")
   // FIXMME: これどうにかなんないの？
   template(slot="brand")
     slot(name="brand")
@@ -13,7 +13,7 @@ b-navbar.MainNavbar(v-bind="navbar_attrs" v-on="$listeners")
 export default {
   name: "MainNavbar",
   computed: {
-    navbar_attrs() {
+    component_attrs() {
       return {
         "type": "is-primary",
         "mobile-burger": false,
@@ -29,31 +29,30 @@ export default {
 <style lang="sass">
 .navbar.MainNavbar
   +touch
-    // touch以下で is-spaced の左右の padding が外れ navbar-item が画面端にくっついてしまうため少し隙間を入れる
-    padding-left: 24px
-    padding-right: 24px
-  +mobile
-    // さらにモバイル時はさらに上下の隙間がもったいないので is-spaced の上下を無効にする
-    padding-top: 0
-    padding-bottom: 0
-    // モバイルだと左右隙間が開きすぎているように見えるのでもっと端に寄せる
-    // 微調整ではなく0にしたい
-    padding-left: 12px
-    padding-right: 12px
+    padding: 0 // is-spaced を無効化
 
 .STAGE-development
   .navbar.MainNavbar
     border: 1px dashed $primary
     .navbar-item
-      border: 1px dashed $danger
-    +touch
-      background: $purple
-    +mobile
-      background: $green
-    +desktop
-      background: $blue
-    +widescreen
-      background: $danger
-    +fullhd
-      background: $turquoise
+      border: 1px dashed change_color($white, $alpha: 0.2)
+    position: relative
+    &:after
+      position: absolute
+      @extend %overlay
+      z-index: -1
+      display: flex
+      align-items: center
+      justify-content: center
+      font-size: $size-7
+      +touch
+        content: "touch"
+      +mobile
+        content: "mobile"
+      +desktop
+        content: "desktop"
+      +widescreen
+        content: "widescreen"
+      +fullhd
+        content: "fullhd"
 </style>

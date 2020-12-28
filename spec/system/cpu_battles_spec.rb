@@ -18,14 +18,13 @@ RSpec.describe "CPU対戦", type: :system do
     visit "http://localhost:4000/cpu-battle"
     first(:xpath, "//span[text()='平手']").click
     first(:xpath, "//span[text()='ルールわかってない']").click
-
-    click_on("対局開始")
+    first(:xpath, "//a[text()='対局開始']").click # click_on("対局開始") が動かないので
 
     # 1手目「79の銀を68に移動」
     first(".place_79").click
     first(".place_68").click
     doc_image("1手目")
-    expect(page).to have_content "2手" # CPUがすぐに指したため2手になっている
+    expect(page).to have_content "#2" # CPUがすぐに指したため2手になっている
 
     # 3手目「５一飛成」を指す
     if false

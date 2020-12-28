@@ -7,18 +7,16 @@
   template(v-if="base.x_mode === 'x1_think'")
     .status_line2.has-text-centered.has-text-weight-bold
       | {{base.main_time_as_string}}
-    MyShogiPlayer(
-      :run_mode="'play_mode'"
-      :kifu_body="base.current_question.init_sfen"
-      :flip_if_white="true"
-      :summary_show="false"
-      :setting_button_show="false"
-      :theme="base.config.sp_theme"
-      :size="base.config.sp_size"
-      :human_side_key="'none'"
+    CustomShogiPlayer(
+      sp_mobile_vertical="is_mobile_vertical_off"
+      sp_run_mode="play_mode"
+      :sp_body="base.current_question.init_sfen"
+      :sp_flip_if_white="true"
+      sp_summary="is_summary_off"
+      sp_human_side="none"
     )
     .wakatta_button.has-text-centered.mt-3
-      b-button.has-text-weight-bold(@click="base.answer_button_push_handle(false)" type="is-primary" size="is-large" :disabled="base.current_mi.otetuki_p(base.current_question.id)") わかった
+      b-button.has-text-weight-bold(@click="base.answer_button_push_handle(false)" type="is-primary" size="is-medium" :disabled="base.current_mi.otetuki_p(base.current_question.id)") わかった
       b-button.has-text-weight-bold(@click="base.skip_handle(false)" v-if="false") SKIP
 
   template(v-if="base.x_mode === 'x2_play'")
@@ -26,38 +24,32 @@
       | {{base.ops_rest_seconds}}
       template(v-if="base.debug_read_p")
         | ({{base.share_turn_offset}})
-    MyShogiPlayer(
+    CustomShogiPlayer(
+      sp_mobile_vertical="is_mobile_vertical_off"
       :key="`quest_${base.question_index}`"
-      :run_mode="'play_mode'"
-      :kifu_body="base.current_question.init_sfen"
-      :flip_if_white="true"
-      :summary_show="false"
-      :setting_button_show="false"
-      :human_side_key="'both'"
-      :controller_show="false"
-      :theme="base.config.sp_theme"
-      :size="base.config.sp_size"
+      sp_run_mode="play_mode"
+      :sp_body="base.current_question.init_sfen"
+      :sp_flip_if_white="true"
+      sp_summary="is_summary_off"
+      sp_human_side="both"
       @update:turn_offset="base.q_turn_offset_set"
       @update:play_mode_advanced_full_moves_sfen="base.play_mode_advanced_full_moves_sfen_set"
     )
     .mt-3.has-text-centered
-      b-button(@click="base.x2_play_timeout_handle(false)" size="is-large" :disabled="base.ops_interval_total < base.config.singleton_giveup_effective_seconds") あきらめる
+      b-button(@click="base.x2_play_timeout_handle(false)" size="is-medium" :disabled="base.ops_interval_total < base.config.singleton_giveup_effective_seconds") あきらめる
 
   template(v-if="base.x_mode === 'x3_see'")
     .status_line2.has-text-centered.has-text-weight-bold
       | 相手が操作中 ({{base.share_turn_offset}}手目)
-    MyShogiPlayer(
-      :run_mode="'play_mode'"
-      :kifu_body="base.share_sfen"
-      :flip_if_white="true"
-      :start_turn="-1"
-      :summary_show="false"
-      :setting_button_show="false"
-      :sound_effect="false"
-      :human_side_key="'none'"
-      :controller_show="false"
-      :theme="base.config.sp_theme"
-      :size="base.config.sp_size"
+    CustomShogiPlayer(
+      sp_mobile_vertical="is_mobile_vertical_off"
+      sp_run_mode="play_mode"
+      :sp_body="base.share_sfen"
+      :sp_flip_if_white="true"
+      :sp_turn="-1"
+      sp_summary="is_summary_off"
+      :sp_sound_enabled="false"
+      sp_human_side="none"
       @update:turn_offset="v => base.share_turn_offset = v"
     )
     .mt-3.has-text-centered

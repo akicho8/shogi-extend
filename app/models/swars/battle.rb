@@ -142,6 +142,15 @@ module Swars
       BattleDecorator::SwarsBattleDecorator
     end
 
+    def player_info
+      memberships.inject({}) { |a, e|
+        a.merge(e.location.key => {
+            :name  => e.user.key,
+            :class => e.judge_info.css_class,
+          })
+      }
+    end
+
     # 将棋ウォーズの形式はCSAなのでパーサーを明示すると理論上は速くなる
     def parser_class
       if kifu_body_for_test || tactic_key
@@ -337,31 +346,20 @@ module Swars
     end
 
     concerning :ViewHelper do
-      included do
-        cattr_accessor(:labels_type1) { ["自分", "相手"] }
-        cattr_accessor(:labels_type2) { ["勝ち", "負け"] }
-      end
-
       def left_right_memberships(current_swars_user)
-        flip = false
         a = memberships.to_a
         if current_swars_user
-          labels = labels_type1
-          if a.last.user == current_swars_user
-            flip = true
+          if a.last.user == current_swars_user # 対象者がいるときは対象者を左
+            a = a.reverse
           end
         else
-          labels = labels_type2
           if win_user_id
-            if a.last.judge_key == "win"
-              flip = true
+            if a.last.judge_key == "win" # 対象者がいないときは勝った方を左
+              a = a.reverse
             end
           end
         end
-        if flip
-          a = a.reverse
-        end
-        [flip, labels.zip(a)]
+        a
       end
     end
   end

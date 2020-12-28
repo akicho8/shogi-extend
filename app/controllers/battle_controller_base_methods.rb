@@ -3,7 +3,7 @@ module BattleControllerBaseMethods
 
   included do
     helper_method :current_turn
-    helper_method :current_flip
+    helper_method :current_viewpoint
   end
 
   let :current_turn do
@@ -12,9 +12,9 @@ module BattleControllerBaseMethods
     end
   end
 
-  let :current_flip do
-    if v = params[:flip].presence
-      v == "true"
+  let :current_viewpoint do
+    if v = params[:viewpoint].presence
+      v.to_sym
     end
   end
 end

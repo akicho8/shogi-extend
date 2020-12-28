@@ -17,10 +17,10 @@ Timecop.freeze("2000-01-02") do
   XyRuleInfo.redis.flushdb
   XyRuleInfo[:xy_rule1].aggregate
 
-  tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_unique: "false")
-  tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_unique: "true")
-  tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_today", entry_name_unique: "false")
-  tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_today", entry_name_unique: "true")
+  tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_uniq_p: "false")
+  tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_uniq_p: "true")
+  tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_today", entry_name_uniq_p: "false")
+  tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_today", entry_name_uniq_p: "true")
 end
 
 # >> |------+-------------------+------------+---------+-------------+---------+-----------+-------------------------------+-------------------------------+------|

@@ -173,5 +173,14 @@ class ServiceInfo
         # "ランキング上位をめざす必要はありません",
       ],
     },
+    {
+      display_p: true,
+      nuxt_link_to: {path: "/style-editor"},
+      title: "将棋盤スタイルエディタ",
+      og_image_key: "style-editor",
+      description: "将棋盤のスタイルをいじくるツール",
+      features: [
+      ],
+    },
   ]
 end

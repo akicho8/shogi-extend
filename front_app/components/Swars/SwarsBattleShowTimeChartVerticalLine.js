@@ -1,7 +1,7 @@
 // chart.js に縦線を入れる方法
 // https://stackoverflow.com/questions/30256695/chart-js-drawing-an-arbitrary-vertical-line
 
-import PaletteInfo from "@/components/models/PaletteInfo.js"
+import { PaletteInfo } from "@/components/models/PaletteInfo.js"
 
 const ChartVlinePlugin = {
   // Plugin API

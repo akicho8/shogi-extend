@@ -8,10 +8,10 @@ default: &default
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']
-  resolved_paths: [
-    "node_modules/shogi-player/src/assets",
-    "node_modules/shogi-player/src/components",
-  ]
+  # resolved_paths: [
+  #   "node_modules/shogi-player/components/models/assets",
+  #   "node_modules/shogi-player/components/models/components",
+  # ]
 
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false

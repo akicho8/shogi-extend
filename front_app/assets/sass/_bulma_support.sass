@@ -1,21 +1,40 @@
+// b-navbar(wrapper-class="container") すると +mobile のとき b-navbar-item がめり込む対策
++touch
+  .navbar > .container .navbar-menu, .container > .navbar .navbar-menu
+    // margin-right: -0.75rem
+    margin-right: 0
+  .navbar > .container .navbar-brand, .container > .navbar .navbar-brand
+    // margin-left: -0.75rem
+    margin-left: 0
+
 // .button で長押しメニュー禁止になっているので a.button の場合のみ許可する(重要)
 a
   &.button
     -webkit-touch-callout: default
 
 ////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 +mobile
   html
     font-size: 15px
 +tablet
+=======
+// +mobile
+//   html
+//     font-size: 14px
++touch
+>>>>>>> @{-1}
   html
     font-size: 15px
-+desktop
-  html
-    font-size: 16px
-+widescreen
-  html
-    font-size: 16px
-+fullhd
-  html
-    font-size: 16px
+// +tablet
+//   html
+//     font-size: 15px
+// +desktop
+//   html
+//     font-size: 16px
+// +widescreen
+//   html
+//     font-size: 16px
+// +fullhd
+//   html
+//     font-size: 16px

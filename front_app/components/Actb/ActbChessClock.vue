@@ -12,7 +12,7 @@
           p.title.is-size-1(:class="e.dom_class")
             | {{e.to_time_format}}
           p
-            b-button.mt-4(@click="e.tap_and_auto_start_handle()" size="is-large" :type="e.button_type") ボタン
+            b-button.mt-4(@click="e.tap_and_auto_start_handle()" size="is-medium" :type="e.button_type") ボタン
 
   b-message
     | 1手毎に{{chess_clock.params.every_plus}}秒加算
@@ -33,7 +33,7 @@
 
 <script>
 import { ChessClock   } from "@/components/models/ChessClock.js"
-import Location from "shogi-player/src/location.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 import { support_child } from "./support_child.js"
 

@@ -109,6 +109,8 @@ const CHART_CONFIG_DEFAULT = {
 
     // https://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
     tooltips: {
+      enabled: false,
+
       mode: "index",    // マウスに対してツールチップが出る条件
       intersect: false, // Y座標のチェックは無視する
 

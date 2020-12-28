@@ -3,7 +3,7 @@
 const CHART_TOP_PADDING_RATE = 1.0   // 評価値の上の隙間率(1.0〜1.5ぐらい1.0で無し)
 const SUGGESTED_MAX_DEFAULT = 10000  // 評価値の初期値
 
-import PaletteInfo from "@/components/models/PaletteInfo.js"
+import { PaletteInfo } from "@/components/models/PaletteInfo.js"
 
 const MainPalette = PaletteInfo.fetch("info")
 
@@ -97,7 +97,7 @@ const CHART_CONFIG_DEFAULT = {
         const datasets = chart_element._chart.config.data.datasets
         const xy_info = datasets[chart_element._datasetIndex].data[chart_element._index]
         if (__vm__.mode === "standby") {
-          __vm__.$refs.main_sp.$refs.pure_sp.api_board_turn_set(xy_info.x)
+          __vm__.$refs.main_sp.sp_object().api_board_turn_set(xy_info.x)
         }
       }
     },

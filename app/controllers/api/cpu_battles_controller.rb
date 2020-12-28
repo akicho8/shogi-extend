@@ -336,6 +336,7 @@ module Api
 
       if @mediator
         response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
+        response[:turn_offset] = @mediator.turn_info.turn_offset
       end
 
       if Rails.env.production? || Rails.env.staging?

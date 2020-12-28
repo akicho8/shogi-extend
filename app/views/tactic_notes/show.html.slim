@@ -25,17 +25,17 @@ javascript:
       = @detail_hash.to_html(table_class: "table is-fullwidth")
     ////////////////////////////////////////////////////////////////////////////////
     .column
-      shogi_player(
-        :kifu_body="'#{sample_kifu_body[:sfen]}'"
-        :start_turn="0"
-        :key_event_capture="true"
-        :slider_show="true"
-        :sfen_show="false"
-        :controller_show="true"
-        :theme="'simple'"
-        :sound_effect="true"
-        :volume="0.5"
-        )
+      // shogi_player(
+      //   :sp_body="'#{sample_kifu_body[:sfen]}'"
+      //   :sp_turn="0"
+      //   :key_event_capture="true"
+      //   :slider_show="true"
+      //   :sfen_show="false"
+      //   :controller_show="true"
+      //   :theme="'simple'"
+      //   :sp_sound_effect="true"
+      //   :sp_sound_enabled="0.5"
+      //   )
 
     ////////////////////////////////////////////////////////////////////////////////
     - if @board_table

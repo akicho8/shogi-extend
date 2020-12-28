@@ -1,5 +1,5 @@
 <template lang="pug">
-.actb.ActbQuestionShow.modal-card
+.ActbApp.ActbQuestionShow.modal-card
   .modal-card-body.box
     //- // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     PageCloseButton(@click="delete_click_handle" position="is_absolute")
@@ -53,17 +53,14 @@
         b-tab-item(:label="`${i === 0 ? '解' : ''}${i + 1}`")
 
     .sp_container
-      MyShogiPlayer(
-        :run_mode="'play_mode'"
-        :kifu_body="selected_sfen"
-        :flip_if_white="true"
-        :start_turn="-1"
-        :key_event_capture="false"
-        :slider_show="true"
-        :controller_show="true"
-        :setting_button_show="false"
-        :theme="base.config.sp_theme"
-        :size="base.config.sp_size"
+      CustomShogiPlayer(
+        sp_mobile_vertical="is_mobile_vertical_off"
+        sp_run_mode="play_mode"
+        :sp_body="selected_sfen"
+        :sp_flip_if_white="true"
+        :sp_turn="-1"
+        sp_slider="is_slider_on"
+        sp_controller="is_controller_on"
         @update:play_mode_advanced_moves="play_mode_advanced_moves_set"
         )
 
@@ -188,7 +185,7 @@ export default {
 
     tab_change_handle() {
       // this.sound_play("click")
-      this.sp_turn_slider_auto_focus()
+      this.sp_turn_slider_auto_focus() // FIXME: 動いてない
     },
 
     play_mode_advanced_moves_set(moves) {
@@ -242,8 +239,8 @@ export default {
       ].join(" ")
     },
 
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.selected_sfen, turn: -1, flip: false, game_name: this.question.title}) },
-    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.selected_sfen, turn: -1, flip: false})   },
+    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.selected_sfen, turn: -1, viewpoint: "black", game_name: this.question.title}) },
+    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.selected_sfen, turn: -1, viewpoint: "black"})   },
 
     // いまログインしている人はこの問題の投稿者か？
     current_user_is_owner_p() {

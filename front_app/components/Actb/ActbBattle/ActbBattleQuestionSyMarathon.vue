@@ -4,19 +4,16 @@
     | {{base.main_time_as_string}}
     template(v-if="base.debug_read_p")
       | ({{base.share_turn_offset}})
-  MyShogiPlayer(
+  CustomShogiPlayer(
+    sp_mobile_vertical="is_mobile_vertical_off"
     :key="`quest_${base.question_index}`"
     ref="main_sp"
-    :run_mode="'play_mode'"
-    :kifu_body="base.current_question.init_sfen"
-    :flip_if_white="true"
-    :summary_show="false"
-    :setting_button_show="false"
-    :controller_show="true"
-    :human_side_key="'both'"
-    :theme="base.config.sp_theme"
-    :size="base.config.sp_size"
-    :vlayout="false"
+    sp_run_mode="play_mode"
+    :sp_body="base.current_question.init_sfen"
+    :sp_flip_if_white="true"
+    sp_summary="is_summary_off"
+    sp_controller="is_controller_on"
+    sp_human_side="both"
     @update:turn_offset="v => base.share_turn_offset = v"
     @update:play_mode_advanced_full_moves_sfen="base.play_mode_advanced_full_moves_sfen_set"
   )

@@ -196,17 +196,17 @@ module BattleModelMod
     turn.clamp(0, turn_max)
   end
 
-  def adjust_flip(flip = nil)
-    flip.to_s == "true"
+  def adjust_viewpoint(viewpoint = nil)
+    viewpoint.presence || "black"
   end
 
   def to_twitter_card_params(params = {})
     turn = adjust_turn(params[:turn])
-    flip = adjust_flip(params[:flip])
+    viewpoint = adjust_viewpoint(params[:viewpoint])
 
     {}.tap do |e|
       e[:title]       = params[:title].presence || twitter_card_title || "#{turn}手目"
-      e[:image]       = twitter_card_image_url(turn: turn, flip: flip)
+      e[:image]       = twitter_card_image_url(turn: turn, viewpoint: viewpoint)
       e[:description] = params[:description].presence || twitter_card_description
     end
   end
@@ -221,9 +221,8 @@ module BattleModelMod
 
   def twitter_card_image_url(options = {})
     turn = adjust_turn(options[:turn])
-    flip = adjust_flip(options[:flip])
-
-    Rails.application.routes.url_helpers.polymorphic_url(self, {format: "png", turn: turn, flip: flip})
+    viewpoint = adjust_viewpoint(options[:viewpoint])
+    Rails.application.routes.url_helpers.polymorphic_url(self, {format: "png", turn: turn, viewpoint: viewpoint})
   end
 
   def battle_decorator(params = {})
@@ -238,16 +237,18 @@ module BattleModelMod
   def battle_decorator_class
   end
 
-  def player_info
-    decorator = mini_battle_decorator
-    Bioshogi::Location.inject({}) { |a, e|
-      name = decorator.player_name_for(e.key)
-      if name
-        name = name[0...3]
-      end
-      a.merge(e.key => {name: name})
-    }
-  end
+  # def player_info
+  #   decorator = mini_battle_decorator
+  #   Bioshogi::Location.inject({}) { |a, e|
+  #     name = decorator.player_name_for(e.key)
+  #     if false
+  #       if name
+  #         name = name[0...3]
+  #       end
+  #     end
+  #     a.merge(e.key => {name: name, :class => "has-text-weight-normal"})
+  #   }
+  # end
 
   # FIXME: self に依存させないようにして全部 KifuParser に委譲すること
   concerning :KifuConvertMethods do

@@ -1,6 +1,6 @@
 // 汎用コード
 
-import SfenParser from "shogi-player/src/sfen_parser"
+import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 
 const strip_tags = require('striptags')
 
@@ -214,15 +214,27 @@ export default {
       window.open(url, "_blank", opts)
     },
 
-    kento_full_url({sfen, turn}) {
+    kento_full_url({sfen, turn, viewpoint}) {
       this.__assert__(sfen, "sfen is blank")
+
       const info = SfenParser.parse(sfen)
       const url = new URL("https://www.kento-shogi.com")
+
+      // initpos は position sfen と moves がない初期局面の sfen
       url.searchParams.set("initpos", info.init_sfen_strip)
-      if (info.attributes.moves) {
-        url.searchParams.set("moves", info.attributes.moves.replace(/\s+/g, "."))
+
+      // 視点も対応してくれるかもしれないので入れとく
+      url.searchParams.set("viewpoint", viewpoint)
+
+      // moves は別のパラメータでスペースを . に置き換えている(KENTOの独自の工夫)
+      const { moves } = info.attributes
+      if (moves) {
+        url.searchParams.set("moves", moves.replace(/\s+/g, "."))
       }
+
+      // #n が手数
       url.hash = turn
+
       return url.toString()
     },
 

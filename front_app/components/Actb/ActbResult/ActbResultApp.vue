@@ -33,7 +33,7 @@
 
   .saisen_suru_container.mt-4
     .buttons.is-centered
-      b-button.has-text-weight-bold(:disabled="!all_active_p" @click="base.battle_continue_handle(false)" :type="button_push_by_self_p ? 'is-primary' : ''" type="is-large") 再戦
+      b-button.has-text-weight-bold(:disabled="!all_active_p" @click="base.battle_continue_handle(false)" :type="button_push_by_self_p ? 'is-primary' : ''" type="is-medium") 再戦
 
   ActbRoomMessage.mt-5
 

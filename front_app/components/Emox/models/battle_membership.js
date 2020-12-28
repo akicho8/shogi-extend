@@ -1,4 +1,4 @@
-import Location from "shogi-player/src/location.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 export class BattleMembership {
   constructor(battle_membership) {

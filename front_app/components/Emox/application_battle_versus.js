@@ -1,5 +1,5 @@
 import { ChessClock   } from "@/components/models/ChessClock.js"
-import Location from "shogi-player/src/location.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 export const application_battle_versus = {
   data() {
@@ -19,6 +19,10 @@ export const application_battle_versus = {
         this.chess_clock.timer_stop()
         this.chess_clock = null
       }
+    },
+
+    membership_clock_time_format(membership) {
+      return this.chess_clock.single_clocks[membership.position].to_time_format
     },
 
     vs_func_init() {

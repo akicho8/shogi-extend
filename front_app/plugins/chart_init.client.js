@@ -1,4 +1,4 @@
-import PaletteInfo from "@/components/models/PaletteInfo.js"
+import { PaletteInfo } from "@/components/models/PaletteInfo.js"
 window.PaletteInfo = PaletteInfo
 
 import Chart from "chart.js"
@@ -8,8 +8,12 @@ window.Chart = Chart
 // http://wordpress.ideacompo.com/?p=12888
 Chart.plugins.register({
   beforeDraw(c) {
+    let color = "rgb(255, 255, 255)"
+    if (c.config.my_custom_background_color) {
+      color = c.config.my_custom_background_color
+    }
     const ctx = c.chart.ctx
-    ctx.fillStyle = "rgba(255, 255, 255, 1)"
+    ctx.fillStyle = color
     ctx.fillRect(0, 0, c.chart.width, c.chart.height)
   }
 })
@@ -50,4 +54,4 @@ Chart.defaults.global.elements.point.borderColor     = function(context) { retur
 // https://www.chartjs.org/docs/latest/configuration/elements.html#rectangle-configuration
 Chart.defaults.global.elements.rectangle.backgroundColor = function(context) { return color_select(context, 0.3) }
 Chart.defaults.global.elements.rectangle.borderColor     = function(context) { return color_select(context, 1.0) }
-Chart.defaults.global.elements.rectangle.borderWidth     = 1
+Chart.defaults.global.elements.rectangle.borderWidth     = 0

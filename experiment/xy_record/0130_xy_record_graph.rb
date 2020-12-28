@@ -17,10 +17,10 @@ require File.expand_path('../../../config/environment', __FILE__)
 #   XyRuleInfo.redis.flushdb
 #   XyRuleInfo[:xy_rule1].aggregate
 #
-#   tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_unique: "false")
-#   tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_unique: "true")
-#   tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_today", entry_name_unique: "false")
-#   tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_today", entry_name_unique: "true")
+#   tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_uniq_p: "false")
+#   tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_all", entry_name_uniq_p: "true")
+#   tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_today", entry_name_uniq_p: "false")
+#   tp XyRuleInfo[:xy_rule1].xy_records(xy_scope_key: "xy_scope_today", entry_name_uniq_p: "true")
 # end
 
 # tp XyRecord.select("*").where(entry_name: "きなこもち").where(xy_rule_key: "xy_rule100").group("date(created_at)")

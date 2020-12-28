@@ -136,19 +136,15 @@
           //- <p class="image is-64x64">
           //-   <img src="/static/img/placeholder-128x128.png">
           //- </p>
-          MyShogiPlayer(
-            :run_mode="'view_mode'"
-            :kifu_body="props.row.init_sfen"
-            :flip_if_white="true"
-            :start_turn="0"
-            :summary_show="false"
-            :slider_show="false"
-            :controller_show="false"
-            :setting_button_show="false"
-            :theme="'simple'"
-            :size="'default'"
-            :sound_effect="false"
-            :operation_disable="true"
+          CustomShogiPlayer(
+            sp_mobile_vertical="is_mobile_vertical_off"
+            sp_run_mode="view_mode"
+            :sp_body="props.row.init_sfen"
+            :sp_flip_if_white="true"
+            :sp_turn="0"
+            sp_summary="is_summary_off"
+            :sp_sound_enabled="false"
+            :sp_op_disabled="true"
             )
         .media-content
           .content
@@ -337,7 +333,7 @@ export default {
           // 行が上下が広がってしまうのを防ぐ
           height: auto
 
-    // モバイルでは MyShogiPlayer を横幅最大にしたいので横のパディングを取る
+    // モバイルでは CustomShogiPlayer を横幅最大にしたいので横のパディングを取る
     +mobile
       .detail
         td, .detail-container

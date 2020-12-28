@@ -5,7 +5,7 @@
 # ogp
 # ogp -e production
 
-URESINORYU = "body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_view_point=self"
+URESINORYU = "body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&abstract_viewpoint=self"
 
 LIST_ALL = [
   { url: "/users/1",                                                                 validations: { "title" => /さん/,                                                                                                                                      }},
@@ -17,7 +17,7 @@ LIST_ALL = [
   { url: "/swars/search?query=Yamada_Taro",                                          validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
   { url: "/swars/users/Yamada_Taro/",                                                validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
   { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/",                     validations: { "og:image" => /Yamada_Taro.*png.*turn/                                                                                                                                                                }},
-  { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&flip=false", validations: { "og:image" => /Yamada_Taro.*png.*turn=100/,                                                                                                                                                                }},
+  { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&viewpoint=black", validations: { "og:image" => /Yamada_Taro.*png.*turn=100/,                                                                                                                                                                }},
   { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet",         validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
   { url: "/swars/users/Yamada_Taro/direct-open/kento",                               validations: { "title" => /KENTO/, "mombile_icon" => /kento/,                                                                                                                          }},
   { url: "/swars/users/Yamada_Taro/direct-open/piyo_shogi",                          validations: { "title" => /ぴよ/,  "mombile_icon" => /piyo_shogi/,                                                                                                                     }},
@@ -37,6 +37,7 @@ LIST_ALL = [
   { url: "/stopwatch",                                                               validations: { "title" => /ストップウォッチ/,                                                                                                                                  }},
   { url: "/cpu-battle",                                                              validations: { "title" => /対戦/,                                                                                                                                              }},
   { url: "/training",                                                                validations: { "title" => /トレーニング/,                                                                                                                                      }},
+  { url: "/style-editor",                                                            validations: { "title" => /スタイルエディタ/,                                                                                                                                   }},
 ]
 
 require "bundler/setup"
@@ -176,7 +177,7 @@ end
 # >> http://localhost:4000/swars/search?query=Yamada_Taro
 # >> http://localhost:4000/swars/users/Yamada_Taro/
 # >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/
-# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&flip=false
+# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&viewpoint=black
 # >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet
 # >> http://localhost:4000/swars/users/Yamada_Taro/direct-open/kento
 # >> http://localhost:4000/swars/users/Yamada_Taro/direct-open/piyo_shogi
@@ -192,7 +193,7 @@ end
 # >> http://localhost:4000/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0
 # >> http://localhost:4000/adapter
 # >> http://localhost:4000/share-board
-# >> http://localhost:4000/share-board?body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&image_view_point=self
+# >> http://localhost:4000/share-board?body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&abstract_viewpoint=self
 # >> http://localhost:4000/stopwatch
 # >> http://localhost:4000/cpu-battle
 # >> http://localhost:4000/actb

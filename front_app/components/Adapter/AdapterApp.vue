@@ -8,6 +8,7 @@
       b-menu
         b-menu-list(label="Action")
           b-menu-item(@click="share_board_open_handle" label="共有将棋盤に転送")
+          b-menu-item(@click="style_editor_open_handle" label="スタイルエディタに転送")
 
         b-menu-list(label="Export")
           b-menu-item(@click="kifu_paper_handle" label="棋譜用紙 (PDF)")
@@ -191,7 +192,7 @@ export default {
       this.sidebar_p = !this.sidebar_p
     },
 
-    //////////////////////////////////////////////////////////////////////////////// open_handle 3種
+    //////////////////////////////////////////////////////////////////////////////// open_handle 4種
     piyo_shogi_open_handle() {
       this.record_fetch(() => this.app_open(this.piyo_shogi_app_with_params_url))
     },
@@ -206,8 +207,18 @@ export default {
           query: {
             body: this.record.all_kifs.sfen,
             turn: this.fixed_turn,
-            image_view_point: "black",
+            abstract_viewpoint: "black",
             // title: "共有将棋盤 (棋譜変換後の確認)",
+          },
+        })
+      })
+    },
+    style_editor_open_handle() {
+      this.record_fetch(() => {
+        this.$router.push({
+          name: "style-editor",
+          query: {
+            body: this.record.all_kifs.sfen,
           },
         })
       })
@@ -377,7 +388,7 @@ export default {
           path: this.show_path,
           sfen: this.record.sfen_body,
           turn: this.fixed_turn,
-          flip: this.record.flip,
+          viewpoint: this.record.viewpoint,
         })
       }
     },
@@ -387,7 +398,7 @@ export default {
         return this.kento_full_url({
           sfen: this.record.sfen_body,
           turn: this.fixed_turn,
-          flip: this.record.flip,
+          viewpoint: this.record.viewpoint,
         })
       }
     },

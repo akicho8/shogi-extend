@@ -6,7 +6,7 @@ b-button.TweetButton.has-text-weight-bold(
   :type="type"
   icon-left="twitter"
   @click="click_handle"
-  rounded)
+  :rounded="false")
   slot
 </template>
 

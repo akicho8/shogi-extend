@@ -1,4 +1,4 @@
-import { HeadGenerator } from "@/components/models/HeadGenerator.js"
+import { HeadGenerator } from "@/components/models/head_generator.js"
 
 export default {
   head() {

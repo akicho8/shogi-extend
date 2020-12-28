@@ -5,9 +5,9 @@ client-only
       p 手数: {{turn_offset}} / {{turn_offset_max}}
       p SFEN: {{current_sfen}}
       p タイトル: {{current_title}}
-      p 視点: {{image_view_point}}
-      p モード: {{run_mode}}
-      p 反転: {{board_flip}}
+      p 視点: {{abstract_viewpoint}}
+      p モード: {{sp_run_mode}}
+      p 視点: {{sp_viewpoint}}
       p URL: {{current_url}}
       p サイドバー {{sidebar_p}}
 
@@ -15,13 +15,14 @@ client-only
       .mx-5.my-5
         b-menu-list(label="Action")
           b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
-          b-menu-item(label="視点設定" @click="image_view_point_setting_handle")
+          b-menu-item(label="視点設定" @click="abstract_viewpoint_setting_handle")
           b-menu-item(label="盤面リセット" @click="reset_handle")
         b-menu-list(label="Edit")
+          b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.sp_run_mode === 'edit_mode'}")
           b-menu-item(label="タイトル変更" @click="title_edit")
-          b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.run_mode === 'edit_mode'}")
           b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
         b-menu-list(label="Export")
+          b-menu-item(label="局面URLコピー" @click="current_url_copy_handle")
           b-menu-item(label="KIF コピー" @click="kifu_copy_handle('kif')")
           b-menu-item(label="KIF ダウンロード" :href="kif_download_url" @click="sound_play('click')")
           b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="shift_jis_kif_download_url" @click="sound_play('click')")
@@ -31,20 +32,34 @@ client-only
           b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
           b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
 
+    //- b-navbar(type="is-dark" wrapper-class="container")
+    //-   template(slot="start")
+    //-     NavbarItemHome
+    //-     b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
+    //-   template(slot="end")
+    //-     b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
+    //-       b-icon(icon="menu")
+
     MainNavbar
       template(slot="brand")
         NavbarItemHome
-        b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
+        b-navbar-item.has-text-weight-bold(@click="title_edit")
+          | {{current_title}}
+          span.mx-1(v-if="sp_run_mode === 'play_mode'") \#{{turn_offset}}
       template(slot="end")
-        b-navbar-item(@click="sidebar_toggle" v-if="run_mode === 'play_mode'")
+        b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
+          b-icon(icon="twitter" type="is-white")
+        b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
+          | 編集完了
+        b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="menu")
 
-        //- template(v-if="run_mode === 'play_mode'")
+        //- template(v-if="sp_run_mode === 'play_mode'")
         //-   b-navbar-item(@click="reset_handle") 盤面リセット
         //-   b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
         //-   b-navbar-item(@click="kifu_copy_handle('kif')") 棋譜コピー
         //-   b-navbar-item(@click="mode_toggle_handle") 局面編集
-        //-   b-navbar-item(@click="image_view_point_setting_handle") 視点設定
+        //-   b-navbar-item(@click="abstract_viewpoint_setting_handle") 視点設定
         //-   b-navbar-dropdown(hoverable arrowless right label="その他")
         //-     b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
         //-     b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
@@ -52,39 +67,37 @@ client-only
         //-     b-navbar-item(:href="kif_download_url" @click="sound_play('click')") 棋譜ダウンロード
         //-     b-navbar-item(@click="title_edit") タイトル編集
         //-     b-navbar-item(@click="kifu_copy_handle('sfen')") SFENコピー
-        //-     template(v-if="run_mode === 'play_mode'")
+        //-     template(v-if="sp_run_mode === 'play_mode'")
         //-       b-navbar-item(@click="room_code_edit")
         //-         | リアルタイム共有
         //-         .has-text-danger.ml-1(v-if="room_code") {{room_code}}
 
-    MainNavbar(type="is-dark" fixed-bottom v-if="development_p")
+    b-navbar(type="is-dark" fixed-bottom v-if="development_p")
       template(slot="start")
         b-navbar-item(@click="reset_handle") 盤面リセット
 
-    MainSection
+    MainSection.is_mobile_padding_zero
       .container
-        .columns
-          .column.is_shogi_player
-            .turn_container.has-text-centered(v-if="run_mode === 'play_mode'")
+        .columns.is-centered
+          .column.is-8-tablet.is-5-desktop
+            .turn_container.has-text-centered(v-if="sp_run_mode === 'play_mode' && false")
               span.turn_offset.has-text-weight-bold {{turn_offset}}
               template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
                 span.mx-1.has-text-grey /
                 span.has-text-grey {{turn_offset_max}}
 
-            MyShogiPlayer.mt-3(
-              :run_mode="run_mode"
-              :debug_mode="false"
-              :start_turn="turn_offset"
-              :kifu_body="current_sfen"
-              :summary_show="false"
-              :slider_show="true"
-              :setting_button_show="development_p"
-              :size="'large'"
-              :sound_effect="true"
-              :controller_show="true"
-              :human_side_key="'both'"
-              :theme="'real'"
-              :flip.sync="board_flip"
+            // sp_bg_variant="is_bg_variant_a"
+            CustomShogiPlayer(
+              :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
+              :sp_run_mode="sp_run_mode"
+              :sp_turn="turn_offset"
+              :sp_body="current_sfen"
+              :sp_sound_enabled="true"
+              :sp_viewpoint.sync="sp_viewpoint"
+              sp_summary="is_summary_off"
+              sp_slider="is_slider_on"
+              sp_controller="is_controller_on"
+              sp_human_side="both"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
               @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
@@ -92,15 +105,15 @@ client-only
               @update:turn_offset_max="v => turn_offset_max = v"
             )
 
-            .buttons.is-centered.mt-5
-              TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="run_mode === 'play_mode'")
-              b-button(@click="mode_toggle_handle" v-if="run_mode === 'edit_mode'") 編集完了
+            .buttons.is-centered.mt-4
+              TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="sp_run_mode === 'play_mode'")
+              //- b-button(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'") 編集完了
 
             .room_code.is-clickable(@click="room_code_edit" v-if="false")
               | {{room_code}}
 
         .columns(v-if="development_p")
-          .column
+          .column.is-clipped
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
             .block
@@ -121,18 +134,18 @@ const RUN_MODE_DEFAULT = "play_mode"
 
 import _ from "lodash"
 
-import { support } from "./support.js"
+import { support_parent } from "./support_parent.js"
 
 import { app_room      } from "./app_room.js"
 import { app_room_init } from "./app_room_init.js"
 
-import ImageViewPointSettingModal from "./ImageViewPointSettingModal.vue"
+import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.vue"
 import AnySourceReadModal         from "@/components/AnySourceReadModal.vue"
 
 export default {
   name: "ShareBoardApp",
   mixins: [
-    support,
+    support_parent,
     app_room,
     app_room_init,
   ],
@@ -147,17 +160,17 @@ export default {
   data() {
     return {
       // watch して url に反映するもの
-      current_sfen:     this.config.record.sfen_body,        // 渡している棋譜
-      current_title:    this.config.record.title,            // 現在のタイトル
-      turn_offset:      this.config.record.initial_turn,     // 現在の手数
-      image_view_point: this.config.record.image_view_point, // Twitter画像の向き
+      current_sfen:        this.config.record.sfen_body,           // 渡している棋譜
+      current_title:       this.config.record.title,               // 現在のタイトル
+      turn_offset:         this.config.record.initial_turn,        // 現在の手数
+      abstract_viewpoint: this.config.record.abstract_viewpoint, // Twitter画像の向き
 
       // urlには反映しない
-      board_flip: this.config.record.board_flip,       // 反転用
+      sp_viewpoint: this.config.record.board_viewpoint,       // 反転用
       turn_offset_max: null,                         // 最後の手数
 
       record: this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
-      run_mode: this.defval(this.$route.query.run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
+      sp_run_mode: this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       edit_mode_sfen: null,     // 局面編集モードの局面
 
       sidebar_p: false,
@@ -166,12 +179,12 @@ export default {
   mounted() {
     // どれかが変更されたらURLを更新
     this.$watch(() => [
-      this.run_mode,
+      this.sp_run_mode,
       this.current_sfen,
       this.edit_mode_sfen,      // 編集モード中でもURLを変更したいため
       this.turn_offset,
       this.current_title,
-      this.image_view_point,
+      this.abstract_viewpoint,
       this.room_code,
     ], () => {
       // 両方エラーになってしまう
@@ -209,7 +222,7 @@ export default {
     // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
     edit_mode_snapshot_sfen_set(v) {
-      if (this.run_mode === "edit_mode") { // 操作モードでも呼ばれるから
+      if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから
         this.edit_mode_sfen = v
       }
     },
@@ -220,29 +233,40 @@ export default {
       this.general_kifu_copy(this.current_body, {to_format: fomrat})
     },
 
+    // 局面URLコピー
+    current_url_copy_handle() {
+      this.sound_play("click")
+      this.clipboard_copy({text: this.current_url})
+    },
+
     // ツイートする
     // tweet_handle() {
     //   this.tweet_window_popup({url: this.current_url, text: this.tweet_hash_tag})
     // },
+
+    tweet_handle() {
+      this.sound_play("click")
+      this.tweet_window_popup({text: this.tweet_body})
+    },
 
     // 操作←→編集 切り替え
     mode_toggle_handle() {
       this.sidebar_p = false
       this.sound_play("click")
 
-      if (this.run_mode === "play_mode") {
-        if (this.image_view_point === "self") {
+      if (this.sp_run_mode === "play_mode") {
+        if (this.abstract_viewpoint === "self") {
           this.toast_ok(`
 局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、
-詰将棋を公開する場合は<b>視点設定</b>を<b>常に☗(先手)</b>に変更することおすすめします`, {duration: 1000 * 10})
+詰将棋を公開する場合は視点設定を先手固定に変更するのがおすすめです`, {duration: 1000 * 10})
         }
 
-        this.run_mode = "edit_mode"
+        this.sp_run_mode = "edit_mode"
         if (true) {
-          this.board_flip = false // ▲視点にしておく(お好み)
+          this.sp_viewpoint = "black" // ▲視点にしておく(お好み)
         }
       } else {
-        this.run_mode = "play_mode"
+        this.sp_run_mode = "play_mode"
 
         // 局面編集から操作モードに戻した瞬間に局面編集モードでの局面を反映しURLを更新する
         // 局面編集モードでの変化をそのまま current_sfen に反映しない理由は駒箱の駒が消えるため
@@ -308,23 +332,23 @@ export default {
     },
 
     // 視点設定変更
-    image_view_point_setting_handle() {
+    abstract_viewpoint_setting_handle() {
       this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
-        component: ImageViewPointSettingModal,
+        component: AbstractViewpointKeySelectModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
         animation: "",
         props: {
-          image_view_point: this.image_view_point,
+          abstract_viewpoint: this.abstract_viewpoint,
           permalink_for: this.permalink_for,
         },
         onCancel: () => this.sound_play("click"),
         events: {
-          "update:image_view_point": v => {
-            this.image_view_point = v
+          "update:abstract_viewpoint": v => {
+            this.abstract_viewpoint = v
           }
         },
       })
@@ -350,7 +374,7 @@ export default {
                 this.toast_ok("正常に読み込みました")
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max
-                this.board_flip = false
+                this.sp_viewpoint = "black"
               }
             })
           },
@@ -367,7 +391,7 @@ export default {
         url = new URL(this.$config.MY_SITE_URL + `/share-board`)
       }
 
-      // ImageViewPointSettingModal から新しい image_view_point が渡されるので params で上書きすること
+      // AbstractViewpointKeySelectModal から新しい abstract_viewpoint が渡されるので params で上書きすること
       params = {
         ...this.current_url_params,
         ...params,
@@ -401,10 +425,10 @@ export default {
 
     current_url_params() {
       const params = {
-        body:             this.current_body, // 編集モードでもURLを更新するため
-        turn:             this.turn_offset,
-        title:            this.current_title,
-        image_view_point: this.image_view_point,
+        body:         this.current_body, // 編集モードでもURLを更新するため
+        turn:         this.turn_offset,
+        title:        this.current_title,
+        abstract_viewpoint: this.abstract_viewpoint,
       }
 
       if (this.room_code) {
@@ -412,8 +436,8 @@ export default {
       }
 
       // 編集モードでの状態を維持したいのでURLに含めておく
-      if (this.run_mode !== "play_mode") {
-        params["run_mode"] = this.run_mode
+      if (this.sp_run_mode !== "play_mode") {
+        params["sp_run_mode"] = this.sp_run_mode
       }
 
       return params
@@ -423,7 +447,7 @@ export default {
     current_url()                { return this.permalink_for()                                                                        },
     json_debug_url()             { return this.permalink_for({format: "json"})                                                        },
     twitter_card_url()           { return this.permalink_for({format: "png"})                                                         },
-    snapshot_image_url()         { return this.permalink_for({format: "png", image_flip: this.board_flip, disposition: "attachment"}) },
+    snapshot_image_url()         { return this.permalink_for({format: "png", image_viewpoint: this.sp_viewpoint, disposition: "attachment"}) }, // abstract_viewpoint より image_viewpoint の方が優先される
     kif_download_url()           { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
     shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"})                              },
 
@@ -433,7 +457,7 @@ export default {
         path: this.current_url,
         sfen: this.current_sfen,
         turn: this.turn_offset,
-        flip: this.board_flip,
+        viewpoint: this.sp_viewpoint,
         game_name: this.current_title,
       })
     },
@@ -442,7 +466,7 @@ export default {
       return this.kento_full_url({
         sfen: this.current_sfen,
         turn: this.turn_offset,
-        flip: this.board_flip,
+        viewpoint: this.sp_viewpoint,
       })
     },
 
@@ -469,6 +493,16 @@ export default {
 </script>
 
 <style lang="sass">
+@import "./support.sass"
+
+.STAGE-development
+  .ShareBoardApp
+    .CustomShogiPlayer
+    .ShogiPlayerGround
+    .ShogiPlayerWidth
+    .Membership
+      border: 1px dashed change_color($success, $alpha: 0.5)
+
 .ShareBoardApp-Sidebar
   .sidebar-content
     width: unset
@@ -477,16 +511,10 @@ export default {
     margin-top: 2em
 
 .ShareBoardApp
-  +mobile
-    .MainSection
-      padding-top: 2rem
-      padding-left: 0.5rem
-      padding-right: 0.5rem
-      padding-bottom: 0
-    .column
-      padding: 0
-      margin: 1.25rem
-      &.is_shogi_player
-        padding: 0
-        margin:  0
+  .MainSection.section
+    +mobile
+      padding: 0.75rem 0 0
+
+  .EditToolBlock
+    margin-top: 12px
 </style>
