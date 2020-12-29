@@ -5,7 +5,7 @@ class Refactor2 < ActiveRecord::Migration[6.0]
     end
     XyMaster::TimeRecord.reset_column_information
     XyMaster::TimeRecord.find_each do |e|
-      e.rule_key = e.read_attribute(:rule_key).sub(/xy_/, "")
+      e.write_attribute(:rule_key, e.read_attribute(:rule_key).sub(/xy_/, ""))
       e.save!
     end
   end
