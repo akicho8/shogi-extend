@@ -1175,6 +1175,20 @@ ActiveRecord::Schema.define(version: 2020_12_29_110304) do
     t.index ["user_id"], name: "index_xy_master_time_records_on_user_id"
   end
 
+  create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "entry_name", null: false
+    t.string "summary"
+    t.string "xy_rule_key", null: false
+    t.integer "x_count", null: false
+    t.float "spent_sec", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entry_name"], name: "index_xy_records_on_entry_name"
+    t.index ["user_id"], name: "index_xy_records_on_user_id"
+    t.index ["xy_rule_key"], name: "index_xy_records_on_xy_rule_key"
+  end
+
   add_foreign_key "actb_bad_marks", "actb_questions", column: "question_id"
   add_foreign_key "actb_bad_marks", "users"
   add_foreign_key "actb_battle_memberships", "actb_battles", column: "battle_id"
