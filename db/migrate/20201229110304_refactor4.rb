@@ -7,8 +7,10 @@ class Refactor4 < ActiveRecord::Migration[6.0]
     XyMaster::Rule.setup
 
     XyMaster::TimeRecord.find_each do |e|
-      e.rule_id = XyMaster::Rule.fetch(e.rule_key).id
-      e.save!(validate: false, touch: false)
+      if v = e.read_attribute(:rule_key)
+        e.rule_id = XyMaster::Rule.fetch(v).id
+        e.save!(validate: false, touch: false)
+      end
     end
 
     change_table :xy_master_time_records do |t|
