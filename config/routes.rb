@@ -153,6 +153,10 @@ Rails.application.routes.draw do
       resources :time_records, only: [:index, :create, :update]
     end
 
+    namespace :ts_master, format: "json" do
+      resources :time_records, only: [:index, :create, :update]
+    end
+
     resource :talk, only: [:show, :create]
     resources :service_infos, only: :index
     resources :users

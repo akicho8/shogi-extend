@@ -27,6 +27,18 @@ class ServiceInfo
     },
     {
       display_p: true,
+      nuxt_link_to: {path: "/checkmate"},
+      title: "符号の鬼",
+      og_image_key: "checkmate",
+      description: "符号マスター養成所",
+      features: [
+        "タップするルールはスマホ用",
+        "100問正解するまでの時間を競う",
+        "1分半切ったら卒業",
+      ],
+    },
+    {
+      display_p: true,
       nuxt_link_to: {path: "/adapter"},
       title: "なんでも棋譜変換",
       og_image_key: "adapter",

@@ -21,7 +21,7 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-class CreateTimeRecords < ActiveRecord::Migration[5.1]
+class CreateXyMaster < ActiveRecord::Migration[5.1]
   def change
     create_table :time_records, force: true do |t|
       t.belongs_to :user,    null: true
