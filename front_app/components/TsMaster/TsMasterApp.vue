@@ -38,7 +38,7 @@
             b-button(@click="rule_dialog_show" icon-right="help")
 
           .DigitBoardTime.is-unselectable
-            .vector_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p")
+            .vector_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p && false")
               template(v-if="mode === 'is_mode_ready'")
                 | ？？
               template(v-if="mode === 'is_mode_run'")
@@ -48,16 +48,20 @@
               TsMasterCountdown(:base="base")
               CustomShogiPlayer(
                 ref="main_sp"
-                sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
+                :sp_body="current_sp_body"
+                sp_run_mode="play_mode"
+                :sp_turn="0"
                 sp_summary="is_summary_off"
                 :sp_hidden_if_piece_stand_blank="true"
                 :sp_viewpoint="current_rule.viewpoint"
-                :sp_board_piece_back_user_class="sp_board_piece_back_user_class"
-                :sp_board_cell_pointerdown_user_handle="sp_board_cell_pointerdown_user_handle"
+                sp_controller="is_controller_on"
               )
 
-            .time_container.fixed_font.is-size-3
+            .time_container.fixed_font.is-size-3(v-if="false")
               | {{time_format}}
+
+            .buttons.mt-4
+              b-button(@click="next_button" size="is-medium") NEXT
 
           TsMasterSlider(:base="base")
 
@@ -124,7 +128,7 @@ export default {
       mode: "is_mode_stop",
       countdown_counter:  null, // カウントダウン用カウンター
       before_place:       null, // 前のセル
-      current_place:      null, // 今のセル
+      current_sp_body:      null, // 今のセル
       o_count:            null, // 正解数
       x_count:            null, // 不正解数
       key_queue:          null, // PCモードでの押したキー
@@ -140,7 +144,6 @@ export default {
       latest_rule:        null, // 最後に挑戦した最新のルール
       interval_counter: new IntervalCounter(this.countdown_func, {early: true, interval: COUNTDOWN_INTERVAL}),
       interval_frame:   new IntervalFrame(this.time_add_func),
-      touch_board_width: null, // touchデバイスでの将棋盤の幅(%)
     }
   },
 
@@ -196,34 +199,17 @@ export default {
   },
 
   methods: {
-    place_talk(place) {
-      const x = DIMENSION - place.x
-      const y = place.y + 1
-      this.talk(`${x} ${y}`, {rate: 2.0})
-    },
-
-    // こっちは prevent.stop されてないので自分で呼ぶ
-    sp_board_cell_pointerdown_user_handle(place, event) {
+    next_button() {
+      this.sound_play("o")
+      this.o_count++
+      this.goal_check()
       if (this.mode === "is_mode_run") {
-        if (this.tap_method_p) {
-          this.input_valid(place.x, place.y)
-        } else {
-          this.place_talk(place)
-        }
-      } else {
-        this.place_talk(place)
+        this.place_next_set()
       }
-      // ダブルタップによる拡大禁止の意味でこれを入れたが効果はなかったけど一応そのまま入れとこう
-      event.preventDefault()
-      event.stopPropagation()
-      return true
-    },
-
-    sp_board_piece_back_user_class(place) {
-      if (!this.tap_method_p) {
-        if (this.mode === "is_mode_run") {
-        }
-      }
+      // } else {
+      //   this.x_count++
+      //   this.sound_play("x")
+      // }
     },
 
     time_records_hash_update() {
@@ -240,19 +226,18 @@ export default {
     },
 
     var_init() {
-      this.scope_key      = null
-      this.rule_key       = null
-      this.chart_rule_key = null
+      this.scope_key         = null
+      this.rule_key          = null
+      this.chart_rule_key    = null
       this.entry_name        = null
       this.current_pages     = null
-      this.touch_board_width = null
     },
 
     init_other_variables() {
       this.countdown_counter = 0
       this.micro_seconds = 0
       this.before_place = null
-      this.current_place = null
+      this.current_sp_body = null
       this.o_count = 0
       this.x_count = 0
       this.key_queue = []
@@ -389,47 +374,6 @@ export default {
       this.sp_object().api_board_clear()
     },
 
-    keydown_handle_core(e) {
-      if (this.mode != "is_mode_run") {
-        return
-      }
-      if (this.tap_method_p) {
-        if (!this.development_p) {
-          return
-        }
-      }
-
-      if (e.key === "Escape") {
-        this.key_queue = []
-        e.preventDefault()
-        return
-      }
-      if (e.key.match(/^\d/)) {
-        this.key_queue.push(e.key)
-        if (this.key_queue.length >= 2) {
-          const x = parseInt(this.key_queue.shift())
-          const y = parseInt(this.key_queue.shift())
-          this.input_valid(DIMENSION - x, y - 1)
-        }
-        e.preventDefault()
-        return
-      }
-    },
-
-    input_valid(x, y) {
-      if (this.active_p(x, y)) {
-        this.sound_play("o")
-        this.o_count++
-        this.goal_check()
-        if (this.mode === "is_mode_run") {
-          this.place_next_set()
-        }
-      } else {
-        this.x_count++
-        this.sound_play("x")
-      }
-    },
-
     goal_check() {
       if (this.count_rest <= 0) {
         this.goal_handle()
@@ -438,40 +382,12 @@ export default {
     },
 
     place_next_set() {
-      this.before_place = this.current_place
-
-      let p = null
-      if (true) {
-        while (true) {
-          p = {x: this.place_random(), y: this.place_random()}
-          if ((this.o_count === 0 && (DIMENSION - 1 - p.x) === p.y)) {
-            continue
-          }
-          if (this.before_place) {
-            if (_.isEqual(this.before_place, p)) {
-              continue
-            }
-          }
-          break
-        }
-      }
-      if (false) {
-        p = {x: this.place_random(), y: _.sample([5,6])}
-      }
-
-      if (!this.tap_method_p) {
-        const soldier = Soldier.random()
-        soldier.place = Place.fetch([p.x, p.y])
-        this.sp_object().api_board_clear()
-        this.sp_object().api_place_on(soldier)
-      }
-
-      this.current_place = p
+      this.current_sp_body = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 8c8d 7g7f 7a6b 5g5f 8d8e 8h7g 5c5d 2h5h 6b5c 7i6h 5a4b 5i4h 3a3b 4h3h 4c4d 5f5e 3b4c 5e5d 4c5d 6h5g 5d6e 5g5f 6e7f 5f5e 7f6g+ P*5d 5c6b 5h5f 6g7g 8i7g B*3d 5f6f P*5b 6i7i 8b8d 5e4d 8d7d P*7h 7d5d S*4c 3d4c 4d4c+ 4b4c B*7f 5b5c 7i6h 4c3b 6h5h P*4c 7f5d 5c5d 8g8f B*7i 8f8e P*8b 6f8f 7i3e+ 8e8d S*7b 8f8i 3e4e P*6g 7c7d 9g9f 4e5f 8i8f 5f5e 9f9e 5e6d 8f8i 7d7e 7g8e 5d5e 8e9c+ 8a9c 9e9d P*9h 9i9h 6d6e 8i8f 6e9h 9d9c+ 9a9c R*9a 9h6e 9a9c+ 5e5f 5h4h L*9b 9c8b P*8a N*7g 6e7d 8b9a S*8b 9a8b 8a8b S*6e 7d9f 8f5f 9f7h 7g8e 7h6g P*7c 7b8a P*9c 6c6d P*6h 6g8e 9c9b+ 8a9b 7c7b+ 6a7b 6e5d N*4b 5d5c+ P*5d 5c6b 7b6b L*2f R*6i L*2e N*3a 5f4f S*3d 3g3f 6b5c 2i3g 4c4d 4f5f 2c2d 2e2d P*2c 3f3e 3d3e 2d2c+ 3a2c 2f2c+ 3b2c P*3f 3e2d 5f5i 6i6h+ 1g1f L*3d N*2h 4d4e 5i5h 6h7g 2g2f 1c1d 2f2e 2d1c 3g4e 5c4d S*4f P*2f 4e5c+ L*4e 4f5g 8e7d P*6e 7d6e P*5f 5d5e 4h3g 5e5f 5g4h P*4f 3g4f 4e4f"
     },
 
     active_p(x, y) {
-      if (this.current_place) {
-        return _.isEqual(this.current_place, {x: x, y: y})
+      if (this.current_sp_body) {
+        return _.isEqual(this.current_sp_body, {x: x, y: y})
       }
     },
 
@@ -505,7 +421,6 @@ export default {
 
     component_style() {
       return {
-        "--touch_board_width": this.touch_board_width,
       }
     },
 
@@ -633,27 +548,6 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    kanji_human() {
-      if (this.current_place_info) {
-        return this.current_place_info.kanji_human
-      }
-    },
-
-    current_place_info() {
-      if (this.current_place_xy) {
-        return Place.fetch(this.current_place_xy)
-      }
-    },
-
-    current_place_xy() {
-      if (this.current_place) {
-        const { x, y } = this.current_place
-        return [x, y]
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
     default_rule_key() {
       if (isMobile.any()) {
         return "rule100t"
@@ -678,7 +572,6 @@ export default {
         chart_scope_key: "chart_scope_recently",
         entry_name:         this.current_entry_name,
         current_pages:      {},
-        touch_board_width:  0.9,
       }
     },
     ////////////////////////////////////////////////////////////////////////////////
@@ -730,20 +623,20 @@ export default {
 
     .CustomShogiPlayer
       +touch
-        width: calc(var(--touch_board_width) * 100%)
+        width: 100%
       +desktop
         width: calc(100vmin * 0.50)
 
     .CustomShogiPlayer
-      --sp_board_padding: 0                  // 盤の隙間なし
-      --sp_board_color: hsla(0, 0%, 0%, 0)   // 盤の色
-      --sp_grid_outer_stroke: 2              // 外枠の太さ
-      --sp_grid_stroke: 1                    // グリッド太さ
-      --sp_grid_outer_color: hsl(0, 0%, 64%) // グリッド外枠色
-      --sp_grid_color:       hsl(0, 0%, 73%) // グリッド色
-      --sp_board_aspect_ratio: 1.0           // 盤を正方形化
-      --sp_grid_star_size: 16%               // 星の大きさ
-      --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
+      // --sp_board_padding: 0                  // 盤の隙間なし
+      // --sp_board_color: hsla(0, 0%, 0%, 0)   // 盤の色
+      // --sp_grid_outer_stroke: 2              // 外枠の太さ
+      // --sp_grid_stroke: 1                    // グリッド太さ
+      // --sp_grid_outer_color: hsl(0, 0%, 64%) // グリッド外枠色
+      // --sp_grid_color:       hsl(0, 0%, 73%) // グリッド色
+      // --sp_board_aspect_ratio: 1.0           // 盤を正方形化
+      // --sp_grid_star_size: 16%               // 星の大きさ
+      // --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
 
   .tweet_box_container
     margin-top: 0.75rem
