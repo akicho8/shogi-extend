@@ -15,6 +15,6 @@
 
 module Actb
   class SourceAbout < ApplicationRecord
-    include StaticMod
+    include MemoryRecordBind
   end
 end

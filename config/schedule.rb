@@ -20,7 +20,7 @@ every("5 3 * * *") do
     # "Swars::Crawler::RegularCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
 
-    "XyRecord.entry_name_blank_scope.destroy_all",
+    "TimeRecord.entry_name_blank_scope.destroy_all",
     "Swars::Battle.old_record_destroy",
     "FreeBattle.old_record_destroy",
 

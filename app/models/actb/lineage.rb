@@ -15,7 +15,7 @@
 
 module Actb
   class Lineage < ApplicationRecord
-    include StaticMod
+    include MemoryRecordBind
 
     has_many :questions, dependent: :destroy
   end

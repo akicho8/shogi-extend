@@ -15,7 +15,7 @@
 
 module Actb
   class Final < ApplicationRecord
-    include StaticMod
+    include MemoryRecordBind
 
     has_many :battles, dependent: :destroy
 

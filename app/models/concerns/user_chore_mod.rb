@@ -3,7 +3,7 @@ module UserChoreMod
 
   class_methods do
     def ghost_destroy_all
-      ids = XyRecord.all.pluck("user_id").uniq
+      ids = TimeRecord.all.pluck("user_id").uniq
       s = User.all
       s = s.where.not(id: ids)
       s = s.where(["email like ?", "%@localhost%"])

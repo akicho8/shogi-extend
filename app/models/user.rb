@@ -41,7 +41,7 @@ class User < ApplicationRecord
   include UserTagMod
   include UserRaceMod
   include UserFreeBattleMod
-  include UserXyRerordMod
+  include UserXyMasterMod
   include UserStaffMod
   include UserChoreMod
   include ::Actb::UserMod

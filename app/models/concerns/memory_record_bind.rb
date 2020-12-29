@@ -8,12 +8,13 @@
 #   end
 #
 #   class Rule < ApplicationRecord
-#     include StaticMod
+#     include MemoryRecordBind
 #   end
 #
+#   Rule.setup
 #
 
-module StaticMod
+module MemoryRecordBind
   extend ActiveSupport::Concern
   included do
     cattr_accessor(:pure_class) { "#{name}Info".constantize }

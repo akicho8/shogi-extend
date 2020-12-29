@@ -9,7 +9,7 @@ task :create_montage do
   end
 end
 
-# rake db_sync TABLES=xy_records
+# rake db_sync TABLES=time_records
 desc "本番サーバーの production の DB をローカルの development にコピーする (オプション: TABLES=t1,t2,t3)"
 task :db_sync do
   Rake::Task[:production_db_backup_to_local].invoke

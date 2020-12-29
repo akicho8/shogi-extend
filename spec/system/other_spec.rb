@@ -8,7 +8,7 @@ RSpec.describe "その他", type: :system do
   end
 
   it "符号の鬼" do
-    XyRecord.setup
+    XyMaster.setup
     visit "http://localhost:4000/xy"
     expect(page).to have_content "符号の鬼"
     doc_image

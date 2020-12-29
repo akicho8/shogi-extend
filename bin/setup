@@ -27,8 +27,8 @@ chdir APP_ROOT do
   #   cp 'config/database.yml.sample', 'config/database.yml'
   # end
 
-  system! "rm -fr front_app/node_modules"
-  system! "cd front_app && yarn"
+  # system! "rm -fr front_app/node_modules"
+  # system! "cd front_app && yarn"
 
   system! "rm -fr public/system"
   system! 'rails dev:cache'
@@ -57,9 +57,9 @@ chdir APP_ROOT do
   # system! "cap production mail_log:download"
   # system! "cap production rails:log:download"
 
-  puts "\n== xy_record redis clear =="
-  system! 'rails r XyRecord.delete_all'
-  system! 'rails r XyRuleInfo.redis.flushdb'
+  puts "\n== time_record redis clear =="
+  system! 'rails r TimeRecord.delete_all'
+  system! 'rails r RuleInfo.redis.flushdb'
 
   puts "\n== Restarting application server =="
   system! 'rails restart'

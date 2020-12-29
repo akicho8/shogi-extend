@@ -149,9 +149,12 @@ Rails.application.routes.draw do
       post :record_create
     end
 
+    namespace :xy_master, format: "json" do
+      resources :time_records, only: [:index, :create, :update]
+    end
+
     resource :talk, only: [:show, :create]
     resources :service_infos, only: :index
-    resources :xy_records, path: "xy", only: [:index, :create, :update]
     resources :users
     resource :cpu_battle, only: [:show, :create]
     resource :share_board, only: [:show, :create]

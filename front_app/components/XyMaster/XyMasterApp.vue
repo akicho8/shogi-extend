@@ -28,21 +28,21 @@
           .buttons.is-centered.mb-0(v-if="idol_p")
             b-button(@click="start_handle" type="is-primary") START
 
-            b-dropdown.is-pulled-left(v-model="xy_rule_key" @click.native="sound_play('click')")
+            b-dropdown.is-pulled-left(v-model="rule_key" @click.native="sound_play('click')")
               button.button(slot="trigger")
                 span {{current_rule.name}}
                 b-icon(icon="menu-down")
-              template(v-for="e in XyRuleInfo.values")
+              template(v-for="e in RuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
 
             b-button(@click="rule_dialog_show" icon-right="help")
 
           .DigitBoardTime.is-unselectable
-            .xy_human_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p")
+            .vector_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p")
               template(v-if="mode === 'is_mode_ready'")
                 | ？？
               template(v-if="mode === 'is_mode_run'")
-                | {{xy_human}}
+                | {{kanji_human}}
 
             .CustomShogiPlayerWrap
               XyMasterCountdown(:base="base")
@@ -92,13 +92,13 @@ import { app_rule_dialog } from "./app_rule_dialog.js"
 
 import ls_support from "@/components/models/ls_support.js"
 
-class XyRuleInfo extends MemoryRecord {
+class RuleInfo extends MemoryRecord {
 }
 
-class XyScopeInfo extends MemoryRecord {
+class ScopeInfo extends MemoryRecord {
 }
 
-class XyChartScopeInfo extends MemoryRecord {
+class ChartScopeInfo extends MemoryRecord {
 }
 
 const COUNTDOWN_INTERVAL = 0.5  // カウントダウンはN秒毎に進む
@@ -130,12 +130,12 @@ export default {
       key_queue:          null, // PCモードでの押したキー
       micro_seconds:      null, // 経過時間
       entry_name_uniq_p: false, // プレイヤー別順位ON/OFF
-      xy_rule_key:        null, // ../../../app/models/xy_rule_info.rb のキー
-      xy_scope_key:       null, // ../../../app/models/xy_scope_info.rb のキー
+      rule_key:        null, // ../../../app/models/rule_info.rb のキー
+      scope_key:       null, // ../../../app/models/scope_info.rb のキー
       entry_name:         null, // ランキングでの名前を保持しておく
       current_rule_index: null, // b-tabs 連動用
-      xy_records_hash:    null, // 複数のルールでそれぞれにランキング情報も入っている
-      xy_record:          null, // ゲームが終わたっときにランクなどが入っている
+      time_records_hash:    null, // 複数のルールでそれぞれにランキング情報も入っている
+      time_record:          null, // ゲームが終わたっときにランクなどが入っている
       current_pages:      null, // b-table のページ
       latest_rule:        null, // 最後に挑戦した最新のルール
       interval_counter: new IntervalCounter(this.countdown_func, {early: true, interval: COUNTDOWN_INTERVAL}),
@@ -145,9 +145,9 @@ export default {
   },
 
   created() {
-    XyRuleInfo.memory_record_reset(this.config.xy_rule_info)
-    XyScopeInfo.memory_record_reset(this.config.xy_scope_info)
-    XyChartScopeInfo.memory_record_reset(this.config.xy_chart_scope_info)
+    RuleInfo.memory_record_reset(this.config.rule_info)
+    ScopeInfo.memory_record_reset(this.config.scope_info)
+    ChartScopeInfo.memory_record_reset(this.config.chart_scope_info)
 
     this.ls_setup()
     this.init_other_variables()
@@ -164,15 +164,15 @@ export default {
   },
 
   watch: {
-    xy_scope_key() {
-      this.xy_records_hash_update()
+    scope_key() {
+      this.time_records_hash_update()
     },
 
     entry_name_uniq_p() {
-      this.xy_records_hash_update()
+      this.time_records_hash_update()
     },
 
-    xy_rule_key(v) {
+    rule_key(v) {
       this.current_rule_index = this.current_rule.code
     },
 
@@ -184,7 +184,7 @@ export default {
       }
 
       // タブインデックスからルールのキーを求めてプルダウンの方にも反映する
-      this.xy_rule_key = XyRuleInfo.fetch(v).key
+      this.rule_key = RuleInfo.fetch(v).key
     },
 
     spent_sec() {
@@ -226,23 +226,23 @@ export default {
       }
     },
 
-    xy_records_hash_update() {
-      if (this.xy_scope_key) {
+    time_records_hash_update() {
+      if (this.scope_key) {
         const params = {
-          xy_records_hash_fetch: true,
-          xy_scope_key: this.xy_scope_key,
+          time_records_hash_fetch: true,
+          scope_key: this.scope_key,
           entry_name_uniq_p: this.entry_name_uniq_p,
         }
-        return this.$axios.$get("/api/xy.json", {params: params}).then(e => {
-          this.xy_records_hash = e
+        return this.$axios.$get("/api/xy_master/time_records.json", {params: params}).then(e => {
+          this.time_records_hash = e
         })
       }
     },
 
     var_init() {
-      this.xy_scope_key      = null
-      this.xy_rule_key       = null
-      this.xy_chart_rule_key = null
+      this.scope_key      = null
+      this.rule_key       = null
+      this.chart_rule_key = null
       this.entry_name        = null
       this.current_pages     = null
       this.touch_board_width = null
@@ -256,7 +256,7 @@ export default {
       this.o_count = 0
       this.x_count = 0
       this.key_queue = []
-      this.xy_record = null
+      this.time_record = null
     },
 
     start_handle() {
@@ -306,8 +306,8 @@ export default {
       this.timer_stop()
       this.talk("おわりました")
 
-      if (this.current_user_name) {
-        this.entry_name = this.current_user_name
+      if (this.current_entry_name) {
+        this.entry_name = this.current_entry_name
         this.record_post()
       } else {
         this.$buefy.dialog.prompt({
@@ -329,46 +329,46 @@ export default {
     // 名前を確定してからサーバーに保存する
     async record_post() {
       const params = {
-        xy_scope_key: this.xy_scope_key,
-        xy_record:    this.post_params,
+        scope_key: this.scope_key,
+        time_record:    this.post_params,
       }
-      const data = await this.$axios.$post("/api/xy", params)
+      const data = await this.$axios.$post("/api/xy_master/time_records", params)
 
       this.entry_name_uniq_p = false // 「プレイヤー別順位」の解除
       this.data_update(data)         // ランキングに反映
 
       // ランク内ならランキングのページをそのページに移動する
       if (this.current_rank <= this.config.rank_max) {
-        this.$set(this.current_pages, this.current_rule_index, this.xy_record.rank_info[this.xy_scope_key].page)
+        this.$set(this.current_pages, this.current_rule_index, this.time_record.rank_info[this.scope_key].page)
       }
 
       // おめでとう
       this.congrats_talk()
 
       // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
-      this.xy_chart_rule_key = this.xy_rule_key
-      this.xy_chart_scope_key = "chart_scope_recently"
+      this.chart_rule_key = this.rule_key
+      this.chart_scope_key = "chart_scope_recently"
       this.chart_data_get_and_show()
     },
 
     data_update(params) {
-      const xy_rule_info = XyRuleInfo.fetch(params.xy_record.xy_rule_key)
-      this.$set(this.xy_records_hash, xy_rule_info.key, params.xy_records)
-      this.xy_record = params.xy_record
+      const rule_info = RuleInfo.fetch(params.time_record.rule_key)
+      this.$set(this.time_records_hash, rule_info.key, params.time_records)
+      this.time_record = params.time_record
     },
 
     congrats_talk() {
       let message = ""
       if (this.entry_name) {
         message += `${this.entry_name}さん`
-        if (this.xy_record.rank_info.xy_scope_today.rank <= CONGRATS_LTEQ) {
+        if (this.time_record.rank_info.scope_today.rank <= CONGRATS_LTEQ) {
           message += `おめでとうございます。`
         }
-        if (this.xy_record.best_update_info) {
-          message += `自己ベストを${this.xy_record.best_update_info.updated_spent_sec}秒更新しました。`
+        if (this.time_record.best_update_info) {
+          message += `自己ベストを${this.time_record.best_update_info.updated_spent_sec}秒更新しました。`
         }
-        const t_r = this.xy_record.rank_info.xy_scope_today.rank
-        const a_r = this.xy_record.rank_info.xy_scope_all.rank
+        const t_r = this.time_record.rank_info.scope_today.rank
+        const a_r = this.time_record.rank_info.scope_all.rank
         message += `本日${t_r}位です。`
         message += `全体で`
         if (t_r === a_r) {
@@ -499,9 +499,9 @@ export default {
 
   computed: {
     base()             { return this                             },
-    XyScopeInfo()      { return XyScopeInfo                      },
-    XyChartScopeInfo() { return XyChartScopeInfo                 },
-    XyRuleInfo()       { return XyRuleInfo                       },
+    ScopeInfo()      { return ScopeInfo                      },
+    ChartScopeInfo() { return ChartScopeInfo                 },
+    RuleInfo()       { return RuleInfo                       },
 
     component_style() {
       return {
@@ -526,14 +526,14 @@ export default {
       if (this.latest_rule) {
         out += `ルール: ${this.latest_rule.name}\n`
       }
-      if (this.xy_record) {
-        out += `本日: ${this.xy_record.rank_info.xy_scope_today.rank}位\n`
-        out += `全体: ${this.xy_record.rank_info.xy_scope_all.rank}位\n`
+      if (this.time_record) {
+        out += `本日: ${this.time_record.rank_info.scope_today.rank}位\n`
+        out += `全体: ${this.time_record.rank_info.scope_all.rank}位\n`
       }
       out += `タイム: ${this.time_format}`
-      if (this.xy_record) {
-        if (this.xy_record.best_update_info) {
-          out += ` (${this.xy_record.best_update_info.updated_spent_sec}秒更新)`
+      if (this.time_record) {
+        if (this.time_record.best_update_info) {
+          out += ` (${this.time_record.best_update_info.updated_spent_sec}秒更新)`
         }
       }
       out += `\n`
@@ -547,7 +547,7 @@ export default {
 
     post_params() {
       return [
-        "xy_rule_key",
+        "rule_key",
         "spent_sec",
         "entry_name",
         "x_count",              // なくてもよい
@@ -609,18 +609,18 @@ export default {
     },
 
     // ログインしているとユーザー名がわかる
-    current_user_name() {
+    current_entry_name() {
       if (this.g_current_user) {
         return this.g_current_user.name
       }
     },
 
     curent_scope() {
-      return XyScopeInfo.fetch(this.xy_scope_key)
+      return ScopeInfo.fetch(this.scope_key)
     },
 
     current_rule() {
-      return XyRuleInfo.fetch(this.xy_rule_key)
+      return RuleInfo.fetch(this.rule_key)
     },
 
     tap_method_p() {
@@ -633,7 +633,7 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    xy_human() {
+    kanji_human() {
       if (this.current_place_info) {
         return this.current_place_info.kanji_human
       }
@@ -654,29 +654,34 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    default_xy_rule_key() {
+    default_rule_key() {
       if (isMobile.any()) {
-        return "xy_rule100t"
+        return "rule100t"
       } else {
-        return "xy_rule100"
+        return "rule100"
       }
     },
 
     current_rank() {
-      return this.xy_record.rank_info[this.xy_scope_key].rank
+      return this.time_record.rank_info[this.scope_key].rank
     },
 
     //////////////////////////////////////////////////////////////////////////////// for ls_support
+    // |------------------+----------------------------------------|
+    // | "xy_master"      | stopwatch のライブラリを使っていたころ |
+    // | "new_xy_master"  | xy プレフィクスついていたころ          |
+    // | "new_xy_master2" | xy プレフィクスついてない現状          |
+    // |------------------+----------------------------------------|
     ls_storage_key() {
-      return "new_xy_master" // "xy_master" は stopwatch のライブラリを使っているためデータ構造が合わない
+      return "new_xy_master2"
     },
     ls_default() {
       return {
-        xy_rule_key:        this.default_xy_rule_key,
-        xy_chart_rule_key:  this.default_xy_rule_key,
-        xy_scope_key:       "xy_scope_today",
-        xy_chart_scope_key: "chart_scope_recently",
-        entry_name:         this.current_user_name,
+        rule_key:        this.default_rule_key,
+        chart_rule_key:  this.default_rule_key,
+        scope_key:       "scope_today",
+        chart_scope_key: "chart_scope_recently",
+        entry_name:         this.current_entry_name,
         current_pages:      {},
         touch_board_width:  0.9,
       }
@@ -691,7 +696,7 @@ export default {
 
 .STAGE-development
   .XyMasterApp
-    .column, .buttons, .CustomShogiPlayerWrap, .time_container, .xy_human_container
+    .column, .buttons, .CustomShogiPlayerWrap, .time_container, .vector_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .XyMasterApp
@@ -701,22 +706,22 @@ export default {
 
   .MainSection
     +mobile
-      padding: $xy_common_gap 0 0
+      padding: $xym_common_gap 0 0
 
   .DigitBoardTime
     display: flex
     justify-content: center
     align-items: center
     flex-direction: column
-    margin-top: $xy_common_gap
+    margin-top: $xym_common_gap
 
-    .xy_human_container
-      margin-bottom: $xy_board_top_bottom_gap
+    .vector_container
+      margin-bottom: $xym_board_top_bottom_gap
       font-size: 2rem
 
     .time_container
       line-height: 100%
-      margin-top: $xy_board_top_bottom_gap
+      margin-top: $xym_board_top_bottom_gap
 
   .CustomShogiPlayerWrap
     width: 100%

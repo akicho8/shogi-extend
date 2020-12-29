@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Skill (actb_skills as Actb::Skill)
+# Rule (emox_rules as Emox::Rule)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
 # | name       | desc               | type        | opts        | refs | index |
@@ -13,8 +13,8 @@
 # | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
 # |------------+--------------------+-------------+-------------+------+-------|
 
-module Actb
-  class Skill < ApplicationRecord
+module XyMaster
+  class Rule < ApplicationRecord
     include MemoryRecordBind
   end
 end

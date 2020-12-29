@@ -15,7 +15,7 @@
 
 module Actb
   class Judge < ApplicationRecord
-    include StaticMod
+    include MemoryRecordBind
 
     scope :win_or_lose, -> { where(key: [:win, :lose]) }
 

@@ -1,0 +1,12 @@
+class Refactor2 < ActiveRecord::Migration[6.0]
+  def change
+    change_table :xy_master_time_records do |t|
+      t.rename :xy_rule_key, :rule_key
+    end
+    XyMaster::TimeRecord.reset_column_information
+    XyMaster::TimeRecord.find_each do |e|
+      e.rule_key = e.rule_key.sub(/xy_/, "")
+      e.save!
+    end
+  end
+end

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Xy record (xy_records as XyRecord)
+# Xy record (time_records as ::XyMaster::TimeRecord)
 #
 # |-------------+-------------+-------------+-------------+--------------+-------|
 # | name        | desc        | type        | opts        | refs         | index |
@@ -10,7 +10,7 @@
 # | user_id     | User        | integer(8)  |             | => ::User#id | A     |
 # | entry_name  | Entry name  | string(255) | NOT NULL    |              | B     |
 # | summary     | Summary     | string(255) |             |              |       |
-# | xy_rule_key | Xy rule key | string(255) | NOT NULL    |              | C     |
+# | rule_key | Xy rule key | string(255) | NOT NULL    |              | C     |
 # | x_count     | X count     | integer(4)  | NOT NULL    |              |       |
 # | spent_sec   | Spent sec   | float(24)   | NOT NULL    |              |       |
 # | created_at  | 作成日時    | datetime    | NOT NULL    |              |       |
@@ -21,16 +21,9 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-class CreateXyRecords < ActiveRecord::Migration[5.1]
-  def change
-    create_table :xy_records, force: true do |t|
-      t.belongs_to :user,    null: true
-      t.string :entry_name,  null: false, index: true
-      t.string :summary,     null: true
-      t.string :xy_rule_key, null: false, index: true
-      t.integer :x_count,    null: false
-      t.float :spent_sec,    null: false
-      t.timestamps           null: false
+module Api
+  module XyMaster
+    class ApplicationController < ::Api::ApplicationController
     end
   end
 end

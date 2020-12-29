@@ -11,14 +11,14 @@
       .column
         .has-text-centered
           b-field.is-inline-flex
-            template(v-for="e in base.XyRuleInfo.values")
-              b-radio-button(v-model="base.xy_chart_rule_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+            template(v-for="e in base.RuleInfo.values")
+              b-radio-button(v-model="base.chart_rule_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
                 | {{e.name}}
       .column
         .has-text-centered
           b-field.is-inline-flex
-            template(v-for="e in base.XyChartScopeInfo.values")
-              b-radio-button(v-model="base.xy_chart_scope_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+            template(v-for="e in base.ChartScopeInfo.values")
+              b-radio-button(v-model="base.chart_scope_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
                 | {{e.name}}
     .columns.is-centered
       .column.is-half
@@ -171,7 +171,7 @@ export default {
 
 .XyMasterChart
   .chart_box_container
-    margin-top: $xy_common_gap
+    margin-top: $xym_common_gap
 
   #main_canvas
     margin: 0 auto

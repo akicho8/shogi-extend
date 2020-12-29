@@ -23,8 +23,8 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   Swars::Grade,
   Swars::Battle,
   User,
-  XyRuleInfo,
-  XyRecord,
+  RuleInfo,
+  TimeRecord,
   Tsl,
 ].each do |e|
   e.setup
