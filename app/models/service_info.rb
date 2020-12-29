@@ -26,9 +26,9 @@ class ServiceInfo
       ],
     },
     {
-      display_p: true,
+      display_p: !Rails.env.production?,
       nuxt_link_to: {path: "/checkmate"},
-      title: "符号の鬼",
+      title: "詰将棋道場『一期一会』",
       og_image_key: "checkmate",
       description: "符号マスター養成所",
       features: [

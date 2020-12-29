@@ -1,5 +1,5 @@
 <template lang="pug">
-.TsMasterChart.columns.is-centered(v-show="base.idol_p")
+.TsMasterChart.columns.is-centered(v-show="base.is_mode_idol")
   .column.chart_box_container
     .columns
       template(v-if="development_p")
@@ -171,7 +171,7 @@ export default {
 
 .TsMasterChart
   .chart_box_container
-    margin-top: $xym_common_gap
+    margin-top: $ts_master_common_gap
 
   #main_canvas
     margin: 0 auto

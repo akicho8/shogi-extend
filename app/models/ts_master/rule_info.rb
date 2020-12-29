@@ -3,18 +3,16 @@
 # XyRecord.where.not(xy_rule_key: ["xy_rule100t","xy_rule100tw","xy_rule100","xy_rule100w"]).destroy_all
 # RuleInfo.rebuild
 
+# rails r 'TsMaster::Rule.destroy_all; TsMaster::Rule.setup; tp TsMaster::Rule'
 module TsMaster
   class RuleInfo
     include ApplicationMemoryRecord
     memory_record [
-      # { key: "rule1",     name: "1問",      o_count_max:   1, viewpoint: :black, input_mode: "keyboard", },
-      # { key: "rule10",    name: "10問",     o_count_max:  10, viewpoint: :black, input_mode: "keyboard", },
-      # { key: "rule30",    name: "30問",     o_count_max:  30, viewpoint: :black, input_mode: "keyboard", },
-
-      { key: "rule100t",  name: "☗100問TAP", o_count_max: 100, viewpoint: :black,  input_mode: "tap",      time_limit: 60*5, },
-      { key: "rule100tw", name: "☖100問TAP", o_count_max: 100, viewpoint: :white,  input_mode: "tap",      time_limit: 60*5, },
-      { key: "rule100",   name: "☗100問",    o_count_max: 100, viewpoint: :black,  input_mode: "keyboard", time_limit: 60*5, },
-      { key: "rule100w",  name: "☖100問",    o_count_max: 100, viewpoint: :white,  input_mode: "keyboard", time_limit: 60*5, },
+      { key: :rule_mate3_type1,  name: "3手詰",   mate:  3, o_count_max:  50, time_limit: nil, },
+      { key: :rule_mate5_type1,  name: "5手詰",   mate:  5, o_count_max:  25, time_limit: nil, },
+      { key: :rule_mate7_type1,  name: "7手詰",   mate:  7, o_count_max:  10, time_limit: nil, },
+      { key: :rule_mate9_type1,  name: "9手詰",   mate:  9, o_count_max:   5, time_limit: nil, },
+      { key: :rule_mate11_type1, name: "11手詰",  mate: 11, o_count_max:   1, time_limit: nil, },
     ]
 
     cattr_accessor(:rank_max) { (Rails.env.production? || Rails.env.staging?) ? 100 : 100 }  # 位まで表示
@@ -78,6 +76,17 @@ module TsMaster
       def redis
         @redis ||= Redis.new(db: AppConfig[:redis_db_for_ts_master])
       end
+    end
+
+    def stock_sample
+      Stock.sample(mate: mate, max: o_count_max)
+    end
+
+    def o_count_max
+      if Rails.env.in?(["development", "test"])
+        return 3
+      end
+      super
     end
 
     # 実際のスコア(のもとの時間)は TimeRecord が持っているので取り出さない
@@ -260,7 +269,7 @@ module TsMaster
             }
           }.compact
 
-          # v = TimeRecord.select("date(created_at) as created_on, min(spent_sec) as spent_sec").where(entry_name: "きなこもち").where(rule_key: "rule100").group("date(created_at)")
+          # v = TimeRecord.select("date(created_at) as created_on, min(spent_sec) as spent_sec").where(entry_name: "きなこもち").where(rule_key: "rule_mate7_type1").group("date(created_at)")
           # v = v.collect { |e| {x: e.created_on, y: e.spent_sec } }
           # puts v.to_json
           # # >> [{"x":"2019-08-10","y":171.772},{"x":"2019-08-11","y":161.548},{"x":"2019-08-12","y":157.918},{"x":"2019-08-13","y":146.687},{"x":"2019-08-14","y":142.752},{"x":"2019-08-15","y":139.364},{"x":"2019-08-16","y":133.889},{"x":"2019-08-17","y":130.848},{"x":"2019-08-18","y":130.095},{"x":"2019-08-19","y":123.119},{"x":"2019-08-20","y":131.65},{"x":"2019-08-21","y":120.522},{"x":"2019-08-22","y":118.307},{"x":"2019-08-23","y":114.063},{"x":"2019-08-24","y":113.073},{"x":"2019-08-25","y":109.149},{"x":"2019-08-26","y":108.687},{"x":"2019-08-27","y":110.269},{"x":"2019-08-28","y":104.478},{"x":"2019-08-29","y":105.316},{"x":"2019-08-30","y":105.476},{"x":"2019-08-31","y":103.375},{"x":"2019-09-01","y":105.116},{"x":"2019-09-02","y":100.815},{"x":"2019-09-03","y":100.654},{"x":"2019-09-04","y":98.631},{"x":"2019-09-05","y":97.019},{"x":"2019-09-06","y":99.751},{"x":"2019-09-07","y":99.185},{"x":"2019-09-08","y":103.74},{"x":"2019-09-09","y":97.968},{"x":"2019-09-10","y":95.1},{"x":"2019-09-11","y":94.568},{"x":"2019-09-12","y":94.953},{"x":"2019-09-13","y":92.09},{"x":"2019-09-14","y":89.048},{"x":"2019-09-15","y":89.181},{"x":"2019-09-16","y":93.073},{"x":"2019-09-17","y":89.913},{"x":"2019-09-18","y":86.798},{"x":"2019-09-19","y":83.755},{"x":"2019-09-20","y":86.758},{"x":"2019-09-21","y":86.481},{"x":"2019-09-22","y":83.531},{"x":"2019-09-23","y":89.281},{"x":"2019-09-24","y":85.422},{"x":"2019-09-25","y":89.183},{"x":"2019-09-26","y":85.196},{"x":"2019-09-27","y":88.264},{"x":"2019-09-28","y":88.116},{"x":"2019-09-29","y":91.133},{"x":"2019-09-30","y":85.814},{"x":"2019-10-01","y":84.215},{"x":"2019-10-02","y":86.432},{"x":"2019-10-03","y":89.516},{"x":"2019-10-04","y":84.116},{"x":"2019-10-06","y":92.616},{"x":"2019-10-07","y":88.281},{"x":"2019-10-08","y":81.199},{"x":"2019-10-09","y":89.332},{"x":"2019-10-10","y":85.231},{"x":"2019-10-11","y":89.032}]

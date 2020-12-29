@@ -5,16 +5,16 @@ RuleInfo.redis.flushdb
 
 Timecop.freeze("2000-01-01") do
   10.times do
-    TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 1, x_count: 0)
+    TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "x", spent_sec: 1, x_count: 0)
   end
 end
 
 10.times do
-  TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 1, x_count: 0)
+  TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "x", spent_sec: 1, x_count: 0)
 end
 RuleInfo.rebuild
 
-r = TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 2, x_count: 0)
+r = TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "x", spent_sec: 2, x_count: 0)
 
 r.rank(scope_key: "scope_today", entry_name_uniq_p: "true")    # => 
 r.rank_info                     # => 

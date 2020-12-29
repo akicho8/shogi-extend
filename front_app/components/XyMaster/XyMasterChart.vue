@@ -171,7 +171,7 @@ export default {
 
 .XyMasterChart
   .chart_box_container
-    margin-top: $xym_common_gap
+    margin-top: $xy_master_common_gap
 
   #main_canvas
     margin: 0 auto

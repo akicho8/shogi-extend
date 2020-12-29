@@ -3,23 +3,23 @@ require "./setup"
 TimeRecord.destroy_all
 
 Timecop.freeze("2000-01-01") do
-  TimeRecord.create!(rule_key: "rule100t", entry_name: "a", spent_sec: 0.1, x_count: 0)
-  TimeRecord.create!(rule_key: "rule100t", entry_name: "b", spent_sec: 0.1, x_count: 0)
+  TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "a", spent_sec: 0.1, x_count: 0)
+  TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "b", spent_sec: 0.1, x_count: 0)
 end
 
 Timecop.freeze("2000-01-02") do
-  TimeRecord.create!(rule_key: "rule100t", entry_name: "a", spent_sec: 0.2, x_count: 0)
-  TimeRecord.create!(rule_key: "rule100t", entry_name: "a", spent_sec: 0.3, x_count: 0)
-  TimeRecord.create!(rule_key: "rule100t", entry_name: "b", spent_sec: 0.2, x_count: 0)
-  TimeRecord.create!(rule_key: "rule100t", entry_name: "b", spent_sec: 0.3, x_count: 0)
+  TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "a", spent_sec: 0.2, x_count: 0)
+  TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "a", spent_sec: 0.3, x_count: 0)
+  TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "b", spent_sec: 0.2, x_count: 0)
+  TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "b", spent_sec: 0.3, x_count: 0)
 
   RuleInfo.redis.flushdb
-  RuleInfo[:rule100t].aggregate
+  RuleInfo[:rule_mate3_type1].aggregate
 
-  tp RuleInfo[:rule100t].time_records(scope_key: "scope_all", entry_name_uniq_p: "false")
-  tp RuleInfo[:rule100t].time_records(scope_key: "scope_all", entry_name_uniq_p: "true")
-  tp RuleInfo[:rule100t].time_records(scope_key: "scope_today", entry_name_uniq_p: "false")
-  tp RuleInfo[:rule100t].time_records(scope_key: "scope_today", entry_name_uniq_p: "true")
+  tp RuleInfo[:rule_mate3_type1].time_records(scope_key: "scope_all", entry_name_uniq_p: "false")
+  tp RuleInfo[:rule_mate3_type1].time_records(scope_key: "scope_all", entry_name_uniq_p: "true")
+  tp RuleInfo[:rule_mate3_type1].time_records(scope_key: "scope_today", entry_name_uniq_p: "false")
+  tp RuleInfo[:rule_mate3_type1].time_records(scope_key: "scope_today", entry_name_uniq_p: "true")
 end
 # ~> /Users/ikeda/src/shogi-extend/app/models/ts_master/time_record.rb:86:in `rule_key': undefined method `key' for nil:NilClass (NoMethodError)
 # ~> 	from /Users/ikeda/src/shogi-extend/app/models/ts_master/time_record.rb:143:in `ranking_remove'

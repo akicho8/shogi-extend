@@ -1,9 +1,9 @@
 <template lang="pug">
-.TsMasterApp(:class="mode" :style="component_style")
-  MainNavbar(v-if="idol_p")
+.TsMasterApp(:class="[mode, {is_mode_idol, is_mode_active}]" :style="component_style")
+  MainNavbar(v-if="is_mode_idol")
     template(slot="brand")
       NavbarItemHome
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'checkmate'}") 詰将棋道場
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'checkmate'}") 詰将棋道場『一期一会』
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
         b-navbar-item(@click="ls_reset") ブラウザに記憶した情報の削除
@@ -13,57 +13,70 @@
       NavbarItemLogin
       NavbarItemProfileLink
 
-  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
+  MainNavbar(v-if="is_mode_active")
+    template(slot="brand")
+      b-navbar-item(@click="stop_handle")
+        b-icon(icon="chevron-left")
+    template(slot="start")
+      b-navbar-item.has-text-weight-bold(tag="div")
+        span.mx-1 {{current_rule.mate}}手詰
+        span.mx-1.is-family-monospace \#{{o_count + 1}}/{{current_rule.o_count_max}}
+        span.mx-1.is-family-monospace {{time_format}}
+    template(slot="end")
+      b-navbar-item.has-text-weight-bold(@click="next_button")
+        | NEXT
+
+  b-navbar(type="is-dark" fixed-bottom v-if="development_p || true")
     template(slot="start")
       b-navbar-item(@click="reset_all_handle") リセット
       b-navbar-item(@click="goal_handle") ゴール
       b-navbar-item(@click="rebuild_handle") リビルド
 
   MainSection
-    PageCloseButton(@click="stop_handle" position="is_absolute" v-if="playing_p")
-    TsMasterRestart(:base="base" v-if="playing_p")
+    //- PageCloseButton(@click="stop_handle" position="is_absolute" v-if="is_mode_active")
+    //- TsMasterRestart(:base="base" v-if="is_mode_active")
     .container
       .columns
         .column
-          .buttons.is-centered.mb-0(v-if="idol_p")
-            b-button(@click="start_handle" type="is-primary") START
+          .buttons.is-centered.mb-0(v-if="is_mode_idol")
+            b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
 
             b-dropdown.is-pulled-left(v-model="rule_key" @click.native="sound_play('click')")
               button.button(slot="trigger")
-                span {{current_rule.name}}
+                span {{current_rule.name}} × {{current_rule.o_count_max}}
                 b-icon(icon="menu-down")
               template(v-for="e in RuleInfo.values")
-                b-dropdown-item(:value="e.key") {{e.name}}
+                b-dropdown-item(:value="e.key") {{e.name}} × {{e.o_count_max}}
 
             b-button(@click="rule_dialog_show" icon-right="help")
 
-          .DigitBoardTime.is-unselectable
-            .vector_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p && false")
-              template(v-if="mode === 'is_mode_ready'")
-                | ？？
-              template(v-if="mode === 'is_mode_run'")
-                | {{kanji_human}}
+          //- .DigitBoardTime.is-unselectable
+          //- .vector_container.has-text-weight-bold.is-inline-block(v-if="false")
+          //-   template(v-if="mode === 'is_mode_ready'")
+          //-     | ？？
+          //-   template(v-if="mode === 'is_mode_run'")
+          //-     | {{kanji_human}}
 
-            .CustomShogiPlayerWrap
-              TsMasterCountdown(:base="base")
-              CustomShogiPlayer(
-                ref="main_sp"
-                :sp_body="current_sp_body"
-                sp_run_mode="play_mode"
-                :sp_turn="0"
-                sp_summary="is_summary_off"
-                :sp_hidden_if_piece_stand_blank="true"
-                :sp_viewpoint="current_rule.viewpoint"
-                sp_controller="is_controller_on"
-              )
+          .CustomShogiPlayerWrap
+            TsMasterCountdown(:base="base")
+            CustomShogiPlayer(
+              ref="main_sp"
+              :sp_body="sp_body"
+              :sp_flip_if_white="true"
+              sp_run_mode="play_mode"
+              sp_summary="is_summary_off"
+              sp_slider="is_slider_off"
+              :sp_turn="0"
+              :sp_controller="mode === 'is_mode_run' ? 'is_controller_on' : 'is_controller_off'"
+            )
 
-            .time_container.fixed_font.is-size-3(v-if="false")
-              | {{time_format}}
+          //- .time_container.fixed_font.is-size-3(v-if="false")
+          //-   | {{time_format}}
+          //-
+          //- .buttons.next_button(v-if="mode === 'is_mode_run'")
+          //-   b-button.has-text-weight-bold(@click="next_button" size="is-medium" rounded) NEXT
 
-            .buttons.mt-4
-              b-button(@click="next_button" size="is-medium") NEXT
-
-          TsMasterSlider(:base="base")
+          //- TsMasterSlider(:base="base")
 
           .box.tweet_box_container.has-text-centered(v-if="mode === 'is_mode_goal'")
             | {{summary}}
@@ -73,6 +86,7 @@
 
       TsMasterChart(:base="base" ref="TsMasterChart")
   DebugPre {{$data}}
+  DebugPre {{config}}
 </template>
 
 <script>
@@ -125,25 +139,26 @@ export default {
   },
   data() {
     return {
+      stocks: null,
       mode: "is_mode_stop",
       countdown_counter:  null, // カウントダウン用カウンター
-      before_place:       null, // 前のセル
-      current_sp_body:      null, // 今のセル
+      sp_body:            null, // 今のセル
+      sp_viewpoint:       null, // 今のセル
       o_count:            null, // 正解数
       x_count:            null, // 不正解数
       key_queue:          null, // PCモードでの押したキー
       micro_seconds:      null, // 経過時間
       entry_name_uniq_p: false, // プレイヤー別順位ON/OFF
-      rule_key:        null, // ../../../app/models/rule_info.rb のキー
-      scope_key:       null, // ../../../app/models/scope_info.rb のキー
+      rule_key:           null, // ../../../app/models/rule_info.rb のキー
+      scope_key:          null, // ../../../app/models/scope_info.rb のキー
       entry_name:         null, // ランキングでの名前を保持しておく
       current_rule_index: null, // b-tabs 連動用
-      time_records_hash:    null, // 複数のルールでそれぞれにランキング情報も入っている
-      time_record:          null, // ゲームが終わたっときにランクなどが入っている
+      time_records_hash:  null, // 複数のルールでそれぞれにランキング情報も入っている
+      time_record:        null, // ゲームが終わたっときにランクなどが入っている
       current_pages:      null, // b-table のページ
       latest_rule:        null, // 最後に挑戦した最新のルール
       interval_counter: new IntervalCounter(this.countdown_func, {early: true, interval: COUNTDOWN_INTERVAL}),
-      interval_frame:   new IntervalFrame(this.time_add_func),
+      interval_frame:   new IntervalCounter(this.time_add_func, {early: true}),
     }
   },
 
@@ -154,11 +169,13 @@ export default {
 
     this.ls_setup()
     this.init_other_variables()
+
+    // this.sp_body = "position sfen ln1gkg1nl/6+P2/2sppps1p/2p3p2/p8/P1P1P3P/2NP1PP2/3s1KSR1/L1+b2G1NL w R2Pbgp 42"
   },
 
   mounted() {
     this.ga_click("詰将棋道場")
-    this.sp_object().api_board_clear()
+    // this.sp_object().api_board_clear()
   },
 
   beforeDestroy() {
@@ -236,22 +253,32 @@ export default {
     init_other_variables() {
       this.countdown_counter = 0
       this.micro_seconds = 0
-      this.before_place = null
-      this.current_sp_body = null
       this.o_count = 0
       this.x_count = 0
       this.key_queue = []
       this.time_record = null
+
+      this.sp_body_reset()
     },
 
     start_handle() {
-      this.sound_play("click")
-      this.mode = "is_mode_ready"
-      this.init_other_variables()
-      this.latest_rule = this.current_rule
-      this.talk_stop()
-      this.sp_object().api_viewpoint_set(this.current_rule.viewpoint)
-      this.interval_counter.start()
+      this.sp_body_reset()
+
+      const params = {
+        stocks_fetch: true,
+        rule_key: this.current_rule.key,
+      }
+      this.$axios.$get("/api/ts_master/time_records.json", {params: params}).then(e => {
+        this.stocks = e.stocks
+
+        this.sound_play("click")
+        this.mode = "is_mode_ready"
+        this.init_other_variables()
+        this.latest_rule = this.current_rule
+        this.talk_stop()
+        // this.sp_object().api_viewpoint_set(this.current_rule.viewpoint)
+        this.interval_counter.start()
+      })
     },
 
     countdown_func(counter) {
@@ -263,7 +290,7 @@ export default {
     },
 
     time_add_func(v) {
-      this.micro_seconds += v
+      this.micro_seconds = v * 1000
     },
 
     go_handle() {
@@ -279,6 +306,7 @@ export default {
       this.mode = "is_mode_stop"
       this.timer_stop()
       this.interval_counter.stop()
+      this.sp_body_reset()
     },
 
     restart_handle() {
@@ -289,6 +317,7 @@ export default {
     goal_handle() {
       this.mode = "is_mode_goal"
       this.timer_stop()
+      this.sp_body_reset()
       this.talk("おわりました")
 
       if (this.current_entry_name) {
@@ -309,6 +338,11 @@ export default {
           },
         })
       }
+    },
+
+    sp_body_reset() {
+      this.sp_body = ""
+      this.sp_viewpoint = "black"
     },
 
     // 名前を確定してからサーバーに保存する
@@ -371,7 +405,7 @@ export default {
 
     timer_stop() {
       this.interval_frame.stop()
-      this.sp_object().api_board_clear()
+      // this.sp_object().api_board_clear()
     },
 
     goal_check() {
@@ -382,21 +416,29 @@ export default {
     },
 
     place_next_set() {
-      this.current_sp_body = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 8c8d 7g7f 7a6b 5g5f 8d8e 8h7g 5c5d 2h5h 6b5c 7i6h 5a4b 5i4h 3a3b 4h3h 4c4d 5f5e 3b4c 5e5d 4c5d 6h5g 5d6e 5g5f 6e7f 5f5e 7f6g+ P*5d 5c6b 5h5f 6g7g 8i7g B*3d 5f6f P*5b 6i7i 8b8d 5e4d 8d7d P*7h 7d5d S*4c 3d4c 4d4c+ 4b4c B*7f 5b5c 7i6h 4c3b 6h5h P*4c 7f5d 5c5d 8g8f B*7i 8f8e P*8b 6f8f 7i3e+ 8e8d S*7b 8f8i 3e4e P*6g 7c7d 9g9f 4e5f 8i8f 5f5e 9f9e 5e6d 8f8i 7d7e 7g8e 5d5e 8e9c+ 8a9c 9e9d P*9h 9i9h 6d6e 8i8f 6e9h 9d9c+ 9a9c R*9a 9h6e 9a9c+ 5e5f 5h4h L*9b 9c8b P*8a N*7g 6e7d 8b9a S*8b 9a8b 8a8b S*6e 7d9f 8f5f 9f7h 7g8e 7h6g P*7c 7b8a P*9c 6c6d P*6h 6g8e 9c9b+ 8a9b 7c7b+ 6a7b 6e5d N*4b 5d5c+ P*5d 5c6b 7b6b L*2f R*6i L*2e N*3a 5f4f S*3d 3g3f 6b5c 2i3g 4c4d 4f5f 2c2d 2e2d P*2c 3f3e 3d3e 2d2c+ 3a2c 2f2c+ 3b2c P*3f 3e2d 5f5i 6i6h+ 1g1f L*3d N*2h 4d4e 5i5h 6h7g 2g2f 1c1d 2f2e 2d1c 3g4e 5c4d S*4f P*2f 4e5c+ L*4e 4f5g 8e7d P*6e 7d6e P*5f 5d5e 4h3g 5e5f 5g4h P*4f 3g4f 4e4f"
+      const stock = this.stocks[this.o_count]
+      this.sp_body = `position sfen ${stock.sfen}`
+      // this.sfen_parse(this.sp_body)
+      // this.sp_viewpoint
+
+      // this.sp_object().api_sfen_or_kif_set(this.sp_body)
+      // this.sp_body = "position sfen ln1gkg1nl/6+P2/2sppps1p/2p3p2/p8/P1P1P3P/2NP1PP2/3s1KSR1/L1+b2G1NL w R2Pbgp 42"
+      // this.sp_object().api_sfen_or_kif_set()
     },
 
-    active_p(x, y) {
-      if (this.current_sp_body) {
-        return _.isEqual(this.current_sp_body, {x: x, y: y})
-      }
-    },
+    // active_p(x, y) {
+    //   if (this.sp_body) {
+    //     return _.isEqual(this.sp_body, {x: x, y: y})
+    //   }
+    // },
 
     place_random() {
       return _.random(0, DIMENSION - 1)
     },
 
     time_format_from_msec(v) {
-      return dayjs.unix(v).format("m:ss.SSS")
+      // return dayjs.unix(v).format("m:ss.SSS")
+      return dayjs.unix(v).format("m:ss")
     },
 
     time_default_format(v) {
@@ -424,12 +466,12 @@ export default {
       }
     },
 
-    idol_p() {
-      return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal'
+    is_mode_idol() {
+      return this.mode === "is_mode_stop" || this.mode === "is_mode_goal"
     },
 
-    playing_p() {
-      return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready'
+    is_mode_active() {
+      return this.mode === "is_mode_run" || this.mode === "is_mode_ready"
     },
 
     countdown() {
@@ -439,7 +481,7 @@ export default {
     summary() {
       let out = ""
       if (this.latest_rule) {
-        out += `ルール: ${this.latest_rule.name}\n`
+        out += `ルール: ${this.latest_rule.name}×${this.latest_rule.o_count_max}問\n`
       }
       if (this.time_record) {
         out += `本日: ${this.time_record.rank_info.scope_today.rank}位\n`
@@ -475,7 +517,10 @@ export default {
     },
 
     time_over_p() {
-      return this.spent_sec >= this.current_rule.time_limit
+      const v = this.current_rule.time_limit
+      if (v) {
+        return this.spent_sec >= v
+      }
     },
 
     tweet_url() {
@@ -485,7 +530,7 @@ export default {
     tweet_body() {
       let out = ""
       out += this.summary
-      out += "#詰将棋道場\n"
+      out += "#詰将棋道場一期一会\n"
       out += this.location_url_without_search_and_hash() + "?" + this.magic_number()
       return out
     },
@@ -538,22 +583,10 @@ export default {
       return RuleInfo.fetch(this.rule_key)
     },
 
-    tap_method_p() {
-      return this.current_rule.input_mode === "tap"
-    },
-
-    keyboard_method_p() {
-      return this.current_rule.input_mode === "keyboard"
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     default_rule_key() {
-      if (isMobile.any()) {
-        return "rule100t"
-      } else {
-        return "rule100"
-      }
+      return "rule_mate3_type1"
     },
 
     current_rank() {
@@ -592,24 +625,20 @@ export default {
 
   +bulma_buttons_button_bottom_marginless
 
-  .MainSection
-    +mobile
-      padding: $xym_common_gap 0 0
+  // .DigitBoardTime
+  //   display: flex
+  //   justify-content: center
+  //   align-items: center
+  //   flex-direction: column
+  // margin-top: $ts_master_common_gap
 
-  .DigitBoardTime
-    display: flex
-    justify-content: center
-    align-items: center
-    flex-direction: column
-    margin-top: $xym_common_gap
-
-    .vector_container
-      margin-bottom: $xym_board_top_bottom_gap
-      font-size: 2rem
-
-    .time_container
-      line-height: 100%
-      margin-top: $xym_board_top_bottom_gap
+  // .vector_container
+  //   margin-bottom: $ts_master_board_top_bottom_gap
+  //   font-size: 2rem
+  //
+  // .time_container
+  //   line-height: 100%
+  //   margin-top: $ts_master_board_top_bottom_gap
 
   .CustomShogiPlayerWrap
     width: 100%
@@ -625,7 +654,7 @@ export default {
       +touch
         width: 100%
       +desktop
-        width: calc(100vmin * 0.50)
+        width: calc(100vmin * 0.66)
 
     .CustomShogiPlayer
       // --sp_board_padding: 0                  // 盤の隙間なし
@@ -638,7 +667,23 @@ export default {
       // --sp_grid_star_size: 16%               // 星の大きさ
       // --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
 
+  .next_button
+    margin-top: 3rem
+
   .tweet_box_container
     margin-top: 0.75rem
     white-space: pre-wrap
+
+  ////////////////////////////////////////////////////////////////////////////////
+  &.is_mode_idol
+    .MainSection.section
+      padding: $ts_master_common_gap 0 0
+    .CustomShogiPlayerWrap
+      margin-top: $ts_master_common_gap
+      +mobile
+        margin-top: 0
+  &.is_mode_active
+    .MainSection.section
+      +mobile
+        padding: 0
 </style>

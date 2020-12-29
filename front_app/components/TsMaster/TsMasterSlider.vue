@@ -1,5 +1,5 @@
 <template lang="pug">
-.TsMasterSlider.is-hidden-desktop(v-if="base.idol_p")
+.TsMasterSlider.is-hidden-desktop(v-if="base.is_mode_idol")
   b-slider(v-model="base.touch_board_width" :min="0" :max="1" :step="0.001" size="is-small")
 </template>
 

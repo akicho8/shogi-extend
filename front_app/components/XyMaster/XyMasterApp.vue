@@ -26,7 +26,7 @@
       .columns
         .column
           .buttons.is-centered.mb-0(v-if="idol_p")
-            b-button(@click="start_handle" type="is-primary") START
+            b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
 
             b-dropdown.is-pulled-left(v-model="rule_key" @click.native="sound_play('click')")
               button.button(slot="trigger")
@@ -704,24 +704,24 @@ export default {
 
   +bulma_buttons_button_bottom_marginless
 
-  .MainSection
+  .MainSection.section
     +mobile
-      padding: $xym_common_gap 0 0
+      padding: $xy_master_common_gap 0 0
 
   .DigitBoardTime
     display: flex
     justify-content: center
     align-items: center
     flex-direction: column
-    margin-top: $xym_common_gap
+    margin-top: $xy_master_common_gap
 
     .vector_container
-      margin-bottom: $xym_board_top_bottom_gap
+      margin-bottom: $xy_master_board_top_bottom_gap
       font-size: 2rem
 
     .time_container
       line-height: 100%
-      margin-top: $xym_board_top_bottom_gap
+      margin-top: $xy_master_board_top_bottom_gap
 
   .CustomShogiPlayerWrap
     width: 100%

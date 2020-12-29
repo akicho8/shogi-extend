@@ -99,7 +99,7 @@ export default {
     margin-top: 2em
 
 .UserShow
-  .MainSection
+  .MainSection.section
     padding-top: 2.8rem
 
   .image

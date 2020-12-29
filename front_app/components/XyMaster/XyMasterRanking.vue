@@ -46,7 +46,7 @@ export default {
 
 .XyMasterRanking
   +mobile
-    margin-top: $xym_common_gap
+    margin-top: $xy_master_common_gap
 
   .scope_info_field
     .field

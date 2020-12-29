@@ -28,14 +28,14 @@ module TsMaster
     class << self
       def setup(options = {})
         if Rails.env.development?
-          create!(rule_key: "rule100", entry_name: "a", spent_sec: 0.2, x_count: 0)
-          create!(rule_key: "rule100", entry_name: "a", spent_sec: 0.3, x_count: 0)
-          create!(rule_key: "rule100", entry_name: "b", spent_sec: 0.2, x_count: 0)
-          create!(rule_key: "rule100", entry_name: "b", spent_sec: 0.3, x_count: 0)
+          create!(rule_key: "rule_mate7_type1", entry_name: "a", spent_sec: 0.2, x_count: 0)
+          create!(rule_key: "rule_mate7_type1", entry_name: "a", spent_sec: 0.3, x_count: 0)
+          create!(rule_key: "rule_mate7_type1", entry_name: "b", spent_sec: 0.2, x_count: 0)
+          create!(rule_key: "rule_mate7_type1", entry_name: "b", spent_sec: 0.3, x_count: 0)
         end
 
         if Rails.env.test?
-          create!(rule_key: "rule100", entry_name: "a", spent_sec: 0.2, x_count: 0)
+          create!(rule_key: "rule_mate7_type1", entry_name: "a", spent_sec: 0.2, x_count: 0)
         end
 
         # RuleInfo.rebuild
@@ -114,9 +114,9 @@ module TsMaster
 
     # 自己ベストを更新したときの情報
     #
-    # assert { TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.333, x_count: 0).best_update_info == nil                       }
-    # assert { TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.334, x_count: 0).best_update_info == nil                       }
-    # assert { TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.332, x_count: 0).best_update_info == {updated_spent_sec: 0.001 }  }
+    # assert { TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "x", spent_sec: 100.333, x_count: 0).best_update_info == nil                       }
+    # assert { TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "x", spent_sec: 100.334, x_count: 0).best_update_info == nil                       }
+    # assert { TimeRecord.create!(rule_key: "rule_mate3_type1", entry_name: "x", spent_sec: 100.332, x_count: 0).best_update_info == {updated_spent_sec: 0.001 }  }
     #
     def best_update_info
       s = self.class.where(rule: rule).where(entry_name: entry_name)

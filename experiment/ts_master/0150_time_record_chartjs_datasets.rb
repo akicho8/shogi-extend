@@ -1,6 +1,6 @@
 require "./setup"
 
-tp RuleInfo.chartjs_datasets(xy_chart_scope_key: "chart_scope_recently", chart_rule_key: "rule100t")
+tp RuleInfo.chartjs_datasets(xy_chart_scope_key: "chart_scope_recently", chart_rule_key: "rule_mate3_type1")
 # >> |-------+-------------------------------------+------------------------------------+------------------------------------|
 # >> | label | data                                | backgroundColor                    | borderColor                        |
 # >> |-------+-------------------------------------+------------------------------------+------------------------------------|
