@@ -6,7 +6,7 @@ class Refactor2 < ActiveRecord::Migration[6.0]
     XyMaster::TimeRecord.reset_column_information
     XyMaster::TimeRecord.find_each do |e|
       e.write_attribute(:rule_key, e.read_attribute(:rule_key).sub(/xy_/, ""))
-      e.save!
+      e.save!(validate: false, touch: false)
     end
   end
 end
