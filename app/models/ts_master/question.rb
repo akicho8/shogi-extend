@@ -38,10 +38,12 @@ module TsMaster
             if options[:max] && n >= options[:max]
               break
             end
-            create!(sfen: e, mate: mate)
-            n += 1
-            if n.modulo(100).zero?
-              p [mate, n]
+            unless e.empty?
+              create!(sfen: e, mate: mate)
+              n += 1
+              if n.modulo(100).zero?
+                p [mate, n]
+              end
             end
           end
         end
