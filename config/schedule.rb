@@ -51,6 +51,16 @@ if @environment == "production"
   every("0 0 1 * *")  { runner %(Actb::Season.create!) }
 end
 
+if @environment == "production"
+  every("15 1 31 12 *") do
+    runner [
+      "SlackAgent.message_send(key: 'Question', body: 'start')",
+      "TsMaster::Question.setup(reset: true)",
+      "SlackAgent.message_send(key: 'Question', body: 'end')",
+    ].join(";")
+  end
+end
+
 # every("30 6 * * *")   { runner "Swars::Battle.import(:expert_import, sleep: 5)"                                                                  }
 # every("*/30 * * * *") { runner "Swars::Battle.import(:conditional_import, sleep: 5, limit: 3, page_max: 1, grade_key_gteq: '三段')" }
 # every("30 5 * * *")    { runner "Swars::Battle.import(:remake)"                                                                                   }
