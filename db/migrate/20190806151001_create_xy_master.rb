@@ -23,7 +23,7 @@
 
 class CreateXyMaster < ActiveRecord::Migration[5.1]
   def change
-    create_table :time_records, force: true do |t|
+    create_table :xy_records, force: true do |t|
       t.belongs_to :user,    null: true
       t.string :entry_name,  null: false, index: true
       t.string :summary,     null: true

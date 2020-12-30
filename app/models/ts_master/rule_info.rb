@@ -15,8 +15,8 @@ module TsMaster
       { key: :rule_mate11_type1, name: "11手詰",  mate: 11, o_count_max:   1, time_limit: nil, },
     ]
 
-    cattr_accessor(:rank_max) { (Rails.env.production? || Rails.env.staging?) ? 100 : 100 }  # 位まで表示
-    cattr_accessor(:per_page) { (Rails.env.production? || Rails.env.staging?) ? 20 : 20 }
+    cattr_accessor(:rank_max) { 100 }  # 位まで表示
+    cattr_accessor(:per_page) { 20  }  # 1ページN件
 
     class << self
       def setup(options = {})
@@ -82,12 +82,12 @@ module TsMaster
       Question.sample(mate: mate, max: o_count_max)
     end
 
-    def o_count_max
-      if Rails.env.in?(["development", "test"])
-        return 3
-      end
-      super
-    end
+    # def o_count_max
+    #   if Rails.env.in?(["development", "test"])
+    #     return 3
+    #   end
+    #   super
+    # end
 
     # 実際のスコア(のもとの時間)は TimeRecord が持っているので取り出さない
     def time_records(params)

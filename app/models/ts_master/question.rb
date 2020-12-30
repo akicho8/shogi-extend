@@ -1,3 +1,17 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Question (ts_master_questions as TsMaster::Question)
+#
+# |----------+------+-------------+-------------+------+-------|
+# | name     | desc | type        | opts        | refs | index |
+# |----------+------+-------------+-------------+------+-------|
+# | id       | ID   | integer(8)  | NOT NULL PK |      |       |
+# | sfen     | Sfen | string(255) | NOT NULL    |      |       |
+# | mate     | Mate | integer(4)  | NOT NULL    |      | A     |
+# | position | 順序 | integer(4)  | NOT NULL    |      | B     |
+# |----------+------+-------------+-------------+------+-------|
+
 module TsMaster
   class Question < ApplicationRecord
     class << self
@@ -6,12 +20,8 @@ module TsMaster
         options = {
           max: default_max,
           mate: [3, 5, 7, 9, 11],
-          reset: false,
+          reset: Rails.env.development? || Rails.env.test?,
         }.merge(options)
-
-        if options[:reset]
-          destroy_all
-        end
 
         Array(options[:mate]).each do |mate|
           mate_import(mate, options)
@@ -19,6 +29,9 @@ module TsMaster
       end
 
       private def mate_import(mate, options = {})
+        if options[:reset]
+          all.mate_eq(mate).destroy_all
+        end
         open(source_file(mate)) do |f|
           n = 0
           f.each(chomp: true) do |e|
@@ -42,6 +55,8 @@ module TsMaster
         case
         when Rails.env.production?
           nil
+        when Rails.env.staging?
+          100
         else
           10
         end

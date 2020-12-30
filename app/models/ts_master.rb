@@ -11,33 +11,22 @@ module TsMaster
     end
 
     [
-      Question,
       Rule,
       TimeRecord,
     ].each do |e|
       e.setup(options)
     end
 
-    # User.find_each(&:create_various_folders_if_blank)
-    # User.find_each(&:create_TsMaster_setting_if_blank)
-    # User.find_each(&:create_TsMaster_season_xrecord_if_blank)
-    # User.find_each(&:create_TsMaster_main_xrecord_if_blank)
-    #
-    # if Rails.env.development? || Rails.env.test?
-    #   TsMaster::BaseChannel.redis_clear
-    # end
-    #
-    # if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
-    #   unless TsMaster::Question.exists?
-    #     TsMaster::Question.import_all
-    #   end
-    # end
+    if Rails.env.development? || Rails.env.test?
+      Question.setup(options)
+    end
   end
 
   def models
     [
-      TimeRecord,
+      Question,
       Rule,
+      TimeRecord,
     ]
   end
 

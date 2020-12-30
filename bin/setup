@@ -58,8 +58,10 @@ chdir APP_ROOT do
   # system! "cap production rails:log:download"
 
   puts "\n== time_record redis clear =="
-  system! 'rails r TimeRecord.delete_all'
-  system! 'rails r RuleInfo.redis.flushdb'
+  system! 'rails r XyMaster::TimeRecord.delete_all'
+  system! 'rails r XyMaster::RuleInfo.redis.flushdb'
+  system! 'rails r TsMaster::TimeRecord.delete_all'
+  system! 'rails r TsMaster::RuleInfo.redis.flushdb'
 
   puts "\n== Restarting application server =="
   system! 'rails restart'
