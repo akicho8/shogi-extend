@@ -313,7 +313,7 @@ export default {
       this.mode = "is_mode_stop"
       this.timer_stop()
       this.interval_counter.stop()
-      // this.sp_body_reset()
+      this.sp_body_reset()
     },
 
     restart_handle() {
