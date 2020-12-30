@@ -29,7 +29,8 @@ class ServiceInfo
       display_p: !Rails.env.production?,
       nuxt_link_to: {path: "/practical-checkmate"},
       title: "実戦詰将棋『一期一会』",
-      og_image_key: "checkmate",
+      new_p: true,
+      og_image_key: "practical-checkmate",
       description: "やねうら王の詰将棋500万問からﾗﾝﾀﾞﾑに出題",
       features: [
         "一度出題した問題には二度と会えないかも",
@@ -189,6 +190,7 @@ class ServiceInfo
       display_p: true,
       nuxt_link_to: {path: "/style-editor"},
       title: "将棋盤スタイルエディタ",
+      new_p: true,
       og_image_key: "style-editor",
       description: "将棋盤のスタイルをいじくる開発用ツール",
       features: [
