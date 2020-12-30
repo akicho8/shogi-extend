@@ -5,7 +5,7 @@ client-only
 
 <script>
 export default {
-  name: "ts",
+  name: "ts_master",
   async asyncData({ $axios, query }) {
     const config = await $axios.$get("/api/ts_master/time_records", {params: {config_fetch: true, ...query}})
     return { config }

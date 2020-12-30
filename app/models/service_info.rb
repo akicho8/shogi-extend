@@ -27,14 +27,14 @@ class ServiceInfo
     },
     {
       display_p: !Rails.env.production?,
-      nuxt_link_to: {path: "/checkmate"},
+      nuxt_link_to: {path: "/practical-checkmate"},
       title: "実戦詰将棋『一期一会』",
       og_image_key: "checkmate",
-      description: "符号マスター養成所",
+      description: "やねうら王実戦詰将棋500万問からランダムに出題",
       features: [
-        "タップするルールはスマホ用",
-        "100問正解するまでの時間を競う",
-        "1分半切ったら卒業",
+        "一度出題した問題には二度と会えないかも",
+        "初見力が試される",
+        "作意がないぶん逆にむずい！？",
       ],
     },
     {
@@ -190,8 +190,10 @@ class ServiceInfo
       nuxt_link_to: {path: "/style-editor"},
       title: "将棋盤スタイルエディタ",
       og_image_key: "style-editor",
-      description: "将棋盤のスタイルをいじくるツール",
+      description: "将棋盤のスタイルをいじくる開発用ツール",
       features: [
+        "もともとは将棋盤を作るときのスタイル調整や動作検証用に作ったものですが他の用途にも使えそうなので公開しています",
+        "これで加工した画面は自由に使ってもらってかまいません",
       ],
     },
   ]

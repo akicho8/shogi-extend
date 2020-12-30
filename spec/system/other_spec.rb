@@ -16,7 +16,7 @@ RSpec.describe "その他", type: :system do
 
   it "実戦詰将棋" do
     TsMaster.setup
-    visit "http://localhost:4000/checkmate"
+    visit "http://localhost:4000/practical-checkmate"
     expect(page).to have_content "実戦詰将棋"
     doc_image
   end
