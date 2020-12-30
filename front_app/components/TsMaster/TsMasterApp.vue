@@ -3,7 +3,7 @@
   MainNavbar(v-if="is_mode_idol")
     template(slot="brand")
       NavbarItemHome
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'checkmate'}") 実践詰将棋『一期一会』
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'checkmate'}") 実戦詰将棋『一期一会』
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
         b-navbar-item(@click="ls_reset") ブラウザに記憶した情報の削除
@@ -23,10 +23,10 @@
         span.mx-1.is-family-monospace \#{{o_count + 1}}/{{current_rule.o_count_max}}
         span.mx-1.is-family-monospace {{time_format}}
     template(slot="end")
-      b-navbar-item.has-text-weight-bold(@click="next_button")
+      b-navbar-item.has-text-weight-bold(@click="next_button" v-if="mode === 'is_mode_run'")
         | NEXT
 
-  b-navbar(type="is-dark" fixed-bottom v-if="development_p || true")
+  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
       b-navbar-item(@click="reset_all_handle") リセット
       b-navbar-item(@click="goal_handle") ゴール
@@ -43,10 +43,10 @@
 
             b-dropdown.is-pulled-left(v-model="rule_key" @click.native="sound_play('click')")
               button.button(slot="trigger")
-                span {{current_rule.name}} × {{current_rule.o_count_max}}
+                span {{current_rule.name}} × {{current_rule.o_count_max}}問
                 b-icon(icon="menu-down")
               template(v-for="e in RuleInfo.values")
-                b-dropdown-item(:value="e.key") {{e.name}} × {{e.o_count_max}}
+                b-dropdown-item(:value="e.key") {{e.name}} × {{e.o_count_max}}問
 
             b-button(@click="rule_dialog_show" icon-right="help")
 
@@ -63,9 +63,11 @@
               ref="main_sp"
               :sp_body="sp_body"
               :sp_flip_if_white="true"
+              sp_mobile_vertical="is_mobile_vertical_on"
               sp_run_mode="play_mode"
               sp_summary="is_summary_off"
               sp_slider="is_slider_off"
+              :sp_sound_body_changed="false"
               :sp_turn="0"
               :sp_controller="mode === 'is_mode_run' ? 'is_controller_on' : 'is_controller_off'"
             )
@@ -174,7 +176,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("実践詰将棋")
+    this.ga_click("実戦詰将棋")
     // this.sp_object().api_board_clear()
   },
 
@@ -216,12 +218,17 @@ export default {
   },
 
   methods: {
+    // play_mode_advanced_full_moves_sfen_set() {
+    //   this.sound_play("piece_sound")
+    // },
+
     next_button() {
       this.sound_play("o")
       this.o_count++
       this.goal_check()
       if (this.mode === "is_mode_run") {
         this.place_next_set()
+        // this.sound_play("start")
       }
       // } else {
       //   this.x_count++
@@ -306,7 +313,7 @@ export default {
       this.mode = "is_mode_stop"
       this.timer_stop()
       this.interval_counter.stop()
-      this.sp_body_reset()
+      // this.sp_body_reset()
     },
 
     restart_handle() {
@@ -418,6 +425,9 @@ export default {
     place_next_set() {
       const question = this.questions[this.o_count]
       this.sp_body = `position sfen ${question.sfen}`
+
+      // this.sp_object().api_sfen_or_kif_set(`position sfen ${question.sfen}`)
+
       // this.sfen_parse(this.sp_body)
       // this.sp_viewpoint
 
@@ -481,7 +491,7 @@ export default {
     summary() {
       let out = ""
       if (this.latest_rule) {
-        out += `ルール: ${this.latest_rule.name}×${this.latest_rule.o_count_max}問\n`
+        out += `ルール: ${this.latest_rule.mate}手詰x${this.latest_rule.o_count_max}問\n`
       }
       if (this.time_record) {
         out += `本日: ${this.time_record.rank_info.scope_today.rank}位\n`
@@ -497,8 +507,10 @@ export default {
       if (this.time_avg) {
         out += `平均: ${this.time_avg}\n`
       }
-      out += `不正解: ${this.x_count}\n`
-      out += `正解率: ${this.rate_per}%\n`
+      if (false) {
+        out += `不正解: ${this.x_count}\n`
+        out += `正解率: ${this.rate_per}%\n`
+      }
       return out
     },
 
@@ -530,7 +542,7 @@ export default {
     tweet_body() {
       let out = ""
       out += this.summary
-      out += "#実践詰将棋一期一会\n"
+      out += "#実戦詰将棋一期一会\n"
       out += this.location_url_without_search_and_hash() + "?" + this.magic_number()
       return out
     },
@@ -685,5 +697,5 @@ export default {
   &.is_mode_active
     .MainSection.section
       +mobile
-        padding: 0
+        padding: 0.5rem 0 0
 </style>

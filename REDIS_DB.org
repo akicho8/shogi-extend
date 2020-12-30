@@ -5,7 +5,7 @@
 | ik1  |  0 |                        |            |                        |
 |      |  1 | Rails.cache            | production | redis_cache_store      |
 |      |  2 | 符号の鬼のランキング用 | production | redis_db_for_xy_master |
-|      |  3 | 実践詰将棋             | production | redis_db_for_ts_master |
+|      |  3 | 実戦詰将棋             | production | redis_db_for_ts_master |
 |      |  4 | 将棋トレーニングバトル | production | redis_db_for_actb      |
 |      |  5 | sidekiq                | production | redis_db_for_sidekiq   |
 |      |  6 | ActionCable            | production | cable.yml              |
@@ -30,7 +30,7 @@
 |      |  7 |                        |            |                        |
 |      |  8 | Rails.cache            | staging    | redis_cache_store      |
 |      |  9 | 符号の鬼のランキング用 | staging    | redis_db_for_xy_master |
-|      | 10 | 実践詰将棋             | staging    | redis_db_for_ts_master |
+|      | 10 | 実戦詰将棋             | staging    | redis_db_for_ts_master |
 |      | 11 | 将棋トレーニングバトル | staging    | redis_db_for_actb      |
 |      | 12 | sidekiq                | staging    | redis_db_for_sidekiq   |
 |      | 13 | ActionCable            | staging    | cable.yml              |

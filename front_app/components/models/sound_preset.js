@@ -22,7 +22,7 @@ export class SoundPreset extends MemoryRecord {
     return [
       { key: "o",              source: mp3_o,             volume: 0.20, },
       { key: "x",              source: mp3_x,             volume: 0.20, },
-      { key: "start",          source: mp3_start,         volume: 0.20, },
+      { key: "start",          source: mp3_start,         volume: 0.15, },
       { key: "lose",           source: mp3_lose,          volume: 0.30, },
       { key: "win",            source: mp3_win,           volume: 0.20, },
       { key: "click",          source: mp3_click,         volume: 0.60, },

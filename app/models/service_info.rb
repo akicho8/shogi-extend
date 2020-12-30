@@ -28,7 +28,7 @@ class ServiceInfo
     {
       display_p: !Rails.env.production?,
       nuxt_link_to: {path: "/checkmate"},
-      title: "実践詰将棋『一期一会』",
+      title: "実戦詰将棋『一期一会』",
       og_image_key: "checkmate",
       description: "符号マスター養成所",
       features: [
