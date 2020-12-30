@@ -33,7 +33,7 @@ class ServiceInfo
       og_image_key: "practical-checkmate",
       description: "やねうら王の詰将棋500万問からﾗﾝﾀﾞﾑに出題",
       features: [
-        "一度出題した問題には二度と会えないかも",
+        "一度出会った問題には二度と会えないかも",
         "初見力が試される",
         "作意がないぶん逆にむずい！？",
       ],
