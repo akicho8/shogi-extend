@@ -678,6 +678,8 @@ export default {
       // --sp_board_aspect_ratio: 1.0           // 盤を正方形化
       // --sp_grid_star_size: 16%               // 星の大きさ
       // --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
+      +mobile
+        --sp_piece_count_gap_bottom: 58%
 
   .next_button
     margin-top: 3rem
