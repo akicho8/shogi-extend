@@ -3,7 +3,7 @@
   MainNavbar(v-if="is_mode_idol")
     template(slot="brand")
       NavbarItemHome
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'checkmate'}") 詰将棋道場『一期一会』
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'checkmate'}") 実践詰将棋『一期一会』
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
         b-navbar-item(@click="ls_reset") ブラウザに記憶した情報の削除
@@ -174,7 +174,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("詰将棋道場")
+    this.ga_click("実践詰将棋")
     // this.sp_object().api_board_clear()
   },
 
@@ -530,7 +530,7 @@ export default {
     tweet_body() {
       let out = ""
       out += this.summary
-      out += "#詰将棋道場一期一会\n"
+      out += "#実践詰将棋一期一会\n"
       out += this.location_url_without_search_and_hash() + "?" + this.magic_number()
       return out
     },
