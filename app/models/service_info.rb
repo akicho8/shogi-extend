@@ -30,7 +30,7 @@ class ServiceInfo
       nuxt_link_to: {path: "/practical-checkmate"},
       title: "実戦詰将棋『一期一会』",
       og_image_key: "checkmate",
-      description: "やねうら王実戦詰将棋500万問からランダムに出題",
+      description: "やねうら王の詰将棋500万問からﾗﾝﾀﾞﾑに出題",
       features: [
         "一度出題した問題には二度と会えないかも",
         "初見力が試される",
