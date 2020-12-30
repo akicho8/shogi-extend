@@ -94,7 +94,7 @@ module TsMaster
           raise "#{params[:mate]}手詰問題を#{params[:max]}件取得したかったが#{rest}件足りない\n#{a}"
         end
 
-        scope.where(position: a).order(["FIELD(position, ?)", a])
+        scope.where(position: a).order([Arel.sql("FIELD(position, ?)"), a])
       end
     end
 
