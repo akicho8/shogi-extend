@@ -11,7 +11,7 @@ module TsMaster
     end
 
     [
-      Stock,
+      Question,
       Rule,
       TimeRecord,
     ].each do |e|

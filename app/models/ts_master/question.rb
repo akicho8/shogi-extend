@@ -1,7 +1,7 @@
 module TsMaster
-  class Stock < ApplicationRecord
+  class Question < ApplicationRecord
     class << self
-      # rails r 'TsMaster::Stock.setup(mate: 3, max: 100)'
+      # rails r 'TsMaster::Question.setup(mate: 3, max: 100)'
       def setup(options = {})
         options = {
           max: default_max,
@@ -47,7 +47,7 @@ module TsMaster
         end
       end
 
-      # rails r 'p TsMaster::Stock.sample(mate: 3, max: 10).collect(&:position)'
+      # rails r 'p TsMaster::Question.sample(mate: 3, max: 10).collect(&:position)'
       def sample(params = {})
         params = {
           :mate      => 3,  # N手詰

@@ -139,7 +139,7 @@ export default {
   },
   data() {
     return {
-      stocks: null,
+      questions: null,
       mode: "is_mode_stop",
       countdown_counter:  null, // カウントダウン用カウンター
       sp_body:            null, // 今のセル
@@ -265,11 +265,11 @@ export default {
       this.sp_body_reset()
 
       const params = {
-        stocks_fetch: true,
+        questions_fetch: true,
         rule_key: this.current_rule.key,
       }
       this.$axios.$get("/api/ts_master/time_records.json", {params: params}).then(e => {
-        this.stocks = e.stocks
+        this.questions = e.questions
 
         this.sound_play("click")
         this.mode = "is_mode_ready"
@@ -416,8 +416,8 @@ export default {
     },
 
     place_next_set() {
-      const stock = this.stocks[this.o_count]
-      this.sp_body = `position sfen ${stock.sfen}`
+      const question = this.questions[this.o_count]
+      this.sp_body = `position sfen ${question.sfen}`
       // this.sfen_parse(this.sp_body)
       // this.sp_viewpoint
 

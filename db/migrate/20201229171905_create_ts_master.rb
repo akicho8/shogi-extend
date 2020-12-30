@@ -10,9 +10,14 @@ class CreateTsMaster < ActiveRecord::Migration[5.1]
       t.timestamps           null: false
     end
     create_table :ts_master_rules, force: true do |t|
-      t.string :key, null: false
+      t.string :key,       null: false
       t.integer :position, null: false, index: true
       t.timestamps
+    end
+    create_table :ts_master_questions, force: true do |t|
+      t.string :sfen,      null: false
+      t.integer :mate,     null: false, index: true
+      t.integer :position, null: false, index: true
     end
   end
 end

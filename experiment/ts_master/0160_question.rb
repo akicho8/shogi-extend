@@ -1,17 +1,17 @@
 require "./setup"
 
-Stock.destroy_all
-Stock.setup(mate: 3, max: 1)
-Stock.count                     # => 1
-Stock.sample(mate: 3, max: 2) rescue $!           # => #<RuntimeError: 3手詰問題を2件取得したかったが1件しかありません>
+Question.destroy_all
+Question.setup(mate: 3, max: 1)
+Question.count                     # => 1
+Question.sample(mate: 3, max: 2) rescue $!           # => #<RuntimeError: 3手詰問題を2件取得したかったが1件しかありません>
 
-Stock.destroy_all
-Stock.setup(mate: 3, max: 10)
-Stock.count                     # => 10
+Question.destroy_all
+Question.setup(mate: 3, max: 10)
+Question.count                     # => 10
 srand(0)
-Stock.sample(mate: 3, max: 5).collect(&:position) # => [5, 0, 3, 7, 9]
+Question.sample(mate: 3, max: 5).collect(&:position) # => [5, 0, 3, 7, 9]
 
-tp Stock
+tp Question
 # >> |-----+---------------------------------------------------------------------------------------+------+----------+---------------------------+---------------------------|
 # >> | id  | sfen                                                                                  | mate | position | created_at                | updated_at                |
 # >> |-----+---------------------------------------------------------------------------------------+------+----------+---------------------------+---------------------------|

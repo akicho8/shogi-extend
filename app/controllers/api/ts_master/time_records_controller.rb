@@ -24,7 +24,7 @@
 module Api
   module TsMaster
     class TimeRecordsController < ApplicationController
-      # curl http://0.0.0.0:3000/api/ts_master/time_records?stocks_fetch=true&rule_key=rule_mate3_type1
+      # curl http://0.0.0.0:3000/api/ts_master/time_records?questions_fetch=true&rule_key=rule_mate3_type1
       # curl http://0.0.0.0:3000/api/ts_master/time_records?config_fetch=true
       # curl http://0.0.0.0:3000/api/ts_master/time_records?chart_scope_key=chart_scope_recently&chart_rule_key=rule_mate3_type1
       # curl http://0.0.0.0:3000/api/ts_master/time_records?scope_key=scope_today&entry_name_uniq_p=false
@@ -35,10 +35,10 @@ module Api
             return
           end
 
-          if params[:stocks_fetch]
+          if params[:questions_fetch]
             rule_info = ::TsMaster::RuleInfo.fetch(params[:rule_key])
-            stocks = rule_info.stock_sample
-            render json: { stocks: stocks }
+            questions = rule_info.question_sample
+            render json: { questions: questions }
             return
           end
 

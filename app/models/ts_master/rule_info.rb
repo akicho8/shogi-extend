@@ -78,8 +78,8 @@ module TsMaster
       end
     end
 
-    def stock_sample
-      Stock.sample(mate: mate, max: o_count_max)
+    def question_sample
+      Question.sample(mate: mate, max: o_count_max)
     end
 
     def o_count_max
