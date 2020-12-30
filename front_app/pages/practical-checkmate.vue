@@ -13,10 +13,10 @@ export default {
   computed: {
     meta() {
       return {
-        title: "符号の鬼",
-        description: "将棋の符号を覚えるツールです",
+        title: "実戦詰将棋『一期一会』",
+        description: "やねうら王の詰将棋500万問からﾗﾝﾀﾞﾑに出題",
         og_description: this.config.description,
-        og_image_key: "checkmate",
+        og_image_key: "practical-checkmate",
         twitter_card_is_small: true,
       }
     },

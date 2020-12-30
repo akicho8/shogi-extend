@@ -38,6 +38,7 @@ LIST_ALL = [
   { url: "/cpu-battle",                                                              validations: { "title" => /対戦/,                                                                                                                                              }},
   { url: "/training",                                                                validations: { "title" => /トレーニング/,                                                                                                                                      }},
   { url: "/style-editor",                                                            validations: { "title" => /スタイルエディタ/,                                                                                                                                   }},
+  { url: "/practical-checkmate",                                                     validations: { "title" => /実戦詰将棋/,                                                                                                                                   }},
 ]
 
 require "bundler/setup"
