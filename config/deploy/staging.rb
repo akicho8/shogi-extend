@@ -2,7 +2,7 @@ server 'shogi-flow.xyz', user: 'deploy', roles: %w{app db web}
 
 set :rbenv_ruby, '2.6.5'
 
-set :keep_releases, 5
+set :keep_releases, 1
 
 # 最初にアプリ削除する？
 if ENV["APP_RESET"] == "1"
