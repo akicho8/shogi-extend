@@ -15,6 +15,6 @@
 
 module Actb
   class Skill < ApplicationRecord
-    include StaticMod
+    include MemoryRecordBind
   end
 end

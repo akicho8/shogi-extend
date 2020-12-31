@@ -288,7 +288,7 @@ export default {
 
 <style lang="sass">
 .SwarsBattleDownload
-  .MainSection
+  .MainSection.section
     +mobile
       padding: 1.4rem 1.5rem
 

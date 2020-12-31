@@ -76,7 +76,7 @@ export default {
 
 <style lang="sass">
 .SwarsSearchDefaultKey
-  .MainSection
+  .MainSection.section
     .container
       max-width: 65ch
     .notification

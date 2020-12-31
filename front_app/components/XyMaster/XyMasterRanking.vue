@@ -1,21 +1,21 @@
 <template lang="pug">
-.column.is-5.XyMasterRanking(v-if="base.idol_p && base.xy_records_hash")
-  b-field.xy_scope_info_field
-    template(v-for="e in base.XyScopeInfo.values")
-      b-radio-button(v-model="base.xy_scope_key" :native-value="e.key" @input="sound_play('click')")
+.column.is-5.XyMasterRanking(v-if="base.idol_p && base.time_records_hash")
+  b-field.scope_info_field
+    template(v-for="e in base.ScopeInfo.values")
+      b-radio-button(v-model="base.scope_key" :native-value="e.key" @input="sound_play('click')")
         | {{e.name}}
 
   b-tabs(v-model="base.current_rule_index" expanded @input="sound_play('click')")
-    template(v-for="e in base.XyRuleInfo.values")
+    template(v-for="e in base.RuleInfo.values")
       b-tab-item(:label="e.name" :value="e.key")
         b-table(
-          :data="base.xy_records_hash[e.key]"
+          :data="base.time_records_hash[e.key]"
           :paginated="true"
           :per-page="base.config.per_page"
           :current-page.sync="base.current_pages[base.current_rule_index]"
           :pagination-simple="false"
           :mobile-cards="false"
-          :row-class="(row, index) => row.id === (base.xy_record && base.xy_record.id) && 'is-selected'"
+          :row-class="(row, index) => row.id === (base.time_record && base.time_record.id) && 'is-selected'"
           :narrowed="true"
           default-sort-direction="desc"
           )
@@ -46,9 +46,9 @@ export default {
 
 .XyMasterRanking
   +mobile
-    margin-top: $xy_common_gap
+    margin-top: $xy_master_common_gap
 
-  .xy_scope_info_field
+  .scope_info_field
     .field
       +mobile
         justify-content: center

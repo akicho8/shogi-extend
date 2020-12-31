@@ -8,9 +8,16 @@ RSpec.describe "その他", type: :system do
   end
 
   it "符号の鬼" do
-    XyRecord.setup
+    XyMaster.setup
     visit "http://localhost:4000/xy"
     expect(page).to have_content "符号の鬼"
+    doc_image
+  end
+
+  it "実戦詰将棋" do
+    TsMaster.setup
+    visit "http://localhost:4000/practical-checkmate"
+    expect(page).to have_content "実戦詰将棋"
     doc_image
   end
 
@@ -26,27 +33,27 @@ RSpec.describe "その他", type: :system do
   #     expect(page).to have_content "Rails"
   #     doc_image
   #   end
-  # 
+  #
   #   describe "詳細" do
   #     it "囲い" do
   #       visit "/tactics/ダイヤモンド美濃"
   #       expect(page).to have_content "ダイヤモンド美濃"
   #       doc_image
   #     end
-  # 
+  #
   #     it "戦型" do
   #       visit "/tactics/富沢キック"
   #       expect(page).to have_content "ポンポン桂"
   #       doc_image
   #     end
-  # 
+  #
   #     it "手筋" do
   #       visit "/tactics/パンツを脱ぐ"
   #       expect(page).to have_content "パンツを脱ぐ"
   #       doc_image
   #     end
   #   end
-  # 
+  #
   #   it "戦法ツリー" do
   #     visit "/tactics-tree"
   #     expect(page).to have_content "Rails"

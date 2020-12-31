@@ -58,5 +58,5 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> |                tsl_leagues | 2  |
 # >> |            tsl_memberships | 56 |
 # >> |                  tsl_users | 56 |
-# >> |                 xy_records | 4  |
+# >> |                 time_records | 4  |
 # >> |----------------------------+----|

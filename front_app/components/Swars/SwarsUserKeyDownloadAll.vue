@@ -120,7 +120,7 @@ export default {
 
 <style lang="sass">
 .SwarsUserKeyDownloadAll
-  .MainSection
+  .MainSection.section
     .container
       max-width: 65ch
     .notification

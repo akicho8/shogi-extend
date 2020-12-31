@@ -20,7 +20,7 @@ every("5 3 * * *") do
     # "Swars::Crawler::RegularCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
 
-    "XyRecord.entry_name_blank_scope.destroy_all",
+    "TimeRecord.entry_name_blank_scope.destroy_all",
     "Swars::Battle.old_record_destroy",
     "FreeBattle.old_record_destroy",
 
@@ -49,6 +49,16 @@ if @environment == "production"
   every("30 4 * * *") { command %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction --result-file /var/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql shogi_web_production) }
   every("45 4 * * *") { command %(ruby -r fileutils -e 'files = Dir["/var/backup/*.sql"].sort; FileUtils.rm(files - files.last(10))') }
   every("0 0 1 * *")  { runner %(Actb::Season.create!) }
+end
+
+if @environment == "production"
+  every("15 1 31 12 *") do
+    runner [
+      "SlackAgent.message_send(key: 'Question', body: 'start')",
+      "TsMaster::Question.setup(reset: true)",
+      "SlackAgent.message_send(key: 'Question', body: 'end')",
+    ].join(";")
+  end
 end
 
 # every("30 6 * * *")   { runner "Swars::Battle.import(:expert_import, sleep: 5)"                                                                  }

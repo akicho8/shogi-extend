@@ -7,7 +7,7 @@ client-only
 export default {
   name: "xy",
   async asyncData({ $axios, query }) {
-    const config = await $axios.$get("/api/xy", {params: {config_fetch: true, ...query}})
+    const config = await $axios.$get("/api/xy_master/time_records", {params: {config_fetch: true, ...query}})
     return { config }
   },
   computed: {

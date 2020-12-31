@@ -63,7 +63,7 @@ export default {
 .SwarsUserKeyKentoApi
   min-height: 100vh
 
-  .MainSection
+  .MainSection.section
     &:first-of-type
       padding-top: 2.6rem
 

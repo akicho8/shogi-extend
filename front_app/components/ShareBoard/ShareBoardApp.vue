@@ -1,3 +1,4 @@
+
 <template lang="pug">
 client-only
   .ShareBoardApp
@@ -11,26 +12,30 @@ client-only
       p URL: {{current_url}}
       p サイドバー {{sidebar_p}}
 
-    b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right v-model="sidebar_p")
-      .mx-5.my-5
-        b-menu-list(label="Action")
-          b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
-          b-menu-item(label="視点設定" @click="abstract_viewpoint_setting_handle")
-          b-menu-item(label="盤面リセット" @click="reset_handle")
-        b-menu-list(label="Edit")
-          b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.sp_run_mode === 'edit_mode'}")
-          b-menu-item(label="タイトル変更" @click="title_edit")
-          b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
-        b-menu-list(label="Export")
-          b-menu-item(label="局面URLコピー" @click="current_url_copy_handle")
-          b-menu-item(label="KIF コピー" @click="kifu_copy_handle('kif')")
-          b-menu-item(label="KIF ダウンロード" :href="kif_download_url" @click="sound_play('click')")
-          b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="shift_jis_kif_download_url" @click="sound_play('click')")
-          b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
-          b-menu-item(label="SFEN コピー" @click="kifu_copy_handle('sfen')")
-        b-menu-list(label="検討")
-          b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
-          b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
+    b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model="sidebar_p")
+      .mx-4.my-4
+        .is-flex.is-justify-content-start.is-align-items-center
+          b-button(@click="sidebar_toggle" icon-left="menu")
+        .mt-4
+          b-menu
+            b-menu-list(label="検討")
+              b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
+              b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
+              b-menu-item(label="コピー" @click="kifu_copy_handle('kif')")
+            b-menu-list(label="Action")
+              b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
+              b-menu-item(label="視点設定" @click="abstract_viewpoint_setting_handle")
+              b-menu-item(label="盤面リセット" @click="reset_handle")
+            b-menu-list(label="Edit")
+              b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.sp_run_mode === 'edit_mode'}")
+              b-menu-item(label="タイトル変更" @click="title_edit")
+              b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
+            b-menu-list(label="Export")
+              b-menu-item(label="局面URLコピー" @click="current_url_copy_handle")
+              b-menu-item(label="SFEN コピー" @click="kifu_copy_handle('sfen')")
+              b-menu-item(label="KIF ダウンロード" :href="kif_download_url" @click="sound_play('click')")
+              b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="shift_jis_kif_download_url" @click="sound_play('click')")
+              b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
 
     //- b-navbar(type="is-dark" wrapper-class="container")
     //-   template(slot="start")
@@ -45,7 +50,7 @@ client-only
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(@click="title_edit")
           | {{current_title}}
-          span.mx-1(v-if="sp_run_mode === 'play_mode'") \#{{turn_offset}}
+          span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
       template(slot="end")
         b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="twitter" type="is-white")
@@ -507,7 +512,9 @@ export default {
   .sidebar-content
     width: unset
 
-  .menu-label:not(:first-child)
+  // .menu-label:not(:first-child)
+  //   margin-top: 1.5em
+  .menu-label
     margin-top: 2em
 
 .ShareBoardApp

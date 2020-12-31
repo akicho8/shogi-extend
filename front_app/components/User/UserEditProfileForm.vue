@@ -121,7 +121,7 @@ export default {
 .UserEditProfileForm
   min-height: 100vh
 
-  .MainSection
+  .MainSection.section
     padding-top: 2.8rem
 
   .image

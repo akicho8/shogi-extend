@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_25_220100) do
+ActiveRecord::Schema.define(version: 2020_12_29_171907) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1077,6 +1077,37 @@ ActiveRecord::Schema.define(version: 2020_11_25_220100) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "ts_master_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "sfen", null: false
+    t.integer "mate", null: false
+    t.integer "position", null: false
+    t.index ["mate", "position"], name: "index_ts_master_questions_on_mate_and_position", unique: true
+    t.index ["mate"], name: "index_ts_master_questions_on_mate"
+    t.index ["position"], name: "index_ts_master_questions_on_position"
+  end
+
+  create_table "ts_master_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["position"], name: "index_ts_master_rules_on_position"
+  end
+
+  create_table "ts_master_time_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "entry_name", null: false
+    t.string "summary"
+    t.bigint "rule_id", null: false
+    t.integer "x_count", null: false
+    t.float "spent_sec", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entry_name"], name: "index_ts_master_time_records_on_entry_name"
+    t.index ["rule_id"], name: "index_ts_master_time_records_on_rule_id"
+    t.index ["user_id"], name: "index_ts_master_time_records_on_user_id"
+  end
+
   create_table "tsl_leagues", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "generation", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -1153,18 +1184,26 @@ ActiveRecord::Schema.define(version: 2020_11_25_220100) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  create_table "xy_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "xy_master_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["position"], name: "index_xy_master_rules_on_position"
+  end
+
+  create_table "xy_master_time_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
+    t.bigint "rule_id", null: false, comment: "ルール"
     t.string "entry_name", null: false
     t.string "summary"
-    t.string "xy_rule_key", null: false
     t.integer "x_count", null: false
     t.float "spent_sec", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["entry_name"], name: "index_xy_records_on_entry_name"
-    t.index ["user_id"], name: "index_xy_records_on_user_id"
-    t.index ["xy_rule_key"], name: "index_xy_records_on_xy_rule_key"
+    t.index ["entry_name"], name: "index_xy_master_time_records_on_entry_name"
+    t.index ["rule_id"], name: "index_xy_master_time_records_on_rule_id"
+    t.index ["user_id"], name: "index_xy_master_time_records_on_user_id"
   end
 
   add_foreign_key "actb_bad_marks", "actb_questions", column: "question_id"

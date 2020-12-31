@@ -84,6 +84,55 @@
 
 # == Schema Information ==
 #
+# Time record (ts_master_time_records as TsMaster::TimeRecord)
+#
+# |------------+------------+-------------+-------------+--------------+-------|
+# | name       | desc       | type        | opts        | refs         | index |
+# |------------+------------+-------------+-------------+--------------+-------|
+# | id         | ID         | integer(8)  | NOT NULL PK |              |       |
+# | user_id    | User       | integer(8)  |             | => ::User#id | A     |
+# | entry_name | Entry name | string(255) | NOT NULL    |              | B     |
+# | summary    | Summary    | string(255) |             |              |       |
+# | rule_id    | Rule       | integer(8)  | NOT NULL    |              | C     |
+# | x_count    | X count    | integer(4)  | NOT NULL    |              |       |
+# | spent_sec  | Spent sec  | float(24)   | NOT NULL    |              |       |
+# | created_at | 作成日時   | datetime    | NOT NULL    |              |       |
+# | updated_at | 更新日時   | datetime    | NOT NULL    |              |       |
+# |------------+------------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Rule (ts_master_rules as TsMaster::Rule)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Question (ts_master_questions as TsMaster::Question)
+#
+# |----------+------+-------------+-------------+------+-------|
+# | name     | desc | type        | opts        | refs | index |
+# |----------+------+-------------+-------------+------+-------|
+# | id       | ID   | integer(8)  | NOT NULL PK |      |       |
+# | sfen     | Sfen | string(255) | NOT NULL    |      |       |
+# | mate     | Mate | integer(4)  | NOT NULL    |      | A! B  |
+# | position | 順序 | integer(4)  | NOT NULL    |      | A! C  |
+# |----------+------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # Membership (tsl_memberships as Tsl::Membership)
 #
 # |--------------------------+--------------------------+-------------+-------------+------------+-------|
@@ -138,28 +187,6 @@
 # | created_at          | 作成日時            | datetime    | NOT NULL    |      |       |
 # | updated_at          | 更新日時            | datetime    | NOT NULL    |      |       |
 # |---------------------+---------------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Xy record (xy_records as XyRecord)
-#
-# |-------------+-------------+-------------+-------------+--------------+-------|
-# | name        | desc        | type        | opts        | refs         | index |
-# |-------------+-------------+-------------+-------------+--------------+-------|
-# | id          | ID          | integer(8)  | NOT NULL PK |              |       |
-# | user_id     | User        | integer(8)  |             | => ::User#id | A     |
-# | entry_name  | Entry name  | string(255) | NOT NULL    |              | B     |
-# | summary     | Summary     | string(255) |             |              |       |
-# | xy_rule_key | Xy rule key | string(255) | NOT NULL    |              | C     |
-# | x_count     | X count     | integer(4)  | NOT NULL    |              |       |
-# | spent_sec   | Spent sec   | float(24)   | NOT NULL    |              |       |
-# | created_at  | 作成日時    | datetime    | NOT NULL    |              |       |
-# | updated_at  | 更新日時    | datetime    | NOT NULL    |              |       |
-# |-------------+-------------+-------------+-------------+--------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
@@ -283,6 +310,42 @@
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
 #--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Time record (xy_master_time_records as XyMaster::TimeRecord)
+#
+# |------------+------------+-------------+-------------+--------------+-------|
+# | name       | desc       | type        | opts        | refs         | index |
+# |------------+------------+-------------+-------------+--------------+-------|
+# | id         | ID         | integer(8)  | NOT NULL PK |              |       |
+# | user_id    | User       | integer(8)  |             | => ::User#id | A     |
+# | rule_id    | Rule       | integer(8)  | NOT NULL    |              | B     |
+# | entry_name | Entry name | string(255) | NOT NULL    |              | C     |
+# | summary    | Summary    | string(255) |             |              |       |
+# | x_count    | X count    | integer(4)  | NOT NULL    |              |       |
+# | spent_sec  | Spent sec  | float(24)   | NOT NULL    |              |       |
+# | created_at | 作成日時   | datetime    | NOT NULL    |              |       |
+# | updated_at | 更新日時   | datetime    | NOT NULL    |              |       |
+# |------------+------------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Rule (xy_master_rules as XyMaster::Rule)
+#
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #

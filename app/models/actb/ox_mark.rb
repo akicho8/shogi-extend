@@ -15,6 +15,6 @@
 
 module Actb
   class OxMark < ApplicationRecord
-    include StaticMod
+    include MemoryRecordBind
   end
 end

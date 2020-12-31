@@ -71,7 +71,7 @@ export default {
 
 <style lang="sass">
 .ThreeStageLeagueApp
-  .MainSection
+  .MainSection.section
     +mobile
       padding-right: 0.25rem
       padding-left: 0.25rem

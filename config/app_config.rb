@@ -15,7 +15,8 @@ AppConfig.deep_merge!({
     :bot_email                           =>  "shogi.extend+bot@gmail.com",
 
     ################################################################################ redis
-    :redis_db_for_xy_rule_info           => 2,    # 符号の鬼のランキング用
+    :redis_db_for_xy_master              => 2,    # 符号の鬼のランキング用
+    :redis_db_for_ts_master              => 3,    # 実戦詰将棋
     :redis_db_for_actb                   => 4,    # actb
     :redis_db_for_sidekiq                => 5,    # sidekiq
     :redis_db_for_emox                   => 7,    # emox

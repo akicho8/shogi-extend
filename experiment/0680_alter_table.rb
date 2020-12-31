@@ -66,4 +66,4 @@ end
 # >> mysql -u root shogi_web_development -te 'alter table tsl_memberships convert to character set utf8mb4 collate utf8mb4_bin'
 # >> mysql -u root shogi_web_development -te 'alter table tsl_users convert to character set utf8mb4 collate utf8mb4_bin'
 # >> mysql -u root shogi_web_development -te 'alter table users convert to character set utf8mb4 collate utf8mb4_bin'
-# >> mysql -u root shogi_web_development -te 'alter table xy_records convert to character set utf8mb4 collate utf8mb4_bin'
+# >> mysql -u root shogi_web_development -te 'alter table time_records convert to character set utf8mb4 collate utf8mb4_bin'
