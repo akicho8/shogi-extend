@@ -46,9 +46,9 @@ module TsMaster
       when Rails.env.production?
         nil
       when Rails.env.staging?
-        500
+        300
       else
-        100
+        300
       end
     end
 

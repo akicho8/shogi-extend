@@ -8,11 +8,11 @@ module TsMaster
   class RuleInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :rule_mate3_type1,  name: "3手詰",   mate:  3, o_count_max:  50, time_limit: nil, },
-      { key: :rule_mate5_type1,  name: "5手詰",   mate:  5, o_count_max:  25, time_limit: nil, },
-      { key: :rule_mate7_type1,  name: "7手詰",   mate:  7, o_count_max:  10, time_limit: nil, },
-      { key: :rule_mate9_type1,  name: "9手詰",   mate:  9, o_count_max:   5, time_limit: nil, },
-      { key: :rule_mate11_type1, name: "11手詰",  mate: 11, o_count_max:   1, time_limit: nil, },
+      { key: :rule_mate3_type1,  name: "3手詰",   mate:  3, o_count_max: 10, time_limit: nil, },
+      { key: :rule_mate5_type1,  name: "5手詰",   mate:  5, o_count_max: 10, time_limit: nil, },
+      { key: :rule_mate7_type1,  name: "7手詰",   mate:  7, o_count_max:  5, time_limit: nil, },
+      { key: :rule_mate9_type1,  name: "9手詰",   mate:  9, o_count_max:  5, time_limit: nil, },
+      { key: :rule_mate11_type1, name: "11手詰",  mate: 11, o_count_max:  3, time_limit: nil, },
     ]
 
     cattr_accessor(:rank_max) { 100 }  # 位まで表示
