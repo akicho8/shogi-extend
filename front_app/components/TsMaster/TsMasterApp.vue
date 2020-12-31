@@ -599,7 +599,7 @@ export default {
       return this.questions[this.o_count]
     },
     current_question_location_key() {
-      return this.sfen_parse(this.current_question_sfen).current_question_location_key
+      return this.sfen_parse(this.current_question_sfen).base_location.key
     },
   },
 }
