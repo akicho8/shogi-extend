@@ -14,7 +14,7 @@
   MainNavbar(v-if="is_mode_idol")
     template(slot="brand")
       NavbarItemHome
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'checkmate'}") 実戦詰将棋『一期一会』
+      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'practical-checkmate'}") 実戦詰将棋『一期一会』
     template(slot="end")
       b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
         b-navbar-item(@click="ls_reset") ブラウザに記憶した情報の削除
