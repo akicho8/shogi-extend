@@ -39,7 +39,7 @@
     li: ExternalLink(beep href="https://soundeffect-lab.info/") 効果音ラボ
     li: ExternalLink(beep href="https://otologic.jp") OtoLogic
 
-  .section_title 実戦詰将棋問題集
+  .section_title 実戦詰将棋問題
   ul
     li: ExternalLink(beep href="http://yaneuraou.yaneu.com/2020/12/25/christmas-present/") やねうら王公式クリスマスプレゼント詰将棋500万問
 
