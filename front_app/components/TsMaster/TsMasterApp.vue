@@ -341,6 +341,7 @@ export default {
     },
 
     sp_body_reset() {
+      // this.sp_body = "position sfen l6n+B/2n6/p1p+R2s1p/+b3pk1p1/2GN1pp2/3P3s1/PP1l1P2P/3S1G3/+r1PK4L b 2GSNPl4p 95"
       this.sp_body = ""
       this.sp_viewpoint = "black"
     },
@@ -640,6 +641,8 @@ export default {
 
     .CustomShogiPlayer
       +mobile
+        --sp_stand_piece_w: 40px // 駒台のセル(W)
+        --sp_stand_piece_h: 40px // 駒台のセル(H)
         --sp_piece_count_gap_bottom: 58%
 
   .next_button
@@ -660,5 +663,5 @@ export default {
   &.is_mode_active
     .MainSection.section
       +mobile
-        padding: 0.5rem 0 0
+        padding: 0.75rem 0 0
 </style>
