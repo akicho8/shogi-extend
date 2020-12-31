@@ -8,8 +8,8 @@
 # |----------+------+-------------+-------------+------+-------|
 # | id       | ID   | integer(8)  | NOT NULL PK |      |       |
 # | sfen     | Sfen | string(255) | NOT NULL    |      |       |
-# | mate     | Mate | integer(4)  | NOT NULL    |      | A     |
-# | position | 順序 | integer(4)  | NOT NULL    |      | B     |
+# | mate     | Mate | integer(4)  | NOT NULL    |      | A! B  |
+# | position | 順序 | integer(4)  | NOT NULL    |      | A! C  |
 # |----------+------+-------------+-------------+------+-------|
 
 require 'rails_helper'

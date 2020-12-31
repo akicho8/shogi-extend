@@ -1187,20 +1187,20 @@ ActiveRecord::Schema.define(version: 2020_12_29_171906) do
   create_table "xy_master_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["position"], name: "index_xy_master_rules_on_position"
   end
 
-  create_table "xy_master_time_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+  create_table "xy_master_time_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id"
+    t.bigint "rule_id", null: false, comment: "ルール"
     t.string "entry_name", null: false
     t.string "summary"
     t.integer "x_count", null: false
     t.float "spent_sec", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "rule_id", null: false, comment: "ルール"
     t.index ["entry_name"], name: "index_xy_master_time_records_on_entry_name"
     t.index ["rule_id"], name: "index_xy_master_time_records_on_rule_id"
     t.index ["user_id"], name: "index_xy_master_time_records_on_user_id"

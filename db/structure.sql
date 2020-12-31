@@ -1584,6 +1584,7 @@ CREATE TABLE `ts_master_questions` (
   `mate` int(11) NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_ts_master_questions_on_mate_and_position` (`mate`,`position`),
   KEY `index_ts_master_questions_on_mate` (`mate`),
   KEY `index_ts_master_questions_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -1723,11 +1724,11 @@ CREATE TABLE `xy_master_rules` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `position` int(11) NOT NULL,
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_xy_master_rules_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xy_master_time_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1735,17 +1736,17 @@ DROP TABLE IF EXISTS `xy_master_time_records`;
 CREATE TABLE `xy_master_time_records` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL,
+  `rule_id` bigint(20) NOT NULL COMMENT 'ルール',
   `entry_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `summary` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `x_count` int(11) NOT NULL,
   `spent_sec` float NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `rule_id` bigint(20) NOT NULL COMMENT 'ルール',
   PRIMARY KEY (`id`),
   KEY `index_xy_master_time_records_on_user_id` (`user_id`),
-  KEY `index_xy_master_time_records_on_entry_name` (`entry_name`),
-  KEY `index_xy_master_time_records_on_rule_id` (`rule_id`)
+  KEY `index_xy_master_time_records_on_rule_id` (`rule_id`),
+  KEY `index_xy_master_time_records_on_entry_name` (`entry_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1780,10 +1781,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20201103121300'),
 ('20201107095900'),
 ('20201125220100'),
-('20201229110300'),
-('20201229110301'),
-('20201229110303'),
-('20201229110304'),
-('20201229171905');
+('20201229171906');
 
 
