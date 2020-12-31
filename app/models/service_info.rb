@@ -26,7 +26,7 @@ class ServiceInfo
       ],
     },
     {
-      display_p: !Rails.env.production?,
+      display_p: true,
       nuxt_link_to: {path: "/practical-checkmate"},
       title: "実戦詰将棋『一期一会』",
       new_p: true,
