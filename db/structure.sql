@@ -1600,7 +1600,7 @@ CREATE TABLE `ts_master_rules` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_ts_master_rules_on_position` (`position`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `ts_master_time_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1781,6 +1781,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20201103121300'),
 ('20201107095900'),
 ('20201125220100'),
-('20201229171906');
+('20201229171906'),
+('20201229171907');
 
 
