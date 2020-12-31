@@ -24,6 +24,18 @@ module TsMaster
       def sample(params = {})
         QuestionSample.new(self, params).sample
       end
+
+      # TsMaster::Question.group(:mate).count
+      # => {3=>998405, 5=>998827, 7=>999071, 9=>999673, 11=>999998}
+      #
+      # production では3秒かかる
+      # SELECT COUNT(*) AS count_all, `ts_master_questions`.`mate` AS ts_master_questions_mate FROM `ts_master_questions` GROUP BY `ts_master_questions`.`mate`
+      #
+      def group_mate_count
+        Rails.cache.fetch("#{name}/#{__method__}", expires_in: 1.year) do
+          group(:mate).count
+        end
+      end
     end
 
     scope :mate_eq, -> mate { where(:mate => mate) }

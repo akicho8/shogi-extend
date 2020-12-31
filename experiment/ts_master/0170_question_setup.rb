@@ -9,6 +9,8 @@ require "./setup"
 
 ActiveRecord::Base.connection.truncate(Question.table_name)
 TsMaster::Question.setup(mate: [3, 5, 7, 9, 11], block_size: 2, max: 6)
+TsMaster::Question.group_mate_count # => {3=>6, 5=>6, 7=>6, 9=>6, 11=>6}
+
 tp Question
 # >> [3, 2]
 # >> [3, 4]
@@ -25,6 +27,7 @@ tp Question
 # >> [11, 2]
 # >> [11, 4]
 # >> [11, 6]
+# >> "TsMaster::Question/group_mate_count"
 # >> |----+---------------------------------------------------------------------------------------+------+----------|
 # >> | id | sfen                                                                                  | mate | position |
 # >> |----+---------------------------------------------------------------------------------------+------+----------|

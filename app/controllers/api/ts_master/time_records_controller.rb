@@ -76,13 +76,14 @@ module Api
 
       def config_params
         {
-          :rule_info        => ::TsMaster::RuleInfo,
-          :scope_info       => ::TsMaster::ScopeInfo,
-          :chart_scope_info => ::TsMaster::ChartScopeInfo,
-          :per_page         => ::TsMaster::RuleInfo.per_page,
-          :rank_max         => ::TsMaster::RuleInfo.rank_max,
-          :count_all_gteq   => ::TsMaster::RuleInfo.count_all_gteq,
-          :description      => ::TsMaster::RuleInfo.description,
+          :rule_info                 => ::TsMaster::RuleInfo,
+          :scope_info                => ::TsMaster::ScopeInfo,
+          :chart_scope_info          => ::TsMaster::ChartScopeInfo,
+          :per_page                  => ::TsMaster::RuleInfo.per_page,
+          :rank_max                  => ::TsMaster::RuleInfo.rank_max,
+          :count_all_gteq            => ::TsMaster::RuleInfo.count_all_gteq,
+          :description               => ::TsMaster::RuleInfo.description,
+          :question_group_mate_count => ::TsMaster::Question.group_mate_count,
         }
       end
 
