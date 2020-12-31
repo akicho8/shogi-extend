@@ -62,13 +62,6 @@
 
             b-button(@click="rule_dialog_show" icon-right="help")
 
-          //- .DigitBoardTime.is-unselectable
-          //- .vector_container.has-text-weight-bold.is-inline-block(v-if="false")
-          //-   template(v-if="mode === 'is_mode_ready'")
-          //-     | ？？
-          //-   template(v-if="mode === 'is_mode_run'")
-          //-     | {{kanji_human}}
-
           .CustomShogiPlayerWrap
             TsMasterCountdown(:base="base")
             CustomShogiPlayer(
@@ -85,20 +78,11 @@
               :sp_controller="mode === 'is_mode_run' ? 'is_controller_on' : 'is_controller_off'"
             )
 
-          //- .time_container.fixed_font.is-size-3(v-if="false")
-          //-   | {{time_format}}
-          //-
-          //- .buttons.next_button(v-if="mode === 'is_mode_run'")
-          //-   b-button.has-text-weight-bold(@click="next_button" size="is-medium" rounded) NEXT
-
-          //- TsMasterSlider(:base="base")
-
           .box.tweet_box_container.has-text-centered(v-if="mode === 'is_mode_goal'")
             | {{summary}}
             TweetButton.mt-2(:body="tweet_body")
 
         TsMasterRanking(:base="base")
-
       TsMasterChart(:base="base" ref="TsMasterChart")
   DebugPre {{$data}}
   DebugPre {{config}}
@@ -188,13 +172,10 @@ export default {
 
     this.ls_setup()
     this.init_other_variables()
-
-    // this.sp_body = "position sfen ln1gkg1nl/6+P2/2sppps1p/2p3p2/p8/P1P1P3P/2NP1PP2/3s1KSR1/L1+b2G1NL w R2Pbgp 42"
   },
 
   mounted() {
     this.ga_click("実戦詰将棋")
-    // this.sp_object().api_board_clear()
   },
 
   beforeDestroy() {
@@ -240,22 +221,13 @@ export default {
       this.sidebar_p = !this.sidebar_p
     },
 
-    // play_mode_advanced_full_moves_sfen_set() {
-    //   this.sound_play("piece_sound")
-    // },
-
     next_button() {
       this.sound_play("o")
       this.o_count++
       this.goal_check()
       if (this.mode === "is_mode_run") {
         this.place_next_set()
-        // this.sound_play("start")
       }
-      // } else {
-      //   this.x_count++
-      //   this.sound_play("x")
-      // }
     },
 
     time_records_hash_update() {
@@ -305,7 +277,6 @@ export default {
         this.init_other_variables()
         this.latest_rule = this.current_rule
         this.talk_stop()
-        // this.sp_object().api_viewpoint_set(this.current_rule.viewpoint)
         this.interval_counter.start()
       })
     },
@@ -434,7 +405,6 @@ export default {
 
     timer_stop() {
       this.interval_frame.stop()
-      // this.sp_object().api_board_clear()
     },
 
     goal_check() {
@@ -447,29 +417,9 @@ export default {
     place_next_set() {
       this.sp_body      = this.current_question_sfen
       this.sp_viewpoint = this.current_question_location_key
-
-      // this.sp_object().api_sfen_or_kif_set(`position sfen ${question.sfen}`)
-
-      // this.sfen_parse(this.sp_body)
-      // this.sp_viewpoint
-
-      // this.sp_object().api_sfen_or_kif_set(this.sp_body)
-      // this.sp_body = "position sfen ln1gkg1nl/6+P2/2sppps1p/2p3p2/p8/P1P1P3P/2NP1PP2/3s1KSR1/L1+b2G1NL w R2Pbgp 42"
-      // this.sp_object().api_sfen_or_kif_set()
-    },
-
-    // active_p(x, y) {
-    //   if (this.sp_body) {
-    //     return _.isEqual(this.sp_body, {x: x, y: y})
-    //   }
-    // },
-
-    place_random() {
-      return _.random(0, DIMENSION - 1)
     },
 
     time_format_from_msec(v) {
-      // return dayjs.unix(v).format("m:ss.SSS")
       return dayjs.unix(v).format("m:ss")
     },
 
@@ -480,18 +430,13 @@ export default {
     magic_number() {
       return dayjs().format("YYMMDDHHmm")
     },
-
-    // computed 側にすると動かなくなるので注意
-    sp_object() {
-      return this.$refs.main_sp.sp_object()
-    },
   },
 
   computed: {
-    base()             { return this                             },
-    ScopeInfo()      { return ScopeInfo                      },
-    ChartScopeInfo() { return ChartScopeInfo                 },
-    RuleInfo()       { return RuleInfo                       },
+    base()           { return this           },
+    ScopeInfo()      { return ScopeInfo      },
+    ChartScopeInfo() { return ChartScopeInfo },
+    RuleInfo()       { return RuleInfo       },
 
     component_style() {
       return {
@@ -669,10 +614,6 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .TsMasterApp-Sidebar
-  // .sidebar-content
-  //   width: unset
-  // .menu-label:not(:first-child)
-  //   margin-top: 1.5em
   .menu-label
     margin-top: 2em
 
@@ -680,21 +621,6 @@ export default {
   touch-action: manipulation
 
   +bulma_buttons_button_bottom_marginless
-
-  // .DigitBoardTime
-  //   display: flex
-  //   justify-content: center
-  //   align-items: center
-  //   flex-direction: column
-  // margin-top: $ts_master_common_gap
-
-  // .vector_container
-  //   margin-bottom: $ts_master_board_top_bottom_gap
-  //   font-size: 2rem
-  //
-  // .time_container
-  //   line-height: 100%
-  //   margin-top: $ts_master_board_top_bottom_gap
 
   .CustomShogiPlayerWrap
     width: 100%
@@ -713,15 +639,6 @@ export default {
         width: calc(100vmin * 0.66)
 
     .CustomShogiPlayer
-      // --sp_board_padding: 0                  // 盤の隙間なし
-      // --sp_board_color: hsla(0, 0%, 0%, 0)   // 盤の色
-      // --sp_grid_outer_stroke: 2              // 外枠の太さ
-      // --sp_grid_stroke: 1                    // グリッド太さ
-      // --sp_grid_outer_color: hsl(0, 0%, 64%) // グリッド外枠色
-      // --sp_grid_color:       hsl(0, 0%, 73%) // グリッド色
-      // --sp_board_aspect_ratio: 1.0           // 盤を正方形化
-      // --sp_grid_star_size: 16%               // 星の大きさ
-      // --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
       +mobile
         --sp_piece_count_gap_bottom: 58%
 
