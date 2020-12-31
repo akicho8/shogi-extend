@@ -31,7 +31,7 @@
     template(slot="start")
       b-navbar-item.has-text-weight-bold(tag="div")
         span.mx-1 {{current_rule.mate}}手詰
-        span.mx-1.is-family-monospace {{o_count + 1}}/{{current_rule.o_count_max}}
+        span.mx-1.is-family-monospace {{o_count}}/{{current_rule.o_count_max}}
         span.mx-1.is-family-monospace {{time_format}}
         span.mx-1.is-family-monospace \#{{turn_offset}}
     template(slot="end" v-if="mode === 'is_mode_run'")
