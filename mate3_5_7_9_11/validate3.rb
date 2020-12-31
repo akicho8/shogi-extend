@@ -1,7 +1,14 @@
 require File.expand_path("../../config/environment", __FILE__)
 
-Pathname(".").glob("*.txt") do |file|
-  puts file
-  lines = file.readlines(chomp: true).to_a
-  p lines.count
-end
+tp Pathname(".").glob("*.txt").collect { |e|
+  { file: e, count: e.readlines.count }
+}
+# >> |------------+--------|
+# >> | file       | count  |
+# >> |------------+--------|
+# >> | mate3.txt  | 998405 |
+# >> | mate7.txt  | 999071 |
+# >> | mate5.txt  | 998827 |
+# >> | mate9.txt  | 999673 |
+# >> | mate11.txt | 999998 |
+# >> |------------+--------|

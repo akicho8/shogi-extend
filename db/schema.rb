@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_171905) do
+ActiveRecord::Schema.define(version: 2020_12_29_171906) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1081,6 +1081,7 @@ ActiveRecord::Schema.define(version: 2020_12_29_171905) do
     t.string "sfen", null: false
     t.integer "mate", null: false
     t.integer "position", null: false
+    t.index ["mate", "position"], name: "index_ts_master_questions_on_mate_and_position", unique: true
     t.index ["mate"], name: "index_ts_master_questions_on_mate"
     t.index ["position"], name: "index_ts_master_questions_on_position"
   end
@@ -1191,7 +1192,7 @@ ActiveRecord::Schema.define(version: 2020_12_29_171905) do
     t.index ["position"], name: "index_xy_master_rules_on_position"
   end
 
-  create_table "xy_master_time_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "xy_master_time_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "user_id"
     t.string "entry_name", null: false
     t.string "summary"

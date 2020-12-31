@@ -1,5 +1,5 @@
 class CreateTsMaster < ActiveRecord::Migration[5.1]
-  def up
+  def change
     create_table :ts_master_time_records, force: true do |t|
       t.belongs_to :user,    null: true
       t.string :entry_name,  null: false, index: true
@@ -18,6 +18,7 @@ class CreateTsMaster < ActiveRecord::Migration[5.1]
       t.string :sfen,      null: false
       t.integer :mate,     null: false, index: true
       t.integer :position, null: false, index: true
+      t.index [:mate, :position], unique: true
     end
   end
 end

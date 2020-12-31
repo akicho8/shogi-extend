@@ -25,6 +25,7 @@
     template(slot="end")
       b-navbar-item.has-text-weight-bold(@click="next_button" v-if="mode === 'is_mode_run'")
         | NEXT
+        b-icon.ml-1(icon="arrow-right" size="is-small")
 
   b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
