@@ -1,5 +1,16 @@
 <template lang="pug">
 .TsMasterApp(:class="[mode, {is_mode_idol, is_mode_active}]" :style="component_style")
+  b-sidebar.TsMasterApp-Sidebar.is-unselectable(fullheight right overlay v-model="sidebar_p")
+    .mx-4.my-4
+      .is-flex.is-justify-content-start.is-align-items-center
+        b-button(@click="sidebar_toggle" icon-left="menu")
+      b-menu(v-if="question_exist_p && mode === 'is_mode_run'")
+        b-menu-list(label="検討")
+          b-menu-item(target="_blank" tag="a" :href="piyo_shogi_app_with_params_url"  label="ぴよ将棋"     @click="sidebar_toggle")
+          b-menu-item(target="_blank" tag="a" :href="kento_app_with_params_url"       label="KENTO"        @click="sidebar_toggle")
+          b-menu-item(                                                                label="コピー"       @click="kifu_copy_handle")
+          b-menu-item(target="_blank" tag="a" :href="share_board_app_with_params_url" label="共有将棋盤"   @click="sidebar_toggle")
+
   MainNavbar(v-if="is_mode_idol")
     template(slot="brand")
       NavbarItemHome
@@ -20,12 +31,14 @@
     template(slot="start")
       b-navbar-item.has-text-weight-bold(tag="div")
         span.mx-1 {{current_rule.mate}}手詰
-        span.mx-1.is-family-monospace \#{{o_count + 1}}/{{current_rule.o_count_max}}
+        span.mx-1.is-family-monospace {{o_count + 1}}/{{current_rule.o_count_max}}
         span.mx-1.is-family-monospace {{time_format}}
-    template(slot="end")
-      b-navbar-item.has-text-weight-bold(@click="next_button" v-if="mode === 'is_mode_run'")
+        span.mx-1.is-family-monospace \#{{turn_offset}}
+    template(slot="end" v-if="mode === 'is_mode_run'")
+      b-navbar-item.has-text-weight-bold.px-4(@click="next_button")
         | NEXT
-        b-icon.ml-1(icon="arrow-right" size="is-small")
+      b-navbar-item(@click="sidebar_toggle")
+        b-icon(icon="menu")
 
   b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")
@@ -34,8 +47,6 @@
       b-navbar-item(@click="rebuild_handle") リビルド
 
   MainSection
-    //- PageCloseButton(@click="stop_handle" position="is_absolute" v-if="is_mode_active")
-    //- TsMasterRestart(:base="base" v-if="is_mode_active")
     .container
       .columns
         .column
@@ -63,11 +74,12 @@
             CustomShogiPlayer(
               ref="main_sp"
               :sp_body="sp_body"
-              :sp_flip_if_white="true"
+              :sp_viewpoint="sp_viewpoint"
               sp_mobile_vertical="is_mobile_vertical_on"
               sp_run_mode="play_mode"
               sp_summary="is_summary_off"
               sp_slider="is_slider_off"
+              @update:turn_offset="e => turn_offset = e"
               :sp_sound_body_changed="false"
               :sp_turn="0"
               :sp_controller="mode === 'is_mode_run' ? 'is_controller_on' : 'is_controller_off'"
@@ -110,6 +122,7 @@ import { app_chart       } from "./app_chart.js"
 import { app_keyboard    } from "./app_keyboard.js"
 import { app_debug       } from "./app_debug.js"
 import { app_rule_dialog } from "./app_rule_dialog.js"
+import { app_external_apps } from "./app_external_apps.js"
 
 import ls_support from "@/components/models/ls_support.js"
 
@@ -135,6 +148,7 @@ export default {
     app_keyboard,
     app_debug,
     app_rule_dialog,
+    app_external_apps,
     app_chart,
   ],
   props: {
@@ -146,7 +160,7 @@ export default {
       mode: "is_mode_stop",
       countdown_counter:  null, // カウントダウン用カウンター
       sp_body:            null, // 今のセル
-      sp_viewpoint:       null, // 今のセル
+      sp_viewpoint:       null, // 視点
       o_count:            null, // 正解数
       x_count:            null, // 不正解数
       key_queue:          null, // PCモードでの押したキー
@@ -162,6 +176,8 @@ export default {
       latest_rule:        null, // 最後に挑戦した最新のルール
       interval_counter: new IntervalCounter(this.countdown_func, {early: true, interval: COUNTDOWN_INTERVAL}),
       interval_frame:   new IntervalCounter(this.time_add_func, {early: true}),
+      sidebar_p: false,
+      turn_offset: null,
     }
   },
 
@@ -219,6 +235,11 @@ export default {
   },
 
   methods: {
+    sidebar_toggle() {
+      this.sound_play("click")
+      this.sidebar_p = !this.sidebar_p
+    },
+
     // play_mode_advanced_full_moves_sfen_set() {
     //   this.sound_play("piece_sound")
     // },
@@ -424,8 +445,8 @@ export default {
     },
 
     place_next_set() {
-      const question = this.questions[this.o_count]
-      this.sp_body = `position sfen ${question.sfen}`
+      this.sp_body      = this.current_question_sfen
+      this.sp_viewpoint = this.current_question_location_key
 
       // this.sp_object().api_sfen_or_kif_set(`position sfen ${question.sfen}`)
 
@@ -621,6 +642,20 @@ export default {
       }
     },
     ////////////////////////////////////////////////////////////////////////////////
+    question_exist_p() {
+      if (this.questions) {
+        return this.questions[this.o_count]
+      }
+    },
+    current_question_sfen() {
+      return `position sfen ${this.current_question.sfen}`
+    },
+    current_question() {
+      return this.questions[this.o_count]
+    },
+    current_question_location_key() {
+      return this.sfen_parse(this.current_question_sfen).current_question_location_key
+    },
   },
 }
 </script>
@@ -632,6 +667,14 @@ export default {
   .TsMasterApp
     .column, .buttons, .CustomShogiPlayerWrap, .time_container, .vector_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
+
+.TsMasterApp-Sidebar
+  // .sidebar-content
+  //   width: unset
+  // .menu-label:not(:first-child)
+  //   margin-top: 1.5em
+  .menu-label
+    margin-top: 2em
 
 .TsMasterApp
   touch-action: manipulation

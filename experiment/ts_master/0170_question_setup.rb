@@ -4,7 +4,6 @@ ActiveRecord::Base.logger = nil
 ActiveRecord::Base.connection.truncate(TsMaster::Question.table_name)
 TsMaster::Question.setup(block_size: 5000)
 
-
 ActiveRecord::Base.connection.truncate(Question.table_name)
 Question.setup(mate: [3, 5, 7, 9, 11], block_size: 2, max: 5)
 tp Question
