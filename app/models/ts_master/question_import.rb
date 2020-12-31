@@ -34,7 +34,7 @@ module TsMaster
           model.insert_all!(attributes_list)
           position += attributes_list.count
           p [mate, position] unless Rails.env.test?
-          if position >= params[:max]
+          if params[:max] && position >= params[:max]
             break
           end
         end
