@@ -210,7 +210,8 @@ export default {
 
     tab_index(v) {
       if (this.info) {
-        this.$router.replace({name: "swars-users-key", params: {key: this.info.user.key}, query: {tab_index: this.tab_index}})
+        // https://github.com/vuejs/vue-router/issues/2872
+        this.$router.replace({name: "swars-users-key", params: {key: this.info.user.key}, query: {tab_index: this.tab_index}}).catch(err => {})
       }
     },
   },
@@ -303,7 +304,8 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     update_handle(options = {}) {
-      this.$router.replace({name: "swars-users-key", params: {key: this.info.user.key}, query: {tab_index: this.tab_index, ...options}})
+      // https://github.com/vuejs/vue-router/issues/2872
+      this.$router.replace({name: "swars-users-key", params: {key: this.info.user.key}, query: {tab_index: this.tab_index, ...options}}).catch(err => {})
     },
 
     back_handle() {
