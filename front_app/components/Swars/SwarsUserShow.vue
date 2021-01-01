@@ -231,19 +231,20 @@ export default {
       this.notice_collector_run(e)
       if (e.user_info) {
         this.info = e.user_info
+
+        // 1. 以前の tab_index を設定する
         this.ls_setup()
+
+        // 2. 次にリンクの指定があるときは tab_index を上書きする(順序重要)
+        if ("tab_index" in this.$route.query) {
+          this.tab_index = parseInt(this.$route.query.tab_index)
+        }
       }
     })
   },
 
   mounted() {
     this.ga_click("プレイヤー情報")
-  },
-
-  created() {
-    if ("tab_index" in this.$route.query) {
-      this.tab_index = parseInt(this.$route.query.tab_index)
-    }
   },
 
   methods: {
