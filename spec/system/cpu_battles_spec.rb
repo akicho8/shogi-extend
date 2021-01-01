@@ -31,9 +31,9 @@ RSpec.describe "CPU対戦", type: :system do
       first(".place_2_8").click
       first(".place_5_1").click
       doc_image("3手目")
-      expect(page).to have_content "成りますか？"
-      click_on("成る")
-
+      first(".promote_on_button").click
+      # expect(page).to have_content "成りますか？"
+      # click_on("成る")
       expect(page).to have_content "反則負け"
       doc_image("反則負け")
     end
