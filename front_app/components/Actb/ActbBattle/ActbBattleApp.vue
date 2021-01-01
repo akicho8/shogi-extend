@@ -64,14 +64,14 @@
 
 <script>
 import { support_child } from "../support_child.js"
-import { up_down_scroll_disable } from "../up_down_scroll_disable.js"
+import { scroll_auto_disable } from "../../../plugins/scroll_auto_disable.js"
 import dayjs from "dayjs"
 
 export default {
   name: "ActbBattleApp",
   mixins: [
     support_child,
-    up_down_scroll_disable,
+    scroll_auto_disable,
   ],
 
 }

@@ -11,6 +11,7 @@ import vue_clipboard   from "./vue_clipboard.js"
 import vue_sound       from "./vue_sound.js"
 // import vue_piyo_shogi  from "./vue_piyo_shogi.js"
 import vue_talk        from "./vue_talk.js"
+import { vue_scroll } from "./vue_scroll.js"
 
 import vue_support_nuxt_side from "./vue_support_nuxt_side.js"
 
@@ -26,6 +27,7 @@ Vue.mixin({
     // vue_piyo_shogi,
 
     vue_talk,
+    vue_scroll,
     vue_support_nuxt_side,
   ],
 })

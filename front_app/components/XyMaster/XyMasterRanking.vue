@@ -1,5 +1,5 @@
 <template lang="pug">
-.column.is-5.XyMasterRanking(v-if="base.idol_p && base.time_records_hash")
+.column.is-5.XyMasterRanking(v-if="base.is_mode_idol && base.time_records_hash")
   b-field.scope_info_field
     template(v-for="e in base.ScopeInfo.values")
       b-radio-button(v-model="base.scope_key" :native-value="e.key" @input="sound_play('click')")

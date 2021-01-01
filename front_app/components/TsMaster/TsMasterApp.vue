@@ -181,6 +181,7 @@ export default {
   beforeDestroy() {
     this.interval_counter.stop()
     this.interval_frame.stop()
+    this.scroll_set(true)
   },
 
   watch: {
@@ -278,6 +279,7 @@ export default {
         this.latest_rule = this.current_rule
         this.talk_stop()
         this.interval_counter.start()
+        this.scroll_set(false)
       })
     },
 
@@ -307,6 +309,7 @@ export default {
       this.timer_stop()
       this.interval_counter.stop()
       this.sp_body_reset()
+      this.scroll_set(true)
     },
 
     restart_handle() {
@@ -318,6 +321,7 @@ export default {
       this.mode = "is_mode_goal"
       this.timer_stop()
       this.sp_body_reset()
+      this.scroll_set(true)
       this.talk("おわりました")
 
       if (this.current_entry_name) {

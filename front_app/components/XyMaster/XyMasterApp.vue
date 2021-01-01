@@ -1,6 +1,6 @@
 <template lang="pug">
 .XyMasterApp(:class="mode" :style="component_style")
-  MainNavbar(v-if="idol_p")
+  MainNavbar(v-if="is_mode_idol")
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'xy'}") 符号の鬼
@@ -20,12 +20,12 @@
       b-navbar-item(@click="rebuild_handle") リビルド
 
   MainSection
-    PageCloseButton(@click="stop_handle" position="is_absolute" v-if="playing_p")
-    XyMasterRestart(:base="base" v-if="playing_p")
+    PageCloseButton(@click="stop_handle" position="is_absolute" v-if="is_mode_active")
+    XyMasterRestart(:base="base" v-if="is_mode_active")
     .container
       .columns
         .column
-          .buttons.is-centered.mb-0(v-if="idol_p")
+          .buttons.is-centered.mb-0(v-if="is_mode_idol")
             b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
 
             b-dropdown.is-pulled-left(v-model="rule_key" @click.native="sound_play('click')")
@@ -38,7 +38,7 @@
             b-button(@click="rule_dialog_show" icon-right="help")
 
           .DigitBoardTime.is-unselectable
-            .vector_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p")
+            .vector_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p && is_mode_active")
               template(v-if="mode === 'is_mode_ready'")
                 | ？？
               template(v-if="mode === 'is_mode_run'")
@@ -267,6 +267,7 @@ export default {
       this.talk_stop()
       this.sp_object().api_viewpoint_set(this.current_rule.viewpoint)
       this.interval_counter.start()
+      this.scroll_set(false)
     },
 
     countdown_func(counter) {
@@ -294,6 +295,7 @@ export default {
       this.mode = "is_mode_stop"
       this.timer_stop()
       this.interval_counter.stop()
+      this.scroll_set(true)
     },
 
     restart_handle() {
@@ -304,6 +306,7 @@ export default {
     goal_handle() {
       this.mode = "is_mode_goal"
       this.timer_stop()
+      this.scroll_set(true)
       this.talk("おわりました")
 
       if (this.current_entry_name) {
@@ -509,11 +512,11 @@ export default {
       }
     },
 
-    idol_p() {
+    is_mode_idol() {
       return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal'
     },
 
-    playing_p() {
+    is_mode_active() {
       return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready'
     },
 

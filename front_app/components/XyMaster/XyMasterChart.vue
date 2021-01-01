@@ -1,5 +1,5 @@
 <template lang="pug">
-.XyMasterChart.columns.is-centered(v-show="base.idol_p")
+.XyMasterChart.columns.is-centered(v-show="base.is_mode_idol")
   .column.chart_box_container
     .columns
       template(v-if="development_p")

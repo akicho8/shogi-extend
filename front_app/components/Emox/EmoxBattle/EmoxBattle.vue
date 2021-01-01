@@ -11,13 +11,13 @@
 
 <script>
 import { support_child } from "../support_child.js"
-import { up_down_scroll_disable } from "../../models/up_down_scroll_disable.js"
+import { scroll_auto_disable } from "../../../plugins/scroll_auto_disable.js"
 
 export default {
   name: "EmoxBattle",
   mixins: [
     support_child,
-    up_down_scroll_disable,
+    scroll_auto_disable,
   ],
   props: {
     base: { type: Object, required: true, },
