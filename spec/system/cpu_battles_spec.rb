@@ -21,15 +21,15 @@ RSpec.describe "CPU対戦", type: :system do
     first(:xpath, "//a[text()='対局開始']").click # click_on("対局開始") が動かないので
 
     # 1手目「79の銀を68に移動」
-    first(".place_79").click
-    first(".place_68").click
+    first(".place_7_9").click
+    first(".place_6_8").click
     doc_image("1手目")
     expect(page).to have_content "#2" # CPUがすぐに指したため2手になっている
 
     # 3手目「５一飛成」を指す
     if false
-      first(".place_28").click
-      first(".place_51").click
+      first(".place_2_8").click
+      first(".place_5_1").click
       doc_image("3手目")
       expect(page).to have_content "成りますか？"
       click_on("成る")
