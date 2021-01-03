@@ -41,6 +41,8 @@ export default {
 <style lang="sass">
 .CustomShogiPlayer
   width: 100%
+  --sp_lifted_origin_bg_color: #{$primary}
+
   +mobile
     --sp_stand_piece_w:     28px // 駒台のセル(W)
     --sp_stand_piece_h:     32px // 駒台のセル(H)
