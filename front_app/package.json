@@ -38,7 +38,7 @@
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^10.0.3",
     "secure-ls": "^1.2.6",
-    "shogi-player": "^0.0.242",
+    "shogi-player": "^0.0.243",
     "striptags": "^3.1.1",
     "url-safe-base64": "^1.1.1",
     "vue-color": "^2.8.0",
