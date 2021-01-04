@@ -264,6 +264,8 @@ export default {
           this.toast_ok(`
 局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、
 詰将棋を公開する場合は視点設定を先手固定に変更するのがおすすめです`, {duration: 1000 * 10})
+        if (this.abstract_viewpoint === "self" && false) {
+          this.toast_ok(`局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、詰将棋を公開する場合は視点設定を先手固定に変更するのがおすすめです`, {duration: 1000 * 10})
         }
 
         this.sp_run_mode = "edit_mode"
