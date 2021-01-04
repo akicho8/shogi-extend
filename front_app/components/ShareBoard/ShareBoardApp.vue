@@ -36,6 +36,12 @@ client-only
               b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="shift_jis_kif_download_url" @click="sound_play('click')")
               b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
 
+          .box.mt-5
+            .title.is-5 ヤバい設定
+            b-field(custom-class="is-small" label="操作モードの内部ルール")
+              b-radio-button(size="is-small" v-model="internal_rule" native-value="strict" @input="internal_rule_input_handle") 厳格
+              b-radio-button(size="is-small" v-model="internal_rule" native-value="loose" @input="internal_rule_input_handle" type="is-danger") 自由
+
     //- b-navbar(type="is-dark" wrapper-class="container")
     //-   template(slot="start")
     //-     NavbarItemHome
@@ -102,6 +108,11 @@ client-only
               sp_slider="is_slider_on"
               sp_controller="is_controller_on"
               sp_human_side="both"
+
+              :sp_play_mode_legal_move_only="strict_p"
+              :sp_play_mode_only_own_piece_to_move="strict_p"
+              :sp_play_mode_can_not_kill_same_team_soldier="strict_p"
+
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
               @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
@@ -134,7 +145,8 @@ client-only
 </template>
 
 <script>
-const RUN_MODE_DEFAULT = "play_mode"
+const RUN_MODE_DEFAULT      = "play_mode"
+const INTERNAL_RULE_DEFAULT = "strict"
 
 import _ from "lodash"
 
@@ -156,7 +168,7 @@ export default {
   props: {
     config: { type: Object, required: true },
   },
-    meta() {
+  meta() {
     return {
       title: this.page_title,
     }
@@ -164,9 +176,9 @@ export default {
   data() {
     return {
       // watch して url に反映するもの
-      current_sfen:        this.config.record.sfen_body,           // 渡している棋譜
-      current_title:       this.config.record.title,               // 現在のタイトル
-      turn_offset:         this.config.record.initial_turn,        // 現在の手数
+      current_sfen:        this.config.record.sfen_body,         // 渡している棋譜
+      current_title:       this.config.record.title,             // 現在のタイトル
+      turn_offset:         this.config.record.initial_turn,      // 現在の手数
       abstract_viewpoint: this.config.record.abstract_viewpoint, // Twitter画像の向き
 
       // urlには反映しない
@@ -174,7 +186,8 @@ export default {
       turn_offset_max: null,                         // 最後の手数
 
       record: this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
-      sp_run_mode: this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
+      sp_run_mode:   this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
+      internal_rule: this.defval(this.$route.query.internal_rule, INTERNAL_RULE_DEFAULT),        // 操作モードの内部ルール strict or loose
 
       sidebar_p: false,
     }
@@ -183,6 +196,7 @@ export default {
     // どれかが変更されたらURLを更新
     this.$watch(() => [
       this.sp_run_mode,
+      this.internal_rule,
       this.current_sfen,
       this.turn_offset,
       this.current_title,
@@ -193,17 +207,17 @@ export default {
       //   this.$router.replace({name: "share-board", query: this.current_url_params})
       //   this.$router.replace({query: this.current_url_params})
       // パラメータだけ変更するときは変更してくれるけどエラーになるっぽいのでエラーにぎりつぶす(いいのか？)
-      this.$router.replace({query: this.current_url_params}).catch(e => {
-        if (this.development_p) {
-          console.debug(e)
-        }
-      })
+      this.$router.replace({query: this.current_url_params}).catch(e => {})
     })
   },
   methods: {
     sidebar_toggle() {
       this.sound_play('click')
       this.sidebar_p = !this.sidebar_p
+    },
+
+    internal_rule_input_handle() {
+      this.sound_play('click')
     },
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
@@ -416,6 +430,10 @@ export default {
       return `${this.current_title} ${this.turn_offset}手目`
     },
 
+    strict_p() {
+      return this.internal_rule === "strict"
+    },
+
     current_url_params() {
       const params = {
         body:         this.current_body, // 編集モードでもURLを更新するため
@@ -429,8 +447,11 @@ export default {
       }
 
       // 編集モードでの状態を維持したいのでURLに含めておく
-      if (this.sp_run_mode !== "play_mode") {
+      if (this.sp_run_mode !== RUN_MODE_DEFAULT) {
         params["sp_run_mode"] = this.sp_run_mode
+      }
+      if (this.internal_rule !== INTERNAL_RULE_DEFAULT) {
+        params["internal_rule"] = this.internal_rule
       }
 
       return params
