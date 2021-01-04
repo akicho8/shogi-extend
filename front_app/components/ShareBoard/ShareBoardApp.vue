@@ -37,8 +37,8 @@ client-only
               b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
 
           .box.mt-5
-            .title.is-5 ヤバい設定
-            b-field(custom-class="is-small" label="操作モードの内部ルール")
+            .title.is-5 ☠危険な設定
+            b-field(custom-class="is-small" label="将棋のルール遵守" message="自由にすると自分の手番で相手の駒を動かせるようになるので先手だけを動かして囲いの手順を作ったりするのに向いている。しかし、反則のため他のアプリではおそらく読めない棋譜になる")
               b-radio-button(size="is-small" v-model="internal_rule" native-value="strict" @input="internal_rule_input_handle") 厳格
               b-radio-button(size="is-small" v-model="internal_rule" native-value="free" @input="internal_rule_input_handle" type="is-danger") 自由
 
@@ -519,12 +519,15 @@ export default {
 
 .ShareBoardApp-Sidebar
   .sidebar-content
-    width: unset
+    width: 18rem
 
   // .menu-label:not(:first-child)
   //   margin-top: 1.5em
   .menu-label
     margin-top: 2em
+
+  // .help
+  //   max-width: 20ch
 
 .ShareBoardApp
   .MainSection.section
