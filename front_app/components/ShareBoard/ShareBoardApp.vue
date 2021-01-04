@@ -40,7 +40,7 @@ client-only
             .title.is-5 ヤバい設定
             b-field(custom-class="is-small" label="操作モードの内部ルール")
               b-radio-button(size="is-small" v-model="internal_rule" native-value="strict" @input="internal_rule_input_handle") 厳格
-              b-radio-button(size="is-small" v-model="internal_rule" native-value="loose" @input="internal_rule_input_handle" type="is-danger") 自由
+              b-radio-button(size="is-small" v-model="internal_rule" native-value="free" @input="internal_rule_input_handle" type="is-danger") 自由
 
     //- b-navbar(type="is-dark" wrapper-class="container")
     //-   template(slot="start")
@@ -187,7 +187,7 @@ export default {
 
       record: this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       sp_run_mode:   this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
-      internal_rule: this.defval(this.$route.query.internal_rule, INTERNAL_RULE_DEFAULT),        // 操作モードの内部ルール strict or loose
+      internal_rule: this.defval(this.$route.query.internal_rule, INTERNAL_RULE_DEFAULT),        // 操作モードの内部ルール strict or free
 
       sidebar_p: false,
     }
