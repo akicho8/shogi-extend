@@ -1,4 +1,3 @@
-
 <template lang="pug">
 client-only
   .ShareBoardApp
@@ -176,7 +175,6 @@ export default {
 
       record: this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       sp_run_mode: this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
-      edit_mode_sfen: null,     // 局面編集モードの局面
 
       sidebar_p: false,
     }
@@ -186,7 +184,6 @@ export default {
     this.$watch(() => [
       this.sp_run_mode,
       this.current_sfen,
-      this.edit_mode_sfen,      // 編集モード中でもURLを変更したいため
       this.turn_offset,
       this.current_title,
       this.abstract_viewpoint,
@@ -228,7 +225,8 @@ export default {
     // ・すぐに反映しないのは駒箱が消えてしまうから
     edit_mode_snapshot_sfen_set(v) {
       if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから
-        this.edit_mode_sfen = v
+        this.current_sfen = v
+        this.sfen_share(this.current_sfen)
       }
     },
 
@@ -260,10 +258,6 @@ export default {
       this.sound_play("click")
 
       if (this.sp_run_mode === "play_mode") {
-        if (this.abstract_viewpoint === "self") {
-          this.toast_ok(`
-局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、
-詰将棋を公開する場合は視点設定を先手固定に変更するのがおすすめです`, {duration: 1000 * 10})
         if (this.abstract_viewpoint === "self" && false) {
           this.toast_ok(`局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、詰将棋を公開する場合は視点設定を先手固定に変更するのがおすすめです`, {duration: 1000 * 10})
         }
@@ -274,14 +268,6 @@ export default {
         }
       } else {
         this.sp_run_mode = "play_mode"
-
-        // 局面編集から操作モードに戻した瞬間に局面編集モードでの局面を反映しURLを更新する
-        // 局面編集モードでの変化をそのまま current_sfen に反映しない理由は駒箱の駒が消えるため
-        // 消えるのはsfenに駒箱の情報が含まれないから
-        if (this.edit_mode_sfen) {
-          this.current_sfen = this.edit_mode_sfen
-          this.edit_mode_sfen = null
-        }
       }
     },
 
@@ -483,7 +469,7 @@ export default {
     advanced_p() { return this.turn_offset > this.config.record.initial_turn },
 
     // 常に画面上の盤面と一致している
-    current_body() { return this.edit_mode_sfen || this.current_sfen },
+    current_body() { return this.current_sfen },
 
     tweet_body() {
       let o = ""
