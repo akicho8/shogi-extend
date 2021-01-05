@@ -5,7 +5,7 @@ module Swars
       def default_params
         {
           user_keys: (Rails.env.production? || Rails.env.staging?) ? Rails.application.credentials[:expert_import_user_keys] : ["devuser1"],
-          page_max: (Rails.env.production? || Rails.env.staging?) ? 5 : 3,
+          page_max: Rails.env.production? ? 5 : 1,
           early_break: true,
         }
       end
