@@ -84,6 +84,7 @@ export default {
   },
   methods: {
     async play_handle() {
+      this.sound_play('click')
       if (!this.yomiage_body) {
         await this.$axios.$post("/api/blindfold.json", {sfen: this.sp_body}).then(e => {
           if (e.bs_error) {
@@ -104,6 +105,7 @@ export default {
     stop_handle() {
       this.talk_stop()
       this.talk_now = false
+      this.sound_play('click')
     },
 
     sidebar_toggle() {
@@ -179,10 +181,18 @@ export default {
   .buttons
     .button
       min-width: 6rem
+    +mobile
+      margin-top: 4rem
 
   .MainSection.section
     +mobile
-      padding: 4rem 0 0
-  .EditToolBlock
-    margin-top: 12px
+      padding: 0.75rem 0 0
+  // .EditToolBlock
+  //   margin-top: 12px
+
+  .CustomShogiPlayer
+    +mobile
+      --sp_stand_piece_w: 40px // 駒台のセル(W)
+      --sp_stand_piece_h: 40px // 駒台のセル(H)
+      --sp_piece_count_gap_bottom: 58%
 </style>
