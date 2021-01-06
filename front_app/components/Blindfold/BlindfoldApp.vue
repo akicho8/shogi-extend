@@ -193,6 +193,7 @@ export default {
   .CustomShogiPlayer
     +mobile
       --sp_stand_piece_w: 40px // 駒台のセル(W)
-      --sp_stand_piece_h: 40px // 駒台のセル(H)
-      --sp_piece_count_gap_bottom: 58%
+      --sp_stand_piece_h: 44px // 駒台のセル(H)
+      --sp_piece_count_gap_bottom: 45%
+      --sp_piece_count_font_size: 8px
 </style>
