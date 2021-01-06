@@ -2,6 +2,8 @@
 client-only
   .ShareBoardApp
     DebugBox
+      p room_code: {{JSON.stringify(room_code)}}
+      p user_name: {{JSON.stringify(user_name)}}
       p 手数: {{turn_offset}} / {{turn_offset_max}}
       p SFEN: {{current_sfen}}
       p タイトル: {{current_title}}
@@ -38,7 +40,7 @@ client-only
 
           .box.mt-5
             .title.is-5 ☠危険な設定
-            b-field(custom-class="is-small" label="将棋のルール遵守" message="自由にすると自分の手番で相手の駒を動かせるようになるので先手だけを動かして囲いの手順を作ったりするのに向いている。しかし、反則のため他のアプリではおそらく読めない棋譜になる")
+            b-field(custom-class="is-small" label="将棋のルール遵守" message="自由にすると「自分の手番では自分の駒を動かさないといけない」というルールを無視するため、自分の手番で相手の駒を動かせるようになる。それを利用すると先手の駒だけを動かして囲いの手順を作ったりするのが簡単になる。しかし反則のため他のアプリではおそらく読めない棋譜になる")
               b-radio-button(size="is-small" v-model="internal_rule" native-value="strict" @input="internal_rule_input_handle") 厳格
               b-radio-button(size="is-small" v-model="internal_rule" native-value="free" @input="internal_rule_input_handle" type="is-danger") 自由
 
@@ -50,13 +52,15 @@ client-only
     //-     b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
     //-       b-icon(icon="menu")
 
-    MainNavbar
+    MainNavbar(:spaced="false")
       template(slot="brand")
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(@click="title_edit")
           | {{current_title}}
           span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
       template(slot="end")
+        b-navbar-item(@click="al_push_test") al_push_test
+
         b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="twitter" type="is-white")
         b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
@@ -82,23 +86,22 @@ client-only
         //-         | リアルタイム共有
         //-         .has-text-danger.ml-1(v-if="room_code") {{room_code}}
 
-    b-navbar(type="is-dark" fixed-bottom v-if="development_p")
-      template(slot="start")
-        b-navbar-item(@click="reset_handle") 盤面リセット
+    //- b-navbar(type="is-dark" fixed-bottom v-if="development_p")
+    //-   template(slot="start")
+    //-     b-navbar-item(@click="reset_handle") 盤面リセット
 
     MainSection.is_mobile_padding_zero
       .container
         .columns.is-centered
-          .column.is-8-tablet.is-5-desktop
-            .turn_container.has-text-centered(v-if="sp_run_mode === 'play_mode' && false")
-              span.turn_offset.has-text-weight-bold {{turn_offset}}
-              template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
-                span.mx-1.has-text-grey /
-                span.has-text-grey {{turn_offset_max}}
+          .column.is-9-tablet.is-9-desktop.is-7-widescreen.is-6-fullhd
+            //- .turn_container.has-text-centered(v-if="sp_run_mode === 'play_mode' && false")
+            //-   span.turn_offset.has-text-weight-bold {{turn_offset}}
+            //-   template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
+            //-     span.mx-1.has-text-grey /
+            //-     span.has-text-grey {{turn_offset_max}}
 
-            // sp_bg_variant="is_bg_variant_a"
             CustomShogiPlayer(
-              :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
+              :sp_layer="development_p ? 'is_layer_on' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
               :sp_turn="turn_offset"
               :sp_body="current_sfen"
@@ -120,12 +123,14 @@ client-only
               @update:turn_offset_max="v => turn_offset_max = v"
             )
 
-            .buttons.is-centered.mt-4
+            .buttons.is-centered.mt-4(v-if="false")
               TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="sp_run_mode === 'play_mode'")
               //- b-button(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'") 編集完了
 
             .room_code.is-clickable(@click="room_code_edit" v-if="false")
               | {{room_code}}
+
+          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog")
 
         .columns(v-if="development_p")
           .column.is-clipped
@@ -142,6 +147,7 @@ client-only
             .block
               b this.record
               pre {{JSON.stringify(record, null, 4)}}
+  //- DebugPre {{$data}}
 </template>
 
 <script>
@@ -154,16 +160,21 @@ import { support_parent } from "./support_parent.js"
 
 import { app_room      } from "./app_room.js"
 import { app_room_init } from "./app_room_init.js"
+import { app_action_log      } from "./app_action_log.js"
+import { app_storage } from "./app_storage.js"
 
 import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.vue"
-import AnySourceReadModal         from "@/components/AnySourceReadModal.vue"
+import RealtimeShareModal              from "./RealtimeShareModal.vue"
+import AnySourceReadModal              from "@/components/AnySourceReadModal.vue"
 
 export default {
   name: "ShareBoardApp",
   mixins: [
     support_parent,
+    app_storage,
     app_room,
     app_room_init,
+    app_action_log,
   ],
   props: {
     config: { type: Object, required: true },
@@ -223,7 +234,7 @@ export default {
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen_set(v) {
       this.current_sfen = v
-      this.sfen_share(this.current_sfen)
+      this.sfen_share()
     },
 
     // デバッグ用
@@ -240,7 +251,7 @@ export default {
     edit_mode_snapshot_sfen_set(v) {
       if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから
         this.current_sfen = v
-        this.sfen_share(this.current_sfen)
+        this.sfen_share()
       }
     },
 
@@ -316,26 +327,46 @@ export default {
     room_code_edit() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.$buefy.dialog.prompt({
-        title: "リアルタイム共有",
-        size: "is-small",
-        message: `
-          <div class="content">
-            <ul>
-              <li>同じ合言葉を設定した人とリアルタイムに盤を共有できます</li>
-              <li>合言葉を設定したら同じ合言葉を相手に伝えてください</li>
-              <li>合言葉はURLにも付加するのでURLを伝えてもかまいません</li>
-            </ul>
-          </div>`,
-        confirmText: "設定",
-        cancelText: "キャンセル",
-        inputAttrs: { type: "text", value: this.room_code, required: false },
-        onCancel: () => this.sound_play("click"),
-        onConfirm: value => {
-          this.sound_play("click")
-          this.room_code_set(value)
+
+      // 視点設定変更
+      this.$buefy.modal.open({
+        component: RealtimeShareModal,
+        parent: this,
+        trapFocus: true,
+        hasModalCard: true,
+        animation: "",
+        canCancel: false,
+        props: {
+          base: this.base,
         },
+        // onCancel: () => this.sound_play("click"),
+        // events: {
+        //   "update:abstract_viewpoint": v => {
+        //     this.abstract_viewpoint = v
+        //   }
+        // },
       })
+
+      // this.$buefy.dialog.prompt({
+      //   title: "リアルタイム共有",
+      //   size: "is-small",
+      //   message: `
+      //     <div class="content">
+      //       <ul>
+      //         <li>同じ合言葉を設定した人とリアルタイムに盤を共有できます</li>
+      //         <li>合言葉を設定したら同じ合言葉を相手に伝えてください</li>
+      //         <li>合言葉はURLにも付加するのでURLを伝えてもかまいません</li>
+      //       </ul>
+      //     </div>`,
+      //   confirmText: "設定",
+      //   cancelText: "キャンセル",
+      //   inputAttrs: { type: "text", value: this.room_code, required: false },
+      //   onCancel: () => this.sound_play("click"),
+      //   onConfirm: value => {
+      //     this.sound_play("click")
+      //     this.room_code_set(value)
+      //   },
+      // })
     },
 
     // 視点設定変更
@@ -426,6 +457,8 @@ export default {
   },
 
   computed: {
+    base() { return this },
+
     page_title() {
       return `${this.current_title} ${this.turn_offset}手目`
     },
@@ -515,7 +548,8 @@ export default {
     .ShogiPlayerGround
     .ShogiPlayerWidth
     .Membership
-      border: 1px dashed change_color($success, $alpha: 0.5)
+    .columns, .column
+      // border: 1px dashed change_color($success, $alpha: 0.5)
 
 .ShareBoardApp-Sidebar
   .sidebar-content

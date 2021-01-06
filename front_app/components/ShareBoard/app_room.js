@@ -5,15 +5,17 @@ export const app_room = {
     return {
       room_code: "",                           // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
+      // $ac_room: null,
     }
   },
   mounted() {
-    this.room_code_set(this.config.record.room_code, {initial: true})
+    this.ls_setup()
+    this.room_code_set(this.config.record.room_code, {noify_skip: true})
   },
   methods: {
     room_code_set(room_code, options = {}) {
       options = {
-        initial: false,
+        noify_skip: false,
         ...options,
       }
 
@@ -21,19 +23,23 @@ export const app_room = {
       const changed_p = this.room_code != room_code
       this.room_code = room_code
 
-      if (changed_p) {
-        if (!options.initial) {
+      if (options.noify_skip) {
+        // mounted でのタイミングでは skip する
+      } else {
+        if (changed_p) {
           if (this.room_code) {
-            this.toast_ok(`合言葉を「${this.room_code}」に設定しました`)
+            this.toast_ok(`合言葉を設定しました`)
           } else {
             this.toast_ok("合言葉を削除しました")
           }
         }
       }
 
-      this.room_unsubscribe() // 内容が変更になったかもしれないのでいったん解除
-      if (this.room_code) {
-        this.room_setup(options)
+      if (changed_p) {
+        this.room_unsubscribe() // 内容が変更になったかもしれないのでいったん解除
+        if (this.room_code) {
+          this.room_setup(options)
+        }
       }
     },
 
@@ -57,9 +63,11 @@ export const app_room = {
       this.ac_unsubscribe("$ac_room")
     },
 
+    // perform のラッパーで共通のパラメータを入れる
     ac_room_perform(action, params = {}) {
       params = Object.assign({}, {
-        user_code: this.user_code,
+        from_user_code: this.user_code, // 送信者識別子
+        from_user_name: this.user_name, // 送信者名
       }, params)
 
       if (this.$ac_room) {
@@ -68,18 +76,20 @@ export const app_room = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    sfen_share(sfen) {
+    sfen_share() {
       this.ac_room_perform("sfen_share", {
-        sfen: sfen,
         title: this.current_title,
+        ...this.current_sfen_info,
       }) // --> app/channels/share_board/room_channel.rb
     },
     sfen_share_broadcasted(params) {
-      if (params.user_code === this.user_code) {
+      if (params.from_user_code === this.user_code) {
         // 自分から自分へ
       } else {
         this.attributes_set(params)
       }
+      this.toast_ok(`${params.from_user_name}さんが${params.turn_offset}手目を指しました`)
+      this.al_push(params)
     },
     ////////////////////////////////////////////////////////////////////////////////
     title_share(share_sfen) {
@@ -88,7 +98,7 @@ export const app_room = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     title_share_broadcasted(params) {
-      if (params.user_code === this.user_code) {
+      if (params.from_user_code === this.user_code) {
         // 自分から自分へ
       } else {
         this.attributes_set(params)
@@ -103,8 +113,19 @@ export const app_room = {
       }
       if (params.sfen) {
         this.current_sfen = params.sfen
-        this.turn_offset = this.sfen_parse(params.sfen).moves.length
+        this.turn_offset = params.turn_offset
       }
+    },
+  },
+  computed: {
+    current_sfen_info() {
+      return {
+        turn_offset: this.current_sfen_turn_offset,
+        sfen: this.current_sfen,
+      }
+    },
+    current_sfen_turn_offset() {
+      return this.sfen_parse(this.current_sfen).moves.length
     },
   },
 }
