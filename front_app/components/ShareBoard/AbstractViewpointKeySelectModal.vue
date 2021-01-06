@@ -18,7 +18,7 @@
     .preview_image_container.is-flex.mt-3
       .preview_image.is-flex
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
-          | Twitter画像の視点
+          | Twitterに投稿した際に表示されるOGP画像の視点
         b-image.mr-1(:src="ogp_image_url")
       .preview_image.is-flex
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
