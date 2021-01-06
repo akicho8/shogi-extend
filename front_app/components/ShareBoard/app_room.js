@@ -5,15 +5,16 @@ export const app_room = {
     return {
       room_code: "",                           // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
+      user_name: "",                           // ユーザー名
     }
   },
   mounted() {
-    this.room_code_set(this.config.record.room_code, {initial: true})
+    this.room_code_set(this.config.record.room_code, {noify_skip: true})
   },
   methods: {
     room_code_set(room_code, options = {}) {
       options = {
-        initial: false,
+        noify_skip: false,
         ...options,
       }
 
@@ -21,8 +22,10 @@ export const app_room = {
       const changed_p = this.room_code != room_code
       this.room_code = room_code
 
-      if (changed_p) {
-        if (!options.initial) {
+      if (options.noify_skip) {
+        // mounted でのタイミングでは skip する
+      } else {
+        if (changed_p) {
           if (this.room_code) {
             this.toast_ok(`合言葉を「${this.room_code}」に設定しました`)
           } else {

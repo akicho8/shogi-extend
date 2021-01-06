@@ -1,4 +1,3 @@
-
 <template lang="pug">
 client-only
   .ShareBoardApp
@@ -145,6 +144,7 @@ import { app_room      } from "./app_room.js"
 import { app_room_init } from "./app_room_init.js"
 
 import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.vue"
+import AbstractViewpointKeySelectModal2 from "./AbstractViewpointKeySelectModal2.vue"
 import AnySourceReadModal         from "@/components/AnySourceReadModal.vue"
 
 export default {
@@ -314,26 +314,45 @@ export default {
     room_code_edit() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.$buefy.dialog.prompt({
-        title: "リアルタイム共有",
-        size: "is-small",
-        message: `
-          <div class="content">
-            <ul>
-              <li>同じ合言葉を設定した人とリアルタイムに盤を共有できます</li>
-              <li>合言葉を設定したら同じ合言葉を相手に伝えてください</li>
-              <li>合言葉はURLにも付加するのでURLを伝えてもかまいません</li>
-            </ul>
-          </div>`,
-        confirmText: "設定",
-        cancelText: "キャンセル",
-        inputAttrs: { type: "text", value: this.room_code, required: false },
-        onCancel: () => this.sound_play("click"),
-        onConfirm: value => {
-          this.sound_play("click")
-          this.room_code_set(value)
+
+      // 視点設定変更
+      this.$buefy.modal.open({
+        component: AbstractViewpointKeySelectModal2,
+        parent: this,
+        trapFocus: true,
+        hasModalCard: true,
+        animation: "",
+        props: {
+          base: this.base,
         },
+        // onCancel: () => this.sound_play("click"),
+        // events: {
+        //   "update:abstract_viewpoint": v => {
+        //     this.abstract_viewpoint = v
+        //   }
+        // },
       })
+
+      // this.$buefy.dialog.prompt({
+      //   title: "リアルタイム共有",
+      //   size: "is-small",
+      //   message: `
+      //     <div class="content">
+      //       <ul>
+      //         <li>同じ合言葉を設定した人とリアルタイムに盤を共有できます</li>
+      //         <li>合言葉を設定したら同じ合言葉を相手に伝えてください</li>
+      //         <li>合言葉はURLにも付加するのでURLを伝えてもかまいません</li>
+      //       </ul>
+      //     </div>`,
+      //   confirmText: "設定",
+      //   cancelText: "キャンセル",
+      //   inputAttrs: { type: "text", value: this.room_code, required: false },
+      //   onCancel: () => this.sound_play("click"),
+      //   onConfirm: value => {
+      //     this.sound_play("click")
+      //     this.room_code_set(value)
+      //   },
+      // })
     },
 
     // 視点設定変更
@@ -424,6 +443,8 @@ export default {
   },
 
   computed: {
+    base() { return this },
+
     page_title() {
       return `${this.current_title} ${this.turn_offset}手目`
     },
