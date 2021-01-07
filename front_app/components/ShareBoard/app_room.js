@@ -1,4 +1,5 @@
 import _ from "lodash"
+import dayjs from "dayjs"
 
 export const app_room = {
   data() {
@@ -68,6 +69,7 @@ export const app_room = {
       params = Object.assign({}, {
         from_user_code: this.user_code, // 送信者識別子
         from_user_name: this.user_name, // 送信者名
+        performed_at: dayjs().unix(),   // 実行日時
       }, params)
 
       if (this.$ac_room) {
