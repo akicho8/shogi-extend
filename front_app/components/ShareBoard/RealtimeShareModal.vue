@@ -13,10 +13,15 @@
         li メニューにある「合言葉設定済みURL」を伝えてもかまいません
         li 共有のタイミングは<b>指したときだけ</b>です←重要
         li 間違えて指したときなどは(合意を得た上で)局面を戻して指し直せばよいです
-        li 盤の右のログの行をタップするとそのときの局面に戻します
+        li 指し手の記録の行をタップするとそのときの局面に戻ります
 
-    b-field(label="合言葉" label-position="on-border")
-      b-input(type="password" v-model="new_room_code" password-reveal)
+    template(v-if="input_show_p")
+      b-field(label="合言葉" label-position="on-border" key="input_show_p_true")
+        b-input(v-model="new_room_code")
+    template(v-else)
+      b-field(label="合言葉 (設定済み)" custom-class="is-small" key="input_show_p_false")
+        .control
+          b-button(@click="room_code_show_toggle_handle" icon-left="lock") 再設定
 
     b-field(label="ハンドルネーム" label-position="on-border")
       b-input(v-model="new_user_name")
@@ -39,9 +44,14 @@ export default {
     return {
       new_room_code: this.base.room_code,
       new_user_name: this.base.user_name,
+      input_show_p: !this.base.room_code,
     }
   },
   methods: {
+    room_code_show_toggle_handle() {
+      this.sound_play("click")
+      this.input_show_p = true
+    },
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
@@ -77,6 +87,6 @@ export default {
       min-width: 8rem
 
   .field:not(:last-child)
-    margin-bottom: 1.25rem
+    margin-bottom: 1.5rem
 
 </style>
