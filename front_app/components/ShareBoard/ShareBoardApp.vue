@@ -67,7 +67,7 @@ client-only
           | {{current_title}}
           span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
       template(slot="end")
-        b-navbar-item(@click="al_add_test") al_add_test
+        b-navbar-item(@click="al_add_test" v-if="development_p") al_add_test
 
         b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="twitter" type="is-white")

@@ -57,12 +57,13 @@ export default {
 @import "./support.sass"
 
 .ShareBoardActionLog.column
+  position: relative
   +tablet
     max-width: 12rem
   +desktop
     max-width: 16rem
-
-  position: relative
+  +mobile
+    height: 10rem
 
   .scroll_block
     @extend %overlay
@@ -71,12 +72,11 @@ export default {
     overflow-x: hidden
 
     border-radius: 3px
-    // background-color: $white-ter
+    background-color: $white-ter
     padding: 0
 
     .time_format
-      vertical-align: text-top
-
+      vertical-align: middle
     a
       text-overflow: ellipsis
       padding: 0.2rem 0.5rem
