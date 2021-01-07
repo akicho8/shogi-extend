@@ -89,7 +89,7 @@ export const app_room = {
         this.attributes_set(params)
       }
       this.toast_ok(`${params.from_user_name}さんが${params.turn_offset}手目を指しました`)
-      this.al_push(params)
+      this.al_add(params)
     },
     ////////////////////////////////////////////////////////////////////////////////
     title_share(share_sfen) {

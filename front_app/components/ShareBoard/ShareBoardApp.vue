@@ -59,7 +59,7 @@ client-only
           | {{current_title}}
           span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
       template(slot="end")
-        b-navbar-item(@click="al_push_test") al_push_test
+        b-navbar-item(@click="al_add_test") al_add_test
 
         b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="twitter" type="is-white")
@@ -93,7 +93,7 @@ client-only
     MainSection.is_mobile_padding_zero
       .container
         .columns.is-centered
-          .column.is-9-tablet.is-9-desktop.is-7-widescreen.is-6-fullhd
+          .MainColumn.column.is-9-tablet.is-9-desktop.is-7-widescreen.is-6-fullhd
             //- .turn_container.has-text-centered(v-if="sp_run_mode === 'play_mode' && false")
             //-   span.turn_offset.has-text-weight-bold {{turn_offset}}
             //-   template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
@@ -570,4 +570,9 @@ export default {
 
   .EditToolBlock
     margin-top: 12px
+
+  .MainColumn
+    +tablet
+      padding-top: 0
+      padding-bottom: 0
 </style>
