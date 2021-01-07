@@ -46,7 +46,6 @@ export const app_room_init = {
       this.clog(`${to_user} に送る`)
       this.ac_room_perform("board_info_send", {
         to_user: to_user,         // 送り先
-        revision: this.$revision,
         title: this.current_title,
         ...this.current_sfen_attrs,
       }) // --> app/channels/share_board/room_channel.rb

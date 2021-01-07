@@ -67,8 +67,8 @@ export default {
         }
       }
 
-      this.base.room_code_set(this.new_room_code)
       this.base.user_name = this.new_user_name
+      this.base.room_code_set(this.new_room_code)
 
       this.close_handle()
     },

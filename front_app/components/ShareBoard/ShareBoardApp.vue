@@ -65,6 +65,7 @@ client-only
           | {{current_title}}
           span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
       template(slot="end")
+        b-navbar-item(@click="member_add_test" v-if="development_p") 仲
         b-navbar-item(@click="al_add_test" v-if="development_p") 指
 
         b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
@@ -97,9 +98,11 @@ client-only
     //-     b-navbar-item(@click="reset_handle") 盤面リセット
 
     MainSection.is_mobile_padding_zero
-      .container
+      .container.is-fluid
         .columns.is-centered
-          .MainColumn.column.is-9-tablet.is-9-desktop.is-7-widescreen.is-6-fullhd
+          ShareBoardActionLog2(:base="base" v-if="share_p")
+
+          .MainColumn.column.is-9-tablet.is-8-desktop.is-7-widescreen.is-6-fullhd
             //- .turn_container.has-text-centered(v-if="sp_run_mode === 'play_mode' && false")
             //-   span.turn_offset.has-text-weight-bold {{turn_offset}}
             //-   template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
@@ -164,10 +167,11 @@ import _ from "lodash"
 
 import { support_parent } from "./support_parent.js"
 
-import { app_room      } from "./app_room.js"
-import { app_room_init } from "./app_room_init.js"
-import { app_action_log      } from "./app_action_log.js"
-import { app_storage } from "./app_storage.js"
+import { app_room         } from "./app_room.js"
+import { app_room_init    } from "./app_room_init.js"
+import { app_action_log   } from "./app_action_log.js"
+import { app_room_members } from "./app_room_members.js"
+import { app_storage      } from "./app_storage.js"
 
 import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.vue"
 import RealtimeShareModal              from "./RealtimeShareModal.vue"
@@ -181,6 +185,7 @@ export default {
     app_room,
     app_room_init,
     app_action_log,
+    app_room_members,
   ],
   props: {
     config: { type: Object, required: true },

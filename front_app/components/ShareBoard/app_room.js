@@ -59,6 +59,7 @@ export const app_room = {
         connected: () => {
           this.idol_timer_start()
           this.board_info_request()
+          this.member_notify_interval_runner.restart()
         },
         disconnected: () => {
           if (this.development_p) {
@@ -78,6 +79,7 @@ export const app_room = {
         from_user_code: this.user_code, // 送信者識別子
         from_user_name: this.user_name, // 送信者名
         performed_at: dayjs().unix(),   // 実行日時
+        revision: this.$revision,       // 古参レベル
       }, params)
 
       if (this.$ac_room) {
