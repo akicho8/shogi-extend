@@ -4,47 +4,55 @@ import dayjs from "dayjs"
 export const app_room = {
   data() {
     return {
-      room_code: "",                           // リアルタイム共有合言葉
+      room_code: this.config.record.room_code, // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
-      // $ac_room: null,
     }
   },
   mounted() {
-    this.ls_setup()
-    this.room_code_set(this.config.record.room_code, {noify_skip: true})
+    this.ls_setup() // user_name の復帰
+
+    if (this.room_code) {
+      if (this.user_name) {
+        // 合言葉設定済みURLから来て名前は設定しているのですぐに共有する
+        this.room_setup()
+      } else {
+        // 合言葉設定済みURLから来て名前は設定していない
+        this.toast_ok("リアルタイム共有で使うあなたのハンドルネームを入力してください")
+        this.room_code_edit()
+      }
+    } else {
+      // 通常の起動
+    }
+  },
+  beforeDestroy() {
+    if (this.room_code) {
+      this.toast_ok("共有を解除しました")
+    }
+    this.room_unsubscribe()
   },
   methods: {
-    room_code_set(room_code, options = {}) {
-      options = {
-        noify_skip: false,
-        ...options,
-      }
-
+    room_code_set(room_code) {
       room_code = _.trim(room_code)
       const changed_p = this.room_code != room_code
       this.room_code = room_code
 
-      if (options.noify_skip) {
-        // mounted でのタイミングでは skip する
-      } else {
-        if (changed_p) {
-          if (this.room_code) {
-            this.toast_ok(`合言葉を設定しました`)
-          } else {
-            this.toast_ok("合言葉を削除しました")
-          }
-        }
-      }
-
       if (changed_p) {
+        if (this.room_code) {
+          this.toast_ok(`合言葉を設定しました`)
+        } else {
+          this.toast_ok("合言葉を削除しました")
+        }
         this.room_unsubscribe() // 内容が変更になったかもしれないのでいったん解除
         if (this.room_code) {
-          this.room_setup(options)
+          this.room_setup()
         }
       }
     },
 
-    room_setup(options = {}) {
+    room_setup() {
+      this.__assert__(this.user_name, "this.user_name")
+      this.__assert__(this.room_code, "this.room_code")
+
       this.room_unsubscribe()
       this.__assert__(this.$ac_room == null, "this.$ac_room == null")
       this.$ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
@@ -118,6 +126,17 @@ export const app_room = {
         this.turn_offset = params.turn_offset
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    room_code_url_copy_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
+      if (!this.room_code) {
+        this.toast_warn("まだ合言葉を設定してません")
+        return
+      }
+      this.clipboard_copy({text: this.share_board_with_room_code_url})
+    },
   },
   computed: {
     share_p() { return this.room_code != "" },
@@ -139,12 +158,13 @@ export const app_room = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 合言葉だけを付与したURL
-    url_with_room_code() {
+    share_board_with_room_code_url() {
       const url = new URL(this.$config.MY_SITE_URL + `/share-board`)
       if (this.room_code) {
         url.searchParams.set("room_code", this.room_code)
       }
       return url.toString()
     },
+
   },
 }

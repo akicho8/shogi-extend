@@ -20,7 +20,8 @@ client-only
         .mt-4
           b-menu
             b-menu-list(label="リアルタイム共有")
-              b-menu-item(label="合言葉の設定" @click="room_code_edit")
+              b-menu-item(label="合言葉とハンドルネームの設定" @click="room_code_edit")
+              b-menu-item(label="合言葉設定済みURLのコピー" @click="room_code_url_copy_handle")
 
             b-menu-list(label="検討")
               b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
@@ -47,9 +48,9 @@ client-only
 
           .box.mt-5
             .title.is-5 ☠危険な設定
-            b-field(custom-class="is-small" label="将棋のルール遵守" message="自由にすると「自分の手番では自分の駒を動かさないといけない」というルールを無視するため、自分の手番で相手の駒を動かせるようになる。それを利用すると先手の駒だけを動かして囲いの手順を作ったりするのが簡単になる。しかし反則のため他のアプリではおそらく読めない棋譜になる")
-              b-radio-button(size="is-small" v-model="internal_rule" native-value="strict" @input="internal_rule_input_handle") 厳格
-              b-radio-button(size="is-small" v-model="internal_rule" native-value="free" @input="internal_rule_input_handle" type="is-danger") 自由
+            b-field(custom-class="is-small" label="将棋のルールを" message="無視にすると「自分の手番では自分の駒を動かさないといけない」の制限がなくなるため、自分の手番で相手の駒を動かせるようになる。それを利用すると(後手のときも先手の駒を動かすことで)先手だけの囲いの手順の棋譜を作るのが簡単になる。しかし反則のため他のアプリではおそらく読めない棋譜になる")
+              b-radio-button(size="is-small" v-model="internal_rule" native-value="strict" @input="internal_rule_input_handle") 遵守
+              b-radio-button(size="is-small" v-model="internal_rule" native-value="free" @input="internal_rule_input_handle" type="is-danger") 無視
 
     //- b-navbar(type="is-dark" wrapper-class="container")
     //-   template(slot="start")
@@ -137,7 +138,7 @@ client-only
             .room_code.is-clickable(@click="room_code_edit" v-if="false")
               | {{room_code}}
 
-          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog")
+          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="share_p")
 
         .columns(v-if="development_p")
           .column.is-clipped
@@ -258,7 +259,10 @@ export default {
     edit_mode_snapshot_sfen_set(v) {
       if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから
         this.current_sfen = v
-        this.sfen_share()
+        if (false) {
+          // 意図せず共有してしまうのを防ぐため共有しない
+          this.sfen_share()
+        }
       }
     },
 

@@ -2,15 +2,18 @@
 .modal-card.RealtimeShareModal(style="width:auto")
   header.modal-card-head
     p.modal-card-title
-      | リアルタイム共有
+      | 合言葉とハンドルネームの設定
       //- span.mx-1.has-text-danger(v-if="base.$ac_room")
       //-   | (共有中)
   section.modal-card-body
     .content
       ul
-        li 同じ合言葉を設定した人とリアルタイムに盤を共有できます
-        li 合言葉を設定したら同じ合言葉を相手に伝えてください
-        li 合言葉はURLにも付加するのでURLを伝えてもかまいません
+        li 同じ合言葉を設定した人とリアルタイムに盤を共有します
+        li 合言葉を設定したら同じ合言葉をこっそり相手に伝えてください
+        li メニューにある「合言葉設定済みURL」を伝えてもかまいません
+        li 共有のタイミングは<b>指したときだけ</b>です←重要
+        li 間違えて指したときなどは(合意を得た上で)局面を戻して指し直せばよいです
+        li 盤の右のログの行をタップするとそのときの局面に戻します
 
     b-field(label="合言葉" label-position="on-border")
       b-input(type="password" v-model="new_room_code" password-reveal)
@@ -20,7 +23,7 @@
 
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
-    b-button.submit_handle(@click="submit_handle" type="is-primary") 実行
+    b-button.submit_handle(@click="submit_handle" type="is-primary") 確定
 </template>
 
 <script>
@@ -65,6 +68,8 @@ export default {
 
 <style lang="sass">
 .RealtimeShareModal
+  .modal-card-body
+    padding-top: 0.5rem
   .modal-card-foot
     justify-content: flex-end
     .button
