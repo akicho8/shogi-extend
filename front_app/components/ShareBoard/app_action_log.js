@@ -1,4 +1,5 @@
 import _ from "lodash"
+import dayjs from "dayjs"
 
 const ACTION_LOG_MAX = 100
 const ACTION_LOG_PUSH_TO = "top"
@@ -21,7 +22,13 @@ export const app_action_log = {
       }
     },
     al_add_test() {
-      this.al_add({turn_offset: this.base.action_logs.length, from_user_name: "あいうえおあいうえお", sfen: "position startpos"})
+      this.al_add({
+        from_user_name: "あいうえおあいうえお",
+        turn_offset: this.base.action_logs.length,
+        performed_last_location_key: "white",
+        sfen: "position startpos",
+        performed_at: dayjs().unix(),
+      })
     },
     al_scroll_to_bottom() {
       const e = this.$refs.ShareBoardActionLog

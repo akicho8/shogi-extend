@@ -3,14 +3,16 @@
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
       a.is-clickable.is-block.is_line_break_off(:key="i" @click="action_log_click_handle(e)")
-        span.mx-1.has-text-weight-bold {{e.turn_offset}}
-        span.mx-1 {{e.from_user_name}}
-        span.mx-1.is-size-7.time_format {{time_format(e.performed_at)}}
+        span.has-text-weight-bold {{e.turn_offset}}
+        span.ml-1 {{location_name(e)}}
+        span.ml-1 {{e.from_user_name}}
+        span.ml-1.is-size-7.time_format.has-text-grey-light {{time_format(e)}}
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
 import dayjs from "dayjs"
+import { Location } from "shogi-player/components/models/location.js"
 
 export default {
   name: "ShareBoardActionLog",
@@ -36,7 +38,10 @@ export default {
       this.base.turn_offset = action_log.turn_offset
     },
     time_format(v) {
-      return dayjs(v).format("m:ss")
+      return dayjs.unix(v.performed_at).format("HH:mm:ss")
+    },
+    location_name(v) {
+      return Location.fetch(v.performed_last_location_key).name
     },
   },
   computed: {
@@ -52,7 +57,11 @@ export default {
 @import "./support.sass"
 
 .ShareBoardActionLog.column
-  max-width: 12rem
+  +tablet
+    max-width: 12rem
+  +desktop
+    max-width: 16rem
+
   position: relative
 
   .scroll_block
@@ -62,7 +71,7 @@ export default {
     overflow-x: hidden
 
     border-radius: 3px
-    background-color: $white-ter
+    // background-color: $white-ter
     padding: 0
 
     .time_format

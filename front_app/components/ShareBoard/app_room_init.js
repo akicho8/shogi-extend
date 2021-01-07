@@ -48,7 +48,7 @@ export const app_room_init = {
         to_user: to_user,         // 送り先
         revision: this.$revision,
         title: this.current_title,
-        ...this.current_sfen_info,
+        ...this.current_sfen_attrs,
       }) // --> app/channels/share_board/room_channel.rb
     },
     board_info_send_broadcasted(params) {

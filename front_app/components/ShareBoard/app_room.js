@@ -81,7 +81,7 @@ export const app_room = {
     sfen_share() {
       this.ac_room_perform("sfen_share", {
         title: this.current_title,
-        ...this.current_sfen_info,
+        ...this.current_sfen_attrs,
       }) // --> app/channels/share_board/room_channel.rb
     },
     sfen_share_broadcasted(params) {
@@ -120,14 +120,18 @@ export const app_room = {
     },
   },
   computed: {
-    current_sfen_info() {
+    current_sfen_attrs() {
       return {
-        turn_offset: this.current_sfen_turn_offset,
-        sfen: this.current_sfen,
+        sfen:                        this.current_sfen,
+        turn_offset:                 this.current_sfen_info.turn_offset_max,
+        performed_last_location_key: this.current_sfen_info.performed_last_location.key,
       }
     },
+    current_sfen_info() {
+      return this.sfen_parse(this.current_sfen)
+    },
     current_sfen_turn_offset() {
-      return this.sfen_parse(this.current_sfen).moves.length
+      return this.current_sfen_info.turn_offset_max
     },
   },
 }
