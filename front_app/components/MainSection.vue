@@ -10,6 +10,11 @@
     &.is_mobile_padding_zero
       padding: 0
 
+    // is-fluid 付きの container は mobile のときも左右の padding が入ったままになっているため取る
+    .container.is-fluid
+      padding-left: unset
+      padding-right: unset
+
 .STAGE-development
   .MainSection.section
     +mobile

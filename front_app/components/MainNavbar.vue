@@ -45,8 +45,8 @@ export default {
       align-items: center
       justify-content: center
       font-size: $size-7
-      +touch
-        content: "touch"
+      +tablet
+        content: "tablet"
       +mobile
         content: "mobile"
       +desktop

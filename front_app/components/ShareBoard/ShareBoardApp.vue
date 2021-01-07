@@ -102,7 +102,8 @@ client-only
         .columns.is-centered
           ShareBoardActionLog2(:base="base" v-if="share_p")
 
-          .MainColumn.column.is-9-tablet.is-8-desktop.is-7-widescreen.is-6-fullhd
+          //- .MainColumn.column.is-9-tablet.is-8-desktop.is-7-widescreen.is-5-fullhd
+          .MainColumn.column
             //- .turn_container.has-text-centered(v-if="sp_run_mode === 'play_mode' && false")
             //-   span.turn_offset.has-text-weight-bold {{turn_offset}}
             //-   template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
@@ -591,6 +592,10 @@ export default {
     +tablet
       padding-top: 0
       padding-bottom: 0
+
+  .MainColumn
+    +tablet
+      max-width: 80vmin
 
   .CustomShogiPlayer
     +mobile
