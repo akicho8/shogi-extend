@@ -13,12 +13,14 @@
         li 合言葉はURLにも付加するのでURLを伝えてもかまいません
 
     b-field(label="合言葉" label-position="on-border")
-      b-input(v-model="new_room_code")
+      b-input(type="password" v-model="new_room_code" password-reveal)
+
     b-field(label="ハンドルネーム" label-position="on-border")
       b-input(v-model="new_user_name")
+
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
-    b-button.submit_handle(@click="submit_handle" type="is-primary") 保存
+    b-button.submit_handle(@click="submit_handle" type="is-primary") 実行
 </template>
 
 <script>

@@ -120,6 +120,9 @@ export const app_room = {
     },
   },
   computed: {
+    share_p() { return this.room_code != "" },
+
+    ////////////////////////////////////////////////////////////////////////////////
     current_sfen_attrs() {
       return {
         sfen:                        this.current_sfen,
@@ -132,6 +135,16 @@ export const app_room = {
     },
     current_sfen_turn_offset() {
       return this.current_sfen_info.turn_offset_max
+    },
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 合言葉だけを付与したURL
+    url_with_room_code() {
+      const url = new URL(this.$config.MY_SITE_URL + `/share-board`)
+      if (this.room_code) {
+        url.searchParams.set("room_code", this.room_code)
+      }
+      return url.toString()
     },
   },
 }

@@ -19,24 +19,31 @@ client-only
           b-button(@click="sidebar_toggle" icon-left="menu")
         .mt-4
           b-menu
+            b-menu-list(label="リアルタイム共有")
+              b-menu-item(label="合言葉の設定" @click="room_code_edit")
+
             b-menu-list(label="検討")
               b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
               b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
               b-menu-item(label="コピー" @click="kifu_copy_handle('kif')")
-            b-menu-list(label="Action")
-              b-menu-item(label="リアルタイム共有" @click="room_code_edit" :class="{'has-text-weight-bold': this.room_code}")
+
+            b-menu-list(label="Twitterでリレー将棋や詰将棋の出題をするときの")
               b-menu-item(label="視点設定" @click="abstract_viewpoint_setting_handle")
-              b-menu-item(label="盤面リセット" @click="reset_handle")
-            b-menu-list(label="Edit")
-              b-menu-item(label="局面編集" @click="mode_toggle_handle" :class="{'has-text-weight-bold': this.sp_run_mode === 'edit_mode'}")
-              b-menu-item(label="タイトル変更" @click="title_edit")
+              b-menu-item(label="局面編集" @click="mode_toggle_handle")
               b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
+
+            b-menu-list(label="詰将棋の問題を解く人用")
+              b-menu-item(label="URLを開いたときの局面に戻す" @click="reset_handle")
+
             b-menu-list(label="Export")
               b-menu-item(label="局面URLコピー" @click="current_url_copy_handle")
               b-menu-item(label="SFEN コピー" @click="kifu_copy_handle('sfen')")
               b-menu-item(label="KIF ダウンロード" :href="kif_download_url" @click="sound_play('click')")
               b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="shift_jis_kif_download_url" @click="sound_play('click')")
               b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
+
+            b-menu-list(label="その他")
+              b-menu-item(label="タイトル変更" @click="title_edit")
 
           .box.mt-5
             .title.is-5 ☠危険な設定
@@ -519,6 +526,8 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     // 最初に表示した手数より進めたか？
     advanced_p() { return this.turn_offset > this.config.record.initial_turn },
 
@@ -553,7 +562,7 @@ export default {
 
 .ShareBoardApp-Sidebar
   .sidebar-content
-    width: 18rem
+    width: 22rem
 
   // .menu-label:not(:first-child)
   //   margin-top: 1.5em
