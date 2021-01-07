@@ -108,7 +108,7 @@ client-only
             //-     span.mx-1.has-text-grey /
             //-     span.has-text-grey {{turn_offset_max}}
 
-            CustomShogiPlayer(
+            CustomShogiPlayer.is_mobile_vertical_good_style(
               :sp_layer="development_p ? 'is_layer_on' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
               :sp_turn="turn_offset"
@@ -588,4 +588,10 @@ export default {
     +tablet
       padding-top: 0
       padding-bottom: 0
+
+  .CustomShogiPlayer
+    +mobile
+      --sp_stand_piece_w: 40px // 駒台のセル(W)
+      --sp_stand_piece_h: 40px // 駒台のセル(H)
+      --sp_piece_count_gap_bottom: 58%
 </style>
