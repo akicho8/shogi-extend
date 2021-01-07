@@ -21,7 +21,7 @@
     template(v-else)
       b-field(label="合言葉 (設定済み)" custom-class="is-small" key="input_show_p_false")
         .control
-          b-button(@click="room_code_show_toggle_handle" icon-left="lock") 再設定
+          b-button(@click="room_code_show_toggle_handle" icon-left="lock") 表示
 
     b-field(label="ハンドルネーム" label-position="on-border")
       b-input(v-model="new_user_name")

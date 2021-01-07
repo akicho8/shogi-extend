@@ -28,13 +28,9 @@ client-only
               b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
               b-menu-item(label="コピー" @click="kifu_copy_handle('kif')")
 
-            b-menu-list(label="Twitterでリレー将棋や詰将棋の出題をするときの")
-              b-menu-item(label="視点設定" @click="abstract_viewpoint_setting_handle")
+            b-menu-list(label="編集系")
               b-menu-item(label="局面編集" @click="mode_toggle_handle")
               b-menu-item(label="棋譜の読み込み" @click="any_source_read_handle")
-
-            b-menu-list(label="詰将棋の問題を解く人用")
-              b-menu-item(label="URLを開いたときの局面に戻す" @click="reset_handle")
 
             b-menu-list(label="Export")
               b-menu-item(label="局面URLコピー" @click="current_url_copy_handle")
@@ -44,11 +40,13 @@ client-only
               b-menu-item(label="画像ダウンロード" :href="snapshot_image_url" @click="sound_play('click')")
 
             b-menu-list(label="その他")
+              b-menu-item(label="OGP画像視点設定" @click="abstract_viewpoint_setting_handle")
               b-menu-item(label="タイトル変更" @click="title_edit")
+              b-menu-item(label="URLを開いたときの局面に戻す" @click="reset_handle")
 
           .box.mt-5
             .title.is-5 ☠危険な設定
-            b-field(custom-class="is-small" label="将棋のルールを" message="無視にすると「自分の手番では自分の駒を動かさないといけない」の制限がなくなるため、自分の手番で相手の駒を動かせるようになる。それを利用すると(後手のときも先手の駒を動かすことで)先手だけの囲いの手順の棋譜を作るのが簡単になる。しかし反則のため他のアプリではおそらく読めない棋譜になる")
+            b-field(custom-class="is-small" label="将棋のルールを" message="無視にすると「自分の手番では自分の駒を動かす」の制限がなくなるため、自分の手番で相手の駒を動かせるようになる。それを利用すると(後手のときも先手の駒を動かすことで)先手だけの囲いの手順の棋譜を作ったりするのが簡単になる。しかし反則のため他のアプリではおそらく読めない棋譜になる")
               b-radio-button(size="is-small" v-model="internal_rule" native-value="strict" @input="internal_rule_input_handle") 遵守
               b-radio-button(size="is-small" v-model="internal_rule" native-value="free" @input="internal_rule_input_handle" type="is-danger") 無視
 
@@ -67,7 +65,7 @@ client-only
           | {{current_title}}
           span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
       template(slot="end")
-        b-navbar-item(@click="al_add_test" v-if="development_p") al_add_test
+        b-navbar-item(@click="al_add_test" v-if="development_p") 指
 
         b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="twitter" type="is-white")
@@ -566,7 +564,7 @@ export default {
 
 .ShareBoardApp-Sidebar
   .sidebar-content
-    width: 22rem
+    width: 20rem
 
   // .menu-label:not(:first-child)
   //   margin-top: 1.5em
