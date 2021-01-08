@@ -3,7 +3,8 @@
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
       .member_info.is_line_break_off(:key="e.from_user_code")
-        span {{e.from_user_name}}
+        b-icon(icon="account" size="is-small" type="is-primary")
+        span.ml-1 {{e.from_user_name}}
         span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
         span.ml-1(v-if="development_p") {{e.revision}}
         span.ml-1(v-if="development_p") {{e.user_age}}
