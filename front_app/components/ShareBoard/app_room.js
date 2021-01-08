@@ -31,17 +31,32 @@ export const app_room = {
     this.room_unsubscribe()
   },
   methods: {
-    room_code_set(room_code) {
+    room_code_set(room_code, user_name) {
+      let changed_p = false
+
       room_code = _.trim(room_code)
-      const changed_p = this.room_code != room_code
-      this.room_code = room_code
+      if (this.room_code != room_code) {
+        this.room_code = room_code
+        changed_p = true
+        if (this.room_code) {
+          this.toast_ok("合言葉を設定しました")
+        } else {
+          this.toast_ok("合言葉を削除して退室しました")
+        }
+      }
+
+      user_name = _.trim(user_name)
+      if (this.user_name != user_name) {
+        this.user_name = user_name
+        if (this.$ac_room) {
+          if (this.development_p) {
+            this.toast_ok("名前を変更したので次の通知を待たずにすぐブロードキャストする")
+          }
+          this.member_share()
+        }
+      }
 
       if (changed_p) {
-        if (this.room_code) {
-          this.toast_ok(`合言葉を設定しました`)
-        } else {
-          this.toast_ok("合言葉を削除しました")
-        }
         this.room_unsubscribe() // 内容が変更になったかもしれないのでいったん解除
         if (this.room_code) {
           this.room_setup()
@@ -53,13 +68,14 @@ export const app_room = {
       this.__assert__(this.user_name, "this.user_name")
       this.__assert__(this.room_code, "this.room_code")
 
+      this.member_infos_clear()
       this.room_unsubscribe()
       this.__assert__(this.$ac_room == null, "this.$ac_room == null")
       this.$ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: () => {
           this.idol_timer_start()
           this.board_info_request()
-          this.member_notify_interval_runner.restart()
+          this.member_bc_interval_runner.restart()
         },
         disconnected: () => {
           if (this.development_p) {

@@ -4,14 +4,15 @@ client-only
     DebugBox
       p room_code: {{JSON.stringify(room_code)}}
       p user_name: {{JSON.stringify(user_name)}}
-      p 手数: {{turn_offset}} / {{turn_offset_max}}
-      p SFEN: {{current_sfen}}
-      p タイトル: {{current_title}}
-      p 視点: {{abstract_viewpoint}}
-      p モード: {{sp_run_mode}}
-      p 視点: {{sp_viewpoint}}
-      p URL: {{current_url}}
-      p サイドバー {{sidebar_p}}
+      p 人数: {{JSON.stringify(member_infos.length)}}
+      //- p 手数: {{turn_offset}} / {{turn_offset_max}}
+      //- p SFEN: {{current_sfen}}
+      //- p タイトル: {{current_title}}
+      //- p 視点: {{abstract_viewpoint}}
+      //- p モード: {{sp_run_mode}}
+      //- p 視点: {{sp_viewpoint}}
+      //- p URL: {{current_url}}
+      //- p サイドバー {{sidebar_p}}
 
     b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model="sidebar_p")
       .mx-4.my-4
@@ -100,7 +101,7 @@ client-only
     MainSection.is_mobile_padding_zero
       .container.is-fluid
         .columns.is-centered
-          ShareBoardActionLog2(:base="base" v-if="share_p")
+          ShareBoardMemberList(:base="base" v-if="share_p")
 
           //- .MainColumn.column.is-9-tablet.is-8-desktop.is-7-widescreen.is-5-fullhd
           .MainColumn.column

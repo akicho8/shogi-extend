@@ -1,12 +1,12 @@
 <template lang="pug">
-.ShareBoardActionLog2.column
+.ShareBoardMemberList.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
-      a.is-clickable.is-block.is_line_break_off(:key="i" @click="action_log_click_handle(e)")
-        span.has-text-weight-bold {{e.revision}}
-        span.ml-1 {{location_name(e)}}
-        span.ml-1 {{e.from_user_name}}
-        span.ml-1.is-size-7.time_format.has-text-grey-light {{time_format(e)}}
+      .member_info.is_line_break_off(:key="e.from_user_code")
+        span {{e.from_user_name}}
+        span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
+        span.ml-1(v-if="development_p") {{e.revision}}
+        span.ml-1(v-if="development_p") {{e.user_age}}
 </template>
 
 <script>
@@ -15,7 +15,7 @@ import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
 
 export default {
-  name: "ShareBoardActionLog2",
+  name: "ShareBoardMemberList",
   mixins: [
     support_child,
   ],
@@ -35,9 +35,6 @@ export default {
     time_format(v) {
       return dayjs.unix(v.performed_at).format("HH:mm:ss")
     },
-    location_name(v) {
-      // return Location.fetch(v.performed_last_location_key).name
-    },
   },
   computed: {
     member_infos() {
@@ -51,7 +48,7 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 
-.ShareBoardActionLog2.column
+.ShareBoardMemberList.column
   position: relative
   +tablet
     max-width: 12rem
@@ -72,13 +69,11 @@ export default {
 
     .time_format
       vertical-align: middle
-    a
+    .member_info
       text-overflow: ellipsis
       padding: 0.2rem 0.5rem
       color: inherit
-      &:hover
-        background-color: $grey-lighter
 
 .STAGE-development
-  .ShareBoardActionLog2
+  .ShareBoardMemberList
 </style>

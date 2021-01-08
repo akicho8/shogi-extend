@@ -3,27 +3,45 @@ import dayjs from "dayjs"
 
 import { IntervalRunner } from '@/components/models/IntervalRunner.js'
 
-const NOTIFY_INTERVAL = 10
-const NOTIFY_INTERVAL2 = 15
+const ALIVE_NOTIFY_INTERVAL = 60  // N秒ごとに存在を通知する
+const MEMBER_TTL            = 120 // 通知がN秒前より古いユーザーは破棄
 
 export const app_room_members = {
   data() {
     return {
       member_infos: [],
-      member_notify_interval_runner: new IntervalRunner(this.step_next, {early: true, interval: NOTIFY_INTERVAL}),
+      member_bc_interval_runner: new IntervalRunner(this.step_next, {early: true, interval: ALIVE_NOTIFY_INTERVAL}),
+      user_age: 0,
     }
   },
 
+  mounted() {
+    // const foo = [
+    //   {id: 1, name: "a"},
+    //   {id: 2, name: "a"},
+    // ]
+    // console.log(_.orderBy(foo, "id", "desc"))
+    // console.log(_.orderBy(foo, "id", "asc"))
+  },
+
   beforeDestroy() {
-    this.member_notify_interval_runner.stop()
+    if (this.member_bc_interval_runner) {
+      this.member_bc_interval_runner.stop()
+    }
   },
 
   methods: {
+    member_infos_clear() {
+      this.member_infos = []
+    },
+
     step_next() {
+      this.user_age += 1
       this.member_share()
     },
     member_share() {
       this.ac_room_perform("member_share", {
+        user_age: this.user_age,
       }) // --> app/channels/share_board/room_channel.rb
     },
     member_share_broadcasted(params) {
@@ -38,32 +56,32 @@ export const app_room_members = {
 
     member_add(params) {
       this.member_infos.push(params)
-      this.filtered_member_infos()
+      this.member_infos_normalize()
     },
 
-    filtered_member_infos() {
-      const t = dayjs().unix()
-      this.member_infos = this.member_infos.filter(e => {
-        const v = t - e.performed_at
-        if (this.development_p) {
-          this.clog(`${t} - ${e.performed_at} = ${v}`)
-        }
-        return v < NOTIFY_INTERVAL2
-      })
+    // 処理順序重要
+    member_infos_normalize() {
+      this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")  // 新しいもの順に並べる
+      this.member_infos = _.uniqBy(this.member_infos, "from_user_code")         // ユーザーの重複を防ぐ(新しい方を採取する)
+      this.member_infos = this.member_infos_find_all_newest(this.member_infos)  // 通知が来た時間が最近の人だけを採取する
+      // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる
+      this.member_infos = _.orderBy(this.member_infos, "user_age", "desc")      // 順序固定のために年寄順に並べる
+    },
 
-      this.member_infos = _.uniqBy(this.member_infos, "from_user_code")    // ユーザーの重複を防ぐ
-      // this.member_infos = _.orderBy(this.member_infos, "revision", "desc") // 古株順は揺れるのだめ
-      this.member_infos = _.orderBy(this.member_infos, "from_user_code") // 古株順は揺れるのだめ
+    // 通知が来た日時が最近の人だけを採取する
+    member_infos_find_all_newest(list) {
+      const now = dayjs().unix()
+      return list.filter(e => {
+        const v = now - e.performed_at
+        if (this.development_p) {
+          this.clog(`${now} - ${e.performed_at} = ${v}`)
+        }
+        return v <= MEMBER_TTL
+      })
     },
 
     member_add_test() {
-      // this.member_add({
-      //   from_user_name: "あいうえおあいうえお",
-      //   turn_offset: this.base.member_infos.length,
-      //   performed_last_location_key: "white",
-      //   sfen: "position startpos",
-      //   performed_at: dayjs().unix(),
-      // })
+      this.member_bc_interval_runner.restart()
     },
   },
 }
