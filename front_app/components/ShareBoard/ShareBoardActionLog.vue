@@ -14,6 +14,8 @@ import { support_child } from "./support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
 
+const ACTION_LOG_CLICK_CONFIRM_SHOW = true
+
 export default {
   name: "ShareBoardActionLog",
   mixins: [
@@ -33,9 +35,27 @@ export default {
     }
   },
   methods: {
-    action_log_click_handle(action_log) {
-      this.base.current_sfen = action_log.sfen
-      this.base.turn_offset = action_log.turn_offset
+    action_log_click_handle(e) {
+      if (ACTION_LOG_CLICK_CONFIRM_SHOW) {
+        const message = `${this.base.call_name(e.from_user_name)}が指した${e.turn_offset}手目に戻りますか？`
+        this.talk(message)
+        this.$buefy.dialog.confirm({
+          message: message,
+          cancelText: "キャンセル",
+          confirmText: `${e.turn_offset}手目に戻る`,
+          onCancel:  () => {},
+          onConfirm: () => {
+            this.talk_stop()
+            this.action_log_jump(e)
+          },
+        })
+      } else {
+        this.action_log_jump(e)
+      }
+    },
+    action_log_jump(e) {
+      this.base.current_sfen = e.sfen
+      this.base.turn_offset = e.turn_offset
     },
     time_format(v) {
       return dayjs.unix(v.performed_at).format("HH:mm:ss")
