@@ -52,7 +52,7 @@ export const app_room = {
           if (this.development_p) {
             this.toast_ok("名前を変更したので次の通知を待たずにすぐブロードキャストする")
           }
-          this.member_info_share()
+          this.member_bc_interval_runner.restart()
         }
       }
 
@@ -116,7 +116,7 @@ export const app_room = {
       } else {
         this.attributes_set(params)
       }
-      this.toast_ok(`${params.from_user_name}さんが${params.turn_offset}手目を指しました`)
+      this.toast_ok(`${this.call_name(params.from_user_name)}が${params.turn_offset}手目を指しました`)
       this.al_add(params)
     },
     ////////////////////////////////////////////////////////////////////////////////
@@ -154,6 +154,13 @@ export const app_room = {
         return
       }
       this.clipboard_copy({text: this.share_board_with_room_code_url})
+    },
+    ////////////////////////////////////////////////////////////////////////////////
+    call_name(name) {
+      if (name.match(/.(さん|サン|ｻﾝ|くん|クン|ｸﾝ|ちゃん|チャン|ﾁｬﾝ|さま|サマ|ｻﾏ|様|氏)$/)) {
+        return name
+      }
+      return `${name}さん`
     },
   },
   computed: {
