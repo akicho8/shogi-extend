@@ -22,7 +22,7 @@ client-only
           b-menu
             b-menu-list(label="リアルタイム共有")
               b-menu-item(label="合言葉とハンドルネームの設定" @click="room_code_edit")
-              b-menu-item(label="合言葉設定済みURLのコピー" @click="room_code_url_copy_handle")
+              b-menu-item(label="合言葉だけを設定したURLのコピー" @click="room_code_url_copy_handle")
 
             b-menu-list(label="検討")
               b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
@@ -42,6 +42,7 @@ client-only
 
             b-menu-list(label="その他")
               b-menu-item(label="OGP画像視点設定" @click="abstract_viewpoint_setting_handle")
+              b-menu-item(label="局面ツイート(合言葉を含む)" @click="tweet_handle")
               b-menu-item(label="タイトル変更" @click="title_edit")
               b-menu-item(label="URLを開いたときの局面に戻す" @click="reset_handle")
 
@@ -69,7 +70,7 @@ client-only
         b-navbar-item(@click="member_add_test" v-if="development_p") 仲
         b-navbar-item(@click="al_add_test" v-if="development_p") 指
 
-        b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
+        b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode' && !share_p")
           b-icon(icon="twitter" type="is-white")
         b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
           | 編集完了
@@ -288,6 +289,7 @@ export default {
     // },
 
     tweet_handle() {
+      this.sidebar_p = false
       this.sound_play("click")
       this.tweet_window_popup({text: this.tweet_body})
     },
