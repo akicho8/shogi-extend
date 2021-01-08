@@ -6,14 +6,14 @@
       //- span.mx-1.has-text-danger(v-if="base.$ac_room")
       //-   | (共有中)
   section.modal-card-body
-    .content
+    .content.is-size-7
       ul
         li 同じ合言葉を設定した人とリアルタイムに盤を共有します
         li 合言葉を設定したら同じ合言葉をこっそり相手に伝えてください
         li メニューにある「合言葉設定済みURL」を伝えてもかまいません
-        li 共有のタイミングは<b>指したときだけ</b>です←重要
+        li 共有のタイミングは<b>指したときだけ</b>です ← 重要
         li 間違えて指したときなどは(合意を得た上で)局面を戻して指し直せばよいです
-        li 指し手の記録の行をタップするとそのときの局面に戻ります
+        li 指し手のログの行をタップするとそのときの局面に戻ります
 
     template(v-if="input_show_p")
       b-field(label="合言葉" label-position="on-border" key="input_show_p_true")
