@@ -73,7 +73,7 @@ export const app_room = {
       this.__assert__(this.$ac_room == null, "this.$ac_room == null")
       this.$ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: () => {
-          this.idol_timer_start()
+          this.revision_increment_timer.restart()
           this.board_info_request()
           this.member_bc_interval_runner.restart()
         },
@@ -95,7 +95,7 @@ export const app_room = {
         from_user_code: this.user_code, // 送信者識別子
         from_user_name: this.user_name, // 送信者名
         performed_at: dayjs().unix(),   // 実行日時
-        revision: this.$revision,       // 古参レベル
+        revision: this.$revision,       // 盤リビジョン(高い方が信憑性のある情報)
       }, params)
 
       if (this.$ac_room) {

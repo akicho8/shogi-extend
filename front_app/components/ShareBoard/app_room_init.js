@@ -1,27 +1,21 @@
+import { IntervalRunner } from '@/components/models/IntervalRunner.js'
+
 export const app_room_init = {
   data() {
     return {
-      idol_timer_id: null,
+      revision_increment_timer: new IntervalRunner(this.revision_increment_timer_callback, {early: false, interval: 1.0}),
     }
   },
+  created() {
+    this.$revision = 0
+  },
   beforeDestroy() {
-    this.idol_timer_stop()
+    if (this.revision_increment_timer) {
+      this.revision_increment_timer.stop()
+    }
   },
   methods: {
-    idol_timer_start() {
-      this.idol_timer_stop()
-      this.$revision = 0
-      this.idol_timer_id = setInterval(this.idol_timer_process, 1000)
-    },
-
-    idol_timer_stop() {
-      if (this.idol_timer_id) {
-        clearInterval(this.idol_timer_id)
-        this.idol_timer_id = null
-      }
-    },
-
-    idol_timer_process() {
+    revision_increment_timer_callback() {
       this.$revision += 1
     },
 

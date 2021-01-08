@@ -27,7 +27,7 @@ client-only
             b-menu-list(label="検討")
               b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
               b-menu-item(label="KENTO" :href="kento_app_with_params_url" :target="target_default" @click="sound_play('click')")
-              b-menu-item(label="コピー" @click="kifu_copy_handle('kif')")
+              b-menu-item(label="棋譜コピー" @click="kifu_copy_handle('kif')")
 
             b-menu-list(label="編集系")
               b-menu-item(label="局面編集" @click="mode_toggle_handle")
