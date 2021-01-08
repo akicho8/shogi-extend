@@ -59,8 +59,10 @@ export default {
 .ShareBoardActionLog.column
   position: relative
   +tablet
-    max-width: 12rem
+    max-width: 8rem
   +desktop
+    max-width: 12rem
+  +widescreen
     max-width: 16rem
   +mobile
     height: 10rem

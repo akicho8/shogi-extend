@@ -101,8 +101,6 @@ client-only
     MainSection.is_mobile_padding_zero
       .container.is-fluid
         .columns.is-centered
-          ShareBoardMemberList(:base="base" v-if="share_p")
-
           //- .MainColumn.column.is-9-tablet.is-8-desktop.is-7-widescreen.is-5-fullhd
           .MainColumn.column
             //- .turn_container.has-text-centered(v-if="sp_run_mode === 'play_mode' && false")
@@ -142,6 +140,7 @@ client-only
               | {{room_code}}
 
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="share_p")
+          ShareBoardMemberList(:base="base" v-if="share_p")
 
         .columns(v-if="development_p")
           .column.is-clipped
@@ -567,7 +566,7 @@ export default {
     .ShogiPlayerWidth
     .Membership
     .columns, .column
-      // border: 1px dashed change_color($success, $alpha: 0.5)
+      border: 1px dashed change_color($success, $alpha: 0.5)
 
 .ShareBoardApp-Sidebar
   .sidebar-content
@@ -585,17 +584,23 @@ export default {
   .MainSection.section
     +mobile
       padding: 0.75rem 0 0
+    +tablet-only
+      padding: 1.5rem
+      .container
+        padding: 0
 
   .EditToolBlock
     margin-top: 12px
 
-  .MainColumn
-    +tablet
-      padding-top: 0
-      padding-bottom: 0
+  // .MainColumn
+  //   +tablet
+  //     padding-top: 0
+  //     padding-bottom: 0
 
   .MainColumn
     +tablet
+      padding-top: unset
+      padding-bottom: unset
       max-width: 80vmin
 
   .CustomShogiPlayer
@@ -603,4 +608,12 @@ export default {
       --sp_stand_piece_w: 40px // 駒台のセル(W)
       --sp_stand_piece_h: 40px // 駒台のセル(H)
       --sp_piece_count_gap_bottom: 58%
+
+  +tablet
+    .ShareBoardMemberList
+      order: 1
+    .MainColumn
+      order: 2
+    .ShareBoardActionLog
+      order: 3
 </style>
