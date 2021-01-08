@@ -27,7 +27,8 @@ export const app_room_init = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     board_info_request_broadcasted(params) {
-      this.toast_ok(`${this.call_name(params.from_user_name)}が入室しました`)
+      this.debug_alert(`${this.call_name(params.from_user_name)}が入室しました`)
+      this.sound_play("pon")
       this.clog(`${params.from_user_code} が欲しいと言っている`)
       if (params.from_user_code === this.user_code) {
         this.clog(`自分から自分へ`)
