@@ -616,4 +616,9 @@ export default {
       order: 2
     .ShareBoardActionLog
       order: 3
+  +mobile
+    .ShareBoardActionLog
+      margin-top: 1rem
+    .ShareBoardMemberList
+      margin-top: 1rem
 </style>

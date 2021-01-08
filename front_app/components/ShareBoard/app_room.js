@@ -52,7 +52,7 @@ export const app_room = {
           if (this.development_p) {
             this.toast_ok("名前を変更したので次の通知を待たずにすぐブロードキャストする")
           }
-          this.member_share()
+          this.member_info_share()
         }
       }
 

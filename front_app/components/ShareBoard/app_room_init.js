@@ -31,7 +31,11 @@ export const app_room_init = {
       if (params.from_user_code === this.user_code) {
         this.clog(`自分から自分へ`)
       } else {
+        this.clog("参加者に盤の状態を教えてあげる")
         this.board_info_send(params.from_user_code)
+
+        this.clog("参加者はこの部屋に誰がいるのかわかってないので自分がいることも教えてあげる")
+        this.member_info_share()
       }
     },
 

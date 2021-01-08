@@ -10,7 +10,7 @@ export const app_room_members = {
   data() {
     return {
       member_infos: [],
-      member_bc_interval_runner: new IntervalRunner(this.step_next, {early: true, interval: ALIVE_NOTIFY_INTERVAL}),
+      member_bc_interval_runner: new IntervalRunner(this.member_bc_interval_callback, {early: true, interval: ALIVE_NOTIFY_INTERVAL}),
       user_age: 0,
     }
   },
@@ -35,21 +35,24 @@ export const app_room_members = {
       this.member_infos = []
     },
 
-    step_next() {
+    member_bc_interval_callback() {
       this.user_age += 1
-      this.member_share()
+      this.member_info_share()
     },
-    member_share() {
-      this.ac_room_perform("member_share", {
+
+    // 自分が存在することをみんなに伝える
+    member_info_share() {
+      this.ac_room_perform("member_info_share", {
         user_age: this.user_age,
       }) // --> app/channels/share_board/room_channel.rb
     },
+
+    // 誰かが存在することが伝えられた
     member_share_broadcasted(params) {
       if (params.from_user_code === this.user_code) {
-        // 自分から自分へ
+        // 誰かが存在することを自分に伝えられた
       } else {
-        // this.attributes_set(params)
-        // this.toast_ok(`タイトルを${params.member}に変更しました`)
+        // 他の人が存在することを自分に伝えられた
       }
       this.member_add(params)
     },

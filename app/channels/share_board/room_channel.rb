@@ -21,7 +21,7 @@ module ShareBoard
       broadcast(:title_share_broadcasted, data)
     end
 
-    def member_share(data)
+    def member_info_share(data)
       broadcast(:member_share_broadcasted, data)
     end
 
