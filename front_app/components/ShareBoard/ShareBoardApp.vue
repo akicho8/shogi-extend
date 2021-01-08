@@ -21,8 +21,9 @@ client-only
         .mt-4
           b-menu
             b-menu-list(label="リアルタイム共有")
-              b-menu-item(label="合言葉とハンドルネームの設定" @click="room_code_edit")
-              b-menu-item(label="合言葉だけを設定したURLのコピー" @click="room_code_url_copy_handle")
+              b-menu-item(label="合言葉の設定と共有" @click="room_code_modal_handle")
+              b-menu-item(label="合言葉だけを含むURLのコピー" @click="room_code_url_copy_handle" :disabled="!room_code")
+              b-menu-item(label="再接続(なんかおかしいとき用)" @click="room_recreate_handle" :disabled="!connectable_p")
 
             b-menu-list(label="検討")
               b-menu-item(label="ぴよ将棋" :href="piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
@@ -67,6 +68,10 @@ client-only
           | {{current_title}}
           span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
       template(slot="end")
+        b-navbar-item(v-if="development_p") {{connected_count}}
+        b-navbar-item(@click="room_recreate" v-if="development_p") 再接続
+        b-navbar-item(@click="room_create" v-if="development_p") 接続
+        b-navbar-item(@click="room_destroy" v-if="development_p") 切断
         b-navbar-item(@click="member_add_test" v-if="development_p") 仲
         b-navbar-item(@click="al_add_test" v-if="development_p") 指
 
@@ -91,7 +96,7 @@ client-only
         //-     b-navbar-item(@click="title_edit") タイトル編集
         //-     b-navbar-item(@click="kifu_copy_handle('sfen')") SFENコピー
         //-     template(v-if="sp_run_mode === 'play_mode'")
-        //-       b-navbar-item(@click="room_code_edit")
+        //-       b-navbar-item(@click="room_code_modal_handle")
         //-         | リアルタイム共有
         //-         .has-text-danger.ml-1(v-if="room_code") {{room_code}}
 
@@ -137,7 +142,7 @@ client-only
               TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="sp_run_mode === 'play_mode'")
               //- b-button(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'") 編集完了
 
-            .room_code.is-clickable(@click="room_code_edit" v-if="false")
+            .room_code.is-clickable(@click="room_code_modal_handle" v-if="false")
               | {{room_code}}
 
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="share_p")
@@ -145,6 +150,7 @@ client-only
 
         .columns(v-if="development_p")
           .column.is-clipped
+            //- pre {{ac_info()}}
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
             .block
@@ -337,11 +343,14 @@ export default {
     },
 
     current_title_set(title) {
-      this.current_title = _.trim(title)
-      this.title_share(this.current_title)
+      title = _.trim(title)
+      if (this.current_title != title) {
+        this.current_title = title
+        this.title_share(this.current_title)
+      }
     },
 
-    room_code_edit() {
+    room_code_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
 

@@ -1,11 +1,16 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 
+const DESTROY_AFTER_WAIT = 3.0
+
 export const app_room = {
   data() {
     return {
       room_code: this.config.record.room_code, // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
+      ac_room: null,
+      connected_count: 0,
+      room_creating_busy: 0,
     }
   },
   mounted() {
@@ -14,11 +19,11 @@ export const app_room = {
     if (this.room_code) {
       if (this.user_name) {
         // 合言葉設定済みURLから来て名前は設定しているのですぐに共有する
-        this.room_setup()
+        this.room_create()
       } else {
         // 合言葉設定済みURLから来て名前は設定していない
-        this.toast_ok("リアルタイム共有で使うあなたのハンドルネームを入力してください")
-        this.room_code_edit()
+        this.toast_ok("リアルタイム共有で表示するハンドルネームを入力してください")
+        this.room_code_modal_handle()
       }
     } else {
       // 通常の起動
@@ -28,14 +33,18 @@ export const app_room = {
     if (this.room_code) {
       this.toast_ok("共有を解除しました")
     }
-    this.room_unsubscribe()
+    this.room_destroy()
   },
   methods: {
     room_code_set(room_code, user_name) {
       let changed_p = false
 
       room_code = _.trim(room_code)
-      if (this.room_code != room_code) {
+      if (this.room_code === room_code) {
+        if (this.ac_room) {
+          this.toast_ok("すでに共有しています")
+        }
+      } else {
         this.room_code = room_code
         changed_p = true
         if (this.room_code) {
@@ -48,36 +57,65 @@ export const app_room = {
       user_name = _.trim(user_name)
       if (this.user_name != user_name) {
         this.user_name = user_name
-        if (this.$ac_room) {
-          if (this.development_p) {
-            this.toast_ok("名前を変更したので次の通知を待たずにすぐブロードキャストする")
-          }
+        if (this.ac_room) {
+          this.toast_ok("ニックネームの変更を共有しました")
           this.member_bc_interval_runner.restart()
         }
       }
 
       if (changed_p) {
-        this.room_unsubscribe() // 内容が変更になったかもしれないのでいったん解除
         if (this.room_code) {
-          this.room_setup()
+          this.room_recreate()
+        } else {
+          this.room_destroy()
         }
       }
     },
 
-    room_setup() {
+    // ac_room.unsubscribe() をした直後に subscribe すると subscribe が無効になる
+    // なので少し待ってから実行する
+    room_recreate() {
+      if (this.room_creating_busy >= 1) {
+        this.toast_ng("共有作業中です")
+        return
+      }
+      if (this.ac_room) {
+        this.room_destroy()
+        this.room_creating_busy += 1
+        const loading = this.$buefy.loading.open()
+        this.delay_block(DESTROY_AFTER_WAIT, () => {
+          this.room_create()
+          this.room_creating_busy = 0
+          loading.close()
+        })
+      } else {
+        this.room_create()
+      }
+    },
+
+    room_recreate_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
+      this.room_recreate()
+    },
+
+    room_create() {
+      this.debug_alert("room_create")
       this.__assert__(this.user_name, "this.user_name")
       this.__assert__(this.room_code, "this.room_code")
 
       this.member_infos_clear()
-      this.room_unsubscribe()
-      this.__assert__(this.$ac_room == null, "this.$ac_room == null")
-      this.$ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
+      // this.room_destroy()
+      this.__assert__(this.ac_room == null, "this.ac_room == null")
+      this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: () => {
+          this.connected_count += 1
           this.revision_increment_timer.restart()
           this.board_info_request()
           this.member_bc_interval_runner.restart()
         },
         disconnected: () => {
+          this.connected_count -= 1
           if (this.development_p) {
             this.toast_ok("部屋を解放しました")
           }
@@ -85,8 +123,9 @@ export const app_room = {
       })
     },
 
-    room_unsubscribe() {
-      this.ac_unsubscribe("$ac_room")
+    room_destroy() {
+      this.debug_alert("room_destroy")
+      this.ac_unsubscribe("ac_room")
     },
 
     // perform のラッパーで共通のパラメータを入れる
@@ -98,8 +137,8 @@ export const app_room = {
         revision: this.$revision,       // 盤リビジョン(高い方が信憑性のある情報)
       }, params)
 
-      if (this.$ac_room) {
-        this.$ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
+      if (this.ac_room) {
+        this.ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
       }
     },
 
@@ -130,8 +169,8 @@ export const app_room = {
         // 自分から自分へ
       } else {
         this.attributes_set(params)
-        this.toast_ok(`タイトルを${params.title}に変更しました`)
       }
+      this.toast_ok(`${this.call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -165,6 +204,7 @@ export const app_room = {
   },
   computed: {
     share_p() { return this.room_code != "" },
+    connectable_p() { return this.room_code && this.user_name },
 
     ////////////////////////////////////////////////////////////////////////////////
     current_sfen_attrs() {

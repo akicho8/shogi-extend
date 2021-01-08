@@ -36,6 +36,7 @@ export const app_room_members = {
     },
 
     member_bc_interval_callback() {
+      this.debug_alert("member_bc_interval_callback")
       this.user_age += 1
       this.member_info_share()
     },

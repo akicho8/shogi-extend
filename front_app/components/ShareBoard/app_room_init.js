@@ -27,6 +27,7 @@ export const app_room_init = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     board_info_request_broadcasted(params) {
+      this.toast_ok(`${this.call_name(params.from_user_name)}が参加しました`)
       this.clog(`${params.from_user_code} が欲しいと言っている`)
       if (params.from_user_code === this.user_code) {
         this.clog(`自分から自分へ`)
@@ -58,7 +59,7 @@ export const app_room_init = {
           this.clog(`リビジョン比較: 相手(${params.revision}) > 自分(${this.$revision}) --> ${params.revision > this.$revision}`)
           if (params.revision > this.$revision) {
             this.clog(`自分より古参の情報なので反映する`)
-            this.toast_ok(`${params.from_user_name}さんから最新の状態を共有してもらいました`)
+            this.toast_ok(`${this.call_name(params.from_user_name)}から最新の状態を共有してもらいました`)
             this.$revision = params.revision
             this.attributes_set(params)
           } else {
