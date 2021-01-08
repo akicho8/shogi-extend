@@ -22,7 +22,7 @@ export const app_room = {
         this.room_create()
       } else {
         // 合言葉設定済みURLから来て名前は設定していない
-        this.toast_ok("リアルタイム共有で表示するハンドルネームを入力してください")
+        this.toast_ok("ハンドルネームを入力してください")
         this.room_code_modal_handle()
       }
     } else {
@@ -37,16 +37,19 @@ export const app_room = {
   },
   methods: {
     room_code_set(room_code, user_name) {
-      let changed_p = false
+      let apply = false
 
       room_code = _.trim(room_code)
       if (this.room_code === room_code) {
         if (this.ac_room) {
           this.toast_ok("すでに共有しています")
+        } else {
+          this.debug_alert("URL経由で飛んできてハンドルネームを入力した直後に接続する")
+          apply = true
         }
       } else {
         this.room_code = room_code
-        changed_p = true
+        apply = true
         if (this.room_code) {
           this.toast_ok("合言葉を設定しました")
         } else {
@@ -63,7 +66,7 @@ export const app_room = {
         }
       }
 
-      if (changed_p) {
+      if (apply) {
         if (this.room_code) {
           this.room_recreate()
         } else {
