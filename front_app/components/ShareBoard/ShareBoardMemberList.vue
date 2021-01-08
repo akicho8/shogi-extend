@@ -58,7 +58,7 @@ export default {
   +widescreen
     max-width: 16rem
   +mobile
-    height: 10rem
+    height: 20rem
 
   .scroll_block
     @extend %overlay
