@@ -2,7 +2,7 @@
 .ShareBoardActionLog.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
-      a.is-clickable.is-block.is_line_break_off(:key="i" @click="action_log_click_handle(e)")
+      a.is-clickable.is-block.is_line_break_off(:key="action_log_key(e)" @click="action_log_click_handle(e)")
         span.has-text-weight-bold {{e.turn_offset}}
         span.ml-1 {{location_name(e)}}
         span.ml-1 {{e.from_user_name}}
@@ -35,6 +35,9 @@ export default {
     }
   },
   methods: {
+    action_log_key(e) {
+      return [e.performed_at, e.turn_offset, e.from_user_code].join("-")
+    },
     action_log_click_handle(e) {
       if (ACTION_LOG_CLICK_CONFIRM_SHOW) {
         const message = `${this.base.call_name(e.from_user_name)}が指した${e.turn_offset}手目に戻りますか？`
@@ -43,7 +46,10 @@ export default {
           message: message,
           cancelText: "キャンセル",
           confirmText: `${e.turn_offset}手目に戻る`,
-          onCancel:  () => {},
+          onCancel:  () => {
+            this.talk_stop()
+            this.sound_play("click")
+          },
           onConfirm: () => {
             this.talk_stop()
             this.action_log_jump(e)

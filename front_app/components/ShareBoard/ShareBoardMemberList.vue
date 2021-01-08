@@ -2,7 +2,7 @@
 .ShareBoardMemberList.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
-      .member_info.is_line_break_off(:key="e.from_user_code")
+      .member_info.is_line_break_off.is-clickable(:key="e.from_user_code" @click="member_info_click_handle(e)")
         b-icon(icon="account" size="is-small" type="is-primary")
         span.ml-1 {{e.from_user_name}}
         span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
@@ -20,18 +20,9 @@ export default {
   mixins: [
     support_child,
   ],
-  props: {
-  },
-  data() {
-    return {
-    }
-  },
-  mounted() {
-  },
   methods: {
-    action_log_click_handle(action_log) {
-      // this.base.current_sfen = action_log.sfen
-      // this.base.turn_offset = action_log.turn_offset
+    member_info_click_handle(e) {
+      this.talk(`${this.base.call_name(e.from_user_name)}`)
     },
     time_format(v) {
       return dayjs.unix(v.performed_at).format("HH:mm:ss")
@@ -39,7 +30,7 @@ export default {
   },
   computed: {
     member_infos() {
-      // return _.reverse(this.base.action_logs.slice())
+      // return _.reverse(this.base.member_infos.slice())
       return this.base.member_infos
     },
   },
@@ -76,6 +67,8 @@ export default {
       text-overflow: ellipsis
       padding: 0.2rem 0.5rem
       color: inherit
+      &:hover
+        background-color: $grey-lighter
 
 .STAGE-development
   .ShareBoardMemberList
