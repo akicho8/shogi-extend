@@ -33,7 +33,7 @@ client-only
           b-icon(icon="twitter" type="is-white")
         b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
           | 編集完了
-        b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
+        b-navbar-item.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="menu")
 
     MainSection.is_mobile_padding_zero
@@ -545,7 +545,7 @@ export default {
 
 .ShareBoardApp
   .navbar-end
-    .navbar-item
+    .sidebar_toggle_navbar_item
       padding-left: 1.5rem
       padding-right: 1.5rem
 
