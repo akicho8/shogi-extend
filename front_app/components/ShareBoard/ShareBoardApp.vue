@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  .ShareBoardApp
+  .ShareBoardApp(:style="component_style")
     DebugBox
       p room_code: {{JSON.stringify(room_code)}}
       p user_name: {{JSON.stringify(user_name)}}
@@ -152,6 +152,8 @@ export default {
       internal_rule: this.defval(this.$route.query.internal_rule, INTERNAL_RULE_DEFAULT),        // 操作モードの内部ルール strict or free
 
       sidebar_p: false,
+
+      share_board_column_width: 80, // 盤の大きさ
     }
   },
   mounted() {
@@ -519,6 +521,12 @@ export default {
       o += this.current_url
       return o
     },
+
+    component_style() {
+      return {
+        "--share_board_column_width": this.share_board_column_width,
+      }
+    },
   },
 }
 </script>
@@ -561,7 +569,7 @@ export default {
     +tablet
       padding-top: unset
       padding-bottom: unset
-      max-width: 80vmin
+      max-width: calc(var(--share_board_column_width) * 1.0vmin)
 
   .CustomShogiPlayer
     +mobile

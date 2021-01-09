@@ -29,10 +29,15 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
           b-menu-item(label="URLを開いたときの局面に戻す"   @click="base.reset_handle")
 
       .box.mt-5
+        .title.is-5 スタイル設定
+        b-field(custom-class="is-small" label="盤の大きさ")
+          b-slider(v-bind="slider_attrs" v-model="base.share_board_column_width" :min="0" :max="100" :step="0.1")
+      .box.mt-5
         .title.is-5 ☠危険な設定
         b-field(custom-class="is-small" label="将棋のルール" message="無視にすると「自分の手番では自分の駒を操作する」の制限をしないので、自分の手番で相手の駒を操作できるようになる。それを踏まえて後手のときも先手の駒を動かせば、見た目上はずっと先手側を操作できるので、先手だけの囲いの手順の棋譜を作ったりするのが簡単になる。しかし反則のため他のアプリでは(おそらく)読めない棋譜になる")
           b-radio-button(size="is-small" v-model="base.internal_rule" native-value="strict" @input="base.internal_rule_input_handle") 守る
           b-radio-button(size="is-small" v-model="base.internal_rule" native-value="free"   @input="base.internal_rule_input_handle" type="is-danger") 無視
+
 </template>
 
 <script>
@@ -41,6 +46,15 @@ import { support_child } from "./support_child.js"
 export default {
   name: "ShareBoardSidebar",
   mixins: [support_child],
+  computed: {
+    slider_attrs() {
+      return {
+        indicator: true,
+        tooltip: false,
+        size: "is-small",
+      }
+    },
+  },
 }
 </script>
 
@@ -52,4 +66,10 @@ export default {
     width: 20rem
   .menu-label
     margin-top: 2em
+
+  .b-slider
+    .b-slider-thumb-wrapper.has-indicator
+      .b-slider-thumb
+        padding: 8px 4px
+        font-size: 10px
 </style>
