@@ -76,11 +76,11 @@ client-only
         .columns(v-if="development_p")
           .column.is-clipped
             .buttons
-              b-button(@click="room_recreate" ) 再接続
-              b-button(@click="room_create" ) 接続
-              b-button(@click="room_destroy" ) 切断
-              b-button(@click="member_add_test" ) 仲
-              b-button(@click="al_add_test" ) 指
+              b-button(@click="room_recreate") 再接続
+              b-button(@click="room_create") 接続
+              b-button(@click="room_destroy") 切断
+              b-button(@click="member_add_test") 生存通知
+              b-button(@click="al_add_test") 指
 
             //- pre {{ac_info()}}
             .buttons

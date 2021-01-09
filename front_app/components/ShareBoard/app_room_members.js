@@ -3,8 +3,9 @@ import dayjs from "dayjs"
 
 import { IntervalRunner } from '@/components/models/IntervalRunner.js'
 
-const ALIVE_NOTIFY_INTERVAL = 60  // N秒ごとに存在を通知する
-const MEMBER_TTL            = 120 // 通知がN秒前より古いユーザーは破棄
+const ALIVE_NOTIFY_INTERVAL = 60     // N秒ごとに存在を通知する
+const MEMBER_TTL            = 60*3   // 通知がN秒前より古いユーザーは破棄
+const ACTIVE_LIMIT          = 60*1.5 // N秒以内なら活発とみなして青くする
 
 export const app_room_members = {
   data() {
@@ -74,14 +75,17 @@ export const app_room_members = {
 
     // 通知が来た日時が最近の人だけを採取する
     member_infos_find_all_newest(list) {
-      const now = dayjs().unix()
-      return list.filter(e => {
-        const v = now - e.performed_at
-        if (this.development_p) {
-          this.clog(`${now} - ${e.performed_at} = ${v}`)
-        }
-        return v <= MEMBER_TTL
-      })
+      return list.filter(e => this.member_elapsed_second(e) <= MEMBER_TTL)
+    },
+
+    // アクティブか？
+    member_active_p(e) {
+      return this.member_elapsed_second(e) <= ACTIVE_LIMIT
+    },
+
+    // 通達があってからの経過秒数
+    member_elapsed_second(e) {
+      return dayjs().unix() - e.performed_at
     },
 
     member_add_test() {
