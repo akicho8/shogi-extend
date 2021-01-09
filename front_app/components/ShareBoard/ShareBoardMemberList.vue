@@ -52,7 +52,7 @@ export default {
   .scroll_block
     @extend %overlay
 
-    overflow-y: scroll
+    overflow-y: auto
     overflow-x: hidden
 
     border-radius: 3px

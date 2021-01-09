@@ -30,7 +30,7 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
 
       .box.mt-5
         .title.is-5 スタイル設定
-        b-field(custom-class="is-small" label="盤の大きさ(PC)")
+        b-field(custom-class="is-small" label="盤の大きさ(スマホを除く)")
           b-slider(v-bind="slider_attrs" v-model="base.share_board_column_width" :min="0" :max="100" :step="0.1")
       .box.mt-5
         .title.is-5 ☠危険な設定
