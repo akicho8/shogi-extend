@@ -9,7 +9,6 @@ export const app_room = {
       room_code: this.config.record.room_code, // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
       ac_room: null,
-      connected_count: 0,
       room_creating_busy: 0,
     }
   },
@@ -112,16 +111,11 @@ export const app_room = {
       this.__assert__(this.ac_room == null, "this.ac_room == null")
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: () => {
-          this.connected_count += 1
           this.revision_increment_timer.restart()
           this.board_info_request()
           this.member_bc_interval_runner.restart()
         },
         disconnected: () => {
-          this.connected_count -= 1
-          if (this.development_p) {
-            this.toast_ok("部屋を解放しました")
-          }
         },
       })
     },
