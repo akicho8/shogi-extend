@@ -535,18 +535,6 @@ export default {
     .columns, .column
       border: 1px dashed change_color($success, $alpha: 0.5)
 
-.ShareBoardApp-Sidebar
-  .sidebar-content
-    width: 20rem
-
-  // .menu-label:not(:first-child)
-  //   margin-top: 1.5em
-  .menu-label
-    margin-top: 2em
-
-  // .help
-  //   max-width: 20ch
-
 .ShareBoardApp
   .navbar-end
     .navbar-item
