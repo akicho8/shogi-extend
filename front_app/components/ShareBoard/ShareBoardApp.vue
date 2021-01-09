@@ -28,12 +28,6 @@ client-only
           b-icon(icon="account")
           b-tag.has-text-weight-bold(rounded)
             .has-text-primary {{member_infos.length}}
-        b-navbar-item(v-if="development_p") {{connected_count}}
-        b-navbar-item(@click="room_recreate" v-if="development_p") 再接続
-        b-navbar-item(@click="room_create" v-if="development_p") 接続
-        b-navbar-item(@click="room_destroy" v-if="development_p") 切断
-        b-navbar-item(@click="member_add_test" v-if="development_p") 仲
-        b-navbar-item(@click="al_add_test" v-if="development_p") 指
 
         b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode' && !share_p")
           b-icon(icon="twitter" type="is-white")
@@ -81,6 +75,13 @@ client-only
 
         .columns(v-if="development_p")
           .column.is-clipped
+            .buttons
+              b-button(@click="room_recreate" ) 再接続
+              b-button(@click="room_create" ) 接続
+              b-button(@click="room_destroy" ) 切断
+              b-button(@click="member_add_test" ) 仲
+              b-button(@click="al_add_test" ) 指
+
             //- pre {{ac_info()}}
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
@@ -547,6 +548,11 @@ export default {
   //   max-width: 20ch
 
 .ShareBoardApp
+  .navbar-end
+    .navbar-item
+      padding-left: 1.5rem
+      padding-right: 1.5rem
+
   .MainSection.section
     +mobile
       padding: 0.75rem 0 0
