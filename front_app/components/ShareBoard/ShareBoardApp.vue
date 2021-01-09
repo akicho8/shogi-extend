@@ -18,12 +18,13 @@ client-only
 
     MainNavbar(:spaced="false")
       template(slot="brand")
-        NavbarItemHome
+        b-navbar-item(@click.native="exit_handle")
+          b-icon(icon="home")
         b-navbar-item.has-text-weight-bold(@click="title_edit")
           | {{current_title}}
           span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
       template(slot="end")
-        b-navbar-item(tag="div" v-if="ac_room")
+        b-navbar-item.is-unselectable(tag="div" v-if="ac_room")
           b-icon(icon="account")
           b-tag.has-text-weight-bold(rounded)
             .has-text-primary {{member_infos.length}}
@@ -171,13 +172,37 @@ export default {
     })
   },
   methods: {
+    exit_handle() {
+      this.sound_play("click")
+      if (!this.ac_room) {
+        this.$router.push({name: "index"})
+      } else {
+        const message = "リアルタイム共有中ですが本当に退室しますか？"
+        this.talk(message)
+        this.$buefy.dialog.confirm({
+          message: message,
+          cancelText: "キャンセル",
+          confirmText: "退室する",
+          onCancel: () => {
+            this.talk_stop()
+            this.sound_play("click")
+          },
+          onConfirm: () => {
+            this.talk_stop()
+            this.sound_play("click")
+            this.$router.push({name: "index"})
+          },
+        })
+      }
+    },
+
     sidebar_toggle() {
-      this.sound_play('click')
+      this.sound_play("click")
       this.sidebar_p = !this.sidebar_p
     },
 
     internal_rule_input_handle() {
-      this.sound_play('click')
+      this.sound_play("click")
     },
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)

@@ -30,8 +30,8 @@ export const app_room = {
     }
   },
   beforeDestroy() {
-    if (this.room_code) {
-      this.toast_ok("共有を解除しました")
+    if (this.ac_room) {
+      this.toast_ok("共有を解除して退室しました")
     }
     this.room_destroy()
   },
