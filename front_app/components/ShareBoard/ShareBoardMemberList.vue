@@ -17,9 +17,7 @@ import { Location } from "shogi-player/components/models/location.js"
 
 export default {
   name: "ShareBoardMemberList",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   methods: {
     member_info_click_handle(e) {
       this.talk(`${this.base.call_name(e.from_user_name)}`)

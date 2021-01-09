@@ -1,0 +1,55 @@
+<template lang="pug">
+b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model="base.sidebar_p")
+  .mx-4.my-4
+    .is-flex.is-justify-content-start.is-align-items-center
+      b-button(@click="base.sidebar_toggle" icon-left="menu")
+    .mt-4
+      b-menu
+        b-menu-list(label="リアルタイム共有")
+          b-menu-item(label="合言葉の設定と共有"           @click="base.room_code_modal_handle")
+          b-menu-item(label="合言葉だけを含むURLのコピー"  @click="base.room_code_url_copy_handle" :disabled="!base.room_code")
+          b-menu-item(label="再接続(なんかおかしいとき用)" @click="base.room_recreate_handle"      :disabled="!base.connectable_p")
+        b-menu-list(label="検討")
+          b-menu-item(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
+          b-menu-item(label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="sound_play('click')")
+          b-menu-item(label="棋譜コピー" @click="base.kifu_copy_handle('kif')")
+        b-menu-list(label="編集系")
+          b-menu-item(label="局面編集"       @click="base.mode_toggle_handle")
+          b-menu-item(label="棋譜の読み込み" @click="base.any_source_read_handle")
+        b-menu-list(label="Export")
+          b-menu-item(label="局面URLコピー"                                                        @click="base.current_url_copy_handle")
+          b-menu-item(label="SFEN コピー"                                                          @click="base.kifu_copy_handle('sfen')")
+          b-menu-item(label="KIF ダウンロード"             :href="base.kif_download_url"           @click="sound_play('click')")
+          b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="base.shift_jis_kif_download_url" @click="sound_play('click')")
+          b-menu-item(label="画像ダウンロード"             :href="base.snapshot_image_url"         @click="sound_play('click')")
+        b-menu-list(label="その他")
+          b-menu-item(label="OGP画像の視点設定"             @click="base.abstract_viewpoint_setting_handle")
+          b-menu-item(label="局面URLツイート(合言葉を含む)" @click="base.tweet_handle")
+          b-menu-item(label="タイトル変更"                  @click="base.title_edit")
+          b-menu-item(label="URLを開いたときの局面に戻す"   @click="base.reset_handle")
+
+      .box.mt-5
+        .title.is-5 ☠危険な設定
+        b-field(custom-class="is-small" label="将棋のルール" message="無視にすると「自分の手番では自分の駒を操作する」の制限をしないので、自分の手番で相手の駒を操作できるようになる。それを踏まえて後手のときも先手の駒を動かせば、見た目上はずっと先手側を操作できるので、先手だけの囲いの手順の棋譜を作ったりするのが簡単になる。しかし反則のため他のアプリでは(おそらく)読めない棋譜になる")
+          b-radio-button(size="is-small" v-model="base.internal_rule" native-value="strict" @input="base.internal_rule_input_handle") 守る
+          b-radio-button(size="is-small" v-model="base.internal_rule" native-value="free"   @input="base.internal_rule_input_handle" type="is-danger") 無視
+</template>
+
+<script>
+import { support_child } from "./support_child.js"
+
+export default {
+  name: "ShareBoardSidebar",
+  mixins: [support_child],
+}
+</script>
+
+<style lang="sass">
+@import "./support.sass"
+
+.ShareBoardApp-Sidebar
+  .sidebar-content
+    width: 20rem
+  .menu-label
+    margin-top: 2em
+</style>

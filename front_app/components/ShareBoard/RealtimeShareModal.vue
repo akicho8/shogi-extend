@@ -3,8 +3,8 @@
   header.modal-card-head
     p.modal-card-title
       | 合言葉の設定と共有
-      //- span.mx-1.has-text-danger(v-if="base.ac_room")
-      //-   | (共有中)
+      span.mx-1.has-text-danger(v-if="base.ac_room")
+        | (共有中)
   section.modal-card-body
     .content.is-size-7
       ul
@@ -14,7 +14,6 @@
         li 共有のタイミングは<b>指したときだけ</b>です ← 重要
         li 間違えて指したときなどは(合意を得た上で)局面を戻して指し直せばよいです
         li 指し手のログの行をタップするとそのときの局面に戻ります
-
     template(v-if="input_show_p")
       b-field(label="合言葉" label-position="on-border" key="input_show_p_true")
         b-input(v-model="new_room_code")
@@ -22,14 +21,11 @@
       b-field(label="合言葉 (設定済み)" custom-class="is-small" key="input_show_p_false")
         .control
           b-button(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger") 変更
-
     b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとからでも変更できます")
       b-input(v-model="new_user_name")
-
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
-    b-button.submit_handle(@click="submit_handle" type="is-primary")
-      | 共有
+    b-button(@click="submit_handle" type="is-primary") 共有
 </template>
 
 <script>
@@ -79,22 +75,6 @@ export default {
     },
   },
   computed: {
-    // submit_name() {
-    //   const v = _.trim(this.new_room_code)
-    //   if (this.base.ac_room) {
-    //     if (v) {
-    //       return "再接続"
-    //     } else {
-    //       return "切断"
-    //     }
-    //   } else {
-    //     if (v) {
-    //       return "接続"
-    //     } else {
-    //       return "接続"
-    //     }
-    //   }
-    // },
   },
 }
 </script>
