@@ -23,7 +23,7 @@
         .control
           b-button(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger") 変更
 
-    b-field(label="ハンドルネーム" label-position="on-border")
+    b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとからでも変更できます")
       b-input(v-model="new_user_name")
 
   footer.modal-card-foot
@@ -111,5 +111,4 @@ export default {
 
   .field:not(:last-child)
     margin-bottom: 1.5rem
-
 </style>
