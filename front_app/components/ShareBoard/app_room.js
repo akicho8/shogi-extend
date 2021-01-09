@@ -155,7 +155,8 @@ export const app_room = {
       } else {
         this.attributes_set(params)
       }
-      this.toast_ok(`${this.call_name(params.from_user_name)}が${params.turn_offset}手目を指しました`)
+      // this.toast_ok(`${this.call_name(params.from_user_name)}が${params.turn_offset}手目を指しました`)
+      this.toast_ok(`${this.call_name(params.from_user_name)}が指しました`)
       this.al_add(params)
     },
     ////////////////////////////////////////////////////////////////////////////////
