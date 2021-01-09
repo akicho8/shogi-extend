@@ -25,4 +25,10 @@ RSpec.describe "共有将棋盤", type: :system do
     expect(page).to have_content "☗7六歩(77)"              # 符号が表示されている
     doc_image
   end
+
+  it "URLから飛んで即座にリアルタイム共有接続" do
+    visit "http://localhost:4000/share-board?room_code=a&handle_name=alice" # 合言葉とハンドルネームを含む
+    expect(page).to have_content "alice"                                    # 入力したハンドルネームの人が参加している
+    doc_image
+  end
 end
