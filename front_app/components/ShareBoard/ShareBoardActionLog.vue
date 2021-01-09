@@ -40,12 +40,12 @@ export default {
     },
     action_log_click_handle(e) {
       if (ACTION_LOG_CLICK_CONFIRM_SHOW) {
-        const message = `${this.base.call_name(e.from_user_name)}が指した${e.turn_offset}手目に戻りますか？`
+        const message = `${this.base.call_name(e.from_user_name)}が指した${e.turn_offset}手目の時点に切り替えますか？`
         this.talk(message)
         this.$buefy.dialog.confirm({
           message: message,
           cancelText: "キャンセル",
-          confirmText: `${e.turn_offset}手目に戻る`,
+          confirmText: `切り替える`,
           onCancel:  () => {
             this.talk_stop()
             this.sound_play("click")
