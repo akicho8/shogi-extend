@@ -3,8 +3,9 @@
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
       a.is-clickable.is-block.is_line_break_off(:key="action_log_key(e)" @click="action_log_click_handle(e)")
-        span.has-text-weight-bold {{e.turn_offset}}
-        span.ml-1 {{location_name(e)}}
+        span {{e.turn_offset}}
+        span.ml-1(v-if="e.last_move_kif") {{e.last_move_kif}}
+        //- span.ml-1 {{location_name(e)}}
         span.ml-1 {{e.from_user_name}}
         span.ml-1.is-size-7.time_format.has-text-grey-light {{time_format(e)}}
 </template>
@@ -61,14 +62,15 @@ export default {
     },
     action_log_jump(e) {
       this.base.current_sfen = e.sfen
+      // this.base.last_move_kif = null
       this.base.turn_offset = e.turn_offset
     },
     time_format(v) {
       return dayjs.unix(v.performed_at).format("HH:mm:ss")
     },
-    location_name(v) {
-      return Location.fetch(v.performed_last_location_key).name
-    },
+    // location_name(v) {
+    //   return Location.fetch(v.performed_last_location_key).name
+    // },
   },
   computed: {
     filtered_action_logs() {

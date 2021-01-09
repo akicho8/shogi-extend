@@ -131,7 +131,7 @@ client-only
               :sp_play_mode_only_own_piece_to_move="strict_p"
               :sp_play_mode_can_not_kill_same_team_soldier="strict_p"
 
-              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+              @update:play_mode_advanced_full_moves_sfen2="play_mode_advanced_full_moves_sfen2_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
               @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
               @update:turn_offset="v => turn_offset = v"
@@ -220,6 +220,7 @@ export default {
       internal_rule: this.defval(this.$route.query.internal_rule, INTERNAL_RULE_DEFAULT),        // 操作モードの内部ルール strict or free
 
       sidebar_p: false,
+      last_move_kif: null,
     }
   },
   mounted() {
@@ -251,8 +252,9 @@ export default {
     },
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
-    play_mode_advanced_full_moves_sfen_set(v) {
+    play_mode_advanced_full_moves_sfen2_set(v, last_move_info) {
       this.current_sfen = v
+      this.last_move_kif = last_move_info.to_kif
       this.sfen_share()
     },
 
@@ -270,6 +272,7 @@ export default {
     edit_mode_snapshot_sfen_set(v) {
       if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから
         this.current_sfen = v
+        this.last_move_kif = null
         if (false) {
           // 意図せず共有してしまうのを防ぐため共有しない
           this.sfen_share()
@@ -437,6 +440,7 @@ export default {
               if (e.body) {
                 this.toast_ok("正常に読み込みました")
                 this.current_sfen = e.body
+                this.last_move_kif = null
                 this.turn_offset = e.turn_max
                 this.sp_viewpoint = "black"
               }
@@ -477,6 +481,7 @@ export default {
       this.sidebar_p = false
       this.sound_play("click")
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
+      this.last_move_kif = null
       this.turn_offset  = this.config.record.initial_turn     // 現在の手数
       this.toast_ok("盤面を最初の状態に戻しました")
     },

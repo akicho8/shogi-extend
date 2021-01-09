@@ -183,6 +183,7 @@ export const app_room = {
       }
       if (params.sfen) {
         this.current_sfen = params.sfen
+        this.last_move_kif = null
         this.turn_offset = params.turn_offset
       }
     },
@@ -213,6 +214,7 @@ export const app_room = {
     current_sfen_attrs() {
       return {
         sfen:                        this.current_sfen,
+        last_move_kif:               this.last_move_kif,
         turn_offset:                 this.current_sfen_info.turn_offset_max,
         performed_last_location_key: this.current_sfen_info.performed_last_location.key,
       }
