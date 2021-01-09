@@ -16,14 +16,6 @@ client-only
 
     ShareBoardSidebar(:base="base")
 
-    //- b-navbar(type="is-dark" wrapper-class="container")
-    //-   template(slot="start")
-    //-     NavbarItemHome
-    //-     b-navbar-item.has-text-weight-bold(@click="title_edit") {{current_title}}
-    //-   template(slot="end")
-    //-     b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
-    //-       b-icon(icon="menu")
-
     MainNavbar(:spaced="false")
       template(slot="brand")
         NavbarItemHome
@@ -45,39 +37,10 @@ client-only
         b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="menu")
 
-        //- template(v-if="sp_run_mode === 'play_mode'")
-        //-   b-navbar-item(@click="reset_handle") 盤面リセット
-        //-   b-navbar-item(@click="any_source_read_handle") 棋譜の読み込み
-        //-   b-navbar-item(@click="kifu_copy_handle('kif')") 棋譜コピー
-        //-   b-navbar-item(@click="mode_toggle_handle") 局面編集
-        //-   b-navbar-item(@click="abstract_viewpoint_setting_handle") 視点設定
-        //-   b-navbar-dropdown(hoverable arrowless right label="その他")
-        //-     b-navbar-item(:href="piyo_shogi_app_with_params_url" :target="target_default") ぴよ将棋
-        //-     b-navbar-item(:href="kento_app_with_params_url" :target="target_default") KENTO
-        //-     b-navbar-item(:href="snapshot_image_url" @click="sound_play('click')") 局面画像の取得
-        //-     b-navbar-item(:href="kif_download_url" @click="sound_play('click')") 棋譜ダウンロード
-        //-     b-navbar-item(@click="title_edit") タイトル編集
-        //-     b-navbar-item(@click="kifu_copy_handle('sfen')") SFENコピー
-        //-     template(v-if="sp_run_mode === 'play_mode'")
-        //-       b-navbar-item(@click="room_code_modal_handle")
-        //-         | リアルタイム共有
-        //-         .has-text-danger.ml-1(v-if="room_code") {{room_code}}
-
-    //- b-navbar(type="is-dark" fixed-bottom v-if="development_p")
-    //-   template(slot="start")
-    //-     b-navbar-item(@click="reset_handle") 盤面リセット
-
     MainSection.is_mobile_padding_zero
       .container.is-fluid
         .columns.is-centered
-          //- .MainColumn.column.is-9-tablet.is-8-desktop.is-7-widescreen.is-5-fullhd
           .MainColumn.column
-            //- .turn_container.has-text-centered(v-if="sp_run_mode === 'play_mode' && false")
-            //-   span.turn_offset.has-text-weight-bold {{turn_offset}}
-            //-   template(v-if="turn_offset_max && (turn_offset < turn_offset_max)")
-            //-     span.mx-1.has-text-grey /
-            //-     span.has-text-grey {{turn_offset_max}}
-
             CustomShogiPlayer.is_mobile_vertical_good_style(
               :sp_layer="development_p ? 'is_layer_on' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
