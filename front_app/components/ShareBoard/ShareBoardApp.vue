@@ -23,6 +23,10 @@ client-only
           | {{current_title}}
           span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
       template(slot="end")
+        b-navbar-item(tag="div" v-if="ac_room")
+          b-icon(icon="account")
+          b-tag.has-text-weight-bold(rounded)
+            .has-text-primary {{member_infos.length}}
         b-navbar-item(v-if="development_p") {{connected_count}}
         b-navbar-item(@click="room_recreate" v-if="development_p") 再接続
         b-navbar-item(@click="room_create" v-if="development_p") 接続
