@@ -60,7 +60,7 @@ RSpec.describe "共有将棋盤", type: :system do
       first(".place_3_3").click                                        # 33の歩を持って
       first(".place_3_4").click                                        # 34に移動
       expect(page).to have_content "☖3四歩"                           # 符号が表示されている
-      debugger
+      # debugger
     end
 
     expect(page).to have_content "☖3四歩"                             # aliceの画面にも符号が表示されている
