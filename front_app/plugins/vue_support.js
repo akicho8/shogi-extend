@@ -336,6 +336,15 @@ export default {
     strip_tags(...args) {
       return strip_tags(...args)
     },
+
+    // call_name("SOS団")  → "SOS団"
+    // call_name("ありす") → "ありすさん"
+    user_call_name(name) {
+      if (name.match(/.(さん|サン|ｻﾝ|くん|クン|ｸﾝ|ちゃん|チャン|ﾁｬﾝ|さま|サマ|ｻﾏ|様|氏|段|級|団|冠)$/)) {
+        return name
+      }
+      return `${name}さん`
+    },
   },
 
   computed: {

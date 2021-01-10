@@ -436,7 +436,7 @@ export default {
       this.sound_play("click")
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
       this.turn_offset  = this.config.record.initial_turn     // 現在の手数
-      this.toast_ok("盤面を最初の状態に戻しました")
+      this.toast_ok("局面をいっちばん最初にここに来たときの状態に戻しました")
     },
   },
 

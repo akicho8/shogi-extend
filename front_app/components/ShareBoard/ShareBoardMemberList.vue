@@ -24,7 +24,7 @@ export default {
       return this.base.member_active_p(e) ? "is-primary" : "is-grey"
     },
     member_info_click_handle(e) {
-      this.talk(`${this.base.call_name(e.from_user_name)}`)
+      this.talk(`${this.base.user_call_name(e.from_user_name)}`)
     },
     time_format(v) {
       return dayjs.unix(v.performed_at).format("HH:mm:ss")
