@@ -20,7 +20,7 @@ client-only
           b-icon(icon="twitter" type="is-white")
         b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
           | 編集完了
-        b-navbar-item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
+        b-navbar-item.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
           b-icon(icon="menu")
 
     MainSection.is_mobile_padding_zero
@@ -178,6 +178,11 @@ export default {
     margin-top: 2em
 
 .BlindfoldApp
+  .navbar-end
+    .sidebar_toggle_navbar_item
+      padding-left: 1.5rem
+      padding-right: 1.5rem
+
   .buttons
     .button
       min-width: 6rem
@@ -193,7 +198,7 @@ export default {
   .CustomShogiPlayer
     +mobile
       --sp_stand_piece_w: 40px // 駒台のセル(W)
-      --sp_stand_piece_h: 44px // 駒台のセル(H)
-      --sp_piece_count_gap_bottom: 45%
+      --sp_stand_piece_h: 40px // 駒台のセル(H)
+      --sp_piece_count_gap_bottom: 58%
       --sp_piece_count_font_size: 8px
 </style>
