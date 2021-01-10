@@ -10,9 +10,9 @@ export const app_storage = {
     }
   },
   computed: {
-    // http://0.0.0.0:4000/share-board?handle_name=foo でハンドルネームを設定できる(主にテスト用)
+    // http://0.0.0.0:4000/share-board?default_user_name=foo でハンドルネームを設定できる(主にテスト用)
     default_user_name() {
-      return this.$route.query.handle_name || this.g_current_user_name
+      return this.$route.query.default_user_name || this.g_current_user_name
     },
 
     // ログイン名

@@ -16,13 +16,13 @@
         li 指し手のログの行をタップするとそのときの局面に切り替えます
     template(v-if="input_show_p")
       b-field(label="合言葉" label-position="on-border" key="input_show_p_true")
-        b-input(v-model="new_room_code")
+        b-input.new_room_code(v-model="new_room_code")
     template(v-else)
       b-field(label="合言葉 (設定済み)" custom-class="is-small" key="input_show_p_false")
         .control
           b-button(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger") 変更
     b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとからでも変更できます")
-      b-input(v-model="new_user_name")
+      b-input.new_user_name(v-model="new_user_name")
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
     b-button(@click="submit_handle" type="is-primary") 共有
