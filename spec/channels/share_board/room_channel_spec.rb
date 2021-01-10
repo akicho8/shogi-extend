@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe ShareBoard::RoomChannel, type: :channel do
   before(:context) do
+    Emox.setup
     Actb.setup
   end
 

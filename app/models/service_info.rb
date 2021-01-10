@@ -113,7 +113,9 @@ class ServiceInfo
       og_image_key: "swars-top-group",
       description: "上位プレイヤーの棋譜を見たいときにどうぞ",
       features: [
+        "現在開催中のイベントが対象",
         "名前タップで棋譜検索",
+        "「─」は引き分け",
       ],
     },
     {
@@ -124,6 +126,7 @@ class ServiceInfo
       description: "プロの棋譜を見たいときにどうぞ",
       features: [
         "名前タップで棋譜検索",
+        "先生方がほとんどだが野生の十段もいる",
         "なぜか電脳少女シロもいる",
       ],
     },
@@ -160,7 +163,7 @@ class ServiceInfo
       title: "エモ将棋",
       new_p: false,
       og_image_key: "emox",
-      description: "気持ちを伝えながら指すネット将棋",
+      description: "気持ちを伝えながら指す実験的ネット将棋",
       features: [
         "フッターにある字を押して気持ちを伝えよう",
         "いろいろアレなんで匿名",
@@ -194,7 +197,7 @@ class ServiceInfo
       og_image_key: "style-editor",
       description: "将棋盤のスタイルをいじくる開発用ツール",
       features: [
-        "もともとは将棋盤を作るときのスタイル調整や動作検証用に作ったものですが他の用途にも使えそうなので公開しています",
+        "もともとは将棋盤の動作テスト用に作ったものですが他の用途にも使えそうなので公開しています",
         "これで加工した画面は自由に使ってもらってかまいません",
       ],
     },

@@ -42,6 +42,12 @@ export default {
 .CustomShogiPlayer
   width: 100%
 
+  &.is_mobile_vertical_good_style
+    +mobile
+      --sp_stand_piece_w: 40px // 駒台のセル(W)
+      --sp_stand_piece_h: 40px // 駒台のセル(H)
+      --sp_piece_count_gap_bottom: 58%
+
   +mobile
     --sp_lifted_origin_bg_color: #{$danger}
     --sp_lifted_origin_opacity: 1.0

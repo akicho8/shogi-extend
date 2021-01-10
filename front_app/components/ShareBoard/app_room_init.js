@@ -1,27 +1,21 @@
+import { IntervalRunner } from '@/components/models/IntervalRunner.js'
+
 export const app_room_init = {
   data() {
     return {
-      idol_timer_id: null,
+      revision_increment_timer: new IntervalRunner(this.revision_increment_timer_callback, {early: false, interval: 1.0}),
     }
   },
+  created() {
+    this.$revision = 0
+  },
   beforeDestroy() {
-    this.idol_timer_stop()
+    if (this.revision_increment_timer) {
+      this.revision_increment_timer.stop()
+    }
   },
   methods: {
-    idol_timer_start() {
-      this.idol_timer_stop()
-      this.$revision = 0
-      this.idol_timer_id = setInterval(this.idol_timer_process, 1000)
-    },
-
-    idol_timer_stop() {
-      if (this.idol_timer_id) {
-        clearInterval(this.idol_timer_id)
-        this.idol_timer_id = null
-      }
-    },
-
-    idol_timer_process() {
+    revision_increment_timer_callback() {
       this.$revision += 1
     },
 
@@ -33,11 +27,17 @@ export const app_room_init = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     board_info_request_broadcasted(params) {
-      this.clog(`${params.user_code} が欲しいと言っている`)
-      if (params.user_code === this.user_code) {
+      this.debug_alert(`${this.call_name(params.from_user_name)}が入室しました`)
+      this.sound_play("pon")
+      this.clog(`${params.from_user_code} が欲しいと言っている`)
+      if (params.from_user_code === this.user_code) {
         this.clog(`自分から自分へ`)
       } else {
-        this.board_info_send(params.user_code)
+        this.clog("参加者に盤の状態を教えてあげる")
+        this.board_info_send(params.from_user_code)
+
+        this.clog("参加者はこの部屋に誰がいるのかわかってないので自分がいることも教えてあげる")
+        this.member_info_share()
       }
     },
 
@@ -46,21 +46,21 @@ export const app_room_init = {
       this.clog(`${to_user} に送る`)
       this.ac_room_perform("board_info_send", {
         to_user: to_user,         // 送り先
-        sfen: this.current_sfen,
-        revision: this.$revision,
         title: this.current_title,
+        ...this.current_sfen_attrs,
       }) // --> app/channels/share_board/room_channel.rb
     },
     board_info_send_broadcasted(params) {
-      if (params.user_code === this.user_code) {
+      if (params.from_user_code === this.user_code) {
         this.clog(`自分から自分へ`)
       } else {
-        this.clog(`${params.user_code} が ${params.to_user} に ${params.sfen} を送信したものを ${this.user_code} が受信`)
+        this.clog(`${params.from_user_code} が ${params.to_user} に ${params.sfen} を送信したものを ${this.user_code} が受信`)
         if (params.to_user === this.user_code) {
           this.clog(`リクエストした情報を送ってもらった`)
           this.clog(`リビジョン比較: 相手(${params.revision}) > 自分(${this.$revision}) --> ${params.revision > this.$revision}`)
           if (params.revision > this.$revision) {
             this.clog(`自分より古参の情報なので反映する`)
+            this.debug_alert(`${this.call_name(params.from_user_name)}から最新の状態を共有してもらいました`)
             this.$revision = params.revision
             this.attributes_set(params)
           } else {

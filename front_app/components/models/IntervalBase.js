@@ -55,6 +55,7 @@ export class IntervalBase {
       this.__interval_off__()
       this.id = null
     } else {
+
       this.debug_log("stop (skip)")
     }
   }

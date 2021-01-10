@@ -21,6 +21,10 @@ module ShareBoard
       broadcast(:title_share_broadcasted, data)
     end
 
+    def member_info_share(data)
+      broadcast(:member_share_broadcasted, data)
+    end
+
     def room_code
       params["room_code"].presence
     end

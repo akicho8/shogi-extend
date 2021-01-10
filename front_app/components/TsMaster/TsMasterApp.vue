@@ -64,7 +64,7 @@
 
           .CustomShogiPlayerWrap
             TsMasterCountdown(:base="base")
-            CustomShogiPlayer(
+            CustomShogiPlayer.is_mobile_vertical_good_style(
               ref="main_sp"
               :sp_body="sp_body"
               :sp_viewpoint="sp_viewpoint"
@@ -642,12 +642,6 @@ export default {
         width: 100%
       +desktop
         width: calc(100vmin * 0.66)
-
-    .CustomShogiPlayer
-      +mobile
-        --sp_stand_piece_w: 40px // 駒台のセル(W)
-        --sp_stand_piece_h: 40px // 駒台のセル(H)
-        --sp_piece_count_gap_bottom: 58%
 
   .next_button
     margin-top: 3rem
