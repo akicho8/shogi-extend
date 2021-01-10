@@ -211,7 +211,7 @@ export default {
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     play_mode_advanced_full_moves_sfen2_set(v, last_move_info) {
       this.current_sfen = v
-      this.sfen_share(last_move_info.to_kif)
+      this.sfen_share(last_move_info.to_kif_without_from)
     },
 
     // デバッグ用
