@@ -40,12 +40,14 @@ export default {
     },
     action_log_click_handle(e) {
       if (ACTION_LOG_CLICK_CONFIRM_SHOW) {
-        const message = `${this.base.call_name(e.from_user_name)}が指した${e.turn_offset}手目の時点に切り替えますか？`
-        this.talk(message)
+        this.sound_play("click")
         this.$buefy.dialog.confirm({
-          message: message,
+          message: `${this.human_time_format(e)}の時点にワープしますか？<p class="is-size-7 has-text-grey">単に前の局面に戻す場合はｺﾝﾄﾛｰﾗｰのﾎﾞﾀﾝを使ってください</p>`,
           cancelText: "キャンセル",
-          confirmText: `切り替える`,
+          confirmText: `本当にワープする`,
+          focusOn: "cancel", // confirm or cancel
+          type: "is-danger",
+          hasIcon: true,
           onCancel:  () => {
             this.talk_stop()
             this.sound_play("click")
@@ -60,11 +62,18 @@ export default {
       }
     },
     action_log_jump(e) {
+      // if (this.base.current_sfen === e.sfen && this.base.turn_offset === e.turn_offset) {
+      //   this.toast_ok("同じ局面です")
+      //   return
+      // }
       this.base.current_sfen = e.sfen
       this.base.turn_offset = e.turn_offset
     },
     time_format(v) {
       return dayjs.unix(v.performed_at).format("HH:mm:ss")
+    },
+    human_time_format(v) {
+      return dayjs.unix(v.performed_at).format("H時m分s秒")
     },
     // location_name(v) {
     //   return Location.fetch(v.performed_last_location_key).name
