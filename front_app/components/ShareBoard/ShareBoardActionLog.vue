@@ -46,7 +46,7 @@ export default {
           cancelText: "キャンセル",
           confirmText: `本当にワープする`,
           focusOn: "cancel", // confirm or cancel
-          type: "is-danger",
+          type: "is-warning",
           hasIcon: true,
           onCancel:  () => {
             this.talk_stop()
