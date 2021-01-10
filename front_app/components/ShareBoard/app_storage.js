@@ -17,7 +17,7 @@ export const app_storage = {
 
     // ログイン名
     g_current_user_name() {
-      const v = this.g_current_user.name
+      const v = this.g_current_user
       if (v) {
         return v.name
       }
