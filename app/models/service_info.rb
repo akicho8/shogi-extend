@@ -201,5 +201,16 @@ class ServiceInfo
         "これで加工した画面は自由に使ってもらってかまいません",
       ],
     },
+    {
+      display_p: true,
+      nuxt_link_to: {path: "/blindfold"},
+      title: "目隠し詰将棋",
+      new_p: true,
+      og_image_key: "blindfold",
+      description: "脳内で将棋盤を作って解く練習",
+      features: [
+        "試作なので最低限の機能のみ",
+      ],
+    },
   ]
 end
