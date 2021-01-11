@@ -55,11 +55,13 @@ client-only
 import _ from "lodash"
 
 import { support_parent } from "./support_parent.js"
+import { app_storage } from "./app_storage.js"
 
 export default {
   name: "BlindfoldApp",
   mixins: [
     support_parent,
+    app_storage,
   ],
   props: {
     config: { type: Object, required: true },

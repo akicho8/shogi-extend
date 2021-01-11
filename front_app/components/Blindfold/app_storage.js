@@ -9,6 +9,9 @@ export const app_storage = {
       talk_rate: null,
     }
   },
+  mounted() {
+    this.ls_setup()
+  },
   computed: {
     default_talk_rate() {
       return 1.0
