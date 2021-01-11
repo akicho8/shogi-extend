@@ -44,17 +44,17 @@ module Api
     def config_params
       {
         record: current_json,
-        twitter_card_options: twitter_card_options,
+        # twitter_card_options: twitter_card_options,
       }
     end
 
-    def twitter_card_options
-      {
-        :title       => "目隠し詰将棋",
-        :image       => "",
-        :description => "",
-      }
-    end
+    # def twitter_card_options
+    #   {
+    #     :title       => "目隠し詰将棋",
+    #     :image       => "",
+    #     :description => "",
+    #   }
+    # end
 
     # def current_title
     #   params[:title].presence || "目隠し詰将棋"

@@ -23,7 +23,7 @@ export default {
     meta() {
       return {
         title: "目隠し詰将棋",
-        description: "",
+        description: "声を聞いて脳内で将棋盤を作って解く練習",
         og_image_key: "blindfold",
         twitter_card_is_small: true,
       }
