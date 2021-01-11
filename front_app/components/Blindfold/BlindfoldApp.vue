@@ -96,7 +96,7 @@ export default {
       if (this.yomiage_body) {
         this.talk_stop()
         this.talk_now = true
-        this.talk(this.yomiage_body, {rate: 1.1, onend: () => this.talk_now = false})
+        this.talk(this.yomiage_body, {rate: 1.0, onend: () => this.talk_now = false})
       }
     },
 
