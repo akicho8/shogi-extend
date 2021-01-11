@@ -10,6 +10,10 @@ client-only
             b-menu-list(label="Action")
               b-menu-item(label="局面編集" @click="mode_toggle_handle")
               b-menu-item(label="ツイート" @click="tweet_handle" v-if="scene === 'play_mode'")
+        .box.mt-5
+          .title.is-5 設定
+          b-field(custom-class="is-small" label="再生速度")
+            b-slider(v-bind="slider_attrs" v-model="talk_rate" :min="0.5" :max="1.5" :step="0.001")
 
     MainNavbar(:spaced="false")
       template(slot="brand")
@@ -96,7 +100,7 @@ export default {
       if (this.yomiage_body) {
         this.talk_stop()
         this.talk_now = true
-        this.talk(this.yomiage_body, {rate: 1.2, onend: () => this.talk_now = false})
+        this.talk(this.yomiage_body, {rate: this.talk_rate, onend: () => this.talk_now = false})
       }
     },
 
@@ -136,6 +140,14 @@ export default {
   },
 
   computed: {
+    slider_attrs() {
+      return {
+        indicator: true,
+        tooltip: false,
+        size: "is-small",
+      }
+    },
+
     current_url_params() {
       return {
         body: this.sp_body,
@@ -173,6 +185,11 @@ export default {
 .BlindfoldApp-Sidebar
   .menu-label
     margin-top: 2em
+  .b-slider
+    .b-slider-thumb-wrapper.has-indicator
+      .b-slider-thumb
+        padding: 8px 4px
+        font-size: 10px
 
 .BlindfoldApp
   .navbar-end
