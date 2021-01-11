@@ -9,31 +9,30 @@ client-only
           b-menu
             b-menu-list(label="Action")
               b-menu-item(label="局面編集" @click="mode_toggle_handle")
-              //- b-menu-item(label="Tweet"    @click="tweet_handle")
 
     MainNavbar
       template(slot="brand")
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'blindfold'}") {{current_title}}
       template(slot="end")
-        b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode'")
+        b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="scene === 'play_mode'")
           b-icon(icon="twitter" type="is-white")
-        b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
+        b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="scene === 'edit_mode'")
           | 編集完了
-        b-navbar-item.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
+        b-navbar-item.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="scene === 'play_mode'")
           b-icon(icon="menu")
 
     MainSection.is_mobile_padding_zero
       .container
         .columns.is-centered
-          .column(v-if="sp_run_mode === 'play_mode'")
+          .column(v-if="scene === 'play_mode'")
             .buttons.is-centered.are-medium
               template(v-if="talk_now")
                 b-button(@click="stop_handle" icon-left="stop")
               template(v-else)
                 b-button(@click="play_handle" icon-left="play")
 
-          .column.is-8-tablet.is-5-desktop(v-if="sp_run_mode === 'edit_mode'")
+          .column.is-8-tablet.is-5-desktop(v-if="scene === 'edit_mode'")
             CustomShogiPlayer(
               :sp_body="sp_body"
               :sp_sound_enabled="true"
@@ -48,8 +47,6 @@ client-only
 </template>
 
 <script>
-const RUN_MODE_DEFAULT = "play_mode"
-
 import _ from "lodash"
 
 import { support_parent } from "./support_parent.js"
@@ -68,7 +65,7 @@ export default {
       talk_now: false,
       sp_body: null,
       current_title: "目隠し詰将棋",
-      sp_run_mode: "play_mode",
+      scene: "play_mode",
       sidebar_p: false,
     }
   },
@@ -114,7 +111,7 @@ export default {
     },
 
     edit_mode_snapshot_sfen_set(v) {
-      if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから
+      if (this.scene === "edit_mode") { // 操作モードでも呼ばれるから
         this.sp_body = v
       }
     },
@@ -129,10 +126,10 @@ export default {
       this.sidebar_p = false
       this.sound_play("click")
       this.yomiage_body = null
-      if (this.sp_run_mode === "play_mode") {
-        this.sp_run_mode = "edit_mode"
+      if (this.scene === "play_mode") {
+        this.scene = "edit_mode"
       } else {
-        this.sp_run_mode = "play_mode"
+        this.scene = "play_mode"
       }
     },
   },
@@ -170,7 +167,6 @@ export default {
     .CustomShogiPlayer
     .ShogiPlayerGround
     .ShogiPlayerWidth
-    .Membership
       border: 1px dashed change_color($success, $alpha: 0.5)
 
 .BlindfoldApp-Sidebar
@@ -187,13 +183,11 @@ export default {
     .button
       min-width: 6rem
     +mobile
-      margin-top: 4rem
+      margin: 4rem 0
 
   .MainSection.section
     +mobile
       padding: 0.75rem 0 0
-  // .EditToolBlock
-  //   margin-top: 12px
 
   .CustomShogiPlayer
     +mobile

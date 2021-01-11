@@ -207,7 +207,7 @@ class ServiceInfo
       title: "目隠し詰将棋",
       new_p: true,
       og_image_key: "blindfold",
-      description: "脳内で将棋盤を作って解く練習",
+      description: "声を聞いて脳内で将棋盤を作って解く<s>苦行</s>練習",
       features: [
         "試作なので最低限の機能のみ",
       ],
