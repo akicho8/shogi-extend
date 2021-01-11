@@ -9,14 +9,15 @@ client-only
           b-menu
             b-menu-list(label="Action")
               b-menu-item(label="局面編集" @click="mode_toggle_handle")
+              b-menu-item(label="ツイート" @click="tweet_handle" v-if="scene === 'play_mode'")
 
-    MainNavbar
+    MainNavbar(:spaced="false")
       template(slot="brand")
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'blindfold'}") {{current_title}}
       template(slot="end")
-        b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="scene === 'play_mode'")
-          b-icon(icon="twitter" type="is-white")
+        //- b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="scene === 'play_mode'")
+        //-   b-icon(icon="twitter" type="is-white")
         b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="scene === 'edit_mode'")
           | 編集完了
         b-navbar-item.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="scene === 'play_mode'")
@@ -32,8 +33,8 @@ client-only
               template(v-else)
                 b-button(@click="play_handle" icon-left="play")
 
-          .column.is-8-tablet.is-5-desktop(v-if="scene === 'edit_mode'")
-            CustomShogiPlayer(
+          .MainColumn.column(v-if="scene === 'edit_mode'")
+            CustomShogiPlayer.is_mobile_vertical_good_style(
               :sp_body="sp_body"
               :sp_sound_enabled="true"
               sp_run_mode="edit_mode"
@@ -95,7 +96,7 @@ export default {
       if (this.yomiage_body) {
         this.talk_stop()
         this.talk_now = true
-        this.talk(this.yomiage_body, {rate: 1.0, onend: () => this.talk_now = false})
+        this.talk(this.yomiage_body, {rate: 1.2, onend: () => this.talk_now = false})
       }
     },
 
@@ -189,10 +190,13 @@ export default {
     +mobile
       padding: 0.75rem 0 0
 
-  .CustomShogiPlayer
-    +mobile
-      --sp_stand_piece_w: 40px // 駒台のセル(W)
-      --sp_stand_piece_h: 40px // 駒台のセル(H)
-      --sp_piece_count_gap_bottom: 58%
-      --sp_piece_count_font_size: 8px
+  .MainColumn
+    +tablet
+      padding-top: unset
+      padding-bottom: unset
+      max-width: 70vmin
+
+  // .CustomShogiPlayer
+  //   +mobile
+  //     --sp_piece_count_font_size: 8px
 </style>

@@ -571,12 +571,6 @@ export default {
       padding-bottom: unset
       max-width: calc(var(--share_board_column_width) * 1.0vmin)
 
-  .CustomShogiPlayer
-    +mobile
-      --sp_stand_piece_w: 40px // 駒台のセル(W)
-      --sp_stand_piece_h: 40px // 駒台のセル(H)
-      --sp_piece_count_gap_bottom: 58%
-
   +tablet
     .ShareBoardMemberList
       order: 1
