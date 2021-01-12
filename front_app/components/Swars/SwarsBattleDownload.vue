@@ -82,10 +82,10 @@ import MemoryRecord from "js-memory-record"
 class ZipDlFormatInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "kif",  message: "一般的",               },
-      { key: "ki2",  message: "人間向け",             },
-      { key: "csa",  message: "コンピュータ将棋用",   },
-      { key: "sfen", message: "表記揺れが起きにくい", },
+      { key: "kif",  message: "一般的",                               },
+      { key: "ki2",  message: "人間向けで掲示板に貼るのに向いている", },
+      { key: "csa",  message: "コンピュータ将棋用",                   },
+      { key: "sfen", message: "コンピュータ将棋用の1行表記",          },
     ]
   }
 
@@ -97,7 +97,7 @@ class ZipDlFormatInfo extends MemoryRecord {
 class BodyEncodeInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "UTF-8",     message: "一般的な文字コード",                                         },
+      { key: "UTF-8",     message: "一般的な文字コード",                                           },
       { key: "Shift_JIS", message: "ShogiGUIでは常にこちらで、激指で連続棋譜解析するときもこちら", },
     ]
   }
