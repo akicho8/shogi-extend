@@ -343,6 +343,9 @@ export default {
       if (name.match(/.(さん|サン|ｻﾝ|くん|クン|ｸﾝ|ちゃん|チャン|ﾁｬﾝ|さま|サマ|ｻﾏ|様|氏|段|級|団|冠)$/)) {
         return name
       }
+      if (name.match(/.(コ|ｺ|こ|子)$/)) {
+        return `${name}ちゃん`
+      }
       return `${name}さん`
     },
   },
