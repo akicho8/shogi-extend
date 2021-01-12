@@ -76,7 +76,6 @@
 </template>
 
 <script>
-
 import { ChessClock   } from "@/components/models/ChessClock.js"
 import { DeviseAngle  } from "@/components/models/DeviseAngle.js"
 import { isMobile     } from "@/components/models/isMobile.js"
