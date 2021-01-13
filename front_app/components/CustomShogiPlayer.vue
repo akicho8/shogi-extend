@@ -1,4 +1,3 @@
-
 <template lang="pug">
 ShogiPlayer.CustomShogiPlayer(
   v-bind="component_params"
