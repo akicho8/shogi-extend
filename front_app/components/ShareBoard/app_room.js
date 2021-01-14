@@ -140,12 +140,12 @@ export const app_room = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    sfen_share(last_move_kif) {
+    sfen_share(params) {
       this.__assert__(this.current_sfen, "this.current_sfen")
 
       this.ac_room_perform("sfen_share", {
         title: this.current_title,
-        last_move_kif: last_move_kif,
+        ...params,
         ...this.current_sfen_attrs,
       }) // --> app/channels/share_board/room_channel.rb
     },
@@ -155,8 +155,19 @@ export const app_room = {
       } else {
         this.attributes_set(params)
       }
-      // this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.turn_offset}手目を指しました`)
-      this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
+      if (false) {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.turn_offset}手目を指しました`)
+      }
+      if (false) {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
+      }
+      if (true) {
+        // 「aliceさん ▲76歩」と表示しながら
+        this.toast_ok_toast_only(`${this.user_call_name(params.from_user_name)} ${params.last_move_kif}`)
+
+        // 「aliceさん」の発声後に「7 6 ふー！」を発声する
+        this.talk(this.user_call_name(params.from_user_name), {onend: () => this.talk(params.yomiage)})
+      }
       this.al_add(params)
     },
     ////////////////////////////////////////////////////////////////////////////////
