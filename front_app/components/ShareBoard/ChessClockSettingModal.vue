@@ -1,35 +1,93 @@
 <template lang="pug">
 .modal-card.ChessClockSettingModal
-  header.modal-card-head
+  header.modal-card-head.is-justify-content-space-between
     p.modal-card-title
       | 対局時計
+      span.mx-1.has-text-grey.is-size-6(v-if="human_status") {{human_status}}
+    template(v-if="!base.chess_clock || !base.chess_clock.running_p")
+      b-switch(size="is-small" type="is-primary" v-model="chess_clock_p" @input="chess_clock_switch_handle") 設置
   section.modal-card-body
     //////////////////////////////////////////////////////////////////////////////// form
     //- template(v-if="!base.chess_clock.running_p")
 
-    .fields
-      //- b-field(custom-class="is-small" label="プリセット")
-      //-   b-select(size="is-small" v-model="base.cc_rule_info_key" @input="cc_rule_info_key_input_handle")
-      //-     template(v-for="e in base.CcRuleInfo.values")
-      //-       option(:value="e.key") {{e.name}}
-      b-field(label="持ち時間(分)" custom-class="is-small")
-        b-numberinput(controls-position="compact" v-model="base.cc_params.initial_main_min"  :min="0" :max="60*6" :exponential="true")
-      b-field(label="1手ごとに加算(秒)" custom-class="is-small")
-        b-numberinput(controls-position="compact" v-model="base.cc_params.every_plus"        :min="0" :max="60*60" :exponential="true")
-      b-field(label="秒読み" custom-class="is-small")
-        b-numberinput(controls-position="compact" v-model="base.cc_params.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
-      b-field(label="猶予(秒)" custom-class="is-small")
-        b-numberinput(controls-position="compact" v-model="base.cc_params.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
+    template(v-if="!base.chess_clock")
+      .has-text-centered.has-text-grey.my-6
+        | 使う場合は右上のスイッチを有効にしてください
+
+    template(v-if="base.chess_clock")
+      template(v-if="base.chess_clock.running_p")
+        .level.is-mobile
+          .level-item.has-text-centered(v-if="base.cc_params.initial_main_min >= 0")
+            div
+              p.heading 持ち時間
+              p.title {{base.cc_params.initial_main_min}}分
+          .level-item.has-text-centered(v-if="base.cc_params.initial_read_sec >= 1")
+            div
+              p.heading 秒読み
+              p.title {{base.cc_params.initial_read_sec}}秒
+          .level-item.has-text-centered(v-if="base.cc_params.initial_extra_sec >= 1")
+            div
+              p.heading 猶予
+              p.title {{base.cc_params.initial_extra_sec}}秒
+          .level-item.has-text-centered(v-if="base.cc_params.every_plus >= 1")
+            div
+              p.heading 1手毎加算
+              p.title {{base.cc_params.every_plus}}秒
+
+        hr
+
+        .level.is-mobile
+          template(v-for="(e, i) in base.chess_clock.single_clocks")
+            .level-item.has-text-centered
+              .active_current_bar(:class="e.bar_class" v-if="e.active_p && base.chess_clock.timer")
+              div
+                p.heading {{e.location.name}}
+                p.title.is-4.is-family-monospace
+                  span.mx-1(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1") {{e.to_time_format}}
+                  span.mx-1(v-if="e.initial_read_sec >= 1") {{e.read_sec}}
+                  span.mx-1(v-if="e.initial_extra_sec >= 1") {{e.extra_sec}}
+
+        //- p 持ち時間{{base.cc_params.initial_main_min}}分
+        //- p 秒読み{{base.cc_params.initial_read_sec}}秒
+        //- p 猶予{{base.cc_params.initial_extra_sec}}秒
+        //- p 1手毎加算{{base.cc_params.every_plus}}秒
+
+      .fields(v-if="!base.chess_clock.running_p")
+        b-field(horizontal label="持ち時間(分)" custom-class="is-small")
+          b-numberinput(expanded controls-position="compact" v-model="base.cc_params.initial_main_min"  :min="0" :max="60*6" :exponential="true")
+        b-field(horizontal label="秒読み" custom-class="is-small")
+          b-numberinput(expanded controls-position="compact" v-model="base.cc_params.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
+        b-field(horizontal label="猶予(秒)" custom-class="is-small")
+          b-numberinput(expanded controls-position="compact" v-model="base.cc_params.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
+        b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
+          b-numberinput(expanded controls-position="compact" v-model="base.cc_params.every_plus"        :min="0" :max="60*60" :exponential="true")
 
   footer.modal-card-foot
-    b-button(@click="close_handle") キャンセル
-    b-dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)")
-      b-button(slot="trigger" icon-left="menu-up") プリセット
-      //- .item(slot="trigger")
-      //-   b-icon(icon="menu")
-      template(v-for="e in base.CcRuleInfo.values")
-        b-dropdown-item(@click="cc_rule_info_key_input_handle(e)") {{e.name}}
-    b-button.submit_handle(@click="submit_handle" type="is-primary") 設定する
+    b-button(@click="close_handle" icon-left="chevron-left") 戻る
+    //- b-button(@click="save_handle") 反映
+
+    template(v-if="base.chess_clock")
+      b-dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!base.chess_clock.running_p")
+        b-button(slot="trigger" icon-left="menu-up") プリセット
+        //- .item(slot="trigger")
+        //-   b-icon(icon="menu")
+        template(v-for="e in base.CcRuleInfo.values")
+          b-dropdown-item(@click="cc_params_set_handle(e)") {{e.name}}
+
+      //- b-button.stop_handle(   @click="stop_handle"   type="is-primary" icon-left="stop")
+      //- b-button.pause_handle(  @click="pause_handle"  type="is-primary" icon-left="pause")
+      //- b-button.resume_handle( @click="resume_handle" type="is-primary" icon-left="resume")
+      //- b-button.play_handle(   @click="play_handle"   type="is-primary" icon-left="play")
+
+      .buttons
+        b-button.stop_button(   @click="stop_handle"     icon-left="stop" v-if="base.chess_clock.running_p && !base.chess_clock.timer")
+
+        template(v-if="base.chess_clock.running_p && base.chess_clock.timer")
+          b-button.pause_button(  @click="pause_handle"  icon-left="pause" type="is-primary")
+        template(v-if="base.chess_clock.running_p && !base.chess_clock.timer")
+          b-button.resume_button( @click="resume_handle" icon-left="play-pause")
+        template(v-if="!base.chess_clock.running_p")
+          b-button.play_button(   @click="play_handle"   icon-left="play")
 
   //- //////////////////////////////////////////////////////////////////////////////// 実行中
   //- template(v-if="base.chess_clock.running_p")
@@ -88,6 +146,7 @@ export default {
   ],
   data() {
     return {
+      chess_clock_p: !!this.base.chess_clock,
     }
   },
   created() {
@@ -97,22 +156,75 @@ export default {
   beforeDestroy() {
   },
   methods: {
+    chess_clock_switch_handle(v) {
+      this.sound_play("click")
+      if (v) {
+        this.toast_ok("置きました")
+        this.base.cc_create()
+      } else {
+        this.toast_ok("捨てました")
+        this.base.cc_destroy()
+      }
+    },
+
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
     },
-    submit_handle() {
+    play_handle() {
+      this.__assert__(!this.base.chess_clock.running_p)
+      this.sound_play("click")
+      this.toast_ok("スタート！")
+      this.base.cc_rule_set()
       this.base.cc_play_handle()
 
-      this.sound_play("click")
-      this.$emit("close")
+      // this.$emit("close")
     },
-    cc_rule_info_key_input_handle(v) {
-      // this.sound_play("click")
-      this.base.cc_rule_set3(v)
+    stop_handle() {
+      this.sound_play("click")
+      if (this.base.chess_clock.running_p) {
+        this.toast_ok("リセットしました")
+        this.base.cc_stop_handle()
+      } else {
+        this.toast_ok("すでにリセットしています")
+      }
+    },
+    pause_handle() {
+      this.sound_play("click")
+      this.base.cc_pause_handle()
+      this.toast_ok("一時停止しました")
+    },
+    resume_handle() {
+      this.sound_play("click")
+      this.base.cc_resume_handle()
+      this.toast_ok("再開しました")
+    },
+    save_handle() {
+      this.sound_play("click")
+      this.base.cc_rule_set()
+      this.toast_ok("反映しました")
+    },
+    cc_params_set_handle(e) {
+      this.base.cc_params = {...e.cc_params}
+      this.toast_ok(`${e.name}のプリセットを読み込みました`)
     },
   },
   computed: {
+    human_status() {
+      let v = null
+      if (this.base.chess_clock) {
+        if (this.base.chess_clock.running_p) {
+          if (this.base.chess_clock.timer) {
+            v = "動作中"
+          } else {
+            v = "一時停止中"
+          }
+        } else {
+          v = "停止中"
+        }
+      }
+      return v
+    },
   },
 }
 </script>
@@ -123,28 +235,33 @@ export default {
 .STAGE-development
   .ChessClockSettingModal
     .modal-card-body, .field
-      border: 1px dashed change_color($primary, $alpha: 0.5)
+      // border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .ChessClockSettingModal
   .modal-card-body
-    padding-top: 0.5rem
+    padding: 2.0rem 2.0rem
   .modal-card-foot
     justify-content: space-between
-    .button
-      min-width: 8rem
-      &.submit_handle
-        font-weight: bold
+    .stop_button
+    .pause_button, .resume_button, .play_button
+      min-width: 6rem
 
   .field:not(:last-child)
-    margin-bottom: 1.5rem
+    margin-bottom: 1.1rem
 
-  .dropdown-menu
-    z-index: 2
-    // .dropdown-content
+  // .dropdown-menu
+  //   z-index: 2
+  //   // .dropdown-content
 
   .fields
-    display: flex
-    justify-content: center
-    align-items: center
-    flex-direction: column
+    +tablet
+      .field
+        align-items: center
+        .field-label.is-small
+          padding-top: 0
+
+    // display: flex
+    // justify-content: center
+    // align-items: center
+    // flex-direction: column
 </style>

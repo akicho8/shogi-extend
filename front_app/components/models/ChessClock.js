@@ -108,8 +108,9 @@ export class ChessClock {
   }
 
   pause_on() {
-    if (this.timer)
-    this.timer_stop()
+    if (this.timer) {
+      this.timer_stop()
+    }
   }
 
   pause_off() {

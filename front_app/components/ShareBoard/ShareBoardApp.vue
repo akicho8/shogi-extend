@@ -2,6 +2,9 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox
+      template(v-if="chess_clock")
+        p timer: {{chess_clock.timer}}
+        p running_p: {{chess_clock.running_p}}
       p sp_viewpoint: {{sp_viewpoint}}
       p sp_player_info: {{JSON.stringify(sp_player_info)}}
       //- p room_code: {{JSON.stringify(room_code)}}
@@ -43,7 +46,7 @@ client-only
         .columns.is-centered
           .MainColumn.column
             CustomShogiPlayer.is_mobile_vertical_good_style(
-              :sp_layer="development_p ? 'is_layer_on' : 'is_layer_off'"
+              :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
               :sp_turn="turn_offset"
               :sp_body="current_sfen"
@@ -219,8 +222,9 @@ export default {
       this.current_sfen = v
       this.sfen_share({last_move_kif: last_move_info.to_kif_without_from, yomiage: last_move_info.to_yomiage})
 
-      const index = Location.fetch(this.sp_viewpoint).code
-      this.cc_switch_handle(this.chess_clock.single_clocks[index])
+      if (this.chess_clock) {
+        this.cc_switch_handle(this.chess_clock.single_clocks[last_move_info.location.code])
+      }
     },
 
     // デバッグ用
@@ -592,4 +596,13 @@ export default {
       margin-top: 1rem
     .ShareBoardMemberList
       margin-top: 1rem
+
+  .CustomShogiPlayer
+    .MembershipLocationPlayerInfo
+      &.read_sec_30
+        background-color: $warning !important
+        color: $black !important
+      &.read_sec_10
+        background-color: $danger !important
+        color: $white !important
 </style>

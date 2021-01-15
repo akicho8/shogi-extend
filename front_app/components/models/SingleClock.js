@@ -1,3 +1,4 @@
+import _ from "lodash"
 import { Location } from "shogi-player/components/models/location.js"
 import dayjs from "dayjs"
 
@@ -86,6 +87,14 @@ export class SingleClock {
         }
       }
 
+      // 全体の本当の残り秒数
+      // if (value < 0) {
+      //   const t = this.rest
+      //   if (t >= 1) {
+      //     this.second_decriment_hook_call("rest_sec", t)
+      //   }
+      // }
+
       if (!this.base.zero_arrival) {
         if (this.rest === 0) {
           if (this.base.timer) {
@@ -159,7 +168,7 @@ export class SingleClock {
   }
 
   get dom_class() {
-    const ary = []
+    let ary = []
     if (this.running_p) {
       if (this.active_p) {
         ary.push("is_sclock_active")
@@ -175,7 +184,7 @@ export class SingleClock {
         ary.push("is_sclock_inactive")
       }
     }
-    return ary
+    return _.compact(ary)
   }
 
   get bar_class() {

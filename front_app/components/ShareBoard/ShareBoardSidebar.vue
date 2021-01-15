@@ -9,7 +9,7 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
           b-menu-item(label="合言葉の設定と共有"           @click="base.room_code_modal_handle")
           b-menu-item(label="合言葉だけを含むURLのコピー"  @click="base.room_code_url_copy_handle" :disabled="!base.room_code")
           b-menu-item(label="再接続(なんかおかしいとき用)" @click="base.room_recreate_handle"      :disabled="!base.connectable_p")
-          b-menu-item(label="再接続(なんかおかしいとき用)" @click="base.cc_modal_handle")
+          b-menu-item(label="対局時計"                     @click="base.cc_modal_handle")
 
         b-menu-list(label="検討用")
           b-menu-item(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
