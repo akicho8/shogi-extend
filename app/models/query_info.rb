@@ -36,7 +36,9 @@ class QueryInfo
   end
 
   def parse
-    str = query.to_s.gsub(/\p{Space}+/, " ").strip
+    str = query.to_s
+    str = BibiRemover.execute(str)
+    str = str.gsub(/\p{Space}+/, " ").squish
     str.split.each do |s|
       parse_one_part(s)
     end
