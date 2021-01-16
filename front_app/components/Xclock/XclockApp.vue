@@ -163,14 +163,14 @@ export default {
   methods: {
     resume_handle() {
       this.sound_play("click")
-      this.chess_clock.pause_off()
+      this.chess_clock.resume_handle()
       this.talk_stop()
     },
     pause_handle() {
       if (this.chess_clock.running_p) {
         this.talk_stop()
         this.sound_play("click")
-        this.chess_clock.pause_on()
+        this.chess_clock.pause_handle()
 
         if (false) {
           this.$buefy.dialog.confirm({
@@ -193,7 +193,7 @@ export default {
         this.full_screen.off()
         this.talk_stop()
         this.sound_play("click")
-        this.chess_clock.stop_button_handle()
+        this.chess_clock.stop_handle()
       }
     },
     play_handle() {
@@ -203,7 +203,7 @@ export default {
         this.sound_play("start")
         this.ga_click("対局時計●")
         this.say(this.play_talk_message())
-        this.chess_clock.play_button_handle()
+        this.chess_clock.play_handle()
       }
     },
     play_talk_message() {

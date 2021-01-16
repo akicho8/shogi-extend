@@ -2,7 +2,7 @@ import { IntervalRunner } from '@/components/models/IntervalRunner.js'
 import { ChessClock     } from "@/components/models/ChessClock.js"
 import { CcRuleInfo       } from "@/components/models/cc_rule_info.js"
 import { Location } from "shogi-player/components/models/location.js"
-import ChessClockSettingModal from "./ChessClockSettingModal.vue"
+import ChessClockModal from "./ChessClockModal.vue"
 
 export const app_chess_clock = {
   data() {
@@ -16,13 +16,13 @@ export const app_chess_clock = {
     this.cc_params = { initial_main_min: 0, initial_read_sec: 0, initial_extra_sec: 0, every_plus: 0 }
 
     // // 初期値
-    // this.cc_rule_set({initial_main_sec: 60*5, initial_read_sec:0, initial_extra_sec: 0, every_plus: 5})
+    // this.cc_params_apply({initial_main_sec: 60*5, initial_read_sec:0, initial_extra_sec: 0, every_plus: 5})
     //
     // if (this.development_p) {
-    //   this.cc_rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 7文字
-    //   this.cc_rule_set({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 5文字
-    //   this.cc_rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0}) // 2行 7文字
-    //   this.cc_rule_set({initial_main_sec: 60*60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60}) // 3行 7文字
+    //   this.cc_params_apply({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 7文字
+    //   this.cc_params_apply({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 5文字
+    //   this.cc_params_apply({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0}) // 2行 7文字
+    //   this.cc_params_apply({initial_main_sec: 60*60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60}) // 3行 7文字
     // }
   },
 
@@ -30,8 +30,8 @@ export const app_chess_clock = {
     if (this.development_p) {
       this.cc_params = { initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 0 }
       this.cc_create()
-      this.cc_rule_set()
-      this.chess_clock.play_button_handle()
+      this.cc_params_apply()
+      this.chess_clock.play_handle()
     }
   },
 
@@ -40,6 +40,11 @@ export const app_chess_clock = {
   },
 
   methods: {
+    cc_create_unless_exist() {
+      if (!this.chess_clock) {
+        this.cc_create()
+      }
+    },
     cc_create() {
       this.cc_destroy()
       this.chess_clock = new ChessClock({
@@ -84,7 +89,7 @@ export const app_chess_clock = {
 
       // 視点設定変更
       this.$buefy.modal.open({
-        component: ChessClockSettingModal,
+        component: ChessClockModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
@@ -125,14 +130,14 @@ export const app_chess_clock = {
 
     cc_resume_handle() {
       // this.sound_play("click")
-      this.chess_clock.pause_off()
+      this.chess_clock.resume_handle()
       this.talk_stop()
     },
     cc_pause_handle() {
       if (this.chess_clock.running_p) {
         // this.talk_stop()
         // this.sound_play("click")
-        this.chess_clock.pause_on()
+        this.chess_clock.pause_handle()
 
         if (false) {
           this.$buefy.dialog.confirm({
@@ -154,7 +159,7 @@ export const app_chess_clock = {
       if (this.chess_clock.running_p) {
         // this.talk_stop()
         // this.sound_play("click")
-        this.chess_clock.stop_button_handle()
+        this.chess_clock.stop_handle()
       }
     },
     cc_play_handle() {
@@ -162,10 +167,11 @@ export const app_chess_clock = {
       } else {
         // this.sound_play("start")
         // this.ga_click("対局時計●")
-        this.chess_clock.play_button_handle()
+        this.chess_clock.play_handle()
       }
     },
     cc_switch_handle(e) {
+      this.__assert__(e, "e")
       if (this.chess_clock.running_p) {
         e.simple_switch_handle()
       } else {
@@ -204,7 +210,7 @@ export const app_chess_clock = {
       }
     },
 
-    cc_rule_set() {
+    cc_params_apply() {
       const params = {
         initial_main_sec:  this.cc_params.initial_main_min * 60,
         initial_read_sec:  this.cc_params.initial_read_sec,
@@ -248,6 +254,32 @@ export const app_chess_clock = {
         class: container_class,
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 時計の状態をすべて共有する
+    chess_clock_share() {
+      const params = {}
+      params.cc_params = this.cc_params
+      if (this.chess_clock) {
+        params.chess_clock_attributes = this.chess_clock.attributes
+      }
+      this.ac_room_perform("chess_clock_share", params) // --> app/channels/share_board/room_channel.rb
+    },
+    chess_clock_share_broadcasted(params) {
+      if (params.from_user_code === this.user_code) {
+        // 自分から自分へ
+      } else {
+        if (params.chess_clock_attributes) {
+          this.cc_create_unless_exist()                               // 時計がなければ作って
+          this.chess_clock.attributes = params.chess_clock_attributes // 内部状態を同じにする
+          this.cc_params = {...params.cc_params}                      // モーダルのパラメータを同じにする
+        } else {
+          this.cc_destroy()
+        }
+      }
+    },
+
   },
   computed: {
     CcRuleInfo() { return CcRuleInfo },

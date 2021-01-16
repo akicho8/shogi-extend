@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.ChessClockSettingModal
+.modal-card.ChessClockModal
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title
       | 対局時計
@@ -7,9 +7,6 @@
     template(v-if="!base.chess_clock || !base.chess_clock.running_p")
       b-switch(size="is-small" type="is-primary" v-model="chess_clock_p" @input="chess_clock_switch_handle") 設置
   section.modal-card-body
-    //////////////////////////////////////////////////////////////////////////////// form
-    //- template(v-if="!base.chess_clock.running_p")
-
     template(v-if="!base.chess_clock")
       .has-text-centered.has-text-grey.my-6
         | 使う場合は右上のスイッチを有効にしてください
@@ -140,13 +137,12 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ChessClockSettingModalApp",
+  name: "ChessClockModalApp",
   mixins: [
     support_child,
   ],
   data() {
     return {
-      chess_clock_p: !!this.base.chess_clock,
     }
   },
   created() {
@@ -165,19 +161,21 @@ export default {
         this.toast_ok("捨てました")
         this.base.cc_destroy()
       }
+      this.base.chess_clock_share()
     },
 
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
     },
+
     play_handle() {
       this.__assert__(!this.base.chess_clock.running_p)
       this.sound_play("click")
-      this.toast_ok("スタート！")
-      this.base.cc_rule_set()
+      this.base.cc_params_apply()
       this.base.cc_play_handle()
-
+      this.base.chess_clock_share()
+      this.toast_ok("スタート！")
       // this.$emit("close")
     },
     stop_handle() {
@@ -185,6 +183,7 @@ export default {
       if (this.base.chess_clock.running_p) {
         this.toast_ok("リセットしました")
         this.base.cc_stop_handle()
+      this.base.chess_clock_share()
       } else {
         this.toast_ok("すでにリセットしています")
       }
@@ -192,16 +191,18 @@ export default {
     pause_handle() {
       this.sound_play("click")
       this.base.cc_pause_handle()
+      this.base.chess_clock_share()
       this.toast_ok("一時停止しました")
     },
     resume_handle() {
       this.sound_play("click")
       this.base.cc_resume_handle()
+      this.base.chess_clock_share()
       this.toast_ok("再開しました")
     },
     save_handle() {
       this.sound_play("click")
-      this.base.cc_rule_set()
+      this.base.cc_params_apply()
       this.toast_ok("反映しました")
     },
     cc_params_set_handle(e) {
@@ -210,6 +211,10 @@ export default {
     },
   },
   computed: {
+    chess_clock_p: {
+      get()  { return !!this.base.chess_clock },
+      set(v) {},
+    },
     human_status() {
       let v = null
       if (this.base.chess_clock) {
@@ -233,11 +238,11 @@ export default {
 @import "support.sass"
 
 .STAGE-development
-  .ChessClockSettingModal
+  .ChessClockModal
     .modal-card-body, .field
-      // border: 1px dashed change_color($primary, $alpha: 0.5)
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.ChessClockSettingModal
+.ChessClockModal
   .modal-card-body
     padding: 2.0rem 2.0rem
   .modal-card-foot
@@ -249,19 +254,10 @@ export default {
   .field:not(:last-child)
     margin-bottom: 1.1rem
 
-  // .dropdown-menu
-  //   z-index: 2
-  //   // .dropdown-content
-
   .fields
     +tablet
       .field
         align-items: center
         .field-label.is-small
           padding-top: 0
-
-    // display: flex
-    // justify-content: center
-    // align-items: center
-    // flex-direction: column
 </style>

@@ -81,6 +81,8 @@ client-only
 
         .columns(v-if="development_p")
           .column.is-clipped
+            ChessClockInspector(:chess_clock="chess_clock" v-if="chess_clock")
+
             .buttons
               b-button(@click="room_recreate") 再接続
               b-button(@click="room_create") 接続
@@ -88,7 +90,6 @@ client-only
               b-button(@click="member_add_test") 生存通知
               b-button(@click="al_add_test") 指
 
-            //- pre {{ac_info()}}
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
             .block

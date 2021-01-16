@@ -268,4 +268,22 @@ export class SingleClock {
     this.initial_extra_sec = v
     this.extra_sec = v
   }
+
+  //////////////////////////////////////////////////////////////////////////////// for serialize
+
+  // foo.attributes = bar.attributes
+  get attributes() {
+    return {
+      main_sec:          this.main_sec,
+      read_sec:          this.read_sec,
+      extra_sec:         this.extra_sec,
+      initial_read_sec:  this.initial_read_sec,
+      initial_main_sec:  this.initial_main_sec,
+      initial_extra_sec: this.initial_extra_sec,
+      every_plus:        this.every_plus,
+    }
+  }
+  set attributes(v) {
+    this.copy_from(v)
+  }
 }
