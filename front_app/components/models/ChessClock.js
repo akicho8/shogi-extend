@@ -89,10 +89,10 @@ export class ChessClock {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////
+
   pause_handle() {
-    if (this.timer) {
-      this.timer_stop()
-    }
+    this.timer_stop()
   }
 
   resume_handle() {
@@ -116,6 +116,16 @@ export class ChessClock {
     this.timer_stop()
     this.timer_start()
   }
+
+  get timer_to_css_class() {
+    if (this.timer) {
+      return "is_pause_off"
+    } else {
+      return "is_pause_on"
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
 
   turn_wrap(v) {
     return v % Location.values.length

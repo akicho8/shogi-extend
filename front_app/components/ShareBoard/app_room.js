@@ -214,9 +214,9 @@ export const app_room = {
     ////////////////////////////////////////////////////////////////////////////////
     current_sfen_attrs() {
       return {
-        sfen:                        this.current_sfen,
-        turn_offset:                 this.current_sfen_info.turn_offset_max,
-        performed_last_location_key: this.current_sfen_info.performed_last_location.key,
+        sfen:              this.current_sfen,
+        turn_offset:       this.current_sfen_info.turn_offset_max,
+        last_location_key: this.current_sfen_info.last_location.key,
       }
     },
     current_sfen_info() {

@@ -3,6 +3,7 @@ client-only
   .ShareBoardApp(:style="component_style")
     DebugBox
       template(v-if="chess_clock")
+        p next_location: {{next_location.key}}
         p timer: {{chess_clock.timer}}
         p running_p: {{chess_clock.running_p}}
       p sp_viewpoint: {{sp_viewpoint}}
@@ -283,9 +284,7 @@ export default {
         }
 
         this.sp_run_mode = "edit_mode"
-        if (true) {
-          this.sp_viewpoint = "black" // ▲視点にしておく(お好み)
-        }
+        this.sp_viewpoint = "black" // ▲視点にしておく(お好み)
       } else {
         this.sp_run_mode = "play_mode"
       }
@@ -494,7 +493,7 @@ export default {
     twitter_card_url()           { return this.permalink_for({format: "png"})                                                         },
     snapshot_image_url()         { return this.permalink_for({format: "png", image_viewpoint: this.sp_viewpoint, disposition: "attachment"}) }, // abstract_viewpoint より image_viewpoint の方が優先される
     kif_download_url()           { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
-    shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"})                              },
+    shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"}) },
 
     // 外部アプリ
     piyo_shogi_app_with_params_url() {
@@ -540,6 +539,10 @@ export default {
       return {
         "--share_board_column_width": this.share_board_column_width,
       }
+    },
+
+    next_location() {
+      return this.sfen_parse(this.current_sfen).next_location
     },
   },
 }

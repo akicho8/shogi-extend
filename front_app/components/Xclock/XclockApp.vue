@@ -424,21 +424,21 @@ export default {
         &.is_level1
           background-color: $blue
           &.is_blink
-            animation: bar_blink 1s ease-in-out 0.5s infinite alternate
+            animation: xclock_bar_blink 1s ease-in-out 0.5s infinite alternate
         &.is_level2
           background-color: $yellow
           &.is_blink
-            animation: bar_blink 0.5s ease-in-out 0.5s infinite alternate
+            animation: xclock_bar_blink 0.5s ease-in-out 0.5s infinite alternate
         &.is_level3
           background-color: $red
           &.is_blink
-            animation: bar_blink 0.5s ease-in-out 0.5s infinite alternate
+            animation: xclock_bar_blink 0.5s ease-in-out 0.5s infinite alternate
         &.is_level4
           background-color: $red
           &.is_blink
-            animation: bar_blink 0.25s ease-in-out 0.5s infinite alternate
+            animation: xclock_bar_blink 0.25s ease-in-out 0.5s infinite alternate
 
-@keyframes bar_blink
+@keyframes xclock_bar_blink
   0%
     opacity: 1.0
   100%

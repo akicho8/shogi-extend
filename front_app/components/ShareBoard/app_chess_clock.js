@@ -48,7 +48,7 @@ export const app_chess_clock = {
     cc_create() {
       this.cc_destroy()
       this.chess_clock = new ChessClock({
-        turn: 0,
+        turn: this.next_location.code, // this.current_sfen を元にした現在の手番
         clock_switch_hook: () => {
           // this.sound_play("click")
         },
