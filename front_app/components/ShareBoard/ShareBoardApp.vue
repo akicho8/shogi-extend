@@ -284,7 +284,7 @@ export default {
         }
 
         this.sp_run_mode = "edit_mode"
-        this.sp_viewpoint = "black" // ▲視点にしておく(お好み)
+        // this.sp_viewpoint = "black" // ▲視点にしておく(お好み)
       } else {
         this.sp_run_mode = "play_mode"
       }
