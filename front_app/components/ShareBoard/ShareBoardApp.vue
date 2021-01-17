@@ -2,9 +2,15 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox
-      p room_code: {{JSON.stringify(room_code)}}
-      p user_name: {{JSON.stringify(user_name)}}
-      p 人数: {{JSON.stringify(member_infos.length)}}
+      template(v-if="chess_clock")
+        p next_location: {{next_location.key}}
+        p timer: {{chess_clock.timer}}
+        p running_p: {{chess_clock.running_p}}
+      p sp_viewpoint: {{sp_viewpoint}}
+      p sp_player_info: {{JSON.stringify(sp_player_info)}}
+      //- p room_code: {{JSON.stringify(room_code)}}
+      //- p user_name: {{JSON.stringify(user_name)}}
+      //- p 人数: {{JSON.stringify(member_infos.length)}}
       //- p 手数: {{turn_offset}} / {{turn_offset_max}}
       //- p SFEN: {{current_sfen}}
       //- p タイトル: {{current_title}}
@@ -41,12 +47,13 @@ client-only
         .columns.is-centered
           .MainColumn.column
             CustomShogiPlayer.is_mobile_vertical_good_style(
-              :sp_layer="development_p ? 'is_layer_on' : 'is_layer_off'"
+              :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
               :sp_turn="turn_offset"
               :sp_body="current_sfen"
               :sp_sound_enabled="true"
               :sp_viewpoint.sync="sp_viewpoint"
+              :sp_player_info="sp_player_info"
               sp_summary="is_summary_off"
               sp_slider="is_slider_on"
               sp_controller="is_controller_on"
@@ -75,6 +82,8 @@ client-only
 
         .columns(v-if="development_p")
           .column.is-clipped
+            ChessClockInspector(:chess_clock="chess_clock" v-if="chess_clock")
+
             .buttons
               b-button(@click="room_recreate") 再接続
               b-button(@click="room_create") 接続
@@ -82,7 +91,6 @@ client-only
               b-button(@click="member_add_test") 生存通知
               b-button(@click="al_add_test") 指
 
-            //- pre {{ac_info()}}
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
             .block
@@ -107,11 +115,13 @@ import _ from "lodash"
 
 import { support_parent } from "./support_parent.js"
 
+import { app_chess_clock         } from "./app_chess_clock.js"
 import { app_room         } from "./app_room.js"
 import { app_room_init    } from "./app_room_init.js"
 import { app_action_log   } from "./app_action_log.js"
 import { app_room_members } from "./app_room_members.js"
 import { app_storage      } from "./app_storage.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.vue"
 import RealtimeShareModal              from "./RealtimeShareModal.vue"
@@ -126,6 +136,7 @@ export default {
     app_room_init,
     app_action_log,
     app_room_members,
+    app_chess_clock,
   ],
   props: {
     config: { type: Object, required: true },
@@ -212,6 +223,10 @@ export default {
     play_mode_advanced_full_moves_sfen2_set(v, last_move_info) {
       this.current_sfen = v
       this.sfen_share({last_move_kif: last_move_info.to_kif_without_from, yomiage: last_move_info.to_yomiage})
+
+      if (this.chess_clock) {
+        this.cc_switch_handle(this.chess_clock.single_clocks[last_move_info.location.code])
+      }
     },
 
     // デバッグ用
@@ -236,13 +251,13 @@ export default {
     },
 
     // 棋譜コピー
-    kifu_copy_handle(fomrat) {
+    kifu_cc_copy_handle(fomrat) {
       this.sound_play("click")
       this.general_kifu_copy(this.current_body, {to_format: fomrat})
     },
 
     // 局面URLコピー
-    current_url_copy_handle() {
+    current_url_cc_copy_handle() {
       this.sound_play("click")
       this.clipboard_copy({text: this.current_url})
     },
@@ -269,9 +284,7 @@ export default {
         }
 
         this.sp_run_mode = "edit_mode"
-        if (true) {
-          this.sp_viewpoint = "black" // ▲視点にしておく(お好み)
-        }
+        // this.sp_viewpoint = "black" // ▲視点にしておく(お好み)
       } else {
         this.sp_run_mode = "play_mode"
       }
@@ -480,7 +493,7 @@ export default {
     twitter_card_url()           { return this.permalink_for({format: "png"})                                                         },
     snapshot_image_url()         { return this.permalink_for({format: "png", image_viewpoint: this.sp_viewpoint, disposition: "attachment"}) }, // abstract_viewpoint より image_viewpoint の方が優先される
     kif_download_url()           { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
-    shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"})                              },
+    shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"}) },
 
     // 外部アプリ
     piyo_shogi_app_with_params_url() {
@@ -526,6 +539,10 @@ export default {
       return {
         "--share_board_column_width": this.share_board_column_width,
       }
+    },
+
+    next_location() {
+      return this.sfen_parse(this.current_sfen).next_location
     },
   },
 }
@@ -583,4 +600,13 @@ export default {
       margin-top: 1rem
     .ShareBoardMemberList
       margin-top: 1rem
+
+  .CustomShogiPlayer
+    .MembershipLocationPlayerInfo
+      &.read_sec_30
+        background-color: $warning !important
+        color: $black !important
+      &.read_sec_10
+        background-color: $danger !important
+        color: $white !important
 </style>

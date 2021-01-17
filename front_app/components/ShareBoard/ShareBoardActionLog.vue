@@ -75,9 +75,6 @@ export default {
     human_time_format(v) {
       return dayjs.unix(v.performed_at).format("H時m分s秒")
     },
-    // location_name(v) {
-    //   return Location.fetch(v.performed_last_location_key).name
-    // },
   },
   computed: {
     filtered_action_logs() {

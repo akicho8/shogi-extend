@@ -71,7 +71,7 @@ export class ChessClock {
     this.single_clocks.forEach(e => e.main_sec = main_sec)
   }
 
-  play_button_handle() {
+  play_handle() {
     if (!this.running_p) {
       this.running_p = true
       this.counter = 0
@@ -80,13 +80,23 @@ export class ChessClock {
     }
   }
 
-  stop_button_handle() {
+  stop_handle() {
     if (this.running_p) {
       this.running_p = false
       this.timer_stop()
       this.single_clocks.forEach(e => e.variable_reset())
       this.zero_arrival = false
     }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  pause_handle() {
+    this.timer_stop()
+  }
+
+  resume_handle() {
+    this.timer_start()
   }
 
   timer_start() {
@@ -107,14 +117,15 @@ export class ChessClock {
     this.timer_start()
   }
 
-  pause_on() {
-    if (this.timer)
-    this.timer_stop()
+  get timer_to_css_class() {
+    if (this.timer) {
+      return "is_pause_off"
+    } else {
+      return "is_pause_on"
+    }
   }
 
-  pause_off() {
-    this.timer_start()
-  }
+  ////////////////////////////////////////////////////////////////////////////////
 
   turn_wrap(v) {
     return v % Location.values.length
@@ -139,5 +150,62 @@ export class ChessClock {
 
   get current_location() {
     return Location.fetch(this.current_index)
+  }
+
+  get human_status() {
+    let v = null
+    if (this.running_p) {
+      if (this.timer) {
+        v = "動作中"
+      } else {
+        v = "一時停止中"
+      }
+    } else {
+      v = "停止中"
+    }
+    return v
+  }
+
+  //////////////////////////////////////////////////////////////////////////////// for serialize
+
+  // foo.attributes = bar.attributes
+  get attributes() {
+    let v = {}
+
+    v.single_clocks = this.single_clocks.map(e => e.attributes)
+
+    v.params = {
+      initial_main_sec:  this.params.initial_main_sec,  // 持ち時間(初期値)
+      initial_read_sec:  this.params.initial_read_sec,  // 秒読み(初期値)
+      initial_extra_sec: this.params.initial_extra_sec, // 猶予(初期値)
+      every_plus:        this.params.every_plus,        // 1手ごと加算
+    }
+
+    v.timer         = this.timer         // null以外ならタイマー動作中
+    v.turn          = this.turn          // 0または1が手番。null:手番が設定されていない
+    v.counter       = this.counter       // 手数 (未使用)
+    v.zero_arrival  = this.zero_arrival  // 0 になったら true
+    v.running_p     = this.running_p     // true:動作中 false:停止中
+    v.speed         = this.speed         // タイマー速度
+
+    return v
+  }
+
+  set attributes(v) {
+    this.timer_stop()
+
+    Object.assign(this.params, v.params)
+
+    this.turn          = v.turn
+    this.counter       = v.counter
+    this.zero_arrival  = v.zero_arrival
+    this.running_p     = v.running_p
+    this.speed         = v.speed
+
+    v.single_clocks.forEach((e, i) => this.single_clocks[i].attributes = e)
+
+    if (v.timer) {
+      this.timer_start()
+    }
   }
 }

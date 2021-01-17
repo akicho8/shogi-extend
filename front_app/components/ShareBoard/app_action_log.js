@@ -25,7 +25,7 @@ export const app_action_log = {
       this.al_add({
         from_user_name: "あいうえおあいうえお",
         turn_offset: this.base.action_logs.length,
-        performed_last_location_key: "white",
+        last_location_key: "white",
         sfen: "position startpos",
         performed_at: dayjs().unix(),
       })

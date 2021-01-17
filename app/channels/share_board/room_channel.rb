@@ -17,6 +17,10 @@ module ShareBoard
       broadcast(:sfen_share_broadcasted, data)
     end
 
+    def chess_clock_share(data)
+      broadcast(:chess_clock_share_broadcasted, data)
+    end
+
     def title_share(data)
       broadcast(:title_share_broadcasted, data)
     end

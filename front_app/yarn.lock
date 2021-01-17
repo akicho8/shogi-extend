@@ -8318,12 +8318,7 @@ no-case@^3.0.3:
     lower-case "^2.0.1"
     tslib "^1.10.0"
 
-node-fetch@^2.6.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
-
-node-fetch@^2.6.1:
+node-fetch@^2.6.0, node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
@@ -10846,10 +10841,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shogi-player@^0.0.256:
-  version "0.0.256"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.256.tgz#bf7e4cfd59efdfba449a8a4861ec823274db7cff"
-  integrity sha512-BHAMnKy8zoXpZjrsjI7bj4OBSRw0uDo9/PYx98MFnNLsM6bPlkUsVPV8976J3KwNG2I67bycFt+ycJURyhO0Mg==
+shogi-player@^0.0.257:
+  version "0.0.257"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.257.tgz#1e868e25d00232be892b7194ee85f4c60cb04c00"
+  integrity sha512-0+o3ONyTOvgfTfLltHoCSeWEnmm7s1jEkxQJUTlMPHXiOtd+zUdm+vGO3JIAW1dwdbMA5JLxGnrDjFut8zUrNw==
   dependencies:
     autolinker latest
     buefy "^0.9.4"

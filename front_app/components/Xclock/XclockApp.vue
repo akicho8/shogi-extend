@@ -76,7 +76,6 @@
 </template>
 
 <script>
-
 import { ChessClock   } from "@/components/models/ChessClock.js"
 import { DeviseAngle  } from "@/components/models/DeviseAngle.js"
 import { isMobile     } from "@/components/models/isMobile.js"
@@ -164,14 +163,14 @@ export default {
   methods: {
     resume_handle() {
       this.sound_play("click")
-      this.chess_clock.pause_off()
+      this.chess_clock.resume_handle()
       this.talk_stop()
     },
     pause_handle() {
       if (this.chess_clock.running_p) {
         this.talk_stop()
         this.sound_play("click")
-        this.chess_clock.pause_on()
+        this.chess_clock.pause_handle()
 
         if (false) {
           this.$buefy.dialog.confirm({
@@ -194,7 +193,7 @@ export default {
         this.full_screen.off()
         this.talk_stop()
         this.sound_play("click")
-        this.chess_clock.stop_button_handle()
+        this.chess_clock.stop_handle()
       }
     },
     play_handle() {
@@ -204,7 +203,7 @@ export default {
         this.sound_play("start")
         this.ga_click("対局時計●")
         this.say(this.play_talk_message())
-        this.chess_clock.play_button_handle()
+        this.chess_clock.play_handle()
       }
     },
     play_talk_message() {
@@ -425,21 +424,21 @@ export default {
         &.is_level1
           background-color: $blue
           &.is_blink
-            animation: bar_blink 1s ease-in-out 0.5s infinite alternate
+            animation: xclock_bar_blink 1s ease-in-out 0.5s infinite alternate
         &.is_level2
           background-color: $yellow
           &.is_blink
-            animation: bar_blink 0.5s ease-in-out 0.5s infinite alternate
+            animation: xclock_bar_blink 0.5s ease-in-out 0.5s infinite alternate
         &.is_level3
           background-color: $red
           &.is_blink
-            animation: bar_blink 0.5s ease-in-out 0.5s infinite alternate
+            animation: xclock_bar_blink 0.5s ease-in-out 0.5s infinite alternate
         &.is_level4
           background-color: $red
           &.is_blink
-            animation: bar_blink 0.25s ease-in-out 0.5s infinite alternate
+            animation: xclock_bar_blink 0.25s ease-in-out 0.5s infinite alternate
 
-@keyframes bar_blink
+@keyframes xclock_bar_blink
   0%
     opacity: 1.0
   100%
