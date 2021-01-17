@@ -55,22 +55,8 @@
 
   //////////////////////////////////////////////////////////////////////////////// form
   .debug_container.mt-5(v-if="development_p")
-    .buttons.are-small.is-centered
-      b-button(@click="chess_clock.generation_next(-1)") -1
-      b-button(@click="chess_clock.generation_next(-60)") -60
-      b-button(@click="chess_clock.generation_next(1)") +1
-      b-button(@click="chess_clock.generation_next(60)") +60
-      b-button(@click="chess_clock.clock_switch()") 切り替え
-      b-button(@click="chess_clock.timer_start()") START ({{chess_clock.running_p}})
-      b-button(@click="chess_clock.timer_stop()") STOP
-      b-button(@click="chess_clock.params.every_plus = 5") フィッシャールール
-      b-button(@click="chess_clock.params.every_plus = 0") 通常ルール
-      b-button(@click="chess_clock.reset()") RESET
-      b-button(@click="chess_clock.main_sec_set(3)") 両方残り3秒
-      input(type="range" v-model.number="chess_clock.speed")
-      | スピード {{chess_clock.speed}}
-    b-message
-      p 1手毎に{{chess_clock.params.every_plus}}秒加算
+    ChessClockInspector(:chess_clock="chess_clock" v-if="chess_clock")
+    .box
       p mouse_cursor_p: {{mouse_cursor_p}}
 
 </template>
