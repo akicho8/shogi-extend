@@ -19,7 +19,6 @@ export class SingleClock {
     this.base  = base
     this.index = index
 
-    // FIXME: params は取る
     this.initial_main_sec  = base.params.initial_main_sec || ONE_MIN * 3
     this.initial_extra_sec = base.params.initial_extra_sec || 0
     this.initial_read_sec  = base.params.initial_read_sec || 0

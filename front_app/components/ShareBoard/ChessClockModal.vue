@@ -82,6 +82,7 @@ export default {
       if (v) {
         this.toast_ok("置きました")
         this.base.cc_create()
+        this.base.cc_params_apply() // すぐにパラメータを反映する
       } else {
         this.toast_ok("捨てました")
         this.base.cc_destroy()

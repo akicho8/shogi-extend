@@ -8,22 +8,8 @@ export const app_chess_clock = {
   data() {
     return {
       chess_clock: null,
-      cc_params: null,
+      cc_params: { initial_main_min: 10, initial_read_sec: 10, initial_extra_sec: 0, every_plus: 0 },
     }
-  },
-
-  created() {
-    this.cc_params = { initial_main_min: 0, initial_read_sec: 0, initial_extra_sec: 0, every_plus: 0 }
-
-    // // 初期値
-    // this.cc_params_apply({initial_main_sec: 60*5, initial_read_sec:0, initial_extra_sec: 0, every_plus: 5})
-    //
-    // if (this.development_p) {
-    //   this.cc_params_apply({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 7文字
-    //   this.cc_params_apply({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 5文字
-    //   this.cc_params_apply({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0}) // 2行 7文字
-    //   this.cc_params_apply({initial_main_sec: 60*60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60}) // 3行 7文字
-    // }
   },
 
   mounted() {
