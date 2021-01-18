@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_171907) do
+ActiveRecord::Schema.define(version: 2021_01_18_202700) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1184,6 +1184,426 @@ ActiveRecord::Schema.define(version: 2020_12_29_171907) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  create_table "wbook_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_wbook_bad_marks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_wbook_bad_marks_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_wbook_bad_marks_on_user_id"
+  end
+
+  create_table "wbook_battle_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "battle_id", null: false, comment: "対戦"
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "judge_id", null: false, comment: "勝敗"
+    t.integer "position", null: false, comment: "順序"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_id", "user_id"], name: "index_wbook_battle_memberships_on_battle_id_and_user_id", unique: true
+    t.index ["battle_id"], name: "index_wbook_battle_memberships_on_battle_id"
+    t.index ["judge_id"], name: "index_wbook_battle_memberships_on_judge_id"
+    t.index ["position"], name: "index_wbook_battle_memberships_on_position"
+    t.index ["user_id"], name: "index_wbook_battle_memberships_on_user_id"
+  end
+
+  create_table "wbook_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "room_id", null: false, comment: "部屋"
+    t.bigint "parent_id", comment: "親"
+    t.bigint "rule_id", null: false, comment: "ルール"
+    t.bigint "final_id", null: false, comment: "結果"
+    t.datetime "begin_at", null: false, comment: "対戦開始日時"
+    t.datetime "end_at", comment: "対戦終了日時"
+    t.integer "battle_pos", null: false, comment: "連戦インデックス"
+    t.boolean "practice", comment: "練習バトル？"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_pos"], name: "index_wbook_battles_on_battle_pos"
+    t.index ["begin_at"], name: "index_wbook_battles_on_begin_at"
+    t.index ["end_at"], name: "index_wbook_battles_on_end_at"
+    t.index ["final_id"], name: "index_wbook_battles_on_final_id"
+    t.index ["parent_id"], name: "index_wbook_battles_on_parent_id"
+    t.index ["room_id"], name: "index_wbook_battles_on_room_id"
+    t.index ["rule_id"], name: "index_wbook_battles_on_rule_id"
+  end
+
+  create_table "wbook_clip_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_wbook_clip_marks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_wbook_clip_marks_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_wbook_clip_marks_on_user_id"
+  end
+
+  create_table "wbook_emotion_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_wbook_emotion_folders_on_position"
+  end
+
+  create_table "wbook_emotions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "所有者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.string "name", null: false, comment: "トリガー名"
+    t.string "message", null: false, comment: "表示用伝言"
+    t.string "voice", null: false, comment: "発声用文言"
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["folder_id"], name: "index_wbook_emotions_on_folder_id"
+    t.index ["position"], name: "index_wbook_emotions_on_position"
+    t.index ["user_id"], name: "index_wbook_emotions_on_user_id"
+  end
+
+  create_table "wbook_finals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_wbook_finals_on_position"
+  end
+
+  create_table "wbook_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "type", null: false, comment: "for STI"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["type", "user_id"], name: "index_wbook_folders_on_type_and_user_id", unique: true
+    t.index ["user_id"], name: "index_wbook_folders_on_user_id"
+  end
+
+  create_table "wbook_good_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_wbook_good_marks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_wbook_good_marks_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_wbook_good_marks_on_user_id"
+  end
+
+  create_table "wbook_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "question_id", null: false, comment: "出題"
+    t.bigint "room_id", comment: "対戦部屋"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "ox_mark_id", null: false, comment: "解答"
+    t.index ["ox_mark_id"], name: "index_wbook_histories_on_ox_mark_id"
+    t.index ["question_id"], name: "index_wbook_histories_on_question_id"
+    t.index ["room_id"], name: "index_wbook_histories_on_room_id"
+    t.index ["user_id"], name: "index_wbook_histories_on_user_id"
+  end
+
+  create_table "wbook_judges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_wbook_judges_on_position"
+  end
+
+  create_table "wbook_lineages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_wbook_lineages_on_position"
+  end
+
+  create_table "wbook_lobby_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.string "body", limit: 512, null: false, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_wbook_lobby_messages_on_user_id"
+  end
+
+  create_table "wbook_main_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "judge_id", null: false, comment: "直前の勝敗"
+    t.bigint "final_id", null: false, comment: "直前の結果"
+    t.integer "battle_count", null: false, comment: "対戦数"
+    t.integer "win_count", null: false, comment: "勝ち数"
+    t.integer "lose_count", null: false, comment: "負け数"
+    t.float "win_rate", null: false, comment: "勝率"
+    t.float "rating", null: false, comment: "レーティング"
+    t.float "rating_diff", null: false, comment: "直近レーティング変化"
+    t.float "rating_max", null: false, comment: "レーティング(最大)"
+    t.integer "straight_win_count", null: false, comment: "連勝数"
+    t.integer "straight_lose_count", null: false, comment: "連敗数"
+    t.integer "straight_win_max", null: false, comment: "連勝数(最大)"
+    t.integer "straight_lose_max", null: false, comment: "連敗数(最大)"
+    t.bigint "skill_id", null: false, comment: "ウデマエ"
+    t.float "skill_point", null: false, comment: "ウデマエの内部ポイント"
+    t.float "skill_last_diff", null: false, comment: "直近ウデマエ変化度"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "disconnect_count", null: false, comment: "切断数"
+    t.datetime "disconnected_at", comment: "最終切断日時"
+    t.index ["battle_count"], name: "index_wbook_main_xrecords_on_battle_count"
+    t.index ["disconnect_count"], name: "index_wbook_main_xrecords_on_disconnect_count"
+    t.index ["final_id"], name: "index_wbook_main_xrecords_on_final_id"
+    t.index ["judge_id"], name: "index_wbook_main_xrecords_on_judge_id"
+    t.index ["lose_count"], name: "index_wbook_main_xrecords_on_lose_count"
+    t.index ["rating"], name: "index_wbook_main_xrecords_on_rating"
+    t.index ["rating_diff"], name: "index_wbook_main_xrecords_on_rating_diff"
+    t.index ["rating_max"], name: "index_wbook_main_xrecords_on_rating_max"
+    t.index ["skill_id"], name: "index_wbook_main_xrecords_on_skill_id"
+    t.index ["straight_lose_count"], name: "index_wbook_main_xrecords_on_straight_lose_count"
+    t.index ["straight_lose_max"], name: "index_wbook_main_xrecords_on_straight_lose_max"
+    t.index ["straight_win_count"], name: "index_wbook_main_xrecords_on_straight_win_count"
+    t.index ["straight_win_max"], name: "index_wbook_main_xrecords_on_straight_win_max"
+    t.index ["user_id"], name: "index_wbook_main_xrecords_on_user_id", unique: true
+    t.index ["win_count"], name: "index_wbook_main_xrecords_on_win_count"
+    t.index ["win_rate"], name: "index_wbook_main_xrecords_on_win_rate"
+  end
+
+  create_table "wbook_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "question_id", null: false, comment: "問題"
+    t.integer "moves_count", null: false, comment: "N手"
+    t.string "moves_str", null: false, comment: "連続した指し手"
+    t.string "end_sfen", comment: "最後の局面"
+    t.string "moves_human_str", comment: "人間向け指し手"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["moves_count"], name: "index_wbook_moves_answers_on_moves_count"
+    t.index ["question_id"], name: "index_wbook_moves_answers_on_question_id"
+  end
+
+  create_table "wbook_notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "question_message_id", null: false, comment: "問題コメント"
+    t.bigint "user_id", null: false, comment: "通知先"
+    t.datetime "opened_at", comment: "開封日時"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_message_id"], name: "index_wbook_notifications_on_question_message_id"
+    t.index ["user_id"], name: "index_wbook_notifications_on_user_id"
+  end
+
+  create_table "wbook_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false, comment: "正解・不正解"
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_wbook_ox_marks_on_key"
+    t.index ["position"], name: "index_wbook_ox_marks_on_position"
+  end
+
+  create_table "wbook_ox_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "question_id", null: false, comment: "問題"
+    t.integer "o_count", null: false, comment: "正解数"
+    t.integer "x_count", null: false, comment: "不正解数"
+    t.integer "ox_total", null: false, comment: "出題数"
+    t.float "o_rate", comment: "高評価率"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["o_count"], name: "index_wbook_ox_records_on_o_count"
+    t.index ["o_rate"], name: "index_wbook_ox_records_on_o_rate"
+    t.index ["ox_total"], name: "index_wbook_ox_records_on_ox_total"
+    t.index ["question_id"], name: "index_wbook_ox_records_on_question_id", unique: true
+    t.index ["x_count"], name: "index_wbook_ox_records_on_x_count"
+  end
+
+  create_table "wbook_question_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "発言者"
+    t.bigint "question_id", null: false, comment: "問題"
+    t.string "body", limit: 512, null: false, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_wbook_question_messages_on_question_id"
+    t.index ["user_id"], name: "index_wbook_question_messages_on_user_id"
+  end
+
+  create_table "wbook_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.bigint "user_id", null: false, comment: "作成者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.bigint "lineage_id", null: false, comment: "種類"
+    t.string "init_sfen", null: false, comment: "問題"
+    t.integer "time_limit_sec", comment: "制限時間(秒)"
+    t.integer "difficulty_level", comment: "難易度"
+    t.string "title", comment: "タイトル"
+    t.string "description", limit: 512, comment: "説明"
+    t.string "hint_desc", comment: "ヒント"
+    t.string "source_author", comment: "作者"
+    t.string "source_media_name", comment: "出典メディア"
+    t.string "source_media_url", comment: "出典URL"
+    t.date "source_published_on", comment: "出典年月日"
+    t.bigint "source_about_id", comment: "所在"
+    t.integer "turn_max", comment: "最大手数"
+    t.boolean "mate_skip", comment: "詰みチェックをスキップする"
+    t.string "direction_message", comment: "メッセージ"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.float "good_rate", comment: "高評価率"
+    t.integer "moves_answers_count", default: 0, null: false, comment: "解答数"
+    t.integer "histories_count", default: 0, null: false, comment: "履歴数(出題数とは異なる)"
+    t.integer "good_marks_count", default: 0, null: false, comment: "高評価数"
+    t.integer "bad_marks_count", default: 0, null: false, comment: "低評価数"
+    t.integer "clip_marks_count", default: 0, null: false, comment: "保存された数"
+    t.integer "messages_count", default: 0, null: false, comment: "コメント数"
+    t.index ["bad_marks_count"], name: "index_wbook_questions_on_bad_marks_count"
+    t.index ["clip_marks_count"], name: "index_wbook_questions_on_clip_marks_count"
+    t.index ["difficulty_level"], name: "index_wbook_questions_on_difficulty_level"
+    t.index ["folder_id"], name: "index_wbook_questions_on_folder_id"
+    t.index ["good_marks_count"], name: "index_wbook_questions_on_good_marks_count"
+    t.index ["good_rate"], name: "index_wbook_questions_on_good_rate"
+    t.index ["histories_count"], name: "index_wbook_questions_on_histories_count"
+    t.index ["init_sfen"], name: "index_wbook_questions_on_init_sfen"
+    t.index ["key"], name: "index_wbook_questions_on_key"
+    t.index ["lineage_id"], name: "index_wbook_questions_on_lineage_id"
+    t.index ["messages_count"], name: "index_wbook_questions_on_messages_count"
+    t.index ["source_about_id"], name: "index_wbook_questions_on_source_about_id"
+    t.index ["time_limit_sec"], name: "index_wbook_questions_on_time_limit_sec"
+    t.index ["turn_max"], name: "index_wbook_questions_on_turn_max"
+    t.index ["user_id"], name: "index_wbook_questions_on_user_id"
+  end
+
+  create_table "wbook_room_memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "room_id", null: false, comment: "対戦部屋"
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.integer "position", null: false, comment: "順序"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_wbook_room_memberships_on_position"
+    t.index ["room_id", "user_id"], name: "index_wbook_room_memberships_on_room_id_and_user_id", unique: true
+    t.index ["room_id"], name: "index_wbook_room_memberships_on_room_id"
+    t.index ["user_id"], name: "index_wbook_room_memberships_on_user_id"
+  end
+
+  create_table "wbook_room_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "room_id", null: false, comment: "対戦部屋"
+    t.string "body", limit: 512, null: false, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_wbook_room_messages_on_room_id"
+    t.index ["user_id"], name: "index_wbook_room_messages_on_user_id"
+  end
+
+  create_table "wbook_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.datetime "begin_at", null: false, comment: "対戦開始日時"
+    t.datetime "end_at", comment: "対戦終了日時"
+    t.bigint "rule_id", null: false, comment: "ルール"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "battles_count", default: 0, null: false, comment: "連戦数"
+    t.boolean "practice", comment: "練習バトル？"
+    t.bigint "bot_user_id", comment: "練習相手"
+    t.index ["battles_count"], name: "index_wbook_rooms_on_battles_count"
+    t.index ["begin_at"], name: "index_wbook_rooms_on_begin_at"
+    t.index ["bot_user_id"], name: "index_wbook_rooms_on_bot_user_id"
+    t.index ["end_at"], name: "index_wbook_rooms_on_end_at"
+    t.index ["rule_id"], name: "index_wbook_rooms_on_rule_id"
+  end
+
+  create_table "wbook_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_wbook_rules_on_position"
+  end
+
+  create_table "wbook_season_xrecords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "judge_id", null: false, comment: "直前の勝敗"
+    t.bigint "final_id", null: false, comment: "直前の結果"
+    t.integer "battle_count", null: false, comment: "対戦数"
+    t.integer "win_count", null: false, comment: "勝ち数"
+    t.integer "lose_count", null: false, comment: "負け数"
+    t.float "win_rate", null: false, comment: "勝率"
+    t.float "rating", null: false, comment: "レーティング"
+    t.float "rating_diff", null: false, comment: "直近レーティング変化"
+    t.float "rating_max", null: false, comment: "レーティング(最大)"
+    t.integer "straight_win_count", null: false, comment: "連勝数"
+    t.integer "straight_lose_count", null: false, comment: "連敗数"
+    t.integer "straight_win_max", null: false, comment: "連勝数(最大)"
+    t.integer "straight_lose_max", null: false, comment: "連敗数(最大)"
+    t.bigint "skill_id", null: false, comment: "ウデマエ"
+    t.float "skill_point", null: false, comment: "ウデマエの内部ポイント"
+    t.float "skill_last_diff", null: false, comment: "直近ウデマエ変化度"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "disconnect_count", null: false, comment: "切断数"
+    t.datetime "disconnected_at", comment: "最終切断日時"
+    t.bigint "user_id", null: false, comment: "対戦者"
+    t.bigint "season_id", null: false, comment: "期"
+    t.integer "create_count", null: false, comment: "users.wbook_season_xrecord.create_count は users.wbook_season_xrecords.count と一致"
+    t.integer "generation", null: false, comment: "世代(seasons.generationと一致)"
+    t.index ["battle_count"], name: "index_wbook_season_xrecords_on_battle_count"
+    t.index ["create_count"], name: "index_wbook_season_xrecords_on_create_count"
+    t.index ["disconnect_count"], name: "index_wbook_season_xrecords_on_disconnect_count"
+    t.index ["final_id"], name: "index_wbook_season_xrecords_on_final_id"
+    t.index ["generation"], name: "index_wbook_season_xrecords_on_generation"
+    t.index ["judge_id"], name: "index_wbook_season_xrecords_on_judge_id"
+    t.index ["lose_count"], name: "index_wbook_season_xrecords_on_lose_count"
+    t.index ["rating"], name: "index_wbook_season_xrecords_on_rating"
+    t.index ["rating_diff"], name: "index_wbook_season_xrecords_on_rating_diff"
+    t.index ["rating_max"], name: "index_wbook_season_xrecords_on_rating_max"
+    t.index ["season_id"], name: "index_wbook_season_xrecords_on_season_id"
+    t.index ["skill_id"], name: "index_wbook_season_xrecords_on_skill_id"
+    t.index ["straight_lose_count"], name: "index_wbook_season_xrecords_on_straight_lose_count"
+    t.index ["straight_lose_max"], name: "index_wbook_season_xrecords_on_straight_lose_max"
+    t.index ["straight_win_count"], name: "index_wbook_season_xrecords_on_straight_win_count"
+    t.index ["straight_win_max"], name: "index_wbook_season_xrecords_on_straight_win_max"
+    t.index ["user_id", "season_id"], name: "index_wbook_season_xrecords_on_user_id_and_season_id", unique: true
+    t.index ["user_id"], name: "index_wbook_season_xrecords_on_user_id"
+    t.index ["win_count"], name: "index_wbook_season_xrecords_on_win_count"
+    t.index ["win_rate"], name: "index_wbook_season_xrecords_on_win_rate"
+  end
+
+  create_table "wbook_seasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "name", null: false, comment: "レーティング"
+    t.integer "generation", null: false, comment: "世代"
+    t.datetime "begin_at", null: false, comment: "期間開始日時"
+    t.datetime "end_at", null: false, comment: "期間終了日時"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["begin_at"], name: "index_wbook_seasons_on_begin_at"
+    t.index ["end_at"], name: "index_wbook_seasons_on_end_at"
+    t.index ["generation"], name: "index_wbook_seasons_on_generation"
+  end
+
+  create_table "wbook_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "自分"
+    t.bigint "rule_id", null: false, comment: "選択ルール"
+    t.string "session_lock_token", comment: "複数開いていてもSTARTを押したユーザーを特定できる超重要なトークン"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["rule_id"], name: "index_wbook_settings_on_rule_id"
+    t.index ["user_id"], name: "index_wbook_settings_on_user_id"
+  end
+
+  create_table "wbook_skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_wbook_skills_on_position"
+  end
+
+  create_table "wbook_source_abouts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_wbook_source_abouts_on_position"
+  end
+
+  create_table "wbook_vs_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "battle_id", null: false, comment: "対戦"
+    t.string "sfen_body", limit: 1536, null: false, comment: "棋譜"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_id"], name: "index_wbook_vs_records_on_battle_id"
+  end
+
   create_table "xy_master_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
@@ -1308,4 +1728,53 @@ ActiveRecord::Schema.define(version: 2020_12_29_171907) do
   add_foreign_key "swars_crawl_reservations", "users"
   add_foreign_key "swars_zip_dl_logs", "swars_users"
   add_foreign_key "swars_zip_dl_logs", "users"
+  add_foreign_key "wbook_bad_marks", "users"
+  add_foreign_key "wbook_bad_marks", "wbook_questions", column: "question_id"
+  add_foreign_key "wbook_battle_memberships", "users"
+  add_foreign_key "wbook_battle_memberships", "wbook_battles", column: "battle_id"
+  add_foreign_key "wbook_battle_memberships", "wbook_judges", column: "judge_id"
+  add_foreign_key "wbook_battles", "wbook_battles", column: "parent_id"
+  add_foreign_key "wbook_battles", "wbook_finals", column: "final_id"
+  add_foreign_key "wbook_battles", "wbook_rooms", column: "room_id"
+  add_foreign_key "wbook_battles", "wbook_rules", column: "rule_id"
+  add_foreign_key "wbook_clip_marks", "users"
+  add_foreign_key "wbook_clip_marks", "wbook_questions", column: "question_id"
+  add_foreign_key "wbook_emotions", "users"
+  add_foreign_key "wbook_emotions", "wbook_emotion_folders", column: "folder_id"
+  add_foreign_key "wbook_folders", "users"
+  add_foreign_key "wbook_good_marks", "users"
+  add_foreign_key "wbook_good_marks", "wbook_questions", column: "question_id"
+  add_foreign_key "wbook_histories", "users"
+  add_foreign_key "wbook_histories", "wbook_ox_marks", column: "ox_mark_id"
+  add_foreign_key "wbook_histories", "wbook_questions", column: "question_id"
+  add_foreign_key "wbook_histories", "wbook_rooms", column: "room_id"
+  add_foreign_key "wbook_lobby_messages", "users"
+  add_foreign_key "wbook_main_xrecords", "users"
+  add_foreign_key "wbook_main_xrecords", "wbook_finals", column: "final_id"
+  add_foreign_key "wbook_main_xrecords", "wbook_judges", column: "judge_id"
+  add_foreign_key "wbook_main_xrecords", "wbook_skills", column: "skill_id"
+  add_foreign_key "wbook_moves_answers", "wbook_questions", column: "question_id"
+  add_foreign_key "wbook_notifications", "users"
+  add_foreign_key "wbook_notifications", "wbook_question_messages", column: "question_message_id"
+  add_foreign_key "wbook_ox_records", "wbook_questions", column: "question_id"
+  add_foreign_key "wbook_question_messages", "users"
+  add_foreign_key "wbook_question_messages", "wbook_questions", column: "question_id"
+  add_foreign_key "wbook_questions", "users"
+  add_foreign_key "wbook_questions", "wbook_folders", column: "folder_id"
+  add_foreign_key "wbook_questions", "wbook_lineages", column: "lineage_id"
+  add_foreign_key "wbook_questions", "wbook_source_abouts", column: "source_about_id"
+  add_foreign_key "wbook_room_memberships", "users"
+  add_foreign_key "wbook_room_memberships", "wbook_rooms", column: "room_id"
+  add_foreign_key "wbook_room_messages", "users"
+  add_foreign_key "wbook_room_messages", "wbook_rooms", column: "room_id"
+  add_foreign_key "wbook_rooms", "users", column: "bot_user_id"
+  add_foreign_key "wbook_rooms", "wbook_rules", column: "rule_id"
+  add_foreign_key "wbook_season_xrecords", "users"
+  add_foreign_key "wbook_season_xrecords", "wbook_finals", column: "final_id"
+  add_foreign_key "wbook_season_xrecords", "wbook_judges", column: "judge_id"
+  add_foreign_key "wbook_season_xrecords", "wbook_seasons", column: "season_id"
+  add_foreign_key "wbook_season_xrecords", "wbook_skills", column: "skill_id"
+  add_foreign_key "wbook_settings", "users"
+  add_foreign_key "wbook_settings", "wbook_rules", column: "rule_id"
+  add_foreign_key "wbook_vs_records", "wbook_battles", column: "battle_id"
 end

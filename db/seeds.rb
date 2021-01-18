@@ -19,6 +19,7 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
 
   Actb,
   Emox,
+  Wbook,
   FreeBattle,
   Swars::Grade,
   Swars::Battle,
