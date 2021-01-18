@@ -13,7 +13,7 @@
             span.mx-1(v-if="e.initial_read_sec >= 1") {{e.read_sec}}
             span.mx-1(v-if="e.initial_extra_sec >= 1") {{e.extra_sec}}
           p {{e.initial_main_sec}} / {{e.initial_read_sec}} / {{e.initial_extra_sec}} / {{e.every_plus}}
-          p active_p: {{e.active_p}}
+          p active_p:{{e.active_p}} rest:{{e.rest}}
 
   .columns
     .column
