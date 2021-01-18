@@ -11,14 +11,6 @@ module Wbook
     end
 
     [
-      Wbook::OxMark,
-      Wbook::Season,
-      Wbook::Lineage,
-      Wbook::EmotionFolder,
-      Wbook::Judge,
-      Wbook::Rule,
-      Wbook::Final,
-      Wbook::Skill,
       Wbook::SourceAbout,
       Wbook::Question,
     ].each do |e|
