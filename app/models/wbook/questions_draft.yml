@@ -1,0 +1,16 @@
+---
+- key: ca653ae280a82b30da293032728d6928
+  init_sfen: position sfen +R7l/gnB6/k1s1G4/pgp2ppp1/1p1p1s1np/P1P2NP2/1P1P1PsPP/2+r4SL/L3+p+p+bNK b GL 1
+  time_limit_sec: 30
+  difficulty_level: 4
+  title: 詰ますしかない
+  description:
+  hint_desc:
+  source_author:
+  source_media_name:
+  source_media_url:
+  source_published_on:
+  lineage_key: 実戦詰め筋
+  moves_answers:
+  - moves_str: 9a9b 9c9b G*9a 9b9a L*9c G*9b G*8a
+  - moves_str: 9a9b 9c9b G*9a 9b9a L*9c R*9b G*8a
