@@ -63,9 +63,9 @@
 </template>
 
 <script>
-import ls_support from "@/components/models/ls_support.js"
-import { isMobile } from "@/components/models/isMobile.js"
-import { Dictionary } from "@/components/models/Dictionary.js"
+import ls_support_mixin from "@/components/models/ls_support_mixin.js"
+import { isMobile } from "@/components/models/is_mobile.js"
+import { Dictionary } from "@/components/models/dictionary.js"
 
 import MemoryRecord from "js-memory-record"
 
@@ -114,10 +114,10 @@ class ZipDlStructureInfo extends MemoryRecord {
 
 export default {
   name: "SwarsBattleDownload",
-  mixins: [ls_support],
+  mixins: [ls_support_mixin],
   data() {
     return {
-      // for ls_support
+      // for ls_support_mixin
       zip_dl_scope_key:  null,
       zip_dl_format_key: null,
       body_encode: null,
@@ -275,7 +275,7 @@ export default {
     current_zip_dl_structure_info()          { return ZipDlStructureInfo.fetch(this.zip_dl_structure_key)                 },
     current_body_encode_info()   { return BodyEncodeInfo.fetch(this.body_encode)        },
 
-    //////////////////////////////////////////////////////////////////////////////// for ls_support
+    //////////////////////////////////////////////////////////////////////////////// for ls_support_mixin
     ls_storage_key() {
       return "swars_download_params"
     },

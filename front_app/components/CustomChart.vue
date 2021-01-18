@@ -140,11 +140,11 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from "@/components/models/chart_mod.js" // FIXME
+import chart_mixin from "@/components/models/chart_mixin.js" // FIXME
 
 export default {
   name: "CustomChart",
-  mixins: [chart_mod],
+  mixins: [chart_mixin],
   props: {
     params: { type: Object, required: true },
   },

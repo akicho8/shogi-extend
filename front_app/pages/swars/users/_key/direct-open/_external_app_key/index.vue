@@ -12,8 +12,8 @@ client-only
 </template>
 
 <script>
-import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
-import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
+import { MyLocalStorage } from "@/components/models/my_local_storage.js"
+import { ExternalAppInfo } from "@/components/models/external_app_info.js"
 
 export default {
   name: "swars-users-key-direct-open-external_app_key",

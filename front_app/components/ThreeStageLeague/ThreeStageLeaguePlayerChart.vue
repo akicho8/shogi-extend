@@ -159,12 +159,12 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from '@/components/models/chart_mod.js'
+import chart_mixin from '@/components/models/chart_mixin.js'
 
 export default {
   name: "ThreeStageLeaguePlayerChart",
   mixins: [
-    chart_mod,
+    chart_mixin,
   ],
   props: {
     config: { type: Object, required: true },

@@ -113,7 +113,7 @@ import stopwatch_data_retention from './stopwatch_data_retention.js'
 import stopwatch_memento_list from './stopwatch_memento_list.js'
 import { app_keyboard } from './app_keyboard.js'
 import { support } from './support.js'
-import { IntervalRunner } from '@/components/models/IntervalRunner.js'
+import { IntervalRunner } from '@/components/models/interval_runner.js'
 
 import StopwatchPermalinkModal from './StopwatchPermalinkModal.vue'
 import StopwatchHistoryModal   from './StopwatchHistoryModal.vue'

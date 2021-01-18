@@ -25,7 +25,7 @@ client-only
 </template>
 
 <script>
-import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
+import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 
 export default {
   name: "SwarsSearchDefaultKey",

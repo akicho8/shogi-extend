@@ -3,7 +3,7 @@
 const CHART_TOP_PADDING_RATE = 1.0   // 評価値の上の隙間率(1.0〜1.5ぐらい1.0で無し)
 const SUGGESTED_MAX_DEFAULT = 10000  // 評価値の初期値
 
-import { PaletteInfo } from "@/components/models/PaletteInfo.js"
+import { PaletteInfo } from "@/components/models/palette_info.js"
 
 const MainPalette = PaletteInfo.fetch("info")
 
@@ -104,11 +104,11 @@ const CHART_CONFIG_DEFAULT = {
   },
 }
 
-import chart_mod from '@/components/models/chart_mod.js'
+import chart_mixin from '@/components/models/chart_mixin.js'
 
 export const cpu_battle_force_chart = {
   mixins: [
-    chart_mod,
+    chart_mixin,
   ],
 
   data() {

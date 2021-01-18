@@ -1,4 +1,4 @@
-import { ChessClock   } from "@/components/models/ChessClock.js"
+import { ChessClock   } from "@/components/models/chess_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 export const application_battle_sy_versus = {

@@ -1,4 +1,4 @@
-import { PaletteInfo } from '@/components/models/PaletteInfo.js'
+import { PaletteInfo } from '@/components/models/palette_info.js'
 
 describe('PaletteInfo', () => {
   it('works', () => {

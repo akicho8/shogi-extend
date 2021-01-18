@@ -2,10 +2,10 @@
 //
 // 使う側で書くこと
 //
-//   import ls_support from "@/components/models/ls_support.js"
+//   import ls_support_mixin from "@/components/models/ls_support_mixin.js"
 //
 //   {
-//     mixins: [ls_support],
+//     mixins: [ls_support_mixin],
 //
 //     data() {
 //       return {
@@ -30,11 +30,10 @@
 //     },
 //   }
 
-import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
+import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
 
 const HASH_MERGE_P = true // ハッシュは復元するときに初期値に対してマージするか？
-
 export default {
   beforeDestroy() {
     this.ls_destroy()

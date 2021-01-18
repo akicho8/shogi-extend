@@ -1,5 +1,5 @@
-import { IntervalRunner } from '@/components/models/IntervalRunner.js'
-import { ChessClock     } from "@/components/models/ChessClock.js"
+import { IntervalRunner } from '@/components/models/interval_runner.js'
+import { ChessClock     } from "@/components/models/chess_clock.js"
 import { CcRuleInfo       } from "@/components/models/cc_rule_info.js"
 import { Location } from "shogi-player/components/models/location.js"
 import ChessClockModal from "./ChessClockModal.vue"

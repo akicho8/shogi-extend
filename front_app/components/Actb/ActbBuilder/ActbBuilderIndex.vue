@@ -167,7 +167,7 @@
 <script>
 import { builder_support } from "./builder_support.js"
 
-import ls_support from "@/components/models/ls_support.js"
+import ls_support_mixin from "@/components/models/ls_support_mixin.js"
 
 import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
 
@@ -193,7 +193,7 @@ export default {
   name: "ActbBuilderIndex",
   mixins: [
     builder_support,
-    ls_support,
+    ls_support_mixin,
   ],
 
   data() {
@@ -284,7 +284,7 @@ export default {
     TabInfo() { return TabInfo },
     question_current_tab_info() { return this.TabInfo.fetch(this.question_tab_index) },
 
-    //////////////////////////////////////////////////////////////////////////////// ls_support
+    //////////////////////////////////////////////////////////////////////////////// ls_support_mixin
 
     ls_default() {
       return {

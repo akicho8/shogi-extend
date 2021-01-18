@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { PaletteInfo } from "@/components/models/PaletteInfo.js"
+import { PaletteInfo } from "@/components/models/palette_info.js"
 
 const CHART_CONFIG_DEFAULT = {
   type: 'doughnut',
@@ -64,11 +64,11 @@ const CHART_CONFIG_DEFAULT = {
   }
 }
 
-import chart_mod from '@/components/models/chart_mod.js'
+import chart_mixin from '@/components/models/chart_mixin.js'
 
 // http://localhost:3000/w?query=kinakom0chi&user_info_show=true
 export default {
-  mixins: [chart_mod],
+  mixins: [chart_mixin],
 
   props: {
     info:         { required: true,                },  // {win: 1, lose: 2}

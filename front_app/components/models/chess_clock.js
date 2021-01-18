@@ -1,4 +1,4 @@
-import { SingleClock } from "./SingleClock.js"
+import { SingleClock } from "./single_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 export class ChessClock {

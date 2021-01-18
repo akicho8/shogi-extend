@@ -96,9 +96,9 @@ import MemoryRecord from 'js-memory-record'
 import { Soldier } from "shogi-player/components/models/soldier.js"
 import { Place } from "shogi-player/components/models/place.js"
 
-import { isMobile        } from "@/components/models/isMobile.js"
-import { IntervalCounter } from '@/components/models/IntervalCounter.js'
-import { IntervalFrame   } from '@/components/models/IntervalFrame.js'
+import { isMobile        } from "@/components/models/is_mobile.js"
+import { IntervalCounter } from '@/components/models/interval_counter.js'
+import { IntervalFrame   } from '@/components/models/interval_frame.js'
 
 import { support_parent } from "./support_parent.js"
 
@@ -108,7 +108,7 @@ import { app_debug       } from "./app_debug.js"
 import { app_rule_dialog } from "./app_rule_dialog.js"
 import { app_external_apps } from "./app_external_apps.js"
 
-import ls_support from "@/components/models/ls_support.js"
+import ls_support_mixin from "@/components/models/ls_support_mixin.js"
 
 class RuleInfo extends MemoryRecord {
 }
@@ -128,7 +128,7 @@ export default {
   name: "TsMasterApp",
   mixins: [
     support_parent,
-    ls_support,
+    ls_support_mixin,
     app_keyboard,
     app_debug,
     app_rule_dialog,
@@ -577,7 +577,7 @@ export default {
       return this.time_record.rank_info[this.scope_key].rank
     },
 
-    //////////////////////////////////////////////////////////////////////////////// for ls_support
+    //////////////////////////////////////////////////////////////////////////////// for ls_support_mixin
     ls_storage_key() {
       return "ts_master"
     },

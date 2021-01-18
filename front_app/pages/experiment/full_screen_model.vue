@@ -13,7 +13,7 @@ client-only
 </template>
 
 <script>
-import { FullScreen } from "@/components/models/FullScreen.js"
+import { FullScreenController } from "@/components/models/full_screen_controller.js"
 
 export default {
   name: "full_screen",
@@ -23,7 +23,7 @@ export default {
     }
   },
   mounted() {
-    this.object = new FullScreen()
+    this.object = new FullScreenController()
     this.object.on()
   },
 }

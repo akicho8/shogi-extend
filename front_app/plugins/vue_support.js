@@ -4,7 +4,7 @@ import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 
 const strip_tags = require('striptags')
 
-import { isMobile } from "../components/models/isMobile.js"
+import { isMobile } from "../components/models/is_mobile.js"
 
 import Autolinker from 'autolinker'
 

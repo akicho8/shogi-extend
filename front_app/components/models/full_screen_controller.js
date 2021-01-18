@@ -2,19 +2,19 @@
 //
 // この機能が有効か？
 //
-//  Fullscreen.enable_p()
+//  FullScreenController.enable_p()
 //
 // 全体をフルスクリーン化するには？
 //
-//   full_screen = new FullScreen()
+//   full_screen = new FullScreenController()
 //   full_screen.on()
 //
 // 一部の要素をフルスクリーン化するには？
 //
-//   full_screen = new FullScreen(document.querySelector("#foo"))
+//   full_screen = new FullScreenController(document.querySelector("#foo"))
 //   full_screen.on()
 //
-export class FullScreen {
+export class FullScreenController {
   // https://blog.katsubemakito.net/html5/fullscreen
   static enable_p() {
     return false ||

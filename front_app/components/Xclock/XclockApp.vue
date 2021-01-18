@@ -62,24 +62,24 @@
 </template>
 
 <script>
-import { ChessClock   } from "@/components/models/ChessClock.js"
-import { DeviseAngle  } from "@/components/models/DeviseAngle.js"
-import { isMobile     } from "@/components/models/isMobile.js"
-import { FullScreen   } from "@/components/models/FullScreen.js"
+import { ChessClock   } from "@/components/models/chess_clock.js"
+import { DeviseAngle  } from "@/components/models/devise_angle.js"
+import { isMobile     } from "@/components/models/is_mobile.js"
+import { FullScreenController   } from "@/components/models/full_screen_controller.js"
 
 import { support      } from "./support.js"
 
-import { app_mouse_hidden         } from "./app_mouse_hidden.js"
+import { mouse_cursor_hidden_mixin         } from "../models/mouse_cursor_hidden_mixin.js"
+import { mobile_screen_adjust_mixin } from "../models/mobile_screen_adjust_mixin.js"
 import { app_keyboard_shortcut    } from "./app_keyboard_shortcut.js"
-import { app_mobile_screen_adjust } from "./app_mobile_screen_adjust.js"
 
 export default {
   name: "XclockApp",
   mixins: [
     support,
-    app_mouse_hidden,
+    mouse_cursor_hidden_mixin,
     app_keyboard_shortcut,
-    app_mobile_screen_adjust,
+    mobile_screen_adjust_mixin,
   ],
   data() {
     return {
@@ -140,7 +140,7 @@ export default {
     } else {
       // this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()
     }
-    this.full_screen = new FullScreen()
+    this.full_screen = new FullScreenController()
   },
   beforeDestroy() {
     this.full_screen.off()

@@ -24,7 +24,7 @@
 
 <script>
 import _ from "lodash"
-import { AdapterTestInfo } from "@/components/models/AdapterTestInfo.js"
+import { AdapterTestInfo } from "@/components/models/adapter_test_info.js"
 
 export default {
   name: "AdapterDescription",

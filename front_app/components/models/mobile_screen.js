@@ -1,6 +1,6 @@
 // 100vh相当の範囲に実際に見えている範囲(innerHeight)を設定する
 
-import { isMobile } from "./isMobile.js"
+import { isMobile } from "./is_mobile.js"
 
 export class MobileScreen {
   constructor(params = {}) {

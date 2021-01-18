@@ -4,7 +4,7 @@ import _ from "lodash"
 
 const MOUSE_CURSOR_HIDDEN_DELAY = 3
 
-export const app_mouse_hidden = {
+export const mouse_cursor_hidden_mixin = {
   data() {
     return {
       mouse_cursor_p: true,

@@ -33,7 +33,7 @@
 //
 const ONE_SECOND = 1000
 
-import { IntervalBase } from "./IntervalBase.js"
+import { IntervalBase } from "./interval_base.js"
 
 export class IntervalRunner extends IntervalBase {
   default_params() {

@@ -144,13 +144,13 @@ const CHART_CONFIG_DEFAULT = {
 
 import dayjs from "dayjs"
 
-import chart_mod from '@/components/models/chart_mod.js'
+import chart_mixin from '@/components/models/chart_mixin.js'
 
 export default {
   name: "TsMasterChart",
   mixins: [
     support_child,
-    chart_mod,
+    chart_mixin,
   ],
   methods: {
     chart_update_from_axios(data) {

@@ -1,7 +1,7 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 
-import { IntervalRunner } from '@/components/models/IntervalRunner.js'
+import { IntervalRunner } from '@/components/models/interval_runner.js'
 
 const ALIVE_NOTIFY_INTERVAL = 60     // N秒ごとに存在を通知する
 const MEMBER_TTL            = 60*3   // 通知がN秒前より古いユーザーは破棄

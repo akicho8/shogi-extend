@@ -19,7 +19,7 @@
 //
 //  early: true オプションをつける
 
-import { IntervalBase } from "./IntervalBase.js"
+import { IntervalBase } from "./interval_base.js"
 
 export class IntervalFrame extends IntervalBase {
   __interval_on__() {

@@ -1,4 +1,4 @@
-import { IntervalRunner } from '@/components/models/IntervalRunner.js'
+import { IntervalRunner } from '@/components/models/interval_runner.js'
 
 export const app_room_init = {
   data() {

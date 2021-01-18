@@ -1,8 +1,8 @@
-import ls_support from "@/components/models/ls_support.js"
+import ls_support_mixin from "@/components/models/ls_support_mixin.js"
 
 export const app_storage = {
   mixins: [
-    ls_support,
+    ls_support_mixin,
   ],
   data() {
     return {
@@ -17,7 +17,7 @@ export const app_storage = {
       return 1.0
     },
 
-    //////////////////////////////////////////////////////////////////////////////// for ls_support
+    //////////////////////////////////////////////////////////////////////////////// for ls_support_mixin
 
     ls_storage_key() {
       return "blindfold"

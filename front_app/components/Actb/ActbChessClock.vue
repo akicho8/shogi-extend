@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { ChessClock   } from "@/components/models/ChessClock.js"
+import { ChessClock   } from "@/components/models/chess_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 import { support_child } from "./support_child.js"

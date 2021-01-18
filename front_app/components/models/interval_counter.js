@@ -17,7 +17,7 @@
 //   },
 //
 
-import { IntervalRunner } from "./IntervalRunner.js"
+import { IntervalRunner } from "./interval_runner.js"
 
 export class IntervalCounter extends IntervalRunner {
   constructor(callback, params = {}) {

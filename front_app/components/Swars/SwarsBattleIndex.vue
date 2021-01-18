@@ -264,8 +264,8 @@ import _ from "lodash"
 
 import { support } from "./support.js"
 
-import { MyLocalStorage } from "@/components/models/MyLocalStorage.js"
-import { ExternalAppInfo } from "@/components/models/ExternalAppInfo.js"
+import { MyLocalStorage } from "@/components/models/my_local_storage.js"
+import { ExternalAppInfo } from "@/components/models/external_app_info.js"
 
 import { Location } from "shogi-player/components/models/location.js"
 

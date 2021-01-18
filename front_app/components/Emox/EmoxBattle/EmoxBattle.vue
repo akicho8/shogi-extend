@@ -11,7 +11,7 @@
 
 <script>
 import { support_child } from "../support_child.js"
-import { scroll_auto_disable } from "../../../plugins/scroll_auto_disable.js"
+import { scroll_auto_disable } from "../../models/scroll_auto_disable.js"
 
 export default {
   name: "EmoxBattle",

@@ -14,7 +14,7 @@ const TOOLTIP_ENABLE = false
 const TICKS_FONT_COLOR = "rgba(0, 0, 0, 0.75)"
 const FONT_SIZE = 8
 
-// import PaletteBlackWhiteInfo from "@/components/models/PaletteBlackWhiteInfo.js"
+// import PaletteBlackWhiteInfo from "@/components/models/palette_black_white_info.js"
 //
 // function color_select(context, alpha) {
 //   // https://www.chartjs.org/docs/latest/general/options.html#option-context
@@ -374,14 +374,14 @@ const CHART_CONFIG_DEFAULT = {
 }
 
 import SwarsBattleShowTimeChartVerticalLine from './SwarsBattleShowTimeChartVerticalLine.js'
-import { PaletteInfo } from "@/components/models/PaletteInfo.js"
-import chart_mod from '@/components/models/chart_mod.js'
+import { PaletteInfo } from "@/components/models/palette_info.js"
+import chart_mixin from '@/components/models/chart_mixin.js'
 
 export default {
   name: "SwarsBattleShowTimeChart",
   mixins: [
     SwarsBattleShowTimeChartVerticalLine, // 縦線表示機能(コメントアウトでOFF)
-    chart_mod,
+    chart_mixin,
   ],
 
   props: {

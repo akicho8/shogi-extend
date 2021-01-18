@@ -184,7 +184,7 @@
 <script>
 const AUTO_PRINT = false
 
-import { isMobile } from "@/components/models/isMobile.js"
+import { isMobile } from "@/components/models/is_mobile.js"
 
 export default {
   name: "FormalSheetShow",
