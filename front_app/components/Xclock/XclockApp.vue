@@ -19,18 +19,18 @@
             .wide_container.form.is-flex
               b-field(label="持ち時間(分)" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @pointerdown.native.stop="" :checkHtml5Validity="false")
-              b-field(label="1手ごとに加算" custom-class="is-small")
+              b-field(label="1手ごとに加算(秒)" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
               b-field(label="秒読み" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
-              b-field(label="猶予" custom-class="is-small")
+              b-field(label="猶予(秒)" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
       XclockAppFooter(:base="base" ref="XclockAppFooter")
 
   //////////////////////////////////////////////////////////////////////////////// 実行中
   template(v-if="chess_clock.running_p")
     .pause_bg(v-if="!chess_clock.timer")
-    .screen_container.is-flex(:class="{mouse_cursor_hidden: mouse_cursor_hidden}")
+    .screen_container.is-flex(:class="{mouse_cursor_hidden_p: mouse_cursor_hidden_p}")
       b-icon.controll_button.pause.is-clickable(icon="pause" v-if="chess_clock.timer" @click.native="pause_handle")
       b-icon.controll_button.resume.is-clickable(icon="play" v-if="!chess_clock.timer" @click.native="resume_handle")
       b-icon.controll_button.stop.is-clickable(icon="stop" v-if="!chess_clock.timer" @click.native="stop_handle")
@@ -66,6 +66,7 @@ import { ChessClock   } from "@/components/models/chess_clock.js"
 import { DeviseAngle  } from "@/components/models/devise_angle.js"
 import { isMobile     } from "@/components/models/is_mobile.js"
 import { FullScreenController   } from "@/components/models/full_screen_controller.js"
+import { CcRuleInfo       } from "@/components/models/cc_rule_info.js"
 
 import { support      } from "./support.js"
 
@@ -125,13 +126,13 @@ export default {
     })
 
     // 初期値
-    this.rule_set({initial_main_sec: 60*5, initial_read_sec:0, initial_extra_sec: 0, every_plus: 5})
+    this.rule_set({initial_main_min: 5, initial_read_sec:0, initial_extra_sec: 0, every_plus: 5})
 
     if (this.development_p) {
-      this.rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 7文字
-      this.rule_set({initial_main_sec: 60*30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 5文字
-      this.rule_set({initial_main_sec: 60*60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0}) // 2行 7文字
-      this.rule_set({initial_main_sec: 60*60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60}) // 3行 7文字
+      this.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 7文字
+      this.rule_set({initial_main_min: 30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 5文字
+      this.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0}) // 2行 7文字
+      this.rule_set({initial_main_min: 60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60}) // 3行 7文字
     }
   },
   mounted() {
@@ -267,12 +268,16 @@ export default {
       }
     },
     rule_set(params) {
+      params = {...params}
+      this.__assert__("initial_main_min" in params, '"initial_main_min" in params')
+      params.initial_main_sec = params.initial_main_min * 60
       this.chess_clock.rule_set_all(params)
     },
   },
   computed: {
     base() { return this },
-    mouse_cursor_hidden() {
+    CcRuleInfo() { return CcRuleInfo },
+    mouse_cursor_hidden_p() {
       return this.chess_clock.timer && !this.mouse_cursor_p
     },
   },
@@ -299,7 +304,7 @@ export default {
     height: 100vh   // 初期値(JSで上書きする)
 
     //////////////////////////////////////////////////////////////////////////////// カーソルを消す
-    &.mouse_cursor_hidden
+    &.mouse_cursor_hidden_p
       cursor: none
 
     //////////////////////////////////////////////////////////////////////////////// 動作中は背景黒にする場合
