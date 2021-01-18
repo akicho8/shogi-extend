@@ -75,7 +75,6 @@ export default {
   },
 
   async created() {
-    this.base.lobby_unsubscribe()
     this.sound_play("click")
 
     // 一覧用のリソース

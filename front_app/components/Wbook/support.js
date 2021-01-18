@@ -44,19 +44,6 @@ export const support = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    message_decorate(str) {
-      str = this.auto_link(str)
-      str = this.simple_format(str)
-      str = this.number_replace_to_question_link(str)
-      return str
-    },
-
-    number_replace_to_question_link(s) {
-      return s.replace(/#(\d+)/, '<a href="/wbook?question_id=$1">#$1</a>')
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
     say(str, options = {}) {
       this.talk(str, {rate: 1.5, ...options})
     },
@@ -85,42 +72,7 @@ export const support = {
     silent_api_put(command, params, block) {
       return this.$axios.$put("/api/wbook.json", {remote_action: command, ...params}, {progress: false}).then(e => block(e))
     },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    rating_format(rating) {
-      return Math.trunc(rating)
-    },
-
-    //////////////////////////////////////////////////////////////////////////////// private
-
-    permit_enable_type(tag) {
-      if (this.base.current_user) {
-        return this.base.current_user.permit_tag_list.includes(tag)
-      }
-    },
-
-    permit_hidden_type(tag) {
-      if (this.base.current_user) {
-        if (this.base.current_user.permit_tag_list.includes(tag)) {
-          return false
-        }
-      }
-      return true
-    },
   },
   computed: {
-    // ...Vuex.mapState([
-    //   "base",
-    //   "bapp",
-    // ]),
-    // ...Vuex.mapGetters([
-    //   "current_gvar1",
-    // ]),
-    // // ...mapState([
-    // //   "fooKey",
-    // // ]),
-
-    permit_staff_p()               { return this.permit_enable_type("staff")                      },
   },
 }

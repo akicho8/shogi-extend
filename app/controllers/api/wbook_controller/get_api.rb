@@ -54,36 +54,14 @@ module Api
         { question: question.as_json(Wbook::Question.json_type5) }
       end
 
-      # http://localhost:3000/api/wbook.json?remote_action=ranking_fetch&ranking_key=rating
-      def ranking_fetch
-        { rank_data: Wbook::RankingCop.new(params.merge(current_user: current_user)) }
-      end
-
-      # http://localhost:3000/api/wbook.json?remote_action=seasons_fetch
-      def seasons_fetch
-        { seasons: Wbook::Season.newest_order.as_json(only: [:id, :generation, :name, :begin_at, :end_at]) }
-      end
-
-      # http://localhost:3000/api/wbook.json?remote_action=history_records_fetch
-      def history_records_fetch
-        s = current_user.wbook_histories.order(created_at: :desc).limit(Wbook::Config[:api_history_fetch_max])
-        { history_records: s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}, :ox_mark => {only: :key}}, methods: [:good_p, :bad_p, :clip_p]) }
-      end
-
-      # http://localhost:3000/api/wbook.json?remote_action=clip_records_fetch
-      def clip_records_fetch
-        s = current_user.wbook_clip_marks.order(created_at: :desc).limit(Wbook::Config[:api_clip_fetch_max])
-        { clip_records: s.as_json(only: [:id], include: {:question => {include: {:user => {only: [:id, :key, :name], methods: [:avatar_path]}}}}, methods: [:good_p, :bad_p, :clip_p]) }
-      end
-
       # http://localhost:3000/api/wbook.json?remote_action=question_single_fetch&question_id=1
       def question_single_fetch
         question = Wbook::Question.find(params[:question_id])
         retv = {}
         retv[:question] = question.as_json_type6
-        if current_user
-          retv.update(current_user.good_bad_clip_flags_for(question))
-        end
+        # if current_user
+        #   retv.update(current_user.good_bad_clip_flags_for(question))
+        # end
         { ov_question_info: retv }
       end
 
@@ -96,11 +74,11 @@ module Api
       # http://localhost:3000/api/wbook.json?remote_action=resource_fetch
       def resource_fetch
         {
-          RuleInfo: Wbook::RuleInfo.as_json,
-          OxMarkInfo: Wbook::OxMarkInfo.as_json(only: [:key, :name, :score, :sound_key, :delay_second]),
-          SkillInfo: Wbook::SkillInfo.as_json(only: [:key, :name]),
-          EmotionInfo: Wbook::EmotionInfo.as_json, # 元に戻す用
-          EmotionFolderInfo: Wbook::EmotionFolderInfo.as_json,
+          # RuleInfo: Wbook::RuleInfo.as_json,
+          # OxMarkInfo: Wbook::OxMarkInfo.as_json(only: [:key, :name, :score, :sound_key, :delay_second]),
+          # SkillInfo: Wbook::SkillInfo.as_json(only: [:key, :name]),
+          # EmotionInfo: Wbook::EmotionInfo.as_json, # 元に戻す用
+          # EmotionFolderInfo: Wbook::EmotionFolderInfo.as_json,
         }
       end
 
@@ -110,42 +88,6 @@ module Api
           LineageInfo: Wbook::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on]),
           FolderInfo:  Wbook::FolderInfo.as_json(only: [:key, :name, :icon, :type]),
         }
-      end
-
-      # http://localhost:3000/api/wbook.json?remote_action=lobby_messages_fetch
-      def lobby_messages_fetch
-        lobby_messages = Wbook::LobbyMessage.order(:created_at).includes(:user).last(Wbook::Config[:api_lobby_message_max])
-        lobby_messages = lobby_messages.collect(&:as_json_type8)
-        { lobby_messages: lobby_messages }
-      end
-
-      # http://localhost:3000/api/wbook.json?remote_action=notifications_fetch
-      def notifications_fetch
-        size = 10
-        notifications = []
-        if current_user
-          notifications = current_user.notifications.where(opened_at: nil).order(created_at: :desc)
-          if notifications.empty?
-            # notifications = current_user.notifications.order(created_at: :desc).limit(size)
-          end
-        end
-        notifications = notifications.collect(&:as_json_type11)
-        { notifications: notifications }
-      end
-
-      # http://localhost:3000/api/wbook.json?remote_action=revision_fetch
-      def revision_fetch
-        { revision: Wbook::Config[:revision] }
-      end
-
-      # 作成した問題数を返す
-      # http://localhost:3000/api/wbook.json?remote_action=zip_dl_count_fetch
-      def zip_dl_count_fetch
-        count = 0
-        if current_user
-          count = zip_dl_scope.count
-        end
-        { count: count }
       end
 
       private
