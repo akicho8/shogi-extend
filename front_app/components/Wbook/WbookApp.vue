@@ -51,26 +51,7 @@ export default {
     app_setup() {
     },
 
-    reload_if_outdated() {
-      return this.silent_api_get("revision_fetch", {}, e => {
-        if (this.base.config.revision === e.revision) {
-          this.debug_alert(`revision: ${this.base.config.revision} OK`)
-        } else {
-          this.ok_notice("新しいプログラムがあるので更新します", {onend: () => location.reload(true)})
-        }
-      })
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
-
-    lobby_setup_without_cable() {
-      this.mode = "lobby"
-      this.room = null          // 対戦中ではないことを判定するため消しておく
-      this.reload_if_outdated()
-    },
-
-    lobby_setup() {
-    },
 
     ov_redirect_onece() {
       if (this.redirect_counter >= 1) {

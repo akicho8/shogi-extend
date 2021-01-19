@@ -12,6 +12,23 @@ module Api
         end
       end
 
+      # 問題編集用
+      # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
+      def question_edit_fetch
+        info = {}
+        info[:config] = Wbook::Config
+        info[:LineageInfo] = Wbook::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
+        info[:FolderInfo]  = Wbook::FolderInfo.as_json(only: [:key, :name, :icon, :type])
+
+        if params[:question_id]
+          question = Wbook::Question.find(params[:question_id])
+          info[:question] = question.as_json(Wbook::Question.json_type5)
+        else
+          info[:question_default_attributes] = Wbook::Question.default_attributes
+        end
+        info
+      end
+
       # 問題一覧
       # http://localhost:3000/api/wbook.json?remote_action=questions_fetch
       # http://localhost:3000/api/wbook.json?remote_action=questions_fetch&folder_key=active
@@ -45,13 +62,6 @@ module Api
         retv[:question_counts].update(all: Wbook::Question.active_only.count)
         retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key], tag: params[:tag]}
         retv
-      end
-
-      # 問題編集用
-      # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
-      def question_edit_fetch
-        question = Wbook::Question.find(params[:question_id])
-        { question: question.as_json(Wbook::Question.json_type5) }
       end
 
       # http://localhost:3000/api/wbook.json?remote_action=question_single_fetch&question_id=1

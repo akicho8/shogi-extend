@@ -1,41 +1,50 @@
 <template lang="pug">
 .WbookEditApp
-  | OK
-  //- ////////////////////////////////////////////////////////////////////////////////
-  //- .primary_header
-  //-   b-icon.header_item.with_icon.ljust(icon="chevron-left" @click.native="base.builder_index_handle")
-  //-   .header_center_title
-  //-     template(v-if="base.question.title")
-  //-       | {{base.question.title}}
-  //-     template(v-else)
-  //-       | {{base.question_new_record_p ? '新規' : '編集'}}
-  //-   .header_item.with_text.rjust.has-text-weight-bold(@click="base.question_save_handle" :class="{disabled: !base.save_button_enabled}")
-  //-     | {{base.save_button_name}}
-  //- 
-  //- ////////////////////////////////////////////////////////////////////////////////
-  //- .secondary_header
-  //-   b-tabs.tabs_in_secondary(v-model="base.tab_index" expanded @input="base.edit_tab_change_handle")
-  //-     b-tab-item(label="配置")
-  //- 
-  //-     b-tab-item
-  //-       template(slot="header")
-  //-         span
-  //-           | 正解
-  //-           b-tag(rounded v-if="base.question.moves_answers.length >= 1") {{base.question.moves_answers.length}}
-  //- 
-  //-     b-tab-item(label="情報")
-  //- 
-  //-     b-tab-item
-  //-       template(slot="header")
-  //-         span
-  //-           | 検証
-  //-           b-tag(rounded v-if="base.valid_count >= 1" type="is-primary") OK
-  //- 
-  //- ////////////////////////////////////////////////////////////////////////////////
-  //- WbookEditHaiti(:base="base" :base="base"  v-if="base.current_tab_info.key === 'haiti_mode'")
-  //- WbookEditSeikai(:base="base" :base="base" v-if="base.current_tab_info.key === 'seikai_mode'" ref="WbookEditSeikai")
-  //- WbookEditForm(:base="base" :base="base"   v-if="base.current_tab_info.key === 'form_mode'")
-  //- WbookEditKensho(:base="base" :base="base" v-if="base.current_tab_info.key === 'kensho_mode'")
+  b-loading(:active="$fetchState.pending")
+  .MainContainer(v-if="!$fetchState.pending")
+    MainNavbar(:spaced="false")
+      template(slot="brand")
+        b-navbar-item(@click.native="exit_handle")
+          b-icon(icon="chevron-left")
+        //- b-navbar-item.has-text-weight-bold(@click="title_edit")
+        //-   | {{current_title}}
+          //- span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
+      //- template(slot="end")
+      //-   //- b-navbar-item.is-unselectable(tag="div" v-if="ac_room")
+      //-   //-   b-icon(icon="account")
+      //-   //-   b-tag.has-text-weight-bold(rounded)
+      //-   //-     .has-text-primary {{member_infos.length}}
+      //-
+      //-   b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode' && !share_p")
+      //-     b-icon(icon="twitter" type="is-white")
+      //-   b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
+      //-     | 編集完了
+      //-   b-navbar-item.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
+      //-     b-icon(icon="menu")
+
+    .container
+      b-tabs.MainTabs(v-model="base.tab_index" expanded @input="base.edit_tab_change_handle")
+        b-tab-item(label="配置")
+        b-tab-item
+          template(slot="header")
+            span
+              | 正解
+              b-tag(rounded v-if="base.question.moves_answers.length >= 1") {{base.question.moves_answers.length}}
+        b-tab-item(label="情報")
+        b-tab-item
+          template(slot="header")
+            span
+              | 検証
+              b-tag(rounded v-if="base.valid_count >= 1" type="is-primary") OK
+
+    MainSection.is_mobile_padding_zero
+      .container
+        //- .columns.is-gapless.is-centered.is-gapless
+        //-   .MainColumn.column
+        WbookEditHaiti(:base="base"  v-if="base.current_tab_info.key === 'haiti_mode'")
+        WbookEditSeikai(:base="base" v-if="base.current_tab_info.key === 'seikai_mode'" ref="WbookEditSeikai")
+        WbookEditForm(:base="base"   v-if="base.current_tab_info.key === 'form_mode'")
+        WbookEditKensho(:base="base" v-if="base.current_tab_info.key === 'kensho_mode'")
 </template>
 
 <script>
@@ -79,19 +88,6 @@ export default {
       questions: null,          // 一覧で表示する配列
       question_counts: {},      // それぞれの箱中の問題数
 
-      // pagination 5点セット
-      page_info: {
-        total:              null,
-        page:               null,
-        per:                null,
-        sort_column:        null,
-        sort_order:         null,
-        sort_order_default: null,
-        //
-        folder_key:         null,
-        tag:                null,
-      },
-
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
       tab_index:        null,
       question:         null,
@@ -107,34 +103,51 @@ export default {
     }
   },
 
+  fetch() {
+    this.$axios.$get("/api/wbook.json", {params: {remote_action: "question_edit_fetch", ...this.$route.query}}).then(e => {
+      this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
+      this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
+      this.config = e.config
+      let question = null
+      if (e.question) {
+        question = new Question(e.question)
+      }
+      if (e.question_default_attributes) {
+        const attributes = _.cloneDeep(e.question_default_attributes)
+        question = new Question(attributes)
+      }
+      this.question_edit_for(question)
+    })
+  },
+
   created() {
     // this.sound_play("click")
-    // 
+    //
     // // 一覧用のリソース
     // await this.api_get("builder_form_resource_fetch", {}, e => {
     //   this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
     //   this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
     // })
-    // 
+    //
     // // // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
     // // if (this.base.edit_question_id) {
     // //   this.question_edit()
     // //   return
     // // }
-    // 
+    //
     // this.builder_new_handle()
   },
 
   methods: {
-    question_edit() {
-      // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
-      if (this.base.edit_question_id) {
-        this.api_get("question_edit_fetch", {question_id: this.base.edit_question_id}, e => {
-          this.base.edit_question_id = null
-          this.question_edit_for(new Question(e.question))
-        })
-      }
-    },
+    // question_edit() {
+    //   // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
+    //   if (this.base.edit_question_id) {
+    //     this.api_get("question_edit_fetch", {question_id: this.base.edit_question_id}, e => {
+    //       this.base.edit_question_id = null
+    //       this.question_edit_for(new Question(e.question))
+    //     })
+    //   }
+    // },
 
     mode_select(tab_key) {
       this.tab_index = TabInfo.fetch(tab_key).code
@@ -143,7 +156,7 @@ export default {
     edit_tab_change_handle(v) {
       this.sound_play("click")
       if (false) {
-        this.say(this.current_tab_info.name)
+        this.talk(this.current_tab_info.name)
       }
       this[this.current_tab_info.handle_method_name]()
     },
@@ -165,7 +178,7 @@ export default {
     kensho_mode_handle() {
       this.mode_select("kensho_mode")
       this.exam_run_count = 0
-      this.say(this.question.direction_message)
+      this.talk(this.question.direction_message)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -177,7 +190,7 @@ export default {
 
         // 合わせて正解も削除する
         if (this.question.moves_answers.length >= 1) {
-          this.ok_notice("元の配置を変更したので正解を削除しました")
+          this.toast_ok("元の配置を変更したので正解を削除しました")
           this.moves_answers_clear()
         }
 
@@ -217,9 +230,9 @@ export default {
       this.$nextTick(() => this.answer_tab_index = this.question.moves_answers.length - 1)
 
       this.sound_play("click")
-      this.ok_notice(`${this.question.moves_answers.length}つ目の正解を追加しました`, {onend: () => {
+      this.toast_ok(`${this.question.moves_answers.length}つ目の正解を追加しました`, {onend: () => {
         if (this.question.moves_answers.length === 1) {
-          this.ok_notice(`他の手順で正解がある場合は続けて追加してください`)
+          this.toast_ok(`他の手順で正解がある場合は続けて追加してください`)
         }
       }})
     },
@@ -230,7 +243,7 @@ export default {
       this.$nextTick(() => this.answer_tab_index = _.clamp(this.answer_tab_index, 0, this.question.moves_answers.length - 1))
 
       this.sound_play("click")
-      this.ok_notice("削除しました")
+      this.toast_ok("削除しました")
     },
 
     full_sfen_build(moves_answer_attributes) {
@@ -278,7 +291,7 @@ export default {
           this.question = new Question(e.question)
 
           this.sound_play("click")
-          this.ok_notice(`${before_save_button_name}しました`)
+          this.toast_ok(`${before_save_button_name}しました`)
 
           if (this.base.config.save_and_back_to_index) {
             this.builder_index_handle()
@@ -287,16 +300,15 @@ export default {
       })
     },
 
-    // 「新規作成」ボタン
-    builder_new_handle() {
-      const attributes = _.cloneDeep(this.base.info.question_default_attributes)
-      const question = new Question(attributes)
-      this.question_edit_for(question)
-    },
+    // // 「新規作成」ボタン
+    // builder_new_handle() {
+    //   const attributes = _.cloneDeep(this.base.info.question_default_attributes)
+    //   const question = new Question(attributes)
+    //   this.question_edit_for(question)
+    // },
 
     question_edit_for(row) {
       this.sound_play("click")
-      // this.$ga.event("open", {event_category: "問題編集"})
 
       this.__assert__(row instanceof Question, `問題が Question でラップされてない ${Question.name}`)
       this.question = row
@@ -305,14 +317,14 @@ export default {
       this.answer_turn_offset = 0
       this.valid_count = 0
 
-      if (this.base.info.warp_to === "builder_haiti") {
-        this.haiti_mode_handle()
-        return
-      }
-      if (this.base.info.warp_to === "builder_form") {
-        this.form_mode_handle()
-        return
-      }
+      // if (this.base.info.warp_to === "builder_haiti") {
+      //   this.haiti_mode_handle()
+      //   return
+      // }
+      // if (this.base.info.warp_to === "builder_form") {
+      //   this.form_mode_handle()
+      //   return
+      // }
 
       // 最初に開くタブの決定
       if (this.question_new_record_p) {
@@ -326,37 +338,6 @@ export default {
       this.builder_index_handle()
     },
 
-    tag_search_handle(tag) {
-      this.sound_play("click")
-      this.say(tag)
-      this.page_info.tag = tag
-      this.async_records_load()
-    },
-
-    page_change_handle(page) {
-      this.page_info.page = page
-      this.async_records_load()
-    },
-
-    sort_handle(column, order) {
-      this.page_info.sort_column = column
-      this.page_info.sort_order = order
-      this.async_records_load()
-    },
-
-    folder_change_handle(folder_key) {
-      this.page_info.folder_key = folder_key
-      this.async_records_load()
-    },
-
-    async_records_load() {
-      this.api_get("questions_fetch", this.page_info, e => {
-        this.questions = e.questions.map(e => new Question(e))
-        this.page_info = e.page_info
-        this.question_counts = e.question_counts // 各フォルダごとの個数
-      })
-    },
-
     play_mode_advanced_moves_set(moves) {
       if (this.question.moves_answers.length === 0) {
         if (this.exam_run_count === 0) {
@@ -365,7 +346,7 @@ export default {
       }
       if (this.question.moves_valid_p(moves)) {
         this.sound_play("o")
-        this.ok_notice("正解")
+        this.toast_ok("正解")
         this.valid_count += 1
       }
       this.exam_run_count += 1
@@ -423,6 +404,20 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-.WbookBuilderApp
-  .WbookEdit
+.STAGE-development
+  .WbookEditApp
+    .container
+      border: 1px dashed change_color($danger, $alpha: 0.5)
+    .columns.is-gapless
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .column
+      border: 1px dashed change_color($success, $alpha: 0.5)
+
+.WbookEditApp
+  .MainSection.section
+    padding: 0
+
+  .MainTabs
+    .tab-content
+      display: none
 </style>

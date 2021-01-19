@@ -1,4 +1,4 @@
-# 将棋トレーニングバトル
+# 将棋問題集
 #
 # entry
 #   app/controllers/api/wbook_controller.rb
@@ -40,7 +40,7 @@ module Api
 
     include DebugMod
 
-    # self.script_name = "将棋トレーニングバトル"
+    # self.script_name = "将棋問題集"
     # self.page_title = ""
     # self.form_position = :bottom
     # self.column_wrapper_enable = false
@@ -82,7 +82,7 @@ module Api
       #     })
       # else
       #   ogp_params_set({
-      #       :title       => "将棋トレーニングバトル",
+      #       :title       => "将棋問題集",
       #       :description => "クイズ形式で将棋の問題を解く力を競う対戦ゲームです",
       #     })
       # end
@@ -99,13 +99,6 @@ module Api
 
       if current_user
         info[:current_user] = current_user.as_json_type9x
-
-        if true
-          # すでにログインしている人は maincable で unauthorized になる
-          # これはクッキーに記録しないままログインしたのが原因
-          # なのですでにログインしていたらクッキーに埋める
-          current_user_set_for_action_cable(current_user)
-        end
       end
 
       # if Rails.env.development?

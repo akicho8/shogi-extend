@@ -50,8 +50,8 @@ export default {
     --sp_lifted_origin_opacity: 0.5
 
   +mobile
-    --sp_stand_piece_w:     28px // 駒台のセル(W)
-    --sp_stand_piece_h:     32px // 駒台のセル(H)
+    --sp_stand_piece_w:     40px // 駒台のセル(W)
+    --sp_stand_piece_h:     40px // 駒台のセル(H)
     --sp_piece_box_piece_w: 28px // 駒箱のセル(W)
     --sp_piece_box_piece_h: 32px // 駒箱のセル(H)
     --sp_piece_count_gap_right: 40%
