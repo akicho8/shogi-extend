@@ -197,6 +197,7 @@ export default {
           message: message,
           cancelText: "キャンセル",
           confirmText: "退室する",
+          focusOn: "cancel",
           onCancel: () => {
             this.talk_stop()
             this.sound_play("click")
