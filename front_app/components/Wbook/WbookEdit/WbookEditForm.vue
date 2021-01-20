@@ -124,9 +124,9 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .WbookEditForm
-  margin: 1.5rem
+  margin: $wbook_share_gap
   .field:not(:first-child)
-    margin-top: 1.5rem
+    margin-top: $wbook_share_gap
   .help
     color: $grey
     font-size: $size-7

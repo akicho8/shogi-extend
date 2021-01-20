@@ -1,39 +1,40 @@
 <template lang="pug">
-.WbookEditHaiti.columns.is-gapless.is-centered
+.WbookEditPlacement.columns.is-gapless.is-centered
   .column
-    CustomShogiPlayer.mt-3(
-      sp_mobile_vertical="is_mobile_vertical_off"
-      sp_run_mode="edit_mode"
-      :sp_body="sp_body"
-      :sp_turn="-1"
-      sp_slider="is_slider_on"
-      sp_controller="is_controller_on"
-      :sp_sound_enabled="false"
-      @update:edit_mode_snapshot_sfen="base.edit_mode_snapshot_sfen"
-      ref="main_sp"
-      )
-    .footer_buttons
-      .buttons.has-addons.is-centered.are-small.mt-3
-        b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(3)") 3
-        b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(4)") 4
-        b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(5)") 5
-        b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(6)") 6
-        .ml-1
-        b-button(icon-left="arrow-left"  @click="$refs.main_sp.sp_object().mediator.slide_xy(-1, 0)")
-        b-button(icon-left="arrow-down"  @click="$refs.main_sp.sp_object().mediator.slide_xy(0, 1)")
-        b-button(icon-left="arrow-up"    @click="$refs.main_sp.sp_object().mediator.slide_xy(0, -1)")
-        b-button(icon-left="arrow-right" @click="$refs.main_sp.sp_object().mediator.slide_xy(1, 0)")
+    .CustomShogiPlayerWrap
+      CustomShogiPlayer(
+        sp_mobile_vertical="is_mobile_vertical_off"
+        sp_run_mode="edit_mode"
+        :sp_body="sp_body"
+        :sp_turn="-1"
+        sp_slider="is_slider_on"
+        sp_controller="is_controller_on"
+        :sp_sound_enabled="false"
+        @update:edit_mode_snapshot_sfen="base.edit_mode_snapshot_sfen"
+        ref="main_sp"
+        )
+      .footer_buttons
+        .buttons.has-addons.is-centered.are-small.mt-3
+          b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(3)") 3
+          b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(4)") 4
+          b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(5)") 5
+          b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(6)") 6
+          .ml-1
+          b-button(icon-left="arrow-left"  @click="$refs.main_sp.sp_object().mediator.slide_xy(-1, 0)")
+          b-button(icon-left="arrow-down"  @click="$refs.main_sp.sp_object().mediator.slide_xy(0, 1)")
+          b-button(icon-left="arrow-up"    @click="$refs.main_sp.sp_object().mediator.slide_xy(0, -1)")
+          b-button(icon-left="arrow-right" @click="$refs.main_sp.sp_object().mediator.slide_xy(1, 0)")
 
-      .buttons.is-centered.are-small.is-marginless.mt-3
-        PiyoShogiButton(:href="piyo_shogi_app_with_params_url" :icon_only="true")
-        b-button(@click="$refs.main_sp.sp_object().mediator.king_formation_auto_set()") 玉配置
-        KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank" :icon_only="true")
-        b-button(@click="$refs.main_sp.sp_object().mediator.king_formation_auto_unset()") 玉回収
-        KifCopyButton(@click="kifu_copy_handle") コピー
-        b-button(tag="a" href="http://www.kukiminsho.com/tdb/searches/" target="_blank" size="is-small" v-if="development_p") 同
+        .buttons.is-centered.are-small.is-marginless.mt-3
+          PiyoShogiButton(:href="piyo_shogi_app_with_params_url" :icon_only="true")
+          b-button(@click="$refs.main_sp.sp_object().mediator.king_formation_auto_set()") 玉配置
+          KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank" :icon_only="true")
+          b-button(@click="$refs.main_sp.sp_object().mediator.king_formation_auto_unset()") 玉回収
+          KifCopyButton(@click="kifu_copy_handle") コピー
+          b-button(tag="a" href="http://www.kukiminsho.com/tdb/searches/" target="_blank" size="is-small" v-if="development_p") 同
 
-      .buttons.is-centered.are-small.is-marginless.mt-3
-        b-button(@click="any_source_read_handle") 棋譜の読み込み
+        .buttons.is-centered.are-small.is-marginless.mt-3
+          b-button(@click="any_source_read_handle") 棋譜の読み込み
 </template>
 
 <script>
@@ -43,7 +44,7 @@ import WbookAnySourceReadModal from "../components/WbookAnySourceReadModal.vue"
 import WbookHaitiKimeruModal   from "../components/WbookHaitiKimeruModal.vue"
 
 export default {
-  name: "WbookEditHaiti",
+  name: "WbookEditPlacement",
   mixins: [
     support_child,
   ],
@@ -151,14 +152,25 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-.WbookEditHaiti
-  .column
-    +tablet
-      padding-top: unset
-      padding-bottom: unset
-      max-width: 60vmin
+.STAGE-development
+  .WbookEditPlacement
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .CustomShogiPlayerWrap
+      border: 1px dashed change_color($danger, $alpha: 0.5)
 
-  .footer_buttons
-    .button
-      margin-bottom: 0
+.WbookEditPlacement
+  .column
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    .CustomShogiPlayerWrap
+      margin-top: $wbook_share_gap
+      width: 100%
+      +tablet
+        max-width: 56vmin
+      .footer_buttons
+        .button
+          margin-bottom: 0
 </style>

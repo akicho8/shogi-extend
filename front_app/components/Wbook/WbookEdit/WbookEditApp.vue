@@ -6,21 +6,14 @@
       template(slot="brand")
         b-navbar-item(@click.native="exit_handle")
           b-icon(icon="chevron-left")
-        //- b-navbar-item.has-text-weight-bold(@click="title_edit")
-        //-   | {{current_title}}
-          //- span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
-      //- template(slot="end")
-      //-   //- b-navbar-item.is-unselectable(tag="div" v-if="ac_room")
-      //-   //-   b-icon(icon="account")
-      //-   //-   b-tag.has-text-weight-bold(rounded)
-      //-   //-     .has-text-primary {{member_infos.length}}
-      //-
-      //-   b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="sp_run_mode === 'play_mode' && !share_p")
-      //-     b-icon(icon="twitter" type="is-white")
-      //-   b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
-      //-     | 編集完了
-      //-   b-navbar-item.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
-      //-     b-icon(icon="menu")
+      template(slot="start")
+        template(v-if="base.question.title")
+          b-navbar-item(tag="div") {{base.question.title}}
+        template(v-else)
+          b-navbar-item(tag="div") {{base.question_new_record_p ? '新規' : '編集'}}
+      template(slot="end")
+        b-navbar-item.has-text-weight-bold(@click="base.question_save_handle" :class="{disabled: !base.save_button_enabled}")
+          | {{base.save_button_name}}
 
     .container
       b-tabs.MainTabs(v-model="base.tab_index" expanded @input="base.edit_tab_change_handle")
@@ -41,17 +34,18 @@
       .container
         //- .columns.is-gapless.is-centered.is-gapless
         //-   .MainColumn.column
-        WbookEditHaiti(:base="base"  v-if="base.current_tab_info.key === 'haiti_mode'")
-        WbookEditSeikai(:base="base" v-if="base.current_tab_info.key === 'seikai_mode'" ref="WbookEditSeikai")
-        WbookEditForm(:base="base"   v-if="base.current_tab_info.key === 'form_mode'")
-        WbookEditKensho(:base="base" v-if="base.current_tab_info.key === 'kensho_mode'")
+        keep-alive
+          WbookEditPlacement(:base="base"  v-if="base.current_tab_info.key === 'placement_mode'")
+          WbookEditAnswerCreate(:base="base" v-if="base.current_tab_info.key === 'answer_create_mode'" ref="WbookEditAnswerCreate")
+          WbookEditForm(:base="base"   v-if="base.current_tab_info.key === 'form_mode'")
+          WbookEditValidation(:base="base" v-if="base.current_tab_info.key === 'validation_mode'")
 </template>
 
 <script>
 import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
-import { support_child } from "./support_child.js"
+import { support_parent } from "./support_parent.js"
 
 import { Question    } from "../models/question.js"
 import { LineageInfo } from '../models/lineage_info.js'
@@ -60,10 +54,10 @@ import { FolderInfo  } from '../models/folder_info.js'
 class TabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "haiti_mode",  name: "配置", },
-      { key: "seikai_mode", name: "正解", },
-      { key: "form_mode",   name: "情報", },
-      { key: "kensho_mode", name: "検証", },
+      { key: "placement_mode",     name: "配置", },
+      { key: "answer_create_mode", name: "正解", },
+      { key: "form_mode",          name: "情報", },
+      { key: "validation_mode",    name: "検証", },
     ]
   }
 
@@ -75,7 +69,7 @@ class TabInfo extends MemoryRecord {
 export default {
   name: "WbookBuilderApp",
   mixins: [
-    support_child,
+    support_parent,
   ],
 
   data() {
@@ -163,20 +157,20 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// 各タブ切り替えた直後の初期化処理
 
-    haiti_mode_handle() {
-      this.mode_select("haiti_mode")
+    placement_mode_handle() {
+      this.mode_select("placement_mode")
     },
 
-    seikai_mode_handle() {
-      this.mode_select("seikai_mode")
+    answer_create_mode_handle() {
+      this.mode_select("answer_create_mode")
     },
 
     form_mode_handle() {
       this.mode_select("form_mode")
     },
 
-    kensho_mode_handle() {
-      this.mode_select("kensho_mode")
+    validation_mode_handle() {
+      this.mode_select("validation_mode")
       this.exam_run_count = 0
       this.talk(this.question.direction_message)
     },
@@ -201,7 +195,7 @@ export default {
 
     // FIXME: イベントで受けとる
     current_moves() {
-      return this.$refs.WbookEdit.$refs.WbookEditSeikai.$refs.main_sp.sp_object().moves_take_turn_offset
+      return this.$refs.WbookEditAnswerCreate.$refs.main_sp.sp_object().moves_take_turn_offset
     },
 
     // 「この手順を正解とする」
@@ -209,20 +203,20 @@ export default {
       const moves = this.current_moves()
 
       if (moves.length === 0) {
-        this.warning_notice("1手以上動かしてください")
+        this.toast_warn("1手以上動かしてください")
         return
       }
 
       {
         const limit = this.base.config.turm_max_limit
         if (limit && moves.length > limit) {
-          this.warning_notice(`${this.base.config.turm_max_limit}手以内にしてください`)
+          this.toast_warn(`${this.base.config.turm_max_limit}手以内にしてください`)
           return
         }
       }
 
       if (this.question.moves_valid_p(moves)) {
-        this.warning_notice("すでに同じ正解があります")
+        this.toast_warn("すでに同じ正解があります")
         return
       }
 
@@ -260,18 +254,18 @@ export default {
 
     question_save_handle() {
       if (this.question.moves_answers.length === 0) {
-        this.warning_notice("正解を作ってください")
+        this.toast_warn("正解を作ってください")
         return
       }
 
       if (!this.question.title) {
-        this.warning_notice("なんかしらのタイトルを捻り出して入力してください")
+        this.toast_warn("なんかしらのタイトルを捻り出して入力してください")
         return
       }
 
       if (this.question_new_record_p) {
         if (this.valid_count === 0) {
-          this.warning_notice("検証してください")
+          this.toast_warn("検証してください")
           return
         }
       }
@@ -285,7 +279,7 @@ export default {
       const before_save_button_name = this.save_button_name
       this.api_put("question_save_handle", {question: this.question}, e => {
         if (e.form_error_message) {
-          this.warning_notice(e.form_error_message)
+          this.toast_warn(e.form_error_message)
         }
         if (e.question) {
           this.question = new Question(e.question)
@@ -317,8 +311,8 @@ export default {
       this.answer_turn_offset = 0
       this.valid_count = 0
 
-      // if (this.base.info.warp_to === "builder_haiti") {
-      //   this.haiti_mode_handle()
+      // if (this.base.info.warp_to === "builder_placement") {
+      //   this.placement_mode_handle()
       //   return
       // }
       // if (this.base.info.warp_to === "builder_form") {
@@ -328,7 +322,7 @@ export default {
 
       // 最初に開くタブの決定
       if (this.question_new_record_p) {
-        this.haiti_mode_handle()
+        this.placement_mode_handle()
       } else {
         this.form_mode_handle()
       }
@@ -341,7 +335,7 @@ export default {
     play_mode_advanced_moves_set(moves) {
       if (this.question.moves_answers.length === 0) {
         if (this.exam_run_count === 0) {
-          this.warning_notice("正解を作ってからやってください")
+          this.toast_warn("正解を作ってからやってください")
         }
       }
       if (this.question.moves_valid_p(moves)) {
@@ -379,10 +373,10 @@ export default {
     },
 
     save_button_name() {
-      if (this.question.id) {
-        return "更新"
-      } else {
+      if (this.question_new_record_p) {
         return "保存"
+      } else {
+        return "更新"
       }
     },
 
