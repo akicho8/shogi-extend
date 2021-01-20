@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.WbookHaitiKimeruModal(:base="base" style="width: auto")
+.modal-card.WbookHaitiKimeruModal(style="width: auto")
   header.modal-card-head
     p.modal-card-title 局面を確定させてください
   section.modal-card-body
@@ -17,13 +17,8 @@
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
-
 export default {
   name: "WbookHaitiKimeruModal",
-  mixins: [
-    support_child,
-  ],
   props: {
     yomikonda_sfen: { type: String, required: true,              },
     sp_turn:     { type: Number, required: true, default: -1, },
@@ -48,7 +43,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
 .WbookHaitiKimeruModal
   .modal-card-body
     +mobile

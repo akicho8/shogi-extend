@@ -28,10 +28,10 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
 .WbookAnySourceReadModal
   .modal-card-foot
     justify-content: flex-end
     .button
       font-weight: bold
 </style>
+

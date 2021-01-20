@@ -1,6 +1,4 @@
-import Vuex from 'vuex'
-
-export const support = {
+export const support_parent = {
   methods: {
     warning_dialog(message_body) {
       this.$buefy.dialog.alert({

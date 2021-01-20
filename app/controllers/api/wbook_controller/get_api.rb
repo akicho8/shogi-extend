@@ -14,6 +14,10 @@ module Api
 
       # 問題編集用
       # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
+      #
+      # http://0.0.0.0:4000/wbook/questions/new
+      # http://0.0.0.0:4000/wbook/questions/1/edit
+      #
       def question_edit_fetch
         info = {}
         info[:config] = Wbook::Config
@@ -34,7 +38,7 @@ module Api
       # http://localhost:3000/api/wbook.json?remote_action=questions_fetch&folder_key=active
       # http://localhost:3000/api/wbook.json?remote_action=questions_fetch&sort_column=lineage_key&sort_order=desc
       # app/javascript/wbook_app/models/question_column_info.js
-      def questions_fetch
+      def questions_index_fetch
         params[:per] ||= Wbook::Config[:api_questions_fetch_per]
 
         s = Wbook::Question.all

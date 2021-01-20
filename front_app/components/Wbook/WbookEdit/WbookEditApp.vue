@@ -1,44 +1,50 @@
 <template lang="pug">
 .WbookEditApp
+  DebugBox
+    template(v-if="question")
+      p question.user.id: {{question.user && question.user.id}}
+      p g_current_user.id: {{g_current_user && g_current_user.id}}
+      p owner_p: {{owner_p}}
+      p editable_p: {{editable_p}}
   b-loading(:active="$fetchState.pending")
   .MainContainer(v-if="!$fetchState.pending")
     MainNavbar(:spaced="false")
       template(slot="brand")
-        b-navbar-item(@click.native="exit_handle")
+        b-navbar-item(tag="nuxt-link" :to="{name: 'wbook-questions'}" @click.native="sound_play('click')")
           b-icon(icon="chevron-left")
       template(slot="start")
-        template(v-if="base.question.title")
-          b-navbar-item(tag="div") {{base.question.title}}
+        template(v-if="question.title")
+          b-navbar-item(tag="div") {{question.title}}
         template(v-else)
-          b-navbar-item(tag="div") {{base.question_new_record_p ? '新規' : '編集'}}
+          b-navbar-item(tag="div") {{question.new_record_p ? '新規' : '編集'}}
       template(slot="end")
-        b-navbar-item.has-text-weight-bold(@click="base.question_save_handle" :class="{disabled: !base.save_button_enabled}")
-          | {{base.save_button_name}}
+        b-navbar-item.has-text-weight-bold(@click="question_save_handle" :class="{disabled: !save_button_enabled}")
+          | {{save_button_name}}
 
     .container
-      b-tabs.MainTabs(v-model="base.tab_index" expanded @input="base.edit_tab_change_handle")
+      b-tabs.MainTabs(v-model="tab_index" expanded @input="edit_tab_change_handle")
         b-tab-item(label="配置")
         b-tab-item
           template(slot="header")
             span
               | 正解
-              b-tag(rounded v-if="base.question.moves_answers.length >= 1") {{base.question.moves_answers.length}}
+              b-tag(rounded v-if="question.moves_answers.length >= 1") {{question.moves_answers.length}}
         b-tab-item(label="情報")
         b-tab-item
           template(slot="header")
             span
               | 検証
-              b-tag(rounded v-if="base.valid_count >= 1" type="is-primary") OK
+              b-tag(rounded v-if="valid_count >= 1" type="is-primary") OK
 
     MainSection.is_mobile_padding_zero
       .container
         //- .columns.is-gapless.is-centered.is-gapless
         //-   .MainColumn.column
         keep-alive
-          WbookEditPlacement(:base="base"  v-if="base.current_tab_info.key === 'placement_mode'")
-          WbookEditAnswerCreate(:base="base" v-if="base.current_tab_info.key === 'answer_create_mode'" ref="WbookEditAnswerCreate")
-          WbookEditForm(:base="base"   v-if="base.current_tab_info.key === 'form_mode'")
-          WbookEditValidation(:base="base" v-if="base.current_tab_info.key === 'validation_mode'")
+          WbookEditPlacement(:base="base"  v-if="current_tab_info.key === 'placement_mode'")
+          WbookEditAnswerCreate(:base="base" v-if="current_tab_info.key === 'answer_create_mode'" ref="WbookEditAnswerCreate")
+          WbookEditForm(:base="base"   v-if="current_tab_info.key === 'form_mode'")
+          WbookEditValidation(:base="base" v-if="current_tab_info.key === 'validation_mode'")
 </template>
 
 <script>
@@ -67,7 +73,7 @@ class TabInfo extends MemoryRecord {
 }
 
 export default {
-  name: "WbookBuilderApp",
+  name: "WbookIndexApp",
   mixins: [
     support_parent,
   ],
@@ -98,52 +104,38 @@ export default {
   },
 
   fetch() {
-    this.$axios.$get("/api/wbook.json", {params: {remote_action: "question_edit_fetch", ...this.$route.query}}).then(e => {
+    return this.$axios.$get("/api/wbook.json", {params: {remote_action: "question_edit_fetch", ...this.$route.params, ...this.$route.query}}).then(e => {
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
       this.config = e.config
-      let question = null
       if (e.question) {
-        question = new Question(e.question)
+        this.question = new Question(e.question)
       }
       if (e.question_default_attributes) {
         const attributes = _.cloneDeep(e.question_default_attributes)
-        question = new Question(attributes)
+        this.question = new Question(attributes)
       }
-      this.question_edit_for(question)
+      this.__assert__(this.question, "this.question")
+      this.__assert__(this.question instanceof Question, "this.question instanceof Question")
+
+      // this.sound_play("click")
+
+      this.answer_tab_index = 0 // 解答リストの一番左指す
+      this.answer_turn_offset = 0
+      this.valid_count = 0
+
+      // 最初に開くタブの決定
+      if (this.question.new_record_p) {
+        this.placement_mode_handle()
+      }
+      if (this.question.persisted_p) {
+        this.form_mode_handle()
+      }
     })
   },
 
-  created() {
-    // this.sound_play("click")
-    //
-    // // 一覧用のリソース
-    // await this.api_get("builder_form_resource_fetch", {}, e => {
-    //   this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
-    //   this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
-    // })
-    //
-    // // // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
-    // // if (this.base.edit_question_id) {
-    // //   this.question_edit()
-    // //   return
-    // // }
-    //
-    // this.builder_new_handle()
-  },
-
   methods: {
-    // question_edit() {
-    //   // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
-    //   if (this.base.edit_question_id) {
-    //     this.api_get("question_edit_fetch", {question_id: this.base.edit_question_id}, e => {
-    //       this.base.edit_question_id = null
-    //       this.question_edit_for(new Question(e.question))
-    //     })
-    //   }
-    // },
-
-    mode_select(tab_key) {
+    main_tab_set(tab_key) {
       this.tab_index = TabInfo.fetch(tab_key).code
     },
 
@@ -158,19 +150,19 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// 各タブ切り替えた直後の初期化処理
 
     placement_mode_handle() {
-      this.mode_select("placement_mode")
+      this.main_tab_set("placement_mode")
     },
 
     answer_create_mode_handle() {
-      this.mode_select("answer_create_mode")
+      this.main_tab_set("answer_create_mode")
     },
 
     form_mode_handle() {
-      this.mode_select("form_mode")
+      this.main_tab_set("form_mode")
     },
 
     validation_mode_handle() {
-      this.mode_select("validation_mode")
+      this.main_tab_set("validation_mode")
       this.exam_run_count = 0
       this.talk(this.question.direction_message)
     },
@@ -208,9 +200,9 @@ export default {
       }
 
       {
-        const limit = this.base.config.turm_max_limit
+        const limit = this.config.turm_max_limit
         if (limit && moves.length > limit) {
-          this.toast_warn(`${this.base.config.turm_max_limit}手以内にしてください`)
+          this.toast_warn(`${this.config.turm_max_limit}手以内にしてください`)
           return
         }
       }
@@ -253,6 +245,11 @@ export default {
     },
 
     question_save_handle() {
+      if (!this.editable_p) {
+        this.toast_ng("所有者でないため更新できません")
+        return
+      }
+
       if (this.question.moves_answers.length === 0) {
         this.toast_warn("正解を作ってください")
         return
@@ -263,7 +260,7 @@ export default {
         return
       }
 
-      if (this.question_new_record_p) {
+      if (this.question.new_record_p) {
         if (this.valid_count === 0) {
           this.toast_warn("検証してください")
           return
@@ -287,50 +284,19 @@ export default {
           this.sound_play("click")
           this.toast_ok(`${before_save_button_name}しました`)
 
-          if (this.base.config.save_and_back_to_index) {
-            this.builder_index_handle()
-          }
+          // if (this.config.save_and_back_to_index) {
+          this.builder_index_handle()
+          // }
         }
       })
     },
 
     // // 「新規作成」ボタン
     // builder_new_handle() {
-    //   const attributes = _.cloneDeep(this.base.info.question_default_attributes)
+    //   const attributes = _.cloneDeep(this.info.question_default_attributes)
     //   const question = new Question(attributes)
     //   this.question_edit_for(question)
     // },
-
-    question_edit_for(row) {
-      this.sound_play("click")
-
-      this.__assert__(row instanceof Question, `問題が Question でラップされてない ${Question.name}`)
-      this.question = row
-
-      this.answer_tab_index = 0 // 解答リストの一番左指す
-      this.answer_turn_offset = 0
-      this.valid_count = 0
-
-      // if (this.base.info.warp_to === "builder_placement") {
-      //   this.placement_mode_handle()
-      //   return
-      // }
-      // if (this.base.info.warp_to === "builder_form") {
-      //   this.form_mode_handle()
-      //   return
-      // }
-
-      // 最初に開くタブの決定
-      if (this.question_new_record_p) {
-        this.placement_mode_handle()
-      } else {
-        this.form_mode_handle()
-      }
-    },
-
-    back_to_index_handle() {
-      this.builder_index_handle()
-    },
 
     play_mode_advanced_moves_set(moves) {
       if (this.question.moves_answers.length === 0) {
@@ -355,11 +321,12 @@ export default {
       this.mediator_snapshot_sfen = sfen
     },
 
-    builder_index_handle(event = null) {
-      if (event) {
-        this.sound_play("click")
-      }
-      this.question = null
+    builder_index_handle() {
+      // if (event) {
+      //   this.sound_play("click")
+      // }
+      // this.question = null
+      this.$router.push({name: "wbook-questions"})
     },
   },
 
@@ -373,7 +340,7 @@ export default {
     },
 
     save_button_name() {
-      if (this.question_new_record_p) {
+      if (this.question.new_record_p) {
         return "保存"
       } else {
         return "更新"
@@ -388,16 +355,28 @@ export default {
       return this.question.moves_answers.length >= 1
     },
 
-    question_new_record_p() {
-      this.__assert__(this.question, "this.question != null")
-      return this.question.id == null
+    //////////////////////////////////////////////////////////////////////////////// 編集権限
+
+    owner_p() {
+      return this.question.owner_p(this.g_current_user)
+    },
+
+    editable_p() {
+      // if (this.development_p) {
+      //   return false
+      // }
+      return this.owner_p
+    },
+
+    disabled_p() {
+      return !this.editable_p
     },
   },
 }
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "../support.sass"
 .STAGE-development
   .WbookEditApp
     .container

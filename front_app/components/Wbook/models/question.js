@@ -7,6 +7,29 @@ export class Question {
     this.time_limit_sec_to_clock()
   }
 
+  //////////////////////////////////////////////////////////////////////////////// ActiveRecord風便利メソッド
+
+  get new_record_p() {
+    return this.id == null
+  }
+
+  get persisted_p() {
+    return this.id != null
+  }
+
+  //////////////////////////////////////////////////////////////////////////////// 権限
+
+  owner_p(user) {
+    // 新規レコードは誰でもオーナー
+    if (this.new_record_p) {
+      return true
+    }
+
+    if (user) {
+      return user.id === this.user.id
+    }
+  }
+
   //////////////////////////////////////////////////////////////////////////////// b-timepicker 用
 
   // 秒 → Date 変換

@@ -40,8 +40,8 @@
 <script>
 import { support_child } from "./support_child.js"
 
-import WbookAnySourceReadModal from "../components/WbookAnySourceReadModal.vue"
-import WbookHaitiKimeruModal   from "../components/WbookHaitiKimeruModal.vue"
+import WbookAnySourceReadModal from "../../WbookAnySourceReadModal.vue"
+import WbookHaitiKimeruModal   from "../../WbookHaitiKimeruModal.vue"
 
 export default {
   name: "WbookEditPlacement",
@@ -151,7 +151,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "../support.sass"
 .STAGE-development
   .WbookEditPlacement
     .column

@@ -1,16 +1,16 @@
 <template lang="pug">
 client-only
-  WbookApp(:info="info")
+  WbookIndexApp
 </template>
 
 <script>
 export default {
   name: "wbook",
-  async asyncData({ $axios, query }) {
-    const info = await $axios.$get("/api/wbook.json", {params: query})
-    console.log(info)
-    return { info }
-  },
+  // async asyncData({ $axios, query }) {
+  //   const info = await $axios.$get("/api/wbook.json", {params: query})
+  //   console.log(info)
+  //   return { info }
+  // },
   computed: {
     meta() {
       return {

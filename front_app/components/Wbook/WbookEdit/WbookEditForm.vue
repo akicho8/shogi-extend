@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "../support.sass"
 .WbookEditForm
   margin: $wbook_share_gap
   .field:not(:first-child)

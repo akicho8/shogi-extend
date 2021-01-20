@@ -95,8 +95,12 @@ export default {
 
 <style lang="sass">
 .UserShow-Sidebar
-  .menu-label:not(:first-child)
-    margin-top: 2em
+  .sidebar-content
+    width: unset
+    a
+      white-space: nowrap
+    .menu-label:not(:first-child)
+      margin-top: 2em
 
 .UserShow
   .MainSection.section
