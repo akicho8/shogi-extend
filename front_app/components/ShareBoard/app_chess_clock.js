@@ -227,10 +227,27 @@ export const app_chess_clock = {
       const container_class = [...e.dom_class]
       if (e.main_sec === 0) {
         if (e.initial_read_sec >= 1) {
-          if (e.read_sec <= 10) {
-            container_class.push("read_sec_10")
-          } else if (e.read_sec <= 30) {
-            container_class.push("read_sec_30")
+          if (e.read_sec >= 1) {
+            if (e.read_sec <= 10) {
+              container_class.push("read_sec_10")
+            } else if (e.read_sec <= 20) {
+              container_class.push("read_sec_20")
+            } else {
+              container_class.push("read_sec_60")
+            }
+          }
+        }
+        if (e.read_sec === 0) {
+          if (e.initial_extra_sec >= 1) {
+            if (e.extra_sec >= 1) {
+              if (e.extra_sec <= 10) {
+                container_class.push("extra_sec_10")
+              } else if (e.extra_sec <= 20) {
+                container_class.push("extra_sec_20")
+              } else {
+                container_class.push("extra_sec_60")
+              }
+            }
           }
         }
       }
