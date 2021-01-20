@@ -31,7 +31,7 @@ export default {
         sp_layout: "is_horizontal",
         // sp_setting: this.development_p,
         sp_sound_enabled: true,
-        volume: 0.5,
+        sp_sound_volume: 0.5,
       }
     },
   },
