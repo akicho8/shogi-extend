@@ -188,11 +188,11 @@ export default {
   methods: {
     exit_handle() {
       this.sound_play("click")
-      if (!this.ac_room) {
-        this.$router.push({name: "index"})
-      } else {
-        const message = "リアルタイム共有中ですが本当に退室しますか？"
+      if (this.ac_room || this.chess_clock) {
+
+        const message = "対局中のように思われますが本当に退室しますか？"
         this.talk(message)
+
         this.$buefy.dialog.confirm({
           message: message,
           cancelText: "キャンセル",
@@ -207,6 +207,8 @@ export default {
             this.$router.push({name: "index"})
           },
         })
+      } else {
+        this.$router.push({name: "index"})
       }
     },
 
