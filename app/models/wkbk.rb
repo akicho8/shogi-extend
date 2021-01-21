@@ -13,6 +13,7 @@ module Wkbk
     [
       Wkbk::SourceAbout,
       Wkbk::Question,
+      Wkbk::Lineage,
     ].each do |e|
       e.setup(options)
     end
