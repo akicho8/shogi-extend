@@ -6,7 +6,7 @@ Wkbk.destroy_all
 Wkbk.setup
 
 Wkbk::Question.count             # => 0
-Wkbk::Lineage.all.collect(&:key) # => ["詰将棋", "玉方持駒限定の似非詰将棋", "実戦詰め筋", "手筋", "必死", "必死逃れ", "定跡", "秘密"]
+Wkbk::Lineage.all.collect(&:key) # => ["詰将棋", "玉方持駒限定詰将棋", "実戦詰め筋", "手筋", "必死", "必死逃れ", "定跡", "秘密"]
 
 user1 = User.sysop
 user2 = User.find_or_create_by!(key: "alice")

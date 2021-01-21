@@ -44,8 +44,8 @@ module Wkbk
             :validate2_uniq_with_parent,     # 同じ組み合わせがない
             :validate3_piece_box_is_empty,   # 「詰将棋」なら先手の駒が空
             :validate4_all_piece_exists,     # 「詰将棋」なら玉方持駒限定になっていない
-            :validate5_all_piece_not_exists, # 「玉方持駒限定の似非詰将棋」なら持駒が不足している
-            :validate6_mate,                 # 「詰将棋」「玉方持駒限定の似非詰将棋」「実戦詰め筋」なら最後は詰んでいる
+            :validate5_all_piece_not_exists, # 「玉方持駒限定詰将棋」なら持駒が不足している
+            :validate6_mate,                 # 「詰将棋」「玉方持駒限定詰将棋」「実戦詰め筋」なら最後は詰んでいる
           ].each do |e|
             if errors.present?
               break
@@ -95,12 +95,12 @@ module Wkbk
     def validate4_all_piece_exists
       if question.lineage.pure_info.piece_counts_check_on
         if not_enough_piece_box.values.any?(&:nonzero?)
-          errors.add(:base, "駒の数が変です。正確には#{not_enough_piece_box_to_human}です。玉方の持駒を限定している詰将棋は「玉方持駒限定の似非詰将棋」にしといてください")
+          errors.add(:base, "駒の数が変です。正確には#{not_enough_piece_box_to_human}です。玉方の持駒を限定している詰将棋は「玉方持駒限定詰将棋」にしといてください")
         end
       end
     end
 
-    # 「玉方持駒限定の似非詰将棋」なら持駒が不足していることを確認する
+    # 「玉方持駒限定詰将棋」なら持駒が不足していることを確認する
     def validate5_all_piece_not_exists
       if question.lineage.pure_info.mochigomagentei
         if not_enough_piece_box.values.all?(&:zero?)
@@ -109,7 +109,7 @@ module Wkbk
       end
     end
 
-    # 「詰将棋」か「玉方持駒限定の似非詰将棋」か「実戦詰め筋」なら詰んでいることを確認
+    # 「詰将棋」か「玉方持駒限定詰将棋」か「実戦詰め筋」なら詰んでいることを確認
     def validate6_mate
       if question.lineage.pure_info.mate_validate_on
         if question.mate_skip?
