@@ -8,6 +8,8 @@ import { isMobile } from "../components/models/is_mobile.js"
 
 import Autolinker from 'autolinker'
 
+import _ from "lodash"
+
 export default {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
@@ -347,6 +349,21 @@ export default {
         return `${name}ちゃん`
       }
       return `${name}さん`
+    },
+
+    // シンプルなハッシュに変換
+    //
+    // [
+    //   { key: "column1", visible: true, },
+    //   { key: "column2", visible: true, },
+    // ]
+    //
+    //   ↓
+    //
+    // { xxx: true, yyy: false }
+    //
+    as_visible_hash(v) {
+      return _.reduce(v, (a, e) => ({...a, [e.key]: e.visible}), {})
     },
   },
 

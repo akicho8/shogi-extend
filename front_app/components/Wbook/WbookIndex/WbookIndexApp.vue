@@ -4,14 +4,7 @@
   .MainContainer(v-if="!$fetchState.pending")
     WbookIndexSidebar(:base="base")
     WbookIndexNavbar(:base="base")
-    b-tabs.mb-0(v-model="tab_index" expanded @input="tab_change_handle")
-      template(v-for="e in TabInfo.values")
-        b-tab-item(v-if="question_tab_available_p(e)")
-          template(slot="header")
-            span
-              | {{e.name}}
-              b-tag(rounded)
-                | {{question_count_in_tab(e)}}
+    WbookIndexTab(:base="base")
     WbookIndexTable(:base="base")
 </template>
 
@@ -19,12 +12,12 @@
 import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
-import { support_parent } from "./support_parent.js"
+import { support_parent   } from "./support_parent.js"
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
 import { Question                } from "../models/question.js"
-import { LineageInfo             } from '../models/lineage_info.js'
-import { FolderInfo              } from '../models/folder_info.js'
+import { LineageInfo             } from "../models/lineage_info.js"
+import { FolderInfo              } from "../models/folder_info.js"
 import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
 import { IndexTabInfo            } from "../models/index_tab_info.js"
 
@@ -38,6 +31,7 @@ export default {
   data() {
     return {
       sidebar_p: false,
+      tab_index:        null,
       visible_hash: null, //  { xxx: true, yyy: false } 形式
       detailed_ids: [],
 
@@ -61,36 +55,20 @@ export default {
         folder_key:         null,
         tag:                null,
       },
-
-      //////////////////////////////////////////////////////////////////////////////// 新規・編集
-      tab_index:        null,
-      question:         null,
-
-      //////////////////////////////////////////////////////////////////////////////// 正解モード
-      mediator_snapshot_sfen: null, // 正解モードでの局面
-
-      //////////////////////////////////////////////////////////////////////////////// 検証モード
-      exam_run_count: null, // 検証モードで手を動かした数
-      valid_count:    null, // 検証モードで正解した数
     }
   },
 
   fetch() {
+    // 有効にすると localStorage をクリアする
+    if (false) {
+      this.$_ls_reset()
+    }
+
     this.ls_setup()
 
     this.tab_set("active")
     this.page_info.folder_key = "active"
     return this.async_records_load()
-  },
-
-  created() {
-  },
-
-  mounted() {
-    // 有効にすると localStorage をクリアする
-    if (false) {
-      this.$_ls_reset()
-    }
   },
 
   methods: {
@@ -140,7 +118,7 @@ export default {
 
     // 指定のタブを選択
     tab_set(tab_key) {
-      this.tab_index = this.TabInfo.fetch(tab_key).code
+      this.tab_index = this.IndexTabInfo.fetch(tab_key).code
     },
 
     // タブが変更されたとき
@@ -160,6 +138,7 @@ export default {
       }
       return true
     },
+
     // このタブのレコード件数
     question_count_in_tab(tab_info) {
       return this.question_counts[tab_info.key] || 0
@@ -194,10 +173,10 @@ export default {
   },
 
   computed: {
-    base()                    { return this                               },
-    TabInfo()                 { return TabInfo                            },
-    QuestionIndexColumnInfo() { return QuestionIndexColumnInfo            },
-    current_tab()             { return this.TabInfo.fetch(this.tab_index) },
+    base()                    { return this                                    },
+    IndexTabInfo()            { return IndexTabInfo                            },
+    QuestionIndexColumnInfo() { return QuestionIndexColumnInfo                 },
+    current_tab()             { return this.IndexTabInfo.fetch(this.tab_index) },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support_mixin
 
@@ -213,7 +192,4 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WbookIndexApp
-  .b-tabs
-    .tab-content
-      display: none
 </style>

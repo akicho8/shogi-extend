@@ -37,11 +37,6 @@ export const support = {
       }
     },
 
-    // { xxx: true, yyy: false } 形式に変換
-    as_visible_hash(v) {
-      return _.reduce(v, (a, e) => ({...a, [e.key]: e.visible}), {})
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     message_decorate(str) {
