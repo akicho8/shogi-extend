@@ -184,7 +184,7 @@
 <script>
 const DEFAULT_TAB_INDEX = 0
 
-import ls_support_mixin from "@/components/models/ls_support_mixin.js"
+import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
 export default {
   name: "SwarsUserShow",

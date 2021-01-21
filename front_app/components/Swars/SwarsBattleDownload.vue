@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import ls_support_mixin from "@/components/models/ls_support_mixin.js"
+import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 import { isMobile } from "@/components/models/is_mobile.js"
 import { Dictionary } from "@/components/models/dictionary.js"
 

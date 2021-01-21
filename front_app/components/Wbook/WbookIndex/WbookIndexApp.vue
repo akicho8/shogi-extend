@@ -3,37 +3,7 @@
   b-loading(:active="$fetchState.pending")
   .MainContainer(v-if="!$fetchState.pending")
     WbookIndexSidebar(:base="base")
-
-    MainNavbar(:spaced="false")
-      template(slot="brand")
-        NavbarItemHome
-        b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'wbook-questions'}") 問題一覧
-        template(v-if="page_info.tag")
-          b-tag(attached closable @close="tag_search_handle(null)" rounded type="is-dark")
-            | {{page_info.tag}}
-
-      template(slot="end")
-        NavbarItemLogin
-        NavbarItemProfileLink
-
-        //- https://buefy.org/documentation/navbar
-        b-navbar-dropdown(arrowless v-if="development_p")
-          //- https://pictogrammers.github.io/@mdi/font/5.4.55/
-          b-icon(icon="table-row" slot="label")
-          template(v-for="e in QuestionIndexColumnInfo.values")
-            b-navbar-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="e.key")
-              .has-text-weight-bold(v-if="visible_hash[e.key]")
-                | {{e.name}}
-              .has-text-grey(v-else)
-                | {{e.name}}
-
-        b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'wbook-questions-new'}" @click.native="sound_play('click')")
-          b-icon(icon="plus")
-
-        b-navbar-item(@click="sidebar_toggle")
-          b-icon(icon="menu")
-
-    ////////////////////////////////////////////////////////////////////////////////
+    WbookIndexNavbar(:base="base")
     b-tabs.mb-0(v-model="tab_index" expanded @input="tab_change_handle")
       template(v-for="e in TabInfo.values")
         b-tab-item(v-if="question_tab_available_p(e)")
@@ -42,13 +12,6 @@
               | {{e.name}}
               b-tag(rounded)
                 | {{question_count_in_tab(e)}}
-
-    //////////////////////////////////////////////////////////////////////////////// シンプル横並び
-    b-field.visible_toggle_checkboxes(grouped group-multiline v-if="false")
-      template(v-for="e in QuestionIndexColumnInfo.values")
-        .control
-          b-checkbox(v-model="visible_hash[e.key]" size="is-small" @input="bool => cb_input_handle(e, bool)")
-            | {{e.name}}
     WbookIndexTable(:base="base")
 </template>
 
@@ -57,30 +20,13 @@ import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
 import { support_parent } from "./support_parent.js"
+import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
-import { Question    } from "../models/question.js"
-import { LineageInfo } from '../models/lineage_info.js'
-import { FolderInfo  } from '../models/folder_info.js'
-
-import ls_support_mixin from "@/components/models/ls_support_mixin.js"
-
+import { Question                } from "../models/question.js"
+import { LineageInfo             } from '../models/lineage_info.js'
+import { FolderInfo              } from '../models/folder_info.js'
 import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
-
-// 「全体」があったりして構造が異なるのでサーバー側で定義したものを利用していない
-class TabInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "all",    name: "全体",   hidden_if_empty: false, },
-      { key: "active", name: "公開",   hidden_if_empty: false, },
-      { key: "draft",  name: "下書き", hidden_if_empty: true,  },
-      { key: "trash",  name: "ゴミ箱", hidden_if_empty: true,  },
-    ]
-  }
-
-  get handle_method_name() {
-    return `${this.key}_handle`
-  }
-}
+import { IndexTabInfo            } from "../models/index_tab_info.js"
 
 export default {
   name: "WbookIndexApp",
@@ -131,54 +77,13 @@ export default {
 
   fetch() {
     this.ls_setup()
-    this.folder_active_handle()
-    return this.async_records_load()
 
-    // this.$axios.$get("/api/wbook.json", {params: {remote_action: "question_index_fetch", ...this.$route.query}}).then(e => {
-    //   // this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
-    //   // this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
-    //   // this.config = e.config
-    //   // let question = null
-    //   // if (e.question) {
-    //   //   question = new Question(e.question)
-    //   // }
-    //   // if (e.question_default_attributes) {
-    //   //   const attributes = _.cloneDeep(e.question_default_attributes)
-    //   //   question = new Question(attributes)
-    //   // }
-    //   // this.question_edit_for(question)
-    // })
+    this.tab_set("active")
+    this.page_info.folder_key = "active"
+    return this.async_records_load()
   },
 
   created() {
-    // this.sound_play("click")
-
-    // async asyncData({ $axios, query }) {
-    //   const info = await $axios.$get("/api/wbook.json", {params: query})
-    //   console.log(info)
-    //   return { info }
-    // },
-
-    // 一覧用のリソース
-    // await this.api_get("builder_form_resource_fetch", {}, e => {
-    //   this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
-    //   this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
-    // })
-
-    // // 指定IDの編集が決まっている場合はそれだけの情報を取得して表示
-    // if (this.edit_question_id) {
-    //   this.question_edit()
-    //   return
-    // }
-    //
-    // if (this.info.warp_to === "builder_haiti" || this.info.warp_to === "builder_form") {
-    //   this.builder_new_handle()
-    //   return
-    // }
-
-    // this.$ga.event("open", {event_category: "問題一覧"})
-    // this.folder_active_handle()
-    // this.ls_setup()
   },
 
   mounted() {
@@ -192,9 +97,6 @@ export default {
     sidebar_toggle() {
       this.sound_play('click')
       this.sidebar_p = !this.sidebar_p
-    },
-
-    ov_question_info_set(id) {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -232,20 +134,20 @@ export default {
 
     // 「公開」選択
     folder_active_handle() {
-      this.question_mode_select("active")
+      this.tab_set("active")
       this.folder_change_handle("active")
     },
 
     // 指定のタブを選択
-    question_mode_select(tab_key) {
+    tab_set(tab_key) {
       this.tab_index = this.TabInfo.fetch(tab_key).code
     },
 
     // タブが変更されたとき
     tab_change_handle() {
       this.sound_play("click")
-      this.talk(this.tab_info.name)
-      this.folder_change_handle(this.tab_info.key)
+      this.talk(this.current_tab.name)
+      this.folder_change_handle(this.current_tab.key)
     },
 
     // このタブは表示するか？
@@ -295,7 +197,7 @@ export default {
     base()                    { return this                               },
     TabInfo()                 { return TabInfo                            },
     QuestionIndexColumnInfo() { return QuestionIndexColumnInfo            },
-    tab_info()                { return this.TabInfo.fetch(this.tab_index) },
+    current_tab()             { return this.TabInfo.fetch(this.tab_index) },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support_mixin
 
@@ -311,15 +213,6 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WbookIndexApp
-  .dropdown-menu
-    min-width: 0
-    a:focus
-      outline: none
-
-  .visible_toggle_checkboxes
-    margin-top: 1.5rem
-    justify-content: center
-
   .b-tabs
     .tab-content
       display: none

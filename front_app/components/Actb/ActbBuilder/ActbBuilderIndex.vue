@@ -167,7 +167,7 @@
 <script>
 import { builder_support } from "./builder_support.js"
 
-import ls_support_mixin from "@/components/models/ls_support_mixin.js"
+import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
 import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
 

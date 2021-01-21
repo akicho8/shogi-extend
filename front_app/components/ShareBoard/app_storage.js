@@ -1,4 +1,4 @@
-import ls_support_mixin from "@/components/models/ls_support_mixin.js"
+import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
 export const app_storage = {
   mixins: [

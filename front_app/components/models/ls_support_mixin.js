@@ -2,7 +2,7 @@
 //
 // 使う側で書くこと
 //
-//   import ls_support_mixin from "@/components/models/ls_support_mixin.js"
+//   import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 //
 //   {
 //     mixins: [ls_support_mixin],
@@ -34,7 +34,7 @@ import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
 
 const HASH_MERGE_P = true // ハッシュは復元するときに初期値に対してマージするか？
-export default {
+export const ls_support_mixin = {
   beforeDestroy() {
     this.ls_destroy()
   },

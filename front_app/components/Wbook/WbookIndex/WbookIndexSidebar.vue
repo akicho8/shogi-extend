@@ -32,7 +32,7 @@ b-sidebar.WbookIndexSidebar.is-unselectable(fullheight right overlay v-model="ba
               | 表示カラム
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in base.QuestionIndexColumnInfo.values")
-              b-menu-item.px-4(
+              b-menu-item(
                 @click.stop="base.cb_toggle_handle(e)"
                 :class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}"
                 :key="e.key"
@@ -59,6 +59,10 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WbookIndexSidebar
+  .dropdown-menu
+    min-width: 0
+    a:focus
+      outline: none
   .menu-label:not(:first-child)
     margin-top: 2em
 </style>

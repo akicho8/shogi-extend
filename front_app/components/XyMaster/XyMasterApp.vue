@@ -93,7 +93,7 @@ import { app_keyboard    } from "./app_keyboard.js"
 import { app_debug       } from "./app_debug.js"
 import { app_rule_dialog } from "./app_rule_dialog.js"
 
-import ls_support_mixin from "@/components/models/ls_support_mixin.js"
+import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
 class RuleInfo extends MemoryRecord {
 }

@@ -108,7 +108,7 @@ import { app_debug       } from "./app_debug.js"
 import { app_rule_dialog } from "./app_rule_dialog.js"
 import { app_external_apps } from "./app_external_apps.js"
 
-import ls_support_mixin from "@/components/models/ls_support_mixin.js"
+import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
 class RuleInfo extends MemoryRecord {
 }
