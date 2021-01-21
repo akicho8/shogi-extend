@@ -8,19 +8,7 @@
       p editable_p: {{editable_p}}
   b-loading(:active="$fetchState.pending")
   .MainContainer(v-if="!$fetchState.pending")
-    MainNavbar(:spaced="false")
-      template(slot="brand")
-        b-navbar-item(tag="nuxt-link" :to="{name: 'wbook-questions'}" @click.native="sound_play('click')")
-          b-icon(icon="chevron-left")
-      template(slot="start")
-        template(v-if="question.title")
-          b-navbar-item(tag="div") {{question.title}}
-        template(v-else)
-          b-navbar-item(tag="div") {{question.new_record_p ? '新規' : '編集'}}
-      template(slot="end")
-        b-navbar-item.has-text-weight-bold(@click="question_save_handle" :class="{disabled: !save_button_enabled}")
-          | {{save_button_name}}
-
+    WbookQuestionEditNavbar(:base="base")
     .container
       b-tabs.MainTabs(v-model="tab_index" expanded @input="edit_tab_change_handle")
         b-tab-item(label="配置")
@@ -38,8 +26,6 @@
 
     MainSection.is_mobile_padding_zero
       .container
-        //- .columns.is-gapless.is-centered.is-gapless
-        //-   .MainColumn.column
         keep-alive
           WbookQuestionEditPlacement(:base="base"  v-if="current_tab_info.key === 'placement_mode'")
           WbookQuestionEditAnswerCreate(:base="base" v-if="current_tab_info.key === 'answer_create_mode'" ref="WbookQuestionEditAnswerCreate")
@@ -56,21 +42,7 @@ import { support_parent } from "./support_parent.js"
 import { Question    } from "../models/question.js"
 import { LineageInfo } from '../models/lineage_info.js'
 import { FolderInfo  } from '../models/folder_info.js'
-
-class TabInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "placement_mode",     name: "配置", },
-      { key: "answer_create_mode", name: "正解", },
-      { key: "form_mode",          name: "情報", },
-      { key: "validation_mode",    name: "検証", },
-    ]
-  }
-
-  get handle_method_name() {
-    return `${this.key}_handle`
-  }
-}
+import { EditTabInfo  } from '../models/edit_tab_info.js'
 
 export default {
   name: "WbookQuestionIndexApp",
@@ -83,10 +55,6 @@ export default {
       //////////////////////////////////////////////////////////////////////////////// 静的情報
       LineageInfo: null,        // 問題の種類
       FolderInfo: null,         // 問題の入れ場所
-
-      //////////////////////////////////////////////////////////////////////////////// 一覧
-      questions: null,          // 一覧で表示する配列
-      question_counts: {},      // それぞれの箱中の問題数
 
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
       tab_index:        null,
@@ -135,8 +103,8 @@ export default {
   },
 
   methods: {
-    main_tab_set(tab_key) {
-      this.tab_index = TabInfo.fetch(tab_key).code
+    tab_set(tab_key) {
+      this.tab_index = EditTabInfo.fetch(tab_key).code
     },
 
     edit_tab_change_handle(v) {
@@ -150,19 +118,19 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// 各タブ切り替えた直後の初期化処理
 
     placement_mode_handle() {
-      this.main_tab_set("placement_mode")
+      this.tab_set("placement_mode")
     },
 
     answer_create_mode_handle() {
-      this.main_tab_set("answer_create_mode")
+      this.tab_set("answer_create_mode")
     },
 
     form_mode_handle() {
-      this.main_tab_set("form_mode")
+      this.tab_set("form_mode")
     },
 
     validation_mode_handle() {
-      this.main_tab_set("validation_mode")
+      this.tab_set("validation_mode")
       this.exam_run_count = 0
       this.talk(this.question.direction_message)
     },
@@ -287,22 +255,12 @@ export default {
         if (e.question) {
           this.question = new Question(e.question)
 
-          this.sound_play("click")
           this.toast_ok(`${before_save_button_name}しました`)
 
-          // if (this.config.save_and_back_to_index) {
-          this.builder_index_handle()
-          // }
+          this.$router.push({name: "wbook-questions"})
         }
       })
     },
-
-    // // 「新規作成」ボタン
-    // builder_new_handle() {
-    //   const attributes = _.cloneDeep(this.info.question_default_attributes)
-    //   const question = new Question(attributes)
-    //   this.question_edit_for(question)
-    // },
 
     play_mode_advanced_moves_set(moves) {
       if (this.question.moves_answers.length === 0) {
@@ -326,57 +284,19 @@ export default {
     mediator_snapshot_sfen_set(sfen) {
       this.mediator_snapshot_sfen = sfen
     },
-
-    builder_index_handle() {
-      // if (event) {
-      //   this.sound_play("click")
-      // }
-      // this.question = null
-      this.$router.push({name: "wbook-questions"})
-    },
   },
 
   computed: {
-    base() { return this },
-
-    TabInfo()     { return TabInfo     },
-
-    current_tab_info() {
-      return TabInfo.fetch(this.tab_index)
-    },
-
-    save_button_name() {
-      if (this.question.new_record_p) {
-        return "保存"
-      } else {
-        return "更新"
-      }
-    },
-
-    base_clock() {
-      return dayjs("2000-01-01T00:00:00+09:00")
-    },
-
-    save_button_enabled() {
-      return this.question.moves_answers.length >= 1
-    },
+    base()                { return this                                         },
+    EditTabInfo()         { return EditTabInfo                                  },
+    current_tab_info()    { return EditTabInfo.fetch(this.tab_index)            },
+    save_button_name()    { return this.question.new_record_p ? "保存" : "更新" },
+    save_button_enabled() { return this.question.moves_answers.length >= 1      },
 
     //////////////////////////////////////////////////////////////////////////////// 編集権限
-
-    owner_p() {
-      return this.question.owner_p(this.g_current_user)
-    },
-
-    editable_p() {
-      // if (this.development_p) {
-      //   return false
-      // }
-      return this.owner_p
-    },
-
-    disabled_p() {
-      return !this.editable_p
-    },
+    owner_p()    { return this.question.owner_p(this.g_current_user) },
+    editable_p() { return this.owner_p                               },
+    disabled_p() { return !this.editable_p                           },
   },
 }
 </script>
