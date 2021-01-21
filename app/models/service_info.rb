@@ -214,10 +214,10 @@ class ServiceInfo
     },
     {
       display_p: true,
-      nuxt_link_to: {path: "/wbook/questions"},
+      nuxt_link_to: {path: "/wkbk/questions"},
       title: "問題集",
       new_p: false,
-      og_image_key: "wbook",
+      og_image_key: "wkbk",
       description: "将棋の問題を解く力を競う対人戦ゲーム",
       features: [
         # "面白いかと思って作ったらあんまり面白くなかった",

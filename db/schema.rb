@@ -1184,24 +1184,24 @@ ActiveRecord::Schema.define(version: 2021_01_18_202700) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  create_table "wbook_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "wkbk_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "type", null: false, comment: "for STI"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["type", "user_id"], name: "index_wbook_folders_on_type_and_user_id", unique: true
-    t.index ["user_id"], name: "index_wbook_folders_on_user_id"
+    t.index ["type", "user_id"], name: "index_wkbk_folders_on_type_and_user_id", unique: true
+    t.index ["user_id"], name: "index_wkbk_folders_on_user_id"
   end
 
-  create_table "wbook_lineages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "wkbk_lineages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["position"], name: "index_wbook_lineages_on_position"
+    t.index ["position"], name: "index_wkbk_lineages_on_position"
   end
 
-  create_table "wbook_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "wkbk_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "question_id", null: false, comment: "問題"
     t.integer "moves_count", null: false, comment: "N手"
     t.string "moves_str", null: false, comment: "連続した指し手"
@@ -1209,11 +1209,11 @@ ActiveRecord::Schema.define(version: 2021_01_18_202700) do
     t.string "moves_human_str", comment: "人間向け指し手"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["moves_count"], name: "index_wbook_moves_answers_on_moves_count"
-    t.index ["question_id"], name: "index_wbook_moves_answers_on_question_id"
+    t.index ["moves_count"], name: "index_wkbk_moves_answers_on_moves_count"
+    t.index ["question_id"], name: "index_wkbk_moves_answers_on_question_id"
   end
 
-  create_table "wbook_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "wkbk_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.bigint "user_id", null: false, comment: "作成者"
     t.bigint "folder_id", null: false, comment: "フォルダ"
@@ -1234,23 +1234,23 @@ ActiveRecord::Schema.define(version: 2021_01_18_202700) do
     t.string "direction_message", comment: "メッセージ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["difficulty_level"], name: "index_wbook_questions_on_difficulty_level"
-    t.index ["folder_id"], name: "index_wbook_questions_on_folder_id"
-    t.index ["init_sfen"], name: "index_wbook_questions_on_init_sfen"
-    t.index ["key"], name: "index_wbook_questions_on_key"
-    t.index ["lineage_id"], name: "index_wbook_questions_on_lineage_id"
-    t.index ["source_about_id"], name: "index_wbook_questions_on_source_about_id"
-    t.index ["time_limit_sec"], name: "index_wbook_questions_on_time_limit_sec"
-    t.index ["turn_max"], name: "index_wbook_questions_on_turn_max"
-    t.index ["user_id"], name: "index_wbook_questions_on_user_id"
+    t.index ["difficulty_level"], name: "index_wkbk_questions_on_difficulty_level"
+    t.index ["folder_id"], name: "index_wkbk_questions_on_folder_id"
+    t.index ["init_sfen"], name: "index_wkbk_questions_on_init_sfen"
+    t.index ["key"], name: "index_wkbk_questions_on_key"
+    t.index ["lineage_id"], name: "index_wkbk_questions_on_lineage_id"
+    t.index ["source_about_id"], name: "index_wkbk_questions_on_source_about_id"
+    t.index ["time_limit_sec"], name: "index_wkbk_questions_on_time_limit_sec"
+    t.index ["turn_max"], name: "index_wkbk_questions_on_turn_max"
+    t.index ["user_id"], name: "index_wkbk_questions_on_user_id"
   end
 
-  create_table "wbook_source_abouts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "wkbk_source_abouts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["position"], name: "index_wbook_source_abouts_on_position"
+    t.index ["position"], name: "index_wkbk_source_abouts_on_position"
   end
 
   create_table "xy_master_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -1377,10 +1377,10 @@ ActiveRecord::Schema.define(version: 2021_01_18_202700) do
   add_foreign_key "swars_crawl_reservations", "users"
   add_foreign_key "swars_zip_dl_logs", "swars_users"
   add_foreign_key "swars_zip_dl_logs", "users"
-  add_foreign_key "wbook_folders", "users"
-  add_foreign_key "wbook_moves_answers", "wbook_questions", column: "question_id"
-  add_foreign_key "wbook_questions", "users"
-  add_foreign_key "wbook_questions", "wbook_folders", column: "folder_id"
-  add_foreign_key "wbook_questions", "wbook_lineages", column: "lineage_id"
-  add_foreign_key "wbook_questions", "wbook_source_abouts", column: "source_about_id"
+  add_foreign_key "wkbk_folders", "users"
+  add_foreign_key "wkbk_moves_answers", "wkbk_questions", column: "question_id"
+  add_foreign_key "wkbk_questions", "users"
+  add_foreign_key "wkbk_questions", "wkbk_folders", column: "folder_id"
+  add_foreign_key "wkbk_questions", "wkbk_lineages", column: "lineage_id"
+  add_foreign_key "wkbk_questions", "wkbk_source_abouts", column: "source_about_id"
 end
