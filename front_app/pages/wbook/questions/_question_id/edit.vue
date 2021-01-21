@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  WbookEditApp
+  WbookQuestionEditApp
 </template>
 
 <script>

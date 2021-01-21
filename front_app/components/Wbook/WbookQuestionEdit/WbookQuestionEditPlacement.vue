@@ -1,5 +1,5 @@
 <template lang="pug">
-.WbookEditPlacement.columns.is-gapless.is-centered
+.WbookQuestionEditPlacement.columns.is-gapless.is-centered
   .column
     .CustomShogiPlayerWrap
       CustomShogiPlayer(
@@ -44,7 +44,7 @@ import WbookAnySourceReadModal from "../../WbookAnySourceReadModal.vue"
 import WbookHaitiKimeruModal   from "../../WbookHaitiKimeruModal.vue"
 
 export default {
-  name: "WbookEditPlacement",
+  name: "WbookQuestionEditPlacement",
   mixins: [
     support_child,
   ],
@@ -153,13 +153,13 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .STAGE-development
-  .WbookEditPlacement
+  .WbookQuestionEditPlacement
     .column
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .CustomShogiPlayerWrap
       border: 1px dashed change_color($danger, $alpha: 0.5)
 
-.WbookEditPlacement
+.WbookQuestionEditPlacement
   .column
     display: flex
     justify-content: center

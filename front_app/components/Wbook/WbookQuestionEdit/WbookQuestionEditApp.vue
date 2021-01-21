@@ -1,5 +1,5 @@
 <template lang="pug">
-.WbookEditApp
+.WbookQuestionEditApp
   DebugBox
     template(v-if="question")
       p question.user.id: {{question.user && question.user.id}}
@@ -41,10 +41,10 @@
         //- .columns.is-gapless.is-centered.is-gapless
         //-   .MainColumn.column
         keep-alive
-          WbookEditPlacement(:base="base"  v-if="current_tab_info.key === 'placement_mode'")
-          WbookEditAnswerCreate(:base="base" v-if="current_tab_info.key === 'answer_create_mode'" ref="WbookEditAnswerCreate")
-          WbookEditForm(:base="base"   v-if="current_tab_info.key === 'form_mode'")
-          WbookEditValidation(:base="base" v-if="current_tab_info.key === 'validation_mode'")
+          WbookQuestionEditPlacement(:base="base"  v-if="current_tab_info.key === 'placement_mode'")
+          WbookQuestionEditAnswerCreate(:base="base" v-if="current_tab_info.key === 'answer_create_mode'" ref="WbookQuestionEditAnswerCreate")
+          WbookQuestionEditForm(:base="base"   v-if="current_tab_info.key === 'form_mode'")
+          WbookQuestionEditValidation(:base="base" v-if="current_tab_info.key === 'validation_mode'")
 </template>
 
 <script>
@@ -73,7 +73,7 @@ class TabInfo extends MemoryRecord {
 }
 
 export default {
-  name: "WbookIndexApp",
+  name: "WbookQuestionIndexApp",
   mixins: [
     support_parent,
   ],
@@ -187,7 +187,7 @@ export default {
 
     // FIXME: イベントで受けとる
     current_moves() {
-      return this.$refs.WbookEditAnswerCreate.$refs.main_sp.sp_object().moves_take_turn_offset
+      return this.$refs.WbookQuestionEditAnswerCreate.$refs.main_sp.sp_object().moves_take_turn_offset
     },
 
     // 「この手順を正解とする」
@@ -384,7 +384,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .STAGE-development
-  .WbookEditApp
+  .WbookQuestionEditApp
     .container
       border: 1px dashed change_color($danger, $alpha: 0.5)
     .columns.is-gapless
@@ -392,7 +392,7 @@ export default {
     .column
       border: 1px dashed change_color($success, $alpha: 0.5)
 
-.WbookEditApp
+.WbookQuestionEditApp
   .MainSection.section
     padding: 0
 

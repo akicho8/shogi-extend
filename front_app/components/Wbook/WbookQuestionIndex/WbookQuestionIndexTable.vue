@@ -1,5 +1,5 @@
 <template lang="pug">
-b-table.WbookIndexTable.is-size-7.mx-2.mt-0(
+b-table.WbookQuestionIndexTable.is-size-7.mx-2.mt-0(
   v-if="base.questions"
   :data="base.questions"
   :mobile-cards="false"
@@ -87,13 +87,13 @@ b-table.WbookIndexTable.is-size-7.mx-2.mt-0(
           | ひとつもありません
 
   template(slot="detail" slot-scope="props")
-    WbookIndexDetail(:question="props.row")
+    WbookQuestionIndexDetail(:question="props.row")
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
 export default {
-  name: "WbookIndexTable",
+  name: "WbookQuestionIndexTable",
   mixins: [
     support_child,
   ],
@@ -102,7 +102,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WbookIndexTable
+.WbookQuestionIndexTable
   th
     font-size: $size-7
 

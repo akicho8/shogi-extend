@@ -1,11 +1,11 @@
 <template lang="pug">
-.WbookIndexApp
+.WbookQuestionIndexApp
   b-loading(:active="$fetchState.pending")
   .MainContainer(v-if="!$fetchState.pending")
-    WbookIndexSidebar(:base="base")
-    WbookIndexNavbar(:base="base")
-    WbookIndexTab(:base="base")
-    WbookIndexTable(:base="base")
+    WbookQuestionIndexSidebar(:base="base")
+    WbookQuestionIndexNavbar(:base="base")
+    WbookQuestionIndexTab(:base="base")
+    WbookQuestionIndexTable(:base="base")
 </template>
 
 <script>
@@ -22,7 +22,7 @@ import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js
 import { IndexTabInfo            } from "../models/index_tab_info.js"
 
 export default {
-  name: "WbookIndexApp",
+  name: "WbookQuestionIndexApp",
   mixins: [
     support_parent,
     ls_support_mixin,
@@ -191,5 +191,5 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WbookIndexApp
+.WbookQuestionIndexApp
 </style>

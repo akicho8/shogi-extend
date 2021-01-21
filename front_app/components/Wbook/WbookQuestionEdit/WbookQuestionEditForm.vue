@@ -1,5 +1,5 @@
 <template lang="pug">
-.WbookEditForm
+.WbookQuestionEditForm
   .columns.is-gapless
     .column
       b-field(label="タイトル" label-position="on-border")
@@ -67,7 +67,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WbookEditForm",
+  name: "WbookQuestionEditForm",
   mixins: [
     support_child,
   ],
@@ -123,7 +123,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WbookEditForm
+.WbookQuestionEditForm
   margin: $wbook_share_gap
   .field:not(:first-child)
     margin-top: $wbook_share_gap

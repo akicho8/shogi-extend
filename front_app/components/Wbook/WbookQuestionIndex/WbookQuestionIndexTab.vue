@@ -1,5 +1,5 @@
 <template lang="pug">
-b-tabs.WbookIndexTab.mb-0(v-model="base.tab_index" expanded @input="base.tab_change_handle")
+b-tabs.WbookQuestionIndexTab.mb-0(v-model="base.tab_index" expanded @input="base.tab_change_handle")
   template(v-for="e in base.IndexTabInfo.values")
     b-tab-item(v-if="base.question_tab_available_p(e)")
       template(slot="header")
@@ -13,14 +13,14 @@ b-tabs.WbookIndexTab.mb-0(v-model="base.tab_index" expanded @input="base.tab_cha
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WbookIndexTab",
+  name: "WbookQuestionIndexTab",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
-.WbookIndexTab
+.WbookQuestionIndexTab
   .tab-content
     display: none
 </style>

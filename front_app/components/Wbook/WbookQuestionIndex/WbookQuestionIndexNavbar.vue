@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.WbookIndexNavbar(:spaced="false")
+MainNavbar.WbookQuestionIndexNavbar(:spaced="false")
   template(slot="brand")
     NavbarItemHome
     b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'wbook-questions'}") 問題一覧
@@ -33,12 +33,12 @@ MainNavbar.WbookIndexNavbar(:spaced="false")
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WbookIndexNavbar",
+  name: "WbookQuestionIndexNavbar",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
-.WbookIndexNavbar
+.WbookQuestionIndexNavbar
 </style>

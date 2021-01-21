@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  WbookIndexApp
+  WbookQuestionIndexApp
 </template>
 
 <script>

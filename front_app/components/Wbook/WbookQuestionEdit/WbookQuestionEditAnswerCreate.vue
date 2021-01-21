@@ -1,5 +1,5 @@
 <template lang="pug">
-.WbookEditAnswerCreate.columns.is-gapless.is-centered
+.WbookQuestionEditAnswerCreate.columns.is-gapless.is-centered
   .column.LeftColumn
     .CustomShogiPlayerWrap
       CustomShogiPlayer(
@@ -42,7 +42,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WbookEditAnswerCreate",
+  name: "WbookQuestionEditAnswerCreate",
   mixins: [support_child],
 }
 </script>
@@ -54,7 +54,7 @@ export default {
   .delete_button
     border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.WbookEditAnswerCreate
+.WbookQuestionEditAnswerCreate
   .LeftColumn
     display: flex
     align-items: center

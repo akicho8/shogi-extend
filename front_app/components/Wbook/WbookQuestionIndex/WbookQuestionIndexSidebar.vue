@@ -1,5 +1,5 @@
 <template lang="pug">
-b-sidebar.WbookIndexSidebar.is-unselectable(fullheight right overlay v-model="base.sidebar_p")
+b-sidebar.WbookQuestionIndexSidebar.is-unselectable(fullheight right overlay v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
       b-button(@click="base.sidebar_toggle" icon-left="menu")
@@ -44,7 +44,7 @@ b-sidebar.WbookIndexSidebar.is-unselectable(fullheight right overlay v-model="ba
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WbookIndexSidebar",
+  name: "WbookQuestionIndexSidebar",
   mixins: [support_child],
 
   computed: {
@@ -58,7 +58,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WbookIndexSidebar
+.WbookQuestionIndexSidebar
   .dropdown-menu
     min-width: 0
     a:focus

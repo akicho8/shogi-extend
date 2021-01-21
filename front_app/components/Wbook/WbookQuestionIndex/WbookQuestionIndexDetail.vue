@@ -1,5 +1,5 @@
 <template lang="pug">
-.WbookIndexDetail
+.WbookQuestionIndexDetail
   .CustomShogiPlayerWrap
     p(v-if="question.direction_message")
       | {{question.direction_message}}
@@ -19,7 +19,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WbookIndexDetail",
+  name: "WbookQuestionIndexDetail",
   mixins: [support_child],
   props: {
     question: { type: Object, required: true, },
@@ -29,7 +29,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WbookIndexDetail
+.WbookQuestionIndexDetail
   width: 100%
 
   display: flex

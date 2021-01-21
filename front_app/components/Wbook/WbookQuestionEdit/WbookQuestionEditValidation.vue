@@ -1,5 +1,5 @@
 <template lang="pug">
-.WbookEditValidation.columns.is-gapless.is-centered
+.WbookQuestionEditValidation.columns.is-gapless.is-centered
   .column
     .CustomShogiPlayerWrap
       .has-text-centered(v-if="base.question.direction_message")
@@ -21,7 +21,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WbookEditValidation",
+  name: "WbookQuestionEditValidation",
   mixins: [
     support_child,
   ],
@@ -32,7 +32,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WbookEditValidation
+.WbookQuestionEditValidation
   .column
     display: flex
     align-items: center
