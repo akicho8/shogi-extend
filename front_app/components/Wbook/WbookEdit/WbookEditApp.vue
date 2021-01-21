@@ -245,6 +245,12 @@ export default {
     },
 
     question_save_handle() {
+      this.sound_play("click")
+
+      if (this.sns_login_required()) {
+        return
+      }
+
       if (!this.editable_p) {
         this.toast_ng("所有者でないため更新できません")
         return

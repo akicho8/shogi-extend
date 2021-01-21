@@ -15,7 +15,7 @@ module Wbook
         end
       end
 
-      def create_various_folders_if_blank
+      def wbook_create_various_folders_if_blank
         FolderInfo.each do |e|
           send("wbook_#{e.key}_box") || send("create_wbook_#{e.key}_box!")
         end

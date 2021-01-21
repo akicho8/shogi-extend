@@ -1,3 +1,3 @@
 require "./setup"
 Wbook::Question.export_all
-# >> write: /Users/ikeda/src/shogi_web/app/models/wbook/questions.yml (6)
+# >> write: /Users/ikeda/src/shogi-extend/app/models/wbook/questions.yml (0)

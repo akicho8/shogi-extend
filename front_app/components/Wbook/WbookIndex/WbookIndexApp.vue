@@ -27,7 +27,7 @@
               .has-text-grey(v-else)
                 | {{e.name}}
 
-        b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'wbook-questions-new'}")
+        b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'wbook-questions-new'}" @click.native="sound_play('click')")
           b-icon(icon="plus")
 
         b-navbar-item(@click="sidebar_toggle")

@@ -17,14 +17,7 @@ module Wbook
       e.setup(options)
     end
 
-    User.find_each(&:create_various_folders_if_blank)
-    User.find_each(&:create_wbook_setting_if_blank)
-    User.find_each(&:create_wbook_season_xrecord_if_blank)
-    User.find_each(&:create_wbook_main_xrecord_if_blank)
-
-    if Rails.env.development? || Rails.env.test?
-      Wbook::BaseChannel.redis_clear
-    end
+    User.find_each(&:wbook_create_various_folders_if_blank)
 
     if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
       unless Wbook::Question.exists?
@@ -39,23 +32,6 @@ module Wbook
       MovesAnswer,
       Folder,
       Lineage,
-      Room,
-      RoomMembership,
-      Battle,
-      BattleMembership,
-      Season,
-      SeasonXrecord,
-      MainXrecord,
-      Setting,
-      GoodMark,
-      BadMark,
-      ClipMark,
-      Judge,
-      Rule,
-      Skill,
-      QuestionMessage,
-      LobbyMessage,
-      RoomMessage,
     ]
   end
 

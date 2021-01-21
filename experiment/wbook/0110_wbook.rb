@@ -10,16 +10,16 @@ user = User.sysop
     e.moves_answers.build(moves_str: "G*5b")
     e.updated_at = Time.current - 1.days + i.hours
 
-    e.time_limit_sec        = 60 * 3
-    e.difficulty_level      = 5
-    e.title                 = "(title)"
-    e.description           = "(description)"
-    e.hint_desc      = "(hint_desc)"
-    e.source_author           = "(source_author)"
+    e.time_limit_sec     = 60 * 3
+    e.difficulty_level   = 5
+    e.title              = "(title)"
+    e.description        = "(description)"
+    e.hint_desc          = "(hint_desc)"
+    e.source_author      = "(source_author)"
     e.source_author_link = "(source_author_link)"
   end
 end
-Wbook::Question.count           # => 3
+Wbook::Question.count           # => 
 exit
 
 # user = User.sysop
@@ -94,3 +94,6 @@ exit
 
 # question = Wbook::Question.first
 # tp question.as_json(include: [:user, :moves_answers])
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- /Users/ikeda/src/shogi-extend/experiment/config/environment (LoadError)
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from -:2:in `<main>'

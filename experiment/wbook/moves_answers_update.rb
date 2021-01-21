@@ -6,7 +6,6 @@ require "./setup"
 # tp question1.moves_answers
 # exit
 
-
 question1 = Wbook::Question.first
 question1.reload
 question1.reload
@@ -21,11 +20,4 @@ Wbook::Question.find_each do |e|
 end
 
 tp question1.moves_answers
-# >> |------|
-# >> | true |
-# >> |------|
-# >> |-------------+----+-----------+-------------+-----------------+----------+---------------------------+---------------------------|
-# >> | question_id | id | moves_str | moves_count | moves_human_str | end_sfen | created_at                | updated_at                |
-# >> |-------------+----+-----------+-------------+-----------------+----------+---------------------------+---------------------------|
-# >> |          44 | 47 | G*5b      |           1 | ▲52金打        |          | 2020-07-29 13:34:13 +0900 | 2020-07-29 13:38:26 +0900 |
-# >> |-------------+----+-----------+-------------+-----------------+----------+---------------------------+---------------------------|
+# ~> -:12:in `<main>': undefined method `reload' for nil:NilClass (NoMethodError)

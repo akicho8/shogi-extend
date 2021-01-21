@@ -62,7 +62,10 @@ module Api
 
         retv = {}
         retv[:questions]       = s.as_json(Wbook::Question.json_type5)
-        retv[:question_counts] = current_user.wbook_questions.group(:folder_id).count.transform_keys { |e| Wbook::Folder.find(e).key }
+        retv[:question_counts] = {}
+        if current_user
+          retv[:question_counts].update(current_user.wbook_questions.group(:folder_id).count.transform_keys { |e| Wbook::Folder.find(e).key })
+        end
         retv[:question_counts].update(all: Wbook::Question.active_only.count)
         retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key], tag: params[:tag]}
         retv
@@ -77,12 +80,6 @@ module Api
         #   retv.update(current_user.good_bad_clip_flags_for(question))
         # end
         { ov_question_info: retv }
-      end
-
-      # 詳細
-      def user_single_fetch
-        user = User.find(params[:user_id])
-        { ov_user_info: user.as_json_type7 }
       end
 
       # http://localhost:3000/api/wbook.json?remote_action=resource_fetch
