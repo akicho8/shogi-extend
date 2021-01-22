@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_18_202700) do
+ActiveRecord::Schema.define(version: 2021_01_21_210600) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1234,6 +1234,7 @@ ActiveRecord::Schema.define(version: 2021_01_18_202700) do
     t.string "direction_message", comment: "メッセージ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "moves_answers_count", default: 0, null: false, comment: "解答数"
     t.index ["difficulty_level"], name: "index_wkbk_questions_on_difficulty_level"
     t.index ["folder_id"], name: "index_wkbk_questions_on_folder_id"
     t.index ["init_sfen"], name: "index_wkbk_questions_on_init_sfen"

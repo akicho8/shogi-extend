@@ -140,7 +140,7 @@ module Wkbk
         include: [
           :user,
           :moves_answers,
-          :ox_record,
+          # :ox_record,
         ],
         only: [
           :id,
@@ -163,13 +163,13 @@ module Wkbk
 
           :moves_answers_count,
 
-          :histories_count,
-          :bad_marks_count,
-          :good_marks_count,
-          :clip_marks_count,
-          :messages_count,
+          # :histories_count,
+          # :bad_marks_count,
+          # :good_marks_count,
+          # :clip_marks_count,
+          # :messages_count,
 
-          :good_rate,
+          # :good_rate,
 
           :created_at,
           :updated_at,
@@ -183,19 +183,14 @@ module Wkbk
     belongs_to :lineage
     belongs_to :source_about
 
-    has_many :histories, dependent: :destroy # 出題履歴
-    has_many :messages, class_name: "Wkbk::QuestionMessage", dependent: :destroy # コメント
-    has_many :message_users, through: :messages, source: :user                   # コメントしたユーザー(複数)
+    # has_many :messages, class_name: "Wkbk::QuestionMessage", dependent: :destroy # コメント
+    # has_many :message_users, through: :messages, source: :user                   # コメントしたユーザー(複数)
 
     acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
     acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
 
     with_options dependent: :destroy do
       has_many :moves_answers  # 手順一致を正解とする答え集
-
-      has_many :good_marks      # 高評価
-      has_many :bad_marks       # 低評価
-      has_many :clip_marks      # 保存
     end
 
     # with_options allow_destroy: true do
@@ -232,8 +227,6 @@ module Wkbk
         self.source_author = nil
         self.source_about_key = :unknown
       end
-
-      self.good_rate ||= nil
 
       if Rails.env.test?
         self.lineage_key ||= "手筋"
@@ -416,16 +409,6 @@ module Wkbk
       self.lineage = Lineage.fetch_if(key)
     end
 
-    def good_rate_update
-      d = good_marks_count + bad_marks_count
-      if d.positive?
-        self.good_rate = good_marks_count.fdiv(d)
-      else
-        self.good_rate = nil
-      end
-      save!(touch: false)
-    end
-
     # 配置 + 1問目
     def main_sfen
       if moves_answers.blank?
@@ -463,12 +446,6 @@ module Wkbk
             moves_answers: {
               only: [:moves_count, :moves_str, :end_sfen],
             },
-            ox_record: {
-              only: [
-                :o_rate,
-                :ox_total,
-              ],
-            },
           },
         })
     end
@@ -485,7 +462,6 @@ module Wkbk
               only: [:id, :key, :name],
               methods: [:avatar_path],
             },
-            ox_record: {},
             moves_answers: {},
             folder: { only: [], methods: [:key, :name, :type] },
             messages: QuestionMessage.json_struct_type8,
@@ -495,12 +471,6 @@ module Wkbk
 
     def linked_title(options = {})
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
-    end
-
-    # 自演評価の無効化
-    def good_bad_click_by_owner_reject
-      good_marks.where(user: user).destroy_all
-      bad_marks.where(user: user).destroy_all
     end
 
     private
@@ -527,21 +497,6 @@ module Wkbk
         *moves_answers.collect(&:moves_str),
       ]
       Digest::MD5.hexdigest(ary.join(":"))
-    end
-
-    concerning :OxRecordtMethdos do
-      included do
-        has_one :ox_record, dependent: :destroy # 正解率
-
-        after_create do
-          create_ox_record!
-        end
-      end
-
-      def ox_add(column)
-        ox_record[column] += 1
-        ox_record.save!
-      end
     end
   end
 end

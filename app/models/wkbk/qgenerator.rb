@@ -58,15 +58,16 @@ module Wkbk
     def func_db_base(s)
       s = s.active_only
 
-      # 指定の評価以上のもの(good_rateが空のものは1.0と見なす)
-      if v = ri.good_rate_gteq
-        s = s.where("(good_rate IS NULL OR (good_rate >= ?))", v)
-      end
+      # # 指定の評価以上のもの(good_rateが空のものは1.0と見なす)
+      # if v = ri.good_rate_gteq
+      #   s = s.where("(good_rate IS NULL OR (good_rate >= ?))", v)
+      # end
+      #
+      # # 指定の正解率以上のもの(o_rateが空のものは1.0と見なす)
+      # if v = ri.o_rate_gteq
+      #   s = s.joins(:ox_record).where("(o_rate IS NULL OR (o_rate >= ?))", v)
+      # end
 
-      # 指定の正解率以上のもの(o_rateが空のものは1.0と見なす)
-      if v = ri.o_rate_gteq
-        s = s.joins(:ox_record).where("(o_rate IS NULL OR (o_rate >= ?))", v)
-      end
       s
     end
 
@@ -98,7 +99,7 @@ module Wkbk
       # 取得するまえに順番をどうするか
       case ri.select_order
       when :o_rate_desc
-        s = s.joins(:ox_record).order(o_rate: :desc)
+        # s = s.joins(:ox_record).order(o_rate: :desc)
       when :random
         s = s.order("RAND()")
       when :latest

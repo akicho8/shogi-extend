@@ -10,7 +10,7 @@ export class EditTabInfo extends MemoryRecord {
     ]
   }
 
-  // get handle_method_name() {
-  //   return `${this.key}_handle`
-  // }
+  get handle_method_name() {
+    return `${this.key}_handle`
+  }
 }

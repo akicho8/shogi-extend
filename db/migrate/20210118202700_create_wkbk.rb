@@ -43,6 +43,8 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.string :direction_message,       null: true,                                                comment: "メッセージ"
 
         t.timestamps
+
+        t.integer :moves_answers_count, default: 0, null: false, index: false, comment: "解答数"
       end
 
       create_table :wkbk_source_abouts, force: true do |t|

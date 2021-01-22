@@ -13,6 +13,7 @@ module Wkbk
       { key: "必死",                     type: "is-primary", mate_validate_on: false, piece_counts_check_on: false, mochigomagentei: false, black_piece_zero_check_on: false, },
       { key: "必死逃れ",                 type: "is-primary", mate_validate_on: false, piece_counts_check_on: false, mochigomagentei: false, black_piece_zero_check_on: false, },
       { key: "定跡",                     type: "is-primary", mate_validate_on: false, piece_counts_check_on: false, mochigomagentei: false, black_piece_zero_check_on: false, },
+      { key: "実戦譜",                   type: "is-primary", mate_validate_on: false, piece_counts_check_on: false, mochigomagentei: false, black_piece_zero_check_on: false, },
     ]
   end
 end
