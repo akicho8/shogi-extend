@@ -18,6 +18,16 @@ module Wkbk
           end
         end
       end
+
+      # このユーザーが作成した本(複数)
+      has_many :wkbk_books, class_name: "Wkbk::Book", dependent: :destroy do
+        def create_mock1(attrs = {})
+          create!(attrs) do |e|
+            e.title ||= SecureRandom.hex
+            e.description ||= SecureRandom.hex
+          end
+        end
+      end
     end
 
     concerning :UserInfoMethods do

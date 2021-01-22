@@ -1,4 +1,4 @@
-module Wkbk::Article::FolderMod
+module Wkbk::FolderMod
   extend ActiveSupport::Concern
 
   included do

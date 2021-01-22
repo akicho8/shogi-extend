@@ -1189,6 +1189,7 @@ ActiveRecord::Schema.define(version: 2021_01_21_210600) do
     t.bigint "user_id", null: false, comment: "作成者"
     t.bigint "folder_id", null: false, comment: "フォルダ"
     t.bigint "lineage_id", null: false, comment: "種類"
+    t.bigint "book_id", comment: "本"
     t.string "init_sfen", null: false, comment: "問題"
     t.integer "time_limit_sec", comment: "制限時間(秒)"
     t.integer "difficulty_level", comment: "難易度"
@@ -1206,6 +1207,7 @@ ActiveRecord::Schema.define(version: 2021_01_21_210600) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "moves_answers_count", default: 0, null: false, comment: "解答数"
+    t.index ["book_id"], name: "index_wkbk_articles_on_book_id"
     t.index ["difficulty_level"], name: "index_wkbk_articles_on_difficulty_level"
     t.index ["folder_id"], name: "index_wkbk_articles_on_folder_id"
     t.index ["init_sfen"], name: "index_wkbk_articles_on_init_sfen"
@@ -1215,6 +1217,20 @@ ActiveRecord::Schema.define(version: 2021_01_21_210600) do
     t.index ["time_limit_sec"], name: "index_wkbk_articles_on_time_limit_sec"
     t.index ["turn_max"], name: "index_wkbk_articles_on_turn_max"
     t.index ["user_id"], name: "index_wkbk_articles_on_user_id"
+  end
+
+  create_table "wkbk_books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.bigint "user_id", null: false, comment: "作成者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.string "title", comment: "タイトル"
+    t.string "description", limit: 512, comment: "説明"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "articles_count", default: 0, null: false, comment: "記事数"
+    t.index ["folder_id"], name: "index_wkbk_books_on_folder_id"
+    t.index ["key"], name: "index_wkbk_books_on_key"
+    t.index ["user_id"], name: "index_wkbk_books_on_user_id"
   end
 
   create_table "wkbk_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -1379,9 +1395,12 @@ ActiveRecord::Schema.define(version: 2021_01_21_210600) do
   add_foreign_key "swars_zip_dl_logs", "swars_users"
   add_foreign_key "swars_zip_dl_logs", "users"
   add_foreign_key "wkbk_articles", "users"
+  add_foreign_key "wkbk_articles", "wkbk_books", column: "book_id"
   add_foreign_key "wkbk_articles", "wkbk_folders", column: "folder_id"
   add_foreign_key "wkbk_articles", "wkbk_lineages", column: "lineage_id"
   add_foreign_key "wkbk_articles", "wkbk_source_abouts", column: "source_about_id"
+  add_foreign_key "wkbk_books", "users"
+  add_foreign_key "wkbk_books", "wkbk_folders", column: "folder_id"
   add_foreign_key "wkbk_folders", "users"
   add_foreign_key "wkbk_moves_answers", "wkbk_articles", column: "article_id"
 end

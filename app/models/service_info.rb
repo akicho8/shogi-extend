@@ -214,7 +214,7 @@ class ServiceInfo
     },
     {
       display_p: true,
-      nuxt_link_to: {path: "/wkbk/articles"},
+      nuxt_link_to: {path: "/wkbk/books"},
       title: "問題集",
       new_p: false,
       og_image_key: "wkbk",

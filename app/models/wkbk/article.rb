@@ -136,11 +136,10 @@ module Wkbk
           :lineage_key,
           :source_about_key,
         ],
-        include: [
-          :user,
-          :moves_answers,
-          # :ox_record,
-        ],
+        include: {
+          user: { only: [:id, :name, :key], methods: [:avatar_path],},
+          moves_answers: {},
+        },
         only: [
           :id,
           :init_sfen,
@@ -181,6 +180,7 @@ module Wkbk
     belongs_to :user, class_name: "::User" # 作者
     belongs_to :lineage
     belongs_to :source_about
+    belongs_to :book, required: false
 
     # has_many :messages, class_name: "Wkbk::ArticleMessage", dependent: :destroy # コメント
     # has_many :message_users, through: :messages, source: :user                   # コメントしたユーザー(複数)
@@ -370,7 +370,7 @@ module Wkbk
       if state = saved_after_state
         SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
         ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
-        User.bot.lobby_speak("#{user.name}さんが#{linked_title}を#{state}しました")
+        # User.bot.lobby_speak("#{user.name}さんが#{linked_title}を#{state}しました")
       end
     end
 
@@ -438,10 +438,7 @@ module Wkbk
             :source_about_key,
           ],
           include: {
-            user: {
-              only: [:id, :name, :key],
-              methods: [:avatar_path],
-            },
+            user: { only: [:id, :name, :key], methods: [:avatar_path],},
             moves_answers: {
               only: [:moves_count, :moves_str, :end_sfen],
             },

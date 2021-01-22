@@ -19,9 +19,10 @@
 
 module Wkbk
   class Folder < ApplicationRecord
-    belongs_to :user # FIXME: 設計ミス。ユーザー毎のフォルダを持つ必要がない
+    belongs_to :user
 
     has_many :articles, dependent: :destroy
+    has_many :books, dependent: :destroy
 
     delegate :name, :type, to: :pure_info
 

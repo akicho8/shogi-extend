@@ -1,17 +1,6 @@
 module Api
   class WkbkController
-    concern :GetApi do
-      concerning :SortMod do
-        included do
-          include ::SortMod
-          include ::PageMod
-        end
-
-        def sort_column_default
-          :updated_at
-        end
-      end
-
+    concern :QuestionMod do
       # 問題編集用
       # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
       #
@@ -71,37 +60,19 @@ module Api
         retv
       end
 
-      # http://localhost:3000/api/wkbk.json?remote_action=article_single_fetch&article_id=1
-      def article_single_fetch
-        article = Wkbk::Article.find(params[:article_id])
-        retv = {}
-        retv[:article] = article.as_json_type6
-        # if current_user
-        #   retv.update(current_user.good_bad_clip_flags_for(article))
-        # end
-        { ov_article_info: retv }
+      def article_save_handle
+        if id = params[:article][:id]
+          article = Wkbk::Article.find(id)
+        else
+          article = current_user.wkbk_articles.build
+        end
+        begin
+          article.update_from_js(params.to_unsafe_h[:article])
+        rescue ActiveRecord::RecordInvalid => error
+          return { form_error_message: error.message }
+        end
+        { article: article.as_json(Wkbk::Article.json_type5) }
       end
-
-      # http://localhost:3000/api/wkbk.json?remote_action=resource_fetch
-      def resource_fetch
-        {
-          # RuleInfo: Wkbk::RuleInfo.as_json,
-          # OxMarkInfo: Wkbk::OxMarkInfo.as_json(only: [:key, :name, :score, :sound_key, :delay_second]),
-          # SkillInfo: Wkbk::SkillInfo.as_json(only: [:key, :name]),
-          # EmotionInfo: Wkbk::EmotionInfo.as_json, # 元に戻す用
-          # EmotionFolderInfo: Wkbk::EmotionFolderInfo.as_json,
-        }
-      end
-
-      # http://localhost:3000/api/wkbk.json?remote_action=builder_form_resource_fetch
-      def builder_form_resource_fetch
-        {
-          LineageInfo: Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on]),
-          FolderInfo:  Wkbk::FolderInfo.as_json(only: [:key, :name, :icon, :type]),
-        }
-      end
-
-      private
 
       def sort_scope_for_articles(s)
         if sort_column && sort_order
@@ -124,6 +95,40 @@ module Api
         end
         s
       end
+
+      # http://localhost:3000/api/wkbk.json?remote_action=article_single_fetch&article_id=1
+      def article_single_fetch
+        raise
+        article = Wkbk::Article.find(params[:article_id])
+        retv = {}
+        retv[:article] = article.as_json_type6
+        # if current_user
+        #   retv.update(current_user.good_bad_clip_flags_for(article))
+        # end
+        { ov_article_info: retv }
+      end
+
+      # http://localhost:3000/api/wkbk.json?remote_action=resource_fetch
+      def resource_fetch
+        raise
+        {
+          # RuleInfo: Wkbk::RuleInfo.as_json,
+          # OxMarkInfo: Wkbk::OxMarkInfo.as_json(only: [:key, :name, :score, :sound_key, :delay_second]),
+          # SkillInfo: Wkbk::SkillInfo.as_json(only: [:key, :name]),
+          # EmotionInfo: Wkbk::EmotionInfo.as_json, # 元に戻す用
+          # EmotionFolderInfo: Wkbk::EmotionFolderInfo.as_json,
+        }
+      end
+
+      # http://localhost:3000/api/wkbk.json?remote_action=builder_form_resource_fetch
+      def builder_form_resource_fetch
+        raise
+        # {
+        #   LineageInfo: Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on]),
+        #   FolderInfo:  Wkbk::FolderInfo.as_json(only: [:key, :name, :icon, :type]),
+        # }
+      end
+
     end
   end
 end

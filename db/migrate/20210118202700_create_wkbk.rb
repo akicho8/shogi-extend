@@ -23,9 +23,10 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
       create_table :wkbk_articles, force: true do |t|
         t.string :key, null: false, index: true
 
-        t.belongs_to :user,    null: false, foreign_key: true,                          comment: "作成者"
-        t.belongs_to :folder,  null: false, foreign_key: {to_table: :wkbk_folders},   comment: "フォルダ"
+        t.belongs_to :user,    null: false, foreign_key: true,                       comment: "作成者"
+        t.belongs_to :folder,  null: false, foreign_key: {to_table: :wkbk_folders},  comment: "フォルダ"
         t.belongs_to :lineage, null: false, foreign_key: {to_table: :wkbk_lineages}, comment: "種類"
+        t.belongs_to :book,    null: true,  foreign_key: {to_table: :wkbk_books},    comment: "本"
 
         t.string :init_sfen,               null: false, index: true,                                  comment: "問題"
         t.integer :time_limit_sec,         null: true,  index: true,                                  comment: "制限時間(秒)"
@@ -61,6 +62,22 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.string :end_sfen,     null: true,  index: false, comment: "最後の局面"
         t.string :moves_human_str, null: true, index: false, comment: "人間向け指し手"
         t.timestamps
+      end
+
+      ################################################################################
+
+      create_table :wkbk_books, force: true do |t|
+        t.string :key, null: false, index: true
+
+        t.belongs_to :user,    null: false, foreign_key: true,                      comment: "作成者"
+        t.belongs_to :folder,  null: false, foreign_key: {to_table: :wkbk_folders}, comment: "フォルダ"
+
+        t.string :title,                   null: true,  index: false,                                 comment: "タイトル"
+        t.string :description, limit: 512, null: true,  index: false,                                 comment: "説明"
+
+        t.timestamps
+
+        t.integer :articles_count, default: 0, null: false, index: false, comment: "記事数"
       end
     end
   end
