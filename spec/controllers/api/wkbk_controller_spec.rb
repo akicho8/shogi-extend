@@ -51,7 +51,7 @@ RSpec.describe Api::WkbkController, type: :controller do
 
   describe "zip_dl_count_fetch" do
     it "works" do
-      @current_user.wkbk_questions.create_mock1
+      @current_user.wkbk_articles.create_mock1
       get :show, params: { remote_action: "zip_dl_count_fetch", format: "json" }
       expect(response).to have_http_status(:ok)
       assert { JSON.parse(response.body) == {"count" => 1} }

@@ -27,7 +27,7 @@ module Api
 
                 "ランキング"                   => :ranking,
                 "履歴"                         => :history,
-                "問題詳細"                     => :ov_question_info,
+                "問題詳細"                     => :ov_article_info,
                 "ユーザー詳細"                 => :ov_user_info,
                 "ログインしている状態"         => :login_lobby,
                 "ログインしていない状態"       => :no_login_lobby,
@@ -149,23 +149,23 @@ module Api
       end
 
       # 問題詳細
-      def debug_for_ov_question_info(info)
+      def debug_for_ov_article_info(info)
         sysop_login_unless_logout
 
-        question = Wkbk::Question.first
-        question.title = "始まりの金" * 10
-        question.direction_message = "3手指してください" * 10
-        question.owner_tag_list = ["タグ1", "タグ2"]
-        question.assign_attributes({
+        article = Wkbk::Article.first
+        article.title = "始まりの金" * 10
+        article.direction_message = "3手指してください" * 10
+        article.owner_tag_list = ["タグ1", "タグ2"]
+        article.assign_attributes({
             :source_about_key       => "ascertained",
             :source_author          => "渡瀬荘二郎",
             :source_media_name      => "Wikipedia",
             :source_media_url       => "https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B",
             :source_published_on    => "1912-03-04",
           })
-        question.save!
+        article.save!
 
-        info[:question_id] = question.id
+        info[:article_id] = article.id
       end
 
       # ユーザー詳細

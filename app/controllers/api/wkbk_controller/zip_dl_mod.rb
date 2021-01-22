@@ -3,8 +3,8 @@ module Api
     include EncodeMod
 
     concern :ZipDlMod do
-      # http://localhost:3000/api/wkbk.zip?remote_action=question_download
-      def question_download
+      # http://localhost:3000/api/wkbk.zip?remote_action=article_download
+      def article_download
         if request.format.zip?
 
           unless current_user
@@ -48,8 +48,8 @@ module Api
       end
 
       def zip_dl_scope
-        # Wkbk::Question.all
-        s = current_user.wkbk_questions
+        # Wkbk::Article.all
+        s = current_user.wkbk_articles
         # s = s.active_only
         s = s.includes(:ox_record)
         s = s.includes(:folder)

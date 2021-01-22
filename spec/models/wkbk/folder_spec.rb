@@ -24,8 +24,8 @@ module Wkbk
     include WkbkSupportMethods
 
     it do
-      question1
-      assert { user1.wkbk_active_box.questions.count >= 1 }
+      article1
+      assert { user1.wkbk_active_box.articles.count >= 1 }
     end
 
     it "folder_key" do
@@ -33,7 +33,7 @@ module Wkbk
     end
 
     it "pure_class" do
-      assert { question1.folder.pure_info.name == "公開" }
+      assert { article1.folder.pure_info.name == "公開" }
     end
   end
 end

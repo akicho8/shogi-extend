@@ -10,18 +10,18 @@ user2 = User.create!
 
 user1.wkbk_lobby_messages.create(body: "(body)")
 
-question = user1.wkbk_questions.create_mock1
+article = user1.wkbk_articles.create_mock1
 
 room = Wkbk::Room.create_with_members!([user1, user2])
 battle = room.battle_create_with_members!
 
-user1.wkbk_histories.create!(question: question, ox_mark: Wkbk::OxMark.fetch(:correct))
+user1.wkbk_histories.create!(article: article, ox_mark: Wkbk::OxMark.fetch(:correct))
 
-user1.wkbk_good_marks.create!(question: question)
-user1.wkbk_bad_marks.create!(question: question)
-user1.wkbk_clip_marks.create!(question: question)
+user1.wkbk_good_marks.create!(article: article)
+user1.wkbk_bad_marks.create!(article: article)
+user1.wkbk_clip_marks.create!(article: article)
 
-question.messages.create!(user: user1, body: "(body)")
+article.messages.create!(user: user1, body: "(body)")
 
 tp Wkbk.count_diff { user1.destroy }
 
@@ -29,7 +29,7 @@ tp Wkbk.count_diff { user1.destroy }
 # >> | model                  | before | after | diff |
 # >> |------------------------+--------+-------+------|
 # >> | Wkbk::Folder           |      6 |     3 |   -3 |
-# >> | Wkbk::Question         |      1 |     0 |   -1 |
+# >> | Wkbk::Article         |      1 |     0 |   -1 |
 # >> | Wkbk::MovesAnswer      |      1 |     0 |   -1 |
 # >> | User                   |      2 |     1 |   -1 |
 # >> | Wkbk::SeasonXrecord    |      2 |     1 |   -1 |
@@ -38,7 +38,7 @@ tp Wkbk.count_diff { user1.destroy }
 # >> | Wkbk::GoodMark         |      1 |     0 |   -1 |
 # >> | Wkbk::BadMark          |      1 |     0 |   -1 |
 # >> | Wkbk::ClipMark         |      1 |     0 |   -1 |
-# >> | Wkbk::QuestionMessage  |      1 |     0 |   -1 |
+# >> | Wkbk::ArticleMessage  |      1 |     0 |   -1 |
 # >> | Wkbk::LobbyMessage     |      1 |     0 |   -1 |
 # >> | Wkbk::RoomMembership   |      2 |     1 |   -1 |
 # >> | Wkbk::BattleMembership |      2 |     1 |   -1 |

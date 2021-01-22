@@ -34,7 +34,7 @@ module Wkbk
     # -------------------------------------------------------------------------------- バトル部屋チャット
     :room_messages_display_p         => true,  # 部屋でのチャット表示
     :room_messages_window_height     => 10,    # 部屋での表示行数
-    :question_messages_window_height => 5,     # 問題での表示行数(未使用)
+    :article_messages_window_height => 5,     # 問題での表示行数(未使用)
     :room_message_drop_lines         => 20,    # 部屋での表示行数(データ)
 
     # -------------------------------------------------------------------------------- プロフィール編集画面
@@ -52,7 +52,7 @@ module Wkbk
     :turm_max_limit                  => 3,     # 手数制限
 
     # -------------------------------------------------------------------------------- API
-    :api_questions_fetch_per         => 5,  # 問題一覧での1ページあたりの表示件数
+    :api_articles_fetch_per         => 5,  # 問題一覧での1ページあたりの表示件数
     :api_lobby_message_max           => 100, # ロビーのメッセージ表示件数
     :api_history_fetch_max           => 50, # 履歴表示件数
     :api_clip_fetch_max              => 50, # 保存表示件数
@@ -66,7 +66,7 @@ module Wkbk
         :room_messages_window_height     => 5,        # 部屋での表示行数
         :matching_forgo_second           => 60*5,     # ○秒たったらマッチングを諦める(nullなら無限)
         :action_cable_debug              => false,    # ActionCable関連デバッグモード
-        :api_questions_fetch_per         => 50,       # 問題一覧での1ページあたりの表示件数
+        :api_articles_fetch_per         => 50,       # 問題一覧での1ページあたりの表示件数
         :self_is_left_side_p             => true,     # 自分を左に表示
         :turm_max_limit                  => 13,       # 手数制限
         :singleton_giveup_effective_seconds           => 3,        # 「あきらめる」がでるまでの秒数(シングルトン)

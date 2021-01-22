@@ -7,7 +7,7 @@
 # | name            | desc            | type        | opts        | refs | index |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 # | id              | ID              | integer(8)  | NOT NULL PK |      |       |
-# | question_id     | Question        | integer(8)  | NOT NULL    |      | A     |
+# | article_id      | Article         | integer(8)  | NOT NULL    |      | A     |
 # | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
 # | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
 # | end_sfen        | End sfen        | string(255) |             |      |       |
@@ -18,7 +18,7 @@
 
 module Wkbk
   class MovesAnswer < ApplicationRecord
-    belongs_to :question, counter_cache: true, touch: true
+    belongs_to :article, counter_cache: true, touch: true
 
     before_validation do
       if will_save_change_to_attribute?(:moves_str) && v = moves_str.presence
@@ -32,11 +32,11 @@ module Wkbk
     end
 
     with_options allow_blank: true do
-      validates :moves_str, uniqueness: { scope: :question_id, case_sensitive: true } # JS側でチェックしているので普通は発生しない
+      validates :moves_str, uniqueness: { scope: :article_id, case_sensitive: true } # JS側でチェックしているので普通は発生しない
     end
 
     validate do
-      if question.moves_answer_validate_skip
+      if article.moves_answer_validate_skip
       else
         if moves_str.present?
           [
@@ -68,21 +68,21 @@ module Wkbk
     # 同じ組み合わせがないことを確認
     def validate2_uniq_with_parent
       # 配置が同じ問題たちを取得
-      s = Question.active_only.where(init_sfen: question.read_attribute(:init_sfen))
+      s = Article.active_only.where(init_sfen: article.read_attribute(:init_sfen))
       if persisted?
         # ただし自分の所属する配置を除く
-        s = s.where.not(id: question.id_in_database)
+        s = s.where.not(id: article.id_in_database)
       end
       # その上で手順まで同じのものがあるか？
-      question_ids = self.class.where(question: s).where(moves_str: moves_str).group(:question_id).count
-      if question_ids.present?
-        errors.add(:base, "配置と正解手順の組み合わせが既出の問題(#{question_ids.keys.join(', ')})と重複しています")
+      article_ids = self.class.where(article: s).where(moves_str: moves_str).group(:article_id).count
+      if article_ids.present?
+        errors.add(:base, "配置と正解手順の組み合わせが既出の問題(#{article_ids.keys.join(', ')})と重複しています")
       end
     end
 
     # 「詰将棋」なら先手の駒が余っていないことを確認する
     def validate3_piece_box_is_empty
-      if question.lineage.pure_info.black_piece_zero_check_on
+      if article.lineage.pure_info.black_piece_zero_check_on
         if mediator.opponent_player.piece_box.empty?
           # 攻め手の持駒は空なのでOK
         else
@@ -93,7 +93,7 @@ module Wkbk
 
     # 「詰将棋」ならすべての駒が存在することを確認 (玉方持駒限定になっていないこと)
     def validate4_all_piece_exists
-      if question.lineage.pure_info.piece_counts_check_on
+      if article.lineage.pure_info.piece_counts_check_on
         if not_enough_piece_box.values.any?(&:nonzero?)
           errors.add(:base, "駒の数が変です。正確には#{not_enough_piece_box_to_human}です。玉方の持駒を限定している詰将棋は「玉方持駒限定詰将棋」にしといてください")
         end
@@ -102,7 +102,7 @@ module Wkbk
 
     # 「玉方持駒限定詰将棋」なら持駒が不足していることを確認する
     def validate5_all_piece_not_exists
-      if question.lineage.pure_info.mochigomagentei
+      if article.lineage.pure_info.mochigomagentei
         if not_enough_piece_box.values.all?(&:zero?)
           errors.add(:base, "玉方の持駒が限定されていません。「詰将棋」の間違いではないですか？")
         end
@@ -111,8 +111,8 @@ module Wkbk
 
     # 「詰将棋」か「玉方持駒限定詰将棋」か「実戦詰め筋」なら詰んでいることを確認
     def validate6_mate
-      if question.lineage.pure_info.mate_validate_on
-        if question.mate_skip?
+      if article.lineage.pure_info.mate_validate_on
+        if article.mate_skip?
           # 「最後は無駄合」なのでチェックしない
         else
           if mediator.current_player.my_mate?
@@ -137,14 +137,14 @@ module Wkbk
     # SQLで調べているためすべてが保存されてから実行する
     after_save_commit do
       if saved_change_to_attribute?(:moves_count)
-        question.update_column(:turn_max, question.moves_answers.maximum("moves_count"))
+        article.update_column(:turn_max, article.moves_answers.maximum("moves_count"))
       end
     end
 
     private
 
     def sfen
-      "#{question.init_sfen} moves #{moves_str}"
+      "#{article.init_sfen} moves #{moves_str}"
     end
 
     def mediator

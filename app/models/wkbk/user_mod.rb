@@ -6,7 +6,7 @@ module Wkbk
       include FolderMod
 
       # このユーザーが作成した問題(複数)
-      has_many :wkbk_questions, class_name: "Wkbk::Question", dependent: :destroy do
+      has_many :wkbk_articles, class_name: "Wkbk::Article", dependent: :destroy do
         def create_mock1(attrs = {})
           create!(attrs) do |e|
             if e.moves_answer_validate_skip.nil?

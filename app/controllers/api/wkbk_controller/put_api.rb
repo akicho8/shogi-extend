@@ -1,18 +1,18 @@
 module Api
   class WkbkController
     concern :PutApi do
-      def question_save_handle
-        if id = params[:question][:id]
-          question = Wkbk::Question.find(id)
+      def article_save_handle
+        if id = params[:article][:id]
+          article = Wkbk::Article.find(id)
         else
-          question = current_user.wkbk_questions.build
+          article = current_user.wkbk_articles.build
         end
         begin
-          question.update_from_js(params.to_unsafe_h[:question])
+          article.update_from_js(params.to_unsafe_h[:article])
         rescue ActiveRecord::RecordInvalid => error
           return { form_error_message: error.message }
         end
-        { question: question.as_json(Wkbk::Question.json_type5) }
+        { article: article.as_json(Wkbk::Article.json_type5) }
       end
     end
   end

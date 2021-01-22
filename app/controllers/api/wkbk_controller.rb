@@ -18,8 +18,8 @@
 #   app/models/wkbk.rb
 #   app/models/colosseum/user_wkbk_mod.rb
 #
-#   question
-#     app/models/wkbk/question.rb
+#   article
+#     app/models/wkbk/article.rb
 #     app/models/wkbk/moves_answer.rb
 #
 # channel
@@ -64,7 +64,7 @@ module Api
 
       # # for OGP
       # case
-      # when e = current_question
+      # when e = current_article
       #   ogp_params_set({
       #       :card        => :summary_large_image,
       #       :title       => e.title_with_author,
@@ -93,7 +93,7 @@ module Api
       info[:config] = Wkbk::Config
       info[:mode] ||= "lobby"   # FIXME: とる
       # info[:api_path] = h.url_for(script_link_path)
-      info[:question_default_attributes] = Wkbk::Question.default_attributes
+      info[:article_default_attributes] = Wkbk::Article.default_attributes
 
       warp_to_params_set(info)  # current_user のデータを作ることもあるので current_user のセットの前で行うこと
 
@@ -141,14 +141,14 @@ module Api
       [current_user, User.bot]
     end
 
-    concerning :QuestionOgpMethods do
-      def current_question
-        @current_question ||= __current_question
+    concerning :ArticleOgpMethods do
+      def current_article
+        @current_article ||= __current_article
       end
 
-      def __current_question
-        if v = params[:question_id]
-          Wkbk::Question.find(v)
+      def __current_article
+        if v = params[:article_id]
+          Wkbk::Article.find(v)
         end
       end
     end

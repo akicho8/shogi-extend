@@ -12,7 +12,7 @@ module Wkbk
 
     [
       Wkbk::SourceAbout,
-      Wkbk::Question,
+      Wkbk::Article,
       Wkbk::Lineage,
     ].each do |e|
       e.setup(options)
@@ -21,15 +21,15 @@ module Wkbk
     User.find_each(&:wkbk_create_various_folders_if_blank)
 
     if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
-      unless Wkbk::Question.exists?
-        Wkbk::Question.import_all
+      unless Wkbk::Article.exists?
+        Wkbk::Article.import_all
       end
     end
   end
 
   def models
     [
-      Question,
+      Article,
       MovesAnswer,
       Folder,
       Lineage,
@@ -53,7 +53,7 @@ module Wkbk
   # >> | model                  | before | after | diff |
   # >> |------------------------+--------+-------+------|
   # >> | Wkbk::Folder           |      6 |     3 |   -3 |
-  # >> | Wkbk::Question         |      1 |     0 |   -1 |
+  # >> | Wkbk::Article         |      1 |     0 |   -1 |
   # >> | Wkbk::MovesAnswer      |      1 |     0 |   -1 |
   # >> | User                   |      2 |     1 |   -1 |
   # >> | Wkbk::RoomMembership   |      2 |     1 |   -1 |
@@ -64,7 +64,7 @@ module Wkbk
   # >> | Wkbk::GoodMark         |      1 |     0 |   -1 |
   # >> | Wkbk::BadMark          |      1 |     0 |   -1 |
   # >> | Wkbk::ClipMark         |      1 |     0 |   -1 |
-  # >> | Wkbk::QuestionMessage  |      1 |     0 |   -1 |
+  # >> | Wkbk::ArticleMessage  |      1 |     0 |   -1 |
   # >> | Wkbk::Rule             |     12 |    12 |    0 |
   # >> | Wkbk::Room             |      1 |     1 |    0 |
   # >> | Wkbk::Skill            |     21 |    21 |    0 |

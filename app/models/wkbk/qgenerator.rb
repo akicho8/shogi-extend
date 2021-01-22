@@ -28,19 +28,19 @@ module Wkbk
         :func_array_reorder,            # DB取得後の並び替え
         :func_array_latest_move_to_top, # 最近の問題は前に移動
         :func_array_fill,               # 足りない問題を足しておく
-      ].inject(Question.all) do |a, e|
+      ].inject(Article.all) do |a, e|
         send(e, a)
       end
     end
 
     # users たちが解いた直近の問題の中のN件の問題
-    def history_latest_questions
+    def history_latest_articles
       s = Wkbk::History.all
       s = s.with_o
       if v = params[:users]
         s = s.where(user: v)
       end
-      s = s.group(:question_id)
+      s = s.group(:article_id)
       s = s.order("MAX(created_at) DESC")
       if v = params[:history_limit]
         s = s.limit(v)
@@ -49,8 +49,8 @@ module Wkbk
     end
 
     # users たちが解いた直近の問題の中から N 件の問題IDs
-    def history_latest_questions_ids
-      history_latest_questions.pluck(:question_id)
+    def history_latest_articles_ids
+      history_latest_articles.pluck(:article_id)
     end
 
     private
@@ -114,14 +114,14 @@ module Wkbk
 
     def func_db_history_reject(s)
       if ri.history_reject
-        s = s.where.not(id: history_latest_questions_ids)
+        s = s.where.not(id: history_latest_articles_ids)
       end
       s
     end
 
     def func_db_limit(s)
-      raise ArgumentError unless ri.best_questions_limit
-      s = s.limit(ri.best_questions_limit).to_a
+      raise ArgumentError unless ri.best_articles_limit
+      s = s.limit(ri.best_articles_limit).to_a
     end
 
     def func_array_reorder(s)
@@ -157,7 +157,7 @@ module Wkbk
     # [1, 2, 3] を除いて [4, 5, 6] のなかから 2 つを選択してくっつける
     def func_array_fill(s)
       if params[:fill]
-        rest = ri.best_questions_limit - s.size
+        rest = ri.best_articles_limit - s.size
         if rest >= 1
           s += db_scope_for_fill.where.not(id: s.collect(&:id)).limit(rest).to_a
         end
@@ -166,7 +166,7 @@ module Wkbk
     end
 
     def db_scope_for_fill
-      s = Question.all
+      s = Article.all
       s = func_db_base(s)
       s = func_db_order(s)
       s = func_db_base(s)

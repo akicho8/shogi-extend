@@ -7,7 +7,7 @@
 # | name            | desc            | type        | opts        | refs | index |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 # | id              | ID              | integer(8)  | NOT NULL PK |      |       |
-# | question_id     | Question        | integer(8)  | NOT NULL    |      | A     |
+# | article_id      | Article         | integer(8)  | NOT NULL    |      | A     |
 # | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
 # | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
 # | end_sfen        | End sfen        | string(255) |             |      |       |
@@ -19,22 +19,22 @@
 require 'rails_helper'
 
 module Wkbk
-  RSpec.describe Question, type: :model do
+  RSpec.describe Article, type: :model do
     include WkbkSupportMethods
 
     MATE_HAND = "G*5b"          # 52金打
 
     def test1(lineage_key)
-      question = user1.wkbk_questions.new
-      question.lineage_key = lineage_key
-      question.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1" # 52金打ちで詰みの詰将棋
-      question.save!
-      question
+      article = user1.wkbk_articles.new
+      article.lineage_key = lineage_key
+      article.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1" # 52金打ちで詰みの詰将棋
+      article.save!
+      article
     end
 
     it "works" do
       moves_answer = test1("詰将棋").moves_answers.create!(moves_str: MATE_HAND) # 頭金で詰み
-      assert { moves_answer.question.turn_max == 1 }                          # 最大手数が親の方に埋められている
+      assert { moves_answer.article.turn_max == 1 }                          # 最大手数が親の方に埋められている
     end
 
     describe "特殊なバリデーション" do
@@ -52,23 +52,23 @@ module Wkbk
       end
 
       it "validate3_piece_box_is_empty" do
-        question = user1.wkbk_questions.new
-        question.lineage_key = "詰将棋"
-        question.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b 2G2r2bg4s4n4l18p 1" # 52金打ちで詰みの詰将棋だが金を2枚持っている
-        question.save!
+        article = user1.wkbk_articles.new
+        article.lineage_key = "詰将棋"
+        article.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b 2G2r2bg4s4n4l18p 1" # 52金打ちで詰みの詰将棋だが金を2枚持っている
+        article.save!
 
-        moves_answer = question.moves_answers.create(moves_str: MATE_HAND)
+        moves_answer = article.moves_answers.create(moves_str: MATE_HAND)
         moves_answer.errors.full_messages # => ["攻め方の持駒が残っています。持駒が残る場合は「実戦詰め筋」とかにしてください"]
         assert { moves_answer.errors.present? }
       end
 
       it "validate4_all_piece_exists" do
-        question = user1.wkbk_questions.new
-        question.lineage_key = "詰将棋"
-        question.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n3l17p 1" # 52金打ちで詰みの詰将棋だが相手の持駒に香と歩が足りてない
-        question.save!
+        article = user1.wkbk_articles.new
+        article.lineage_key = "詰将棋"
+        article.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n3l17p 1" # 52金打ちで詰みの詰将棋だが相手の持駒に香と歩が足りてない
+        article.save!
 
-        moves_answer = question.moves_answers.create(moves_str: MATE_HAND)
+        moves_answer = article.moves_answers.create(moves_str: MATE_HAND)
         moves_answer.errors.full_messages # => ["駒の数が変です。正確には香が1つ少ないのと歩が1つ少ないです。玉方の持駒を限定している詰将棋は「玉方持駒限定詰将棋」にしといてください"]
         assert { moves_answer.errors.present? }
       end

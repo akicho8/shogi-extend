@@ -5,7 +5,7 @@ User.delete_all
 Wkbk.destroy_all
 Wkbk.setup
 
-Wkbk::Question.count             # => 0
+Wkbk::Article.count             # => 0
 Wkbk::Lineage.all.collect(&:key) # => ["詰将棋", "玉方持駒限定詰将棋", "実戦詰め筋", "手筋", "必死", "必死逃れ", "定跡"]
 
 user1 = User.sysop
@@ -15,7 +15,7 @@ User.setup
 
 # 問題作成
 10.times do |i|
-  question = user1.wkbk_questions.create! do |e|
+  article = user1.wkbk_articles.create! do |e|
     e.moves_answer_validate_skip = true
 
     e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{i+1}p 1"
@@ -35,25 +35,25 @@ User.setup
     end
   end
 end
-Wkbk::Question.count           # => 10
+Wkbk::Article.count           # => 10
 
-question = Wkbk::Question.first!
-question.lineage.key               # => "詰将棋"
+article = Wkbk::Article.first!
+article.lineage.key               # => "詰将棋"
 
 # 最初の問題だけゴミ箱へ
-question = Wkbk::Question.first!
-# question.update!(folder: question.user.wkbk_trash_box) の方法はださい
-question.user.wkbk_trash_box.questions << question
-question.folder # => #<Wkbk::TrashBox id: 135, user_id: 45, type: "Wkbk::TrashBox", created_at: "2021-01-21 12:46:53", updated_at: "2021-01-21 12:46:53">
+article = Wkbk::Article.first!
+# article.update!(folder: article.user.wkbk_trash_box) の方法はださい
+article.user.wkbk_trash_box.articles << article
+article.folder # => #<Wkbk::TrashBox id: 135, user_id: 45, type: "Wkbk::TrashBox", created_at: "2021-01-21 12:46:53", updated_at: "2021-01-21 12:46:53">
 
 # 2番目の問題は下書きへ
-question = Wkbk::Question.second!
-question.folder_key           # => "active"
-question.folder_key = :draft
-question.save!                 # => true
-question.folder.type           # => "is-warning"
+article = Wkbk::Article.second!
+article.folder_key           # => "active"
+article.folder_key = :draft
+article.save!                 # => true
+article.folder.type           # => "is-warning"
 
-tp Wkbk::Question
+tp Wkbk::Article
 tp Wkbk.info
 # >> |----+----------------------------------+---------+-----------+------------+--------------------------------------------+----------------+------------------+----------+---------------+-------------+-----------------+-------------------+------------------+---------------------+-----------------+----------+-----------+-------------------+---------------------------+---------------------------+---------------------+----------------------------+---------------+----------------|
 # >> | id | key                              | user_id | folder_id | lineage_id | init_sfen                                  | time_limit_sec | difficulty_level | title    | description   | hint_desc   | source_author   | source_media_name | source_media_url | source_published_on | source_about_id | turn_max | mate_skip | direction_message | created_at                | updated_at                | moves_answers_count | moves_answer_validate_skip | user_tag_list | owner_tag_list |
@@ -73,7 +73,7 @@ tp Wkbk.info
 # >> | model             | count | 最終ID |
 # >> |-------------------+-------+--------|
 # >> | User              |     3 |     47 |
-# >> | Wkbk::Question    |    10 |     29 |
+# >> | Wkbk::Article    |    10 |     29 |
 # >> | Wkbk::MovesAnswer |    30 |     86 |
 # >> | Wkbk::Folder      |     9 |    141 |
 # >> | Wkbk::Lineage     |     7 |    112 |

@@ -1,12 +1,12 @@
 require "./setup"
 
-Wkbk::Question.destroy_all
+Wkbk::Article.destroy_all
 
 user1 = User.create!
 user2 = User.create!
 
-question1 = user1.wkbk_questions.create_mock1
-user2.wkbk_good_marks.create!(question: question1)
+article1 = user1.wkbk_articles.create_mock1
+user2.wkbk_good_marks.create!(article: article1)
 
 user2.wkbk_good_marks.count     # => 
 
@@ -14,10 +14,10 @@ ActiveSupport::LogSubscriber.colorize_logging = false
 logger = ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
 ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
 
-user1.wkbk_questions.count                  # => 
-user1.wkbk_questions.average(:good_rate)    # => 
-user1.wkbk_questions.sum(:good_marks_count) # => 
-user1.wkbk_questions.sum(:bad_marks_count)  # => 
+user1.wkbk_articles.count                  # => 
+user1.wkbk_articles.average(:good_rate)    # => 
+user1.wkbk_articles.sum(:good_marks_count) # => 
+user1.wkbk_articles.sum(:bad_marks_count)  # => 
 # ~> /Users/ikeda/src/shogi-extend/app/models/concerns/memory_record_bind.rb:51:in `rescue in fetch': Wkbk::Judge.fetch(:pending) (ArgumentError)
 # ~> keys: []
 # ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/memory_record_bind.rb:44:in `fetch'

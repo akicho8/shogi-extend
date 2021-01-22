@@ -1,7 +1,7 @@
 require "./setup"
 
 rows = []
-Wkbk::Question.all.each do |e|
+Wkbk::Article.all.each do |e|
   row = {}
   row[:id] = e.id
   row[:updated_at] = e.updated_at.strftime("%F %T")

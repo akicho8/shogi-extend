@@ -1,12 +1,12 @@
 require "./setup"
 
-# tp User.sysop.wkbk_questions
+# tp User.sysop.wkbk_articles
 
 # Wkbk.destroy_all
 # 
 user = User.sysop
 
-question = user.wkbk_questions.create! do |e|
+article = user.wkbk_articles.create! do |e|
   e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1"
   e.moves_answers.build(moves_str: "G*5b")
 end
@@ -18,7 +18,7 @@ battle = Wkbk::Battle.create! do |e|
   e.memberships.build(user: user2)
 end
 
-history = user.wkbk_histories.create!(question: question, ox_mark: Wkbk::OxMark.fetch(:correct))
+history = user.wkbk_histories.create!(article: article, ox_mark: Wkbk::OxMark.fetch(:correct))
 tp history
 
 # ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/inheritance.rb:205:in `compute_type': uninitialized constant User::Wkbk::MainXrecord (NameError)

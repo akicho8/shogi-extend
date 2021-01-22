@@ -17,6 +17,6 @@ module Wkbk
   class Lineage < ApplicationRecord
     include MemoryRecordBind
 
-    has_many :questions, dependent: :destroy
+    has_many :articles, dependent: :destroy
   end
 end

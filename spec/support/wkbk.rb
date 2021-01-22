@@ -11,16 +11,16 @@ module WkbkSupportMethods
     let(:user2) { User.create!(name: "user2", email: "user2@localhost", confirmed_at: Time.current) }
     let(:user3) { User.create!(name: "user3", email: "user3@localhost", confirmed_at: Time.current) }
 
-    let(:question1) do
-      user1.wkbk_questions.create_mock1
+    let(:article1) do
+      user1.wkbk_articles.create_mock1
     end
 
-    let(:question_message1) do
-      question1.messages.create!(user: user2, body: "(body)")
+    let(:article_message1) do
+      article1.messages.create!(user: user2, body: "(body)")
     end
 
     let(:notification1) do
-      user1.notifications.create!(question_message: question_message1)
+      user1.notifications.create!(article_message: article_message1)
     end
 
     let(:room1) do

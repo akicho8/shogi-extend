@@ -7,7 +7,7 @@ RSpec.describe "将棋トレーニングバトル", type: :system do
 
   # from WkbkSupportMethods
   let(:user1)     { User.create!                    }
-  let(:question1) { user1.wkbk_questions.create_mock1 }
+  let(:article1) { user1.wkbk_articles.create_mock1 }
 
   xit "トップ(ログインなし)" do
     visit "/training"
@@ -22,13 +22,13 @@ RSpec.describe "将棋トレーニングバトル", type: :system do
   end
 
   xit "問題詳細(ログインなし)" do
-    visit "/training?question_id=#{question1.id}"
+    visit "/training?article_id=#{article1.id}"
     expect(page).to have_content "配置"
     doc_image
   end
 
   xit "問題詳細(ログインあり)" do
-    visit "/training?question_id=#{question1.id}&_user_id=#{user1.id}"
+    visit "/training?article_id=#{article1.id}&_user_id=#{user1.id}"
     expect(page).to have_content "配置"
     doc_image
   end

@@ -20,7 +20,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
 
       ################################################################################
 
-      create_table :wkbk_questions, force: true do |t|
+      create_table :wkbk_articles, force: true do |t|
         t.string :key, null: false, index: true
 
         t.belongs_to :user,    null: false, foreign_key: true,                          comment: "作成者"
@@ -55,7 +55,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
 
       # MovesAnswer
       create_table :wkbk_moves_answers, force: true do |t|
-        t.belongs_to :question, foreign_key: {to_table: :wkbk_questions}, null: false,               comment: "問題"
+        t.belongs_to :article, foreign_key: {to_table: :wkbk_articles}, null: false,               comment: "問題"
         t.integer :moves_count, null: false, index: true,  comment: "N手"
         t.string :moves_str,    null: false, index: false, comment: "連続した指し手"
         t.string :end_sfen,     null: true,  index: false, comment: "最後の局面"
