@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.WkbkHaitiKimeruModal(style="width: auto")
+.modal-card.WkbkHaitiKimeruModal
   header.modal-card-head
     p.modal-card-title 局面を確定させてください
   section.modal-card-body
