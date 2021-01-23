@@ -8,6 +8,7 @@ export class ArticleIndexColumnInfo extends MemoryRecord {
       { key: "source_author",       name: "作者",     short_name: "作者",     visible: false, },
 
       { key: "title",               name: "タイトル", short_name: "タイトル", visible: true,  },
+      { key: "book.title",          name: "本",       short_name: "本",       visible: true,  },
       // { key: "histories_count",     name: "出題数",   short_name: "出題",     visible: false, },
       // { key: "o_rate",              name: "正解率",   short_name: "正解率",   visible: true,  },
       // { key: "o_count",             name: "正解数",   short_name: "正解",     visible: false, },

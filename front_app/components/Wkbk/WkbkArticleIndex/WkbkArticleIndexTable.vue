@@ -47,6 +47,10 @@ b-table.WkbkArticleIndexTable.is-size-7.mx-2.mt-0(
     nuxt-link(:to="{name: 'wkbk-articles-article_id-edit', params: {article_id: row.id}}")
       | {{string_truncate(row.title, {length: 20})}}
 
+  b-table-column(v-slot="{row}" custom-key="book.title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book.title').short_name"            sortable         :visible="!!base.visible_hash.title")
+    nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.book.id}}")
+      | {{string_truncate(row.book.title, {length: 20})}}({{row.book.articles_count}})
+
   //- b-table-column(v-slot="{row}" custom-key="histories_count"   field="histories_count"   :label="base.ArticleIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="!!base.visible_hash.histories_count")  {{row.histories_count}}
   //- b-table-column(v-slot="{row}" custom-key="ox_record.o_rate"  field="ox_record.o_rate"  :label="base.ArticleIndexColumnInfo.fetch('o_rate').short_name"  sortable numeric :visible="!!base.visible_hash.o_rate")  {{float_to_perc(row.ox_record.o_rate)}} %
   //- b-table-column(v-slot="{row}" custom-key="ox_record.o_count" field="ox_record.o_count" :label="base.ArticleIndexColumnInfo.fetch('o_count').short_name" sortable numeric :visible="!!base.visible_hash.o_count") {{row.ox_record.o_count}}

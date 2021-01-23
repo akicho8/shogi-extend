@@ -31,7 +31,7 @@ b-table.WkbkBookIndexTable.is-size-7.mx-2.mt-0(
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').short_name"            sortable         :visible="!!base.visible_hash.title")
     nuxt-link(:to="{name: 'wkbk-books-book_id', params: {book_id: row.id}}")
-      | {{string_truncate(row.title, {length: 20})}}
+      | {{string_truncate(row.title, {length: 20})}}({{row.articles_count}})
 
   b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').short_name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
 
@@ -46,6 +46,7 @@ b-table.WkbkBookIndexTable.is-size-7.mx-2.mt-0(
   b-table-column(v-slot="{row}" custom-key="operation" label="操作")
     template(v-if="g_current_user && g_current_user.id === row.user.id || debug_force_edit_p")
       nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.id}}") 編集
+      nuxt-link.ml-1(:to="{name: 'wkbk-articles-new', query: {book_id: row.id}}") 問題追加
 
   template(slot="empty")
     section.section.is-unselectable

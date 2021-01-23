@@ -2,6 +2,7 @@
 .WkbkArticleEditApp
   DebugBox
     template(v-if="article")
+      p article.book_id: {{article.book_id}}
       p article.user.id: {{article.user && article.user.id}}
       p g_current_user.id: {{g_current_user && g_current_user.id}}
       p owner_p: {{owner_p}}
@@ -31,6 +32,9 @@
           WkbkArticleEditAnswerCreate(:base="base" v-if="current_tab_info.key === 'answer_create_mode'" ref="WkbkArticleEditAnswerCreate")
           WkbkArticleEditForm(:base="base"   v-if="current_tab_info.key === 'form_mode'")
           WkbkArticleEditValidation(:base="base" v-if="current_tab_info.key === 'validation_mode'")
+  DebugPre
+    | {{article}}
+    | {{books}}
 </template>
 
 <script>
@@ -40,6 +44,7 @@ import dayjs from "dayjs"
 import { support_parent } from "./support_parent.js"
 
 import { Article    } from "../models/article.js"
+import { Book    } from "../models/book.js"
 import { LineageInfo } from '../models/lineage_info.js'
 import { FolderInfo  } from '../models/folder_info.js'
 import { EditTabInfo  } from '../models/edit_tab_info.js'
@@ -55,6 +60,8 @@ export default {
       //////////////////////////////////////////////////////////////////////////////// 静的情報
       LineageInfo: null,        // 問題の種類
       FolderInfo: null,         // 問題の入れ場所
+      config: null,
+      books: [],
 
       //////////////////////////////////////////////////////////////////////////////// 新規・編集
       tab_index:        null,
@@ -76,6 +83,11 @@ export default {
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
       this.config = e.config
+
+      if (e.books) {
+        this.books = e.books.map(e => new Book(e))
+      }
+
       if (e.article) {
         this.article = new Article(e.article)
       }

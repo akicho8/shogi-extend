@@ -3,14 +3,16 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
   template(slot="brand")
     b-navbar-item(tag="nuxt-link" :to="{name: 'wkbk-books'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
+    b-navbar-item(tag="div") {{base.book.title}}
   template(slot="start")
-    template(v-if="base.book.title")
-      b-navbar-item(tag="div") {{base.book.title}}
-    template(v-else)
-      b-navbar-item(tag="div") {{base.book.new_record_p ? '新規' : '編集'}}
+    b-navbar-item.has-text-weight-bold(tag="div" v-if="base.current_article")
+      span.mx-1.is-family-monospace {{base.current_index + 1}} / {{base.max_count}}
+
   template(slot="end")
-    b-navbar-item.has-text-weight-bold(@click="base.book_save_handle" :class="{disabled: !base.save_button_enabled}")
-      | {{base.save_button_name}}
+    b-navbar-item.has-text-weight-bold.px-4(@click="base.next_handle" v-if="base.current_article")
+      | NEXT
+    b-navbar-item.has-text-weight-bold.px-4(@click="base.restart_handle" v-if="!base.current_article")
+      | RESTART
 </template>
 
 <script>

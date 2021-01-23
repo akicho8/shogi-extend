@@ -2,6 +2,11 @@
 .WkbkArticleEditForm
   .columns.is-gapless
     .column
+      b-field.lineage_key(label="本" label-position="on-border")
+        b-select(v-model="base.article.book_id" expanded)
+          option(:value="null")
+          option(v-for="e in base.books" :value="e.id") {{e.title}}
+
       b-field(label="タイトル" label-position="on-border")
         b-input(v-model.trim="base.article.title" required)
 
@@ -10,7 +15,7 @@
 
       b-field.lineage_key(label="種類" label-position="on-border" v-if="base.LineageInfo")
         b-select(v-model="base.article.lineage_key" expanded)
-          option(v-for="row in base.LineageInfo.values" :value="row.key") {{row.name}}
+          option(v-for="e in base.LineageInfo.values" :value="e.key") {{e.name}}
 
       b-field(label="制限時間" label-position="on-border" v-if="base.config.time_limit_sec_enable")
         b-timepicker(v-model="base.article.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
@@ -31,7 +36,7 @@
       b-field(v-if="lineage_info.mate_validate_on")
         b-switch(v-model="base.article.mate_skip" size="is-small") 最後は無駄合い (なので詰みチェックしない)
 
-      b-collapse.mt-5(:open="source_author_collapse_open_p")
+      b-collapse.mt-5(:open="source_author_collapse_open_p" v-if="false")
         b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 作者が他者の場合
         .box.py-5
           b-field

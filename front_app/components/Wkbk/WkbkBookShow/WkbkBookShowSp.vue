@@ -1,15 +1,15 @@
 <template lang="pug">
-.WkbkBookShowValidation.columns.is-gapless.is-centered
+.WkbkBookShowSp.columns.is-gapless.is-centered
   .column
     .CustomShogiPlayerWrap
-      .has-text-centered(v-if="base.book.direction_message")
-        | {{base.book.direction_message}}
+      .has-text-centered(v-if="base.current_article.direction_message")
+        | {{base.current_article.direction_message}}
       CustomShogiPlayer(
-        sp_mobile_vertical="is_mobile_vertical_off"
-        sp_run_mode="play_mode"
-        :sp_body="base.book.init_sfen"
-        :sp_flip_if_white="true"
+        :sp_body="base.current_sp_body"
+        :sp_viewpoint="base.current_sp_viewpoint"
         :sp_turn="0"
+        :sp_sound_body_changed="false"
+        sp_run_mode="play_mode"
         sp_summary="is_summary_off"
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"
@@ -21,16 +21,14 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WkbkBookShowValidation",
-  mixins: [
-    support_child,
-  ],
+  name: "WkbkBookShowSp",
+  mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkBookShowValidation
+.WkbkBookShowSp
   .column
     display: flex
     align-items: center
@@ -38,8 +36,10 @@ export default {
     flex-direction: column
   .CustomShogiPlayerWrap
     width: 100%
-    margin-top: $wkbk_share_gap
+    +mobile
+      margin-top: 0.5rem
     +tablet
+      margin-top: $wkbk_share_gap
       padding-top: unset
       padding-bottom: unset
       max-width: 66vmin

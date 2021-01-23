@@ -1,8 +1,9 @@
 module Api
   class WkbkController < ::Api::ApplicationController
-    include SortMod
-    include QuestionMod
     include BookMod
+    include ArticleMod
+
+    include SortMod
     include ZipDlMod
     include DebugMod
 

@@ -74,6 +74,7 @@ module Wkbk
     # Vueでリアクティブになるように空でもカラムは作っておくこと
     def self.default_attributes
       default = {
+        :book_id             => nil,
         :title               => nil,
         :description         => nil,
         :hint_desc           => nil,
@@ -105,24 +106,24 @@ module Wkbk
         default[:source_published_on] = "1912-03-04"
 
         default.update({
-            :title            => "(title)",
-            :time_limit_sec   => 30.seconds,
+                         :title            => "(title)",
+                         :time_limit_sec   => 30.seconds,
 
-            # :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
-            # :moves_answers => [
-            #   :moves_str => "1c1b",
-            #   :end_sfen  => "7gk/8G/7G1/7N1/9/9/9/9/9 w 2r2bg4s3n4l18p 2",
-            # ],
+                         # :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
+                         # :moves_answers => [
+                         #   :moves_str => "1c1b",
+                         #   :end_sfen  => "7gk/8G/7G1/7N1/9/9/9/9/9 w 2r2bg4s3n4l18p 2",
+                         # ],
 
-            :init_sfen => "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1",
-            :moves_answers => [
-              { :moves_str => "S*2c 2b3c G*4c",            },
-              { :moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c", },
-              { :moves_str => "S*2c 2b1c 2c1b+ 1a1b G*2c", },
-              { :moves_str => "S*2c 2b3a G*3b",            },
-            ],
+                         :init_sfen => "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1",
+                         :moves_answers => [
+                           { :moves_str => "S*2c 2b3c G*4c",            },
+                           { :moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c", },
+                           { :moves_str => "S*2c 2b1c 2c1b+ 1a1b G*2c", },
+                           { :moves_str => "S*2c 2b3a G*3b",            },
+                         ],
 
-          })
+                       })
       end
 
       default
@@ -139,9 +140,21 @@ module Wkbk
         include: {
           user: { only: [:id, :name, :key], methods: [:avatar_path],},
           moves_answers: {},
+          book: {
+            only: [
+              :id,
+              :title,
+              # :description,
+              # :owner_tag_list,
+              :articles_count,
+              # :created_at,
+              # :updated_at,
+            ],
+          },
         },
         only: [
           :id,
+          :book_id,
           :init_sfen,
           :time_limit_sec,
           :difficulty_level,
@@ -180,7 +193,7 @@ module Wkbk
     belongs_to :user, class_name: "::User" # 作者
     belongs_to :lineage
     belongs_to :source_about
-    belongs_to :book, required: false
+    belongs_to :book, required: false, counter_cache: true
 
     # has_many :messages, class_name: "Wkbk::ArticleMessage", dependent: :destroy # コメント
     # has_many :message_users, through: :messages, source: :user                   # コメントしたユーザー(複数)
@@ -199,24 +212,24 @@ module Wkbk
 
     before_validation do
       normalize_zenkaku_to_hankaku(*[
-          :title,
-          :description,
-          :hint_desc,
-          :direction_message,
-          :source_author,
-          :source_media_name,
-        ])
+                                     :title,
+                                     :description,
+                                     :hint_desc,
+                                     :direction_message,
+                                     :source_author,
+                                     :source_media_name,
+                                   ])
 
       normalize_blank_to_nil(*[
-          :title,
-          :description,
-          :hint_desc,
-          :direction_message,
-          :source_author,
-          :source_media_name,
-          :source_media_url,
-          :source_published_on,
-        ])
+                               :title,
+                               :description,
+                               :hint_desc,
+                               :direction_message,
+                               :source_author,
+                               :source_media_name,
+                               :source_media_url,
+                               :source_published_on,
+                             ])
 
       if Rails.env.test?
         self.title ||= "(title#{self.class.count.next})"
@@ -251,7 +264,7 @@ module Wkbk
     end
 
     with_options allow_blank: true do
-      validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
+      # validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
       validates :description, length: { maximum: 512 }
 
       # validates :init_sfen # , uniqueness: { case_sensitive: true }
@@ -260,7 +273,7 @@ module Wkbk
 
     def page_url(options = {})
       # UrlProxy.wrap2("/wkbk/articles/#{id}")
-      UrlProxy.wrap2("/training?article_id=#{id}")
+      UrlProxy.wrap2("/wkbk/articles/#{id}/edit")
       # Rails.application.routes.url_helpers.url_for([:wkbk, {only_path: false, article_id: id}.merge(options)])
     end
 
@@ -320,25 +333,26 @@ module Wkbk
 
       ActiveRecord::Base.transaction do
         attrs = article.slice(*[
-              :init_sfen,
-              :title,
-              :description,
-              :hint_desc,
-              :direction_message,
-              :mate_skip,
+                                :book_id,
+                                :init_sfen,
+                                :title,
+                                :description,
+                                :hint_desc,
+                                :direction_message,
+                                :mate_skip,
 
-              :source_about_key,
-              :source_author,
-              :source_media_name,
-              :source_media_url,
-              :source_published_on,
-              :owner_tag_list,
+                                :source_about_key,
+                                :source_author,
+                                :source_media_name,
+                                :source_media_url,
+                                :source_published_on,
+                                :owner_tag_list,
 
-              :difficulty_level,
-              :time_limit_sec,
-              :folder_key,
-              :lineage_key,
-            ])
+                                :difficulty_level,
+                                :time_limit_sec,
+                                :folder_key,
+                                :lineage_key,
+                              ])
 
         assign_attributes(attrs)
 
@@ -420,49 +434,49 @@ module Wkbk
     # 出題用
     def as_json_type3
       as_json({
-          only: [
-            :id,
-            :init_sfen,
-            :time_limit_sec,
-            :difficulty_level,
-            :title,
-            :description,
-            :hint_desc,
-            :direction_message,
-            :mate_skip,
-            :owner_tag_list,
-            :source_author,
-            :source_media_url,
-          ],
-          methods: [
-            :source_about_key,
-          ],
-          include: {
-            user: { only: [:id, :name, :key], methods: [:avatar_path],},
-            moves_answers: {
-              only: [:moves_count, :moves_str, :end_sfen],
-            },
-          },
-        })
+                only: [
+                  :id,
+                  :init_sfen,
+                  :time_limit_sec,
+                  :difficulty_level,
+                  :title,
+                  :description,
+                  :hint_desc,
+                  :direction_message,
+                  :mate_skip,
+                  :owner_tag_list,
+                  :source_author,
+                  :source_media_url,
+                ],
+                methods: [
+                  :source_about_key,
+                ],
+                include: {
+                  user: { only: [:id, :name, :key], methods: [:avatar_path],},
+                  moves_answers: {
+                    only: [:moves_count, :moves_str, :end_sfen],
+                  },
+                },
+              })
     end
 
     # 詳細用
     def as_json_type6
       as_json({
-          methods: [
-            :source_about_key,
-            :lineage_key,
-          ],
-          include: {
-            user: {
-              only: [:id, :key, :name],
-              methods: [:avatar_path],
-            },
-            moves_answers: {},
-            folder: { only: [], methods: [:key, :name, :type] },
-            messages: ArticleMessage.json_struct_type8,
-          },
-        })
+                methods: [
+                  :source_about_key,
+                  :lineage_key,
+                ],
+                include: {
+                  user: {
+                    only: [:id, :key, :name],
+                    methods: [:avatar_path],
+                  },
+                  moves_answers: {},
+                  folder: { only: [], methods: [:key, :name, :type] },
+                  messages: ArticleMessage.json_struct_type8,
+                },
+              })
     end
 
     def linked_title(options = {})

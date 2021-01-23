@@ -1,6 +1,6 @@
 module Api
   class WkbkController
-    concern :QuestionMod do
+    concern :ArticleMod do
       # 問題編集用
       # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
       #
@@ -13,11 +13,24 @@ module Api
         info[:LineageInfo] = Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
         info[:FolderInfo]  = Wkbk::FolderInfo.as_json(only: [:key, :name, :icon, :type])
 
+        if current_user
+          info[:books] = current_user.wkbk_books.order(:created_at)
+        end
+
         if params[:article_id]
           article = Wkbk::Article.find(params[:article_id])
           info[:article] = article.as_json(Wkbk::Article.json_type5)
         else
           info[:article_default_attributes] = Wkbk::Article.default_attributes
+
+          if current_user
+            if v = params[:book_id]
+              if book = current_user.wkbk_books.find_by(id: v)
+                info[:article_default_attributes][:book_id] = book.id
+              end
+            end
+          end
+
         end
         info
       end

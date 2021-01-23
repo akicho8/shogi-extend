@@ -1,20 +1,12 @@
 import dayjs from "dayjs"
+import { ModelBase } from "../../models/model_base.js"
 
-export class Article {
+export class Article extends ModelBase {
   constructor(article) {
+    super()
     Object.assign(this, article)
 
     this.time_limit_sec_to_clock()
-  }
-
-  //////////////////////////////////////////////////////////////////////////////// ActiveRecord風便利メソッド
-
-  get new_record_p() {
-    return this.id == null
-  }
-
-  get persisted_p() {
-    return this.id != null
   }
 
   //////////////////////////////////////////////////////////////////////////////// 権限
@@ -43,6 +35,10 @@ export class Article {
   }
 
   ////////////////////////////////////////////////////////////////////////////////
+
+  init_sfen_with(moves_answer) {
+    return [this.init_sfen, "moves", moves_answer.moves_str].join(" ")
+  }
 
   // sfenは正解か？
   sfen_valid_p(sfen) {
@@ -91,7 +87,7 @@ export class Article {
 
   // 解答のSFENの配列を返す
   get answer_sfen_list() {
-    return this.moves_answers.map(e => [this.init_sfen, "moves", e.moves_str].join(" "))
+    return this.moves_answers.map(e => this.init_sfen_with(e))
   }
 
   get base_clock() {

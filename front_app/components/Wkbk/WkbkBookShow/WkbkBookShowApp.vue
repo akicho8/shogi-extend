@@ -4,29 +4,39 @@
     template(v-if="book")
       p book.user.id: {{book.user && book.user.id}}
       p g_current_user.id: {{g_current_user && g_current_user.id}}
-      p owner_p: {{owner_p}}
-      p editable_p: {{editable_p}}
+      p goal_p: {{goal_p}}
+      p rest_count: {{rest_count}}
+      p current_index: {{current_index}}
+      p max_count: {{max_count}}
+      template(v-if="current_exist_p")
+        p current_sp_body: {{current_sp_body}}
+        p current_sp_viewpoint: {{current_sp_viewpoint}}
   b-loading(:active="$fetchState.pending")
   .MainContainer(v-if="!$fetchState.pending")
     WkbkBookShowNavbar(:base="base")
     MainSection.is_mobile_padding_zero
       .container
-        keep-alive
-          //- WkbkBookShowPlacement(:base="base"  v-if="current_tab_info.key === 'placement_mode'")
-          //- WkbkBookShowAnswerCreate(:base="base" v-if="current_tab_info.key === 'answer_create_mode'" ref="WkbkBookShowAnswerCreate")
-          //- WkbkBookShowForm(:base="base")
-          WkbkBookShowValidation(:base="base")
+        //- WkbkBookShowPlacement(:base="base"  v-if="current_tab_info.key === 'placement_mode'")
+        //- WkbkBookShowAnswer(:base="base" v-if="current_tab_info.key === 'answer_create_mode'" ref="WkbkBookShowAnswer")
+        //- WkbkBookShowGoal(:base="base")
+        WkbkBookShowSp(:base="base" v-if="current_exist_p")
+        WkbkBookShowAnswer(:base="base" v-if="current_exist_p")
+        WkbkBookShowGoal(:base="base" v-if="!current_exist_p")
+  DebugPre
+    | {{$data}}
 </template>
 
 <script>
 import { support_parent } from "./support_parent.js"
 import { Book    } from "../models/book.js"
 import { FolderInfo  } from '../models/folder_info.js'
+import { app_articles } from "./app_articles.js"
 
 export default {
   name: "WkbkBookIndexApp",
   mixins: [
     support_parent,
+    app_articles,
   ],
 
   data() {
@@ -40,7 +50,6 @@ export default {
       book:         null,
 
       //////////////////////////////////////////////////////////////////////////////// 検証モード
-      valid_count:    null, // 検証モードで正解した数
     }
   },
 
@@ -48,45 +57,23 @@ export default {
     // app/controllers/api/wkbk_controller/book_mod.rb
     // http://localhost:3000/api/wkbk.json?remote_action=book_show_fetch&book_id=2
     return this.$axios.$get("/api/wkbk.json", {params: {remote_action: "book_show_fetch", ...this.$route.params, ...this.$route.query}}).then(e => {
-      
+
       // this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
       this.config = e.config
+
       this.book = new Book(e.book)
 
-      // this.valid_count = 0
-
-      this.talk(this.book.direction_message)
+      this.setup_first()
     })
   },
 
   methods: {
-    // FIXME: イベントで受けとる
-    current_moves() {
-      return this.$refs.WkbkBookShowAnswerCreate.$refs.main_sp.sp_object().moves_take_turn_offset
-    },
-
-    play_mode_advanced_moves_set(moves) {
-      // if (this.book.moves_answers.length === 0) {
-      //   if (this.exam_run_count === 0) {
-      //     this.toast_warn("正解を作ってからやってください")
-      //   }
-      // }
-      if (this.book.moves_valid_p(moves)) {
-        this.sound_play("o")
-        this.toast_ok("正解")
-        // this.valid_count += 1
-      }
-      // this.exam_run_count += 1
-    },
-
   },
 
   computed: {
-    base()                { return this                                         },
-
-    //////////////////////////////////////////////////////////////////////////////// 編集権限
-    owner_p()    { return this.book.owner_p(this.g_current_user) },
+    base() { return this },
+    owner_p() { return this.book.owner_p(this.g_current_user) },
   },
 }
 </script>
