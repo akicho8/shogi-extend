@@ -30,7 +30,7 @@ b-table.WkbkBookIndexTable.mx-2.mt-0(
   //- b-table-column(v-slot="{row}" custom-key="user_id"           field="user.id"           :label="base.BookIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="!!base.visible_hash.user_id") {{row.user.name}}
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').short_name" sortable)
-    nuxt-link(:to="{name: 'wkbk-books-book_id', params: {book_id: row.id}}" @click.native="sound_play('click')")
+    nuxt-link(:to="{name: 'library-books-book_id', params: {book_id: row.id}}" @click.native="sound_play('click')")
       | {{string_truncate(row.title, {length: 20})}}({{row.articles_count}})
 
   b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.current_tab.key === 'everyone'")
@@ -49,17 +49,17 @@ b-table.WkbkBookIndexTable.mx-2.mt-0(
 
   b-table-column(v-slot="{row}" custom-key="operation" label="")
     template(v-if="g_current_user && g_current_user.id === row.user.id || debug_force_edit_p")
-      //- nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.id}}")
+      //- nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.id}}")
       //-   b-icon(icon="edit")
       //-   | 編集
-      nuxt-link(:to="{name: 'wkbk-articles-new', query: {book_id: row.id}}")
+      nuxt-link(:to="{name: 'library-articles-new', query: {book_id: row.id}}")
         b-icon(icon="plus")
 
       b-dropdown(append-to-body position="is-top-left" @active-change="sound_play('click')")
         a.px-4(slot="trigger")
           b-icon(icon="dots-vertical")
         b-dropdown-item(has-link )
-          nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.id}}" @click.native="sound_play('click')") 編集
+          nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.id}}" @click.native="sound_play('click')") 編集
         //- b-dropdown-item(:separator="true")
 
   template(slot="empty")

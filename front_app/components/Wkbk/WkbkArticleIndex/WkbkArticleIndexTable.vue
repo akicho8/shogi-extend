@@ -42,7 +42,7 @@ b-table.WkbkArticleIndexTable.mx-2.mt-0(
   //-     a {{row.user.name}}
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').short_name" sortable :visible="!!base.visible_hash.title")
-    nuxt-link(:to="{name: 'wkbk-articles-article_id-edit', params: {article_id: row.id}}")
+    nuxt-link(:to="{name: 'library-articles-article_id-edit', params: {article_id: row.id}}")
       | {{string_truncate(row.title, {length: 20})}}
 
   b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.current_tab.key === 'everyone'")
@@ -50,7 +50,7 @@ b-table.WkbkArticleIndexTable.mx-2.mt-0(
       | {{string_truncate(row.user.name, {length: 20})}}
 
   b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').short_name" sortable :visible="!!base.visible_hash.book_title")
-    nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.book.id}}" v-if="row.book")
+    nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.book.id}}" v-if="row.book")
       | {{string_truncate(row.book.title, {length: 20})}}({{row.book.articles_count}})
 
   //- b-table-column(v-slot="{row}" custom-key="histories_count"   field="histories_count"   :label="base.ArticleIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="!!base.visible_hash.histories_count")  {{row.histories_count}}
@@ -82,7 +82,7 @@ b-table.WkbkArticleIndexTable.mx-2.mt-0(
 
   b-table-column(v-slot="{row}" custom-key="operation" label="操作")
     template(v-if="g_current_user && g_current_user.id === row.user.id || debug_force_edit_p")
-      nuxt-link(:to="{name: 'wkbk-articles-article_id-edit', params: {article_id: row.id}}") 編集
+      nuxt-link(:to="{name: 'library-articles-article_id-edit', params: {article_id: row.id}}") 編集
 
   template(slot="empty")
     section.section.is-unselectable

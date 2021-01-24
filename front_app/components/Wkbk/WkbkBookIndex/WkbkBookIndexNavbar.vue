@@ -2,7 +2,7 @@
 MainNavbar.WkbkBookIndexNavbar(:spaced="false")
   template(slot="brand")
     NavbarItemHome
-    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'wkbk-books'}") 問題集リスト
+    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'library-books'}") 問題集リスト
     //- template(v-if="base.page_info.tag")
     //-   b-tag(attached closable @close="base.tag_search_handle(null)" rounded type="is-dark")
     //-     | {{base.page_info.tag}}
@@ -22,7 +22,7 @@ MainNavbar.WkbkBookIndexNavbar(:spaced="false")
     //-       .has-text-grey(v-else)
     //-         | {{e.name}}
 
-    b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'wkbk-books-new'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'library-books-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
     b-navbar-item.px-5(@click="base.sidebar_toggle")

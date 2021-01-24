@@ -1,10 +1,10 @@
 <template lang="pug">
 MainNavbar.WkbkArticleIndexNavbar(:spaced="false")
   template(slot="brand")
-    b-navbar-item(tag="nuxt-link" :to="{name: 'wkbk-books'}" @click.native="sound_play('click')")
+    b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
     //- NavbarItemHome
-    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'wkbk-articles'}") 問題リスト
+    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'library-articles'}") 問題リスト
     //- template(v-if="base.page_info.tag")
     //-   b-tag(attached closable @close="base.tag_search_handle(null)" type="is-dark")
     //-     | {{base.page_info.tag}}
@@ -24,7 +24,7 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false")
           .has-text-grey(v-else)
             | {{e.name}}
 
-    b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'wkbk-articles-new'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'library-articles-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
     b-navbar-item.px-5(@click="base.sidebar_toggle")

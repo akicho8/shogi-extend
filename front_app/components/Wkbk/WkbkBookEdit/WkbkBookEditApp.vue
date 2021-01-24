@@ -257,7 +257,7 @@ export default {
 
           this.toast_ok(`${before_save_button_name}しました`)
 
-          this.$router.push({name: "wkbk-books", query: {scope: this.book.folder_key}})
+          this.$router.push({name: "library-books", query: {scope: this.book.folder_key}})
         }
       })
     },

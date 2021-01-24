@@ -6,7 +6,7 @@ b-sidebar.WkbkArticleIndexSidebar.is-unselectable(fullheight right overlay v-mod
     .mt-4
       b-menu
         //- b-menu-list(label="Action" v-if="development_p")
-        //-   b-menu-item(tag="nuxt-link" :to="{name: 'wkbk-articles-new'}" label="問題作成" @click.native="sound_play('click')")
+        //-   b-menu-item(tag="nuxt-link" :to="{name: 'library-articles-new'}" label="問題作成" @click.native="sound_play('click')")
 
         b-menu-list(label="表示オプション")
 

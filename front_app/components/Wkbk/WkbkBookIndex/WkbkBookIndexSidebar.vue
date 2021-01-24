@@ -6,8 +6,8 @@ b-sidebar.WkbkBookIndexSidebar.is-unselectable(fullheight right overlay v-model=
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          //- b-menu-item(tag="nuxt-link" :to="{name: 'wkbk-books-new'}" label="問題集作成" @click.native="sound_play('click')")
-          b-menu-item(tag="nuxt-link" :to="{name: 'wkbk-articles'}" label="問題一覧" @click.native="sound_play('click')")
+          //- b-menu-item(tag="nuxt-link" :to="{name: 'library-books-new'}" label="問題集作成" @click.native="sound_play('click')")
+          b-menu-item(tag="nuxt-link" :to="{name: 'library-articles'}" label="問題一覧" @click.native="sound_play('click')")
 
         //- b-menu-list(label="表示オプション")
         //-

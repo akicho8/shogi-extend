@@ -269,7 +269,7 @@ export default {
 
           this.toast_ok(`${before_save_button_name}しました`)
 
-          this.$router.push({name: "wkbk-articles", query: {scope: this.article.folder_key}})
+          this.$router.push({name: "library-articles", query: {scope: this.article.folder_key}})
         }
       })
     },

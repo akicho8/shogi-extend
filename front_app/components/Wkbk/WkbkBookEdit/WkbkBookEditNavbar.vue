@@ -1,7 +1,7 @@
 <template lang="pug">
 MainNavbar.WkbkBookEditNavbar(:spaced="false")
   template(slot="brand")
-    b-navbar-item(tag="nuxt-link" :to="{name: 'wkbk-books'}" @click.native="sound_play('click')")
+    b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
   template(slot="start")
     template(v-if="base.book.title")

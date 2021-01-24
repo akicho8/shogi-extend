@@ -214,7 +214,7 @@ class ServiceInfo
     },
     {
       display_p: !Rails.env.production?,
-      nuxt_link_to: {path: "/wkbk/books"},
+      nuxt_link_to: {path: "/library/books"},
       title: "問題集",
       new_p: true,
       og_image_key: "wkbk",

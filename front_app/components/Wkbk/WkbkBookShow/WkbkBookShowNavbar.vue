@@ -1,7 +1,7 @@
 <template lang="pug">
 MainNavbar.WkbkBookShowNavbar(:spaced="false")
   template(slot="brand")
-    b-navbar-item(tag="nuxt-link" :to="{name: 'wkbk-books'}" @click.native="sound_play('click')")
+    b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
     b-navbar-item(tag="a" @click.native="base.description_handle") {{base.book.title}}
   template(slot="start")
