@@ -13,6 +13,7 @@ module Actb::Question::ImportExportMod
     def export_all
       json = all.as_json({
           only: [
+            :user_id,
             :key,
             :init_sfen,
             :time_limit_sec,
@@ -21,17 +22,25 @@ module Actb::Question::ImportExportMod
             :description,
             :hint_desc,
             :direction_message,
-            :owner_tag_list,
             :source_author,
             :source_media_name,
             :source_media_url,
             :source_published_on,
+            :mate_skip,
           ],
           methods: [
+            :owner_tag_list,
             :lineage_key,
             :source_about_key,
           ],
           include: {
+            :user => {
+              only: [
+                :id,
+                :key,
+                :name,
+              ],
+            },
             :moves_answers => {
               only: [
                 :moves_str,
@@ -65,6 +74,7 @@ module Actb::Question::ImportExportMod
               :source_media_name,
               :source_media_url,
               :source_published_on,
+              :mate_skip,
             ]))
         record.moves_answers.clear
         e[:moves_answers].each do |e|

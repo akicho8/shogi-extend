@@ -12,33 +12,41 @@ module Wkbk::Article::ImportExportMod
 
     def export_all
       json = all.as_json({
-          only: [
-            :key,
-            :init_sfen,
-            :time_limit_sec,
-            :difficulty_level,
-            :title,
-            :description,
-            :hint_desc,
-            :direction_message,
-            :owner_tag_list,
-            :source_author,
-            :source_media_name,
-            :source_media_url,
-            :source_published_on,
-          ],
-          methods: [
-            :lineage_key,
-            :source_about_key,
-          ],
-          include: {
-            :moves_answers => {
-              only: [
-                :moves_str,
-              ],
-            },
-          },
-        })
+                           only: [
+                             :key,
+                             :init_sfen,
+                             :time_limit_sec,
+                             :difficulty_level,
+                             :title,
+                             :description,
+                             :hint_desc,
+                             :direction_message,
+                             :owner_tag_list,
+                             :source_author,
+                             :source_media_name,
+                             :source_media_url,
+                             :source_published_on,
+                             :mate_skip,
+                           ],
+                           methods: [
+                             :lineage_key,
+                             :source_about_key,
+                           ],
+                           include: {
+                             :user => {
+                               only: [
+                                 :id,
+                                 :key,
+                                 :name,
+                               ],
+                             },
+                             :moves_answers => {
+                               only: [
+                                 :moves_str,
+                               ],
+                             },
+                           },
+                         })
 
       body = json.to_yaml(line_width: -1)
 
@@ -48,27 +56,36 @@ module Wkbk::Article::ImportExportMod
       puts "write: #{file} (#{count})"
     end
 
-    def import_all(user = User.sysop)
+    def import_all(options = {})
+      options = {
+        user: User.sysop,
+      }.merge(options)
+
       persistent_records.each do |e|
-        record = user.wkbk_articles.find_or_initialize_by(key: e[:key])
-        record.update!(e.slice(*[
-              :lineage_key,
-              :init_sfen,
-              :time_limit_sec,
-              :difficulty_level,
-              :title,
-              :description,
-              :hint_desc,
-              :direction_message,
-              :source_about_key,
-              :source_author,
-              :source_media_name,
-              :source_media_url,
-              :source_published_on,
-            ]))
-        record.moves_answers.clear
-        e[:moves_answers].each do |e|
-          record.moves_answers.create!(moves_str: e[:moves_str])
+        record = options[:user].wkbk_articles.find_or_initialize_by(key: e[:key])
+        begin
+          record.update!(e.slice(*[
+                                   :lineage_key,
+                                   :init_sfen,
+                                   :time_limit_sec,
+                                   :difficulty_level,
+                                   :title,
+                                   :description,
+                                   :hint_desc,
+                                   :direction_message,
+                                   :source_about_key,
+                                   :source_author,
+                                   :source_media_name,
+                                   :source_media_url,
+                                   :source_published_on,
+                                   :mate_skip,
+                                 ]))
+          record.moves_answers.clear
+          e[:moves_answers].each do |e|
+            record.moves_answers.create!(moves_str: e[:moves_str])
+          end
+        rescue => error
+          p [error, e]
         end
       end
     end
