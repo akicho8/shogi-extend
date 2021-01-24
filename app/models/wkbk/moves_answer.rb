@@ -104,7 +104,7 @@ module Wkbk
     def validate5_all_piece_not_exists
       if article.lineage.pure_info.mochigomagentei
         if not_enough_piece_box.values.all?(&:zero?)
-          errors.add(:base, "玉方の持駒が限定されていません。「詰将棋」の間違いではないですか？")
+          errors.add(:base, "「玉方持駒限定詰将棋」の指定があるのに玉方の持駒が限定されていません。「詰将棋」の間違いではないですか？")
         end
       end
     end

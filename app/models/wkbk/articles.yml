@@ -214,6 +214,30 @@
   - moves_str: N*6d 6c6d B*4a 5b6a S*6b 7a6b G*5b 6a7a 5b6b 7a6b S*6c 6b7a G*7b
   - moves_str: N*6d 6c6d B*4a 5b6a S*6b 7a6b G*5b 6a7a 5b6b 7a6b S*6c 6b6a G*6b
   mate_skip: false
+- key: 35aba341171982f4c9a2284fc89f2b89
+  user_id: 21
+  init_sfen: position sfen 4k4/3sg4/3ppp3/9/9/9/9/9/9 b RG 1
+  time_limit_sec: 8
+  difficulty_level: 1
+  title: 肩慣らし
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 21
+    key: 185da0fb8f2d637b2a6407a66eb5992d
+    name: えふえふ
+  moves_answers:
+  - moves_str: R*3a 5a4b G*3b
+  - moves_str: R*3a 5a4b G*4a
+  mate_skip: false
 - key: 85d06fb76541f0e1250a872ecbf3998d
   user_id: 8
   init_sfen: position sfen 4k4/4b4/9/9/9/9/9/9/9 b L2rb4g4s4n3l18p 1
@@ -237,6 +261,35 @@
   moves_answers:
   - moves_str: L*5i
   mate_skip: false
+- key: 0d59de16e5a5c4ce21527a0c40f368d3
+  user_id: 159
+  init_sfen: position sfen lnsg2s+Rl/4k1g2/p2ppp1+Pp/2p3p2/9/4P4/P2PsPP1P/2+r1N4/L3KGSNL
+    b 2BNPg3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 意外な手から必死逃れ
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死逃れ
+  source_about_key: ascertained
+  user:
+    id: 159
+    key: cc0bc8aae89d0bf0d02cbda5c44ad14a
+    name: Beluga＠将棋アカ
+  moves_answers:
+  - moves_str: B*4a 5b4a 2c3b 4a5b 3b4b 5b4b B*2d
+  - moves_str: B*4a 5b6b B*8d
+  - moves_str: B*4a 5b5a B*8d
+  - moves_str: B*4a 5b4a 2c3b 4a5b 3b4b 3a4b N*6d 6c6d B*4a 5b6b G*6c 6b5a 4a5b+
+  - moves_str: B*4a 5b4a 2c3b 4a5b 3b4b 3a4b N*6d 5b6b B*8d
+  - moves_str: B*4a 5b4a 2c3b 4a5b 3b4b 5b6b B*8d
+  mate_skip: false
 - key: c91023a688fde65cdd6bd456d9d87289
   user_id: 8
   init_sfen: position sfen 5B1nl/7k1/6pp1/8p/9/9/9/9/9 b S 1
@@ -259,6 +312,101 @@
     name: きなこもち
   moves_answers:
   - moves_str: S*3b
+  mate_skip: false
+- key: ea8ffe6ef835514404142c0348316c7c
+  user_id: 170
+  init_sfen: position sfen 2R3gnk/6Gsl/5G1p1/5p2p/9/9/9/9/9 b B 1
+  time_limit_sec: 30
+  difficulty_level: 3
+  title: 穴熊の詰将棋
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 3b2a 3a2a 7a2a+ 1a2a B*3b 2a1a G*2a
+  - moves_str: 3b2a 3a2a 7a2a+ 1a2a B*3b 2a3a G*2a
+  - moves_str: 3b2a 1a2a N*3c 2a1a 7a3a+ 2b3a G*2a
+  - moves_str: 3b2a 1a2a N*3c 2a1a 7a3a+ G*2a 3a2a
+  - moves_str: 3b2a 1a2a N*3c 2a1a 7a3a G*2a 3a2a+
+  - moves_str: 3b2a 1a2a N*3c 2a1a 7a3a G*2a 3a2a
+  - moves_str: 3b2a 1a2a N*3c 2a1a 7a3a G*2a 3c2a+
+  - moves_str: 3b2a 1a2a N*3c 2a1a 7a3a+ G*2a 3c2a+
+  - moves_str: 3b2a 1a2a N*3c 2b3c 7a3a+ 2a3a G*3b
+  mate_skip: false
+- key: e10815af1822005b5306308f4f7d6812
+  user_id: 170
+  init_sfen: position sfen ln3+R1Bl/1r3sSk1/5p1p1/p1p1p3p/1p3g3/2P1P1p1P/PPN2PSP1/4G4/L4G1NL
+    b G2Pbsnp 1
+  time_limit_sec: 30
+  difficulty_level: 3
+  title: 対抗系の実践詰将棋
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c G*2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c2d G*3d 2d1c 3d2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c2d G*3d 2d1c 3b2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c2d G*3d 2d2e 3g2f
+  - moves_str: 3b2c+ 2b2c 4a3b 2c2d G*2c 2d2e 3g2f
+  - moves_str: 3b2c+ 2b2c 4a3b 2c2d G*2c 2d2e 2g2f
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1a1b G*2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 3b3d
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 1b3d 2d1c 3b2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 1b3d 2d1c 3d2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 1b3d 2d1c G*2d
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 1b3d 2d1c G*2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 1b3d 2d1c 3b3c P*2c 3c2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 1b3d 2d1c 3b3c P*2c 3d2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 1b3d 2d1c 3b3c N*2c 3c2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 1b3d 2d1c 3b3c N*2c 3d2d 1c1b 3c2c
+  - moves_str: 3b2c+ 2b2c 4a3b 2c1c 2a1b+ 1c2d 1b3d 2d1c 3b3c 4b3c G*2c
+  mate_skip: false
+- key: 3a8be1ca1fbd0681c571344ccc6243bc
+  user_id: 170
+  init_sfen: position sfen l5Bnl/5+PG2/3r1pnp1/2p1p2kp/p3sPp2/1PP1g1PPP/P5N2/1R4S2/LN3G2L
+    b Sbgs3p 1
+  time_limit_sec: 30
+  difficulty_level: 2
+  title: 実戦で逃した詰将棋
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: S*2e 3c2e 2f2e 2d3d N*2f
   mate_skip: false
 - key: 11720675a060167906461c4b11235f1e
   user_id: 8
@@ -425,6 +573,32 @@
   moves_answers:
   - moves_str: G*3d 3c3d 3a3d
   mate_skip: false
+- key: 6601956a9262b977d5a1a5ac199665f8
+  user_id: 207
+  init_sfen: position sfen 6+Rnl/9/7k1/6Np+b/9/9/9/9/9 b Grb3g4s2n3l17p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 金をいつ使うか
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*2b 2c1c 2b1b 1a1b 3a2b
+  - moves_str: G*2b 2c1c 2b1b 1c1b 3a2b
+  - moves_str: G*2b 2c1c 2b1b 1c2c 3d2b+
+  mate_skip: false
 - key: 6fc471f94345ebb2421be55c3aaff4a6
   user_id: 8
   init_sfen: position sfen ln7/1kg+R5/ppp6/9/9/9/9/9/9 b Sr2b3g3s3n3l15p 1
@@ -448,6 +622,302 @@
   moves_answers:
   - moves_str: S*7a 8b9b 6b7b
   mate_skip: true
+- key: 15807cf879b696e976adb83aeafc1e4a
+  user_id: 207
+  init_sfen: position sfen 6s1l/4+R2S1/6lk1/7N1/7S1/9/9/9/9 b Nr2b4gs2n2l18p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 龍を活躍させたいが
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: N*1e 1a1e 2b1c+ 2c1c 5b1b
+  mate_skip: false
+- key: 662fc2f083c364e883fbfd96b3ddabce
+  user_id: 224
+  init_sfen: position sfen lnsgk1snl/6gb1/p1pppp2p/6R2/9/2r6/P2PPPP1P/1BG6/LNS1KGSNL
+    b 3P3p 1
+  time_limit_sec: 10
+  difficulty_level: 3
+  title: 相横歩取り!?
+  description: |-
+    ▲3二飛成には▽同銀の一手だが、▲2二角成と角をボロっと取ることが出来て勝勢。
+    ▲2二角成は、▽同銀には▲3二飛成、▽同金には3一飛成でやはり勝勢。▽3三歩と打つしかないが、▲3二馬としておけば優勢。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 224
+    key: 69604c1d04a1ba3d485149d012add8f4
+    name: 恵比歯科
+  moves_answers:
+  - moves_str: 3d3b+
+  - moves_str: 8h2b+
+  mate_skip: false
+- key: 404690302c39b118e464f27ad04acc66
+  user_id: 207
+  init_sfen: position sfen 7R1/5Bn2/8k/7N1/7g1/9/9/9/9 b Grb2g4s2n4l18p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 上部に逃げられそう
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2d1b+ 1c1b G*2b 1b1c 2a1a+
+  mate_skip: true
+- key: 1764cf453fbcb315210f1449097c02db
+  user_id: 207
+  init_sfen: position sfen 9/6+B+bk/6N2/7pp/9/9/9/9/9 b RSr4g3s3n4l16p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 馬の守りをどうするか
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*2c 2b2c R*1a 1b1a 3b2a
+  mate_skip: false
+- key: 68eeb3317d2c9374c2048e7a364ef64b
+  user_id: 207
+  init_sfen: position sfen 6+B1l/8k/6r2/6spp/9/9/9/9/9 b 2Srb4gs4n3l16p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 飛車が利いているわね
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*1c 3c1c S*2a 1b2c 3a3b
+  mate_skip: false
+- key: 14b1cb2bca893c830e701f774ea2ef72
+  user_id: 207
+  init_sfen: position sfen 8r/5+B+R2/7gk/8s/9/9/9/9/9 b 2Gbg3s4n4l18p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 空中銀冠がガッチリ？
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*2d 2c2d 4b3a 1a3a G*1b
+  mate_skip: false
+- key: 3869e8a3443fefa1c4a894b1f0420267
+  user_id: 207
+  init_sfen: position sfen 6snl/8k/6R2/8p/9/9/9/9/9 b 2SPr2b4gs3n3l16p 1
+  time_limit_sec: 40
+  difficulty_level: 1
+  title: 追い込まれているが金がないので1手詰ではない
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*1c 2a1c S*2c 1b2a P*2b 3a2b 3c3b+
+  mate_skip: false
+- key: 0fe6243e139cc9639a08d9c337a7a7e5
+  user_id: 207
+  init_sfen: position sfen 7pk/9/6G+B1/9/9/9/9/9/9 b NP2rb3g4s3n4l16p 1
+  time_limit_sec: 40
+  difficulty_level: 1
+  title: 打歩詰は反則
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3c2b 2a2b P*1b 1a2a N*3c 2a3a 2c4a
+  mate_skip: false
+- key: 0ed660d720b1f9c3241fff466b9dae09
+  user_id: 170
+  init_sfen: position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1
+  time_limit_sec: 30
+  difficulty_level: 2
+  title: 渡瀬荘二郎『待宵』8番
+  description: 
+  hint_desc: 
+  source_author: 渡瀬荘二郎
+  source_media_name: フリー百科事典『ウィキペディア（Wikipedia）』
+  source_media_url: https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B
+  source_published_on: '2017-02-22'
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: S*2c 2b1c 2c1b+ 1c1b G*2c
+  - moves_str: S*2c 2b1c 2c1b+ 1a1b G*2c
+  mate_skip: false
+- key: bf6b2631c27ceb02b59a1973f6bbc328
+  user_id: 170
+  init_sfen: position sfen 7nl/5+B1k1/6Lp1/6p1p/7s1/9/9/9/9 b GS 1
+  time_limit_sec: 120
+  difficulty_level: 4
+  title: 大橋宗桂『将棋造物』2番 15手詰め
+  description: 
+  hint_desc: 
+  source_author: 大橋宗桂
+  source_media_name: フリー百科事典『ウィキペディア（Wikipedia）』
+  source_media_url: https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B
+  source_published_on: '2017-02-22'
+  direction_message: 
+  owner_tag_list:
+  - 古典詰将棋
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 3c3b+ 2b1b G*2b 1b1c 2b2c 1c2c S*2d 2c1b P*1c 2a1c 2d2c+ 1b2c 4b3c
+      2c1b 3b2b
+  - moves_str: 3c3b+ 2b1b G*2b 1b1c 2b2c 1c2c S*2d 2c1b P*1c 2a1c 2d2c+ 1b2c 4b3c
+      2c1b 3c2b
+  - moves_str: 3c3b+ 2b1b G*2b 1b1c 2b2c 1c2c S*2d 2c1b P*1c 2a1c 2d2c 1b2c 4b3c 2c1b
+      3b2b
+  - moves_str: 3c3b+ 2b1b G*2b 1b1c 2b2c 1c2c S*2d 2c1b P*1c 2a1c 2d2c 1b2c 4b3c 2c1b
+      3c2b
+  mate_skip: false
+- key: b96bd72eff9fe7b0a36906e7ddd5f94a
+  user_id: 170
+  init_sfen: position sfen 4l4/4p2bl/6k2/4Pp1pp/6Nn1/8P/7PS/5N3/8L b BG 1
+  time_limit_sec: 40
+  difficulty_level: 2
+  title: 一直線の実践型七手詰め
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: G*4c 3c3d B*2c 3d3e 1g2f 3e4f 2c5f+
+  mate_skip: false
+- key: '09fa436d4146304a10faad7c44c108f5'
+  user_id: 170
+  init_sfen: position sfen 7nl/9/8p/6sSk/7p1/5pG1N/6PP1/6S2/6NNL b P 1
+  time_limit_sec: 60
+  difficulty_level: 3
+  title: 打ち歩詰め回避の必至問題
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 3f2f
+  mate_skip: false
 - key: 4c79cb4f7179cc7ebfd319d8e3fe441b
   user_id: 8
   init_sfen: position sfen ln1gkg1nl/1r1s3b1/ppppppspp/6p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL
@@ -471,6 +941,236 @@
     name: きなこもち
   moves_answers:
   - moves_str: 2e2d 2c2d 2h2d
+  mate_skip: false
+- key: 1ae54b2c30bb0e22124580d1201d6dea
+  user_id: 224
+  init_sfen: position sfen 7R1/6p2/5bk2/9/4NP3/3+B5/9/9/9 b r4g4s3n4l16p 1
+  time_limit_sec: 20
+  difficulty_level: 3
+  title: 桂馬をどうする？
+  description: 角を取りたくなるが、際どく詰まない。5一に効かせる▲6三桂不成が正解。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 224
+    key: 69604c1d04a1ba3d485149d012add8f4
+    name: 恵比歯科
+  moves_answers:
+  - moves_str: 5e6c 3c4b 2a5a+
+  - moves_str: 5e6c 3c3d 6f4d
+  mate_skip: false
+- key: 30ea9d503497dcddc820c9f0cf4a05d5
+  user_id: 207
+  init_sfen: position sfen 8l/6B2/5+R1G1/8k/6Sp1/9/9/9/9 b rb3g3s4n3l17p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 攻め駒はたくさんあるけどどれで王手しようか
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2c1b 1d1e 4c1c
+  mate_skip: true
+- key: 1b8813d5727cf7024179e7a90f9fb60c
+  user_id: 207
+  init_sfen: position sfen 6+B1l/6R2/6Sk1/5p+pp1/9/9/9/9/9 b rb4g3s4n3l15p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 重たい形をどうほぐす
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3b1b+ 1a1b 3a3b 2c1c 3c2b
+  mate_skip: false
+- key: c03fb397ead5cde711a8f00c93be4da4
+  user_id: 207
+  init_sfen: position sfen 5g1nR/7k1/5ppp1/9/9/9/9/9/9 b BGrb2g4s3n4l15p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 逃げられないように
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: B*1c 2a1c G*2a 2b3b 1a1b+
+  mate_skip: true
+- key: 903761749f53c4af4477261f6c55d734
+  user_id: 207
+  init_sfen: position sfen 5p1k1/7B1/6rP1/9/9/9/9/9/9 b 2Grb2g4s4n4l16p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 邪魔な駒の消し方
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*3a 3c3a 2b1a+ 2a1a G*2b
+  - moves_str: G*3a 3c3a 2b1a+ 2a3b G*3c
+  mate_skip: false
+- key: 37af4ef2af7a0f5ba6e9d933fa29843f
+  user_id: 207
+  init_sfen: position sfen 6R2/8k/6+bpp/9/9/9/9/9/9 b GSrb3g3s4n4l16p 1
+  time_limit_sec: 40
+  difficulty_level: 1
+  title: 馬の守りをかいくぐる
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*2a 1b2b G*3b 2b1a 2a1b+ 1a1b 3a2a+
+  - moves_str: S*2a 1b2b G*3b 2b1a 2a1b 1a1b 3a2a+
+  mate_skip: false
+- key: 28f150cb9c04de637ec50e8b40a27dfc
+  user_id: 207
+  init_sfen: position sfen 9/6g2/6sPk/6+B1p/9/9/9/9/9 b B2G2rg3s4n4l16p 1
+  time_limit_sec: 40
+  difficulty_level: 1
+  title: 馬の利きを活かすには
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*1b 1c1b 2c2b+ 1b2b B*1c 2b1c G*1b
+  - moves_str: G*1b 1c1b 2c2b+ 1b2b B*1c 2b2a G*1b
+  - moves_str: G*1b 1c1b 2c2b+ 1b2b B*1c 2b1a G*1b
+  mate_skip: false
+- key: 66d21e34d4bf7f1734e5477ea1b420aa
+  user_id: 170
+  init_sfen: position sfen 7nl/5k3/6bp1/5pp1p/5N3/9/9/9/9 b R2Gp 1
+  time_limit_sec: 60
+  difficulty_level: 3
+  title: 将棋造物第10番改題
+  description: 
+  hint_desc: 
+  source_author: 初代大橋宗桂
+  source_media_name: 将棋造物
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 古典詰将棋
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: R*2b 3c2b G*5c 4b3b G*4b
+  - moves_str: R*2b 3c2b G*5c 4b3a G*4b
+  - moves_str: R*2b 3c2b G*5c 4b4a G*4b
+  - moves_str: R*2b 3c2b G*5c 4b5a G*5b
+  mate_skip: false
+- key: 2e8cf057317c4b85d891d502568a8608
+  user_id: 170
+  init_sfen: position sfen 7B1/5S3/5ppkn/9/5G1pp/6P2/9/9/9 b GL 1
+  time_limit_sec: 60
+  difficulty_level: 3
+  title: 象戯造物 第17番
+  description: 
+  hint_desc: 
+  source_author: 初代大橋宗桂
+  source_media_name: 象戯造物
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 古典詰将棋
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 4e3d 3c3d 2a3b+ 2c3b G*3c 3b2a L*2d 2a1b 2d2b+
+  - moves_str: 4e3d 3c3d 2a3b+ 2c3b G*3c 3b2a L*2d 2a1b 3c2b
+  - moves_str: 4e3d 3c3d 2a3b+ 2c3b G*3c 3b2a L*2d 2a1a 2d2b+
+  - moves_str: 4e3d 3c3d 2a3b+ 2c3b G*3c 3b2a L*2d 2a1a 3c2b
+  - moves_str: 4e3d 3c3d 2a3b+ 2c3b G*3c 3b2a L*2c 2a1a 2c2b+
+  - moves_str: 4e3d 3c3d 2a3b+ 2c3b G*3c 3b2a L*2c 2a1b 2c2b+
+  - moves_str: 4e3d 3c3d 2a3b+ 2c3b G*3c 3b2a L*2c 2a1b 3c2b
+  - moves_str: 4e3d 3c3d 2a3b+ 2c3b G*3c 3b2a L*2c 2a1a 3c2b
   mate_skip: false
 - key: 9f0acd918ff2fa3339415bbb9d9e75b0
   user_id: 8
@@ -573,6 +1273,138 @@
     name: きなこもち
   moves_answers:
   - moves_str: 4i4h 3d3e 4g4f 2b8h+ 7i8h B*5e 4h4g
+  mate_skip: false
+- key: f41a28ab2d02e10716f833ed52dc5e54
+  user_id: 207
+  init_sfen: position sfen 7r1/9/6+B1k/9/7+b1/9/9/9/9 b RGS3g3s4n4l18p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 馬飛に馬飛で対抗する
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*1b 1c1b S*2c 2a2c R*1a
+  - moves_str: G*1b 1c1b S*2c 1b1c R*1b
+  mate_skip: false
+- key: b8c5f7614026d62c82a7ee8c9438d78d
+  user_id: 207
+  init_sfen: position sfen 7B1/9/6k2/6N2/6S2/9/9/9/9 b G2rb3g3s3n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 無防備な玉に角桂の利き
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 1手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*2d
+  mate_skip: false
+- key: 9a6bb4e6801f5b68fbb6e044cac24ff0
+  user_id: 170
+  init_sfen: position sfen ln1g5/pks4+R1/2pg5/Pp1p1B3/2P6/1RS6/9/9/L8 b LPp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 稀によくある詰将棋
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 8f8d P*8c 8d8c+ 8b8c P*8d 8c8d L*8e
+  - moves_str: 8f8d P*8c 8d8c+ 8b8c P*8d 8c8d L*8f
+  - moves_str: 8f8d P*8c 8d8c+ 8b8c P*8d 8c8d L*8g
+  - moves_str: 8f8d P*8c 8d8c+ 8b8c P*8d 8c8d L*8h
+  - moves_str: 8f8d P*8c 8d8c+ 8b8c P*8d 8c8d L*8i
+  - moves_str: 8f8d P*8c 8d8c+ 8b8c P*8d 8c8b L*8c
+  - moves_str: P*8c 8b8c 8f8d 8c8d P*8e 8d8c L*8d
+  - moves_str: P*8c 8b8c 8f8d 8c8d L*8e
+  - moves_str: P*8c 8b8c 8f8d 8c8d L*8f
+  - moves_str: P*8c 8b8c 8f8d 8c8d L*8g
+  - moves_str: P*8c 8b8c 8f8d 8c8d L*8h
+  - moves_str: P*8c 8b8c 8f8d 8c8d L*8i
+  - moves_str: 8f8d P*8c 8d8c+ 8b8c P*8d 8c8d P*8e 8d8c L*8d
+  mate_skip: true
+- key: 97f9ca5dec7f4e929647e279790eabaf
+  user_id: 207
+  init_sfen: position sfen 7+r1/9/6S1k/5s+B2/9/9/9/9/9 b Rb4g2s4n4l18p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 飛車の使い道
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: R*1b 2a1b 3d2d
+  mate_skip: false
+- key: e4cab2405f2f466097f54e8309c1f487
+  user_id: 207
+  init_sfen: position sfen l2g1k1nl/1r3sgp1/p2ppp2p/1pps1bp2/1n7/2P1PB3/PP3PP1P/1SG2S1R1/LN1K1G1NL
+    b Pp 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 序盤にチャンスがやってきた
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: P*6e
   mate_skip: false
 - key: a9bcfb4fd3e6348a71a6f39337c82914
   user_id: 8
@@ -696,6 +1528,354 @@
   moves_answers:
   - moves_str: G*8b 7b8b 5b6b G*7b S*7a 8b9b 6b7b
   mate_skip: true
+- key: 3a739aed7ac361b42544987dc92cb22b
+  user_id: 207
+  init_sfen: position sfen 8l/6S1k/7L1/8p/9/9/9/9/9 b G2r2b3g3s4n2l17p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: あいつさえいなければ…
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2c2b+ 1b2b G*2c
+  mate_skip: false
+- key: b8b5e447ca29eeb79ecfa346455e8b11
+  user_id: 170
+  init_sfen: position sfen 9/3r5/4BP1pp/6k2/5g1NP/9/6BP1/6G2/8L b Rp 1
+  time_limit_sec: 10
+  difficulty_level: 2
+  title: 実戦で逃した詰将棋2
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: R*3c 3d2d 3g4f 4e4f 5c3e+
+  - moves_str: R*3c 3d2d 3g4f P*3e 5c3e+ 4e3e 3c3e+
+  - moves_str: R*3c 3d2d 3g4f P*3e 3c3e+ 4e3e 5c3e+
+  - moves_str: R*3c 3d2d 3g4f 2d2e 5c2f+
+  - moves_str: R*3c 3d2e 3c2c+ P*2d 5c2f+
+  - moves_str: R*3c 3d2e 3c2c+ N*2d 5c2f+
+  - moves_str: R*3c 3d2e 3c2c+ 2e3f 2c2f
+  - moves_str: R*3c 3d2e 3c2c+ 2e3f 5c2f+
+  mate_skip: false
+- key: 1b024a52a8804752904da621d6f2ffb3
+  user_id: 170
+  init_sfen: position sfen ln3gbnl/r3p4/p2G1ksp1/1p1P1pp1p/2pS5/4G3P/PPN2PPP1/1R4SK1/L4G1NL
+    b Sb3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 実戦で逃した次の一手
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: S*8c
+  mate_skip: false
+- key: 7787e508fe7cefcbcadc96cff1b7e01f
+  user_id: 207
+  init_sfen: position sfen 4n1+B2/5R3/6k2/6Bpp/9/9/9/9/9 b r4g4s3n4l16p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 大駒三枚の連携技
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/ddlj-mo7gw
+  source_published_on: '2019-11-13'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3d2c+ 3c2c 4b3b+
+  mate_skip: false
+- key: 9fee0406c8b8be25535cba1d74f159d8
+  user_id: 207
+  init_sfen: position sfen 3R1l3/4k4/4B4/9/9/4N4/9/9/9 b rb4g4s3n3l18p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 取られそうな飛角の活かし方
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/n9e2zkkjzz
+  source_published_on: '2019-11-22'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 6a6b+ 5b4c 5c4d+
+  mate_skip: false
+- key: 8164c8f474dfd6de40da11e744ecc174
+  user_id: 207
+  init_sfen: position sfen 9/5B3/5+b1S1/4Sk3/4p1R2/9/9/9/9 b r4g2s4n4l17p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 最後はフワッと
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/hhl9uj-sae
+  source_published_on: '2020-01-25'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 4b5c+ 4c5c 3e3d
+  mate_skip: false
+- key: 0e67d141fa75e25e0578025e66da4bb0
+  user_id: 207
+  init_sfen: position sfen 9/9/3n2+R2/4k4/5r3/3+B5/9/9/9 b Gb3g4s3n4l18p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 飛車の守り
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/en7ezyk7gb
+  source_published_on: '2020-03-28'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*6e 4e6e 3c4d
+  mate_skip: false
+- key: 4114acc57efa85c0c702086a30c48947
+  user_id: 207
+  init_sfen: position sfen 7k1/7g1/5sBN1/7N1/9/9/9/9/9 b S2rb3g2s2n4l18p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 桂桂コンビ
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/hsu0cxqvkn
+  source_published_on: '2020-04-20'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2c1a+ 2a1a S*1b
+  - moves_str: 2c1a+ 2a3a S*4b
+  mate_skip: false
+- key: 9b9170b08adb72a0a3ea4a69325958e8
+  user_id: 207
+  init_sfen: position sfen 6p1k/7r1/6N2/7N1/7N1/9/9/9/9 b R2b4g4sn4l17p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 三枚桂の攻め
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/iakmwkf7dc
+  source_published_on: '2020-04-28'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2d1b+ 1a1b R*1c
+  - moves_str: 2d1b+ 2b1b R*2a
+  mate_skip: false
+- key: d61eaafd4678843a950463c2312b6eae
+  user_id: 207
+  init_sfen: position sfen 8+R/5+B1g1/7k1/6r2/8+p/9/9/9/9 b GSb2g3s4n4l17p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 守備駒をうまくズラす
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/kpua6ssdte
+  source_published_on: '2020-05-02'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*3b 2b3b G*1c
+  - moves_str: S*3b 3d3b G*2d
+  mate_skip: false
+- key: 821098f46a508dce82ec64f5d26169a4
+  user_id: 207
+  init_sfen: position sfen 8+B/6s2/7kS/8p/9/9/9/9/9 b Rrb4g2s4n4l17p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 上部の脱出を防ぐ俗手
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/l7hvi8r2lf
+  source_published_on: '2020-05-13'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: R*2d 2c1c 2d2b+
+  mate_skip: false
+- key: 5ec3b3696d305adbf5f745ea456e3dbf
+  user_id: 207
+  init_sfen: position sfen 8s/5lg2/7kB/5+R3/8p/9/9/9/9 b Grb2g3s4n3l17p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 下段に逃がしても大丈夫？
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/5jnjvdc9g4
+  source_published_on: '2020-05-27'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 4d1d 2c1d G*2d
+  - moves_str: 4d1d 2c3c G*3d
+  mate_skip: false
+- key: 06452e77d7e6ac8a11df5a91abb94ec8
+  user_id: 207
+  init_sfen: position sfen 5+R2+p/7kS/4SN3/6Ps1/9/9/9/9/9 b R2b4gs3n4l16p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: ドラゴンアタック
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/i4u_xcaczh
+  source_published_on: '2020-06-03'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 4a3b 2b3b R*4b
+  mate_skip: false
+- key: 6207d14930010a90d6a608c26efa3117
+  user_id: 207
+  init_sfen: position sfen 5R3/6k1s/5lB2/5p2g/9/9/9/9/9 b Rb3g3s4n3l17p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 大駒を失うことを恐れるな
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/krfeukg2_f
+  source_published_on: '2020-06-08'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: R*2b 3b3c 4a3a+
+  - moves_str: R*2b 3b4a 2b4b+
+  - moves_str: R*2b 3b4a 3c4b+
+  mate_skip: true
 - key: f04982eb49e9d4529fa7bcafcf3c729f
   user_id: 8
   init_sfen: position sfen ln7/2k6/1pppS4/p8/9/9/9/9/9 b BGN2rb3g3s2n3l14p 1
@@ -721,6 +1901,81 @@
   moves_answers:
   - moves_str: N*8d 8c8d B*6a 7b8b G*8c 8b7a 8c7b
   - moves_str: N*8d 8c8d B*6a 7b8b G*8c 8b7a 6a7b+
+  mate_skip: false
+- key: 44108f7e3c2a5deca3b81db12693a936
+  user_id: 589
+  init_sfen: position sfen 7nl/+R+R4gk1/pppppgp+bp/5p1p1/9/9/9/9/9 b B2G3SNLs2n2l9p
+    1
+  time_limit_sec: 1234
+  difficulty_level: 5
+  title: 馬冠
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 589
+    key: eff4253ea6b912447fb245779466a9f0
+    name: colonbo0320
+  moves_answers:
+  - moves_str: S*3a 2b3a 8b3b 2c3b N*2c 3b2c S*2b 2c2b G*4a 3a4a G*5b 4a3a G*4b 4c4b
+      5b4b
+  mate_skip: false
+- key: '08f70d594f00f4201f2628e7cca76ae6'
+  user_id: 589
+  init_sfen: position sfen 4+R1snl/4+R1gk1/5pppp/9/9/9/9/9/9 b 2G2S2bgs3n3l14p 1
+  time_limit_sec: 20
+  difficulty_level: 2
+  title: 簡単
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 589
+    key: eff4253ea6b912447fb245779466a9f0
+    name: colonbo0320
+  moves_answers:
+  - moves_str: 5a3a 2b3a G*4a 3a2b S*3a 2b1b 5b3b B*2b 3b2b
+  - moves_str: 5a3a 2b3a G*4a 3a2b S*3a 2b1b 5b3b G*2b 3b2b
+  mate_skip: false
+- key: 10736afbcc80fcdeda1bb76913855ce5
+  user_id: 589
+  init_sfen: position sfen l7+P/2kp1R3/p1+b4+S1/1PN1pgp2/5n3/P2PP1Pl1/1+B1G1S2+l/2RS5/9
+    b 2G2N5Psl3p 1
+  time_limit_sec: 23
+  difficulty_level: 1
+  title: 意外と簡単
+  description: 桂馬と金将と竜王を使って詰ますよ。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 589
+    key: eff4253ea6b912447fb245779466a9f0
+    name: colonbo0320
+  moves_answers:
+  - moves_str: 7d6b+ 7b8b 6b7b 7c7b G*8c 8b8a 4b7b+
+  - moves_str: 7d6b+ 7b8b 6b7b 8b9b G*8b 7c8b 7b8b
+  - moves_str: 7d6b+ 7b8b 6b7b 7c7b G*8c 8b7a 4b7b+
   mate_skip: false
 - key: c4c702d59254f71bac7b0b0539909f64
   user_id: 8
@@ -848,6 +2103,157 @@
   moves_answers:
   - moves_str: G*1c 2b1c B*4f
   mate_skip: false
+- key: f5f5799a59e6e4f6bed731fb6eb3e5b2
+  user_id: 207
+  init_sfen: position sfen 6R2/7kl/9/8p/6N2/9/9/9/9 b Gr2b3g4s3n3l17p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 盲点になりやすい初手
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/n8tqfm8dsb
+  source_published_on: '2019-11-07'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*2a 2b1c 3a3c+
+  mate_skip: true
+- key: 8b4aaa7f1202e5dd16f9e62c60a8951c
+  user_id: 207
+  init_sfen: position sfen 6sn1/6k2/5R3/7B1/9/7L1/9/9/9 b Br4g3s3n3l18p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 開き王手をしたい形だが…
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/-8duow31ee
+  source_published_on: '2020-03-06'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2d3c+ 2a3c B*2a
+  mate_skip: false
+- key: bfde688261e410c075ed5d6e06ce9cbc
+  user_id: 224
+  init_sfen: position sfen 8b/8k/5p3/7P1/5N3/4B4/9/9/9 b 2r4g4s3n4l16p 1
+  time_limit_sec: 10
+  difficulty_level: 2
+  title: 桂馬をどうする？②
+  description: 2一に逃げられると詰みません。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 224
+    key: 69604c1d04a1ba3d485149d012add8f4
+    name: 恵比歯科
+  moves_answers:
+  - moves_str: 4e3c 1b2b 5f2c+ 2b3a 2c4a 3a2b 2d2c+
+  mate_skip: false
+- key: e8ea3da9008c0777db553615bfa3f318
+  user_id: 224
+  init_sfen: position sfen 7kl/9/5Sspp/4+B4/9/9/9/9/9 b G2rb3g2s4n3l16p 1
+  time_limit_sec: 10
+  difficulty_level: 3
+  title: 銀をどうする？
+  description: うっかり成ってしまうと、詰まなくなってしまいます。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 224
+    key: 69604c1d04a1ba3d485149d012add8f4
+    name: 恵比歯科
+  moves_answers:
+  - moves_str: 4c3b 2a2b G*1b 2b1b 3b2a 1b2b 5d3b
+  mate_skip: false
+- key: ba364dec9dbdccaf990f24a4834a96b9
+  user_id: 224
+  init_sfen: position sfen 9/9/3+R5/9/4k4/9/9/9/5L3 b Brb4g4s4n3l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 四択
+  description: 右上以外から角を打つのは、いずれも中合で逃れ
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 224
+    key: 69604c1d04a1ba3d485149d012add8f4
+    name: 恵比歯科
+  moves_answers:
+  - moves_str: B*3c 5e5f 3c6f+
+  - moves_str: B*3c 5e5f 6c6f
+  - moves_str: B*2b 5e5f 2b6f+
+  - moves_str: B*2b 5e5f 6c6f
+  - moves_str: B*1a 5e5f 1a6f+
+  - moves_str: B*1a 5e5f 6c6f
+  - moves_str: B*4d 5e5f 6c6f
+  mate_skip: false
+- key: 9b2417881e1fe536571fc3049b1def4b
+  user_id: 224
+  init_sfen: position sfen 6k2/5g3/6+B2/9/9/9/9/9/9 b G3S2rb2gs4n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 4
+  title: 相手の金を翻弄する
+  description: |-
+    初手は左辺に逃げられるのを防ぐための一手。
+    その後も必然手が続きます。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 224
+    key: 69604c1d04a1ba3d485149d012add8f4
+    name: 恵比歯科
+  moves_answers:
+  - moves_str: S*3b 4b3b S*2b 3b2b G*4b 3a2a S*3b 2a1a 3c2b 1a2b G*2c 2b1a 3b2a+ 1a2a
+      4b3b 2a1a 3b2b
+  - moves_str: S*3b 4b3b S*2b 3b2b G*4b 3a2a S*3b 2a1b 3c2b 1b2b G*2c 2b1a 3b2a+ 1a2a
+      4b3b 2a1a 3b2b
+  mate_skip: false
 - key: d581e4627dd54bfc4016ca3c7a619916
   user_id: 8
   init_sfen: position sfen ln7/1k1g5/ppp+P+P4/9/9/9/9/9/9 b GS2r2b2g3s3n3l13p 1
@@ -894,6 +2300,31 @@
     name: きなこもち
   moves_answers:
   - moves_str: 2b8b+
+  mate_skip: false
+- key: acdaa8889df69ceb191b6dac32f59c2a
+  user_id: 207
+  init_sfen: position sfen 6R2/8k/6n2/6N2/9/9/9/9/9 b Gr2b3g4s2n4l18p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 金はとどめか先か
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3a2a+ 1b2a G*2b
+  - moves_str: 3a2a+ 1b1c G*2d
   mate_skip: false
 - key: 7cefd9a2b7ce9fa1abce53ec93fad602
   user_id: 8
@@ -943,6 +2374,31 @@
   moves_answers:
   - moves_str: 3h4i
   - moves_str: 3h2i
+  mate_skip: false
+- key: 544694ce1b6613c29553782d34437352
+  user_id: 207
+  init_sfen: position sfen 5pp2/7Bk/7P1/7rg/9/9/9/9/9 b GSrb2g3s4n4l15p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 根元の歩が心配
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*2a 1b2a 2b1a+ 2a1a G*2b
+  - moves_str: S*2a 1b2a 2b1a+ 2a3b G*3c
   mate_skip: false
 - key: 92a39a7d103243e4b26bf597fcae2171
   user_id: 8
@@ -1065,6 +2521,30 @@
   moves_answers:
   - moves_str: B*2f
   mate_skip: false
+- key: 3edbfd2c3d0a62bc2c02627c8302b964
+  user_id: 170
+  init_sfen: position sfen l+R5nl/5gk2/3psg3/2p3spp/pN1Plpp2/4G3P/PP2B1PP1/5SSK1/+b4G1NL
+    b NPr4p 1
+  time_limit_sec: 60
+  difficulty_level: 2
+  title: 田楽刺しに対する返し技
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 5g6f
+  mate_skip: false
 - key: f59c6ec0d8f9ac8296e42fe82cd77437
   user_id: 8
   init_sfen: position sfen 8S/9/7kp/6R2/9/9/9/9/9 b BNrb4g3s3n4l17p 1
@@ -1159,6 +2639,35 @@
   moves_answers:
   - moves_str: G*7b S*9c 7a8a
   mate_skip: false
+- key: 0d59f4d1e8670b19f1078cfa0818acb1
+  user_id: 783
+  init_sfen: position sfen kn2g1s1l/lsg6/pp1pRPn2/1bp1ppp1p/PN7/5Br1P/1PPPP1N2/1KS3S2/L2G1G2L
+    b 3p 1
+  time_limit_sec: 180
+  difficulty_level: 3
+  title: できればカッコよく決めたい
+  description: |-
+    カッコよく決めなくても悪くはならないけど、指せたら気持ちよさそうな一手
+    84の角の効きを遮断して飛車を成れれば文句なしの展開
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 783
+    key: b2969d74d347b64178443e821819b6c1
+    name: Wndr
+  moves_answers:
+  - moves_str: 4f7c+
+  - moves_str: 4f8b+
+  - moves_str: 3h4g
+  - moves_str: 4f2d
+  mate_skip: false
 - key: 2fff956093c107adad7cfc476ce5de88
   user_id: 8
   init_sfen: position sfen 6knl/6l2/5+SsP1/2pp2ppp/9/9/9/9/9 b 2B2r4g2s3n2l12p 1
@@ -1206,6 +2715,30 @@
   moves_answers:
   - moves_str: S*6b
   mate_skip: false
+- key: 79717af63a3938ea42ad1e22aff1d7b5
+  user_id: 783
+  init_sfen: position sfen lnsgkg1nl/3r3s1/p1ppppp1p/9/6+b2/1P4B2/P1PP1PP1P/1S1G3R1/LN2KGSNL
+    b 2P2p 1
+  time_limit_sec: 20
+  difficulty_level: 2
+  title: どこかの定跡で見たような…
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 783
+    key: b2969d74d347b64178443e821819b6c1
+    name: Wndr
+  moves_answers:
+  - moves_str: P*5b
+  mate_skip: false
 - key: 0d2e1f27806865d8578bf4a71a058a02
   user_id: 8
   init_sfen: position sfen 5gkBR/4g4/6g1p/4r4/9/9/9/9/9 b bg4s4n4l17p 1
@@ -1228,6 +2761,31 @@
     name: きなこもち
   moves_answers:
   - moves_str: 2a4c+ 3a2b 1a2a+
+  mate_skip: false
+- key: 9478099848a545a5a845d49c9f8e64b1
+  user_id: 207
+  init_sfen: position sfen 8R/6k2/5n3/7Bs/9/9/9/9/9 b Lrb4g3s3n3l18p 1
+  time_limit_sec: 20
+  difficulty_level: 1
+  title: 香車の使い方
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: L*3d 3b2b 2d3c+
+  - moves_str: L*3d 3b2c 2d3c+
   mate_skip: false
 - key: c9c85eb318b5643e47fb970288de2f53
   user_id: 8
@@ -1253,6 +2811,29 @@
   moves_answers:
   - moves_str: 9g5c+
   - moves_str: 5f5c+
+  mate_skip: false
+- key: 4e76e99effdc1a148c775f04aa13bd8d
+  user_id: 170
+  init_sfen: position sfen 5k3/r8/4+B4/9/9/9/9/9/9 b GSNrb3g3s3n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 2
+  title: 実戦で逃した詰将棋3
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: G*3a 4a5a S*5b 9b5b N*6c 5a6a 5c7a
   mate_skip: false
 - key: '08b580e9fb01b1af64a44800a3808403'
   user_id: 8
@@ -1421,6 +3002,30 @@
   moves_answers:
   - moves_str: B*4a
   mate_skip: false
+- key: b2da3a7c28af3007ad47a5bef8d8f66a
+  user_id: 207
+  init_sfen: position sfen 7+R1/9/7+rk/7pp/9/9/9/9/9 b GSN2b3g3s3n4l16p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 龍 vs 龍
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*1b 2c1b N*2e 2d2e S*2d
+  mate_skip: false
 - key: 0d498cd4c02a2f68bdbef6fe3259d32d
   user_id: 8
   init_sfen: position sfen ln3k1nl/1r2gsgb1/3ppppp1/p1p5p/1s5P1/Pp1B2R1P/1PPPPPP2/2GSKS3/LN4GNL
@@ -1473,6 +3078,250 @@
   moves_answers:
   - moves_str: 8i9g 8g9g P*8f
   mate_skip: false
+- key: 788250fd9bee4e6df6817838d296c1e2
+  user_id: 1002
+  init_sfen: position sfen lnsRngs1+R/1k2g4/ppp2p2p/6p2/9/2PLP4/PP1P1PP1P/1+b2G4/LN1GK1SNL
+    b 3Pbsp 1
+  time_limit_sec: 60
+  difficulty_level: 4
+  title: 超急戦(次の一手)(三手1組)★3
+  description: 必死ではないですがこれをさせればほぽ勝ち確です(三手一組です)
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 実戦で超級戦での変化です
+  owner_tag_list:
+  - 超級戦
+  - 3手1組
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 1a3a 4a3a S*6b
+  mate_skip: false
+- key: 3e1f68fe9249ce9f5c152ce3b34a0cab
+  user_id: 1002
+  init_sfen: position sfen 4k4/9/PPPPPPPPP/9/9/9/9/9/9 b B4L 1
+  time_limit_sec: 60
+  difficulty_level: 2
+  title: 有名な問題だよ★1
+  description: |-
+    三手までさせれば.......
+
+
+    追記､作者が自分出ないので書かせてもらいました。
+  hint_desc: 
+  source_author: 
+  source_media_name: 人(先生)
+  source_media_url: 
+  source_published_on: 
+  direction_message: 古典詰将棋です。
+  owner_tag_list:
+  - 古典詰将棋
+  - 11手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: unknown
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: L*5b 5a4a B*3b 4a3a 3b2a+ 3a2a L*2b 2a3a L*3b 3a4a L*4b
+  - moves_str: L*5b 5a6a B*7b 6a7a 7b8a+ 7a8a L*8b 8a7a L*7b 7a6a L*6b
+  mate_skip: false
+- key: 9f35297a4e738c65ed89ebfafdb3f816
+  user_id: 1002
+  init_sfen: position sfen 3p5/3RSSSSk/9/9/9/9/9/9/5+p3 b 4Lrbgnl7p 1
+  time_limit_sec: 300
+  difficulty_level: 5
+  title: 詰将棋だよ★5
+  description: |-
+    知らないと解けないと思います
+    自分が知る限り最長手数(21手)にしてるはずです。
+
+    追記、歩合い銀あいの正解も作りました。自力で解いたので間違ってたら教えてください
+
+    速詰め無しらしいですが､他のつまし方が分からない人もいると思うので、載せておきます。削除依頼がきたら消します
+
+    間違ってたらすみませんm(_ _)m
+
+    追記､作者が他者の場合書かなければいけないみたいなので追加しました。すいませんでした。
+    ちなみに自分は5五の〇とかいう漫画で知りました。
+    下の方にヒントあります。みたい人は見てください
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ヒント 八手目は角合いします
+  hint_desc: 
+  source_author: 
+  source_media_name: 5五の龍(恐らくこの字)(漫画)
+  source_media_url: 
+  source_published_on: 
+  direction_message: 古典詰将棋です
+  owner_tag_list:
+  - 古典詰将棋
+  - 21手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: unknown
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: L*1i 1b2b L*2i 2b3b L*3h 3b4b L*4g B*4d 4g4d 4b5c 6b6c+ 5c4d B*6f 4d4e
+      6c6e 4e4f 6e5e 4f4g 5e5g 4g3h 5g2g
+  - moves_str: L*1i 1b2b L*2i 2b3b L*3h 3b4b L*4g P*4d 3h3c+ 4b3c 6b6c+ 3c3d 6c4c
+      3d3e 4c4d 3e3f 4d4f
+  - moves_str: L*1i 1b2b L*2i 2b3b L*3h 3b4b L*4g P*4d 3h3c+ 4b3c 6b6c+ 3c3b 6c4c
+      3b3a 4c4a
+  - moves_str: L*1i 1b2b L*2i 2b3b L*3h 3b4b L*4g P*4d 3h3c+ 4b3c 6b6c+ 3c3b 6c4c
+      3b3a 5b4a+
+  - moves_str: L*1i 1b2b L*2i 2b3b L*3h 3b4b L*4g S*4d 5b6c+ 6a6b 4g4d S*4c S*5c 4b5a
+      5c6b+ 5a4a 6c5b
+  - moves_str: L*1i 1b2b L*2i 2b3b L*3h 3b4b L*4g S*4d 5b6c+ 6a6b 4g4d S*4c S*5c 4b5a
+      5c6b+ 5a4a 6b5b
+  - moves_str: L*1i 1b2b L*2i 2b3b L*3h 3b4b L*4g S*4d 5b6c+ 6a6b 4g4d S*4c S*5c 4b5a
+      6c6b 5a4a 5c5b+
+  - moves_str: L*1i 1b2b L*2i 2b3b L*3h 3b4b L*4g S*4d 5b6c+ 6a6b 4g4d S*4c S*5c 4b5a
+      6c6b 5a4a 6b5b
+  - moves_str: L*1i 1b2b L*2i 2b3b L*3h 3b4b L*4g S*4d 5b6c+ 6a6b 4g4d S*4c S*5c 4b5a
+      6c6b 5a4a 4d4c
+  mate_skip: true
+- key: 2cdad363f567162f13b63dc6747aef0f
+  user_id: 1002
+  init_sfen: position sfen 7n1/7k1/7pp/6+RP1/9/9/9/9/9 b - 1
+  time_limit_sec: 60
+  difficulty_level: 1
+  title: 歩兵★1
+  description: |-
+    少し頭を使うと解けるよ
+    正解率50%超えた。自分の載せている問題では初です
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 詰将棋です。
+  owner_tag_list:
+  - 打ち歩詰め回避
+  - 7手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: unknown
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 2d2c 2b1a P*1b 1a1b 3d3b 1b1a 2c2b+
+  - moves_str: 2d2c 2b1a P*1b 1a1b 3d3b 1b1a 3b2b
+  - moves_str: 2d2c 2b1a P*1b 1a1b 3d3b P*2b 2c2b+
+  - moves_str: 2d2c 2b1a P*1b 1a1b 3d3b P*2b 3b2b
+  mate_skip: false
+- key: b5e5f9b6a48ebd96189c5ecad3a32f70
+  user_id: 1002
+  init_sfen: position sfen lnsgk1snl/6g2/p1ppppb1p/6pR1/9/1rP6/P2PPPP1P/1SG6/LN2KGSNL
+    b B2P2p 1
+  time_limit_sec: 60
+  difficulty_level: 3
+  title: 手筋(定石?)だよ(5手1組)★3
+  description: 8七歩はさすがに不満､対処法は？
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 攻め合うよ 居飛車党ならさせないと.......
+  owner_tag_list:
+  - 居飛車
+  - 5手1組
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 2d2a+ 3c8h+ 7h8h 8f8h+ 2a3a
+  mate_skip: false
+- key: 828246bace73d1629b95cb824e23d4f0
+  user_id: 1002
+  init_sfen: position sfen 7nk/9/7P1/8p/9/9/9/9/9 b RBrb4g4s3n4l16p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 大胆に使う★1
+  description: |-
+    ヒント書くと答えに繋がるので書きません！
+
+
+
+
+
+
+
+    本来は1四歩ですが飛車を追加しました
+  hint_desc: 
+  source_author: 河合伸六
+  source_media_name: 旧パラ
+  source_media_url: 
+  source_published_on: '1950-10-01'
+  direction_message: 大駒は近づけて打ってください(無意味に遠ざけて打たないで）)
+  owner_tag_list:
+  - 飛車角
+  - 5手詰め
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: R*1c 2a1c B*3c 1a2a 2c2b+
+  - moves_str: R*1c 2a1c B*3c 1a2a 3c2b+
+  - moves_str: R*1c 2a1c B*3c 1a1b 2c2b+
+  - moves_str: R*1c 2a1c B*3c 1a1b 3c2b+
+  mate_skip: false
 - key: 6bb24901cedfac1a2de730f186dd18e7
   user_id: 8
   init_sfen: position sfen 7nl/4+B1k2/5pp1p/9/7G1/9/9/9/9 b GNk2rb2g4s2n3l15p 1
@@ -1495,6 +3344,148 @@
     name: きなこもち
   moves_answers:
   - moves_str: N*2d 3b2b G*2c 2b2c 5b4a 2c2b 4a3b
+  mate_skip: false
+- key: 78bc39636b77b903a3621f1de48fd266
+  user_id: 1002
+  init_sfen: position sfen lng3Rnl/1ksL5/1ppp5/p4B3/9/P1PP5/1PNG5/K1S6/L1b+r5 b 3Pg2p
+    1
+  time_limit_sec: 180
+  difficulty_level: 2
+  title: 定石中の定石(実戦詰将棋)★4
+  description: |-
+    詰将棋というより手筋に近いかな？
+
+
+    詰まなかったり、詰んでいるのに正解判定されなかった場合は早詰めです(可哀想なので1通りプラスで追加しました)
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: "⚠早詰め注意報"
+  owner_tag_list:
+  - 美濃囲い
+  - 15手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 3a7a+ 8b9b 7a7b G*8b 7b8b 9b8b S*7a 8b7a 6b6a+ 7a8b 4d7a+ 8b9b G*9c
+      8a9c G*8b
+  - moves_str: 3a7a+ 8b9b 7a7b G*8b 7b8b 9b8b S*7a 8b9b G*8b 9b9c 7g8e 9c8d G*7e
+  mate_skip: false
+- key: 4dd21aba53aa402585c07dde1de150db
+  user_id: 1002
+  init_sfen: position sfen 3g2R2/1ks6/1pp6/L8/9/9/9/9/r8 b BSPl 1
+  time_limit_sec: 180
+  difficulty_level: 3
+  title: 実戦詰将棋★3
+  description: |-
+    速詰み無しらしいので回答は一通りです
+    合駒は何を打っても特に変化がないので、全て香合でお願いします。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 合駒は香で統一してください
+  owner_tag_list:
+  - 美濃囲い
+  - 19手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: B*9c 8b9b 9c7a+ 9i9d+ S*8a 7b8a P*9c 9d9c 7a8a 9b8a 3a6a+ L*7a S*7b
+      8a9b G*9a 9b9a 6a7a 9a9b 7a8a
+  mate_skip: false
+- key: a64198f665eb7d112f05a65ce496afe5
+  user_id: 1002
+  init_sfen: position sfen 7nl/6gk1/5g1pp/5pp2/7PP/9/9/7R1/8L b SN3Ps 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 矢倉の手筋Part2★1
+  description: |-
+    知っていて損はない感じの手筋
+    ワンチャン居飛車党でなくとも使う時がくるかもしれないかもしれない.......
+    端をついておかないと金をかわされた時に困る
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 矢倉
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 1e1d 1c1d N*2d
+  mate_skip: false
+- key: 79e4a454bf2dc39f81a4c398e5851a89
+  user_id: 1002
+  init_sfen: position sfen 7nl/5bgk1/3p1gspp/4ppp2/9/9/9/9/9 b S2rb2g2s3n3l12p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 矢倉の手筋★1
+  description: 知っていて全く損はないです
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 矢倉囲い
+  - 3手1組
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: S*5b 4c5c 5b4a+
+  mate_skip: false
+- key: fb8f24590f1fb6af5c782248addeb2e3
+  user_id: 1002
+  init_sfen: position sfen bk7/4l4/9/1NN6/1NN6/9/9/9/9 b P2rb4g4s3l17p 1
+  time_limit_sec: 60
+  difficulty_level: 2
+  title: 桂馬の躍動★3
+  description: やってみたかっただけです！以上(｀･ω･´)ﾉ
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 桂馬
+  - 9手詰め
+  - 11手詰め
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: P*8b 9a8b 7d8b+ 8a8b B*9c 8b8a 8e7c 8a9a 7e8c
+  - moves_str: P*8b 9a8b 7d8b+ 8a8b B*9c 8b9a 7e8c 9a8a 8e7c
+  - moves_str: P*8b 9a8b 7d8b+ 8a8b B*9c 8b9a 7e8c 9a8a 9c7a+
+  - moves_str: P*8b 9a8b 7d8b+ 8a8b B*7c 8b8a 8e9c 8a7a 7e6c 7a6a 7c5a+
+  - moves_str: P*8b 9a8b 7d8b+ 8a8b B*7c 8b7a 7e6c 7a8a 8e9c
   mate_skip: false
 - key: cba60c26b7b13e0756fe5a191a51b479
   user_id: 8
@@ -1570,6 +3561,30 @@
   moves_answers:
   - moves_str: B*2b
   mate_skip: false
+- key: 5ea66ad357cc71bfadfe88db257bdd46
+  user_id: 1002
+  init_sfen: position sfen 3g5/kss6/Bpng5/2pp5/1N7/9/9/9/L8 b SNLrbg2l12p 1
+  time_limit_sec: 30
+  difficulty_level: 1
+  title: 指せたらかっこいいよね★1
+  description: 自分が指した棋譜を少しアレンジしてみました。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 一手必至
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: S*7a
+  mate_skip: false
 - key: 96cb876637ad8c2d3b7d4149f5858d5a
   user_id: 8
   init_sfen: position sfen lnsg1k2l/1r4g2/p1ppspnp1/4p1R1p/1p5P1/P7P/1PPPPPPb1/3SKS3/LNG3GNL
@@ -1620,6 +3635,48 @@
   moves_answers:
   - moves_str: G*8d
   mate_skip: false
+- key: 60cd8172f8be31541128d145ebaa8fde
+  user_id: 1002
+  init_sfen: position sfen 6ngl/6n1k/4BB3/4S4/8K/3Ss3L/4r1gN1/9/9 b NLslp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 欠陥
+  description: |-
+    できるだけ最善手指してください
+    多少の変化は正解にしてますが明らかにつまされに行っているのは正解とみなしていません。
+    難易度がバグ？かなんかで編集できないですがMAXです。
+    個人的には今までで1番時間かかりました。(制作時間)
+    逆王手されまくって..............(そういう趣旨です)
+    余詰があったら教えてください
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: ちなみに初見で攻略させる気はありません(詰将棋)
+  owner_tag_list: []
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 1e2e P*1c 4c3d+ L*2c 3d2c 1b2c N*3e 2c3c 5d4c+ 3a4c L*3d 3c2b L*2d
+      3b2d 5c4d+ 2b1b 3e2c+ 1b2c 3d3c+ 2c1b 4d3d
+  - moves_str: 1e2e P*1c 4c3d+ L*2c 3d2c 1b2c 2g3e 2c3c 5d4c+ 3a4c L*3d 3c2b L*2d
+      3b2d 5c4d+ 2b1b 3e2c+ 1b2c 3d3c+ 2c1b 4d3d
+  - moves_str: 1e2e P*1c 4c3d+ L*2c N*2d 3b2d 1f1c+ 1b1c L*1d 1c2b 5c4d+ 2b3b 5d4c+
+      3a4c 3d4c 3b4a P*4b 4a3a 4c2a 3a4b 4d4c 4b4a G*4b
+  - moves_str: 1e2e P*1c 4c3d+ L*2c N*2d 3b2d 1f1c+ 1b1c L*1d 1c2b 5c4d+ 2b3b 5d4c+
+      3a4c 3d4c 3b4a P*4b 4a3a 4c2a 3a4b 4d4c 4b5a G*5b
+  - moves_str: 1e2e P*1c 4c3d+ L*2c N*2d 3b2d 1f1c+ 1b1c L*1d 1c2b 5c4d+ 2b3b 5d4c+
+      3a4c 3d4c 3b4a P*4b 4a3a 4c2a 3a4b 2a4c 4b3a G*3b
+  - moves_str: 1e2e P*1c 4c3d+ L*2c N*2d 3b2d 1f1c+ 1b1c L*1d 1c2b 5c4d+ 2b3b 5d4c+
+      3a4c 3d4c 3b4a P*4b 4a3a 4c2a 3a4b 2a4c 4b4a G*4b
+  - moves_str: 1e2e P*1c 4c3d+ L*2c N*2d 3b2d 1f1c+ 1b1c L*1d 1c2b 5c4d+ 2b3b 5d4c+
+      3a4c 3d4c 3b4a P*4b 4a3a 4c2a 3a4b 2a4c 4b5a G*5b
+  mate_skip: true
 - key: a8caba89bcd298327ee0d089b25f2da6
   user_id: 8
   init_sfen: position sfen 3g4l/2skg4/+Lppp1pn2/3spb1rp/pP4p2/5R1PP/2PPPPP2/2GSKSG2/1N5NL
@@ -1728,6 +3785,30 @@
   moves_answers:
   - moves_str: 5f5d
   mate_skip: false
+- key: a24895df7236773992e13eed113ce333
+  user_id: 207
+  init_sfen: position sfen 5+B1kl/9/6g1p/9/9/9/9/9/9 b RGPrb2g4s4n3l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 実戦型だが止めの駒は…？
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*2b 2a2b P*2c 3c2c R*3b 2b2a 4a3a
+  mate_skip: false
 - key: 064c719fe44f91aee042f0d449233225
   user_id: 8
   init_sfen: position sfen ln5nl/3sgkg2/2pp4p/p3pspp1/5NP2/PrP2P2L/3PPS3/1S2K2G1/LN1G5
@@ -1757,6 +3838,30 @@
     name: きなこもち
   moves_answers:
   - moves_str: B*7e
+  mate_skip: false
+- key: 7c1b0447d751497c9bc09f2bd4b28a45
+  user_id: 207
+  init_sfen: position sfen 6l1B/8S/9/7k1/6ppp/9/9/9/9 b GS2rb3g2s4n3l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 玉を上部に逃がしたと見せかけて詰んでいる
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*1c 2d1c 1a2b+ 1c2b G*2c
   mate_skip: false
 - key: 28b37b9702013dc2e7c4e9a68bc5d747
   user_id: 8
@@ -1859,6 +3964,51 @@
     name: きなこもち
   moves_answers:
   - moves_str: 3g3f
+  mate_skip: false
+- key: c47100573117d1c34afd357131ad07e7
+  user_id: 1002
+  init_sfen: position sfen ln2+P4/kg+RL1r3/1ppp5/p4B3/3P5/P1P6/1PNGs4/K1S1+s4/L1b+p5
+    b GSPg2nl6p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 逆転勝ちを狙えPart2★5
+  description: |-
+    例のやつの本来目指していたやつです。
+    余詰め(前回のやつはなしです)はないと思いますが､あったらすいません｡
+    基本､詰まない場合は打ち歩詰めor駒が足りないです。特に打ち歩詰めに気を付けてください。(気づきづらいです。)
+    追記、少し問題と解を変更しました
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 詰将棋です。9七に角がきたら問答無用で成ってください
+  owner_tag_list:
+  - 打ち歩詰め回避
+  - 23手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: G*9c 9b9c 7g8e 9c8d S*7e 8d8e 8g8f 8e9f 7h8g 9f9e 9h8i N*9g 9i9g 7i9g+
+      P*9f 9g9f 8g9f 9e9f B*8e 9f9g 4d8h 9g8g N*9i
+  - moves_str: G*9c 9b9c 7g8e 9c8d S*7e 8d8e 8g8f 8e9f 7h8g 9f9e 9h8i N*9g 9i9g 7i9g+
+      P*9f 9g9f 8g9f 9e9f B*8e 9f8g N*9i 8g9g 4d8h
+  - moves_str: G*9c 9b9c 7g8e 9c8d S*7e 8d8e 8g8f 8e9f 7h8g 9f9e 9h8i N*9g 9i9g 7i9g+
+      P*9f 9g9f 8g9f 9e9f B*8e 9f9g 4d8h 9g8g 6g7g
+  - moves_str: G*9c 9b9c 7g8e 9c8d S*7e 8d8e 8g8f 8e9f 7h8g 9f9e 9h8i L*9g 9i9g 7i9g+
+      P*9f 9g9f 8g9f 9e9f B*8e 9f9g L*9h 9g8g 6g7g
+  - moves_str: G*9c 9b9c 7g8e 9c8d S*7e 8d8e 8g8f 8e9f 7h8g 9f9e 9h8i L*9g 9i9g 7i9g+
+      P*9f 9g9f 8g9f 9e9f B*8e 9f9g L*9i 9g8g 6g7g
+  - moves_str: G*9c 9b9c 7g8e 9c8d S*7e 8d8e 8g8f 8e9f 7h8g 9f9e 9h8i L*9g 9i9g 7i9g+
+      P*9f 9g9f 8g9f 9e9f B*8e 9f9g L*9i 9g8g 8e9f
+  - moves_str: G*9c 9b9c 7g8e 9c8d S*7e 8d8e 8g8f 8e9f 7h8g 9f9e 9h8i L*9g 9i9g 7i9g+
+      P*9f 9g9f 8g9f 9e9f B*8e 9f9g L*9h 9g8g 8e9f
+  - moves_str: G*9c 9b9c 7g8e 9c8d S*7e 8d8e 8g8f 8e9f 7h8g 9f9e 9h8i L*9g 9i9g 7i9g+
+      P*9f 9g9f 8g9f 9e9f B*8e 9f8g 6g7g 8g9g L*9h
   mate_skip: false
 - key: 8d31526ea40842a61e464217630eda6b
   user_id: 8
@@ -1991,6 +4141,250 @@
   moves_answers:
   - moves_str: N*6d 6c6d 5f6d 5b6c S*5b 6c6d 7f7e
   mate_skip: false
+- key: d78bc550c8a23d65369c6b502a572b1b
+  user_id: 1002
+  init_sfen: position sfen 4k4/1s5s1/bs5sb/4p1p2/2LNNNL2/2gRpRg2/3gLg3/4N4/P7P b l13p
+    1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: おふざけ詰将棋
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 5e6c
+  mate_skip: true
+- key: '0824fc21752ce8a9c86aa1fc86733c10'
+  user_id: 1002
+  init_sfen: position sfen 4k4/9/1gp1s1pg1/pLNpNpNLp/+r+p1g+lg1+p+r/1+p+p1+n1+p+p1/2+s+p+l+p+s2/3+p+s+p3/4+p4
+    b 2Bp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: "°♡°★5"
+  description: |-
+    こういうなんかふざけている感じの局面を作ってみました。ただ､二度と作るつもりはありません。
+    余詰めを見つけたら教えてください｡もしかしなくても、指摘されたら再び掲載することはないかもだけど....欠陥問題を掲載する気はないので、遠慮なくどうぞ
+    下の方は飾りです。活用する方法もありそうでしたが、作者の精神的に無理です
+
+    正解がおそらく3or5個足りません
+    ただもう見つけられないので(精神的に)見つけたら教えてください
+    今更ですが、95歩､15歩にしておけば良かったですね
+
+
+    ちなみに詰将棋を作っている最中の作者の脳内
+
+    なんか左右対称とか模様になってるとかそう言う詰将棋作りたいな〜
+    ↓
+    余詰めが無くならない...角を追加しよう(錯乱)
+    ↓
+    余詰めが無くならない...余詰めの方を正解にしよう(錯乱)
+    ↓
+    解の数....あと、1個足りない.....(錯乱状態)
+    ↓
+    見つけた......
+    ↓
+    大きな余詰めも見つけた.......(やり直し.......)
+    ↓
+    vgfjgfkjfojgjfgjg0rdw6gvjjpbgf
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 駒余りあり(の変化が多い)です
+  owner_tag_list:
+  - 桂馬
+  - 23手詰め
+  - 25手詰め
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4b3b 2a1b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4b3b 2a1b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 3b2b 1b1c G*2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 2d2b+ 1b1c G*2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4c3b+ 2a1b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4c3b+ 2a1b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4c3b+ 2a1b 1c2b+ 2c2b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4c3b+ 2a1b 1c2b+ 2c2b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4c3b+ 2a1b 1c2b+ 2c2b 3b2b 1b1c G*2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a B*1c P*2b 5b4a+
+      3a4a 6b5b 4a3a 5b4b 3a2a 4c3b+ 2a1b 1c2b+ 2c2b 2d2b+ 1b1c G*2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 3b2b 1b1c G*2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 2d2b+ 1b1c G*2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 3b2b 2c2b 1c2b+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3b 5d4b+ 3b4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4c3b+ 2a1b 3b2b 2c2b 1c2b+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 3b2b 2c2b 1c2b+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 3b2b 1b1c G*2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 1c2b+ 2c2b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4b3b 2a1b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4c3b+ 2a1b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4c3b+ 2a1b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4c3b+ 2a1b 1c2b+ 2c2b 3b2b 1b1c G*2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4c3b+ 2a1b 1c2b+ 2c2b 3b2b 1b1c 2b2c
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4c3b+ 2a1b 1c2b+ 2c2b 3b2b 1b1c 2d2c+
+  - moves_str: 3d4b+ 5c4b 7d6b+ 5a4a B*5b 4a3a 5d4b+ 3a4b S*4c 4b3a 5b4a+ 3a4a 6b5b
+      4a3a B*1c P*2b 5b4b 3a2a 4c3b+ 2a1b 1c2b+ 2c2b 2d2b+ 1b1c G*2c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 8d8b+ 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 8d8b+ 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 7b8b 8c8b 9c8b+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 7b8b 8c8b 9c8b+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 7b8b 8c8b 9c8b+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 7b8b 8c8b 9c8b+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 8d8b+ 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7b 5d6b+ 7b6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 8d8b+ 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 8d8b+ 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 8d8b+ 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a B*9c P*8b 5b6a+
+      7a6a 4b5b 6a7a 5b6b 7a8a 6c7b+ 8a9b 7b8b 8c8b 9c8b+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 8d8b+ 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6b7b 8a9b 9c8b+ 8c8b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 7b8b 9b9c 8d8c+
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 8d8b+ 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c G*8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c 8b8c
+  - moves_str: 7d6b+ 5c6b 3d4b+ 5a6a B*5b 6a7a 5d6b+ 7a6b S*6c 6b7a 5b6a+ 7a6a 4b5b
+      6a7a B*9c P*8b 5b6b 7a8a 6c7b+ 8a9b 9c8b+ 8c8b 7b8b 9b9c 8d8c+
+  mate_skip: false
 - key: '00472568659ec9cdb5cc073eda0c6dba'
   user_id: 8
   init_sfen: position sfen ln1g3nl/1ks1gr3/ppp1p1bsp/3p3p1/P4p3/6RPP/2NPPPP2/1B1SKS3/L1G3GNL
@@ -2017,6 +4411,233 @@
     name: きなこもち
   moves_answers:
   - moves_str: 9e9d 9c9d P*9c
+  mate_skip: false
+- key: 6d08cee0c38e7dd682b27a89333a114a
+  user_id: 1002
+  init_sfen: position sfen 6pk1/5Sn2/9/5pNbr/5BNN1/9/9/9/9 b 2Pr4g3s4l14p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 詰みそうで詰まない★3
+  description: |-
+    久しぶりの解1通りです。
+    作者的に超､楽
+    幸せ..............
+    結局、2通りになったけど、前回と比べるまでもない.......(前回､全部で､解の個数150超えた｡色々ありすぎて死にそうだった笑)
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 飛車角
+  - 桂馬
+  - 15手詰め
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 3d2b+ 2a2b 2e3c+ 2d3c 4b3c+ 2b3c B*5a 3c2b 3e2c+ 2b2a P*2b 2a1a P*1b
+      1d1b 2c1b
+  - moves_str: 3d2b+ 2a2b 2e3c+ 2d3c 4b3c 2b3c B*5a 3c2b 3e2c+ 2b2a P*2b 2a1a P*1b
+      1d1b 2c1b
+  mate_skip: false
+- key: ee3ca99dc9cc94cdcd0a1de807449f00
+  user_id: 1002
+  init_sfen: position sfen 1R5nl/5ggk1/3ppps1p/2p3pP1/p1n5S/1P1+b1PP2/Pp1sP1N1P/LS+b6/KNG4RL
+    b 2Pglp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: ん
+  description: タイトル通りです。相手の受け方にも注意してください
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 矢倉囲い
+  - 17手詰め
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 4f4e
+  mate_skip: true
+- key: 26c52fa8e4d23c093edb52f797c3d408
+  user_id: 1002
+  init_sfen: position sfen 9/9/9/9/9/9/7k1/6RB1/5SRB1 b 4g3s4n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: す
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 3h3g
+  mate_skip: true
+- key: a630e1cca7a6f79c0fe365ab42622baa
+  user_id: 207
+  init_sfen: position sfen 9/8k/6SN1/9/9/9/9/9/9 b G2r2b3g3s3n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 桂馬の使い道は？
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2c1a+ 1b1a G*2b
+  - moves_str: 2c1a+ 1b1c G*2d
+  - moves_str: 2c1a+ 1b2c G*2d
+  mate_skip: false
+- key: 04d26390ba1fd19de22558e8c42dbc49
+  user_id: 207
+  init_sfen: position sfen 9/9/7l1/6RBk/7N1/7pp/9/9/9 b rb4g4s3n3l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 飛角桂の渋滞
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2d1c+ 1d2e 3d3e
+  - moves_str: 2d1c+ 1d1e 1c1d
+  mate_skip: false
+- key: bcddbd99d926b9d920c1d6d06635ee24
+  user_id: 207
+  init_sfen: position sfen 5s1k1/8b/5p3/6N2/9/9/9/9/9 b RBr4g3s3n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 飛角コンボ
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: R*3a 2a3a B*1c 3a3b 1c2b+
+  - moves_str: R*3a 2a3a B*1c 3a2a 1c2b+
+  - moves_str: R*3a 2a3a B*1c 3a2a 3d2b+
+  mate_skip: false
+- key: c5f83c8bef29ee67a22419d637437595
+  user_id: 1002
+  init_sfen: position sfen 6snk/3l1gg1g/4sBSRB/6P1g/9/9/9/9/9 b - 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 玉飛車角金銀桂香歩★3
+  description: |-
+    玉飛車角金銀桂香歩を全て使ってみたというタイトル通りの詰将棋
+
+    ⚠低評価つけている方がいたのでタイトルを変更､それに伴い局面も少しかえましたが、全く変化は変わっておりません。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: "⚠駒余りのある変化があります。"
+  owner_tag_list:
+  - 飛車角
+  - 15手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 2c2a+ 1a2a 1c3a+ 2a3a 4c3b+ 4b3b N*4c 3a2a 3c3b+ 2a3b G*3c 3b2a S*3b
+      2a1a G*2a
+  - moves_str: 2c2a+ 1a2a 1c3a+ 2a3a 4c3b+ 4b3b N*4c 3a2a 3c3b+ 2a3b G*3c 3b2a 4c3a+
+      2a1a G*2a
+  - moves_str: 2c2a+ 1a2a 1c3a+ 2a3a 4c3b+ 4b3b N*4c 3a2a 3c3b+ 2a3b G*3c 3b2a 4c3a+
+      2a3a G*3b
+  - moves_str: 2c2a+ 1a2a 1c3a+ 2a3a 4c3b+ 4b3b N*4c 3a2a 3c3b+ 2a3b G*3c 3b2a 4c3a+
+      2a3a S*3b
+  - moves_str: 2c2a 1a2a 1c3a+ 2a3a 4c3b+ 4b3b N*4c 3a2a 3c3b+ 2a3b G*3c 3b2a S*3b
+      2a1a G*2a
+  - moves_str: 2c2a 1a2a 1c3a+ 2a3a 4c3b+ 4b3b N*4c 3a2a 3c3b+ 2a3b G*3c 3b2a 4c3a+
+      2a1a G*2a
+  - moves_str: 2c2a 1a2a 1c3a+ 2a3a 4c3b+ 4b3b N*4c 3a2a 3c3b+ 2a3b G*3c 3b2a 4c3a+
+      2a3a S*3b
+  - moves_str: 2c2a 1a2a 1c3a+ 2a3a 4c3b+ 4b3b N*4c 3a2a 3c3b+ 2a3b G*3c 3b2a 4c3a+
+      2a3a G*3b
+  mate_skip: false
+- key: eab2471d0729d36881168439888d022e
+  user_id: 1079
+  init_sfen: position sfen 4k4/9/9/4G4/9/9/9/9/9 b 2GS2r2bg3s4n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: っっっっt
+  description: h
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: よろしくお願いいたします。
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1079
+    key: 8a2ff0a7d707a95ece154896548e1703
+    name: TosshyH
+  moves_answers:
+  - moves_str: G*5b 5a5b S*5c 5b6a G*6b
+  - moves_str: G*5b 5a5b S*5c 5b5a G*5b
+  - moves_str: G*5b 5a5b S*5c 5b4a G*4b
   mate_skip: false
 - key: 5f708e61c73b44d3d6591d1120de569c
   user_id: 8
@@ -2100,6 +4721,92 @@
   moves_answers:
   - moves_str: 3f3d
   mate_skip: false
+- key: 624a47fccbd67b871c96cc6c9e2ef35d
+  user_id: 1002
+  init_sfen: position sfen 3nR1ln1/2ls+P4/ns4+b2/2+b6/3gk1g2/2N6/4P4/9/3LRL3 b 2g2s16p
+    1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 弄ばれる馬★5
+  description: |-
+    金銀の動きがもはや芸術的
+    個人的に､今までで､1番の出来栄え
+
+    ⚠やや修正しました
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 馬の守りは金銀3枚､それを上手く掻い潜って.......
+  owner_tag_list:
+  - 金銀
+  - 19手詰め
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 5b6b 3c5a S*5f 5e5d 5f6e 5d5c 6e5d 5c5d G*4d 5d5e 5g5f 7d5f 4d5d 5e5d
+      5i5f P*5e B*6e 5d5c 6e4c+
+  - moves_str: 5b6b 3c5a S*5f 5e5d 5f6e 5d5c 6e5d 5c5d G*4d 5d5e 5g5f 7d5f 4d5d 5e5d
+      5i5f R*5e B*6e 5d5c 6e4c+
+  - moves_str: 5b6b 3c5a S*5f 5e5d 5f6e 5d5c 6e5d 5c5d G*4d 5d5e 5g5f 7d5f 4d5d 5e5d
+      5i5f G*5e B*6e 5d5c 6e4c+
+  - moves_str: 5b6b 3c5a S*5f 5e5d 5f6e 5d5c 6e5d 5c5d G*4d 5d5e 5g5f 7d5f 4d5d 5e5d
+      5i5f S*5e B*6e 5d5c 6e4c+
+  mate_skip: false
+- key: 0e17d646ed1bc8546657d8b47e09b45c
+  user_id: 207
+  init_sfen: position sfen 6+B2/8n/6nk1/6p1P/7pp/9/9/9/9 b G2rb3g4s2n4l14p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: わっしょいしそうな玉の捕まえ方
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*2d 2c2d 3a1c
+  - moves_str: G*2d 1b2d 1d1c+
+  mate_skip: false
+- key: eb0f96fde1d7d85da8189a183025da76
+  user_id: 1002
+  init_sfen: position sfen ln1g2+R1l/1Bsk2+P2/p1p1pp2p/3p3g1/4b2N1/2PL5/PPKPPPG1P/1SG1s4/LN2+r4
+    b S2Pn2p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: れ
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 3g4f
+  mate_skip: true
 - key: d1a2aa57475de3cc3766b7faa3c6868a
   user_id: 8
   init_sfen: position sfen 9/9/9/9/9/9/+bg7/k8/2G6 b RLPkrb2g4s4n3l17p 1
@@ -2172,6 +4879,107 @@
     name: きなこもち
   moves_answers:
   - moves_str: G*8c 8b7a S*8b
+  mate_skip: false
+- key: a3c55a61bf02906b20eb039425ad399f
+  user_id: 1002
+  init_sfen: position sfen 4k4/9/9/P6ps/R2NNNN2/3LLLLP1/6p1S/9/6G1B b - 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 主役は.......★5
+  description: |-
+    個人的には飛車が主役だとは思います。
+    全ては17手目の布石.......
+    余詰めはないはずです.......あったらすいません
+    ⚠少し問題を修正しました
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 盤面をよく見て....意外とどうでも良さそうな手にも注意が必要です
+  owner_tag_list:
+  - 飛車
+  - 29手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 5e6c+ 5a4a 4e3c+ 4a3a 4f4b+ 3a2a 4b3b 2a1b 3b2b 1b1c 2b2c 1d2c 3e2c+
+      1c1d S*1e 1d1e 6e5c+ S*2e 9e2e 2d2e S*1f 1e1d 1f2e 1d1e 1g1f 1e2f P*2g 2f1g
+      3i2h
+  - moves_str: 5e6c+ 5a4a 4e3c+ 4a3a 4f4b+ 3a2a 4b3b 2a1b 3b2b 1b1c 2b2c 1d2c 3e2c+
+      1c1d S*1e 1d1e 6e5c S*2e 9e2e 2d2e S*1f 1e1d 1f2e 1d1e 1g1f 1e2f P*2g 2f1g 3i2h
+  - moves_str: 5e6c+ 5a4a 4e3c+ 4a3a 4f4b+ 3a2a 4b3b 2a1b 3b2b 1b1c 2b2c 1d2c 3e2c+
+      1c1d S*1e 1d1e 6e7c+ S*2e 9e2e 2d2e S*1f 1e1d 1f2e 1d1e 1g1f 1e2f P*2g 2f1g
+      3i2h
+  - moves_str: 5e6c+ 5a4a 4e3c+ 4a3a 4f4b+ 3a2a 4b3b 2a1b 3b2b 1b1c 2b2c 1d2c 3e2c+
+      1c1d S*1e 1d1e 6e7c S*2e 9e2e 2d2e S*1f 1e1d 1f2e 1d1e 1g1f 1e2f P*2g 2f1g 3i2h
+  mate_skip: false
+- key: 8c09b18adfefd7cfdba53e2a7f395c63
+  user_id: 1079
+  init_sfen: position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
+    b - 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 初手
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 初手を指してください。
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 1079
+    key: 8a2ff0a7d707a95ece154896548e1703
+    name: TosshyH
+  moves_answers:
+  - moves_str: 7g7f 3c3d 2g2f 8c8d 2f2e 8d8e 6i7h
+  - moves_str: 7g7f 3c3d 6g6f 7a6b 2h6h
+  - moves_str: 7g7f 8c8d 2g2f 8d8e 2f2e 4a3b 6i7h
+  - moves_str: 7g7f 8c8d 2g2f 8d8e 2f2e 3c3d 8h2b+ 3a2b 7i8h 2b3c 8h7g
+  mate_skip: false
+- key: d73b53068efeed83016e9ae68b7b64e1
+  user_id: 1002
+  init_sfen: position sfen +p1l1k1l1+p/1g5g1/4r4/+psP1L1Ps+p/N1+p+pP+p+p1N/1N2l2N1/9/9/9
+    b BGS3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 難しそうだけど.......★3
+  description: |-
+    本当はもっと簡単なの作ろうと思ってたのに.......いつの間に??
+    でも､今回は指し手は全て平凡(妙手みたいなのはない)です。
+    香不成でも詰むとは思ってなかった.......
+    余詰めがあったらすいません(早詰めはノーカウントです)
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 邪道です
+  owner_tag_list:
+  - 13手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 5d5c P*5b 5c5b+ 5a5b S*5c 5b5c R*5d 5c4b G*5c 4b4a P*4b 4a3b B*4c
+  - moves_str: 5d5c P*5b 5c5b+ 5a5b S*5c 5b5c R*5d 5c6b G*5c 6b6a P*6b 6a7b B*6c
+  - moves_str: 5d5c P*5b 5c5b 5a5b S*5c 5b5c R*5d 5c6b G*5c 6b6a P*6b 6a7b B*6c
+  - moves_str: 5d5c P*5b 5c5b 5a5b S*5c 5b5c R*5d 5c4b G*5c 4b4a P*4b 4a3b B*4c
+  - moves_str: 5d5c P*5b 5c5b+ 5a5b S*5c 5b5c R*5d 5c4b G*5c 4b3b B*4c 3b4a 5c5b
+  - moves_str: 5d5c P*5b 5c5b+ 5a5b S*5c 5b5c R*5d 5c6b G*5c 6b7b B*6c 7b6a 5c5b
+  - moves_str: 5d5c P*5b 5c5b 5a5b S*5c 5b5c R*5d 5c4b G*5c 4b3b B*4c 3b4a 5c5b
+  - moves_str: 5d5c P*5b 5c5b 5a5b S*5c 5b5c R*5d 5c6b G*5c 6b7b B*6c 7b6a 5c5b
   mate_skip: false
 - key: 70b0bb6a722b742fdb93f7a3690413c5
   user_id: 8
@@ -2278,6 +5086,321 @@
   - moves_str: S*6a 7b8b 5c7a 8b9b G*8b
   - moves_str: S*6a 7b8b 5c7a 8b7a G*7b
   mate_skip: false
+- key: 9bed17b2d0c15d6a9f89492b7762b60a
+  user_id: 783
+  init_sfen: position sfen ln2k2nl/1r2g1g2/2ppppsp1/p1sR2p1p/3N5/P1P3P2/1P1PPPN1P/2GK2S2/L1S2G2L
+    b B2Pb 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 詰まされた飛桂の大暴れ
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: スマートな1手か武骨な5手1組か
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 783
+    key: b2969d74d347b64178443e821819b6c1
+    name: Wndr
+  moves_answers:
+  - moves_str: 6e7c+
+  - moves_str: 6d7d 7c7d B*7a 8b7b 7a5c+
+  mate_skip: false
+- key: 5841616febe25f4b2b5fef7968c7c6bb
+  user_id: 1002
+  init_sfen: position sfen ln7/2sk2l2/1ppppp3/p8/9/9/9/9/9 b RBG 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 必至じゃ不満part1★1
+  description: |-
+    誰もこういうの出していない気がしたので手筋として載せておきました。覚えておけば､実戦でも役に立ちますよ
+    最近､難しい問題出し過ぎた気がしたのでこういうのもいいかなって
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 美濃囲い
+  - 9手詰め
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: R*4b 6b7a B*9c 8a9c G*6b 7a8b 6b7b 8b9b 7b8b
+  - moves_str: R*4b 6b7a B*9c 9a9c G*6b 7a8b 6b7b 8b9b 7b8b
+  - moves_str: R*4b 6b7a B*9c 9a9c G*6b 7a8b 6b7b 8b9a 7b8b
+  - moves_str: R*4b 6b7a B*9c 8a9c G*6b 7a8a 6b7b 8a9b 7b8b
+  - moves_str: R*4b 6b7a B*9c 8a9c G*6b 7a8a 6b7b 8a9b S*8a
+  - moves_str: R*4b 6b7a B*9c 8a9c G*6b 7a8b 6b7b 8b9b S*8a
+  mate_skip: false
+- key: 3e491a8d0e4a01ae6c39a4ace25111e7
+  user_id: 1002
+  init_sfen: position sfen lnk6/2s2R3/1ppsp4/p2p5/9/9/9/9/9 b B2Grb2g2s3n3l13p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 必至じゃ不満part2★1
+  description: 前回と同じだと詰みません.......なら､どうする?
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 美濃囲い
+  - 9手詰め
+  - 実戦形
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: G*6a 7a8b B*7a 8b9b 4b7b+ 6c7b S*9c 8a9c G*8b
+  mate_skip: false
+- key: 6d79a50c7b4a5ac625ec9f3305b23dad
+  user_id: 1002
+  init_sfen: position sfen lnks1+R3/9/1ppppp3/p8/1P7/9/9/9/9 b BGSrb3g2s3n3l11p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 必至じゃ不満part3★1
+  description: |-
+    必至の方が見つからないと言われる方もいると思いますが､大丈夫です。自分も分かりません（笑）。
+    シリーズ化するために言っているだけです。強いていうなら52金かな？(必至になっている保証はないです)
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 美濃囲い
+  - 9手詰め
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: S*6b 7a6b G*5b 6a5b B*7a 6b7b 4a5b 7b7a S*8b
+  - moves_str: S*6b 7a6b G*5b 6b7b 4a6a 7b8b B*7a 8b9b 6a7b
+  mate_skip: true
+- key: 02d7a51121ec80e6b5dea11b4e9f0cef
+  user_id: 203
+  init_sfen: position sfen l+P1g3nl/1Rp1gk1p1/p1Sp1ps1p/4BPs1g/2P1N1pP1/3N+B3P/+s+p2P1GR1/3K1+n3/8L
+    b L3Pp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 15手詰み？
+  description: 43から殺到康光して詰みですね、とはいえ自玉は金を渡さなければ余裕なので、72銀で飛車の横効きを通しつつ金銀交換を迫れば必至で勝ちです。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 7c7b+
+  - moves_str: 7c7b
+  mate_skip: false
+- key: 9a247e0a083919e029f88a4746daa739
+  user_id: 203
+  init_sfen: position sfen ln4k1l/1R2Bp1s1/p4g1g1/3p2lpp/1p2pn3/1P1PP1p1P/P1NS1G1P1/1+r1B2SK1/2P4NL
+    b G2Psp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 一手必至？
+  description: |-
+    最長応手だと9手目に合流します。
+    5手目43角成に対して同玉は44歩から、7手目43角成に対して同玊は42龍から早く詰むので割愛します。
+
+    最終手55歩の後は
+    54王、56桂、55王、53龍、54合、46打まで、無駄に変化するので省略。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 8b8a+ 3a3b 8a4a 3b3c G*3b 3c4d 5b4c+ 4b4c G*5d 4d5d 4a5b S*5c 5f5e
+  - moves_str: 8b8a+ 3a3b 8a4a 3b3c G*3b 3c4d 5b4c+ 4b4c G*5d 4d5d 4a5b G*5c 5f5e
+  - moves_str: 8b8a+ 3a3b 8a4a 3b3c G*3b 3c4d 5b4c+ 4b4c G*5d 4d5d 4a5b B*5c 5f5e
+  - moves_str: 8b8a+ 3a3b 8a4a 3b3c 5b4c+ 4b4c G*3b 3c4d G*5d 4d5d 4a5b S*5c 5f5e
+  - moves_str: 8b8a+ 3a3b 8a4a 3b3c 5b4c+ 4b4c G*3b 3c4d G*5d 4d5d 4a5b G*5c 5f5e
+  - moves_str: 8b8a+ 3a3b 8a4a 3b3c 5b4c+ 4b4c G*3b 3c4d G*5d 4d5d 4a5b B*5c 5f5e
+  mate_skip: true
+- key: 20a5cc3915637f7ee711a4c4c9c6d759
+  user_id: 1002
+  init_sfen: position sfen lR5nl/5ggk1/4pps1p/6pP1/8S/pP+b+b1P3/Pp1+n1sN1P/LS1+p2g2/KNG4RL
+    b P5p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 詰まさなければ負け★3
+  description: 1回下書きの段階で投稿してしまいました。すいません｡
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 矢倉囲い
+  - 15手詰め
+  - 実戦形
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 2d2c+ 3b2c 2i2c+ 2b2c 8a2a+ P*2b N*3e 3d3e P*2d 3c2d 1e2d 2c2d S*2e
+      2d1e G*1f
+  - moves_str: 2d2c+ 3b2c 2i2c+ 2b2c 8a2a+ P*2b N*3e 3d3e P*2d 3c2d 1e2d 2c2d S*2e
+      2d2c G*2d
+  - moves_str: 2d2c+ 3b2c 2i2c+ 2b2c 8a2a+ P*2b N*3e 3d3e P*2d 3c2d 1e2d 2c2d S*2e
+      2d3c G*3d
+  - moves_str: 2d2c+ 3b2c 2i2c+ 2b2c 8a2a+ R*2b N*3e 3d3e P*2d 3c2d 1e2d 2c2d S*2e
+      2d1e G*1f
+  - moves_str: 2d2c+ 3b2c 2i2c+ 2b2c 8a2a+ R*2b N*3e 3d3e P*2d 3c2d 1e2d 2c2d S*2e
+      2d3c G*3d
+  - moves_str: 2d2c+ 3b2c 2i2c+ 2b2c 8a2a+ R*2b N*3e 3d3e P*2d 3c2d 1e2d 2c2d S*2e
+      2d2c G*2d
+  mate_skip: false
+- key: 2084addbacd9076a9f80ab60c6c3c2da
+  user_id: 481
+  init_sfen: position sfen lnsgkgsnl/7b1/p1pppp1pp/6p2/2P6/1r7/P2PPPPPP/1BR6/LNSGKGSNL
+    b Pp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 反撃のチャンス
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 早石田の定石を指してください
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 481
+    key: 3b85d32f3fd67bcf5bc3c8366a237ea1
+    name: Pon
+  moves_answers:
+  - moves_str: 7e7d 7c7d 8h2b+ 3a2b B*9e
+  - moves_str: 7e7d 7c7d 8h2b 3a2b B*9e
+  - moves_str: 7e7d 2b8h+ 7h8h
+  - moves_str: 7e7d 2b8h 7h8h
+  - moves_str: 7e7d 7a6b 8h2b+ 3a2b B*7g
+  - moves_str: 7e7d 7a6b 8h2b 3a2b B*7g
+  - moves_str: 7e7d 7a7b 8h2b+ 3a2b B*7g
+  - moves_str: 7e7d 7a7b 8h2b 3a2b B*7g
+  - moves_str: 7e7d 7a8b 8h2b+ 3a2b B*7g
+  - moves_str: 7e7d 7a8b 8h2b 3a2b B*7g
+  mate_skip: false
+- key: fb78aeb97b51fbe8c184a32f7d945289
+  user_id: 481
+  init_sfen: position sfen ln3g1nl/1s2g1sk1/2pppp1p1/6p2/p7p/2P6/P2PPPPPP/1+r3G1SL/LN2b1GNK
+    b RB2Ps 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 反撃の一手
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 481
+    key: 3b85d32f3fd67bcf5bc3c8366a237ea1
+    name: Pon
+  moves_answers:
+  - moves_str: B*6f
+  - moves_str: B*5e
+  mate_skip: false
+- key: 02d8d88e8ad385c787b911f56357fd47
+  user_id: 481
+  init_sfen: position sfen 1k7/9/1K7/9/9/9/9/9/9 b RPr2b4g4s4n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 玉vs玉
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 481
+    key: 3b85d32f3fd67bcf5bc3c8366a237ea1
+    name: Pon
+  moves_answers:
+  - moves_str: R*8b 8a9a 8b9b+
+  - moves_str: R*8b 8a7a 8b7b+
+  mate_skip: false
+- key: 93c7c1f24e74fd69792f92992a332fff
+  user_id: 481
+  init_sfen: position sfen 5+R1lk/7pp/3ss4/9/9/9/9/9/+B5L1L b rb4g2s4nl16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 5手詰め 駒余りあり
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 481
+    key: 3b85d32f3fd67bcf5bc3c8366a237ea1
+    name: Pon
+  moves_answers:
+  - moves_str: 9i2b 1a2b 4a3b 2b1a 1i1b
+  - moves_str: 9i2b 1a2b 4a3b 2b1a 1i1b+
+  - moves_str: 9i2b 1a2b 4a3b 2b1a 3b1b
+  mate_skip: false
 - key: 2eeb692665287621392f18c92e8d408c
   user_id: 8
   init_sfen: position sfen ln1g5/2s6/ppkp5/2N6/P1P6/1P7/9/9/L8 b BG2rb2g3s2n2l12p
@@ -2305,6 +5428,54 @@
   moves_answers:
   - moves_str: B*8b 7c8d G*8e
   mate_skip: false
+- key: a082fe8d390104bf7951c7f906e96bc1
+  user_id: 207
+  init_sfen: position sfen 7nl/5+Rgk1/7sp/9/9/9/9/9/9 b Sr2b3g2s3n3l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 龍で迫る実戦型
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 実戦で役立つ！飛車を使った基本の詰将棋20問 第17問
+  source_media_url: https://sakura-gogogo.hatenablog.com/entry/2020/05/27/173000
+  source_published_on: '2020-05-27'
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*3a 2b1b 4b3b 2c3b G*2b
+  mate_skip: false
+- key: 6bf2cc297e539d1dc14dd710b56671ec
+  user_id: 207
+  init_sfen: position sfen 6+R2/8k/6pp1/8p/9/6P1P/9/9/9 b 2Gr2b2g4s4n4l13p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 龍で迫る実戦型 No.2
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 実戦で役立つ！飛車を使った基本の詰将棋20問 第19問
+  source_media_url: https://sakura-gogogo.hatenablog.com/entry/2020/05/27/173000
+  source_published_on: '2020-05-27'
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*2b 1b1c 3a1a 1c2d G*3e
+  mate_skip: false
 - key: 840d642a78a125a4018f8940fb755f7f
   user_id: 8
   init_sfen: position sfen 9/9/5p1p1/4pbp2/7P1/5P3/5SN2/9/9 b - 1
@@ -2331,6 +5502,194 @@
   moves_answers:
   - moves_str: 3g4e
   mate_skip: false
+- key: f14bee9aebb6f7c22671f705e91730cb
+  user_id: 170
+  init_sfen: position sfen Rp6l/R1gk2g2/2ppps1pb/2b2p2p/5n3/2PPPLp2/1PS2P1PP/5K1S1/2+n2GSNL
+    b G2Pnlp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 一間龍へ
+  description: |-
+    同玉は21飛成、合駒、32飛成。
+    52玉は32飛成。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: G*6a
+  mate_skip: false
+- key: 5ff3dc71953e23e7448f1d40be7b2b32
+  user_id: 170
+  init_sfen: position sfen lns2+R2l/1P1kg3r/p1pppN1pp/3l2p2/9/2S6/P1+pPP1PPP/6+n2/L2GK4
+    b GSP2bgsn2p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 実戦で逃した詰将棋4
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 13手詰めです。
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 4a7a 6b7a 8b8a+ 7a8a S*7b 8a7b N*8d 7b8b P*8c 8b8c S*7b 8c7d G*7e
+  - moves_str: 4a7a 6b7a 8b8a+ 7a8a S*7b 8a7b N*8d 7b8b P*8c 8b8c S*7b 8c7d G*8e
+  - moves_str: 4a7a 6b7a 8b8a+ 7a8a S*7b 8a7b N*8d 7b8b P*8c 8b8c S*7b 8c8d G*8e
+  - moves_str: 4a7a 6b7a 8b8a+ 7a8a S*7b 8a7b N*8d 7b8b P*8c 8b8c S*7b 8c9d G*8e
+  - moves_str: 4a7a 6b7a 8b8a+ 7a8a S*7b 8a7b N*8d 7b8b P*8c 8b8c S*7b 8c8b G*8c
+  - moves_str: 4a7a 6b7a 8b8a+ 7a8a S*7b 8a7b N*8d 7b8b P*8c 8b8c S*7b 8c8b G*8a
+  mate_skip: false
+- key: bb18586919221e38e6cbce6c7ce7882c
+  user_id: 1280
+  init_sfen: position sfen knn6/ls+R6/ppn6/2pB5/9/9/9/9/9 b R3Gkbg3sn3l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 詰め将棋
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1280
+    key: ae27fc51b5e327f513e39dd7313a924a
+    name: yshita77
+  moves_answers:
+  - moves_str: 7b8b 9a8b G*7b 8b7b G*6b 7b6b G*5c 6b6a S*5b 6a7b R*6b
+  mate_skip: false
+- key: 11565b499a3dfea8a1a004960cdc771a
+  user_id: 1280
+  init_sfen: position sfen lnk4nl/2r1G2P1/p4+R1p1/2s1pp2p/1p1p5/2P1P3P/PPSP1P3/2G1S2+b1/LN1K1G1NL
+    b BGS3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 飛車を交わして詰ませる
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 9手詰め
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1280
+    key: ae27fc51b5e327f513e39dd7313a924a
+    name: yshita77
+  moves_answers:
+  - moves_str: B*6b 7a8b S*8c 7d8c 4c8c 8b8c G*8d 8c8b S*8c
+  - moves_str: B*6b 7a8b S*8c 7d8c 4c8c 8b8c G*8d 8c9b S*8c
+  mate_skip: false
+- key: 919603f60b529c38c2549c793f71fa9b
+  user_id: 1280
+  init_sfen: position sfen l2g5/3k5/pp1g5/2p+R5/9/9/9/9/9 b B2Gkrb4s4n3l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 詰ませてください
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 1280
+    key: ae27fc51b5e327f513e39dd7313a924a
+    name: yshita77
+  moves_answers:
+  - moves_str: B*5c 6b7b G*7c 6c7c 6d6a 7b8b 5c7a+ 8b9b G*8b
+  - moves_str: B*5c 6b7b G*7c 6c7c 6d6a 7b8b 6a7a 8b9b G*8b
+  - moves_str: B*5c 6b7b 6d6c 7b6c G*6d 6c7b G*7c 7b8a G*8b
+  mate_skip: false
+- key: be00219fef2f23d134761336b152f872
+  user_id: 1280
+  init_sfen: position sfen 6+N1l/3k1g3/5nkpp/4Sp3/3+R+B1p2/7P1/9/3+r5/9 b BG2g3s2n3l13p
+    1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 22角問題
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 7手詰め
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 1280
+    key: ae27fc51b5e327f513e39dd7313a924a
+    name: yshita77
+  moves_answers:
+  - moves_str: 5e4d 3c4d 5d4e 4d3c B*4d 3c2d G*2e
+  mate_skip: false
+- key: ce3ae551cde7896c16d18fbd90b40e41
+  user_id: 1002
+  init_sfen: position sfen 8l/8k/4+b4/8K/9/9/9/9/9 b 2RBP3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: パッと見5手詰め★2
+  description: |-
+    一瞬､詰まなそうにみえるけど、良く考えれば簡単.......でもないか??
+
+    余詰めが多そうな予感がするので、余詰めあったらすいません
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 今回は変化が多いので途中までで正解にしてます
+  owner_tag_list:
+  - 飛車角
+  lineage_key: 玉方持駒限定詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: R*1c 1b2a P*2b 2a2b R*2c 2b3b 2c3c+ 3b4a B*3b 4a5b 3c5c 5b6a B*8c
+  - moves_str: R*1c 1b2a P*2b 2a2b R*2c 2b3b 2c3c+ 3b4a B*3b 4a5b 3c5c 5b6a 1c1a+
+  - moves_str: R*1c 1b2a P*2b 2a3a R*5a 3a2b 5a1a+ 2b3b 1c2c+ 3b4b B*3a 4b5a 3a5c+
+      P*4a B*7c
+  - moves_str: R*1c 1b2a P*2b 2a3a R*5a 3a2b 5a1a+ 2b3b 1c2c+ 3b4b B*3a 4b5a 3a5c+
+      P*4a B*8d
+  - moves_str: R*1c 1b2a P*2b 2a3a R*5a 3a2b 5a1a+ 2b3b 1c2c+ 3b4b B*3a 4b5a 3a5c+
+      P*4a B*9e
+  - moves_str: R*1c 1b2a P*2b 2a3b R*3c 3b4a B*3b 4a5a 3c5c+ 5a6a B*8c
+  - moves_str: R*1c 1b2a P*2b 2a3b R*3c 3b4a B*3b 4a5a 3c5c+ 5a6a 1c1a+
+  mate_skip: true
 - key: 11e21520ccb2819f7649066a4d0a0bb1
   user_id: 8
   init_sfen: position sfen ln5nl/2ks+S4/1ppp3p1/5pg1p/p2Sr2P1/2PPp3P/PP4+b2/LGG1+s4/KNB5L
@@ -2354,6 +5713,55 @@
     name: きなこもち
   moves_answers:
   - moves_str: 5b6b 7b6b S*4f
+  mate_skip: false
+- key: 7cda2745fa36242badb55a8027943472
+  user_id: 1280
+  init_sfen: position sfen 6S1l/5+N3/5nkpp/5p3/4+B1p2/7P1/9/S1+P6/+L1G6 b BG2r2g2s2n2l12p
+    1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: よく見たら3手詰め
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 3手詰め
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1280
+    key: ae27fc51b5e327f513e39dd7313a924a
+    name: yshita77
+  moves_answers:
+  - moves_str: B*2b 3c3d G*2e
+  - moves_str: B*2b 3c2d G*2e
+  mate_skip: false
+- key: 37c097d039c2f9d70e796bc362958240
+  user_id: 1280
+  init_sfen: position sfen ln1g1gsnl/1ks4b1/pppppp1pp/9/9/4PSr2/PPPP1P1PP/2K2S1R1/LNBG1G1NL
+    b Pp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 飛車を閉じ込める
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 1手指してください
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 1280
+    key: ae27fc51b5e327f513e39dd7313a924a
+    name: yshita77
+  moves_answers:
+  - moves_str: P*3e
   mate_skip: false
 - key: fd664bbd450dc894d5d3b99abab29718
   user_id: 8
@@ -2400,6 +5808,182 @@
     name: きなこもち
   moves_answers:
   - moves_str: B*5e
+  mate_skip: false
+- key: 9c85499c53737d94b66378682811ba07
+  user_id: 1280
+  init_sfen: position sfen lnk4nl/2r1G2P1/p4+R1p1/2s1pp2p/1p1p5/2P1P3P/PPSP1P3/2G1G2+b1/LN1K1G1NL
+    b B2S3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 飛車を避けて詰ませる
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 11手詰めのみ
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1280
+    key: ae27fc51b5e327f513e39dd7313a924a
+    name: yshita77
+  moves_answers:
+  - moves_str: B*6b 7a8b S*8c 7d8c 4c8c 8b8c S*8d 8c7d S*7e 7d6c 6b5c+
+  - moves_str: B*6b 7a8b S*8c 7d8c 4c8c 8b8c S*8d 8c7d S*7e 7d6c 5b5c
+  mate_skip: false
+- key: b0cd889eeeff8d0c323792e63ce884c5
+  user_id: 207
+  init_sfen: position sfen 9/9/9/9/9/7n1/7G1/5s3/6B1k b RGrb2g3s3n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 入玉されたけど包囲した
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*2i 1i2i 2g2h 2i3i R*2i
+  - moves_str: G*2i 1i2i 2g2h 2i1i R*2i
+  mate_skip: false
+- key: 6c9d08395565370f1c297c183c15481e
+  user_id: 203
+  init_sfen: position sfen +B+R1g2k1l/2n1s4/p3pp1s1/6p1p/Ppp6/1P+bP1P2P/K1g1P1P2/9/LLNr3NL
+    b 2G2SN4p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 長い詰みより
+  description: 実戦なら33金銀か55馬の退路封鎖の必至で勝ちですね
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 必至
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: S*2b 3a2b G*3c 2b1c N*2e 1c2d 3c2c 2d2c S*2d 2c2d S*3c 2d2e G*3f
+  - moves_str: S*2b 3a2b G*3c 2b1c N*2e 1c2d 3c2c 2d2c S*2d 2c2d S*3c 2d2c G*2b
+  - moves_str: S*2b 3a2b G*3c 2b1c N*2e 1c2d 3c2c 2d2c S*2d 2c2d S*3c 2d2c G*2d
+  - moves_str: S*2b 3a2b G*3c 2b1c N*2e 1c2d 3c2c 2d2c S*2d 2c2b S*2c 2b3a G*3b
+  - moves_str: S*2b 3a2b G*3c 2b1c N*2e 1c2d 3c2c 2d2c S*2d 2c2b S*2c 2b2a G*2b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c4b S*3c 4b3a G*2b 3a4a 8a6a 5b6a G*4b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c4b S*3c 4b3a G*4b 3a2a 8a6a 5b6a G*2b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c4b S*3c 4b3a 8a6a 5b6a G*4b 3a2a G*2b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c4b S*3c 4b3a 8a6a 5b6a G*2b 3a4a G*4b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c3b S*3c 3b3a G*2b 3a4a 8a6a 5b6a G*4b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c3b S*3c 3b3a G*4b 3a2a 8a6a 5b6a G*2b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c3b S*3c 3b3a 8a6a 5b6a G*4b 3a2a G*2b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c3b S*3c 3b3a 8a6a 5b6a G*2b 3a4a G*4b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c2b S*3c 2b3a G*4b 3a2a 8a6a 5b6a G*2b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c2b S*3c 2b3a G*2b 3a4a 8a6a 5b6a G*4b
+  - moves_str: S*2b 3a2b G*3c 2b3c N*2e 3c2b S*3c 2b3a 8a6a 5b6a G*4b 3a2a G*2b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c4b S*3c 4b3a G*2b 3a4a 8a6a 5b6a G*4b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c4b S*3c 4b3a G*4b 3a2a 8a6a 5b6a G*2b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c4b S*3c 4b3a 8a6a 5b6a G*4b 3a2a G*2b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c4b S*3c 4b3a 8a6a 5b6a G*2b 3a4a G*4b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c3b S*3c 3b3a G*2b 3a4a 8a6a 5b6a G*4b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c3b S*3c 3b3a G*4b 3a2a 8a6a 5b6a G*2b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c3b S*3c 3b3a 8a6a 5b6a G*4b 3a2a G*2b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c3b S*3c 3b3a 8a6a 5b6a G*2b 3a4a G*4b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c2b S*3c 2b3a G*2b 3a4a 8a6a 5b6a G*4b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c2b S*3c 2b3a G*4b 3a2a 8a6a 5b6a G*2b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c2b S*3c 2b3a 8a6a 5b6a G*4b 3a2a G*2b
+  - moves_str: S*4b 3a4b G*3c 4b3c N*2e 3c2b S*3c 2b3a 8a6a 5b6a G*2b 3a4a G*4b
+  mate_skip: true
+- key: 1383e40f1f137b198ba9cc64a228efb8
+  user_id: 203
+  init_sfen: position sfen l1g1k4/s2gs4/2n2B+N2/p2+N1Bp2/3pp1Pp1/P5N2/3P1P1PP/3+p1SG2/L1+r1P1K1L
+    b SL2Prg3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: そんな切らなくても
+  description: |-
+    62角成から詰むんですけど、変化が多すぎて（別解登録量が多すぎる）やめました。
+    最終手以降は12飛と受けてもガチャガチャやれば詰みますし、53銀や44桂で追撃の必至をかけても一手一手じゃないですかね。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 詰み
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 4c5b+ 6b5b 4d7a+
+  mate_skip: false
+- key: 0ae6feb64d4046c8ddd5967b1302f837
+  user_id: 1002
+  init_sfen: position sfen 1r2k2r1/1+PSb1bS+P1/9/9/ppplPlppp/3sNs3/3g1g3/2g1L1g2/4K4
+    b 3NL9p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: れんで
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 5f6d
+  mate_skip: true
+- key: 98e418efb8445b07002a79ce2eb4cfb0
+  user_id: 1002
+  init_sfen: position sfen 3gkg3/9/3B1+B3/9/9/9/9/9/9 b 2r2g4s4n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 手数は長いけど.....(13手詰め)★1
+  description: 手数が長めだけど､ものすごい簡単です。長手数＝難しい､だからチャレンジしないではなく、できるだけチャレンジして欲しいです。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 13手詰め
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 6c4a+ 5a6b G*6c 6b7a 4c6a 7a8b 6a7b 8b9c G*9d 9c9b 9d8c 9b9a 7b8b
+  - moves_str: 6c4a+ 5a6b G*6c 6b7a 4c6a 7a8b 6a7b 8b9c G*9d 9c9b 9d8c 9b9a 8c8b
   mate_skip: false
 - key: b8702d7ea6dab903615dc6aff6e93f82
   user_id: 8
@@ -2481,6 +6065,154 @@
   moves_answers:
   - moves_str: L*3f
   mate_skip: false
+- key: '011359c1cc6689762b4a222c448a318b'
+  user_id: 207
+  init_sfen: position sfen 6gkl/5s3/7+Bp/9/9/9/9/9/9 b RGNLrb2g3s3n2l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 金銀の連携を崩して
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/4zdifnukhn
+  source_published_on: '2019-10-21'
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: L*2b 3a2b N*3c 4b3c G*3a 2a3a R*4a
+  mate_skip: false
+- key: 82c0d4d871a531d59bb4fb4fd3d3a47c
+  user_id: 207
+  init_sfen: position sfen 8l/6+R2/7n1/7k1/7sp/9/9/9/9 b GSNr2b3g2s2n3l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 龍を使う準備
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/iuznbn9dgp
+  source_published_on: '2020-04-14'
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*3e 2c3e G*2c 2d1d N*2f 2e2f 3b3d
+  mate_skip: true
+- key: 823ed3a55c5a54b8bbffc0a7f051dc39
+  user_id: 207
+  init_sfen: position sfen 5+b3/7ns/7k1/9/7+B1/9/9/9/9 b GN2r3g3s2n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: ダブルホースコンビネーション
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/y5dhmw4ht2
+  source_published_on: '2020-07-08'
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: N*3e 2c3b 2e4c 3b3a 3e2c 1b2c G*2a
+  - moves_str: N*3e 2c3b 2e4c 3b3a 3e2c 4a2c G*4b
+  mate_skip: false
+- key: 942f0bcc30b33a3a4b74907eea76ebc9
+  user_id: 207
+  init_sfen: position sfen 9/6S1+b/4B1k2/6pp1/6N2/9/9/9/9 b S2r4g2s3n4l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 馬の守りは金銀三枚なのか…？
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/zmicm26v5i
+  source_published_on: '2020-07-13'
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*2b 3c2b 5c3a+ 2b1a 3e2c 1b2c 3a2a
+  mate_skip: false
+- key: 3593bc1f96a850f1b53a6202bb86dd49
+  user_id: 207
+  init_sfen: position sfen 4g1k1p/6B2/8+b/7N1/9/9/9/9/9 b GS2r2g3s3n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: あいつさえいなければ… No.2
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/iq3ax0guuh
+  source_published_on: '2020-07-24'
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*4b 3a4b G*4c 4b3a 3b2a+ 3a2a 4c3b
+  - moves_str: S*4b 3a4b G*4c 4b3a 3b2a+ 3a4a 2a3b
+  - moves_str: S*4b 3a4b G*4c 4b3a 3b2a+ 3a4a 2d3b+
+  mate_skip: false
+- key: c44250ceb4dc7543db97c962f3e4685c
+  user_id: 207
+  init_sfen: position sfen 9/3pB2gl/6k2/5p3/9/7P1/9/9/9 b RSrb3g3s4n3l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 意味深に設置された歩
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/m-qpjrojvy
+  source_published_on: '2020-07-26'
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: R*5c 3c3b 5b4c+ 3b2c S*2d 2c2d 4c2e
+  - moves_str: R*5c 3c3b 5b4c+ 3b2c S*2d 2c1d 4c2e
+  mate_skip: false
 - key: fe946a6362bb67c9e87bbe91ca7d9850
   user_id: 8
   init_sfen: position sfen 4k1sS+R/3p5/9/5N3/9/9/9/9/9 b R2b4g2s3n4l17p 1
@@ -2503,6 +6235,114 @@
     name: きなこもち
   moves_answers:
   - moves_str: R*4a 5a4a 2a3b+ 4a5a 1a3a
+  mate_skip: true
+- key: 9cf88e9ed34233e4941103cfa047141e
+  user_id: 170
+  init_sfen: position sfen ln1B3nl/5+B+S2/2sp3pk/p3pgp1p/3P2g2/P1S1P3P/5nPP1/6SK1/L+rr4NL
+    b Gg6p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 対抗系必至手筋
+  description: |-
+    こちらの玉は39飛成に17玉で詰まない。
+    なので、24金から必至をかけて勝ち。
+    これを同歩ととると31馬から詰み。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 3手、指してください
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: G*2d 1c1b 4b3a
+  mate_skip: false
+- key: 9a3d9b07a809dafa35b4bc93eeae5d6d
+  user_id: 207
+  init_sfen: position sfen 7k1/6rB1/9/6r1+B/7N1/9/9/9/9 b S4g3s3n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 角馬 vs 飛車二枚
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/ne1gsadn1w
+  source_published_on: '2020-07-10'
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*1b 2a1b 1d2c 1b2c 2b1c+
+  - moves_str: S*1b 2a1b 1d2c 1b2a 2e1c
+  mate_skip: false
+- key: 43c46a5511b5a0c9bf3ae19c6c488153
+  user_id: 1002
+  init_sfen: position sfen 5gg2/7k1/5sRB1/6ss1/9/9/9/9/9 b RB2gs4n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 飛車角VS金銀★2
+  description: |-
+    タイトルの通り
+    比較的軽めの詰将棋です。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 飛車角
+  - 金銀
+  - 11手詰め
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: B*1a 2b2a 3c3a+ 2a3a R*2a 3a4b 2c4a+ 4b5c G*6c 5c5d G*5e
+  - moves_str: B*1a 2b2a 3c3a 2a3a R*2a 3a4b 2c4a+ 4b5c G*6c 5c5d G*5e
+  mate_skip: false
+- key: 40e31c4f1b5ad5de94dd570b2c5f3311
+  user_id: 170
+  init_sfen: position sfen l+R4+Rnl/4+N1s2/pS3g2k/1p2ppppp/2Pp5/4+bPPPP/P5N2/7K1/5+bgSL
+    b GNLgs4p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 実戦で逃した詰将棋5
+  description: |-
+    同玉は22龍～25歩まで。
+    12玉は32龍～。
+    で詰みます。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: N*2e 2d2e G*2d
   mate_skip: true
 - key: 4ee104cd027dc23e9990f6132e208003
   user_id: 8
@@ -2574,6 +6414,50 @@
   - moves_str: G*8b 9b9c 8b7b 9c9b 7a8b+
   - moves_str: G*8b 9b9c 8b8a 9c9b 7a8b+
   mate_skip: false
+- key: cce49616a564924175ef431af1eafdf2
+  user_id: 1002
+  init_sfen: position sfen 4snnrS/4s1g1k/8B/6r1B/5P1GL/5L1sG/9/9/9 b 2Ng2l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: ただただ難しい詰将棋★5
+  description: |-
+    分からないというより、読み切るのが大変といった感じの詰将棋
+
+    詰みそうで詰まない局面も結構あるので、注意
+
+    途中で一手稼ぐ変化がありますが正解にしてません。最短且つ最善でお願いします
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 駒をバンバン取ります
+  owner_tag_list:
+  - 23手詰め
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: 1d2c+ 1b2c 2e3d 2c3d R*4d 3d3c 1a2b 3b2b N*2e 3c2c 1c2b+ 2c2b N*1d
+      2b2c G*2b 2a2b 1d2b+ 2c2b 1e1c+ 2b2a R*2b 2a1a 1c1b
+  - moves_str: 1d2c+ 1b2c 2e3d 2c3d R*4d 3d3c 1a2b 3b2b N*2e 3c2c 1c2b+ 2c2b N*1d
+      2b2c G*2b 2a2b 1d2b+ 2c2b 1e1c+ 2b2a R*2b 2a1a 2b1b+
+  - moves_str: 1d2c+ 1b2c 2e3d 2c3d R*4d 3d3c 1a2b 3b2b N*2e 3c2c 1c2b+ 2c2b N*1d
+      2b2c G*2b 2a2b 1d2b+ 2c2b 1e1c+ 2b1a R*1b 1a2a 1b2b+
+  - moves_str: 1d2c+ 1b2c 2e3d 2c3d R*4d 3d3c 1a2b 3b2b N*2e 3c2c 1c2b+ 2c2b N*1d
+      2b2c G*2b 2a2b 1d2b+ 2c2b 1e1c+ 2b1a R*1b 1a2a 1c2b
+  - moves_str: 1d2c+ 1b2c 2e3d 2c3d R*4d 3d3c 1c2b+ 3b2b N*2e 3c2c 1a2b+ 2c2b N*1d
+      2b2c G*2b 2a2b 1d2b+ 2c2b 1e1c+ 2b2a R*2b 2a1a 2b1b+
+  - moves_str: 1d2c+ 1b2c 2e3d 2c3d R*4d 3d3c 1c2b+ 3b2b N*2e 3c2c 1a2b+ 2c2b N*1d
+      2b2c G*2b 2a2b 1d2b+ 2c2b 1e1c+ 2b2a R*2b 2a1a 1c1b
+  - moves_str: 1d2c+ 1b2c 2e3d 2c3d R*4d 3d3c 1c2b+ 3b2b N*2e 3c2c 1a2b+ 2c2b N*1d
+      2b2c G*2b 2a2b 1d2b+ 2c2b 1e1c+ 2b1a R*1b 1a2a 1c2b
+  - moves_str: 1d2c+ 1b2c 2e3d 2c3d R*4d 3d3c 1c2b+ 3b2b N*2e 3c2c 1a2b+ 2c2b N*1d
+      2b2c G*2b 2a2b 1d2b+ 2c2b 1e1c+ 2b1a R*1b 1a2a 1b2b+
+  mate_skip: false
 - key: ba5f7a08992160ae8e5afe6207e4afb6
   user_id: 8
   init_sfen: position sfen 3g5/9/5r2G/7p1/8p/9/9/9/9 b B 1
@@ -2596,6 +6480,105 @@
     name: きなこもち
   moves_answers:
   - moves_str: B*3d
+  mate_skip: false
+- key: 9ab9b64f73f6b40c0fc332aa98a9b390
+  user_id: 207
+  init_sfen: position sfen 6+B1n/6b1k/6r2/6pp1/9/9/9/9/9 b G2Sr3g2s3n4l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 玉の頭にカナ駒を打ちたくなるが…
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/vojsitb9uw
+  source_published_on: '2020-07-16'
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*2c 3c2c S*1c 2c1c G*2b
+  mate_skip: false
+- key: ddffa88597bf4be394d671ec7c4ecaf3
+  user_id: 207
+  init_sfen: position sfen 8R/7k1/5l1p1/5pg2/9/9/9/9/9 b BGrb2g4s4n3l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 取られそうな飛車をどうする？
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/sib83yoe5s
+  source_published_on: '2020-07-21'
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: B*1c 2b3c G*3b 3c3b 1a3a+
+  mate_skip: false
+- key: 303efe13e65c5b5e47f8ed8ca9c0c68f
+  user_id: 207
+  init_sfen: position sfen 8p/6S2/6k2/5s2B/6gl1/7p1/9/9/9 b Rrb3g2s4n3l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 豪快に
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/gas0wstt1f
+  source_published_on: '2020-07-22'
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: R*4c 3c2d 4c1c+ 2d1c 1d2c+
+  - moves_str: R*4c 3c2d 4c1c+ 2d3d 1d2c+
+  - moves_str: R*4c 3c2d 4c1c+ 2d1e 1d2c+
+  - moves_str: R*4c 3c2d 4c1c+ 2d1e 1d2c
+  mate_skip: true
+- key: 4f2fec8370a5e0254865e83ddd26df68
+  user_id: 207
+  init_sfen: position sfen 7k1/7g1/8+B/7N1/9/9/9/9/9 b G2rb2g4s3n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 馬桂連携
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*3b 2b3b 2d1b+
   mate_skip: false
 - key: 6408730fe0932a34dc4b5c9fb04a4eb8
   user_id: 8
@@ -2668,6 +6651,211 @@
   moves_answers:
   - moves_str: G*8d 8c8d P*9d 9c9d 8a8d
   mate_skip: false
+- key: 4bd9c7cad0f6d752bc6ce28b47813b53
+  user_id: 170
+  init_sfen: position sfen 7nl/5GSgk/5+B1pp/5pp2/9/9/9/9/9 b L2rb2g3s3n2l14p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 退路封鎖
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 3b2a 2b2a N*2d 2c2d 4c2a 1b2a L*2c
+  mate_skip: true
+- key: 63c301dda75de7fb1643d1cb06e2515b
+  user_id: 170
+  init_sfen: position sfen ln1g4+B/1ks1g4/1pppbs1pp/p3p4/3P1p1n1/P1P1P3P/1P2SPP2/1KS1G4/LN1G2rNL
+    b RL2p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 相手の桂馬だけを捌かせない
+  description: |-
+    玉の安全度は互角。
+    相手陣に飛車をおろすと、こっちだけ桂馬をとれず劣勢に。
+    28飛車に24歩なら48銀、49飛成、59金で相手の飛車が詰む。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 1手、指してください
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: R*2h
+  mate_skip: false
+- key: 8cabfb55c9f310a592ff3ee35ed61c06
+  user_id: 207
+  init_sfen: position sfen 4s2k1/8s/5K3/4BB3/9/9/9/9/9 b 2r4g2s4n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 二枚角の援護射撃
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 4c3c 2a3a 5d3b+
+  - moves_str: 4c3c 2a1a 3c3b
+  mate_skip: true
+- key: 5cf0bcc2448e7acd945da353a5545cc2
+  user_id: 170
+  init_sfen: position sfen +R5gnk/8l/p2p3+B1/4p3p/1p7/3P1bP1P/PP2PgNP1/3+r2SK1/L4G2L
+    b GN3P3snl3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 穴熊戦詰め筋
+  description: 同桂は31龍、22合いごまは23桂馬。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: 2c3c
+  mate_skip: true
+- key: 01d6197eca4ff2d1f4ea416d33453960
+  user_id: 207
+  init_sfen: position sfen 4g1kl1/8s/4p4/6B2/6R2/9/9/9/9 b rb3g3s4n3l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: どこに開く？
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3d2c+ 3a4b 3e3b+
+  mate_skip: false
+- key: cb63529e9bce376ca873569a0bd7fda6
+  user_id: 207
+  init_sfen: position sfen 9/9/9/6BP1/7R1/5SSSk/9/9/9 b rb4gs4n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 銀三枚横並び
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2e1e 1f2f 1e1f
+  mate_skip: false
+- key: '00228c96480654f2caa9a0f8ff980739'
+  user_id: 207
+  init_sfen: position sfen 7Sk/9/9/9/9/9/+B8/7LK/1+r6L b rb4g3s4n2l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 不思議な位置にいる馬と龍
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 9g8h 8i8h 1h2i
+  mate_skip: true
+- key: e937ba56060f20b380576b255641af74
+  user_id: 1002
+  init_sfen: position sfen lG5nl/4s1+R2/p2kpp2p/3p5/b2n5/1spS5/P2PPP2P/KP2G4/LN1b3NL
+    b RGS4Pg2p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 逆転からの大逆転★3
+  description: |-
+    久しぶりにいい将棋がさせたので載せました。
+    一瞬頓死したと思いましたが何とか凌いで.......
+    負けたかと思いましたが読み切れて良かったです。最悪､86飛成りで何とかするつもりでした。(金合以外の変化を追加しました)
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 実戦
+  - 9手詰め
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: R*8c G*7c S*7b 6c7b 8c8b+ 7b6c 3b5b 6c7d G*8e
+  - moves_str: R*8c G*7c S*7b 6c7b 8c8b+ 7b6c 3b5b 6c7d S*8e
+  - moves_str: R*8c G*7c S*7b 6c7b 8c8b+ 7b6c 3b5b 6c5d G*5e
+  - moves_str: R*8c 9e7c 8c7c+ 6c7c B*5a G*6b S*8b 7c7d G*8d 7d8d 5a6b+
+  - moves_str: R*8c 9e7c 8c7c+ 6c7c B*5a G*6b S*8b 7c8c G*8d
+  - moves_str: R*8c 9e7c 8c7c+ 6c7c B*5a R*6b S*8b 7c8c G*8d
+  mate_skip: true
 - key: 19e556d7e6f087ac4be452bedb49bb8e
   user_id: 8
   init_sfen: position sfen 9/7k1/7s1/7p1/9/9/4B4/7R1/9 b S2Prb4g2s4n4l15p 1
@@ -2743,6 +6931,45 @@
     name: きなこもち
   moves_answers:
   - moves_str: 3h3i
+  mate_skip: false
+- key: c65b5977c7b6857441f0bc8daee8c1f0
+  user_id: 1002
+  init_sfen: position sfen 4p4/3lkl3/9/1P2K2P1/S7S/9/9/9/9 b 2B4N2r4g2s2l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 頭が丸い駒たちによる詰将棋★4
+  description: 難易度はギリギリまで悩みましたが、★4です。ヒントがあるから意外と簡単になっていると思います。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: ヒント 合駒はしません
+  owner_tag_list:
+  - 21手詰め
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: N*6d 5b4a B*1d 4a3a B*1c 3a2a N*3c 2a1a 1c2b+ 1a2b 2d2c+ 2b1a 2c1b
+      1a1b N*2d 1b1c N*2e 1c2b 1d3b+ 2b1a 3c2a+
+  - moves_str: N*6d 5b4a B*1d 4a3a B*1c 3a2a N*3c 2a1a 1c2b+ 1a2b 2d2c+ 2b1a 2c1b
+      1a1b N*2d 1b1c N*2e 1c2b 1d3b+ 2b1a 3b2a
+  - moves_str: N*4d 5b6a B*9d 6a7a B*9c 7a8a N*7c 8a9a 9c8b+ 9a8b 8d8c+ 8b9a 8c9b
+      9a9b N*8d 9b9c N*8e 9c8b 9d7b+ 8b9a 7c8a+
+  - moves_str: N*4d 5b6a B*9d 6a7a B*9c 7a8a N*7c 8a9a 9c8b+ 9a8b 8d8c+ 8b9a 8c9b
+      9a9b N*8d 9b9c N*8e 9c8b 9d7b+ 8b9a 7b8a
+  - moves_str: N*4d 5b6a B*9d 6a7a B*9c 7a8a N*7c 8a9a 9c8b 9a8b 8d8c+ 8b9a 8c9b 9a9b
+      N*8d 9b9c N*8e 9c8b 9d7b+ 8b9a 7c8a+
+  - moves_str: N*4d 5b6a B*9d 6a7a B*9c 7a8a N*7c 8a9a 9c8b 9a8b 8d8c+ 8b9a 8c9b 9a9b
+      N*8d 9b9c N*8e 9c8b 9d7b+ 8b9a 7b8a
+  - moves_str: N*6d 5b4a B*1d 4a3a B*1c 3a2a N*3c 2a1a 1c2b 1a2b 2d2c+ 2b1a 2c1b 1a1b
+      N*2d 1b1c N*2e 1c2b 1d3b+ 2b1a 3b2a
+  - moves_str: N*6d 5b4a B*1d 4a3a B*1c 3a2a N*3c 2a1a 1c2b 1a2b 2d2c+ 2b1a 2c1b 1a1b
+      N*2d 1b1c N*2e 1c2b 1d3b+ 2b1a 3c2a+
   mate_skip: false
 - key: 524586bf8ad671d2763a510a7b9b30f4
   user_id: 8
@@ -2892,6 +7119,176 @@
   - moves_str: 3a7a+ 8b7a 6b6a+ 7a8b 5c7a+ 8b9b G*8b
   - moves_str: 3a7a+ 8b7a 6b6a+ 7a8b 5c7a 8b9b G*8b
   mate_skip: false
+- key: 35f7584b74192bc5989eb3df9c183308
+  user_id: 1086
+  init_sfen: position sfen 5S1n1/5RPk1/6pp1/8p/9/9/9/9/9 b BSrb4g2s3n4l14p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 15手詰
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 15手指してください
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1086
+    key: a1cbb84af87eba9982102e07e9ecb288
+    name: 73182.g6q
+  moves_answers:
+  - moves_str: B*3a 2b1a S*2b 1a1b 2b1c+ 2a1c 3a2b+ 1b2b 3b3a+ 2b1a 3a2a 1a2a 4a3b+
+      2a1b 3b2b
+  - moves_str: B*3a 2b1a S*2b 1a1b 2b1c 2a1c 3a2b+ 1b2b 3b3a+ 2b1a 3a2a 1a2a 4a3b+
+      2a1b 3b2b
+  mate_skip: false
+- key: 34bc24cfe1785f63ce0152c5147d2fd6
+  user_id: 1002
+  init_sfen: position sfen 9/9/1pg1n1gp1/+P1plnlp1+P/2npppn2/l7l/p3K3p/9/4k4 b BG3SP2rbgs6p
+    1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 主役は角★5
+  description: 3手目をきちんと読んでさせたなら神です。こんなの読めない（笑）
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: "⚠合駒注意報 歩､桂､香は打てません"
+  owner_tag_list:
+  - 21手詰め
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1002
+    key: 5a720754a866fffd8009d77fb917deb3
+    name: あ
+  moves_answers:
+  - moves_str: S*6h 5i4i B*5h 4i3h P*3i 3h3i S*4h 3i2i G*3i 2i1h S*2i 1h1i 2i2h 1i1h
+      5h3f R*2g 2h2g 3e2g+ R*2h 1h1i 3i2i
+  - moves_str: S*6h 5i4i B*5h 4i3h P*3i 3h3i S*4h 3i2i G*3i 2i1h S*2i 1h1i 2i2h 1i1h
+      5h3f R*2g 2h2g 3e2g R*2h 1h1i 3i2i
+  - moves_str: S*6h 5i4i B*5h 4i3h P*3i 3h3i S*4h 3i2h G*3i 2h1h S*2i 1h1i 2i2h 1i1h
+      5h3f R*2g 2h2g 3e2g+ R*2h 1h1i 3i2i
+  - moves_str: S*6h 5i4i B*5h 4i3h P*3i 3h3i S*4h 3i2h G*3i 2h1h S*2i 1h1i 2i2h 1i1h
+      5h3f R*2g 2h2g 3e2g R*2h 1h1i 3i2i
+  - moves_str: S*4h 5i6i B*5h 6i7h P*7i 7h7i S*6h 7i8i G*7i 8i9h S*8i 9h9i 8i8h 9i9h
+      5h7f R*8g 8h8g 7e8g+ R*8h 9h9i 7i8i
+  - moves_str: S*4h 5i6i B*5h 6i7h P*7i 7h7i S*6h 7i8i G*7i 8i9h S*8i 9h9i 8i8h 9i9h
+      5h7f R*8g 8h8g 7e8g R*8h 9h9i 7i8i
+  - moves_str: S*4h 5i6i B*5h 6i7h P*7i 7h7i S*6h 7i8h G*7i 8h9h S*8i 9h9i 8i8h 9i9h
+      5h7f R*8g 8h8g 7e8g+ R*8h 9h9i 7i8i
+  - moves_str: S*4h 5i6i B*5h 6i7h P*7i 7h7i S*6h 7i8h G*7i 8h9h S*8i 9h9i 8i8h 9i9h
+      5h7f R*8g 8h8g 7e8g R*8h 9h9i 7i8i
+  - moves_str: S*6h 5i4i B*5h 4i3h P*3i 3h3i S*4h 3i2i G*3i 2i1h S*2i 1h1i 2i2h 1i1h
+      5h3f R*2g 3f2g 3e2g 2h1i 1h1i R*2i 1i1h 3i2h
+  - moves_str: S*6h 5i4i B*5h 4i3h P*3i 3h3i S*4h 3i2h G*3i 2h1h S*2i 1h1i 2i2h 1i1h
+      5h3f R*2g 3f2g 3e2g 2h1i 1h1i R*2i 1i1h 3i2h
+  - moves_str: S*4h 5i6i B*5h 6i7h P*7i 7h7i S*6h 7i8h G*7i 8h9h S*8i 9h9i 8i8h 9i9h
+      5h7f R*8g 7f8g 7e8g 8h9i 9h9i R*8i 9i9h 7i8h
+  - moves_str: S*4h 5i6i B*5h 6i7h P*7i 7h7i S*6h 7i8i G*7i 8i9h S*8i 9h9i 8i8h 9i9h
+      5h7f R*8g 7f8g 7e8g 8h9i 9h9i R*8i 9i9h 7i8h
+  mate_skip: false
+- key: f2ec514f4a673cf953406a81947ce1fa
+  user_id: 203
+  init_sfen: position sfen l8/sk7/1g+r+B2+N2/p5p2/3pp1Pp1/PL4N2/3P1P1PP/3+p1SG2/L3P1K1L
+    b GSN2Prbgsn3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 虚をつく一撃
+  description: |-
+    同金は82香成、同玉は85桂〜73桂成、71玉は72歩同竜82金〜、同銀は81金〜91金〜73馬〜92香
+    ある棋譜を検討してたらこれで詰みだと示されビックリしました。
+    言われればわかるけど秒読みで渡されたら先手玉の安全度を見て詰めろの連続で迫りたくなりますね
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: この一手で相手は粘りようもなくなります。
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: S*9c
+  mate_skip: true
+- key: 93cd51d78087e688b9a16bac78ba7e47
+  user_id: 203
+  init_sfen: position sfen l1g6/s8/2k3+N2/p5p2/3pp1Pp1/P5N2/3P1P1PP/3+p1SG2/L3P1K1L
+    b RG2SNL2Pr2bgn3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 雲を掴むように見えるが
+  description: |-
+    やっぱ桂馬ってつえーわ
+    玉方最長の逃走ルートは84/64玉、74金、同玉、77香の詰み筋になります。それ以外の詰み筋は若干早く詰むので対応する正解手も恣意的に絞ってます。（正解を追加するのが面倒くさいのです、許して）
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 詰んでる局面です、3手だけ指して下さい。
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: N*8e 7c8d G*7d
+  - moves_str: N*8e 7c6d G*7d
+  - moves_str: N*8e 7c7d R*7c
+  - moves_str: N*8e 7c8c G*7c
+  - moves_str: N*8e 7c8b G*7c
+  - moves_str: N*8e 7c7b R*7c
+  - moves_str: N*8e 7c7b G*7c
+  - moves_str: N*8e 7c6b S*7c
+  - moves_str: N*8e 7c6b S*6c
+  - moves_str: N*8e 7c6c R*7c
+  - moves_str: N*8e 7c6c G*7c
+  mate_skip: true
+- key: 7eb79f931bd6e9655b42ece645dd7b8b
+  user_id: 203
+  init_sfen: position sfen l2ks1+R1l/9/1n2s4/L1g3p1p/1P1pN4/4GpP1P/2P2G3/1+pbK5/1N5RL
+    b GNb2s9p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 受けるか、それとも
+  description: |-
+    受けるのであれば46金寄で先手玉の安全度を大きく向上させ、63桂成や22飛成を間に合わせましょう。
+    同じ様でも46同金上だと、67銀59玉28歩！（67銀57玉56銀成同金13角！）で王手飛車を見せられ苦しくなってしまいます。
+    ところで、よく見ると問題図で相手玉が詰んでいることに気がつくと思います。玉の逃げ方が多くそれぞれ確認の必要はありますが、なるべくは詰ませたいものですね。
+    詰ませる場合は最初の5手セットまでを正解としました、それ以降は変化が多少あるので、自分で並べてみてください。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 先手玉には67銀や79角の詰めろがかかってます。
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 5f4f
+  - moves_str: 3a5a 6a5a N*4c 5a4b 2i2b+
+  - moves_str: 3a5a 6a5a N*4c 5a4a 2i2a+
+  - moves_str: 3a5a 6a5a N*4c 5a5b S*6c
+  - moves_str: 3a5a 6a5a N*4c 5a6b G*6c
+  - moves_str: 3a5a 6a5a N*4c 5a6a 2i2a+
+  mate_skip: false
 - key: a071df9931d773fb059a360c6687691b
   user_id: 8
   init_sfen: position sfen lnsg3nl/1r2k1g2/p1ppppspp/5bp2/P6P1/4R4/1PPPPPP1P/1BGSKS3/LN4GNL
@@ -2946,6 +7343,184 @@
   moves_answers:
   - moves_str: 7g8f
   mate_skip: false
+- key: 8cd86ee375f3da8d373f33d8ea3f0b76
+  user_id: 203
+  init_sfen: position sfen l6nl/1r2g1gk1/2n1p1sp1/p1pps1p1p/1p3p1P1/P1PPS1P1P/1PS1P1N2/1KG1G2R1/LN6L
+    b Bbp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 木村定跡の仕掛けをおさらい
+  description: |-
+    スタンダードな木村定跡の仕掛けです、今や絶滅種
+    そして現代ソフトで解析すると割と歩のぶつける順番に自由度はあるみたいです。相手の変化に対応する必要はありますが、
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: タップミスしないでね
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 3f3e 3c4d 7f7e 7d7e 1f1e 1d1e 2e2d
+  - moves_str: 2e2d 3c2d 3g4e
+  - moves_str: 2e2d 2c2d 3f3e
+  - moves_str: 3f3e 3c4d 1f1e 1d1e 7f7e 7d7e 2e2d
+  - moves_str: 3f3e 3c4d 2e2d 2c2d 3e3d
+  - moves_str: 3f3e 3c4d 7f7e 7d7e 2e2d 2c2d 1f1e
+  mate_skip: false
+- key: 7a07a739796542d9e8f3746dc9d2dfa2
+  user_id: 203
+  init_sfen: position sfen l5knl/1r2g1g2/2n1p1sp1/p1pps1p1p/1p3p1P1/P1PPS1P1P/1PS1P1N2/2G1G2R1/LNK5L
+    b Bbp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 升田定跡の仕掛けをおさらい
+  description: |-
+    世に伊奈さん
+    で覚えようと教えられましたが、多少の手順前後は通るみたいですね
+    今やこの形も絶滅危惧種
+    途中の変化も結構面白いんですけどね
+    そして現代ソフトで解析すると割と歩のぶつける順番に自由度はあるみたいです。相手の変化に対応する必要はありますが、
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: クリックミスしないでね
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 2e2d 2c2d 1f1e 1d1e 7f7e 7d7e 3f3e
+  - moves_str: 1f1e 1d1e 2e2d
+  - moves_str: 3f3e 6d6e 3g4e
+  - moves_str: 3f3e 3c4d 2e2d
+  - moves_str: 3f3e 4e4f 7i8h
+  - moves_str: 2e2d 2c2d 7f7e 7d7e 3f3e 3c4d 1f1e
+  - moves_str: 2e2d 2c2d 7f7e 7d7e 3f3e 5b4c 3g4e
+  - moves_str: 2e2d 2c2d 3f3e 3c4d 7f7e 7d7e 2h2d
+  - moves_str: 2e2d 2c2d 1f1e 1d1e 3f3e 1e1f 3e3d
+  mate_skip: false
+- key: '085d9f4337b401020e766d2acf825b87'
+  user_id: 203
+  init_sfen: position sfen lr5nl/3g1kg2/2n1p1sp1/p1ppspp1p/1p5P1/P1PPSPP1P/1PS1P1N2/2GK1G3/LN5RL
+    b Bb 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 48金29飛角換わり同型からの有名な仕掛けをおさらい
+  description: スタンダードな応手といわれる周辺です。24歩の代わりに35歩も難しいところです。当然手待ちもなくはない。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 後手の2手目は同歩です
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 4f4e 4d4e 5f4e 5d5e 3f3e
+  - moves_str: 6h7i
+  - moves_str: 6h5h
+  - moves_str: 2i6i
+  - moves_str: 4f4e 6d6e 6h7i
+  - moves_str: 4f4e 4d4e 5f4e 5d5e 2e2d 2c2d P*2e
+  mate_skip: false
+- key: 044f8d00b482ade333bd51ef5c4abca0
+  user_id: 203
+  init_sfen: position sfen l5knl/1r2g1g2/2n1p1sp1/p1ppspp1p/1p5P1/P1P1SPP1P/1PSPP1N2/2GK1G3/LN5RL
+    b Bb 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 角換わり新旧対決の振り返り
+  description: |-
+    先後反転してます。
+
+    解答の1つ、最終手38金は68玉を活かした逃げ方。
+    その後の46桂には37金で根元の桂を取りに行くのがいいと言われている。
+    ちなみに旧型角換わり陣の変化としては、45同歩の他に42金や86歩、84角がある。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 後手の2手目は同歩です。
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 4f4e 4d4e 3g4e 3c4d P*4f
+  - moves_str: 4f4e 4d4e 3g4e 5d4e 5f4e P*4g 4h3h
+  - moves_str: 6h7i
+  mate_skip: false
+- key: ae7288b2ceaa28139a1fc0484e5b1775
+  user_id: 207
+  init_sfen: position sfen 7+p1/7Sk/9/6R1g/9/9/9/9/9 b GNr2b2g3s3n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 金の守りを…
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*2c 1b2c 3d3c+ 2c1b N*2d 1d2d 3c1c
+  mate_skip: false
+- key: a92444de990556fe8fb0fca9c08b48eb
+  user_id: 203
+  init_sfen: position sfen l6nl/1r2g1gk1/2n1p1sp1/p1ppspp1p/1p5P1/P1PPSPP1P/1PS1P1N2/1KG1G2R1/LN6L
+    b Bb 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 狙えフルコンボ！木村定跡有名手順
+  description: 定跡を知ってるもの同士の早指しは時に音ゲーの様に見えます。今回は有名な木村必勝定跡とされている有名な手順を題材としてみました。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: ゴールは44馬です。
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 4f4e 4d4e 3f3e 3c4d 7f7e 7d7e 1f1e 1d1e 2e2d 2c2d 2h2d P*2c 2d2h B*6c
+      P*1c 1a1c 3g2e 1c1d 3e3d 2c2d 2e3c+ 2a3c 2h2d 3b2c B*1a 2b3b 3d3c+ 4d3c N*4d
+      3c4d 2d2c+ 3b2c 1a4d+
+  mate_skip: false
 - key: 7b4e2b718e2cfd2686ac935687e36de7
   user_id: 8
   init_sfen: position sfen ln7/1kg5l/1p1gp1npb/p1pp1pr1p/5spP1/PR6P/2NPPPP2/3SKSG2/L1G4NL
@@ -2998,6 +7573,102 @@
   moves_answers:
   - moves_str: 8f8i
   mate_skip: false
+- key: 8524fa2495f0656232745cb9436de993
+  user_id: 207
+  init_sfen: position sfen 5pkn1/9/3+p5/5+B2p/9/9/9/9/9 b RGrb3g4s3n4l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: すっぽり収まる玉
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*3b 3a3b R*1b 3b2c 1b2b+
+  - moves_str: G*3b 3a3b R*1b 3b3a 1b2b+
+  mate_skip: false
+- key: 3a9375f15d93dbfa8281cdab8d182272
+  user_id: 207
+  init_sfen: position sfen 5+B1p1/9/6kg1/5p2R/9/9/9/9/9 b Grb2g4s4n4l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 右辺に逃がさない
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: G*3d 2c3d 1d1c+
+  mate_skip: true
+- key: f90249aa18fc04abc9c77ffa6ea0bb2b
+  user_id: 203
+  init_sfen: position sfen ln1g3nl/1ks6/1ppg1r3/p2ppsppp/9/P1P1P1P1P/1P1PS1N2/1BK1GS3/LN1G4L
+    b Br3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 攻めが切れそう？
+  description: 45歩早仕掛け郷田新手
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: B*3b 4c4b 3b2a+ R*4a N*3c 4a5a 9f9e
+  mate_skip: false
+- key: 4ffd19f335f4ce3a9c5896d8b77cbe10
+  user_id: 170
+  init_sfen: position sfen 7n1/6+Rg1/6s2/5pppk/9/7+B1/9/9/9 b BSr3g2s3n4l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 上下からのサンドイッチ
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 170
+    key: b60df7672aada781e329e19bfba9a9a1
+    name: shimopp
+  moves_answers:
+  - moves_str: B*2c 2b2c 3b1b
+  mate_skip: true
 - key: cb7c44dd214e410174ee5ea523163023
   user_id: 8
   init_sfen: position sfen 5B3/6n2/4+Bpk1S/6N2/5PP2/9/9/9/9 b 2r4g3s2n4l15p 1
@@ -3043,6 +7714,84 @@
     name: きなこもち
   moves_answers:
   - moves_str: 5a4b+ 3b3c 1c2b
+  mate_skip: false
+- key: 03e5e1d67ffa856ca2eb19dbb0bb7f58
+  user_id: 783
+  init_sfen: position sfen l4g1nl/1r4sk1/p1np1g1pp/2p1ps3/1p3Np2/2P1S2P1/PP1PP3P/1BS1GR3/LNKG4L
+    b Pb2p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 利きをよくみる
+  description: |-
+    53桂成/不成が想定解
+    33歩も清算後に25桂で小鬢攻めできるので可
+    44角は切れそう、75歩は後手の反撃が大変なので今回は不可
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 783
+    key: b2969d74d347b64178443e821819b6c1
+    name: Wndr
+  moves_answers:
+  - moves_str: 4e5c+
+  - moves_str: 4e5c
+  - moves_str: P*3c
+  mate_skip: false
+- key: 8cef5307e2faced9f00bbcca61f6e831
+  user_id: 207
+  init_sfen: position sfen 9/5+B1kp/6N2/9/9/9/9/9/9 b G2rb3g4s3n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 上部に逃がさない初手は？
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3c2a+ 2b2a G*3b 2a1a 4b3c
+  mate_skip: true
+- key: fca86295b66457c31c6540ff26fe6b2c
+  user_id: 207
+  init_sfen: position sfen 7k1/6r2/8+B/9/9/9/9/9/9 b GNrb3g4s3n4l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 飛車の守りを無効化するには
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: N*3c 3b3c G*2b
+  - moves_str: N*3c 2a1a G*2a
   mate_skip: false
 - key: 8866edbfaf28b3a9a74786a51b183460
   user_id: 8
@@ -3093,6 +7842,30 @@
   moves_answers:
   - moves_str: R*3b 3c3b 1d2c
   mate_skip: false
+- key: bfff1d3f15bec42e56e357312119849b
+  user_id: 1280
+  init_sfen: position sfen 7kl/7s1/4+B1ppp/4pp3/9/9/9/9/9 b BS2r4g2s4n3l13p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 3手詰め
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1280
+    key: ae27fc51b5e327f513e39dd7313a924a
+    name: yshita77
+  moves_answers:
+  - moves_str: S*3b 2a3b B*4c
+  - moves_str: S*3b 2a1b B*2a
+  mate_skip: true
 - key: 76992e8e64e35efc306c55eb655319b1
   user_id: 8
   init_sfen: position sfen 4bnlk1/9/5ppN1/7L1/9/9/9/9/9 b BGN2r3g4sn2l16p 1
@@ -3235,6 +8008,54 @@
   - moves_str: 4b3b
   - moves_str: 7a6b
   mate_skip: false
+- key: 9a7c7a754715aca944dcbd447bf3d5ef
+  user_id: 207
+  init_sfen: position sfen 6R2/7k1/9/7BP/9/9/9/9/9 b rb4g4s4n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 繋がる飛角
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 1手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2d1c+
+  mate_skip: false
+- key: 6732c0efe755922c1cb38aaacaf211f8
+  user_id: 207
+  init_sfen: position sfen 9/9/6b1r/6S1k/7R1/9/9/7+p1/9 b Gb3g3s4n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 成れるかどうかの狭間で
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2e2d 1d1e G*2f 1e2d 2f2e
+  mate_skip: false
 - key: a4c7b61c99dc4881668c33c6b98f1e9d
   user_id: 8
   init_sfen: position sfen ln5nl/2kg3r1/ppsgp4/2pp1psbp/1R4p2/P1PBSP1pP/3PPGP2/2KS3P1/LNG4NL
@@ -3266,6 +8087,30 @@
     name: きなこもち
   moves_answers:
   - moves_str: 5f4e
+  mate_skip: false
+- key: 27f98ea7274f28b0a3a55b33dcdef906
+  user_id: 207
+  init_sfen: position sfen 7kn/9/8B/9/6Lg1/9/9/9/9 b L2rb3g4s3n2l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 奴は必ず帰ってくる
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 1c3a+ 2a1b L*1d 1b2c 3a1c
   mate_skip: false
 - key: 160e00b463c3bc5301d506fccac31bd4
   user_id: 8
@@ -3341,6 +8186,345 @@
     name: きなこもち
   moves_answers:
   - moves_str: B*1a 2b2a 3c2c+ 2a3a 2c2b
+  mate_skip: false
+- key: 93d4e4e872a33a3d2f6e482d6de81e58
+  user_id: 783
+  init_sfen: position sfen l7l/5kgs1/p3ppn1p/3pb4/1r5n1/P1nP1P3/1P2PSP1P/1GR3G2/L3K3L
+    b BGS5Psnp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: あとで
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 783
+    key: b2969d74d347b64178443e821819b6c1
+    name: Wndr
+  moves_answers:
+  - moves_str: G*4a
+  - moves_str: B*7d 8e8a
+  - moves_str: S*4a S*6c G*5b
+  mate_skip: false
+- key: e05d24e73b9497521b9f5f8f743c06f7
+  user_id: 783
+  init_sfen: position sfen 1+R7/3G1gp2/p1npp2kp/5p3/2+b1P1L2/4nPnS1/PPNP2S1P/2G1G4/L1K5L
+    b BLPr2s5p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: てすと
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 783
+    key: b2969d74d347b64178443e821819b6c1
+    name: Wndr
+  moves_answers:
+  - moves_str: P*2d 2c2b L*2c 2b1b 8a2a
+  - moves_str: P*2d 2c1d B*2c 1d2d L*2e
+  - moves_str: P*2d 2c2d L*2e 2d1d B*2c
+  - moves_str: P*2d 2c1b B*3d 1b2b 3d2c+
+  - moves_str: P*2d 2c1b B*3d 1b2b 2d2c+
+  - moves_str: P*2d 2c3c 3e3c+
+  mate_skip: true
+- key: 557566888edca76e209993f38b944f76
+  user_id: 207
+  init_sfen: position sfen 8g/9/5+B1kn/9/8p/7N1/9/9/9 b Rrb3g4s2n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: どこに誘い込む？
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: R*2d 2c2d 4c3d
+  - moves_str: R*2d 2c1b 4c3d
+  mate_skip: true
+- key: c705f59cdd136a994aacfdf9b2c47976
+  user_id: 207
+  init_sfen: position sfen 2+R4n1/5k3/4ppp2/9/9/9/9/9/9 b BSrb4g3s3n4l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 龍で迫る実戦型 No.3
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*3a 4b3b B*4a 3b3a 4a2c+ 3a4b 2c4a
+  - moves_str: S*3a 4b3b B*4a 3b3a 4a2c+ 3a4b 7a4a
+  mate_skip: false
+- key: fff7ef86e983b61436d178386a81964e
+  user_id: 207
+  init_sfen: position sfen 6+Rps/8k/8p/9/9/9/9/9/9 b Gr2b3g3s4n4l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 追いつめたけど意外にしぶとい
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3a3b 1a2b G*2c 1b1a 3b2b 2a2b S*1b
+  mate_skip: false
+- key: f3b771c581cec5858c144690c041f2a9
+  user_id: 203
+  init_sfen: position sfen lnsgkgsnl/1r7/p1pppp1pp/4b1p2/1pP6/9/PPNPPPPPP/2R6/L1SGKGSNL
+    b B 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 角のお見合い
+  description: 新鬼殺し系統でよくみる手筋
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: B*5e
+  mate_skip: false
+- key: ee9f1c74e239e26a1448e10102acc21d
+  user_id: 203
+  init_sfen: position sfen ln3R1nl/1k1gs4/ppppp3p/7p1/5p3/2P1P4/PP1P1PP1P/2K1G2r1/LNSG3NL
+    b S2bgs2p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 少数精鋭
+  description: 藤井猛九段著「四間飛車上達法」より
+  hint_desc: 
+  source_author: 藤井猛
+  source_media_name: 四間飛車上達法
+  source_media_url: 
+  source_published_on: '2017-12-25'
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: S*7a 8b9b 4a5a+
+  - moves_str: S*7a 8b7b 4a5a+
+  mate_skip: false
+- key: d7aea8d4000c688b3ddca0a2d066e7ca
+  user_id: 203
+  init_sfen: position sfen 7r1/9/6npp/6+Rsk/5l3/8P/9/9/9 b Bb4g3s3n3l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 森信雄 詰めろ将棋 問126改題
+  description: '原図: position sfen 7l1/9/6npp/6+Rsk/9/8P/9/9/9 b Bbgp 1'
+  hint_desc: 
+  source_author: 森信雄
+  source_media_name: 詰めろ将棋
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: B*3f B*2e 3f2e 3c2e B*2f
+  mate_skip: false
+- key: dc4462bd51b01c4f507e78079bbadb16
+  user_id: 203
+  init_sfen: position sfen 9/4+R1gk1/6g1l/3B1ps2/6pp1/8P/9/9/9 b 2Grb3s4n3l14p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 高橋道雄 3手必至問題集 第26問
+  description: 
+  hint_desc: 
+  source_author: 高橋道雄
+  source_media_name: 3手必至問題集
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 6d3a+ 2b3a G*1b
+  mate_skip: false
+- key: d6fa44d4181592aa200d4cebab380251
+  user_id: 203
+  init_sfen: position sfen 6+BSl/7L1/7pk/5rr2/4b2PS/8+p/9/9/9 b S4gs4n2l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 沼春雄 1手・3手必至問題 第128問
+  description: 
+  hint_desc: 
+  source_author: 沼春雄
+  source_media_name: 1手・3手必至問題
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 2a1b+ 1c1b 1e1d
+  mate_skip: false
+- key: b628d6d262c2e20a37a7dbd69ba60697
+  user_id: 203
+  init_sfen: position sfen +R8/l1s6/k8/1p1G5/pn7/9/9/9/9 b SLr2b3g2s3n2l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 内藤國雄のすべて 第6部必至編より
+  description: 
+  hint_desc: 
+  source_author: 内藤國雄
+  source_media_name: 内藤國雄のすべて
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: S*8b 9c8c L*9d
+  mate_skip: false
+- key: ae924817c13011d7f0eb1233a4f3a023
+  user_id: 203
+  init_sfen: position sfen 6+Rnl/5spBk/7s1/5sN2/6+b1p/9/9/9/9 b R4gs2n3l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 青野照市 精選必至200問 第138問
+  description: 
+  hint_desc: 
+  source_author: 青野照市
+  source_media_name: 精選必至200問
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: R*1d 2c1d 3a3b
+  mate_skip: false
+- key: c99115a18fa7a17f20e8e94e09240596
+  user_id: 203
+  init_sfen: position sfen 6Bnl/6S1k/6g2/7s1/9/9/9/9/9 b GS4P2rb2gs3n3l14p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 金子 タカシ 将棋・ひと目の必死 第90問
+  description: 
+  hint_desc: 
+  source_author: 金子タカシ
+  source_media_name: 将棋・ひと目の必死
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: G*2c 3c2c S*2b
+  mate_skip: false
+- key: 6b7aa3d0c59d063ac9c6f69c5518a330
+  user_id: 203
+  init_sfen: position sfen 1n2kg+Rn1/1r3pg2/3pG1+B2/9/5N3/9/9/9/9 b Bg4sn4l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 広そうで狭い
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 3c3b 4a3a B*5b
   mate_skip: false
 - key: 12eb2d525dab9ecd2b2a22c2acc9638f
   user_id: 8
@@ -3470,6 +8654,157 @@
   moves_answers:
   - moves_str: P*9f 9e9f 9i9f P*9e L*8e
   mate_skip: false
+- key: dc61f38f837640374aaa9c1030217c6a
+  user_id: 203
+  init_sfen: position sfen ln1g4l/1ks3g2/1pppbsn2/p5r1p/3PPp1P1/P1PS4P/1PBG1PP2/1KS4R1/LN1G3NL
+    w 3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 揺さぶる
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: P*3f 3g3f 3d3f P*3g 3f2f
+  - moves_str: P*3h 2h3h P*2f 3h2h P*3h
+  - moves_str: P*2f
+  mate_skip: false
+- key: b6b9a5d60a4302e3ad8f4441e0a66fd7
+  user_id: 203
+  init_sfen: position sfen ln1s1k1nl/4s1gP1/p5s2/2+Rp1pppp/9/5PP1P/P+r3GN2/1B2G4/LNKG2+b1L
+    b S2P5p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: スクラムを崩す
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: P*5c 5b5c 7d7a
+  - moves_str: P*5c 5b4c 7d7a
+  mate_skip: false
+- key: e071f20d3e4d1db521b8869430ad5624
+  user_id: 203
+  init_sfen: position sfen l4g1nl/1r2g1k2/p1nps1sp1/2p1ppp1p/1p7/2P1PPPPP/PPSP1GNS1/3R3K1/LN3G2L
+    w Bb 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 不用心な組み換え
+  description: 振飛車側は桂跳ねを見越して飛車を回るべきでした。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 7c6e
+  mate_skip: false
+- key: 6c5324dfa35df37b445d900cc479607b
+  user_id: 203
+  init_sfen: position sfen lnsgkgs2/7r1/pppppp1pp/6p2/3Bbn1P1/2P6/PP1PPPP1P/5S1R1/LNSGKG1NL
+    b - 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 受からない！と焦らない
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 9i9h 5e9i+ 7i7h
+  mate_skip: false
+- key: 5ac8ef0df66a1137968aa7bc9d127331
+  user_id: 203
+  init_sfen: position sfen ln1gk1sn+B/1r1s2g1l/p1pppp1pp/6p2/1p1N1b3/2P5P/PP1PPPPP1/1R7/L1SGKGSNL
+    b - 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 変化の意図を読み取る
+  description: |-
+    鬼殺し向かい飛車の1変化、後手が32銀ではなく32金としてきました。ここで32銀の時と同様に68飛や12馬とすると、22金とされ馬が機能しなくなります。端から暴れていくしかなくなり不本意な展開です。
+    なお、居飛車側が32金の変化に誘導する場合は11に馬を作られる前でないとうまく行きません。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 後手が32金!と変化してきました。
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 1a2a
+  mate_skip: false
+- key: aaf8c930aeea216ff553e25d9c863111
+  user_id: 203
+  init_sfen: position sfen ln1g1gsnl/1r1s2k2/p1pp1p1pp/4+b1pP1/1p5R1/2P6/PPNP1PP1P/2G2K3/L1S2GSNL
+    w B2p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 瀬戸際で踏ん張る
+  description: |-
+    素直に同歩は同飛車大学となり、次の34飛と23角の両狙いが受からず収集困難。解答図も先手の攻めが刺さっているようだが、最終図で14角成同歩23歩成とした図は後手のと金が駒取りにならずこれからの勝負。
+    とはいえ実戦なら攻められてて辛く、他の手よりマシというところ
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 3a2b 2d2c+ 2b2c P*2d 2c1d B*2c 3b4b
+  mate_skip: false
 - key: 3e27e15f8695ff4f007776e233c80517
   user_id: 8
   init_sfen: position sfen ln1k5/1G1sR4/ppppp4/9/9/9/9/9/9 b Gr2b2g3s3n3l13p 1
@@ -3495,6 +8830,267 @@
   moves_answers:
   - moves_str: G*5a 6b5a 5b7b+
   mate_skip: false
+- key: 83a90164e2a1e5529bf152c44a0aa336
+  user_id: 207
+  init_sfen: position sfen 7pk/9/8G/6b1L/9/9/9/9/9 b 2rb3g4s4n3l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 金の行き先
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 1手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 1c2c
+  mate_skip: true
+- key: 9557140335acdcdf98d9552f44700a9e
+  user_id: 203
+  init_sfen: position sfen 8l/9/1pkn+R2p1/3p4p/4p2P1/2PP4P/1P1G5/1G5+r1/K1+b5L b GSN2Pbg3s2n2l6p
+    1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 坊主の悲劇
+  description: 64龍の余地を許してしまったため、詰みが生じてしまいました。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 53龍に63桂合と節約してきました。3手指して下さい。
+  owner_tag_list: []
+  lineage_key: 実戦詰め筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: N*8e 7c7d G*7e
+  - moves_str: N*8e 7c8d 5c6d
+  mate_skip: true
+- key: 9d0b6c22055c00ff3bb9117ec8996a13
+  user_id: 203
+  init_sfen: position sfen lnsgkgs1l/6rb1/ppppppnpp/6p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL
+    b - 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 焦ると乱戦に
+  description: 明らかにふざけた挑発ですが、勢い余って24歩と開戦すると同歩同飛車に45桂と跳ねられ怪しい展開になります。一応24角と王手桂取りで57桂を防ぐ筋はありますが、そんな事せずに一旦57を受けておけば今度こそ相手は受けなしです。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 3i4h
+  - moves_str: 5i6h
+  - moves_str: 4g4f
+  - moves_str: 4i5h
+  - moves_str: 6i6h
+  - moves_str: 9g9f
+  - moves_str: 4i4h
+  mate_skip: false
+- key: 55f9a7512e359c69aa5d82a8f99058bb
+  user_id: 207
+  init_sfen: position sfen 6ng1/5B2l/6R2/5rpk1/7s1/6P1+p/9/9/9 b Gb2g3s3n3l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 開き方を考える
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 5手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3c1c+ 2d1c G*2d 1c2b 4b3c+
+  mate_skip: false
+- key: 34656a10cf9bf0bfd91b6f0a2c44f948
+  user_id: 203
+  init_sfen: position sfen ln1g1k1nl/3r1s1b1/3sppgp1/p1pp2p1p/1p7/P2R4P/B1PPPPP2/3SKS3/LNG3GNL
+    b 2P 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 陣形差を活かして
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: P*8b 8a7c 8b8a+
+  - moves_str: P*8b 6b8b 9g6d
+  mate_skip: false
+- key: d925459d9bea79940cf66b8e77a9eb18
+  user_id: 203
+  init_sfen: position sfen ln5nl/4gkg2/p1pps1spp/1r3p3/4p4/1SP2PP2/P2PPBSPP/1R4G2/LN1GK2NL
+    w 2Pbp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 逆棒銀成功？
+  description: |-
+    角交換振り飛車で居玉のまま逆棒銀した際にあるあるな手筋
+    ちな初手95角は87歩で失敗
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: P*8g 8h8g B*9e
+  - moves_str: 5e5f 5g5f P*8g 8h8g B*9e
+  - moves_str: 5e5f 4g5f B*5e
+  mate_skip: false
+- key: 558841296c2d20e379bf0b797203bf40
+  user_id: 203
+  init_sfen: position sfen l4+R1nl/2g3g2/2ppppkp1/p2b1sp1p/2P6/P7P/3PPPP2/1S+n6/L3KGSNL
+    w BSPrgn2p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 逃がす様には追いたくない
+  description: 37角成から詰み(23手くらい？)ですが、長い詰みより短い必至ということで57桂から縛るのもよし。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: N*5f 5g5f G*5g
+  - moves_str: 6d3g+ 2i3g R*6i 5i4h N*3f 4h3h G*2h
+  mate_skip: false
+- key: 8cfd64a7843118cce1e8d5024c94a966
+  user_id: 203
+  init_sfen: position sfen ln5nl/2gk3r1/pp1gppb2/3ssPppp/3p5/2R1S4/PP2P1PPP/1B2G1S2/LN3GKNL
+    b 2Pp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: ガツンとぶつけていく
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 5f5e 5d5e 4d4c+
+  - moves_str: 5f5e 6d5e 8h5e 5d5e 4d4c+
+  - moves_str: 5f5e 6d5e 8h5e S*6d S*3a 2b2c 5e6d
+  - moves_str: 5f5e P*7e 7f3f 6d5e 8h5e 5d5e 4d4c+
+  - moves_str: 5f5e P*7e 7f3f 5d5e 4d4c+
+  - moves_str: 5f5e P*7e 7f3f 5d4e 3f8f
+  - moves_str: 5f5e P*7e 7f3f 5d4e 5e6d
+  mate_skip: false
+- key: 9e63dae14559f6a9d65ba5732c36d0e3
+  user_id: 203
+  init_sfen: position sfen ln2g1gnl/5skb1/3psp1p1/p5p1p/1prP1S3/4R3P/PPB1PPPP1/4G1SK1/LN3G1NL
+    b 2Pp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: elmo囲いvs玉頭銀
+  description: 以下71飛に72歩や73歩などなど
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 7g2b+ 3a2b B*8d
+  mate_skip: false
+- key: 783df1a099d3c576a992965fed4c007a
+  user_id: 203
+  init_sfen: position sfen ln1g4l/1ks1g4/1ppppsnpb/p4pr1p/6pP1/P1P2P1GP/1P1PPS3/1BKS2R2/LNG4NL
+    b P 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 相手を見なければ理想形とはいえない
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 手広く有利な局面ですが、棒金の攻めを炸裂させて下さい。
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 1f1e 1d1e P*1d 3d1d 1i1e
+  - moves_str: 1f1e 1d1e P*1d 1c2b 2f3e
+  - moves_str: 1f1e 1d1e P*1d 1c3a 2f3e
+  mate_skip: false
 - key: 1ab09d99dd5750b8487bfa081b4fd8b0
   user_id: 8
   init_sfen: position sfen 5sk1l/5g3/5pnpp/9/9/9/9/9/9 b BGSN2rb2g2s2n3l15p 1
@@ -3518,6 +9114,159 @@
   moves_answers:
   - moves_str: S*2b 3a3b B*2a 3b2b N*3d 2b2a G*2b
   - moves_str: S*2b 3a3b B*2a 3b2b N*3d 2b3a G*2b
+  mate_skip: false
+- key: 73d27d0674b3c309abe120f5dbdb625e
+  user_id: 203
+  init_sfen: position sfen lnsgkgsnl/7b1/ppp+B3pp/6p2/9/2P6/PP1PP+rPPP/1S5R1/LN1GKGSNL
+    w 3Pp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 焦点の歩
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 7a7b 6c3f P*5h
+  - moves_str: 7a7b 6c5d 4g5g 2h5h 5g5h
+  - moves_str: 7a7b 6c6d P*6h
+  - moves_str: 7a7b 6c5c 4g5g 2h5h
+  - moves_str: 7a7b 6c8e P*6h
+  - moves_str: 7a7b 6c9f P*6h
+  mate_skip: false
+- key: e5b57966c6ba327c70f6b4493cf5e921
+  user_id: 783
+  init_sfen: position sfen lnsgkgsnl/7r1/ppppp+B1pp/6p2/9/2P4P1/PP1PP+bP1P/7R1/LNSGKGSNL
+    b Pp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 張り合った結果
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 4手目32飛戦法
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 783
+    key: b2969d74d347b64178443e821819b6c1
+    name: Wndr
+  moves_answers:
+  - moves_str: 2h4h
+  mate_skip: false
+- key: f9e4caa111cb9712859fbc7781ef0da4
+  user_id: 203
+  init_sfen: position sfen lnsgk2nl/6g2/pppppsb1p/5p1r1/6p2/2P2P3/PP1PPSP1P/1BK1G2R1/LNSG3NL
+    b Pp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 捌いてきたが…？
+  description: 向かい飛車の急戦に対してよくある反撃筋。88の角が24の角より働くため、後手のこの攻めはうまくいかない。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 2h2d 3c2d P*2b
+  - moves_str: 2h2d 3c2d 4f4e
+  mate_skip: false
+- key: 876e148b602672ef4df69113e0361c5e
+  user_id: 203
+  init_sfen: position sfen ln2kgsnl/1r5b1/ppppsg1pp/4ppp2/4S4/P8/BPPP1PPPP/4R4/LN1GKGSNL
+    b P 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 引いてはつまらない
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 9g5c+ 4c5c 5e5d
+  mate_skip: false
+- key: c04812220d0a7b542413e52833535bb8
+  user_id: 203
+  init_sfen: position sfen ln1g4l/1ks1gr3/1ppps1n1p/p3p1pp1/5p3/PPP1SPPP1/1SBPP1N1P/1KG1G2R1/LN6L
+    w b 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 角成をどう受けよう
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 5d5e
+  mate_skip: false
+- key: bd87701858fe4d9e85c815711fa0e9d1
+  user_id: 203
+  init_sfen: position sfen ln1g4l/1rs3gk1/p3ppns1/1ppp2ppp/1N7/PPP1P3P/3P1PPP1/3SG1SK1/L4G1NL
+    b RBb 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 手がかりは強引に
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 8e9c+ 9a9c 9f9e
+  - moves_str: 8e9c+ 8a9c 9f9e
+  - moves_str: 8e9c+ 9a9c B*9a
   mate_skip: false
 - key: '0749b06b577c85fb7485e71b3e2034b8'
   user_id: 8
@@ -3589,6 +9338,30 @@
   - moves_str: 4e3e 3d3e 7a3e+
   - moves_str: 7a3e+ 3d3e 4e3e
   mate_skip: false
+- key: eecda98d27dbae7a74b4da54fbec574b
+  user_id: 207
+  init_sfen: position sfen 7p1/8k/9/7R1/9/9/9/9/9 b Sr2b4g3s4n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 変換
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: S*2c 1b1c 2c1d+ 1c1b 1d2c 1b1a 2d1d
+  mate_skip: true
 - key: 845a7c4be9923efc02461e201e644cbc
   user_id: 8
   init_sfen: position sfen 6Bnl/6Ssk/6ppp/9/9/9/9/9/9 b N2rb4g2s2n3l15p 1
@@ -3611,6 +9384,30 @@
     name: きなこもち
   moves_answers:
   - moves_str: N*2d 2c2d 3a2b+ 1b2b S*2c
+  mate_skip: false
+- key: 4d89ca647f34bd59f681bbf0f9e114bc
+  user_id: 207
+  init_sfen: position sfen 7p1/8k/6R2/8G/9/9/9/9/9 b r2b3g4s4n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: どっちで
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 1手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3c1c+
   mate_skip: false
 - key: 3ce113c9a9c6c01258cfd5a9be639ace
   user_id: 8
@@ -3638,6 +9435,61 @@
     name: きなこもち
   moves_answers:
   - moves_str: 3g3f 2f2g+ 4h3g
+  mate_skip: false
+- key: 44ba6691095ebc2772b954b9235d1b20
+  user_id: 203
+  init_sfen: position sfen lr4knl/3g2g2/2n1ppsp1/p1pps3p/1p4pP1/P1PPSP2P/1PS1P1N2/2GK1G3/LN5RL
+    b Bbp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 角換わり48金62金31玉での仕掛け方
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 35歩同歩となった局面です、3手指して下さい。
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 3g4e 3c3d 2e2d
+  - moves_str: 3g4e 3c4b 2e2d
+  - moves_str: 3g4e 3c4d 2e2d
+  - moves_str: 3g4e 3c2b 2e2d
+  - moves_str: 3g4e 3c2b 1f1e
+  - moves_str: 3g4e 3c2b 7f7e
+  - moves_str: 3g4e 5d4e 4f4e
+  - moves_str: 3g4e 5d4e 5f4e
+  mate_skip: false
+- key: 4800d1212c3e9490f5b1e654f1fb364c
+  user_id: 203
+  init_sfen: position sfen 1r5nl/3g1k3/2n1pp1gp/2Pps1s2/lpp2Npp1/3PSP2P/1PS1P4/2GK1G3/1N5RL
+    b BPbl3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 端の攻防の狙いとは
+  description: もし端歩交換が行われてなかったら、62角には63金で何も起こらない。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 直前に95歩同歩同香同香と進みました。
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 203
+    key: 6bcdcc93d2837248aca5694e2aacedbc
+    name: 名無しの棋士194号
+  moves_answers:
+  - moves_str: 7d7c+ 6b7c B*6b
   mate_skip: false
 - key: 5bfcbb40b5805d8d346f8cab488c4136
   user_id: 8
@@ -3689,6 +9541,30 @@
     name: きなこもち
   moves_answers:
   - moves_str: 9g5c+
+  mate_skip: false
+- key: c990b6188afb867b9857795babcc6ecc
+  user_id: 783
+  init_sfen: position sfen l2g4l/4k1gb1/p1npppnpp/1r3s1R1/2p2N3/2s2P3/PP1PPS2P/1BGSKG3/LN6L
+    b 2P3p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 下書き
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 783
+    key: b2969d74d347b64178443e821819b6c1
+    name: Wndr
+  moves_answers:
+  - moves_str: 8h5e
   mate_skip: false
 - key: 7787f8339afa54148efd352e607411a4
   user_id: 8
@@ -3761,6 +9637,82 @@
   - moves_str: S*8b 9c9d R*9c
   - moves_str: S*8b 9c8c R*9c
   - moves_str: S*8b 9c9b R*9c
+  mate_skip: false
+- key: af46565893386dc8b5eaa099ebf49f86
+  user_id: 207
+  init_sfen: position sfen 8g/8k/8p/6R2/9/9/9/9/9 b 2Nr2b3g4s2n4l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 金の守備力を甘く見ない
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 3d3b+ 1a2b N*2d 1b1a N*2c 2b2c 3b1b
+  - moves_str: 3d3b+ 1a2b N*2d 1b1a N*2c 2b2c 2d1b+
+  mate_skip: false
+- key: 44617fa7d348f98a864a918d84975be2
+  user_id: 207
+  init_sfen: position sfen 8l/5r1B1/7S1/7k1/6pg1/9/9/9/9 b Grb2g3s4n3l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 誘いたい場所
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2b3c+ 2d3c G*3d
+  - moves_str: 2b3c+ 2d1c G*1d
+  mate_skip: false
+- key: 9f1d8e41323aa6f4ac2f3c7808fc89d9
+  user_id: 207
+  init_sfen: position sfen 9/7np/7n1/6pSk/7R1/9/9/9/9 b Gr2b3g3s2n4l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 勇気ある決断
+  description: 
+  hint_desc: 
+  source_author: さくら（自作）
+  source_media_name: 詰将棋メーカー
+  source_media_url: https://tsumeshogi.com/problems/e2dlod_zsu
+  source_published_on: '2020-08-11'
+  direction_message: 
+  owner_tag_list:
+  - 3手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: 2d1e 2c1e G*2d
+  - moves_str: 2d1e 1d2e G*2f
+  - moves_str: 2d1e 1d1c G*2d
   mate_skip: false
 - key: 99713b0de660aa8458d0df59975b7e13
   user_id: 8
@@ -4409,6 +10361,29 @@
   moves_answers:
   - moves_str: P*7e 7d7e P*7d
   mate_skip: false
+- key: becfaf641be7debff28241257c8d8f16
+  user_id: 481
+  init_sfen: position sfen kg7/ln6R/2B6/9/9/9/9/9/9 b Grb2g4s3n3l18p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: どっちを残す
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 481
+    key: 3b85d32f3fd67bcf5bc3c8366a237ea1
+    name: Pon
+  moves_answers:
+  - moves_str: 1b8b+ 8a8b N*8c 9a8a G*7a
+  mate_skip: false
 - key: 7aa5dac853a08ea0b3291c8444220e63
   user_id: 8
   init_sfen: position sfen 5Bk2/4+P4/9/7P1/9/9/9/9/9 b Sk2rb4g3s4n4l16p 1
@@ -4537,6 +10512,104 @@
   moves_answers:
   - moves_str: 6f6e 7c6e 7g2b+ 3a2b B*6f
   - moves_str: 6f6e 6d6e 5f6e 7c6e 7g2b+ 3a2b B*6f
+  mate_skip: false
+- key: c94e6c3c4dc7181563c0045d85ae265d
+  user_id: 207
+  init_sfen: position sfen 7k1/9/3bppppP/9/9/9/9/9/9 b RGSrb3g3s4n4l13p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 歩の向きに注意
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: R*1a 2a3b G*3a 3b4b 1a1b+ 4b3a S*4b
+  - moves_str: R*1a 2a3b G*3a 3b4b 1a1b+ 4b5a S*6b
+  mate_skip: false
+- key: 9b715d0800404480534c51e17c0bb7d2
+  user_id: 207
+  init_sfen: position sfen 9/5nsg1/7k1/9/7Pp/9/9/9/9 b RGSr2b2g2s3n4l16p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 歩の拠点をどう活かす
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list:
+  - 7手詰
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 207
+    key: d337af031f6fa93b2dbc6121e5bde062
+    name: さくら
+  moves_answers:
+  - moves_str: R*2d 2c1b S*1c 1b1c 2d1d 1c1d G*2d
+  - moves_str: R*2d 2c1b S*1c 1b1c 2d1d 1c2c G*2d
+  mate_skip: false
+- key: adfd85c282b8bfaaf253f297824f9b52
+  user_id: 481
+  init_sfen: position sfen 4sGBnl/6+Rsk/p4psp1/2p1p1pl1/4+b1nlp/2P6/P2PPPPPP/3+p1G1SL/1r3GNNK
+    b GPp 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 必殺の一手
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死
+  source_about_key: ascertained
+  user:
+    id: 481
+    key: 3b85d32f3fd67bcf5bc3c8366a237ea1
+    name: Pon
+  moves_answers:
+  - moves_str: G*1d
+  mate_skip: false
+- key: 3e4d62d096e3d9a75a44670041e0eee8
+  user_id: 481
+  init_sfen: position sfen lnsgkgsnl/7b1/p1ppppp1p/7p1/9/1r7/P1PPPPP1P/1B5R1/LNSGKGSNL
+    b P2p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: たまにある盤面
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 481
+    key: 3b85d32f3fd67bcf5bc3c8366a237ea1
+    name: Pon
+  moves_answers:
+  - moves_str: P*2c
   mate_skip: false
 - key: 9f13cff006b4fd723405107ae26146e9
   user_id: 8
@@ -6592,6 +12665,30 @@
   moves_answers:
   - moves_str: 3e3d 4c3d 3f3e
   mate_skip: false
+- key: 6893351130655fcdb54041ce98fcc248
+  user_id: 1700
+  init_sfen: position sfen 4k4/9/PPPPPPPPP/9/9/9/9/9/9 b B4L2rb4g4s4n9p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 古典的な
+  description: 有名なやつです
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: unknown
+  user:
+    id: 1700
+    key: bbf110e149fbb79b13a65937f294fd7f
+    name: 炭酸水素ナトリウム
+  moves_answers:
+  - moves_str: L*5b 5a4a B*3b 4a3a 3b2a+ 3a2a L*2b 2a3a L*3b 3a4a L*4b
+  - moves_str: L*5b 5a6a B*7b 6a7a 7b8a+ 7a8a L*8b 8a7a L*7b 7a6a L*6b
+  mate_skip: false
 - key: 2b81726b0647c85aa5065d3d95b00bcd
   user_id: 8
   init_sfen: position sfen 7nl/2rs1ggk1/+Lp1p1p1p1/4pbp1p/1P5P1/5P2P/2NPPSP2/R3K4/2G3GNL
@@ -7274,6 +13371,39 @@
     name: きなこもち
   moves_answers:
   - moves_str: 9d9c+ 9b9c N*4d
+  mate_skip: false
+- key: b046c59c98533e42d3792046c7c18817
+  user_id: 783
+  init_sfen: position sfen ln3g1nl/4g2k1/3pp1psp/1r1s1p1p1/p1p3SNP/6PP1/PPPPPP1G1/1KS2R3/LN1G4L
+    b BPb 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 桂を諦めない
+  description: |-
+    問題図の手前、実戦では35銀と出るところで結局24歩で桂が死にそうだなと断念。
+    でも何か技がありそうだなと局後検討したらへぇ～という感じ
+    なお33圭は同玉があるので本当は微妙
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 手筋
+  source_about_key: ascertained
+  user:
+    id: 783
+    key: b2969d74d347b64178443e821819b6c1
+    name: Wndr
+  moves_answers:
+  - moves_str: 2e1c+ 2a1c 1e1d
+  - moves_str: 2e1c+ 1a1c 2f2e 2d2e P*2d
+  - moves_str: 2e1c+ 2b1c
+  - moves_str: 2e3c+ 2a3c 2f2e 2d2e P*2d
+  - moves_str: 2e3c+ 2a3c 2f2e 3c2e P*2f
+  - moves_str: 2e3c+ 2a3c 2f2e 3c2e 3e4d
+  - moves_str: 2e1c+ 2b1c 2f2e 2d2e 1e1d
   mate_skip: false
 - key: 41bff93292d795be6b1364f3b55b635b
   user_id: 8
@@ -8005,4 +14135,123 @@
     name: きなこもち
   moves_answers:
   - moves_str: 8h8a+
+  mate_skip: false
+- key: e89d2e5ebdd47e4a5f071983000f4478
+  user_id: 2086
+  init_sfen: position sfen lrk1S1+R2/2g6/p3p4/2+Bp5/9/9/9/9/9 b Sb3g2s4n3l15p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 最短手数で
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 2086
+    key: b483b89c06a978292b5eba6391f59f30
+    name: Koji Hirono
+  moves_answers:
+  - moves_str: 5a6b+ 7a6b S*7a 8a7a 3a4b
+  mate_skip: true
+- key: e90ab8d388c9ba23949445ff24cc0045
+  user_id: 2086
+  init_sfen: position sfen l2p4l/4k1gb1/p4pnpp/1pp3p2/3P5/P2G5/2N6/9/L8 b RGNrbg4snl8p
+    1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 飛車の打ちどころ
+  description: 詰む場所がいろいろあり、玉方の最長手順を探すのが難しい。
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 2086
+    key: b483b89c06a978292b5eba6391f59f30
+    name: Koji Hirono
+  moves_answers:
+  - moves_str: N*6d 5b6c G*5c 6c5c R*5a 5c6c 5a5b+ 6c7c 5b7b
+  - moves_str: N*6d 5b6c G*5c 6c7c R*7a 7c8c 7a7b+ 8c9d 9f9e
+  mate_skip: false
+- key: 2ab7e9b73cac33794c1dd3cc2e80bdfa
+  user_id: 1622
+  init_sfen: position sfen 7nk/7g1/9/4rB2S/9/9/9/9/9 b NLPrb3g3s2n3l17p 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 簡単
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 詰将棋
+  source_about_key: ascertained
+  user:
+    id: 1622
+    key: 328c32e694c183c61394ef98eaadc9a3
+    name: 柳沼秀一
+  moves_answers:
+  - moves_str: P*1b 1a1b N*2d 1b1a L*1b
+  mate_skip: false
+- key: 424fa5ba3be1a47e28d34a081df91277
+  user_id: 1622
+  init_sfen: position sfen l2g3nl/1ks2r1b1/ppngp1sp1/2pp1pp1p/7P1/2P1P1PSP/PP1P1P3/1BKSG2R1/LN1G3NL
+    b - 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 棒銀の成功例
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 定跡
+  source_about_key: ascertained
+  user:
+    id: 1622
+    key: 328c32e694c183c61394ef98eaadc9a3
+    name: 柳沼秀一
+  moves_answers:
+  - moves_str: 3f3e 3d3e 2f3e P*3d 2e2d
+  - moves_str: 1f1e 1d1e 2f1e 1a1e 1i1e
+  mate_skip: false
+- key: ba97b85a9a9cab728426452d51ef86d1
+  user_id: 1622
+  init_sfen: position sfen lnsg5/1k7/pppp5/9/9/9/4P4/2+b1S1g2/4K4 b Rg 1
+  time_limit_sec: 10
+  difficulty_level: 1
+  title: 必至を逃れるには⁇
+  description: 
+  hint_desc: 
+  source_author: 
+  source_media_name: 
+  source_media_url: 
+  source_published_on: 
+  direction_message: 
+  owner_tag_list: []
+  lineage_key: 必死逃れ
+  source_about_key: ascertained
+  user:
+    id: 1622
+    key: 328c32e694c183c61394ef98eaadc9a3
+    name: 柳沼秀一
+  moves_answers:
+  - moves_str: R*3b
   mate_skip: false
