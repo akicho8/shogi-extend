@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.AbstractViewpointKeySelectModal(style="width:auto")
   header.modal-card-head
-    p.modal-card-title OGP画像の視点設定
+    p.modal-card-title.is-size-6 OGP画像の視点設定
   section.modal-card-body
     .field.my-1
       b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="self")

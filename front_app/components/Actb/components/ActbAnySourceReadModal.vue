@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.ActbAnySourceReadModal
   header.modal-card-head
-    p.modal-card-title 棋譜の読み込み
+    p.modal-card-title.is-size-6 棋譜の読み込み
   section.modal-card-body
     b-input(type="textarea" v-model="any_source" ref="any_source")
   footer.modal-card-foot

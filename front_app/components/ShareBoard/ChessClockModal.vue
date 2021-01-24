@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.ChessClockModal
   header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title
+    p.modal-card-title.is-size-6
       | 対局時計
       span.mx-1.has-text-grey.is-size-6(v-if="instance") {{instance.human_status}}
     template(v-if="!instance || !instance.running_p")

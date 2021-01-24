@@ -1,7 +1,7 @@
 <template lang="pug">
 .StopwatchHistoryModal.modal-card.is-size-7(style="width: auto")
   header.modal-card-head
-    p.modal-card-title 履歴
+    p.modal-card-title.is-size-6 履歴
   section.modal-card-body
     b-table(
       :data="rows"

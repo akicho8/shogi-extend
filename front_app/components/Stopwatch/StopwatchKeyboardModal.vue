@@ -1,7 +1,7 @@
 <template lang="pug">
 .StopwatchKeyboardModal.modal-card.mx-4(style="width: auto")
   header.modal-card-head
-    p.modal-card-title キーボード操作
+    p.modal-card-title.is-size-6 キーボード操作
   section.modal-card-body
     table.table.is-narrow
       tr

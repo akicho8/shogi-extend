@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.RealtimeShareModal(style="width:auto")
   header.modal-card-head
-    p.modal-card-title
+    p.modal-card-title.is-size-6
       | 合言葉の設定と共有
       span.mx-1.has-text-danger(v-if="base.ac_room")
         | (共有中)
