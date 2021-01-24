@@ -1,5 +1,5 @@
 <template lang="pug">
-b-table.WkbkBookIndexTable.is-size-7.mx-2.mt-0(
+b-table.WkbkBookIndexTable.mx-2.mt-0(
   v-if="base.books"
   :data="base.books"
   :mobile-cards="false"
@@ -26,27 +26,41 @@ b-table.WkbkBookIndexTable.is-size-7.mx-2.mt-0(
 
   //- :has-detailed-visible="row => sound_play('click')"
 
-  b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="base.BookIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="!!base.visible_hash.id") {{row.id}}
-  b-table-column(v-slot="{row}" custom-key="user_id"           field="user.id"           :label="base.BookIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="!!base.visible_hash.user_id") {{row.user.name}}
+  //- b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="base.BookIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="!!base.visible_hash.id") {{row.id}}
+  //- b-table-column(v-slot="{row}" custom-key="user_id"           field="user.id"           :label="base.BookIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="!!base.visible_hash.user_id") {{row.user.name}}
 
-  b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').short_name"            sortable         :visible="!!base.visible_hash.title")
+  b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').short_name" sortable)
     nuxt-link(:to="{name: 'wkbk-books-book_id', params: {book_id: row.id}}")
       | {{string_truncate(row.title, {length: 20})}}({{row.articles_count}})
 
-  b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').short_name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
+  b-table-column(v-slot="{row}" custom-key="user_id" field="user_id" :label="base.BookIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.current_tab.key === 'all'")
+    nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}")
+      | {{string_truncate(row.user.name, {length: 20})}}
 
-  b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="base.BookIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="!!base.visible_hash.owner_tag_list")
-    b-taglist
-      b-tag.is-clickable(v-for="tag in row.owner_tag_list" @click.native.stop="tag_search_handle(tag)" rounded)
-        | {{tag}}
+  //- b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').short_name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
 
-  b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.BookIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="!!base.visible_hash.created_at")       {{row_time_format(row.created_at)}}
-  b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="base.BookIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="!!base.visible_hash.updated_at")       {{row_time_format(row.updated_at)}}
+  //- b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="base.BookIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="!!base.visible_hash.owner_tag_list")
+  //-   b-taglist
+  //-     b-tag.is-clickable(v-for="tag in row.owner_tag_list" @click.native.stop="tag_search_handle(tag)" rounded)
+  //-       | {{tag}}
 
-  b-table-column(v-slot="{row}" custom-key="operation" label="操作")
+  //- b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.BookIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="!!base.visible_hash.created_at")       {{row_time_format(row.created_at)}}
+  //- b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="base.BookIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="!!base.visible_hash.updated_at")       {{row_time_format(row.updated_at)}}
+
+  b-table-column(v-slot="{row}" custom-key="operation" label="")
     template(v-if="g_current_user && g_current_user.id === row.user.id || debug_force_edit_p")
-      nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.id}}") 編集
-      nuxt-link.ml-1(:to="{name: 'wkbk-articles-new', query: {book_id: row.id}}") 問題追加
+      //- nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.id}}")
+      //-   b-icon(icon="edit")
+      //-   | 編集
+      nuxt-link(:to="{name: 'wkbk-articles-new', query: {book_id: row.id}}")
+        b-icon(icon="plus")
+
+      b-dropdown(append-to-body position="is-top-left" @active-change="sound_play('click')")
+        a.px-4(slot="trigger")
+          b-icon(icon="dots-vertical")
+        b-dropdown-item(has-link )
+          nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.id}}") 編集
+        //- b-dropdown-item(:separator="true")
 
   template(slot="empty")
     section.section.is-unselectable

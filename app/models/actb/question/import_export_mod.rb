@@ -29,6 +29,7 @@ module Actb::Question::ImportExportMod
             :mate_skip,
           ],
           methods: [
+            :folder_key,
             :owner_tag_list,
             :lineage_key,
             :source_about_key,

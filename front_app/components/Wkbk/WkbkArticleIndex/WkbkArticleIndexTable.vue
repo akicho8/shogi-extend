@@ -1,5 +1,5 @@
 <template lang="pug">
-b-table.WkbkArticleIndexTable.is-size-7.mx-2.mt-0(
+b-table.WkbkArticleIndexTable.mx-2.mt-0(
   v-if="base.articles"
   :data="base.articles"
   :mobile-cards="false"
@@ -26,29 +26,31 @@ b-table.WkbkArticleIndexTable.is-size-7.mx-2.mt-0(
   //- :has-detailed-visible="row => sound_play('click')"
 
   b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="base.ArticleIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="!!base.visible_hash.id") {{row.id}}
-  b-table-column(v-slot="{row}" custom-key="user_id"           field="user.id"           :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name"       sortable         :visible="!!base.visible_hash.user_id") {{row.user.name}}
 
-  b-table-column(v-slot="{row}" custom-key="source_author"     field="source_author"     :label="base.ArticleIndexColumnInfo.fetch('source_author').short_name"       sortable         :visible="!!base.visible_hash.source_author")
-
-    template(v-if="row.source_about_key === 'unknown'")
-      | 不詳
-    template(v-else-if="row.source_author")
-      span.has-text-weight-bold
-        template(v-if="row.source_media_url")
-          a(:href="row.source_media_url" target="_blank")
-            | {{row.source_author}}
-            b-icon(icon="link" size="is-small")
-        template(v-else)
-          | {{row.source_author}}
-    template(v-else)
-      a {{row.user.name}}
+  //- b-table-column(v-slot="{row}" custom-key="source_author"     field="source_author"     :label="base.ArticleIndexColumnInfo.fetch('source_author').short_name"       sortable         :visible="!!base.visible_hash.source_author")
+  //-   template(v-if="row.source_about_key === 'unknown'")
+  //-     | 不詳
+  //-   template(v-else-if="row.source_author")
+  //-     span.has-text-weight-bold
+  //-       template(v-if="row.source_media_url")
+  //-         a(:href="row.source_media_url" target="_blank")
+  //-           | {{row.source_author}}
+  //-           b-icon(icon="link" size="is-small")
+  //-       template(v-else)
+  //-         | {{row.source_author}}
+  //-   template(v-else)
+  //-     a {{row.user.name}}
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').short_name"            sortable         :visible="!!base.visible_hash.title")
     nuxt-link(:to="{name: 'wkbk-articles-article_id-edit', params: {article_id: row.id}}")
       | {{string_truncate(row.title, {length: 20})}}
 
+  b-table-column(v-slot="{row}" custom-key="user_id" field="user.id" :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name" sortable :visible="!!base.visible_hash.user_id")
+    nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}")
+      | {{string_truncate(row.user.name, {length: 20})}}
+
   b-table-column(v-slot="{row}" custom-key="book.title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book.title').short_name"            sortable         :visible="!!base.visible_hash.title")
-    nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.book.id}}")
+    nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.book.id}}" v-if="row.book")
       | {{string_truncate(row.book.title, {length: 20})}}({{row.book.articles_count}})
 
   //- b-table-column(v-slot="{row}" custom-key="histories_count"   field="histories_count"   :label="base.ArticleIndexColumnInfo.fetch('histories_count').short_name"  sortable numeric :visible="!!base.visible_hash.histories_count")  {{row.histories_count}}
@@ -72,7 +74,7 @@ b-table.WkbkArticleIndexTable.is-size-7.mx-2.mt-0(
 
   b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="base.ArticleIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="!!base.visible_hash.owner_tag_list")
     b-taglist
-      b-tag.is-clickable(v-for="tag in row.owner_tag_list" @click.native.stop="tag_search_handle(tag)" rounded)
+      b-tag.is-clickable(v-for="tag in row.owner_tag_list" @click.native.stop="base.tag_search_handle(tag)" rounded)
         | {{tag}}
 
   b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.ArticleIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="!!base.visible_hash.created_at")       {{row_time_format(row.created_at)}}

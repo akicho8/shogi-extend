@@ -1,6 +1,6 @@
 module Wkbk
   Config = {
-    :revision                        => 25,
+    :revision                        => 1,
     :wkbk_display_p                  => true,
 
     # -------------------------------------------------------------------------------- 共通
@@ -52,7 +52,7 @@ module Wkbk
     :turm_max_limit                  => 3,     # 手数制限
 
     # -------------------------------------------------------------------------------- API
-    :api_articles_fetch_per         => 5,  # 問題一覧での1ページあたりの表示件数
+    :api_articles_fetch_per          => 5,  # 問題一覧での1ページあたりの表示件数
     :api_lobby_message_max           => 100, # ロビーのメッセージ表示件数
     :api_history_fetch_max           => 50, # 履歴表示件数
     :api_clip_fetch_max              => 50, # 保存表示件数

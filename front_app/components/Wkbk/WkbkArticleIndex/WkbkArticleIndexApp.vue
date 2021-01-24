@@ -5,6 +5,7 @@
     WkbkArticleIndexSidebar(:base="base")
     WkbkArticleIndexNavbar(:base="base")
     WkbkArticleIndexTab(:base="base")
+    WkbkArticleIndexTag(:base="base")
     WkbkArticleIndexTable(:base="base")
 </template>
 
@@ -46,8 +47,8 @@ export default {
       // pagination 5点セット
       page_info: {
         total:              null,
-        page:               null,
-        per:                null,
+        page:               this.$route.query.page,
+        per:                this.$route.query.per,
         sort_column:        null,
         sort_order:         null,
         sort_order_default: null,
@@ -103,7 +104,11 @@ export default {
     },
 
     async_records_load() {
-      return this.api_get("articles_index_fetch", this.page_info, e => {
+      const params = {
+        remote_action: "articles_index_fetch",
+        ...this.page_info,
+      }
+      return this.$axios.$get("/api/wkbk.json", {params}).then(e => {
         this.articles = e.articles.map(e => new Article(e))
         this.page_info = e.page_info
         this.article_counts = e.article_counts // 各フォルダごとの個数
@@ -130,14 +135,14 @@ export default {
 
     // このタブは表示するか？
     // ゴミ箱など常に0なので0のときは表示しない
-    article_tab_available_p(tab_info) {
-      if (tab_info.hidden_if_empty) {
-        if (this.article_count_in_tab(tab_info) === 0) {
-          return false
-        }
-      }
-      return true
-    },
+    // article_tab_available_p(tab_info) {
+    //   if (tab_info.hidden_if_empty) {
+    //     if (this.article_count_in_tab(tab_info) === 0) {
+    //       return false
+    //     }
+    //   }
+    //   return true
+    // },
 
     // このタブのレコード件数
     article_count_in_tab(tab_info) {

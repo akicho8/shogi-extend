@@ -57,36 +57,48 @@ module Wkbk::Article::ImportExportMod
     end
 
     def import_all(options = {})
+      persistent_records.each do |e|
+        begin
+          import_one(e, options)
+        rescue => error
+          p [error, e]
+        end
+      end
+    end
+
+    def import_one(e, options = {})
       options = {
         user: User.sysop,
       }.merge(options)
 
-      persistent_records.each do |e|
-        record = options[:user].wkbk_articles.find_or_initialize_by(key: e[:key])
-        begin
-          record.update!(e.slice(*[
-                                   :lineage_key,
-                                   :init_sfen,
-                                   :time_limit_sec,
-                                   :difficulty_level,
-                                   :title,
-                                   :description,
-                                   :hint_desc,
-                                   :direction_message,
-                                   :source_about_key,
-                                   :source_author,
-                                   :source_media_name,
-                                   :source_media_url,
-                                   :source_published_on,
-                                   :mate_skip,
-                                 ]))
-          record.moves_answers.clear
-          e[:moves_answers].each do |e|
-            record.moves_answers.create!(moves_str: e[:moves_str])
-          end
-        rescue => error
-          p [error, e]
-        end
+      if Rails.env.production?
+        user = User.find_by!(key: e[:user][:key])
+      elsif Rails.env.staging?
+        user = User.find_by(name: e[:user][:name]) || options[:user]
+      else
+        user = options[:user]
+      end
+
+      record = user.wkbk_articles.find_or_initialize_by(key: e[:key])
+      record.update!(e.slice(*[
+                               :lineage_key,
+                               :init_sfen,
+                               :time_limit_sec,
+                               :difficulty_level,
+                               :title,
+                               :description,
+                               :hint_desc,
+                               :direction_message,
+                               :source_about_key,
+                               :source_author,
+                               :source_media_name,
+                               :source_media_url,
+                               :source_published_on,
+                               :mate_skip,
+                             ]))
+      record.moves_answers.clear
+      e[:moves_answers].each do |e|
+        record.moves_answers.create!(moves_str: e[:moves_str])
       end
     end
 
