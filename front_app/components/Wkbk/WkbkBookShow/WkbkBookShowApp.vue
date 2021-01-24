@@ -1,6 +1,7 @@
 <template lang="pug">
 .WkbkBookShowApp
   DebugBox
+    p mode: {{mode}}
     template(v-if="book")
       p book.user.id: {{book.user && book.user.id}}
       p g_current_user.id: {{g_current_user && g_current_user.id}}
@@ -16,15 +17,13 @@
     WkbkBookShowNavbar(:base="base")
     MainSection.is_mobile_padding_zero
       .container
-        //- WkbkBookShowPlacement(:base="base"  v-if="current_tab_info.key === 'placement_mode'")
-        //- WkbkBookShowAnswer(:base="base" v-if="current_tab_info.key === 'answer_create_mode'" ref="WkbkBookShowAnswer")
-        //- WkbkBookShowGoal(:base="base")
         template(v-if="is_standby_p")
           WkbkBookShowStandby(:base="base")
         template(v-if="is_running_p")
-          WkbkBookShowSp(:base="base"     v-if="current_exist_p")
-          WkbkBookShowAnswer(:base="base" v-if="current_exist_p")
-          WkbkBookShowGoal(:base="base"   v-if="!current_exist_p")
+          WkbkBookShowSp(:base="base")
+          WkbkBookShowAnswer(:base="base")
+        template(v-if="is_goal_p")
+          WkbkBookShowGoal(:base="base")
   DebugPre
     | {{$data}}
 </template>
@@ -35,6 +34,7 @@ import { Book    } from "../models/book.js"
 import { FolderInfo  } from '../models/folder_info.js'
 import { app_articles } from "./app_articles.js"
 import { app_mode } from "./app_mode.js"
+import { app_support } from "./app_support.js"
 
 export default {
   name: "WkbkBookIndexApp",
@@ -42,6 +42,7 @@ export default {
     support_parent,
     app_articles,
     app_mode,
+    app_support,
   ],
 
   data() {
@@ -68,9 +69,11 @@ export default {
 
       this.book = new Book(e.book)
 
-      // this.setup_first()
-
-      this.mode_set("standby")
+      if (true) {
+        this.setup_first()
+      } else {
+        this.mode_set("standby")
+      }
     })
   },
 

@@ -19,7 +19,7 @@ import { Book                } from "../models/book.js"
 import { LineageInfo             } from "../models/lineage_info.js"
 import { FolderInfo              } from "../models/folder_info.js"
 import { BookIndexColumnInfo } from "../models/book_index_column_info.js"
-import { IndexTabInfo            } from "../models/index_tab_info.js"
+import { IndexScopeInfo            } from "../models/index_scope_info.js"
 
 export default {
   name: "WkbkBookIndexApp",
@@ -66,8 +66,9 @@ export default {
 
     this.ls_setup()
 
-    this.tab_set("public")
-    this.page_info.folder_key = "public"
+    const scope = this.$route.query.scope || "public"
+    this.tab_set(scope)
+    this.page_info.folder_key = scope
     return this.async_records_load()
   },
 
@@ -118,7 +119,7 @@ export default {
 
     // 指定のタブを選択
     tab_set(tab_key) {
-      this.tab_index = this.IndexTabInfo.fetch(tab_key).code
+      this.tab_index = this.IndexScopeInfo.fetch(tab_key).code
     },
 
     // タブが変更されたとき
@@ -174,9 +175,9 @@ export default {
 
   computed: {
     base()                    { return this                                    },
-    IndexTabInfo()            { return IndexTabInfo                            },
+    IndexScopeInfo()            { return IndexScopeInfo                            },
     BookIndexColumnInfo() { return BookIndexColumnInfo                 },
-    current_tab()             { return this.IndexTabInfo.fetch(this.tab_index) },
+    current_tab()             { return this.IndexScopeInfo.fetch(this.tab_index) },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support_mixin
 

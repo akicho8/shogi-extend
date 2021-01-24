@@ -9,16 +9,24 @@ export const app_articles = {
     setup_first() {
       this.mode_set("running")
       this.current_index = 0
+      this.goal_check()
     },
 
     next_handle() {
       this.sound_play("o")
       this.current_index += 1
+      this.goal_check()
     },
 
     restart_handle() {
-      this.sound_play("o")
+      this.sound_play("click")
       this.setup_first()
+    },
+
+    goal_check() {
+      if (!this.current_article) {
+        this.mode_set("goal")
+      }
     },
 
     play_mode_advanced_moves_set(moves) {

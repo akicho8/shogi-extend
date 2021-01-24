@@ -45,6 +45,15 @@ class ApplicationRecord < ActiveRecord::Base
     end
   end
 
+  # "" or nil → ""
+  def normalize_blank_to_empty_string(*keys)
+    keys.each do |key|
+      if will_save_change_to_attribute?(key)
+        public_send("#{key}=", public_send(key).to_s)
+      end
+    end
+  end
+
   # 半角化
   def normalize_zenkaku_to_hankaku(*keys)
     keys.each do |key|

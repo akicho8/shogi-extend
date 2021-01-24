@@ -32,7 +32,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.integer :time_limit_sec,         null: true,  index: true,                                  comment: "制限時間(秒)"
         t.integer :difficulty_level,       null: true,  index: true,                                  comment: "難易度"
         t.string :title,                   null: true,  index: false,                                 comment: "タイトル"
-        t.string :description, limit: 512, null: true,  index: false,                                 comment: "説明"
+        t.string :description, limit: 1024, null: true,  index: false,                                 comment: "説明"
         t.string :hint_desc,               null: true,  index: false,                                 comment: "ヒント"
         t.string :source_author,           null: true,  index: false,                                 comment: "作者"
         t.string :source_media_name,       null: true,  index: false,                                 comment: "出典メディア"
@@ -73,7 +73,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.belongs_to :folder,  null: false, foreign_key: {to_table: :wkbk_folders}, comment: "フォルダ"
 
         t.string :title,                   null: true,  index: false,                                 comment: "タイトル"
-        t.string :description, limit: 512, null: true,  index: false,                                 comment: "説明"
+        t.string :description, limit: 1024, null: true,  index: false,                                 comment: "説明"
 
         t.timestamps
 

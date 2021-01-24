@@ -1,7 +1,7 @@
 import MemoryRecord from 'js-memory-record'
 
 // 「全体」があったりして構造が異なるのでサーバー側で定義したものを利用していない
-export class IndexTabInfo extends MemoryRecord {
+export class IndexScopeInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "everyone",     name: "全体",   },

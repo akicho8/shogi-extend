@@ -16,8 +16,7 @@
               sp_slider="is_slider_on"
               sp_controller="is_controller_on"
               )
-    .box.is-shadowless.has-background-white-ter(v-if="base.current_article.description")
-      | {{simple_format(auto_link(base.current_article.description))}}
+    .box.is-shadowless.has-background-white-ter(v-if="base.current_article.description" v-html="simple_format(auto_link(base.current_article.description))")
 </template>
 
 <script>

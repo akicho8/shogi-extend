@@ -47,7 +47,7 @@ import { Article    } from "../models/article.js"
 import { Book    } from "../models/book.js"
 import { LineageInfo } from '../models/lineage_info.js'
 import { FolderInfo  } from '../models/folder_info.js'
-import { EditTabInfo  } from '../models/edit_tab_info.js'
+import { EditScopeInfo  } from '../models/edit_scope_info.js'
 
 export default {
   name: "WkbkArticleIndexApp",
@@ -116,7 +116,7 @@ export default {
 
   methods: {
     tab_set(tab_key) {
-      this.tab_index = EditTabInfo.fetch(tab_key).code
+      this.tab_index = EditScopeInfo.fetch(tab_key).code
     },
 
     edit_tab_change_handle(v) {
@@ -269,7 +269,7 @@ export default {
 
           this.toast_ok(`${before_save_button_name}しました`)
 
-          this.$router.push({name: "wkbk-articles"})
+          this.$router.push({name: "wkbk-articles", query: {scope: this.article.folder_key}})
         }
       })
     },
@@ -300,8 +300,8 @@ export default {
 
   computed: {
     base()                { return this                                         },
-    EditTabInfo()         { return EditTabInfo                                  },
-    current_tab_info()    { return EditTabInfo.fetch(this.tab_index)            },
+    EditScopeInfo()         { return EditScopeInfo                                  },
+    current_tab_info()    { return EditScopeInfo.fetch(this.tab_index)            },
     save_button_name()    { return this.article.new_record_p ? "保存" : "更新" },
     save_button_enabled() { return this.article.moves_answers.length >= 1      },
 

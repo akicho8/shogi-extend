@@ -2,7 +2,7 @@
 .WkbkBookShowStandby
   .columns.is-gapless
     .column
-      .box.is-shadowless(v-if="base.book.description" v-html="simple_format(auto_link(base.book.description))")
+      .box.is-shadowless.has-background-white-ter(v-if="base.book.description" v-html="simple_format(auto_link(base.book.description))")
       .buttons
         b-button(@click="base.restart_handle") スタート
 </template>

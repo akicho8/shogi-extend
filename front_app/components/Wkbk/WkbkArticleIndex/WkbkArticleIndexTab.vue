@@ -1,6 +1,6 @@
 <template lang="pug">
 b-tabs.WkbkArticleIndexTab.mb-0(v-model="base.tab_index" expanded @input="base.tab_change_handle")
-  template(v-for="e in base.IndexTabInfo.values")
+  template(v-for="e in base.IndexScopeInfo.values")
     b-tab-item
       template(slot="header")
         span

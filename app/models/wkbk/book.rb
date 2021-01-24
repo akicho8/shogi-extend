@@ -132,15 +132,8 @@ module Wkbk
     has_many :articles, dependent: :nullify  # 記事
 
     before_validation do
-      normalize_zenkaku_to_hankaku(*[
-                                     :title,
-                                     :description,
-                                   ])
-
-      normalize_blank_to_nil(*[
-                               :title,
-                               :description,
-                             ])
+      normalize_zenkaku_to_hankaku(:title, :description)
+      normalize_blank_to_nil(:title, :description)
 
       if Rails.env.test?
         self.title ||= "(title#{self.class.count.next})"
@@ -156,7 +149,7 @@ module Wkbk
 
     with_options allow_blank: true do
       validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
-      validates :description, length: { maximum: 512 }
+      validates :description, length: { maximum: 1024 }
 
       # validates :init_sfen # , uniqueness: { case_sensitive: true }
       # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

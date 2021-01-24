@@ -3,11 +3,16 @@ module Wkbk::Article::ImportExportMod
 
   class_methods do
     def setup(options = {})
-      # if Rails.env.staging? || Rails.env.production? || Rails.env.development?
-      #   unless exists?
-      #     import_all
-      #   end
-      # end
+      unless exists?
+        case
+        when Rails.env.production?
+          import_all(max: 1024)
+        when Rails.env.staging?
+          import_all(max: 1024)
+        when Rails.env.development?
+          import_all
+        end
+      end
     end
 
     def export_all
@@ -57,7 +62,7 @@ module Wkbk::Article::ImportExportMod
     end
 
     def import_all(options = {})
-      persistent_records.each do |e|
+      persistent_records.take(options[:max] || 10).each do |e|
         begin
           import_one(e, options)
         rescue => error
@@ -71,6 +76,10 @@ module Wkbk::Article::ImportExportMod
         user: User.sysop,
       }.merge(options)
 
+      if e[:user][:key] != "932ed39bb18095a2fc73e0002f94ecf1"
+        return
+      end
+
       if Rails.env.production?
         user = User.find_by!(key: e[:user][:key])
       elsif Rails.env.staging?
@@ -80,7 +89,7 @@ module Wkbk::Article::ImportExportMod
       end
 
       record = user.wkbk_articles.find_or_initialize_by(key: e[:key])
-      record.update!(e.slice(*[
+      record.assign_attributes(e.slice(*[
                                :lineage_key,
                                :init_sfen,
                                :time_limit_sec,
@@ -96,10 +105,24 @@ module Wkbk::Article::ImportExportMod
                                :source_published_on,
                                :mate_skip,
                              ]))
+      record.folder_key = "private"
+      record.save!
       record.moves_answers.clear
       e[:moves_answers].each do |e|
         record.moves_answers.create!(moves_str: e[:moves_str])
       end
+
+      if e[:user][:key] == "932ed39bb18095a2fc73e0002f94ecf1"
+        if e[:owner_tag_list].include?("アヒル戦法")
+          record.update!(folder_key: "public")
+
+          book = user.wkbk_books.find_or_initialize_by(title: "アヒル戦法問題集")
+          book.articles << record
+          book.save!
+        end
+      end
+
+      print "."
     end
 
     private

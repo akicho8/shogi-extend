@@ -3,7 +3,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
   template(slot="brand")
     b-navbar-item(tag="nuxt-link" :to="{name: 'wkbk-books'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
-    b-navbar-item(tag="div") {{base.book.title}}
+    b-navbar-item(tag="a" @click.native="base.description_handle") {{base.book.title}}
   template(slot="start")
     b-navbar-item.has-text-weight-bold(tag="div" v-if="base.current_article")
       span.mx-1.is-family-monospace {{base.current_index + 1}} / {{base.max_count}}
@@ -11,8 +11,8 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
   template(slot="end" v-if="base.is_running_p")
     b-navbar-item.has-text-weight-bold.px-4(@click="base.next_handle" v-if="base.current_article")
       | NEXT
-    b-navbar-item.has-text-weight-bold.px-4(@click="base.restart_handle" v-if="!base.current_article")
-      | RESTART
+    //- b-navbar-item.has-text-weight-bold.px-4(@click="base.restart_handle" v-if="!base.current_article")
+    //-   | RESTART
 </template>
 
 <script>

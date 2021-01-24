@@ -213,10 +213,10 @@ class ServiceInfo
       ],
     },
     {
-      display_p: true,
+      display_p: !Rails.env.production?,
       nuxt_link_to: {path: "/wkbk/books"},
       title: "問題集",
-      new_p: false,
+      new_p: true,
       og_image_key: "wkbk",
       description: "将棋の問題を解く力を競う対人戦ゲーム",
       features: [

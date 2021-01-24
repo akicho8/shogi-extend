@@ -2,7 +2,7 @@
 .WkbkBookShowGoal
   .columns.is-gapless
     .column
-      .buttons.is-centered(v-if="development_p")
+      .buttons.is-centered
         b-button(@click="base.restart_handle") リスタート
 </template>
 

@@ -20,7 +20,7 @@ import { Article                } from "../models/article.js"
 import { LineageInfo             } from "../models/lineage_info.js"
 import { FolderInfo              } from "../models/folder_info.js"
 import { ArticleIndexColumnInfo } from "../models/article_index_column_info.js"
-import { IndexTabInfo            } from "../models/index_tab_info.js"
+import { IndexScopeInfo            } from "../models/index_scope_info.js"
 
 export default {
   name: "WkbkArticleIndexApp",
@@ -123,7 +123,7 @@ export default {
 
     // 指定のタブを選択
     tab_set(tab_key) {
-      this.tab_index = this.IndexTabInfo.fetch(tab_key).code
+      this.tab_index = this.IndexScopeInfo.fetch(tab_key).code
     },
 
     // タブが変更されたとき
@@ -179,9 +179,9 @@ export default {
 
   computed: {
     base()                    { return this                                    },
-    IndexTabInfo()            { return IndexTabInfo                            },
+    IndexScopeInfo()            { return IndexScopeInfo                            },
     ArticleIndexColumnInfo() { return ArticleIndexColumnInfo                 },
-    current_tab()             { return this.IndexTabInfo.fetch(this.tab_index) },
+    current_tab()             { return this.IndexScopeInfo.fetch(this.tab_index) },
 
     //////////////////////////////////////////////////////////////////////////////// ls_support_mixin
 
