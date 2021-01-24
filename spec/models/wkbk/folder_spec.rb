@@ -25,11 +25,11 @@ module Wkbk
 
     it do
       article1
-      assert { user1.wkbk_active_box.articles.count >= 1 }
+      assert { user1.wkbk_public_box.articles.count >= 1 }
     end
 
     it "folder_key" do
-      assert { user1.wkbk_active_box.key == :active }
+      assert { user1.wkbk_public_box.key == :public }
     end
 
     it "pure_class" do

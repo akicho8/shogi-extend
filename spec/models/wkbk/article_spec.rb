@@ -3,32 +3,33 @@
 #
 # Article (wkbk_articles as Wkbk::Article)
 #
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
-# | name                | desc                | type        | opts                | refs         | index |
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
-# | id                  | ID                  | integer(8)  | NOT NULL PK         |              |       |
-# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |              | A     |
-# | user_id             | User                | integer(8)  | NOT NULL            | => ::User#id | B     |
-# | folder_id           | Folder              | integer(8)  | NOT NULL            |              | C     |
-# | lineage_id          | Lineage             | integer(8)  | NOT NULL            |              | D     |
-# | init_sfen           | Init sfen           | string(255) | NOT NULL            |              | E     |
-# | time_limit_sec      | Time limit sec      | integer(4)  |                     |              | F     |
-# | difficulty_level    | Difficulty level    | integer(4)  |                     |              | G     |
-# | title               | タイトル            | string(255) |                     |              |       |
-# | description         | 説明                | string(512) |                     |              |       |
-# | hint_desc           | Hint desc           | string(255) |                     |              |       |
-# | source_author       | Source author       | string(255) |                     |              |       |
-# | source_media_name   | Source media name   | string(255) |                     |              |       |
-# | source_media_url    | Source media url    | string(255) |                     |              |       |
-# | source_published_on | Source published on | date        |                     |              |       |
-# | source_about_id     | Source about        | integer(8)  |                     |              | H     |
-# | turn_max            | 手数                | integer(4)  |                     |              | I     |
-# | mate_skip           | Mate skip           | boolean     |                     |              |       |
-# | direction_message   | Direction message   | string(255) |                     |              |       |
-# | created_at          | 作成日時            | datetime    | NOT NULL            |              |       |
-# | updated_at          | 更新日時            | datetime    | NOT NULL            |              |       |
-# | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
+# |---------------------+---------------------+--------------+---------------------+--------------+-------|
+# | name                | desc                | type         | opts                | refs         | index |
+# |---------------------+---------------------+--------------+---------------------+--------------+-------|
+# | id                  | ID                  | integer(8)   | NOT NULL PK         |              |       |
+# | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A     |
+# | user_id             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | folder_id           | Folder              | integer(8)   | NOT NULL            |              | C     |
+# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | D     |
+# | book_id             | Book                | integer(8)   |                     |              | E     |
+# | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | F     |
+# | time_limit_sec      | Time limit sec      | integer(4)   |                     |              | G     |
+# | difficulty_level    | Difficulty level    | integer(4)   |                     |              | H     |
+# | title               | タイトル            | string(255)  |                     |              |       |
+# | description         | 説明                | string(1024) |                     |              |       |
+# | hint_desc           | Hint desc           | string(255)  |                     |              |       |
+# | source_author       | Source author       | string(255)  |                     |              |       |
+# | source_media_name   | Source media name   | string(255)  |                     |              |       |
+# | source_media_url    | Source media url    | string(255)  |                     |              |       |
+# | source_published_on | Source published on | date         |                     |              |       |
+# | source_about_id     | Source about        | integer(8)   |                     |              | I     |
+# | turn_max            | 手数                | integer(4)   |                     |              | J     |
+# | mate_skip           | Mate skip           | boolean      |                     |              |       |
+# | direction_message   | Direction message   | string(255)  |                     |              |       |
+# | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
+# | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
+# | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# |---------------------+---------------------+--------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -105,12 +106,12 @@ module Wkbk
         assert { article1.folder_key == "public" }
       end
       it "移動方法1" do
-        user1.wkbk_trash_box.articles << article1
-        assert { article1.folder.class == Wkbk::TrashBox }
+        user1.wkbk_private_box.articles << article1
+        assert { article1.folder.class == Wkbk::PrivateBox }
       end
       it "移動方法2(フォーム用)" do
-        article1.folder_key = :trash
-        assert { article1.folder_key == "trash" }
+        article1.folder_key = :private
+        assert { article1.folder_key == "private" }
       end
     end
 
@@ -125,7 +126,6 @@ module Wkbk
     end
 
     it "info" do
-      # tp article1.info
       assert { article1.info }
     end
 
@@ -134,7 +134,7 @@ module Wkbk
     end
 
     it "page_url" do
-      assert { article1.page_url == "http://0.0.0.0:4000/training?article_id=#{article1.id}" }
+      assert { article1.page_url == "http://0.0.0.0:4000/wkbk/articles/#{article1.id}/edit" }
     end
 
     it "share_board_png_url" do
@@ -158,10 +158,10 @@ module Wkbk
     #   assert { Wkbk::LobbyMessage.count == 1 }
     # end
 
-    it "message_users" do
-      article1.messages.create!(user: user1, body: "(body)")
-      assert { article1.message_users == [user1] }
-    end
+    # it "message_users" do
+    #   article1.messages.create!(user: user1, body: "(body)")
+    #   assert { article1.message_users == [user1] }
+    # end
 
     it "turn_max" do
       assert { article1.turn_max == 1 }

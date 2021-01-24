@@ -1194,7 +1194,7 @@ ActiveRecord::Schema.define(version: 2021_01_21_210600) do
     t.integer "time_limit_sec", comment: "制限時間(秒)"
     t.integer "difficulty_level", comment: "難易度"
     t.string "title", comment: "タイトル"
-    t.string "description", limit: 512, comment: "説明"
+    t.string "description", limit: 1024, comment: "説明"
     t.string "hint_desc", comment: "ヒント"
     t.string "source_author", comment: "作者"
     t.string "source_media_name", comment: "出典メディア"
@@ -1224,7 +1224,7 @@ ActiveRecord::Schema.define(version: 2021_01_21_210600) do
     t.bigint "user_id", null: false, comment: "作成者"
     t.bigint "folder_id", null: false, comment: "フォルダ"
     t.string "title", comment: "タイトル"
-    t.string "description", limit: 512, comment: "説明"
+    t.string "description", limit: 1024, comment: "説明"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "articles_count", default: 0, null: false, comment: "記事数"

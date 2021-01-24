@@ -3,32 +3,33 @@
 #
 # Article (wkbk_articles as Wkbk::Article)
 #
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
-# | name                | desc                | type        | opts                | refs         | index |
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
-# | id                  | ID                  | integer(8)  | NOT NULL PK         |              |       |
-# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |              | A     |
-# | user_id             | User                | integer(8)  | NOT NULL            | => ::User#id | B     |
-# | folder_id           | Folder              | integer(8)  | NOT NULL            |              | C     |
-# | lineage_id          | Lineage             | integer(8)  | NOT NULL            |              | D     |
-# | init_sfen           | Init sfen           | string(255) | NOT NULL            |              | E     |
-# | time_limit_sec      | Time limit sec      | integer(4)  |                     |              | F     |
-# | difficulty_level    | Difficulty level    | integer(4)  |                     |              | G     |
-# | title               | タイトル            | string(255) |                     |              |       |
-# | description         | 説明                | string(512) |                     |              |       |
-# | hint_desc           | Hint desc           | string(255) |                     |              |       |
-# | source_author       | Source author       | string(255) |                     |              |       |
-# | source_media_name   | Source media name   | string(255) |                     |              |       |
-# | source_media_url    | Source media url    | string(255) |                     |              |       |
-# | source_published_on | Source published on | date        |                     |              |       |
-# | source_about_id     | Source about        | integer(8)  |                     |              | H     |
-# | turn_max            | 手数                | integer(4)  |                     |              | I     |
-# | mate_skip           | Mate skip           | boolean     |                     |              |       |
-# | direction_message   | Direction message   | string(255) |                     |              |       |
-# | created_at          | 作成日時            | datetime    | NOT NULL            |              |       |
-# | updated_at          | 更新日時            | datetime    | NOT NULL            |              |       |
-# | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
+# |---------------------+---------------------+--------------+---------------------+--------------+-------|
+# | name                | desc                | type         | opts                | refs         | index |
+# |---------------------+---------------------+--------------+---------------------+--------------+-------|
+# | id                  | ID                  | integer(8)   | NOT NULL PK         |              |       |
+# | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A     |
+# | user_id             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | folder_id           | Folder              | integer(8)   | NOT NULL            |              | C     |
+# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | D     |
+# | book_id             | Book                | integer(8)   |                     |              | E     |
+# | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | F     |
+# | time_limit_sec      | Time limit sec      | integer(4)   |                     |              | G     |
+# | difficulty_level    | Difficulty level    | integer(4)   |                     |              | H     |
+# | title               | タイトル            | string(255)  |                     |              |       |
+# | description         | 説明                | string(1024) |                     |              |       |
+# | hint_desc           | Hint desc           | string(255)  |                     |              |       |
+# | source_author       | Source author       | string(255)  |                     |              |       |
+# | source_media_name   | Source media name   | string(255)  |                     |              |       |
+# | source_media_url    | Source media url    | string(255)  |                     |              |       |
+# | source_published_on | Source published on | date         |                     |              |       |
+# | source_about_id     | Source about        | integer(8)   |                     |              | I     |
+# | turn_max            | 手数                | integer(4)   |                     |              | J     |
+# | mate_skip           | Mate skip           | boolean      |                     |              |       |
+# | direction_message   | Direction message   | string(255)  |                     |              |       |
+# | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
+# | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
+# | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# |---------------------+---------------------+--------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -87,7 +88,7 @@ module Wkbk
 
         :difficulty_level    => 1,
         :lineage_key         => "詰将棋",
-        :folder_key          => "active",
+        :folder_key          => "public",
 
         # 他者が作者
         :source_about_key    => "ascertained",
@@ -488,16 +489,16 @@ module Wkbk
     # 保存直後の状態
     def saved_after_state
       case
-      when active_folder_posted?
+      when public_folder_posted?
         "投稿"
-      when folder_key === "active" && current_hash != @save_before_hash
+      when folder.kind_of?(PublicBox) && current_hash != @save_before_hash
         "更新"
       end
     end
 
     # 公開した直後か？
-    def active_folder_posted?
-      saved_change_to_attribute?(:folder_id) && folder_key === "active"
+    def public_folder_posted?
+      saved_change_to_attribute?(:folder_id) && folder.kind_of?(PublicBox)
     end
 
     # 変更を検知するためのハッシュ(重要なデータだけにする)

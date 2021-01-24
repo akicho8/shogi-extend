@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Active box (wkbk_folders as Wkbk::ActiveBox)
+# Public box (wkbk_folders as Wkbk::PublicBox)
 #
 # |------------+------------+-------------+-------------+--------------------+-------|
 # | name       | desc       | type        | opts        | refs               | index |

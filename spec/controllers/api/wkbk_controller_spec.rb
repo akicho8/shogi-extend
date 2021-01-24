@@ -25,38 +25,38 @@ RSpec.describe Api::WkbkController, type: :controller do
   #   end
   # end
 
-  describe "マッチング開始通知にロビーにいる人が気づいて挑戦を受け入れた" do
-    def test1
-      params = {
-        session_lock_token: SecureRandom.hex,
-        rule_key: :marathon_rule,
-        user_id: user1.id,
-      }
+  # describe "マッチング開始通知にロビーにいる人が気づいて挑戦を受け入れた" do
+  #   def test1
+  #     params = {
+  #       session_lock_token: SecureRandom.hex,
+  #       rule_key: :marathon_rule,
+  #       user_id: user1.id,
+  #     }
+  #
+  #     put :update, params: { remote_action: "new_challenge_accept_handle", **params}
+  #     expect(response).to have_http_status(:ok)
+  #     hash = JSON.parse(response.body)
+  #     hash["status"]
+  #   end
+  #
+  #   it "相手がもういない" do
+  #     assert { test1 == "opponent_missing" }
+  #   end
+  #
+  #   it "マッチングした" do
+  #     Wkbk::Rule[:marathon_rule].matching_users_add(user1)
+  #     assert { test1 == "success" }
+  #   end
+  # end
 
-      put :update, params: { remote_action: "new_challenge_accept_handle", **params}
-      expect(response).to have_http_status(:ok)
-      hash = JSON.parse(response.body)
-      hash["status"]
-    end
-
-    it "相手がもういない" do
-      assert { test1 == "opponent_missing" }
-    end
-
-    it "マッチングした" do
-      Wkbk::Rule[:marathon_rule].matching_users_add(user1)
-      assert { test1 == "success" }
-    end
-  end
-
-  describe "zip_dl_count_fetch" do
-    it "works" do
-      @current_user.wkbk_articles.create_mock1
-      get :show, params: { remote_action: "zip_dl_count_fetch", format: "json" }
-      expect(response).to have_http_status(:ok)
-      assert { JSON.parse(response.body) == {"count" => 1} }
-    end
-  end
+  # describe "zip_dl_count_fetch" do
+  #   it "works" do
+  #     @current_user.wkbk_articles.create_mock1
+  #     get :show, params: { remote_action: "zip_dl_count_fetch", format: "json" }
+  #     expect(response).to have_http_status(:ok)
+  #     assert { JSON.parse(response.body) == {"count" => 1} }
+  #   end
+  # end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .....

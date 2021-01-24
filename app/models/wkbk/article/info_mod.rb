@@ -36,7 +36,7 @@ module Wkbk::Article::InfoMod
     # a["高評価数"]   = good_marks_count
     # a["低評価数"]   = bad_marks_count
 
-    a["コメント数"] = messages_count
+    # a["コメント数"] = messages_count
 
     a["出典"] = source_media_name
     a["出典年月日"] = source_published_on

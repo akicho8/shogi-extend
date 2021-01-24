@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Draft box (wkbk_folders as Wkbk::DraftBox)
+# Private box (wkbk_folders as Wkbk::PrivateBox)
 #
 # |------------+------------+-------------+-------------+--------------------+-------|
 # | name       | desc       | type        | opts        | refs               | index |
