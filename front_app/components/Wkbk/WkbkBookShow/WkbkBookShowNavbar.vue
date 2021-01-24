@@ -8,7 +8,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
     b-navbar-item.has-text-weight-bold(tag="div" v-if="base.current_article")
       span.mx-1.is-family-monospace {{base.current_index + 1}} / {{base.max_count}}
 
-  template(slot="end")
+  template(slot="end" v-if="base.is_running_p")
     b-navbar-item.has-text-weight-bold.px-4(@click="base.next_handle" v-if="base.current_article")
       | NEXT
     b-navbar-item.has-text-weight-bold.px-4(@click="base.restart_handle" v-if="!base.current_article")

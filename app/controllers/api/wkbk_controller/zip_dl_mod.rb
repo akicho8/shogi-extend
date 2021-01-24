@@ -50,7 +50,7 @@ module Api
       def zip_dl_scope
         # Wkbk::Article.all
         s = current_user.wkbk_articles
-        # s = s.active_only
+        # s = s
         s = s.includes(:ox_record)
         s = s.includes(:folder)
       end

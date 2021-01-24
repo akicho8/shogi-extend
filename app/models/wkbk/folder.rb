@@ -34,7 +34,6 @@ module Wkbk
       FolderInfo.fetch(key)
     end
 
-    # :active, :draft, :trash
     def key
       @key ||= self.class.name.demodulize.underscore.remove("_box").to_sym
     end

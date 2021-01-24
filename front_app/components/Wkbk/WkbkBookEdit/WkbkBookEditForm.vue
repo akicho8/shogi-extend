@@ -24,7 +24,7 @@
       //- b-field(label="メッセージ" label-position="on-border" message="問題と一緒に表示する文言です。何手指してほしいかや、ヒントを伝えたいときだけ入力してください。基本未入力でかまいません")
       //-   b-input(v-model.trim="base.book.direction_message" placeholder="3手指してください")
 
-      b-field(label="タグ" label-position="on-border")
+      b-field(label="タグ" label-position="on-border" v-if="false")
         //- https://buefy.org/documentation/taginput
         b-taginput(v-model="base.book.owner_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
 

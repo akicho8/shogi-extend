@@ -7,6 +7,7 @@ export const app_articles = {
 
   methods: {
     setup_first() {
+      this.mode_set("running")
       this.current_index = 0
     },
 

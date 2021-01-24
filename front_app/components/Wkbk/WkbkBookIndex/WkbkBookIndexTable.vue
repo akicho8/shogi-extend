@@ -33,7 +33,7 @@ b-table.WkbkBookIndexTable.mx-2.mt-0(
     nuxt-link(:to="{name: 'wkbk-books-book_id', params: {book_id: row.id}}")
       | {{string_truncate(row.title, {length: 20})}}({{row.articles_count}})
 
-  b-table-column(v-slot="{row}" custom-key="user_id" field="user_id" :label="base.BookIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.current_tab.key === 'all'")
+  b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.current_tab.key === 'everyone'")
     nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}")
       | {{string_truncate(row.user.name, {length: 20})}}
 

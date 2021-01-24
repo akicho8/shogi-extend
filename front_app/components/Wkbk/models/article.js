@@ -83,7 +83,7 @@ export class Article extends ModelBase {
   }
   ////////////////////////////////////////////////////////////////////////////////
 
-  // private
+  // public
 
   // 解答のSFENの配列を返す
   get answer_sfen_list() {

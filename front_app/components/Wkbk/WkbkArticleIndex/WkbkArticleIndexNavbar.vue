@@ -18,7 +18,7 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false")
       //- https://pictogrammers.github.io/@mdi/font/5.4.55/
       b-icon(icon="table-row" slot="label")
       template(v-for="e in base.ArticleIndexColumnInfo.values")
-        b-navbar-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key")
+        b-navbar-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
           .has-text-weight-bold(v-if="base.visible_hash[e.key]")
             | {{e.name}}
           .has-text-grey(v-else)
@@ -27,7 +27,7 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false")
     b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'wkbk-articles-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
-    b-navbar-item(@click="base.sidebar_toggle")
+    b-navbar-item.px-5(@click="base.sidebar_toggle")
       b-icon(icon="menu")
 </template>
 

@@ -110,7 +110,7 @@ module Actb
 
     describe "フォルダ" do
       it "初期値" do
-        assert { question1.folder_key == "active" }
+        assert { question1.folder_key == "public" }
       end
       it "移動方法1" do
         user1.actb_trash_box.questions << question1
@@ -154,15 +154,15 @@ module Actb
     end
 
     it "公開フォルダに移動させたタイミングで投稿通知" do
-      question1.update!(folder_key: "draft")
+      question1.update!(folder_key: "private")
       Actb::LobbyMessage.destroy_all
 
       assert { Actb::LobbyMessage.count == 0 }
 
-      question1.update_from_js(folder_key: "active")
+      question1.update_from_js(folder_key: "public")
       assert { Actb::LobbyMessage.count == 1 }
 
-      question1.update_from_js(folder_key: "draft")
+      question1.update_from_js(folder_key: "private")
       assert { Actb::LobbyMessage.count == 1 }
     end
 

@@ -41,15 +41,15 @@ b-table.WkbkArticleIndexTable.mx-2.mt-0(
   //-   template(v-else)
   //-     a {{row.user.name}}
 
-  b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').short_name"            sortable         :visible="!!base.visible_hash.title")
+  b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').short_name" sortable :visible="!!base.visible_hash.title")
     nuxt-link(:to="{name: 'wkbk-articles-article_id-edit', params: {article_id: row.id}}")
       | {{string_truncate(row.title, {length: 20})}}
 
-  b-table-column(v-slot="{row}" custom-key="user_id" field="user.id" :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name" sortable :visible="!!base.visible_hash.user_id")
+  b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.current_tab.key === 'everyone'")
     nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}")
       | {{string_truncate(row.user.name, {length: 20})}}
 
-  b-table-column(v-slot="{row}" custom-key="book.title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book.title').short_name"            sortable         :visible="!!base.visible_hash.title")
+  b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').short_name" sortable :visible="!!base.visible_hash.book_title")
     nuxt-link(:to="{name: 'wkbk-books-book_id-edit', params: {book_id: row.book.id}}" v-if="row.book")
       | {{string_truncate(row.book.title, {length: 20})}}({{row.book.articles_count}})
 

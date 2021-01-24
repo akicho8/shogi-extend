@@ -68,7 +68,8 @@ module Wkbk
     # 同じ組み合わせがないことを確認
     def validate2_uniq_with_parent
       # 配置が同じ問題たちを取得
-      s = Article.active_only.where(init_sfen: article.read_attribute(:init_sfen))
+      s = article.user.wkbk_articles # 自分が作成したすべての問題が対称
+      s = s.where(init_sfen: article.read_attribute(:init_sfen))
       if persisted?
         # ただし自分の所属する配置を除く
         s = s.where.not(id: article.id_in_database)
@@ -76,7 +77,7 @@ module Wkbk
       # その上で手順まで同じのものがあるか？
       article_ids = self.class.where(article: s).where(moves_str: moves_str).group(:article_id).count
       if article_ids.present?
-        errors.add(:base, "配置と正解手順の組み合わせが既出の問題(#{article_ids.keys.join(', ')})と重複しています")
+        errors.add(:base, "配置と正解手順の組み合わせが既出の問題(ID:#{article_ids.keys.join(', ')})と重複しています")
       end
     end
 

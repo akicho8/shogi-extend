@@ -4,11 +4,12 @@ export class ArticleIndexColumnInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "id",                  name: "ID",       short_name: "ID",       visible: false, togglable: true, },
-      { key: "user_id",             name: "投稿者",   short_name: "投稿者",   visible: false, togglable: true, },
-      { key: "source_author",       name: "作者",     short_name: "作者",     visible: false, togglable: true, },
+      { key: "title",               name: "タイトル", short_name: "タイトル", visible: true,  togglable: false, },
+      { key: "user_id",             name: "投稿者",   short_name: "投稿者",   visible: false, togglable: false, },
 
-      { key: "title",               name: "タイトル", short_name: "タイトル", visible: true,  togglable: true, },
-      { key: "book.title",          name: "本",       short_name: "本",       visible: true,  togglable: true, },
+      // { key: "source_author",       name: "作者",     short_name: "作者",     visible: false, togglable: false, },
+
+      { key: "book_title",          name: "本",       short_name: "本",       visible: true,  togglable: true, },
       // { key: "histories_count",     name: "出題数",   short_name: "出題",     visible: false, togglable: true, },
       // { key: "o_rate",              name: "正解率",   short_name: "正解率",   visible: true,  togglable: true, },
       // { key: "o_count",             name: "正解数",   short_name: "正解",     visible: false, togglable: true, },

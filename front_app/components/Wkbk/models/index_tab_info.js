@@ -4,10 +4,9 @@ import MemoryRecord from 'js-memory-record'
 export class IndexTabInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "all",    name: "全体",   hidden_if_empty: false, },
-      { key: "active", name: "公開",   hidden_if_empty: false, },
-      { key: "draft",  name: "下書き", hidden_if_empty: true,  },
-      { key: "trash",  name: "ゴミ箱", hidden_if_empty: true,  },
+      { key: "everyone",     name: "全体",   },
+      { key: "public",  name: "公開",   },
+      { key: "private", name: "非公開", },
     ]
   }
 

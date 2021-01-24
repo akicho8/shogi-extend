@@ -67,8 +67,8 @@ export default {
 
     this.ls_setup()
 
-    this.tab_set("active")
-    this.page_info.folder_key = "active"
+    this.tab_set("public")
+    this.page_info.folder_key = "public"
     return this.async_records_load()
   },
 
@@ -117,8 +117,8 @@ export default {
 
     // 「公開」選択
     folder_active_handle() {
-      this.tab_set("active")
-      this.folder_change_handle("active")
+      this.tab_set("public")
+      this.folder_change_handle("public")
     },
 
     // 指定のタブを選択

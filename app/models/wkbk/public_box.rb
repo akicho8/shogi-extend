@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Draft box (wkbk_folders as Wkbk::DraftBox)
+# Active box (wkbk_folders as Wkbk::ActiveBox)
 #
 # |------------+------------+-------------+-------------+--------------------+-------|
 # | name       | desc       | type        | opts        | refs               | index |
@@ -18,6 +18,6 @@
 #--------------------------------------------------------------------------------
 
 module Wkbk
-  class DraftBox < Folder
+  class PublicBox < Folder
   end
 end

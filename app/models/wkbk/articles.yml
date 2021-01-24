@@ -14,7 +14,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 手筋
@@ -39,7 +39,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -64,7 +64,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -88,7 +88,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -113,7 +113,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -138,7 +138,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -162,7 +162,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -186,7 +186,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 手筋
@@ -212,7 +212,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -237,7 +237,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -262,7 +262,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -287,7 +287,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死逃れ
   source_about_key: ascertained
@@ -316,7 +316,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -341,7 +341,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -382,7 +382,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -406,7 +406,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 手筋
@@ -433,7 +433,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -457,7 +457,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -481,7 +481,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -506,7 +506,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -530,7 +530,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -554,7 +554,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -578,7 +578,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -605,7 +605,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -629,7 +629,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -657,7 +657,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -682,7 +682,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -707,7 +707,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -732,7 +732,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -757,7 +757,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -782,7 +782,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -807,7 +807,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -832,7 +832,7 @@
   source_published_on: '2017-02-22'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -857,7 +857,7 @@
   source_published_on: '2017-02-22'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 古典詰将棋
   lineage_key: 玉方持駒限定詰将棋
@@ -889,7 +889,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -913,7 +913,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -938,7 +938,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -962,7 +962,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -987,7 +987,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1012,7 +1012,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -1037,7 +1037,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -1062,7 +1062,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -1088,7 +1088,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -1114,7 +1114,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -1141,7 +1141,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 古典詰将棋
   lineage_key: 玉方持駒限定詰将棋
@@ -1169,7 +1169,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 古典詰将棋
   lineage_key: 玉方持駒限定詰将棋
@@ -1206,7 +1206,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -1230,7 +1230,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -1256,7 +1256,7 @@
   source_published_on: 
   direction_message: "▲36歩を取らせたのは罠でした"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -1283,7 +1283,7 @@
   source_published_on: 
   direction_message: 鬼殺しを受け切れ
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -1307,7 +1307,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -1333,7 +1333,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 1手詰
   lineage_key: 詰将棋
@@ -1358,7 +1358,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -1394,7 +1394,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1420,7 +1420,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -1444,7 +1444,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -1469,7 +1469,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1495,7 +1495,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   - 嬉野流
@@ -1521,7 +1521,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -1547,7 +1547,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -1571,7 +1571,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1596,7 +1596,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -1628,7 +1628,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -1652,7 +1652,7 @@
   source_published_on: '2019-11-13'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1677,7 +1677,7 @@
   source_published_on: '2019-11-22'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1702,7 +1702,7 @@
   source_published_on: '2020-01-25'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1727,7 +1727,7 @@
   source_published_on: '2020-03-28'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1752,7 +1752,7 @@
   source_published_on: '2020-04-20'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1778,7 +1778,7 @@
   source_published_on: '2020-04-28'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1804,7 +1804,7 @@
   source_published_on: '2020-05-02'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1830,7 +1830,7 @@
   source_published_on: '2020-05-13'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1855,7 +1855,7 @@
   source_published_on: '2020-05-27'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1881,7 +1881,7 @@
   source_published_on: '2020-06-03'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1906,7 +1906,7 @@
   source_published_on: '2020-06-08'
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -1935,7 +1935,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1961,7 +1961,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -1986,7 +1986,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2010,7 +2010,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2035,7 +2035,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 必死逃れ
@@ -2060,7 +2060,7 @@
   source_published_on: '2019-11-07'
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -2085,7 +2085,7 @@
   source_published_on: '2020-03-06'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -2110,7 +2110,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2134,7 +2134,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2158,7 +2158,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2190,7 +2190,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2217,7 +2217,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -2242,7 +2242,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -2266,7 +2266,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -2293,7 +2293,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 両取り
   lineage_key: 手筋
@@ -2318,7 +2318,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死逃れ
   source_about_key: ascertained
@@ -2343,7 +2343,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -2369,7 +2369,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2393,7 +2393,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -2420,7 +2420,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2445,7 +2445,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 手筋
@@ -2471,7 +2471,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2496,7 +2496,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2520,7 +2520,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2544,7 +2544,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -2569,7 +2569,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 手筋
@@ -2594,7 +2594,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -2621,7 +2621,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2648,7 +2648,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2673,7 +2673,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2698,7 +2698,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2722,7 +2722,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2746,7 +2746,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -2773,7 +2773,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2798,7 +2798,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2825,7 +2825,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 手筋
@@ -2850,7 +2850,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2875,7 +2875,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死逃れ
   source_about_key: ascertained
@@ -2899,7 +2899,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2923,7 +2923,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2947,7 +2947,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2971,7 +2971,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -2999,7 +2999,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -3026,7 +3026,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3051,7 +3051,7 @@
   source_published_on: 
   direction_message: 実戦で超級戦での変化です
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 超級戦
   - 3手1組
@@ -3081,7 +3081,7 @@
   source_published_on: 
   direction_message: 古典詰将棋です。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 古典詰将棋
   - 11手詰め
@@ -3161,7 +3161,7 @@
   source_published_on: 
   direction_message: 古典詰将棋です
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 古典詰将棋
   - 21手詰め
@@ -3206,7 +3206,7 @@
   source_published_on: 
   direction_message: 詰将棋です。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 打ち歩詰め回避
   - 7手詰め
@@ -3236,7 +3236,7 @@
   source_published_on: 
   direction_message: 攻め合うよ 居飛車党ならさせないと.......
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 居飛車
   - 5手1組
@@ -3271,7 +3271,7 @@
   source_published_on: '1950-10-01'
   direction_message: 大駒は近づけて打ってください(無意味に遠ざけて打たないで）)
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 飛車角
   - 5手詰め
@@ -3300,7 +3300,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -3329,7 +3329,7 @@
   source_published_on: 
   direction_message: "⚠早詰め注意報"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 美濃囲い
   - 15手詰め
@@ -3359,7 +3359,7 @@
   source_published_on: 
   direction_message: 合駒は香で統一してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 美濃囲い
   - 19手詰め
@@ -3389,7 +3389,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 矢倉
   lineage_key: 手筋
@@ -3414,7 +3414,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 矢倉囲い
   - 3手1組
@@ -3441,7 +3441,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3468,7 +3468,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3493,7 +3493,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3517,7 +3517,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 一手必至
   lineage_key: 必死
@@ -3545,7 +3545,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -3570,7 +3570,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -3595,7 +3595,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -3625,7 +3625,7 @@
   source_published_on: 
   direction_message: "△45香打で飛車が死んじゃう"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -3653,7 +3653,7 @@
   source_published_on: 
   direction_message: 角の頭を狙われて△95歩▲同歩△同香と進みました
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -3681,7 +3681,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -3706,7 +3706,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -3737,7 +3737,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -3762,7 +3762,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -3788,7 +3788,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 嬉野流
   lineage_key: 手筋
@@ -3815,7 +3815,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 嬉野流
   lineage_key: 手筋
@@ -3841,7 +3841,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -3868,7 +3868,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -3893,7 +3893,7 @@
   source_published_on: 
   direction_message: 最短手順で解いてください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -3920,7 +3920,7 @@
   source_published_on: 
   direction_message: 都合よく3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -3952,7 +3952,7 @@
   source_published_on: 
   direction_message: 都合よく3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -3978,7 +3978,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -4004,7 +4004,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 実戦詰め筋
@@ -4032,7 +4032,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -4061,7 +4061,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 飛車角
   - 桂馬
@@ -4091,7 +4091,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -4118,7 +4118,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -4144,7 +4144,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -4171,7 +4171,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 実戦形
   lineage_key: 詰将棋
@@ -4203,7 +4203,7 @@
   source_published_on: 
   direction_message: "△29飛成をどう受ける？"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -4231,7 +4231,7 @@
   source_published_on: 
   direction_message: "▲66角打に△44金と受けてきました"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -4261,7 +4261,7 @@
   source_published_on: 
   direction_message: 馬の守りは金銀3枚､それを上手く掻い潜って.......
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 金銀
   - 19手詰め
@@ -4294,7 +4294,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -4322,7 +4322,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 詰将棋
@@ -4347,7 +4347,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -4371,7 +4371,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 美濃囲い系
   lineage_key: 詰将棋
@@ -4400,7 +4400,7 @@
   source_published_on: 
   direction_message: 盤面をよく見て....意外とどうでも良さそうな手にも注意が必要です
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 飛車
   - 29手詰め
@@ -4436,7 +4436,7 @@
   source_published_on: 
   direction_message: 初手を指してください。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -4468,7 +4468,7 @@
   source_published_on: 
   direction_message: 邪道です
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 13手詰め
   lineage_key: 玉方持駒限定詰将棋
@@ -4504,7 +4504,7 @@
   source_published_on: 
   direction_message: 3手指してください。2手目は△87角です
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -4530,7 +4530,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -4558,7 +4558,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -4584,7 +4584,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -4610,7 +4610,7 @@
   source_published_on: 
   direction_message: スマートな1手か武骨な5手1組か
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -4637,7 +4637,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 美濃囲い
   - 9手詰め
@@ -4668,7 +4668,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 美濃囲い
   - 9手詰め
@@ -4697,7 +4697,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 美濃囲い
   - 9手詰め
@@ -4725,7 +4725,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -4756,7 +4756,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -4786,7 +4786,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 矢倉囲い
   - 15手詰め
@@ -4825,7 +4825,7 @@
   source_published_on: 
   direction_message: 早石田の定石を指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -4859,7 +4859,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -4884,7 +4884,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -4909,7 +4909,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -4938,7 +4938,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 実戦形
   lineage_key: 詰将棋
@@ -4963,7 +4963,7 @@
   source_published_on: '2020-05-27'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -4988,7 +4988,7 @@
   source_published_on: '2020-05-27'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -5016,7 +5016,7 @@
   source_published_on: 
   direction_message: 中盤のおわりぐらいの局面です。45歩か45桂の良いと思うほうを指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -5043,7 +5043,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -5068,7 +5068,7 @@
   source_published_on: 
   direction_message: 13手詰めです。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -5097,7 +5097,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -5124,7 +5124,7 @@
   source_published_on: 
   direction_message: "△62銀は悪手でした"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -5148,7 +5148,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5172,7 +5172,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -5199,7 +5199,7 @@
   source_published_on: 
   direction_message: 必至
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5253,7 +5253,7 @@
   source_published_on: 
   direction_message: 詰み
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -5277,7 +5277,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 13手詰め
   lineage_key: 詰将棋
@@ -5307,7 +5307,7 @@
   source_published_on: 
   direction_message: 角交換を避けて△42銀としてきました
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -5333,7 +5333,7 @@
   source_published_on: 
   direction_message: "▲34飛の状態で9筋を攻められました。都合よく5手指してください"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -5361,7 +5361,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -5386,7 +5386,7 @@
   source_published_on: '2019-10-21'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -5411,7 +5411,7 @@
   source_published_on: '2020-04-14'
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -5436,7 +5436,7 @@
   source_published_on: '2020-07-08'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -5462,7 +5462,7 @@
   source_published_on: '2020-07-13'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -5487,7 +5487,7 @@
   source_published_on: '2020-07-24'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -5514,7 +5514,7 @@
   source_published_on: '2020-07-26'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -5540,7 +5540,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -5568,7 +5568,7 @@
   source_published_on: 
   direction_message: 3手、指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -5592,7 +5592,7 @@
   source_published_on: '2020-07-10'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -5620,7 +5620,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 飛車角
   - 金銀
@@ -5652,7 +5652,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -5676,7 +5676,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -5700,7 +5700,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -5724,7 +5724,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -5754,7 +5754,7 @@
   source_published_on: 
   direction_message: 駒をバンバン取ります
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 23手詰め
   lineage_key: 詰将棋
@@ -5794,7 +5794,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -5818,7 +5818,7 @@
   source_published_on: '2020-07-16'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -5843,7 +5843,7 @@
   source_published_on: '2020-07-21'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -5868,7 +5868,7 @@
   source_published_on: '2020-07-22'
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -5896,7 +5896,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -5922,7 +5922,7 @@
   source_published_on: 
   direction_message: "△89飛成に対する応手は？"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -5947,7 +5947,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -5971,7 +5971,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -5995,7 +5995,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -6023,7 +6023,7 @@
   source_published_on: 
   direction_message: 1手、指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -6047,7 +6047,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -6074,7 +6074,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -6098,7 +6098,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -6123,7 +6123,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -6148,7 +6148,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -6177,7 +6177,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 実戦
   - 9手詰め
@@ -6213,7 +6213,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -6238,7 +6238,7 @@
   source_published_on: 
   direction_message: 飛車を取り返せ
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -6263,7 +6263,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -6287,7 +6287,7 @@
   source_published_on: 
   direction_message: ヒント 合駒はしません
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 21手詰め
   lineage_key: 詰将棋
@@ -6329,7 +6329,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 詰将棋
@@ -6355,7 +6355,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -6381,7 +6381,7 @@
   source_published_on: 
   direction_message: ここからelmo囲いに向かってください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -6406,7 +6406,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6430,7 +6430,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6455,7 +6455,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 美濃囲い系
   lineage_key: 詰将棋
@@ -6481,7 +6481,7 @@
   source_published_on: 
   direction_message: 15手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6512,7 +6512,7 @@
   source_published_on: 
   direction_message: この一手で相手は粘りようもなくなります。
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -6539,7 +6539,7 @@
   source_published_on: 
   direction_message: 詰んでる局面です、3手だけ指して下さい。
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -6578,7 +6578,7 @@
   source_published_on: 
   direction_message: 先手玉には67銀や79角の詰めろがかかってます。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -6611,7 +6611,7 @@
   source_published_on: 
   direction_message: どこを攻めますか？ 1手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -6639,7 +6639,7 @@
   source_published_on: 
   direction_message: "△86歩は何で取りますか？"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -6666,7 +6666,7 @@
   source_published_on: 
   direction_message: タップミスしないでね
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -6701,7 +6701,7 @@
   source_published_on: 
   direction_message: クリックミスしないでね
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -6734,7 +6734,7 @@
   source_published_on: 
   direction_message: 後手の2手目は同歩です
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -6769,7 +6769,7 @@
   source_published_on: 
   direction_message: 後手の2手目は同歩です。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -6795,7 +6795,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -6821,7 +6821,7 @@
   source_published_on: 
   direction_message: ゴールは44馬です。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -6848,7 +6848,7 @@
   source_published_on: 
   direction_message: "△45銀と上がってきました"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 石田流
   lineage_key: 手筋
@@ -6876,7 +6876,7 @@
   source_published_on: 
   direction_message: 飛車をどこに引きますか？
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -6901,7 +6901,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -6927,7 +6927,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -6953,7 +6953,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -6977,7 +6977,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -7001,7 +7001,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7029,7 +7029,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7055,7 +7055,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -7080,7 +7080,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -7106,7 +7106,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7130,7 +7130,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7157,7 +7157,7 @@
   source_published_on: 
   direction_message: "△28龍で詰まされそう"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 必死逃れ
@@ -7184,7 +7184,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7219,7 +7219,7 @@
   source_published_on: 
   direction_message: 後手番です
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 早石田対策
   lineage_key: 定跡
@@ -7250,7 +7250,7 @@
   source_published_on: 
   direction_message: "▲96歩に対して1手指してください"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 早石田対策
   lineage_key: 定跡
@@ -7277,7 +7277,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 1手詰
   lineage_key: 詰将棋
@@ -7302,7 +7302,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -7336,7 +7336,7 @@
   source_published_on: 
   direction_message: "△22飛車としてきました"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7360,7 +7360,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -7386,7 +7386,7 @@
   source_published_on: 
   direction_message: 浮いた銀を狙って△69飛打としてきました
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   - 王手飛車
@@ -7415,7 +7415,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7439,7 +7439,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7463,7 +7463,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -7489,7 +7489,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -7515,7 +7515,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -7541,7 +7541,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -7566,7 +7566,7 @@
   source_published_on: '2017-12-25'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7591,7 +7591,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -7615,7 +7615,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -7639,7 +7639,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -7663,7 +7663,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -7687,7 +7687,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -7711,7 +7711,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -7735,7 +7735,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -7759,7 +7759,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -7789,7 +7789,7 @@
   source_published_on: 
   direction_message: 攻めを継続する1手を指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -7815,7 +7815,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   - 王手飛車
@@ -7841,7 +7841,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7868,7 +7868,7 @@
   source_published_on: 
   direction_message: 5手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7893,7 +7893,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7920,7 +7920,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7946,7 +7946,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7971,7 +7971,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7998,7 +7998,7 @@
   source_published_on: 
   direction_message: 後手が32金!と変化してきました。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -8025,7 +8025,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8051,7 +8051,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8075,7 +8075,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 1手詰
   lineage_key: 詰将棋
@@ -8101,7 +8101,7 @@
   source_published_on: 
   direction_message: 53龍に63桂合と節約してきました。3手指して下さい。
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -8127,7 +8127,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -8157,7 +8157,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 5手詰
   lineage_key: 詰将棋
@@ -8183,7 +8183,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8211,7 +8211,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8238,7 +8238,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8264,7 +8264,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8295,7 +8295,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8320,7 +8320,7 @@
   source_published_on: 
   direction_message: 手広く有利な局面ですが、棒金の攻めを炸裂させて下さい。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -8346,7 +8346,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8372,7 +8372,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8402,7 +8402,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 4手目32飛戦法
   lineage_key: 定跡
@@ -8428,7 +8428,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -8454,7 +8454,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -8479,7 +8479,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8505,7 +8505,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8529,7 +8529,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8553,7 +8553,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -8578,7 +8578,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -8603,7 +8603,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8627,7 +8627,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 1手詰
   lineage_key: 詰将棋
@@ -8655,7 +8655,7 @@
   source_published_on: 
   direction_message: 銀を活用して飛車の食いとめよ
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -8681,7 +8681,7 @@
   source_published_on: 
   direction_message: 35歩同歩となった局面です、3手指して下さい。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -8713,7 +8713,7 @@
   source_published_on: 
   direction_message: 直前に95歩同歩同香同香と進みました。
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -8740,7 +8740,7 @@
   source_published_on: 
   direction_message: 大駒を活用する1手を指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8765,7 +8765,7 @@
   source_published_on: 
   direction_message: 後手陣に隙がありました
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -8790,7 +8790,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8814,7 +8814,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8838,7 +8838,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 実戦型
   lineage_key: 詰将棋
@@ -8865,7 +8865,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -8891,7 +8891,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -8917,7 +8917,7 @@
   source_published_on: '2020-08-11'
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 3手詰
   lineage_key: 詰将棋
@@ -8944,7 +8944,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8968,7 +8968,7 @@
   source_published_on: 
   direction_message: どこに角が打てますか？
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 矢倉
   lineage_key: 手筋
@@ -8997,7 +8997,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -9021,7 +9021,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9045,7 +9045,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9069,7 +9069,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9095,7 +9095,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9119,7 +9119,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9144,7 +9144,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9168,7 +9168,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -9195,7 +9195,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9219,7 +9219,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9243,7 +9243,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9267,7 +9267,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9292,7 +9292,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9318,7 +9318,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9342,7 +9342,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -9366,7 +9366,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9390,7 +9390,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9415,7 +9415,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 実戦形
   lineage_key: 詰将棋
@@ -9440,7 +9440,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -9465,7 +9465,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9491,7 +9491,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9515,7 +9515,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 玉方持駒限定詰将棋
   source_about_key: ascertained
@@ -9539,7 +9539,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 玉方持駒限定詰将棋
   source_about_key: ascertained
@@ -9565,7 +9565,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9589,7 +9589,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9613,7 +9613,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9638,7 +9638,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9667,7 +9667,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9691,7 +9691,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9721,7 +9721,7 @@
   source_published_on: 
   direction_message: 都合よく技を決めてください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 手筋
@@ -9747,7 +9747,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -9773,7 +9773,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 7手詰
   lineage_key: 詰将棋
@@ -9800,7 +9800,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -9825,7 +9825,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -9849,7 +9849,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9873,7 +9873,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -9898,7 +9898,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9922,7 +9922,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9947,7 +9947,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -9972,7 +9972,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9996,7 +9996,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -10021,7 +10021,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10052,7 +10052,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10080,7 +10080,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10104,7 +10104,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -10129,7 +10129,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10153,7 +10153,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10178,7 +10178,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -10207,7 +10207,7 @@
   source_published_on: 
   direction_message: 都合よく3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -10235,7 +10235,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -10261,7 +10261,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -10288,7 +10288,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -10313,7 +10313,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -10340,7 +10340,7 @@
   source_published_on: 
   direction_message: 都合よく3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   - 王手飛車
@@ -10367,7 +10367,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10392,7 +10392,7 @@
   source_published_on: 
   direction_message: どっちで取りますか？
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10418,7 +10418,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10444,7 +10444,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10473,7 +10473,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10498,7 +10498,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10528,7 +10528,7 @@
   source_published_on: 
   direction_message: "△45銀と飛車を狙ってきました"
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10556,7 +10556,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 実戦詰め筋
@@ -10585,7 +10585,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10614,7 +10614,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -10644,7 +10644,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10670,7 +10670,7 @@
   source_published_on: 
   direction_message: 82銀打で粘ってきました
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 実戦詰め筋
@@ -10696,7 +10696,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -10721,7 +10721,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -10749,7 +10749,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10775,7 +10775,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10802,7 +10802,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10828,7 +10828,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10853,7 +10853,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10879,7 +10879,7 @@
   source_published_on: 
   direction_message: 歩をつくとしたらどこ？
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10907,7 +10907,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -10934,7 +10934,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10959,7 +10959,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10984,7 +10984,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11009,7 +11009,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11035,7 +11035,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11060,7 +11060,7 @@
   source_published_on: 
   direction_message: 嬉野流を阻止してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11095,7 +11095,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11121,7 +11121,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11147,7 +11147,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11173,7 +11173,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11199,7 +11199,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 王手飛車
   lineage_key: 手筋
@@ -11224,7 +11224,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -11252,7 +11252,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11280,7 +11280,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -11308,7 +11308,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11334,7 +11334,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 実戦詰め筋
@@ -11361,7 +11361,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11387,7 +11387,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11412,7 +11412,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11437,7 +11437,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -11462,7 +11462,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   - 右玉
@@ -11489,7 +11489,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11514,7 +11514,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11540,7 +11540,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11565,7 +11565,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11592,7 +11592,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11620,7 +11620,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11647,7 +11647,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11677,7 +11677,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11705,7 +11705,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11730,7 +11730,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11757,7 +11757,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11782,7 +11782,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -11809,7 +11809,7 @@
   source_published_on: 
   direction_message: 都合よく7手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11834,7 +11834,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11859,7 +11859,7 @@
   source_published_on: 
   direction_message: 都合よく5手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 十字飛車
   lineage_key: 手筋
@@ -11885,7 +11885,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11910,7 +11910,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11935,7 +11935,7 @@
   source_published_on: 
   direction_message: 34歩打ちとしてきました。3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11959,7 +11959,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: unknown
@@ -11985,7 +11985,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12012,7 +12012,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 定跡
@@ -12038,7 +12038,7 @@
   source_published_on: 
   direction_message: 都合よく3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12063,7 +12063,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12088,7 +12088,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12113,7 +12113,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 矢倉
   lineage_key: 手筋
@@ -12139,7 +12139,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12167,7 +12167,7 @@
   source_published_on: 
   direction_message: 都合よく指していってください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12194,7 +12194,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12219,7 +12219,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12245,7 +12245,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12273,7 +12273,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12299,7 +12299,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12324,7 +12324,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12349,7 +12349,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -12374,7 +12374,7 @@
   source_published_on: 
   direction_message: 次の最善手は？
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12404,7 +12404,7 @@
   source_published_on: 
   direction_message: 27桂打としてきました
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12432,7 +12432,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12457,7 +12457,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12482,7 +12482,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 必死
@@ -12508,7 +12508,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12537,7 +12537,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -12563,7 +12563,7 @@
   source_published_on: 
   direction_message: 都合よく7手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12592,7 +12592,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12617,7 +12617,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12643,7 +12643,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12669,7 +12669,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12698,7 +12698,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12729,7 +12729,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12755,7 +12755,7 @@
   source_published_on: 
   direction_message: 都合よく3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12781,7 +12781,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12806,7 +12806,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12831,7 +12831,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12856,7 +12856,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12881,7 +12881,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12906,7 +12906,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - アヒル戦法
   lineage_key: 手筋
@@ -12932,7 +12932,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -12960,7 +12960,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12985,7 +12985,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -13011,7 +13011,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13038,7 +13038,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13063,7 +13063,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13088,7 +13088,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13113,7 +13113,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13138,7 +13138,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13163,7 +13163,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13188,7 +13188,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13212,7 +13212,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13238,7 +13238,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -13262,7 +13262,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -13288,7 +13288,7 @@
   source_published_on: 
   direction_message: 3手指してください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13313,7 +13313,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13338,7 +13338,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
@@ -13364,7 +13364,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13389,7 +13389,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list:
   - 嬉野流
   lineage_key: 手筋
@@ -13414,7 +13414,7 @@
   source_published_on: 
   direction_message: 最短で詰ましてください
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -13439,7 +13439,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -13465,7 +13465,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13489,7 +13489,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: true
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -13514,7 +13514,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -13539,7 +13539,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -13564,7 +13564,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
@@ -13589,7 +13589,7 @@
   source_published_on: 
   direction_message: 
   mate_skip: false
-  folder_key: active
+  folder_key: public
   owner_tag_list: []
   lineage_key: 必死逃れ
   source_about_key: ascertained

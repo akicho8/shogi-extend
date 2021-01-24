@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Trash box (wkbk_folders as Wkbk::TrashBox)
+# Draft box (wkbk_folders as Wkbk::DraftBox)
 #
 # |------------+------------+-------------+-------------+--------------------+-------|
 # | name       | desc       | type        | opts        | refs               | index |
@@ -18,6 +18,6 @@
 #--------------------------------------------------------------------------------
 
 module Wkbk
-  class TrashBox < Folder
+  class PrivateBox < Folder
   end
 end

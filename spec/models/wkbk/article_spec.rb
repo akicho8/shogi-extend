@@ -102,7 +102,7 @@ module Wkbk
 
     describe "フォルダ" do
       it "初期値" do
-        assert { article1.folder_key == "active" }
+        assert { article1.folder_key == "public" }
       end
       it "移動方法1" do
         user1.wkbk_trash_box.articles << article1
@@ -145,18 +145,18 @@ module Wkbk
       assert { article1.share_board_url == "http://0.0.0.0:3000/share-board?abstract_viewpoint=black&body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&title=#{article1.title}&turn=0" }
     end
 
-    it "公開フォルダに移動させたタイミングで投稿通知" do
-      article1.update!(folder_key: "draft")
-      Wkbk::LobbyMessage.destroy_all
-
-      assert { Wkbk::LobbyMessage.count == 0 }
-
-      article1.update_from_js(folder_key: "active")
-      assert { Wkbk::LobbyMessage.count == 1 }
-
-      article1.update_from_js(folder_key: "draft")
-      assert { Wkbk::LobbyMessage.count == 1 }
-    end
+    # it "公開フォルダに移動させたタイミングで投稿通知" do
+    #   article1.update!(folder_key: "private")
+    #   Wkbk::LobbyMessage.destroy_all
+    #
+    #   assert { Wkbk::LobbyMessage.count == 0 }
+    #
+    #   article1.update_from_js(folder_key: "public")
+    #   assert { Wkbk::LobbyMessage.count == 1 }
+    #
+    #   article1.update_from_js(folder_key: "private")
+    #   assert { Wkbk::LobbyMessage.count == 1 }
+    # end
 
     it "message_users" do
       article1.messages.create!(user: user1, body: "(body)")

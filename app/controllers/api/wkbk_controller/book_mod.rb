@@ -47,8 +47,8 @@ module Api
 
         s = Wkbk::Book.all
         if v = params[:folder_key]
-          if v == "all"
-            s = s.folder_eq(:active)
+          if v == "everyone"
+            s = s.public_only
           else
             if current_user
               s = s.where(user: current_user)
@@ -70,7 +70,7 @@ module Api
         if current_user
           retv[:book_counts].update(current_user.wkbk_books.group(:folder_id).count.transform_keys { |e| Wkbk::Folder.find(e).key })
         end
-        retv[:book_counts].update(all: Wkbk::Book.active_only.count)
+        retv[:book_counts].update(everyone: Wkbk::Book.public_only.count)
         retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key], tag: params[:tag]}
         retv
       end
