@@ -32,6 +32,8 @@ module Wkbk::Article::ImportExportMod
                              :source_media_url,
                              :source_published_on,
                              :mate_skip,
+                             :created_at,
+                             :updated_at,
                            ],
                            methods: [
                              :lineage_key,
@@ -76,9 +78,9 @@ module Wkbk::Article::ImportExportMod
         user: User.sysop,
       }.merge(options)
 
-      if e[:user][:key] != "932ed39bb18095a2fc73e0002f94ecf1"
-        return
-      end
+      # if e[:user][:key] != "932ed39bb18095a2fc73e0002f94ecf1"
+      #   return
+      # end
 
       if Rails.env.production?
         user = User.find_by!(key: e[:user][:key])
@@ -90,23 +92,48 @@ module Wkbk::Article::ImportExportMod
 
       record = user.wkbk_articles.find_or_initialize_by(key: e[:key])
       record.assign_attributes(e.slice(*[
-                               :lineage_key,
-                               :init_sfen,
-                               :time_limit_sec,
-                               :difficulty_level,
-                               :title,
-                               :description,
-                               :hint_desc,
-                               :direction_message,
-                               :source_about_key,
-                               :source_author,
-                               :source_media_name,
-                               :source_media_url,
-                               :source_published_on,
-                               :mate_skip,
-                             ]))
+                                         :folder_key,
+                                         :lineage_key,
+                                         :init_sfen,
+                                         :time_limit_sec,
+                                         :difficulty_level,
+                                         :title,
+                                         :description,
+                                         :hint_desc,
+                                         :direction_message,
+                                         :source_about_key,
+                                         :source_author,
+                                         :source_media_name,
+                                         :source_media_url,
+                                         :source_published_on,
+                                         :mate_skip,
+                                         :created_at,
+                                         :updated_at,
+                                       ]))
+
       record.folder_key = "private"
+
+      if true
+        a = []
+        if v = e[:source_author].presense
+          a << "作者: #{v}"
+        end
+        if v = e[:source_media_name].presense
+          a << "出典: #{v}"
+        end
+        if v = e[:source_media_url].presense
+          a << "出典URL: #{v}"
+        end
+        if v = e[:source_published_on].presense
+          a << "出典年月日: #{v}"
+        end
+        if a.present?
+          record.description = (a.join("\n") + "\n\n" + record.description).strip
+        end
+      end
+
       record.save!
+
       record.moves_answers.clear
       e[:moves_answers].each do |e|
         record.moves_answers.create!(moves_str: e[:moves_str])

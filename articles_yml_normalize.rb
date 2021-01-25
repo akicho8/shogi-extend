@@ -6,7 +6,7 @@ tsume = ["20a5cc3915637f7ee711a4c4c9c6d759"]
 
 require "pathname"
 require "yaml"
-file = Pathname("../actb/questions_all.yml")
+file = Pathname("app/models/actb/questions_all.yml")
 list = YAML.load(file.read)
 list.count                      # => 562
 # list = list.find_all { |e| e["user_id"] == 8 }
@@ -19,4 +19,4 @@ list.each { |e| gentei.include?(e["key"]) ? e["lineage_key"] = "玉方持駒限�
 list.each { |e| jissen.include?(e["key"]) ? e["lineage_key"] = "実戦詰め筋" : nil }
 list.each { |e| tsume.include?(e["key"]) ? e["lineage_key"] = "詰将棋" : nil}
 list.count                      # => 511
-Pathname("articles.yml").write(list.to_yaml)
+Pathname("app/models/wkbk/articles.yml").write(list.to_yaml)

@@ -27,6 +27,8 @@ module Actb::Question::ImportExportMod
             :source_media_url,
             :source_published_on,
             :mate_skip,
+            :created_at,
+            :updated_at,
           ],
           methods: [
             :folder_key,
