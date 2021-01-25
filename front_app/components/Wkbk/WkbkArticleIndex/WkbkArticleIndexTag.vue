@@ -1,7 +1,7 @@
 <template lang="pug">
-.WkbkArticleIndexTag(v-if="base.page_info.tag")
+.WkbkArticleIndexTag(v-if="base.tag")
   b-tag(attached closable @close="base.tag_search_handle(null)" type="is-primary")
-    | {{base.page_info.tag}}
+    | {{base.tag}}
 </template>
 
 <script>

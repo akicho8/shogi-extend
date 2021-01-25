@@ -41,7 +41,7 @@ import { support_parent } from "./support_parent.js"
 import { Book    } from "../models/book.js"
 // import { LineageInfo } from '../models/lineage_info.js'
 import { FolderInfo  } from '../models/folder_info.js'
-import { EditScopeInfo  } from '../models/edit_scope_info.js'
+import { EditScopeInfo  } from '../models/edit_tab_info.js'
 
 export default {
   name: "WkbkBookIndexApp",
@@ -80,16 +80,13 @@ export default {
       // this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
       this.config = e.config
-
-      if (e.book) {
-        this.book = new Book(e.book)
-      }
-      if (e.book_default_attributes) {
-        const attributes = _.cloneDeep(e.book_default_attributes)
-        this.book = new Book(attributes)
-      }
-      this.__assert__(this.book, "this.book")
-      this.__assert__(this.book instanceof Book, "this.book instanceof Book")
+      this.book = new Book(e.book)
+      // if (e.book_default_attributes) {
+      //   const attributes = _.cloneDeep(e.book_default_attributes)
+      //   this.book = new Book(attributes)
+      // }
+      // this.__assert__(this.book, "this.book")
+      // this.__assert__(this.book instanceof Book, "this.book instanceof Book")
 
       // this.sound_play("click")
 

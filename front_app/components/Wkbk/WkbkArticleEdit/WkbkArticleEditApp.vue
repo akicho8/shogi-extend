@@ -47,7 +47,7 @@ import { Article    } from "../models/article.js"
 import { Book    } from "../models/book.js"
 import { LineageInfo } from '../models/lineage_info.js'
 import { FolderInfo  } from '../models/folder_info.js'
-import { EditScopeInfo  } from '../models/edit_scope_info.js'
+import { EditScopeInfo  } from '../models/edit_tab_info.js'
 
 export default {
   name: "WkbkArticleIndexApp",
@@ -79,26 +79,23 @@ export default {
   },
 
   fetch() {
-    return this.$axios.$get("/api/wkbk.json", {params: {remote_action: "article_edit_fetch", ...this.$route.params, ...this.$route.query}}).then(e => {
+    const params = {
+      remote_action: "article_edit",
+      ...this.$route.params,
+      ...this.$route.query,
+    }
+    return this.$axios.$get("/api/wkbk.json", {params}).then(e => {
+      if (!e.article) {
+        this.$nuxt.error({statusCode: 403, message: "非公開のためアクセスできるのは作成者だけです"})
+        return
+      }
+
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
       this.config = e.config
 
-      if (e.books) {
-        this.books = e.books.map(e => new Book(e))
-      }
-
-      if (e.article) {
-        this.article = new Article(e.article)
-      }
-      if (e.article_default_attributes) {
-        const attributes = _.cloneDeep(e.article_default_attributes)
-        this.article = new Article(attributes)
-      }
-      this.__assert__(this.article, "this.article")
-      this.__assert__(this.article instanceof Article, "this.article instanceof Article")
-
-      // this.sound_play("click")
+      this.books = e.books.map(e => new Book(e))
+      this.article = new Article(e.article)
 
       this.answer_tab_index = 0 // 解答リストの一番左指す
       this.answer_turn_offset = 0
@@ -260,7 +257,7 @@ export default {
       // https://day.js.org/docs/en/durations/diffing
       this.article.time_limit_clock_to_sec()
       const before_save_button_name = this.save_button_name
-      this.api_put("article_save_handle", {article: this.article}, e => {
+      this.api_put("article_save", {article: this.article}, e => {
         if (e.form_error_message) {
           this.toast_warn(e.form_error_message)
         }

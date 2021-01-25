@@ -5,9 +5,9 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false")
       b-icon(icon="chevron-left")
     //- NavbarItemHome
     b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'library-articles'}") 問題リスト
-    //- template(v-if="base.page_info.tag")
+    //- template(v-if="base.tag")
     //-   b-tag(attached closable @close="base.tag_search_handle(null)" type="is-dark")
-    //-     | {{base.page_info.tag}}
+    //-     | {{base.tag}}
 
   template(slot="end")
     NavbarItemLogin

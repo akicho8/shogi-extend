@@ -1,195 +1,71 @@
 <template lang="pug">
 .WkbkArticleIndexApp
-  b-loading(:active="$fetchState.pending")
-  .MainContainer(v-if="!$fetchState.pending")
-    WkbkArticleIndexSidebar(:base="base")
-    WkbkArticleIndexNavbar(:base="base")
-    WkbkArticleIndexTab(:base="base")
-    WkbkArticleIndexTag(:base="base")
-    WkbkArticleIndexTable(:base="base")
+  WkbkArticleIndexSidebar(:base="base")
+  WkbkArticleIndexNavbar(:base="base")
+  WkbkArticleIndexTab(:base="base")
+  WkbkArticleIndexTag(:base="base")
+  WkbkArticleIndexTable(:base="base")
+  DebugPre {{$data}}
 </template>
 
 <script>
-import MemoryRecord from 'js-memory-record'
-import dayjs from "dayjs"
-
-import { support_parent   } from "./support_parent.js"
-import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
-
-import { Article                } from "../models/article.js"
-import { LineageInfo             } from "../models/lineage_info.js"
-import { FolderInfo              } from "../models/folder_info.js"
-import { ArticleIndexColumnInfo } from "../models/article_index_column_info.js"
-import { IndexScopeInfo            } from "../models/index_scope_info.js"
+import { Article        } from "../models/article.js"
+import { support_parent } from "./support_parent.js"
+import { app_table      } from "./app_table.js"
+import { app_tabs       } from "./app_tabs.js"
+import { app_storage    } from "./app_storage.js"
+import { app_columns    } from "./app_columns.js"
+import { app_sidebar    } from "./app_sidebar.js"
 
 export default {
   name: "WkbkArticleIndexApp",
   mixins: [
     support_parent,
-    ls_support_mixin,
+    app_table,
+    app_tabs,
+    app_storage,
+    app_columns,
+    app_sidebar,
   ],
 
-  data() {
-    return {
-      sidebar_p: false,
-      tab_index:        null,
-      visible_hash: null, //  { xxx: true, yyy: false } 形式
-      detailed_ids: [],
-
-      //////////////////////////////////////////////////////////////////////////////// 静的情報
-      LineageInfo: null,        // 問題の種類
-      FolderInfo: null,         // 問題の入れ場所
-
-      //////////////////////////////////////////////////////////////////////////////// 一覧
-      articles: null,          // 一覧で表示する配列
-      article_counts: {},      // それぞれの箱中の問題数
-
-      // pagination 5点セット
-      page_info: {
-        total:              null,
-        page:               this.$route.query.page,
-        per:                this.$route.query.per,
-        sort_column:        null,
-        sort_order:         null,
-        sort_order_default: null,
-        //
-        folder_key:         null,
-        tag:                null,
-      },
-    }
+  watch: {
+    "$route.query": "$fetch",
   },
 
   fetch() {
-    // 有効にすると localStorage をクリアする
-    if (false) {
-      this.$_ls_reset()
+    this.page        = this.$route.query.page        || 1
+    this.per         = this.$route.query.per         || 50
+    this.sort_column = this.$route.query.sort_column || ""
+    this.sort_order  = this.$route.query.sort_order  || ""
+    this.scope       = this.$route.query.scope       || this.default_scope
+    this.tag         = this.$route.query.tag         || ""
+
+    const params = {
+      remote_action: "article_index",
+      page:        this.page,
+      per:         this.per,
+      sort_column: this.sort_column,
+      sort_order:  this.sort_order,
+      scope:       this.scope,
+      tag:         this.tag,
     }
 
-    this.ls_setup()
-
-    this.tab_set("public")
-    this.page_info.folder_key = "public"
-    return this.async_records_load()
+    return this.$axios.$get("/api/wkbk.json", {params}).then(e => {
+      this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
+      this.articles       = e.articles.map(e => new Article(e))
+      this.total          = e.total
+      this.article_counts = e.article_counts
+    })
   },
 
   methods: {
-    sidebar_toggle() {
-      this.sound_play('click')
-      this.sidebar_p = !this.sidebar_p
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    tag_search_handle(tag) {
-      this.sound_play("click")
-      this.talk(tag)
-      this.page_info.tag = tag
-      this.async_records_load()
-    },
-
-    page_change_handle(page) {
-      this.page_info.page = page
-      this.async_records_load()
-    },
-
-    sort_handle(column, order) {
-      this.page_info.sort_column = column
-      this.page_info.sort_order = order
-      this.async_records_load()
-    },
-
-    folder_change_handle(folder_key) {
-      this.page_info.folder_key = folder_key
-      this.async_records_load()
-    },
-
-    async_records_load() {
-      const params = {
-        remote_action: "articles_index_fetch",
-        ...this.page_info,
-      }
-      return this.$axios.$get("/api/wkbk.json", {params}).then(e => {
-        this.articles = e.articles.map(e => new Article(e))
-        this.page_info = e.page_info
-        this.article_counts = e.article_counts // 各フォルダごとの個数
-      })
-    },
-
-    // 「公開」選択
-    folder_active_handle() {
-      this.tab_set("public")
-      this.folder_change_handle("public")
-    },
-
-    // 指定のタブを選択
-    tab_set(tab_key) {
-      this.tab_index = this.IndexScopeInfo.fetch(tab_key).code
-    },
-
-    // タブが変更されたとき
-    tab_change_handle() {
-      this.sound_play("click")
-      this.talk(this.current_tab.name)
-      this.folder_change_handle(this.current_tab.key)
-    },
-
-    // このタブは表示するか？
-    // ゴミ箱など常に0なので0のときは表示しない
-    // article_tab_available_p(tab_info) {
-    //   if (tab_info.hidden_if_empty) {
-    //     if (this.article_count_in_tab(tab_info) === 0) {
-    //       return false
-    //     }
-    //   }
-    //   return true
-    // },
-
-    // このタブのレコード件数
-    article_count_in_tab(tab_info) {
-      return this.article_counts[tab_info.key] || 0
-    },
-
-    // チェックボックスが変更されたとき
-    cb_input_handle(column, bool) {
-      this.sound_play('click')
-      if (bool) {
-        this.talk(column.name)
-      }
-    },
-
-    // チェックボックスをトグルする
-    cb_toggle_handle(column) {
-      this.sound_play('click')
-      this.$set(this.visible_hash, column.key, !this.visible_hash[column.key])
-      if (this.visible_hash[column.key]) {
-        this.talk(column.name)
-      }
-    },
-
-    //////////////////////////////////////////////////////////////////////////////// details
-    detail_set(enabled) {
-      this.sound_play('click')
-      if (enabled) {
-        this.detailed_ids = this.articles.map(e => e.id)
-      } else {
-        this.detailed_ids = []
-      }
+    router_replace(params) {
+      this.$router.replace({name: "library-articles", query: {...this.url_params, ...params}})
     },
   },
 
   computed: {
-    base()                    { return this                                    },
-    IndexScopeInfo()            { return IndexScopeInfo                            },
-    ArticleIndexColumnInfo() { return ArticleIndexColumnInfo                 },
-    current_tab()             { return this.IndexScopeInfo.fetch(this.tab_index) },
-
-    //////////////////////////////////////////////////////////////////////////////// ls_support_mixin
-
-    ls_default() {
-      return {
-        visible_hash: this.as_visible_hash(ArticleIndexColumnInfo.values),
-      }
-    },
+    base() { return this },
   },
 }
 </script>

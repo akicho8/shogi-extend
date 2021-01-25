@@ -497,6 +497,16 @@ module Wkbk
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
     end
 
+    # 本があれば本の権限に従う
+    # 本がなければ所有者のみ編集可能
+    def owner_editable_p(current_user)
+      if book
+        book.owner_editable_p(current_user)
+      else
+        user == current_user
+      end
+    end
+
     private
 
     # 保存直後の状態
@@ -525,4 +535,4 @@ module Wkbk
   end
 end
 # ~> -:39:in `<module:Wkbk>': uninitialized constant Wkbk::ApplicationRecord (NameError)
-# ~> 	from -:38:in `<main>'
+# ~>    from -:38:in `<main>'

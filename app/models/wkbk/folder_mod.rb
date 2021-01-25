@@ -16,6 +16,11 @@ module Wkbk::FolderMod
     end
   end
 
+  def folder_key_eq(key)
+    raise ArgumentError, key.inspect unless key.kind_of?(Symbol)
+    folder_key == key
+  end
+
   # folder.class => "Wkbk::PublicBox" => "public"
   def folder_key
     if folder

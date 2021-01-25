@@ -32,8 +32,8 @@ module Api
       # 問題編集用
       # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
       #
-      # http://0.0.0.0:4000/wkbk/books/new
-      # http://0.0.0.0:4000/wkbk/books/1/edit
+      # http://0.0.0.0:4000/library/books/new
+      # http://0.0.0.0:4000/library/books/1/edit
       #
       def book_edit_fetch
         info = {}
@@ -57,7 +57,6 @@ module Api
           else
             raise "must not happen"
           end
-
         else
           info[:book_default_attributes] = Wkbk::Book.default_attributes
         end

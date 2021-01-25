@@ -355,6 +355,10 @@ module Wkbk
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
     end
 
+    def owner_editable_p(current_user)
+      folder_key_eq(:public) || (folder_key_eq(:private) && user == current_user)
+    end
+
     private
 
     # 保存直後の状態

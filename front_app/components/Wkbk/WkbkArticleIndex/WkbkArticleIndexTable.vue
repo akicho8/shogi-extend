@@ -1,6 +1,7 @@
 <template lang="pug">
 b-table.WkbkArticleIndexTable.mx-2.mt-0(
   v-if="base.articles"
+  :loading="base.$fetchState.pending"
   :data="base.articles"
   :mobile-cards="false"
   hoverable
@@ -9,14 +10,13 @@ b-table.WkbkArticleIndexTable.mx-2.mt-0(
   paginated
   backend-pagination
   pagination-simple
-  :page="base.page_info.page"
-  :total="base.page_info.total"
-  :per-page="base.page_info.per"
+
+  :page="base.page" :total="base.total" :per-page="base.per"
   @page-change="base.page_change_handle"
 
   backend-sorting
-  :default-sort-direction="base.page_info.sort_order_default"
-  :default-sort="[base.page_info.sort_column, base.page_info.sort_order]"
+  default-sort-direction="asc"
+  :default-sort="[base.sort_column, base.sort_order]"
   @sort="base.sort_handle"
 
   detailed
@@ -45,11 +45,11 @@ b-table.WkbkArticleIndexTable.mx-2.mt-0(
     nuxt-link(:to="{name: 'library-articles-article_id-edit', params: {article_id: row.id}}")
       | {{string_truncate(row.title, {length: 20})}}
 
-  b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.current_tab.key === 'everyone'")
+  b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.scope === 'everyone'")
     nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}")
       | {{string_truncate(row.user.name, {length: 20})}}
 
-  b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').short_name" sortable :visible="!!base.visible_hash.book_title")
+  b-table-column(v-slot="{row}" custom-key="book_title" field="book_title" :label="base.ArticleIndexColumnInfo.fetch('book_title').short_name" sortable :visible="!!base.visible_hash.book_title")
     nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.book.id}}" v-if="row.book")
       | {{string_truncate(row.book.title, {length: 20})}}({{row.book.articles_count}})
 

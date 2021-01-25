@@ -1,79 +1,51 @@
 module Api
   class WkbkController
     concern :ArticleMod do
-      # 問題編集用
-      # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
-      #
-      # http://0.0.0.0:4000/wkbk/articles/new
-      # http://0.0.0.0:4000/wkbk/articles/1/edit
-      #
-      def article_edit_fetch
-        info = {}
-        info[:config] = Wkbk::Config
-        info[:LineageInfo] = Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
-        info[:FolderInfo]  = Wkbk::FolderInfo.as_json(only: [:key, :name, :icon, :type])
-
-        if current_user
-          info[:books] = current_user.wkbk_books.order(:created_at)
-        end
-
-        if params[:article_id]
-          article = Wkbk::Article.find(params[:article_id])
-          info[:article] = article.as_json(Wkbk::Article.json_type5)
-        else
-          info[:article_default_attributes] = Wkbk::Article.default_attributes
-
-          if current_user
-            if v = params[:book_id]
-              if book = current_user.wkbk_books.find_by(id: v)
-                info[:article_default_attributes][:book_id] = book.id
-              end
-            end
-          end
-
-        end
-        info
-      end
-
       # 問題一覧
-      # http://localhost:3000/api/wkbk.json?remote_action=articles_fetch
-      # http://localhost:3000/api/wkbk.json?remote_action=articles_fetch&folder_key=active
-      # http://localhost:3000/api/wkbk.json?remote_action=articles_fetch&sort_column=lineage_key&sort_order=desc
+      # http://0.0.0.0:3000/api/wkbk.json?remote_action=article_index
+      # http://0.0.0.0:3000/api/wkbk.json?remote_action=article_index&scope=public
+      # http://0.0.0.0:3000/api/wkbk.json?remote_action=article_index&scope=private
+      # http://0.0.0.0:3000/api/wkbk.json?remote_action=article_index&sort_column=lineage_key&sort_order=desc
       # app/javascript/wkbk_app/models/article_column_info.js
-      def articles_index_fetch
-        params[:per] ||= Wkbk::Config[:api_articles_fetch_per]
-
-        s = Wkbk::Article.all
-        if v = params[:folder_key]
-          if v == "everyone"
-            s = s.public_only
-          else
-            if current_user
-              s = s.where(user: current_user)
-              s = s.folder_eq(v)
-            else
-              s = s.none
-            end
-          end
-        end
-        if v = params[:tag].presence
-          s = s.tagged_with(v)
-        end
-        s = page_scope(s)       # page_mod.rb
-        s = sort_scope_for_articles(s)
-
+      def article_index
         retv = {}
-        retv[:articles]       = s.as_json(Wkbk::Article.json_type5)
-        retv[:article_counts] = {}
-        if current_user
-          retv[:article_counts].update(current_user.wkbk_articles.group(:folder_id).count.transform_keys { |e| Wkbk::Folder.find(e).key })
-        end
-        retv[:article_counts].update(everyone: Wkbk::Article.public_only.count)
-        retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key], tag: params[:tag]}
+        # retv[:current_user] = current_user
+        retv[:ArticleIndexScopeInfo] = Wkbk::ArticleIndexScopeInfo.as_json(only: [:key, :name])
+        retv[:articles]         = sort_scope_for_articles(current_articles).as_json(Wkbk::Article.json_type5)
+        retv[:article_counts]   = article_counts
+        retv[:total]            = current_articles.total_count
+        # retv[:page_info]        = {scope: params[:scope], tag: params[:tag]}
         retv
       end
 
-      def article_save_handle
+      # 問題編集用
+      # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
+      #
+      # http://0.0.0.0:4000/library/articles/new
+      # http://0.0.0.0:4000/library/articles/1/edit
+      #
+      def article_edit
+        retv = {}
+        retv[:config] = Wkbk::Config
+        retv[:LineageInfo] = Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
+        retv[:FolderInfo]  = Wkbk::FolderInfo.as_json(only: [:key, :name, :icon, :type])
+
+        retv[:books] = current_user ? current_user.wkbk_books.order(:created_at) : []
+
+        if params[:article_id]
+          # 編集
+          record = Wkbk::Article.find(params[:article_id])
+          if record.owner_editable_p(current_user)
+            retv[:article] = record.as_json(Wkbk::Article.json_type5)
+          end
+        else
+          # 新規
+          retv[:article] = Wkbk::Article.default_attributes.merge(book_id: default_book_id)
+        end
+        retv
+      end
+
+      def article_save
         if id = params[:article][:id]
           article = Wkbk::Article.find(id)
         else
@@ -87,10 +59,30 @@ module Api
         { article: article.as_json(Wkbk::Article.json_type5) }
       end
 
+      private
+
+      def article_counts
+        Wkbk::ArticleIndexScopeInfo.inject({}) do |a, e|
+          a.merge(e.key => e.query_func[current_user].count)
+        end
+      end
+
+      def current_articles
+        @current_articles ||= -> {
+          s = current_article_scope_info.query_func[current_user]
+          if v = params[:tag].presence # TODO: 複数タグ
+            s = s.tagged_with(v)
+          end
+          s = page_scope(s)       # page_mod.rb
+        }.call
+      end
+
       def sort_scope_for_articles(s)
         if sort_column && sort_order
           columns = sort_column.scan(/\w+/)
           case columns.first
+          when "book_title"
+            s = s.joins(:book).merge(Wkbk::Book.order(:title))
           when "ox_record"
             # { key: "o_rate",           name: "正解率",     short_name: "正率",     visible: true,  },
             # { key: "o_count",          name: "正解数",     short_name: "正解",     visible: false, },
@@ -109,39 +101,42 @@ module Api
         s
       end
 
-      # http://localhost:3000/api/wkbk.json?remote_action=article_single_fetch&article_id=1
-      def article_single_fetch
-        raise
-        article = Wkbk::Article.find(params[:article_id])
-        retv = {}
-        retv[:article] = article.as_json_type6
-        # if current_user
-        #   retv.update(current_user.good_bad_clip_flags_for(article))
+      def current_article_scope_info
+        Wkbk::ArticleIndexScopeInfo.fetch(current_scope)
+      end
+
+      def current_scope
+        (params[:scope].presence || :everyone).to_sym
+
+        # if v = params[:scope].presence
+        #   v.to_sym
+        # else
+        #   if current_user
+        #     :public
+        #   else
+        #     :everyone
+        #   end
         # end
-        { ov_article_info: retv }
       end
 
-      # http://localhost:3000/api/wkbk.json?remote_action=resource_fetch
-      def resource_fetch
-        raise
-        {
-          # RuleInfo: Wkbk::RuleInfo.as_json,
-          # OxMarkInfo: Wkbk::OxMarkInfo.as_json(only: [:key, :name, :score, :sound_key, :delay_second]),
-          # SkillInfo: Wkbk::SkillInfo.as_json(only: [:key, :name]),
-          # EmotionInfo: Wkbk::EmotionInfo.as_json, # 元に戻す用
-          # EmotionFolderInfo: Wkbk::EmotionFolderInfo.as_json,
-        }
+      def current_book
+        if v = params[:book_id]
+          if current_user
+            current_user.wkbk_books.find_by(id: v)
+          end
+        end
       end
 
-      # http://localhost:3000/api/wkbk.json?remote_action=builder_form_resource_fetch
-      def builder_form_resource_fetch
-        raise
-        # {
-        #   LineageInfo: Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on]),
-        #   FolderInfo:  Wkbk::FolderInfo.as_json(only: [:key, :name, :icon, :type]),
-        # }
+      def default_book_id
+        if v = current_book
+          v.id
+        end
       end
 
+      # PageMod override
+      def default_per
+        Wkbk::Config[:api_articles_fetch_per]
+      end
     end
   end
 end
