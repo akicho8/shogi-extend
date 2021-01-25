@@ -64,7 +64,7 @@ module Wkbk::Article::ImportExportMod
     end
 
     def import_all(options = {})
-      persistent_records.take(options[:max] || 10).each do |e|
+      persistent_records.take(options[:max] || 200).each do |e|
         begin
           import_one(e, options)
         rescue => error
@@ -115,20 +115,20 @@ module Wkbk::Article::ImportExportMod
 
       if true
         a = []
-        if v = e[:source_author].presense
+        if v = e[:source_author].presence
           a << "作者: #{v}"
         end
-        if v = e[:source_media_name].presense
+        if v = e[:source_media_name].presence
           a << "出典: #{v}"
         end
-        if v = e[:source_media_url].presense
+        if v = e[:source_media_url].presence
           a << "出典URL: #{v}"
         end
-        if v = e[:source_published_on].presense
+        if v = e[:source_published_on].presence
           a << "出典年月日: #{v}"
         end
         if a.present?
-          record.description = (a.join("\n") + "\n\n" + record.description).strip
+          record.description = (a.join("\n") + "\n\n" + record.description.to_s.strip).strip
         end
       end
 
