@@ -51,7 +51,7 @@ export default {
   computed: {
     detail_p: {
       get()  { return this.base.detailed_ids.length >= 1 },
-      set(v) { this.base.detail_set(v)           },
+      set(v) { this.base.detail_set(v)                   },
     },
   },
 }

@@ -351,6 +351,16 @@ export default {
       return `${name}さん`
     },
 
+    // {a: 1, b: null} => {a: 1}
+    hash_compact(hash) {
+      return _.reduce(hash, (a, val, key) => {
+        if (val != null) {
+          a[key] = val
+        }
+        return a
+      }, {})
+    },
+
     // シンプルなハッシュに変換
     //
     // [

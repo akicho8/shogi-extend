@@ -5,12 +5,13 @@ export const app_storage = {
     ls_support_mixin,
   ],
   created() {
-    this.ls_setup()
+    this.ls_setup() // fetch により先に呼ばれるので先に scope を設定できる
   },
   computed: {
     ls_default() {
       return {
         visible_hash: this.as_visible_hash(this.ArticleIndexColumnInfo.values),
+        scope: this.default_scope,
       }
     },
   },

@@ -1,5 +1,8 @@
 <template lang="pug">
 .WkbkArticleIndexApp
+  DebugBox
+    p scope: {{scope}}({{tab_index}})
+    p page: {{page}}
   WkbkArticleIndexSidebar(:base="base")
   WkbkArticleIndexNavbar(:base="base")
   WkbkArticleIndexTab(:base="base")
@@ -10,6 +13,7 @@
 
 <script>
 import { Article        } from "../models/article.js"
+
 import { support_parent } from "./support_parent.js"
 import { app_table      } from "./app_table.js"
 import { app_tabs       } from "./app_tabs.js"
@@ -33,20 +37,21 @@ export default {
   },
 
   fetch() {
-    this.page        = this.$route.query.page        || 1
-    this.per         = this.$route.query.per         || 50
-    this.sort_column = this.$route.query.sort_column || ""
-    this.sort_order  = this.$route.query.sort_order  || ""
-    this.scope       = this.$route.query.scope       || this.default_scope
-    this.tag         = this.$route.query.tag         || ""
+    this.scope       = this.$route.query.scope || this.scope // 引数 -> localStorageの値 -> 初期値 の順で決定
+    this.page        = this.$route.query.page
+    this.per         = this.$route.query.per
+    this.sort_column = this.$route.query.sort_column
+    this.sort_order  = this.$route.query.sort_order
+    this.tag         = this.$route.query.tag
 
     const params = {
       remote_action: "article_index",
+      // ...this.url_params でも良いかもしれないが用途が異なるので今のところ別にしている
+      scope:       this.scope,
       page:        this.page,
       per:         this.per,
       sort_column: this.sort_column,
       sort_order:  this.sort_order,
-      scope:       this.scope,
       tag:         this.tag,
     }
 
@@ -60,7 +65,9 @@ export default {
 
   methods: {
     router_replace(params) {
-      this.$router.replace({name: "library-articles", query: {...this.url_params, ...params}})
+      params = {...this.url_params, ...params}
+      params = this.hash_compact(params)
+      this.$router.replace({name: "library-articles", query: params})
     },
   },
 

@@ -36,6 +36,9 @@ export const app_table = {
     },
 
     page_change_handle(page) {
+      if (page <= 1) {
+        page = null
+      }
       this.router_replace({page})
     },
 
@@ -48,11 +51,11 @@ export const app_table = {
 
     url_params() {
       return {
+        scope:       this.scope,
         page:        this.page,
         per:         this.per,
         sort_column: this.sort_column,
         sort_order:  this.sort_order,
-        scope:       this.scope,
         tag:         this.tag,
       }
     },

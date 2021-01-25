@@ -3,8 +3,8 @@ import { IndexScopeInfo } from "../models/index_scope_info.js"
 export const app_tabs = {
   data() {
     return {
-      tab_index: 0,            // for b-tabs v-model
-      article_counts: {},      // それぞれの箱中の問題数
+      tab_index: 0,       // for b-tabs v-model
+      article_counts: {}, // それぞれの箱中の問題数
     }
   },
   methods: {
@@ -13,26 +13,18 @@ export const app_tabs = {
       return this.article_counts[e.key] || 0
     },
 
-    // 指定のタブを選択
-    tab_set(scope) {
-      this.tab_index = this.IndexScopeInfo.fetch(scope).code
-    },
-
-    // タブが変更されたとき
+    // タブが変更されたときはページをリセットする
     tab_input_handle(index) {
+      this.__assert__(index === this.tab_index, "index === this.tab_index")
       this.sound_play("click")
-      this.talk(this.current_tab.name)
-      this.router_replace({scope: this.current_tab.key})
+      this.talk(this.current_scope_info.name)
+      this.router_replace({scope: this.current_scope_info.key, page: null})
     },
   },
 
   computed: {
-    IndexScopeInfo() { return IndexScopeInfo },
-
-    // 現在のタブ
-    current_tab() {
-      return this.IndexScopeInfo.fetch(this.tab_index)
-    },
+    IndexScopeInfo()     { return IndexScopeInfo                            },
+    current_scope_info() { return this.IndexScopeInfo.fetch(this.tab_index) },
 
     // ログインしている → 公開
     // ログインしてない → 全体
