@@ -3,16 +3,16 @@ module Wkbk::Article::ImportExportMod
 
   class_methods do
     def setup(options = {})
-      unless exists?
-        case
-        when Rails.env.production?
-          import_all(max: 1024)
-        when Rails.env.staging?
-          import_all(max: 1024)
-        when Rails.env.development?
-          import_all
-        end
-      end
+      # unless exists?
+      #   case
+      #   when Rails.env.production?
+      #     import_all(max: 1024)
+      #   when Rails.env.staging?
+      #     import_all(max: 1024)
+      #   when Rails.env.development?
+      #     import_all
+      #   end
+      # end
     end
 
     def export_all

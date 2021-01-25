@@ -8,8 +8,21 @@ module Api
         # info[:LineageInfo] = Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
         info[:FolderInfo]  = Wkbk::FolderInfo.as_json(only: [:key, :name, :icon, :type])
         # if params[:book_id]
+
         book = Wkbk::Book.find(params[:book_id])
-        info[:book] = book.as_json(Wkbk::Book.json_type5a)
+        case book.folder_key
+        when :public
+          info[:book] = book.as_json(Wkbk::Book.json_type5a)
+        when :private
+          if book.user == current_user
+            info[:book] = book.as_json(Wkbk::Book.json_type5a)
+          else
+            info[:book] = nil
+          end
+        else
+          raise "must not happen"
+        end
+
         # else
         #   info[:book_default_attributes] = Wkbk::Book.default_attributes
         # end
@@ -31,9 +44,24 @@ module Api
         if params[:book_id]
           book = Wkbk::Book.find(params[:book_id])
           info[:book] = book.as_json(Wkbk::Book.json_type5)
+
+          case book.folder_key
+          when :public
+            info[:book] = book.as_json(Wkbk::Book.json_type5)
+          when :private
+            if book.user == current_user
+              info[:book] = book.as_json(Wkbk::Book.json_type5)
+            else
+              info[:book] = nil
+            end
+          else
+            raise "must not happen"
+          end
+
         else
           info[:book_default_attributes] = Wkbk::Book.default_attributes
         end
+
         info
       end
 

@@ -20,6 +20,10 @@ module Wkbk
           send("wkbk_#{e.key}_box") || send("create_wkbk_#{e.key}_box!")
         end
       end
+
+      def wkbk_folder_for(key)
+        public_send("wkbk_#{key}_box")
+      end
     end
   end
 end

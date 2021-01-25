@@ -146,23 +146,23 @@ module Wkbk
       }
     end
 
-    belongs_to :user, class_name: "::User" # 作者
+    belongs_to :user, class_name: "::User"
     # belongs_to :book
 
     acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
     acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
 
-    has_many :articles, dependent: :nullify  # 記事
+    has_many :articles, dependent: :nullify # 記事
 
     before_validation do
-      normalize_zenkaku_to_hankaku(:title, :description)
-      normalize_blank_to_nil(:title, :description)
-
       if Rails.env.test?
         self.title ||= "(title#{self.class.count.next})"
       end
 
       self.key ||= SecureRandom.hex
+
+      normalize_zenkaku_to_hankaku(:title, :description)
+      normalize_blank_to_nil(:title, :description)
     end
 
     # with_options presence: true do
@@ -180,7 +180,7 @@ module Wkbk
 
     def page_url(options = {})
       # UrlProxy.wrap2("/wkbk/books/#{id}")
-      UrlProxy.wrap2("/training?book_id=#{id}")
+      UrlProxy.wrap2("/library/books/#{id}")
       # Rails.application.routes.url_helpers.url_for([:wkbk, {only_path: false, book_id: id}.merge(options)])
     end
     #

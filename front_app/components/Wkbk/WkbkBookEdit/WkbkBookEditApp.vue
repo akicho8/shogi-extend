@@ -72,9 +72,15 @@ export default {
 
   fetch() {
     return this.$axios.$get("/api/wkbk.json", {params: {remote_action: "book_edit_fetch", ...this.$route.params, ...this.$route.query}}).then(e => {
+      if (!e.book) {
+        this.$nuxt.error({statusCode: 403, message: "非公開のためアクセスできるのは作成者だけです"})
+        return
+      }
+
       // this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
       this.config = e.config
+
       if (e.book) {
         this.book = new Book(e.book)
       }

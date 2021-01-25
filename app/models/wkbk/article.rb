@@ -212,6 +212,35 @@ module Wkbk
     # end
 
     before_validation do
+      if Rails.env.development?
+        self.title ||= SecureRandom.hex
+        self.init_sfen ||= "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
+      end
+
+      if Rails.env.test?
+        self.title ||= "(title#{self.class.count.next})"
+      end
+
+      if source_author.to_s.match(/不詳|不明/)
+        self.source_author = nil
+        self.source_about_key = :unknown
+      end
+
+      if Rails.env.test?
+        self.lineage_key ||= "手筋"
+      end
+
+      self.lineage_key ||= "詰将棋"
+      self.source_about ||= SourceAbout.fetch(:ascertained)
+      self.key ||= SecureRandom.hex
+
+      if lineage.pure_info.mate_validate_on
+        self.mate_skip ||= false
+      else
+        # 手筋などのときは詰みチェックをニュートラルにしとく
+        self.mate_skip = nil
+      end
+
       normalize_zenkaku_to_hankaku(*[
                                      :title,
                                      :description,
@@ -231,32 +260,6 @@ module Wkbk
                                :source_media_url,
                                :source_published_on,
                              ])
-
-      if Rails.env.test?
-        self.title ||= "(title#{self.class.count.next})"
-      end
-
-      if source_author.to_s.match(/不詳|不明/)
-        self.source_author = nil
-        self.source_about_key = :unknown
-      end
-
-      if Rails.env.test?
-        self.lineage_key ||= "手筋"
-      end
-
-      self.lineage_key ||= "詰将棋"
-
-      self.source_about ||= SourceAbout.fetch(:ascertained)
-
-      self.key ||= SecureRandom.hex
-
-      if lineage.pure_info.mate_validate_on
-        self.mate_skip ||= false
-      else
-        # 手筋などのときは詰みチェックをニュートラルにしとく
-        self.mate_skip = nil
-      end
     end
 
     with_options presence: true do
@@ -270,6 +273,16 @@ module Wkbk
 
       # validates :init_sfen # , uniqueness: { case_sensitive: true }
       # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+    end
+
+    validate do
+      if false
+        if changes_to_save[:book_id] && book
+          if book.folder_key == :public && folder_key === :private
+            errors.add(:base, "公開している問題集に非公開の問題は入れられません")
+          end
+        end
+      end
     end
 
     def page_url(options = {})
@@ -511,3 +524,5 @@ module Wkbk
     end
   end
 end
+# ~> -:39:in `<module:Wkbk>': uninitialized constant Wkbk::ApplicationRecord (NameError)
+# ~> 	from -:38:in `<main>'

@@ -50,6 +50,8 @@ export default {
     default_message() {
       if (this.error.statusCode === 404) {
         return "ページが見つかりません"
+      } else if (this.error.statusCode === 403) {
+        return "403 Forbidden"
       } else {
         return "ぶっこわれました"
       }

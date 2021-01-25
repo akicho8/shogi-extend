@@ -103,7 +103,7 @@ module Wkbk
 
     describe "フォルダ" do
       it "初期値" do
-        assert { article1.folder_key == "public" }
+        assert { article1.folder_key == :public }
       end
       it "移動方法1" do
         user1.wkbk_private_box.articles << article1
@@ -111,7 +111,7 @@ module Wkbk
       end
       it "移動方法2(フォーム用)" do
         article1.folder_key = :private
-        assert { article1.folder_key == "private" }
+        assert { article1.folder_key == :private }
       end
     end
 

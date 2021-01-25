@@ -11,20 +11,28 @@ module Wkbk::FolderMod
 
     before_validation do
       if user
-        self.folder ||= user.wkbk_public_box
+        self.folder_key ||= :private
       end
     end
   end
 
+  # folder.class => "Wkbk::PublicBox" => "public"
   def folder_key
     if folder
-      self.folder.class.name.demodulize.underscore.remove("_box")
+      self.folder.class.name.demodulize.underscore.remove("_box").to_sym
     end
   end
 
   def folder_key=(key)
-    if user
-      self.folder = user.public_send("wkbk_#{key}_box")
+    if user.blank?
+      raise [
+        "連続アサイン中なのでまだ user が準備されていない",
+        "これは Rails 6.1 では改善されているかもしれない",
+        "いまのところは user.books.create!(folder_key: :#{key}) ではなく",
+        "いったん book = user.build すると良い",
+        "一番安全なのは create!(folder: object) と直接オブジェクトを渡す方法",
+      ].join(" ")
     end
+    self.folder = user.wkbk_folder_for(key)
   end
 end

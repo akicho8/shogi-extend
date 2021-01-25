@@ -67,6 +67,11 @@ export default {
       this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
       this.config = e.config
 
+      if (!e.book) {
+        this.$nuxt.error({statusCode: 403, message: "非公開のためアクセスできるのは作成者だけです"})
+        return
+      }
+
       this.book = new Book(e.book)
 
       if (true) {

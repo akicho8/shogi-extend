@@ -76,5 +76,9 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.timestamps
       end
     end
+
+    if Rails.env.production? || Rails.env.staging?
+      Wkbk::Article.import_all
+    end
   end
 end
