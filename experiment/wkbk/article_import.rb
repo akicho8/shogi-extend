@@ -1,3 +1,3 @@
 require "./setup"
-Wkbk::Article.import_all(max: 10)
+Wkbk::Article.import_all
 

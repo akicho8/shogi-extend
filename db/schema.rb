@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_21_210600) do
+ActiveRecord::Schema.define(version: 2021_01_25_105600) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1225,9 +1225,9 @@ ActiveRecord::Schema.define(version: 2021_01_21_210600) do
     t.bigint "folder_id", null: false, comment: "フォルダ"
     t.string "title", comment: "タイトル"
     t.string "description", limit: 1024, comment: "説明"
+    t.integer "articles_count", default: 0, null: false, comment: "記事数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "articles_count", default: 0, null: false, comment: "記事数"
     t.index ["folder_id"], name: "index_wkbk_books_on_folder_id"
     t.index ["key"], name: "index_wkbk_books_on_key"
     t.index ["user_id"], name: "index_wkbk_books_on_user_id"

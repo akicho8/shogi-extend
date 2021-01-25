@@ -55,11 +55,10 @@
       //-     b-field(label="出典URL" label-position="on-border")
       //-       b-input(v-model.trim="base.book.source_media_url" type="url")
 
-      b-field(label="フォルダ" custom-class="is-small" v-if="base.FolderInfo")
+      b-field(label="表示範囲" custom-class="is-small" v-if="base.FolderInfo")
         b-field.is-marginless
           template(v-for="row in base.FolderInfo.values")
-            b-radio-button(v-model="base.book.folder_key" :native-value="row.key")
-              span {{row.name}}
+            b-radio-button(v-model="base.book.folder_key" :native-value="row.key") {{row.name}}
 </template>
 
 <script>

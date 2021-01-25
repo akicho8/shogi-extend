@@ -60,12 +60,10 @@
           b-field(label="出典URL" label-position="on-border")
             b-input(v-model.trim="base.article.source_media_url" type="url")
 
-      b-field(label="フォルダ" custom-class="is-small" v-if="base.FolderInfo")
+      b-field(label="表示範囲" custom-class="is-small" v-if="base.FolderInfo")
         b-field.is-marginless
           template(v-for="row in base.FolderInfo.values")
-            b-radio-button(v-model="base.article.folder_key" :native-value="row.key" :type="row.type")
-              b-icon(:icon="row.icon" size="is-small")
-              span {{row.name}}
+            b-radio-button(v-model="base.article.folder_key" :native-value="row.key") {{row.name}}
 </template>
 
 <script>
@@ -120,7 +118,7 @@ export default {
     },
   },
   computed: {
-    article()     { return this.base.article                                     },
+    article()      { return this.base.article                                     },
     lineage_info() { return this.base.LineageInfo.fetch(this.article.lineage_key) },
   },
 }
