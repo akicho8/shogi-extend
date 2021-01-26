@@ -10,7 +10,6 @@ module Wkbk::Article::InfoMod
     a["画像URL"]        = share_board_png_url
     a["共有将棋盤"]     = share_board_url
     a["種類"]           = lineage.key
-    a["フォルダ"]       = folder.pure_info.name
     a["メッセージ"]     = direction_message
     a["タグ"]           = owner_tag_list.join(", ")
     a["作成日時"]       = created_at.to_s(:ymdhm)

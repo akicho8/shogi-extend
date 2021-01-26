@@ -12,9 +12,9 @@
 # | folder_id      | Folder             | integer(8)   | NOT NULL            |              | C     |
 # | title          | タイトル           | string(255)  |                     |              |       |
 # | description    | 説明               | string(1024) |                     |              |       |
+# | articles_count | Articles count     | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | created_at     | 作成日時           | datetime     | NOT NULL            |              |       |
 # | updated_at     | 更新日時           | datetime     | NOT NULL            |              |       |
-# | articles_count | Articles count     | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # |----------------+--------------------+--------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------

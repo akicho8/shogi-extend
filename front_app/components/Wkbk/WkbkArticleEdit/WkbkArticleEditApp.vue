@@ -260,7 +260,7 @@ export default {
         if (e.article) {
           this.article = new Article(e.article)
           this.toast_ok(`${before_save_button_name}しました`)
-          this.$router.push({name: "library-articles", query: {scope: this.article.folder_key}})
+          this.$router.push({name: "library-articles", query: {scope: this.article.redirect_scope_after_save}})
         }
       })
     },

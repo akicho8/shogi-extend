@@ -30,11 +30,6 @@
       b-field(label="タグ" label-position="on-border")
         //- https://buefy.org/documentation/taginput
         b-taginput(v-model="base.article.owner_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
-
-      //- b-field(label="表示範囲" custom-class="is-small" v-if="base.FolderInfo")
-      //-   b-field.is-marginless
-      //-     template(v-for="row in base.FolderInfo.values")
-      //-       b-radio-button(v-model="base.article.folder_key" :native-value="row.key") {{row.name}}
 </template>
 
 <script>
@@ -62,13 +57,6 @@ export default {
       handler(v) {
         this.sound_play("click")
         this.talk(v)
-      },
-    },
-    "article.folder_key": {
-      handler(v) {
-        const folder_info = this.base.FolderInfo.fetch(v)
-        this.sound_play("click")
-        this.talk(folder_info.name)
       },
     },
   },

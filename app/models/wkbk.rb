@@ -28,6 +28,7 @@ module Wkbk
 
   def models
     [
+      Book,
       Article,
       MovesAnswer,
       Folder,

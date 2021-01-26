@@ -9,21 +9,17 @@
 # | id                  | ID                  | integer(8)   | NOT NULL PK         |              |       |
 # | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A     |
 # | user_id             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | folder_id           | Folder              | integer(8)   | NOT NULL            |              | C     |
-# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | D     |
-# | book_id             | Book                | integer(8)   |                     |              | E     |
-# | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | F     |
-# | time_limit_sec      | Time limit sec      | integer(4)   |                     |              | G     |
-# | difficulty_level    | Difficulty level    | integer(4)   |                     |              | H     |
+# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | C     |
+# | book_id             | Book                | integer(8)   |                     |              | D     |
+# | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
 # | title               | タイトル            | string(255)  |                     |              |       |
 # | description         | 説明                | string(1024) |                     |              |       |
-# | hint_desc           | Hint desc           | string(255)  |                     |              |       |
-# | turn_max            | 手数                | integer(4)   |                     |              | J     |
+# | turn_max            | 手数                | integer(4)   |                     |              | F     |
 # | mate_skip           | Mate skip           | boolean      |                     |              |       |
 # | direction_message   | Direction message   | string(255)  |                     |              |       |
+# | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
 # | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
-# | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -148,7 +144,7 @@ module Wkbk
 
     belongs_to :user, class_name: "::User" # 作者
     belongs_to :lineage
-    belongs_to :book, required: false, counter_cache: true
+    belongs_to :book, required: false, counter_cache: true, touch: true
 
     acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
     acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ

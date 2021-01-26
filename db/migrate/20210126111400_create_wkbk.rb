@@ -67,14 +67,14 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
       end
     end
 
-    if Rails.env.production? || Rails.env.staging? || Rails.env.development?
-      Wkbk.setup
-      if Rails.env.production? || Rails.env.staging?
-        Wkbk::Article.import_all(max: 1000)
-      end
-      if Rails.env.development?
-        Wkbk::Article.import_all(max: 50)
-      end
-    end
+    # if Rails.env.production? || Rails.env.staging? || Rails.env.development?
+    #   Wkbk.setup
+    #   if Rails.env.production? || Rails.env.staging?
+    #     Wkbk::Article.import_all(max: 1000)
+    #   end
+    #   if Rails.env.development?
+    #     Wkbk::Article.import_all(max: 50)
+    #   end
+    # end
   end
 end

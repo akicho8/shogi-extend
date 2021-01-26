@@ -84,7 +84,6 @@ module Wkbk::Article::ImportExportMod
 
       record = user.wkbk_articles.find_or_initialize_by(key: e[:key])
       record.assign_attributes(e.slice(*[
-                                         :folder_key,
                                          :lineage_key,
                                          :init_sfen,
                                          :title,
@@ -95,7 +94,7 @@ module Wkbk::Article::ImportExportMod
                                          :updated_at,
                                        ]))
 
-      record.folder_key = "private"
+      # record.folder_key = "private"
 
       if true
         a = []
@@ -125,9 +124,10 @@ module Wkbk::Article::ImportExportMod
 
       if e[:user][:key] == "932ed39bb18095a2fc73e0002f94ecf1"
         if e[:owner_tag_list].include?("アヒル戦法")
-          record.update!(folder_key: "public")
+          # record.update!(folder_key: "public")
 
           book = user.wkbk_books.find_or_initialize_by(title: "アヒル戦法問題集")
+          book.folder_key = :public
           book.articles << record
           book.save!
         end

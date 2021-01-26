@@ -18,5 +18,6 @@ list.each { |e| e["lineage_key"] = e["lineage_key"].gsub("玉方持駒限定の�
 list.each { |e| gentei.include?(e["key"]) ? e["lineage_key"] = "持駒限定詰将棋" : nil }
 list.each { |e| jissen.include?(e["key"]) ? e["lineage_key"] = "実戦詰め筋" : nil }
 list.each { |e| tsume.include?(e["key"]) ? e["lineage_key"] = "詰将棋" : nil}
+list.each { |e| e.delete("folder_key") }
 list.count                      # => 511
 Pathname("app/models/wkbk/articles.yml").write(list.to_yaml)
