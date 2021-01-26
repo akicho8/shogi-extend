@@ -1,12 +1,12 @@
 <template lang="pug">
-b-tabs.WkbkBookIndexTab.mb-0(v-model="base.tab_index" expanded @input="base.tab_change_handle")
+b-tabs.WkbkBookIndexTab.mb-0(v-model="base.tab_index" expanded @input="base.tab_input_handle")
   template(v-for="e in base.IndexScopeInfo.values")
-    b-tab-item(v-if="base.book_tab_available_p(e) || true")
+    b-tab-item
       template(slot="header")
         span
           | {{e.name}}
           b-tag(rounded)
-            | {{base.book_count_in_tab(e)}}
+            | {{base.count_in_tab(e)}}
 </template>
 
 <script>

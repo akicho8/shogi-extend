@@ -72,7 +72,7 @@ module Api
 
       def sort_scope_for_articles(s)
         if sort_column && sort_order
-          columns = sort_column.scan(/\w+/)
+          columns = sort_column.to_s.scan(/\w+/)
           case columns.first
           when "user"
             s = s.joins(:user).merge(User.reorder(columns.last => sort_order))

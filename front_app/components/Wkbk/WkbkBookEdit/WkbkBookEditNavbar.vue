@@ -9,7 +9,7 @@ MainNavbar.WkbkBookEditNavbar(:spaced="false")
     template(v-else)
       b-navbar-item(tag="div") {{base.book.new_record_p ? '新規' : '編集'}}
   template(slot="end")
-    b-navbar-item.has-text-weight-bold(@click="base.book_save_handle" :class="{disabled: !base.save_button_enabled}")
+    b-navbar-item.has-text-weight-bold(@click="base.save_handle" :class="{disabled: !base.save_button_enabled}")
       | {{base.save_button_name}}
 </template>
 

@@ -38,7 +38,7 @@ export default {
     flex-direction: column
   .CustomShogiPlayerWrap
     width: 100%
-    margin-top: $wkbk_share_gap
+    margin: $wkbk_share_gap 0
     +tablet
       padding-top: unset
       padding-bottom: unset

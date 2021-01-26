@@ -1,6 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
-export class EditScopeInfo extends MemoryRecord {
+export class ArticleEditTabInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "placement_mode",     name: "配置", },

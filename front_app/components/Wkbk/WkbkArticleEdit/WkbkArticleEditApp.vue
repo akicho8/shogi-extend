@@ -28,10 +28,10 @@
     MainSection.is_mobile_padding_zero
       .container
         keep-alive
-          WkbkArticleEditPlacement(:base="base"  v-if="current_tab_info.key === 'placement_mode'")
+          WkbkArticleEditPlacement(:base="base"    v-if="current_tab_info.key === 'placement_mode'")
           WkbkArticleEditAnswerCreate(:base="base" v-if="current_tab_info.key === 'answer_create_mode'" ref="WkbkArticleEditAnswerCreate")
-          WkbkArticleEditForm(:base="base"   v-if="current_tab_info.key === 'form_mode'")
-          WkbkArticleEditValidation(:base="base" v-if="current_tab_info.key === 'validation_mode'")
+          WkbkArticleEditForm(:base="base"         v-if="current_tab_info.key === 'form_mode'")
+          WkbkArticleEditValidation(:base="base"   v-if="current_tab_info.key === 'validation_mode'")
   DebugPre
     | {{article}}
     | {{books}}
@@ -43,11 +43,11 @@ import dayjs from "dayjs"
 
 import { support_parent } from "./support_parent.js"
 
-import { Article    } from "../models/article.js"
-import { Book    } from "../models/book.js"
-import { LineageInfo } from '../models/lineage_info.js'
-import { FolderInfo  } from '../models/folder_info.js'
-import { EditScopeInfo  } from '../models/edit_tab_info.js'
+import { Article            } from "../models/article.js"
+import { Book               } from "../models/book.js"
+import { LineageInfo        } from '../models/lineage_info.js'
+import { FolderInfo         } from '../models/folder_info.js'
+import { ArticleEditTabInfo } from '../models/article_edit_tab_info.js'
 
 export default {
   name: "WkbkArticleIndexApp",
@@ -110,7 +110,7 @@ export default {
 
   methods: {
     tab_set(tab_key) {
-      this.tab_index = EditScopeInfo.fetch(tab_key).code
+      this.tab_index = ArticleEditTabInfo.fetch(tab_key).code
     },
 
     edit_tab_change_handle(v) {
@@ -218,7 +218,7 @@ export default {
       this.answer_tab_index = 0
     },
 
-    article_save_handle() {
+    save_handle() {
       this.sound_play("click")
 
       if (this.sns_login_required()) {
@@ -291,9 +291,9 @@ export default {
 
   computed: {
     base()                { return this                                        },
-    EditScopeInfo()       { return EditScopeInfo                               },
+    ArticleEditTabInfo()       { return ArticleEditTabInfo                               },
     FolderInfo()          { return FolderInfo                                  },
-    current_tab_info()    { return EditScopeInfo.fetch(this.tab_index)         },
+    current_tab_info()    { return ArticleEditTabInfo.fetch(this.tab_index)         },
     save_button_name()    { return this.article.new_record_p ? "保存" : "更新" },
     save_button_enabled() { return this.article.moves_answers.length >= 1      },
 

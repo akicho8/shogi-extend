@@ -31,7 +31,6 @@
 <script>
 import { support_parent } from "./support_parent.js"
 import { Book    } from "../models/book.js"
-import { FolderInfo  } from '../models/folder_info.js'
 import { app_articles } from "./app_articles.js"
 import { app_mode } from "./app_mode.js"
 import { app_support } from "./app_support.js"
@@ -47,24 +46,18 @@ export default {
 
   data() {
     return {
-      //////////////////////////////////////////////////////////////////////////////// 静的情報
-      LineageInfo: null,        // 問題の種類
-      FolderInfo: null,         // 問題の入れ場所
-
-      //////////////////////////////////////////////////////////////////////////////// 新規・編集
-      tab_index:        null,
-      book:         null,
-      //////////////////////////////////////////////////////////////////////////////// 検証モード
+      book: null,
     }
   },
 
   fetch() {
     // app/controllers/api/wkbk_controller/book_mod.rb
     // http://localhost:3000/api/wkbk.json?remote_action=book_show_fetch&book_id=2
-    return this.$axios.$get("/api/wkbk.json", {params: {remote_action: "book_show_fetch", ...this.$route.params, ...this.$route.query}}).then(e => {
-
-      // this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
-      this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
+    const params = {
+      ...this.$route.params,
+      ...this.$route.query,
+    }
+    return this.$axios.$get("/api/wkbk/books/show", {params}).then(e => {
       this.config = e.config
 
       if (!e.book) {

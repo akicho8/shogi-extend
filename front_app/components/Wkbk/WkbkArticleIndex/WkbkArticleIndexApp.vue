@@ -54,7 +54,7 @@ export default {
       tag:         this.tag,
     }
 
-    return this.$axios.$get("/api/wkbk/articles.json", {params}).then(e => {
+    return this.$axios.$get("/api/wkbk/articles/index.json", {params}).then(e => {
       this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
       this.articles       = e.articles.map(e => new Article(e))
       this.total          = e.total

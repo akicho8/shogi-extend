@@ -65,7 +65,6 @@ module Wkbk
           :id,
           :title,
           :description,
-          :owner_tag_list,
           :articles_count,
           :created_at,
           :updated_at,
@@ -73,6 +72,7 @@ module Wkbk
       }
     end
 
+    # 出題
     def self.json_type5a
       {
         methods: [
@@ -82,16 +82,12 @@ module Wkbk
           user: { only: [:id, :name, :key], methods: [:avatar_path] },
           articles: {
             methods: [
-              :folder_key,
               :lineage_key,
-              :source_about_key,
             ],
             include: {
               user: { only: [:id, :name, :key], methods: [:avatar_path],},
               moves_answers: {
                 only: [
-                  # :id,
-                  # :article_id,
                   :moves_count,
                   :moves_str,
                   :end_sfen,
@@ -102,34 +98,11 @@ module Wkbk
             only: [
               :id,
               :init_sfen,
-              :time_limit_sec,
-              :difficulty_level,
-              # :display_key,
               :title,
               :description,
-              :owner_tag_list,
-              :hint_desc,
               :direction_message,
               :turn_max,
-              :mate_skip,
-
-              :source_author,
-              :source_media_name,
-              :source_media_url,
-              :source_published_on,
-
               :moves_answers_count,
-
-              # :histories_count,
-              # :bad_marks_count,
-              # :good_marks_count,
-              # :clip_marks_count,
-              # :messages_count,
-
-              # :good_rate,
-
-              # :created_at,
-              # :updated_at,
             ],
 
           },
@@ -138,7 +111,6 @@ module Wkbk
           :id,
           :title,
           :description,
-          :owner_tag_list,
           :articles_count,
           :created_at,
           :updated_at,
@@ -156,9 +128,6 @@ module Wkbk
 
     belongs_to :user, class_name: "::User"
     # belongs_to :book
-
-    acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
-    acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
 
     has_many :articles, dependent: :nullify # 記事
 
@@ -192,35 +161,6 @@ module Wkbk
       UrlProxy.wrap2("/library/books/#{id}")
       # Rails.application.routes.url_helpers.url_for([:wkbk, {only_path: false, book_id: id}.merge(options)])
     end
-    #
-    # def share_board_png_url
-    #   Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, format: "png", **share_board_params}])
-    # end
-    #
-    # def share_board_url
-    #   Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, title: title, **share_board_params}])
-    # end
-    #
-    # def share_board_params
-    #   { body: main_sfen, turn: 0, abstract_viewpoint: "black" }
-    # end
-    #
-    # # Twitter画像が表示できる url_for にそのまま渡すパラメータ
-    # def shared_image_params
-    #   [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, abstract_viewpoint: "black"]
-    # end
-
-    # def title_with_author
-    #   [title, author_saku].join(" ")
-    # end
-    #
-    # def author_saku
-    #   if source_about.key == "unknown"
-    #     "作者不詳"
-    #   else
-    #     [source_author || user.name, "作"].join
-    #   end
-    # end
 
     def mock_attrs_set
       if Rails.env.test?
@@ -237,7 +177,6 @@ module Wkbk
     #     "title"            => "(title)",
     #     "init_sfen"        => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
     #     "moves_answers"    => [{"moves_str"=>"4c5b"}],
-    #     "time_limit_clock" => "1999-12-31T15:03:00.000Z",
     #   }
     #   book = user.wkbk_books.build
     #   book.update_from_js(params)
@@ -251,7 +190,6 @@ module Wkbk
         attrs = book.slice(*[
                              :title,
                              :description,
-                             :owner_tag_list,
                              :folder_key,
                            ])
         assign_attributes(attrs)
@@ -314,29 +252,17 @@ module Wkbk
       as_json({
                 only: [
                   :id,
-                  # :init_sfen,
-                  # :time_limit_sec,
-                  # :difficulty_level,
                   :title,
                   :description,
-                  # :hint_desc,
-                  # :direction_message,
-                  # :mate_skip,
                   :owner_tag_list,
-                  # :source_author,
-                  # :source_media_url,
                 ],
                 methods: [
-                  # :source_about_key,
                 ],
                 include: {
                   user: {
                     only: [:id, :name, :key],
                     methods: [:avatar_path],
                   },
-                  # moves_answers: {
-                  #   only: [:moves_count, :moves_str, :end_sfen],
-                  # },
                 },
               })
     end
@@ -345,8 +271,6 @@ module Wkbk
     def as_json_type6
       as_json({
                 methods: [
-                  # :source_about_key,
-                  # :lineage_key,
                 ],
                 include: {
                   user: {
@@ -355,7 +279,6 @@ module Wkbk
                   },
                   moves_answers: {},
                   folder: { only: [], methods: [:key, :name, :type] },
-                  # messages: BookMessage.json_struct_type8,
                 },
               })
     end
@@ -373,23 +296,21 @@ module Wkbk
     # 保存直後の状態
     def saved_after_state
       case
-      when active_folder_posted?
+      when public_folder_posted?
         "投稿"
-      when folder_key === "active" && current_hash != @save_before_hash
+      when folder_key_eq(:public) && current_hash != @save_before_hash
         "更新"
       end
     end
 
     # 公開した直後か？
-    def active_folder_posted?
-      saved_change_to_attribute?(:folder_id) && folder_key === "active"
+    def public_folder_posted?
+      saved_change_to_attribute?(:folder_id) && folder_key_eq(:public)
     end
 
     # 変更を検知するためのハッシュ(重要なデータだけにする)
     def current_hash
       ary = [
-        # init_sfen,
-        # *moves_answers.collect(&:moves_str),
         title,
         description,
         articles_count,

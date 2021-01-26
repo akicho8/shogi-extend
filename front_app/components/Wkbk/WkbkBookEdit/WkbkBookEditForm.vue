@@ -5,8 +5,8 @@
       b-field(label="タイトル" label-position="on-border")
         b-input(v-model.trim="base.book.title" required)
 
-      b-field(label="解説" label-position="on-border")
-        b-input(v-model.trim="base.book.description" type="textarea" rows="3")
+      b-field(label="備考" label-position="on-border")
+        b-input(v-model.trim="base.book.description" type="textarea" rows="5")
 
       b-field(label="表示範囲" custom-class="is-small" v-if="base.FolderInfo")
         b-field.is-marginless
@@ -39,7 +39,6 @@ export default {
   },
   computed: {
     book()     { return this.base.book                                     },
-    lineage_info() { return this.base.LineageInfo.fetch(this.book.lineage_key) },
   },
 }
 </script>

@@ -27,7 +27,7 @@ b-sidebar.WkbkArticleIndexSidebar.is-unselectable(fullheight right overlay v-mod
                   b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
                     span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}") {{e.name}}
 
-          b-menu-item(@click="sound_play('click')")
+          b-menu-item.sidebar_columns_toggle(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 表示カラム
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -35,7 +35,7 @@ b-sidebar.WkbkArticleIndexSidebar.is-unselectable(fullheight right overlay v-mod
               b-menu-item(
                 v-if="e.togglable"
                 @click.stop="base.cb_toggle_handle(e)"
-                :class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}"
+                :class="{is_visible_off: !base.visible_hash[e.key], is_visible_on: base.visible_hash[e.key]}"
                 :key="e.key"
                 :label="e.name"
                 )

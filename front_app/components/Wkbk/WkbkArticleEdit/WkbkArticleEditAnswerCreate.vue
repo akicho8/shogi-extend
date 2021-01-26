@@ -81,7 +81,7 @@ export default {
 
   // 共通
   .CustomShogiPlayerWrap
-    margin-top: $wkbk_share_gap
+    margin: $wkbk_share_gap 0
     width: 100%
     +tablet
       padding-top: unset

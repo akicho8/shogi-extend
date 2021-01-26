@@ -15,20 +15,21 @@
             | {{e.title}}
             | {{base.FolderInfo.fetch(e.folder_key).pulldown_name}}
 
-      //- b-field.lineage_key(label="種類" label-position="on-border" v-if="base.LineageInfo")
-      //-   b-select(v-model="base.article.lineage_key" expanded)
-      //-     option(v-for="e in base.LineageInfo.values" :value="e.key")
-      //-       | {{e.name}}
+      b-field.lineage_key(label="種類" label-position="on-border" v-if="base.LineageInfo")
+        b-select(v-model="base.article.lineage_key" expanded)
+          option(v-for="e in base.LineageInfo.values" :value="e.key")
+            | {{e.name}}
 
       b-field(label="出題時の一言" label-position="on-border" message="何手指してほしいかやヒントを伝えたいときだけ入力してください")
         b-input(v-model.trim="base.article.direction_message" placeholder="3手指してください")
 
+      b-field
+        b-switch(v-model="base.article.mate_skip" :disabled="!lineage_info.mate_validate_on")
+          | 最後は無駄合いなので詰みチェックを省略する
+
       b-field(label="タグ" label-position="on-border")
         //- https://buefy.org/documentation/taginput
         b-taginput(v-model="base.article.owner_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
-
-      b-field(v-if="lineage_info.mate_validate_on")
-        b-switch(v-model="base.article.mate_skip" size="is-small") 最後は無駄合い (なので詰みチェックしない)
 
       //- b-field(label="表示範囲" custom-class="is-small" v-if="base.FolderInfo")
       //-   b-field.is-marginless
@@ -81,7 +82,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkArticleEditForm
-  margin: $wkbk_share_gap
+  margin: $wkbk_share_gap 0
   .field:not(:first-child)
     margin-top: $wkbk_share_gap
   .help

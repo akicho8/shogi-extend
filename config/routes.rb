@@ -133,13 +133,13 @@ Rails.application.routes.draw do
     put "emox/matching_users_clear_handle(.:format)",     to: "emox#matching_users_clear_handle"
 
     namespace :wkbk, format: :json do
-      resource :books, only: [] do
+      namespace :books do
         get :index
         get :show
         get :edit
         post :save
       end
-      resource :articles, only: [] do
+      namespace :articles do
         get :index
         get :edit
         post :save
