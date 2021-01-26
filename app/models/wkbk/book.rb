@@ -146,6 +146,14 @@ module Wkbk
       }
     end
 
+    # article edit の form の選択肢用
+    def self.json_type7
+      {
+        only: [:id, :title],
+        methods: [:folder_key],
+      }
+    end
+
     belongs_to :user, class_name: "::User"
     # belongs_to :book
 

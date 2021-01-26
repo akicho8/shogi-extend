@@ -20,9 +20,7 @@ module Api
         retv = {}
         retv[:config] = ::Wkbk::Config
         retv[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
-        retv[:FolderInfo]  = ::Wkbk::FolderInfo.as_json(only: [:key, :name, :icon, :type])
-
-        retv[:books] = current_user ? current_user.wkbk_books.order(:created_at) : []
+        retv[:books] = current_books
 
         if params[:article_id]
           # 編集
@@ -114,6 +112,15 @@ module Api
       # PageMod override
       def default_per
         ::Wkbk::Config[:api_articles_fetch_per]
+      end
+
+      # プルダウン選択用
+      def current_books
+        if current_user
+          current_user.wkbk_books.order(:created_at).as_json(::Wkbk::Book.json_type7)
+        else
+          []
+        end
       end
     end
   end

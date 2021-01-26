@@ -11,20 +11,14 @@
       b-field.lineage_key(label="問題集" label-position="on-border")
         b-select(v-model="base.article.book_id" expanded)
           option(:value="null")
-          option(v-for="e in base.books" :value="e.id") {{e.title}}
+          option(v-for="e in base.books" :value="e.id")
+            | {{e.title}}
+            | {{base.FolderInfo.fetch(e.folder_key).pulldown_name}}
 
-      b-field(label="ヒント" label-position="on-border" v-if="base.config.hint_enable")
-        b-input(v-model.trim="base.article.hint_desc")
-
-      b-field.lineage_key(label="種類" label-position="on-border" v-if="base.LineageInfo")
-        b-select(v-model="base.article.lineage_key" expanded)
-          option(v-for="e in base.LineageInfo.values" :value="e.key") {{e.name}}
-
-      b-field(label="制限時間" label-position="on-border" v-if="base.config.time_limit_sec_enable")
-        b-timepicker(v-model="base.article.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
-
-      b-field(label="難易度" custom-class="is-small" v-if="base.config.difficulty_level_enable")
-        b-rate(v-model="base.article.difficulty_level" spaced :max="base.config.difficulty_level_max" :show-score="false")
+      //- b-field.lineage_key(label="種類" label-position="on-border" v-if="base.LineageInfo")
+      //-   b-select(v-model="base.article.lineage_key" expanded)
+      //-     option(v-for="e in base.LineageInfo.values" :value="e.key")
+      //-       | {{e.name}}
 
       b-field(label="出題時の一言" label-position="on-border" message="何手指してほしいかやヒントを伝えたいときだけ入力してください")
         b-input(v-model.trim="base.article.direction_message" placeholder="3手指してください")
@@ -35,30 +29,6 @@
 
       b-field(v-if="lineage_info.mate_validate_on")
         b-switch(v-model="base.article.mate_skip" size="is-small") 最後は無駄合い (なので詰みチェックしない)
-
-      b-collapse.mt-5(:open="source_author_collapse_open_p" v-if="false")
-        b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 作者が他者の場合
-        .box.py-5
-          b-field
-            b-switch(v-model="base.article.source_about_key" size="is-small" true-value="unknown" false-value="ascertained") 作者不詳
-
-          b-field(label="作者" label-position="on-border")
-            b-input(v-model.trim="base.article.source_author" placeholder="初代大橋宗桂" :disabled="base.article.source_about_key === 'unknown'")
-
-          b-field(label="出典メディア" label-position="on-border")
-            b-input(v-model.trim="base.article.source_media_name" placeholder="詰パラ")
-
-          b-field(label="出典年月日" label-position="on-border")
-            b-datepicker(
-              v-model="base.article.date_casted_source_published_on"
-              :month-names="[1,2,3,4,5,6,7,8,9,10,11,12]"
-              :day-names="['日','月','火','水','木','金', '土']"
-              :years-range="[-500, 100]"
-              :mobile-native="false"
-            )
-
-          b-field(label="出典URL" label-position="on-border")
-            b-input(v-model.trim="base.article.source_media_url" type="url")
 
       //- b-field(label="表示範囲" custom-class="is-small" v-if="base.FolderInfo")
       //-   b-field.is-marginless
@@ -76,11 +46,9 @@ export default {
   ],
   data() {
     return {
-      source_author_collapse_open_p: null,
     }
   },
   created() {
-    this.source_author_collapse_open_p = this.base.article.source_author_collapse_open_p
   },
   watch: {
     "article.lineage_key": {
@@ -100,20 +68,6 @@ export default {
         const folder_info = this.base.FolderInfo.fetch(v)
         this.sound_play("click")
         this.talk(folder_info.name)
-      },
-    },
-    "article.difficulty_level": {
-      handler(v) {
-        this.sound_play("click")
-        this.talk(v)
-      },
-    },
-    "base.article.source_about_key": {
-      handler(v) {
-        if (v === "unknown") {
-          this.talk("作者不詳")
-        }
-        this.sound_play("click")
       },
     },
   },

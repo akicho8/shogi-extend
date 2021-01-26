@@ -59,7 +59,6 @@ export default {
     return {
       //////////////////////////////////////////////////////////////////////////////// 静的情報
       LineageInfo: null,        // 問題の種類
-      FolderInfo: null,         // 問題の入れ場所
       config: null,
       books: [],
 
@@ -90,7 +89,6 @@ export default {
       }
 
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
-      this.FolderInfo  = FolderInfo.memory_record_reset(e.FolderInfo)
       this.config = e.config
 
       this.books = e.books.map(e => new Book(e))
@@ -254,7 +252,6 @@ export default {
       // })
 
       // https://day.js.org/docs/en/durations/diffing
-      this.article.time_limit_clock_to_sec()
       const before_save_button_name = this.save_button_name
       return this.$axios.$post("/api/wkbk/articles/save.json", {article: this.article}).then(e => {
         if (e.form_error_message) {
@@ -293,9 +290,10 @@ export default {
   },
 
   computed: {
-    base()                { return this                                         },
-    EditScopeInfo()         { return EditScopeInfo                                  },
-    current_tab_info()    { return EditScopeInfo.fetch(this.tab_index)            },
+    base()                { return this                                        },
+    EditScopeInfo()       { return EditScopeInfo                               },
+    FolderInfo()          { return FolderInfo                                  },
+    current_tab_info()    { return EditScopeInfo.fetch(this.tab_index)         },
     save_button_name()    { return this.article.new_record_p ? "保存" : "更新" },
     save_button_enabled() { return this.article.moves_answers.length >= 1      },
 

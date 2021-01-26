@@ -249,7 +249,6 @@ export default {
       // })
 
       // https://day.js.org/docs/en/durations/diffing
-      // this.book.time_limit_clock_to_sec()
       const before_save_button_name = this.save_button_name
       this.api_put("book_save_handle", {book: this.book}, e => {
         if (e.form_error_message) {

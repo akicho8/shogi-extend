@@ -1,7 +1,10 @@
 import MemoryRecord from 'js-memory-record'
 
 export class FolderInfo extends MemoryRecord {
-  // get handle_method_name() {
-  //   return `folder_${this.key}_handle`
-  // }
+  static get define() {
+    return [
+      { key: "public",   name: "公開",   pulldown_name: "",  },
+      { key: "private",  name: "非公開", pulldown_name: "🔒", }, // https://lets-emoji.com/emojilist/emojilist-7/
+    ]
+  }
 }

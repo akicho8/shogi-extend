@@ -18,11 +18,6 @@
 # | title               | タイトル            | string(255)  |                     |              |       |
 # | description         | 説明                | string(1024) |                     |              |       |
 # | hint_desc           | Hint desc           | string(255)  |                     |              |       |
-# | source_author       | Source author       | string(255)  |                     |              |       |
-# | source_media_name   | Source media name   | string(255)  |                     |              |       |
-# | source_media_url    | Source media url    | string(255)  |                     |              |       |
-# | source_published_on | Source published on | date         |                     |              |       |
-# | source_about_id     | Source about        | integer(8)   |                     |              | I     |
 # | turn_max            | 手数                | integer(4)   |                     |              | J     |
 # | mate_skip           | Mate skip           | boolean      |                     |              |       |
 # | direction_message   | Direction message   | string(255)  |                     |              |       |
@@ -78,37 +73,18 @@ module Wkbk
         :book_id             => nil,
         :title               => nil,
         :description         => nil,
-        :hint_desc           => nil,
         :direction_message   => nil,
         :owner_tag_list      => [],
-        :time_limit_sec      => 10.seconds,
         :moves_answers       => [],
         :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
         :mate_skip           => false,
-
-        :difficulty_level    => 1,
         :lineage_key         => "詰将棋",
         # :folder_key        => "public",
-
-        # 他者が作者
-        :source_about_key    => "ascertained",
-        :source_author       => nil,
-        :source_media_name   => nil,
-        :source_media_url    => nil,
-        :source_published_on => nil,
       }
 
       if Rails.env.development?
-
-        # 他者が作者
-        default[:source_author]       = "渡瀬荘二郎"
-        default[:source_media_name]   = "Wikipedia"
-        default[:source_media_url]    = "https://ja.wikipedia.org/wiki/%E5%AE%9F%E6%88%A6%E5%9E%8B%E8%A9%B0%E5%B0%86%E6%A3%8B"
-        default[:source_published_on] = "1912-03-04"
-
         default.update({
                          :title            => "(title)",
-                         :time_limit_sec   => 30.seconds,
 
                          # :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
                          # :moves_answers => [
@@ -136,7 +112,6 @@ module Wkbk
         methods: [
           # :folder_key,
           :lineage_key,
-          :source_about_key,
         ],
         include: {
           user: { only: [:id, :name, :key], methods: [:avatar_path],},
@@ -145,11 +120,7 @@ module Wkbk
             only: [
               :id,
               :title,
-              # :description,
-              # :owner_tag_list,
               :articles_count,
-              # :created_at,
-              # :updated_at,
             ],
             methods: [
               :folder_key,
@@ -160,32 +131,13 @@ module Wkbk
           :id,
           :book_id,
           :init_sfen,
-          :time_limit_sec,
-          :difficulty_level,
-          # :display_key,
           :title,
           :description,
           :owner_tag_list,
-          :hint_desc,
           :direction_message,
           :turn_max,
           :mate_skip,
-
-          :source_author,
-          :source_media_name,
-          :source_media_url,
-          :source_published_on,
-
           :moves_answers_count,
-
-          # :histories_count,
-          # :bad_marks_count,
-          # :good_marks_count,
-          # :clip_marks_count,
-          # :messages_count,
-
-          # :good_rate,
-
           :created_at,
           :updated_at,
         ],
@@ -196,11 +148,7 @@ module Wkbk
 
     belongs_to :user, class_name: "::User" # 作者
     belongs_to :lineage
-    belongs_to :source_about
     belongs_to :book, required: false, counter_cache: true
-
-    # has_many :messages, class_name: "Wkbk::ArticleMessage", dependent: :destroy # コメント
-    # has_many :message_users, through: :messages, source: :user                   # コメントしたユーザー(複数)
 
     acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
     acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
@@ -208,11 +156,6 @@ module Wkbk
     with_options dependent: :destroy do
       has_many :moves_answers  # 手順一致を正解とする答え集
     end
-
-    # with_options allow_destroy: true do
-    #   accepts_nested_attributes_for :moves_answers
-    #   accepts_nested_attributes_for :endpos_answers
-    # end
 
     before_validation do
       if Rails.env.development?
@@ -224,17 +167,11 @@ module Wkbk
         self.title ||= "(title#{self.class.count.next})"
       end
 
-      if source_author.to_s.match(/不詳|不明/)
-        self.source_author = nil
-        self.source_about_key = :unknown
-      end
-
       if Rails.env.test?
         self.lineage_key ||= "手筋"
       end
 
       self.lineage_key ||= "詰将棋"
-      self.source_about ||= SourceAbout.fetch(:ascertained)
       self.key ||= SecureRandom.hex
 
       if lineage.pure_info.mate_validate_on
@@ -257,21 +194,13 @@ module Wkbk
       normalize_zenkaku_to_hankaku(*[
                                      :title,
                                      :description,
-                                     :hint_desc,
                                      :direction_message,
-                                     :source_author,
-                                     :source_media_name,
                                    ])
 
       normalize_blank_to_nil(*[
                                :title,
                                :description,
-                               :hint_desc,
                                :direction_message,
-                               :source_author,
-                               :source_media_name,
-                               :source_media_url,
-                               :source_published_on,
                              ])
     end
 
@@ -281,27 +210,22 @@ module Wkbk
     end
 
     with_options allow_blank: true do
-      # validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
+      validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
       validates :description, length: { maximum: 1024 }
-
-      # validates :init_sfen # , uniqueness: { case_sensitive: true }
-      # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     end
 
-    validate do
-      if false
-        if changes_to_save[:book_id] && book
-          if book.folder_key == :public && folder_key === :private
-            errors.add(:base, "公開している問題集に非公開の問題は入れられません")
-          end
-        end
-      end
-    end
+    # validate do
+    #   if false
+    #     if changes_to_save[:book_id] && book
+    #       if book.folder_key == :public && folder_key === :private
+    #         errors.add(:base, "公開している問題集に非公開の問題は入れられません")
+    #       end
+    #     end
+    #   end
+    # end
 
     def page_url(options = {})
-      # UrlProxy.wrap2("/wkbk/articles/#{id}")
       UrlProxy.wrap2("/wkbk/articles/#{id}/edit")
-      # Rails.application.routes.url_helpers.url_for([:wkbk, {only_path: false, article_id: id}.merge(options)])
     end
 
     def share_board_png_url
@@ -319,18 +243,6 @@ module Wkbk
     # Twitter画像が表示できる url_for にそのまま渡すパラメータ
     def shared_image_params
       [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, abstract_viewpoint: "black"]
-    end
-
-    def title_with_author
-      [title, author_saku].join(" ")
-    end
-
-    def author_saku
-      if source_about.key == "unknown"
-        "作者不詳"
-      else
-        [source_author || user.name, "作"].join
-      end
     end
 
     def mock_attrs_set
@@ -364,20 +276,9 @@ module Wkbk
                                 :init_sfen,
                                 :title,
                                 :description,
-                                :hint_desc,
                                 :direction_message,
                                 :mate_skip,
-
-                                :source_about_key,
-                                :source_author,
-                                :source_media_name,
-                                :source_media_url,
-                                :source_published_on,
                                 :owner_tag_list,
-
-                                :difficulty_level,
-                                :time_limit_sec,
-                                # :folder_key,
                                 :lineage_key,
                               ])
 
@@ -412,20 +313,6 @@ module Wkbk
         SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
         ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
         # User.bot.lobby_speak("#{user.name}さんが#{linked_title}を#{state}しました")
-      end
-    end
-
-    def source_about_key
-      source_about.key
-    end
-
-    def source_about_key=(key)
-      self.source_about = SourceAbout.fetch(key)
-    end
-
-    def source_about_unknown_name
-      if source_about.key == "unknown"
-        "作者不詳"
       end
     end
 
@@ -464,19 +351,13 @@ module Wkbk
                 only: [
                   :id,
                   :init_sfen,
-                  :time_limit_sec,
-                  :difficulty_level,
                   :title,
                   :description,
-                  :hint_desc,
                   :direction_message,
                   :mate_skip,
                   :owner_tag_list,
-                  :source_author,
-                  :source_media_url,
                 ],
                 methods: [
-                  :source_about_key,
                 ],
                 include: {
                   user: { only: [:id, :name, :key], methods: [:avatar_path],},
@@ -491,7 +372,6 @@ module Wkbk
     def as_json_type6
       as_json({
                 methods: [
-                  :source_about_key,
                   :lineage_key,
                 ],
                 include: {
@@ -547,5 +427,3 @@ module Wkbk
     end
   end
 end
-# ~> -:39:in `<module:Wkbk>': uninitialized constant Wkbk::ApplicationRecord (NameError)
-# ~>    from -:38:in `<main>'
