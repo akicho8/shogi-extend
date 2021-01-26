@@ -2,13 +2,16 @@
 .WkbkArticleEditForm
   .columns.is-gapless
     .column
-      b-field.lineage_key(label="本" label-position="on-border")
+      b-field(label="タイトル" label-position="on-border")
+        b-input(v-model.trim="base.article.title" required)
+
+      b-field(label="解説" label-position="on-border")
+        b-input(v-model.trim="base.article.description" type="textarea" rows="8")
+
+      b-field.lineage_key(label="問題集" label-position="on-border")
         b-select(v-model="base.article.book_id" expanded)
           option(:value="null")
           option(v-for="e in base.books" :value="e.id") {{e.title}}
-
-      b-field(label="タイトル" label-position="on-border")
-        b-input(v-model.trim="base.article.title" required)
 
       b-field(label="ヒント" label-position="on-border" v-if="base.config.hint_enable")
         b-input(v-model.trim="base.article.hint_desc")
@@ -20,13 +23,10 @@
       b-field(label="制限時間" label-position="on-border" v-if="base.config.time_limit_sec_enable")
         b-timepicker(v-model="base.article.time_limit_clock" icon="clock" :enable-seconds="true" :mobile-native="false")
 
-      b-field(label="解説" label-position="on-border")
-        b-input(v-model.trim="base.article.description" type="textarea" rows="3")
-
       b-field(label="難易度" custom-class="is-small" v-if="base.config.difficulty_level_enable")
         b-rate(v-model="base.article.difficulty_level" spaced :max="base.config.difficulty_level_max" :show-score="false")
 
-      b-field(label="メッセージ" label-position="on-border" message="問題と一緒に表示する文言です。何手指してほしいかや、ヒントを伝えたいときだけ入力してください。基本未入力でかまいません")
+      b-field(label="出題時の一言" label-position="on-border" message="何手指してほしいかやヒントを伝えたいときだけ入力してください")
         b-input(v-model.trim="base.article.direction_message" placeholder="3手指してください")
 
       b-field(label="タグ" label-position="on-border")
@@ -60,10 +60,10 @@
           b-field(label="出典URL" label-position="on-border")
             b-input(v-model.trim="base.article.source_media_url" type="url")
 
-      b-field(label="表示範囲" custom-class="is-small" v-if="base.FolderInfo")
-        b-field.is-marginless
-          template(v-for="row in base.FolderInfo.values")
-            b-radio-button(v-model="base.article.folder_key" :native-value="row.key") {{row.name}}
+      //- b-field(label="表示範囲" custom-class="is-small" v-if="base.FolderInfo")
+      //-   b-field.is-marginless
+      //-     template(v-for="row in base.FolderInfo.values")
+      //-       b-radio-button(v-model="base.article.folder_key" :native-value="row.key") {{row.name}}
 </template>
 
 <script>

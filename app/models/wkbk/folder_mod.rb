@@ -9,11 +9,11 @@ module Wkbk::FolderMod
 
     scope :folder_eq, -> type { joins(:folder).where(Wkbk::Folder.arel_table[:type].eq("Wkbk::#{Wkbk::FolderInfo.fetch(type).key.to_s.classify}Box")) }
 
-    before_validation do
-      if user
-        self.folder_key ||= :private
-      end
-    end
+    # before_validation do
+    #   if user
+    #     self.folder_key ||= :private
+    #   end
+    # end
   end
 
   def folder_key_eq(key)

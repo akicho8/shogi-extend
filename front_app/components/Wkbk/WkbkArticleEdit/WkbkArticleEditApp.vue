@@ -80,11 +80,10 @@ export default {
 
   fetch() {
     const params = {
-      remote_action: "article_edit",
       ...this.$route.params,
       ...this.$route.query,
     }
-    return this.$axios.$get("/api/wkbk.json", {params}).then(e => {
+    return this.$axios.$get("/api/wkbk/articles/edit.json", {params}).then(e => {
       if (!e.article) {
         this.$nuxt.error({statusCode: 403, message: "非公開のためアクセスできるのは作成者だけです"})
         return
@@ -244,7 +243,7 @@ export default {
       }
 
       if (this.article.new_record_p) {
-        if (this.valid_count === 0) {
+        if (this.valid_count === 0 && !this.development_p) {
           this.toast_warn("検証してください")
           return
         }
@@ -257,15 +256,13 @@ export default {
       // https://day.js.org/docs/en/durations/diffing
       this.article.time_limit_clock_to_sec()
       const before_save_button_name = this.save_button_name
-      this.api_put("article_save", {article: this.article}, e => {
+      return this.$axios.$post("/api/wkbk/articles/save.json", {article: this.article}).then(e => {
         if (e.form_error_message) {
           this.toast_warn(e.form_error_message)
         }
         if (e.article) {
           this.article = new Article(e.article)
-
           this.toast_ok(`${before_save_button_name}しました`)
-
           this.$router.push({name: "library-articles", query: {scope: this.article.folder_key}})
         }
       })

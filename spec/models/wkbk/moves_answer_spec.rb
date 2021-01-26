@@ -69,12 +69,12 @@ module Wkbk
         article.save!
 
         moves_answer = article.moves_answers.create(moves_str: MATE_HAND)
-        moves_answer.errors.full_messages # => ["駒の数が変です。正確には香が1つ少ないのと歩が1つ少ないです。玉方の持駒を限定している詰将棋は「玉方持駒限定詰将棋」にしといてください"]
+        moves_answer.errors.full_messages # => ["駒の数が変です。正確には香が1つ少ないのと歩が1つ少ないです。玉方の持駒を限定している詰将棋は「持駒限定詰将棋」にしといてください"]
         assert { moves_answer.errors.present? }
       end
 
       it "validate5_all_piece_not_exists" do
-        moves_answer = test1("玉方持駒限定詰将棋").moves_answers.create(moves_str: MATE_HAND)
+        moves_answer = test1("持駒限定詰将棋").moves_answers.create(moves_str: MATE_HAND)
         moves_answer.errors.full_messages # => ["玉方の持駒が限定されていません。「詰将棋」の間違いではないですか？"]
         assert { moves_answer.errors.present? }
       end

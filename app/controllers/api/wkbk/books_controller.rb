@@ -1,6 +1,42 @@
 module Api
-  class WkbkController
-    concern :BookMod do
+  module Wkbk
+    class BooksController < ApplicationController
+      # 問題一覧
+      # http://localhost:3000/api/wkbk.json?remote_action=books_index_fetch
+      # http://localhost:3000/api/wkbk.json?remote_action=books_index_fetch&folder_key=active
+      # http://localhost:3000/api/wkbk.json?remote_action=books_index_fetch&sort_column=lineage_key&sort_order=desc
+      # app/javascript/wkbk_app/models/book_column_info.js
+      def books_index_fetch
+        s = Wkbk::Book.all
+        if v = params[:folder_key]
+          if v == "everyone"
+            s = s.public_only
+          else
+            if current_user
+              s = s.where(user: current_user)
+              s = s.folder_eq(v)
+            else
+              s = s.none
+            end
+          end
+        end
+        if v = params[:tag].presence
+          s = s.tagged_with(v)
+        end
+        s = page_scope(s)       # page_mod.rb
+        s = sort_scope_for_books(s)
+
+        retv = {}
+        retv[:books]       = s.as_json(Wkbk::Book.json_type5)
+        retv[:book_counts] = {}
+        if current_user
+          retv[:book_counts].update(current_user.wkbk_books.group(:folder_id).count.transform_keys { |e| Wkbk::Folder.find(e).key })
+        end
+        retv[:book_counts].update(everyone: Wkbk::Book.public_only.count)
+        retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key], tag: params[:tag]}
+        retv
+      end
+
       # http://localhost:3000/api/wkbk.json?remote_action=book_show_fetch&book_id=2
       def book_show_fetch
         info = {}
@@ -64,44 +100,6 @@ module Api
         info
       end
 
-      # 問題一覧
-      # http://localhost:3000/api/wkbk.json?remote_action=books_index_fetch
-      # http://localhost:3000/api/wkbk.json?remote_action=books_index_fetch&folder_key=active
-      # http://localhost:3000/api/wkbk.json?remote_action=books_index_fetch&sort_column=lineage_key&sort_order=desc
-      # app/javascript/wkbk_app/models/book_column_info.js
-      def books_index_fetch
-        params[:per] ||= Wkbk::Config[:api_books_fetch_per]
-
-        s = Wkbk::Book.all
-        if v = params[:folder_key]
-          if v == "everyone"
-            s = s.public_only
-          else
-            if current_user
-              s = s.where(user: current_user)
-              s = s.folder_eq(v)
-            else
-              s = s.none
-            end
-          end
-        end
-        if v = params[:tag].presence
-          s = s.tagged_with(v)
-        end
-        s = page_scope(s)       # page_mod.rb
-        s = sort_scope_for_books(s)
-
-        retv = {}
-        retv[:books]       = s.as_json(Wkbk::Book.json_type5)
-        retv[:book_counts] = {}
-        if current_user
-          retv[:book_counts].update(current_user.wkbk_books.group(:folder_id).count.transform_keys { |e| Wkbk::Folder.find(e).key })
-        end
-        retv[:book_counts].update(everyone: Wkbk::Book.public_only.count)
-        retv[:page_info]       = {**page_info(s), **sort_info, folder_key: params[:folder_key], tag: params[:tag]}
-        retv
-      end
-
       def sort_scope_for_books(s)
         if sort_column && sort_order
           columns = sort_column.scan(/\w+/)
@@ -136,6 +134,11 @@ module Api
           return { form_error_message: error.message }
         end
         { book: book.as_json(Wkbk::Book.json_type5) }
+      end
+
+      # PageMod override
+      def default_per
+        Wkbk::Config[:api_books_fetch_per]
       end
     end
   end

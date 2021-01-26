@@ -9,6 +9,14 @@ export class Article extends ModelBase {
     this.time_limit_sec_to_clock()
   }
 
+  get folder_key() {
+    if (this.book) {
+      return this.book.folder_key
+    } else {
+      return "private"
+    }
+  }
+
   //////////////////////////////////////////////////////////////////////////////// 権限
 
   owner_p(user) {

@@ -15,7 +15,7 @@ b-table.WkbkArticleIndexTable.mx-2.mt-0(
   @page-change="base.page_change_handle"
 
   backend-sorting
-  default-sort-direction="asc"
+  default-sort-direction="desc"
   :default-sort="[base.sort_column, base.sort_order]"
   @sort="base.sort_handle"
 
@@ -49,7 +49,7 @@ b-table.WkbkArticleIndexTable.mx-2.mt-0(
     nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}")
       | {{string_truncate(row.user.name, {length: 20})}}
 
-  b-table-column(v-slot="{row}" custom-key="book_title" field="book_title" :label="base.ArticleIndexColumnInfo.fetch('book_title').short_name" sortable :visible="!!base.visible_hash.book_title")
+  b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').short_name" sortable :visible="!!base.visible_hash.book_title")
     nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.book.id}}" v-if="row.book")
       | {{string_truncate(row.book.title, {length: 20})}}({{row.book.articles_count}})
 
@@ -68,7 +68,7 @@ b-table.WkbkArticleIndexTable.mx-2.mt-0(
   b-table-column(v-slot="{row}" custom-key="difficulty_level"  field="difficulty_level"  :label="base.ArticleIndexColumnInfo.fetch('difficulty_level').short_name" sortable numeric :visible="!!base.visible_hash.difficulty_level") {{row.difficulty_level}}
   //- b-table-column(v-slot="{row}" custom-key="time_limit_sec"    field="time_limit_sec"  :label="base.ArticleIndexColumnInfo.fetch('time_limit_sec').short_name" sortable numeric :visible="!!base.visible_hash.time_limit_sec") {{row.time_limit_sec}}秒
 
-  b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage_key"         :label="base.ArticleIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
+  b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
   b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}
   b-table-column(v-slot="{row}" custom-key="moves_answers_count" field="moves_answers_count" :label="base.ArticleIndexColumnInfo.fetch('moves_answers_count').short_name" sortable numeric :visible="!!base.visible_hash.moves_answers_count") {{row.moves_answers_count}}
 

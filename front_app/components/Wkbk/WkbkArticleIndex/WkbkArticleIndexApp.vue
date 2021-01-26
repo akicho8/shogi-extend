@@ -40,13 +40,12 @@ export default {
     this.scope       = this.$route.query.scope || this.scope // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per
-    this.sort_column = this.$route.query.sort_column
-    this.sort_order  = this.$route.query.sort_order
+    this.sort_column = this.$route.query.sort_column || "updated_at"
+    this.sort_order  = this.$route.query.sort_order || "desc"
     this.tag         = this.$route.query.tag
 
+    // this.url_params とは異なり最終的な初期値を設定する
     const params = {
-      remote_action: "article_index",
-      // ...this.url_params でも良いかもしれないが用途が異なるので今のところ別にしている
       scope:       this.scope,
       page:        this.page,
       per:         this.per,
@@ -55,7 +54,7 @@ export default {
       tag:         this.tag,
     }
 
-    return this.$axios.$get("/api/wkbk.json", {params}).then(e => {
+    return this.$axios.$get("/api/wkbk/articles.json", {params}).then(e => {
       this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
       this.articles       = e.articles.map(e => new Article(e))
       this.total          = e.total

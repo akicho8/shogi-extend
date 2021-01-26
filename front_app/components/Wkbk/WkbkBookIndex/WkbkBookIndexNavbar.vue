@@ -8,6 +8,9 @@ MainNavbar.WkbkBookIndexNavbar(:spaced="false")
     //-     | {{base.page_info.tag}}
 
   template(slot="end")
+    NavbarItemLogin
+    NavbarItemProfileLink
+
     //- NavbarItemLogin
     //- NavbarItemProfileLink
 

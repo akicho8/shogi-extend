@@ -64,7 +64,7 @@ module Wkbk::Article::ImportExportMod
     end
 
     def import_all(options = {})
-      persistent_records.take(options[:max] || 200).each do |e|
+      persistent_records.take(options[:max] || 50).each do |e|
         begin
           import_one(e, options)
         rescue => error

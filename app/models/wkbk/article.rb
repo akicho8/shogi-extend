@@ -88,7 +88,7 @@ module Wkbk
 
         :difficulty_level    => 1,
         :lineage_key         => "詰将棋",
-        :folder_key          => "public",
+        # :folder_key        => "public",
 
         # 他者が作者
         :source_about_key    => "ascertained",
@@ -134,7 +134,7 @@ module Wkbk
     def self.json_type5
       {
         methods: [
-          :folder_key,
+          # :folder_key,
           :lineage_key,
           :source_about_key,
         ],
@@ -150,6 +150,9 @@ module Wkbk
               :articles_count,
               # :created_at,
               # :updated_at,
+            ],
+            methods: [
+              :folder_key,
             ],
           },
         },
@@ -239,6 +242,16 @@ module Wkbk
       else
         # 手筋などのときは詰みチェックをニュートラルにしとく
         self.mate_skip = nil
+      end
+
+      if changes_to_save[:book_id]
+        if book
+          self.folder_key = book.folder_key
+        else
+          self.folder_key = :private
+        end
+      else
+        self.folder_key ||= :private
       end
 
       normalize_zenkaku_to_hankaku(*[
@@ -364,7 +377,7 @@ module Wkbk
 
                                 :difficulty_level,
                                 :time_limit_sec,
-                                :folder_key,
+                                # :folder_key,
                                 :lineage_key,
                               ])
 

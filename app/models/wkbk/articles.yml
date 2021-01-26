@@ -928,7 +928,7 @@
   folder_key: public
   owner_tag_list:
   - 古典詰将棋
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 170
@@ -1234,7 +1234,7 @@
   folder_key: public
   owner_tag_list:
   - 古典詰将棋
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 170
@@ -1264,7 +1264,7 @@
   folder_key: public
   owner_tag_list:
   - 古典詰将棋
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 170
@@ -3324,7 +3324,7 @@
   owner_tag_list:
   - 古典詰将棋
   - 11手詰め
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: unknown
   user:
     id: 1002
@@ -3367,7 +3367,7 @@
   owner_tag_list:
   - 古典詰将棋
   - 21手詰め
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: unknown
   user:
     id: 1002
@@ -3414,7 +3414,7 @@
   owner_tag_list:
   - 打ち歩詰め回避
   - 7手詰め
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: unknown
   user:
     id: 1002
@@ -3538,7 +3538,7 @@
   owner_tag_list:
   - 美濃囲い
   - 15手詰め
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 1002
@@ -3570,7 +3570,7 @@
   owner_tag_list:
   - 美濃囲い
   - 19手詰め
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 1002
@@ -4687,7 +4687,7 @@
   owner_tag_list:
   - 飛車
   - 29手詰め
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 1002
@@ -4758,7 +4758,7 @@
   folder_key: public
   owner_tag_list:
   - 13手詰め
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 1002
@@ -4940,7 +4940,7 @@
   owner_tag_list:
   - 美濃囲い
   - 9手詰め
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 1002
@@ -10180,7 +10180,7 @@
   mate_skip: false
   folder_key: public
   owner_tag_list: []
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 8
@@ -10206,7 +10206,7 @@
   mate_skip: false
   folder_key: public
   owner_tag_list: []
-  lineage_key: 玉方持駒限定詰将棋
+  lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
     id: 8

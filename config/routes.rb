@@ -125,15 +125,26 @@ Rails.application.routes.draw do
     get "actb(.:format)", to: "actb#show",   format: nil # /actb.zip もある
     put "actb(.:format)", to: "actb#update", format: nil
 
-    get "wkbk(.:format)", to: "wkbk#show",   format: nil # /wkbk.zip もある
-    put "wkbk(.:format)", to: "wkbk#update", format: nil
-
     get "emox/resource_fetch(.:format)",                  to: "emox#resource_fetch"
     put "emox/session_lock_token_set_handle(.:format)",   to: "emox#session_lock_token_set_handle"
     put "emox/session_lock_token_valid_handle(.:format)", to: "emox#session_lock_token_valid_handle"
     put "emox/rule_key_set_handle(.:format)",             to: "emox#rule_key_set_handle"
     put "emox/debug_matching_add_handle(.:format)",       to: "emox#debug_matching_add_handle"
     put "emox/matching_users_clear_handle(.:format)",     to: "emox#matching_users_clear_handle"
+
+    namespace :wkbk, format: :json do
+      resource :books, only: [] do
+        get :index
+        get :show
+        get :edit
+        post :save
+      end
+      resource :articles, only: [] do
+        get :index
+        get :edit
+        post :save
+      end
+    end
 
     resource :session, only: [] do
       get :auth_user_fetch

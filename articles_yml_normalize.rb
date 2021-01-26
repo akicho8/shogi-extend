@@ -14,8 +14,8 @@ list = list.reject { |e| reject_keys.include?(e["key"]) }
 list = list.find_all { |e| e["folder_key"] == "active" }
 list.each { |e| e["folder_key"] = "public" }
 list.each { |e| e["mate_skip"] = mate_skip_keys.include?(e["key"]) }
-list.each { |e| e["lineage_key"] = e["lineage_key"].gsub("玉方持駒限定の似非詰将棋", "玉方持駒限定詰将棋") }
-list.each { |e| gentei.include?(e["key"]) ? e["lineage_key"] = "玉方持駒限定詰将棋" : nil }
+list.each { |e| e["lineage_key"] = e["lineage_key"].gsub("玉方持駒限定の似非詰将棋", "持駒限定詰将棋") }
+list.each { |e| gentei.include?(e["key"]) ? e["lineage_key"] = "持駒限定詰将棋" : nil }
 list.each { |e| jissen.include?(e["key"]) ? e["lineage_key"] = "実戦詰め筋" : nil }
 list.each { |e| tsume.include?(e["key"]) ? e["lineage_key"] = "詰将棋" : nil}
 list.count                      # => 511

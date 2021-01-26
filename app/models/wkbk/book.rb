@@ -40,12 +40,12 @@ module Wkbk
         :title       => nil,
         :description => nil,
         :hint_desc   => nil,
-        :folder_key  => "active",
+        :folder_key  => :private,
       }
 
       if Rails.env.development?
         default.update({
-                         :title            => "(title)",
+                         :title => "(title)",
                        })
       end
 
@@ -159,6 +159,7 @@ module Wkbk
         self.title ||= "(title#{self.class.count.next})"
       end
 
+      self.folder_key ||= :private
       self.key ||= SecureRandom.hex
 
       normalize_zenkaku_to_hankaku(:title, :description)
