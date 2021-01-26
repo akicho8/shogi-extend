@@ -1,5 +1,5 @@
 <template lang="pug">
-b-table.WkbkArticleIndexTable.mx-2.mt-0(
+b-table.WkbkArticleIndexTable(
   v-if="base.articles"
   :loading="base.$fetchState.pending"
   :data="base.articles"
