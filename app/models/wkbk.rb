@@ -12,7 +12,6 @@ module Wkbk
 
     [
       Wkbk::Lineage,
-      Wkbk::SourceAbout,
       Wkbk::Article,
     ].each do |e|
       e.setup(options)

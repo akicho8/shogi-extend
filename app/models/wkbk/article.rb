@@ -181,15 +181,15 @@ module Wkbk
         self.mate_skip = nil
       end
 
-      if changes_to_save[:book_id]
-        if book
-          self.folder_key = book.folder_key
-        else
-          self.folder_key = :private
-        end
-      else
-        self.folder_key ||= :private
-      end
+      # if changes_to_save[:book_id]
+      #   if book
+      #     self.folder_key = book.folder_key
+      #   else
+      #     self.folder_key = :private
+      #   end
+      # else
+      #   self.folder_key ||= :private
+      # end
 
       normalize_zenkaku_to_hankaku(*[
                                      :title,
@@ -225,7 +225,7 @@ module Wkbk
     # end
 
     def page_url(options = {})
-      UrlProxy.wrap2("/wkbk/articles/#{id}/edit")
+      UrlProxy.wrap2("/library/articles/#{id}/edit")
     end
 
     def share_board_png_url
@@ -312,7 +312,6 @@ module Wkbk
       if state = saved_after_state
         SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
         ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
-        # User.bot.lobby_speak("#{user.name}さんが#{linked_title}を#{state}しました")
       end
     end
 
@@ -404,24 +403,25 @@ module Wkbk
 
     # 保存直後の状態
     def saved_after_state
-      case
-      when public_folder_posted?
+      if new_record?
         "投稿"
-      when folder.kind_of?(PublicBox) && current_hash != @save_before_hash
+      else
         "更新"
       end
     end
 
     # 公開した直後か？
-    def public_folder_posted?
-      saved_change_to_attribute?(:folder_id) && folder.kind_of?(PublicBox)
-    end
+    # def public_folder_posted?
+    #   saved_change_to_attribute?(:folder_id) && folder.kind_of?(PublicBox)
+    # end
 
     # 変更を検知するためのハッシュ(重要なデータだけにする)
     def current_hash
       ary = [
         init_sfen,
         *moves_answers.collect(&:moves_str),
+        title,
+        description,
       ]
       Digest::MD5.hexdigest(ary.join(":"))
     end

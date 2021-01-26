@@ -157,9 +157,7 @@ module Wkbk
     end
 
     def page_url(options = {})
-      # UrlProxy.wrap2("/wkbk/books/#{id}")
       UrlProxy.wrap2("/library/books/#{id}")
-      # Rails.application.routes.url_helpers.url_for([:wkbk, {only_path: false, book_id: id}.merge(options)])
     end
 
     def mock_attrs_set

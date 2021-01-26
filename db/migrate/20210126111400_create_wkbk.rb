@@ -24,7 +24,6 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.string :key,                      null: false, index: true
 
         t.belongs_to :user,                 null: false, foreign_key: true,                            comment: "作成者"
-        t.belongs_to :folder,               null: false, foreign_key: {to_table: :wkbk_folders},       comment: "フォルダ"
         t.belongs_to :lineage,              null: false, foreign_key: {to_table: :wkbk_lineages},      comment: "種類"
         t.belongs_to :book,                 null: true,  foreign_key: {to_table: :wkbk_books},         comment: "本"
 
@@ -34,10 +33,9 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.integer :turn_max,                null: true,  index: true,                                  comment: "最大手数"
         t.boolean :mate_skip,               null: true,                                                comment: "詰みチェックをスキップする"
         t.string :direction_message,        null: true,                                                comment: "メッセージ"
+        t.integer :moves_answers_count, default: 0, null: false, index: false, comment: "解答数"
 
         t.timestamps
-
-        t.integer :moves_answers_count, default: 0, null: false, index: false, comment: "解答数"
       end
 
       create_table :wkbk_source_abouts, force: true do |t|
