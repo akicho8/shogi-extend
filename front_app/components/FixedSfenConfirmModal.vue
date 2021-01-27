@@ -1,13 +1,14 @@
 <template lang="pug">
-.modal-card.ActbHaitiKimeruModal(:base="base" style="width: auto")
+.modal-card.FixedSfenConfirmModal
   header.modal-card-head
     p.modal-card-title.is-size-6 局面を確定させてください
   section.modal-card-body
     CustomShogiPlayer(
       sp_mobile_vertical="is_mobile_vertical_off"
       sp_run_mode="view_mode"
-      :sp_body="yomikonda_sfen"
+      :sp_body="readed_source_sfen"
       :sp_turn="sp_turn"
+      sp_summary="is_summary_off"
       sp_slider="is_slider_on"
       sp_controller="is_controller_on"
       @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
@@ -17,20 +18,15 @@
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
-
 export default {
-  name: "ActbHaitiKimeruModal",
-  mixins: [
-    support_child,
-  ],
+  name: "FixedSfenConfirmModal",
   props: {
-    yomikonda_sfen: { type: String, required: true,              },
+    readed_source_sfen: { type: String, required: true,              },
     sp_turn:     { type: Number, required: true, default: -1, },
   },
   data() {
     return {
-      kyokumen_kimeta_sfen: null,
+      fixed_sfen: null,
     }
   },
   created() {
@@ -38,18 +34,17 @@ export default {
   },
   methods: {
     mediator_snapshot_sfen_set(sfen) {
-      this.kyokumen_kimeta_sfen = sfen
+      this.fixed_sfen = sfen
     },
     submit_handle() {
-      this.$emit("update:kyokumen_kimeta_sfen", this.kyokumen_kimeta_sfen)
+      this.$emit("update:fixed_sfen", this.fixed_sfen)
     },
   },
 }
 </script>
 
 <style lang="sass">
-@import "../support.sass"
-.ActbHaitiKimeruModal
+.FixedSfenConfirmModal
   .modal-card-body
     +mobile
       padding: 0

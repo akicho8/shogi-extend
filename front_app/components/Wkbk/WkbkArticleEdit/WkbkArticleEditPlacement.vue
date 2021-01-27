@@ -41,8 +41,8 @@
 <script>
 import { support_child } from "./support_child.js"
 
-import WkbkAnySourceReadModal from "../../WkbkAnySourceReadModal.vue"
-import WkbkHaitiKimeruModal   from "../../WkbkHaitiKimeruModal.vue"
+import AnySourceReadModal from "../../AnySourceReadModal.vue"
+import FixedSfenConfirmModal   from "../../FixedSfenConfirmModal.vue"
 
 export default {
   name: "WkbkArticleEditPlacement",
@@ -51,7 +51,7 @@ export default {
   ],
   data() {
     return {
-      yomikonda_sfen: null,
+      readed_source_sfen: null,
       sp_body: null,
     }
   },
@@ -82,7 +82,7 @@ export default {
         parent: this,
         hasModalCard: true,
         animation: "",
-        component: WkbkAnySourceReadModal,
+        component: AnySourceReadModal,
         events: {
           "update:any_source": any_source => {
             this.sound_play("click")
@@ -91,11 +91,11 @@ export default {
 
               if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN
                 this.toast_ok("反映しました")
-                this.kyokumen_set(e.body)
+                this.fixed_sfen_set(e.body)
               } else {
                 // moves があるので局面を確定してもらう
                 const sp_turn = this.sp_turn_guess(any_source) // URLから現在の手数を推測
-                this.kyokumen_kimeru_handle({yomikonda_sfen: e.body, sp_turn: sp_turn})
+                this.fixed_sfen_confirm_handle({readed_source_sfen: e.body, sp_turn: sp_turn})
               }
             })
           },
@@ -114,19 +114,19 @@ export default {
     },
 
     // 棋譜の読み込みタップ時の処理
-    kyokumen_kimeru_handle(props) {
+    fixed_sfen_confirm_handle(props) {
       this.toast_ok("局面を確定させてください")
       const modal_instance = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         props: props,
         animation: "",
-        component: WkbkHaitiKimeruModal,
+        component: FixedSfenConfirmModal,
         events: {
-          "update:kyokumen_kimeta_sfen": kyokumen_kimeta_sfen => {
+          "update:fixed_sfen": fixed_sfen => {
             this.sound_play("click")
             this.toast_ok("反映しました")
-            this.kyokumen_set(kyokumen_kimeta_sfen)
+            this.fixed_sfen_set(fixed_sfen)
             modal_instance.close()
           },
         },
@@ -138,7 +138,7 @@ export default {
     // なので更新したと思っても最初の状態と変化していないので盤面に反映されない
     // こういうときは引数を渡して変化したかどうかとかそんなまわりくどいことはせずに
     // 直接更新すればいい
-    kyokumen_set(str) {
+    fixed_sfen_set(str) {
       this.sp_body = str
       this.piece_box_piece_couns_adjust()
     },
