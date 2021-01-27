@@ -5,8 +5,9 @@
     p page: {{page}}
   WkbkBookIndexSidebar(:base="base")
   WkbkBookIndexNavbar(:base="base")
-  WkbkBookIndexTab(:base="base")
-  WkbkBookIndexTable(:base="base")
+  .container
+    WkbkBookIndexTab(:base="base")
+    WkbkBookIndexTable(:base="base")
   DebugPre {{$data}}
 </template>
 

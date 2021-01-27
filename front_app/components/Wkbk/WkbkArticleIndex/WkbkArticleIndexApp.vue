@@ -5,9 +5,10 @@
     p page: {{page}}
   WkbkArticleIndexSidebar(:base="base")
   WkbkArticleIndexNavbar(:base="base")
-  WkbkArticleIndexTab(:base="base")
-  WkbkArticleIndexTag(:base="base")
-  WkbkArticleIndexTable(:base="base")
+  .container
+    WkbkArticleIndexTab(:base="base")
+    WkbkArticleIndexTag(:base="base")
+    WkbkArticleIndexTable(:base="base")
   DebugPre {{$data}}
 </template>
 
