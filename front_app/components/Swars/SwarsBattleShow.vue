@@ -7,6 +7,7 @@
         .mx-4.my-4
           b-menu
             b-menu-list(label="Action")
+              b-menu-item(label="問題作成"               tag="nuxt-link" :to="{name: 'library-articles-new', query: {body: record.sfen_body, turn: new_turn, viewpoint: new_viewpoint}}" @click.native="sound_play('click')")
               b-menu-item(label="共有将棋盤に転送"       tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}" @click.native="sound_play('click')")
               b-menu-item(label="スタイルエディタに転送" tag="nuxt-link" :to="{name: 'style-editor', query: style_editor_query}" @click.native="sound_play('click')")
 

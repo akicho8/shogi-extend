@@ -38,6 +38,7 @@ export default {
     width: 100%
     +mobile
       margin-top: 0.5rem
+
     +tablet
       margin-top: $wkbk_share_gap
       padding-top: unset

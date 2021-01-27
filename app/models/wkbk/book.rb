@@ -90,7 +90,6 @@ module Wkbk
                 only: [
                   :moves_count,
                   :moves_str,
-                  :end_sfen,
                   :moves_human_str,
                 ],
               },

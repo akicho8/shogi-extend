@@ -1190,6 +1190,7 @@ ActiveRecord::Schema.define(version: 2021_01_26_111400) do
     t.bigint "lineage_id", null: false, comment: "種類"
     t.bigint "book_id", comment: "本"
     t.string "init_sfen", null: false, comment: "問題"
+    t.string "viewpoint", null: false, comment: "視点"
     t.string "title", comment: "タイトル"
     t.string "description", limit: 1024, comment: "説明"
     t.integer "turn_max", comment: "最大手数"
@@ -1241,7 +1242,6 @@ ActiveRecord::Schema.define(version: 2021_01_26_111400) do
     t.bigint "article_id", null: false, comment: "問題"
     t.integer "moves_count", null: false, comment: "N手"
     t.string "moves_str", null: false, comment: "連続した指し手"
-    t.string "end_sfen", comment: "最後の局面"
     t.string "moves_human_str", comment: "人間向け指し手"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

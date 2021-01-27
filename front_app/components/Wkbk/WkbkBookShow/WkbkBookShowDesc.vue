@@ -1,8 +1,10 @@
 <template lang="pug">
 .modal-card.WkbkBookShowDesc
-  header.modal-card-head
-    p.modal-card-title.is-size-6
+  header.modal-card-head.is-justify-content-space-between
+    p.modal-card-title.is-size-6.is-flex-grow-0
       | {{base.book.title}}
+    p.modal-card-title.is-size-6.is-flex-grow-0
+      | {{base.book.user.name}}
   section.modal-card-body
     .content
       p(v-html="simple_format(auto_link(base.book.description))")

@@ -8,7 +8,7 @@
         sp_mobile_vertical="is_mobile_vertical_off"
         sp_run_mode="play_mode"
         :sp_body="base.article.init_sfen"
-        :sp_flip_if_white="true"
+        :sp_viewpoint="base.article.viewpoint"
         :sp_turn="0"
         sp_summary="is_summary_off"
         sp_slider="is_slider_on"

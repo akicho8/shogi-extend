@@ -49,7 +49,7 @@ export default {
   ],
   data() {
     return {
-      readed_source_sfen: null,
+      default_sp_body: null,
       sp_body: null,
     }
   },
@@ -80,7 +80,7 @@ export default {
               } else {
                 // moves があるので局面を確定してもらう
                 const sp_turn = this.sp_turn_guess(any_source) // URLから現在の手数を推測
-                this.fixed_sfen_confirm_handle({readed_source_sfen: e.body, sp_turn: sp_turn})
+                this.fixed_sfen_confirm_handle({default_sp_body: e.body, sp_turn: sp_turn})
               }
             })
           },

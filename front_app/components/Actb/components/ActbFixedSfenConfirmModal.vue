@@ -6,7 +6,7 @@
     CustomShogiPlayer(
       sp_mobile_vertical="is_mobile_vertical_off"
       sp_run_mode="view_mode"
-      :sp_body="readed_source_sfen"
+      :sp_body="default_sp_body"
       :sp_turn="sp_turn"
       sp_slider="is_slider_on"
       sp_controller="is_controller_on"
@@ -25,7 +25,7 @@ export default {
     support_child,
   ],
   props: {
-    readed_source_sfen: { type: String, required: true,              },
+    default_sp_body: { type: String, required: true,              },
     sp_turn:     { type: Number, required: true, default: -1, },
   },
   data() {

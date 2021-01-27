@@ -20,6 +20,7 @@ module Wkbk::Article::ImportExportMod
                            only: [
                              :key,
                              :init_sfen,
+                             :viewpoint,
                              :title,
                              :description,
                              :direction_message,
@@ -60,7 +61,9 @@ module Wkbk::Article::ImportExportMod
         begin
           import_one(e, options)
         rescue => error
-          p [error, e]
+          tp e
+          tp error
+          raise error
         end
       end
     end
@@ -86,6 +89,7 @@ module Wkbk::Article::ImportExportMod
       record.assign_attributes(e.slice(*[
                                          :lineage_key,
                                          :init_sfen,
+                                         :viewpoint,
                                          :title,
                                          :description,
                                          :direction_message,

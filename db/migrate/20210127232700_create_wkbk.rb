@@ -28,6 +28,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.belongs_to :book,                 null: true,  foreign_key: {to_table: :wkbk_books},         comment: "本"
 
         t.string :init_sfen,                null: false, index: true,                                  comment: "問題"
+        t.string :viewpoint,                null: false, index: false,                                 comment: "視点"
         t.string :title,                    null: true,  index: false,                                 comment: "タイトル"
         t.string :description, limit: 1024, null: true,  index: false,                                 comment: "説明"
         t.integer :turn_max,                null: true,  index: true,                                  comment: "最大手数"
@@ -49,7 +50,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.belongs_to :article, foreign_key: {to_table: :wkbk_articles}, null: false,               comment: "問題"
         t.integer :moves_count,                                         null: false, index: true,  comment: "N手"
         t.string :moves_str,                                            null: false, index: false, comment: "連続した指し手"
-        t.string :end_sfen,                                             null: true,  index: false, comment: "最後の局面"
+        # t.string :end_sfen,                                             null: true,  index: false, comment: "最後の局面"
         t.string :moves_human_str,                                      null: true,  index: false, comment: "人間向け指し手"
         t.timestamps
       end

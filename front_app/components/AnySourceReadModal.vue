@@ -17,6 +17,11 @@ export default {
     }
   },
   mounted() {
+    if (this.development_p) {
+      if (!this.any_source) {
+        this.any_source = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 8c8d 7g7f 7a6b 5g5f 8d8e"
+      }
+    }
     this.desktop_focus_to(this.$refs.any_source.$refs.textarea)
   },
   methods: {
@@ -34,4 +39,3 @@ export default {
     .button
       font-weight: bold
 </style>
-

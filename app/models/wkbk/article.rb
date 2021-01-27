@@ -28,7 +28,6 @@
 
 module Wkbk
   class Article < ApplicationRecord
-    include FolderMod
     include ImportExportMod
     include InfoMod
 
@@ -66,6 +65,7 @@ module Wkbk
     # Vueでリアクティブになるように空でもカラムは作っておくこと
     def self.default_attributes
       default = {
+        :id                  => nil,
         :book_id             => nil,
         :title               => nil,
         :description         => nil,
@@ -73,8 +73,9 @@ module Wkbk
         :owner_tag_list      => [],
         :moves_answers       => [],
         :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
+        :viewpoint           => "black",
         :mate_skip           => false,
-        :lineage_key         => "詰将棋",
+        :lineage_key         => nil,
         # :folder_key        => "public",
       }
 
@@ -127,6 +128,7 @@ module Wkbk
           :id,
           :book_id,
           :init_sfen,
+          :viewpoint,
           :title,
           :description,
           :owner_tag_list,
@@ -167,6 +169,7 @@ module Wkbk
         self.lineage_key ||= "手筋"
       end
 
+      self.viewpoint ||= "black"
       self.lineage_key ||= "詰将棋"
       self.key ||= SecureRandom.hex
 
@@ -203,6 +206,7 @@ module Wkbk
     with_options presence: true do
       validates :title
       validates :init_sfen
+      validates :viewpoint
     end
 
     with_options allow_blank: true do
@@ -233,12 +237,12 @@ module Wkbk
     end
 
     def share_board_params
-      { body: main_sfen, turn: 0, abstract_viewpoint: "black" }
+      { body: main_sfen, turn: 0, abstract_viewpoint: viewpoint }
     end
 
     # Twitter画像が表示できる url_for にそのまま渡すパラメータ
     def shared_image_params
-      [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, abstract_viewpoint: "black"]
+      [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, abstract_viewpoint: viewpoint]
     end
 
     def mock_attrs_set
@@ -270,6 +274,7 @@ module Wkbk
         attrs = article.slice(*[
                                 :book_id,
                                 :init_sfen,
+                                :viewpoint,
                                 :title,
                                 :description,
                                 :direction_message,
@@ -297,7 +302,7 @@ module Wkbk
             end
 
             moves_answer.moves_str = e[:moves_str]
-            moves_answer.end_sfen = e[:end_sfen]
+            # moves_answer.end_sfen = e[:end_sfen]
             moves_answer.save!
           end
         end
@@ -346,6 +351,7 @@ module Wkbk
                 only: [
                   :id,
                   :init_sfen,
+                  :viewpoint,
                   :title,
                   :description,
                   :direction_message,
@@ -357,7 +363,7 @@ module Wkbk
                 include: {
                   user: { only: [:id, :name, :key], methods: [:avatar_path],},
                   moves_answers: {
-                    only: [:moves_count, :moves_str, :end_sfen],
+                    only: [:moves_count, :moves_str],
                   },
                 },
               })
@@ -365,6 +371,8 @@ module Wkbk
 
     # 詳細用
     def as_json_type6
+      raise
+
       as_json({
                 methods: [
                   :lineage_key,
@@ -376,7 +384,6 @@ module Wkbk
                   },
                   moves_answers: {},
                   folder: { only: [], methods: [:key, :name, :type] },
-                  messages: ArticleMessage.json_struct_type8,
                 },
               })
     end
