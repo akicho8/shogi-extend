@@ -1,8 +1,7 @@
 <template lang="pug">
 b-table.WkbkBookIndexTable(
-  v-if="base.books"
   :loading="base.$fetchState.pending"
-  :data="base.books"
+  :data="base.books || []"
   :mobile-cards="false"
   hoverable
   :narrowed="false"
@@ -50,7 +49,7 @@ b-table.WkbkBookIndexTable(
           nuxt-link(:to="{name: 'library-articles-new', query: {book_id: row.id}}"        @click.native="sound_play('click')") 問題追加
           nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.id}}" @click.native="sound_play('click')") 編集
 
-  template(slot="empty")
+  template(slot="empty" v-if="base.books != null")
     section.section.is-unselectable
       .content.has-text-grey.has-text-centered
         p

@@ -12,7 +12,7 @@ export const app_table = {
       tag:         null,
 
       // jsonで貰うもの
-      articles: [],
+      articles: null, // null:まだ読み込んでいない [...]:読み込んだ
       total: 0,
 
       // b-table で開いたIDたち

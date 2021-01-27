@@ -1,8 +1,7 @@
 <template lang="pug">
 b-table.WkbkArticleIndexTable(
-  v-if="base.articles"
   :loading="base.$fetchState.pending"
-  :data="base.articles"
+  :data="base.articles || []"
   :mobile-cards="false"
   hoverable
   :narrowed="false"
@@ -55,7 +54,7 @@ b-table.WkbkArticleIndexTable(
     template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
       nuxt-link(:to="{name: 'library-articles-article_id-edit', params: {article_id: row.id}}" @click.native="sound_play('click')") 編集
 
-  template(slot="empty")
+  template(slot="empty" v-if="base.books != null")      
     section.section.is-unselectable
       .content.has-text-grey.has-text-centered
         p
