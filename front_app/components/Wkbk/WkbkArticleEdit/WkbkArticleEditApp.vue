@@ -145,7 +145,7 @@ export default {
 
     edit_mode_snapshot_sfen(sfen) {
       if (this.article.init_sfen !== sfen) {
-        this.debug_alert(`配置取得 ${sfen}`)
+        // this.debug_alert(`配置取得 ${sfen}`)
         this.article.init_sfen = sfen
 
         // 合わせて正解も削除する

@@ -15,8 +15,8 @@
         )
       .footer_buttons
         .buttons.is-centered.are-small.is-marginless.mt-3
-          b-button(@click="$refs.main_sp.sp_object().mediator.king_formation_auto_set()") 玉配置
-          b-button(@click="$refs.main_sp.sp_object().mediator.king_formation_auto_unset()") 玉回収
+          b-button(@click="king_formation_auto_set(true)") 詰将棋検討用攻め方玉配置
+          b-button(@click="king_formation_auto_set(false)") 玉回収
 
         .buttons.is-centered.are-small.is-marginless.mt-3
           PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
@@ -57,12 +57,24 @@ export default {
   },
 
   created() {
-    // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
     this.sp_body = this.base.article.init_sfen
+  },
+
+  mounted() {
     this.piece_box_piece_couns_adjust()
   },
 
   methods: {
+    king_formation_auto_set(v) {
+      this.sound_play("click")
+      if (v) {
+        this.$refs.main_sp.sp_object().mediator.king_formation_auto_set()
+      } else {
+        this.$refs.main_sp.sp_object().mediator.king_formation_auto_unset()
+        this.piece_box_piece_couns_adjust() // 玉が増える場合があるので駒箱を調整する
+      }
+    },
+
     // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
       this.sound_play("click")
@@ -137,9 +149,9 @@ export default {
       this.general_kifu_copy(this.base.article.init_sfen, {to_format: "kif"})
     },
 
-    // 駒箱に足りない駒を補充
+    // 駒箱正規化
     piece_box_piece_couns_adjust() {
-      // this.$nextTick(() => this.$refs.main_sp.sp_object().mediator.piece_box_piece_couns_adjust())
+      this.$refs.main_sp.sp_object().mediator.piece_box_piece_couns_adjust()
     },
 
   },
