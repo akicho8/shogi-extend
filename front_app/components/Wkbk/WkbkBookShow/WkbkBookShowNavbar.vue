@@ -3,10 +3,12 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
   template(slot="brand")
     b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
-    b-navbar-item(tag="a" @click.native="base.description_handle") {{base.book.title}}
+    b-navbar-item(tag="a" @click.native="base.description_handle")
+      b-icon(icon="information-outline")
+      //- | {{base.book.title}}
   template(slot="start")
     b-navbar-item.has-text-weight-bold(tag="div" v-if="base.current_article")
-      span.mx-1.is-family-monospace {{base.current_index + 1}} / {{base.max_count}}
+      span.mx-1.is-family-monospace {{base.current_index + 1}}/{{base.max_count}}
     b-navbar-item.has-text-weight-bold(tag="div" v-if="base.current_article")
       | {{base.current_article.title}}
 
