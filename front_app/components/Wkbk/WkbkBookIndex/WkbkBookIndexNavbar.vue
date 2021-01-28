@@ -2,7 +2,7 @@
 MainNavbar.WkbkBookIndexNavbar(:spaced="false")
   template(slot="brand")
     NavbarItemHome
-    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'library-books'}") みんなで作る問題集
+    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'library-books'}") みんなの問題集
 
   template(slot="end")
     NavbarItemLogin
