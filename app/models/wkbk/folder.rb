@@ -19,23 +19,8 @@
 
 module Wkbk
   class Folder < ApplicationRecord
-    belongs_to :user
+    include MemoryRecordBind
 
-    has_many :articles, dependent: :destroy
     has_many :books, dependent: :destroy
-
-    delegate :name, :type, to: :pure_info
-
-    def owner_with_name
-      "#{user.name}の#{self.class.model_name.human}"
-    end
-
-    def pure_info
-      FolderInfo.fetch(key)
-    end
-
-    def key
-      @key ||= self.class.name.demodulize.underscore.remove("_box").to_sym
-    end
   end
 end

@@ -3,8 +3,6 @@ module Wkbk
     extend ActiveSupport::Concern
 
     included do
-      include FolderMod
-
       # このユーザーが作成した問題(複数)
       has_many :wkbk_articles, class_name: "Wkbk::Article", dependent: :destroy do
         def create_mock1(attrs = {})

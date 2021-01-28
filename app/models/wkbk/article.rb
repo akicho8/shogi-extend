@@ -165,12 +165,12 @@ module Wkbk
         self.title ||= "(title#{self.class.count.next})"
       end
 
-      if Rails.env.test?
-        self.lineage_key ||= "手筋"
-      end
+      # if Rails.env.test?
+      #   self.lineage_key ||= "手筋"
+      # end
 
       self.viewpoint ||= "black"
-      self.lineage_key ||= "詰将棋"
+      self.lineage_key ||= "次の一手"
       self.key ||= SecureRandom.hex
 
       if lineage.pure_info.mate_validate_on
@@ -415,7 +415,7 @@ module Wkbk
 
     # 公開した直後か？
     # def public_folder_posted?
-    #   saved_change_to_attribute?(:folder_id) && folder.kind_of?(PublicBox)
+    #   saved_change_to_attribute?(:folder_id) && folder.kind_of?(PublicFolder)
     # end
 
     # 変更を検知するためのハッシュ(重要なデータだけにする)
@@ -430,3 +430,5 @@ module Wkbk
     end
   end
 end
+# ~> -:30:in `<module:Wkbk>': uninitialized constant Wkbk::ApplicationRecord (NameError)
+# ~> 	from -:29:in `<main>'

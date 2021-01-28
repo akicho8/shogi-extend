@@ -5,10 +5,9 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
 
       # フォルダ
       create_table :wkbk_folders, force: true do |t|
-        t.belongs_to :user, foreign_key: true,  null: false
-        t.string :type, null: false, comment: "for STI"
+        t.string :key, null: false
+        t.integer :position, null: false, index: true
         t.timestamps
-        t.index [:type, :user_id], unique: true
       end
 
       # 問題の種類

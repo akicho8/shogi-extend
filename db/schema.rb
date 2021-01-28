@@ -1222,12 +1222,11 @@ ActiveRecord::Schema.define(version: 2021_01_27_232700) do
   end
 
   create_table "wkbk_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "type", null: false, comment: "for STI"
+    t.string "key", null: false
+    t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["type", "user_id"], name: "index_wkbk_folders_on_type_and_user_id", unique: true
-    t.index ["user_id"], name: "index_wkbk_folders_on_user_id"
+    t.index ["position"], name: "index_wkbk_folders_on_position"
   end
 
   create_table "wkbk_lineages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -1386,6 +1385,5 @@ ActiveRecord::Schema.define(version: 2021_01_27_232700) do
   add_foreign_key "wkbk_articles", "wkbk_lineages", column: "lineage_id"
   add_foreign_key "wkbk_books", "users"
   add_foreign_key "wkbk_books", "wkbk_folders", column: "folder_id"
-  add_foreign_key "wkbk_folders", "users"
   add_foreign_key "wkbk_moves_answers", "wkbk_articles", column: "article_id"
 end

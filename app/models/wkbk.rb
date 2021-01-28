@@ -11,28 +11,27 @@ module Wkbk
     end
 
     [
-      Wkbk::Lineage,
-      Wkbk::Article,
+      Folder,
+      Lineage,
+      Article,
     ].each do |e|
       e.setup(options)
     end
 
-    User.find_each(&:wkbk_create_various_folders_if_blank)
-
     if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
-      unless Wkbk::Article.exists?
-        Wkbk::Article.import_all
+      unless Article.exists?
+        Article.import_all
       end
     end
   end
 
   def models
     [
+      Folder,
+      Lineage,
       Book,
       Article,
       MovesAnswer,
-      Folder,
-      Lineage,
     ]
   end
 
@@ -52,28 +51,28 @@ module Wkbk
   # >> |------------------------+--------+-------+------|
   # >> | model                  | before | after | diff |
   # >> |------------------------+--------+-------+------|
-  # >> | Wkbk::Folder           |      6 |     3 |   -3 |
-  # >> | Wkbk::Article         |      1 |     0 |   -1 |
-  # >> | Wkbk::MovesAnswer      |      1 |     0 |   -1 |
+  # >> | Folder           |      6 |     3 |   -3 |
+  # >> | Article         |      1 |     0 |   -1 |
+  # >> | MovesAnswer      |      1 |     0 |   -1 |
   # >> | User                   |      2 |     1 |   -1 |
-  # >> | Wkbk::RoomMembership   |      2 |     1 |   -1 |
-  # >> | Wkbk::BattleMembership |      2 |     1 |   -1 |
-  # >> | Wkbk::SeasonXrecord    |      2 |     1 |   -1 |
-  # >> | Wkbk::MainXrecord      |      2 |     1 |   -1 |
-  # >> | Wkbk::Setting          |      2 |     1 |   -1 |
-  # >> | Wkbk::GoodMark         |      1 |     0 |   -1 |
-  # >> | Wkbk::BadMark          |      1 |     0 |   -1 |
-  # >> | Wkbk::ClipMark         |      1 |     0 |   -1 |
-  # >> | Wkbk::ArticleMessage  |      1 |     0 |   -1 |
-  # >> | Wkbk::Rule             |     12 |    12 |    0 |
-  # >> | Wkbk::Room             |      1 |     1 |    0 |
-  # >> | Wkbk::Skill            |     21 |    21 |    0 |
-  # >> | Wkbk::Battle           |      1 |     1 |    0 |
-  # >> | Wkbk::RoomMessage      |      0 |     0 |    0 |
-  # >> | Wkbk::Season           |      1 |     1 |    0 |
-  # >> | Wkbk::LobbyMessage     |      1 |     1 |    0 |
-  # >> | Wkbk::Judge            |      4 |     4 |    0 |
-  # >> | Wkbk::Lineage          |      8 |     8 |    0 |
+  # >> | RoomMembership   |      2 |     1 |   -1 |
+  # >> | BattleMembership |      2 |     1 |   -1 |
+  # >> | SeasonXrecord    |      2 |     1 |   -1 |
+  # >> | MainXrecord      |      2 |     1 |   -1 |
+  # >> | Setting          |      2 |     1 |   -1 |
+  # >> | GoodMark         |      1 |     0 |   -1 |
+  # >> | BadMark          |      1 |     0 |   -1 |
+  # >> | ClipMark         |      1 |     0 |   -1 |
+  # >> | ArticleMessage  |      1 |     0 |   -1 |
+  # >> | Rule             |     12 |    12 |    0 |
+  # >> | Room             |      1 |     1 |    0 |
+  # >> | Skill            |     21 |    21 |    0 |
+  # >> | Battle           |      1 |     1 |    0 |
+  # >> | RoomMessage      |      0 |     0 |    0 |
+  # >> | Season           |      1 |     1 |    0 |
+  # >> | LobbyMessage     |      1 |     1 |    0 |
+  # >> | Judge            |      4 |     4 |    0 |
+  # >> | Lineage          |      8 |     8 |    0 |
   # >> |------------------------+--------+-------+------|
   def count_diff(options = {})
     list = [User, *models]
