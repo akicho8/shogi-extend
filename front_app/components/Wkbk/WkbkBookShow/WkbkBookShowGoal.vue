@@ -2,8 +2,12 @@
 .WkbkBookShowGoal
   .columns.is-gapless
     .column
-      .buttons.is-centered
-        b-button(@click="base.restart_handle") リスタート
+      .is-flex.is-justify-content-center
+        .box.has-text-centered.is-inline-block
+          | {{base.ox_summary}}
+          TweetButton.mt-2(:body="base.ox_tweet_body")
+      .buttons.is-centered.mt-4
+        b-button(@click="base.play_restart") もう一度挑戦する
 </template>
 
 <script>
@@ -19,4 +23,6 @@ export default {
 @import "../support.sass"
 .WkbkBookShowGoal
   margin: $wkbk_share_gap
+  .box
+    white-space: pre-wrap
 </style>

@@ -13,9 +13,11 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
       | {{base.current_article.title}}
 
   template(slot="end" v-if="base.is_running_p")
-    b-navbar-item.has-text-weight-bold.px-4(@click="base.next_handle" v-if="base.current_article")
-      | NEXT
-    //- b-navbar-item.has-text-weight-bold.px-4(@click="base.restart_handle" v-if="!base.current_article")
+    b-navbar-item.has-text-weight-bold.px-5(@click="base.next_handle(false)" v-if="base.current_article")
+      | ×
+    b-navbar-item.has-text-weight-bold.px-5(@click="base.next_handle(true)" v-if="base.current_article")
+      | ○
+    //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_restart" v-if="!base.current_article")
     //-   | RESTART
 </template>
 

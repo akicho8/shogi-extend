@@ -60,6 +60,7 @@ export default {
       this.articles       = e.articles.map(e => new Article(e))
       this.total          = e.total
       this.article_counts = e.article_counts
+      this.ga_click("問題リスト")
     })
   },
 

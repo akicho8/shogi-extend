@@ -4,7 +4,7 @@
     .column
       .box.is-shadowless.has-background-white-ter(v-if="base.book.description" v-html="simple_format(auto_link(base.book.description))")
       .buttons
-        b-button(@click="base.restart_handle") スタート
+        b-button(@click="base.play_restart") スタート
 </template>
 
 <script>

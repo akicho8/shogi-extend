@@ -1,6 +1,8 @@
 <template lang="pug">
 .WkbkBookShowApp
   DebugBox
+    p interval_counter.count: {{interval_counter.count}}
+    p spent_sec: {{spent_sec}}
     p mode: {{mode}}
     template(v-if="book")
       p book.user.id: {{book.user && book.user.id}}
@@ -29,11 +31,14 @@
 </template>
 
 <script>
+import { Book           } from "../models/book.js"
+
 import { support_parent } from "./support_parent.js"
-import { Book    } from "../models/book.js"
-import { app_articles } from "./app_articles.js"
-import { app_mode } from "./app_mode.js"
-import { app_support } from "./app_support.js"
+
+import { app_articles   } from "./app_articles.js"
+import { app_mode       } from "./app_mode.js"
+import { app_support    } from "./app_support.js"
+import { app_tweet      } from "./app_tweet.js"
 
 export default {
   name: "WkbkBookIndexApp",
@@ -42,6 +47,7 @@ export default {
     app_articles,
     app_mode,
     app_support,
+    app_tweet,
   ],
 
   data() {
@@ -68,7 +74,7 @@ export default {
       this.book = new Book(e.book)
 
       if (true) {
-        this.setup_first()
+        this.play_start()
       } else {
         this.mode_set("standby")
       }

@@ -59,6 +59,7 @@ export default {
       this.books       = e.books.map(e => new Book(e))
       this.total       = e.total
       this.book_counts = e.book_counts
+      this.ga_click("みんなの問題集")
     })
   },
 
