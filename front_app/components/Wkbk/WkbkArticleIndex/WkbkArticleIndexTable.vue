@@ -22,7 +22,8 @@ b-table.WkbkArticleIndexTable(
   detail-key="id"
   :opened-detailed="base.detailed_ids"
   )
-  //- :has-detailed-visible="row => sound_play('click')"
+  // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
+  // :has-detailed-visible="row => sound_play('click')"
 
   b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="base.ArticleIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="!!base.visible_hash.id") {{row.id}}
 
@@ -40,7 +41,6 @@ b-table.WkbkArticleIndexTable(
 
   b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
   b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}
-  b-table-column(v-slot="{row}" custom-key="moves_answers_count" field="moves_answers_count" :label="base.ArticleIndexColumnInfo.fetch('moves_answers_count').short_name" sortable numeric :visible="!!base.visible_hash.moves_answers_count") {{row.moves_answers_count}}
 
   b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="base.ArticleIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="!!base.visible_hash.owner_tag_list")
     b-taglist

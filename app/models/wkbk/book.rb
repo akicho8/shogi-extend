@@ -85,12 +85,12 @@ module Wkbk
               :lineage_key,
             ],
             include: {
-              user: { only: [:id, :name, :key], methods: [:avatar_path],},
+              # user: { only: [:id, :name, :key], methods: [:avatar_path],},
               moves_answers: {
                 only: [
                   :moves_count,
                   :moves_str,
-                  :moves_human_str,
+                  # :moves_human_str,
                 ],
               },
             },
@@ -101,7 +101,7 @@ module Wkbk
               :description,
               :direction_message,
               :turn_max,
-              :moves_answers_count,
+              # :moves_answers_count,
             ],
 
           },
