@@ -10,7 +10,7 @@ export const app_tabs = {
   methods: {
     // このタブのレコード件数
     count_in_tab(e) {
-      return this.book_counts[e.key] || 0
+      return this.book_counts[e.key] ?? 0
     },
 
     // タブが変更されたときはページをリセットする

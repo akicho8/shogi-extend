@@ -37,11 +37,11 @@ export default {
   },
 
   fetch() {
-    this.scope       = this.$route.query.scope || this.scope // 引数 -> localStorageの値 -> 初期値 の順で決定
+    this.scope       = this.$route.query.scope ?? this.scope // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per
-    this.sort_column = this.$route.query.sort_column || "updated_at"
-    this.sort_order  = this.$route.query.sort_order || "desc"
+    this.sort_column = this.$route.query.sort_column ?? "updated_at"
+    this.sort_order  = this.$route.query.sort_order ?? "desc"
     this.tag         = this.$route.query.tag
 
     // this.url_params とは異なり最終的な初期値を設定する

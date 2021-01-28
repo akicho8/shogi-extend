@@ -121,8 +121,8 @@ export default {
           this.placement_tab_handle()
           this.extract_confirm({
             default_sp_body: body,
-            default_sp_turn: parseInt(this.$route.query.turn || -1),
-            default_sp_viewpoint: this.$route.query.viewpoint || "black",
+            default_sp_turn: parseInt(this.$route.query.turn ?? -1),
+            default_sp_viewpoint: this.$route.query.viewpoint ?? "black",
           })
           performed = true
         }

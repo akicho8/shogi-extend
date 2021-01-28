@@ -43,6 +43,7 @@ export const app_table = {
     },
 
     sort_handle(sort_column, sort_order) {
+      this.sound_play("click")
       this.router_replace({sort_column, sort_order})
     },
   },

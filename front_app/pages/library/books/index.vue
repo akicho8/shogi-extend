@@ -9,7 +9,7 @@ export default {
   computed: {
     meta() {
       return {
-        title: "問題集一覧",
+        title: "みんなで作る問題集",
         description: "",
         og_image_key: "wkbk_books",
       }

@@ -60,6 +60,7 @@ export const app_placement = {
       if (md) {
         return parseInt(md[1])
       }
+      return null
     },
 
     base_sfen_set(from_sfen) {
@@ -96,9 +97,7 @@ export const app_placement = {
 
     // 駒箱正規化
     piece_box_piece_couns_adjust() {
-      if (this.$refs.WkbkArticleEditPlacement) {
-        this.$refs.WkbkArticleEditPlacement.$refs.main_sp.sp_object().mediator.piece_box_piece_couns_adjust()
-      }
+      this.$refs.WkbkArticleEditPlacement?.$refs.main_sp.sp_object().mediator.piece_box_piece_couns_adjust()
     },
   },
 }
