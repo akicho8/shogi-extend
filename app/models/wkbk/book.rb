@@ -29,13 +29,17 @@ module Wkbk
     class << self
       def setup(options = {})
         if Rails.env.development?
-          # curl http://0.0.0.0:4000/library/books/1/ | less
-          book = User.sysop.wkbk_books.create!(folder_key: :public)
-          article = book.articles.create!
-
-          # curl http://0.0.0.0:4000/library/books/2/ | less
-          book = User.sysop.wkbk_books.create!(folder_key: :private)
-          article = book.articles.create!
+          [
+            { id: 1, user: :sysop, folder_key: :public,  },
+            { id: 2, user: :sysop, folder_key: :private, },
+            { id: 3, user: :bot,   folder_key: :public,  },
+            { id: 4, user: :bot,   folder_key: :private, },
+          ].each do |e|
+            Book.where(id: e[:id]).destroy_all
+            book = User.public_send(e[:user]).wkbk_books.create!(id: e[:id], folder_key: e[:folder_key], title: "#{e[:user]} - #{e[:folder_key]}")
+            article = book.articles.create!
+          end
+          tp self
         end
       end
 
@@ -149,8 +153,8 @@ module Wkbk
 
     before_validation do
       if Rails.env.test? || Rails.env.development?
-        self.title ||= "(title#{self.class.count.next})"
-        self.description ||= "(description)"
+        self.title ||= SecureRandom.hex
+        self.description ||= SecureRandom.hex
       end
 
       self.folder_key ||= :private
@@ -360,13 +364,11 @@ module Wkbk
       end
 
       def sequence_key
-        if sequence
-          sequence.key
-        end
+        sequence&.key
       end
 
       def sequence_key=(key)
-        self.sequence = Sequence.lookup(key)
+        self.sequence = Sequence.fetch(key)
       end
     end
   end

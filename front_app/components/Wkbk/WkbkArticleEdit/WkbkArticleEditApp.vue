@@ -84,16 +84,15 @@ export default {
       ...this.$route.query,
     }
     return this.$axios.$get("/api/wkbk/articles/edit.json", {params}).then(e => {
-      if (!e.article) {
-        this.$nuxt.error({statusCode: 403, message: "非公開のためアクセスできるのは作成者だけです"})
+      if (e.error) {
+        this.$nuxt.error(e.error)
         return
       }
 
       this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)
-      this.config = e.config
-
-      this.books = e.books.map(e => new Book(e))
-      this.article = new Article(e.article)
+      this.config      = e.config
+      this.books       = e.books.map(e => new Book(e))
+      this.article     = new Article(e.article)
 
       // 前回保存したときの値を初期値にする
       if (this.article.new_record_p) {

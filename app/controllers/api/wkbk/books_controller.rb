@@ -45,7 +45,18 @@ module Api
           v = book.as_json(::Wkbk::Book.show_json_struct)
           v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.show_articles_json_struct)
           retv[:book] = v
+          retv[:meta] = book_meta(book)
+          # else
+          #   retv[:ogp_meta_hash] = {
+          #     :title                 => "#{book.user.name}さんの問題集(非公開)",
+          #     :description           => "",
+          #     :og_image_key          => "library-books",
+          #     :twitter_card_is_small => true,
+          #   }
+        else
+          retv[:error] = { statusCode: 403, message: "非公開" }
         end
+
         render json: retv
       end
 
@@ -57,37 +68,42 @@ module Api
       #
       def edit
         retv = {}
-        retv[:config] = ::Wkbk::Config
-        # retv[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
-        # retv[:FolderInfo]  = ::Wkbk::FolderInfo.as_json(only: [:key, :name, :icon, :type])
-
-        if params[:book_id]
-          # 編集
-          record = ::Wkbk::Book.find(params[:book_id])
-          if record.owner_editable_p(current_user)
-            retv[:book] = record.as_json(::Wkbk::Book.json_type5)
+        if current_user
+          retv[:config] = ::Wkbk::Config
+          if params[:book_id]
+            # 編集
+            book = ::Wkbk::Book.find(params[:book_id])
+            if book.owner_editable_p(current_user)
+              retv[:book] = book.as_json(::Wkbk::Book.json_type5)
+              retv[:meta] = book_meta(book)
+            else
+              retv[:error] = { statusCode: 403, message: "所有者ではありません" }
+            end
+          else
+            # 新規
+            retv[:book] = ::Wkbk::Book.default_attributes
           end
         else
-          # 新規
-          retv[:book] = ::Wkbk::Book.default_attributes
+          retv[:error] = { statusCode: 403, message: "ログインしてください" }
         end
-
         render json: retv
       end
 
       # POST http://0.0.0.0:3000/api/wkbk/books/save
       def save
         retv = {}
-        if id = params[:book][:id]
-          book = ::Wkbk::Book.find(id)
-        else
-          book = current_user.wkbk_books.build
-        end
-        begin
-          book.update_from_js(params.to_unsafe_h[:book])
-          retv[:book] = book.as_json(::Wkbk::Book.json_type5)
-        rescue ActiveRecord::RecordInvalid => error
-          retv[:form_error_message] = error.message
+        if current_user
+          if id = params[:book][:id]
+            book = current_user.wkbk_books.find(id)
+          else
+            book = current_user.wkbk_books.build
+          end
+          begin
+            book.update_from_js(params.to_unsafe_h[:book])
+            retv[:book] = book.as_json(::Wkbk::Book.json_type5)
+          rescue ActiveRecord::RecordInvalid => error
+            retv[:form_error_message] = error.message
+          end
         end
         render json: retv
       end
@@ -134,6 +150,14 @@ module Api
       # PageMod override
       def default_per
         ::Wkbk::Config[:api_books_fetch_per]
+      end
+
+      def book_meta(book)
+        {
+          :title       => book.title,
+          :description => book.description || "",
+          :og_image    => book.og_image_path || "library-books",
+        }
       end
     end
   end

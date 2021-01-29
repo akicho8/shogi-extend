@@ -8,8 +8,15 @@
 URESINORYU = "body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&abstract_viewpoint=self"
 
 LIST_ALL = [
-  { url: "/library/books",   validations: { "og:title" => /問題集/, "og:image" => /books/,       "twitter:card" => "summary_large_image" }},
-  { url: "/library/books/1", validations: { "og:title" => /title/,  "og:image" => /share-board/, "twitter:card" => "summary_large_image" }},
+  # { url: "/library/books",        validations: { "og:title" => /問題集/, "og:image" => /books/,       "twitter:card" => "summary_large_image" }},
+  # { url: "/library/books/1",      validations: { "og:image" => /share-board/, "twitter:card" => "summary_large_image" }},
+
+  # { url: "/library/books/new",    validations: {  }},
+  # { url: "/library/books/1/edit", validations: {  }},
+
+  { url: "/library/books/2",      validations: { "error" => /Forbidden/ }},
+  { url: "/library/books/2/edit", validations: { "error" => /Forbidden/ }},
+
   # { url: "/library/books/2", validations: { "og:title" => /非公開/, }},
 
   # { url: "/users/1",                                                                 validations: { "title" => /さん/,                                                                                                                                      }},
@@ -77,11 +84,19 @@ class Ogp < Thor
         puts url
 
         row["URL"] = url
+        attributes = {}
+
         begin
           html = URI(url).read
         rescue OpenURI::HTTPError => error
-          row["結果"] = error.to_s.include?(e[:validations]["error"]) ? "○" : "×"
-          next
+          attributes["error"] = error.to_s
+          # row["結果"] = "×"
+          # if v = e[:validations]["error"]
+          #   if error.to_s.include?(v)
+          #     row["結果"] = "○"
+          #   end
+          # end
+          # next row
         end
         doc = Nokogiri::HTML(html)
 
@@ -89,7 +104,7 @@ class Ogp < Thor
           tp doc.search("meta")
         end
 
-        attributes = [
+        [
           "og:image",
           "og:title",
           "og:description",
@@ -99,19 +114,19 @@ class Ogp < Thor
           if element = doc.at("meta[property='#{k}']")
             content = element[:content]
           else
-            raise "タグが見つからない : #{k}"
+            content = ""
           end
-          a.merge(k => content)
+          attributes[k] = content
         }
         attributes["title"] = doc.title
-        attributes["mobile_icon"] = doc.at("link[rel=apple-touch-icon]")[:href]
+        attributes["mobile_icon"] = doc.at("link[rel=apple-touch-icon]")[:href] rescue ""
 
         # row["title"]    = attributes["title"]
         row["og:title"] = attributes["og:title"]
 
         row.update(attributes)
 
-        all = attributes.merge("html" => html)
+        attributes["html"] = html
 
         validations = e[:validations]
         if !validations.empty?
@@ -119,7 +134,7 @@ class Ogp < Thor
             if s.kind_of?(String)
               s = /\A#{Regexp.escape(s)}\z/
             end
-            all[key].match?(s)
+            attributes[key].to_s.match?(s)
           }
           row["結果"] = good ? "○" : "×"
         end

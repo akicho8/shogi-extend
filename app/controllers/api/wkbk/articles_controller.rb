@@ -46,19 +46,25 @@ module Api
       # http://0.0.0.0:3000/api/wkbk/articles/edit?article_id=1
       def edit
         retv = {}
-        retv[:config] = ::Wkbk::Config
-        retv[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
-        retv[:books] = current_books
+        if current_user
+          retv[:config] = ::Wkbk::Config
+          retv[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
+          retv[:books] = current_books
 
-        if params[:article_id]
-          # 編集
-          record = ::Wkbk::Article.find(params[:article_id])
-          if record.owner_editable_p(current_user)
-            retv[:article] = record.as_json(::Wkbk::Article.json_type5)
+          if params[:article_id]
+            # 編集
+            record = ::Wkbk::Article.find(params[:article_id])
+            if record.owner_editable_p(current_user)
+              retv[:article] = record.as_json(::Wkbk::Article.json_type5)
+            else
+              retv[:error] = { statusCode: 403, message: "所有者ではありません" }
+            end
+          else
+            # 新規
+            retv[:article] = ::Wkbk::Article.default_attributes.merge(book_id: default_book_id)
           end
         else
-          # 新規
-          retv[:article] = ::Wkbk::Article.default_attributes.merge(book_id: default_book_id)
+          retv[:error] = { statusCode: 403, message: "ログインしてください" }
         end
         render json: retv
       end
@@ -66,16 +72,18 @@ module Api
       # POST http://0.0.0.0:3000/api/wkbk/articles/save
       def save
         retv = {}
-        if id = params[:article][:id]
-          article = ::Wkbk::Article.find(id)
-        else
-          article = current_user.wkbk_articles.build
-        end
-        begin
-          article.update_from_js(params.to_unsafe_h[:article])
-          retv[:article] = article.as_json(::Wkbk::Article.json_type5)
-        rescue ActiveRecord::RecordInvalid => error
-          retv[:form_error_message] = error.message
+        if current_user
+          if id = params[:article][:id]
+            article = current_user.wkbk_articles.find(id)
+          else
+            article = current_user.wkbk_articles.build
+          end
+          begin
+            article.update_from_js(params.to_unsafe_h[:article])
+            retv[:article] = article.as_json(::Wkbk::Article.json_type5)
+          rescue ActiveRecord::RecordInvalid => error
+            retv[:form_error_message] = error.message
+          end
         end
         render json: retv
       end

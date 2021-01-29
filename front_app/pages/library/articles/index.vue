@@ -5,7 +5,7 @@ client-only
 
 <script>
 export default {
-  name: "wkbk",
+  name: "library-articles",
   // async asyncData({ $axios, query }) {
   //   const info = await $axios.$get("/api/wkbk.json", {params: query})
   //   console.log(info)

@@ -11,8 +11,12 @@ module Wkbk
     end
 
     [
+      # Static
+      Sequence,
       Folder,
       Lineage,
+      # ActiveRecord
+      Book,
       Article,
     ].each do |e|
       e.setup(options)

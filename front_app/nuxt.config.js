@@ -71,10 +71,10 @@ const config = {
   ** Headers of the page
   */
   head: {
-    title: process.env.APP_NAME,
+    title: "?",
     titleTemplate: `%s - ${process.env.APP_NAME}`,
     // titleTemplate(title) {
-    //   return (title ? `${title} | ` : "") + process.env.APP_NAME
+    //   return (title ? `${title} - ` : "") + process.env.APP_NAME
     // },
 
     htmlAttrs: {
