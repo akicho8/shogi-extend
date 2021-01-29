@@ -12,6 +12,7 @@
     MainSection.is_mobile_padding_zero
       .container
          WkbkBookEditForm(:base="base")
+  DebugPre {{$data}}
 </template>
 
 <script>
@@ -22,6 +23,7 @@ import { support_parent } from "./support_parent.js"
 
 import { Book       } from "../models/book.js"
 import { FolderInfo } from "../models/folder_info.js"
+import { SequenceInfo } from "../models/sequence_info.js"
 
 export default {
   name: "WkbkBookIndexApp",
@@ -89,6 +91,7 @@ export default {
     base()                { return this                                         },
     save_button_name()    { return this.book.new_record_p ? "保存" : "更新" },
     FolderInfo()          { return FolderInfo },
+    SequenceInfo()        { return SequenceInfo },
 
     //////////////////////////////////////////////////////////////////////////////// 編集権限
     owner_p()    { return this.book.owner_p(this.g_current_user) },

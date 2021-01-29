@@ -50,17 +50,17 @@ module Wkbk
       end
     end
 
-    def self.mock_article
-      raise if Rails.env.production? || Rails.env.staging?
-
-      user1 = User.find_or_create_by!(name: "user1", email: "user1@localhost")
-      user2 = User.find_or_create_by!(name: "user2", email: "user2@localhost")
-      user3 = User.find_or_create_by!(name: "user3", email: "user3@localhost")
-      article = user1.wkbk_articles.create_mock1
-      article.messages.create!(user: user2, body: "user2のコメント")
-      article.messages.create!(user: user3, body: "user3のコメント")
-      article
-    end
+    # def self.mock_article
+    #   raise if Rails.env.production? || Rails.env.staging?
+    #
+    #   user1 = User.find_or_create_by!(name: "user1", email: "user1@localhost")
+    #   user2 = User.find_or_create_by!(name: "user2", email: "user2@localhost")
+    #   user3 = User.find_or_create_by!(name: "user3", email: "user3@localhost")
+    #   article = user1.wkbk_articles.create_mock1
+    #   article.messages.create!(user: user2, body: "user2のコメント")
+    #   article.messages.create!(user: user3, body: "user3のコメント")
+    #   article
+    # end
 
     # Vueでリアクティブになるように空でもカラムは作っておくこと
     def self.default_attributes
@@ -156,6 +156,10 @@ module Wkbk
     end
 
     before_validation do
+      if book
+        self.user ||= book.user
+      end
+
       if Rails.env.development?
         self.title ||= SecureRandom.hex
         self.init_sfen ||= "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
@@ -431,4 +435,4 @@ module Wkbk
   end
 end
 # ~> -:30:in `<module:Wkbk>': uninitialized constant Wkbk::ApplicationRecord (NameError)
-# ~> 	from -:29:in `<main>'
+# ~>    from -:29:in `<main>'

@@ -26,30 +26,43 @@ module Wkbk
     include FolderMod
     include InfoMod
 
-    def self.mock_book
-      raise if Rails.env.production? || Rails.env.staging?
+    class << self
+      def setup(options = {})
+        if Rails.env.development?
+          # curl http://0.0.0.0:4000/library/books/1/ | less
+          book = User.sysop.wkbk_books.create!(folder_key: :public)
+          article = book.articles.create!
 
-      user1 = User.find_or_create_by!(name: "user1", email: "user1@localhost")
-      book = user1.wkbk_books.create_mock1
-      book
+          # curl http://0.0.0.0:4000/library/books/2/ | less
+          book = User.sysop.wkbk_books.create!(folder_key: :private)
+          article = book.articles.create!
+        end
+      end
+
+      def mock_book
+        raise if Rails.env.production? || Rails.env.staging?
+
+        user1 = User.find_or_create_by!(name: "user1", email: "user1@localhost")
+        book = user1.wkbk_books.create_mock1
+        book
+      end
     end
 
     # Vueでリアクティブになるように空でもカラムは作っておくこと
     def self.default_attributes
-      default = {
-        :title       => nil,
-        :description => nil,
-        :hint_desc   => nil,
-        :folder_key  => :private,
+      attrs = {
+        :id           => nil,
+        :title        => nil,
+        :description  => nil,
+        :folder_key   => :private,
+        :sequence_key => :shuffle,
       }
 
       if Rails.env.development?
-        default.update({
-                         :title => "(title)",
-                       })
+        attrs[:title] ||= "(title)"
       end
 
-      default
+      attrs
     end
 
     # 一覧・編集用
@@ -57,6 +70,7 @@ module Wkbk
       {
         methods: [
           :folder_key,
+          :sequence_key,
         ],
         include: {
           user: { only: [:id, :name, :key], methods: [:avatar_path] },
@@ -73,39 +87,8 @@ module Wkbk
     end
 
     # 出題
-    def self.json_type5a
+    def self.show_json_struct
       {
-        methods: [
-          :folder_key,
-        ],
-        include: {
-          user: { only: [:id, :name, :key], methods: [:avatar_path] },
-          articles: {
-            methods: [
-              :lineage_key,
-            ],
-            include: {
-              # user: { only: [:id, :name, :key], methods: [:avatar_path],},
-              moves_answers: {
-                only: [
-                  :moves_count,
-                  :moves_str,
-                  # :moves_human_str,
-                ],
-              },
-            },
-            only: [
-              :id,
-              :init_sfen,
-              :title,
-              :description,
-              :direction_message,
-              :turn_max,
-              # :moves_answers_count,
-            ],
-
-          },
-        },
         only: [
           :id,
           :title,
@@ -114,6 +97,40 @@ module Wkbk
           :created_at,
           :updated_at,
         ],
+        methods: [
+          :folder_key,
+          :sequence_key,
+          :og_image_path,
+        ],
+        include: {
+          user: {
+            only: [:id, :name, :key],
+            methods: [:avatar_path],
+          },
+        },
+      }
+    end
+
+    def self.show_articles_json_struct
+      {
+        only: [
+          :id,
+          :init_sfen,
+          :title,
+          :description,
+          :direction_message,
+          :turn_max,
+        ],
+        methods: [
+          :lineage_key,
+        ],
+        include: {
+          moves_answers: {
+            only: [
+              :moves_str,
+            ],
+          },
+        },
       }
     end
 
@@ -131,11 +148,13 @@ module Wkbk
     has_many :articles, dependent: :nullify # 記事
 
     before_validation do
-      if Rails.env.test?
+      if Rails.env.test? || Rails.env.development?
         self.title ||= "(title#{self.class.count.next})"
+        self.description ||= "(description)"
       end
 
       self.folder_key ||= :private
+      self.sequence_key ||= :shuffle
       self.key ||= SecureRandom.hex
 
       normalize_zenkaku_to_hankaku(:title, :description)
@@ -188,6 +207,7 @@ module Wkbk
                              :title,
                              :description,
                              :folder_key,
+                             :sequence_key,
                            ])
         assign_attributes(attrs)
         save!
@@ -275,7 +295,8 @@ module Wkbk
                     methods: [:avatar_path],
                   },
                   moves_answers: {},
-                  folder: { only: [], methods: [:key, :name, :type] },
+                  folder: { only: [], methods: [:key, :name] },
+                  sequence: { only: [], methods: [:key, :name] },
                 },
               })
     end
@@ -286,6 +307,20 @@ module Wkbk
 
     def owner_editable_p(current_user)
       folder_key_eq(:public) || (folder_key_eq(:private) && user == current_user)
+    end
+
+    def ordered_articles
+      sequence.pure_info.apply[articles]
+    end
+
+    def og_image_path
+      if article = articles.sample
+        v = {}
+        v[:turn]               = 0
+        v[:body]               = article.init_sfen
+        v[:abstract_viewpoint] = article.viewpoint
+        "/share-board.png?#{v.to_query}"
+      end
     end
 
     private
@@ -313,6 +348,26 @@ module Wkbk
         articles_count,
       ]
       Digest::MD5.hexdigest(ary.join(":"))
+    end
+
+    concerning :SequenceMethods do
+      included do
+        belongs_to :sequence
+      end
+
+      def sequence_key_eq(key)
+        sequence_key.to_s == key.to_s
+      end
+
+      def sequence_key
+        if sequence
+          sequence.key
+        end
+      end
+
+      def sequence_key=(key)
+        self.sequence = Sequence.lookup(key)
+      end
     end
   end
 end

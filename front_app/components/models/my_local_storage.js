@@ -15,19 +15,23 @@
 
 export class MyLocalStorage {
   static set(key, value) {
-    this.core.setItem(key, JSON.stringify(value))
+    if (this.core) {
+      this.core.setItem(key, JSON.stringify(value))
+    }
   }
 
   static lookup(key) {
-    const json = this.core.getItem(key)
-    if (json) {
-      try {
-        return JSON.parse(json)
-      } catch (e) {
-        const message = `${this.name}.lookup(${JSON.stringify(key)}) # => ${JSON.stringify(json)}`
-        console.error(message)
-        alert(message)
-        console.error(e)
+    if (this.core) {
+      const json = this.core.getItem(key)
+      if (json) {
+        try {
+          return JSON.parse(json)
+        } catch (e) {
+          const message = `${this.name}.lookup(${JSON.stringify(key)}) # => ${JSON.stringify(json)}`
+          console.error(message)
+          alert(message)
+          console.error(e)
+        }
       }
     }
   }
@@ -49,14 +53,18 @@ export class MyLocalStorage {
 
   static get keys() {
     const keys = []
-    for (let i = 0; i < this.core.length; i++) {
-      keys.push(this.core.key(i))
+    if (this.core) {
+      for (let i = 0; i < this.core.length; i++) {
+        keys.push(this.core.key(i))
+      }
     }
     return keys
   }
 
   static remove(key) {
-    this.core.removeItem(key)
+    if (this.core) {
+      this.core.removeItem(key)
+    }
   }
 
   static get attributes() {
@@ -68,10 +76,16 @@ export class MyLocalStorage {
   }
 
   static remove_all() {
-    this.core.clear()
+    if (this.core) {
+      this.core.clear()
+    }
   }
 
   static get core() {
+    return (typeof window !== 'undefined' && this.storage)
+  }
+
+  static get storage() {
     return localStorage
   }
 }

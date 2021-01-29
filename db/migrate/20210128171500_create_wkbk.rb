@@ -17,6 +17,13 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.timestamps
       end
 
+      # 出題順序
+      create_table :wkbk_sequences, force: true do |t|
+        t.string :key, null: false
+        t.integer :position, null: false, index: true
+        t.timestamps
+      end
+
       ################################################################################
 
       create_table :wkbk_articles, force: true do |t|
@@ -58,11 +65,12 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
 
       create_table :wkbk_books, force: true do |t|
         t.string :key,                         null: false, index: true
-        t.belongs_to :user,                    null: false, foreign_key: true,                      comment: "作成者"
-        t.belongs_to :folder,                  null: false, foreign_key: {to_table: :wkbk_folders}, comment: "フォルダ"
-        t.string :title,                       null: true,  index: false,                           comment: "タイトル"
-        t.string :description, limit: 1024,    null: true,  index: false,                           comment: "説明"
-        t.integer :articles_count, default: 0, null: false, index: false,                           comment: "記事数"
+        t.belongs_to :user,                    null: false, foreign_key: true,                        comment: "作成者"
+        t.belongs_to :folder,                  null: false, foreign_key: {to_table: :wkbk_folders},   comment: "フォルダ"
+        t.belongs_to :sequence,                null: false, foreign_key: {to_table: :wkbk_sequences}, comment: "順序"
+        t.string :title,                       null: true,  index: false,                             comment: "タイトル"
+        t.string :description, limit: 1024,    null: true,  index: false,                             comment: "説明"
+        t.integer :articles_count, default: 0, null: false, index: false,                             comment: "記事数"
         t.timestamps
       end
     end

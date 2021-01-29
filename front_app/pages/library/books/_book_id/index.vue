@@ -5,21 +5,34 @@ client-only
 
 <script>
 export default {
-  // name: "wkbk-books-_book_id-index",
-  // async asyncData({ $axios, params }) {
-  //   // http://0.0.0.0:3000/api/three_stage_league?generation=28
-  //   const config = await $axios.$get("/api/three_stage_league", {params: params})
-  //   return { config }
-  // },
-  // computed: {
-  //   meta() {
-  //     return {
-  //       title: this.config.page_title,
-  //       description: `奨励会三段リーグの結果を見やすく表示します`,
-  //       og_image_key: "three-stage-leagues",
-  //     }
-  //   },
-  // },
+  name: "wkbk-books-_book_id-index",
+  async asyncData({ $axios, params }) {
+    if (process.server) {
+      const e = await $axios.$get("/api/wkbk/books/show", {params})
+      return { book: e.book }
+    } else {
+      return { book: null }
+    }
+  },
+  computed: {
+    meta() {
+      // やっぱりデータを渡すようにするべき？
+      if (this.book) {
+        return {
+          title: this.book.title,
+          description: this.book.description ?? "",
+          og_image: this.book.og_image_path ?? "library-books",
+        }
+      } else {
+        return {
+          title: "非公開",
+          description: "",
+          og_image_key: "library-books",
+          twitter_card_is_small: true,
+        }
+      }
+    },
+  },
 }
 </script>
 

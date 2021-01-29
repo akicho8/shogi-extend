@@ -37,6 +37,10 @@ export default {
     "$route.query": "$fetch",
   },
 
+  mounted() {
+    this.ga_click("問題リスト")
+  },
+
   fetch() {
     this.scope       = this.$route.query.scope ?? this.scope // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
@@ -60,7 +64,6 @@ export default {
       this.articles       = e.articles.map(e => new Article(e))
       this.total          = e.total
       this.article_counts = e.article_counts
-      this.ga_click("問題リスト")
     })
   },
 

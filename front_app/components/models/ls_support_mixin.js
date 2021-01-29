@@ -41,10 +41,13 @@ export const ls_support_mixin = {
 
   methods: {
     ls_setup() {
-      if (!this.$ls_unwatch) {
-        this.ls_load()
-        // 変数がハッシュかもしれないので deep: true にしておく
-        this.$ls_unwatch = this.$watch(() => this.ls_attributes, () => this.ls_save(), {deep: true})
+      // server → client の順で2回呼ばれるので2回目のときだけ変数を復帰する(重要)
+      if (process.browser) {
+        if (!this.$ls_unwatch) {
+          this.ls_load()
+          // 変数がハッシュかもしれないので deep: true にしておく
+          this.$ls_unwatch = this.$watch(() => this.ls_attributes, () => this.ls_save(), {deep: true})
+        }
       }
     },
 

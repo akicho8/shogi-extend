@@ -12,7 +12,7 @@ export const app_tweet = {
   },
 
   beforeDestroy() {
-    this.interval_counter.stop()
+    this.interval_counter?.stop()
   },
 
   methods: {
@@ -42,7 +42,7 @@ export const app_tweet = {
     ox_summary() {
       let out = ""
       out += `${this.book.title}\n`
-      out += `正解率: ${this.ox_rate_per}% (${this.o_count}/${this.o_count_max})\n`
+      out += `正解率: ${this.ox_rate_per} (${this.o_count}/${this.o_count_max})\n`
       out += `タイム: ${this.ox_spent_sec_to_s}\n`
       out += `平均: ${this.ox_time_avg}\n`
       return out
@@ -68,7 +68,7 @@ export const app_tweet = {
       if (this.ox_total === 0) {
         return "?"
       } else {
-        return this.float_to_perc(this.ox_rate)
+        return this.float_to_perc(this.ox_rate) + "%"
       }
     },
 

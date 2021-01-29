@@ -36,13 +36,15 @@ module Api
         render json: retv
       end
 
-      # http://0.0.0.0:3000/api/wkbk/books/show?book_id=2
+      # http://0.0.0.0:3000/api/wkbk/books/show.json?book_id=1
       def show
         retv = {}
         retv[:config] = ::Wkbk::Config
         book = ::Wkbk::Book.find(params[:book_id])
         if book.owner_editable_p(current_user)
-          retv[:book] = book.as_json(::Wkbk::Book.json_type5a)
+          v = book.as_json(::Wkbk::Book.show_json_struct)
+          v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.show_articles_json_struct)
+          retv[:book] = v
         end
         render json: retv
       end

@@ -1,33 +1,34 @@
 <template lang="pug">
 .WkbkBookShowApp
-  DebugBox
-    p interval_counter.count: {{interval_counter.count}}
-    p spent_sec: {{spent_sec}}
-    p mode: {{mode}}
-    template(v-if="book")
-      p book.user.id: {{book.user && book.user.id}}
-      p g_current_user.id: {{g_current_user && g_current_user.id}}
-      p goal_p: {{goal_p}}
-      p rest_count: {{rest_count}}
-      p current_index: {{current_index}}
-      p max_count: {{max_count}}
-      template(v-if="current_exist_p")
-        p current_sp_body: {{current_sp_body}}
-        p current_sp_viewpoint: {{current_sp_viewpoint}}
-  b-loading(:active="$fetchState.pending")
-  .MainContainer(v-if="!$fetchState.pending")
-    WkbkBookShowNavbar(:base="base")
-    MainSection.is_mobile_padding_zero
-      .container
-        template(v-if="is_standby_p")
-          WkbkBookShowStandby(:base="base")
-        template(v-if="is_running_p")
-          WkbkBookShowSp(:base="base")
-          WkbkBookShowAnswer(:base="base")
-        template(v-if="is_goal_p")
-          WkbkBookShowGoal(:base="base")
-  DebugPre
-    | {{$data}}
+  client-only
+    DebugBox
+      p interval_counter.count: {{interval_counter.count}}
+      p spent_sec: {{spent_sec}}
+      p mode: {{mode}}
+      template(v-if="book")
+        p book.user.id: {{book.user && book.user.id}}
+        p g_current_user.id: {{g_current_user && g_current_user.id}}
+        p goal_p: {{goal_p}}
+        p rest_count: {{rest_count}}
+        p current_index: {{current_index}}
+        p max_count: {{max_count}}
+        template(v-if="current_exist_p")
+          p current_sp_body: {{current_sp_body}}
+          p current_sp_viewpoint: {{current_sp_viewpoint}}
+    b-loading(:active="$fetchState.pending")
+    .MainContainer(v-if="!$fetchState.pending")
+      WkbkBookShowNavbar(:base="base")
+      MainSection.is_mobile_padding_zero
+        .container
+          template(v-if="is_standby_p")
+            WkbkBookShowStandby(:base="base")
+          template(v-if="is_running_p")
+            WkbkBookShowSp(:base="base")
+            WkbkBookShowAnswer(:base="base")
+          template(v-if="is_goal_p")
+            WkbkBookShowGoal(:base="base")
+    DebugPre
+      | {{$data}}
 </template>
 
 <script>
@@ -56,8 +57,9 @@ export default {
     }
   },
 
+  // fetchOnServer: false,
   fetch() {
-    // app/controllers/api/wkbk_controller/book_mod.rb
+    // app/controllers/api/wkbk/books_controller.rb
     // http://localhost:3000/api/wkbk.json?remote_action=book_show_fetch&book_id=2
     const params = {
       ...this.$route.params,
@@ -73,11 +75,13 @@ export default {
 
       this.book = new Book(e.book)
 
+      // if (process.browser) {
       if (true) {
         this.play_start()
       } else {
         this.mode_set("standby")
       }
+      // }
     })
   },
 
@@ -87,6 +91,8 @@ export default {
   computed: {
     base() { return this },
     owner_p() { return this.book.owner_p(this.g_current_user) },
+
+    // curl http://0.0.0.0:4000/library/books/6/
   },
 }
 </script>

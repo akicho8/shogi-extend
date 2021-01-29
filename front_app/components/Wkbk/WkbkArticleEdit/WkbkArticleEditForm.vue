@@ -8,14 +8,14 @@
       b-field(label="解説" label-position="on-border")
         b-input(v-model.trim="base.article.description" type="textarea" rows="8")
 
-      b-field.lineage_key(label="問題集" label-position="on-border")
+      b-field(label="問題集" label-position="on-border")
         b-select(v-model="base.article.book_id" expanded)
           option(:value="null")
           option(v-for="e in base.books" :value="e.id")
             | {{e.title}}
             | {{base.FolderInfo.fetch(e.folder_key).pulldown_name}}
 
-      b-field.lineage_key(label="種類" label-position="on-border" v-if="base.LineageInfo")
+      b-field(label="種類" label-position="on-border" v-if="base.LineageInfo")
         b-select(v-model="base.article.lineage_key" expanded)
           option(v-for="e in base.LineageInfo.values" :value="e.key")
             | {{e.name}}

@@ -1,19 +1,18 @@
 <template lang="pug">
-client-only
-  WkbkBookIndexApp
+WkbkBookIndexApp
 </template>
 
 <script>
 export default {
-  name: "wkbk",
+  name: "library-books",
   computed: {
-    meta() {
-      return {
-        title: "みんなの問題集",
-        description: "",
-        og_image_key: "wkbk_books",
-      }
-    },
+    // meta() {
+    //   return {
+    //     title: "みんなの問題集",
+    //     description: "",
+    //     og_image_key: "wkbk_books",
+    //   }
+    // },
   },
 }
 </script>

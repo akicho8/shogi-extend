@@ -5,9 +5,12 @@ export const app_articles = {
     }
   },
 
+  mounted() {
+    this.ga_click("問題集を解く")
+  },
+
   methods: {
     play_start() {
-      this.ga_click("問題集を解く")
       this.mode_set("running")
       this.current_index = 0
       this.ox_start()

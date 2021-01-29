@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_232700) do
+ActiveRecord::Schema.define(version: 2021_01_28_171500) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1211,6 +1211,7 @@ ActiveRecord::Schema.define(version: 2021_01_27_232700) do
     t.string "key", null: false
     t.bigint "user_id", null: false, comment: "作成者"
     t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.bigint "sequence_id", null: false, comment: "順序"
     t.string "title", comment: "タイトル"
     t.string "description", limit: 1024, comment: "説明"
     t.integer "articles_count", default: 0, null: false, comment: "記事数"
@@ -1218,6 +1219,7 @@ ActiveRecord::Schema.define(version: 2021_01_27_232700) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["folder_id"], name: "index_wkbk_books_on_folder_id"
     t.index ["key"], name: "index_wkbk_books_on_key"
+    t.index ["sequence_id"], name: "index_wkbk_books_on_sequence_id"
     t.index ["user_id"], name: "index_wkbk_books_on_user_id"
   end
 
@@ -1246,6 +1248,14 @@ ActiveRecord::Schema.define(version: 2021_01_27_232700) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_wkbk_moves_answers_on_article_id"
     t.index ["moves_count"], name: "index_wkbk_moves_answers_on_moves_count"
+  end
+
+  create_table "wkbk_sequences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_wkbk_sequences_on_position"
   end
 
   create_table "wkbk_source_abouts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -1385,5 +1395,6 @@ ActiveRecord::Schema.define(version: 2021_01_27_232700) do
   add_foreign_key "wkbk_articles", "wkbk_lineages", column: "lineage_id"
   add_foreign_key "wkbk_books", "users"
   add_foreign_key "wkbk_books", "wkbk_folders", column: "folder_id"
+  add_foreign_key "wkbk_books", "wkbk_sequences", column: "sequence_id"
   add_foreign_key "wkbk_moves_answers", "wkbk_articles", column: "article_id"
 end
