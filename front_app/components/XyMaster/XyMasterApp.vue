@@ -46,14 +46,17 @@
 
             .CustomShogiPlayerWrap
               XyMasterCountdown(:base="base")
+              //- 「持ちあげる処理」を無効にするために sp_board_cell_left_click_user_handle で true を返している
               CustomShogiPlayer(
                 ref="main_sp"
                 sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
                 sp_summary="is_summary_off"
+                sp_pi_variant="is_pi_variant_b"
                 :sp_hidden_if_piece_stand_blank="true"
                 :sp_viewpoint="current_rule.viewpoint"
                 :sp_board_piece_back_user_class="sp_board_piece_back_user_class"
                 :sp_board_cell_pointerdown_user_handle="sp_board_cell_pointerdown_user_handle"
+                :sp_board_cell_left_click_user_handle="() => true"
               )
 
             .time_container.fixed_font.is-size-3
@@ -206,7 +209,7 @@ export default {
     sp_board_cell_pointerdown_user_handle(place, event) {
       if (this.mode === "is_mode_run") {
         if (this.tap_method_p) {
-          this.input_valid(place.x, place.y)
+          this.input_valid(place)
         } else {
           this.place_talk(place)
         }
@@ -219,9 +222,15 @@ export default {
       return true
     },
 
+    // 最後に押したところに色をつける
     sp_board_piece_back_user_class(place) {
-      if (!this.tap_method_p) {
+      if (this.tap_method_p) {
         if (this.mode === "is_mode_run") {
+          if (this.before_place) {
+            if (this.xy_equal_p(this.before_place, place)) {
+              return "has-background-primary-light"
+            }
+          }
         }
       }
     },
@@ -410,17 +419,17 @@ export default {
       if (e.key.match(/^\d/)) {
         this.key_queue.push(e.key)
         if (this.key_queue.length >= 2) {
-          const x = parseInt(this.key_queue.shift())
-          const y = parseInt(this.key_queue.shift())
-          this.input_valid(DIMENSION - x, y - 1)
+          const x = DIMENSION - parseInt(this.key_queue.shift())
+          const y = parseInt(this.key_queue.shift()) - 1
+          this.input_valid({x, y})
         }
         e.preventDefault()
         return
       }
     },
 
-    input_valid(x, y) {
-      if (this.active_p(x, y)) {
+    input_valid(xy) {
+      if (this.active_p(xy)) {
         this.sound_play("o")
         this.o_count++
         this.goal_check()
@@ -472,10 +481,14 @@ export default {
       this.current_place = p
     },
 
-    active_p(x, y) {
+    active_p(xy) {
       if (this.current_place) {
-        return _.isEqual(this.current_place, {x: x, y: y})
+        return this.xy_equal_p(this.current_place, xy)
       }
+    },
+
+    xy_equal_p(a, b) {
+      return a.x === b.x && a.y === b.y
     },
 
     place_random() {
@@ -752,6 +765,8 @@ export default {
       --sp_board_aspect_ratio: 1.0           // 盤を正方形化
       --sp_grid_star_size: 16%               // 星の大きさ
       --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
+      --sp_shadow_offset: 0                  // 影なし
+      --sp_shadow_blur: 0                    // 影なし
 
   .tweet_box_container
     margin-top: 0.75rem
