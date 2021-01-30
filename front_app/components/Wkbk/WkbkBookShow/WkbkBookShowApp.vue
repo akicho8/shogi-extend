@@ -1,10 +1,11 @@
 <template lang="pug">
-.WkbkBookShowApp
-  client-only
+client-only
+  .WkbkBookShowApp
     DebugBox
-      p interval_counter.count: {{interval_counter.count}}
       p spent_sec: {{spent_sec}}
       p mode: {{mode}}
+      template(v-if="interval_counter")
+        p interval_counter.count: {{interval_counter.count}}
       template(v-if="book")
         p book.user.id: {{book.user && book.user.id}}
         p g_current_user.id: {{g_current_user && g_current_user.id}}
@@ -15,18 +16,22 @@
         template(v-if="current_exist_p")
           p current_sp_body: {{current_sp_body}}
           p current_sp_viewpoint: {{current_sp_viewpoint}}
-    b-loading(:active="$fetchState.pending")
-    .MainContainer(v-if="!$fetchState.pending")
-      WkbkBookShowNavbar(:base="base")
-      MainSection.is_mobile_padding_zero
-        .container
-          template(v-if="is_standby_p")
-            WkbkBookShowStandby(:base="base")
-          template(v-if="is_running_p")
-            WkbkBookShowSp(:base="base")
-            WkbkBookShowAnswer(:base="base")
-          template(v-if="is_goal_p")
-            WkbkBookShowGoal(:base="base")
+    template(v-if="$fetchState.pending")
+      b-loading(:active="true")
+    template(v-else-if="$fetchState.error")
+      | {{$fetchState.error.message}}
+    template(v-else)
+      .MainContainer
+        WkbkBookShowNavbar(:base="base")
+        MainSection.is_mobile_padding_zero
+          .container
+            template(v-if="is_standby_p")
+              WkbkBookShowStandby(:base="base")
+            template(v-if="is_running_p")
+              WkbkBookShowSp(:base="base")
+              WkbkBookShowAnswer(:base="base")
+            template(v-if="is_goal_p")
+              WkbkBookShowGoal(:base="base")
     DebugPre
       | {{$data}}
 </template>
@@ -54,35 +59,44 @@ export default {
   data() {
     return {
       book: null,
+      meta: null,
     }
   },
 
   // fetchOnServer: false,
-  fetch() {
+  async fetch() {
     // app/controllers/api/wkbk/books_controller.rb
-    // http://localhost:3000/api/wkbk.json?remote_action=book_show_fetch&book_id=2
     const params = {
       ...this.$route.params,
       ...this.$route.query,
     }
-    return this.$axios.$get("/api/wkbk/books/show", {params}).then(e => {
-      this.config = e.config
+    const e = await this.$axios.$get("/api/wkbk/books/show.json", {params})
+    if (e.error) {
+      this.$nuxt.error(e.error)
+      return
+    }
 
-      if (!e.book) {
-        this.$nuxt.error({statusCode: 403, message: "非公開のためアクセスできるのは作成者だけです"})
-        return
-      }
+    this.config = e.config
+    this.book = new Book(e.book)
+    this.meta = e.meta
 
-      this.book = new Book(e.book)
+    this.clog("process.client", process.client)
+    this.clog("process.server", process.server)
 
-      // if (process.browser) {
-      if (true) {
-        this.play_start()
-      } else {
-        this.mode_set("standby")
-      }
-      // }
-    })
+    if (process.client) {
+      this.play_start()
+    }
+
+    // if (process.browser) {
+    // if (true) {
+    //   this.play_start()
+    // } else {
+    //   this.mode_set("standby")
+    // }
+  },
+
+  mounted() {
+    this.clog("book", this.book)
   },
 
   methods: {
@@ -91,8 +105,12 @@ export default {
   computed: {
     base() { return this },
     owner_p() { return this.book.owner_p(this.g_current_user) },
-
     // curl http://0.0.0.0:4000/library/books/6/
+    // meta() {
+    //   return {
+    //     title: "foo",
+    //   }
+    // }
   },
 }
 </script>

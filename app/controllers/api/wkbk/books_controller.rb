@@ -57,6 +57,7 @@ module Api
           retv[:error] = { statusCode: 403, message: "非公開" }
         end
 
+        # sleep(3)
         render json: retv
       end
 
@@ -154,7 +155,7 @@ module Api
 
       def book_meta(book)
         {
-          :title       => book.title,
+          :title       => [book.title, book.user.name].join(" - "),
           :description => book.description || "",
           :og_image    => book.og_image_path || "library-books",
         }

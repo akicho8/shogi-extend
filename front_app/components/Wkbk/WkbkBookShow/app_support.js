@@ -13,7 +13,10 @@ export const app_support = {
         hasModalCard: true,
         animation: "",
         canCancel: true,
-        onCancel:  () => this.sound_play("click"),
+        onCancel:  () => {
+          this.talk_stop()
+          this.sound_play("click")
+        },
       })
     },
   },

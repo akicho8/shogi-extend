@@ -1,13 +1,12 @@
 <template lang="pug">
-client-only
-  WkbkBookShowApp
+WkbkBookShowApp
 </template>
 
 <script>
-import { Book } from "../../../../components/wkbk/models/book.js"
+// import { Book } from "../../../../components/wkbk/models/book.js"
 
 export default {
-  name: "library-books-_book_id-index",
+  // name: "library-books-_book_id-index",
   // async asyncData(c) {
   //   console.log(process.browser)
   //   debugger
