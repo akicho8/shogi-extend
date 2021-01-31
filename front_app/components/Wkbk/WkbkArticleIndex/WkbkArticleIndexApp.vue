@@ -1,15 +1,21 @@
 <template lang="pug">
-.WkbkArticleIndexApp
-  DebugBox
-    p scope: {{scope}}({{tab_index}})
-    p page: {{page}}
-  WkbkArticleIndexSidebar(:base="base")
-  WkbkArticleIndexNavbar(:base="base")
-  .container
-    WkbkArticleIndexTab(:base="base")
-    WkbkArticleIndexTag(:base="base")
-    WkbkArticleIndexTable(:base="base")
-  DebugPre {{$data}}
+client-only
+  .WkbkArticleIndexApp
+    DebugBox
+      p scope: {{scope}}({{tab_index}})
+      p page: {{page}}
+    template(v-if="$fetchState.pending")
+      b-loading(:active="true")
+    template(v-else-if="$fetchState.error")
+      | {{$fetchState.error.message}}
+    template(v-else)
+      WkbkArticleIndexSidebar(:base="base")
+      WkbkArticleIndexNavbar(:base="base")
+      .container
+        WkbkArticleIndexTab(:base="base")
+        WkbkArticleIndexTag(:base="base")
+        WkbkArticleIndexTable(:base="base")
+    DebugPre {{$data}}
 </template>
 
 <script>
@@ -33,6 +39,12 @@ export default {
     app_sidebar,
   ],
 
+  data() {
+    return {
+      meta: null,
+    }
+  },
+
   watch: {
     "$route.query": "$fetch",
   },
@@ -42,7 +54,7 @@ export default {
   },
 
   fetch() {
-    this.scope       = this.$route.query.scope ?? this.scope // 引数 -> localStorageの値 -> 初期値 の順で決定
+    this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定。SSRのとき scope は null なのでさらにデフォルト値を設定する必要あり
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per
     this.sort_column = this.$route.query.sort_column ?? "updated_at"
@@ -59,13 +71,55 @@ export default {
       tag:         this.tag,
     }
 
+    this.clog("process.client", process.client)
+    this.clog("process.server", process.server)
+
+    // if (process.client) {
+    //   this.play_start()
+    // }
+
     return this.$axios.$get("/api/wkbk/articles/index.json", {params}).then(e => {
+      if (e.error) {
+        this.$nuxt.error(e.error)
+        return
+      }
+      this.meta           = e.meta
       this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
       this.articles       = e.articles.map(e => new Article(e))
       this.total          = e.total
       this.article_counts = e.article_counts
     })
   },
+
+  // async fetch() {
+  //   this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定。SSRのとき scope は null なのでさらにデフォルト値を設定する必要あり
+  //   this.page        = this.$route.query.page
+  //   this.per         = this.$route.query.per
+  //   this.sort_column = this.$route.query.sort_column ?? "updated_at"
+  //   this.sort_order  = this.$route.query.sort_order ?? "desc"
+  //   this.tag         = this.$route.query.tag
+  //
+  //   // this.url_params とは異なり最終的な初期値を設定する
+  //   const params = {
+  //     scope:       this.scope,
+  //     page:        this.page,
+  //     per:         this.per,
+  //     sort_column: this.sort_column,
+  //     sort_order:  this.sort_order,
+  //     tag:         this.tag,
+  //   }
+  //
+  //   const e = await this.$axios.$get("/api/wkbk/articles/index.json", {params})
+  //   if (e.error) {
+  //     this.$nuxt.error(e.error)
+  //     return
+  //   }
+  //   this.meta           = e.meta
+  //   this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
+  //   this.articles       = e.articles.map(e => new Article(e))
+  //   this.total          = e.total
+  //   this.article_counts = e.article_counts
+  // },
 
   methods: {
     router_replace(params) {

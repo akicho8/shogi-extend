@@ -1,6 +1,5 @@
 <template lang="pug">
-client-only
-  WkbkArticleEditApp
+WkbkArticleEditApp
 </template>
 
 <script>

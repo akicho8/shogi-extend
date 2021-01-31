@@ -19,7 +19,7 @@ client-only
     template(v-if="$fetchState.pending")
       b-loading(:active="true")
     template(v-else-if="$fetchState.error")
-      | {{$fetchState.error.message}}
+      div {{$fetchState.error.message}}
     template(v-else)
       .MainContainer
         WkbkBookShowNavbar(:base="base")
@@ -58,6 +58,7 @@ export default {
 
   data() {
     return {
+      config: null,
       book: null,
       meta: null,
     }

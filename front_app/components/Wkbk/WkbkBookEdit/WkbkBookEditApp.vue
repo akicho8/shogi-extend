@@ -1,18 +1,22 @@
 <template lang="pug">
-.WkbkBookEditApp
-  DebugBox
-    template(v-if="book")
-      p book.user.id: {{book.user && book.user.id}}
-      p g_current_user.id: {{g_current_user && g_current_user.id}}
-      p owner_p: {{owner_p}}
-      p editable_p: {{editable_p}}
-  b-loading(:active="$fetchState.pending")
-  .MainContainer(v-if="!$fetchState.pending")
-    WkbkBookEditNavbar(:base="base")
-    MainSection.is_mobile_padding_zero
-      .container
-         WkbkBookEditForm(:base="base")
-  DebugPre {{$data}}
+client-only
+  .WkbkBookEditApp
+    DebugBox
+      template(v-if="book")
+        p book.user.id: {{book.user && book.user.id}}
+        p g_current_user.id: {{g_current_user && g_current_user.id}}
+        p owner_p: {{owner_p}}
+        p editable_p: {{editable_p}}
+    template(v-if="$fetchState.pending")
+      b-loading(:active="true")
+    template(v-else-if="$fetchState.error")
+      | {{$fetchState.error.message}}
+    template(v-else)
+      WkbkBookEditNavbar(:base="base")
+      MainSection.is_mobile_padding_zero
+        .container
+           WkbkBookEditForm(:base="base")
+    DebugPre {{$data}}
 </template>
 
 <script>
@@ -26,32 +30,52 @@ import { FolderInfo } from "../models/folder_info.js"
 import { SequenceInfo } from "../models/sequence_info.js"
 
 export default {
-  name: "WkbkBookIndexApp",
+  name: "WkbkBookEditApp",
   mixins: [
     support_parent,
   ],
 
   data() {
     return {
+      config: null,
       book: null,
+      meta: null,
     }
   },
 
-  fetch() {
+  // fetch() {
+  //   const params = {
+  //     ...this.$route.params,
+  //     ...this.$route.query,
+  //   }
+  //   // app/controllers/api/wkbk/books_controller.rb
+  //   return this.$axios.$get("/api/wkbk/books/edit.json", {params}).then(e => {
+  //     if (e.error) {
+  //       this.$nuxt.error(e.error)
+  //       return
+  //     }
+  //     this.config = e.config
+  //     this.book = new Book(e.book)
+  //     this.meta = e.meta
+  //   })
+  // },
+
+  async fetch() {
     const params = {
       ...this.$route.params,
       ...this.$route.query,
     }
-    return this.$axios.$get("/api/wkbk/books/edit.json", {params}).then(e => {
-      if (!e.book) {
-        this.$nuxt.error({statusCode: 403, message: "非公開のためアクセスできるのは作成者だけです"})
-        return
-      }
-      this.config = e.config
-      this.book = new Book(e.book)
-    })
+    // app/controllers/api/wkbk/books_controller.rb
+    const e = await this.$axios.$get("/api/wkbk/books/edit.json", {params})
+    if (e.error) {
+      this.$nuxt.error(e.error)
+      return
+    }
+    this.config = e.config
+    this.book = new Book(e.book)
+    this.meta = e.meta
   },
-
+  
   methods: {
     save_handle() {
       this.sound_play("click")

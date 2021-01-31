@@ -5,7 +5,12 @@ export const app_storage = {
     ls_support_mixin,
   ],
   created() {
+    this.clog("created process.client", process.client)
+    this.clog("created process.server", process.server)
+
     this.ls_setup() // fetch により先に呼ばれるので先に scope を設定できる
+    this.clog("created visible_hash", this.visible_hash)
+    this.clog("created scope", this.scope)
   },
   computed: {
     ls_default() {

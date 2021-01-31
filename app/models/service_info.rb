@@ -213,6 +213,7 @@ class ServiceInfo
       ],
     },
     {
+      key: :wkbk,
       display_p: !Rails.env.production?,
       nuxt_link_to: {path: "/library/books"},
       title: "みんなの問題集",
@@ -229,4 +230,8 @@ class ServiceInfo
       ],
     },
   ]
+
+  def og_meta
+    [:title, :description, :og_image_key].inject({}) {|a, e| a.merge(e => public_send(e)) }
+  end
 end

@@ -8,21 +8,44 @@
 URESINORYU = "body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&abstract_viewpoint=self"
 
 LIST_ALL = [
-  # { url: "/library/books",        validations: { "og:title" => /問題集/, "og:image" => /books/,       "twitter:card" => "summary_large_image" }},
-  # { url: "/library/books/1",      validations: { "og:image" => /share-board/, "twitter:card" => "summary_large_image" }},
+  { url: "/library/articles",                  validations: { "code" => "200", }},
+  { url: "/library/articles/1/edit",           validations: { "code" => "403", }},
+  
+  # { url: "/library/books",                   validations: { "code" => "200", }},
+  # { url: "/library/books/1",                 validations: { "code" => "200", }},
+  # { url: "/library/books/2",                 validations: { "code" => "403", }},
+  # { url: "/library/books/9999",              validations: { "code" => "404", }},
+  # { url: "/library/books/2?_user_id=1",      validations: { "code" => "200", }},
+  # { url: "/library/books/4?_user_id=1",      validations: { "code" => "403", }},
+  # { url: "/library/books/new",               validations: { "code" => "403", }},
+  # { url: "/library/books/new?_user_id=1",    validations: { "code" => "200", }},
+  # { url: "/library/books/1/edit",            validations: { "code" => "403", }},
+  # { url: "/library/books/2/edit",            validations: { "code" => "403", }},
+  # { url: "/library/books/3/edit",            validations: { "code" => "403", }},
+  # { url: "/library/books/4/edit",            validations: { "code" => "403", }},
+  # { url: "/library/books/1/edit?_user_id=1", validations: { "code" => "200", }},
+  # { url: "/library/books/2/edit?_user_id=1", validations: { "code" => "200", }},
+  # { url: "/library/books/3/edit?_user_id=1", validations: { "code" => "404", }},
+  # { url: "/library/books/4/edit?_user_id=1", validations: { "code" => "404", }},
+  
+  # 
+  # { url: "/library/books",              validations: { "og:image" => /books/, "og:title" => /問題集/, }},
+  # { url: "/library/books/1",            validations: { "og:image" => /share/,                         }},
 
-  # { url: "/library/books/new",    validations: {  }},
-  # { url: "/library/books/1/edit", validations: {  }},
+  # { url: "/library/books/1/edit", validations: { "code" => "404 Forbidden" }},
 
-  { url: "/library/books/2",      validations: { "error" => /Forbidden/ }},
-  { url: "/library/books/2/edit", validations: { "error" => /Forbidden/ }},
+  # { url: "/library/books/2",      validations: { "code" => /Forbidden/ }},
+  # { url: "/library/books/2/edit", validations: { "code" => /Forbidden/ }},
+  # { url: "/library/books/3",      validations: { "code" => /Forbidden/ }},
+  # { url: "/library/books/3/edit", validations: { "code" => /Forbidden/ }},
+  # { url: "/library/books/10000",  validations: { "code" => /Forbidden/ }},
 
   # { url: "/library/books/2", validations: { "og:title" => /非公開/, }},
 
   # { url: "/users/1",                                                                 validations: { "title" => /さん/,                                                                                                                                      }},
   #
-  # { url: "/settings/profile",                                                        validations: { "error" => "404"                                                                                                                                      }},
-  # { url: "/settings/email",                                                          validations: { "error" => "404",                                                                                                                                      }},
+  # { url: "/settings/profile",                                                        validations: { "code" => "404"                                                                                                                                      }},
+  # { url: "/settings/email",                                                          validations: { "code" => "404",                                                                                                                                      }},
   #
   # { url: "/",                                                                        validations: { "title" => "SHOGI-EXTEND(d)",                                                                                                           }},
   # { url: "/swars/search?query=Yamada_Taro",                                          validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
@@ -88,8 +111,9 @@ class Ogp < Thor
 
         begin
           html = URI(url).read
+          attributes["code"] = "200"
         rescue OpenURI::HTTPError => error
-          attributes["error"] = error.to_s
+          attributes["code"] = error.to_s.to_i.to_s
           # row["結果"] = "×"
           # if v = e[:validations]["error"]
           #   if error.to_s.include?(v)

@@ -36,8 +36,9 @@ module Wkbk
             { id: 4, user: :bot,   folder_key: :private, },
           ].each do |e|
             Book.where(id: e[:id]).destroy_all
-            book = User.public_send(e[:user]).wkbk_books.create!(id: e[:id], folder_key: e[:folder_key], title: "#{e[:user]} - #{e[:folder_key]}")
-            article = book.articles.create!
+            book = User.public_send(e[:user]).wkbk_books.create!(id: e[:id], folder_key: e[:folder_key], title: "#{e[:user]} - #{e[:folder_key]} - #{e[:id]}")
+            Article.where(id: e[:id]).destroy_all
+            article = book.articles.create!(id: e[:id], title: "#{e[:user]} - #{e[:folder_key]} - #{e[:id]}")
           end
           tp self
         end
@@ -55,9 +56,9 @@ module Wkbk
     # Vueでリアクティブになるように空でもカラムは作っておくこと
     def self.default_attributes
       attrs = {
-        :id           => nil,
-        :title        => nil,
-        :description  => nil,
+        # :id           => nil,
+        # :title        => nil,
+        # :description  => nil,
         :folder_key   => :private,
         :sequence_key => :shuffle,
       }
@@ -310,7 +311,7 @@ module Wkbk
     end
 
     def owner_editable_p(current_user)
-      folder_key_eq(:public) || (folder_key_eq(:private) && user == current_user)
+      folder_key_eq(:public) || user == current_user
     end
 
     def ordered_articles
@@ -318,12 +319,22 @@ module Wkbk
     end
 
     def og_image_path
-      if article = articles.sample
-        v = {}
-        v[:turn]               = 0
-        v[:body]               = article.init_sfen
-        v[:abstract_viewpoint] = article.viewpoint
-        "/share-board.png?#{v.to_query}"
+      articles.sample&.og_image_path
+    end
+
+    def og_meta
+      if new_record?
+        {
+          :title       => "新規 - 問題集",
+          :description => description || "",
+          :og_image    => "library-books",
+        }
+      else
+        {
+          :title       => [title, user.name].join(" - "),
+          :description => description || "",
+          :og_image    => og_image_path || "library-books",
+        }
       end
     end
 

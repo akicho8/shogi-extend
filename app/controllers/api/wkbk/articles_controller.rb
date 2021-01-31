@@ -29,6 +29,8 @@
 module Api
   module Wkbk
     class ArticlesController < ApplicationController
+      before_action :api_login_required, only: [:edit, :save]
+
       # http://0.0.0.0:3000/api/wkbk/articles
       # http://0.0.0.0:3000/api/wkbk/articles?scope=everyone
       # http://0.0.0.0:3000/api/wkbk/articles?scope=public
@@ -39,51 +41,44 @@ module Api
         retv[:articles]       = sort_scope_for_articles(current_articles).as_json(::Wkbk::Article.json_type5)
         retv[:article_counts] = article_counts
         retv[:total]          = current_articles.total_count
+        retv[:meta]           = ServiceInfo.fetch(:wkbk).og_meta
         render json: retv
       end
 
       # http://0.0.0.0:3000/api/wkbk/articles/edit
       # http://0.0.0.0:3000/api/wkbk/articles/edit?article_id=1
+      # http://0.0.0.0:3000/api/wkbk/articles/edit?article_id=1&_user_id=1
       def edit
         retv = {}
-        if current_user
-          retv[:config] = ::Wkbk::Config
-          retv[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
-          retv[:books] = current_books
+        retv[:config] = ::Wkbk::Config
+        retv[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
+        retv[:books] = current_books
 
-          if params[:article_id]
-            # 編集
-            record = ::Wkbk::Article.find(params[:article_id])
-            if record.owner_editable_p(current_user)
-              retv[:article] = record.as_json(::Wkbk::Article.json_type5)
-            else
-              retv[:error] = { statusCode: 403, message: "所有者ではありません" }
-            end
-          else
-            # 新規
-            retv[:article] = ::Wkbk::Article.default_attributes.merge(book_id: default_book_id)
-          end
+        if params[:article_id]
+          article = ::Wkbk::Article.find(params[:article_id])
+          owner_valid(article)
+          retv[:article] = article.as_json(::Wkbk::Article.json_type5)
         else
-          retv[:error] = { statusCode: 403, message: "ログインしてください" }
+          article = current_user.wkbk_articles.build(::Wkbk::Article.default_attributes.merge(book_id: default_book_id))
+          retv[:article] = article
         end
+        retv[:meta] = article.og_meta
         render json: retv
       end
 
       # POST http://0.0.0.0:3000/api/wkbk/articles/save
       def save
         retv = {}
-        if current_user
-          if id = params[:article][:id]
-            article = current_user.wkbk_articles.find(id)
-          else
-            article = current_user.wkbk_articles.build
-          end
-          begin
-            article.update_from_js(params.to_unsafe_h[:article])
-            retv[:article] = article.as_json(::Wkbk::Article.json_type5)
-          rescue ActiveRecord::RecordInvalid => error
-            retv[:form_error_message] = error.message
-          end
+        if id = params[:article][:id]
+          article = current_user.wkbk_articles.find(id)
+        else
+          article = current_user.wkbk_articles.build
+        end
+        begin
+          article.update_from_js(params.to_unsafe_h[:article])
+          retv[:article] = article.as_json(::Wkbk::Article.json_type5)
+        rescue ActiveRecord::RecordInvalid => error
+          retv[:form_error_message] = error.message
         end
         render json: retv
       end

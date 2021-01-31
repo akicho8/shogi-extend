@@ -218,6 +218,16 @@ module Wkbk
       validates :description, length: { maximum: 1024 }
     end
 
+    validate do
+      if changes_to_save[:book_id] || changes_to_save[:user_id]
+        if book && user
+          if book.user != user
+            errors.add(:base, "問題集の所有者と問題の所有者が異なります")
+          end
+        end
+      end
+    end
+
     # validate do
     #   if false
     #     if changes_to_save[:book_id] && book
@@ -403,6 +413,32 @@ module Wkbk
         book.owner_editable_p(current_user)
       else
         user == current_user
+      end
+    end
+
+    def og_image_path
+      if persisted?
+        v = {}
+        v[:turn]               = 0
+        v[:body]               = init_sfen
+        v[:abstract_viewpoint] = viewpoint
+        "/share-board.png?#{v.to_query}"
+      end
+    end
+
+    def og_meta
+      if new_record?
+        {
+          :title       => "新規 - 問題",
+          :description => description || "",
+          :og_image    => "library-books",
+        }
+      else
+        {
+          :title       => [title, user.name].join(" - "),
+          :description => description || "",
+          :og_image    => og_image_path || "library-books",
+        }
       end
     end
 

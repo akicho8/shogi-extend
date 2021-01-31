@@ -34,6 +34,7 @@ import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
 
 const HASH_MERGE_P = true // ハッシュは復元するときに初期値に対してマージするか？
+
 export const ls_support_mixin = {
   beforeDestroy() {
     this.ls_destroy()
@@ -42,7 +43,11 @@ export const ls_support_mixin = {
   methods: {
     ls_setup() {
       // server → client の順で2回呼ばれるので2回目のときだけ変数を復帰する(重要)
-      if (process.browser) {
+
+      this.clog("ls_setup process.client", process.client)
+      this.clog("ls_setup process.server", process.server)
+
+      if (process.client) {
         if (!this.$ls_unwatch) {
           this.ls_load()
           // 変数がハッシュかもしれないので deep: true にしておく
@@ -61,6 +66,13 @@ export const ls_support_mixin = {
     },
 
     ls_save() {
+      if (this.development_p || true) {
+        _.each(this.ls_attributes, (v, k) => {
+          if (v == null) {
+            throw new Error(`[${this.ls_storage_key}] ${k} に null を設定している`)
+          }
+        })
+      }
       MyLocalStorage.set(this.ls_storage_key, this.ls_attributes)
     },
 
@@ -75,7 +87,7 @@ export const ls_support_mixin = {
       this.ls_keys.forEach(key => {
         const d = this.ls_default[key]    // => {a: 1, b: 2} (default value)
         let v = null
-        if (key in hash) {
+        if ((key in hash) && (hash[key] != null)) { // 保存している値が null のときは初期値に戻す
           const s = hash[key]             // => {a: 0,     } (stored value)
           if (HASH_MERGE_P && _.isPlainObject(d) && _.isPlainObject(s)) {
             v = {..._.cloneDeep(d), ...s} // => {a: 0, b: 2} 初期値に対してマージ

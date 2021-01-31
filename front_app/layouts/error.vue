@@ -1,4 +1,6 @@
 <template lang="pug">
+// 原因はさっぱりわからんけど client-only をつけないと下のエラーが出る
+// [Vue warn]: The client-side rendered virtual DOM tree is not matching server-rendered content. This is likely caused by incorrect HTML markup, for example nesting block-level elements inside <p>, or missing <tbody>. Bailing hydration and performing full client-side render.
 client-only
   .error.has-background-primary
     nuxt-link(to="/" @click.native="sound_play('click')")
@@ -6,8 +8,8 @@ client-only
 
     .section.px-4.py-4
       .container
-        .box.has-text-weight-bold.has-text-centered
-          p {{default_message}}
+        .box.has-text-centered
+          p {{status_code_with_message}}
           p(v-if="error.message")
             | {{error.message}}
         .emoji.has-text-centered.is-unselectable.is-clickable(@click="charactor_click")
@@ -21,7 +23,9 @@ import _ from "lodash"
 
 export default {
   name: "error",
-  props: ["error"], // BUG: this.$nuxt.error({statusCode: 404, message: ""}) とすると引数がメッセージが含まれるようになる
+  props: {
+    error: { type: Object, required: false, default: {}, },
+  },
 
   data() {
     return {
@@ -29,17 +33,12 @@ export default {
     }
   },
 
-    meta() {
-    return {
-      title: this.charactor,
-      short_title: true,
-    }
-  },
-
   methods: {
     charactor_click() {
-      this.sound_play('click')
-      this.talk(this.default_message)
+      if (process.client) {
+        this.sound_play('click')
+        this.talk(this.status_code_with_message)
+      }
     },
     charactor_sample() {
       return _.sample([..."🐰🐥🦉🐔🦔🐻🐹🐷🐮🐯🦁🐱🦊🐺🐶🐵🐸🐛🦋🥀🍀☘🍄"])
@@ -47,13 +46,28 @@ export default {
   },
 
   computed: {
-    default_message() {
-      if (this.error.statusCode === 404) {
-        return "ページが見つかりません"
-      } else if (this.error.statusCode === 403) {
-        return "403 Forbidden"
+    meta() {
+      return {
+        title: this.status_code_with_message,
+        short_title: true,
+      }
+    },
+
+    status_code_with_message() {
+      if (this.error) {
+        if (this.error.statusCode) {
+          if (this.error.statusCode === 404) {
+            return `${this.error.statusCode} Not Found`
+          } else if (this.error.statusCode === 403) {
+            return `${this.error.statusCode} Forbidden`
+          } else {
+            return `${this.error.statusCode} ???`
+          }
+        } else {
+          return "??? ステイタスコード不明"
+        }
       } else {
-        return "ぶっこわれました"
+        return "エラー情報不明"
       }
     },
   },
@@ -80,7 +94,7 @@ export default {
   align-items: center
 
   .box
-    border-radius: 25px
+    border-radius: 8px
     background-color: var(--balloon-bg-color)
     border: 1px solid var(--balloon-fg-color)
 

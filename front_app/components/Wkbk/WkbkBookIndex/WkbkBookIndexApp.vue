@@ -1,14 +1,19 @@
 <template lang="pug">
-.WkbkBookIndexApp
-  client-only
+client-only
+  .WkbkBookIndexApp
     DebugBox
       p scope: {{scope}}({{tab_index}})
       p page: {{page}}
-    WkbkBookIndexSidebar(:base="base")
-    WkbkBookIndexNavbar(:base="base")
-    .container
-      WkbkBookIndexTab(:base="base")
-      WkbkBookIndexTable(:base="base")
+    template(v-if="$fetchState.pending")
+      b-loading(:active="true")
+    template(v-else-if="$fetchState.error")
+      | {{$fetchState.error.message}}
+    template(v-else)
+      WkbkBookIndexSidebar(:base="base")
+      WkbkBookIndexNavbar(:base="base")
+      .container
+        WkbkBookIndexTab(:base="base")
+        WkbkBookIndexTable(:base="base")
     DebugPre {{$data}}
 </template>
 
@@ -33,6 +38,12 @@ export default {
     app_sidebar,
   ],
 
+  data() {
+    return {
+      meta: null,
+    }
+  },
+
   watch: {
     "$route.query": "$fetch",
   },
@@ -41,11 +52,11 @@ export default {
     this.ga_click("みんなの問題集")
   },
 
-  fetchOnServer: false,
+  // fetchOnServer: false,
   fetch() {
-    this.__assert__(this.scope, "this.scope")
+    // this.__assert__(this.scope, "this.scope")
 
-    this.scope       = this.$route.query.scope ?? this.scope // 引数 -> localStorageの値 -> 初期値 の順で決定
+    this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per
     this.sort_column = this.$route.query.sort_column ?? "updated_at"
@@ -63,6 +74,11 @@ export default {
     }
 
     return this.$axios.$get("/api/wkbk/books/index.json", {params}).then(e => {
+      if (e.error) {
+        this.$nuxt.error(e.error)
+        return
+      }
+      this.meta        = e.meta
       this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
       this.books       = e.books.map(e => new Book(e))
       this.total       = e.total
@@ -80,13 +96,6 @@ export default {
 
   computed: {
     base() { return this },
-    meta() {
-      return {
-        title: "みんなの問題集",
-        description: "市販の問題集を繰り返し解くよりも本人が本人のためだけに作った問題集を繰り返し解いた方が身に付きやすいのではないかという実験もかねた、次の一手や詰将棋の問題を投稿するサービスです",
-        og_image_key: "library-books",
-      }
-    },
   },
 }
 </script>
