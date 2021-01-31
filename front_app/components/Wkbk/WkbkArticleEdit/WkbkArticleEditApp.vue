@@ -9,12 +9,13 @@ client-only
         p g_current_user.id: {{g_current_user && g_current_user.id}}
         p owner_p: {{owner_p}}
         p editable_p: {{editable_p}}
-    template(v-if="$fetchState.pending")
-      b-loading(:active="true")
-    template(v-else-if="$fetchState.error")
-      | {{$fetchState.error.message}}
-    template(v-else)
-      WkbkArticleEditNavbar(:base="base")
+
+    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    b-loading(:active="$fetchState.pending")
+
+    WkbkArticleEditNavbar(:base="base")
+
+    .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
       .container
         b-tabs.MainTabs(v-model="tab_index" expanded @input="edit_tab_change_handle" v-if="article")
           b-tab-item(label="配置")
@@ -30,13 +31,14 @@ client-only
                 | 検証
                 b-tag.ml-1(rounded v-if="valid_count >= 1" type="is-primary") OK
 
-    //-   MainSection.is_mobile_padding_zero
-    //-     .container
-    //-       keep-alive
-    //-         WkbkArticleEditPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleEditPlacement")
-    //-         WkbkArticleEditAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleEditAnswer")
-    //-         WkbkArticleEditForm(:base="base"       v-if="current_tab_info.key === 'form'")
-    //-         WkbkArticleEditValidation(:base="base" v-if="current_tab_info.key === 'validation'")
+        MainSection.is_mobile_padding_zero
+         .container
+           keep-alive
+             WkbkArticleEditPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleEditPlacement")
+             WkbkArticleEditAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleEditAnswer")
+             WkbkArticleEditForm(:base="base"       v-if="current_tab_info.key === 'form'")
+             WkbkArticleEditValidation(:base="base" v-if="current_tab_info.key === 'validation'")
+
     DebugPre
       | {{article}}
       | {{books}}

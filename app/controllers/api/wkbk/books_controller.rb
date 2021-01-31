@@ -64,20 +64,15 @@ module Api
         retv = {}
         retv[:config] = ::Wkbk::Config
         if params[:book_id]
-          # 編集
           book = current_user.wkbk_books.find(params[:book_id])
-          if book.owner_editable_p(current_user)
-            retv[:book] = book.as_json(::Wkbk::Book.json_type5)
-            retv[:meta] = book.og_meta
-          else
-            retv[:error] = { statusCode: 403, message: "所有者ではありません" }
-          end
+          permission_valid!(book)
+          retv[:book] = book.as_json(::Wkbk::Book.json_type5)
         else
-          # 新規
           book = current_user.wkbk_books.build(::Wkbk::Book.default_attributes)
           retv[:book] = book
-          retv[:meta] = book.og_meta
         end
+        retv[:meta] = book.og_meta
+        # sleep(3)
         render json: retv
       end
 

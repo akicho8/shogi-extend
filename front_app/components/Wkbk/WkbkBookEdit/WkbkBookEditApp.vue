@@ -7,15 +7,17 @@ client-only
         p g_current_user.id: {{g_current_user && g_current_user.id}}
         p owner_p: {{owner_p}}
         p editable_p: {{editable_p}}
-    template(v-if="$fetchState.pending")
-      b-loading(:active="true")
-    template(v-else-if="$fetchState.error")
-      | {{$fetchState.error.message}}
-    template(v-else)
-      WkbkBookEditNavbar(:base="base")
+
+    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    b-loading(:active="$fetchState.pending")
+
+    WkbkBookEditNavbar(:base="base")
+
+    .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
       MainSection.is_mobile_padding_zero
         .container
            WkbkBookEditForm(:base="base")
+
     DebugPre {{$data}}
 </template>
 
