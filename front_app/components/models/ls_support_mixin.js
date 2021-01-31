@@ -69,6 +69,7 @@ export const ls_support_mixin = {
       if (this.development_p || true) {
         _.each(this.ls_attributes, (v, k) => {
           if (v == null) {
+            debugger
             throw new Error(`[${this.ls_storage_key}] ${k} に null を設定している`)
           }
         })

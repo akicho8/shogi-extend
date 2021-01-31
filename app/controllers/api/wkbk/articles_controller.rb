@@ -56,7 +56,7 @@ module Api
 
         if params[:article_id]
           article = ::Wkbk::Article.find(params[:article_id])
-          owner_valid(article)
+          permission_valid!(article)
           retv[:article] = article.as_json(::Wkbk::Article.json_type5)
         else
           article = current_user.wkbk_articles.build(::Wkbk::Article.default_attributes.merge(book_id: default_book_id))

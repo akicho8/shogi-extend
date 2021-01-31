@@ -8,7 +8,7 @@ b-sidebar.WkbkBookIndexSidebar.is-unselectable(fullheight right overlay v-model=
         b-menu-list(label="Action")
           //- b-menu-item(tag="nuxt-link" :to="{name: 'library-books-new'}" label="問題集作成" @click.native="sound_play('click')")
           b-menu-item(tag="nuxt-link" :to="{name: 'library-articles'}" label="問題リスト" @click.native="sound_play('click')")
-        b-menu-list(label="表示オプション")
+        b-menu-list(label="表示オプション" v-if="base.visible_hash")
           b-menu-item.sidebar_columns_toggle(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 表示カラム

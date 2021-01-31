@@ -1,20 +1,36 @@
 <template lang="pug">
-client-only
-  .WkbkBookIndexApp
+.WkbkBookIndexApp
+  client-only
     DebugBox
       p scope: {{scope}}({{tab_index}})
       p page: {{page}}
-    template(v-if="$fetchState.pending")
-      b-loading(:active="true")
-    template(v-else-if="$fetchState.error")
-      | {{$fetchState.error.message}}
-    template(v-else)
+
+    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+
+    .MainContainer
       WkbkBookIndexSidebar(:base="base")
       WkbkBookIndexNavbar(:base="base")
       .container
         WkbkBookIndexTab(:base="base")
         WkbkBookIndexTable(:base="base")
+
+    DebugPre {{$fetchState}}
     DebugPre {{$data}}
+
+    //- .box
+    //-   template(v-if="$fetchState.pending")
+    //-     | pending
+    //-   template(v-else-if="$fetchState.error")
+    //-     | error
+    //-   template(v-else)
+    //-     | htlm
+    //-
+    //- WkbkBookIndexSidebar(:base="base")
+    //- WkbkBookIndexNavbar(:base="base")
+    //- .container
+    //-   WkbkBookIndexTab(:base="base")
+    //-   WkbkBookIndexTable(:base="base")
+
 </template>
 
 <script>

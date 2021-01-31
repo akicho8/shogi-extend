@@ -4,18 +4,19 @@ client-only
     DebugBox
       p scope: {{scope}}({{tab_index}})
       p page: {{page}}
-    template(v-if="$fetchState.pending")
-      b-loading(:active="true")
-    template(v-else-if="$fetchState.error")
-      | {{$fetchState.error.message}}
-    template(v-else)
+
+    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+
+    .MainContainer
       WkbkArticleIndexSidebar(:base="base")
       WkbkArticleIndexNavbar(:base="base")
       .container
         WkbkArticleIndexTab(:base="base")
         WkbkArticleIndexTag(:base="base")
         WkbkArticleIndexTable(:base="base")
+
     DebugPre {{$data}}
+    DebugPre {{$fetchState.pending}}
 </template>
 
 <script>

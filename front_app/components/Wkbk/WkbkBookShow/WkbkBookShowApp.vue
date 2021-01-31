@@ -16,22 +16,22 @@ client-only
         template(v-if="current_exist_p")
           p current_sp_body: {{current_sp_body}}
           p current_sp_viewpoint: {{current_sp_viewpoint}}
-    template(v-if="$fetchState.pending")
-      b-loading(:active="true")
-    template(v-else-if="$fetchState.error")
-      div {{$fetchState.error.message}}
-    template(v-else)
-      .MainContainer
-        WkbkBookShowNavbar(:base="base")
-        MainSection.is_mobile_padding_zero
-          .container
-            template(v-if="is_standby_p")
-              WkbkBookShowStandby(:base="base")
-            template(v-if="is_running_p")
-              WkbkBookShowSp(:base="base")
-              WkbkBookShowAnswer(:base="base")
-            template(v-if="is_goal_p")
-              WkbkBookShowGoal(:base="base")
+
+    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    b-loading(:active="$fetchState.pending")
+
+    WkbkBookShowNavbar(:base="base")
+    .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
+      MainSection.is_mobile_padding_zero
+        .container
+          template(v-if="is_standby_p")
+            WkbkBookShowStandby(:base="base")
+          template(v-if="is_running_p")
+            WkbkBookShowSp(:base="base")
+            WkbkBookShowAnswer(:base="base")
+          template(v-if="is_goal_p")
+            WkbkBookShowGoal(:base="base")
+
     DebugPre
       | {{$data}}
 </template>
@@ -75,11 +75,6 @@ export default {
       this.$nuxt.error(e.response.data)
       return
     })
-
-    // if (e.error) {
-    //   this.$nuxt.error(e.error)
-    //   return
-    // }
 
     this.config = e.config
     this.book = new Book(e.book)

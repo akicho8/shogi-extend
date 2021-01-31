@@ -43,25 +43,14 @@ module Api
       def show
         retv = {}
         retv[:config] = ::Wkbk::Config
+
         book = ::Wkbk::Book.find(params[:book_id])
+        permission_valid!(book)
 
-        if book.owner_editable_p(current_user)
-          v = book.as_json(::Wkbk::Book.show_json_struct)
-          v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.show_articles_json_struct)
-          retv[:book] = v
-          retv[:meta] = book.og_meta
-          # else
-          #   retv[:ogp_meta_hash] = {
-          #     :title                 => "#{book.user.name}さんの問題集(非公開)",
-          #     :description           => "",
-          #     :og_image_key          => "library-books",
-          #     :twitter_card_is_small => true,
-          #   }
-        else
-          retv[:error] = { statusCode: 403, message: "非公開" }
-        end
-
-        # sleep(3)
+        v = book.as_json(::Wkbk::Book.show_json_struct)
+        v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.show_articles_json_struct)
+        retv[:book] = v
+        retv[:meta] = book.og_meta
         render json: retv
       end
 
