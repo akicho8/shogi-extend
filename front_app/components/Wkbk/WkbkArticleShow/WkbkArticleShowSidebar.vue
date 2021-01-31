@@ -8,6 +8,7 @@ b-sidebar.WkbkArticleShowSidebar.is-unselectable(fullheight right overlay v-mode
         b-menu-list(label="Action" v-if="development_p")
           //- b-menu-item(tag="nuxt-link" :to="{name: 'library-articles-new'}" label="問題作成" @click.native="sound_play('click')")
           b-menu-item(tag="nuxt-link" :to="{name: 'library-articles-article_id-edit', params: {article_id: base.article.id}}" label="編集" v-if="base.editable_p")
+          b-menu-item(label="ツイート" @click="base.tweet_handle")
 
         //- b-menu-list(label="表示オプション")
         //-
