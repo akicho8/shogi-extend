@@ -4,7 +4,7 @@
     .CustomShogiPlayerWrap
       CustomShogiPlayer(
         :sp_body="base.article.init_sfen"
-        :sp_viewpoint="base.sp_viewpoint"
+        :sp_viewpoint="base.article.viewpoint"
         :sp_turn="0"
         :sp_sound_body_changed="false"
         sp_mobile_vertical="is_mobile_vertical_off"
@@ -28,7 +28,7 @@
               sp_mobile_vertical="is_mobile_vertical_off"
               sp_run_mode="view_mode"
               :sp_body="base.article.init_sfen_with(e)"
-              :sp_viewpoint="base.sp_viewpoint"
+              :sp_viewpoint="base.article.viewpoint"
               :sp_turn="-1"
               :sp_sound_body_changed="false"
               sp_summary="is_summary_off"

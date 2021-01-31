@@ -2,7 +2,6 @@
 client-only
   .WkbkArticleEditApp
     DebugBox
-      p sp_viewpoint: {{sp_viewpoint}}
       template(v-if="article")
         p article.book_id: {{article.book_id}}
         p article.user.id: {{article.user && article.user.id}}

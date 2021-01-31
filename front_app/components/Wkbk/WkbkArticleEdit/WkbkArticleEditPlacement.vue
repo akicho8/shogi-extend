@@ -7,7 +7,7 @@
         sp_run_mode="edit_mode"
         :sp_body="base.sp_body"
         :sp_turn="0"
-        :sp_viewpoint.sync="base.sp_viewpoint"
+        :sp_viewpoint.sync="base.article.viewpoint"
         :sp_sound_body_changed="false"
         :sp_sound_enabled="false"
         sp_slider="is_slider_on"

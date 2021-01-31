@@ -5,14 +5,7 @@ export const app_placement = {
   data() {
     return {
       sp_body: null,
-      sp_viewpoint: "black", // FIXME: article.viewpoint でいいのでは？
     }
-  },
-
-  watch: {
-    sp_viewpoint(v) {
-      this.article.viewpoint = v
-    },
   },
 
   methods: {
@@ -33,7 +26,7 @@ export const app_placement = {
                 // moves がないので確定
                 this.toast_ok("反映しました")
                 this.base_sfen_set(e.body)
-                this.sp_viewpoint = "black"
+                // this.sp_viewpoint = "black"
               } else {
                 // moves があるので局面を確定してもらう
                 let default_sp_turn = this.default_sp_turn(any_source)
@@ -81,7 +74,7 @@ export const app_placement = {
           "update:submit": e => {
             // this.toast_ok("反映しました")
 
-            this.sp_viewpoint = e.viewpoint
+            this.base.article.viewpoint = e.viewpoint
             this.base_sfen_set(e.from_sfen) // 初期配置の設定
 
             if (e.moves.length >= 1) {
