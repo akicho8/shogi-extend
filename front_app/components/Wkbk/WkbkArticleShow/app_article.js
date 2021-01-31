@@ -8,22 +8,6 @@ export const app_article = {
   },
 
   methods: {
-    ////////////////////////////////////////////////////////////////////////////////
-    edit_mode_snapshot_sfen(sfen) {
-      if (this.article.init_sfen !== sfen) {
-        if (this.article.moves_answers.length >= 1) {
-          this.toast_ok("元の配置を変更したので正解を削除しました")
-        }
-        this.article_init_sfen_set(sfen)
-      }
-    },
-
-    article_init_sfen_set(sfen) {
-      this.answers_clear()
-      this.article.init_sfen = sfen
-      this.valid_count = 0
-    },
-
     current_moves() {
       return this.$refs.WkbkArticleShowAnswer.$refs.main_sp.sp_object().moves_take_turn_offset
     },
@@ -44,14 +28,14 @@ export const app_article = {
       // this.exam_run_count += 1
     },
 
-    turn_offset_set(v) {
-      this.answer_turn_offset = v
-    },
+    // turn_offset_set(v) {
+    //   // this.answer_turn_offset = v
+    // },
   },
 
   computed: {
-    save_button_name()    { return this.article.new_record_p ? "保存" : "更新" },
-    save_button_enabled() { return this.article.moves_answers.length >= 1      },
+    // save_button_name()    { return this.article.new_record_p ? "保存" : "更新" },
+    // save_button_enabled() { return this.article.moves_answers.length >= 1      },
 
     //////////////////////////////////////////////////////////////////////////////// 編集権限
     owner_p()    { return this.article.owner_p(this.g_current_user) },

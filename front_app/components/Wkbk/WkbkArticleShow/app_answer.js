@@ -2,7 +2,7 @@ export const app_answer = {
   data() {
     return {
       answer_tab_index:   null, // 表示している正解タブの位置
-      answer_turn_offset: null, // 正解モードでの手数
+      // answer_turn_offset: null, // 正解モードでの手数
     }
   },
 

@@ -5,14 +5,13 @@
       CustomShogiPlayer(
         sp_mobile_vertical="is_mobile_vertical_off"
         sp_run_mode="edit_mode"
-        :sp_body="base.sp_body"
+        :sp_body="base.article.init_sfen"
         :sp_turn="0"
-        :sp_viewpoint.sync="base.sp_viewpoint"
+        :sp_viewpoint="base.article.viewpoint"
         :sp_sound_body_changed="false"
         :sp_sound_enabled="false"
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"
-        @update:edit_mode_snapshot_sfen="base.edit_mode_snapshot_sfen"
         ref="main_sp"
         )
       .footer_buttons
@@ -24,20 +23,6 @@
           PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
           KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
           KifCopyButton(@click="kifu_copy_handle") コピー
-
-        //- .buttons.is-centered.are-small.is-marginless.mt-3
-        //-   b-button(@click="base.any_source_read_handle") 棋譜の読み込み
-
-        //- .buttons.has-addons.is-centered.are-small.mt-3(v-if="development_p")
-        //-   b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(3)") 3
-        //-   b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(4)") 4
-        //-   b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(5)") 5
-        //-   b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(6)") 6
-        //-   .ml-1
-        //-   b-button(icon-left="arrow-left"  @click="$refs.main_sp.sp_object().mediator.slide_xy(-1, 0)")
-        //-   b-button(icon-left="arrow-down"  @click="$refs.main_sp.sp_object().mediator.slide_xy(0, 1)")
-        //-   b-button(icon-left="arrow-up"    @click="$refs.main_sp.sp_object().mediator.slide_xy(0, -1)")
-        //-   b-button(icon-left="arrow-right" @click="$refs.main_sp.sp_object().mediator.slide_xy(1, 0)")
 </template>
 
 <script>
@@ -48,9 +33,9 @@ export default {
   mixins: [
     support_child,
   ],
-  created() {
-    this.base.sp_body = this.base.article.init_sfen
-  },
+  // created() {
+  //   this.base.sp_body = this.base.article.init_sfen
+  // },
 
   mounted() {
     this.base.piece_box_piece_couns_adjust()

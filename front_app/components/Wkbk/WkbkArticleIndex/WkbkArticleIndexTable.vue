@@ -37,6 +37,7 @@ b-table.WkbkArticleIndexTable(
 
   b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').short_name" sortable :visible="!!base.visible_hash.book_title")
     nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.book.id}}" v-if="row.book")
+
       | {{string_truncate(row.book.title, {length: 20})}}({{row.book.articles_count}})
 
   b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}

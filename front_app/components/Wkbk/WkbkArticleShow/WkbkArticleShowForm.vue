@@ -9,30 +9,25 @@
 
       b-field(label="解説")
         .control
-          | {{base.article.description}}
+          | {{simple_format(auto_link(base.article.description))}}
 
-      //- b-field(label="問題集" label-position="on-border")
-      //-   b-select(v-model="base.article.book_id" expanded)
-      //-     option(:value="null")
-      //-     option(v-for="e in base.books" :value="e.id")
-      //-       | {{e.title}}
-      //-       | {{base.FolderInfo.fetch(e.folder_key).pulldown_name}}
+      b-field(label="問題集" v-if="base.book")
+        .control
+          | {{base.article.book.title}}
 
-      //- b-field(label="種類" label-position="on-border" v-if="base.LineageInfo")
-      //-   b-select(v-model="base.article.lineage_key" expanded)
-      //-     option(v-for="e in base.LineageInfo.values" :value="e.key")
-      //-       | {{e.name}}
+      b-field(label="種類")
+        .control
+          | {{base.article.lineage.name}}
 
-      b-field(label="出題時の一言" label-position="on-border" message="何手指してほしいかやヒントを伝えたいときだけ入力してください")
-        b-input(v-model.trim="base.article.direction_message" placeholder="3手指してください")
+      b-field(label="出題時の一言")
+        .control
+          | {{base.article.direction_message}}
 
-      //- b-field
-      //-   b-switch(v-model="base.article.mate_skip" :disabled="!lineage_info.mate_validate_on")
-      //-     | 最後は無駄合いなので詰みチェックを省略する
-
-      b-field(label="タグ" label-position="on-border")
-        //- https://buefy.org/documentation/taginput
-        b-taginput(v-model="base.article.owner_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
+      b-field(label="タグ")
+        .control
+          b-taglist
+            template(v-for="tag in base.article.owner_tag_list")
+              b-tag(@click="tag_handle(tag)") {{tag}}
 </template>
 
 <script>
@@ -48,6 +43,11 @@ export default {
     }
   },
   created() {
+  },
+  methods: {
+    tag_handle(tag) {
+      this.$router.push({name: 'library-articles', query: {tag: tag}})
+    },
   },
   watch: {
     "article.lineage_key": {

@@ -142,6 +142,48 @@ module Wkbk
       }
     end
 
+    def self.show_json_struct
+      {
+        methods: [
+          # :folder_key,
+          :lineage_key,
+        ],
+        include: {
+          user: { only: [:id, :name, :key], methods: [:avatar_path],},
+          lineage: { only: [:id, :key], methods: [:name]},
+          moves_answers: {},
+          book: {
+            only: [
+              :id,
+              :title,
+              :articles_count,
+            ],
+            include: {
+              folder: { only: [:id, :name],},
+            },
+            methods: [
+              :folder_key,
+            ],
+          },
+        },
+        only: [
+          :id,
+          :book_id,
+          :init_sfen,
+          :viewpoint,
+          :title,
+          :description,
+          :owner_tag_list,
+          :direction_message,
+          :turn_max,
+          :mate_skip,
+          :moves_answers_count,
+          :created_at,
+          :updated_at,
+        ],
+      }
+    end
+    
     attribute :moves_answer_validate_skip
 
     belongs_to :user, class_name: "::User" # 作者

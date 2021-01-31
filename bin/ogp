@@ -9,6 +9,11 @@ URESINORYU = "body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2
 
 LIST_ALL = [
   { url: "/library/articles",                      validations: { "code" => "200", }},
+  { url: "/library/articles/1",                    validations: { "code" => "200", }},
+  { url: "/library/articles/2",                    validations: { "code" => "403", }},
+  { url: "/library/articles/9999",                 validations: { "code" => "404", }},
+  { url: "/library/articles/2?_user_id=1",         validations: { "code" => "200", }},
+  { url: "/library/articles/4?_user_id=1",         validations: { "code" => "403", }},
   { url: "/library/articles/1/edit",               validations: { "code" => "403", }},
   { url: "/library/articles/1/edit?_user_id=1",    validations: { "code" => "200", }},
   { url: "/library/articles/2/edit",               validations: { "code" => "403", }},
@@ -18,7 +23,7 @@ LIST_ALL = [
   { url: "/library/articles/4/edit",               validations: { "code" => "403", }},
   { url: "/library/articles/4/edit?_user_id=1",    validations: { "code" => "403", }},
   { url: "/library/articles/9999/edit?_user_id=1", validations: { "code" => "404", }},
-
+  
   { url: "/library/books",                   validations: { "code" => "200", }},
   { url: "/library/books/1",                 validations: { "code" => "200", }},
   { url: "/library/books/2",                 validations: { "code" => "403", }},

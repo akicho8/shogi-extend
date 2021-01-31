@@ -36,7 +36,6 @@ export const app_tabs = {
 
     validation_tab_handle() {
       this.tab_set("validation")
-      this.exam_run_count = 0
       this.talk(this.article.direction_message)
     },
   },

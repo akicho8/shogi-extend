@@ -2,7 +2,6 @@
 client-only
   .WkbkArticleShowApp
     DebugBox
-      p sp_viewpoint: {{sp_viewpoint}}
       template(v-if="article")
         p article.book_id: {{article.book_id}}
         p article.user.id: {{article.user && article.user.id}}
@@ -28,9 +27,7 @@ client-only
           b-tab-item(label="情報")
           b-tab-item
             template(slot="header")
-              span
-                | 検証
-                b-tag.ml-1(rounded v-if="valid_count >= 1" type="is-primary") OK
+              span 検証
 
         MainSection.is_mobile_padding_zero
          .container
@@ -81,10 +78,6 @@ export default {
       config: null,
       // books: [],
       meta: null,
-
-      //////////////////////////////////////////////////////////////////////////////// 検証モード
-      exam_run_count: null, // 検証モードで手を動かした数
-      valid_count:    null, // 検証モードで正解した数
     }
   },
 
@@ -115,37 +108,19 @@ export default {
     }
 
     this.answer_tab_index = 0 // 解答リストの一番左指す
-    this.answer_turn_offset = 0
-    this.valid_count = 0
+    // this.answer_turn_offset = 0
+    // this.valid_count = 0
 
-    let performed = false
-    if (this.article.new_record_p) {
-      if (this.development_p && false) {
-        this.$route.query.body = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 8c8d 7g7f"
-        this.$route.query.viewpoint = "white"
-        this.$route.query.turn = 1
-      }
-      const body = this.$route.query.body
-      if (body) {
-        this.placement_tab_handle()
-        this.extract_confirm({
-          default_sp_body: body,
-          default_sp_turn: parseInt(this.$route.query.turn ?? -1),
-          default_sp_viewpoint: this.$route.query.viewpoint ?? "black",
-        })
-        performed = true
-      }
-    }
-
-    if (!performed) {
-      // 最初に開くタブの決定
-      if (this.article.new_record_p) {
-        this.placement_tab_handle()
-      }
-      if (this.article.persisted_p) {
-        this.form_tab_handle()
-      }
-    }
+    // if (!performed) {
+    //   // 最初に開くタブの決定
+    //   if (this.article.new_record_p) {
+    //     this.placement_tab_handle()
+    //   }
+    //   if (this.article.persisted_p) {
+    //     this.form_tab_handle()
+    //   }
+    // }
+    this.validation_tab_handle()
   },
 
   computed: {
