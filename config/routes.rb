@@ -1,4 +1,3 @@
-
 Rails.application.routes.draw do
   root "tops#show"
 
@@ -141,6 +140,7 @@ Rails.application.routes.draw do
       end
       namespace :articles do
         get :index
+        get :show
         get :edit
         post :save
       end

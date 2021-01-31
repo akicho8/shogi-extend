@@ -45,6 +45,19 @@ module Api
         render json: retv
       end
 
+      # http://0.0.0.0:3000/api/wkbk/articles/show
+      # http://0.0.0.0:3000/api/wkbk/articles/show?article_id=1
+      # http://0.0.0.0:3000/api/wkbk/articles/show?article_id=1&_user_id=1
+      def show
+        retv = {}
+        retv[:config] = ::Wkbk::Config
+        article = ::Wkbk::Article.find(params[:article_id])
+        permission_valid!(article)
+        retv[:article] = article.as_json(::Wkbk::Article.json_type5)
+        retv[:meta] = article.og_meta
+        render json: retv
+      end
+
       # http://0.0.0.0:3000/api/wkbk/articles/edit
       # http://0.0.0.0:3000/api/wkbk/articles/edit?article_id=1
       # http://0.0.0.0:3000/api/wkbk/articles/edit?article_id=1&_user_id=1

@@ -1,3 +1,3 @@
 <template lang="pug">
-  p show
+WkbkArticleShowApp
 </template>

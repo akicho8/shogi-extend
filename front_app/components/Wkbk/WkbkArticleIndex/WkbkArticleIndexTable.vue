@@ -28,7 +28,7 @@ b-table.WkbkArticleIndexTable(
   b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="base.ArticleIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="!!base.visible_hash.id") {{row.id}}
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').short_name" sortable :visible="!!base.visible_hash.title")
-    nuxt-link(:to="{name: 'library-articles-article_id-edit', params: {article_id: row.id}}")
+    nuxt-link(:to="{name: 'library-articles-article_id', params: {article_id: row.id}}")
       | {{string_truncate(row.title, {length: 20})}}
 
   b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.scope === 'everyone'")
