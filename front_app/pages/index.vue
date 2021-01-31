@@ -5,6 +5,8 @@
       b-navbar-item(tag="nuxt-link" :to="{name: 'index'}" @click.native="title_click")
         h1.has-text-weight-bold SHOGI-EXTEND
     template(slot="end")
+      b-navbar-item.has-text-weight-bold(:href="$config.MY_SITE_URL" v-if="development_p")
+        | 3000
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'launcher'}" v-if="development_p")
         b-icon(icon="rocket")
       NavbarItemLogin
