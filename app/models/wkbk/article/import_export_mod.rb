@@ -57,7 +57,11 @@ module Wkbk::Article::ImportExportMod
     end
 
     def import_all(options = {})
-      persistent_records.take(options[:max] || 50).each do |e|
+      options = {
+        max: (Rails.env.production? || Rails.env.staging?) ? 1024 : 50,
+      }.merge(options)
+
+      persistent_records.take(options[:max]).each do |e|
         begin
           import_one(e, options)
         rescue => error
