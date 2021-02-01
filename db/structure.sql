@@ -1727,6 +1727,7 @@ CREATE TABLE `wkbk_articles` (
   `lineage_id` bigint(20) NOT NULL COMMENT '種類',
   `book_id` bigint(20) DEFAULT NULL COMMENT '本',
   `init_sfen` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '問題',
+  `viewpoint` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '視点',
   `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'タイトル',
   `description` varchar(1024) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '説明',
   `turn_max` int(11) DEFAULT NULL COMMENT '最大手数',
@@ -1755,6 +1756,7 @@ CREATE TABLE `wkbk_books` (
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `user_id` bigint(20) NOT NULL COMMENT '作成者',
   `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
+  `sequence_id` bigint(20) NOT NULL COMMENT '順序',
   `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'タイトル',
   `description` varchar(1024) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '説明',
   `articles_count` int(11) NOT NULL DEFAULT '0' COMMENT '記事数',
@@ -1764,8 +1766,10 @@ CREATE TABLE `wkbk_books` (
   KEY `index_wkbk_books_on_key` (`key`),
   KEY `index_wkbk_books_on_user_id` (`user_id`),
   KEY `index_wkbk_books_on_folder_id` (`folder_id`),
+  KEY `index_wkbk_books_on_sequence_id` (`sequence_id`),
   CONSTRAINT `fk_rails_44fef78592` FOREIGN KEY (`folder_id`) REFERENCES `wkbk_folders` (`id`),
-  CONSTRAINT `fk_rails_e41ea88b96` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `fk_rails_e41ea88b96` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_f6d4c81ca5` FOREIGN KEY (`sequence_id`) REFERENCES `wkbk_sequences` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_folders`;
@@ -1773,14 +1777,12 @@ DROP TABLE IF EXISTS `wkbk_folders`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_folders` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'for STI',
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_wkbk_folders_on_type_and_user_id` (`type`,`user_id`),
-  KEY `index_wkbk_folders_on_user_id` (`user_id`),
-  CONSTRAINT `fk_rails_cd8c6a36b0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  KEY `index_wkbk_folders_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_lineages`;
@@ -1804,7 +1806,6 @@ CREATE TABLE `wkbk_moves_answers` (
   `article_id` bigint(20) NOT NULL COMMENT '問題',
   `moves_count` int(11) NOT NULL COMMENT 'N手',
   `moves_str` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '連続した指し手',
-  `end_sfen` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '最後の局面',
   `moves_human_str` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '人間向け指し手',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
@@ -1812,6 +1813,19 @@ CREATE TABLE `wkbk_moves_answers` (
   KEY `index_wkbk_moves_answers_on_article_id` (`article_id`),
   KEY `index_wkbk_moves_answers_on_moves_count` (`moves_count`),
   CONSTRAINT `fk_rails_c8b1910065` FOREIGN KEY (`article_id`) REFERENCES `wkbk_articles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `wkbk_sequences`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wkbk_sequences` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_wkbk_sequences_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_source_abouts`;
@@ -1894,6 +1908,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20201229171906'),
 ('20201229171907'),
 ('20210121210600'),
-('20210126111400');
+('20210128171500');
 
 

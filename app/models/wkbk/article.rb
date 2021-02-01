@@ -12,6 +12,7 @@
 # | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | C     |
 # | book_id             | Book                | integer(8)   |                     |              | D     |
 # | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
+# | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
 # | title               | タイトル            | string(255)  |                     |              |       |
 # | description         | 説明                | string(1024) |                     |              |       |
 # | turn_max            | 手数                | integer(4)   |                     |              | F     |

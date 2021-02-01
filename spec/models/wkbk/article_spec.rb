@@ -12,6 +12,7 @@
 # | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | C     |
 # | book_id             | Book                | integer(8)   |                     |              | D     |
 # | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
+# | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
 # | title               | タイトル            | string(255)  |                     |              |       |
 # | description         | 説明                | string(1024) |                     |              |       |
 # | turn_max            | 手数                | integer(4)   |                     |              | F     |
@@ -61,7 +62,7 @@ module Wkbk
         # 開発者に通知
         mail = ActionMailer::Base.deliveries.last
         assert { mail.to   == ["shogi.extend@gmail.com"] }
-        assert { mail.subject.include?("投稿しました") }
+        assert { mail.subject.include?("更新しました") }
 
         # 同じ2つ目を作る→失敗
         article = user1.wkbk_articles.build
@@ -84,27 +85,27 @@ module Wkbk
       end
     end
 
-    describe "所在" do
-      it do
-        article1.update!(source_about_key: "unknown") # => true
-        assert { article1.source_about_key == "unknown"   }
-        assert { article1.source_about.name == "作者不詳" }
-      end
-    end
+    # describe "所在" do
+    #   it do
+    #     article1.update!(source_about_key: "unknown") # => true
+    #     assert { article1.source_about_key == "unknown"   }
+    #     assert { article1.source_about.name == "作者不詳" }
+    #   end
+    # end
 
-    describe "フォルダ" do
-      it "初期値" do
-        assert { article1.folder_key == :public }
-      end
-      it "移動方法1" do
-        user1.wkbk_private_box.articles << article1
-        assert { article1.folder.class == Wkbk::PrivateBox }
-      end
-      it "移動方法2(フォーム用)" do
-        article1.folder_key = :private
-        assert { article1.folder_key == :private }
-      end
-    end
+    # describe "フォルダ" do
+    #   it "初期値" do
+    #     assert { article1.folder_key == :public }
+    #   end
+    #   it "移動方法1" do
+    #     user1.wkbk_private_box.articles << article1
+    #     assert { article1.folder.class == Wkbk::PrivateBox }
+    #   end
+    #   it "移動方法2(フォーム用)" do
+    #     article1.folder_key = :private
+    #     assert { article1.folder_key == :private }
+    #   end
+    # end
 
     it "init_sfen" do
       article1.init_sfen = "position sfen 9/9/9/9/9/9/9/9/9 b - 1"
@@ -125,7 +126,7 @@ module Wkbk
     end
 
     it "page_url" do
-      assert { article1.page_url == "http://0.0.0.0:4000/wkbk/articles/#{article1.id}/edit" }
+      assert { article1.page_url == "http://0.0.0.0:4000/library/articles/#{article1.id}/edit" }
     end
 
     it "share_board_png_url" do

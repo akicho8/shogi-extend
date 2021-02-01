@@ -8,9 +8,15 @@ RSpec::Rails::ControllerExampleGroup.module_eval do
     end
 
     def user_login(attributes = {})
-      create(:user, attributes).tap do |user|
+      case attributes
+      when User
         user_logout
-        controller.current_user_set(user)
+        controller.current_user_set(attributes)
+      when Hash
+        create(:user, attributes).tap do |user|
+          user_logout
+          controller.current_user_set(user)
+        end
       end
     end
 

@@ -3,19 +3,15 @@
 #
 # Folder (wkbk_folders as Wkbk::Folder)
 #
-# |------------+------------+-------------+-------------+--------------------+-------|
-# | name       | desc       | type        | opts        | refs               | index |
-# |------------+------------+-------------+-------------+--------------------+-------|
-# | id         | ID         | integer(8)  | NOT NULL PK |                    |       |
-# | user_id    | User       | integer(8)  | NOT NULL    | => User#id         | A! B  |
-# | type       | 所属モデル | string(255) | NOT NULL    | SpecificModel(STI) | A!    |
-# | created_at | 作成日時   | datetime    | NOT NULL    |                    |       |
-# | updated_at | 更新日時   | datetime    | NOT NULL    |                    |       |
-# |------------+------------+-------------+-------------+--------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
+# |------------+--------------------+-------------+-------------+------+-------|
+# | name       | desc               | type        | opts        | refs | index |
+# |------------+--------------------+-------------+-------------+------+-------|
+# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
+# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
+# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
+# |------------+--------------------+-------------+-------------+------+-------|
 
 require 'rails_helper'
 
@@ -23,23 +19,18 @@ module Wkbk
   RSpec.describe Folder, type: :model do
     include WkbkSupportMethods
 
-    it do
-      article1
-      assert { user1.wkbk_public_box.articles.count >= 1 }
+    it "relation" do
+      assert { Wkbk::Book.first.folder.kind_of?(Wkbk::Folder) }
     end
 
-    it "folder_key" do
-      assert { user1.wkbk_public_box.key == :public }
-    end
-
-    it "pure_class" do
-      assert { article1.folder.pure_info.name == "公開" }
+    it "relation" do
+      assert { Wkbk::Folder.first.books.present? }
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ...
-# >> 
+# >>
 # >> Finished in 0.72046 seconds (files took 2.15 seconds to load)
 # >> 3 examples, 0 failures
-# >> 
+# >>

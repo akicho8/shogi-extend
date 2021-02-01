@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   include ActbSupportMethods
 
-  it "works" do
+  xit "works" do
     user1.actb_lobby_messages.create!(body: "(body)")
     question = user1.actb_questions.create_mock1
     room = Actb::Room.create_with_members!([user1, user2])
@@ -46,9 +46,52 @@ RSpec.describe User, type: :model do
 EOT
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> .
-# >> 
-# >> Finished in 2.08 seconds (files took 2.09 seconds to load)
-# >> 1 example, 0 failures
-# >> 
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/specification.rb:2302:in `raise_if_conflicts': Unable to activate rspec-expectations-3.9.2, because rspec-support-3.10.1 conflicts with rspec-support (~> 3.9.0) (Gem::ConflictError)
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/specification.rb:1418:in `activate'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems.rb:223:in `rescue in try_activate'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems.rb:216:in `try_activate'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:123:in `rescue in require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:34:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:841:in `block in expect_with'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:836:in `map'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:836:in `expect_with'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/spec_helper.rb:24:in `block in <top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core.rb:98:in `configure'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/spec_helper.rb:20:in `<top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/rails_helper.rb:2:in `<top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from -:1:in `<main>'
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/specification.rb:2302:in `raise_if_conflicts': Unable to activate rspec-expectations-3.9.2, because rspec-support-3.10.1 conflicts with rspec-support (~> 3.9.0) (Gem::ConflictError)
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/specification.rb:1418:in `activate'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems.rb:217:in `try_activate'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:123:in `rescue in require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:34:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:841:in `block in expect_with'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:836:in `map'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:836:in `expect_with'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/spec_helper.rb:24:in `block in <top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core.rb:98:in `configure'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/spec_helper.rb:20:in `<top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/rails_helper.rb:2:in `<top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from -:1:in `<main>'
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- rspec/expectations (LoadError)
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:841:in `block in expect_with'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:836:in `map'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:836:in `expect_with'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/spec_helper.rb:24:in `block in <top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib/rspec/core.rb:98:in `configure'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/spec_helper.rb:20:in `<top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/rails_helper.rb:2:in `<top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from -:1:in `<main>'

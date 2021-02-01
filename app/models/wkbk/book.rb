@@ -10,6 +10,7 @@
 # | key            | ユニークなハッシュ | string(255)  | NOT NULL            |              | A     |
 # | user_id        | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
 # | folder_id      | Folder             | integer(8)   | NOT NULL            |              | C     |
+# | sequence_id    | Sequence           | integer(8)   | NOT NULL            |              | D     |
 # | title          | タイトル           | string(255)  |                     |              |       |
 # | description    | 説明               | string(1024) |                     |              |       |
 # | articles_count | Articles count     | integer(4)   | DEFAULT(0) NOT NULL |              |       |
