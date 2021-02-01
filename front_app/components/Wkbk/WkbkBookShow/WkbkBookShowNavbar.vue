@@ -23,7 +23,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
         //- b-navbar-item(tag="a" @click.native="base.description_handle")
         //-   b-icon(icon="information-outline")
 
-      template(v-if="base.is_standby_p")
+      template(v-if="base.is_standby_p && false")
         b-navbar-item(tag="div")
           | {{base.book.title}}
 

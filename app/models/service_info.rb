@@ -216,7 +216,7 @@ class ServiceInfo
       key: :wkbk,
       display_p: !Rails.env.production?,
       nuxt_link_to: {path: "/library/books"},
-      title: "みんなの問題集",
+      title: "みんなの将棋問題集",
       new_p: true,
       og_image_key: "library-books",
       description: "市販の問題集を繰り返し解くよりも本人が本人のためだけに作った問題集を繰り返し解いた方が身に付きやすいのではないかという実験もかねた、次の一手や詰将棋の問題を投稿するサービスです",

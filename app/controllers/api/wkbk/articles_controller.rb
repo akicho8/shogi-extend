@@ -107,7 +107,7 @@ module Api
       def current_articles
         @current_articles ||= -> {
           s = current_article_scope_info.query_func[current_user]
-          if v = params[:tag].presence # TODO: 複数タグ
+          if v = params[:tag].to_s.split(/[,\s]+/).presence
             s = s.tagged_with(v)
           end
           s = page_scope(s)       # page_mod.rb

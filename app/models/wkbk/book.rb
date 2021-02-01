@@ -76,6 +76,7 @@ module Wkbk
         methods: [
           :folder_key,
           :sequence_key,
+          :tweet_body,
         ],
         include: {
           user: { only: [:id, :name, :key], methods: [:avatar_path] },

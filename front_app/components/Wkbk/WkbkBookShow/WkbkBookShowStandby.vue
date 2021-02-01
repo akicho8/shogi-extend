@@ -7,7 +7,7 @@
   //-       b-button(@click="base.play_restart") スタート
 
   .is-flex.is-justify-content-center
-    .hero
+    .hero.is-medium
       .hero-body
         p.title
           | {{base.book.title}}
@@ -17,7 +17,7 @@
   .columns.is-gapless
     .column
       .buttons
-        b-button(@click="base.play_restart") START
+        b-button(@click="base.play_restart" type="is-primary") START
 </template>
 
 <script>

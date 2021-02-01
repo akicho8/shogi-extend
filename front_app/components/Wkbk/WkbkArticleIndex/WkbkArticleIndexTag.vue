@@ -1,14 +1,23 @@
 <template lang="pug">
-.WkbkArticleIndexTag(v-if="base.tag")
-  b-tag(attached closable @close="base.tag_search_handle(null)" type="is-primary")
-    | {{base.tag}}
+.WkbkArticleIndexTag(v-if="tags")
+  b-taglist
+    template(v-for="tag in tags")
+      b-tag(closable @close="base.tag_remove_handle(tag)")
+        | {{tag}}
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
+import _ from "lodash"
+
 export default {
   name: "WkbkArticleIndexTag",
   mixins: [support_child],
+  computed: {
+    tags() {
+      return this.tags_wrap(this.base.tag)
+    },
+  },
 }
 </script>
 

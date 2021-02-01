@@ -32,8 +32,7 @@ b-table.WkbkArticleIndexTable(
       | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
   b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.scope === 'everyone'")
-    nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}")
-      | {{string_truncate(row.user.name, {length: s_config.TRUNCATE_MAX})}}
+    WkbkUserName(:user="row.user")
 
   b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').short_name" sortable :visible="!!base.visible_hash.book_title")
     nuxt-link(:to="{name: 'library-books-book_id', params: {book_id: row.book.id}}" v-if="row.book")
@@ -44,9 +43,9 @@ b-table.WkbkArticleIndexTable(
   b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}
 
   b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="base.ArticleIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="!!base.visible_hash.owner_tag_list")
-    b-taglist
-      b-tag.is-clickable(v-for="tag in row.owner_tag_list" @click.native.stop="base.tag_search_handle(tag)" rounded)
-        | {{tag}}
+    //- b-taglist
+    b-tag.is-clickable.mr-1(v-for="tag in row.owner_tag_list" @click.native.stop="base.tag_search_handle(tag)" rounded)
+      | {{tag}}
 
   b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.ArticleIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="!!base.visible_hash.created_at")       {{row_time_format(row.created_at)}}
   b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="base.ArticleIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="!!base.visible_hash.updated_at")       {{row_time_format(row.updated_at)}}

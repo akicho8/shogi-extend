@@ -22,7 +22,7 @@ export const app_tweet = {
       let o = ""
       o += "#" + "みんなの将棋問題集" + "\n"
       o += this.article.title + "\n"
-      o += this.current_url + "\n"
+      o += this.current_url
       return o
     },
   },

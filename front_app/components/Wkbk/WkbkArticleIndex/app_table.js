@@ -1,4 +1,5 @@
 import { ArticleIndexColumnInfo } from "../models/article_index_column_info.js"
+import _ from "lodash"
 
 export const app_table = {
   data() {
@@ -32,6 +33,13 @@ export const app_table = {
     tag_search_handle(tag) {
       this.sound_play("click")
       this.talk(tag)
+      tag = this.tags_append(this.tag, tag).join(",")
+      this.router_replace({tag})
+    },
+
+    tag_remove_handle(tag) {
+      this.sound_play("click")
+      tag = this.tags_remove(this.tag, tag).join(",")
       this.router_replace({tag})
     },
 

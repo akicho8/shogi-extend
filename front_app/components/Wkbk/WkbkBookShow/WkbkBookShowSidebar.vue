@@ -8,7 +8,12 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight :right="false" overlay 
         b-menu-list(label="Action")
           b-menu-item(label="やめる"                 @click.native="base.retire_handle"       :disabled="!base.is_running_p")
           b-menu-item(label="現在の問題の詳細を開く" @click.native="base.article_show_handle" :disabled="!base.article_show_p")
+
+        b-menu-list(label="編集追加")
           b-menu-item(label="この問題集の編集"       @click.native="base.book_edit_handle"    :disabled="!base.owner_p")
+          b-menu-item(label="問題を追加する"         @click.native="base.article_new_handle"  :disabled="!base.article_new_p")
+
+        b-menu-list(label="その他")
           b-menu-item(label="ツイート"               @click.native="base.book_tweet_handle")
 
         b-menu-list(label="表示オプション" v-if="base.visible_hash")

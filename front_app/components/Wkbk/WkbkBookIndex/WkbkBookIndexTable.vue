@@ -27,7 +27,7 @@ b-table.WkbkBookIndexTable(
 
   b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
     nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play('click')")
-      | {{string_truncate(row.user.name, {length: s_config.TRUNCATE_MAX})}}
+      WkbkUserName(:user="row.user")
 
   b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
 
@@ -35,19 +35,24 @@ b-table.WkbkBookIndexTable(
   b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{row_time_format(row.updated_at)}}
 
   b-table-column(v-slot="{row}" custom-key="operation" label="")
-    template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-      //- nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.id}}")
-      //-   b-icon(icon="edit")
-      //-   | 編集
-      nuxt-link(:to="{name: 'library-articles-new', query: {book_id: row.id}}" v-if="false")
-        b-icon(icon="plus")
+    //- nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.id}}")
+    //-   b-icon(icon="edit")
+    //-   | 編集
+    nuxt-link(:to="{name: 'library-articles-new', query: {book_id: row.id}}" v-if="false")
+      b-icon(icon="plus")
 
-      b-dropdown(append-to-body position="is-top-left" @active-change="sound_play('click')")
-        a(slot="trigger")
-          b-icon(icon="dots-horizontal")
-        b-dropdown-item(has-link )
+    b-dropdown(append-to-body position="is-top-left" @active-change="sound_play('click')")
+      a(slot="trigger")
+        b-icon(icon="dots-horizontal")
+      template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
+        b-dropdown-item(has-link)
           nuxt-link(:to="{name: 'library-articles-new', query: {book_id: row.id}}"        @click.native="sound_play('click')") 問題追加
+        b-dropdown-item(has-link)
           nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.id}}" @click.native="sound_play('click')") 編集
+      b-dropdown-item(has-link)
+        a(@click="tweet_window_popup({text: row.tweet_body})") ツイート
+
+      //- this.tweet_window_popup({text: this.book.tweet_body})
 
   template(slot="empty" v-if="base.books != null")
     section.section.is-unselectable
@@ -96,4 +101,10 @@ export default {
     .detail
       td, .detail-container
         padding: 0
+
+  .image
+    img
+      max-height: none
+      height: 18px
+      width:  18px
 </style>
