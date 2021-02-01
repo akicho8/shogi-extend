@@ -1,10 +1,23 @@
 <template lang="pug">
 .WkbkBookShowStandby
+  //- .columns.is-gapless
+  //-   .column
+  //-     .box.is-shadowless.has-background-white-ter(v-if="base.book.description" v-html="simple_format(auto_link(base.book.description))")
+  //-     .buttons
+  //-       b-button(@click="base.play_restart") スタート
+
+  .is-flex.is-justify-content-center
+    .hero
+      .hero-body
+        p.title
+          | {{base.book.title}}
+        p.subtitle(v-if="base.book.description" v-html="simple_format(auto_link(base.book.description))")
+          | Primary subtitle
+
   .columns.is-gapless
     .column
-      .box.is-shadowless.has-background-white-ter(v-if="base.book.description" v-html="simple_format(auto_link(base.book.description))")
       .buttons
-        b-button(@click="base.play_restart") スタート
+        b-button(@click="base.play_restart") START
 </template>
 
 <script>
@@ -24,14 +37,19 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .WkbkBookShowStandby
-  margin: $wkbk_share_gap
+  // margin: $wkbk_share_gap
   .column
     display: flex
     justify-content: center
     align-items: center
     flex-direction: column
-  .box
-    width: 100%
+
+  .hero
     +tablet
       width: 65ch
+
+  // .box
+  //   width: 100%
+  //   +tablet
+  //     width: 65ch
 </style>

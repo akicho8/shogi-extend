@@ -22,6 +22,7 @@ client-only
       template(slot="end")
         //- b-navbar-item.has-text-weight-bold(@click="tweet_handle" v-if="scene === 'play_mode'")
         //-   b-icon(icon="twitter" type="is-white")
+
         b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="scene === 'edit_mode'")
           | 編集完了
         b-navbar-item.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="scene === 'play_mode'")

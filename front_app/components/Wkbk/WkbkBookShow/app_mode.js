@@ -8,7 +8,21 @@ export const app_mode = {
   methods: {
     mode_set(v) {
       this.mode = v
-    }
+    },
+
+    retire_handle() {
+      if (this.is_running_p) {
+        this.talk("途中で辞めました")
+        this.sound_play("click")
+        this.mode_set("goal")
+        this.ox_stop()
+      }
+    },
+
+    close_handle() {
+      this.sound_play("click")
+      this.mode_set("standby")
+    },
   },
 
   computed: {

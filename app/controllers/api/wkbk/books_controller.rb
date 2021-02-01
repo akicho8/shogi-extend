@@ -50,7 +50,6 @@ module Api
         v = book.as_json(::Wkbk::Book.show_json_struct)
         v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.show_articles_json_struct)
         retv[:book] = v
-        retv[:meta] = book.og_meta
         render json: retv
       end
 

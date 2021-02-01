@@ -105,7 +105,8 @@ module Wkbk
         methods: [
           :folder_key,
           :sequence_key,
-          :og_image_path,
+          :tweet_body,
+          :og_meta,
         ],
         include: {
           user: {
@@ -336,6 +337,15 @@ module Wkbk
           :og_image    => og_image_path || "library-books",
         }
       end
+    end
+
+    def tweet_body
+      o = []
+      o << title
+      # o << description
+      o << "#" + "みんなの将棋問題集"
+      o << page_url
+      o.join("\n")
     end
 
     private

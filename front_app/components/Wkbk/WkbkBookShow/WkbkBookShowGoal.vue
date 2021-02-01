@@ -3,11 +3,26 @@
   .columns.is-gapless
     .column
       .is-flex.is-justify-content-center
-        .box.has-text-centered.is-inline-block
-          | {{base.ox_summary}}
-          TweetButton.mt-2(:body="base.ox_tweet_body")
-      .buttons.is-centered.mt-4
-        b-button(@click="base.play_restart") もう一度挑戦する
+        .card.is-inline-block
+          .card-content
+            p.title.is-size-6
+              | 結果
+            //- p.subtitle
+            //-   | Jeff Atwood
+            p
+              | {{base.ox_summary}}
+          .card-footer
+            p.card-footer-item
+              TweetButton(:body="base.ox_tweet_body") Tweet
+
+      //- .is-flex.is-justify-content-center
+      //-   .box.has-text-centered.is-inline-block.is-shadowless
+      //-     | {{base.ox_summary}}
+      //-     TweetButton.mt-2(:body="base.ox_tweet_body") Tweet
+
+      //- .buttons.is-centered.mt-4
+      //-   //- b-button(@click="base.play_restart") もう一度挑戦する
+      //-   b-button(@click="base.close_handle") 閉じる
 </template>
 
 <script>
@@ -23,6 +38,6 @@ export default {
 @import "../support.sass"
 .WkbkBookShowGoal
   margin: $wkbk_share_gap
-  .box
+  .card-content
     white-space: pre-wrap
 </style>

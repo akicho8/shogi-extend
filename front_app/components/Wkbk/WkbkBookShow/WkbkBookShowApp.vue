@@ -21,6 +21,7 @@ client-only
     b-loading(:active="$fetchState.pending")
 
     WkbkBookShowNavbar(:base="base")
+    WkbkBookShowSidebar(:base="base")
     .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
       MainSection.is_mobile_padding_zero
         .container
@@ -45,22 +46,23 @@ import { app_articles   } from "./app_articles.js"
 import { app_mode       } from "./app_mode.js"
 import { app_support    } from "./app_support.js"
 import { app_tweet      } from "./app_tweet.js"
+import { app_sidebar    } from "./app_sidebar.js"
 
 export default {
-  name: "WkbkBookIndexApp",
+  name: "WkbkBookShowApp",
   mixins: [
     support_parent,
     app_articles,
     app_mode,
     app_support,
     app_tweet,
+    app_sidebar,
   ],
 
   data() {
     return {
       config: null,
       book: null,
-      meta: null,
     }
   },
 
@@ -78,13 +80,13 @@ export default {
 
     this.config = e.config
     this.book = new Book(e.book)
-    this.meta = e.meta
 
     this.clog("process.client", process.client)
     this.clog("process.server", process.server)
 
     if (process.client) {
-      this.play_start()
+      // this.play_start()
+      this.mode_set("standby")
     }
 
     // if (process.browser) {
@@ -99,18 +101,10 @@ export default {
     this.clog("book", this.book)
   },
 
-  methods: {
-  },
-
   computed: {
-    base() { return this },
-    owner_p() { return this.book.owner_p(this.g_current_user) },
-    // curl http://0.0.0.0:4000/library/books/6/
-    // meta() {
-    //   return {
-    //     title: "foo",
-    //   }
-    // }
+    base()    { return this },
+    owner_p() { return this.book?.owner_p(this.g_current_user) },
+    meta()    { return this.book?.og_meta },
   },
 }
 </script>

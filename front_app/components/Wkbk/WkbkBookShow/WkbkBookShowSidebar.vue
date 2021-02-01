@@ -1,19 +1,22 @@
 <template lang="pug">
-b-sidebar.WkbkBookIndexSidebar.is-unselectable(fullheight right overlay v-model="base.sidebar_p")
+b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight :right="false" overlay v-model="base.sidebar_p" v-if="base.book")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          //- b-menu-item(tag="nuxt-link" :to="{name: 'library-books-new'}" label="問題集作成" @click.native="sound_play('click')")
-          b-menu-item(tag="nuxt-link" :to="{name: 'library-articles'}" label="問題リスト" @click.native="sound_play('click')")
+          b-menu-item(label="やめる"                 @click.native="base.retire_handle"       :disabled="!base.is_running_p")
+          b-menu-item(label="現在の問題の詳細を開く" @click.native="base.article_show_handle" :disabled="!base.article_show_p")
+          b-menu-item(label="この問題集の編集"       @click.native="base.book_edit_handle"    :disabled="!base.owner_p")
+          b-menu-item(label="ツイート"               @click.native="base.book_tweet_handle")
+
         b-menu-list(label="表示オプション" v-if="base.visible_hash")
           b-menu-item.sidebar_columns_toggle(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 表示カラム
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in base.BookIndexColumnInfo.values")
+            template(v-for="e in base.BookShowColumnInfo.values")
               b-menu-item(
                 v-if="e.togglable"
                 @click.stop="base.cb_toggle_handle(e)"
@@ -27,14 +30,14 @@ b-sidebar.WkbkBookIndexSidebar.is-unselectable(fullheight right overlay v-model=
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WkbkBookIndexSidebar",
+  name: "WkbkBookShowSidebar",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkBookIndexSidebar
+.WkbkBookShowSidebar
   .dropdown-menu
     min-width: 0
     a:focus

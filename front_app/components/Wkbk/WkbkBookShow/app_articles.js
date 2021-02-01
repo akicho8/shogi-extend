@@ -11,6 +11,11 @@ export const app_articles = {
 
   methods: {
     play_start() {
+      this.sound_play("start")
+      this.play_start_process()
+    },
+
+    play_start_process() {
       this.mode_set("running")
       this.current_index = 0
       this.ox_start()
@@ -24,13 +29,13 @@ export const app_articles = {
     },
 
     play_restart() {
-      this.sound_play("click")
       this.play_start()
     },
 
     goal_check() {
       if (!this.current_article) {
         this.mode_set("goal")
+        this.sound_play("win")
         this.ox_stop()
       }
     },

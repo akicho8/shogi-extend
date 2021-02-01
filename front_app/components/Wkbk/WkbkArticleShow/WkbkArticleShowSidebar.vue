@@ -2,7 +2,7 @@
 b-sidebar.WkbkArticleShowSidebar.is-unselectable(fullheight right overlay v-model="base.sidebar_p" v-if="base.article")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
-      b-button(@click="base.sidebar_toggle" icon-left="menu")
+      b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
       b-menu
         b-menu-list(label="Action" v-if="development_p")

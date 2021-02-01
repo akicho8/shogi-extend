@@ -59,14 +59,14 @@ export const app_tweet = {
     ox_tweet_body() {
       let out = ""
       out += this.ox_summary
-      out += "#みんなの問題集\n"
+      out += "#" + "みんなの将棋問題集" + "\n"
       out += this.location_url_without_search_and_hash()
       return out
     },
 
     ox_rate_per() {
       if (this.ox_total === 0) {
-        return "?"
+        return "0%"
       } else {
         return this.float_to_perc(this.ox_rate) + "%"
       }

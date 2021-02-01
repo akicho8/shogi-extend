@@ -25,20 +25,20 @@ b-table.WkbkArticleIndexTable(
   // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
   // :has-detailed-visible="row => sound_play('click')"
 
-  b-table-column(v-slot="{row}" custom-key="id"                field="id"                :label="base.ArticleIndexColumnInfo.fetch('id').short_name"               sortable numeric :visible="!!base.visible_hash.id") {{row.id}}
+  b-table-column(v-slot="{row}" custom-key="id" field="id" :label="base.ArticleIndexColumnInfo.fetch('id').short_name" sortable numeric :visible="!!base.visible_hash.id") {{row.id}}
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').short_name" sortable :visible="!!base.visible_hash.title")
-    nuxt-link(:to="{name: 'library-articles-article_id', params: {article_id: row.id}}")
-      | {{string_truncate(row.title, {length: 20})}}
+    nuxt-link(:to="{name: 'library-articles-article_id', params: {article_id: row.id}}" @click.native="sound_play('click')")
+      | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
   b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').short_name" sortable :visible="base.scope === 'everyone'")
     nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}")
-      | {{string_truncate(row.user.name, {length: 20})}}
+      | {{string_truncate(row.user.name, {length: s_config.TRUNCATE_MAX})}}
 
   b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').short_name" sortable :visible="!!base.visible_hash.book_title")
-    nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.book.id}}" v-if="row.book")
+    nuxt-link(:to="{name: 'library-books-book_id', params: {book_id: row.book.id}}" v-if="row.book")
 
-      | {{string_truncate(row.book.title, {length: 20})}}({{row.book.articles_count}})
+      | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.articles_count}})
 
   b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').short_name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
   b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').short_name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}

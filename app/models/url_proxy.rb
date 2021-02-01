@@ -11,7 +11,6 @@
 # しかし link_to(..., :about_terms) とするとドメインの部分は省略され /about_terms/terms になってしまう
 # だからといって about_terms_url と書くのは本番でもドメインが含まれてしまっていや
 # なので独自に変換する
-
 module UrlProxy
   extend self
 

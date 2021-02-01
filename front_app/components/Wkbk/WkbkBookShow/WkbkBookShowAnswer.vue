@@ -56,6 +56,7 @@ $wkbk_book_show_answer_width: 66vmin
         flex-direction: column
         .CustomShogiPlayerWrap
           margin-top: $wkbk_share_gap
+          margin-bottom: $wkbk_share_gap // 下を開けないとスライダーのボタンの大きさで縦サイズが変化してしまう
           width: 100%
           +tablet
             padding-top: unset

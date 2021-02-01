@@ -23,11 +23,11 @@ b-table.WkbkBookIndexTable(
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
     nuxt-link(:to="{name: 'library-books-book_id', params: {book_id: row.id}}" @click.native="sound_play('click')")
-      | {{string_truncate(row.title, {length: 20})}}
+      | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
   b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
     nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play('click')")
-      | {{string_truncate(row.user.name, {length: 20})}}
+      | {{string_truncate(row.user.name, {length: s_config.TRUNCATE_MAX})}}
 
   b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
 

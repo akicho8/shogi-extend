@@ -2,8 +2,25 @@ import WkbkBookShowDesc from "./WkbkBookShowDesc.vue"
 
 export const app_support = {
   methods: {
+    book_edit_handle() {
+      if (this.base.owner_p) {
+        this.sound_play("click")
+        this.$router.push({name: "library-books-book_id-edit", params: {book_id: this.book.id}})
+      }
+    },
+    article_show_handle() {
+      if (this.article_show_p) {
+        this.sound_play("click")
+        this.$router.push({name: "library-articles-article_id", params: {article_id: this.current_article.id}})
+      }
+    },
+    book_tweet_handle() {
+      this.sound_play("click")
+      this.tweet_window_popup({text: this.book.tweet_body})
+    },
     description_handle() {
       this.sound_play("click")
+      this.talk_stop()
       this.talk(this.book.description)
       this.$buefy.modal.open({
         component: WkbkBookShowDesc,
@@ -18,6 +35,11 @@ export const app_support = {
           this.sound_play("click")
         },
       })
+    },
+  },
+  computed: {
+    article_show_p() {
+      return this.current_article
     },
   },
 }

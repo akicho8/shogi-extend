@@ -1,4 +1,9 @@
 export const support = {
-  methods: {
+  computed: {
+    s_config() {
+      return {
+        TRUNCATE_MAX: 20,
+      }
+    },
   },
 }
