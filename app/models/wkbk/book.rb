@@ -29,18 +29,22 @@ module Wkbk
     class << self
       def setup(options = {})
         if Rails.env.development?
-          [
-            { id: 1, user: :sysop, folder_key: :public,  },
-            { id: 2, user: :sysop, folder_key: :private, },
-            { id: 3, user: :bot,   folder_key: :public,  },
-            { id: 4, user: :bot,   folder_key: :private, },
-          ].each do |e|
-            Book.where(id: e[:id]).destroy_all
-            book = User.public_send(e[:user]).wkbk_books.create!(id: e[:id], folder_key: e[:folder_key], title: "#{e[:user]} - #{e[:folder_key]} - #{e[:id]}")
-            Article.where(id: e[:id]).destroy_all
-            article = book.articles.create!(id: e[:id], title: "#{e[:user]} - #{e[:folder_key]} - #{e[:id]}")
-          end
+          mock_setup
           tp self
+        end
+      end
+
+      def mock_setup
+        [
+          { id: 1, user: :sysop, folder_key: :public,  },
+          { id: 2, user: :sysop, folder_key: :private, },
+          { id: 3, user: :bot,   folder_key: :public,  },
+          { id: 4, user: :bot,   folder_key: :private, },
+        ].each do |e|
+          Book.where(id: e[:id]).destroy_all
+          book = User.public_send(e[:user]).wkbk_books.create!(id: e[:id], folder_key: e[:folder_key], title: "#{e[:user]} - #{e[:folder_key]} - #{e[:id]}")
+          Article.where(id: e[:id]).destroy_all
+          article = book.articles.create!(id: e[:id], title: "#{e[:user]} - #{e[:folder_key]} - #{e[:id]}")
         end
       end
 
