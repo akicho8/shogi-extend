@@ -51,10 +51,22 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkBookEditForm
-  margin: $wkbk_share_gap
+  +mobile
+    --gap: calc(#{$wkbk_share_gap} * 0.75)
+  +tablet
+    --gap: #{$wkbk_share_gap}
+
+  margin: var(--gap)
+
   .field:not(:first-child)
-    margin-top: $wkbk_share_gap
+    margin-top: var(--gap)
+
   .help
     color: $grey
     font-size: $size-7
+
+  // iPhoneでselectをタップするとズームするのはフォントサイズが16px未満だから
+  +touch
+    input, textarea, select
+      font-size: 16px
 </style>
