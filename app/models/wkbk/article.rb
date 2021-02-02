@@ -51,6 +51,14 @@ module Wkbk
       end
     end
 
+    def self.new_og_meta
+      {
+        :title       => "新規 - 問題",
+        :description => "",
+        :og_image    => "library-books",
+      }
+    end
+
     # def self.mock_article
     #   raise if Rails.env.production? || Rails.env.staging?
     #
@@ -184,7 +192,7 @@ module Wkbk
         ],
       }
     end
-    
+
     attribute :moves_answer_validate_skip
 
     belongs_to :user, class_name: "::User" # 作者
@@ -470,19 +478,12 @@ module Wkbk
     end
 
     def og_meta
-      if new_record?
-        {
-          :title       => "新規 - 問題",
-          :description => description || "",
-          :og_image    => "library-books",
-        }
-      else
-        {
-          :title       => [title, user.name].join(" - "),
-          :description => description || "",
-          :og_image    => og_image_path || "library-books",
-        }
-      end
+      raise if new_record?
+      {
+        :title       => [title, user.name].join(" - "),
+        :description => description || "",
+        :og_image    => og_image_path || "library-books",
+      }
     end
 
     private

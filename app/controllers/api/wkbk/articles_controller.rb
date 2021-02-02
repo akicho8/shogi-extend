@@ -59,9 +59,9 @@ module Api
         render json: retv
       end
 
-      # http://0.0.0.0:3000/api/wkbk/articles/edit
-      # http://0.0.0.0:3000/api/wkbk/articles/edit?article_id=1
-      # http://0.0.0.0:3000/api/wkbk/articles/edit?article_id=1&_user_id=1
+      # http://0.0.0.0:3000/api/wkbk/articles/edit.json
+      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_id=1
+      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_id=1&_user_id=1
       def edit
         retv = {}
         retv[:config] = ::Wkbk::Config
@@ -72,11 +72,13 @@ module Api
           article = ::Wkbk::Article.find(params[:article_id])
           permission_valid!(article)
           retv[:article] = article.as_json(::Wkbk::Article.json_type5)
+          retv[:meta] = article.og_meta
         else
-          article = current_user.wkbk_articles.build(::Wkbk::Article.default_attributes.merge(book_id: default_book_id))
-          retv[:article] = article
+          # article = current_user.wkbk_articles.build()
+          # article = current_user.wkbk_articles.build(::Wkbk::Article.default_attributes)
+          retv[:article] = ::Wkbk::Article.default_attributes.merge(book_id: default_book_id)
+          retv[:meta] = ::Wkbk::Article.new_og_meta
         end
-        retv[:meta] = article.og_meta
         render json: retv
       end
 

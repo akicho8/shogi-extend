@@ -43,6 +43,8 @@ RSpec.describe Api::Wkbk::BooksController, type: :controller do
     { args: [ :show,  params: { book_id: 4,    }, ], user: :sysop, code: 403, },
     { args: [ :edit,  params: {                }, ],               code: 403, },
     { args: [ :edit,  params: {                }, ], user: :sysop, code: 200, },
+    { args: [ :edit,  params: {                }, ],               code: 403, },
+    { args: [ :edit,  params: {                }, ], user: :sysop, code: 200, },
     { args: [ :edit,  params: { book_id: 1,    }, ],               code: 403, },
     { args: [ :edit,  params: { book_id: 2,    }, ],               code: 403, },
     { args: [ :edit,  params: { book_id: 3,    }, ],               code: 403, },
