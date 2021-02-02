@@ -5,7 +5,7 @@
       b-field(label="タイトル" label-position="on-border")
         b-input(v-model.trim="base.book.title" required)
 
-      b-field(label="備考" label-position="on-border")
+      b-field(label="概要" label-position="on-border")
         b-input(v-model.trim="base.book.description" type="textarea" rows="5")
 
       b-field(label="出題順序" label-position="on-border")

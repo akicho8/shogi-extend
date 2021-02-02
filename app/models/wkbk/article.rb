@@ -51,13 +51,13 @@ module Wkbk
       end
     end
 
-    def self.new_og_meta
-      {
-        :title       => "新規 - 問題",
-        :description => "",
-        :og_image    => "library-books",
-      }
-    end
+    # def self.new_og_meta
+    #   {
+    #     :title       => "新規 - 問題",
+    #     :description => "",
+    #     :og_image    => "library-books",
+    #   }
+    # end
 
     # def self.mock_article
     #   raise if Rails.env.production? || Rails.env.staging?
@@ -71,46 +71,55 @@ module Wkbk
     #   article
     # end
 
-    # Vueでリアクティブになるように空でもカラムは作っておくこと
-    def self.default_attributes
-      default = {
-        :id                  => nil,
-        :book_id             => nil,
-        :title               => nil,
-        :description         => nil,
-        :direction_message   => nil,
-        :owner_tag_list      => [],
-        :moves_answers       => [],
-        :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
-        :viewpoint           => "black",
-        :mate_skip           => false,
-        :lineage_key         => nil,
-        # :folder_key        => "public",
-      }
+    # # Vueでリアクティブになるように空でもカラムは作っておくこと
+    # def self.default_attributes
+    #   default = {
+    #     :id                  => nil,
+    #     :book_id             => nil,
+    #     :title               => nil,
+    #     :description         => nil,
+    #     :direction_message   => nil,
+    #     :owner_tag_list      => [],
+    #     :moves_answers       => [],
+    #     :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
+    #     :viewpoint           => "black",
+    #     :mate_skip           => false,
+    #     :lineage_key         => nil,
+    #     # :folder_key        => "public",
+    #   }
+    #
+    #   if Rails.env.development?
+    #     default.update({
+    #                      :title            => "(title)",
+    #
+    #                      # :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
+    #                      # :moves_answers => [
+    #                      #   :moves_str => "1c1b",
+    #                      #   :end_sfen  => "7gk/8G/7G1/7N1/9/9/9/9/9 w 2r2bg4s3n4l18p 2",
+    #                      # ],
+    #
+    #                      :init_sfen => "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1",
+    #                      :moves_answers => [
+    #                        { :moves_str => "S*2c 2b3c G*4c",            },
+    #                        { :moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c", },
+    #                        { :moves_str => "S*2c 2b1c 2c1b+ 1a1b G*2c", },
+    #                        { :moves_str => "S*2c 2b3a G*3b",            },
+    #                      ],
+    #
+    #                    })
+    #   end
+    #
+    #   default
+    # end
 
-      if Rails.env.development?
-        default.update({
-                         :title            => "(title)",
-
-                         # :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
-                         # :moves_answers => [
-                         #   :moves_str => "1c1b",
-                         #   :end_sfen  => "7gk/8G/7G1/7N1/9/9/9/9/9 w 2r2bg4s3n4l18p 2",
-                         # ],
-
-                         :init_sfen => "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1",
-                         :moves_answers => [
-                           { :moves_str => "S*2c 2b3c G*4c",            },
-                           { :moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c", },
-                           { :moves_str => "S*2c 2b1c 2c1b+ 1a1b G*2c", },
-                           { :moves_str => "S*2c 2b3a G*3b",            },
-                         ],
-
-                       })
-      end
-
-      default
-    end
+    # def self.default_attributes2
+    #   [
+    #     { :moves_str => "S*2c 2b3c G*4c",            },
+    #     { :moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c", },
+    #     { :moves_str => "S*2c 2b1c 2c1b+ 1a1b G*2c", },
+    #     { :moves_str => "S*2c 2b3a G*3b",            },
+    #   ]
+    # end
 
     # 一覧・編集用
     def self.json_type5
@@ -478,12 +487,31 @@ module Wkbk
     end
 
     def og_meta
-      raise if new_record?
-      {
-        :title       => [title, user.name].join(" - "),
-        :description => description || "",
-        :og_image    => og_image_path || "library-books",
-      }
+      if new_record?
+        {
+          :title       => "新規 - 問題",
+          :description => "",
+          :og_image    => "library-books",
+        }
+      else
+        {
+          :title       => [title, user.name].join(" - "),
+          :description => description || "",
+          :og_image    => og_image_path || "library-books",
+        }
+      end
+    end
+
+    def default_assign
+      self.init_sfen      ||= "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+      self.viewpoint      ||= "black"
+      self.mate_skip      ||= false
+      self.owner_tag_list ||= []
+
+      if Rails.env.development?
+        moves_answers.build(:moves_str => "S*2c 2b3c G*4c")
+        moves_answers.build(:moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c")
+      end
     end
 
     private

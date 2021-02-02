@@ -59,21 +59,21 @@ module Wkbk
     end
 
     # Vueでリアクティブになるように空でもカラムは作っておくこと
-    def self.default_attributes
-      attrs = {
-        # :id           => nil,
-        # :title        => nil,
-        # :description  => nil,
-        :folder_key   => :private,
-        :sequence_key => :shuffle,
-      }
-
-      if Rails.env.development?
-        attrs[:title] ||= "(title)"
-      end
-
-      attrs
-    end
+    # def self.default_attributes
+    #   attrs = {
+    #     # :id           => nil,
+    #     # :title        => nil,
+    #     # :description  => nil,
+    #     :folder_key   => :private,
+    #     :sequence_key => :shuffle,
+    #   }
+    #
+    #   if Rails.env.development?
+    #     attrs[:title] ||= "(title)"
+    #   end
+    #
+    #   attrs
+    # end
 
     # 一覧・編集用
     def self.json_type5
@@ -352,6 +352,23 @@ module Wkbk
       o << "#" + "みんなの将棋問題集"
       o << page_url
       o.join("\n")
+    end
+
+    def default_assign
+      self.folder_key = :private
+      self.sequence_key = :shuffle
+
+      if user
+        self.title ||= "#{user.name}の将棋問題集第#{user.wkbk_books.count.next}弾(仮)"
+      end
+
+      if Rails.env.development?
+        self.title       ||= "あ" * 80
+        self.description ||= "い" * 256
+      end
+
+      self.title       ||= ""
+      self.description ||= ""
     end
 
     private

@@ -35,7 +35,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
     template(slot="end")
       template(v-if="base.is_running_p")
         b-navbar-item(tag="div" v-if="base.current_article")
-          span.mx-1.is-family-monospace {{base.current_index + 1}} / {{base.max_count}}
+          span.mx-1.is-family-monospace {{base.current_index + 1}}/{{base.max_count}}
         b-navbar-item.has-text-weight-bold.px-5.is-clickable(@click="base.next_handle(false)" v-if="base.current_article") ×
         b-navbar-item.has-text-weight-bold.px-5.is-clickable(@click="base.next_handle(true)"  v-if="base.current_article") ○
       template(v-if="base.is_standby_p && development_p")
