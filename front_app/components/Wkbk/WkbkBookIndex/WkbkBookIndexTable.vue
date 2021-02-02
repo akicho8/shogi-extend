@@ -19,7 +19,7 @@ b-table.WkbkBookIndexTable(
   @sort="base.sort_handle"
   )
 
-  b-table-column(v-slot="{row}" custom-key="id" field="id" :label="base.BookIndexColumnInfo.fetch('id').name"               sortable numeric :visible="!!base.visible_hash.id") {{row.id}}
+  b-table-column(v-slot="{row}" custom-key="id" field="id" :label="base.BookIndexColumnInfo.fetch('id').name"               sortable numeric width="1" :visible="!!base.visible_hash.id") {{row.id}}
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
     nuxt-link(:to="{name: 'library-books-book_id', params: {book_id: row.id}}" @click.native="sound_play('click')")
@@ -34,7 +34,7 @@ b-table.WkbkBookIndexTable(
   b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable :visible="!!base.visible_hash.created_at") {{row_time_format(row.created_at)}}
   b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{row_time_format(row.updated_at)}}
 
-  b-table-column(v-slot="{row}" custom-key="operation" label="")
+  b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
     //- nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.id}}")
     //-   b-icon(icon="edit")
     //-   | 編集

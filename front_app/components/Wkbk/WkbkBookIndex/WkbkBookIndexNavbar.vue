@@ -2,17 +2,16 @@
 MainNavbar.WkbkBookIndexNavbar(:spaced="false")
   template(slot="brand")
     NavbarItemHome
-    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'library-books'}") みんなの将棋問題集
+    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'library-books'}") みんなの将棋問題集
 
   template(slot="end")
     NavbarItemLogin
     NavbarItemProfileLink
 
-    b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'library-books-new'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'library-books-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
-    b-navbar-item.px-5(@click="base.sidebar_toggle")
-      b-icon(icon="menu")
+    WkbkSidebarToggle(@click="base.sidebar_toggle")
 </template>
 
 <script>

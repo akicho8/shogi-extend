@@ -2,8 +2,7 @@
 MainNavbar.WkbkBookShowNavbar(:spaced="false")
   template(v-if="base.book")
     template(slot="brand")
-      b-navbar-item.px-5(@click="base.sidebar_toggle")
-        b-icon(icon="menu")
+      WkbkSidebarToggle(@click="base.sidebar_toggle")
 
       template(v-if="base.is_standby_p")
         b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
@@ -28,8 +27,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
           | {{base.book.title}}
 
     template(slot="start")
-      //- b-navbar-item.px-5(@click="base.sidebar_toggle")
-      //-   b-icon(icon="menu")
+      //- WkbkSidebarToggle(@click="base.sidebar_toggle")
       template(v-if="base.is_running_p")
         b-navbar-item(tag="div" v-if="base.current_article")
           | {{base.current_article.title}}

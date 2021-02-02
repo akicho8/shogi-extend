@@ -25,7 +25,7 @@ b-table.WkbkArticleIndexTable(
   // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
   // :has-detailed-visible="row => sound_play('click')"
 
-  b-table-column(v-slot="{row}" custom-key="id" field="id" :label="base.ArticleIndexColumnInfo.fetch('id').short_name" sortable numeric :visible="!!base.visible_hash.id") {{row.id}}
+  b-table-column(v-slot="{row}" custom-key="id" field="id" :label="base.ArticleIndexColumnInfo.fetch('id').short_name" sortable numeric width="1" :visible="!!base.visible_hash.id") {{row.id}}
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').short_name" sortable :visible="!!base.visible_hash.title")
     nuxt-link(:to="{name: 'library-articles-article_id', params: {article_id: row.id}}" @click.native="sound_play('click')")
@@ -50,7 +50,7 @@ b-table.WkbkArticleIndexTable(
   b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.ArticleIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="!!base.visible_hash.created_at")       {{row_time_format(row.created_at)}}
   b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="base.ArticleIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="!!base.visible_hash.updated_at")       {{row_time_format(row.updated_at)}}
 
-  b-table-column(v-slot="{row}" custom-key="operation" label="")
+  b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
     template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
       nuxt-link(:to="{name: 'library-articles-article_id-edit', params: {article_id: row.id}}" @click.native="sound_play('click')") 編集
 

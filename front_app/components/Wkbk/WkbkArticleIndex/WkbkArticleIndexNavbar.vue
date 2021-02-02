@@ -21,11 +21,10 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false")
           .has-text-grey(v-else)
             | {{e.name}}
 
-    b-navbar-item.has-text-weight-bold.px-5(tag="nuxt-link" :to="{name: 'library-articles-new'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'library-articles-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
-    b-navbar-item.px-5(@click="base.sidebar_toggle")
-      b-icon(icon="menu")
+    WkbkSidebarToggle(@click="base.sidebar_toggle")
 </template>
 
 <script>
