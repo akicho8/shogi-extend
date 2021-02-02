@@ -1,9 +1,10 @@
 <template lang="pug">
-.WkbkBookShowAnswer.columns.is-gapless.is-centered
+// keyを指定すると2回目の描画のときに b-tab-item の部分が正しく更新される
+.WkbkBookShowAnswer.columns.is-gapless.is-centered(:key="`article_${base.current_article.id}`")
   .column
-    b-tabs(v-model="answer_tab_index" position="is-centered" :vertical="false" :expanded="true" :animated="false" v-if="base.current_article.moves_answers.length >= 1" @input="sound_play('click')")
+    b-tabs(v-model="base.answer_tab_index" position="is-centered" :vertical="false" :expanded="true" :animated="false" v-if="base.current_article.moves_answers.length >= 1" @input="sound_play('click')")
       template(v-for="(e, i) in base.current_article.moves_answers")
-        b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
+        b-tab-item(:label="`${i + 1}`")
           .CustomShogiPlayerWrap
             CustomShogiPlayer(
               sp_mobile_vertical="is_mobile_vertical_off"
@@ -27,7 +28,6 @@ export default {
   mixins: [support_child],
   data() {
     return {
-      answer_tab_index: 0,
     }
   },
 }

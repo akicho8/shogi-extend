@@ -2,6 +2,7 @@ export const app_articles = {
   data() {
     return {
       current_index: null, // 問題インデックス
+      answer_tab_index: 0, // 解答タブ
     }
   },
 
@@ -18,6 +19,7 @@ export const app_articles = {
     play_start_process() {
       this.mode_set("running")
       this.current_index = 0
+      this.answer_tab_index = 0
       this.ox_start()
       this.goal_check()
     },
@@ -25,6 +27,7 @@ export const app_articles = {
     next_handle(o) {
       this.ox_apply(o)
       this.current_index += 1
+      this.answer_tab_index = 0
       this.goal_check()
     },
 
