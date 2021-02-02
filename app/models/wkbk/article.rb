@@ -468,9 +468,9 @@ module Wkbk
 
     # 本があれば本の権限に従う
     # 本がなければ所有者のみ編集可能
-    def owner_editable_p(current_user)
+    def showable_p(current_user)
       if book
-        book.owner_editable_p(current_user)
+        book.showable_p(current_user)
       else
         user == current_user
       end

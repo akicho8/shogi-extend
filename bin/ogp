@@ -21,9 +21,9 @@ LIST_ALL = [
   { url: "/library/articles/2/edit",               validations: { "code" => "403", }},
   { url: "/library/articles/2/edit?_user_id=1",    validations: { "code" => "200", }},
   { url: "/library/articles/3/edit",               validations: { "code" => "403", }},
-  { url: "/library/articles/3/edit?_user_id=1",    validations: { "code" => "200", }},
+  { url: "/library/articles/3/edit?_user_id=1",    validations: { "code" => "404", }},
   { url: "/library/articles/4/edit",               validations: { "code" => "403", }},
-  { url: "/library/articles/4/edit?_user_id=1",    validations: { "code" => "403", }},
+  { url: "/library/articles/4/edit?_user_id=1",    validations: { "code" => "404", }},
   { url: "/library/articles/9999/edit?_user_id=1", validations: { "code" => "404", }},
   
   { url: "/library/books",                   validations: { "code" => "200", }},

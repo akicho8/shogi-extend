@@ -17,11 +17,18 @@ module Api
         end
       end
 
-      def permission_valid!(record)
-        unless record.owner_editable_p(current_user)
+      def show_permission_valid!(record)
+        unless record.showable_p(current_user)
           raise WkbkPermissionError
         end
       end
+
+      # def edit_permission_valid!(record)
+      #   raise "must not happen" unless current_user
+      #   unless record.user == current_user
+      #     raise WkbkPermissionError
+      #   end
+      # end
 
       rescue_from "ActiveRecord::RecordNotFound" do |error|
         render json: { statusCode: 404, message: "または権限がありません" }, status: 404

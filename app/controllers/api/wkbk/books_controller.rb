@@ -46,7 +46,7 @@ module Api
         retv[:config] = ::Wkbk::Config
 
         book = ::Wkbk::Book.find(params[:book_id])
-        permission_valid!(book)
+        show_permission_valid!(book)
 
         v = book.as_json(::Wkbk::Book.show_json_struct)
         v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.show_articles_json_struct)
@@ -66,7 +66,7 @@ module Api
         retv[:config] = ::Wkbk::Config
         if params[:book_id]
           book = current_user.wkbk_books.find(params[:book_id])
-          permission_valid!(book)
+          # edit_permission_valid!(book)
         else
           book = current_user.wkbk_books.build
           book.default_assign

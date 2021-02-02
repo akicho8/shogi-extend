@@ -53,7 +53,7 @@ module Api
         retv = {}
         retv[:config] = ::Wkbk::Config
         article = ::Wkbk::Article.find(params[:article_id])
-        permission_valid!(article)
+        show_permission_valid!(article)
         retv[:article] = article.as_json(::Wkbk::Article.show_json_struct)
         retv[:meta] = article.og_meta
         render json: retv
@@ -69,8 +69,8 @@ module Api
         retv[:books] = current_books
 
         if params[:article_id]
-          article = ::Wkbk::Article.find(params[:article_id])
-          permission_valid!(article)
+          article = current_user.wkbk_articles.find(params[:article_id])
+          # edit_permission_valid!(article)
         else
           # article = current_user.wkbk_articles.build()
           article = current_user.wkbk_articles.build

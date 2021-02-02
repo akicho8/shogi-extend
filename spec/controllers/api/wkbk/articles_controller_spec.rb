@@ -41,22 +41,22 @@ RSpec.describe Api::Wkbk::ArticlesController, type: :controller do
 
   [
     { args: [ :index, params: {                   }],               code: 200, },
+    { args: [ :edit,  params: {                   }],               code: 403, },
+    { args: [ :edit,  params: {                   }], user: :sysop, code: 200, },
     { args: [ :show,  params: { article_id: 1,    }],               code: 200, },
     { args: [ :show,  params: { article_id: 2,    }],               code: 403, },
     { args: [ :show,  params: { article_id: 9999, }],               code: 404, },
     { args: [ :show,  params: { article_id: 2,    }], user: :sysop, code: 200, },
     { args: [ :show,  params: { article_id: 4,    }], user: :sysop, code: 403, },
-    { args: [ :edit,  params: {                   }],               code: 403, },
-    { args: [ :edit,  params: {                   }], user: :sysop, code: 200, },
     { args: [ :edit,  params: { article_id: 1,    }],               code: 403, },
-    { args: [ :show,  params: { article_id: 1,    }], user: :sysop, code: 200, },
+    { args: [ :edit,  params: { article_id: 1,    }], user: :sysop, code: 200, },
     { args: [ :edit,  params: { article_id: 2,    }],               code: 403, },
-    { args: [ :show,  params: { article_id: 2,    }], user: :sysop, code: 200, },
+    { args: [ :edit,  params: { article_id: 2,    }], user: :sysop, code: 200, },
     { args: [ :edit,  params: { article_id: 3,    }],               code: 403, },
-    { args: [ :show,  params: { article_id: 3,    }], user: :sysop, code: 200, },
+    { args: [ :edit,  params: { article_id: 3,    }], user: :sysop, code: 404, },
     { args: [ :edit,  params: { article_id: 4,    }],               code: 403, },
-    { args: [ :show,  params: { article_id: 4,    }], user: :sysop, code: 403, },
-    { args: [ :show,  params: { article_id: 9999, }], user: :sysop, code: 404, },
+    { args: [ :edit,  params: { article_id: 4,    }], user: :sysop, code: 404, },
+    { args: [ :edit,  params: { article_id: 9999, }], user: :sysop, code: 404, },
   ].each do |e|
     it "アクセス制限" do
       if e[:user]

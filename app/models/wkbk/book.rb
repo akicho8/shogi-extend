@@ -317,9 +317,27 @@ module Wkbk
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
     end
 
-    def owner_editable_p(current_user)
+    def showable_p(current_user)
+      # case
+      # when :show
       folder_key_eq(:public) || user == current_user
+      # when :edit
+      #   user && current_user && (user == current_user)
+      # else
+      #   raise "must not happen"
+      # end
     end
+
+    # def showable_p(action, current_user)
+    #   case
+    #   when :show
+    #     folder_key_eq(:public) || user == current_user
+    #   when :edit
+    #     user && current_user && (user == current_user)
+    #   else
+    #     raise "must not happen"
+    #   end
+    # end
 
     def ordered_articles
       sequence.pure_info.apply[articles]

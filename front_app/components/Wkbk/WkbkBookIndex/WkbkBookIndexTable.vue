@@ -41,14 +41,15 @@ b-table.WkbkBookIndexTable(
     nuxt-link(:to="{name: 'library-articles-new', query: {book_id: row.id}}" v-if="false")
       b-icon(icon="plus")
 
-    b-dropdown(append-to-body position="is-top-left" @active-change="sound_play('click')")
+    b-dropdown(append-to-body position="is-bottom-left" @active-change="sound_play('click')")
       a(slot="trigger")
         b-icon(icon="dots-horizontal")
-      template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-        b-dropdown-item(has-link)
-          nuxt-link(:to="{name: 'library-articles-new', query: {book_id: row.id}}"        @click.native="sound_play('click')") 問題追加
+      template(v-if="(g_current_user && g_current_user.id === row.user.id) || development_p")
         b-dropdown-item(has-link)
           nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.id}}" @click.native="sound_play('click')") 編集
+        b-dropdown-item(has-link)
+          nuxt-link(:to="{name: 'library-articles-new', query: {book_id: row.id}}"        @click.native="sound_play('click')") 問題追加
+        b-dropdown-item(separator)
       b-dropdown-item(has-link)
         a(@click="tweet_window_popup({text: row.tweet_body})") ツイート
 
