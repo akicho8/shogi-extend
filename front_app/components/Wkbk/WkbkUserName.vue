@@ -23,6 +23,7 @@ export default {
 @import "./support.sass"
 .WkbkUserName
   .image
+    flex-shrink: 0
     img
       max-height: none
       height: 18px
