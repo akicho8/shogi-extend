@@ -503,14 +503,18 @@ module Wkbk
     end
 
     def default_assign
-      self.init_sfen      ||= "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+      # "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
+      self.init_sfen      ||= "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
       self.viewpoint      ||= "black"
       self.mate_skip      ||= false
       self.owner_tag_list ||= []
 
       if Rails.env.development?
-        moves_answers.build(:moves_str => "S*2c 2b3c G*4c")
-        moves_answers.build(:moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c")
+        self.init_sfen = "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
+        self.moves_answers.build(moves_str: "S*2c 2b3c G*4c")
+        self.moves_answers.build(moves_str: "S*2c 2b1c 2c1b+ 1c1b G*2c")
+        self.moves_answers.build(moves_str: "S*2c 2b1c 2c1b+ 1a1b G*2c")
+        self.moves_answers.build(moves_str: "S*2c 2b3a G*3b")
       end
     end
 
