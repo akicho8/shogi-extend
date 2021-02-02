@@ -8,16 +8,15 @@
 
   .is-flex.is-justify-content-center
     .hero.is-medium
-      .hero-body
+      .hero-body.has-text-centered
         p.title
           | {{base.book.title}}
-        p.subtitle(v-if="base.book.description" v-html="simple_format(auto_link(base.book.description))")
-          | Primary subtitle
+        p.mt-5.subtitle.box.has-background-white-ter.is-shadowless.has-text-left(v-html="simple_format(auto_link(base.book.description))" v-if="base.book.description")
 
   .columns.is-gapless
     .column
       .buttons
-        b-button(@click="base.play_restart" type="is-primary") START
+        b-button(@click="base.play_restart" type="is-primary") はじめる
 </template>
 
 <script>
@@ -46,7 +45,7 @@ export default {
 
   .hero
     +tablet
-      width: 65ch
+      width: 50ch
 
   // .box
   //   width: 100%

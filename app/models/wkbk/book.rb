@@ -161,8 +161,8 @@ module Wkbk
 
     before_validation do
       if Rails.env.test? || Rails.env.development?
-        self.title ||= SecureRandom.hex
-        self.description ||= SecureRandom.hex
+        self.title       ||= "あ" * 80
+        self.description ||= "い" * 256
       end
 
       self.folder_key ||= :private
