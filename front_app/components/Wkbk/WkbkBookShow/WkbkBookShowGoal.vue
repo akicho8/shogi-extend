@@ -20,9 +20,9 @@
       //-     | {{base.ox_summary}}
       //-     TweetButton.mt-2(:body="base.ox_tweet_body") Tweet
 
-      //- .buttons.is-centered.mt-4
-      //-   //- b-button(@click="base.play_restart") もう一度挑戦する
-      //-   b-button(@click="base.close_handle") 閉じる
+      .buttons.is-centered.mt-4
+        //- b-button(@click="base.play_restart") もう一度挑戦する
+        b-button(@click="base.close_handle") もどる
 </template>
 
 <script>
