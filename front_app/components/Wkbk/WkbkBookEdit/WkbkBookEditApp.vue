@@ -95,7 +95,7 @@ export default {
       }
 
       if (!this.book.title) {
-        this.toast_warn("なんかしらのタイトルを捻り出して入力してください")
+        this.toast_warn("なんかしらのタイトルを捻り出してください")
         return
       }
 

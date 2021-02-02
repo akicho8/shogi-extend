@@ -225,7 +225,7 @@ export default {
       }
 
       if (!this.question.title) {
-        this.warning_notice("なんかしらのタイトルを捻り出して入力してください")
+        this.warning_notice("なんかしらのタイトルを捻り出してください")
         return
       }
 
