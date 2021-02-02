@@ -28,7 +28,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
 
     template(slot="start")
       //- WkbkSidebarToggle(@click="base.sidebar_toggle")
-      template(v-if="base.is_running_p")
+      template(v-if="base.is_running_p && false")
         b-navbar-item(tag="div" v-if="base.current_article")
           | {{base.current_article.title}}
 

@@ -2,6 +2,8 @@
 .WkbkBookShowSp.columns.is-gapless.is-centered
   .column
     .CustomShogiPlayerWrap
+      .has-text-centered.is-size-5(v-if="base.current_article.title")
+        | {{base.current_article.title}}
       .has-text-centered(v-if="base.current_article.direction_message")
         | {{base.current_article.direction_message}}
       CustomShogiPlayer(
