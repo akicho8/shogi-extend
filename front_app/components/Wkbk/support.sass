@@ -29,5 +29,6 @@ $wkbk_share_gap: 1.5rem // 共通の隙間
 // iPhoneでselectをタップするとズームするのはフォントサイズが16px未満だから
 // なので16pxにしとく
 .WkbkBookEditApp, .WkbkArticleEditApp
-  select
-    font-size: 16px
+  +touch
+    input, textarea, select
+      font-size: 16px

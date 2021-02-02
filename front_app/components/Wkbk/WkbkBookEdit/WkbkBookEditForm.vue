@@ -57,6 +57,4 @@ export default {
   .help
     color: $grey
     font-size: $size-7
-  .b-radio
-    font-size: $size-7
 </style>
