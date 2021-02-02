@@ -6,7 +6,7 @@
         b-input(v-model.trim="base.article.title" required)
 
       b-field(label="解説" label-position="on-border")
-        b-input(v-model.trim="base.article.description" type="textarea" rows="8")
+        b-input(v-model.trim="base.article.description" type="textarea")
 
       b-field(label="問題集" label-position="on-border")
         b-select(v-model="base.article.book_id" expanded)
@@ -70,9 +70,16 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkArticleEditForm
-  margin: $wkbk_share_gap 0
+  +mobile
+    --gap: calc(#{$wkbk_share_gap} * 0.75)
+  +tablet
+    --gap: #{$wkbk_share_gap}
+
+  margin: var(--gap)
+
   .field:not(:first-child)
-    margin-top: $wkbk_share_gap
+    margin-top: var(--gap)
+
   .help
     color: $grey
     font-size: $size-7

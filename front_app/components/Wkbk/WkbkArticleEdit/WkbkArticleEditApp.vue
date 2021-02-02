@@ -30,13 +30,13 @@ client-only
                 | 検証
                 b-tag.ml-1(rounded v-if="valid_count >= 1" type="is-primary") OK
 
-        MainSection.is_mobile_padding_zero
-         .container
-           keep-alive
-             WkbkArticleEditPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleEditPlacement")
-             WkbkArticleEditAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleEditAnswer")
-             WkbkArticleEditForm(:base="base"       v-if="current_tab_info.key === 'form'")
-             WkbkArticleEditValidation(:base="base" v-if="current_tab_info.key === 'validation'")
+      MainSection.is_mobile_padding_zero
+       .container
+         keep-alive
+           WkbkArticleEditPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleEditPlacement")
+           WkbkArticleEditAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleEditAnswer")
+           WkbkArticleEditForm(:base="base"       v-if="current_tab_info.key === 'form'")
+           WkbkArticleEditValidation(:base="base" v-if="current_tab_info.key === 'validation'")
 
     DebugPre
       | {{article}}
