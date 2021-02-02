@@ -2,8 +2,10 @@
 .modal-card.FixedSfenConfirmModal
   header.modal-card-head
     p.modal-card-title.is-size-6
-      template(v-if="mode === 'from'") 初期配置とする局面を決めてください
-      template(v-if="mode === 'to'") 正解手順の最後の局面まで進めてください
+      //- template(v-if="mode === 'from'") 初期配置とする局面を決めてください
+      //- template(v-if="mode === 'to'") 正解手順の最後の局面まで進めてください
+      template(v-if="mode === 'from'") 初期配置の局面
+      template(v-if="mode === 'to'") 正解手順の局面
   section.modal-card-body
     CustomShogiPlayer(
       sp_mobile_vertical="is_mobile_vertical_off"
@@ -12,6 +14,7 @@
       :sp_turn="sp_turn"
       :sp_viewpoint.sync="sp_viewpoint"
       :sp_sound_body_changed="false"
+      :sp_op_disabled="true"
       sp_summary="is_summary_off"
       sp_slider="is_slider_on"
       sp_controller="is_controller_on"
@@ -24,8 +27,10 @@
       | turn_offset:{{turn_offset}}
       | snapshot_sfen:{{snapshot_sfen}}
       | moves:{{moves}}
-    b-button(@click="from_handle" type="is-primary" v-if="mode === 'from'") この局面を初期配置とする
-    b-button(@click="to_handle" type="is-primary" v-if="mode === 'to'") ここまでの手順を正解とする
+    //- b-button(@click="from_handle" type="is-primary" v-if="mode === 'from'") この局面を初期配置とする
+    //- b-button(@click="to_handle" type="is-primary" v-if="mode === 'to'") ここまでの手順を正解とする
+    b-button(@click="from_handle" type="is-primary" v-if="mode === 'from'") 決定
+    b-button(@click="to_handle" type="is-primary" v-if="mode === 'to'") 決定
 </template>
 
 <script>
