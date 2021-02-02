@@ -99,3 +99,29 @@ a.no-decoration
       height: -webkit-fill-available
       vertical-align: middle
       font-size: 0.5rem
+
+// インデックスのカラムの表示/非表示の部分
+.sidebar_columns_toggle
+  a.is-active
+    background-color: unset
+    color: unset
+  .is_visible_on
+    a
+      font-weight: bold
+  .is_visible_off
+    a
+      color: $grey
+
+// モバイルであれば padding を消す
+// 左上アイコンと brand タイトルの隙間の違和感を無くすために使う
+.px_0_if_mobile
+  +mobile
+    padding-left:  0
+    padding-right: 0
+
+// タブレット以上で幅を広くする
+// タブレット以上であれば広いのでアイコンを押しやすくする
+.px_5_if_tablet
+  +tablet
+    padding-left:  1.5rem
+    padding-right: 1.5rem

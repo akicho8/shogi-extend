@@ -83,4 +83,9 @@ export default {
   .help
     color: $grey
     font-size: $size-7
+
+  // iPhoneでselectをタップするとズームするのはフォントサイズが16px未満だから
+  +touch
+    input, textarea, select
+      font-size: 16px
 </style>
