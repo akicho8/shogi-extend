@@ -10,8 +10,10 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight :right="false" overlay 
           b-menu-item(:label="`問題${base.current_article.id}を別タブで開く`" @click.native="base.article_show_handle" :disabled="!base.article_show_p")
 
         b-menu-list(label="編集追加")
-          b-menu-item(label="この問題集の編集"       @click.native="base.book_edit_handle"    :disabled="!base.owner_p")
-          b-menu-item(label="問題を追加する"         @click.native="base.article_new_handle"  :disabled="!base.article_new_p")
+          //- b-menu-item(label="この問題集の編集"       @click.native="base.book_edit_handle"    :disabled="!base.owner_p")
+          //- b-menu-item(label="問題を追加する"         @click.native="base.article_new_handle"  :disabled="!base.article_new_p")
+          b-menu-item(label="編集"       @click.native="base.book_edit_handle"    :disabled="!base.owner_p")
+          b-menu-item(label="問題追加    @click.native="base.article_new_handle"  :disabled="!base.article_new_p")
 
         b-menu-list(label="その他")
           b-menu-item(label="ツイート"               @click.native="base.book_tweet_handle")
