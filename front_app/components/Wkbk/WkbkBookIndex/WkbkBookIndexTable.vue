@@ -49,9 +49,12 @@ b-table.WkbkBookIndexTable(
           nuxt-link(:to="{name: 'library-books-book_id-edit', params: {book_id: row.id}}" @click.native="sound_play('click')") 編集
         b-dropdown-item(has-link)
           nuxt-link(:to="{name: 'library-articles-new', query: {book_id: row.id}}"        @click.native="sound_play('click')") 問題追加
+        //- b-dropdown-item(separator)
+        b-dropdown-item(has-link)
+          a(@click="tweet_window_popup({text: row.tweet_body})") ツイート
         b-dropdown-item(separator)
-      b-dropdown-item(has-link)
-        a(@click="tweet_window_popup({text: row.tweet_body})") ツイート
+        b-dropdown-item(has-link)
+          a.deleet キャンセル
 
       //- this.tweet_window_popup({text: this.book.tweet_body})
 

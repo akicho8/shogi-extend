@@ -85,6 +85,7 @@ module Wkbk
         ],
         include: {
           user: { only: [:id, :name, :key], methods: [:avatar_path] },
+
         },
         only: [
           :id,
@@ -143,6 +144,29 @@ module Wkbk
             ],
           },
         },
+      }
+    end
+
+    def self.edit_articles_json_struct
+      {
+        only: [
+          :id,
+          # :init_sfen,
+          :title,
+          # :description,
+          # :direction_message,
+          # :turn_max,
+        ],
+        # methods: [
+        #   :lineage_key,
+        # ],
+        # include: {
+        #   moves_answers: {
+        #     only: [
+        #       :moves_str,
+        #     ],
+        #   },
+        # },
       }
     end
 

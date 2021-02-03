@@ -17,6 +17,7 @@ client-only
       MainSection.is_mobile_padding_zero
         .container
            WkbkBookEditForm(:base="base")
+           WkbkBookEditArticleIndexTable(:base="base")
 
     DebugPre {{$data}}
 </template>
@@ -26,6 +27,7 @@ import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
 import { support_parent } from "./support_parent.js"
+import { app_table } from "./app_table.js"
 
 import { Book       } from "../models/book.js"
 import { FolderInfo } from "../models/folder_info.js"
@@ -35,6 +37,7 @@ export default {
   name: "WkbkBookEditApp",
   mixins: [
     support_parent,
+    app_table,
   ],
 
   data() {

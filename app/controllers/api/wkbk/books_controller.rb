@@ -55,7 +55,6 @@ module Api
       end
 
       # 問題編集用
-      # 管理者が他者の問題を編集することもあるため current_user のスコープをつけてはいけない
       #
       # http://0.0.0.0:3000/api/wkbk/books/edit.json
       # http://0.0.0.0:3000/api/wkbk/books/edit.json?book_id=1
@@ -71,7 +70,9 @@ module Api
           book = current_user.wkbk_books.build
           book.default_assign
         end
-        retv[:book] = book.as_json(::Wkbk::Book.json_type5)
+        v = book.as_json(::Wkbk::Book.json_type5)
+        v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.edit_articles_json_struct)
+        retv[:book] = v
         retv[:meta] = book.og_meta
         # sleep(3)
         render json: retv

@@ -424,10 +424,10 @@ module Wkbk
       as_json({
                 only: [
                   :id,
-                  :init_sfen,
-                  :viewpoint,
                   :title,
                   :description,
+                  :init_sfen,
+                  :viewpoint,
                   :direction_message,
                   :mate_skip,
                   :owner_tag_list,
