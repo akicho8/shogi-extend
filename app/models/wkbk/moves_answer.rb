@@ -19,6 +19,9 @@ module Wkbk
   class MovesAnswer < ApplicationRecord
     belongs_to :article, counter_cache: true, touch: true
 
+    acts_as_list touch_on_update: false, top_of_list: 0, scope: :article
+    # default_scope { order(:position) }
+
     before_validation do
       if will_save_change_to_attribute?(:moves_str) && v = moves_str.presence
         self.moves_count = v.split.size

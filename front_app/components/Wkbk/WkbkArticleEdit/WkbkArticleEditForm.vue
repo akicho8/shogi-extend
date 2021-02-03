@@ -23,6 +23,9 @@
       b-field(label="出題時の一言" label-position="on-border" message="何手指してほしいかやヒントを伝えたいときだけ入力してください")
         b-input(v-model.trim="base.article.direction_message" placeholder="3手指してください")
 
+      b-field(label="難易度" custom-class="is-small")
+        b-rate(v-model="base.article.difficulty" spaced :max="5" :show-score="false")
+
       b-field
         b-switch(v-model="base.article.mate_skip" :disabled="!lineage_info.mate_validate_on")
           | 最後は無駄合いなので詰みチェックを省略する
@@ -54,6 +57,12 @@ export default {
       },
     },
     "article.mate_skip": {
+      handler(v) {
+        this.sound_play("click")
+        this.talk(v)
+      },
+    },
+    "article.difficulty": {
       handler(v) {
         this.sound_play("click")
         this.talk(v)

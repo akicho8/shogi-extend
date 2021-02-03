@@ -41,13 +41,9 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.boolean :mate_skip,               null: true,                                                comment: "詰みチェックをスキップする"
         t.string :direction_message,        null: true,                                                comment: "メッセージ"
         t.integer :moves_answers_count, default: 0, null: false, index: false, comment: "解答数"
-
-        t.timestamps
-      end
-
-      create_table :wkbk_source_abouts, force: true do |t|
-        t.string :key,       null: false
         t.integer :position, null: false, index: true
+        t.integer :difficulty,       null: true,  index: true,                                  comment: "難易度"
+
         t.timestamps
       end
 
@@ -58,6 +54,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.string :moves_str,                                            null: false, index: false, comment: "連続した指し手"
         # t.string :end_sfen,                                             null: true,  index: false, comment: "最後の局面"
         t.string :moves_human_str,                                      null: true,  index: false, comment: "人間向け指し手"
+        t.integer :position, null: false, index: true
         t.timestamps
       end
 

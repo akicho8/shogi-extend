@@ -71,7 +71,8 @@ module Api
           book.default_assign
         end
         v = book.as_json(::Wkbk::Book.json_type5)
-        v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.edit_articles_json_struct)
+        # v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.edit_articles_json_struct)
+        v[:articles] = book.articles.order(:position).as_json(::Wkbk::Book.edit_articles_json_struct)
         retv[:book] = v
         retv[:meta] = book.og_meta
         # sleep(3)

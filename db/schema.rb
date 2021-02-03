@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_01_231200) do
+ActiveRecord::Schema.define(version: 2021_02_03_161600) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1197,12 +1197,16 @@ ActiveRecord::Schema.define(version: 2021_02_01_231200) do
     t.boolean "mate_skip", comment: "詰みチェックをスキップする"
     t.string "direction_message", comment: "メッセージ"
     t.integer "moves_answers_count", default: 0, null: false, comment: "解答数"
+    t.integer "position", null: false
+    t.integer "difficulty", comment: "難易度"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["book_id"], name: "index_wkbk_articles_on_book_id"
+    t.index ["difficulty"], name: "index_wkbk_articles_on_difficulty"
     t.index ["init_sfen"], name: "index_wkbk_articles_on_init_sfen"
     t.index ["key"], name: "index_wkbk_articles_on_key"
     t.index ["lineage_id"], name: "index_wkbk_articles_on_lineage_id"
+    t.index ["position"], name: "index_wkbk_articles_on_position"
     t.index ["turn_max"], name: "index_wkbk_articles_on_turn_max"
     t.index ["user_id"], name: "index_wkbk_articles_on_user_id"
   end
@@ -1244,10 +1248,12 @@ ActiveRecord::Schema.define(version: 2021_02_01_231200) do
     t.integer "moves_count", null: false, comment: "N手"
     t.string "moves_str", null: false, comment: "連続した指し手"
     t.string "moves_human_str", comment: "人間向け指し手"
+    t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_wkbk_moves_answers_on_article_id"
     t.index ["moves_count"], name: "index_wkbk_moves_answers_on_moves_count"
+    t.index ["position"], name: "index_wkbk_moves_answers_on_position"
   end
 
   create_table "wkbk_sequences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -1256,14 +1262,6 @@ ActiveRecord::Schema.define(version: 2021_02_01_231200) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["position"], name: "index_wkbk_sequences_on_position"
-  end
-
-  create_table "wkbk_source_abouts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false
-    t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["position"], name: "index_wkbk_source_abouts_on_position"
   end
 
   create_table "xy_master_rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

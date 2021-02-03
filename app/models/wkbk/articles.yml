@@ -4,7 +4,7 @@
   init_sfen: position sfen ln1gk2nl/6g2/p2pppspp/2p3p2/7P1/1rP6/P2PPPP1P/2G3SR1/LN2KG1NL
     b BSPbsp 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 居玉は危険
   description: 
   hint_desc: 
@@ -30,7 +30,7 @@
   user_id: 8
   init_sfen: position sfen ln1g5/1ks6/pppp5/9/4B4/9/9/9/9 b GN2rb2g3s2n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 美濃囲いの弱点
   description: 
   hint_desc: 
@@ -56,7 +56,7 @@
   user_id: 8
   init_sfen: position sfen 7nk/7sp/9/9/4B4/9/9/9/9 b N2rb4g3s2n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 斜めに弱い
   description: 
   hint_desc: 
@@ -81,7 +81,7 @@
   user_id: 8
   init_sfen: position sfen 8k/7g1/8G/9/9/9/9/9/9 b GN2r2bg4s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂馬をうまく使う
   description: 
   hint_desc: 
@@ -107,7 +107,7 @@
   user_id: 8
   init_sfen: position sfen ln7/1ks4R1/pppp5/9/9/9/9/9/9 b GSr2b3g2s3n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 棺桶美濃あるある
   description: 
   hint_desc: 
@@ -133,7 +133,7 @@
   user_id: 8
   init_sfen: position sfen ln7/1ksG5/1pp6/p8/9/9/9/9/9 b BGP2rb2g3s3n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 美濃囲いあるある
   description: 
   hint_desc: 
@@ -158,7 +158,7 @@
   user_id: 8
   init_sfen: position sfen ln7/kSG6/1p7/p8/9/9/9/9/9 b L2r2b3g3s3n2l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 成っちゃだめ
   description: 
   hint_desc: 
@@ -183,7 +183,7 @@
   user_id: 8
   init_sfen: position sfen ln1g5/1rsk5/p2pp1+B2/9/1p7/9/9/9/9 b Nrb3g3s2n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 致命傷になる玉の早逃げ
   description: 
   hint_desc: 
@@ -210,7 +210,7 @@
   init_sfen: position sfen lns3+P2/4k4/ppppp1p2/9/5P3/9/9/9/9 b B2GSN2rb2g2s2n3l10p
     1
   time_limit_sec: 30
-  difficulty_level: 3
+  difficulty: 3
   title: 手筋の組み合わせ
   description: 
   hint_desc: 
@@ -236,7 +236,7 @@
   user_id: 21
   init_sfen: position sfen 4k4/3sg4/3ppp3/9/9/9/9/9/9 b RG 1
   time_limit_sec: 8
-  difficulty_level: 1
+  difficulty: 1
   title: 肩慣らし
   description: 
   hint_desc: 
@@ -262,7 +262,7 @@
   user_id: 8
   init_sfen: position sfen 4k4/4b4/9/9/9/9/9/9/9 b L2rb4g4s4n3l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 香車は離して打つ
   description: 
   hint_desc: 
@@ -288,7 +288,7 @@
   init_sfen: position sfen lnsg2s+Rl/4k1g2/p2ppp1+Pp/2p3p2/9/4P4/P2PsPP1P/2+r1N4/L3KGSNL
     b 2BNPg3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 意外な手から必死逃れ
   description: 
   hint_desc: 
@@ -318,7 +318,7 @@
   user_id: 8
   init_sfen: position sfen 5B1nl/7k1/6pp1/8p/9/9/9/9/9 b S 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 王手は追う手
   description: 
   hint_desc: 
@@ -344,7 +344,7 @@
   init_sfen: position sfen ln3+R1Bl/1r3sSk1/5p1p1/p1p1p3p/1p3g3/2P1P1p1P/PPN2PSP1/4G4/L4G1NL
     b G2Pbsnp 1
   time_limit_sec: 30
-  difficulty_level: 3
+  difficulty: 3
   title: 対抗系の実践詰将棋
   description: 
   hint_desc: 
@@ -386,7 +386,7 @@
   init_sfen: position sfen l5Bnl/5+PG2/3r1pnp1/2p1p2kp/p3sPp2/1PP1g1PPP/P5N2/1R4S2/LN3G2L
     b Sbgs3p 1
   time_limit_sec: 30
-  difficulty_level: 2
+  difficulty: 2
   title: 実戦で逃した詰将棋
   description: 
   hint_desc: 
@@ -411,7 +411,7 @@
   user_id: 8
   init_sfen: position sfen 6k2/9/9/9/1r4NR1/9/9/9/9 b 2b4g4s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 31玉だったせいで
   description: 
   hint_desc: 
@@ -439,7 +439,7 @@
   init_sfen: position sfen ln4knl/2s3g2/2pp1gspp/4ppp2/p7P/1rPPP1PP1/P2GSPN2/1SG4R1/LN1K4L
     b BPbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 矢倉あるある
   description: 
   hint_desc: 
@@ -464,7 +464,7 @@
   user_id: 8
   init_sfen: position sfen 4k4/3r5/2B6/9/9/9/9/9/9 b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 大駒交換では損
   description: 
   hint_desc: 
@@ -489,7 +489,7 @@
   user_id: 8
   init_sfen: position sfen 9/3sg4/9/9/9/9/9/9/9 b N 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金銀横並びの弱点
   description: 
   hint_desc: 
@@ -515,7 +515,7 @@
   init_sfen: position sfen ln5+Rl/1+S2kg3/p1p1p2pp/3p2p2/2P1P4/9/9/9/9 b BGrb2g3s3n2l9p
     1
   time_limit_sec: 20
-  difficulty_level: 2
+  difficulty: 2
   title: 角から馬へ
   description: 実戦譜より
   hint_desc: 
@@ -540,7 +540,7 @@
   user_id: 8
   init_sfen: position sfen kg6+R/8R/9/9/9/9/9/9/9 b 2b3g4s4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 大駒を切る
   description: 
   hint_desc: 
@@ -565,7 +565,7 @@
   user_id: 8
   init_sfen: position sfen 5+B+R2/9/4skp2/4p4/6P2/9/9/9/9 b Grb3g2s4n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 上部に逃げられそう
   description: 下手に王手すると逃げられる
   hint_desc: 
@@ -590,7 +590,7 @@
   user_id: 207
   init_sfen: position sfen 6+Rnl/9/7k1/6Np+b/9/9/9/9/9 b Grb3g4s2n3l17p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 金をいつ使うか
   description: 
   hint_desc: 
@@ -618,7 +618,7 @@
   user_id: 8
   init_sfen: position sfen ln7/1kg+R5/ppp6/9/9/9/9/9/9 b Sr2b3g3s3n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 一間竜あるある
   description: 
   hint_desc: 
@@ -643,7 +643,7 @@
   user_id: 207
   init_sfen: position sfen 6s1l/4+R2S1/6lk1/7N1/7S1/9/9/9/9 b Nr2b4gs2n2l18p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 龍を活躍させたいが
   description: 
   hint_desc: 
@@ -670,7 +670,7 @@
   init_sfen: position sfen lnsgk1snl/6gb1/p1pppp2p/6R2/9/2r6/P2PPPP1P/1BG6/LNS1KGSNL
     b 3P3p 1
   time_limit_sec: 10
-  difficulty_level: 3
+  difficulty: 3
   title: 相横歩取り!?
   description: |-
     ▲3二飛成には▽同銀の一手だが、▲2二角成と角をボロっと取ることが出来て勝勢。
@@ -698,7 +698,7 @@
   user_id: 207
   init_sfen: position sfen 7R1/5Bn2/8k/7N1/7g1/9/9/9/9 b Grb2g4s2n4l18p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 上部に逃げられそう！？
   description: 
   hint_desc: 
@@ -724,7 +724,7 @@
   user_id: 207
   init_sfen: position sfen 9/6+B+bk/6N2/7pp/9/9/9/9/9 b RSr4g3s3n4l16p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 馬の守りをどうするか
   description: 
   hint_desc: 
@@ -750,7 +750,7 @@
   user_id: 207
   init_sfen: position sfen 6+B1l/8k/6r2/6spp/9/9/9/9/9 b 2Srb4gs4n3l16p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車が利いているわね
   description: 
   hint_desc: 
@@ -776,7 +776,7 @@
   user_id: 207
   init_sfen: position sfen 8r/5+B+R2/7gk/8s/9/9/9/9/9 b 2Gbg3s4n4l18p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 空中銀冠がガッチリ？
   description: 
   hint_desc: 
@@ -802,7 +802,7 @@
   user_id: 207
   init_sfen: position sfen 6snl/8k/6R2/8p/9/9/9/9/9 b 2SPr2b4gs3n3l16p 1
   time_limit_sec: 40
-  difficulty_level: 1
+  difficulty: 1
   title: 追い込まれているが金がないので1手詰ではない
   description: 
   hint_desc: 
@@ -828,7 +828,7 @@
   user_id: 207
   init_sfen: position sfen 7pk/9/6G+B1/9/9/9/9/9/9 b NP2rb3g4s3n4l16p 1
   time_limit_sec: 40
-  difficulty_level: 1
+  difficulty: 1
   title: 打歩詰は反則
   description: 
   hint_desc: 
@@ -854,7 +854,7 @@
   user_id: 170
   init_sfen: position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1
   time_limit_sec: 30
-  difficulty_level: 2
+  difficulty: 2
   title: 渡瀬荘二郎『待宵』8番
   description: 
   hint_desc: 
@@ -880,7 +880,7 @@
   user_id: 170
   init_sfen: position sfen 7nl/5+B1k1/6Lp1/6p1p/7s1/9/9/9/9 b GS 1
   time_limit_sec: 120
-  difficulty_level: 4
+  difficulty: 4
   title: 大橋宗桂『将棋造物』2番 15手詰め
   description: 
   hint_desc: 
@@ -913,7 +913,7 @@
   user_id: 170
   init_sfen: position sfen 4l4/4p2bl/6k2/4Pp1pp/6Nn1/8P/7PS/5N3/8L b BG 1
   time_limit_sec: 40
-  difficulty_level: 2
+  difficulty: 2
   title: 一直線の実践型七手詰め
   description: 
   hint_desc: 
@@ -938,7 +938,7 @@
   user_id: 170
   init_sfen: position sfen 7nl/9/8p/6sSk/7p1/5pG1N/6PP1/6S2/6NNL b P 1
   time_limit_sec: 60
-  difficulty_level: 3
+  difficulty: 3
   title: 打ち歩詰め回避の必至問題
   description: 
   hint_desc: 
@@ -964,7 +964,7 @@
   init_sfen: position sfen ln1gkg1nl/1r1s3b1/ppppppspp/6p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 好機を見逃すな
   description: 
   hint_desc: 
@@ -989,7 +989,7 @@
   user_id: 224
   init_sfen: position sfen 7R1/6p2/5bk2/9/4NP3/3+B5/9/9/9 b r4g4s3n4l16p 1
   time_limit_sec: 20
-  difficulty_level: 3
+  difficulty: 3
   title: 桂馬をどうする？
   description: 角を取りたくなるが、際どく詰まない。5一に効かせる▲6三桂不成が正解。
   hint_desc: 
@@ -1015,7 +1015,7 @@
   user_id: 207
   init_sfen: position sfen 8l/6B2/5+R1G1/8k/6Sp1/9/9/9/9 b rb3g3s4n3l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 攻め駒はたくさんあるけどどれで王手しようか
   description: 
   hint_desc: 
@@ -1041,7 +1041,7 @@
   user_id: 207
   init_sfen: position sfen 6+B1l/6R2/6Sk1/5p+pp1/9/9/9/9/9 b rb4g3s4n3l15p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 重たい形をどうほぐす
   description: 
   hint_desc: 
@@ -1067,7 +1067,7 @@
   user_id: 207
   init_sfen: position sfen 5g1nR/7k1/5ppp1/9/9/9/9/9/9 b BGrb2g4s3n4l15p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 逃げられないように
   description: 
   hint_desc: 
@@ -1093,7 +1093,7 @@
   user_id: 207
   init_sfen: position sfen 5p1k1/7B1/6rP1/9/9/9/9/9/9 b 2Grb2g4s4n4l16p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 邪魔な駒の消し方
   description: 
   hint_desc: 
@@ -1120,7 +1120,7 @@
   user_id: 207
   init_sfen: position sfen 6R2/8k/6+bpp/9/9/9/9/9/9 b GSrb3g3s4n4l16p 1
   time_limit_sec: 40
-  difficulty_level: 1
+  difficulty: 1
   title: 馬の守りをかいくぐる
   description: 
   hint_desc: 
@@ -1147,7 +1147,7 @@
   user_id: 207
   init_sfen: position sfen 9/6g2/6sPk/6+B1p/9/9/9/9/9 b B2G2rg3s4n4l16p 1
   time_limit_sec: 40
-  difficulty_level: 1
+  difficulty: 1
   title: 馬の利きを活かすには
   description: 
   hint_desc: 
@@ -1175,7 +1175,7 @@
   user_id: 170
   init_sfen: position sfen 7nl/5k3/6bp1/5pp1p/5N3/9/9/9/9 b R2Gp 1
   time_limit_sec: 60
-  difficulty_level: 3
+  difficulty: 3
   title: 将棋造物第10番改題
   description: 
   hint_desc: 
@@ -1204,7 +1204,7 @@
   user_id: 170
   init_sfen: position sfen 7B1/5S3/5ppkn/9/5G1pp/6P2/9/9/9 b GL 1
   time_limit_sec: 60
-  difficulty_level: 3
+  difficulty: 3
   title: 象戯造物 第17番
   description: 
   hint_desc: 
@@ -1238,7 +1238,7 @@
   init_sfen: position sfen lnsgkgsnl/1r5b1/p1pppp1pp/6p2/1p7/2P6/PPSPPPPPP/1B5R1/LN1GKGSNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 必須の一手
   description: |-
     ▲78金を入れないまま飛車の横利きを止める手、例えば▲48銀としてしまうと△86歩 ▲同歩 △同飛と進み、▲同銀なら飛車が貰えるものの、△88角成で角が抜かれ、かつ馬ができて序盤早々不利になる。
@@ -1267,7 +1267,7 @@
   user_id: 8
   init_sfen: position sfen 7S+R/9/6skp/6p2/8P/9/9/9/9 b Gr2b3g2s4n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 一目で見えるようになりたい
   description: 
   hint_desc: 
@@ -1294,7 +1294,7 @@
   init_sfen: position sfen ln3k1nl/3sg1gb1/p1ppppspp/6p2/7P1/6r1P/PPPPSP3/2G2S1R1/LNBK1G1NL
     b 3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 嬉野流の罠
   description: 嬉野流の序盤の罠。相手は56の歩に続けて36の歩まで取ってしまうと▲46銀から飛車が詰む
   hint_desc: 
@@ -1320,7 +1320,7 @@
   init_sfen: position sfen lnsgkgs1l/1r5b1/pppppp1pp/6p2/5n3/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 3
+  difficulty: 3
   title: 鬼殺し封じ
   description: |-
     先後反転しています
@@ -1347,7 +1347,7 @@
   user_id: 207
   init_sfen: position sfen 7r1/9/6+B1k/9/7+b1/9/9/9/9 b RGS3g3s4n4l18p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 馬飛に馬飛で対抗する
   description: 
   hint_desc: 
@@ -1374,7 +1374,7 @@
   user_id: 207
   init_sfen: position sfen 7B1/9/6k2/6N2/6S2/9/9/9/9 b G2rb3g3s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 無防備な玉に角桂の利き
   description: 
   hint_desc: 
@@ -1400,7 +1400,7 @@
   user_id: 170
   init_sfen: position sfen ln1g5/pks4+R1/2pg5/Pp1p1B3/2P6/1RS6/9/9/L8 b LPp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 稀によくある詰将棋
   description: 
   hint_desc: 
@@ -1437,7 +1437,7 @@
   user_id: 207
   init_sfen: position sfen 7+r1/9/6S1k/5s+B2/9/9/9/9/9 b Rb4g2s4n4l18p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車の使い道
   description: 
   hint_desc: 
@@ -1464,7 +1464,7 @@
   init_sfen: position sfen l2g1k1nl/1r3sgp1/p2ppp2p/1pps1bp2/1n7/2P1PB3/PP3PP1P/1SG2S1R1/LN1K1G1NL
     b Pp 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 序盤にチャンスがやってきた
   description: 
   hint_desc: 
@@ -1489,7 +1489,7 @@
   user_id: 8
   init_sfen: position sfen lng6/1ks4+R1/pppp+B4/9/9/9/9/9/9 b rb3g3s3n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どっちを切る？
   description: 
   hint_desc: 
@@ -1515,7 +1515,7 @@
   user_id: 8
   init_sfen: position sfen 7nl/6s1k/5pnpp/9/9/9/9/9/9 b RGNr2b3g3sn3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金を残す
   description: 
   hint_desc: 
@@ -1542,7 +1542,7 @@
   init_sfen: position sfen ln1g2knl/1r1s2g2/5pppp/2s1p4/p2p3PP/2PPP1P2/PPSGSPN2/1KG4R1/LN6L
     b Bb2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 嬉野流のとき気をつけよう
   description: 
   hint_desc: 
@@ -1569,7 +1569,7 @@
   user_id: 8
   init_sfen: position sfen 8k/9/6S2/8p/9/9/9/9/9 b SLg 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 慌てないで
   description: 慌てて▲22銀打だと逃げられる
   hint_desc: 
@@ -1596,7 +1596,7 @@
   user_id: 8
   init_sfen: position sfen ln7/2ks+R4/ppppp4/9/9/9/9/9/9 b Gg 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 送りの手筋
   description: 
   hint_desc: 
@@ -1621,7 +1621,7 @@
   user_id: 207
   init_sfen: position sfen 8l/6S1k/7L1/8p/9/9/9/9/9 b G2r2b3g3s4n2l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: あいつさえいなければ…
   description: 
   hint_desc: 
@@ -1647,7 +1647,7 @@
   user_id: 170
   init_sfen: position sfen 9/3r5/4BP1pp/6k2/5g1NP/9/6BP1/6G2/8L b Rp 1
   time_limit_sec: 10
-  difficulty_level: 2
+  difficulty: 2
   title: 実戦で逃した詰将棋2
   description: 
   hint_desc: 
@@ -1680,7 +1680,7 @@
   init_sfen: position sfen ln3gbnl/r3p4/p2G1ksp1/1p1P1pp1p/2pS5/4G3P/PPN2PPP1/1R4SK1/L4G1NL
     b Sb3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦で逃した次の一手
   description: 
   hint_desc: 
@@ -1705,7 +1705,7 @@
   user_id: 207
   init_sfen: position sfen 4n1+B2/5R3/6k2/6Bpp/9/9/9/9/9 b r4g4s3n4l16p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 大駒三枚の連携技
   description: 
   hint_desc: 
@@ -1731,7 +1731,7 @@
   user_id: 207
   init_sfen: position sfen 3R1l3/4k4/4B4/9/9/4N4/9/9/9 b rb4g4s3n3l18p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 取られそうな飛角の活かし方
   description: 
   hint_desc: 
@@ -1757,7 +1757,7 @@
   user_id: 207
   init_sfen: position sfen 9/5B3/5+b1S1/4Sk3/4p1R2/9/9/9/9 b r4g2s4n4l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 最後はフワッと
   description: 
   hint_desc: 
@@ -1783,7 +1783,7 @@
   user_id: 207
   init_sfen: position sfen 9/9/3n2+R2/4k4/5r3/3+B5/9/9/9 b Gb3g4s3n4l18p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車の守り
   description: 
   hint_desc: 
@@ -1809,7 +1809,7 @@
   user_id: 207
   init_sfen: position sfen 7k1/7g1/5sBN1/7N1/9/9/9/9/9 b S2rb3g2s2n4l18p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 桂桂コンビ
   description: 
   hint_desc: 
@@ -1836,7 +1836,7 @@
   user_id: 207
   init_sfen: position sfen 6p1k/7r1/6N2/7N1/7N1/9/9/9/9 b R2b4g4sn4l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 三枚桂の攻め
   description: 
   hint_desc: 
@@ -1863,7 +1863,7 @@
   user_id: 207
   init_sfen: position sfen 8+R/5+B1g1/7k1/6r2/8+p/9/9/9/9 b GSb2g3s4n4l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 守備駒をうまくズラす
   description: 
   hint_desc: 
@@ -1890,7 +1890,7 @@
   user_id: 207
   init_sfen: position sfen 8+B/6s2/7kS/8p/9/9/9/9/9 b Rrb4g2s4n4l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 上部の脱出を防ぐ俗手
   description: 
   hint_desc: 
@@ -1916,7 +1916,7 @@
   user_id: 207
   init_sfen: position sfen 8s/5lg2/7kB/5+R3/8p/9/9/9/9 b Grb2g3s4n3l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 下段に逃がしても大丈夫？
   description: 
   hint_desc: 
@@ -1943,7 +1943,7 @@
   user_id: 207
   init_sfen: position sfen 5+R2+p/7kS/4SN3/6Ps1/9/9/9/9/9 b R2b4gs3n4l16p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: ドラゴンアタック
   description: 
   hint_desc: 
@@ -1969,7 +1969,7 @@
   user_id: 207
   init_sfen: position sfen 5R3/6k1s/5lB2/5p2g/9/9/9/9/9 b Rb3g3s4n3l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 大駒を失うことを恐れるな
   description: 
   hint_desc: 
@@ -1997,7 +1997,7 @@
   user_id: 8
   init_sfen: position sfen ln7/2k6/1pppS4/p8/9/9/9/9/9 b BGN2rb3g3s2n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金の打ち場所を作る
   description: |-
     初手▲61角打では逃げられる
@@ -2026,7 +2026,7 @@
   init_sfen: position sfen lnsg3nl/1k2gsr2/1pppp1bp1/5pp1p/p6P1/PP5RP/B1PPPPP2/3SKS3/LNG3GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 4
+  difficulty: 4
   title: 棋力が高い人ほど誘われる罠
   description: "▲86歩を悪手とみて△95歩としてきた局面だけど▲86歩は△95歩を誘う罠だった。香角交換になっても端を突破できる。"
   hint_desc: 
@@ -2052,7 +2052,7 @@
   user_id: 8
   init_sfen: position sfen ln7/9/1pp6/p2p5/1k7/P2B5/1P7/9/LN7 b G2rb3g4s2n2l12p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 美濃から脱出した玉
   description: "▲77桂として負けた実戦譜より"
   hint_desc: 
@@ -2077,7 +2077,7 @@
   user_id: 8
   init_sfen: position sfen 5R3/7k1/5pppp/9/9/9/9/9/9 b Gr2b3g4s4n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車と金の連携
   description: 
   hint_desc: 
@@ -2103,7 +2103,7 @@
   init_sfen: position sfen 6n2/6gk1/5psp1/6p2/8l/P1P6/1P1P1PPPP/3+r2SK1/LN3+b1NL b
     B2G 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 投了するのはまだ早い
   description: "▲96歩では△38飛から詰み"
   hint_desc: 
@@ -2129,7 +2129,7 @@
   user_id: 207
   init_sfen: position sfen 6R2/7kl/9/8p/6N2/9/9/9/9 b Gr2b3g4s3n3l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 盲点になりやすい初手
   description: 
   hint_desc: 
@@ -2155,7 +2155,7 @@
   user_id: 207
   init_sfen: position sfen 6sn1/6k2/5R3/7B1/9/7L1/9/9/9 b Br4g3s3n3l18p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 開き王手をしたい形だが…
   description: 
   hint_desc: 
@@ -2181,7 +2181,7 @@
   user_id: 224
   init_sfen: position sfen 8b/8k/5p3/7P1/5N3/4B4/9/9/9 b 2r4g4s3n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 2
+  difficulty: 2
   title: 桂馬をどうする？②
   description: 2一に逃げられると詰みません。
   hint_desc: 
@@ -2206,7 +2206,7 @@
   user_id: 224
   init_sfen: position sfen 7kl/9/5Sspp/4+B4/9/9/9/9/9 b G2rb3g2s4n3l16p 1
   time_limit_sec: 10
-  difficulty_level: 3
+  difficulty: 3
   title: 銀をどうする？
   description: うっかり成ってしまうと、詰まなくなってしまいます。
   hint_desc: 
@@ -2231,7 +2231,7 @@
   user_id: 224
   init_sfen: position sfen 9/9/3+R5/9/4k4/9/9/9/5L3 b Brb4g4s4n3l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 四択
   description: 右上以外から角を打つのは、いずれも中合で逃れ
   hint_desc: 
@@ -2262,7 +2262,7 @@
   user_id: 224
   init_sfen: position sfen 6k2/5g3/6+B2/9/9/9/9/9/9 b G3S2rb2gs4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 4
+  difficulty: 4
   title: 相手の金を翻弄する
   description: |-
     初手は左辺に逃げられるのを防ぐための一手。
@@ -2292,7 +2292,7 @@
   user_id: 8
   init_sfen: position sfen ln7/1k1g5/ppp+P+P4/9/9/9/9/9/9 b GS2r2b2g3s3n3l13p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金が邪魔で即詰はない？
   description: このくらいは実戦で見えるようになりたい(願望)
   hint_desc: 
@@ -2318,7 +2318,7 @@
   user_id: 8
   init_sfen: position sfen kn7/lg5R1/ppS6/9/9/9/9/9/8b b rb3g3s3n3l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: そんなところにいたのかよ
   description: まわりをよく見よう
   hint_desc: 
@@ -2343,7 +2343,7 @@
   user_id: 207
   init_sfen: position sfen 6R2/8k/6n2/6N2/9/9/9/9/9 b Gr2b3g4s2n4l18p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 金はとどめか先か
   description: 
   hint_desc: 
@@ -2371,7 +2371,7 @@
   init_sfen: position sfen ln1g4l/2ks1g3/pppp2n1p/4P1pP1/3S1p3/2P6/PP1P2P1P/2KG3R1/LN1G2rNL
     b BSPbs2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 盤を広く見よう
   description: 
   hint_desc: 
@@ -2397,7 +2397,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/9/9/9/9/4PPPPP/4+p1S1+p/6K2 b s 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: ギリ生きてる
   description: 
   hint_desc: 
@@ -2423,7 +2423,7 @@
   user_id: 207
   init_sfen: position sfen 5pp2/7Bk/7P1/7rg/9/9/9/9/9 b GSrb2g3s4n4l15p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 根元の歩が心配
   description: 
   hint_desc: 
@@ -2450,7 +2450,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/2b6/2pp5/1N7/P1P6/KP1P5/1s7/Lg3+r3 b np 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 端から脱出だ〜！
   description: 上がった方が広いと勘違いしやすい局面
   hint_desc: 
@@ -2475,7 +2475,7 @@
   user_id: 8
   init_sfen: position sfen 7kl/4sr3/7G1/9/9/9/9/9/9 b G2P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車が邪魔
   description: 
   hint_desc: 
@@ -2503,7 +2503,7 @@
   user_id: 8
   init_sfen: position sfen 1n2k4/1+RS1gs3/9/9/9/9/9/9/9 b r2b3g2s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 駒得よりも詰み
   description: とりあえず桂馬とっとこうじゃチャンスを逃してしまう
   hint_desc: 
@@ -2529,7 +2529,7 @@
   init_sfen: position sfen ln3g1n1/1r1sg1sk1/2ppbp1pp/p3p1p2/1p6L/P1P1P4/1P1PSPPP1/2G3SK1/LN2RG1N1
     b BLP 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 香車ただやん
   description: 序中盤で香と角を持駒にできた場合、香打ちから飛車を浮かせて技がかかる場合がある
   hint_desc: 
@@ -2556,7 +2556,7 @@
   init_sfen: position sfen lnkg5/2s5l/1pp2+R1p1/p5p1p/3p1s1P1/P1P3P1P/1PSP1P3/1KGG5/LN2+r3L
     b BGN2Pbsnp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 必勝の一手
   description: 
   hint_desc: 
@@ -2582,7 +2582,7 @@
   init_sfen: position sfen l+R5nl/5gk2/3psg3/2p3spp/pN1Plpp2/4G3P/PP2B1PP1/5SSK1/+b4G1NL
     b NPr4p 1
   time_limit_sec: 60
-  difficulty_level: 2
+  difficulty: 2
   title: 田楽刺しに対する返し技
   description: 
   hint_desc: 
@@ -2607,7 +2607,7 @@
   user_id: 8
   init_sfen: position sfen 8S/9/7kp/6R2/9/9/9/9/9 b BNrb4g3s3n4l17p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車を守りながら王手
   description: 
   hint_desc: 
@@ -2632,7 +2632,7 @@
   user_id: 8
   init_sfen: position sfen lk7/3g3R1/pp7/9/9/9/9/9/9 b G 1
   time_limit_sec: 30
-  difficulty_level: 2
+  difficulty: 2
   title: 一気に寄せる
   description: 
   hint_desc: 
@@ -2658,7 +2658,7 @@
   user_id: 8
   init_sfen: position sfen ln7/1kbBr4/1p1p5/2p1pP3/p8/1n7/9/9/9 b N 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: やばい角が詰んだ
   description: 角が取られたところを想像するとまだ終わってはない
   hint_desc: 
@@ -2684,7 +2684,7 @@
   user_id: 8
   init_sfen: position sfen ln+B6/k8/1pp6/p8/9/9/9/9/9 b Gs 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 狭くて受けなし
   description: 綺麗な詰将棋に慣れていると意外と3手目が見えにくい
   hint_desc: 
@@ -2710,7 +2710,7 @@
   init_sfen: position sfen kn2g1s1l/lsg6/pp1pRPn2/1bp1ppp1p/PN7/5Br1P/1PPPP1N2/1KS3S2/L2G1G2L
     b 3p 1
   time_limit_sec: 180
-  difficulty_level: 3
+  difficulty: 3
   title: できればカッコよく決めたい
   description: |-
     カッコよく決めなくても悪くはならないけど、指せたら気持ちよさそうな一手
@@ -2740,7 +2740,7 @@
   user_id: 8
   init_sfen: position sfen 6knl/6l2/5+SsP1/2pp2ppp/9/9/9/9/9 b 2B2r4g2s3n2l12p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 退路封鎖＆離して打つ
   description: 
   hint_desc: 
@@ -2766,7 +2766,7 @@
   user_id: 8
   init_sfen: position sfen ln7/1ks6/1pp1r4/p8/9/9/9/9/9 b BGSLrb3g2s3n2l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どこから攻める？
   description: 飛車が逃げたら詰む
   hint_desc: 
@@ -2792,7 +2792,7 @@
   init_sfen: position sfen lnsgkg1nl/3r3s1/p1ppppp1p/9/6+b2/1P4B2/P1PP1PP1P/1S1G3R1/LN2KGSNL
     b 2P2p 1
   time_limit_sec: 20
-  difficulty_level: 2
+  difficulty: 2
   title: どこかの定跡で見たような…
   description: 
   hint_desc: 
@@ -2817,7 +2817,7 @@
   user_id: 8
   init_sfen: position sfen 5gkBR/4g4/6g1p/4r4/9/9/9/9/9 b bg4s4n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 美味しそうな飛車
   description: 
   hint_desc: 
@@ -2842,7 +2842,7 @@
   user_id: 207
   init_sfen: position sfen 8R/6k2/5n3/7Bs/9/9/9/9/9 b Lrb4g3s3n3l18p 1
   time_limit_sec: 20
-  difficulty_level: 1
+  difficulty: 1
   title: 香車の使い方
   description: 
   hint_desc: 
@@ -2870,7 +2870,7 @@
   init_sfen: position sfen ln1g3nl/1ks1gr3/1ppppsbpp/p4pp2/7P1/P3R4/BPPPPPP1P/3SKS3/LNG3GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: いきなりチャンス
   description: アヒル戦法の序盤。53の地点をいつも当然のように受けられるせいで逆にチャンスが来ているのを見逃してしまっていたことがたまにある
   hint_desc: 
@@ -2896,7 +2896,7 @@
   user_id: 170
   init_sfen: position sfen 5k3/r8/4+B4/9/9/9/9/9/9 b GSNrb3g3s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 2
+  difficulty: 2
   title: 実戦で逃した詰将棋3
   description: 
   hint_desc: 
@@ -2922,7 +2922,7 @@
   init_sfen: position sfen ln1g1gbnl/3s2sk1/2pppp1p1/pr4PRp/9/P3PS2P/1PPP1PN2/1BG6/LNSK1G2L
     b P2p 1
   time_limit_sec: 10
-  difficulty_level: 2
+  difficulty: 2
   title: 逃げてはいけない
   description: |-
     ▲33歩成を何で取っても飛車をもらえる。
@@ -2950,7 +2950,7 @@
   user_id: 8
   init_sfen: position sfen 6S2/4R3S/6k2/5pp1p/9/9/9/9/9 b r2b4g2s4n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 連続銀成り
   description: 
   hint_desc: 
@@ -2976,7 +2976,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/9/9/9/1n7/P2+r5/9/KNB6 b p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 3手詰を回避せよ
   description: 何もしないと△98歩打から詰んでしまう
   hint_desc: 
@@ -3001,7 +3001,7 @@
   user_id: 8
   init_sfen: position sfen 7nk/9/5+R2p/7N1/9/9/9/9/9 b Pr2b4g4s2n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂馬が活躍
   description: 
   hint_desc: 
@@ -3026,7 +3026,7 @@
   user_id: 8
   init_sfen: position sfen l1r6/2k6/9/1+P1+R5/9/9/9/9/9 b 2b4g4s4n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: いったん左へやす
   description: 龍で王手すると右に逃げられる
   hint_desc: 
@@ -3051,7 +3051,7 @@
   user_id: 8
   init_sfen: position sfen ln1g4l/1ks1r1g2/1pppspnp1/p3p1p1p/9/9/9/7R1/9 b B 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 中飛車の弱点
   description: 角金交換のあとの飛成りが狙い
   hint_desc: 
@@ -3076,7 +3076,7 @@
   user_id: 207
   init_sfen: position sfen 7+R1/9/7+rk/7pp/9/9/9/9/9 b GSN2b3g3s3n4l16p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 龍 vs 龍
   description: 
   hint_desc: 
@@ -3103,7 +3103,7 @@
   init_sfen: position sfen ln3k1nl/1r2gsgb1/3ppppp1/p1p5p/1s5P1/Pp1B2R1P/1PPPPPP2/2GSKS3/LN4GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車のこびんを攻める
   description: |-
     ▲75角△74歩▲56角△86歩の次の一手
@@ -3131,7 +3131,7 @@
   init_sfen: position sfen +Bn3k1nl/4gsgb1/3ppppp1/p1p5p/1r5P1/P5R1P/1+sPPPPP2/2GSKS3/LN4GNL
     b LPp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 同金はお手伝い
   description: |-
     アヒル戦法 vs 棒銀
@@ -3159,7 +3159,7 @@
   init_sfen: position sfen lnsRngs1+R/1k2g4/ppp2p2p/6p2/9/2PLP4/PP1P1PP1P/1+b2G4/LN1GK1SNL
     b 3Pbsp 1
   time_limit_sec: 60
-  difficulty_level: 4
+  difficulty: 4
   title: 超急戦(次の一手)(三手1組)★3
   description: 必死ではないですがこれをさせればほぽ勝ち確です(三手一組です)
   hint_desc: 
@@ -3186,7 +3186,7 @@
   user_id: 1002
   init_sfen: position sfen 4k4/9/PPPPPPPPP/9/9/9/9/9/9 b B4L 1
   time_limit_sec: 60
-  difficulty_level: 2
+  difficulty: 2
   title: 有名な問題だよ★1
   description: |-
     三手までさせれば.......
@@ -3218,7 +3218,7 @@
   user_id: 1002
   init_sfen: position sfen 3p5/3RSSSSk/9/9/9/9/9/9/5+p3 b 4Lrbgnl7p 1
   time_limit_sec: 300
-  difficulty_level: 5
+  difficulty: 5
   title: 詰将棋だよ★5
   description: |-
     知らないと解けないと思います
@@ -3315,7 +3315,7 @@
   user_id: 1002
   init_sfen: position sfen 7n1/7k1/7pp/6+RP1/9/9/9/9/9 b - 1
   time_limit_sec: 60
-  difficulty_level: 1
+  difficulty: 1
   title: 歩兵★1
   description: |-
     少し頭を使うと解けるよ
@@ -3348,7 +3348,7 @@
   init_sfen: position sfen lnsgk1snl/6g2/p1ppppb1p/6pR1/9/1rP6/P2PPPP1P/1SG6/LN2KGSNL
     b B2P2p 1
   time_limit_sec: 60
-  difficulty_level: 3
+  difficulty: 3
   title: 手筋(定石?)だよ(5手1組)★3
   description: 8七歩はさすがに不満､対処法は？
   hint_desc: 
@@ -3375,7 +3375,7 @@
   user_id: 1002
   init_sfen: position sfen 7nk/9/7P1/8p/9/9/9/9/9 b RBrb4g4s3n4l16p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 大胆に使う★1
   description: |-
     ヒント書くと答えに繋がるので書きません！
@@ -3414,7 +3414,7 @@
   user_id: 8
   init_sfen: position sfen 7nl/4+B1k2/5pp1p/9/7G1/9/9/9/9 b GNk2rb2g4s2n3l15p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 桂馬が強すぎる件
   description: 桂馬ぐらいと思っていたら一気に詰むことがあるので気をつけたい(自省)
   hint_desc: 
@@ -3440,7 +3440,7 @@
   init_sfen: position sfen lng3Rnl/1ksL5/1ppp5/p4B3/9/P1PP5/1PNG5/K1S6/L1b+r5 b 3Pg2p
     1
   time_limit_sec: 180
-  difficulty_level: 2
+  difficulty: 2
   title: 定石中の定石(実戦詰将棋)★4
   description: |-
     詰将棋というより手筋に近いかな？
@@ -3473,7 +3473,7 @@
   user_id: 1002
   init_sfen: position sfen 3g2R2/1ks6/1pp6/L8/9/9/9/9/r8 b BSPl 1
   time_limit_sec: 180
-  difficulty_level: 3
+  difficulty: 3
   title: 実戦詰将棋★3
   description: |-
     速詰み無しらしいので回答は一通りです
@@ -3503,7 +3503,7 @@
   user_id: 1002
   init_sfen: position sfen 7nl/6gk1/5g1pp/5pp2/7PP/9/9/7R1/8L b SN3Ps 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 矢倉の手筋Part2★1
   description: |-
     知っていて損はない感じの手筋
@@ -3532,7 +3532,7 @@
   user_id: 1002
   init_sfen: position sfen 7nl/5bgk1/3p1gspp/4ppp2/9/9/9/9/9 b S2rb2g2s3n3l12p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 矢倉の手筋★1
   description: 知っていて全く損はないです
   hint_desc: 
@@ -3560,7 +3560,7 @@
   init_sfen: position sfen 1n3l1nl/+Rsk1g1r2/1p1pp2pp/2p3p2/1P2b2P1/5P3/1+bPPPSP1P/3SK4/LNG3GNL
     b GSP2p 1
   time_limit_sec: 60
-  difficulty_level: 2
+  difficulty: 2
   title: 攻めを切らすな
   description: アヒル戦法の中盤。▲91銀打もあるけど銀はまだとっておきたい。▲84歩に△同歩なら▲83歩。△91歩打なら▲83歩成 △61玉 ▲81龍で勝勢
   hint_desc: 
@@ -3586,7 +3586,7 @@
   init_sfen: position sfen sn5nl/+Rbk1g1r2/1p1pp2pp/2p3p2/1P5P1/5S3/1+bPPP1P1P/3SK4/LNG3GNL
     b GSLP3p 1
   time_limit_sec: 60
-  difficulty_level: 1
+  difficulty: 1
   title: 送りの手筋で躱す
   description: |-
     アヒル戦法の中盤
@@ -3614,7 +3614,7 @@
   init_sfen: position sfen lng3gnl/1r1sks3/2ppppp2/p7p/9/P1PPP1P1P/1PS2PN2/1KG2S1R1/LN3G2L
     b Bb3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル囲いの弱点
   description: 取ってもほっといても悪くなる
   hint_desc: 
@@ -3639,7 +3639,7 @@
   user_id: 1002
   init_sfen: position sfen 3g5/kss6/Bpng5/2pp5/1N7/9/9/9/L8 b SNLrbg2l12p 1
   time_limit_sec: 30
-  difficulty_level: 1
+  difficulty: 1
   title: 指せたらかっこいいよね★1
   description: 自分が指した棋譜を少しアレンジしてみました。
   hint_desc: 
@@ -3666,7 +3666,7 @@
   init_sfen: position sfen lnsg1k2l/1r4g2/p1ppspnp1/4p1R1p/1p5P1/P7P/1PPPPPPb1/3SKS3/LNG3GNL
     b BP 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角打の悪手を咎める
   description: |-
     合わせて▲18角打しているようじゃいけない(反省)
@@ -3694,7 +3694,7 @@
   user_id: 8
   init_sfen: position sfen lns+N1S1nl/2k1b1+R2/p1pp1pp1p/9/9/9/9/9/9 b 2G 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 急いで角取る必要ある？
   description: 相手の動けない駒を急いで自分から取る必要はない。それよりも退路封鎖することを考える
   hint_desc: 
@@ -3720,7 +3720,7 @@
   init_sfen: position sfen 3g4l/2skg4/+Lppp1pn2/3spb1rp/pP4p2/5R1PP/2PPPPP2/2GSKSG2/1N5NL
     b N2Pbl 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 垂らしの歩
   description: アヒル戦法で角だけ渡して失敗した場面。ここからまだがんばるとすれば▲84歩△同歩▲83歩。この垂らしの歩はアヒル戦法対美濃でよくでてくる好手筋なので覚えときたい。
   hint_desc: 
@@ -3747,7 +3747,7 @@
   init_sfen: position sfen 3g4l/1+Lskg4/1ppp1pn2/4pb1rp/pPs3p2/5R1PP/2PPPPP2/2GSKSG2/1N5NL
     b N2Pbl 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 十字飛車を含みにした回避
   description: |-
     アヒル戦法で飛車が詰んでしまいがちな局面
@@ -3780,7 +3780,7 @@
   init_sfen: position sfen 1n1g1g1nl/1r2k1s2/3pppbpp/2ps2R2/lp5P1/9/BPPPPPP1P/3SKS3/LNG3GNL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 相手の攻めを利用した二枚替え
   description: アヒル戦法あるある手筋。角が金銀と交換できないときはやめておこう
   hint_desc: 
@@ -3807,7 +3807,7 @@
   init_sfen: position sfen l4g1nl/1r2gk1b1/2npp1sp1/p1p1spp2/1p5Pp/P3R4/BPPPPPP1P/3SKS3/LNG3GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 銀ただやん
   description: |-
     アヒル戦法で飛車を追いまわされているとき偶然こんな局面になっていることがある
@@ -3835,7 +3835,7 @@
   user_id: 207
   init_sfen: position sfen 5+B1kl/9/6g1p/9/9/9/9/9/9 b RGPrb2g4s4n3l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦型だが止めの駒は…？
   description: 
   hint_desc: 
@@ -3862,7 +3862,7 @@
   init_sfen: position sfen ln5nl/3sgkg2/2pp4p/p3pspp1/5NP2/PrP2P2L/3PPS3/1S2K2G1/LN1G5
     b RB3Pb2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 歩で追い返すのは温い
   description: |-
     原形を留めていないけどアヒル戦法の中盤
@@ -3893,7 +3893,7 @@
   user_id: 207
   init_sfen: position sfen 6l1B/8S/9/7k1/6ppp/9/9/9/9 b GS2rb3g2s4n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 玉を上部に逃がしたと見せかけて詰んでいる
   description: 
   hint_desc: 
@@ -3920,7 +3920,7 @@
   init_sfen: position sfen lns3knl/1r4g2/p1pp1g1pp/4ppp2/6b2/3SP4/PPPPsP2P/2G4R1/LN1KG2NL
     b BS2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 同銀はお手伝い
   description: 王手しながら57の地点に利きを増やすことで銀がただで取れる
   hint_desc: 
@@ -3948,7 +3948,7 @@
   user_id: 8
   init_sfen: position sfen ln1g5/1ks6/1ppp5/pl7/2n6/P8/1PPP5/2K6/LNBG5 b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 土下座の歩でなぜか受かる
   description: 嬉野流は桂香で87を狙われやすい
   hint_desc: 
@@ -3975,7 +3975,7 @@
   init_sfen: position sfen 4B4/9/3B1p1p1/5sk1p/6p2/8P/4+r2P1/9/8L b SNkr4g2s3n3l12p
     1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 後ろからの利きは見えにくい
   description: 実戦でありがちな、ただの3手詰だけど見えにくい局面
   hint_desc: 
@@ -4001,7 +4001,7 @@
   init_sfen: position sfen lnkg3nl/2s1g4/1pp1p2pp/p2p5/7P1/P3P4/1PPPS+RPbP/4K4/LNG1S1GNL
     b BS3Pr 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角を閉じ込める
   description: |-
     アヒル囲いに大駒を打ち込める隙間は27と87しかなくて、飛車が浮いて横に動くと27が空くので、△27角打がやたら多い。
@@ -4029,7 +4029,7 @@
   user_id: 8
   init_sfen: position sfen lk7/3p2R2/pppG5/9/9/9/9/9/9 b Gkr2b2g4s4n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 真っ先に歩を払いたくなってくる
   description: 歩を取ったときに一間竜の形になるようにする
   hint_desc: 
@@ -4055,7 +4055,7 @@
   init_sfen: position sfen ln3k1nl/1r2g1g2/1pppssbp1/p3pp2p/7P1/P5R1P/BPPPPPP2/3S1S3/LNG1K1GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル vs 雁木
   description: |-
     雁木囲いを決める△53銀を見たら▲33飛成〜▲71角打で優勢。
@@ -4087,7 +4087,7 @@
   init_sfen: position sfen ln3k1nl/1r4g2/2pgssbp1/p2ppp2p/1pP4P1/P5R1P/BPNPPPP2/3SKS3/L1G3GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 正面衝突
   description: |-
     ▲85桂のとき後手に歩がないのがポイント。
@@ -4117,7 +4117,7 @@
   init_sfen: position sfen ln1g1g1nl/1ks1r1s2/1pppp1bpp/p4pp2/7P1/PB5R1/1PPPPPP1P/3SKS3/LNG3GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル戦法知ってる？
   description: アヒル戦法を知っているか相手に問う3手
   hint_desc: 
@@ -4144,7 +4144,7 @@
   init_sfen: position sfen l1g3g2/3sks3/2npppp2/p3l3+B/1p5p1/2+R1N4/PPPPBPP2/2G3+p1+l/LN1KP3+r
     b SNgs3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: "【悲報】アヒル囲いが一瞬で崩壊"
   description: 美濃囲いと同じ弱点がある
   hint_desc: 
@@ -4171,7 +4171,7 @@
   init_sfen: position sfen ln1g3nl/1ks1gr3/ppp1p1bsp/3p3p1/P4p3/6RPP/2NPPPP2/1B1SKS3/L1G3GNL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どこから手を作る？
   description: |-
     そのあとは△同香に▲85桂
@@ -4199,7 +4199,7 @@
   user_id: 1002
   init_sfen: position sfen 6pk1/5Sn2/9/5pNbr/5BNN1/9/9/9/9 b 2Pr4g3s4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 詰みそうで詰まない★3
   description: |-
     久しぶりの解1通りです。
@@ -4234,7 +4234,7 @@
   user_id: 207
   init_sfen: position sfen 9/8k/6SN1/9/9/9/9/9/9 b G2r2b3g3s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂馬の使い道は？
   description: 
   hint_desc: 
@@ -4262,7 +4262,7 @@
   user_id: 207
   init_sfen: position sfen 9/9/7l1/6RBk/7N1/7pp/9/9/9 b rb4g4s3n3l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛角桂の渋滞
   description: 
   hint_desc: 
@@ -4289,7 +4289,7 @@
   user_id: 207
   init_sfen: position sfen 5s1k1/8b/5p3/6N2/9/9/9/9/9 b RBr4g3s3n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛角コンボ
   description: 
   hint_desc: 
@@ -4317,7 +4317,7 @@
   user_id: 8
   init_sfen: position sfen 9/5+B1Sk/7pp/6N2/9/9/9/9/9 b 2rb4g3s3n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 馬と桂の連携
   description: 馬が寄れば必死だけど詰ませるときは詰まそう
   hint_desc: 
@@ -4347,7 +4347,7 @@
   init_sfen: position sfen lnsgk2nl/1r4g2/ppppp1spp/5p3/7P1/4+B4/PPPPPPPrP/1B7/LNSGKGSNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 序盤の受け方一つで勝負が決まってしまうんよな
   description: |-
     56に角や馬がいるときに使える手だけどこれがなかなか見えにくい
@@ -4377,7 +4377,7 @@
   init_sfen: position sfen ln1g3nl/1sk4r1/ppppp4/3s+bgp1p/P4p1p1/3B2R1P/2NPPPPP1/LG1SKSG2/7NL
     b Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車を逃げ回った甲斐がありました
   description: |-
     金が動けば飛車が取れる
@@ -4406,7 +4406,7 @@
   init_sfen: position sfen 3nR1ln1/2ls+P4/ns4+b2/2+b6/3gk1g2/2N6/4P4/9/3LRL3 b 2g2s16p
     1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 弄ばれる馬★5
   description: |-
     金銀の動きがもはや芸術的
@@ -4444,7 +4444,7 @@
   user_id: 207
   init_sfen: position sfen 6+B2/8n/6nk1/6p1P/7pp/9/9/9/9 b G2rb3g4s2n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: わっしょいしそうな玉の捕まえ方
   description: 
   hint_desc: 
@@ -4471,7 +4471,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/9/9/9/9/+bg7/k8/2G6 b RLPkrb2g4s4n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金が欲しい
   description: |-
     アヒル囲いの端に入玉されたときの局面を想定。
@@ -4499,7 +4499,7 @@
   user_id: 8
   init_sfen: position sfen 5S3/2+R6/5k3/5p1p1/6P2/9/9/9/9 b r2b4g3s4n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 一時停止
   description: 
   hint_desc: 
@@ -4524,7 +4524,7 @@
   user_id: 8
   init_sfen: position sfen ln1g5/1ks4+R1/2pp5/pP7/1p7/9/9/9/9 b GSr2b2g2s3n3l13p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 順番に注意
   description: 銀からいくと△93玉で詰まない
   hint_desc: 
@@ -4550,7 +4550,7 @@
   user_id: 1002
   init_sfen: position sfen 4k4/9/9/P6ps/R2NNNN2/3LLLLP1/6p1S/9/6G1B b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 主役は.......★5
   description: |-
     個人的には飛車が主役だとは思います。
@@ -4591,7 +4591,7 @@
   init_sfen: position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 初手
   description: 
   hint_desc: 
@@ -4620,7 +4620,7 @@
   init_sfen: position sfen +p1l1k1l1+p/1g5g1/4r4/+psP1L1Ps+p/N1+p+pP+p+p1N/1N2l2N1/9/9/9
     b BGS3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 難しそうだけど.......★3
   description: |-
     本当はもっと簡単なの作ろうと思ってたのに.......いつの間に??
@@ -4658,7 +4658,7 @@
   init_sfen: position sfen 1nsg3nl/1k2gsr2/ppppp1bp1/5pp1p/1P5P1/7RP/L1PPPPP2/3SKS3/1NG3GNL
     b LPb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: パターン入りました
   description: |-
     ▲95香に続いて▲96飛と回られると困るので、それを読んで棋力の高い人ほど△87角打としてきます。
@@ -4688,7 +4688,7 @@
   init_sfen: position sfen 1nsg3nl/1k2gsr2/ppppp1bp1/5pp1p/LP+b4P1/R7P/L1PPPPP2/3SKS3/1NG3GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 93を守る馬
   description: 93の地点を受けるには△75馬しかありませんが▲76歩で馬をどかすことができます。
   hint_desc: 
@@ -4715,7 +4715,7 @@
   init_sfen: position sfen 1nsg3nl/2k1gsr2/+Lpppp1bp1/5pp1p/1+b5P1/R1P5P/L2PPPP2/3SKS3/1NG3GNL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 美濃囲いが未完成だった場合
   description: |-
     後手は美濃囲いが未完成だったので△72玉と逃げた局面。
@@ -4744,7 +4744,7 @@
   user_id: 8
   init_sfen: position sfen ln7/2k6/pppp+B4/9/9/9/9/9/9 b GS2rb3g3s3n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 気持ちよい馬捨て
   description: 
   hint_desc: 
@@ -4771,7 +4771,7 @@
   init_sfen: position sfen ln2k2nl/1r2g1g2/2ppppsp1/p1sR2p1p/3N5/P1P3P2/1P1PPPN1P/2GK2S2/L1S2G2L
     b B2Pb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 詰まされた飛桂の大暴れ
   description: 
   hint_desc: 
@@ -4797,7 +4797,7 @@
   user_id: 1002
   init_sfen: position sfen ln7/2sk2l2/1ppppp3/p8/9/9/9/9/9 b RBG 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 必至じゃ不満part1★1
   description: |-
     誰もこういうの出していない気がしたので手筋として載せておきました。覚えておけば､実戦でも役に立ちますよ
@@ -4831,7 +4831,7 @@
   user_id: 1002
   init_sfen: position sfen lnk6/2s2R3/1ppsp4/p2p5/9/9/9/9/9 b B2Grb2g2s3n3l13p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 必至じゃ不満part2★1
   description: 前回と同じだと詰みません.......なら､どうする?
   hint_desc: 
@@ -4859,7 +4859,7 @@
   user_id: 1002
   init_sfen: position sfen lnks1+R3/9/1ppppp3/p8/1P7/9/9/9/9 b BGSrb3g2s3n3l11p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 必至じゃ不満part3★1
   description: |-
     必至の方が見つからないと言われる方もいると思いますが､大丈夫です。自分も分かりません（笑）。
@@ -4890,7 +4890,7 @@
   init_sfen: position sfen l+P1g3nl/1Rp1gk1p1/p1Sp1ps1p/4BPs1g/2P1N1pP1/3N+B3P/+s+p2P1GR1/3K1+n3/8L
     b L3Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 15手詰み？
   description: 43から殺到康光して詰みですね、とはいえ自玉は金を渡さなければ余裕なので、72銀で飛車の横効きを通しつつ金銀交換を迫れば必至で勝ちです。
   hint_desc: 
@@ -4917,7 +4917,7 @@
   init_sfen: position sfen ln4k1l/1R2Bp1s1/p4g1g1/3p2lpp/1p2pn3/1P1PP1p1P/P1NS1G1P1/1+r1B2SK1/2P4NL
     b G2Psp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 一手必至？
   description: |-
     最長応手だと9手目に合流します。
@@ -4953,7 +4953,7 @@
   init_sfen: position sfen lR5nl/5ggk1/4pps1p/6pP1/8S/pP+b+b1P3/Pp1+n1sN1P/LS1+p2g2/KNG4RL
     b P5p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 詰まさなければ負け★3
   description: 1回下書きの段階で投稿してしまいました。すいません｡
   hint_desc: 
@@ -4993,7 +4993,7 @@
   init_sfen: position sfen lnsgkgsnl/7b1/p1pppp1pp/6p2/2P6/1r7/P2PPPPPP/1BR6/LNSGKGSNL
     b Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 反撃のチャンス
   description: 
   hint_desc: 
@@ -5028,7 +5028,7 @@
   init_sfen: position sfen ln3g1nl/1s2g1sk1/2pppp1p1/6p2/p7p/2P6/P2PPPPPP/1+r3G1SL/LN2b1GNK
     b RB2Ps 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 反撃の一手
   description: 
   hint_desc: 
@@ -5054,7 +5054,7 @@
   user_id: 481
   init_sfen: position sfen 1k7/9/1K7/9/9/9/9/9/9 b RPr2b4g4s4n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 玉vs玉
   description: 
   hint_desc: 
@@ -5080,7 +5080,7 @@
   user_id: 481
   init_sfen: position sfen 5+R1lk/7pp/3ss4/9/9/9/9/9/+B5L1L b rb4g2s4nl16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 5手詰め 駒余りあり
   description: 
   hint_desc: 
@@ -5108,7 +5108,7 @@
   init_sfen: position sfen ln1g5/2s6/ppkp5/2N6/P1P6/1P7/9/9/L8 b BG2rb2g3s2n2l12p
     1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 玉がちょっと出てきた
   description: |-
     継ぎ桂で64の地点を狙ってうまくいけば問題図のようになる
@@ -5136,7 +5136,7 @@
   user_id: 207
   init_sfen: position sfen 7nl/5+Rgk1/7sp/9/9/9/9/9/9 b Sr2b3g2s3n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 龍で迫る実戦型
   description: 
   hint_desc: 
@@ -5162,7 +5162,7 @@
   user_id: 207
   init_sfen: position sfen 6+R2/8k/6pp1/8p/9/6P1P/9/9/9 b 2Gr2b2g4s4n4l13p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 龍で迫る実戦型 No.2
   description: 
   hint_desc: 
@@ -5188,7 +5188,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/5p1p1/4pbp2/7P1/5P3/5SN2/9/9 b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂を活躍させたい
   description: |-
     考え方の問題。
@@ -5217,7 +5217,7 @@
   init_sfen: position sfen Rp6l/R1gk2g2/2ppps1pb/2b2p2p/5n3/2PPPLp2/1PS2P1PP/5K1S1/2+n2GSNL
     b G2Pnlp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 一間龍へ
   description: |-
     同玉は21飛成、合駒、32飛成。
@@ -5245,7 +5245,7 @@
   init_sfen: position sfen lns2+R2l/1P1kg3r/p1pppN1pp/3l2p2/9/2S6/P1+pPP1PPP/6+n2/L2GK4
     b GSP2bgsn2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦で逃した詰将棋4
   description: 
   hint_desc: 
@@ -5275,7 +5275,7 @@
   user_id: 1280
   init_sfen: position sfen l2g5/3k5/pp1g5/2p+R5/9/9/9/9/9 b B2Gkrb4s4n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 詰ませてください
   description: 
   hint_desc: 
@@ -5303,7 +5303,7 @@
   init_sfen: position sfen ln5nl/2ks+S4/1ppp3p1/5pg1p/p2Sr2P1/2PPp3P/PP4+b2/LGG1+s4/KNB5L
     b G2Prn2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 逆転のチャンス
   description: 
   hint_desc: 
@@ -5328,7 +5328,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/6R2/3Rpk3/3s1p3/4P4/9/9/9 b Bb4g3s4n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 天王山の角
   description: 
   hint_desc: 
@@ -5353,7 +5353,7 @@
   user_id: 207
   init_sfen: position sfen 9/9/9/9/9/7n1/7G1/5s3/6B1k b RGrb2g3s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 入玉されたけど包囲した
   description: 
   hint_desc: 
@@ -5381,7 +5381,7 @@
   init_sfen: position sfen +B+R1g2k1l/2n1s4/p3pp1s1/6p1p/Ppp6/1P+bP1P2P/K1g1P1P2/9/LLNr3NL
     b 2G2SN4p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 長い詰みより
   description: 実戦なら33金銀か55馬の退路封鎖の必至で勝ちですね
   hint_desc: 
@@ -5434,7 +5434,7 @@
   init_sfen: position sfen l1g1k4/s2gs4/2n2B+N2/p2+N1Bp2/3pp1Pp1/P5N2/3P1P1PP/3+p1SG2/L1+r1P1K1L
     b SL2Prg3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: そんな切らなくても
   description: |-
     62角成から詰むんですけど、変化が多すぎて（別解登録量が多すぎる）やめました。
@@ -5461,7 +5461,7 @@
   user_id: 1002
   init_sfen: position sfen 3gkg3/9/3B1+B3/9/9/9/9/9/9 b 2r2g4s4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 手数は長いけど.....(13手詰め)★1
   description: 手数が長めだけど､ものすごい簡単です。長手数＝難しい､だからチャレンジしないではなく、できるだけチャレンジして欲しいです。
   hint_desc: 
@@ -5489,7 +5489,7 @@
   init_sfen: position sfen ln1gkg1nl/3s1s3/p1ppppbpp/2r3p2/1p5P1/P2B2R2/1PPPPPP1P/9/LNSGKGSNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 打ち込みの隙あり
   description: |-
     アヒル戦法の有名な局面。
@@ -5519,7 +5519,7 @@
   init_sfen: position sfen 1n1g2snl/1ks1g1r2/1pppppbp1/6R1p/l6P1/9/BPPPPPP1P/3SKS3/LNG3GNL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: それでも端は破れるはず
   description: "▲36飛でも合流できるけどこのパターンも覚えておきたい"
   hint_desc: 
@@ -5546,7 +5546,7 @@
   init_sfen: position sfen 3g2snl/pks1g1r2/1pppppbp1/P7p/1nb4P1/R8/1PPPPPP1P/3SKS3/LNG3GNL
     b Lp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒルvs対三間飛車ではこの手
   description: |-
     9筋に打って突破を目指すのもいいけど対三間飛車では入手した香を36に打つ手がある。
@@ -5574,7 +5574,7 @@
   user_id: 207
   init_sfen: position sfen 6gkl/5s3/7+Bp/9/9/9/9/9/9 b RGNLrb2g3s3n2l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金銀の連携を崩して
   description: 
   hint_desc: 
@@ -5600,7 +5600,7 @@
   user_id: 207
   init_sfen: position sfen 8l/6+R2/7n1/7k1/7sp/9/9/9/9 b GSNr2b3g2s2n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 龍を使う準備
   description: 
   hint_desc: 
@@ -5626,7 +5626,7 @@
   user_id: 207
   init_sfen: position sfen 5+b3/7ns/7k1/9/7+B1/9/9/9/9 b GN2r3g3s2n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: ダブルホースコンビネーション
   description: 
   hint_desc: 
@@ -5653,7 +5653,7 @@
   user_id: 207
   init_sfen: position sfen 9/6S1+b/4B1k2/6pp1/6N2/9/9/9/9 b S2r4g2s3n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 馬の守りは金銀三枚なのか…？
   description: 
   hint_desc: 
@@ -5679,7 +5679,7 @@
   user_id: 207
   init_sfen: position sfen 4g1k1p/6B2/8+b/7N1/9/9/9/9/9 b GS2r2g3s3n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: あいつさえいなければ… No.2
   description: 
   hint_desc: 
@@ -5707,7 +5707,7 @@
   user_id: 207
   init_sfen: position sfen 9/3pB2gl/6k2/5p3/9/7P1/9/9/9 b RSrb3g3s4n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 意味深に設置された歩
   description: 
   hint_desc: 
@@ -5734,7 +5734,7 @@
   user_id: 8
   init_sfen: position sfen 4k1sS+R/3p5/9/5N3/9/9/9/9/9 b R2b4g2s3n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: こっちこい
   description: 
   hint_desc: 
@@ -5760,7 +5760,7 @@
   init_sfen: position sfen ln1B3nl/5+B+S2/2sp3pk/p3pgp1p/3P2g2/P1S1P3P/5nPP1/6SK1/L+rr4NL
     b Gg6p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対抗系必至手筋
   description: |-
     こちらの玉は39飛成に17玉で詰まない。
@@ -5788,7 +5788,7 @@
   user_id: 207
   init_sfen: position sfen 7k1/6rB1/9/6r1+B/7N1/9/9/9/9 b S4g3s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角馬 vs 飛車二枚
   description: 
   hint_desc: 
@@ -5815,7 +5815,7 @@
   user_id: 1002
   init_sfen: position sfen 5gg2/7k1/5sRB1/6ss1/9/9/9/9/9 b RB2gs4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車角VS金銀★2
   description: |-
     タイトルの通り
@@ -5847,7 +5847,7 @@
   init_sfen: position sfen l+R4+Rnl/4+N1s2/pS3g2k/1p2ppppp/2Pp5/4+bPPPP/P5N2/7K1/5+bgSL
     b GNLgs4p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦で逃した詰将棋5
   description: |-
     同玉は22龍～25歩まで。
@@ -5875,7 +5875,7 @@
   user_id: 8
   init_sfen: position sfen 1r7/2g6/3s5/9/5B3/9/9/9/9 b krb3g3s4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車金両取り
   description: 角銀交換でもそのあとの飛車金両取りの形が見えれば積極的に狙っていきたい
   hint_desc: 
@@ -5900,7 +5900,7 @@
   user_id: 8
   init_sfen: position sfen 6s2/7b1/5g3/3B5/9/9/9/9/9 b k2r3g3s4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角金両取り
   description: 
   hint_desc: 
@@ -5925,7 +5925,7 @@
   user_id: 8
   init_sfen: position sfen lnB6/k1s6/1ppp5/p8/1P7/9/9/9/9 b G2rb3g3s3n3l13p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 美濃囲い開き王手で受けなし
   description: 
   hint_desc: 
@@ -5951,7 +5951,7 @@
   user_id: 1002
   init_sfen: position sfen 4snnrS/4s1g1k/8B/6r1B/5P1GL/5L1sG/9/9/9 b 2Ng2l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: ただただ難しい詰将棋★5
   description: |-
     分からないというより、読み切るのが大変といった感じの詰将棋
@@ -5997,7 +5997,7 @@
   user_id: 8
   init_sfen: position sfen 3g5/9/5r2G/7p1/8p/9/9/9/9 b B 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 取るならこっちも取るで釣り合う
   description: 駒が取られるそうなときは他の駒を結びつけるのもあるけど、相手の駒が動くことで同じ価値の駒を取れるようにすることで均衡が保てる
   hint_desc: 
@@ -6022,7 +6022,7 @@
   user_id: 207
   init_sfen: position sfen 6+B1n/6b1k/6r2/6pp1/9/9/9/9/9 b G2Sr3g2s3n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 玉の頭にカナ駒を打ちたくなるが…
   description: 
   hint_desc: 
@@ -6048,7 +6048,7 @@
   user_id: 207
   init_sfen: position sfen 8R/7k1/5l1p1/5pg2/9/9/9/9/9 b BGrb2g4s4n3l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 取られそうな飛車をどうする？
   description: 
   hint_desc: 
@@ -6074,7 +6074,7 @@
   user_id: 207
   init_sfen: position sfen 8p/6S2/6k2/5s2B/6gl1/7p1/9/9/9 b Rrb3g2s4n3l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 豪快に
   description: 
   hint_desc: 
@@ -6103,7 +6103,7 @@
   user_id: 207
   init_sfen: position sfen 7k1/7g1/8+B/7N1/9/9/9/9/9 b G2rb2g4s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 馬桂連携
   description: 
   hint_desc: 
@@ -6130,7 +6130,7 @@
   init_sfen: position sfen ln1gl3l/1k1g5/2ppp+R3/p7p/3Pbpp2/3n5/2P1PPP1P/3S1S1P1/+p+r1G1KGNL
     b BSsn3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 龍を追い払え
   description: アヒル戦法あるある手筋で金を逃げずにぶつけるほうが良くなる
   hint_desc: 
@@ -6156,7 +6156,7 @@
   user_id: 8
   init_sfen: position sfen 2nk5/2g3+B2/1pppp4/1N7/9/9/9/9/9 b G2rb2g4s2n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 勢いで取ってはいけない
   description: 問題するとわかりやすいが実戦をあとから見直すと結構やっちゃってる
   hint_desc: 
@@ -6181,7 +6181,7 @@
   user_id: 8
   init_sfen: position sfen 1+R7/9/ks7/9/1P7/9/9/9/9 b GPr2b3g3s4n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 最速で詰まそう
   description: 3手目▲84龍だと7手詰
   hint_desc: 
@@ -6206,7 +6206,7 @@
   user_id: 170
   init_sfen: position sfen 7nl/5GSgk/5+B1pp/5pp2/9/9/9/9/9 b L2rb2g3s3n2l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 退路封鎖
   description: 
   hint_desc: 
@@ -6232,7 +6232,7 @@
   init_sfen: position sfen ln1g4+B/1ks1g4/1pppbs1pp/p3p4/3P1p1n1/P1P1P3P/1P2SPP2/1KS1G4/LN1G2rNL
     b RL2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 相手の桂馬だけを捌かせない
   description: |-
     玉の安全度は互角。
@@ -6260,7 +6260,7 @@
   user_id: 207
   init_sfen: position sfen 4s2k1/8s/5K3/4BB3/9/9/9/9/9 b 2r4g2s4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 二枚角の援護射撃
   description: 
   hint_desc: 
@@ -6288,7 +6288,7 @@
   init_sfen: position sfen +R5gnk/8l/p2p3+B1/4p3p/1p7/3P1bP1P/PP2PgNP1/3+r2SK1/L4G2L
     b GN3P3snl3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 穴熊戦詰め筋
   description: 同桂は31龍、22合いごまは23桂馬。
   hint_desc: 
@@ -6313,7 +6313,7 @@
   user_id: 207
   init_sfen: position sfen 4g1kl1/8s/4p4/6B2/6R2/9/9/9/9 b rb3g3s4n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どこに開く？
   description: 
   hint_desc: 
@@ -6339,7 +6339,7 @@
   user_id: 207
   init_sfen: position sfen 9/9/9/6BP1/7R1/5SSSk/9/9/9 b rb4gs4n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 銀三枚横並び
   description: 
   hint_desc: 
@@ -6365,7 +6365,7 @@
   user_id: 207
   init_sfen: position sfen 7Sk/9/9/9/9/9/+B8/7LK/1+r6L b rb4g3s4n2l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 不思議な位置にいる馬と龍
   description: 
   hint_desc: 
@@ -6392,7 +6392,7 @@
   init_sfen: position sfen lG5nl/4s1+R2/p2kpp2p/3p5/b2n5/1spS5/P2PPP2P/KP2G4/LN1b3NL
     b RGS4Pg2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 逆転からの大逆転★3
   description: |-
     久しぶりにいい将棋がさせたので載せました。
@@ -6427,7 +6427,7 @@
   user_id: 8
   init_sfen: position sfen 9/7k1/7s1/7p1/9/9/4B4/7R1/9 b S2Prb4g2s4n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 歩と銀の組み合わせの弱点
   description: |-
     ・角が銀の頭を指している
@@ -6458,7 +6458,7 @@
   init_sfen: position sfen ln5+Bl/1k2g4/1spp1p1p1/pp6p/7s1/8P/2PPPPP2/3SKS2+r/LNG3GN+b
     b GNPrl4p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車を取り返す
   description: 敗勢だけど飛車を取り返せれば少しはやる気がでてくるかもしれない
   hint_desc: 
@@ -6484,7 +6484,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/9/9/9/9/4PPPPP/4+rGK2/5s1NL b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: まだ生きてる
   description: "▲28玉では詰んでしまう"
   hint_desc: 
@@ -6509,7 +6509,7 @@
   user_id: 1002
   init_sfen: position sfen 4p4/3lkl3/9/1P2K2P1/S7S/9/9/9/9 b 2B4N2r4g2s2l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 頭が丸い駒たちによる詰将棋★4
   description: 難易度はギリギリまで悩みましたが、★4です。ヒントがあるから意外と簡単になっていると思います。
   hint_desc: 
@@ -6550,7 +6550,7 @@
   user_id: 8
   init_sfen: position sfen 4+R1gnl/6k2/5p1r1/6N2/9/9/9/9/9 b k2b3g4s2n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル囲い詰まされ形
   description: |-
     アヒル囲いは31に金がいるのでこの形で詰まされることがある。
@@ -6579,7 +6579,7 @@
   init_sfen: position sfen 1n5nl/l1k6/p3+B2pp/1s+Sp5/P1P4Pb/1Rn3r2/3PPP2P/4KS3/LNG3G1L
     b 7P2gs 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 攻めるのは自玉を安全にしてから
   description: 先手は△59金打から詰むので▲63馬から飛車を取るのが先決
   hint_desc: 
@@ -6606,7 +6606,7 @@
   init_sfen: position sfen lnsg1g1nl/3k1s1r1/ppppppbpp/6p2/P6P1/9/1PPPPPP1P/1B1S1S1R1/LNG1KG1NL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル囲いとみせかけてelmo囲い
   description: そのあとは▲78玉▲59金右とすればelmo囲いの完成
   hint_desc: 
@@ -6632,7 +6632,7 @@
   user_id: 8
   init_sfen: position sfen lngn5/2k6/p1ppp4/9/2N6/9/9/9/9 b 2GNk2r2bg4s3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: かっこいい桂馬の使い方
   description: 
   hint_desc: 
@@ -6657,7 +6657,7 @@
   user_id: 8
   init_sfen: position sfen 4B1B2/4k4/3s5/4N4/9/9/9/9/9 b k2r4g3s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角成で包囲
   description: 43に逃がさないようにする
   hint_desc: 
@@ -6683,7 +6683,7 @@
   user_id: 8
   init_sfen: position sfen lng3R2/1ksP5/ppppB4/9/9/9/9/9/9 b rb3g3s3n3l13p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 有名な美濃崩し
   description: 
   hint_desc: 
@@ -6710,7 +6710,7 @@
   user_id: 1086
   init_sfen: position sfen 5S1n1/5RPk1/6pp1/8p/9/9/9/9/9 b BSrb4g2s3n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 15手詰
   description: 
   hint_desc: 
@@ -6739,7 +6739,7 @@
   init_sfen: position sfen l8/sk7/1g+r+B2+N2/p5p2/3pp1Pp1/PL4N2/3P1P1PP/3+p1SG2/L3P1K1L
     b GSN2Prbgsn3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 虚をつく一撃
   description: |-
     同金は82香成、同玉は85桂〜73桂成、71玉は72歩同竜82金〜、同銀は81金〜91金〜73馬〜92香
@@ -6768,7 +6768,7 @@
   init_sfen: position sfen l1g6/s8/2k3+N2/p5p2/3pp1Pp1/P5N2/3P1P1PP/3+p1SG2/L3P1K1L
     b RG2SNL2Pr2bgn3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 雲を掴むように見えるが
   description: |-
     やっぱ桂馬ってつえーわ
@@ -6806,7 +6806,7 @@
   init_sfen: position sfen l2ks1+R1l/9/1n2s4/L1g3p1p/1P1pN4/4GpP1P/2P2G3/1+pbK5/1N5RL
     b GNb2s9p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 受けるか、それとも
   description: |-
     受けるのであれば46金寄で先手玉の安全度を大きく向上させ、63桂成や22飛成を間に合わせましょう。
@@ -6841,7 +6841,7 @@
   init_sfen: position sfen lnsg3nl/1r2k1g2/p1ppppspp/5bp2/P6P1/4R4/1PPPPPP1P/1BGSKS3/LN4GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どこを攻める？
   description: |-
     攻めの手掛かりがなくてここで変な手を指すとおかしなことになる。
@@ -6871,7 +6871,7 @@
   init_sfen: position sfen l5knl/1r3gg2/2npp1spp/p1ps1pp2/7PP/PpPSP1P2/1PSP1PN2/2G1KG1R1/LN6L
     b Bb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 安易に同歩はよくない局面
   description: |-
     同歩とすると△65桂と活用され、その上77の銀をよけられない。除けると飛車に走られる。
@@ -6899,7 +6899,7 @@
   init_sfen: position sfen l6nl/1r2g1gk1/2n1p1sp1/p1pps1p1p/1p3p1P1/P1PPS1P1P/1PS1P1N2/1KG1G2R1/LN6L
     b Bbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 木村定跡の仕掛けをおさらい
   description: |-
     スタンダードな木村定跡の仕掛けです、今や絶滅種
@@ -6932,7 +6932,7 @@
   init_sfen: position sfen l5knl/1r2g1g2/2n1p1sp1/p1pps1p1p/1p3p1P1/P1PPS1P1P/1PS1P1N2/2G1G2R1/LNK5L
     b Bbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 升田定跡の仕掛けをおさらい
   description: |-
     世に伊奈さん
@@ -6971,7 +6971,7 @@
   init_sfen: position sfen lr5nl/3g1kg2/2n1p1sp1/p1ppspp1p/1p5P1/P1PPSPP1P/1PS1P1N2/2GK1G3/LN5RL
     b Bb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 48金29飛角換わり同型からの有名な仕掛けをおさらい
   description: スタンダードな応手といわれる周辺です。24歩の代わりに35歩も難しいところです。当然手待ちもなくはない。
   hint_desc: 
@@ -7002,7 +7002,7 @@
   init_sfen: position sfen l5knl/1r2g1g2/2n1p1sp1/p1ppspp1p/1p5P1/P1P1SPP1P/1PSPP1N2/2GK1G3/LN5RL
     b Bb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角換わり新旧対決の振り返り
   description: |-
     先後反転してます。
@@ -7034,7 +7034,7 @@
   user_id: 207
   init_sfen: position sfen 7+p1/7Sk/9/6R1g/9/9/9/9/9 b GNr2b2g3s3n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金の守りを…
   description: 
   hint_desc: 
@@ -7061,7 +7061,7 @@
   init_sfen: position sfen l6nl/1r2g1gk1/2n1p1sp1/p1ppspp1p/1p5P1/P1PPSPP1P/1PS1P1N2/1KG1G2R1/LN6L
     b Bb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 狙えフルコンボ！木村定跡有名手順
   description: 定跡を知ってるもの同士の早指しは時に音ゲーの様に見えます。今回は有名な木村必勝定跡とされている有名な手順を題材としてみました。
   hint_desc: 
@@ -7089,7 +7089,7 @@
   init_sfen: position sfen ln7/1kg5l/1p1gp1npb/p1pp1pr1p/5spP1/PR6P/2NPPPP2/3SKSG2/L1G4NL
     b S2Pb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 石田流の隙を突く
   description: 
   hint_desc: 
@@ -7116,7 +7116,7 @@
   init_sfen: position sfen ln7/1kg5l/1p1gp1npb/p1pp1ps1p/2s4P1/PR4P1P/2NPPP3/3SKSG2/L1G4NL
     b R3Pb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車をどこに引く？
   description: |-
     右側で桂交換が行われそうなので88だとあとで△76桂打とされる。
@@ -7144,7 +7144,7 @@
   user_id: 207
   init_sfen: position sfen 5pkn1/9/3+p5/5+B2p/9/9/9/9/9 b RGrb3g4s3n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: すっぽり収まる玉
   description: 
   hint_desc: 
@@ -7171,7 +7171,7 @@
   user_id: 207
   init_sfen: position sfen 5+B1p1/9/6kg1/5p2R/9/9/9/9/9 b Grb2g4s4n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 右辺に逃がさない
   description: 
   hint_desc: 
@@ -7198,7 +7198,7 @@
   init_sfen: position sfen ln1g3nl/1ks6/1ppg1r3/p2ppsppp/9/P1P1P1P1P/1P1PS1N2/1BK1GS3/LN1G4L
     b Br3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 攻めが切れそう？
   description: 45歩早仕掛け郷田新手
   hint_desc: 
@@ -7223,7 +7223,7 @@
   user_id: 170
   init_sfen: position sfen 7n1/6+Rg1/6s2/5pppk/9/7+B1/9/9/9 b BSr3g2s3n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 上下からのサンドイッチ
   description: 
   hint_desc: 
@@ -7248,7 +7248,7 @@
   user_id: 8
   init_sfen: position sfen 4S2b1/6k2/8+B/6N2/6PP1/9/9/9/9 b 2r4g3s3n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 上に逃げられそう？
   description: 
   hint_desc: 
@@ -7274,7 +7274,7 @@
   init_sfen: position sfen l4g1nl/1r4sk1/p1np1g1pp/2p1ps3/1p3Np2/2P1S2P1/PP1PP3P/1BS1GR3/LNKG4L
     b Pb2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 利きをよくみる
   description: |-
     53桂成/不成が想定解
@@ -7304,7 +7304,7 @@
   user_id: 207
   init_sfen: position sfen 9/5+B1kp/6N2/9/9/9/9/9/9 b G2rb3g4s3n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 上部に逃がさない初手は？
   description: 
   hint_desc: 
@@ -7330,7 +7330,7 @@
   user_id: 207
   init_sfen: position sfen 7k1/6r2/8+B/9/9/9/9/9/9 b GNrb3g4s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車の守りを無効化するには
   description: 
   hint_desc: 
@@ -7357,7 +7357,7 @@
   user_id: 8
   init_sfen: position sfen 6b2/7kS/6r1p/8+B/9/9/9/9/9 b R4g3s4n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車にずれてもらう
   description: 
   hint_desc: 
@@ -7382,7 +7382,7 @@
   user_id: 8
   init_sfen: position sfen 4bnlk1/9/5ppN1/7L1/9/9/9/9/9 b BGN2r3g4sn2l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 左に逃げられそう
   description: 
   hint_desc: 
@@ -7408,7 +7408,7 @@
   init_sfen: position sfen 2S5l/2p1+R4/klg3+B2/pp1p2p1p/7p1/PP3GP1P/3P3P1/6g1K/LN1+bP1+rNL
     b GNP3sn3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: まだまだこれから
   description: |-
     桂打ちに玉が逃げると詰んでしまうので同歩とするしかない。
@@ -7436,7 +7436,7 @@
   user_id: 8
   init_sfen: position sfen 2S6/1+R7/2pk2+b2/3p5/2P6/4S4/9/9/9 b Grb3g2s4n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 捕まるかな？
   description: |-
     1手目の王手は追う手になっているのと、馬の存在もあって、そちらには逃がすまいと3手目▲45金と直接王手をしたくなる。
@@ -7471,7 +7471,7 @@
   init_sfen: position sfen lnsgkgsnl/1r5b1/p1ppppppp/1p7/2P6/9/PP1PPPPPP/1B5R1/LNSGKGSNL
     w - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 2手目△84歩からの早石田の受け方
   description: |-
     ネットで調べても2手目△34歩が多いのでKENTOで調べた手順です。
@@ -7501,7 +7501,7 @@
   init_sfen: position sfen lnsg1gsnl/1r3k1b1/p1pp1pppp/1p2p4/2P6/P8/1P1PPPPPP/1BR6/LNSGKGSNL
     w - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: "▲96歩にあいさつしている場合ではない"
   description: |-
     序盤でも一手の重みがある局面
@@ -7534,7 +7534,7 @@
   user_id: 207
   init_sfen: position sfen 6R2/7k1/9/7BP/9/9/9/9/9 b rb4g4s4n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 繋がる飛角
   description: 
   hint_desc: 
@@ -7560,7 +7560,7 @@
   user_id: 207
   init_sfen: position sfen 9/9/6b1r/6S1k/7R1/9/9/7+p1/9 b Gb3g3s4n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 成れるかどうかの狭間で
   description: 
   hint_desc: 
@@ -7587,7 +7587,7 @@
   init_sfen: position sfen ln5nl/2kg3r1/ppsgp4/2pp1psbp/1R4p2/P1PBSP1pP/3PPGP2/2KS3P1/LNG4NL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: "▲44角より良い手がある"
   description: |-
     KENTOの手を自分なりに考察。
@@ -7620,7 +7620,7 @@
   user_id: 207
   init_sfen: position sfen 7kn/9/8B/9/6Lg1/9/9/9/9 b L2rb3g4s3n2l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 奴は必ず帰ってくる
   description: 
   hint_desc: 
@@ -7647,7 +7647,7 @@
   init_sfen: position sfen ln4g1l/1+P1sks3/2p1gpn2/p2Pp1p1p/9/3S3PP/2N1PPPS1/4GGK2/3r3NL
     b RBL4Pbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル囲いはこびんを死守せよ
   description: 開けるとろくなことがない
   hint_desc: 
@@ -7674,7 +7674,7 @@
   user_id: 8
   init_sfen: position sfen 9/8k/7p1/7P1/5P3/9/9/9/9 b B 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 玉の斜めの駒が前進するなら先に角
   description: |-
     歩成 同玉 のあとでは角を打っても効果がない。
@@ -7702,7 +7702,7 @@
   user_id: 8
   init_sfen: position sfen 5n3/7k1/6R2/8L/9/9/9/9/9 b Brb4g4s3n3l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂をそっと配置
   description: 13飛成では逃げられる
   hint_desc: 
@@ -7727,7 +7727,7 @@
   user_id: 207
   init_sfen: position sfen 8g/9/5+B1kn/9/8p/7N1/9/9/9 b Rrb3g4s2n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どこに誘い込む？
   description: 
   hint_desc: 
@@ -7754,7 +7754,7 @@
   user_id: 207
   init_sfen: position sfen 2+R4n1/5k3/4ppp2/9/9/9/9/9/9 b BSrb4g3s3n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 龍で迫る実戦型 No.3
   description: 
   hint_desc: 
@@ -7781,7 +7781,7 @@
   user_id: 207
   init_sfen: position sfen 6+Rps/8k/8p/9/9/9/9/9/9 b Gr2b3g3s4n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 追いつめたけど意外にしぶとい
   description: 
   hint_desc: 
@@ -7808,7 +7808,7 @@
   init_sfen: position sfen lnsgkgsnl/1r7/p1pppp1pp/4b1p2/1pP6/9/PPNPPPPPP/2R6/L1SGKGSNL
     b B 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角のお見合い
   description: 新鬼殺し系統でよくみる手筋
   hint_desc: 
@@ -7834,7 +7834,7 @@
   init_sfen: position sfen ln3R1nl/1k1gs4/ppppp3p/7p1/5p3/2P1P4/PP1P1PP1P/2K1G2r1/LNSG3NL
     b S2bgs2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 少数精鋭
   description: 藤井猛九段著「四間飛車上達法」より
   hint_desc: 
@@ -7860,7 +7860,7 @@
   user_id: 203
   init_sfen: position sfen 7r1/9/6npp/6+Rsk/5l3/8P/9/9/9 b Bb4g3s3n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 森信雄 詰めろ将棋 問126改題
   description: '原図: position sfen 7l1/9/6npp/6+Rsk/9/8P/9/9/9 b Bbgp 1'
   hint_desc: 
@@ -7885,7 +7885,7 @@
   user_id: 203
   init_sfen: position sfen 9/4+R1gk1/6g1l/3B1ps2/6pp1/8P/9/9/9 b 2Grb3s4n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 高橋道雄 3手必至問題集 第26問
   description: 
   hint_desc: 
@@ -7910,7 +7910,7 @@
   user_id: 203
   init_sfen: position sfen 6+BSl/7L1/7pk/5rr2/4b2PS/8+p/9/9/9 b S4gs4n2l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 沼春雄 1手・3手必至問題 第128問
   description: 
   hint_desc: 
@@ -7935,7 +7935,7 @@
   user_id: 203
   init_sfen: position sfen +R8/l1s6/k8/1p1G5/pn7/9/9/9/9 b SLr2b3g2s3n2l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 内藤國雄のすべて 第6部必至編より
   description: 
   hint_desc: 
@@ -7960,7 +7960,7 @@
   user_id: 203
   init_sfen: position sfen 6+Rnl/5spBk/7s1/5sN2/6+b1p/9/9/9/9 b R4gs2n3l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 青野照市 精選必至200問 第138問
   description: 
   hint_desc: 
@@ -7985,7 +7985,7 @@
   user_id: 203
   init_sfen: position sfen 6Bnl/6S1k/6g2/7s1/9/9/9/9/9 b GS4P2rb2gs3n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金子 タカシ 将棋・ひと目の必死 第90問
   description: 
   hint_desc: 
@@ -8010,7 +8010,7 @@
   user_id: 203
   init_sfen: position sfen 1n2kg+Rn1/1r3pg2/3pG1+B2/9/5N3/9/9/9/9 b Bg4sn4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 広そうで狭い
   description: 
   hint_desc: 
@@ -8035,7 +8035,7 @@
   user_id: 8
   init_sfen: position sfen 4k4/5g3/4+B4/9/9/9/9/9/9 b RSp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: あるある退路封鎖
   description: 矢倉を作って入城し遅れて結局51に戻されたような局面
   hint_desc: 
@@ -8063,7 +8063,7 @@
   init_sfen: position sfen l2g3nl/2k1g2r1/pppppsb2/7pp/L4pp2/1R7/2NPPPP1P/3S1SG2/2GK3NL
     b SNPb3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 82玉でないなら9筋を攻めても意味がない
   description: |-
     9筋を攻めても玉に当たらない。
@@ -8093,7 +8093,7 @@
   init_sfen: position sfen ln3kg2/1lgs1s3/p1pppp3/9/2PP3r1/PP6p/2BSPPPPL/1R2G1K1P/LN3G3
     b BN2Psnp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル囲いの玉はじっとしとけ
   description: これまで何度食らったことでしょう
   hint_desc: 
@@ -8120,7 +8120,7 @@
   user_id: 8
   init_sfen: position sfen 9/3sg4/2ppp4/9/1B7/9/9/9/9 b N 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金銀横並びの弱点の応用
   description: 
   hint_desc: 
@@ -8146,7 +8146,7 @@
   init_sfen: position sfen 1nsg4l/1r1kgsB2/3p2npp/1bp1pp3/l5pP1/1R7/1PPPPPP1P/3S1S3/LNG1K1GNL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 段ずらしのトリック
   description: |-
     先手は飛車を打ち込む隙がないので同香同角飛成でも不満はないけどもっと良い手があった。
@@ -8174,7 +8174,7 @@
   init_sfen: position sfen ln1g4l/1ks3g2/1pppbsn2/p5r1p/3PPp1P1/P1PS4P/1PBG1PP2/1KS4R1/LN1G3NL
     w 3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 揺さぶる
   description: 
   hint_desc: 
@@ -8202,7 +8202,7 @@
   init_sfen: position sfen ln1s1k1nl/4s1gP1/p5s2/2+Rp1pppp/9/5PP1P/P+r3GN2/1B2G4/LNKG2+b1L
     b S2P5p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: スクラムを崩す
   description: 
   hint_desc: 
@@ -8229,7 +8229,7 @@
   init_sfen: position sfen l4g1nl/1r2g1k2/p1nps1sp1/2p1ppp1p/1p7/2P1PPPPP/PPSP1GNS1/3R3K1/LN3G2L
     w Bb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 不用心な組み換え
   description: 振飛車側は桂跳ねを見越して飛車を回るべきでした。
   hint_desc: 
@@ -8255,7 +8255,7 @@
   init_sfen: position sfen lnsgkgs2/7r1/pppppp1pp/6p2/3Bbn1P1/2P6/PP1PPPP1P/5S1R1/LNSGKG1NL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 受からない！と焦らない
   description: 
   hint_desc: 
@@ -8281,7 +8281,7 @@
   init_sfen: position sfen ln1gk1sn+B/1r1s2g1l/p1pppp1pp/6p2/1p1N1b3/2P5P/PP1PPPPP1/1R7/L1SGKGSNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 変化の意図を読み取る
   description: |-
     鬼殺し向かい飛車の1変化、後手が32銀ではなく32金としてきました。ここで32銀の時と同様に68飛や12馬とすると、22金とされ馬が機能しなくなります。端から暴れていくしかなくなり不本意な展開です。
@@ -8309,7 +8309,7 @@
   init_sfen: position sfen ln1g1gsnl/1r1s2k2/p1pp1p1pp/4+b1pP1/1p5R1/2P6/PPNP1PP1P/2G2K3/L1S2GSNL
     w B2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 瀬戸際で踏ん張る
   description: |-
     素直に同歩は同飛車大学となり、次の34飛と23角の両狙いが受からず収集困難。解答図も先手の攻めが刺さっているようだが、最終図で14角成同歩23歩成とした図は後手のと金が駒取りにならずこれからの勝負。
@@ -8336,7 +8336,7 @@
   user_id: 8
   init_sfen: position sfen ln1k5/1G1sR4/ppppp4/9/9/9/9/9/9 b Gr2b2g3s3n3l13p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: こっちくるんかい
   description: |-
     送りの手筋のつもりが61玉とこっちに来ちゃった局面。
@@ -8363,7 +8363,7 @@
   user_id: 207
   init_sfen: position sfen 7pk/9/8G/6b1L/9/9/9/9/9 b 2rb3g4s4n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金の行き先
   description: 
   hint_desc: 
@@ -8390,7 +8390,7 @@
   init_sfen: position sfen 8l/9/1pkn+R2p1/3p4p/4p2P1/2PP4P/1P1G5/1G5+r1/K1+b5L b GSN2Pbg3s2n2l6p
     1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 坊主の悲劇
   description: 64龍の余地を許してしまったため、詰みが生じてしまいました。
   hint_desc: 
@@ -8417,7 +8417,7 @@
   init_sfen: position sfen lnsgkgs1l/6rb1/ppppppnpp/6p2/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 焦ると乱戦に
   description: 明らかにふざけた挑発ですが、勢い余って24歩と開戦すると同歩同飛車に45桂と跳ねられ怪しい展開になります。一応24角と王手桂取りで57桂を防ぐ筋はありますが、そんな事せずに一旦57を受けておけば今度こそ相手は受けなしです。
   hint_desc: 
@@ -8448,7 +8448,7 @@
   user_id: 207
   init_sfen: position sfen 6ng1/5B2l/6R2/5rpk1/7s1/6P1+p/9/9/9 b Gb2g3s3n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 開き方を考える
   description: 
   hint_desc: 
@@ -8475,7 +8475,7 @@
   init_sfen: position sfen ln1g1k1nl/3r1s1b1/3sppgp1/p1pp2p1p/1p7/P2R4P/B1PPPPP2/3SKS3/LNG3GNL
     b 2P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 陣形差を活かして
   description: 
   hint_desc: 
@@ -8502,7 +8502,7 @@
   init_sfen: position sfen ln5nl/4gkg2/p1pps1spp/1r3p3/4p4/1SP2PP2/P2PPBSPP/1R4G2/LN1GK2NL
     w 2Pbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 逆棒銀成功？
   description: |-
     角交換振り飛車で居玉のまま逆棒銀した際にあるあるな手筋
@@ -8532,7 +8532,7 @@
   init_sfen: position sfen l4+R1nl/2g3g2/2ppppkp1/p2b1sp1p/2P6/P7P/3PPPP2/1S+n6/L3KGSNL
     w BSPrgn2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 逃がす様には追いたくない
   description: 37角成から詰み(23手くらい？)ですが、長い詰みより短い必至ということで57桂から縛るのもよし。
   hint_desc: 
@@ -8559,7 +8559,7 @@
   init_sfen: position sfen ln5nl/2gk3r1/pp1gppb2/3ssPppp/3p5/2R1S4/PP2P1PPP/1B2G1S2/LN3GKNL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: ガツンとぶつけていく
   description: 
   hint_desc: 
@@ -8591,7 +8591,7 @@
   init_sfen: position sfen ln2g1gnl/5skb1/3psp1p1/p5p1p/1prP1S3/4R3P/PPB1PPPP1/4G1SK1/LN3G1NL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: elmo囲いvs玉頭銀
   description: 以下71飛に72歩や73歩などなど
   hint_desc: 
@@ -8617,7 +8617,7 @@
   init_sfen: position sfen ln1g4l/1ks1g4/1ppppsnpb/p4pr1p/6pP1/P1P2P1GP/1P1PPS3/1BKS2R2/LNG4NL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 相手を見なければ理想形とはいえない
   description: 
   hint_desc: 
@@ -8644,7 +8644,7 @@
   user_id: 8
   init_sfen: position sfen 5sk1l/5g3/5pnpp/9/9/9/9/9/9 b BGSN2rb2g2s2n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 使う順序に注意
   description: 角から入ると21玉で詰まない
   hint_desc: 
@@ -8671,7 +8671,7 @@
   init_sfen: position sfen lnsgkgsnl/7b1/ppp+B3pp/6p2/9/2P6/PP1PP+rPPP/1S5R1/LN1GKGSNL
     w 3Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 焦点の歩
   description: 
   hint_desc: 
@@ -8702,7 +8702,7 @@
   init_sfen: position sfen lnsgkgsnl/7r1/ppppp+B1pp/6p2/9/2P4P1/PP1PP+bP1P/7R1/LNSGKGSNL
     b Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 張り合った結果
   description: 
   hint_desc: 
@@ -8729,7 +8729,7 @@
   init_sfen: position sfen lnsgk2nl/6g2/pppppsb1p/5p1r1/6p2/2P2P3/PP1PPSP1P/1BK1G2R1/LNSG3NL
     b Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 捌いてきたが…？
   description: 向かい飛車の急戦に対してよくある反撃筋。88の角が24の角より働くため、後手のこの攻めはうまくいかない。
   hint_desc: 
@@ -8756,7 +8756,7 @@
   init_sfen: position sfen ln2kgsnl/1r5b1/ppppsg1pp/4ppp2/4S4/P8/BPPP1PPPP/4R4/LN1GKGSNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 引いてはつまらない
   description: 
   hint_desc: 
@@ -8782,7 +8782,7 @@
   init_sfen: position sfen ln1g4l/1rs3gk1/p3ppns1/1ppp2ppp/1N7/PPP1P3P/3P1PPP1/3SG1SK1/L4G1NL
     b RBb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 手がかりは強引に
   description: 
   hint_desc: 
@@ -8809,7 +8809,7 @@
   user_id: 8
   init_sfen: position sfen 8B/8l/7k1/8p/7N1/9/9/9/9 b 2rb4g4s3n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どっちが詰み？
   description: 
   hint_desc: 
@@ -8834,7 +8834,7 @@
   user_id: 8
   init_sfen: position sfen 3B5/9/9/6p1p/5+B1k1/6P1P/9/9/8L b 2r4g4s4n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 取れない馬
   description: 実戦だと角成りで追ってしまいそう
   hint_desc: 
@@ -8859,7 +8859,7 @@
   user_id: 8
   init_sfen: position sfen 2B6/9/9/6p1p/5+B1k1/6P1P/9/9/8L b 2r4g4s4n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 取れるんかい
   description: 先入観を惑わす
   hint_desc: 
@@ -8885,7 +8885,7 @@
   user_id: 207
   init_sfen: position sfen 7p1/8k/9/7R1/9/9/9/9/9 b Sr2b4g3s4n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 変換
   description: 
   hint_desc: 
@@ -8911,7 +8911,7 @@
   user_id: 8
   init_sfen: position sfen 6Bnl/6Ssk/6ppp/9/9/9/9/9/9 b N2rb4g2s2n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 打ち場所の確保
   description: 先に成ると詰まない
   hint_desc: 
@@ -8936,7 +8936,7 @@
   user_id: 207
   init_sfen: position sfen 7p1/8k/6R2/8G/9/9/9/9/9 b r2b3g4s4n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どっちで
   description: 
   hint_desc: 
@@ -8963,7 +8963,7 @@
   init_sfen: position sfen l6nl/3gksg2/2n1ppbp1/p2p2R1p/3s3P1/P6rP/1PPPPPP2/1BGSKS3/LN4GNL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金銀の連携で飛車の侵入を防ぐ
   description: |-
     ▲34飛のとき、△27角打には▲36歩でよかった。△26飛のときも▲36歩で良い。
@@ -8992,7 +8992,7 @@
   init_sfen: position sfen lr4knl/3g2g2/2n1ppsp1/p1pps3p/1p4pP1/P1PPSP2P/1PS1P1N2/2GK1G3/LN5RL
     b Bbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角換わり48金62金31玉での仕掛け方
   description: 
   hint_desc: 
@@ -9025,7 +9025,7 @@
   init_sfen: position sfen 1r5nl/3g1k3/2n1pp1gp/2Pps1s2/lpp2Npp1/3PSP2P/1PS1P4/2GK1G3/1N5RL
     b BPbl3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 端の攻防の狙いとは
   description: もし端歩交換が行われてなかったら、62角には63金で何も起こらない。
   hint_desc: 
@@ -9051,7 +9051,7 @@
   init_sfen: position sfen ln1n4l/2spk1gs1/1rp2gnp1/p2PPpp1p/3NS4/1PP3P1P/PS1G2+BP1/1KG4R1/L7L
     b Pb2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 使えてない大駒を活用
   description: |-
     48飛でもほぼ正解。
@@ -9079,7 +9079,7 @@
   init_sfen: position sfen lnsg2snl/1k2gr3/1pppp1bpp/p5p2/5p1P1/P3R4/BPPPPPP1P/3SKS3/LNG3GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 86歩じゃないよ
   description: 53の地点に成り込める
   hint_desc: 
@@ -9105,7 +9105,7 @@
   user_id: 8
   init_sfen: position sfen 7B1/7l1/5S1k1/5p1pp/9/9/9/9/9 b Rrb4g3s4n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車で引きつける
   description: 
   hint_desc: 
@@ -9130,7 +9130,7 @@
   user_id: 8
   init_sfen: position sfen 7+B1/9/7ks/6ppp/9/9/9/9/9 b RGrb3g3s4n4l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車を残す
   description: 
   hint_desc: 
@@ -9155,7 +9155,7 @@
   user_id: 8
   init_sfen: position sfen S8/9/k2B5/1p7/9/9/9/9/9 b RSrb4g2s4n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 初手の前に3通り読もう
   description: 実戦でありがちな詰んでそうだけど漠然としている局面で、上に逃がしてはいけないと意識してしまうと初手が指しにくい。
   hint_desc: 
@@ -9183,7 +9183,7 @@
   user_id: 207
   init_sfen: position sfen 8g/8k/8p/6R2/9/9/9/9/9 b 2Nr2b3g4s2n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金の守備力を甘く見ない
   description: 
   hint_desc: 
@@ -9210,7 +9210,7 @@
   user_id: 207
   init_sfen: position sfen 8l/5r1B1/7S1/7k1/6pg1/9/9/9/9 b Grb2g3s4n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 誘いたい場所
   description: 
   hint_desc: 
@@ -9237,7 +9237,7 @@
   user_id: 207
   init_sfen: position sfen 9/7np/7n1/6pSk/7R1/9/9/9/9 b Gr2b3g3s2n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 勇気ある決断
   description: 
   hint_desc: 
@@ -9265,7 +9265,7 @@
   user_id: 8
   init_sfen: position sfen 7S1/9/7k1/5+R3/9/6N2/9/9/9 b r2b4g3s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: とどめの龍
   description: 
   hint_desc: 
@@ -9290,7 +9290,7 @@
   user_id: 8
   init_sfen: position sfen l6nl/1r1s2gk1/p4gsp1/2ppp1p1p/5p3/9/9/9/9 b B 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 矢倉は隙だらけ
   description: 
   hint_desc: 
@@ -9317,7 +9317,7 @@
   init_sfen: position sfen Gn1g5/2s6/kp7/p1p6/9/P1P6/1PN6/9/L8 b BGS2rbg2s2n3l12p
     1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 退路封鎖の角
   description: |-
     ▲92金 △84玉 ▲85銀と王手していけば73から脱出される。
@@ -9345,7 +9345,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/6R2/4kS3/2G6/4P4/9/5N3/9 b r2b3g3s3n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: とってつけたような歩
   description: 
   hint_desc: 
@@ -9370,7 +9370,7 @@
   user_id: 8
   init_sfen: position sfen ln5nl/4r1gk1/ppppppppp/9/9/9/9/9/9 b Skr2b3g3s2n2l9p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 割り打ちの銀
   description: 
   hint_desc: 
@@ -9395,7 +9395,7 @@
   user_id: 8
   init_sfen: position sfen ln5nl/1r4gk1/ppppppppp/9/9/9/9/9/9 b BS 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車追いからの割り打ちの銀
   description: 
   hint_desc: 
@@ -9420,7 +9420,7 @@
   user_id: 8
   init_sfen: position sfen ln5nl/1r5k1/pppppgppp/9/9/9/9/9/9 b BSN 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 守りの金には桂打ち
   description: |-
     71角打ちのあと42金型であれば割り打ちの銀が利くが、43に金がいては無理筋と諦めてはいけない。
@@ -9447,7 +9447,7 @@
   user_id: 8
   init_sfen: position sfen 7k1/6R2/7S1/9/9/9/9/9/b8 b krb4g3s4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角の利きを避ける
   description: 
   hint_desc: 
@@ -9473,7 +9473,7 @@
   user_id: 8
   init_sfen: position sfen 7kl/5bg2/7G1/7+R1/9/9/9/9/8L b rb2g4s4n2l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金が邪魔
   description: 
   hint_desc: 
@@ -9498,7 +9498,7 @@
   user_id: 8
   init_sfen: position sfen 5Bsnl/7k1/6pBp/9/9/9/9/9/9 b Sk2r4g2s3n3l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角が邪魔
   description: "▲12角成では同香で詰まない"
   hint_desc: 
@@ -9524,7 +9524,7 @@
   user_id: 8
   init_sfen: position sfen 2p6/1kg6/9/2P6/9/9/PP1s5/1KG4r1/9 b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金底の歩を打ちたい
   description: |-
     歩を捨てると打てるようになる。
@@ -9551,7 +9551,7 @@
   user_id: 8
   init_sfen: position sfen 7gk/7s1/6N1P/9/9/9/9/9/9 b GS2r2b2g2s3n4l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金を斜めに誘う
   description: 
   hint_desc: 
@@ -9576,7 +9576,7 @@
   user_id: 8
   init_sfen: position sfen 5+RBk1/8g/9/9/9/9/9/9/9 b rb3g4s4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 恐がらずに開き王手
   description: 
   hint_desc: 
@@ -9601,7 +9601,7 @@
   user_id: 8
   init_sfen: position sfen 5+RBk1/6s1g/9/9/9/9/9/9/9 b Rb3g3s4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 龍は見殺し
   description: 
   hint_desc: 
@@ -9627,7 +9627,7 @@
   user_id: 8
   init_sfen: position sfen 4R4/6k2/5ppp1/8p/9/9/9/9/9 b Rk2b4g4s4n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 端に逃がすな
   description: 
   hint_desc: 
@@ -9654,7 +9654,7 @@
   user_id: 8
   init_sfen: position sfen 4R4/6g1k/4ppppp/9/9/9/9/9/9 b Sr2b3g3s4n4l13p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 2コンボ
   description: 
   hint_desc: 
@@ -9679,7 +9679,7 @@
   user_id: 8
   init_sfen: position sfen 4R1g2/4G1k2/5ppp1/8p/9/9/9/9/9 b Gkr2bg4s4n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 詰ましに行っちゃダメ
   description: 
   hint_desc: 
@@ -9704,7 +9704,7 @@
   user_id: 8
   init_sfen: position sfen 4R4/5Sks1/5pppp/9/9/9/9/9/9 b r2b4g2s4n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 守りの銀が邪魔？
   description: ひと目、31にどうやって成るかと考えてしまうのは自分だけだろうか
   hint_desc: 
@@ -9729,7 +9729,7 @@
   user_id: 8
   init_sfen: position sfen 5RSk1/4b2gl/5ppp1/8p/9/9/9/9/9 b Rb3g3s4n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金とっちゃだめ
   description: 
   hint_desc: 
@@ -9755,7 +9755,7 @@
   user_id: 8
   init_sfen: position sfen 4RgSs1/6k2/5ppp1/8p/9/9/9/9/9 b kr2b3g2s4n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 詰みのお手伝い
   description: もうだめだと投げ遣りに金を打ったことで、まだチャンスはあったのに詰みが確定してしまった実戦あるある局面。
   hint_desc: 
@@ -9781,7 +9781,7 @@
   user_id: 8
   init_sfen: position sfen 4+R2nl/6Sk1/5ppp1/8p/9/9/9/9/9 b r2b4g3s3n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: とつげきの龍
   description: 
   hint_desc: 
@@ -9807,7 +9807,7 @@
   user_id: 8
   init_sfen: position sfen 4+R4/5gk2/5pppp/9/9/9/9/9/9 b Sr2b3g3s4n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金が欲しかった
   description: 
   hint_desc: 
@@ -9834,7 +9834,7 @@
   init_sfen: position sfen lnsgk2nl/1r4+Rs1/p1pppp1pp/9/9/9/9/9/9 b G2b2g2s2n2l11p
     1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車交換しちゃだめ
   description: 飛車の威圧で詰みが見えない局面 (超初心者あるある)
   hint_desc: 
@@ -9859,7 +9859,7 @@
   user_id: 8
   init_sfen: position sfen 6Rnl/8k/6s1p/9/9/9/9/9/9 b S 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 落ちついて一間竜
   description: 
   hint_desc: 
@@ -9884,7 +9884,7 @@
   user_id: 8
   init_sfen: position sfen 1SB6/S8/l1n6/k1p6/1p7/p1P6/1P7/9/9 b G 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 取った香で退路封鎖
   description: 対局後の検討でこのパターンの詰み逃しがしょっちゅうなので覚えたい
   hint_desc: 
@@ -9911,7 +9911,7 @@
   user_id: 8
   init_sfen: position sfen l8/1kg6/1sn6/ppp+B5/9/9/9/9/9 b 2P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂を見たら継ぎ歩に歩打ち
   description: 
   hint_desc: 
@@ -9936,7 +9936,7 @@
   user_id: 481
   init_sfen: position sfen kg7/ln6R/2B6/9/9/9/9/9/9 b Grb2g4s3n3l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どっちを残す
   description: 
   hint_desc: 
@@ -9961,7 +9961,7 @@
   user_id: 8
   init_sfen: position sfen 5Bk2/4+P4/9/7P1/9/9/9/9/9 b Sk2rb4g3s4n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 歩の加勢
   description: 3手目を23銀成としてしまうと詰まない
   hint_desc: 
@@ -9987,7 +9987,7 @@
   user_id: 8
   init_sfen: position sfen 5Bk1l/4+P4/9/9/9/9/9/9/9 b Sk2rb4g3s4n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 香があれば銀成いける
   description: 玉方の香がないと詰まない
   hint_desc: 
@@ -10014,7 +10014,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/6n2/6p2/9/6P2/9/9/9 b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂を見たら突き歩
   description: |-
     わかっていても実戦だとスルーしている手筋No.1
@@ -10042,7 +10042,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/6n2/9/9/9/9/9/9 b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂を見たら歩
   description: 
   hint_desc: 
@@ -10068,7 +10068,7 @@
   init_sfen: position sfen l4gknl/4g1sb1/2nppp1p1/prps2p1p/5P3/PPPPS3P/1SBGP1PP1/2G2R3/LNK4NL
     b p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 王手飛車の狙い
   description: |-
     77の角が桂に当たるせいで先手は指しにくい。
@@ -10100,7 +10100,7 @@
   user_id: 207
   init_sfen: position sfen 7k1/9/3bppppP/9/9/9/9/9/9 b RGSrb3g3s4n4l13p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 歩の向きに注意
   description: 
   hint_desc: 
@@ -10127,7 +10127,7 @@
   user_id: 207
   init_sfen: position sfen 9/5nsg1/7k1/9/7Pp/9/9/9/9 b RGSr2b2g2s3n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 歩の拠点をどう活かす
   description: 
   hint_desc: 
@@ -10155,7 +10155,7 @@
   init_sfen: position sfen 4sGBnl/6+Rsk/p4psp1/2p1p1pl1/4+b1nlp/2P6/P2PPPPPP/3+p1G1SL/1r3GNNK
     b GPp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 必殺の一手
   description: 
   hint_desc: 
@@ -10181,7 +10181,7 @@
   init_sfen: position sfen lnsgkgsnl/7b1/p1ppppp1p/7p1/9/1r7/P1PPPPP1P/1B5R1/LNSGKGSNL
     b P2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: たまにある盤面
   description: 
   hint_desc: 
@@ -10206,7 +10206,7 @@
   user_id: 8
   init_sfen: position sfen 7nl/4g1gk1/3p1spp1/4p3p/5p3/9/9/9/9 b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 連結を崩す
   description: 
   hint_desc: 
@@ -10231,7 +10231,7 @@
   user_id: 8
   init_sfen: position sfen 4RS1nl/5B1k1/5p1pp/6p2/9/9/9/9/9 b rb4g3s3n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: いい感じの銀捨て
   description: 
   hint_desc: 
@@ -10257,7 +10257,7 @@
   user_id: 8
   init_sfen: position sfen 9/9/3+R5/9/4k1S2/9/9/9/9 b Gr2b3g3s4n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: かんたんなの
   description: 
   hint_desc: 
@@ -10282,7 +10282,7 @@
   user_id: 8
   init_sfen: position sfen 8B/7Sk/9/6ppp/9/9/9/9/9 b P2rb4g3s4n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: しょうもない5手詰
   description: 
   hint_desc: 
@@ -10308,7 +10308,7 @@
   init_sfen: position sfen ln1gk2nl/1r4g2/2p2pppp/ps2ps3/1p1p3P1/P1R5P/LPPPPPPb1/3SKS3/1NG3GNL
     b B 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 27角打にはいつものアレ
   description: 27角打には36歩と覚えよう
   hint_desc: 
@@ -10334,7 +10334,7 @@
   user_id: 8
   init_sfen: position sfen 5B2l/7k1/8p/7N1/9/9/9/9/9 b 2rb4g4s3n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角成で詰み
   description: 
   hint_desc: 
@@ -10359,7 +10359,7 @@
   user_id: 8
   init_sfen: position sfen 4ks3/2g3R2/2p1p4/9/9/9/9/9/9 b G2Nr2b2g3s2n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金玉をずらす
   description: 2手目61玉には51金打で詰み
   hint_desc: 
@@ -10385,7 +10385,7 @@
   init_sfen: position sfen l3+B2nl/3+R1ggk1/4pg2p/p5pp1/5p3/P1p1P1P2/1P3P2L/1KS6/LNS3+rN1
     b BG4P2sn2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 矢倉は終わった
   description: 
   hint_desc: 
@@ -10411,7 +10411,7 @@
   init_sfen: position sfen lnsg3nl/2k1g4/pppp1S1p1/8p/3+B1rBP1/2P5P/PP1PP1+p2/9/LNSGKG2L
     b RPsn3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: わからないと初段は遠いのか？
   description: |-
     実践では▲71角成としたが大悪手だったようだ。
@@ -10444,7 +10444,7 @@
   init_sfen: position sfen ln4gnl/1r1k5/2p3p+R1/3bPp2p/3p5/psP5P/3P1PP2/P2SKS3/LNG3GNL
     b G3Pbs2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 平凡な手ほど難しい
   description: |-
     実戦では金を打ってそこからおかしくなった。
@@ -10471,7 +10471,7 @@
   user_id: 8
   init_sfen: position sfen 2+R+R5/2s2G3/1skgp4/1ppp5/9/1B7/9/9/9 b Nb2g2s3n4l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦で間違えた詰み
   description: 
   hint_desc: 
@@ -10497,7 +10497,7 @@
   init_sfen: position sfen l4r2l/1kg6/1s1gp2p1/p1pp1b1Pp/1n3Sp2/PBPP4P/1K2P1P2/1GG4R1/LN5NL
     b SN2Ps2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 銀冠＋下段飛車で狙える手筋
   description: 
   hint_desc: 
@@ -10522,7 +10522,7 @@
   user_id: 8
   init_sfen: position sfen 4k4/5sg2/9/9/9/9/9/9/9 b GN 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 詰めろ金取り
   description: 
   hint_desc: 
@@ -10548,7 +10548,7 @@
   init_sfen: position sfen 5+P1nl/3+R2gk1/5g1p1/5pp1p/7P1/9/9/9/9 b BSkrb2g3s3n3l12p
     1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: ありがちな詰み
   description: 詰み手順より「41と」と入るのが重要ってことを示したかった
   hint_desc: 
@@ -10576,7 +10576,7 @@
   init_sfen: position sfen ln3g1nl/3sg1sk1/2pppp1p1/p1r3p1p/1p5P1/P2R5/1PPPPPP1P/3SKS3/LNG3GNL
     b Bb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 中段飛車の狙いは？
   description: |-
     85歩を飛車で守ると王手飛車、そのあとは△44飛▲85飛
@@ -10605,7 +10605,7 @@
   init_sfen: position sfen 1n1gkg1nl/1r7/3pppspp/2p2b3/l1s4P1/1P4R2/B1PPPPP1P/2GSKS3/LN4GNL
     b 3Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角の見殺し
   description: |-
     △92歩 ▲85歩 △97香 同桂
@@ -10634,7 +10634,7 @@
   init_sfen: position sfen l1S4nl/4gsgb1/4pp1p1/2+R3p1p/p2p2nP1/PP1N1PP1P/2PkPbG2/5S3/L+rSGK2NL
     b 3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 何手詰めでしょう？
   description: 
   hint_desc: 
@@ -10660,7 +10660,7 @@
   init_sfen: position sfen lng3gnl/3sks3/p1ppppp2/3r3pp/6bP1/2P5P/PPSPPPP2/1BG2S1R1/LN1K1G1NL
     b p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対アヒル戦法(居飛車編)
   description: |-
     同歩とすると飛車に回られて何もできなくなる。
@@ -10688,7 +10688,7 @@
   user_id: 8
   init_sfen: position sfen ln1s+R4/1ks6/pppp5/9/9/9/9/9/9 b 2GS 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 71銀型美濃囲いの攻略
   description: 初手が重要
   hint_desc: 
@@ -10716,7 +10716,7 @@
   init_sfen: position sfen lnsgkg1nl/9/pppppp2p/5bsr1/6p2/5R3/PPPPPPPPP/1B1S2G2/LNG1K1SNL
     b p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対向かい飛車序盤で好機
   description: 
   hint_desc: 
@@ -10744,7 +10744,7 @@
   init_sfen: position sfen lnsgk2nl/4r1g2/pppp1p3/3b2pPp/9/4P1s1P/PPPPSPP2/4KS1R1/LNBG1G1NL
     b Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 無理攻めあるあるの受け方
   description: "▲23歩成は△27歩打"
   hint_desc: 
@@ -10770,7 +10770,7 @@
   init_sfen: position sfen lns2k1nl/1r4gs1/p1pp1g1pp/4pp3/1p5P1/P5R2/+bPPPPPP1P/3SKS3/LNG3GNL
     b Pb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 同桂の理由も考えよう
   description: "▲85桂 △同飛 ▲86飛 の飛車ぶつけ狙った▲97桂が正解"
   hint_desc: 
@@ -10797,7 +10797,7 @@
   init_sfen: position sfen ln3k1nl/1r1s2gs1/p1pp1g1pp/3b1p3/1N2p2P1/PR7/1PPPPPP1P/3SKS3/L1G3GNL
     b B2P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どっちに成る？
   description: "▲73桂成だと△86飛▲同歩のあと△73角で角が銀と連結してしまう"
   hint_desc: 
@@ -10824,7 +10824,7 @@
   init_sfen: position sfen ln1g4l/1ks1gb3/p1pppsnp1/1p4r1p/PNB2ppP1/4R4/1PPPPPP1P/3SKSG2/L1G4NL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車の横利きに注意
   description: 
   hint_desc: 
@@ -10852,7 +10852,7 @@
   init_sfen: position sfen 3sg2n1/1+R3sk+rl/p3lpp2/1p6p/4p4/P7P/1PPPPPP2/3S1S3/LN1GKG2+p
     b 2BG2P2nlp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どこを攻めるべきかよく考える
   description: |-
     左はもう攻められないので右を見ないといけない。
@@ -10880,7 +10880,7 @@
   init_sfen: position sfen ln3k1nl/1r1sg1gs1/2pppp1p1/p5p1p/1p5P1/P2R4P/1PPPPPPb1/3SKS3/LNG3GNL
     b B 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: みんな打っちゃう△27角
   description: このあと28金で角を貰う
   hint_desc: 
@@ -10907,7 +10907,7 @@
   init_sfen: position sfen ln2k2nl/2g1rsg2/pppp1p1pp/5b3/5s1P1/P5R2/BPPPPPP1P/3SKS3/LNG3GNL
     b 2P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 中飛車のキズ
   description: |-
     中飛車側は銀を中央から使うために△42銀としたときに32の金が浮いている
@@ -10938,7 +10938,7 @@
   init_sfen: position sfen +R1n4nl/2k1g4/2ppp1b2/1p2bpp1p/7r1/9/1PPPPPPPP/3SK1G2/L1G3SNL
     b GSLPsn2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どうやって寄せる？
   description: |-
     寄せるっていうか詰んでる
@@ -10968,7 +10968,7 @@
   init_sfen: position sfen ln1g3nl/1ks1gr3/1ppppsbpp/p5p2/5p1P1/P3R4/BPPPPPP1P/3SKS3/LNG3GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対美濃囲いのうっかり手筋
   description: |-
     最初から56飛としておくのがポイント
@@ -10998,7 +10998,7 @@
   init_sfen: position sfen lnsg4l/1r2k1g2/p1ppppnpp/6s2/1p2b1p2/P6R1/BPPPPPP1P/3SKS3/LNG3GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 横利きを止めるな
   description: |-
     55の角がなんとなく邪魔だからといって56歩してはいけない(敗着級)
@@ -11029,7 +11029,7 @@
   init_sfen: position sfen ln1g3nl/1ks3r2/1p1gpsbpp/p1pp1pp2/1P5P1/1B2R4/2PPPPP1P/3SKS3/LNG3GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対三間飛車で金歩銀の並びにはこれ
   description: |-
     「三間飛車」+「高美濃」+「端攻めで角を香車で取らなかったとき」にでてくる局面
@@ -11058,7 +11058,7 @@
   init_sfen: position sfen +Rnk4nl/1ssgg4/1ppp1s1p1/1P6p/5p1P1/3P2P1P/2P1KP3/9/LNG3GNL
     b RB5Pbsl 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どこに逃げる？
   description: 
   hint_desc: 
@@ -11085,7 +11085,7 @@
   user_id: 8
   init_sfen: position sfen lnRsk1snl/1r4g2/p1p1+Npp2/4p4/9/9/9/9/9 b G 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 問題だと簡単だけど実戦だとむずい
   description: こういうときの送りの手筋は見えにくい
   hint_desc: 
@@ -11111,7 +11111,7 @@
   init_sfen: position sfen p2S1g1nl/9/KPp2+L1pp/2g3k2/2n3Bn1/2b2S3/Lg2PPP1P/4G4/2S+R3RL
     b N4Ps5p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 残り数秒で間違えた詰み筋
   description: 下がって詰ませるのは見えにくい
   hint_desc: 
@@ -11137,7 +11137,7 @@
   init_sfen: position sfen 1nk4nl/3gg1rs1/+Lpspppbpp/2p6/1P4pP1/R8/1+bPPPPP1P/3SKS3/LNG3GNL
     b 2P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 右矢倉は困る
   description: |-
     美濃囲いなら▲82成香 △同玉 ▲99飛成で龍が作れるけど▲82成香で△同銀となると▲92飛成に△91香打で龍が捕まってしまうので、▲82成香とは行けない
@@ -11167,7 +11167,7 @@
   init_sfen: position sfen ln1g4+R/1ks1s4/1ppp3pp/p4p3/6pn1/P8/1PPPPPP1P/3SKS3/LNG3GNL
     b BGLPrbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 美濃崩しの有名な手筋
   description: 同金とはならないけど硬い本美濃囲いの連結を外せる
   hint_desc: 
@@ -11193,7 +11193,7 @@
   init_sfen: position sfen l3k2nl/1r2g1s2/2ns1g1pp/p1pppbp2/1p3R3/P8/BPPPPPP1P/3SKS3/LNG3GNL
     b 2P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 好機到来
   description: |-
     △同金▲71角の狙い
@@ -11222,7 +11222,7 @@
   init_sfen: position sfen ln5nl/1r4gk1/3ppp3/p2s2gsp/2p3pp1/P1P5P/1+p1PPPP2/3S1S1R1/LNG1K1GNL
     b B2Pb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛金両取りの狙い
   description: 
   hint_desc: 
@@ -11248,7 +11248,7 @@
   init_sfen: position sfen ln5nl/1r2gskb1/3pppgp1/p2s4p/1pp3pP1/P6RP/BPPPPPP2/2GSKS3/LN4GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 無理攻め禁物
   description: 攻めの手掛かりが何もないのでいったん71角と退避させて銀を活用していく
   hint_desc: 
@@ -11275,7 +11275,7 @@
   init_sfen: position sfen ln1g3nl/1ks2bg2/1ppp1p1p1/p2sr1p1p/4p2P1/P5R1P/BPPPPPP2/2GSKS3/LN4GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 歩越し銀には歩
   description: 格言通り歩の上いる銀の筋に歩をつく
   hint_desc: 
@@ -11302,7 +11302,7 @@
   init_sfen: position sfen l1sgk2nl/6g2/pp1p1pppb/2R5p/3nrs1P1/P7P/BPPPPPP2/3SKS3/LNG3GNL
     b Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: ピンチをどう凌ぐ？
   description: |-
     56歩打とされると終わってしまうので先に桂馬を取る、または57桂成を催促する
@@ -11332,7 +11332,7 @@
   init_sfen: position sfen 1r3k1nl/4g1g2/l1np1s1p1/p1psp1p1p/1p3p3/P1PPP3P/1PS2PP2/2G1KS1R1/LN4GNL
     b BPb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車のコビンを狙え
   description: 92打と72打の違いを考えて指そう(自戒)
   hint_desc: 
@@ -11358,7 +11358,7 @@
   init_sfen: position sfen l6nl/1r3ggk1/2n1bpsp1/p1p1p1p1p/3P1P1P1/PPP6/1SNGP1P1P/2G2S1R1/L1K4NL
     b BPsp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 浮いてい駒を探せ
   description: 角を入手してから探すのではなく常に浮いている駒を把握しておきたい(自戒)
   hint_desc: 
@@ -11384,7 +11384,7 @@
   init_sfen: position sfen lng4nl/3sksg2/p1ppp1pp1/5p2p/P8/6r1P/2PPPPN2/1BGS1S1P1/LN2K1G1L
     b BPr2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: コビンをあけるな
   description: 
   hint_desc: 
@@ -11410,7 +11410,7 @@
   init_sfen: position sfen l1g1k1gnl/1p1s1s3/2npppb2/p5p2/8p/P2PR4/1PPSPPPrP/2G1KS1p1/LN4GNL
     b B2P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 冷静に飛車捕獲
   description: 
   hint_desc: 
@@ -11437,7 +11437,7 @@
   init_sfen: position sfen l1g1k2nl/1p1s2g2/2npp4/p+rpn1s3/6pBp/P1PP5/1PNSPSPPP/2G1K1G2/L7L
     b B2Prp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 終盤は角より金ぐらいの気持ちで
   description: 
   hint_desc: 
@@ -11463,7 +11463,7 @@
   init_sfen: position sfen lnsgkgsnl/7b1/p1ppppppp/1r7/1p7/7P1/PPPPPPP1P/2GS3R1/LNB1KGSNL
     w - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 嬉野流封じ
   description: 嬉野流は▲56歩ができないと困る
   hint_desc: 
@@ -11490,7 +11490,7 @@
   init_sfen: position sfen +R6nl/2gkg1r2/2pp3pp/1p2pp3/5s1Pb/6p2/2PPPPP1P/3SKS3/LNG3GNL
     b SNPbl2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 割り打ちの銀をしてる場合じゃない
   description: |-
     割り打ちの銀をすると
@@ -11526,7 +11526,7 @@
   init_sfen: position sfen 1n5nl/1skggb1r1/pppp1s3/4bp2p/L3p1p2/8P/L1PPPPPP1/1R1S1SG2/1NG1K2NL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 向かい飛車+角の対処法
   description: "△27馬▲同金△同飛のあと▲28歩打"
   hint_desc: 
@@ -11553,7 +11553,7 @@
   init_sfen: position sfen 1n3g1nl/pr2gks2/3pppbp1/P1p5p/2s4P1/1P4R1P/L1PPPPP2/3SKS3/1NG3GNL
     b L2Pb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 香車を持ったら？
   description: 
   hint_desc: 
@@ -11580,7 +11580,7 @@
   init_sfen: position sfen l7l/2kgr4/pgn1b1npp/1pp2sp2/3ppp1PP/P1P6/2NPSSP2/1RG1K4/L6NL
     b GS2Pbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 一瞬のチャンス
   description: 
   hint_desc: 
@@ -11607,7 +11607,7 @@
   init_sfen: position sfen lng4nl/3s1kgb1/2pp2sp1/p3ppp1p/3P5/PrPBP1P1P/2NSSPN2/2G1K2R1/L4G2L
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 珍しい形の序盤王手飛車
   description: 
   hint_desc: 
@@ -11633,7 +11633,7 @@
   user_id: 8
   init_sfen: position sfen 2n6/2G1s1+R2/4k4/3pp4/2N6/9/9/9/9 b Bkrb3g3s2n4l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦だと気付かない系
   description: 
   hint_desc: 
@@ -11659,7 +11659,7 @@
   init_sfen: position sfen ln3k1nl/1r2g1gs1/2ppppbpp/9/sp5P1/6R2/BPPPPPP1P/3SKS3/LNG3GNL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 勝率5%アップの手筋！？
   description: |-
     角銀交換＋香銀交換できるなら簡単だけど53歩の形だとただの駒損になってしまう
@@ -11689,7 +11689,7 @@
   init_sfen: position sfen 5+R1n1/2+P1rl1s1/3p1kpp1/5p3/9/5N3/9/9/9 b Bb4g3s2n3l13p
     1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 下から角打ちするイメージを育てたい
   description: |-
     実戦だと上から打つ角打ちしかイメージできないせいで詰みを逃すことが多い。
@@ -11717,7 +11717,7 @@
   init_sfen: position sfen 7n1/2sggrs1l/+Rpkpp1bp1/1P6p/2p+b1p1P1/8P/2PPPPP2/3SKS3/LNG3GNL
     b N3Pl 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車はピンチではない
   description: |-
     1. 相手は同歩ができないので飛車は安全
@@ -11747,7 +11747,7 @@
   init_sfen: position sfen +R6n1/p1k1grs1l/3pp2p1/1p+b5p/5p1P1/2PL4P/3PPPP2/3SKS3/1+b4GNL
     b GN3Pgsnlp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どうしよう
   description: この局面なら詰みがありそうかな？ ぐらいは感じ取れるようになろう(自戒)
   hint_desc: 
@@ -11775,7 +11775,7 @@
   init_sfen: position sfen ln1g3nl/1ks1g4/1ppppsb1p/7r1/BP3pp2/6R2/2PPPPPPP/3SK1G2/LNG3SNL
     b P2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角を取ってくれないパターン
   description: この状態で9筋に入ってもそんな悪くはならないが難しいかもしれない
   hint_desc: 
@@ -11802,7 +11802,7 @@
   init_sfen: position sfen ln3ksnl/5g3/2r+R1p1pp/p1p3p2/5P1P1/PPs2S3/3PP1P1P/1G1SK4/LN4GNL
     b G3P2bp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 相手の使えてない大駒と交換してはいけない
   description: 龍飛交換は相手にとってはありがたい手
   hint_desc: 
@@ -11828,7 +11828,7 @@
   init_sfen: position sfen lnsgkgsnl/7r1/ppppppbpp/6p2/7P1/7R1/PPPPPPP1P/1B7/LNSGKGSNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対向かい飛車の絶対手
   description: "▲38金を入れずに▲36飛としてしまうと△24歩▲34飛△25歩▲38金△26歩▲28歩打(土下座の歩)と進んで不利になる"
   hint_desc: 
@@ -11854,7 +11854,7 @@
   user_id: 8
   init_sfen: position sfen +R4gk2/6g2/6+B2/9/9/9/9/9/9 b Nrb2g4s3n4l18p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦だと難しいやつ
   description: 
   hint_desc: 
@@ -11880,7 +11880,7 @@
   init_sfen: position sfen l1g3bnl/3sk1g2/2np1ppp1/pr2p3p/1Ps6/1GSPPPP1P/P1N2SNP1/3B1KG2/LR6L
     w P2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 激ムズ次の1手
   description: 確実に角を取り返せるので飛車を捨ててもよいという形勢判断ができないと無理な手
   hint_desc: 
@@ -11908,7 +11908,7 @@
   init_sfen: position sfen ln3kbnl/1r2g1g2/3p1p1p1/p1pspsp1p/1p7/P1PP2P1P/1PS1PPS2/2GBK2R1/LN4GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 1歩持ったら銀を縦に進ませてみる
   description: 同銀には66歩打
   hint_desc: 
@@ -11934,7 +11934,7 @@
   init_sfen: position sfen ln2k2nl/1r2gsg2/3pppbpp/p1p3R2/2s2P1P1/Pp7/BPPPPSP1P/3SK4/LNG3GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対早繰り銀
   description: 
   hint_desc: 
@@ -11961,7 +11961,7 @@
   init_sfen: position sfen ls1+Rskgnl/1+r5b1/p2+Npp1p1/2p5p/7P1/P7P/N1PPPPP2/3S1S3/L1G1K1GNL
     b G2Pb2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車や龍の横利きには歩
   description: 
   hint_desc: 
@@ -11987,7 +11987,7 @@
   init_sfen: position sfen lnr4nl/1kb+R5/1p1pp4/2p5p/1P2s4/p2P3PP/2P1PPP2/3SK1G2/LNG3SNL
     b 2GS2Pb2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: あの手筋はこういうときに使う
   description: 美濃囲い崩しでよく出てくるけど実際使うと変なことになったりするあれはこういうときに使う(自戒)
   hint_desc: 
@@ -12013,7 +12013,7 @@
   init_sfen: position sfen ln4gnl/2gsks3/1ppp1p1p1/p3pb2p/7P1/PR3Pr1P/2PPP4/1B1SKSG2/LNG4NL
     b 2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対三間飛車アヒル戦法!?
   description: |-
     3手の読み重要(自戒)
@@ -12044,7 +12044,7 @@
   init_sfen: position sfen +R1g1k3l/3sg1+L2/2npppS1p/p8/5np2/P1+r6/1PNPPPP1P/3SKS3/L1G3GNL
     b 3P2b2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 簡単だけど実戦だとそうでもない次の1手
   description: 見た瞬間72歩打が見えるようになりたい(願望)
   hint_desc: 
@@ -12070,7 +12070,7 @@
   init_sfen: position sfen 7nl/1+P1rgk3/2+Bppgsp1/2p5p/2s4P1/1P6P/LGPPP1P2/3SKS3/+rN5GL
     b BNL5Pn 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 香車を見たらこれ
   description: |-
     香車を入手する前からこの手筋になるのを想定しよう(自戒)
@@ -12098,7 +12098,7 @@
   init_sfen: position sfen +R2s3nl/1+P1gk1rs1/2pppgbp1/1p6p/5p1P1/9/1bPPPPP1P/3SKS3/LNG3GNL
     b NL2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 絶好の香打
   description: |-
     36香打は相手が歩を持っているので意味なし
@@ -12130,7 +12130,7 @@
   init_sfen: position sfen ln2k1snl/1r4g2/2p+B1s1pp/5pp2/Pp5P1/9/1PPPPPP1P/2GSKS3/LN4GNL
     b G3Prb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 攻め駒の補充
   description: |-
     この局面では金で王手してもぜんぜん駒が足りてないのでまず補充することが考える
@@ -12158,7 +12158,7 @@
   init_sfen: position sfen l4k1nl/1r4sb1/2ns1gs2/p1ppppp1p/1p7/P3P2+RP/1PPP1PN2/2G1KS3/LNB3G1L
     b G3P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦だとなぜ間違えるのか
   description: 23歩打ではぐだぐだになる
   hint_desc: 
@@ -12184,7 +12184,7 @@
   init_sfen: position sfen 1n5nl/1lr2k3/p+Rp2p1p1/4+bs2p/L2pp1pP1/2B5P/2PPPPP2/3SKS3/1NG3GNL
     b 2G3Ps 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: なんだかんだで龍が大切
   description: |-
     ▲72龍 → 相手の使えてない飛車と飛車交換はいまいち
@@ -12212,7 +12212,7 @@
   init_sfen: position sfen 1+Rl1k2nl/4gr3/1pppb2pp/4p1p2/1P1+b1psPP/9/2PPPPP2/3SKS3/1NG3GNL
     b GSN2Pl 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 攻めるか受けるか
   description: ここでは攻めるよりも△46歩からアヒル囲いが崩壊してしまうのを防ぐ手を指さないといけない
   hint_desc: 
@@ -12240,7 +12240,7 @@
   init_sfen: position sfen ln5nl/1ksgg1B2/pppppb2p/6pr1/5p3/3R3s1/2PPPPPpP/3SK1G2/LNG3SNL
     b 3P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 7手読め
   description: 浮いてる72金を気にとめておこう
   hint_desc: 
@@ -12266,7 +12266,7 @@
   init_sfen: position sfen ln3+S1+R1/1sk1g4/pppppb3/9/L4ppPl/2P6/1L1PPPPp1/1G2K1G2/1N4S+r1
     b GSPb2n3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 玉に攻まるのが大切
   description: "▲51成銀が3手詰め詰めろなので龍は取れない"
   hint_desc: 
@@ -12292,7 +12292,7 @@
   init_sfen: position sfen lng3bnl/1r1sk1g2/3p1ppp1/p1s1p3p/1pp2P3/PP1PP1P1P/2P1BSN2/1SG2G2L/LN1K3R1
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦の十字飛車は気づかない
   description: 
   hint_desc: 
@@ -12319,7 +12319,7 @@
   init_sfen: position sfen ln5nl/5kgs1/p1pp1p1p1/3gpb2p/1r3s1P1/PB6P/2PPPPP2/3SKS3/LNG3GNL
     b R2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 一目の歩打ち
   description: 88飛打はアヒル囲いが崩れておかしなことになる
   hint_desc: 
@@ -12345,7 +12345,7 @@
   init_sfen: position sfen ln5nl/1r3b3/pps1k1spp/2pp1p3/9/P2SgP3/BPPP2P1P/4KS3/LNG3GNL
     b G2Pr2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どこかに隙はないかな？
   description: 
   hint_desc: 
@@ -12371,7 +12371,7 @@
   init_sfen: position sfen ln5nl/1r4gk1/p3sgbpp/2ppp1p2/2s2PSPP/P3P1PR1/1PPP2N2/2G1KS3/LNB3G1L
     b Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 3手の読みが大切
   description: 
   hint_desc: 
@@ -12396,7 +12396,7 @@
   user_id: 1700
   init_sfen: position sfen 4k4/9/PPPPPPPPP/9/9/9/9/9/9 b B4L2rb4g4s4n9p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 古典的な
   description: 有名なやつです
   hint_desc: 
@@ -12423,7 +12423,7 @@
   init_sfen: position sfen 7nl/2rs1ggk1/+Lp1p1p1p1/4pbp1p/1P5P1/5P2P/2NPPSP2/R3K4/2G3GNL
     b BSN3Pslp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 取られそうな角や桂は歩で支える
   description: そういう何気ない手が大切
   hint_desc: 
@@ -12449,7 +12449,7 @@
   init_sfen: position sfen ln2kgsnl/3s5/p1pppgbpp/2r2pR2/1p5P1/P2B5/1PPPPPP1P/9/LNSGKGSNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル定跡の変化(△44歩で角交換拒否の場合)
   description: |-
     ▲66角のあと△同角▲同飛と進むのが一般的だけど△44歩と角交換を拒否すると飛車の横利きが止まるので▲34飛と走れる
@@ -12478,7 +12478,7 @@
   init_sfen: position sfen 1n1g1k1nl/1r1s2g2/l1pp1pppp/p3p2R1/9/Ps7/LpPPPP2P/2G2S3/1NS1K1GNL
     b 2B2Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 駒得しても攻め方がわからない
   description: 序盤で角ただでもらったけど使いどころがわからずに負けた
   hint_desc: 
@@ -12504,7 +12504,7 @@
   init_sfen: position sfen 1n1g2knl/1r1s2g2/l1ppppppp/p8/2s6/P6R1/LpPPPP2P/2G2S3/1NS1K1GNL
     b 2B3P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 序盤の56角打はだいたい良い手
   description: 
   hint_desc: 
@@ -12530,7 +12530,7 @@
   init_sfen: position sfen ln2k1bnl/3sg1g2/2ppp1spp/pr3pp2/1b5P1/PR7/1PPPPPP1P/5S3/LNSGK1GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: これは見えん
   description: 飛車交換を拒否されて諦めてしまったがこんな手があったとは！
   hint_desc: 
@@ -12556,7 +12556,7 @@
   init_sfen: position sfen ln5nl/1r3b1k1/3pssp1p/p3s2p1/2p2pP1P/P6R1/1PPP5/2G1KS3/LNB3G1L
     b 2G2Pn3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: この手筋を覚えたら勝率1%アップ
   description: 矢倉がぐだぐだになったあと41金で金角交換できる局面が結構多いけどこの手筋に気付いたことが一度もない
   hint_desc: 
@@ -12583,7 +12583,7 @@
   init_sfen: position sfen l1g3gnl/3sks3/2n1pppp1/p1ppr2b1/1p5G1/P2B2P1p/1PSPPPNR1/2GK1S3/LN6L
     w 3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: なんのために桂が跳んだのかと自分に問いたい
   description: "△26角ならあとで取った▲29香打で角が貰える"
   hint_desc: 
@@ -12610,7 +12610,7 @@
   init_sfen: position sfen 1n5nl/3kg4/pp1p1gs1p/2p1pppr1/LPb5P/9/2PPPPPP1/1R1SKSG2/1NG4NL
     b SLPbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角と銀香交換のあとどうする？
   description: |-
     端攻めされて角銀交換して香車で香車を取って△73歩打の局面
@@ -12640,7 +12640,7 @@
   init_sfen: position sfen ln5nl/1+r3b+P1k/2pp1+B1g1/p3pppsp/7N1/P3PS2P/3P1P3/2+s1KS1R1/LN4G1L
     b GPg4p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車や龍の横利きを止めたい
   description: 避けたら自玉への脅威がなくなるのでゆっくり攻めればよくなる
   hint_desc: 
@@ -12666,7 +12666,7 @@
   init_sfen: position sfen l4k1nl/1r2g1g2/2nsppsp1/p1pp2p1p/1p5P1/P3R3P/NPPPPPP2/2GSKS3/L5GNL
     b Bb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦になると見えなくなる角打ち
   description: 
   hint_desc: 
@@ -12693,7 +12693,7 @@
   init_sfen: position sfen ln1g1k1nl/1r1s2g2/p1pp1pppp/3b5/7P1/P3R4/1PPPPPPbP/2GS1S3/LN2K1GNL
     b SPp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 36歩の代替手筋
   description: 64角が利いているため36歩ができない
   hint_desc: 
@@ -12720,7 +12720,7 @@
   init_sfen: position sfen ln1g4l/1ks1gs3/1ppppp2+P/p4b1r1/1P5n1/1B4R2/2PPPPPPL/3SKSG2/LNG4N1
     b 4P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 龍を作る誘惑に負けるな
   description: |-
     38飛成では成ったところで何もできない
@@ -12749,7 +12749,7 @@
   init_sfen: position sfen 1+R2sk1nl/3G1sgb1/2ppppppp/1p7/1P5P1/+b8/2PPPPP1P/3+l1SK2/r5GNL
     b 2NLPgsp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 難しく考えてはいけない
   description: 
   hint_desc: 
@@ -12775,7 +12775,7 @@
   init_sfen: position sfen +Bn1gkg1nl/3s2s2/2pppp1pp/p5p2/1p4bP1/P3+r4/1PPP1PP1P/4G4/LNSGK1SNL
     b RLp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 57をどう受ける？
   description: 歩もないので受ける必要がない
   hint_desc: 
@@ -12801,7 +12801,7 @@
   init_sfen: position sfen ln1r3n1/1+L1k1+B+S2/2pspp1p1/3p2p2/ppS2P1K1/4nSP2/PP+b3NPP/4+r4/L7L
     b 2GP2g3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 銀が邪魔
   description: 
   hint_desc: 
@@ -12827,7 +12827,7 @@
   init_sfen: position sfen 1nkg4l/2s1gs3/+Lpppppn2/5bp2/1P6p/R8/2PPPPP1P/3SKSG2/LNG4NL
     b 3Prbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 82成香の代替手
   description: この先の手順は超むずいので普通に82成香の方がいいかもしれないけど最善手は84歩
   hint_desc: 
@@ -12854,7 +12854,7 @@
   init_sfen: position sfen ln3g1nl/4g1k2/p1ppspspp/4p1p2/7P1/PP6P/2PPPPPn1/3SKS3/L1G3GNL
     b RBPrb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: ノーガードの方がダメージが少ない
   description: |-
     49金と逃げると香桂を取られたあげく成桂+飛車打ちで手がつけられなくなる
@@ -12887,7 +12887,7 @@
   init_sfen: position sfen 7nl/4gsk2/2+R2p1pp/3pp1p2/5s1P1/8P/2PPPP+n2/2GSG4/3KS1+r2
     b BGN3Pbn3l3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 終盤の24歩に着目
   description: 同歩で龍の横利きを2筋まで通すのが狙い
   hint_desc: 
@@ -12913,7 +12913,7 @@
   init_sfen: position sfen +L4g1nl/2k1g4/3p2bp1/2p3p1p/4b2P1/8P/2PPP1P2/3SKS3/1NG3GNL
     b R2SN5Prl2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どこから手をつけたらいいのか？
   description: こういうのがいちばんむずい
   hint_desc: 
@@ -12939,7 +12939,7 @@
   init_sfen: position sfen ln+N3g1l/3sks3/2ppppp2/p6pp/9/PKPP1PP1P/2+n1P4/1P5+r1/L2g5
     b RBGSNL2Pbgs 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル囲い攻略
   description: どうやっても52金打で詰む
   hint_desc: 
@@ -12966,7 +12966,7 @@
   init_sfen: position sfen ln2k2nl/1r2g1g2/2ppssbpp/p3pp3/1p5P1/P5R2/BPPPPPP1P/3SKS3/LNG3GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: ええかげん気づこう
   description: 
   hint_desc: 
@@ -12994,7 +12994,7 @@
   init_sfen: position sfen ln1g1k1nl/1r1s3g1/2p2pp1p/p2B3p1/1p7/P8/1PPPPPP1P/3SKS3/LNG3GNL
     b BSPr2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: どうせ詰まないんでしょう？
   description: |-
     詰むって知ってると詰む
@@ -13023,7 +13023,7 @@
   init_sfen: position sfen ln1g1kbnl/1r1s2g2/2pp1pppp/p3R4/9/Ps7/B1PPPPP1P/3SKS3/LNG3GNL
     b 3Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: アヒル対嬉野流
   description: 92飛には83歩成
   hint_desc: 
@@ -13050,7 +13050,7 @@
   init_sfen: position sfen lr3g1n1/6skl/2+P1sgbp1/p3pp2p/1pBp3P1/P5R1P/1P1PPPP2/2GSKS3/L5GNL
     b NPnp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂を持ったら金に向けて打ったらどうなるか考えてみよう
   description: |-
     △34金→銀がただ
@@ -13079,7 +13079,7 @@
   init_sfen: position sfen ln1g1kbnl/1r1s2g2/2pp1pppp/p2sp4/1p5P1/P6R1/BPPPPPP1P/2GSKS3/LN4GNL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対嬉野流は受けないとだめ
   description: 7筋はつきたくないけど▲76歩▲77銀の形にしないとダメっぽい
   hint_desc: 
@@ -13106,7 +13106,7 @@
   init_sfen: position sfen ln1gg3l/1ks6/1ppp2+Rp1/p3p3p/7P1/P6rP/1PPPPPP2/3SKS3/LNG3GNL
     b BNPbsp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 対アヒル囲いでは△26飛の形も多いので覚えたい
   description: "△27飛成▲36角打で角飛交換できる"
   hint_desc: 
@@ -13133,7 +13133,7 @@
   init_sfen: position sfen 7nl/pksggbr2/npppp2pp/P8/2B2pps1/4R3P/1PPPPPP2/3SKS3/2G3GNL
     b LPnl 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂を取ったら何ができるか先に考えよう
   description: 44桂打が見えていれば9筋に香を足すよりも93歩成といけるはず
   hint_desc: 
@@ -13160,7 +13160,7 @@
   init_sfen: position sfen ln3g1nl/4g2k1/3pp1psp/1r1s1p1p1/p1p3SNP/6PP1/PPPPPP1G1/1KS2R3/LN1G4L
     b BPb 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂を諦めない
   description: |-
     問題図の手前、実戦では35銀と出るところで結局24歩で桂が死にそうだなと断念。
@@ -13195,7 +13195,7 @@
   init_sfen: position sfen l6nl/1r2gkg2/p1ns1sbpp/1ppppp3/P6PP/3R5/BPPPPPP2/3SKS3/LNG3GNL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 角道に玉がいると何か起きる
   description: このあとは△83角▲63銀と攻めが続く
   hint_desc: 
@@ -13222,7 +13222,7 @@
   init_sfen: position sfen l6nl/1r3kg2/p1nsgsp1p/1ppppp1B1/P7P/4P1P2/1PPP1PN2/2G1KS1R1/LN4G1L
     b B2Ps 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 22金の悪形にすれば何か起きる
   description: 
   hint_desc: 
@@ -13249,7 +13249,7 @@
   init_sfen: position sfen l6rl/3gksg2/2ns1pnp1/p1pppbp1p/9/P1P1PSP1P/1PSP1P3/1BG2G1R1/LN1K3NL
     b Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂跳ね+歩持ってる=？
   description: 
   hint_desc: 
@@ -13275,7 +13275,7 @@
   init_sfen: position sfen 1n1g3nl/3s1kgs1/p1p1pp2p/7r1/3+B2pr1/PP3B1p1/2NPPPP1P/2G2SGP1/L1S1K2NL
     b L3P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 突破されそうなら受ける
   description: それが難しい
   hint_desc: 
@@ -13301,7 +13301,7 @@
   init_sfen: position sfen ln1gr1snl/1ks4b1/pppp1+R3/6p1p/9/4p4/PPPP1P2P/2K1GS3/LNBG3NL
     b G3Ps2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 歩が打てる列を把握しとこう
   description: 実戦では42金としたがこれでは金銀交換になって、相手の使えてない駒を持駒にしてあげたようなもの
   hint_desc: 
@@ -13327,7 +13327,7 @@
   init_sfen: position sfen l4ksnl/1r2g2b1/p1n1pp1+Rp/1p1ps4/9/4P4/PP+pP1P2P/4GS3/LNBGK2NL
     b G2Ps3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 31銀を歩で叩くの何か起こりがち
   description: 同銀で角が取れる
   hint_desc: 
@@ -13353,7 +13353,7 @@
   init_sfen: position sfen ln2k1snl/2gr2g2/2p1pp1pb/pp4p1p/7P1/P2sPSP1P/1PPp1P3/1BG1G2R1/LNS1K2NL
     b P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: こんなときどうする？
   description: 歩成なら同銀で加勢できる
   hint_desc: 
@@ -13379,7 +13379,7 @@
   init_sfen: position sfen ln3gknl/1r1g2s2/3pppbpp/2s6/pp5P1/P5R2/BPPPPPP1P/3SKS3/LNG3GNL
     b 2P 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 53への利きが1つならGO!
   description: 
   hint_desc: 
@@ -13406,7 +13406,7 @@
   init_sfen: position sfen lnsgk1s+Rl/1r4g2/pppppp3/6p1p/9/8P/PPPP+bPP2/1B7/LNSGKGSNL
     b NP2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂は金に向けて打つと何か起きる
   description: 
   hint_desc: 
@@ -13433,7 +13433,7 @@
   init_sfen: position sfen ln1g2R2/1ks1gs3/1pp4p1/p2pp3p/5pBn1/P1P1P3P/1P1PS4/2KG5/LN1G2rNL
     b SL3Pbp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: むつかしい次の1手
   description: |-
     71角成もいいけど71銀打のほうがもっと良いらしい
@@ -13461,7 +13461,7 @@
   init_sfen: position sfen l6nl/3gk1+S2/2nspp1p1/p1r5p/3p2g2/P1P1P3P/1PNP1P3/1+b1SK2g1/7NL
     b RGSL3Pb2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: いきなり飛車で王手はイヤな予感
   description: 
   hint_desc: 
@@ -13488,7 +13488,7 @@
   init_sfen: position sfen ln1g5/1ks2+R3/ppppp1p2/9/P3P4/1P1P1PP2/2S+n4+r/1K1G5/L8
     b B2GS2N2LPbs5p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 激ムズ形勢判断
   description: 詰めろでないことを見切って攻めの手を指さないといけない
   hint_desc: 
@@ -13516,7 +13516,7 @@
   init_sfen: position sfen l4g1nl/1r2gk3/2ns3p1/p1pppbP1p/1p3p+s2/2PPP3P/PPNG1PN2/1SGB1S3/LK4R1L
     b Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 駒損しても有利な局面か判断
   description: 
   hint_desc: 
@@ -13542,7 +13542,7 @@
   init_sfen: position sfen ln1gk4/1r1s3P1/p1pppp2p/6G2/1p1P4b/2P6/PP+B1PPP1P/2GR1G3/LNS1K1s+lL
     w NPsnp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 歩が打てる列を把握しておこう
   description: 
   hint_desc: 
@@ -13568,7 +13568,7 @@
   init_sfen: position sfen 4kg1nl/3g2s2/3pppbpp/5lR2/4P2P1/1SpP5/1P1G1PP1P/+l1GS5/1N1K3NL
     b RN4Pbsp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: なぜ見えない！？
   description: 
   hint_desc: 
@@ -13594,7 +13594,7 @@
   init_sfen: position sfen l4kbnl/2sG2g2/pp3ppp1/3pr3P/Ps2p2P1/3P2P2/BP1SPPN2/3SK4/L1G3G1L
     b N3Prn 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 桂を持ったら飛車に当ててみる
   description: 何か起きないか考えよう
   hint_desc: 
@@ -13620,7 +13620,7 @@
   init_sfen: position sfen ln3g1nl/4gsk2/3p1p1p1/p1p1P1p1p/2r6/3P4P/PPP2PPP1/2G1G1SK1/LN2R2NL
     w 2B2s2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 振り飛車には22歩(or 88歩)
   description: 
   hint_desc: 
@@ -13646,7 +13646,7 @@
   init_sfen: position sfen ln3g1nl/4gsk2/3p1p1p1/p1p1P1p1p/2r6/3P4P/PPP2PPP1/1G2G1SK1/LN2R2NL
     w 2BP2sp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車の上に金がある形を見たらこれ
   description: 金がどこに動こうが42 or 62銀打
   hint_desc: 
@@ -13672,7 +13672,7 @@
   init_sfen: position sfen lnsg3nl/2k1rsgb1/pppp3pp/4p1p2/5p1P1/5SP1P/PPPPPP3/1B2G2R1/LNSGK2NL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 中飛車の定跡？
   description: 46銀 45歩 が問題図。同銀とするとおかしなことになった。
   hint_desc: 
@@ -13697,7 +13697,7 @@
   user_id: 8
   init_sfen: position sfen 4r4/4S4/3gg+R3/9/9/9/9/9/9 b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 53金打の両取りの対応は？
   description: 両当たりだからと焦って先に飛車を取るとたんに飛車交換したことになるが53龍から入れば飛車と飛車金の交換になる
   hint_desc: 
@@ -13724,7 +13724,7 @@
   init_sfen: position sfen l4rbnl/4k1g2/2+Sppppp1/p7p/3P5/P4PnPP/1PP3N2/2GB1GK2/L3R3L
     b GSN2P2s2p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 打ち場所を作る
   description: 飛車がいなければ61銀打からの3手詰
   hint_desc: 
@@ -13749,7 +13749,7 @@
   user_id: 8
   init_sfen: position sfen 3g1l3/3ks+R3/1SpNp4/9/4N4/9/9/9/9 b Gr2b2g2s2n3l16p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 実戦の退路封鎖がぜんぜん見えない
   description: 
   hint_desc: 
@@ -13776,7 +13776,7 @@
   init_sfen: position sfen ln1g3nl/5kg2/3spp1s1/pr6p/2ppb1P2/1P4S1P/PGPPPPN2/1BKSG2R1/LN6L
     b 3Pp 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 近付けて受けるのはこういう時にこそ使う
   description: 27飛では26歩が厳しい
   hint_desc: 
@@ -13802,7 +13802,7 @@
   init_sfen: position sfen ln6l/1r4k2/p2s1gsp1/2ppp3p/6p2/2P1S3P/PP1PP4/2GSGR3/LN1K4L
     b BGPb2n4p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 寄せの手筋200で何十回解いても実戦ではできない
   description: 
   hint_desc: 
@@ -13828,7 +13828,7 @@
   init_sfen: position sfen ln3ks1l/r8/pp1p+PS+Bpp/2p6/4p4/2P1l1P2/PP1P1S1PP/2KSR4/LNG2G1N+b
     b N3P2g 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車の横利きにはアレ
   description: 歩がないときは「62と」もある
   hint_desc: 
@@ -13855,7 +13855,7 @@
   init_sfen: position sfen ln2kgsnl/1r1sg2b1/3ppp1pp/p1p3p2/9/P1P1P4/1P1P1PPPP/1BG1GS1R1/LNSK3NL
     b p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: そんな序盤で隙があるとは思わんじゃん
   description: 普通にスルーしてた
   hint_desc: 
@@ -13881,7 +13881,7 @@
   init_sfen: position sfen lnk3snl/2g3gb1/pspppp3/4r1ppp/6S2/9/PPPP1PP1P/2G1GS1R1/LNBK3NL
     b 3p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 斜め棒銀失敗の気配
   description: 24銀と出ると44角から飛車先に歩の連打で銀が死ぬ
   hint_desc: 
@@ -13907,7 +13907,7 @@
   user_id: 8
   init_sfen: position sfen l8/1kg+B5/p8/9/9/9/9/9/9 b RGSrb2g3s4n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 最後に銀を残す
   description: 
   hint_desc: 
@@ -13933,7 +13933,7 @@
   user_id: 8
   init_sfen: position sfen 5ks+Rl/4g4/4p3p/5NP2/5p3/9/9/9/9 b BSkrb3g2s3n3l14p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 金を取ってるようじゃいけない
   description: 
   hint_desc: 
@@ -13960,7 +13960,7 @@
   init_sfen: position sfen ln5nl/2k2g3/3p1p1p1/p1p2bp1p/4p2P1/4S4/2PPSPP1P/1R2K4/LNG3GNL
     b GS4Prbs 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車も捨てる
   description: 
   hint_desc: 
@@ -13985,7 +13985,7 @@
   user_id: 2086
   init_sfen: position sfen lrk1S1+R2/2g6/p3p4/2+Bp5/9/9/9/9/9 b Sb3g2s4n3l15p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 最短手数で
   description: 
   hint_desc: 
@@ -14011,7 +14011,7 @@
   init_sfen: position sfen l2p4l/4k1gb1/p4pnpp/1pp3p2/3P5/P2G5/2N6/9/L8 b RGNrbg4snl8p
     1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 飛車の打ちどころ
   description: 詰む場所がいろいろあり、玉方の最長手順を探すのが難しい。
   hint_desc: 
@@ -14037,7 +14037,7 @@
   user_id: 1622
   init_sfen: position sfen 7nk/7g1/9/4rB2S/9/9/9/9/9 b NLPrb3g3s2n3l17p 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 簡単
   description: 
   hint_desc: 
@@ -14063,7 +14063,7 @@
   init_sfen: position sfen l2g3nl/1ks2r1b1/ppngp1sp1/2pp1pp1p/7P1/2P1P1PSP/PP1P1P3/1BKSG2R1/LN1G3NL
     b - 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 棒銀の成功例
   description: 
   hint_desc: 
@@ -14089,7 +14089,7 @@
   user_id: 1622
   init_sfen: position sfen lnsg5/1k7/pppp5/9/9/9/4P4/2+b1S1g2/4K4 b Rg 1
   time_limit_sec: 10
-  difficulty_level: 1
+  difficulty: 1
   title: 必至を逃れるには⁇
   description: 
   hint_desc: 

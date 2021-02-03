@@ -19,11 +19,13 @@ module Wkbk::Article::ImportExportMod
       json = all.as_json({
                            only: [
                              :key,
+                             :position,
                              :init_sfen,
                              :viewpoint,
                              :title,
                              :description,
                              :direction_message,
+                             :difficulty,
                              :owner_tag_list,
                              :mate_skip,
                              :created_at,
@@ -97,6 +99,7 @@ module Wkbk::Article::ImportExportMod
                                          :title,
                                          :description,
                                          :direction_message,
+                                         :difficulty,
                                          :mate_skip,
                                          :created_at,
                                          :updated_at,
@@ -138,6 +141,13 @@ module Wkbk::Article::ImportExportMod
           book.folder_key = :public
           book.articles << record
           book.save!
+        else
+          if Rails.env.development?
+            book = user.wkbk_books.find_or_initialize_by(title: "その他")
+            book.folder_key = :public
+            book.articles << record
+            book.save!
+          end
         end
       end
 

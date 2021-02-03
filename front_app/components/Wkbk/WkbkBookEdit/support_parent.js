@@ -1,4 +1,5 @@
+import { support } from "../support.js"
+
 export const support_parent = {
-  methods: {
-  }
+  mixins: [support],
 }

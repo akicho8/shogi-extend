@@ -128,6 +128,7 @@ module Wkbk
       {
         only: [
           :id,
+          :position,
           :init_sfen,
           :title,
           :description,
@@ -151,11 +152,15 @@ module Wkbk
       {
         only: [
           :id,
+          :position,
           # :init_sfen,
           :title,
+          :difficulty,
           # :description,
           # :direction_message,
           # :turn_max,
+          :created_at,
+          :updated_at,
         ],
         # methods: [
         #   :lineage_key,
@@ -207,7 +212,7 @@ module Wkbk
       validates :description, length: { maximum: 1024 }
 
       # validates :init_sfen # , uniqueness: { case_sensitive: true }
-      # validates :difficulty_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+      # validates :difficulty, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     end
 
     def page_url(options = {})
@@ -247,6 +252,15 @@ module Wkbk
                            ])
         assign_attributes(attrs)
         save!
+
+        # acts_as_list の機能をOFFにして一括で設定する
+        Article.acts_as_list_no_update do
+          Array(book[:articles]).each.with_index do |e, i|
+            r = articles.find(e[:id])
+            r.position = i
+            r.save!(validate: false, touch: false)
+          end
+        end
       end
 
       # 「公開」フォルダに移動させたときに通知する
@@ -300,25 +314,25 @@ module Wkbk
     #   end
     # end
 
-    # 出題用
-    def as_json_type3
-      as_json({
-                only: [
-                  :id,
-                  :title,
-                  :description,
-                  :owner_tag_list,
-                ],
-                methods: [
-                ],
-                include: {
-                  user: {
-                    only: [:id, :name, :key],
-                    methods: [:avatar_path],
-                  },
-                },
-              })
-    end
+    # # 出題用
+    # def as_json_type3
+    #   as_json({
+    #             only: [
+    #               :id,
+    #               :title,
+    #               :description,
+    #               :owner_tag_list,
+    #             ],
+    #             methods: [
+    #             ],
+    #             include: {
+    #               user: {
+    #                 only: [:id, :name, :key],
+    #                 methods: [:avatar_path],
+    #               },
+    #             },
+    #           })
+    # end
 
     # 詳細用
     def as_json_type6

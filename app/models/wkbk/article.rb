@@ -145,12 +145,14 @@ module Wkbk
         only: [
           :id,
           :book_id,
+          :position,
           :init_sfen,
           :viewpoint,
           :title,
           :description,
           :owner_tag_list,
           :direction_message,
+          :difficulty,
           :turn_max,
           :mate_skip,
           :moves_answers_count,
@@ -187,12 +189,14 @@ module Wkbk
         only: [
           :id,
           :book_id,
+          :position,
           :init_sfen,
           :viewpoint,
           :title,
           :description,
           :owner_tag_list,
           :direction_message,
+          :difficulty,
           :turn_max,
           :mate_skip,
           :moves_answers_count,
@@ -201,6 +205,9 @@ module Wkbk
         ],
       }
     end
+
+    acts_as_list touch_on_update: false, top_of_list: 0, scope: :book
+    default_scope { order(:position) }
 
     attribute :moves_answer_validate_skip
 
@@ -236,6 +243,7 @@ module Wkbk
       self.viewpoint ||= "black"
       self.lineage_key ||= "次の一手"
       self.key ||= SecureRandom.hex
+      self.difficulty ||= 1
 
       if lineage.pure_info.mate_validate_on
         self.mate_skip ||= false
@@ -347,11 +355,13 @@ module Wkbk
       ActiveRecord::Base.transaction do
         attrs = article.slice(*[
                                 :book_id,
+                                # :position,
                                 :init_sfen,
                                 :viewpoint,
                                 :title,
                                 :description,
                                 :direction_message,
+                                :difficulty,
                                 :mate_skip,
                                 :owner_tag_list,
                                 :lineage_key,
@@ -419,48 +429,48 @@ module Wkbk
       end
     end
 
-    # 出題用
-    def as_json_type3
-      as_json({
-                only: [
-                  :id,
-                  :title,
-                  :description,
-                  :init_sfen,
-                  :viewpoint,
-                  :direction_message,
-                  :mate_skip,
-                  :owner_tag_list,
-                ],
-                methods: [
-                ],
-                include: {
-                  user: { only: [:id, :name, :key], methods: [:avatar_path],},
-                  moves_answers: {
-                    only: [:moves_count, :moves_str],
-                  },
-                },
-              })
-    end
+    # # 出題用
+    # def as_json_type3
+    #   as_json({
+    #             only: [
+    #               :id,
+    #               :title,
+    #               :description,
+    #               :init_sfen,
+    #               :viewpoint,
+    #               :direction_message,
+    #               :mate_skip,
+    #               :owner_tag_list,
+    #             ],
+    #             methods: [
+    #             ],
+    #             include: {
+    #               user: { only: [:id, :name, :key], methods: [:avatar_path],},
+    #               moves_answers: {
+    #                 only: [:moves_count, :moves_str],
+    #               },
+    #             },
+    #           })
+    # end
 
-    # 詳細用
-    def as_json_type6
-      raise
-
-      as_json({
-                methods: [
-                  :lineage_key,
-                ],
-                include: {
-                  user: {
-                    only: [:id, :key, :name],
-                    methods: [:avatar_path],
-                  },
-                  moves_answers: {},
-                  folder: { only: [], methods: [:key, :name, :type] },
-                },
-              })
-    end
+    # # 詳細用
+    # def as_json_type6
+    #   raise
+    #
+    #   as_json({
+    #             methods: [
+    #               :lineage_key,
+    #             ],
+    #             include: {
+    #               user: {
+    #                 only: [:id, :key, :name],
+    #                 methods: [:avatar_path],
+    #               },
+    #               moves_answers: {},
+    #               folder: { only: [], methods: [:key, :name, :type] },
+    #             },
+    #           })
+    # end
 
     def linked_title(options = {})
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
@@ -504,10 +514,11 @@ module Wkbk
 
     def default_assign
       # "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
-      self.init_sfen      ||= "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
-      self.viewpoint      ||= "black"
-      self.mate_skip      ||= false
-      self.owner_tag_list ||= []
+      self.init_sfen        ||= "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
+      self.viewpoint        ||= "black"
+      self.mate_skip        ||= false
+      self.difficulty ||= 1
+      self.owner_tag_list   ||= []
 
       if Rails.env.development?
         self.init_sfen = "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
