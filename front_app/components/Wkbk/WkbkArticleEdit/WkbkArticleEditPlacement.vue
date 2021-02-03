@@ -16,19 +16,19 @@
         ref="main_sp"
         )
       .footer_buttons
-        .buttons.is-centered.are-small.is-marginless.mt-3
+        .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
           b-button(@click="king_formation_auto_set(true)") 詰将棋検討用攻め方玉配置
           b-button(@click="king_formation_auto_set(false)") 玉回収
 
-        .buttons.is-centered.are-small.is-marginless.mt-3
+        .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
           PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
           KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
           KifCopyButton(@click="kifu_copy_handle") コピー
 
-        .buttons.is-centered.are-small.is-marginless.mt-3
+        .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
           b-button(@click="base.any_source_read_handle") 棋譜の読み込み
 
-        .buttons.has-addons.is-centered.are-small.mt-3(v-if="development_p")
+        .buttons.mb-0.has-addons.is-centered.are-small.mt-3(v-if="development_p")
           b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(3)") 3
           b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(4)") 4
           b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(5)") 5
@@ -96,7 +96,11 @@ export default {
     align-items: center
     flex-direction: column
     .CustomShogiPlayerWrap
-      margin: $wkbk_share_gap 0
+      +mobile
+        margin: 0.5rem 0
+      +tablet
+        margin: $wkbk_share_gap 0
+
       width: 100%
       +tablet
         max-width: 56vmin

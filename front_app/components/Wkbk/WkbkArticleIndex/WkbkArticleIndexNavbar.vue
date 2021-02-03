@@ -4,7 +4,7 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false")
     b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
     //- NavbarItemHome
-    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'library-articles'}") 問題リスト
+    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'library-articles'}") 問題リスト
 
   template(slot="end")
     NavbarItemLogin

@@ -6,7 +6,7 @@ MainNavbar.WkbkBookEditNavbar(:spaced="false")
         b-icon(icon="chevron-left")
     template(slot="start")
       template(v-if="base.book.title")
-        b-navbar-item(tag="div") {{base.book.title}}
+        b-navbar-item.px_0_if_mobile(tag="div") {{base.book.title}}
       template(v-else)
         //- b-navbar-item(tag="div") {{base.book.new_record_p ? '新規' : '編集'}}
     template(slot="end")
