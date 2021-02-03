@@ -1,7 +1,7 @@
 <template lang="pug">
 .WkbkArticleIndexDetail
   .CustomShogiPlayerWrap
-    p(v-if="article.direction_message")
+    .has-text-centered(v-if="article.direction_message")
       | {{article.direction_message}}
     CustomShogiPlayer(
       sp_mobile_vertical="is_mobile_vertical_off"
