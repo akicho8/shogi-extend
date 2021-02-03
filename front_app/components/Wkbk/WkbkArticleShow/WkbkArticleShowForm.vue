@@ -9,7 +9,7 @@
 
       b-field(label="解説")
         .control
-          | {{simple_format(auto_link(base.article.description))}}
+          p(v-html="simple_format(auto_link(base.article.description))")
 
       b-field(label="問題集" v-if="base.book")
         .control
