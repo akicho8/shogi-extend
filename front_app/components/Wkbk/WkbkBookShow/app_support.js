@@ -11,7 +11,12 @@ export const app_support = {
     article_show_handle() {
       if (this.article_show_p) {
         this.sound_play("click")
-        this.$router.push({name: "library-articles-article_id", params: {article_id: this.current_article.id}})
+        if (false) {
+          this.$router.push({name: "library-articles-article_id", params: {article_id: this.current_article.id}})
+        } else {
+          const e = this.$router.resolve({name: "library-articles-article_id", params: {article_id: this.current_article.id}})
+          this.other_window_open(e.href)
+        }
       }
     },
     article_new_handle() {

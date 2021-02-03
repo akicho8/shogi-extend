@@ -5,9 +5,9 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight :right="false" overlay 
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
       b-menu
-        b-menu-list(label="Action")
-          b-menu-item(label="やめる"                 @click.native="base.retire_handle"       :disabled="!base.is_running_p")
-          b-menu-item(label="現在の問題の詳細を開く" @click.native="base.article_show_handle" :disabled="!base.article_show_p")
+        b-menu-list(label="Action" v-if="base.is_running_p")
+          b-menu-item(label="やめる"                                          @click.native="base.retire_handle"       :disabled="!base.is_running_p")
+          b-menu-item(:label="`問題${base.current_article.id}を別タブで開く`" @click.native="base.article_show_handle" :disabled="!base.article_show_p")
 
         b-menu-list(label="編集追加")
           b-menu-item(label="この問題集の編集"       @click.native="base.book_edit_handle"    :disabled="!base.owner_p")
