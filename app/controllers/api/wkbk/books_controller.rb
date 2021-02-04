@@ -88,6 +88,13 @@ module Api
           book = current_user.wkbk_books.build
         end
         begin
+          # if v = params[:croped_image]
+          #   bin = data_base64_body_to_binary(v)
+          #   io = StringIO.new(bin)
+          #   user.avatar.attach(io: io, filename: "avatar.png")
+          #   # user.avatar_blob.saved_changes? # => true
+          # end
+
           book.update_from_js(params.to_unsafe_h[:book])
           retv[:book] = book.as_json(::Wkbk::Book.json_type5)
         rescue ActiveRecord::RecordInvalid => error

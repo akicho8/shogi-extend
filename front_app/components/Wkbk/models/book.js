@@ -8,6 +8,9 @@ export class Book extends ModelBase {
     if (this.articles) {
       this.articles = this.articles.map(e => new Article(e))
     }
+
+    this.new_file_info = null   // b-upload で受けとる情報
+    this.new_file_src  = null   // 読み込んだ内容
   }
 
   //////////////////////////////////////////////////////////////////////////////// 権限

@@ -127,7 +127,6 @@ export default {
   .image
     img
       width: 256px
-      filter: brightness(0.8)
     position: relative
     .image_same_size_box
       position: absolute
@@ -137,6 +136,8 @@ export default {
       display: flex
       align-items: center
       justify-content: center
+      .icon
+        filter: drop-shadow(0px 0px 16px rgba(0, 0, 0, 1.0))
 
   .field
     margin-top: 2rem

@@ -103,11 +103,5 @@ module Api
     # def required_return_value
     #   (params[:required_return_value].presence || "simple_profile").to_sym
     # end
-
-    def data_base64_body_to_binary(data_base64_body)
-      md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<base64_bin>.*)/)
-      md or raise ArgumentError, "Data URL scheme 形式になっていません : #{data_base64_body.inspect.truncate(80)}"
-      Base64.decode64(md["base64_bin"])
-    end
   end
 end

@@ -82,6 +82,7 @@ module Wkbk
           :folder_key,
           :sequence_key,
           :tweet_body,
+          :avatar_path,
         ],
         include: {
           user: { only: [:id, :name, :key], methods: [:avatar_path] },
@@ -469,6 +470,59 @@ module Wkbk
 
       def sequence_key=(key)
         self.sequence = Sequence.fetch(key)
+      end
+    end
+
+    concerning :AvatarMethods do
+      included do
+        has_one_attached :avatar
+
+        after_create_commit do
+          cg = CardGenerator.new(body: title)
+          cg.render
+          io = StringIO.new(cg.to_png)
+          avatar.attach(io: io, filename: "avatar.png")
+          # user.avatar_blob.saved_changes? # => true
+
+        end
+      end
+
+      class_methods do
+        def image_files(name)
+          @image_files ||= {}
+          @image_files[name] ||= -> {
+            root_dir = Rails.root.join("app/assets/images")
+            root_dir.join(name.to_s).glob("0*.png").collect do |e|
+              e.relative_path_from(root_dir)
+            end
+          }.call
+        end
+      end
+
+      # FALLBACK_ICONS_DEBUG=1 foreman s
+      # rails r "p User.first.avatar_path"
+      def avatar_path
+        if ENV["FALLBACK_ICONS_DEBUG"]
+          return ActionController::Base.helpers.asset_path(self.class.image_files(:book).sample)
+        end
+
+        if avatar.attached?
+          # ▼Activestorrage service_url missing default_url_options[:host] · Issue #32866 · rails/rails
+          # https://github.com/rails/rails/issues/32866
+          Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true)
+        else
+          list = self.class.image_files(:book)
+          file = list[(id || self.class.count.next).modulo(list.size)]
+          ActionController::Base.helpers.asset_path(file) # asset_url にしてもURLにならないのはなぜ？
+        end
+      end
+
+      # rails r "p User.first.avatar_url"
+      def avatar_url
+        root = Rails.application.routes.url_helpers.url_for(:root)
+        uri = URI(root)
+        uri.path = avatar_path
+        uri.to_s
       end
     end
   end

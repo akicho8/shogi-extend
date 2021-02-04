@@ -11,6 +11,7 @@ client-only
       WkbkArticleIndexSidebar(:base="base")
       WkbkArticleIndexNavbar(:base="base")
       .container
+
         WkbkArticleIndexTab(:base="base")
         WkbkArticleIndexTag(:base="base")
         WkbkArticleIndexTable(:base="base")

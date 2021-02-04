@@ -28,6 +28,7 @@ import dayjs from "dayjs"
 
 import { support_parent } from "./support_parent.js"
 import { app_table } from "./app_table.js"
+import { app_upload } from "./app_upload.js"
 
 import { Book       } from "../models/book.js"
 import { FolderInfo } from "../models/folder_info.js"
@@ -38,6 +39,7 @@ export default {
   mixins: [
     support_parent,
     app_table,
+    app_upload,
   ],
 
   data() {
