@@ -97,7 +97,7 @@ export default {
     flex-direction: column
     .CustomShogiPlayerWrap
       +mobile
-        margin: 0.75rem 0
+        margin: 0.9rem 0
       +tablet
         margin: $wkbk_share_gap 0
 
