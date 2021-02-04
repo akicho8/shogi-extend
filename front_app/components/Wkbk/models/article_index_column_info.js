@@ -5,7 +5,7 @@ export class ArticleIndexColumnInfo extends MemoryRecord {
     return [
       { key: "id",                  name: "ID",       visible: false, togglable: true,  },
       { key: "title",               name: "タイトル", visible: null,  togglable: false, },
-      { key: "user_id",             name: "投稿者",   visible: null,  togglable: false, },
+      { key: "user_id",             name: "投稿",   visible: null,  togglable: false, },
       { key: "book_title",          name: "問題集",   visible: false, togglable: true,  },
       { key: "lineage_key",         name: "種類",     visible: false, togglable: true,  },
       { key: "turn_max",            name: "手数",     visible: false, togglable: true,  },
