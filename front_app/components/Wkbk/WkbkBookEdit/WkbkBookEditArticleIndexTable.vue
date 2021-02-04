@@ -43,7 +43,10 @@
       //- sortable :visible="!!base.visible_hash.title"
 
       b-table-column(v-slot="{row}" custom-key="position"         field="position"         label="POS"    :width="1" numeric :visible="development_p") {{row.position + 1}}
-      b-table-column(v-slot="{row}" custom-key="id"               field="id"               label="ID"     :width="1" numeric) {{row.id}}
+      b-table-column(v-slot="{row}" custom-key="id"               field="id"               label="ID"     :width="1" numeric)
+        nuxt-link(:to="{name: 'library-articles-article_id', params: {article_id: row.id}}" @click.native="sound_play('click')")
+          | {{row.id}}
+
       b-table-column(v-slot="{row}" custom-key="title"            field="title"            label="タイトル") {{row.title}}
       b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="1" numeric) {{row.difficulty}}
 
