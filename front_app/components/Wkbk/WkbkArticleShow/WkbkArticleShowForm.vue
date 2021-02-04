@@ -73,12 +73,13 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkArticleShowForm
-  margin: $wkbk_share_gap 0
+  +mobile
+    --gap: calc(#{$wkbk_share_gap} * 0.75)
+  +tablet
+    --gap: #{$wkbk_share_gap}
+
+  margin: var(--gap)
+
   .field:not(:first-child)
-    margin-top: $wkbk_share_gap
-  .help
-    color: $grey
-    font-size: $size-7
-  .b-radio
-    font-size: $size-7
+    margin-top: var(--gap)
 </style>

@@ -81,7 +81,10 @@ export default {
     align-items: center
     flex-direction: column
     .CustomShogiPlayerWrap
-      margin: $wkbk_share_gap 0
+      +mobile
+        margin: 0.75rem 0
+      +tablet
+        margin: $wkbk_share_gap 0
       width: 100%
       +tablet
         max-width: 56vmin

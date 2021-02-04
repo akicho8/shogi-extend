@@ -29,13 +29,13 @@ client-only
             template(slot="header")
               span 検証
 
-        MainSection.is_mobile_padding_zero
-         .container
-           keep-alive
-             WkbkArticleShowPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleShowPlacement")
-             WkbkArticleShowAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleShowAnswer")
-             WkbkArticleShowForm(:base="base"       v-if="current_tab_info.key === 'form'")
-             WkbkArticleShowValidation(:base="base" v-if="current_tab_info.key === 'validation'")
+      MainSection.is_mobile_padding_zero
+       .container
+         keep-alive
+           WkbkArticleShowPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleShowPlacement")
+           WkbkArticleShowAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleShowAnswer")
+           WkbkArticleShowForm(:base="base"       v-if="current_tab_info.key === 'form'")
+           WkbkArticleShowValidation(:base="base" v-if="current_tab_info.key === 'validation'")
 
     DebugPre
       | {{article}}
