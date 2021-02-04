@@ -19,6 +19,7 @@ b-table.WkbkArticleIndexTable(
   @sort="base.sort_handle"
 
   detailed
+  :show-detail-icon="false"
   detail-key="id"
   :opened-detailed="base.detailed_ids"
   )
@@ -37,9 +38,11 @@ b-table.WkbkArticleIndexTable(
   b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
     nuxt-link(:to="{name: 'library-books-book_id', params: {book_id: row.book.id}}" v-if="row.book")
 
-      | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.articles_count}})
+      | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}
+      span(v-if="false") ({{row.book.articles_count}})
 
   b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
+
   b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}
 
   b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" :label="base.ArticleIndexColumnInfo.fetch('difficulty').name" sortable :visible="!!base.visible_hash.difficulty") {{row.difficulty}}

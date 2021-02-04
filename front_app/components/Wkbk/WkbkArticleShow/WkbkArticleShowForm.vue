@@ -23,6 +23,9 @@
         .control
           | {{base.article.direction_message}}
 
+      b-field(label="難易度" custom-class="is-small")
+        b-rate(:value="base.article.difficulty" spaced :max="5" :show-score="false" disabled)
+
       b-field(label="タグ")
         .control
           b-taglist

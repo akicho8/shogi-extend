@@ -20,7 +20,7 @@
           option(v-for="e in base.LineageInfo.values" :value="e.key")
             | {{e.name}}
 
-      b-field(label="出題時の一言" label-position="on-border" message="何手指してほしいかやヒントを伝えたいときだけ入力してください")
+      b-field(label="出題時の一言" label-position="on-border" message="タイトルとは別に一言添えたいときの文章")
         b-input(v-model.trim="base.article.direction_message" placeholder="3手指してください")
 
       b-field(label="難易度" custom-class="is-small")
@@ -28,7 +28,8 @@
 
       b-field
         b-switch(v-model="base.article.mate_skip" :disabled="!lineage_info.mate_validate_on")
-          | 最後は無駄合いなので詰みチェックを省略する
+          span 最後は無駄合い
+          span.has-text-grey.is-size-7.ml-1 なので詰みチェックを省略
 
       b-field(label="タグ" label-position="on-border")
         //- https://buefy.org/documentation/taginput

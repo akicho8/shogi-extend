@@ -1,5 +1,5 @@
 <template lang="pug">
-.WkbkArticleIndexTag(v-if="tags")
+.WkbkArticleIndexTag(v-if="tags.length >= 1")
   b-taglist
     template(v-for="tag in tags")
       b-tag(closable @close="base.tag_remove_handle(tag)")
