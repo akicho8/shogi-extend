@@ -55,6 +55,7 @@
             li
               ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
 
+
         .column.is-4.has-text-centered-tablet
           .title.is-6.mb-0.has-text-weight-bold GitHub
           ul.mt-1

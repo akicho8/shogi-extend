@@ -1,8 +1,11 @@
 <template lang="pug">
 MainNavbar.WkbkBookIndexNavbar(:spaced="false")
   template(slot="brand")
-    NavbarItemHome
-    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'library-books'}") みんなの将棋問題集
+    //- NavbarItemHome
+    b-navbar-item(tag="nuxt-link" :to="{name: 'library'}" @click.native="sound_play('click')")
+      b-icon(icon="chevron-left")
+    //- b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'library-books'}") みんなの将棋問題集
+    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'library-books'}") 問題集管理
 
   template(slot="end")
     NavbarItemLogin

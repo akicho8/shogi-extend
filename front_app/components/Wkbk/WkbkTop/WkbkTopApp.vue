@@ -1,5 +1,5 @@
 <template lang="pug">
-.WkbkBookIndexApp
+.WkbkTopApp
   client-only
     DebugBox
       p scope: {{scope}}({{tab_index}})
@@ -8,11 +8,13 @@
     p(v-if="$fetchState.error" v-text="$fetchState.error.message")
 
     .MainContainer
-      WkbkBookIndexSidebar(:base="base")
-      WkbkBookIndexNavbar(:base="base")
-      .container
-        WkbkBookIndexTab(:base="base")
-        WkbkBookIndexTable(:base="base")
+      WkbkTopSidebar(:base="base")
+      WkbkTopNavbar(:base="base")
+      MainSection
+        .container
+          WkbkTopCardList(:base="base")
+          //- WkbkTopTab(:base="base")
+          //- WkbkTopTable(:base="base")
 
     DebugPre {{$fetchState}}
     DebugPre {{$data}}
@@ -25,11 +27,11 @@
     //-   template(v-else)
     //-     | htlm
     //-
-    //- WkbkBookIndexSidebar(:base="base")
-    //- WkbkBookIndexNavbar(:base="base")
+    //- WkbkTopSidebar(:base="base")
+    //- WkbkTopNavbar(:base="base")
     //- .container
-    //-   WkbkBookIndexTab(:base="base")
-    //-   WkbkBookIndexTable(:base="base")
+    //-   WkbkTopTab(:base="base")
+    //-   WkbkTopTable(:base="base")
 
 </template>
 
@@ -44,7 +46,7 @@ import { app_columns    } from "./app_columns.js"
 import { app_sidebar    } from "./app_sidebar.js"
 
 export default {
-  name: "WkbkBookIndexApp",
+  name: "WkbkTopApp",
   mixins: [
     support_parent,
     app_table,
@@ -65,7 +67,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("問題集一覧")
+    this.ga_click("みんなの将棋問題集")
   },
 
   // fetchOnServer: false,
@@ -89,7 +91,7 @@ export default {
       tag:         this.tag,
     }
 
-    return this.$axios.$get("/api/wkbk/books/index.json", {params}).catch(e => {
+    return this.$axios.$get("/api/wkbk/tops/index.json", {params}).catch(e => {
       this.$nuxt.error(e.response.data)
       return
     }).then(e => {
@@ -121,5 +123,8 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkBookIndexApp
+.WkbkTopApp
+  .MainSection.section
+    +tablet
+      padding: 1.5rem 0.8rem
 </style>
