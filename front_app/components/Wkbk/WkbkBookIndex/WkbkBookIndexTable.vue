@@ -23,7 +23,10 @@ b-table.WkbkBookIndexTable(
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
     nuxt-link(:to="{name: 'library-books-book_id', params: {book_id: row.id}}" @click.native="sound_play('click')")
-      | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
+      .image.avatar_image.is-inline-block
+        img(:src="row.avatar_path" :alt="row.title")
+      span.row_title(v-if="false")
+        | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
   b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
     nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play('click')")
@@ -80,8 +83,8 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkBookIndexTable
-  th, td
-    vertical-align: unset
+  //- th, td
+  //-   vertical-align: top
 
   th
     font-size: $size-7
@@ -109,9 +112,13 @@ export default {
       td, .detail-container
         padding: 0
 
-  .image
+  .avatar_image
     img
       max-height: none
-      height: 18px
-      width:  18px
+      width:  calc(1200px * 0.15)
+      height: calc( 630px * 0.15)
+
+  .row_title
+    margin-left: 0.5rem
+    vertical-align: top
 </style>

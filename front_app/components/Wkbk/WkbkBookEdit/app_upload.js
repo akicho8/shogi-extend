@@ -1,3 +1,5 @@
+import book_fallback from "@/static/book_fallback.png"
+
 export const app_upload = {
   methods: {
     upload_handle(v) {
@@ -9,10 +11,27 @@ export const app_upload = {
       reader.addEventListener("load", () => { this.book.new_file_src = reader.result }, false)
       reader.readAsDataURL(this.book.new_file_info)
     },
+    upload_delete_handle() {
+      if (this.book.new_file_src) {
+        this.sound_play("click")
+        this.toast_ok("いまアップロードした画像を削除しました")
+        this.book.new_file_src = null
+        return
+      }
+      if (this.book.raw_avatar_path) {
+        this.sound_play("click")
+        this.toast_ok("既存のアップロード画像を削除しました")
+        this.book.raw_avatar_path = null
+        return
+      }
+    },
   },
   computed: {
     image_source() {
-      return this.book.new_file_src || this.book.avatar_path
+      return this.book.new_file_src || this.book.raw_avatar_path || book_fallback
+    },
+    image_source_exist_p() {
+      return this.book.new_file_src || this.book.raw_avatar_path
     },
   },
 }

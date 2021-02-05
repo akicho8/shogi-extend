@@ -178,5 +178,5 @@ export default {
   th
     font-size: $size-7
   th, td
-    vertical-align: unset
+    vertical-align: middle
 </style>

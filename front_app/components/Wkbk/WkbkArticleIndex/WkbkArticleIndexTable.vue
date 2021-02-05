@@ -85,7 +85,7 @@ export default {
 @import "../support.sass"
 .WkbkArticleIndexTable
   th, td
-    vertical-align: unset
+    vertical-align: middle
 
   th
     font-size: $size-7

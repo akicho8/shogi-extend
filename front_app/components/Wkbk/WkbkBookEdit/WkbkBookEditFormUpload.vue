@@ -6,9 +6,12 @@ b-upload.WkbkBookEditFormUpload(@input="base.upload_handle" @click.native="debug
     img(:src="base.image_source")
     .position_center
       b-icon.has-text-white(icon="camera" size="is-large")
-    .position_top_right
+    .position_top_left
       .size_info.is-size-7
         | 1200x630 推奨
+    .position_bottom_right(v-if="base.image_source_exist_p")
+      .icon_box(@click.prevent.stop="base.upload_delete_handle")
+        b-icon.has-text-white(icon="trash-can")
 </template>
 
 <script>
@@ -26,7 +29,7 @@ export default {
   .image
     img
       +desktop
-        width: unset
+        width: calc(1200px * 0.5)
         height: calc(630px * 0.5)
 
     // 中央のカメラ
@@ -45,10 +48,10 @@ export default {
         filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 1.0))
 
     // 1200x630 推奨
-    .position_top_right
+    .position_top_left
       position: absolute
       top: 0
-      right: 0
+      left: 0
       .size_info
         margin: 6px
         padding: 0.25rem 0.6rem
@@ -56,4 +59,16 @@ export default {
         background-color: change_color($black, $alpha: 0.6)
         font-weight: bold
         border-radius: 3px
+
+    .position_bottom_right
+      position: absolute
+      bottom: 0
+      right: 0
+      .icon_box
+        margin: 6px
+        padding: 0.3rem 0.4rem 0.2rem
+        background-color: change_color($black, $alpha: 0.6)
+        border-radius: 3px
+        .icon
+          filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 1.0))
 </style>
