@@ -5,16 +5,16 @@ export const app_support = {
     book_edit_handle() {
       if (this.base.owner_p) {
         this.sound_play("click")
-        this.$router.push({name: "library-books-book_id-edit", params: {book_id: this.book.id}})
+        this.$router.push({name: "library-books-book_key-edit", params: {book_key: this.book.key}})
       }
     },
     article_show_handle() {
       if (this.article_show_p) {
         this.sound_play("click")
         if (false) {
-          this.$router.push({name: "library-articles-article_id", params: {article_id: this.current_article.id}})
+          this.$router.push({name: "library-articles-article_key", params: {article_key: this.current_article.key}})
         } else {
-          const e = this.$router.resolve({name: "library-articles-article_id", params: {article_id: this.current_article.id}})
+          const e = this.$router.resolve({name: "library-articles-article_key", params: {article_key: this.current_article.key}})
           this.other_window_open(e.href)
         }
       }
@@ -22,7 +22,7 @@ export const app_support = {
     article_new_handle() {
       if (this.article_new_p) {
         this.sound_play("click")
-        this.$router.push({name: "library-articles-new", params: {book_id: this.book.id}})
+        this.$router.push({name: "library-articles-new", params: {book_key: this.book.key}})
       }
     },
     book_tweet_handle() {

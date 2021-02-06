@@ -8,9 +8,9 @@
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
 # | id                  | ID                  | integer(8)   | NOT NULL PK         |              |       |
 # | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A     |
-# | user_id             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | C     |
-# | book_id             | Book                | integer(8)   |                     |              | D     |
+# | user_key             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | lineage_key          | Lineage             | integer(8)   | NOT NULL            |              | C     |
+# | book_key             | Book                | integer(8)   |                     |              | D     |
 # | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
 # | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
 # | title               | タイトル            | string(255)  |                     |              |       |
@@ -40,23 +40,23 @@ RSpec.describe Api::Wkbk::ArticlesController, type: :controller do
   end
 
   [
-    { args: [ :index, params: {                   }],               code: 200, },
-    { args: [ :edit,  params: {                   }],               code: 403, },
-    { args: [ :edit,  params: {                   }], user: :sysop, code: 200, },
-    { args: [ :show,  params: { article_id: 1,    }],               code: 200, },
-    { args: [ :show,  params: { article_id: 2,    }],               code: 403, },
-    { args: [ :show,  params: { article_id: 9999, }],               code: 404, },
-    { args: [ :show,  params: { article_id: 2,    }], user: :sysop, code: 200, },
-    { args: [ :show,  params: { article_id: 4,    }], user: :sysop, code: 403, },
-    { args: [ :edit,  params: { article_id: 1,    }],               code: 403, },
-    { args: [ :edit,  params: { article_id: 1,    }], user: :sysop, code: 200, },
-    { args: [ :edit,  params: { article_id: 2,    }],               code: 403, },
-    { args: [ :edit,  params: { article_id: 2,    }], user: :sysop, code: 200, },
-    { args: [ :edit,  params: { article_id: 3,    }],               code: 403, },
-    { args: [ :edit,  params: { article_id: 3,    }], user: :sysop, code: 404, },
-    { args: [ :edit,  params: { article_id: 4,    }],               code: 403, },
-    { args: [ :edit,  params: { article_id: 4,    }], user: :sysop, code: 404, },
-    { args: [ :edit,  params: { article_id: 9999, }], user: :sysop, code: 404, },
+    { args: [ :index, params: {                    }],               code: 200, },
+    { args: [ :edit,  params: {                    }],               code: 403, },
+    { args: [ :edit,  params: {                    }], user: :sysop, code: 200, },
+    { args: [ :show,  params: { article_key: 1,    }],               code: 200, },
+    { args: [ :show,  params: { article_key: 2,    }],               code: 403, },
+    { args: [ :show,  params: { article_key: 9999, }],               code: 404, },
+    { args: [ :show,  params: { article_key: 2,    }], user: :sysop, code: 200, },
+    { args: [ :show,  params: { article_key: 4,    }], user: :sysop, code: 403, },
+    { args: [ :edit,  params: { article_key: 1,    }],               code: 403, },
+    { args: [ :edit,  params: { article_key: 1,    }], user: :sysop, code: 200, },
+    { args: [ :edit,  params: { article_key: 2,    }],               code: 403, },
+    { args: [ :edit,  params: { article_key: 2,    }], user: :sysop, code: 200, },
+    { args: [ :edit,  params: { article_key: 3,    }],               code: 403, },
+    { args: [ :edit,  params: { article_key: 3,    }], user: :sysop, code: 404, },
+    { args: [ :edit,  params: { article_key: 4,    }],               code: 403, },
+    { args: [ :edit,  params: { article_key: 4,    }], user: :sysop, code: 404, },
+    { args: [ :edit,  params: { article_key: 9999, }], user: :sysop, code: 404, },
   ].each do |e|
     it "アクセス制限" do
       if e[:user]

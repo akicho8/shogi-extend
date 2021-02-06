@@ -8,9 +8,9 @@
 # |----------------+--------------------+--------------+---------------------+--------------+-------|
 # | id             | ID                 | integer(8)   | NOT NULL PK         |              |       |
 # | key            | ユニークなハッシュ | string(255)  | NOT NULL            |              | A     |
-# | user_id        | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | folder_id      | Folder             | integer(8)   | NOT NULL            |              | C     |
-# | sequence_id    | Sequence           | integer(8)   | NOT NULL            |              | D     |
+# | user_key        | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | folder_key      | Folder             | integer(8)   | NOT NULL            |              | C     |
+# | sequence_key    | Sequence           | integer(8)   | NOT NULL            |              | D     |
 # | title          | タイトル           | string(255)  |                     |              |       |
 # | description    | 説明               | string(1024) |                     |              |       |
 # | articles_count | Articles count     | integer(4)   | DEFAULT(0) NOT NULL |              |       |
@@ -35,24 +35,24 @@ RSpec.describe Api::Wkbk::BooksController, type: :controller do
   end
 
   [
-    { args: [ :index, params: {                }, ],               code: 200, },
-    { args: [ :show,  params: { book_id: 1,    }, ],               code: 200, },
-    { args: [ :show,  params: { book_id: 2,    }, ],               code: 403, },
-    { args: [ :show,  params: { book_id: 9999, }, ],               code: 404, },
-    { args: [ :edit,  params: { book_id: 2,    }, ], user: :sysop, code: 200, },
-    { args: [ :show,  params: { book_id: 4,    }, ], user: :sysop, code: 403, },
-    { args: [ :edit,  params: {                }, ],               code: 403, },
-    { args: [ :edit,  params: {                }, ], user: :sysop, code: 200, },
-    { args: [ :edit,  params: {                }, ],               code: 403, },
-    { args: [ :edit,  params: {                }, ], user: :sysop, code: 200, },
-    { args: [ :edit,  params: { book_id: 1,    }, ],               code: 403, },
-    { args: [ :edit,  params: { book_id: 2,    }, ],               code: 403, },
-    { args: [ :edit,  params: { book_id: 3,    }, ],               code: 403, },
-    { args: [ :edit,  params: { book_id: 4,    }, ],               code: 403, },
-    { args: [ :edit,  params: { book_id: 1,    }, ], user: :sysop, code: 200, },
-    { args: [ :edit,  params: { book_id: 2,    }, ], user: :sysop, code: 200, },
-    { args: [ :edit,  params: { book_id: 3,    }, ], user: :sysop, code: 404, },
-    { args: [ :edit,  params: { book_id: 4,    }, ], user: :sysop, code: 404, },
+    { args: [ :index, params: {                 }, ],               code: 200, },
+    { args: [ :show,  params: { book_key: 1,    }, ],               code: 200, },
+    { args: [ :show,  params: { book_key: 2,    }, ],               code: 403, },
+    { args: [ :show,  params: { book_key: 9999, }, ],               code: 404, },
+    { args: [ :edit,  params: { book_key: 2,    }, ], user: :sysop, code: 200, },
+    { args: [ :show,  params: { book_key: 4,    }, ], user: :sysop, code: 403, },
+    { args: [ :edit,  params: {                 }, ],               code: 403, },
+    { args: [ :edit,  params: {                 }, ], user: :sysop, code: 200, },
+    { args: [ :edit,  params: {                 }, ],               code: 403, },
+    { args: [ :edit,  params: {                 }, ], user: :sysop, code: 200, },
+    { args: [ :edit,  params: { book_key: 1,    }, ],               code: 403, },
+    { args: [ :edit,  params: { book_key: 2,    }, ],               code: 403, },
+    { args: [ :edit,  params: { book_key: 3,    }, ],               code: 403, },
+    { args: [ :edit,  params: { book_key: 4,    }, ],               code: 403, },
+    { args: [ :edit,  params: { book_key: 1,    }, ], user: :sysop, code: 200, },
+    { args: [ :edit,  params: { book_key: 2,    }, ], user: :sysop, code: 200, },
+    { args: [ :edit,  params: { book_key: 3,    }, ], user: :sysop, code: 404, },
+    { args: [ :edit,  params: { book_key: 4,    }, ], user: :sysop, code: 404, },
   ].each do |e|
     it "アクセス制限" do
       if e[:user]

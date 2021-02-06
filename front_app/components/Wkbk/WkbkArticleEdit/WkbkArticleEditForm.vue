@@ -9,9 +9,9 @@
         b-input(v-model.trim="base.article.description" type="textarea")
 
       b-field(label="問題集" label-position="on-border")
-        b-select(v-model="base.article.book_id" expanded)
+        b-select(v-model="base.article.book_key" expanded)
           option(:value="null")
-          option(v-for="e in base.books" :value="e.id")
+          option(v-for="e in base.books" :value="e.id2")
             | {{e.title}}
             | {{base.FolderInfo.fetch(e.folder_key).pulldown_name}}
 

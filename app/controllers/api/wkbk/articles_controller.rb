@@ -8,9 +8,9 @@
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
 # | id                  | ID                  | integer(8)   | NOT NULL PK         |              |       |
 # | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A     |
-# | user_id             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | C     |
-# | book_id             | Book                | integer(8)   |                     |              | D     |
+# | user_key             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | lineage_key          | Lineage             | integer(8)   | NOT NULL            |              | C     |
+# | book_key             | Book                | integer(8)   |                     |              | D     |
 # | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
 # | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
 # | title               | タイトル            | string(255)  |                     |              |       |
@@ -47,12 +47,12 @@ module Api
       end
 
       # http://0.0.0.0:3000/api/wkbk/articles/show
-      # http://0.0.0.0:3000/api/wkbk/articles/show?article_id=1
-      # http://0.0.0.0:3000/api/wkbk/articles/show?article_id=1&_user_id=1
+      # http://0.0.0.0:3000/api/wkbk/articles/show?article_key=1
+      # http://0.0.0.0:3000/api/wkbk/articles/show?article_key=1&_user_key=1
       def show
         retv = {}
         retv[:config] = ::Wkbk::Config
-        article = ::Wkbk::Article.find(params[:article_id])
+        article = ::Wkbk::Article.find_by!(key: params[:article_key])
         show_permission_valid!(article)
         retv[:article] = article.as_json(::Wkbk::Article.show_json_struct)
         retv[:meta] = article.og_meta
@@ -60,22 +60,22 @@ module Api
       end
 
       # http://0.0.0.0:3000/api/wkbk/articles/edit.json
-      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_id=1
-      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_id=1&_user_id=1
+      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_key=1
+      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_key=1&_user_key=1
       def edit
         retv = {}
         retv[:config] = ::Wkbk::Config
         retv[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
         retv[:books] = current_books
 
-        if params[:article_id]
-          article = current_user.wkbk_articles.find(params[:article_id])
+        if v = params[:article_key]
+          article = current_user.wkbk_articles.find_by!(key: v)
           # edit_permission_valid!(article)
         else
           # article = current_user.wkbk_articles.build()
           article = current_user.wkbk_articles.build
           article.default_assign
-          # retv[:article] = ::Wkbk::Article.default_attributes.merge(book_id: default_book_id)
+          # retv[:article] = ::Wkbk::Article.default_attributes.merge(book_key: default_book_key)
           # retv[:meta] = ::Wkbk::Article.new_og_meta
         end
         retv[:article] = article.as_json(::Wkbk::Article.json_type5)
@@ -86,8 +86,8 @@ module Api
       # POST http://0.0.0.0:3000/api/wkbk/articles/save
       def save
         retv = {}
-        if id = params[:article][:id]
-          article = current_user.wkbk_articles.find(id)
+        if v = params[:article][:key]
+          article = current_user.wkbk_articles.find_by!(key: v)
         else
           article = current_user.wkbk_articles.build
         end
@@ -144,17 +144,15 @@ module Api
       end
 
       def current_book
-        if v = params[:book_id]
-          if current_user
-            current_user.wkbk_books.find_by(id: v)
+        if current_user
+          if v = params[:book_key]
+            current_user.wkbk_books.find_by!(key: v)
           end
         end
       end
 
-      def default_book_id
-        if v = current_book
-          v.id
-        end
+      def default_book_key
+        current_book&.key
       end
 
       # PageMod override

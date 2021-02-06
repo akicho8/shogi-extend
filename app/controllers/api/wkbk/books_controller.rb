@@ -8,9 +8,9 @@
 # |----------------+--------------------+--------------+---------------------+--------------+-------|
 # | id             | ID                 | integer(8)   | NOT NULL PK         |              |       |
 # | key            | ユニークなハッシュ | string(255)  | NOT NULL            |              | A     |
-# | user_id        | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | folder_id      | Folder             | integer(8)   | NOT NULL            |              | C     |
-# | sequence_id    | Sequence           | integer(8)   | NOT NULL            |              | D     |
+# | user_key        | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | folder_key      | Folder             | integer(8)   | NOT NULL            |              | C     |
+# | sequence_key    | Sequence           | integer(8)   | NOT NULL            |              | D     |
 # | title          | タイトル           | string(255)  |                     |              |       |
 # | description    | 説明               | string(1024) |                     |              |       |
 # | articles_count | Articles count     | integer(4)   | DEFAULT(0) NOT NULL |              |       |
@@ -40,12 +40,12 @@ module Api
         render json: retv
       end
 
-      # http://0.0.0.0:3000/api/wkbk/books/show.json?book_id=1
+      # http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=1
       def show
         retv = {}
         retv[:config] = ::Wkbk::Config
 
-        book = ::Wkbk::Book.find(params[:book_id])
+        book = ::Wkbk::Book.find_by!(key: params[:book_key])
         show_permission_valid!(book)
 
         v = book.as_json(::Wkbk::Book.show_json_struct)
@@ -57,14 +57,14 @@ module Api
       # 問題編集用
       #
       # http://0.0.0.0:3000/api/wkbk/books/edit.json
-      # http://0.0.0.0:3000/api/wkbk/books/edit.json?book_id=1
+      # http://0.0.0.0:3000/api/wkbk/books/edit.json?book_key=1
       # http://0.0.0.0:4000/library/books/new
       # http://0.0.0.0:4000/library/books/1/edit
       def edit
         retv = {}
         retv[:config] = ::Wkbk::Config
-        if params[:book_id]
-          book = current_user.wkbk_books.find(params[:book_id])
+        if v = params[:book_key]
+          book = current_user.wkbk_books.find_by!(key: v)
           # edit_permission_valid!(book)
         else
           book = current_user.wkbk_books.build
@@ -82,8 +82,8 @@ module Api
       # POST http://0.0.0.0:3000/api/wkbk/books/save
       def save
         retv = {}
-        if id = params[:book][:id]
-          book = current_user.wkbk_books.find(id)
+        if v = params[:book][:key]
+          book = current_user.wkbk_books.find_by!(key: v)
         else
           book = current_user.wkbk_books.build
         end

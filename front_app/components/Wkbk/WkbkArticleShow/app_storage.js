@@ -6,7 +6,7 @@ export const app_storage = {
   ],
   data() {
     return {
-      default_book_id: null,
+      default_book_key: null,
       default_lineage_key: null,
     }
   },
@@ -16,7 +16,7 @@ export const app_storage = {
   computed: {
     ls_default() {
       return {
-        default_book_id: null,
+        default_book_key: null,
         default_lineage_key: "次の一手",
       }
     },

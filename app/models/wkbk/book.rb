@@ -38,15 +38,16 @@ module Wkbk
 
       def mock_setup
         [
-          { id: 1, user: :sysop, folder_key: :public,  },
-          { id: 2, user: :sysop, folder_key: :private, },
-          { id: 3, user: :bot,   folder_key: :public,  },
-          { id: 4, user: :bot,   folder_key: :private, },
+          { key: 1, user: :sysop, folder_key: :public,  },
+          { key: 2, user: :sysop, folder_key: :private, },
+          { key: 3, user: :bot,   folder_key: :public,  },
+          { key: 4, user: :bot,   folder_key: :private, },
         ].each do |e|
-          Book.where(id: e[:id]).destroy_all
-          book = User.public_send(e[:user]).wkbk_books.create!(id: e[:id], folder_key: e[:folder_key], title: "#{e[:user]} - #{e[:folder_key]} - #{e[:id]}")
-          Article.where(id: e[:id]).destroy_all
-          article = book.articles.create!(id: e[:id], title: "#{e[:user]} - #{e[:folder_key]} - #{e[:id]}")
+          Book.where(key: e[:key]).destroy_all
+          title = "#{e[:user]} - #{e[:folder_key]} - #{e[:key]}"
+          book = User.public_send(e[:user]).wkbk_books.create!(key: e[:key], folder_key: e[:folder_key], title: title)
+          Article.where(key: e[:key]).destroy_all
+          article = book.articles.create!(key: e[:key], title: title)
         end
       end
 

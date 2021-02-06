@@ -17,7 +17,7 @@
         )
       .footer_buttons
         .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-          b-button(@click="king_formation_auto_set(true)") 詰将棋検討用攻め方玉配置
+          b-button(@click="king_formation_auto_set(true)") 詰将棋検討用玉配置
           b-button(@click="king_formation_auto_set(false)") 玉回収
 
         .buttons.mb-0.is-centered.are-small.is-marginless.mt-3

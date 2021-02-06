@@ -20,23 +20,23 @@ b-table.WkbkArticleIndexTable(
 
   detailed
   :show-detail-icon="false"
-  detail-key="id"
-  :opened-detailed="base.detailed_ids"
+  detail-key="id2"
+  :opened-detailed="base.detailed_keys"
   )
   // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
   // :has-detailed-visible="row => sound_play('click')"
 
-  b-table-column(v-slot="{row}" custom-key="id" field="id" :label="base.ArticleIndexColumnInfo.fetch('id').name" sortable numeric width="1" :visible="!!base.visible_hash.id") {{row.id}}
+  b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric wkeyth="1" :visible="!!base.visible_hash.key") {{row.key}}
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').name" sortable :visible="!!base.visible_hash.title")
-    nuxt-link(:to="{name: 'library-articles-article_id', params: {article_id: row.id}}" @click.native="sound_play('click')")
+    nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key2}}" @click.native="sound_play('click')")
       | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
   b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
     WkbkUserName(:user="row.user")
 
   b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
-    nuxt-link(:to="{name: 'library-books-book_id', params: {book_id: row.book.id}}" v-if="row.book")
+    nuxt-link(:to="{name: 'library-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
 
       | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}
       span(v-if="false") ({{row.book.articles_count}})
@@ -57,7 +57,7 @@ b-table.WkbkArticleIndexTable(
 
   b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
     template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-      nuxt-link(:to="{name: 'library-articles-article_id-edit', params: {article_id: row.id}}" @click.native="sound_play('click')") 編集
+      nuxt-link(:to="{name: 'library-articles-article_key-edit', params: {article_key: row.key2}}" @click.native="sound_play('click')") 編集
 
   template(slot="empty" v-if="base.articles != null")
     section.section.is-unselectable

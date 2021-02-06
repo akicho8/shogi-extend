@@ -16,16 +16,16 @@ export const app_table = {
       total: 0,
 
       // b-table で開いたIDたち
-      detailed_ids: [],
+      detailed_keys: [],
     }
   },
   methods: {
     detail_set(enabled) {
       this.sound_play('click')
       if (enabled) {
-        this.detailed_ids = this.books.map(e => e.id)
+        this.detailed_keys = this.books.map(e => e.id2)
       } else {
-        this.detailed_ids = []
+        this.detailed_keys = []
       }
     },
 

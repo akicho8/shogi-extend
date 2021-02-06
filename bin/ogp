@@ -25,7 +25,7 @@ LIST_ALL = [
   { url: "/library/articles/4/edit",               validations: { "code" => "403", }},
   { url: "/library/articles/4/edit?_user_id=1",    validations: { "code" => "404", }},
   { url: "/library/articles/9999/edit?_user_id=1", validations: { "code" => "404", }},
-  
+
   { url: "/library/books",                   validations: { "code" => "200", }},
   { url: "/library/books/new",               validations: { "code" => "403", }},
   { url: "/library/books/new?_user_id=1",    validations: { "code" => "200", }},
@@ -45,14 +45,15 @@ LIST_ALL = [
   { url: "/library/books/3/edit?_user_id=1", validations: { "code" => "404", }},
   { url: "/library/books/4/edit?_user_id=1", validations: { "code" => "404", }},
 
-  { url: "/library/books",              validations: { "og:image" => /books/, "og:title" => /問題集/, }},
+  { url: "/library/books",              validations: { "og:image" => /library/, "og:title" => /問題集/, }},
   { url: "/library/books/1",            validations: { "og:image" => /share/,                         }},
+  { url: "/library",                    validations: { "og:image" => /library/, "og:title" => /問題集/, }},
 
   { url: "/users/1",                                                                 validations: { "title" => /さん/,                                                                                                                                      }},
-  
+
   { url: "/settings/profile",                                                        validations: { "code" => "404"                                                                                                                                      }},
   { url: "/settings/email",                                                          validations: { "code" => "404",                                                                                                                                      }},
-  
+
   { url: "/",                                                                        validations: { "title" => "SHOGI-EXTEND(d)",                                                                                                           }},
   { url: "/swars/search?query=Yamada_Taro",                                          validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
   { url: "/swars/users/Yamada_Taro/",                                                validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},

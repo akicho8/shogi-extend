@@ -22,36 +22,21 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-module Api
-  module Wkbk
-    class TopsController < ApplicationController
-      # http://0.0.0.0:3000/api/wkbk/tops/index.json
-      def index
-        retv = {}
-        retv[:books] = current_books.as_json(::Wkbk::Book.index_json_type5)
-        retv[:meta]  = ServiceInfo.fetch(:wkbk).og_meta
-        render json: retv
-      end
+require 'rails_helper'
 
-      private
+RSpec.describe Api::Wkbk::TopsController, type: :controller do
+  before(:context) do
+    Actb.setup
+    Emox.setup
+    Wkbk.setup
+    Wkbk::Book.mock_setup
+    # tp Wkbk.info
+    # tp Wkbk::Book
+  end
 
-      def current_books
-        @current_books ||= -> {
-          s = ::Wkbk::Book.public_only
-          if current_user
-            # 本当は↓としたいけど or するときは両方同じ join が必要らしいのでしかたなく private_only している
-            # s = s.or(::Wkbk::Book.where(user: current_user))
-            s = s.or(::Wkbk::Book.private_only.where(user: current_user))
-          end
-          s = s.order(updated_at: :desc)
-          s = page_scope(s)       # page_mod.rb
-        }.call
-      end
-
-      # PageMod override
-      def default_per
-        50
-      end
-    end
+  it "works" do
+    user_login(User.sysop)
+    get :index
+    expect(response).to have_http_status(200)
   end
 end

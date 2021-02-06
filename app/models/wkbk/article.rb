@@ -148,6 +148,7 @@ module Wkbk
           :id,
           :key,
           :book_id,
+          :book_key,
           :position,
           :init_sfen,
           :viewpoint,
@@ -194,6 +195,7 @@ module Wkbk
           :id,
           :key,
           :book_id,
+          :book_key,
           :position,
           :init_sfen,
           :viewpoint,
@@ -360,6 +362,7 @@ module Wkbk
       ActiveRecord::Base.transaction do
         attrs = article.slice(*[
                                 :book_id,
+                                :book_key,
                                 # :position,
                                 :init_sfen,
                                 :viewpoint,
@@ -403,6 +406,18 @@ module Wkbk
         SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
         ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
       end
+    end
+
+    def book_key=(v)
+      if v
+        self.book = Book.find_by!(key: v)
+      else
+        self.book = nil
+      end
+    end
+
+    def book_key
+      book&.key
     end
 
     def init_sfen=(sfen)

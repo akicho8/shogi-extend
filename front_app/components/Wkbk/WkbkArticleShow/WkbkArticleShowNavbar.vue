@@ -7,7 +7,7 @@ MainNavbar.WkbkArticleShowNavbar(:spaced="false")
     template(slot="start")
       b-navbar-item(tag="div") {{base.article.title}}
     template(slot="end")
-      //- b-navbar-item(tag="nuxt-link" :to="{name: 'library-articles-article_id-edit', params: {article_id: base.article.id}}" v-if="base.editable_p")
+      //- b-navbar-item(tag="nuxt-link" :to="{name: 'library-articles-article_key-edit', params: {article_key: base.article.key}}" v-if="base.editable_p")
       //-   | 編集
       WkbkSidebarToggle(@click="base.sidebar_toggle")
 </template>

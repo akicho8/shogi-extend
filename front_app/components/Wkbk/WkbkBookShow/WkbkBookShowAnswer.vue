@@ -1,6 +1,6 @@
 <template lang="pug">
 // keyを指定すると2回目の描画のときに b-tab-item の部分が正しく更新される
-.WkbkBookShowAnswer.columns.is-gapless.is-centered(:key="`article_${base.current_article.id}`")
+.WkbkBookShowAnswer.columns.is-gapless.is-centered(:key="`article_${base.current_article.key}`")
   .column
     b-tabs(v-model="base.answer_tab_index" position="is-centered" :vertical="false" :expanded="true" :animated="false" v-if="base.current_article.moves_answers.length >= 1" @input="sound_play('click')")
       template(v-for="(e, i) in base.current_article.moves_answers")

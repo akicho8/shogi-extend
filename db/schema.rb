@@ -1204,7 +1204,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_161600) do
     t.index ["book_id"], name: "index_wkbk_articles_on_book_id"
     t.index ["difficulty"], name: "index_wkbk_articles_on_difficulty"
     t.index ["init_sfen"], name: "index_wkbk_articles_on_init_sfen"
-    t.index ["key"], name: "index_wkbk_articles_on_key"
+    t.index ["key"], name: "index_wkbk_articles_on_key", unique: true
     t.index ["lineage_id"], name: "index_wkbk_articles_on_lineage_id"
     t.index ["position"], name: "index_wkbk_articles_on_position"
     t.index ["turn_max"], name: "index_wkbk_articles_on_turn_max"
@@ -1222,7 +1222,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_161600) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["folder_id"], name: "index_wkbk_books_on_folder_id"
-    t.index ["key"], name: "index_wkbk_books_on_key"
+    t.index ["key"], name: "index_wkbk_books_on_key", unique: true
     t.index ["sequence_id"], name: "index_wkbk_books_on_sequence_id"
     t.index ["user_id"], name: "index_wkbk_books_on_user_id"
   end
@@ -1232,6 +1232,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_161600) do
     t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_wkbk_folders_on_key", unique: true
     t.index ["position"], name: "index_wkbk_folders_on_position"
   end
 
@@ -1240,6 +1241,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_161600) do
     t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_wkbk_lineages_on_key", unique: true
     t.index ["position"], name: "index_wkbk_lineages_on_position"
   end
 
@@ -1261,6 +1263,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_161600) do
     t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_wkbk_sequences_on_key", unique: true
     t.index ["position"], name: "index_wkbk_sequences_on_position"
   end
 

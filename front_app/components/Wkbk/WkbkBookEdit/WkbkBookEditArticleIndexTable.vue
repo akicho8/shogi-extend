@@ -32,32 +32,32 @@
       //- @sort="base.sort_handle"
       //-
       //- detailed
-      //- detail-key="id"
-      //- :opened-detailed="base.detailed_ids"
+      //- detail-key="key"
+      //- :opened-detailed="base.detailed_keys"
 
       // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
       // :has-detailed-visible="row => sound_play('click')"
 
-      //- b-table-column(v-slot="{row}" custom-key="id" field="id" :label="base.ArticleIndexColumnInfo.fetch('id').name" sortable numeric width="1" :visible="!!base.visible_hash.id") {{row.id}}
+      //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric wkeyth="1" :visible="!!base.visible_hash.key") {{row.key}}
 
       //- sortable :visible="!!base.visible_hash.title"
 
       b-table-column(v-slot="{row}" custom-key="position"         field="position"         label="POS"    :width="1" numeric :visible="development_p") {{row.position + 1}}
-      b-table-column(v-slot="{row}" custom-key="id"               field="id"               label="ID"     :width="1" numeric)
-        nuxt-link(:to="{name: 'library-articles-article_id', params: {article_id: row.id}}" @click.native="sound_play('click')")
-          | {{row.id}}
+      b-table-column(v-slot="{row}" custom-key="key"              field="key"              label="KEY"     :wkeyth="1" numeric)
+        nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+          | {{row.key}}
 
       b-table-column(v-slot="{row}" custom-key="title"            field="title"            label="タイトル") {{row.title}}
       b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="1" numeric) {{row.difficulty}}
 
-      //- nuxt-link(:to="{name: 'library-articles-article_id', params: {article_id: row.id}}" @click.native="sound_play('click')")
+      //- nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
       //- | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
       //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
       //-   WkbkUserName(:user="row.user")
       //-
       //- b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
-      //-   nuxt-link(:to="{name: 'library-books-book_id', params: {book_id: row.book.id}}" v-if="row.book")
+      //-   nuxt-link(:to="{name: 'library-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
       //-
       //-     | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.articles_count}})
       //-
@@ -74,7 +74,7 @@
       //-
       //- b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
       //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-      //-     nuxt-link(:to="{name: 'library-articles-article_id-edit', params: {article_id: row.id}}" @click.native="sound_play('click')") 編集
+      //-     nuxt-link(:to="{name: 'library-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
       b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
         b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")
         b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     up_down_handle(object, sign) {
-      const index = this.base.book.articles.findIndex(e => e.id === object.id)
+      const index = this.base.book.articles.findIndex(e => e.id2 === object.id2)
       this.base.book.articles = this.ary_move(this.base.book.articles, index, index + sign)
     },
 

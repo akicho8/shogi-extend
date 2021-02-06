@@ -91,7 +91,8 @@ module Wkbk::Article::ImportExportMod
         user = options[:user]
       end
 
-      record = user.wkbk_articles.find_or_initialize_by(key: e[:key])
+      # record = user.wkbk_articles.find_or_initialize_by(key: e[:key])
+      record = user.wkbk_articles.build
       record.assign_attributes(e.slice(*[
                                          :lineage_key,
                                          :init_sfen,

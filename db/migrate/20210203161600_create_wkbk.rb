@@ -5,21 +5,21 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
 
       # フォルダ
       create_table :wkbk_folders, force: true do |t|
-        t.string :key, null: false, index: true
+        t.string :key, null: false, index: { unique: true }
         t.integer :position, null: false, index: true
         t.timestamps
       end
 
       # 問題の種類
       create_table :wkbk_lineages, force: true do |t|
-        t.string :key, null: false, index: true
+        t.string :key, null: false, index: { unique: true }
         t.integer :position, null: false, index: true
         t.timestamps
       end
 
       # 出題順序
       create_table :wkbk_sequences, force: true do |t|
-        t.string :key, null: false, index: true
+        t.string :key, null: false, index: { unique: true }
         t.integer :position, null: false, index: true
         t.timestamps
       end
@@ -27,7 +27,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
       ################################################################################
 
       create_table :wkbk_articles, force: true do |t|
-        t.string :key,                      null: false, index: true
+        t.string :key,                      null: false, index: { unique: true }
 
         t.belongs_to :user,                 null: false, foreign_key: true,                            comment: "作成者"
         t.belongs_to :lineage,              null: false, foreign_key: {to_table: :wkbk_lineages},      comment: "種類"
@@ -61,7 +61,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
       ################################################################################
 
       create_table :wkbk_books, force: true do |t|
-        t.string :key,                         null: false, index: true
+        t.string :key,                         null: false, index: { unique: true }
         t.belongs_to :user,                    null: false, foreign_key: true,                        comment: "作成者"
         t.belongs_to :folder,                  null: false, foreign_key: {to_table: :wkbk_folders},   comment: "フォルダ"
         t.belongs_to :sequence,                null: false, foreign_key: {to_table: :wkbk_sequences}, comment: "順序"

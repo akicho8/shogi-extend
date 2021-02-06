@@ -10,6 +10,12 @@ RSpec.describe "みんなの将棋問題集", type: :system do
     # tp Wkbk::Book
   end
 
+  it "問題集トップ" do
+    visit "http://0.0.0.0:4000/library"
+    expect(page).to have_content "問題集"
+    doc_image
+  end
+
   it "問題集一覧" do
     visit "http://0.0.0.0:4000/library/books"
     expect(page).to have_content "問題集"
