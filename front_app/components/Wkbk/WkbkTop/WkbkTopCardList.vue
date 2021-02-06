@@ -2,6 +2,7 @@
 .WkbkTopCardList.columns.is-multiline
   template(v-for="e in base.books")
     .column.is-one-quarter-widescreen.is-one-third-desktop.is-half-tablet
+      //- https://bulma.io/documentation/components/card/
       nuxt-link.card.is-block(:to="{name: 'library-books-book_key', params: {book_key: e.key}}" @click.native="sound_play('click')")
         .card-image
           figure.image
@@ -17,13 +18,12 @@
                  | {{e.user.name}}
                  br
                  | {{diff_time_format(e.updated_at)}}更新
-
-          .content(v-if="false")
-            div(v-html="simple_format(auto_link(e.description))")
-            div {{diff_time_format(e.updated_at)}}更新
+                 b-icon.ml-2(icon="eye-off" v-if="e.folder_key === 'private'" size="is-small")
+          .content
+            .description.is_truncate2(v-html="simple_format(auto_link(e.description))")
 
             //- .image.is-flex-shrink-0.user_avatar
-            //-   
+            //-
             //- p(v-html="e.description")
 
           //- .image.user_image
@@ -55,5 +55,4 @@ export default {
       max-height: none
       height: 18px
       width:  18px
-
 </style>

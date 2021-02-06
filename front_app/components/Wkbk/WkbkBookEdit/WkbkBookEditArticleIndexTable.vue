@@ -54,7 +54,8 @@
       //-     | {{row.key}}
 
       b-table-column(v-slot="{row}" custom-key="title"            field="title"            label="タイトル")
-        nuxt-link.title_truncate(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+        //- nuxt-link.article_title(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+        nuxt-link.article_title.is_truncate1(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
           | {{row.title}}
 
       b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="星" :width="1" numeric)
@@ -200,10 +201,6 @@ export default {
     .title, .subtitle
       white-space: nowrap
 
-  .title_truncate
+  .article_title
     max-width: 20rem
-    display: block
-    white-space: nowrap
-    text-overflow: ellipsis
-    overflow: hidden
 </style>
