@@ -64,4 +64,12 @@ class ApplicationRecord < ActiveRecord::Base
       end
     end
   end
+
+  # devise では欲しい長さの4/3倍の文字数が得られるのを予測して3/4倍しているがこれはいまいち
+  # 実際はおおよそ4/3倍なので指定の文字数に足りない場合がある
+  # なのでN文字欲しければN文字以上生成させて先頭からN文字拾えばよい
+  # わかりやすい名前はARの内部のメソッドとかぶりそうなので注意
+  def secure_random_urlsafe_base64_token(length = 11)
+    SecureRandom.urlsafe_base64(length).slice(0, length)
+  end
 end

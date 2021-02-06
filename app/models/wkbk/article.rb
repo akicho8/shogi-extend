@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
@@ -134,6 +135,7 @@ module Wkbk
           book: {
             only: [
               :id,
+              :key,
               :title,
               :articles_count,
             ],
@@ -144,6 +146,7 @@ module Wkbk
         },
         only: [
           :id,
+          :key,
           :book_id,
           :position,
           :init_sfen,
@@ -175,6 +178,7 @@ module Wkbk
           book: {
             only: [
               :id,
+              :key,
               :title,
               :articles_count,
             ],
@@ -188,6 +192,7 @@ module Wkbk
         },
         only: [
           :id,
+          :key,
           :book_id,
           :position,
           :init_sfen,
@@ -242,7 +247,7 @@ module Wkbk
 
       self.viewpoint ||= "black"
       self.lineage_key ||= "次の一手"
-      self.key ||= SecureRandom.hex
+      self.key ||= secure_random_urlsafe_base64_token
       self.difficulty ||= 1
 
       if lineage.pure_info.mate_validate_on

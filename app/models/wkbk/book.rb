@@ -89,6 +89,7 @@ module Wkbk
         },
         only: [
           :id,
+          :key,
           :title,
           :description,
           :articles_count,
@@ -113,6 +114,7 @@ module Wkbk
         },
         only: [
           :id,
+          :key,
           :title,
           :description,
           :articles_count,
@@ -127,6 +129,7 @@ module Wkbk
       {
         only: [
           :id,
+          :key,
           :title,
           :description,
           :articles_count,
@@ -152,6 +155,7 @@ module Wkbk
       {
         only: [
           :id,
+          :key,
           :position,
           :init_sfen,
           :title,
@@ -176,6 +180,7 @@ module Wkbk
       {
         only: [
           :id,
+          :key,
           :position,
           # :init_sfen,
           :title,
@@ -202,7 +207,7 @@ module Wkbk
     # article edit の form の選択肢用
     def self.json_type7
       {
-        only: [:id, :title],
+        only: [:id, :key, :title],
         methods: [:folder_key],
       }
     end
@@ -215,12 +220,12 @@ module Wkbk
     before_validation do
       if Rails.env.test? || Rails.env.development?
         self.title       ||= "あ" * 80
-        self.description ||= "い" * 256
+        self.description ||= "い" * 128
       end
 
       self.folder_key ||= :private
       self.sequence_key ||= :shuffle
-      self.key ||= SecureRandom.hex
+      self.key ||= secure_random_urlsafe_base64_token
 
       normalize_zenkaku_to_hankaku(:title, :description)
       normalize_blank_to_nil(:title, :description)
@@ -359,22 +364,22 @@ module Wkbk
     #           })
     # end
 
-    # 詳細用
-    def as_json_type6
-      as_json({
-                methods: [
-                ],
-                include: {
-                  user: {
-                    only: [:id, :key, :name],
-                    methods: [:avatar_path],
-                  },
-                  moves_answers: {},
-                  folder: { only: [], methods: [:key, :name] },
-                  sequence: { only: [], methods: [:key, :name] },
-                },
-              })
-    end
+    # # 詳細用
+    # def as_json_type6
+    #   as_json({
+    #             methods: [
+    #             ],
+    #             include: {
+    #               user: {
+    #                 only: [:id, :key, :name],
+    #                 methods: [:avatar_path],
+    #               },
+    #               moves_answers: {},
+    #               folder: { only: [], methods: [:key, :name] },
+    #               sequence: { only: [], methods: [:key, :name] },
+    #             },
+    #           })
+    # end
 
     def linked_title(options = {})
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
@@ -383,7 +388,7 @@ module Wkbk
     def showable_p(current_user)
       # case
       # when :show
-      folder_key_eq(:public) || user == current_user
+      folder_eq(:public) || user == current_user
       # when :edit
       #   user && current_user && (user == current_user)
       # else
@@ -394,7 +399,7 @@ module Wkbk
     # def showable_p(action, current_user)
     #   case
     #   when :show
-    #     folder_key_eq(:public) || user == current_user
+    #     folder_eq(:public) || user == current_user
     #   when :edit
     #     user && current_user && (user == current_user)
     #   else
@@ -459,14 +464,14 @@ module Wkbk
       case
       when public_folder_posted?
         "投稿"
-      when folder_key_eq(:public) && current_hash != @save_before_hash
+      when folder_eq(:public) && current_hash != @save_before_hash
         "更新"
       end
     end
 
     # 公開した直後か？
     def public_folder_posted?
-      saved_change_to_attribute?(:folder_id) && folder_key_eq(:public)
+      saved_change_to_attribute?(:folder_id) && folder_eq(:public)
     end
 
     # 変更を検知するためのハッシュ(重要なデータだけにする)
