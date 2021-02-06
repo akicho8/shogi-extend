@@ -20,7 +20,7 @@ b-table.WkbkArticleIndexTable(
 
   detailed
   :show-detail-icon="false"
-  detail-key="id2"
+  detail-key="key"
   :opened-detailed="base.detailed_keys"
   )
   // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう

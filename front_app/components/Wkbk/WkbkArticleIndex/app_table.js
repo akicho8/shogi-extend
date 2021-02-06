@@ -24,7 +24,7 @@ export const app_table = {
     detail_set(enabled) {
       this.sound_play('click')
       if (enabled) {
-        this.detailed_keys = this.articles.map(e => e.id2)
+        this.detailed_keys = this.articles.map(e => e.key)
       } else {
         this.detailed_keys = []
       }

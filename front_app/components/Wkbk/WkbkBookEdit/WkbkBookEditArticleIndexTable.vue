@@ -1,8 +1,9 @@
 <template lang="pug">
-.WkbkBookEditArticleIndexTable
-  .box
+.WkbkBookEditArticleIndexTable(v-if="base.book.articles.length >= 1")
+  .box.is-inline-block
     .title.is-6 問題の並び替え
-    .subtitle.is-7.mb-0 出題順序で「カスタマイズ」を選択したときに有効 (DnD)
+    .subtitle.is-7.mb-0 出題順序で「カスタマイズ」を選択したときの並び
+
     b-table.mt-1(
       :data="base.book.articles"
       :mobile-cards="false"
@@ -42,13 +43,22 @@
 
       //- sortable :visible="!!base.visible_hash.title"
 
-      b-table-column(v-slot="{row}" custom-key="position"         field="position"         label="POS"    :width="1" numeric :visible="development_p") {{row.position + 1}}
-      b-table-column(v-slot="{row}" custom-key="key"              field="key"              label="KEY"     :wkeyth="1" numeric)
-        nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
-          | {{row.key}}
+      b-table-column(v-slot="{row}" custom-key="operation" label="" width="0")
+        b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")
+        b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
 
-      b-table-column(v-slot="{row}" custom-key="title"            field="title"            label="タイトル") {{row.title}}
-      b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="1" numeric) {{row.difficulty}}
+      //- b-table-column(v-slot="{row}" custom-key="position"         field="position"         label="POS"    :width="1" numeric :visible="development_p") {{row.position + 1}}
+
+      //- b-table-column(v-slot="{row}" custom-key="key"              field="key"              label="KEY"     :wkeyth="1" numeric)
+      //-   nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+      //-     | {{row.key}}
+
+      b-table-column(v-slot="{row}" custom-key="title"            field="title"            label="タイトル")
+        nuxt-link.title_truncate(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+          | {{row.title}}
+
+      b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="星" :width="1" numeric)
+        | {{row.difficulty}}
 
       //- nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
       //- | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
@@ -75,9 +85,6 @@
       //- b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
       //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
       //-     nuxt-link(:to="{name: 'library-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
-      b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
-        b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")
-        b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
 
       //- template(slot="empty" v-if="base.articles != null")
       //-   section.section.is-unselectable
@@ -93,6 +100,8 @@
 
 <script>
 import { support_child } from "./support_child.js"
+import { isMobile } from "@/components/models/is_mobile.js"
+
 export default {
   name: "WkbkBookEditArticleIndexTable",
   mixins: [
@@ -102,12 +111,19 @@ export default {
     return {
       dragging_row: null,
       from_index: null,
+      run_count: 0,
     }
   },
   methods: {
     up_down_handle(object, sign) {
-      const index = this.base.book.articles.findIndex(e => e.id2 === object.id2)
+      const index = this.base.book.articles.findIndex(e => e.key === object.key)
       this.base.book.articles = this.ary_move(this.base.book.articles, index, index + sign)
+      if (this.run_count === 0) {
+        if (!isMobile.any()) {
+          this.toast_ok("マウスでドラッグアンドドロップできますよ")
+        }
+      }
+      this.run_count += 1
     },
 
     dragstart_handle(payload) {
@@ -179,4 +195,15 @@ export default {
     font-size: $size-7
   th, td
     vertical-align: middle
+
+  .box
+    .title, .subtitle
+      white-space: nowrap
+
+  .title_truncate
+    max-width: 20rem
+    display: block
+    white-space: nowrap
+    text-overflow: ellipsis
+    overflow: hidden
 </style>

@@ -11,7 +11,7 @@
       b-field(label="問題集" label-position="on-border")
         b-select(v-model="base.article.book_key" expanded)
           option(:value="null")
-          option(v-for="e in base.books" :value="e.id2")
+          option(v-for="e in base.books" :value="e.key")
             | {{e.title}}
             | {{base.FolderInfo.fetch(e.folder_key).pulldown_name}}
 
