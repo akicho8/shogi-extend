@@ -76,7 +76,7 @@ export default {
     },
     page_title() {
       if (this.record) {
-        return `${this.record.name}さん`
+        return `${this.record.name}`
       }
     },
     twitter_key() {
