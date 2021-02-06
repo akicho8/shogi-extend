@@ -12,7 +12,7 @@ MainNavbar.WkbkTopNavbar(:spaced="false")
     //-   b-icon(icon="plus")
 
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
-      b-icon(icon="plus")
+      b-icon(icon="cog")
 
     WkbkSidebarToggle(@click="base.sidebar_toggle" v-if="false")
 </template>

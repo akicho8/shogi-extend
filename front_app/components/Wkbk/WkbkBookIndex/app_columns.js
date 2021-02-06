@@ -1,7 +1,7 @@
 export const app_columns = {
   data() {
     return {
-      visible_hash: {}, //  { a: true, b: false } 形式
+      visible_hash: null, //  { a: true, b: false } 形式
     }
   },
   methods: {

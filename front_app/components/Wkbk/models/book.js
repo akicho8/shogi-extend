@@ -1,4 +1,5 @@
 import { Article } from "./article.js"
+import { FolderInfo } from "./folder_info.js"
 import { ModelBase } from "../../models/model_base.js"
 
 export class Book extends ModelBase {
@@ -11,6 +12,14 @@ export class Book extends ModelBase {
 
     this.new_file_info = null   // b-upload で受けとる情報
     this.new_file_src  = null   // 読み込んだ内容
+
+    // vue の data に設定すると Book が Object になっている謎
+    // なのでここで入れているが何かがおもいっきり間違っている気がする
+    // あとでぜったいバグるところ
+    if (this.folder) {
+      throw new Error("すでに this.folder がある")
+    }
+    this.folder = FolderInfo.fetch(this.folder_key).attributes
   }
 
   //////////////////////////////////////////////////////////////////////////////// 権限

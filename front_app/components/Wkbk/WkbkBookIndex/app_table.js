@@ -1,4 +1,5 @@
 import { BookIndexColumnInfo } from "../models/book_index_column_info.js"
+import { FolderInfo          } from '../models/folder_info.js'
 
 export const app_table = {
   data() {
@@ -49,6 +50,7 @@ export const app_table = {
   },
   computed: {
     BookIndexColumnInfo()  { return BookIndexColumnInfo },
+    FolderInfo()  { return FolderInfo },
 
     url_params() {
       return {

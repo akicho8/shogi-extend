@@ -42,16 +42,15 @@ export const ls_support_mixin = {
 
   methods: {
     ls_setup() {
+
       // server → client の順で2回呼ばれるので2回目のときだけ変数を復帰する(重要)
 
-      this.clog("ls_setup process.client", process.client)
-      this.clog("ls_setup process.server", process.server)
-      this.clog("ls_setup ls_storage_key", this.ls_storage_key)
-
       if (process.client) {
+        this.clog("[ls_setup]")
         if (!this.$ls_unwatch) {
           this.ls_load()
           // 変数がハッシュかもしれないので deep: true にしておく
+          this.clog("[ls_unwatch] ON")
           this.$ls_unwatch = this.$watch(() => this.ls_attributes, () => this.ls_save(), {deep: true})
         }
       }
@@ -79,6 +78,7 @@ export const ls_support_mixin = {
     },
 
     ls_load() {
+      this.clog(`[ls_load] from ${this.ls_storage_key}`)
       this.ls_restore(MyLocalStorage.get(this.ls_storage_key))
     },
 
@@ -93,13 +93,13 @@ export const ls_support_mixin = {
           const s = hash[key]             // => {a: 0,     } (stored value)
           if (HASH_MERGE_P && _.isPlainObject(d) && _.isPlainObject(s)) {
             v = {..._.cloneDeep(d), ...s} // => {a: 0, b: 2} 初期値に対してマージ
-            this.clog(`${key} = ${JSON.stringify(v)}`)
+            this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(v)} (hash)`)
           } else {
-            this.clog(`${key} = ${s}`)
+            this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(s)} (direct)`)
             v = s                         // マージできないのでストアされたものをそのまま使う
           }
         } else {
-          this.clog(`${key} = ${d} (default)`)
+          this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(d)} (default)`)
           v = d
         }
         this[key] = v

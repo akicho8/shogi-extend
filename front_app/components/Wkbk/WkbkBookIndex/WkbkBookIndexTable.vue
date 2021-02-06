@@ -1,73 +1,80 @@
 <template lang="pug">
-b-table.WkbkBookIndexTable(
-  :loading="base.$fetchState.pending"
-  :data="base.books || []"
-  :mobile-cards="false"
-  hoverable
-  :narrowed="false"
+.WkbkBookIndexTable
+  b-table(
+    v-if="base.visible_hash"
+    :loading="base.$fetchState.pending"
+    :data="base.books || []"
+    :mobile-cards="true"
+    hoverable
+    :narrowed="false"
 
-  paginated
-  backend-pagination
-  pagination-simple
+    paginated
+    backend-pagination
+    pagination-simple
 
-  :page="base.page" :total="base.total" :per-page="base.per"
-  @page-change="base.page_change_handle"
+    :page="base.page" :total="base.total" :per-page="base.per"
+    @page-change="base.page_change_handle"
 
-  backend-sorting
-  default-sort-direction="desc"
-  :default-sort="[base.sort_column, base.sort_order]"
-  @sort="base.sort_handle"
-  )
+    backend-sorting
+    default-sort-direction="desc"
+    :default-sort="[base.sort_column, base.sort_order]"
+    @sort="base.sort_handle"
+    )
 
-  b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name"               sortable numeric wkeyth="1" :visible="!!base.visible_hash.key") {{row.key}}
+    b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name" sortable numeric width="1" :visible="!!base.visible_hash.key")
+      | {{row.key}}
 
-  b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
-    nuxt-link(:to="{name: 'library-books-book_key', params: {book_key: row.key}}" @click.native="sound_play('click')")
-      .image.avatar_image.is-inline-block
-        img(:src="row.avatar_path" :alt="row.title")
-      span.row_title(v-if="false")
-        | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
+    b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
+      nuxt-link(:to="{name: 'library-books-book_key', params: {book_key: row.key}}" @click.native="sound_play('click')")
+        .image.avatar_image.is-inline-block
+          img(:src="row.avatar_path" :alt="row.title")
 
-  b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
-    nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play('click')")
-      WkbkUserName(:user="row.user")
+        span.row_title(v-if="false")
+          | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
-  b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
+    //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
+    //-   nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play('click')")
+    //-     WkbkUserName(:user="row.user")
 
-  b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable :visible="!!base.visible_hash.created_at") {{row_time_format(row.created_at)}}
-  b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{row_time_format(row.updated_at)}}
+    b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
 
-  b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
-    //- nuxt-link(:to="{name: 'library-books-book_key-edit', params: {book_key: row.key}}")
-    //-   b-icon(icon="edit")
-    //-   | 編集
-    nuxt-link(:to="{name: 'library-articles-new', query: {book_key: row.key}}" v-if="false")
-      b-icon(icon="plus")
+    b-table-column(v-slot="{row}" custom-key="folder_key" field="folder_id" :label="base.BookIndexColumnInfo.fetch('folder_key').name" sortable :visible="!!base.visible_hash.folder_key")
+      b-icon(:icon="row.folder.icon")
 
-    b-dropdown(append-to-body position="is-bottom-left" @active-change="sound_play('click')")
-      a(slot="trigger")
-        b-icon(icon="dots-horizontal")
-      template(v-if="(g_current_user && g_current_user.id === row.user.id) || development_p")
-        b-dropdown-item(has-link)
-          nuxt-link(:to="{name: 'library-books-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
-        b-dropdown-item(has-link)
-          nuxt-link(:to="{name: 'library-articles-new', query: {book_key: row.key}}"        @click.native="sound_play('click')") 問題追加
-        //- b-dropdown-item(separator)
-        b-dropdown-item(has-link)
-          a(@click="tweet_window_popup({text: row.tweet_body})") ツイート
-        b-dropdown-item(separator)
-        b-dropdown-item(has-link)
-          a.deleet キャンセル
+    b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable :visible="!!base.visible_hash.created_at") {{row_time_format(row.created_at)}}
+    b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{row_time_format(row.updated_at)}}
 
-      //- this.tweet_window_popup({text: this.book.tweet_body})
+    b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
+      //- nuxt-link(:to="{name: 'library-books-book_key-edit', params: {book_key: row.key}}")
+      //-   b-icon(icon="edit")
+      //-   | 編集
+      nuxt-link(:to="{name: 'library-articles-new', query: {book_key: row.key}}" v-if="false")
+        b-icon(icon="plus")
 
-  template(slot="empty" v-if="base.books != null")
-    section.section.is-unselectable
-      .content.has-text-grey.has-text-centered
-        p
-          b-icon(icon="emoticon-sad" size="is-large")
-        p
-          | ひとつもありません
+      b-dropdown(append-to-body position="is-bottom-left" @active-change="sound_play('click')")
+        a(slot="trigger")
+          b-icon(icon="dots-horizontal")
+        template(v-if="(g_current_user && g_current_user.id === row.user.id) || development_p")
+          b-dropdown-item(has-link)
+            nuxt-link(:to="{name: 'library-books-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
+          b-dropdown-item(has-link)
+            nuxt-link(:to="{name: 'library-articles-new', query: {book_key: row.key}}"        @click.native="sound_play('click')") 問題追加
+          //- b-dropdown-item(separator)
+          b-dropdown-item(has-link)
+            a(@click="tweet_window_popup({text: row.tweet_body})") ツイート
+          b-dropdown-item(separator)
+          b-dropdown-item(has-link)
+            a.deleet キャンセル
+
+        //- this.tweet_window_popup({text: this.book.tweet_body})
+
+    template(slot="empty" v-if="base.books != null")
+      section.section.is-unselectable
+        .content.has-text-grey.has-text-centered
+          p
+            b-icon(icon="emoticon-sad" size="is-large")
+          p
+            | ひとつもありません
 </template>
 
 <script>

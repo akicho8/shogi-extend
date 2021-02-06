@@ -2,6 +2,7 @@
 client-only
   .WkbkArticleIndexApp
     DebugBox
+      p visible_hash: {{visible_hash}}
       p scope: {{scope}}({{tab_index}})
       p page: {{page}}
 
@@ -10,10 +11,11 @@ client-only
     .MainContainer
       WkbkArticleIndexSidebar(:base="base")
       WkbkArticleIndexNavbar(:base="base")
-      .container
-        //- WkbkArticleIndexTab(:base="base")
-        WkbkArticleIndexTag(:base="base")
-        WkbkArticleIndexTable(:base="base")
+      MainSection
+        .container
+          //- WkbkArticleIndexTab(:base="base")
+          WkbkArticleIndexTag(:base="base")
+          WkbkArticleIndexTable(:base="base")
 
     DebugPre {{$data}}
     DebugPre {{$fetchState.pending}}
@@ -72,8 +74,8 @@ export default {
       tag:         this.tag,
     }
 
-    this.clog("process.client", process.client)
-    this.clog("process.server", process.server)
+    // this.clog("process.client", process.client)
+    // this.clog("process.server", process.server)
 
     // if (process.client) {
     //   this.play_start()
@@ -88,7 +90,7 @@ export default {
       //   return
       // }
       this.meta           = e.meta
-      this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
+      // this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
       this.articles       = e.articles.map(e => new Article(e))
       this.total          = e.total
       // this.article_counts = e.article_counts
@@ -141,5 +143,15 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
+.STAGE-development
+  .WkbkArticleIndexApp
+    .container
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+
 .WkbkArticleIndexApp
+  .MainSection.section
+    +mobile
+      padding: 0.75rem 0.5rem
+    +tablet
+      padding: 1rem
 </style>

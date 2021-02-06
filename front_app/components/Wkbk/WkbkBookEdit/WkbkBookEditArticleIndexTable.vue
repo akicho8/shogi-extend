@@ -39,7 +39,7 @@
       // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
       // :has-detailed-visible="row => sound_play('click')"
 
-      //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric wkeyth="1" :visible="!!base.visible_hash.key") {{row.key}}
+      //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric width="1" :visible="!!base.visible_hash.key") {{row.key}}
 
       //- sortable :visible="!!base.visible_hash.title"
 
@@ -49,7 +49,7 @@
 
       //- b-table-column(v-slot="{row}" custom-key="position"         field="position"         label="POS"    :width="1" numeric :visible="development_p") {{row.position + 1}}
 
-      //- b-table-column(v-slot="{row}" custom-key="key"              field="key"              label="KEY"     :wkeyth="1" numeric)
+      //- b-table-column(v-slot="{row}" custom-key="key"              field="key"              label="KEY"     :width="1" numeric)
       //-   nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
       //-     | {{row.key}}
 

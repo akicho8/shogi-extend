@@ -2,6 +2,7 @@
 .WkbkBookIndexApp
   client-only
     DebugBox
+      p visible_hash: {{visible_hash}}
       p scope: {{scope}}({{tab_index}})
       p page: {{page}}
 
@@ -10,9 +11,10 @@
     .MainContainer
       WkbkBookIndexSidebar(:base="base")
       WkbkBookIndexNavbar(:base="base")
-      .container
-        //- WkbkBookIndexTab(:base="base")
-        WkbkBookIndexTable(:base="base")
+      MainSection
+        .container
+          //- WkbkBookIndexTab(:base="base")
+          WkbkBookIndexTable(:base="base")
 
     DebugPre {{$fetchState}}
     DebugPre {{$data}}
@@ -34,7 +36,8 @@
 </template>
 
 <script>
-import { Book           } from "../models/book.js"
+import { Book        } from "../models/book.js"
+import { FolderInfo  } from '../models/folder_info.js'
 
 import { support_parent } from "./support_parent.js"
 import { app_table      } from "./app_table.js"
@@ -55,6 +58,7 @@ export default {
   ],
 
   data() {
+    console.log("[data]")
     return {
       meta: null,
     }
@@ -65,11 +69,13 @@ export default {
   },
 
   mounted() {
+    console.log("[mounted]")
     this.ga_click("問題集一覧")
   },
 
   // fetchOnServer: false,
   fetch() {
+    console.log("[fetch]")
     // this.__assert__(this.scope, "this.scope")
 
     this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
@@ -101,7 +107,7 @@ export default {
       this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
       this.books       = e.books.map(e => new Book(e))
       this.total       = e.total
-      this.book_counts = e.book_counts
+      // this.book_counts = e.book_counts
     })
   },
 
@@ -121,5 +127,15 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
+.STAGE-development
+  .WkbkBookIndexApp
+    .container
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+
 .WkbkBookIndexApp
+  .MainSection.section
+    +mobile
+      padding: 0.75rem 0.5rem
+    +tablet
+      padding: 1rem
 </style>
