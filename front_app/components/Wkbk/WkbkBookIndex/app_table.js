@@ -52,7 +52,7 @@ export const app_table = {
 
     url_params() {
       return {
-        scope:       this.scope,
+        // scope:       this.scope,
         page:        this.page,
         per:         this.per,
         sort_column: this.sort_column,

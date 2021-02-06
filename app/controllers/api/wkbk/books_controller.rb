@@ -34,7 +34,7 @@ module Api
       def index
         retv = {}
         retv[:books]       = sort_scope_for_books(current_books).as_json(::Wkbk::Book.index_json_type5)
-        retv[:book_counts] = book_counts
+        # retv[:book_counts] = book_counts
         retv[:total]       = current_books.total_count
         retv[:meta]        = ServiceInfo.fetch(:wkbk).og_meta
         render json: retv
@@ -106,7 +106,12 @@ module Api
 
       def current_books
         @current_books ||= -> {
-          s = current_book_scope_info.query_func[current_user]
+          # s = current_book_scope_info.query_func[current_user]
+          if current_user
+            s = current_user.wkbk_books
+          else
+            s = ::Wkbk::Book.none
+          end
           if v = params[:tag].presence # TODO: 複数タグ
             s = s.tagged_with(v)
           end

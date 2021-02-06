@@ -11,7 +11,7 @@
       WkbkBookIndexSidebar(:base="base")
       WkbkBookIndexNavbar(:base="base")
       .container
-        WkbkBookIndexTab(:base="base")
+        //- WkbkBookIndexTab(:base="base")
         WkbkBookIndexTable(:base="base")
 
     DebugPre {{$fetchState}}
