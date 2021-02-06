@@ -10,7 +10,7 @@ export const app_storage = {
       default_lineage_key: null,
     }
   },
-  created() {
+  beforeMount() {
     this.ls_setup() // fetch により先に呼ばれるので先に scope を設定できる
   },
   computed: {

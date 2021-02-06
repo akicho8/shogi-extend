@@ -4,8 +4,8 @@ export const app_storage = {
   mixins: [
     ls_support_mixin,
   ],
-  created() {
-    this.ls_setup() // fetch により先に呼ばれるので先に scope を設定できる
+  beforeMount() {
+    // this.ls_setup() // fetch により先に呼ばれるので先に scope を設定できる
   },
   computed: {
     ls_default() {

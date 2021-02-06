@@ -4,8 +4,8 @@ export const app_storage = {
   mixins: [
     ls_support_mixin,
   ],
-  mounted() {
-    this.ls_setup()
+  beforeMount() {
+    this.ls_setup()             // created() のなかで呼ぶと動かないのはなぜ？？？
   },
   computed: {
     ls_default() {
