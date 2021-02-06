@@ -33,6 +33,29 @@ module Wkbk
         SlackAgent.message_send(key: self.class.name, body: "カード画像更新(#{title})")
       end
 
+      # アップロードした base64 のあれをあれする
+      # nil なら元のを消す
+      def new_file_src=(v)
+        if v
+          # SlackAgent.message_send(key: self.class.name, body: "カード画像更新(#{title})")
+          v = data_uri_scheme_to_bin(v)
+          io = StringIO.new(v)
+          avatar.attach(io: io, filename: "#{SecureRandom.hex}.png")
+        else
+          # if avatar.attached?
+          #   avatar.purge_later
+          # end
+        end
+      end
+
+      def raw_avatar_path=(v)
+        unless v
+          if avatar.attached?
+            avatar.purge_later
+          end
+        end
+      end
+
       private
 
       # なんらかのアバターのパスを返す
@@ -67,21 +90,6 @@ module Wkbk
         list = self.class.fallback_image_files(:book)
         file = list[(id || self.class.count.next).modulo(list.size)]
         ActionController::Base.helpers.asset_path(file) # asset_url にしてもURLにならないのはなぜ？
-      end
-
-      # アップロードした base64 のあれをあれする
-      # nil なら元のを消す
-      def new_file_src=(v)
-        if v
-          # SlackAgent.message_send(key: self.class.name, body: "カード画像更新(#{title})")
-          v = data_uri_scheme_to_bin(v)
-          io = StringIO.new(v)
-          avatar.attach(io: io, filename: "#{SecureRandom.hex}.png")
-        else
-          if avatar.attached?
-            avatar.purge_later
-          end
-        end
       end
 
       def data_uri_scheme_to_bin(data_base64_body)

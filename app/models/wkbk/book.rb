@@ -279,7 +279,8 @@ module Wkbk
                              :description,
                              :folder_key,
                              :sequence_key,
-                             :new_file_src,
+                             :new_file_src,    # nil 以外が来たらそれで画像作成
+                             :raw_avatar_path, # nil が来たら画像削除
                            ])
         assign_attributes(attrs)
         save!
