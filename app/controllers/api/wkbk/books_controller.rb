@@ -112,7 +112,7 @@ module Api
           else
             s = ::Wkbk::Book.none
           end
-          if v = params[:tag].presence # TODO: 複数タグ
+          if v = params[:tag].to_s.split(/[,\s]+/).presence
             s = s.tagged_with(v)
           end
           s = page_scope(s)       # page_mod.rb

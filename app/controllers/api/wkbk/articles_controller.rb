@@ -110,7 +110,12 @@ module Api
 
       def current_articles
         @current_articles ||= -> {
-          s = current_article_scope_info.query_func[current_user]
+          # s = current_article_scope_info.query_func[current_user]
+          if current_user
+            s = current_user.wkbk_articles
+          else
+            s = ::Wkbk::Article.none
+          end
           if v = params[:tag].to_s.split(/[,\s]+/).presence
             s = s.tagged_with(v)
           end

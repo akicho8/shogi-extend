@@ -11,8 +11,7 @@ client-only
       WkbkArticleIndexSidebar(:base="base")
       WkbkArticleIndexNavbar(:base="base")
       .container
-
-        WkbkArticleIndexTab(:base="base")
+        //- WkbkArticleIndexTab(:base="base")
         WkbkArticleIndexTag(:base="base")
         WkbkArticleIndexTable(:base="base")
 
@@ -92,7 +91,7 @@ export default {
       this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
       this.articles       = e.articles.map(e => new Article(e))
       this.total          = e.total
-      this.article_counts = e.article_counts
+      // this.article_counts = e.article_counts
     })
   },
 
