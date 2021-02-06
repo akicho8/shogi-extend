@@ -112,8 +112,9 @@
 
     b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="QuestionIndexColumnInfo.fetch('owner_tag_list').short_name" :visible="!!visible_hash.owner_tag_list")
       b-taglist
-        b-tag.is-clickable(v-for="tag in row.owner_tag_list" @click.native.stop="bapp.tag_search_handle(tag)" rounded)
-          | {{tag}}
+        template(v-for="tag in row.owner_tag_list")
+          b-tag.is-clickable( @click.native.stop="bapp.tag_search_handle(tag)" rounded :key="tag")
+            | {{tag}}
 
     b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="QuestionIndexColumnInfo.fetch('created_at').short_name"       sortable         :visible="!!visible_hash.created_at")       {{row_time_format(row.created_at)}}
     b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="QuestionIndexColumnInfo.fetch('updated_at').short_name"       sortable         :visible="!!visible_hash.updated_at")       {{row_time_format(row.updated_at)}}

@@ -15,7 +15,7 @@
         b-tab-item.is-size-2(:label="tab_info.name")
 
   .ActbRankingRows(v-if="rank_data")
-    ActbRankingRow(:base="base" v-for="row in rank_data.rank_records" :row="row")
+    ActbRankingRow(:base="base" v-for="row in rank_data.rank_records" :row="row" :key="row.user.id")
 
     template(v-if="!rank_data.user_rank_in && rank_data.current_user_rank_record")
       ActbRankingRow.current_user_rank_record(:base="base" :row="rank_data.current_user_rank_record")

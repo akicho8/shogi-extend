@@ -9,10 +9,10 @@
         b-tab-item(:label="tab_info.tab_name")
 
   template(v-if="base.history_current_tab_info.key === 'history_index'")
-    ActbHistoryRow(:base="base" v-for="row in base.history_records" :row="row")
+    ActbHistoryRow(:base="base" v-for="row in base.history_records" :row="row" :key="row.id")
 
   template(v-if="base.history_current_tab_info.key === 'clip_index'")
-    ActbHistoryRow(:base="base" v-for="row in base.clip_records" :row="row")
+    ActbHistoryRow(:base="base" v-for="row in base.clip_records" :row="row" :key="row.id")
 </template>
 
 <script>
