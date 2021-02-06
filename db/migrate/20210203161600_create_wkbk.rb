@@ -5,21 +5,21 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
 
       # フォルダ
       create_table :wkbk_folders, force: true do |t|
-        t.string :key, null: false
+        t.string :key, null: false, index: true
         t.integer :position, null: false, index: true
         t.timestamps
       end
 
       # 問題の種類
       create_table :wkbk_lineages, force: true do |t|
-        t.string :key, null: false
+        t.string :key, null: false, index: true
         t.integer :position, null: false, index: true
         t.timestamps
       end
 
       # 出題順序
       create_table :wkbk_sequences, force: true do |t|
-        t.string :key, null: false
+        t.string :key, null: false, index: true
         t.integer :position, null: false, index: true
         t.timestamps
       end
