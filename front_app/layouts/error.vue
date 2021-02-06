@@ -12,8 +12,10 @@ client-only
           p {{status_code_with_message}}
           p(v-if="error.message")
             | {{error.message}}
+          b-button.mt-4(@click="login_handle" v-if="!g_current_user && error_status_code === 403") ログイン
         .emoji.has-text-centered.is-unselectable.is-clickable(@click="charactor_click")
           | {{charactor}}
+
     DebugPre
       | {{error}}
 </template>
@@ -33,7 +35,15 @@ export default {
     }
   },
 
+  mounted() {
+    // this.sns_login_modal_handle()
+  },
+
   methods: {
+    login_handle() {
+      this.sound_play("click")
+      this.sns_login_modal_handle()
+    },
     charactor_click() {
       if (process.client) {
         this.sound_play('click')
@@ -51,6 +61,10 @@ export default {
         title: this.status_code_with_message,
         short_title: true,
       }
+    },
+
+    error_status_code() {
+      return this.error?.statusCode
     },
 
     status_code_with_message() {
