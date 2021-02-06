@@ -26,7 +26,7 @@ module Wkbk
   class Book < ApplicationRecord
     include FolderMod
     include InfoMod
-    include BookAvatarMod
+    include AvatarMod
 
     class << self
       def setup(options = {})

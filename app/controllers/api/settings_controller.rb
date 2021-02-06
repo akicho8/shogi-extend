@@ -9,7 +9,7 @@ module Api
       user = current_user
 
       if v = params[:croped_image]
-        bin = data_base64_body_to_binary(v)
+        bin = data_uri_scheme_to_bin(v)
         io = StringIO.new(bin)
         user.avatar.attach(io: io, filename: "avatar.png")
         # user.avatar_blob.saved_changes? # => true

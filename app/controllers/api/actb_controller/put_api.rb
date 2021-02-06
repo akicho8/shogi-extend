@@ -181,7 +181,7 @@ module Api
       #   user = current_user
       #
       #   if v = params[:croped_image]
-      #     bin = data_base64_body_to_binary(v)
+      #     bin = data_uri_scheme_to_bin(v)
       #     io = StringIO.new(bin)
       #     user.avatar.attach(io: io, filename: "user_icon.png")
       #   end
@@ -232,7 +232,7 @@ module Api
       private
 
       # from app/javascript/actb_app/the_profile_edit_form.vue profile_update_handle
-      def data_base64_body_to_binary(data_base64_body)
+      def data_uri_scheme_to_bin(data_base64_body)
         raise "must not happen"
 
         md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<base64_bin>.*)/)
