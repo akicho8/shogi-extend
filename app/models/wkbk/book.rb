@@ -412,7 +412,7 @@ module Wkbk
     # end
 
     # 所有者だった場合は全部見せる
-    def ordered_articles
+    def ordered_articles(current_user)
       if user == current_user
         s = articles
       else

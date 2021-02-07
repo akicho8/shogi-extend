@@ -13,8 +13,6 @@ module Wkbk
       scope :folder_eq,     -> v { joins(:folder).where(Folder.arel_table[:key].eq(v))     }
       scope :folder_or,     -> v { joins(:folder).where(Folder.arel_table[:key].eq_any(v)) }
       scope :folder_not_eq, -> v { joins(:folder).where(Folder.arel_table[:key].not_eq(v)) }
-
-      delegate :show_can, to: :folder
     end
 
     def folder_key=(key)
@@ -27,6 +25,10 @@ module Wkbk
 
     def folder_eq(key)
       folder == Folder.fetch(key)
+    end
+
+    def show_can(current_user)
+      folder.pure_info.show_can[current_user, self]
     end
   end
 end
