@@ -219,8 +219,8 @@ module Wkbk
       }
     end
 
+    # テーブルでのソートより優先してしまうため default_scope { order(:position) } は指定しない
     acts_as_list touch_on_update: false, top_of_list: 0, scope: :book
-    default_scope { order(:position) }
 
     attribute :moves_answer_validate_skip
 
