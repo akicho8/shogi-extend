@@ -56,6 +56,9 @@ const config = {
   target: 'server',
 
   router: {
+    // https://ja.nuxtjs.org/docs/2.x/configuration-glossary/configuration-router/#linkactiveclass
+    linkActiveClass: 'is-active',
+
     // base: process.env.NODE_ENV === 'production' ? "/app/" : "/",
 
     // https://ja.nuxtjs.org/api/configuration-router/#trailingslash
