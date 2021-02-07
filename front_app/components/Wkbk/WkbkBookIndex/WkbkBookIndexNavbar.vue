@@ -14,7 +14,7 @@ MainNavbar.WkbkBookIndexNavbar(:spaced="false" wrapper-class="container is-fluid
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-books-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
-    WkbkSidebarToggle(@click="base.sidebar_toggle")
+    WkbkSidebarToggle.is-hidden-desktop(@click="base.sidebar_toggle")
 </template>
 
 <script>
