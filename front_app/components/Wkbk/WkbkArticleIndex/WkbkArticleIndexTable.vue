@@ -37,11 +37,8 @@
     //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
     //-   WkbkUserName(:user="row.user")
 
-    b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
-      nuxt-link(:to="{name: 'library-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
-
-        | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}
-        span(v-if="false") ({{row.book.articles_count}})
+    b-table-column(v-slot="{row}" custom-key="folder_key" field="folder.position" :label="base.ArticleIndexColumnInfo.fetch('folder_key').name" sortable :visible="!!base.visible_hash.folder_key")
+      WkbkFolder(:folder_key="row.folder_key")
 
     b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
 
@@ -55,9 +52,11 @@
         b-tag.is-clickable.mr-1(@click.native.stop="base.tag_search_handle(tag)" rounded :key="tag")
           | {{tag}}
 
-    b-table-column(v-slot="{row}" custom-key="folder_key" field="folder_id" :label="base.ArticleIndexColumnInfo.fetch('folder_key').name" sortable :visible="!!base.visible_hash.folder_key")
-      //- | {{base.FolderInfo.fetch(e.folder_key).icon}}
-      b-icon(:icon="base.FolderInfo.fetch(row.folder.key).icon")
+    b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
+      nuxt-link(:to="{name: 'library-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
+
+        | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}
+        span(v-if="false") ({{row.book.articles_count}})
 
     b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.ArticleIndexColumnInfo.fetch('created_at').name"       sortable         :visible="!!base.visible_hash.created_at")       {{row_time_format(row.created_at)}}
     b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="base.ArticleIndexColumnInfo.fetch('updated_at').name"       sortable         :visible="!!base.visible_hash.updated_at")       {{row_time_format(row.updated_at)}}

@@ -37,7 +37,7 @@
       b-field(label="表示範囲" custom-class="is-small")
         b-field.is-marginless
           template(v-for="e in base.FolderInfo.values")
-            b-radio-button(v-model="base.book.folder_key" :native-value="e.key")
+            b-radio-button(v-model="base.article.folder_key" :native-value="e.key")
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
 </template>

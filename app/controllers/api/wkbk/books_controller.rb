@@ -125,6 +125,8 @@ module Api
           case columns.first
           when "user"
             s = s.joins(:user).merge(User.reorder(columns.last => sort_order))
+          when "folder"
+            s = s.joins(:folder).merge(::Wkbk::Folder.reorder(columns.last => sort_order)) # position の order を避けるため reorder
           else
             s = sort_scope(s)
           end

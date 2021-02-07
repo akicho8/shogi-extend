@@ -133,6 +133,8 @@ module Api
             s = s.joins(:book).merge(::Wkbk::Book.reorder(columns.last => sort_order))
           when "lineage"
             s = s.joins(:lineage).merge(::Wkbk::Lineage.reorder(columns.last => sort_order)) # position の order を避けるため reorder
+          when "folder"
+            s = s.joins(:folder).merge(::Wkbk::Folder.reorder(columns.last => sort_order)) # position の order を避けるため reorder
           else
             s = sort_scope(s)
           end

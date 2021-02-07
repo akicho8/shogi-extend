@@ -10,8 +10,8 @@ export class SequenceInfo extends MemoryRecord {
       { key: "difficulty_desc", name: "難易度降順",       },
       { key: "created_at_asc",  name: "問題作成日時昇順", },
       { key: "created_at_desc", name: "問題作成日時降順", },
-      { key: "updated_at_asc",  name: "問題更新日時昇順", },
-      { key: "updated_at_desc", name: "問題更新日時降順", },
+      { key: "updated_at_asc",  name: "問題最終更新昇順", },
+      { key: "updated_at_desc", name: "問題最終更新降順", },
       { key: "customize",       name: "カスタマイズ",     },
     ]
   }

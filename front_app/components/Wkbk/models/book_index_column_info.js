@@ -4,12 +4,12 @@ export class BookIndexColumnInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "key",            name: "KEY",      visible: false, togglable: true,  },
-      { key: "title",          name: "タイトル", visible: true,  togglable: false, },
-      { key: "user_id",        name: "投稿",     visible: true,  togglable: false, },
-      { key: "articles_count", name: "問題数",   visible: true,  togglable: true,  },
+      { key: "title",          name: "問題集",   visible: true,  togglable: false, },
       { key: "folder_key",     name: "公開設定", visible: true,  togglable: true,  },
+      // { key: "user_id",        name: "投稿",     visible: true,  togglable: false, },
       { key: "created_at",     name: "作成日時", visible: false, togglable: true,  },
-      { key: "updated_at",     name: "更新日時", visible: true,  togglable: true,  },
+      { key: "updated_at",     name: "最終更新", visible: true,  togglable: true,  },
+      { key: "articles_count", name: "問題数",   visible: true,  togglable: true,  },
     ]
   }
 }
