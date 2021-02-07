@@ -24,14 +24,14 @@ export class Book extends ModelBase {
 
   //////////////////////////////////////////////////////////////////////////////// 権限
 
-  owner_p(user) {
-    // 新規レコードは誰でもオーナー
-    if (this.new_record_p) {
-      return true
-    }
-
-    if (user) {
-      return user.id === this.user.id
-    }
-  }
+  // owner_p(user) {
+  //   // 新規レコードは誰でもオーナー
+  //   if (this.new_record_p) {
+  //     return true
+  //   }
+  // 
+  //   if (user) {
+  //     return user.id === this.user.id
+  //   }
+  // }
 }

@@ -1,40 +1,39 @@
 <template lang="pug">
-client-only
-  .WkbkBookShowApp
-    DebugBox
-      p spent_sec: {{spent_sec}}
-      p mode: {{mode}}
-      template(v-if="interval_counter")
-        p interval_counter.count: {{interval_counter.count}}
-      template(v-if="book")
-        p book.user.id: {{book.user && book.user.id}}
-        p g_current_user.id: {{g_current_user && g_current_user.id}}
-        p goal_p: {{goal_p}}
-        p rest_count: {{rest_count}}
-        p current_index: {{current_index}}
-        p max_count: {{max_count}}
-        template(v-if="current_exist_p")
-          p current_sp_body: {{current_sp_body}}
-          p current_sp_viewpoint: {{current_sp_viewpoint}}
+.WkbkBookShowApp
+  DebugBox
+    p spent_sec: {{spent_sec}}
+    p mode: {{mode}}
+    template(v-if="interval_counter")
+      p interval_counter.count: {{interval_counter.count}}
+    template(v-if="book")
+      p book.user.id: {{book.user && book.user.id}}
+      p g_current_user.id: {{g_current_user && g_current_user.id}}
+      p goal_p: {{goal_p}}
+      p rest_count: {{rest_count}}
+      p current_index: {{current_index}}
+      p max_count: {{max_count}}
+      template(v-if="current_exist_p")
+        p current_sp_body: {{current_sp_body}}
+        p current_sp_viewpoint: {{current_sp_viewpoint}}
 
-    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
-    b-loading(:active="$fetchState.pending")
+  p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+  b-loading(:active="$fetchState.pending")
 
-    WkbkBookShowNavbar(:base="base")
-    WkbkBookShowSidebar(:base="base")
-    .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
-      MainSection.is_mobile_padding_zero
-        .container
-          template(v-if="is_standby_p")
-            WkbkBookShowStandby(:base="base")
-          template(v-if="is_running_p")
-            WkbkBookShowSp(:base="base")
-            WkbkBookShowAnswer(:base="base")
-          template(v-if="is_goal_p")
-            WkbkBookShowGoal(:base="base")
+  WkbkBookShowNavbar(:base="base")
+  WkbkBookShowSidebar(:base="base")
+  .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
+    MainSection.is_mobile_padding_zero
+      .container
+        template(v-if="is_standby_p")
+          WkbkBookShowStandby(:base="base")
+        template(v-if="is_running_p")
+          WkbkBookShowSp(:base="base")
+          WkbkBookShowAnswer(:base="base")
+        template(v-if="is_goal_p")
+          WkbkBookShowGoal(:base="base")
 
-    DebugPre
-      | {{$data}}
+  DebugPre
+    | {{$data}}
 </template>
 
 <script>
@@ -86,8 +85,8 @@ export default {
 
     if (process.client) {
       // this.play_start()
-      this.mode_set("standby")
     }
+    this.mode_set("standby")
 
     // if (process.browser) {
     // if (true) {
@@ -103,8 +102,25 @@ export default {
 
   computed: {
     base()    { return this },
-    owner_p() { return this.book?.owner_p(this.g_current_user) },
     meta()    { return this.book?.og_meta },
+
+    owner_p() {
+      if (this.book) {
+        return this.g_current_user && this.g_current_user.id === this.book.user.id
+      }
+    },
+
+  // owner_p(user) {
+  //   // 新規レコードは誰でもオーナー
+  //   if (this.new_record_p) {
+  //     return true
+  //   }
+  //
+  //   if (user) {
+  //     return user.id === this.user.id
+  //   }
+  // }
+
   },
 }
 </script>

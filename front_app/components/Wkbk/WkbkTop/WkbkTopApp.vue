@@ -1,37 +1,36 @@
 <template lang="pug">
 .WkbkTopApp
-  client-only
-    DebugBox
-      p scope: {{scope}}({{tab_index}})
-      p page: {{page}}
+  DebugBox
+    p scope: {{scope}}({{tab_index}})
+    p page: {{page}}
 
-    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+  p(v-if="$fetchState.error" v-text="$fetchState.error.message")
 
-    .MainContainer
-      WkbkTopSidebar(:base="base")
-      WkbkTopNavbar(:base="base")
-      MainSection
-        .container
-          WkbkTopCardList(:base="base")
-          //- WkbkTopTab(:base="base")
-          //- WkbkTopTable(:base="base")
+  .MainContainer
+    WkbkTopSidebar(:base="base")
+    WkbkTopNavbar(:base="base")
+    MainSection
+      .container
+        WkbkTopCardList(:base="base")
+        //- WkbkTopTab(:base="base")
+        //- WkbkTopTable(:base="base")
 
-    DebugPre {{$fetchState}}
-    DebugPre {{$data}}
+  DebugPre {{$fetchState}}
+  DebugPre {{$data}}
 
-    //- .box
-    //-   template(v-if="$fetchState.pending")
-    //-     | pending
-    //-   template(v-else-if="$fetchState.error")
-    //-     | error
-    //-   template(v-else)
-    //-     | htlm
-    //-
-    //- WkbkTopSidebar(:base="base")
-    //- WkbkTopNavbar(:base="base")
-    //- .container
-    //-   WkbkTopTab(:base="base")
-    //-   WkbkTopTable(:base="base")
+  //- .box
+  //-   template(v-if="$fetchState.pending")
+  //-     | pending
+  //-   template(v-else-if="$fetchState.error")
+  //-     | error
+  //-   template(v-else)
+  //-     | htlm
+  //-
+  //- WkbkTopSidebar(:base="base")
+  //- WkbkTopNavbar(:base="base")
+  //- .container
+  //-   WkbkTopTab(:base="base")
+  //-   WkbkTopTable(:base="base")
 
 </template>
 
