@@ -18,7 +18,7 @@ export default {
         "type": "is-primary",
         "mobile-burger": false,
         "wrapper-class": "container",
-        "spaced": true,
+        "spaced": false,
         ...this.$attrs,
       }
     },
