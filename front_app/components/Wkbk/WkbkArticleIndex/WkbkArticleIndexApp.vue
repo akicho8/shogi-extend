@@ -11,11 +11,27 @@ client-only
     .MainContainer
       WkbkArticleIndexSidebar(:base="base")
       WkbkArticleIndexNavbar(:base="base")
-      MainSection
-        .container
+
+      .div1
+        .div2
+          b-sidebar(position="static" open type="is-white")
+            WkbkArticleIndexSidebarBody(:base="base")
+        .div3
           //- WkbkArticleIndexTab(:base="base")
           WkbkArticleIndexTag(:base="base")
           WkbkArticleIndexTable(:base="base")
+
+      //- MainSection
+      //- .container.is-fluid
+      //- .columns.is-gapless
+      //-   .column.is-2
+      //-     b-sidebar(left position="static" open fullheight reduce)
+      //-       WkbkArticleIndexSidebarBody(:base="base")
+      //-   .column
+      //-     .div3
+      //-       //- WkbkArticleIndexTab(:base="base")
+      //-       WkbkArticleIndexTag(:base="base")
+      //-       WkbkArticleIndexTable(:base="base")
 
     DebugPre {{$data}}
     DebugPre {{$fetchState.pending}}
@@ -147,9 +163,17 @@ export default {
   .WkbkArticleIndexApp
     .container
       border: 1px dashed change_color($primary, $alpha: 0.5)
+    .div1, .div2, .div3
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .WkbkArticleIndexApp
-  .MainSection.section
+  .div1
+    display: flex
+  .div2
+    .sidebar-content
+      box-shadow: unset
+  .div3
+    width: 100%
     +mobile
       padding: 0.75rem 0.5rem
     +tablet
