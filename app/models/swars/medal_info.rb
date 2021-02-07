@@ -50,7 +50,7 @@ module Swars
 
       { key: "レアマン",           medal_params: { message: "レアな戦法が多い",                       method: "raw",  name: "🍀",                type: nil, },          if_cond: proc { (r = deviation_avg) && r < 50.0     },},
 
-      { key: "切断マン",           medal_params: { message: "悔しかったので切断した", method: "raw",  name: "💩",                type: nil, },          if_cond: proc { (r = lose_ratio_of("DISCONNECT")) && r > 0 },},
+      { key: "切断マン",           medal_params: { message: "切断したことがある",                     method: "raw",  name: "💩",                type: nil, },          if_cond: proc { (r = lose_ratio_of("DISCONNECT")) && r > 0 },},
 
       { key: "角不成マン",         medal_params: { message: "角不成をした",                           method: "raw",  name: "☠",                 type: nil, },          if_cond: proc { all_tag_ratio_for("角不成") > 0 }           },
       { key: "飛車不成マン",       medal_params: { message: "飛車不成をした",                         method: "raw",  name: "💀",                type: nil, },          if_cond: proc { all_tag_ratio_for("飛車不成") > 0 }           },
