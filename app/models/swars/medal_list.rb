@@ -385,11 +385,13 @@ module Swars
     end
 
     # final_key の方法で負けた率 (分母: 負け数)
+    # ただし最低14手は指していること
     def lose_ratio_of(final_key)
       @lose_ratio_of ||= {}
       @lose_ratio_of[final_key] ||= -> {
         if lose_count.positive?
           s = lose_scope.joins(:battle).where(Swars::Battle.arel_table[:final_key].eq(final_key))
+          s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
           c = s.count
           c.fdiv(lose_count)
         end

@@ -4,7 +4,7 @@ module Swars
     include ApplicationMemoryRecord
     memory_record [
       # ヒットしたらbreakなので順序重要
-      { key: "切断マン",           message: "悔しかったので切断した",                                                        medal_params: "💩", if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :DISCONNECT } },
+      { key: "切断マン",           message: "悔しかったので切断した",                                                        medal_params: "💩", if_cond: -> m { m.judge_key == "lose" && m.battle.turn_max >= 14 && m.battle.final_info.key == :DISCONNECT } },
       { key: "棋神マン",           message: "棋神召喚疑惑あり",                                                              medal_params: "🤖", if_cond: -> m { m.judge_key == "win" && m.battle.turn_max >= 50 && (m.two_serial_max || 0) >= 15 } },
       { key: "1手詰じらしマン",    message: -> m { "1手詰を#{m.think_last_s}焦らして歪んだ優越感に浸った" },                 medal_params: "😈", if_cond: -> m { (t = m.battle.rule_info.teasing_limit) && (m.think_last || 0) >= t && m.judge_key == "win" && m.battle.final_info.key == :CHECKMATE } },
       { key: "絶対投了しないマン", message: -> m { "悔しかったので時間切れになるまで#{m.think_last_s}放置した" },            medal_params: "🧟", if_cond: -> m { (t = m.battle.rule_info.long_leave_alone) && (m.think_last || 0) >= t && m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT },},

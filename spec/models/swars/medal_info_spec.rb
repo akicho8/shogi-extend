@@ -69,17 +69,23 @@ module Swars
     end
 
     describe "切断マン" do
-      before do
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      end
+
+      def test1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597]], final_key: :DISCONNECT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
+        @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"切断マン")
       end
 
       it do
-        assert { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"切断マン") }
+        assert { test1(13) == false }
+        assert { test1(14) == true  }
       end
     end
 
@@ -103,17 +109,22 @@ module Swars
     end
 
     describe "切れ負けマン" do
-      before do
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      end
+      def test1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597]], final_key: :TIMEOUT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
+        @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"切れ負けマン")
       end
 
       it do
-        assert { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"切れ負けマン") }
+        assert { test1(13) == false }
+        assert { test1(14) == true  }
       end
     end
 

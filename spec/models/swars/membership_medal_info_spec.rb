@@ -37,10 +37,14 @@ module Swars
     end
 
     describe "切断マン" do
-      def test1
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      end
+
+      def test1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597]], final_key: :DISCONNECT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -48,8 +52,8 @@ module Swars
       end
 
       it do
-        test1                   # => [:切断マン, "悔しかったので切断した"]
-        assert { test1 == [:切断マン, "悔しかったので切断した"] }
+        assert { test1(13) != [:切断マン, "悔しかったので切断した"] }
+        assert { test1(14) == [:切断マン, "悔しかったので切断した"] }
       end
     end
 
@@ -242,7 +246,7 @@ module Swars
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .........
-# >> 
+# >>
 # >> Finished in 12.15 seconds (files took 2.68 seconds to load)
 # >> 9 examples, 0 failures
-# >> 
+# >>
