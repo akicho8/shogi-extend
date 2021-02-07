@@ -19,7 +19,7 @@ module MemoryRecordBind
   included do
     cattr_accessor(:pure_class) { "#{name}Info".constantize }
 
-    acts_as_list top_of_list: 0
+    acts_as_list top_of_list: 0, touch_on_update: false
     default_scope { order(:position) }
 
     with_options presence: true do

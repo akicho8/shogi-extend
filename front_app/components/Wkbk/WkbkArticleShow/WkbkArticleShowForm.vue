@@ -31,6 +31,10 @@
           b-taglist
             template(v-for="tag in base.article.owner_tag_list")
               b-tag(@click="tag_handle(tag)") {{tag}}
+
+      b-field(label="公開設定" custom-class="is-small")
+        .control
+          | {{base.article.folder.name}}
 </template>
 
 <script>

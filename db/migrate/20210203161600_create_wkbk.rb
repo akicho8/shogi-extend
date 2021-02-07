@@ -7,6 +7,8 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
       create_table :wkbk_folders, force: true do |t|
         t.string :key, null: false, index: { unique: true }
         t.integer :position, null: false, index: true
+        t.integer :books_count,    default: 0, null: false, index: false, comment: "問題集数"
+        t.integer :articles_count, default: 0, null: false, index: false, comment: "問題数"
         t.timestamps
       end
 
@@ -30,6 +32,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.string :key,                      null: false, index: { unique: true }
 
         t.belongs_to :user,                 null: false, foreign_key: true,                            comment: "作成者"
+        t.belongs_to :folder,               null: false, foreign_key: {to_table: :wkbk_folders},       comment: "フォルダ"
         t.belongs_to :lineage,              null: false, foreign_key: {to_table: :wkbk_lineages},      comment: "種類"
         t.belongs_to :book,                 null: true,  foreign_key: {to_table: :wkbk_books},         comment: "本"
 

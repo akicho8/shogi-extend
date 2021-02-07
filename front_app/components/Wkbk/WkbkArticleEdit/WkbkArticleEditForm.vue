@@ -12,8 +12,7 @@
         b-select(v-model="base.article.book_key" expanded)
           option(:value="null")
           option(v-for="e in base.books" :value="e.key")
-            | {{e.title}}
-            | {{base.FolderInfo.fetch(e.folder_key).pulldown_name}}
+            | {{e.title}} ({{e.folder.name}})
 
       b-field(label="種類" label-position="on-border" v-if="base.LineageInfo")
         b-select(v-model="base.article.lineage_key" expanded)
@@ -34,6 +33,13 @@
       b-field(label="タグ" label-position="on-border")
         //- https://buefy.org/documentation/taginput
         b-taginput(v-model="base.article.owner_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
+
+      b-field(label="表示範囲" custom-class="is-small")
+        b-field.is-marginless
+          template(v-for="e in base.FolderInfo.values")
+            b-radio-button(v-model="base.book.folder_key" :native-value="e.key")
+              b-icon(:icon="e.icon" size="is-small")
+              span {{e.name}}
 </template>
 
 <script>
@@ -67,6 +73,13 @@ export default {
       handler(v) {
         this.sound_play("click")
         this.talk(v)
+      },
+    },
+    "article.folder_key": {
+      handler(v) {
+        const folder_info = this.base.FolderInfo.fetch(v)
+        this.sound_play("click")
+        this.talk(folder_info.name)
       },
     },
   },

@@ -16,10 +16,10 @@ export class Book extends ModelBase {
     // vue の data に設定すると Book が Object になっている謎
     // なのでここで入れているが何かがおもいっきり間違っている気がする
     // あとでぜったいバグるところ
-    if (this.folder) {
-      throw new Error("すでに this.folder がある")
-    }
-    this.folder = FolderInfo.fetch(this.folder_key).attributes
+    // if (this.folder) {
+    //   throw new Error("すでに this.folder がある")
+    // }
+    // this.folder = FolderInfo.fetch(this.folder_key).attributes
   }
 
   //////////////////////////////////////////////////////////////////////////////// 権限

@@ -22,7 +22,7 @@ client-only
 </template>
 
 <script>
-import { Article        } from "../models/article.js"
+import { Article     } from "../models/article.js"
 
 import { support_parent } from "./support_parent.js"
 import { app_table      } from "./app_table.js"

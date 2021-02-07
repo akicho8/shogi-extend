@@ -1,4 +1,5 @@
 import { ArticleIndexColumnInfo } from "../models/article_index_column_info.js"
+import { FolderInfo  } from '../models/folder_info.js'
 import _ from "lodash"
 
 export const app_table = {
@@ -57,6 +58,7 @@ export const app_table = {
   },
   computed: {
     ArticleIndexColumnInfo()  { return ArticleIndexColumnInfo },
+    FolderInfo() { return FolderInfo },
 
     url_params() {
       return {

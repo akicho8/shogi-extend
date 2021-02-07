@@ -9,11 +9,12 @@ export class Article extends ModelBase {
 
   // 保存後にどこのスコープにするか？
   get redirect_scope_after_save() {
-    if (this.book) {
-      return this.book.folder_key
-    } else {
-      return "private"
-    }
+    return this.folder_key
+    // if (this.book) {
+    //   return this.book.folder_key
+    // } else {
+    //   return "private"
+    // }
   }
 
   //////////////////////////////////////////////////////////////////////////////// 権限

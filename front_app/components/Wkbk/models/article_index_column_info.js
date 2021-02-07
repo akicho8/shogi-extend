@@ -11,6 +11,7 @@ export class ArticleIndexColumnInfo extends MemoryRecord {
       { key: "turn_max",       name: "手数",     visible: true,  togglable: true,  },
       { key: "difficulty",     name: "難易度",   visible: true,  togglable: true,  },
       { key: "owner_tag_list", name: "タグ",     visible: true,  togglable: true,  },
+      { key: "folder_key",     name: "公開設定", visible: true,  togglable: true,  },
       { key: "created_at",     name: "作成日時", visible: false, togglable: true,  },
       { key: "updated_at",     name: "更新日時", visible: true,  togglable: true,  },
     ]

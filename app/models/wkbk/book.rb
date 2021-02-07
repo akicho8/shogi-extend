@@ -47,7 +47,7 @@ module Wkbk
           title = "#{e[:user]} - #{e[:folder_key]} - #{e[:key]}"
           book = User.public_send(e[:user]).wkbk_books.create!(key: e[:key], folder_key: e[:folder_key], title: title)
           Article.where(key: e[:key]).destroy_all
-          article = book.articles.create!(key: e[:key], title: title)
+          article = book.articles.create!(key: e[:key], title: title, folder_key: e[:folder_key])
         end
       end
 
@@ -79,6 +79,15 @@ module Wkbk
 
     def self.index_json_type5
       {
+        only: [
+          :id,
+          :key,
+          :title,
+          :description,
+          :articles_count,
+          :created_at,
+          :updated_at,
+        ],
         methods: [
           :folder_key,
           :sequence_key,
@@ -86,8 +95,15 @@ module Wkbk
           :avatar_path,
         ],
         include: {
-          user: { only: [:id, :name, :key], methods: [:avatar_path] },
+          user: { only: [:key, :id, :name], methods: [:avatar_path] },
+          folder: { only: [:key, :id, :name],},
         },
+      }
+    end
+
+    # 編集用
+    def self.json_type5
+      {
         only: [
           :id,
           :key,
@@ -97,12 +113,6 @@ module Wkbk
           :created_at,
           :updated_at,
         ],
-      }
-    end
-
-    # 編集用
-    def self.json_type5
-      {
         methods: [
           :folder_key,
           :sequence_key,
@@ -110,18 +120,9 @@ module Wkbk
           :raw_avatar_path,
         ],
         include: {
-          user: { only: [:id, :name, :key], methods: [:avatar_path] },
-
+          user: { only: [:key, :id, :name], methods: [:avatar_path] },
+          folder: { only: [:key, :id, :name],},
         },
-        only: [
-          :id,
-          :key,
-          :title,
-          :description,
-          :articles_count,
-          :created_at,
-          :updated_at,
-        ],
       }
     end
 
@@ -144,10 +145,8 @@ module Wkbk
           :og_meta,
         ],
         include: {
-          user: {
-            only: [:id, :name, :key],
-            methods: [:avatar_path],
-          },
+          user: { only: [:key, :id, :name], methods: [:avatar_path],},
+          folder: { only: [:key, :id, :name],},
         },
       }
     end
@@ -210,6 +209,9 @@ module Wkbk
       {
         only: [:id, :key, :title],
         methods: [:folder_key],
+        include: {
+          folder: { only: [:key, :id, :name],},
+        },
       }
     end
 
@@ -359,7 +361,7 @@ module Wkbk
     #             ],
     #             include: {
     #               user: {
-    #                 only: [:id, :name, :key],
+    #                 only: [:key, :id, :name],
     #                 methods: [:avatar_path],
     #               },
     #             },
@@ -443,8 +445,8 @@ module Wkbk
     end
 
     def default_assign
-      self.folder_key = :private
-      self.sequence_key = :shuffle
+      self.folder_key ||= :public
+      self.sequence_key ||= :shuffle
 
       if user
         self.title ||= "#{user.name}の将棋問題集第#{user.wkbk_books.count.next}弾(仮)"

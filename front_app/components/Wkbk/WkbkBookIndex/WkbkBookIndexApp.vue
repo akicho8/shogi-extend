@@ -37,7 +37,6 @@
 
 <script>
 import { Book        } from "../models/book.js"
-import { FolderInfo  } from '../models/folder_info.js'
 
 import { support_parent } from "./support_parent.js"
 import { app_table      } from "./app_table.js"

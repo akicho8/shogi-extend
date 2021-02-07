@@ -39,7 +39,8 @@
     b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
 
     b-table-column(v-slot="{row}" custom-key="folder_key" field="folder_id" :label="base.BookIndexColumnInfo.fetch('folder_key').name" sortable :visible="!!base.visible_hash.folder_key")
-      b-icon(:icon="row.folder.icon")
+      //- | {{base.FolderInfo.fetch(e.folder_key).icon}}
+      b-icon(:icon="base.FolderInfo.fetch(row.folder.key).icon")
 
     b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable :visible="!!base.visible_hash.created_at") {{row_time_format(row.created_at)}}
     b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{row_time_format(row.updated_at)}}

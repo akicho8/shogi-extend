@@ -1187,6 +1187,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_161600) do
   create_table "wkbk_articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.bigint "user_id", null: false, comment: "作成者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
     t.bigint "lineage_id", null: false, comment: "種類"
     t.bigint "book_id", comment: "本"
     t.string "init_sfen", null: false, comment: "問題"
@@ -1203,6 +1204,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_161600) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["book_id"], name: "index_wkbk_articles_on_book_id"
     t.index ["difficulty"], name: "index_wkbk_articles_on_difficulty"
+    t.index ["folder_id"], name: "index_wkbk_articles_on_folder_id"
     t.index ["init_sfen"], name: "index_wkbk_articles_on_init_sfen"
     t.index ["key"], name: "index_wkbk_articles_on_key", unique: true
     t.index ["lineage_id"], name: "index_wkbk_articles_on_lineage_id"
@@ -1230,6 +1232,8 @@ ActiveRecord::Schema.define(version: 2021_02_03_161600) do
   create_table "wkbk_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
+    t.integer "books_count", default: 0, null: false, comment: "問題集数"
+    t.integer "articles_count", default: 0, null: false, comment: "問題数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["key"], name: "index_wkbk_folders_on_key", unique: true
@@ -1393,6 +1397,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_161600) do
   add_foreign_key "swars_zip_dl_logs", "users"
   add_foreign_key "wkbk_articles", "users"
   add_foreign_key "wkbk_articles", "wkbk_books", column: "book_id"
+  add_foreign_key "wkbk_articles", "wkbk_folders", column: "folder_id"
   add_foreign_key "wkbk_articles", "wkbk_lineages", column: "lineage_id"
   add_foreign_key "wkbk_books", "users"
   add_foreign_key "wkbk_books", "wkbk_folders", column: "folder_id"

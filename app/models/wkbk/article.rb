@@ -30,6 +30,7 @@
 
 module Wkbk
   class Article < ApplicationRecord
+    include FolderMod
     include ImportExportMod
     include InfoMod
 
@@ -125,25 +126,6 @@ module Wkbk
     # 一覧・編集用
     def self.json_type5
       {
-        methods: [
-          # :folder_key,
-          :lineage_key,
-        ],
-        include: {
-          user: { only: [:id, :name, :key], methods: [:avatar_path],},
-          moves_answers: {},
-          book: {
-            only: [
-              :id,
-              :key,
-              :title,
-              :articles_count,
-            ],
-            methods: [
-              :folder_key,
-            ],
-          },
-        },
         only: [
           :id,
           :key,
@@ -163,17 +145,60 @@ module Wkbk
           :created_at,
           :updated_at,
         ],
+        methods: [
+          :folder_key,
+          :lineage_key,
+        ],
+        include: {
+          user: { only: [:key, :id, :name], methods: [:avatar_path],},
+          folder: { only: [:key, :id, :name],},
+          moves_answers: {},
+          book: {
+            only: [
+              :id,
+              :key,
+              :title,
+              :articles_count,
+            ],
+            methods: [
+              :folder_key,
+            ],
+            include: {
+              folder: { only: [:key, :id, :name],},
+            },
+          },
+        },
       }
     end
 
     def self.show_json_struct
       {
+        only: [
+          :id,
+          :key,
+          :book_id,
+          :book_key,
+          :position,
+          :init_sfen,
+          :viewpoint,
+          :title,
+          :description,
+          :owner_tag_list,
+          :direction_message,
+          :difficulty,
+          :turn_max,
+          :mate_skip,
+          :moves_answers_count,
+          :created_at,
+          :updated_at,
+        ],
         methods: [
-          # :folder_key,
+          :folder_key,
           :lineage_key,
         ],
         include: {
-          user: { only: [:id, :name, :key], methods: [:avatar_path],},
+          user: { only: [:key, :id, :name], methods: [:avatar_path],},
+          folder: { only: [:key, :id, :name],},
           lineage: { only: [:id, :key], methods: [:name]},
           moves_answers: {},
           book: {
@@ -183,33 +208,14 @@ module Wkbk
               :title,
               :articles_count,
             ],
-            include: {
-              folder: { only: [:id, :name],},
-            },
             methods: [
               :folder_key,
             ],
+            include: {
+              folder: { only: [:key, :id, :name] },
+            },
           },
         },
-        only: [
-          :id,
-          :key,
-          :book_id,
-          :book_key,
-          :position,
-          :init_sfen,
-          :viewpoint,
-          :title,
-          :description,
-          :owner_tag_list,
-          :direction_message,
-          :difficulty,
-          :turn_max,
-          :mate_skip,
-          :moves_answers_count,
-          :created_at,
-          :updated_at,
-        ],
       }
     end
 
@@ -259,15 +265,7 @@ module Wkbk
         self.mate_skip = nil
       end
 
-      # if changes_to_save[:book_id]
-      #   if book
-      #     self.folder_key = book.folder_key
-      #   else
-      #     self.folder_key = :private
-      #   end
-      # else
-      #   self.folder_key ||= :private
-      # end
+      self.folder_key ||= book&.folder_key || :public
 
       normalize_zenkaku_to_hankaku(*[
                                      :title,
@@ -363,6 +361,7 @@ module Wkbk
         attrs = article.slice(*[
                                 :book_id,
                                 :book_key,
+                                :folder_key,
                                 # :position,
                                 :init_sfen,
                                 :viewpoint,
@@ -380,7 +379,6 @@ module Wkbk
         save!
 
         if records = article[:moves_answers]
-
           # 削除
           # [1, 2, 3] があるとき [1, 3] をセットすることで [2] が削除される
           self.moves_answer_ids = records.collect { |e| e[:id] }
@@ -465,7 +463,7 @@ module Wkbk
     #             methods: [
     #             ],
     #             include: {
-    #               user: { only: [:id, :name, :key], methods: [:avatar_path],},
+    #               user: { only: [:key, :id, :name], methods: [:avatar_path],},
     #               moves_answers: {
     #                 only: [:moves_count, :moves_str],
     #               },
@@ -499,11 +497,20 @@ module Wkbk
     # 本があれば本の権限に従う
     # 本がなければ所有者のみ編集可能
     def showable_p(current_user)
-      if book
-        book.showable_p(current_user)
-      else
-        user == current_user
-      end
+      # case
+      # when :show
+      folder_eq(:public) || user == current_user
+      # when :edit
+      #   user && current_user && (user == current_user)
+      # else
+      #   raise "must not happen"
+      # end
+
+      # if book
+      #   book.showable_p(current_user)
+      # else
+      #   user == current_user
+      # end
     end
 
     def og_image_path
@@ -534,11 +541,13 @@ module Wkbk
 
     def default_assign
       # "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
-      self.init_sfen        ||= "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
-      self.viewpoint        ||= "black"
-      self.mate_skip        ||= false
-      self.difficulty ||= 1
-      self.owner_tag_list   ||= []
+
+      self.folder_key     ||= book&.folder_key || :public
+      self.init_sfen      ||= "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
+      self.viewpoint      ||= "black"
+      self.mate_skip      ||= false
+      self.difficulty     ||= 1
+      self.owner_tag_list ||= []
 
       if Rails.env.development?
         self.init_sfen = "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
