@@ -1,5 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
+// app/models/wkbk/sequence_info.rb
 export class SequenceInfo extends MemoryRecord {
   static get define() {
     return [
@@ -12,7 +13,7 @@ export class SequenceInfo extends MemoryRecord {
       { key: "created_at_desc", name: "問題作成日時降順", },
       { key: "updated_at_asc",  name: "問題最終更新昇順", },
       { key: "updated_at_desc", name: "問題最終更新降順", },
-      { key: "customize",       name: "カスタマイズ",     },
+      { key: "position_asc",    name: "カスタマイズ",     },
     ]
   }
 }
