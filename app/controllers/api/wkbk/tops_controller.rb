@@ -39,9 +39,7 @@ module Api
         @current_books ||= -> {
           s = ::Wkbk::Book.public_only
           if current_user
-            # 本当は↓としたいけど or するときは両方同じ join が必要らしいのでしかたなく private_only している
-            # s = s.or(::Wkbk::Book.where(user: current_user))
-            s = s.or(::Wkbk::Book.private_only.where(user: current_user))
+            s = s.or(current_user.wkbk_books.joins(:folder))
           end
           s = s.order(updated_at: :desc)
           s = page_scope(s)       # page_mod.rb

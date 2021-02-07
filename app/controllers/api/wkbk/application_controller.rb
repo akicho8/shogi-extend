@@ -17,8 +17,15 @@ module Api
         end
       end
 
-      def show_permission_valid!(record)
-        unless record.showable_p(current_user)
+      # |----------+------+--------+-------------+-----------------------------|
+      # | 種類     | 一覧 | 直リン | 一覧条件    | 直リン表示条件              |
+      # |----------+------+--------+-------------+-----------------------------|
+      # | 公開     | ○   | ○     | public_only | true                        |
+      # | 限定公開 | ×   | ○     | public_only | true                        |
+      # | 非公開   | ×   | ×     | public_only | current_user == record.user |
+      # |----------+------+--------+-------------+-----------------------------|
+      def show_can!(record)
+        unless record.show_can(current_user)
           raise WkbkPermissionError
         end
       end

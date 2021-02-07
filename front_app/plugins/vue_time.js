@@ -32,7 +32,7 @@ export default {
         return date.format("HH:mm")
       }
       if (diff_year < 1) {
-        return date.format("M/D HH:mm")
+        return date.format("MM/DD")
       }
       return date.format("YYYY-MM-DD")
     },

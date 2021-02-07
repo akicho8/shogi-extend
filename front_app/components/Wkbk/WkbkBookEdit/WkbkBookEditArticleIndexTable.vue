@@ -43,7 +43,7 @@
 
       //- sortable :visible="!!base.visible_hash.title"
 
-      b-table-column(v-slot="{row}" custom-key="operation" label="" width="0")
+      b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0")
         b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")
         b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
 
@@ -58,7 +58,7 @@
         nuxt-link.article_title.is_truncate1(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
           | {{row.title}}
 
-      b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="星" :width="1" numeric)
+      b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難" :width="0" numeric)
         | {{row.difficulty}}
 
       //- nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")

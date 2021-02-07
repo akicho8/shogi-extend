@@ -62,8 +62,8 @@
           //- b-dropdown-item(separator)
           b-dropdown-item(has-link)
             a(@click="tweet_window_popup({text: row.tweet_body})") ツイート
-          b-dropdown-item(separator)
-          b-dropdown-item(has-link)
+          b-dropdown-item.is-hidden-desktop(separator)
+          b-dropdown-item.is-hidden-desktop(has-link)
             a.deleet キャンセル
 
         //- this.tweet_window_popup({text: this.book.tweet_body})

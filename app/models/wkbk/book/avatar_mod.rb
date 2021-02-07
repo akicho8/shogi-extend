@@ -49,7 +49,7 @@ module Wkbk
       end
 
       def raw_avatar_path=(v)
-        unless v
+        if v == false
           if avatar.attached?
             avatar.purge_later
           end

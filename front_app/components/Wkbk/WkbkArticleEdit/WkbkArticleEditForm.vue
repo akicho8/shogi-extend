@@ -12,7 +12,7 @@
         b-select(v-model="base.article.book_key" expanded)
           option(:value="null")
           option(v-for="e in base.books" :value="e.key")
-            | {{e.title}} ({{e.folder.name}})
+            | {{e.title}} ({{base.FolderInfo.fetch(e.folder_key).name}})
 
       b-field(label="種類" label-position="on-border" v-if="base.LineageInfo")
         b-select(v-model="base.article.lineage_key" expanded)

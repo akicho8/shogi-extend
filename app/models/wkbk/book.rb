@@ -218,7 +218,7 @@ module Wkbk
     belongs_to :user, class_name: "::User"
     # belongs_to :book
 
-    has_many :articles, dependent: :nullify # 記事
+    has_many :articles, dependent: :restrict_with_error
 
     before_validation do
       if Rails.env.test? || Rails.env.development?
@@ -389,18 +389,18 @@ module Wkbk
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
     end
 
-    def showable_p(current_user)
-      # case
-      # when :show
-      folder_eq(:public) || user == current_user
-      # when :edit
-      #   user && current_user && (user == current_user)
-      # else
-      #   raise "must not happen"
-      # end
-    end
+    # def show_can(current_user)
+    #   # case
+    #   # when :show
+    #   folder_eq(:public) || user == current_user
+    #   # when :edit
+    #   #   user && current_user && (user == current_user)
+    #   # else
+    #   #   raise "must not happen"
+    #   # end
+    # end
 
-    # def showable_p(action, current_user)
+    # def show_can(action, current_user)
     #   case
     #   when :show
     #     folder_eq(:public) || user == current_user
@@ -411,8 +411,14 @@ module Wkbk
     #   end
     # end
 
+    # 所有者だった場合は全部見せる
     def ordered_articles
-      sequence.pure_info.apply[articles]
+      if user == current_user
+        s = articles
+      else
+        s = articles.public_or_limited
+      end
+      sequence.pure_info.apply[s]
     end
 
     def og_image_path

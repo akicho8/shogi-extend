@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
@@ -492,25 +491,6 @@ module Wkbk
 
     def linked_title(options = {})
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
-    end
-
-    # 本があれば本の権限に従う
-    # 本がなければ所有者のみ編集可能
-    def showable_p(current_user)
-      # case
-      # when :show
-      folder_eq(:public) || user == current_user
-      # when :edit
-      #   user && current_user && (user == current_user)
-      # else
-      #   raise "must not happen"
-      # end
-
-      # if book
-      #   book.showable_p(current_user)
-      # else
-      #   user == current_user
-      # end
     end
 
     def og_image_path

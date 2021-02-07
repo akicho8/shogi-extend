@@ -44,12 +44,10 @@ module Api
       def show
         retv = {}
         retv[:config] = ::Wkbk::Config
-
         book = ::Wkbk::Book.find_by!(key: params[:book_key])
-        show_permission_valid!(book)
-
+        show_can!(book)
         v = book.as_json(::Wkbk::Book.show_json_struct)
-        v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.show_articles_json_struct)
+        v[:articles] = book.ordered_articles(current_user).as_json(::Wkbk::Book.show_articles_json_struct)
         retv[:book] = v
         render json: retv
       end
@@ -71,7 +69,6 @@ module Api
           book.default_assign
         end
         v = book.as_json(::Wkbk::Book.json_type5)
-        # v[:articles] = book.ordered_articles.as_json(::Wkbk::Book.edit_articles_json_struct)
         v[:articles] = book.articles.order(:position).as_json(::Wkbk::Book.edit_articles_json_struct)
         retv[:book] = v
         retv[:meta] = book.og_meta

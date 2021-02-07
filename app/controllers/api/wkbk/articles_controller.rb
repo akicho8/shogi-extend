@@ -53,7 +53,7 @@ module Api
         retv = {}
         retv[:config] = ::Wkbk::Config
         article = ::Wkbk::Article.find_by!(key: params[:article_key])
-        show_permission_valid!(article)
+        show_can!(article)
         retv[:article] = article.as_json(::Wkbk::Article.show_json_struct)
         retv[:meta] = article.og_meta
         render json: retv
