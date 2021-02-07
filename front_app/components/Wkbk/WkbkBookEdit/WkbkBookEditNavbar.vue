@@ -2,7 +2,7 @@
 MainNavbar.WkbkBookEditNavbar(:spaced="false")
   template(v-if="base.book")
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
+      b-navbar-item(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="sound_play('click')")
         b-icon(icon="chevron-left")
     template(slot="start")
       template(v-if="base.book.title")

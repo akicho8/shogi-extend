@@ -2,7 +2,7 @@
 MainNavbar.WkbkArticleEditNavbar(:spaced="false")
   template(v-if="base.article")
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'library-articles'}" @click.native="sound_play('click')")
+      b-navbar-item(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play('click')")
         b-icon(icon="chevron-left")
     template(slot="start")
       template(v-if="base.article.title")

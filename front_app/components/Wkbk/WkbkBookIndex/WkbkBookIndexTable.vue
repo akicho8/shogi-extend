@@ -25,7 +25,7 @@
       | {{row.key}}
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
-      nuxt-link(:to="{name: 'library-books-book_key', params: {book_key: row.key}}" @click.native="sound_play('click')")
+      nuxt-link(:to="{name: 'rack-books-book_key', params: {book_key: row.key}}" @click.native="sound_play('click')")
         .image.avatar_image.is-inline-block
           img(:src="row.avatar_path" :alt="row.title")
 
@@ -45,10 +45,10 @@
     b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
 
     b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
-      //- nuxt-link(:to="{name: 'library-books-book_key-edit', params: {book_key: row.key}}")
+      //- nuxt-link(:to="{name: 'rack-books-book_key-edit', params: {book_key: row.key}}")
       //-   b-icon(icon="edit")
       //-   | 編集
-      nuxt-link(:to="{name: 'library-articles-new', query: {book_key: row.key}}" v-if="false")
+      nuxt-link(:to="{name: 'rack-articles-new', query: {book_key: row.key}}" v-if="false")
         b-icon(icon="plus")
 
       b-dropdown(append-to-body position="is-bottom-left" @active-change="sound_play('click')")
@@ -56,9 +56,9 @@
           b-icon(icon="dots-horizontal")
         template(v-if="(g_current_user && g_current_user.id === row.user.id) || development_p")
           b-dropdown-item(has-link)
-            nuxt-link(:to="{name: 'library-books-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
+            nuxt-link(:to="{name: 'rack-books-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
           b-dropdown-item(has-link)
-            nuxt-link(:to="{name: 'library-articles-new', query: {book_key: row.key}}"        @click.native="sound_play('click')") 問題追加
+            nuxt-link(:to="{name: 'rack-articles-new', query: {book_key: row.key}}"        @click.native="sound_play('click')") 問題追加
           //- b-dropdown-item(separator)
           b-dropdown-item(has-link)
             a(@click="tweet_window_popup({text: row.tweet_body})") ツイート

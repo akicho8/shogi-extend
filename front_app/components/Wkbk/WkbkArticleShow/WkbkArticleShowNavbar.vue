@@ -2,12 +2,12 @@
 MainNavbar.WkbkArticleShowNavbar(:spaced="false")
   template(v-if="base.article")
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'library-articles'}" @click.native="sound_play('click')")
+      b-navbar-item(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play('click')")
         b-icon(icon="chevron-left")
     template(slot="start")
       b-navbar-item(tag="div") {{base.article.title}}
     template(slot="end")
-      //- b-navbar-item(tag="nuxt-link" :to="{name: 'library-articles-article_key-edit', params: {article_key: base.article.key}}" v-if="base.editable_p")
+      //- b-navbar-item(tag="nuxt-link" :to="{name: 'rack-articles-article_key-edit', params: {article_key: base.article.key}}" v-if="base.editable_p")
       //-   | 編集
       WkbkSidebarToggle(@click="base.sidebar_toggle")
 </template>

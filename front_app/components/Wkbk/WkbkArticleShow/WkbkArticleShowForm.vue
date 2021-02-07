@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     tag_handle(tag) {
-      this.$router.push({name: 'library-articles', query: {tag: tag}})
+      this.$router.push({name: 'rack-articles', query: {tag: tag}})
     },
   },
   watch: {

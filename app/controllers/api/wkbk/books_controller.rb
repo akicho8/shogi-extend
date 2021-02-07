@@ -56,8 +56,8 @@ module Api
       #
       # http://0.0.0.0:3000/api/wkbk/books/edit.json
       # http://0.0.0.0:3000/api/wkbk/books/edit.json?book_key=1
-      # http://0.0.0.0:4000/library/books/new
-      # http://0.0.0.0:4000/library/books/1/edit
+      # http://0.0.0.0:4000/rack/books/new
+      # http://0.0.0.0:4000/rack/books/1/edit
       def edit
         retv = {}
         retv[:config] = ::Wkbk::Config

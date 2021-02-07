@@ -6,8 +6,8 @@ b-sidebar.WkbkTopSidebar.is-unselectable(fullheight right overlay v-model="base.
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          //- b-menu-item(tag="nuxt-link" :to="{name: 'library-books-new'}" label="問題集作成" @click.native="sound_play('click')")
-          b-menu-item(tag="nuxt-link" :to="{name: 'library-articles'}" label="問題リスト" @click.native="sound_play('click')")
+          //- b-menu-item(tag="nuxt-link" :to="{name: 'rack-books-new'}" label="問題集作成" @click.native="sound_play('click')")
+          b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles'}" label="問題リスト" @click.native="sound_play('click')")
         b-menu-list(label="表示オプション" v-if="base.visible_hash")
           b-menu-item.sidebar_columns_toggle(@click="sound_play('click')")
             template(slot="label" slot-scope="props")

@@ -126,7 +126,7 @@ module Wkbk
     end
 
     it "page_url" do
-      assert { article1.page_url == "http://0.0.0.0:4000/library/articles/#{article1.id}/edit" }
+      assert { article1.page_url == "http://0.0.0.0:4000/rack/articles/#{article1.id}/edit" }
     end
 
     it "share_board_png_url" do

@@ -56,7 +56,7 @@ module Wkbk
     #   {
     #     :title       => "新規 - 問題",
     #     :description => "",
-    #     :og_image    => "library-books",
+    #     :og_image    => "rack-books",
     #   }
     # end
 
@@ -311,7 +311,7 @@ module Wkbk
     # end
 
     def page_url(options = {})
-      UrlProxy.wrap2("/library/articles/#{id}/edit")
+      UrlProxy.wrap2("/rack/articles/#{id}/edit")
     end
 
     def share_board_png_url
@@ -508,13 +508,13 @@ module Wkbk
         {
           :title       => "新規 - 問題",
           :description => "",
-          :og_image    => "library-books",
+          :og_image    => "rack-books",
         }
       else
         {
           :title       => [title, user.name].join(" - "),
           :description => description || "",
-          :og_image    => og_image_path || "library-books",
+          :og_image    => og_image_path || "rack-books",
         }
       end
     end

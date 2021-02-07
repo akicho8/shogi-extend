@@ -1,10 +1,10 @@
 <template lang="pug">
 MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
   template(slot="brand")
-    b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
+    b-navbar-item(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
     //- NavbarItemHome
-    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'library-articles'}") 問題リスト
+    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack-articles'}") 問題リスト
 
   template(slot="end")
     NavbarItemLogin
@@ -21,7 +21,7 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fl
           .has-text-grey(v-else)
             | {{e.name}}
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'library-articles-new'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
     WkbkSidebarToggle.is-hidden-desktop(@click="base.sidebar_toggle")

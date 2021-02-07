@@ -12,7 +12,7 @@ export const app_tweet = {
       return {}
     },
     current_url() {
-      let url = new URL(this.$config.MY_SITE_URL + `/library/articles/${this.article.key}`)
+      let url = new URL(this.$config.MY_SITE_URL + `/rack/articles/${this.article.key}`)
       _.each(this.current_url_params, (v, k) => {
         url.searchParams.set(k, v)
       })

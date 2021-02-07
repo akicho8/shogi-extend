@@ -2,16 +2,16 @@
 MainNavbar.WkbkBookIndexNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
   template(slot="brand")
     //- NavbarItemHome
-    b-navbar-item(tag="nuxt-link" :to="{name: 'library'}" @click.native="sound_play('click')")
+    b-navbar-item(tag="nuxt-link" :to="{name: 'rack'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
-    //- b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'library-books'}") みんなの将棋問題集
-    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'library-books'}") 問題集リスト
+    //- b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack-books'}") みんなの将棋問題集
+    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack-books'}") 問題集リスト
 
   template(slot="end")
     NavbarItemLogin
     NavbarItemProfileLink
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'library-books-new'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-books-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
     WkbkSidebarToggle(@click="base.sidebar_toggle")

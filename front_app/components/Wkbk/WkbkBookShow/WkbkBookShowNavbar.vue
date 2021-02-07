@@ -5,7 +5,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
       WkbkSidebarToggle(@click="base.sidebar_toggle")
 
       template(v-if="base.is_standby_p")
-        b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
+        b-navbar-item(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="sound_play('click')")
           b-icon(icon="chevron-left")
 
       template(v-if="base.is_running_p")

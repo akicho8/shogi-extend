@@ -50,25 +50,25 @@
       //- b-table-column(v-slot="{row}" custom-key="position"         field="position"         label="POS"    :width="1" numeric :visible="development_p") {{row.position + 1}}
 
       //- b-table-column(v-slot="{row}" custom-key="key"              field="key"              label="KEY"     :width="1" numeric)
-      //-   nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+      //-   nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
       //-     | {{row.key}}
 
       b-table-column(v-slot="{row}" custom-key="title"            field="title"            label="タイトル")
-        //- nuxt-link.article_title(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
-        nuxt-link.article_title.is_truncate1(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+        //- nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+        nuxt-link.article_title.is_truncate1(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
           | {{row.title}}
 
       b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難" :width="0" numeric)
         | {{row.difficulty}}
 
-      //- nuxt-link(:to="{name: 'library-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+      //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
       //- | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
       //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
       //-   WkbkUserName(:user="row.user")
       //-
       //- b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
-      //-   nuxt-link(:to="{name: 'library-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
+      //-   nuxt-link(:to="{name: 'rack-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
       //-
       //-     | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.articles_count}})
       //-
@@ -85,7 +85,7 @@
       //-
       //- b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
       //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-      //-     nuxt-link(:to="{name: 'library-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
+      //-     nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
 
       //- template(slot="empty" v-if="base.articles != null")
       //-   section.section.is-unselectable
