@@ -11,8 +11,12 @@
     .MainContainer
       WkbkBookIndexSidebar(:base="base")
       WkbkBookIndexNavbar(:base="base")
-      MainSection
-        .container
+
+      .left_and_right
+        .left_block.is-hidden-touch
+          b-sidebar(position="static" open type="is-white")
+            WkbkBookIndexSidebarBody(:base="base")
+        .right_block
           //- WkbkBookIndexTab(:base="base")
           WkbkBookIndexTable(:base="base")
 
@@ -130,11 +134,19 @@ export default {
   .WkbkBookIndexApp
     .container
       border: 1px dashed change_color($primary, $alpha: 0.5)
+    .left_and_right, .left_block, .right_block
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .WkbkBookIndexApp
-  .MainSection.section
-    +mobile
-      padding: 0.75rem 0.5rem
-    +tablet
-      padding: 1rem
+  .left_and_right
+    display: flex
+    .left_block
+      .sidebar-content
+        box-shadow: unset
+    .right_block
+      width: 100%
+      +mobile
+        padding: 0.75rem 0.5rem
+      +tablet
+        padding: 1rem
 </style>

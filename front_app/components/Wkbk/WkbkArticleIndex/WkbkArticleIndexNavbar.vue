@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fluid")
+MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
   template(slot="brand")
     b-navbar-item(tag="nuxt-link" :to="{name: 'library-books'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
@@ -24,7 +24,7 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fl
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'library-articles-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
-    WkbkSidebarToggle(@click="base.sidebar_toggle")
+    WkbkSidebarToggle.is-hidden-desktop(@click="base.sidebar_toggle")
 </template>
 
 <script>
@@ -38,5 +38,4 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkArticleIndexNavbar
 </style>

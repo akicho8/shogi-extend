@@ -12,11 +12,11 @@ client-only
       WkbkArticleIndexSidebar(:base="base")
       WkbkArticleIndexNavbar(:base="base")
 
-      .div1
-        .div2
+      .left_and_right
+        .left_block.is-hidden-touch
           b-sidebar(position="static" open type="is-white")
             WkbkArticleIndexSidebarBody(:base="base")
-        .div3
+        .right_block
           //- WkbkArticleIndexTab(:base="base")
           WkbkArticleIndexTag(:base="base")
           WkbkArticleIndexTable(:base="base")
@@ -28,7 +28,7 @@ client-only
       //-     b-sidebar(left position="static" open fullheight reduce)
       //-       WkbkArticleIndexSidebarBody(:base="base")
       //-   .column
-      //-     .div3
+      //-     .right_block
       //-       //- WkbkArticleIndexTab(:base="base")
       //-       WkbkArticleIndexTag(:base="base")
       //-       WkbkArticleIndexTable(:base="base")
@@ -163,19 +163,19 @@ export default {
   .WkbkArticleIndexApp
     .container
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    .div1, .div2, .div3
+    .left_and_right, .left_block, .right_block
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .WkbkArticleIndexApp
-  .div1
+  .left_and_right
     display: flex
-  .div2
-    .sidebar-content
-      box-shadow: unset
-  .div3
-    width: 100%
-    +mobile
-      padding: 0.75rem 0.5rem
-    +tablet
-      padding: 1rem
+    .left_block
+      .sidebar-content
+        box-shadow: unset
+    .right_block
+      width: 100%
+      +mobile
+        padding: 0.75rem 0.5rem
+      +tablet
+        padding: 1rem
 </style>

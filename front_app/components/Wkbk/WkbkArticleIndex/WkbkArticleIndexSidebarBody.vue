@@ -4,8 +4,11 @@
     //- b-menu-list(label="Action" v-if="development_p")
     //-   b-menu-item(tag="nuxt-link" :to="{name: 'library-articles-new'}" label="問題作成" @click.native="sound_play('click')")
 
-    b-menu-list(label="表示オプション")
+    b-menu-list(label="コンテンツ")
+      b-menu-item(tag="nuxt-link" :to="{name: 'library-books'}"    label="問題集リスト" @click.native="sound_play('click')")
+      b-menu-item(tag="nuxt-link" :to="{name: 'library-articles'}" label="問題リスト"   @click.native="sound_play('click')")
 
+    b-menu-list(label="表示オプション")
       b-menu-item(@click="sound_play('click')")
         template(slot="label" slot-scope="props")
           | 図面表示
@@ -48,11 +51,11 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-// .STAGE-development
-//   .WkbkArticleIndexSidebarBody
-//     border: 1px dashed change_color($primary, $alpha: 0.5)
-//     .menu
-//       border: 1px dashed change_color($primary, $alpha: 0.5)
+.STAGE-development
+  .WkbkArticleIndexSidebarBody
+    border: 1px dashed change_color($primary, $alpha: 0.5)
+    .menu
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .is-fixed
   .WkbkArticleIndexSidebarBody

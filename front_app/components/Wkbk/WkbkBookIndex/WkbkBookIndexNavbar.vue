@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.WkbkBookIndexNavbar(:spaced="false")
+MainNavbar.WkbkBookIndexNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
   template(slot="brand")
     //- NavbarItemHome
     b-navbar-item(tag="nuxt-link" :to="{name: 'library'}" @click.native="sound_play('click')")
