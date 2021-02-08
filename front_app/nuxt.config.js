@@ -8,16 +8,23 @@ const axios = require('axios')
 const sitemap = {
   hostname: process.env.MY_NUXT_URL,
   gzip: true,
-  cacheTime: 1000 * 60 * 60,    // 1時間
+  cacheTime: (process.env.NODE_ENV === 'development' ? 0 : 1000 * 60 * 60), // 1時間
   exclude: [
     "/experiment/**",
     "/settings/**",
     "/launcher",
     "/inspire",
+    "/rack/articles/new",
+    "/rack/books/new",
   ],
   routes: async () => {
     let list = []
     let res = null
+
+    // http://0.0.0.0:3000/api/wkbk/tops/sitemap
+    res = await axios.get(`${process.env.API_URL}/api/wkbk/tops/sitemap`)
+    list = list.concat(res.data.books.map(({key}) => `/rack/books/${key}`))
+    list = list.concat(res.data.articles.map(({key}) => `/rack/articles/${key}`))
 
     // http://0.0.0.0:3000/api/tsl_user_all
     res = await axios.get(`${process.env.API_URL}/api/tsl_league_all`)

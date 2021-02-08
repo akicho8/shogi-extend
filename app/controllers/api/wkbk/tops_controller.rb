@@ -33,6 +33,15 @@ module Api
         render json: retv
       end
 
+      # http://0.0.0.0:3000/api/wkbk/tops/sitemap.json
+      # http://0.0.0.0:4000/sitemap.xml
+      def sitemap
+        retv = {}
+        retv[:books]    = ::Wkbk::Book.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
+        retv[:articles] = ::Wkbk::Article.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
+        render json: retv
+      end
+
       private
 
       def current_books

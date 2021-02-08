@@ -134,6 +134,7 @@ Rails.application.routes.draw do
     namespace :wkbk, format: :json do
       namespace :tops do
         get :index
+        get :sitemap
       end
       namespace :books do
         get :top
