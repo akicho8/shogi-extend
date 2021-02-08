@@ -14,7 +14,7 @@
         b-select(v-model="base.book.sequence_key" required)
           option(v-for="e in base.SequenceInfo.values" :value="e.key" v-text="e.name")
 
-      b-field(label="公開設定" custom-class="is-small" :message="FolderInfo.fetch(base.article.folder_key).message.book")
+      b-field(label="公開設定" custom-class="is-small" :message="FolderInfo.fetch(base.book.folder_key).message.book")
         b-field.is-marginless
           template(v-for="e in FolderInfo.values")
             b-radio-button(v-model="base.book.folder_key" :native-value="e.key")
