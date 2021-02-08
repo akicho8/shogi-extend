@@ -34,10 +34,11 @@
         //- https://buefy.org/documentation/taginput
         b-taginput(v-model="base.article.owner_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
 
-      b-field(label="表示範囲" custom-class="is-small")
+      b-field(label="公開設定" custom-class="is-small" message="限定公開はURLを知っている人だけが見れる")
         b-field.is-marginless
           template(v-for="e in base.FolderInfo.values")
             b-radio-button(v-model="base.article.folder_key" :native-value="e.key")
+              //- WkbkFolder(:folder_key="e.key")
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
 </template>

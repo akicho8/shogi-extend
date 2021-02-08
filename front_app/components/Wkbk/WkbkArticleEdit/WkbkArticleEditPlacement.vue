@@ -5,7 +5,7 @@
       CustomShogiPlayer(
         sp_mobile_vertical="is_mobile_vertical_off"
         sp_run_mode="edit_mode"
-        :sp_body="base.sp_body"
+        :sp_body="base.article.init_sfen"
         :sp_turn="0"
         :sp_viewpoint.sync="base.article.viewpoint"
         :sp_sound_body_changed="false"
@@ -49,7 +49,7 @@ export default {
     support_child,
   ],
   created() {
-    this.base.sp_body = this.base.article.init_sfen
+    // this.base.sp_body = this.base.article.init_sfen
   },
 
   mounted() {

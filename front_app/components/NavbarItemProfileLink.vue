@@ -1,8 +1,28 @@
 <template lang="pug">
-b-navbar-item.NavbarItemProfileLink(tag="nuxt-link" :to="{name: 'users-id', params: {id: g_current_user.id}}" @click.native="sound_play('click')" v-if="g_current_user")
+b-navbar-item.NavbarItemProfileLink(
+  v-if="new_user"
+  tag="nuxt-link"
+  :to="{name: 'users-id', params: {id: new_user.id}}"
+  :title="new_user.name"
+  @click.native="sound_play('click')"
+  )
   .image
-    img.is-rounded(:src="g_current_user.avatar_path")
+    img.is-rounded(:src="new_user.avatar_path" :alt="new_user.name")
 </template>
+
+<script>
+export default {
+  name: "NavbarItemProfileLink",
+  props: {
+    user: { type: Object, default: null },
+  },
+  computed: {
+    new_user() {
+      return this.user || this.g_current_user
+    },
+  },
+}
+</script>
 
 <style lang="sass">
 .NavbarItemProfileLink

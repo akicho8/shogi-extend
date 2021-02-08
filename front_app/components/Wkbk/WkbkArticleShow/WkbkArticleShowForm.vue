@@ -32,9 +32,9 @@
             template(v-for="tag in base.article.owner_tag_list")
               b-tag(@click="tag_handle(tag)") {{tag}}
 
-      b-field(label="公開設定" custom-class="is-small")
+      b-field(label="公開設定")
         .control
-          | {{base.article.folder.name}}
+          WkbkFolder(:folder_key="base.article.folder_key")
 </template>
 
 <script>

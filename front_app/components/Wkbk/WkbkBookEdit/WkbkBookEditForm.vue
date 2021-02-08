@@ -14,7 +14,7 @@
         b-select(v-model="base.book.sequence_key" required)
           option(v-for="e in base.SequenceInfo.values" :value="e.key" v-text="e.name")
 
-      b-field(label="表示範囲" custom-class="is-small")
+      b-field(label="表示範囲" custom-class="is-small" message="限定公開はURLを知っている人だけが見れる")
         b-field.is-marginless
           template(v-for="e in base.FolderInfo.values")
             b-radio-button(v-model="base.book.folder_key" :native-value="e.key")
