@@ -20,7 +20,7 @@ export const app_support = {
       }
     },
     article_new_handle() {
-      if (this.article_new_p) {
+      if (this.owner_p) {
         this.sound_play("click")
         this.$router.push({name: "rack-articles-new", params: {book_key: this.book.key}})
       }
@@ -49,11 +49,6 @@ export const app_support = {
     },
   },
   computed: {
-    article_show_p() {
-      return this.current_article
-    },
-    article_new_p() {
-      return this.g_current_user && this.owner_p
-    },
+    article_show_p() { return this.current_article },
   },
 }

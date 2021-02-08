@@ -1,3 +1,5 @@
+import { FolderInfo  } from './models/folder_info.js'
+
 import _ from "lodash"
 
 export const support = {
@@ -17,6 +19,7 @@ export const support = {
     },
   },
   computed: {
+    FolderInfo() { return FolderInfo },
     s_config() {
       return {
         TRUNCATE_MAX: 20,

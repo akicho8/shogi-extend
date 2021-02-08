@@ -131,9 +131,14 @@ export default {
     SequenceInfo()        { return SequenceInfo },
 
     //////////////////////////////////////////////////////////////////////////////// 編集権限
-    owner_p()    { return this.book.owner_p(this.g_current_user) },
     editable_p() { return this.owner_p                               },
     disabled_p() { return !this.editable_p                           },
+
+    owner_p() {
+      if (this.book) {
+        return this.g_current_user && this.g_current_user.id === this.book.user.id
+      }
+    },
   },
 }
 </script>

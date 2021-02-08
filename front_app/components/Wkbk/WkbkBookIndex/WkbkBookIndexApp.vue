@@ -81,7 +81,7 @@ export default {
     console.log("[fetch]")
     // this.__assert__(this.scope, "this.scope")
 
-    this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
+    // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per
     this.sort_column = this.$route.query.sort_column ?? "updated_at"
@@ -90,7 +90,7 @@ export default {
 
     // this.url_params とは異なり最終的な初期値を設定する
     const params = {
-      scope:       this.scope,
+      // scope:       this.scope,
       page:        this.page,
       per:         this.per,
       sort_column: this.sort_column,
@@ -107,7 +107,7 @@ export default {
       //   return
       // }
       this.meta        = e.meta
-      this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
+      // this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
       this.books       = e.books.map(e => new Book(e))
       this.total       = e.total
       // this.book_counts = e.book_counts

@@ -4,15 +4,22 @@ import dayjs from "dayjs"
 export const app_tweet = {
   data() {
     return {
-      interval_counter: new IntervalCounter(() => this.spent_sec += 1),
+      interval_counter: null,
       o_count: 0,
       x_count: 0,
       spent_sec: 0,
     }
   },
 
+  beforeMount() {
+    this.interval_counter = new IntervalCounter(() => this.spent_sec += 1)
+  },
+
   beforeDestroy() {
-    this.interval_counter?.stop()
+    if (this.interval_counter) {
+      this.interval_counter.stop()
+      this.interval_counter = null
+    }
   },
 
   methods: {

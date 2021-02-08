@@ -76,7 +76,8 @@ export const app_article = {
           this.default_book_key     = this.article.book_key
           this.default_lineage_key = this.article.lineage_key
 
-          this.$router.push({name: "rack-articles", query: {scope: this.article.redirect_scope_after_save}})
+          // this.$router.push({name: "rack-articles", query: {scope: this.article.redirect_scope_after_save}})
+          this.$router.push({name: "rack-articles"})
         }
       })
     },
