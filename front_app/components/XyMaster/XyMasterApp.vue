@@ -43,7 +43,7 @@
                 | ？？
               template(v-if="mode === 'is_mode_run'")
                 | {{kanji_human(current_place)}}
-                .next_place
+                .next_place(v-if="false")
                   | {{kanji_human(next_place)}}
 
             .CustomShogiPlayerWrap
