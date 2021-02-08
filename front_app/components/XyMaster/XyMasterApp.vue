@@ -88,6 +88,7 @@ import { IntervalFrame   } from '@/components/models/interval_frame.js'
 
 import { support_parent } from "./support_parent.js"
 
+import { app_tweet       } from "./app_tweet.js"
 import { app_chart       } from "./app_chart.js"
 import { app_keyboard    } from "./app_keyboard.js"
 import { app_debug       } from "./app_debug.js"
@@ -118,6 +119,7 @@ export default {
     app_debug,
     app_rule_dialog,
     app_chart,
+    app_tweet,
   ],
   props: {
     config: { type: Object, required: true },
@@ -128,22 +130,16 @@ export default {
       countdown_counter:  null, // カウントダウン用カウンター
       before_place:       null, // 前のセル
       current_place:      null, // 今のセル
-      o_count:            null, // 正解数
-      x_count:            null, // 不正解数
       key_queue:          null, // PCモードでの押したキー
-      micro_seconds:      null, // 経過時間
-      entry_name_uniq_p: false, // プレイヤー別順位ON/OFF
-      rule_key:        null, // ../../../app/models/rule_info.rb のキー
-      scope_key:       null, // ../../../app/models/scope_info.rb のキー
-      entry_name:         null, // ランキングでの名前を保持しておく
+      rule_key:           null, // ../../../app/models/rule_info.rb のキー
+      scope_key:          null, // ../../../app/models/scope_info.rb のキー
       current_rule_index: null, // b-tabs 連動用
-      time_records_hash:    null, // 複数のルールでそれぞれにランキング情報も入っている
-      time_record:          null, // ゲームが終わたっときにランクなどが入っている
+      time_records_hash:  null, // 複数のルールでそれぞれにランキング情報も入っている
+      time_record:        null, // ゲームが終わたっときにランクなどが入っている
       current_pages:      null, // b-table のページ
-      latest_rule:        null, // 最後に挑戦した最新のルール
-      interval_counter: new IntervalCounter(this.countdown_func, {early: true, interval: COUNTDOWN_INTERVAL}),
-      interval_frame:   new IntervalFrame(this.time_add_func),
-      touch_board_width: null, // touchデバイスでの将棋盤の幅(%)
+      touch_board_width:  null, // touchデバイスでの将棋盤の幅(%)
+      interval_counter:   null,
+      interval_frame:     null,
     }
   },
 
@@ -154,6 +150,11 @@ export default {
 
     this.ls_setup()
     this.init_other_variables()
+  },
+
+  beforeMount() {
+    this.interval_counter = new IntervalCounter(this.countdown_func, {early: true, interval: COUNTDOWN_INTERVAL})
+    this.interval_frame   = new IntervalFrame(this.time_add_func)
   },
 
   mounted() {
@@ -514,51 +515,19 @@ export default {
   },
 
   computed: {
-    base()             { return this                             },
-    ScopeInfo()      { return ScopeInfo                      },
-    ChartScopeInfo() { return ChartScopeInfo                 },
-    RuleInfo()       { return RuleInfo                       },
+    base()           { return this           },
+    ScopeInfo()      { return ScopeInfo      },
+    ChartScopeInfo() { return ChartScopeInfo },
+    RuleInfo()       { return RuleInfo       },
+
+    is_mode_idol()   { return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal' },
+    is_mode_active() { return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready' },
+    countdown()      { return COUNTDOWN_MAX - this.countdown_counter },
 
     component_style() {
       return {
         "--touch_board_width": this.touch_board_width,
       }
-    },
-
-    is_mode_idol() {
-      return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal'
-    },
-
-    is_mode_active() {
-      return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready'
-    },
-
-    countdown() {
-      return COUNTDOWN_MAX - this.countdown_counter
-    },
-
-    summary() {
-      let out = ""
-      if (this.latest_rule) {
-        out += `ルール: ${this.latest_rule.name}\n`
-      }
-      if (this.time_record) {
-        out += `本日: ${this.time_record.rank_info.scope_today.rank}位\n`
-        out += `全体: ${this.time_record.rank_info.scope_all.rank}位\n`
-      }
-      out += `タイム: ${this.time_format}`
-      if (this.time_record) {
-        if (this.time_record.best_update_info) {
-          out += ` (${this.time_record.best_update_info.updated_spent_sec}秒更新)`
-        }
-      }
-      out += `\n`
-      if (this.time_avg) {
-        out += `平均: ${this.time_avg}\n`
-      }
-      out += `不正解: ${this.x_count}\n`
-      out += `正解率: ${this.rate_per}%\n`
-      return out
     },
 
     post_params() {
@@ -571,66 +540,6 @@ export default {
       ].reduce((a, e) => ({...a, [e]: this[e]}), {})
     },
 
-    o_count_max() {
-      return this.latest_rule.o_count_max
-    },
-
-    time_over_p() {
-      return this.spent_sec >= this.current_rule.time_limit
-    },
-
-    tweet_url() {
-      return this.tweet_url_build_from_text(this.tweet_body)
-    },
-
-    tweet_body() {
-      let out = ""
-      out += this.summary
-      out += "#符号の鬼\n"
-      out += this.location_url_without_search_and_hash() + "?" + this.magic_number()
-      return out
-    },
-
-    rate_per() {
-      return this.float_to_perc(this.rate)
-    },
-
-    rate() {
-      if (this.total_count === 0) {
-        return 0
-      }
-      return this.o_count / this.total_count
-    },
-
-    total_count() {
-      return this.o_count + this.x_count
-    },
-
-    count_rest() {
-      return this.o_count_max - this.o_count
-    },
-
-    time_format() {
-      return this.time_format_from_msec(this.spent_sec)
-    },
-
-    time_avg() {
-      if (this.o_count >= 1) {
-        return this.time_format_from_msec(this.spent_sec / this.o_count)
-      }
-    },
-
-    spent_sec() {
-      return this.micro_seconds / 1000
-    },
-
-    // ログインしているとユーザー名がわかる
-    current_entry_name() {
-      if (this.g_current_user) {
-        return this.g_current_user.name
-      }
-    },
-
     curent_scope() {
       return ScopeInfo.fetch(this.scope_key)
     },
@@ -639,13 +548,8 @@ export default {
       return RuleInfo.fetch(this.rule_key)
     },
 
-    tap_method_p() {
-      return this.current_rule.input_mode === "tap"
-    },
-
-    keyboard_method_p() {
-      return this.current_rule.input_mode === "keyboard"
-    },
+    tap_method_p()      { return this.current_rule.input_mode === "tap" },
+    keyboard_method_p() { return this.current_rule.input_mode === "keyboard" },
 
     ////////////////////////////////////////////////////////////////////////////////
 
