@@ -61,7 +61,7 @@ export default {
   ],
 
   data() {
-    console.log("[data]")
+    // console.log("[data]")
     return {
       meta: null,
     }
@@ -72,13 +72,13 @@ export default {
   },
 
   mounted() {
-    console.log("[mounted]")
+    // console.log("[mounted]")
     this.ga_click("問題集一覧")
   },
 
   // fetchOnServer: false,
   fetch() {
-    console.log("[fetch]")
+    // console.log("[fetch]")
     // this.__assert__(this.scope, "this.scope")
 
     // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
