@@ -42,7 +42,7 @@ export const app_article = {
         return true
       }
 
-      if (this.article.moves_answers.length === 0) {
+      if (this.article.moves_answers.length === 0 && false) {
         this.toast_warn("正解を作ってください")
         return true
       }
@@ -52,10 +52,12 @@ export const app_article = {
         return true
       }
 
-      if (this.article.new_record_p) {
-        if (this.valid_count === 0 && !this.development_p) {
-          this.toast_warn("検証してください")
-          return true
+      if (this.article.moves_answers.length >= 1) {
+        if (this.article.new_record_p) {
+          if (this.valid_count === 0 && !this.development_p) {
+            this.toast_warn("検証してください")
+            return true
+          }
         }
       }
 
