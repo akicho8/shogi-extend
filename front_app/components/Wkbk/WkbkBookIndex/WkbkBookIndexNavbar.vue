@@ -4,7 +4,7 @@ MainNavbar.WkbkBookIndexNavbar(:spaced="false" wrapper-class="container is-fluid
     //- NavbarItemHome
     b-navbar-item(tag="nuxt-link" :to="{name: 'rack'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
-    //- b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack-books'}") みんなの将棋問題集
+    //- b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack-books'}") 将棋問題集
     b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack-books'}") 問題集リスト
 
   template(slot="end")

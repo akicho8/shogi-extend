@@ -445,7 +445,7 @@ module Wkbk
       o = []
       o << title
       # o << description
-      o << "#" + "みんなの将棋問題集"
+      o << "#" + "将棋問題集"
       o << page_url
       o.join("\n")
     end

@@ -216,7 +216,7 @@ class ServiceInfo
       key: :wkbk,
       display_p: !Rails.env.production?,
       nuxt_link_to: {path: "/rack"},
-      title: "みんなの将棋問題集",
+      title: "将棋問題集",
       new_p: true,
       og_image_key: "rack",
       description: "市販の問題集を繰り返し解くよりも、最初のうちは本人のために本人の実戦譜の検討を元に本人が作った問題集を繰り返し解いた方が身に付きやすいのではないか、という実験もかねた、将棋問題投稿復習ツール",

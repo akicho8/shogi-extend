@@ -20,7 +20,7 @@ export const app_tweet = {
     },
     tweet_body() {
       let o = ""
-      o += "#" + "みんなの将棋問題集" + "\n"
+      o += "#" + "将棋問題集" + "\n"
       o += this.article.title + "\n"
       o += this.current_url
       return o

@@ -66,7 +66,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("みんなの将棋問題集")
+    this.ga_click("将棋問題集")
   },
 
   // fetchOnServer: false,

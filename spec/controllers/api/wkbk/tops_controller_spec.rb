@@ -34,9 +34,14 @@ RSpec.describe Api::Wkbk::TopsController, type: :controller do
     # tp Wkbk::Book
   end
 
-  it "works" do
+  it "index" do
     user_login(User.sysop)
     get :index
+    expect(response).to have_http_status(200)
+  end
+
+  it "sitemap" do
+    get :sitemap
     expect(response).to have_http_status(200)
   end
 end
