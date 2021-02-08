@@ -453,24 +453,7 @@ export default {
     place_next_set() {
       this.before_place = this.current_place
 
-      let p = null
-      if (true) {
-        while (true) {
-          p = {x: this.place_random(), y: this.place_random()}
-          if ((this.o_count === 0 && (DIMENSION - 1 - p.x) === p.y)) {
-            continue
-          }
-          if (this.before_place) {
-            if (_.isEqual(this.before_place, p)) {
-              continue
-            }
-          }
-          break
-        }
-      }
-      if (false) {
-        p = {x: this.place_random(), y: _.sample([5,6])}
-      }
+      const p = this.generate_next(this.before_place)
 
       if (!this.tap_method_p) {
         const soldier = Soldier.random()
@@ -480,6 +463,30 @@ export default {
       }
 
       this.current_place = p
+    },
+
+    generate_next(before = null) {
+      let p = null
+      while (true) {
+        p = this.random_xy()
+        // if ((this.o_count === 0 && (DIMENSION - 1 - p.x) === p.y)) {
+        //   continue
+        // }
+        if (before) {
+          if (_.isEqual(before, p)) {
+            continue
+          }
+        }
+        break
+      }
+      return p
+    },
+
+    random_xy() {
+      return {
+        x: this.place_random(),
+        y: this.place_random(),
+      }
     },
 
     active_p(xy) {
