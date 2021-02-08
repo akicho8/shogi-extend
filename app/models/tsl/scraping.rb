@@ -90,6 +90,7 @@ module Tsl
       str = str.gsub("小髙", "小高")
       str = str.gsub("泰煕", "泰熙")
       str = str.gsub("廣瀬章人", "広瀬章人")
+      str = str.gsub(/[斉齋齊]藤/, "斎藤")
     end
 
     def result_key_normalize(key)
