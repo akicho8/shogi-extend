@@ -143,6 +143,7 @@ module Wkbk
           :sequence_key,
           :tweet_body,
           :og_meta,
+          :avatar_path,
         ],
         include: {
           user: { only: [:key, :id, :name], methods: [:avatar_path],},
@@ -422,7 +423,8 @@ module Wkbk
     end
 
     def og_image_path
-      articles.sample&.og_image_path
+      # articles.sample&.og_image_path
+      avatar_path
     end
 
     def og_meta
