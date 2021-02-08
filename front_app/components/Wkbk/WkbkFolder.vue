@@ -6,7 +6,6 @@
 
 <script>
 import { support } from "./support.js"
-import { FolderInfo } from './models/folder_info.js'
 
 export default {
   name: "WkbkFolder",
@@ -15,9 +14,7 @@ export default {
     folder_key: { type: String, required: true, },
   },
   computed: {
-    folder() {
-      return FolderInfo.fetch(this.folder_key)
-    },
+    folder() { return this.FolderInfo.fetch(this.folder_key) },
   },
 }
 </script>

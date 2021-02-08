@@ -57,7 +57,6 @@ import { app_tweet    } from "./app_tweet.js"
 import { Article     } from "../models/article.js"
 import { Book        } from "../models/book.js"
 // import { LineageInfo } from '../models/lineage_info.js'
-import { FolderInfo  } from '../models/folder_info.js'
 
 export default {
   name: "WkbkArticleShowApp",
@@ -131,7 +130,6 @@ export default {
 
   computed: {
     base()       { return this       },
-    FolderInfo() { return FolderInfo },
   },
 }
 </script>

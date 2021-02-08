@@ -24,7 +24,7 @@
                  | {{base.book.user.name}}
                  br
                  | {{diff_time_format(base.book.updated_at)}}更新
-                 b-icon.ml-2(:icon="base.FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
+                 b-icon.ml-2(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
           .content
             .description(v-html="simple_format(auto_link(base.book.description))")
         .card-footer
@@ -59,7 +59,7 @@
   //-              | {{base.book.user.name}}
   //-              br
   //-              | {{diff_time_format(base.book.updated_at)}}更新
-  //-              b-icon.ml-2(:icon="base.FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
+  //-              b-icon.ml-2(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
   //-       .content
   //-         .description(v-html="simple_format(auto_link(base.book.description))")
 

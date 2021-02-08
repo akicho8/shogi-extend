@@ -16,7 +16,7 @@
 
       b-field(label="公開設定" custom-class="is-small" :message="FolderInfo.fetch(base.article.folder_key).message.book")
         b-field.is-marginless
-          template(v-for="e in base.FolderInfo.values")
+          template(v-for="e in FolderInfo.values")
             b-radio-button(v-model="base.book.folder_key" :native-value="e.key")
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
@@ -40,7 +40,7 @@ export default {
     },
     "book.folder_key": {
       handler(v) {
-        const folder_info = this.base.FolderInfo.fetch(v)
+        const folder_info = this.FolderInfo.fetch(v)
         this.sound_play("click")
         this.talk(folder_info.name)
       },

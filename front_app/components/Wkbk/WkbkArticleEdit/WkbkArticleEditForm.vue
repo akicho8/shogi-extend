@@ -12,7 +12,7 @@
         b-select(v-model="base.article.book_key" expanded)
           option(:value="null")
           option(v-for="e in base.books" :value="e.key")
-            | {{e.title}} ({{base.FolderInfo.fetch(e.folder_key).name}})
+            | {{e.title}} ({{FolderInfo.fetch(e.folder_key).name}})
 
       b-field(label="種類" label-position="on-border" v-if="base.LineageInfo")
         b-select(v-model="base.article.lineage_key" expanded)
@@ -77,7 +77,7 @@ export default {
     },
     "article.folder_key": {
       handler(v) {
-        const folder_info = this.base.FolderInfo.fetch(v)
+        const folder_info = this.FolderInfo.fetch(v)
         this.sound_play("click")
         this.talk(folder_info.name)
       },

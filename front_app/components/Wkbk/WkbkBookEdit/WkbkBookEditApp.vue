@@ -31,7 +31,6 @@ import { app_table } from "./app_table.js"
 import { app_upload } from "./app_upload.js"
 
 import { Book       } from "../models/book.js"
-import { FolderInfo } from "../models/folder_info.js"
 import { SequenceInfo } from "../models/sequence_info.js"
 
 export default {
@@ -127,7 +126,6 @@ export default {
   computed: {
     base()                { return this                                         },
     save_button_name()    { return this.book.new_record_p ? "保存" : "更新" },
-    FolderInfo()          { return FolderInfo },
     SequenceInfo()        { return SequenceInfo },
 
     //////////////////////////////////////////////////////////////////////////////// 編集権限

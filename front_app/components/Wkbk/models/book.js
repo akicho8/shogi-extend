@@ -1,5 +1,4 @@
 import { Article } from "./article.js"
-import { FolderInfo } from "./folder_info.js"
 import { ModelBase } from "../../models/model_base.js"
 
 export class Book extends ModelBase {
