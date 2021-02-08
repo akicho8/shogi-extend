@@ -42,7 +42,9 @@
               template(v-if="mode === 'is_mode_ready'")
                 | ？？
               template(v-if="mode === 'is_mode_run'")
-                | {{kanji_human}}
+                | {{kanji_human(current_place)}}
+                .next_place
+                  | {{kanji_human(next_place)}}
 
             .CustomShogiPlayerWrap
               XyMasterCountdown(:base="base")
@@ -130,6 +132,7 @@ export default {
       countdown_counter:  null, // カウントダウン用カウンター
       before_place:       null, // 前のセル
       current_place:      null, // 今のセル
+      next_place:         null, // 次のセル
       key_queue:          null, // PCモードでの押したキー
       rule_key:           null, // ../../../app/models/rule_info.rb のキー
       scope_key:          null, // ../../../app/models/scope_info.rb のキー
@@ -295,6 +298,7 @@ export default {
     go_handle() {
       this.mode = "is_mode_run"
       this.interval_frame.start()
+      this.place_next_next_setup()
       this.place_next_set()
       this.sound_play("start")
       this.goal_check()
@@ -450,10 +454,14 @@ export default {
       }
     },
 
+    place_next_next_setup() {
+      this.next_place = this.generate_next()
+    },
+
     place_next_set() {
       this.before_place = this.current_place
 
-      const p = this.generate_next(this.before_place)
+      const p = this.next_place
 
       if (!this.tap_method_p) {
         const soldier = Soldier.random()
@@ -463,6 +471,7 @@ export default {
       }
 
       this.current_place = p
+      this.next_place = this.generate_next(p)
     },
 
     generate_next(before = null) {
@@ -519,6 +528,11 @@ export default {
     sp_object() {
       return this.$refs.main_sp.sp_object()
     },
+
+    kanji_human(xy) {
+      const { x, y } = xy
+      return Place.fetch([x, y]).kanji_human
+    }
   },
 
   computed: {
@@ -557,27 +571,6 @@ export default {
 
     tap_method_p()      { return this.current_rule.input_mode === "tap" },
     keyboard_method_p() { return this.current_rule.input_mode === "keyboard" },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    kanji_human() {
-      if (this.current_place_info) {
-        return this.current_place_info.kanji_human
-      }
-    },
-
-    current_place_info() {
-      if (this.current_place_xy) {
-        return Place.fetch(this.current_place_xy)
-      }
-    },
-
-    current_place_xy() {
-      if (this.current_place) {
-        const { x, y } = this.current_place
-        return [x, y]
-      }
-    },
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -645,6 +638,13 @@ export default {
     .vector_container
       margin-bottom: $xy_master_board_top_bottom_gap
       font-size: 2rem
+      position: relative
+      .next_place
+        white-space: nowrap
+        position: absolute
+        top: 0
+        left: 7rem
+        color: $grey-light
 
     .time_container
       line-height: 100%
