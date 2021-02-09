@@ -7,6 +7,7 @@ client-only
       template(v-if="interval_counter")
         p interval_counter.count: {{interval_counter.count}}
       template(v-if="book")
+        p journal_ox_counts: {{journal_ox_counts}}
         p book.user.id: {{book.user && book.user.id}}
         p g_current_user.id: {{g_current_user && g_current_user.id}}
         p goal_p: {{goal_p}}
@@ -48,6 +49,7 @@ import { app_articles   } from "./app_articles.js"
 import { app_mode       } from "./app_mode.js"
 import { app_support    } from "./app_support.js"
 import { app_tweet      } from "./app_tweet.js"
+import { app_journal   } from "./app_journal.js"
 import { app_sidebar    } from "./app_sidebar.js"
 
 export default {
@@ -58,6 +60,7 @@ export default {
     app_mode,
     app_support,
     app_tweet,
+    app_journal,
     app_sidebar,
   ],
 
@@ -97,6 +100,10 @@ export default {
     // } else {
     //   this.mode_set("standby")
     // }
+
+    if (this.development_p) {
+      this.journal_test()
+    }
   },
 
   mounted() {

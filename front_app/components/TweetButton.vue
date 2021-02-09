@@ -2,7 +2,7 @@
 b-button.TweetButton.has-text-weight-bold(
   v-bind="$attrs"
   v-on="$listeners"
-  size="is-small"
+  :size="size"
   :type="type"
   icon-left="twitter"
   @click="click_handle"
@@ -16,6 +16,7 @@ export default {
   props: {
     body: { type: String, required: true,  default: "",           },
     type: { type: String, required: false, default: "is-twitter", },
+    size: { type: String, required: false, default: "is-small",   },
   },
   methods: {
     click_handle() {

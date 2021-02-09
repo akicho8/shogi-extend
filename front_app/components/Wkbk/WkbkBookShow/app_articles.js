@@ -21,14 +21,22 @@ export const app_articles = {
       this.current_index = 0
       this.answer_tab_index = 0
       this.ox_start()
-      this.goal_check()
+      if (this.current_article) {
+        this.journal_next_init()
+      } else {
+        this.goal_check()
+      }
     },
 
     next_handle(o) {
       this.ox_apply(o)
       this.current_index += 1
       this.answer_tab_index = 0
-      this.goal_check()
+      if (this.current_article) {
+        this.journal_next_init()
+      } else {
+        this.goal_check()
+      }
     },
 
     play_restart() {
@@ -36,11 +44,10 @@ export const app_articles = {
     },
 
     goal_check() {
-      if (!this.current_article) {
-        this.mode_set("goal")
-        this.sound_play("win")
-        this.ox_stop()
-      }
+      this.__assert__(!this.current_article)
+      this.mode_set("standby")
+      this.sound_play("win")
+      this.ox_stop()
     },
 
     play_mode_advanced_moves_set(moves) {

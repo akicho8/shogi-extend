@@ -8,11 +8,12 @@ export const app_tweet = {
       o_count: 0,
       x_count: 0,
       spent_sec: 0,
+      ox_summary: null,  // ツイート内容はリアクティブに変化しないようにあえて変数に保存しておく
     }
   },
 
   beforeMount() {
-    this.interval_counter = new IntervalCounter(() => this.spent_sec += 1)
+    this.interval_counter = new IntervalCounter(() => this.journal_counter())
   },
 
   beforeDestroy() {
@@ -27,10 +28,12 @@ export const app_tweet = {
       this.o_count = 0
       this.x_count = 0
       this.spent_sec = 0
+      this.journal_init()
       this.interval_counter.restart()
     },
 
     ox_stop() {
+      this.ox_summary = this.ox_summary_generate()
       this.interval_counter.stop()
     },
 
@@ -38,15 +41,15 @@ export const app_tweet = {
       if (o) {
         this.sound_play("o")
         this.o_count += 1
+        this.journal_record("o")
       } else {
         this.sound_play("x")
         this.x_count += 1
+        this.journal_record("x")
       }
     },
-  },
 
-  computed: {
-    ox_summary() {
+    ox_summary_generate() {
       let out = ""
       out += `${this.book.title}\n`
       out += `正解率: ${this.ox_rate_per} (${this.o_count}/${this.o_count_max})\n`
@@ -54,9 +57,11 @@ export const app_tweet = {
       out += `平均: ${this.ox_time_avg}\n`
       return out
     },
+  },
 
+  computed: {
     o_count_max() {
-      return this.book.articles_count
+      return this.book.articles.length
     },
 
     ox_tweet_url() {
@@ -65,6 +70,7 @@ export const app_tweet = {
 
     ox_tweet_body() {
       let out = ""
+      out += "\n"
       out += this.ox_summary
       out += "#" + "将棋問題集" + "\n"
       out += this.location_url_without_search_and_hash()

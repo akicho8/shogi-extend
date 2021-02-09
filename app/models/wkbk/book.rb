@@ -249,7 +249,7 @@ module Wkbk
     end
 
     def page_url(options = {})
-      UrlProxy.wrap2("/rack/books/#{id}")
+      UrlProxy.wrap2("/rack/books/#{key}")
     end
 
     def mock_attrs_set

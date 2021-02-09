@@ -14,7 +14,7 @@ export const app_mode = {
       if (this.is_running_p) {
         this.talk("途中で辞めました")
         this.sound_play("click")
-        this.mode_set("goal")
+        this.mode_set("standby")
         this.ox_stop()
       }
     },

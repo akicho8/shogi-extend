@@ -1,99 +1,136 @@
 <template lang="pug">
-.WkbkBookShowArticleIndexTable(v-if="base.book.articles.length >= 1")
-  b-table.mt-1(
-    :data="base.book.articles"
-    :mobile-cards="false"
-    )
-    //- :show-header="true"
-    //- hoverable
-    //- narrowed
-    //- :row-class="() => 'is-clickable'"
-    //- draggable
-    //- @dragstart="dragstart_handle"
-    //- @drop="drop_handle"
-    //- @dragover="dragover_handle"
-    //- @dragleave="dragleave_handle"
-    //- :loading="base.$fetchState.pending"
+.WkbkBookShowArticleIndexTable
+  //- .card.is-inline-block
+  //-   .card-content
+  //-     p.title.is-size-6
+  //-       | 結果
+  //-     //- p.subtitle
+  //-     //-   | Jeff Atwood
+  //-     p
+  //-       | {{base.ox_summary}}
+  //-   .card-footer
+  //-     p.card-footer-item
+  //-       TweetButton(:body="base.ox_tweet_body") Tweet
 
-    //- paginated
-    //- backend-pagination
-    //- pagination-simple
-    //-
-    //- :page="base.page" :total="base.total" :per-page="base.per"
-    //- @page-change="base.page_change_handle"
-    //-
-    //- backend-sorting
-    //- default-sort-direction="desc"
-    //- :default-sort="[base.sort_column, base.sort_order]"
-    //- @sort="base.sort_handle"
-    //-
-    //- detailed
-    //- detail-key="key"
-    //- :opened-detailed="base.detailed_keys"
+  nav.panel.is-twitter.mb-0(v-if="base.journal_hash")
+    p.panel-heading
+      | 結果
+    .panel-block.ox_summary
+      | {{base.ox_summary}}
+    .panel-block
+      TweetButton.is-link.is-outlined.is-fullwidth(:body="base.ox_tweet_body" size="") ツイート
 
-    // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
-    // :has-detailed-visible="row => sound_play('click')"
+  nav.panel.mb-0
+    p.panel-heading
+      | 問題リスト
+    .panel-block(v-if="base.journal_hash")
+      b-button.is-fullwidth(@click="base.articles_find_all_x_handle" :disabled="!base.articles_find_all_x_enabled")
+        | 不正解のみ残す
+    .panel-block.is-block
+      b-table(
+        v-if="base.book.articles.length >= 1"
+        :data="base.book.articles"
+        :mobile-cards="false"
+        )
+        //- :show-header="true"
+        //- hoverable
+        //- narrowed
+        //- :row-class="() => 'is-clickable'"
+        //- draggable
+        //- @dragstart="dragstart_handle"
+        //- @drop="drop_handle"
+        //- @dragover="dragover_handle"
+        //- @dragleave="dragleave_handle"
+        //- :loading="base.$fetchState.pending"
 
-    //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric width="1" :visible="!!base.visible_hash.key") {{row.key}}
+        //- paginated
+        //- backend-pagination
+        //- pagination-simple
+        //-
+        //- :page="base.page" :total="base.total" :per-page="base.per"
+        //- @page-change="base.page_change_handle"
+        //-
+        //- backend-sorting
+        //- default-sort-direction="desc"
+        //- :default-sort="[base.sort_column, base.sort_order]"
+        //- @sort="base.sort_handle"
+        //-
+        //- detailed
+        //- detail-key="key"
+        //- :opened-detailed="base.detailed_keys"
 
-    //- sortable :visible="!!base.visible_hash.title"
+        // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
+        // :has-detailed-visible="row => sound_play('click')"
 
-    //- b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0")
-    //-   b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")
-    //-   b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
+        //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric width="1" :visible="!!base.visible_hash.key") {{row.key}}
 
-    //- b-table-column(v-slot="{row}" custom-key="position"         field="position"         label="POS"    :width="1" numeric :visible="development_p") {{row.position + 1}}
+        //- sortable :visible="!!base.visible_hash.title"
 
-    //- b-table-column(v-slot="{row}" custom-key="key"              field="key"              label="KEY"     :width="1" numeric)
-    //-   nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
-    //-     | {{row.key}}
+        //- b-table-column(v-slot="{row}" custom-key="operation" label="")
+        //-   b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")
+        //-   b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
 
-    b-table-column(v-slot="{index}" custom-key="index" field="index" label="" numeric :width="0") {{index + 1}}
-    b-table-column(v-slot="{row}" custom-key="title"            field="title"            label="問題")
+        //- b-table-column(v-slot="{row}" custom-key="position"         field="position"         label="POS"    :width="1" numeric :visible="development_p") {{row.position + 1}}
 
-      //- nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
-      nuxt-link.article_title.is_truncate1(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
-        | {{row.title}}
+        //- b-table-column(v-slot="{row}" custom-key="key"              field="key"              label="KEY"     :width="1" numeric)
+        //-   nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+        //-     | {{row.key}}
 
-    b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="0" numeric :visible="false")
-      | {{row.difficulty}}
+        b-table-column(v-slot="{index}" custom-key="index" field="index" label="" numeric) {{index + 1}}
+        b-table-column(v-slot="{row}" custom-key="title"            field="title"            label="問題" cell-class="is_line_break_on")
 
-    //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
-    //- | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
+          //- b-table-column(v-slot="e" custom-key="spent_sec" field="spent_sec" label="時間" numeric)
+          //-   | {{e.index}}
+          //- | {{journal_time_format(journal_hash[e.index])}}
+          //- nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+          nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+            | {{row.title}}
 
-    //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
-    //-   WkbkUserName(:user="row.user")
-    //-
-    //- b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
-    //-   nuxt-link(:to="{name: 'rack-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
-    //-
-    //-     | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.articles_count}})
-    //-
-    //- b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
-    //- b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}
-    //-
-    //- b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="base.ArticleIndexColumnInfo.fetch('owner_tag_list').name" :visible="!!base.visible_hash.owner_tag_list")
-    //-   //- b-taglist
-    //-   b-tag.is-clickable.mr-1(v-for="tag in row.owner_tag_list" @click.native.stop="base.tag_search_handle(tag)" rounded)
-    //-     | {{tag}}
-    //-
-    //- b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" label="作成日時" :width="0") {{row_time_format(row.created_at)}}
-    b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" label="最終更新" :visible="false") {{row_time_format(row.updated_at)}}
-    //-
-    //- b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
-    //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-    //-     nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
+        b-table-column(v-slot="{row}" custom-key="ox" field="ox" label="解" centered :visible="!!base.journal_hash")
+          b-icon(v-bind="base.journal_row_icon_attrs_for(row)")
 
-    //- template(slot="empty" v-if="base.articles != null")
-    //-   section.section.is-unselectable
-    //-     .content.has-text-grey.has-text-centered
-    //-       p
-    //-         b-icon(icon="emoticon-sad" size="is-large")
-    //-       p
-    //-         | ひとつもありません
+        b-table-column(v-slot="{row}" custom-key="spent_sec" field="spent_sec" label="時間" centered :visible="!!base.journal_hash")
+          | {{base.journal_row_time_format_at(row)}}
 
-    //- template(slot="detail" slot-scope="props")
-    //-   WkbkBookIndexDetail(:article="props.row")
+        b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="20" centered :visible="false")
+          | {{row.difficulty}}
+
+        //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+        //- | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
+
+        //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
+        //-   WkbkUserName(:user="row.user")
+        //-
+        //- b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
+        //-   nuxt-link(:to="{name: 'rack-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
+        //-
+        //-     | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.articles_count}})
+        //-
+        //- b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
+        //- b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}
+        //-
+        //- b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="base.ArticleIndexColumnInfo.fetch('owner_tag_list').name" :visible="!!base.visible_hash.owner_tag_list")
+        //-   //- b-taglist
+        //-   b-tag.is-clickable.mr-1(v-for="tag in row.owner_tag_list" @click.native.stop="base.tag_search_handle(tag)" rounded)
+        //-     | {{tag}}
+        //-
+        //- b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" label="作成日時") {{row_time_format(row.created_at)}}
+        b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" label="最終更新" :visible="false") {{row_time_format(row.updated_at)}}
+        //-
+        //- b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
+        //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
+        //-     nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
+
+        //- template(slot="empty" v-if="base.articles != null")
+        //-   section.section.is-unselectable
+        //-     .content.has-text-grey.has-text-centered
+        //-       p
+        //-         b-icon(icon="emoticon-sad" size="is-large")
+        //-       p
+        //-         | ひとつもありません
+
+        //- template(slot="detail" slot-scope="props")
+        //-   WkbkBookIndexDetail(:article="props.row")
 </template>
 
 <script>
@@ -180,25 +217,35 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkBookShowArticleIndexTable
-  .table
-    th, td
-      vertical-align: middle
+  // .table
+  //   tr, td
+  //     height: 5rem
 
+  // .table
+  //   th, td
+  //     vertical-align: middle
+
+  .panel:not(:first-child)
+    margin-top: 1.25rem // 理論的には 1rem が正しいが影で狭く見えるため広くする
   +mobile
     margin-top: 1rem
-    padding: 0.5rem
+    padding: 0
   +tablet
-    padding: 0 1rem
+    padding: 0 1rem 0 0
 
   th
     font-size: $size-7
   th, td
     vertical-align: middle
 
-  .box
-    .title, .subtitle
-      white-space: nowrap
+  // .box
+  //   .title, .subtitle
+  //     white-space: nowrap
 
-  .article_title
-    max-width: 20rem
+  .ox_summary
+    white-space: pre-wrap
+
+  // .article_title
+  //   // display: inline
+  //   // max-width: 14rem
 </style>

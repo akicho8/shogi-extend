@@ -1,4 +1,5 @@
 import WkbkBookShowDesc from "./WkbkBookShowDesc.vue"
+// import dayjs from "dayjs"
 
 export const app_support = {
   methods: {
@@ -27,7 +28,7 @@ export const app_support = {
     },
     book_tweet_handle() {
       this.sound_play("click")
-      this.tweet_window_popup({text: this.book.tweet_body})
+      this.tweet_window_popup({text: `\n${this.book.tweet_body}`})
     },
     description_handle() {
       this.sound_play("click")
@@ -47,6 +48,9 @@ export const app_support = {
         },
       })
     },
+    // second_to_m_ss() {
+    //   return dayjs.unix(this.spent_sec).format("m:ss")
+    // },
   },
   computed: {
     article_show_p() { return this.current_article },

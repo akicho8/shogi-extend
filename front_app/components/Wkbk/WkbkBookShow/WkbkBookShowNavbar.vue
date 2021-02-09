@@ -35,9 +35,10 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
     template(slot="end")
       template(v-if="base.is_running_p")
         b-navbar-item(tag="div" v-if="base.current_article")
-          span.mx-1.is-family-monospace {{base.current_index + 1}}/{{base.max_count}}
-        b-navbar-item.has-text-weight-bold.px-5.is-clickable(@click="base.next_handle(false)" v-if="base.current_article") ×
-        b-navbar-item.has-text-weight-bold.px-5.is-clickable(@click="base.next_handle(true)"  v-if="base.current_article") ○
+          span.mx-1.is-family-monospace.is-unselectable {{base.current_index + 1}}/{{base.max_count}}
+          span.mx-1.is-family-monospace.is-unselectable {{base.current_journal_time_to_s}}
+        b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(false)" v-if="base.current_article") ×
+        b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(true)"  v-if="base.current_article") ○
 
       template(v-if="base.is_standby_p && development_p")
         b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.book_tweet_handle")
