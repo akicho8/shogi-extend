@@ -70,6 +70,13 @@ class ApplicationRecord < ActiveRecord::Base
   # なのでN文字欲しければN文字以上生成させて先頭からN文字拾えばよい
   # わかりやすい名前はARの内部のメソッドとかぶりそうなので注意
   def secure_random_urlsafe_base64_token(length = 11)
-    SecureRandom.urlsafe_base64(length).slice(0, length)
+    if false
+      SecureRandom.urlsafe_base64(length).slice(0, length)
+    else
+      v = SecureRandom.urlsafe_base64(length * 2)
+      v = v.gsub(/[-_]/, "")
+      v = v.slice(/[a-z].{#{length-1}}/i)
+      v or raise "must not happen"
+    end
   end
 end
