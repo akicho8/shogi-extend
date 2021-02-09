@@ -2,7 +2,7 @@
 MainNavbar.WkbkArticleShowNavbar(:spaced="false")
   template(v-if="base.article")
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play('click')")
+      b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play('click')")
         b-icon(icon="chevron-left")
     template(slot="start")
       NavbarItemProfileLink(:user="base.article.user")

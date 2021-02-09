@@ -5,15 +5,15 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
       WkbkSidebarToggle(@click="base.sidebar_toggle")
 
       template(v-if="base.is_standby_p")
-        b-navbar-item(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="sound_play('click')")
+        b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="sound_play('click')")
           b-icon(icon="chevron-left")
 
       template(v-if="base.is_running_p")
-        b-navbar-item(@click.native="base.retire_handle")
+        b-navbar-item.px_5_if_tablet(@click.native="base.retire_handle")
           b-icon(icon="chevron-left")
 
       template(v-if="base.is_goal_p")
-        b-navbar-item(@click.native="base.close_handle")
+        b-navbar-item.px_5_if_tablet(@click.native="base.close_handle")
           b-icon(icon="chevron-left")
 
         //- b-navbar-item(tag="a" @click.native="base.description_handle")
@@ -38,8 +38,9 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
           span.mx-1.is-family-monospace {{base.current_index + 1}}/{{base.max_count}}
         b-navbar-item.has-text-weight-bold.px-5.is-clickable(@click="base.next_handle(false)" v-if="base.current_article") ×
         b-navbar-item.has-text-weight-bold.px-5.is-clickable(@click="base.next_handle(true)"  v-if="base.current_article") ○
+
       template(v-if="base.is_standby_p && development_p")
-        b-navbar-item.has-text-weight-bold(@click="base.book_tweet_handle")
+        b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.book_tweet_handle")
           b-icon(icon="twitter" type="is-white")
 
       //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_restart" v-if="!base.current_article")

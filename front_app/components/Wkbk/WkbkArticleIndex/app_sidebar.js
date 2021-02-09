@@ -15,5 +15,8 @@ export const app_sidebar = {
       get()  { return this.detailed_keys.length >= 1 },
       set(v) { this.detail_set(v)                    },
     },
+    display_option_disabled() {
+      return (this.articles || []).length !== 0
+    },
   },
 }
