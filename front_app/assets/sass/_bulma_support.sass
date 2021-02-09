@@ -30,6 +30,11 @@ a
   &.button
     -webkit-touch-callout: default
 
+// ブランドは背景色を変更しない。ただし hover のときはのぞく
+.navbar.is-primary .navbar-brand > a.navbar-item.is-active
+  &:not(:hover)
+    background-color: unset
+
 ////////////////////////////////////////////////////////////////////////////////
 +mobile
   html
