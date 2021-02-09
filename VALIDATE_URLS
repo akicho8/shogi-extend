@@ -1,5 +1,9 @@
 # -*- mode: ruby -*-
 [
+  "https://www.shogi-extend.com/rack",
+  "https://www.shogi-extend.com/rack/books",
+  "https://www.shogi-extend.com/rack/articles",
+
   "http://0.0.0.0:4000/adapter?body=http://live.shogi.or.jp/ryuou/kifu/33/ryuou202011260101.html",
   "http://0.0.0.0:4000/adapter?body=http://live.shogi.or.jp/ryuou/kifu/33/ryuou202011260101.html&app_to=piyo_shogi",
   "http://0.0.0.0:4000/adapter?body=http://live.shogi.or.jp/ryuou/kifu/33/ryuou202011260101.html&app_to=kento",
