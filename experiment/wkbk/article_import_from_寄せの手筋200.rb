@@ -10,8 +10,8 @@ if book = user.wkbk_books.find_by(title: book_title)
   book.destroy
 end
 
-dir = Rails.root.join("ysntsj").expand_path
-dir.glob("0*.kif").sort.take(500).each do |file|
+dir = Rails.root.join("kifu_data").expand_path
+dir.glob("#{book_title}/*.kif").sort.take(500).each do |file|
   str = file.read.strip
   next if str.empty?
 

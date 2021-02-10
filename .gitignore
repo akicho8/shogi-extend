@@ -25,3 +25,4 @@ yarn-debug.log*
 /config/master.key
 /dump.rdb
 /.basic_auth*
+/kifu_data
