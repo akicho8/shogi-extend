@@ -29,7 +29,7 @@
         //-     b-button.is-outlined(:icon-left="e.icon" @click="base.next_handle(e)")
 
         .ox_buttons.buttons.my-4.has-addons.is-centered
-          template(v-for="e in base.OxInfo.values")
+          template(v-for="e in base.OxInfo.values.slice().reverse()")
             b-button.mb-0.is-outlined(:icon-left="e.icon" @click="base.next_handle(e)" type="is-primary")
 
     .column.RightColumn(:key="base.current_article.key" v-if="base.current_article.moves_answers.length >= 1")
