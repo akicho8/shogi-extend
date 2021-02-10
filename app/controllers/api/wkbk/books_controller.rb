@@ -47,7 +47,8 @@ module Api
         book = ::Wkbk::Book.find_by!(key: params[:book_key])
         show_can!(book)
         v = book.as_json(::Wkbk::Book.show_json_struct)
-        v[:articles] = book.ordered_articles(current_user).as_json(::Wkbk::Book.show_articles_json_struct)
+        articles = book.ordered_articles(current_user).as_json(::Wkbk::Book.show_articles_json_struct)
+        v[:articles] = articles.collect.with_index { |e, i| e.merge(index: i) }
         retv[:book] = v
         render json: retv
       end

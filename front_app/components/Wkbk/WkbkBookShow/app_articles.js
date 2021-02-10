@@ -1,8 +1,9 @@
 export const app_articles = {
   data() {
     return {
-      current_index: null, // 問題インデックス
-      answer_tab_index: 0, // 解答タブ
+      current_index: null,  // 問題インデックス
+      answer_tab_index: 0,  // 解答タブ
+      saved_articles: null, // 最初の状態を articles を保存しておく
     }
   },
 
@@ -18,7 +19,7 @@ export const app_articles = {
 
     play_start_process() {
       this.mode_set("running")
-      this.current_index = 0
+      // this.current_index = 0
       this.answer_tab_index = 0
       this.ox_start()
       if (this.current_article) {
@@ -28,8 +29,8 @@ export const app_articles = {
       }
     },
 
-    next_handle(o) {
-      this.ox_apply(o)
+    next_handle(ox_info) {
+      this.ox_apply(ox_info)
       this.current_index += 1
       this.answer_tab_index = 0
       if (this.current_article) {
@@ -68,5 +69,10 @@ export const app_articles = {
     current_sp_body()      { return this.current_article.init_sfen      }, // 現在の問題のSFEN
     current_sp_viewpoint() { return this.current_article.viewpoint      }, // 現在の問題の視点
     // current_sp_viewpoint() { return this.sfen_parse(this.current_sp_body).base_location.key }, // 現在の問題のSFENの視点
+
+    current_index_human: {
+      get()  { return this.current_index + 1 },
+      set(v) { this.current_index = v - 1    },
+    },
   },
 }

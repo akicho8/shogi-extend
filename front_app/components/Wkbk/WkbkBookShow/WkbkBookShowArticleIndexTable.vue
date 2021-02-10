@@ -23,17 +23,28 @@
   nav.panel.mb-0
     p.panel-heading
       | 問題リスト
-    .panel-block(v-if="base.journal_hash")
-      b-button.is-fullwidth(@click="base.articles_find_all_x_handle" :disabled="!base.articles_find_all_x_enabled")
+    .panel-block.op_buttons(v-if="base.journal_hash")
+      b-button.is-fullwidth(@click="base.op_select_x_handle")
         | 不正解のみ残す
+      b-button.is-fullwidth(@click="base.op_shuffle_handle")
+        | シャッフル
+      b-button.is-fullwidth(@click="base.op_revert_handle")
+        | 元に戻す
+    .panel-block
+      b-numberinput(controls-position="compact" expanded v-model="base.current_index_human" :min="1" :max="base.book.articles.length" :exponential="true" @click.native="sound_play('click')")
+      //- b-button.is-fullwidth(@click="base.op_select_x_handle")
+      //-   | 不正解のみ残す
     .panel-block.is-block
       b-table(
         v-if="base.book.articles.length >= 1"
         :data="base.book.articles"
         :mobile-cards="false"
+        :show-header="false"
+        @click="row => select_handle(row)"
+        :row-class="(e, i) => (i === base.current_index) && 'current_row'"
+        hoverable
         )
-        //- :show-header="true"
-        //- hoverable
+        //- :row-class="(e, i) => (i === base.current_index) && 'is-selected'"
         //- narrowed
         //- :row-class="() => 'is-clickable'"
         //- draggable
@@ -76,15 +87,27 @@
         //-   nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
         //-     | {{row.key}}
 
-        b-table-column(v-slot="{index}" custom-key="index" field="index" label="" numeric) {{index + 1}}
+        b-table-column(v-slot="{row}" custom-key="index" field="index" label="" centered cell-class="index_column")
+          //- template(v-if="row.index === base.current_index")
+          //-   b-tag(rounded type="is-primary")
+          //-     | {{index + 1}}
+          //- template(v-else)
+          //- :cell-class="row.index === base.current_index ? 'has-text-weight-bold' : ''"
+          //- b-icon(icon="play" type="is-primary" v-if="row.index === base.current_index")
+          //- span.has-text-grey-light(v-else) {{row.index + 1}}
+          | {{row.index + 1}}
+
         b-table-column(v-slot="{row}" custom-key="title"            field="title"            label="問題" cell-class="is_line_break_on")
 
           //- b-table-column(v-slot="e" custom-key="spent_sec" field="spent_sec" label="時間" numeric)
           //-   | {{e.index}}
           //- | {{journal_time_format(journal_hash[e.index])}}
           //- nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
-          nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
-            | {{row.title}}
+
+          //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
+          //-   span.has-text-grey-dark
+          //-     | {{row.title}}
+          | {{row.title}}
 
         b-table-column(v-slot="{row}" custom-key="ox" field="ox" label="解" centered :visible="!!base.journal_hash")
           b-icon(v-bind="base.journal_row_icon_attrs_for(row)")
@@ -121,6 +144,19 @@
         //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
         //-     nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
 
+        //- b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0")
+        //-   b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')" @click.native.prevent)
+        //-     b-icon(icon="dots-vertical" slot="trigger")
+            //- b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
+            //-   span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}") {{e.name}}
+            //- b-dropdown-item(:separator="true")
+            //- b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 7文字
+            //- b-dropdown-item(@click="base.rule_set({initial_main_min: 30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 5文字
+            //- b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0})") 2行 7文字
+
+          //- template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
+          //-   nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
+
         //- template(slot="empty" v-if="base.articles != null")
         //-   section.section.is-unselectable
         //-     .content.has-text-grey.has-text-centered
@@ -150,6 +186,14 @@ export default {
     }
   },
   methods: {
+    select_handle(row) {
+      this.__assert__(row.index != null, "row.index != null")
+      if (this.base.current_index != row.index) {
+        this.sound_play("click")
+        this.base.current_index = row.index
+      }
+    },
+
     up_down_handle(object, sign) {
       const index = this.base.book.articles.findIndex(e => e.key === object.key)
       this.base.book.articles = this.ary_move(this.base.book.articles, index, index + sign)
@@ -238,12 +282,28 @@ export default {
   th, td
     vertical-align: middle
 
+  .b-table
+    td
+      &.index_column
+        padding: 0
+    .index_column
+      color: $grey-light
+    .current_row
+      .index_column
+        background-color: $primary
+        color: $white
+
   // .box
   //   .title, .subtitle
   //     white-space: nowrap
 
   .ox_summary
     white-space: pre-wrap
+
+  .op_buttons
+    .button:not(:first-child)
+      margin-top: 0.5rem
+    flex-direction: column
 
   // .article_title
   //   // display: inline

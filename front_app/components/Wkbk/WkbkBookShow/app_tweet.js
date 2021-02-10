@@ -37,15 +37,13 @@ export const app_tweet = {
       this.interval_counter.stop()
     },
 
-    ox_apply(o) {
-      if (o) {
-        this.sound_play("o")
+    ox_apply(ox_info) {
+      this.sound_play(ox_info.key)
+      this.journal_record(ox_info.key)
+      if (ox_info.key === "o") {
         this.o_count += 1
-        this.journal_record("o")
       } else {
-        this.sound_play("x")
         this.x_count += 1
-        this.journal_record("x")
       }
     },
 

@@ -152,6 +152,7 @@ module Wkbk
       }
     end
 
+    # 出題用
     def self.show_articles_json_struct
       {
         only: [
@@ -165,7 +166,7 @@ module Wkbk
           :turn_max,
         ],
         methods: [
-          :lineage_key,
+          # :lineage_key,
         ],
         include: {
           moves_answers: {

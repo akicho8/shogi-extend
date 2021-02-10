@@ -1,3 +1,4 @@
+
 import dayjs from "dayjs"
 import { OxInfo } from "../models/ox_info.js"
 import _ from "lodash"
@@ -77,17 +78,6 @@ export const app_journal = {
           }
         }
       }
-    },
-
-    // 不正解のみ残す
-    articles_find_all_x_handle() {
-      this.sound_play("click")
-      this.book.articles = this.book.articles.filter(e => {
-        const ox_info = this.journal_ox_info_for(e)
-        if (ox_info) {
-          return ox_info.key === "x"
-        }
-      })
     },
   },
   computed: {

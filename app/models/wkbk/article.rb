@@ -129,7 +129,6 @@ module Wkbk
           :id,
           :key,
           :book_id,
-          :book_key,
           :position,
           :init_sfen,
           :viewpoint,
@@ -145,6 +144,7 @@ module Wkbk
           :updated_at,
         ],
         methods: [
+          :book_key,
           :folder_key,
           :lineage_key,
         ],
@@ -176,7 +176,6 @@ module Wkbk
           :id,
           :key,
           :book_id,
-          :book_key,
           :position,
           :init_sfen,
           :viewpoint,
@@ -192,6 +191,7 @@ module Wkbk
           :updated_at,
         ],
         methods: [
+          :book_key,
           :folder_key,
           :lineage_key,
         ],
@@ -358,7 +358,7 @@ module Wkbk
 
       ActiveRecord::Base.transaction do
         attrs = article.slice(*[
-                                :book_id,
+                                # :book_id,
                                 :book_key,
                                 :folder_key,
                                 # :position,

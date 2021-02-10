@@ -6,7 +6,7 @@ client-only
       p mode: {{mode}}
       template(v-if="interval_counter")
         p interval_counter.count: {{interval_counter.count}}
-      template(v-if="book")
+      template(v-if="book && false")
         p journal_ox_counts: {{journal_ox_counts}}
         p book.user.id: {{book.user && book.user.id}}
         p g_current_user.id: {{g_current_user && g_current_user.id}}
@@ -51,6 +51,9 @@ import { app_support    } from "./app_support.js"
 import { app_tweet      } from "./app_tweet.js"
 import { app_journal   } from "./app_journal.js"
 import { app_sidebar    } from "./app_sidebar.js"
+import { app_op  } from "./app_op.js"
+
+import _ from "lodash"
 
 export default {
   name: "WkbkBookShowApp",
@@ -62,6 +65,7 @@ export default {
     app_tweet,
     app_journal,
     app_sidebar,
+    app_op,
   ],
 
   data() {
@@ -85,6 +89,8 @@ export default {
 
     this.config = e.config
     this.book = new Book(e.book)
+    this.current_index = 0
+    this.saved_articles = _.cloneDeep(this.book.articles)
 
     this.clog("process.client", process.client)
     this.clog("process.server", process.server)
@@ -101,8 +107,10 @@ export default {
     //   this.mode_set("standby")
     // }
 
-    if (this.development_p) {
-      this.journal_test()
+    if (process.client) {
+      if (this.development_p) {
+        this.journal_test()
+      }
     }
   },
 

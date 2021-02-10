@@ -75,6 +75,9 @@ module Api
           # article = current_user.wkbk_articles.build()
           article = current_user.wkbk_articles.build
           article.default_assign
+          if current_book
+            article.book ||= current_book
+          end
           # retv[:article] = ::Wkbk::Article.default_attributes.merge(book_key: default_book_key)
           # retv[:meta] = ::Wkbk::Article.new_og_meta
         end

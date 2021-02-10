@@ -23,7 +23,7 @@ export const app_support = {
     article_new_handle() {
       if (this.owner_p) {
         this.sound_play("click")
-        this.$router.push({name: "rack-articles-new", params: {book_key: this.book.key}})
+        this.$router.push({name: "rack-articles-new", query: {book_key: this.book.key}})
       }
     },
     book_tweet_handle() {
