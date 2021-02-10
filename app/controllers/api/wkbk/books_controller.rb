@@ -78,6 +78,7 @@ module Api
       end
 
       # POST http://0.0.0.0:3000/api/wkbk/books/save
+      # nginx の client_max_body_size を調整が必要
       def save
         retv = {}
         if v = params[:book][:key]
