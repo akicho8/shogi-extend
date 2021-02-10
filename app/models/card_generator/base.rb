@@ -24,6 +24,8 @@ module CardGenerator
         :stroke_width     => 3,               # 縁取りの太さ
         :stroke_antialias => true,            # 縁取りのアンチエイリアス (効いてない。常にtrue)
         :stroke_opacity   => 1.0,             # 縁取りの非透明度 (効いてない。常にtrue)
+
+        :padding_lr       => 128 + 64 + 32,   # 左右のpadding
       }
     end
 
@@ -132,7 +134,7 @@ module CardGenerator
         if v = params[:font_size]
           v
         else
-          (params[:width] - 128) / (body.toeuc.bytesize / 2)
+          (params[:width] - params[:padding_lr]) / (body.toeuc.bytesize / 2)
         end
       }.call
     end

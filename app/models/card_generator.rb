@@ -35,5 +35,5 @@ module CardGenerator
 end
 
 if $0 == __FILE__
-  CardGenerator.display(base_color: [0, 0.5, 0.5], hue: 0, font_luminance: 0.98, stroke_darker: 0.05, stroke_width: 4)
+  CardGenerator.display(base_color: [0, 0.5, 0.5], hue: 0, font_luminance: 0.98, stroke_darker: 0.05, stroke_width: 4, body: "終盤の手筋123")
 end
