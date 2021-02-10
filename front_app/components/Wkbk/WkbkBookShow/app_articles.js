@@ -4,6 +4,7 @@ export const app_articles = {
       current_index: null,  // 問題インデックス
       answer_tab_index: 0,  // 解答タブ
       saved_articles: null, // 最初の状態を articles を保存しておく
+      description_open_p: null,
     }
   },
 
@@ -21,6 +22,7 @@ export const app_articles = {
       this.mode_set("running")
       // this.current_index = 0
       this.answer_tab_index = 0
+      this.description_open_p = this.mobile_p()
       this.ox_start()
       if (this.current_article) {
         this.journal_next_init()
@@ -33,6 +35,7 @@ export const app_articles = {
       this.ox_apply(ox_info)
       this.current_index += 1
       this.answer_tab_index = 0
+      this.description_open_p = this.mobile_p()
       if (this.current_article) {
         this.journal_next_init()
       } else {
@@ -56,6 +59,11 @@ export const app_articles = {
         this.sound_play("o")
         this.toast_ok("正解")
       }
+    },
+
+    description_open_handle() {
+      this.sound_play("click")
+      this.description_open_p = !this.description_open_p
     },
   },
 

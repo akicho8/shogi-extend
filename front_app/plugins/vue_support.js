@@ -12,6 +12,9 @@ import _ from "lodash"
 
 export default {
   methods: {
+    mobile_p()  { return isMobile.any()  },
+    desktop_p() { return !isMobile.any() },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     delay_block(seconds, block) {

@@ -32,7 +32,7 @@ client-only
             WkbkBookShowStandby(:base="base")
           template(v-if="is_running_p")
             WkbkBookShowSp(:base="base")
-            WkbkBookShowAnswer(:base="base")
+            //- WkbkBookShowAnswer(:base="base")
           template(v-if="is_goal_p")
             WkbkBookShowGoal(:base="base")
 
