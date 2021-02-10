@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: c88a3ed7e9ca948c8ddfd3f3f5eb99081186e755
+  revision: 55224309f805a56131ac69aebb50a44d27ef72ae
   specs:
     bioshogi (0.0.1)
       actionview
@@ -143,7 +143,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     color (1.8)
-    concurrent-ruby (1.1.7)
+    concurrent-ruby (1.1.8)
     connection_pool (2.2.2)
     crass (1.0.6)
     database_cleaner (1.8.3)
@@ -184,7 +184,7 @@ GEM
     html_format (0.0.9)
       actionpack
       activesupport
-    i18n (1.8.7)
+    i18n (1.8.8)
       concurrent-ruby (~> 1.0)
     image_processing (1.10.3)
       mini_magick (>= 4.9.5, < 5)
@@ -210,7 +210,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.8.0)
+    loofah (2.9.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
