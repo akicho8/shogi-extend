@@ -75,33 +75,9 @@ module CardGenerator
 
     def canvas
       @canvas ||= -> {
-        # canvas = Magick::Image.new(*image_rect)
-        # if params[:canvas_color]
-        #   canvas.background_color = params[:canvas_color]
-        # end
-        # canvas.background_color = "blue"
-        # canvas
-
-        # PR したけど放置されている
-
-        # list = Magick::ImageList.new
-        # params = self.params
-        # list.new_image(*image_rect) do |e|
-        #   e.background_color = params[:canvas_color]
-        # end
-
-        # https://github.com/rmagick/rmagick/issues/699
-        # https://github.com/rmagick/rmagick/pull/701
-        params = self.params
-        s = self
-        image = Magick::Image.new(*image_rect) { |e|
-          e.background_color = s.send(:background_color).html # FIXME: PRしたけどまだgemに載ってない
-        }
-
-        # list = Magick::ImageList.new
-        # list.new_image(*image_rect)
-        # list.last.background_color = "red" # params[:canvas_color]
-        # list
+        Magick::Image.new(*image_rect) do |e|
+          e.background_color = background_color.html
+        end
       }.call
     end
 
