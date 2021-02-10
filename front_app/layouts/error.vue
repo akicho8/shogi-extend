@@ -10,8 +10,7 @@ client-only
       .container
         .box.has-text-centered
           p {{status_code_with_message}}
-          p(v-if="error.message")
-            | {{error.message}}
+          p(v-if="error.message" v-html="error.message")
           b-button.mt-4(@click="login_handle" v-if="!g_current_user && error_status_code === 403") ログイン
         .emoji.has-text-centered.is-unselectable.is-clickable(@click="charactor_click")
           | {{charactor}}
@@ -75,7 +74,7 @@ export default {
           } else if (this.error.statusCode === 403) {
             return `${this.error.statusCode} Forbidden`
           } else {
-            return `${this.error.statusCode} ???`
+            return `ぶっこわれました(${this.error.statusCode})`
           }
         } else {
           return "??? ステイタスコード不明"
