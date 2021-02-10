@@ -50,7 +50,7 @@ export const app_tweet = {
     ox_summary_generate() {
       let out = ""
       out += `${this.book.title}\n`
-      out += `正解率: ${this.ox_rate_per} (${this.o_count}/${this.o_count_max})\n`
+      out += `正解率: ${this.ox_rate_per} (${this.o_count}/${this.ox_total})\n`
       out += `タイム: ${this.ox_spent_sec_to_s}\n`
       out += `平均: ${this.ox_time_avg}\n`
       return out
