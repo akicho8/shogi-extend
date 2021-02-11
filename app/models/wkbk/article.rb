@@ -311,7 +311,7 @@ module Wkbk
     end
 
     with_options allow_blank: true do
-      validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
+      # validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
       validates :title, length: { maximum: 100 }
       validates :description, length: { maximum: 5000 }
     end
