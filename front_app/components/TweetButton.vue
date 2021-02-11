@@ -22,6 +22,7 @@ export default {
     click_handle() {
       this.__assert__(this.body, "this.body")
       this.tweet_window_popup({text: this.body})
+      this.$emit("after_click")
     },
   },
 }
