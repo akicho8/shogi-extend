@@ -410,7 +410,7 @@ module Wkbk
     end
 
     def init_sfen=(sfen)
-      write_attribute(:init_sfen, sfen.to_s.remove(/position sfen /).presence)
+      write_attribute(:init_sfen, sfen.to_s.remove(/\s*position\s+sfen\s*/).presence)
     end
 
     def init_sfen
