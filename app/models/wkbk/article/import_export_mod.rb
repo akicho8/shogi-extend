@@ -60,7 +60,7 @@ module Wkbk
 
         def import_all(options = {})
           options = {
-            max: (Rails.env.production? || Rails.env.staging?) ? 1024 : 50,
+            max: (Rails.env.production? || Rails.env.staging?) ? 1024 : 1024,
           }.merge(options)
 
           persistent_records.take(options[:max]).each do |e|
