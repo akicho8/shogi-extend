@@ -16,12 +16,13 @@
         .card-content
           .media
             .media-left
-              figure.image.is-48x48
+              nuxt-link.image.is-48x48.is-clickable(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
                 img.is-rounded(:src="base.book.user.avatar_path" :alt="base.book.user.name")
             .media-content
                p.title.is-4 {{base.book.title}}
                p.subtitle.is-6
-                 | {{base.book.user.name}}
+                 nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
+                   | {{base.book.user.name}}
                  br
                  | {{diff_time_format(base.book.updated_at)}}更新
                  b-icon.ml-2(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
