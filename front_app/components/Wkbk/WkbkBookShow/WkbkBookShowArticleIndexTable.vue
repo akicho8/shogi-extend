@@ -18,12 +18,12 @@
     .panel-block.ox_summary
       | {{base.ox_summary}}
     .panel-block
-      TweetButton.is-link.is-outlined.is-fullwidth(:body="base.ox_tweet_body" size="") ツイート
+      TweetButton.is-link.is-outlined.is-fullwidth(:body="base.ox_tweet_body" size="" @after_click="sound_play('click')") ツイート
 
   nav.panel.mb-0
     p.panel-heading
       | 問題リスト
-    .panel-block.op_buttons(v-if="base.journal_hash")
+    .panel-block.op_buttons
       b-button.is-fullwidth(@click="base.op_select_x_handle")
         | 不正解のみ残す
       b-button.is-fullwidth(@click="base.op_shuffle_handle")

@@ -54,7 +54,7 @@
 
     b-table-column(v-slot="{row}" custom-key="book_title" field="books.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
       template(v-for="book in row.books")
-        nuxt-link.is-block(:to="{name: 'rack-books-book_key', params: {book_key: book.key}}") {{book.title}}
+        nuxt-link.is-block(:to="{name: 'rack-books-book_key', params: {book_key: book.key}}" @click.native="sound_play('click')") {{book.title}}
 
     b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.ArticleIndexColumnInfo.fetch('created_at').name"       sortable         :visible="!!base.visible_hash.created_at")       {{row_time_format(row.created_at)}}
     b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="base.ArticleIndexColumnInfo.fetch('updated_at').name"       sortable         :visible="!!base.visible_hash.updated_at")       {{row_time_format(row.updated_at)}}

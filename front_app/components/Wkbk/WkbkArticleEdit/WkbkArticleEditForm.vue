@@ -43,12 +43,6 @@
                 b-checkbox(v-model="base.article.book_keys" :native-value="e.key")
                   | {{e.title}}
                   //- b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon")
-
-          //- b-select(v-model="base.article.book_key" expanded)
-          //-   option(:value="null")
-          //-   option(v-for="e in base.books" :value="e.key")
-          //-     | {{e.title}}
-
 </template>
 
 <script>
@@ -88,7 +82,8 @@ export default {
       handler(v) {
         const folder_info = this.FolderInfo.fetch(v)
         this.sound_play("click")
-        this.talk(folder_info.name)
+        this.talk_stop()
+        this.talk(folder_info.message.article)
       },
     },
   },

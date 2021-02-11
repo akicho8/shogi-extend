@@ -236,9 +236,8 @@ module Wkbk
           folder: { only: [:key, :id, :name],},
           lineage: { only: [:id, :key], methods: [:name]},
           moves_answers: {},
-          book: {
+          books: {
             only: [
-              :id,
               :key,
               :title,
               :bookships_count,
@@ -435,11 +434,11 @@ module Wkbk
     end
 
     def book_keys=(v)
-      self.books = Book.where(key: v) # このタイミングで INSERT が走る
+      self.books = Book.where(key: v) # このタイミングで(persistedなら) INSERT が走る
     end
 
     def book_keys
-      books.pluck(:key)
+      books.collect(&:key) # 保存しているとは限らないため pluck したらいけない
     end
 
     def init_sfen=(sfen)

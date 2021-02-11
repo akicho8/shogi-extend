@@ -11,7 +11,7 @@ MainNavbar.WkbkTopNavbar(:spaced="false")
     //- b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-books-new'}" @click.native="sound_play('click')")
     //-   b-icon(icon="plus")
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play('click')")
       b-icon(icon="cog")
 
     WkbkSidebarToggle(@click="base.sidebar_toggle" v-if="false")

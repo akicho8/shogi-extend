@@ -38,6 +38,11 @@ export const app_op = {
 
     op_shuffle_handle() {
       this.sound_play("click")
+      if (this.book.articles.length <= 1) {
+        this.toast_warn("シャッフルするほどの問題がありません")
+        return
+      }
+
       this.book.articles = _.shuffle(this.book.articles)
       this.op_index_set_all()
       this.current_index = 0

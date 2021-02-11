@@ -42,7 +42,8 @@ export default {
       handler(v) {
         const folder_info = this.FolderInfo.fetch(v)
         this.sound_play("click")
-        this.talk(folder_info.name)
+        this.talk_stop()
+        this.talk(folder_info.message.book)
       },
     },
   },

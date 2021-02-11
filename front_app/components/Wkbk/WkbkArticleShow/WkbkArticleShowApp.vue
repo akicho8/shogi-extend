@@ -2,7 +2,7 @@
 .WkbkArticleShowApp
   DebugBox
     template(v-if="article")
-      p article.book_key: {{article.book_key}}
+      p article.book_keys: {{article.book_keys}}
       p article.user.id: {{article.user && article.user.id}}
       p g_current_user.id: {{g_current_user && g_current_user.id}}
       p owner_p: {{owner_p}}

@@ -56,16 +56,22 @@ export default {
     border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .WkbkArticleEditAnswer
-  .LeftColumn
+  .LeftColumn.column
     display: flex
     align-items: center
     flex-direction: column
     .CustomShogiPlayerWrap
+      +mobile
+        margin-top: 0.5rem
       +tablet
-        max-width: 64vmin
+        margin-top: 4rem
       .answer_create_handle
-        margin-top: $wkbk_share_gap
-  .RightColumn
+        margin-top: 1rem
+
+  .RightColumn.column
+    +mobile
+      margin-top: 1rem
+
     display: flex
     align-items: center
     flex-direction: column
@@ -77,14 +83,16 @@ export default {
         align-items: center
         flex-direction: column
         .CustomShogiPlayerWrap
+          +mobile
+            margin-top: 0.5rem
           +tablet
-            max-width: 66vmin
+            margin-top: 1.5rem
 
   // 共通
   .CustomShogiPlayerWrap
-    margin: $wkbk_share_gap 0
     width: 100%
     +tablet
+      max-width: 60vmin
       padding-top: unset
       padding-bottom: unset
 </style>

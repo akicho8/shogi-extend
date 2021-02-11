@@ -8,6 +8,7 @@ export const app_storage = {
     return {
       default_book_keys: null,
       default_lineage_key: null,
+      default_folder_key: null,
     }
   },
   beforeMount() {
@@ -18,6 +19,7 @@ export const app_storage = {
       return {
         default_book_keys: null,
         default_lineage_key: "次の一手",
+        default_folder_key: "public",
       }
     },
   },

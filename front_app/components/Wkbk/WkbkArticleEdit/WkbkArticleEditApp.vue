@@ -3,7 +3,7 @@ client-only
   .WkbkArticleEditApp
     DebugBox
       template(v-if="article")
-        p article.book_key: {{article.book_key}}
+        p article.book_keys: {{article.book_keys}}
         p article.user.id: {{article.user && article.user.id}}
         p g_current_user.id: {{g_current_user && g_current_user.id}}
         p owner_p: {{owner_p}}
@@ -101,11 +101,14 @@ export default {
 
     // 前回保存したときの値を初期値にする
     if (this.article.new_record_p) {
-      if (!this.article.book_key) {
+      if (!this.article.book_keys) {
         this.article.book_keys = this.default_book_keys
       }
       if (!this.article.lineage_key) {
         this.article.lineage_key = this.default_lineage_key
+      }
+      if (!this.article.folder_key) {
+        this.article.folder_key = this.default_folder_key
       }
     }
 
