@@ -140,14 +140,16 @@ module Wkbk
 
               book = user.wkbk_books.find_or_initialize_by(title: "アヒル戦法問題集")
               book.folder_key = :public
-              book.articles << record
               book.save!
+
+              book.articles << record
             else
               if Rails.env.development?
                 book = user.wkbk_books.find_or_initialize_by(title: "その他")
                 book.folder_key = :public
-                book.articles << record
                 book.save!
+
+                book.articles << record
               end
             end
           end
