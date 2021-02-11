@@ -124,7 +124,7 @@ module CardGenerator
         if v = params[:body]
           v
         else
-          "将棋問題集"
+          "インスタント将棋問題集"
         end
       }.call
     end

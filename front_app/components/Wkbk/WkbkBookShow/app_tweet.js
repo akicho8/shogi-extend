@@ -70,7 +70,7 @@ export const app_tweet = {
       let out = ""
       out += "\n"
       out += this.ox_summary
-      out += "#" + "将棋問題集" + "\n"
+      out += "#" + "インスタント将棋問題集" + "\n"
       out += this.location_url_without_search_and_hash()
       return out
     },

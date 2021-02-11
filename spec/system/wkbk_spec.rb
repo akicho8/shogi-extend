@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "将棋問題集", type: :system do
+RSpec.describe "インスタント将棋問題集", type: :system do
   before do
     Actb.setup
     Emox.setup

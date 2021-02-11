@@ -2,7 +2,7 @@
 MainNavbar.WkbkTopNavbar(:spaced="false")
   template(slot="brand")
     NavbarItemHome
-    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack'}") 将棋問題集
+    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack'}") インスタント将棋問題集
 
   template(slot="end")
     NavbarItemLogin

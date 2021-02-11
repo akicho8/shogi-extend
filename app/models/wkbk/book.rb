@@ -447,7 +447,7 @@ module Wkbk
       o = []
       o << title
       # o << description
-      o << "#" + "将棋問題集"
+      o << "#" + "インスタント将棋問題集"
       o << page_url
       o.join("\n")
     end
@@ -457,7 +457,7 @@ module Wkbk
       self.sequence_key ||= :shuffle
 
       if user
-        self.title ||= "#{user.name}の将棋問題集第#{user.wkbk_books.count.next}弾(仮)"
+        self.title ||= "#{user.name}のインスタント将棋問題集第#{user.wkbk_books.count.next}弾(仮)"
       end
 
       if Rails.env.development?
