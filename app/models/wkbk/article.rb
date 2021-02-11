@@ -266,9 +266,7 @@ module Wkbk
     acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
     acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
 
-    with_options dependent: :destroy do
-      has_many :moves_answers  # 手順一致を正解とする答え集
-    end
+    has_many :moves_answers, dependent: :destroy
 
     before_validation do
       # if book
