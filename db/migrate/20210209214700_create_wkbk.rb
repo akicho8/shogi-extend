@@ -38,8 +38,8 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
 
         t.string :init_sfen,                null: false, index: true,                                  comment: "問題"
         t.string :viewpoint,                null: false, index: false,                                 comment: "視点"
-        t.string :title,                    null: true,  index: false,                                 comment: "タイトル"
-        t.string :description, limit: 1024, null: true,  index: false,                                 comment: "説明"
+        t.string :title, limit: 100,        null: false, index: false,                                 comment: "タイトル"
+        t.string :description, limit: 5000, null: false, index: false,                                 comment: "説明"
         t.integer :turn_max,                null: true,  index: true,                                  comment: "最大手数"
         t.boolean :mate_skip,               null: true,                                                comment: "詰みチェックをスキップする"
         t.string :direction_message,        null: true,                                                comment: "メッセージ"
@@ -68,9 +68,9 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.belongs_to :user,                    null: false, foreign_key: true,                        comment: "作成者"
         t.belongs_to :folder,                  null: false, foreign_key: {to_table: :wkbk_folders},   comment: "フォルダ"
         t.belongs_to :sequence,                null: false, foreign_key: {to_table: :wkbk_sequences}, comment: "順序"
-        t.string :title,                       null: true,  index: false,                             comment: "タイトル"
-        t.string :description, limit: 1024,    null: true,  index: false,                             comment: "説明"
         t.integer :articles_count, default: 0, null: false, index: false,                             comment: "記事数"
+        t.string :title, limit: 100,           null: false,  index: false,                             comment: "タイトル"
+        t.string :description, limit: 5000,    null: false,  index: false,                             comment: "説明"
         t.timestamps
       end
     end

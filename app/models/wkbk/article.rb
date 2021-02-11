@@ -266,17 +266,8 @@ module Wkbk
 
       self.folder_key ||= book&.folder_key || :public
 
-      normalize_zenkaku_to_hankaku(*[
-                                     :title,
-                                     :description,
-                                     :direction_message,
-                                   ])
-
-      normalize_blank_to_nil(*[
-                               :title,
-                               :description,
-                               :direction_message,
-                             ])
+      normalize_zenkaku_to_hankaku(:title, :description, :direction_message)
+      normalize_blank_to_empty_string(:title, :description, :direction_message)
     end
 
     with_options presence: true do
@@ -287,7 +278,8 @@ module Wkbk
 
     with_options allow_blank: true do
       validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
-      validates :description, length: { maximum: 1024 }
+      validates :title, length: { maximum: 100 }
+      validates :description, length: { maximum: 5000 }
     end
 
     validate do

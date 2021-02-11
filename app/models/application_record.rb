@@ -48,9 +48,7 @@ class ApplicationRecord < ActiveRecord::Base
   # "" or nil → ""
   def normalize_blank_to_empty_string(*keys)
     keys.each do |key|
-      if will_save_change_to_attribute?(key)
-        public_send("#{key}=", public_send(key).to_s)
-      end
+      public_send("#{key}=", public_send(key).to_s)
     end
   end
 

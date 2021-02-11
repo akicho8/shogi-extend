@@ -233,7 +233,7 @@ module Wkbk
       self.key ||= secure_random_urlsafe_base64_token
 
       normalize_zenkaku_to_hankaku(:title, :description)
-      normalize_blank_to_nil(:title, :description)
+      normalize_blank_to_empty_string(:title, :description)
     end
 
     # with_options presence: true do
@@ -243,7 +243,8 @@ module Wkbk
 
     with_options allow_blank: true do
       validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
-      validates :description, length: { maximum: 1024 }
+      validates :title, length: { maximum: 100 }
+      validates :description, length: { maximum: 5000 }
 
       # validates :init_sfen # , uniqueness: { case_sensitive: true }
       # validates :difficulty, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
