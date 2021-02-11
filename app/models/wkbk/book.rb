@@ -519,6 +519,13 @@ module Wkbk
         has_many :bookships, dependent: :destroy # 問題集と問題の中間情報たち
         has_many :articles, through: :bookships  # 自分に入っている問題たち
       end
+
+      # bookの下にあるものを全削除(超危険)
+      # 中間情報経由で articles.destroy_all は空振りする(articles は削除されない)
+      def dependent_records_destroy_all
+        articles.each(&:destroy!)
+        bookships.destroy_all
+      end
     end
   end
 end
