@@ -31,14 +31,16 @@ module Wkbk
 
   def models
     [
-      Folder,
-      Lineage,
-      Book,
+      Bookship,
       Article,
       MovesAnswer,
+      Book,
+      Lineage,
+      Folder,
     ]
   end
 
+  # 実行順序重要
   def destroy_all
     models.each do |e|
       e.destroy_all

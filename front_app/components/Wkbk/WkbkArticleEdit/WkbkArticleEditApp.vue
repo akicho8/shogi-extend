@@ -102,7 +102,7 @@ export default {
     // 前回保存したときの値を初期値にする
     if (this.article.new_record_p) {
       if (!this.article.book_key) {
-        this.article.book_key = this.default_book_key
+        this.article.book_keys = this.default_book_keys
       }
       if (!this.article.lineage_key) {
         this.article.lineage_key = this.default_lineage_key

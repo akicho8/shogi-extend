@@ -6,8 +6,8 @@ export const app_storage = {
   ],
   data() {
     return {
-      default_book_key: null,
-      default_lineage_key: null,
+      // default_book_keys: null,
+      // default_lineage_key: null,
     }
   },
   beforeMount() {
@@ -16,8 +16,8 @@ export const app_storage = {
   computed: {
     ls_default() {
       return {
-        default_book_key: null,
-        default_lineage_key: "次の一手",
+        // default_book_keys: null,
+        // default_lineage_key: "次の一手",
       }
     },
   },

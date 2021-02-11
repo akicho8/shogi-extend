@@ -52,11 +52,9 @@
         b-tag.is-clickable.mr-1(@click.native.stop="base.tag_search_handle(tag)" rounded :key="tag")
           | {{tag}}
 
-    b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
-      nuxt-link(:to="{name: 'rack-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
-
-        | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}
-        span(v-if="false") ({{row.book.articles_count}})
+    b-table-column(v-slot="{row}" custom-key="book_title" field="books.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
+      template(v-for="book in row.books")
+        nuxt-link.is-block(:to="{name: 'rack-books-book_key', params: {book_key: book.key}}") {{book.title}}
 
     b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.ArticleIndexColumnInfo.fetch('created_at').name"       sortable         :visible="!!base.visible_hash.created_at")       {{row_time_format(row.created_at)}}
     b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="base.ArticleIndexColumnInfo.fetch('updated_at').name"       sortable         :visible="!!base.visible_hash.updated_at")       {{row_time_format(row.updated_at)}}
@@ -116,6 +114,10 @@ export default {
       .tag
         // 行が上下が広がってしまうのを防ぐ
         height: auto
+
+    // 複数並ぶ問題集の隙間
+    // .book_title:not(:first-child)
+    //   margin-left: 3rem
 
   // モバイルでは CustomShogiPlayer を横幅最大にしたいので横のパディングを取る
   +mobile

@@ -7,18 +7,19 @@
 # | name                | desc                | type         | opts                | refs         | index |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
 # | id                  | ID                  | integer(8)   | NOT NULL PK         |              |       |
-# | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A     |
+# | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A!    |
 # | user_id             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | C     |
-# | book_id             | Book                | integer(8)   |                     |              | D     |
+# | folder_id           | Folder              | integer(8)   | NOT NULL            |              | C     |
+# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | D     |
 # | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
 # | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
-# | title               | タイトル            | string(255)  |                     |              |       |
-# | description         | 説明                | string(1024) |                     |              |       |
-# | turn_max            | 手数                | integer(4)   |                     |              | F     |
-# | mate_skip           | Mate skip           | boolean      |                     |              |       |
-# | direction_message   | Direction message   | string(255)  |                     |              |       |
+# | title               | タイトル            | string(100)  | NOT NULL            |              |       |
+# | description         | 説明                | string(5000) | NOT NULL            |              |       |
+# | direction_message   | Direction message   | string(100)  | NOT NULL            |              |       |
+# | turn_max            | 手数                | integer(4)   | NOT NULL            |              | F     |
+# | mate_skip           | Mate skip           | boolean      | NOT NULL            |              |       |
 # | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# | difficulty          | Difficulty          | integer(4)   | NOT NULL            |              | G     |
 # | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
 # | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|

@@ -134,7 +134,7 @@ module CardGenerator
         if v = params[:font_size]
           v
         else
-          (params[:width] - params[:padding_lr]) / (body.toeuc.bytesize / 2)
+          (params[:width] - params[:padding_lr]) / body.toeuc.bytesize.fdiv(2).ceil
         end
       }.call
     end

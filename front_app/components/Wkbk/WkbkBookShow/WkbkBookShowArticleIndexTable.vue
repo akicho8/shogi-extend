@@ -127,7 +127,7 @@
         //- b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
         //-   nuxt-link(:to="{name: 'rack-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
         //-
-        //-     | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.articles_count}})
+        //-     | {{string_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.bookships_count}})
         //-
         //- b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
         //- b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}

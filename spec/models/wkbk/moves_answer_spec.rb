@@ -11,6 +11,7 @@
 # | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
 # | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
 # | moves_human_str | Moves human str | string(255) |             |      |       |
+# | position        | 順序            | integer(4)  | NOT NULL    |      | C     |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
 # |-----------------+-----------------+-------------+-------------+------+-------|

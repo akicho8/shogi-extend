@@ -7,18 +7,19 @@
 # | name                | desc                | type         | opts                | refs         | index |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
 # | id                  | ID                  | integer(8)   | NOT NULL PK         |              |       |
-# | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A     |
-# | user_key             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | lineage_key          | Lineage             | integer(8)   | NOT NULL            |              | C     |
-# | book_key             | Book                | integer(8)   |                     |              | D     |
+# | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A!    |
+# | user_id             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | folder_id           | Folder              | integer(8)   | NOT NULL            |              | C     |
+# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | D     |
 # | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
 # | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
-# | title               | タイトル            | string(255)  |                     |              |       |
-# | description         | 説明                | string(1024) |                     |              |       |
-# | turn_max            | 手数                | integer(4)   |                     |              | F     |
-# | mate_skip           | Mate skip           | boolean      |                     |              |       |
-# | direction_message   | Direction message   | string(255)  |                     |              |       |
+# | title               | タイトル            | string(100)  | NOT NULL            |              |       |
+# | description         | 説明                | string(5000) | NOT NULL            |              |       |
+# | direction_message   | Direction message   | string(100)  | NOT NULL            |              |       |
+# | turn_max            | 手数                | integer(4)   | NOT NULL            |              | F     |
+# | mate_skip           | Mate skip           | boolean      | NOT NULL            |              |       |
 # | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# | difficulty          | Difficulty          | integer(4)   | NOT NULL            |              | G     |
 # | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
 # | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
@@ -32,14 +33,11 @@ module Api
     class ArticlesController < ApplicationController
       before_action :api_login_required, only: [:edit, :save]
 
-      # http://0.0.0.0:3000/api/wkbk/articles
-      # http://0.0.0.0:3000/api/wkbk/articles?scope=everyone
-      # http://0.0.0.0:3000/api/wkbk/articles?scope=public
-      # http://0.0.0.0:3000/api/wkbk/articles?scope=private
-      # http://0.0.0.0:3000/api/wkbk/articles?sort_column=id&sort_order=desc
+      # http://0.0.0.0:3000/api/wkbk/articles/index?_user_id=1
+      # http://0.0.0.0:3000/api/wkbk/articles/index?_user_id=1&sort_column=id&sort_order=desc
       def index
         retv = {}
-        retv[:articles]       = sort_scope_for_articles(current_articles).as_json(::Wkbk::Article.json_type5)
+        retv[:articles]       = sort_scope_for_articles(current_articles).as_json(::Wkbk::Article.json_type5_for_index)
         # retv[:article_counts] = article_counts
         retv[:total]          = current_articles.total_count
         retv[:meta]           = ServiceInfo.fetch(:wkbk).og_meta
@@ -48,7 +46,7 @@ module Api
 
       # http://0.0.0.0:3000/api/wkbk/articles/show
       # http://0.0.0.0:3000/api/wkbk/articles/show?article_key=1
-      # http://0.0.0.0:3000/api/wkbk/articles/show?article_key=1&_user_key=1
+      # http://0.0.0.0:3000/api/wkbk/articles/show?article_key=1&_user_id=1
       def show
         retv = {}
         retv[:config] = ::Wkbk::Config
@@ -61,28 +59,39 @@ module Api
 
       # http://0.0.0.0:3000/api/wkbk/articles/edit.json
       # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_key=1
-      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_key=1&_user_key=1
+      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_key=1&_user_id=1
+      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?article_key=1&_user_id=1
       def edit
         retv = {}
         retv[:config] = ::Wkbk::Config
         retv[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
-        retv[:books] = current_books
 
         if v = params[:article_key]
-          article = current_user.wkbk_articles.find_by!(key: v)
+          article = current_user.wkbk_articles.find_by!(key: v) # 本人しかアクセスできないため権限チェックは不要
           # edit_permission_valid!(article)
         else
-          # article = current_user.wkbk_articles.build()
+          # article = current_user.wkbk_articles.build
           article = current_user.wkbk_articles.build
           article.default_assign
-          if current_book
-            article.book ||= current_book
+          if default_book
+            article.books = [default_book]
+            article.folder_key = default_book.folder_key
           end
           # retv[:article] = ::Wkbk::Article.default_attributes.merge(book_key: default_book_key)
           # retv[:meta] = ::Wkbk::Article.new_og_meta
         end
-        retv[:article] = article.as_json(::Wkbk::Article.json_type5)
+
+        retv[:article] = article.as_json(::Wkbk::Article.json_type5_for_edit)
         retv[:meta] = article.og_meta
+
+        # チェックしたものが上に来るようにする
+        books = [
+          default_book,                                     # 引数で指定したものが一番上
+          article.books.order(updated_at: :desc),           # 現在のレコードで選択したもの
+          current_user.wkbk_books.order(updated_at: :desc), # その他全部
+        ].flatten.compact.uniq
+        retv[:books] = books.as_json(::Wkbk::Book.json_type7)
+
         render json: retv
       end
 
@@ -96,7 +105,7 @@ module Api
         end
         begin
           article.update_from_js(params.to_unsafe_h[:article])
-          retv[:article] = article.as_json(::Wkbk::Article.json_type5)
+          retv[:article] = article.as_json(::Wkbk::Article.json_type5_for_edit)
         rescue ActiveRecord::RecordInvalid => error
           retv[:form_error_message] = error.message
         end
@@ -132,8 +141,8 @@ module Api
           case columns.first
           when "user"
             s = s.joins(:user).merge(User.reorder(columns.last => sort_order))
-          when "book"
-            s = s.joins(:book).merge(::Wkbk::Book.reorder(columns.last => sort_order))
+          when "books"
+            s = s.joins(:books).merge(::Wkbk::Book.reorder(columns.last => sort_order))
           when "lineage"
             s = s.joins(:lineage).merge(::Wkbk::Lineage.reorder(columns.last => sort_order)) # position の order を避けるため reorder
           when "folder"
@@ -153,30 +162,19 @@ module Api
         (params[:scope].presence || :everyone).to_sym
       end
 
-      def current_book
-        if current_user
-          if v = params[:book_key]
-            current_user.wkbk_books.find_by!(key: v)
-          end
+      def default_book
+        if v = params[:book_key]
+          current_user.wkbk_books.find_by!(key: v)
         end
       end
 
-      def default_book_key
-        current_book&.key
-      end
+      # def default_book_key
+      #   default_book&.key
+      # end
 
       # PageMod override
       def default_per
         ::Wkbk::Config[:api_articles_fetch_per]
-      end
-
-      # プルダウン選択用
-      def current_books
-        if current_user
-          current_user.wkbk_books.order(:created_at).as_json(::Wkbk::Book.json_type7)
-        else
-          []
-        end
       end
     end
   end

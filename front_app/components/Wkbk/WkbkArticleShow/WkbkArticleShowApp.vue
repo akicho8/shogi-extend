@@ -98,14 +98,14 @@ export default {
     this.article     = new Article(e.article)
 
     // 前回保存したときの値を初期値にする
-    if (this.article.new_record_p) {
-      if (!this.article.book_key) {
-        this.article.book_key = this.default_book_key
-      }
-      if (!this.article.lineage_key) {
-        this.article.lineage_key = this.default_lineage_key
-      }
-    }
+    // if (this.article.new_record_p) {
+    //   if (!this.article.book_key) {
+    //     this.article.book_key = this.default_book_keys
+    //   }
+    //   if (!this.article.lineage_key) {
+    //     this.article.lineage_key = this.default_lineage_key
+    //   }
+    // }
 
     this.answer_tab_index = 0 // 解答リストの一番左指す
     // this.answer_turn_offset = 0

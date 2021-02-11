@@ -7,18 +7,19 @@
 # | name                | desc                | type         | opts                | refs         | index |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
 # | id                  | ID                  | integer(8)   | NOT NULL PK         |              |       |
-# | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A     |
+# | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A!    |
 # | user_id             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | C     |
-# | book_id             | Book                | integer(8)   |                     |              | D     |
+# | folder_id           | Folder              | integer(8)   | NOT NULL            |              | C     |
+# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | D     |
 # | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
 # | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
-# | title               | タイトル            | string(255)  |                     |              |       |
-# | description         | 説明                | string(1024) |                     |              |       |
-# | turn_max            | 手数                | integer(4)   |                     |              | F     |
-# | mate_skip           | Mate skip           | boolean      |                     |              |       |
-# | direction_message   | Direction message   | string(255)  |                     |              |       |
+# | title               | タイトル            | string(100)  | NOT NULL            |              |       |
+# | description         | 説明                | string(5000) | NOT NULL            |              |       |
+# | direction_message   | Direction message   | string(100)  | NOT NULL            |              |       |
+# | turn_max            | 手数                | integer(4)   | NOT NULL            |              | F     |
+# | mate_skip           | Mate skip           | boolean      | NOT NULL            |              |       |
 # | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# | difficulty          | Difficulty          | integer(4)   | NOT NULL            |              | G     |
 # | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
 # | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
@@ -76,7 +77,6 @@ module Wkbk
     # def self.default_attributes
     #   default = {
     #     :id                  => nil,
-    #     :book_id             => nil,
     #     :title               => nil,
     #     :description         => nil,
     #     :direction_message   => nil,
@@ -122,13 +122,13 @@ module Wkbk
     #   ]
     # end
 
-    # 一覧・編集用
-    def self.json_type5
+    # 一覧
+    def self.json_type5_for_index
       {
         only: [
           :id,
           :key,
-          :book_id,
+          # :book_keys,
           :position,
           :init_sfen,
           :viewpoint,
@@ -144,7 +144,48 @@ module Wkbk
           :updated_at,
         ],
         methods: [
-          :book_key,
+          # :book_keys,
+          :folder_key,
+          :lineage_key,
+        ],
+        include: {
+          user: { only: [:key, :id, :name], methods: [:avatar_path],},
+          folder: { only: [:key, :id, :name],},
+          # moves_answers: {},
+          books: {
+            only: [
+              :key,
+              :title,
+            ],
+            methods: [
+              :folder_key,
+            ],
+          },
+        },
+      }
+    end
+
+    def self.json_type5_for_edit
+      {
+        only: [
+          :id,
+          :key,
+          :position,
+          :init_sfen,
+          :viewpoint,
+          :title,
+          :description,
+          :owner_tag_list,
+          :direction_message,
+          :difficulty,
+          :turn_max,
+          :mate_skip,
+          :moves_answers_count,
+          # :created_at,
+          # :updated_at,
+        ],
+        methods: [
+          :book_keys,
           :folder_key,
           :lineage_key,
         ],
@@ -152,19 +193,14 @@ module Wkbk
           user: { only: [:key, :id, :name], methods: [:avatar_path],},
           folder: { only: [:key, :id, :name],},
           moves_answers: {},
-          book: {
+          books: {
             only: [
-              :id,
               :key,
               :title,
-              :articles_count,
             ],
             methods: [
               :folder_key,
             ],
-            include: {
-              folder: { only: [:key, :id, :name],},
-            },
           },
         },
       }
@@ -175,7 +211,7 @@ module Wkbk
         only: [
           :id,
           :key,
-          :book_id,
+          :book_keys,
           :position,
           :init_sfen,
           :viewpoint,
@@ -191,7 +227,7 @@ module Wkbk
           :updated_at,
         ],
         methods: [
-          :book_key,
+          :book_keys,
           :folder_key,
           :lineage_key,
         ],
@@ -205,7 +241,7 @@ module Wkbk
               :id,
               :key,
               :title,
-              :articles_count,
+              :bookships_count,
             ],
             methods: [
               :folder_key,
@@ -218,14 +254,15 @@ module Wkbk
       }
     end
 
-    # テーブルでのソートより優先してしまうため default_scope { order(:position) } は指定しない
-    acts_as_list touch_on_update: false, top_of_list: 0, scope: :book
+    # # テーブルでのソートより優先してしまうため default_scope { order(:position) } は指定しない
+    # acts_as_list touch_on_update: false, top_of_list: 0, scope: :book
 
     attribute :moves_answer_validate_skip
 
     belongs_to :user, class_name: "::User" # 作者
     belongs_to :lineage
-    belongs_to :book, required: false, counter_cache: true, touch: true
+
+    # belongs_to :book, required: false, counter_cache: true, touch: true
 
     acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
     acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
@@ -235,9 +272,9 @@ module Wkbk
     end
 
     before_validation do
-      if book
-        self.user ||= book.user
-      end
+      # if book
+      #   self.user ||= book.user
+      # end
 
       if Rails.env.development? || Rails.env.test?
         self.title ||= SecureRandom.hex
@@ -256,15 +293,15 @@ module Wkbk
       self.lineage_key ||= "次の一手"
       self.key ||= secure_random_urlsafe_base64_token
       self.difficulty ||= 1
+      self.turn_max ||= 0
+      self.folder_key ||= :public
 
-      if lineage.pure_info.mate_validate_on
-        self.mate_skip ||= false
-      else
-        # 手筋などのときは詰みチェックをニュートラルにしとく
-        self.mate_skip = nil
-      end
-
-      self.folder_key ||= book&.folder_key || :public
+      # if lineage.pure_info.mate_validate_on
+      #   self.mate_skip ||= false
+      # else
+      #   self.mate_skip = nil
+      # end
+      self.mate_skip ||= false
 
       normalize_zenkaku_to_hankaku(:title, :description, :direction_message)
       normalize_blank_to_empty_string(:title, :description, :direction_message)
@@ -282,19 +319,19 @@ module Wkbk
       validates :description, length: { maximum: 5000 }
     end
 
-    validate do
-      if changes_to_save[:book_id] || changes_to_save[:user_id]
-        if book && user
-          if book.user != user
-            errors.add(:base, "問題集の所有者と問題の所有者が異なります")
-          end
-        end
-      end
-    end
+    # validate do
+    #   if changes_to_save[:book_keys] || changes_to_save[:user_id]
+    #     if book && user
+    #       if book.user != user
+    #         errors.add(:base, "問題集の所有者と問題の所有者が異なります")
+    #       end
+    #     end
+    #   end
+    # end
 
     # validate do
     #   if false
-    #     if changes_to_save[:book_id] && book
+    #     if changes_to_save[:book_keys] && book
     #       if book.folder_key == :public && folder_key === :private
     #         errors.add(:base, "公開している問題集に非公開の問題は入れられません")
     #       end
@@ -350,8 +387,8 @@ module Wkbk
 
       ActiveRecord::Base.transaction do
         attrs = article.slice(*[
-                                # :book_id,
-                                :book_key,
+                                # :book_keys,
+                                :book_keys,
                                 :folder_key,
                                 # :position,
                                 :init_sfen,
@@ -397,16 +434,12 @@ module Wkbk
       end
     end
 
-    def book_key=(v)
-      if v
-        self.book = Book.find_by!(key: v)
-      else
-        self.book = nil
-      end
+    def book_keys=(v)
+      self.books = Book.where(key: v) # このタイミングで INSERT が走る
     end
 
-    def book_key
-      book&.key
+    def book_keys
+      books.pluck(:key)
     end
 
     def init_sfen=(sfen)
@@ -514,7 +547,7 @@ module Wkbk
     def default_assign
       # "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
 
-      self.folder_key     ||= book&.folder_key || :public
+      # self.folder_key     ||= :public
       self.init_sfen      ||= "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
       self.viewpoint      ||= "black"
       self.mate_skip      ||= false
@@ -556,7 +589,12 @@ module Wkbk
       ]
       Digest::MD5.hexdigest(ary.join(":"))
     end
+
+    concerning :BookshipMethods do
+      included do
+        has_many :bookships, dependent: :destroy # 問題集と問題の中間情報たち
+        has_many :books, through: :bookships     # 自分が入っている問題集たち
+      end
+    end
   end
 end
-# ~> -:30:in `<module:Wkbk>': uninitialized constant Wkbk::ApplicationRecord (NameError)
-# ~>    from -:29:in `<main>'

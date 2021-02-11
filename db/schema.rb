@@ -1189,26 +1189,22 @@ ActiveRecord::Schema.define(version: 2021_02_09_214700) do
     t.bigint "user_id", null: false, comment: "作成者"
     t.bigint "folder_id", null: false, comment: "フォルダ"
     t.bigint "lineage_id", null: false, comment: "種類"
-    t.bigint "book_id", comment: "本"
     t.string "init_sfen", null: false, comment: "問題"
     t.string "viewpoint", null: false, comment: "視点"
-    t.string "title", comment: "タイトル"
-    t.string "description", limit: 1024, comment: "説明"
-    t.integer "turn_max", comment: "最大手数"
-    t.boolean "mate_skip", comment: "詰みチェックをスキップする"
-    t.string "direction_message", comment: "メッセージ"
+    t.string "title", limit: 100, null: false, comment: "タイトル"
+    t.string "description", limit: 5000, null: false, comment: "説明"
+    t.string "direction_message", limit: 100, null: false, comment: "メッセージ"
+    t.integer "turn_max", null: false, comment: "最大手数"
+    t.boolean "mate_skip", null: false, comment: "詰みチェックをスキップする"
     t.integer "moves_answers_count", default: 0, null: false, comment: "解答数"
-    t.integer "position", null: false
-    t.integer "difficulty", comment: "難易度"
+    t.integer "difficulty", null: false, comment: "難易度"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["book_id"], name: "index_wkbk_articles_on_book_id"
     t.index ["difficulty"], name: "index_wkbk_articles_on_difficulty"
     t.index ["folder_id"], name: "index_wkbk_articles_on_folder_id"
     t.index ["init_sfen"], name: "index_wkbk_articles_on_init_sfen"
     t.index ["key"], name: "index_wkbk_articles_on_key", unique: true
     t.index ["lineage_id"], name: "index_wkbk_articles_on_lineage_id"
-    t.index ["position"], name: "index_wkbk_articles_on_position"
     t.index ["turn_max"], name: "index_wkbk_articles_on_turn_max"
     t.index ["user_id"], name: "index_wkbk_articles_on_user_id"
   end
@@ -1218,15 +1214,29 @@ ActiveRecord::Schema.define(version: 2021_02_09_214700) do
     t.bigint "user_id", null: false, comment: "作成者"
     t.bigint "folder_id", null: false, comment: "フォルダ"
     t.bigint "sequence_id", null: false, comment: "順序"
-    t.string "title", comment: "タイトル"
-    t.string "description", limit: 1024, comment: "説明"
-    t.integer "articles_count", default: 0, null: false, comment: "記事数"
+    t.string "title", limit: 100, null: false, comment: "タイトル"
+    t.string "description", limit: 5000, null: false, comment: "説明"
+    t.integer "bookships_count", default: 0, null: false, comment: "記事数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["folder_id"], name: "index_wkbk_books_on_folder_id"
     t.index ["key"], name: "index_wkbk_books_on_key", unique: true
     t.index ["sequence_id"], name: "index_wkbk_books_on_sequence_id"
     t.index ["user_id"], name: "index_wkbk_books_on_user_id"
+  end
+
+  create_table "wkbk_bookships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "作成者"
+    t.bigint "book_id", null: false, comment: "問題集"
+    t.bigint "article_id", null: false, comment: "問題"
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_wkbk_bookships_on_article_id"
+    t.index ["book_id", "article_id"], name: "index_wkbk_bookships_on_book_id_and_article_id", unique: true
+    t.index ["book_id"], name: "index_wkbk_bookships_on_book_id"
+    t.index ["position"], name: "index_wkbk_bookships_on_position"
+    t.index ["user_id"], name: "index_wkbk_bookships_on_user_id"
   end
 
   create_table "wkbk_folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -1396,11 +1406,13 @@ ActiveRecord::Schema.define(version: 2021_02_09_214700) do
   add_foreign_key "swars_zip_dl_logs", "swars_users"
   add_foreign_key "swars_zip_dl_logs", "users"
   add_foreign_key "wkbk_articles", "users"
-  add_foreign_key "wkbk_articles", "wkbk_books", column: "book_id"
   add_foreign_key "wkbk_articles", "wkbk_folders", column: "folder_id"
   add_foreign_key "wkbk_articles", "wkbk_lineages", column: "lineage_id"
   add_foreign_key "wkbk_books", "users"
   add_foreign_key "wkbk_books", "wkbk_folders", column: "folder_id"
   add_foreign_key "wkbk_books", "wkbk_sequences", column: "sequence_id"
+  add_foreign_key "wkbk_bookships", "users"
+  add_foreign_key "wkbk_bookships", "wkbk_articles", column: "article_id"
+  add_foreign_key "wkbk_bookships", "wkbk_books", column: "book_id"
   add_foreign_key "wkbk_moves_answers", "wkbk_articles", column: "article_id"
 end

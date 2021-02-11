@@ -26,6 +26,10 @@ module Wkbk
           end
         end
       end
+
+      has_many :wkbk_bookships, class_name: "::Wkbk::Bookship", dependent: :destroy # 作成した問題集中間情報
+      has_many :wkbk_active_articles, through: :wkbk_bookships, source: :article, class_name: "::Wkbk::Article"    # フォルダに入れた記事たち
+      has_many :wkbk_active_books,    through: :wkbk_bookships, source: :book, class_name: "::Wkbk::Book"          # 記事を入れられた問題集たち
     end
 
     concerning :UserInfoMethods do

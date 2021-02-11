@@ -32,7 +32,7 @@ b-table.WkbkTopTable(
     nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play('click')")
       WkbkUserName(:user="row.user")
 
-  b-table-column(v-slot="{row}" custom-key="articles_count" field="articles_count" :label="base.BookIndexColumnInfo.fetch('articles_count').name" sortable numeric :visible="!!base.visible_hash.articles_count") {{row.articles_count}}
+  b-table-column(v-slot="{row}" custom-key="bookships_count" field="bookships_count" :label="base.BookIndexColumnInfo.fetch('bookships_count').name" sortable numeric :visible="!!base.visible_hash.bookships_count") {{row.bookships_count}}
 
   b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable :visible="!!base.visible_hash.created_at") {{row_time_format(row.created_at)}}
   b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{row_time_format(row.updated_at)}}

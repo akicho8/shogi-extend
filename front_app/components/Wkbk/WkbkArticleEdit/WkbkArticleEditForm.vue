@@ -8,12 +8,6 @@
       b-field(label="解説" label-position="on-border")
         b-input(v-model.trim="base.article.description" type="textarea")
 
-      b-field(label="問題集" label-position="on-border")
-        b-select(v-model="base.article.book_key" expanded)
-          option(:value="null")
-          option(v-for="e in base.books" :value="e.key")
-            | {{e.title}} ({{FolderInfo.fetch(e.folder_key).name}})
-
       b-field(label="種類" label-position="on-border" v-if="base.LineageInfo")
         b-select(v-model="base.article.lineage_key" expanded)
           option(v-for="e in base.LineageInfo.values" :value="e.key")
@@ -40,6 +34,21 @@
             b-radio-button(v-model="base.article.folder_key" :native-value="e.key")
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
+
+      .box.is-inline-block
+        b-field(label="この問題を含める問題集" custom-class="is-medium")
+          .control.books
+            template(v-for="e in base.books")
+              b-field
+                b-checkbox(v-model="base.article.book_keys" :native-value="e.key")
+                  | {{e.title}}
+                  //- b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon")
+
+          //- b-select(v-model="base.article.book_key" expanded)
+          //-   option(:value="null")
+          //-   option(v-for="e in base.books" :value="e.key")
+          //-     | {{e.title}}
+
 </template>
 
 <script>
@@ -94,21 +103,24 @@ export default {
 @import "../support.sass"
 .WkbkArticleEditForm
   +mobile
-    --gap: calc(#{$wkbk_share_gap} * 0.75)
+    margin: 0.5rem
   +tablet
-    --gap: #{$wkbk_share_gap}
+    margin: 1.5rem
 
-  margin: var(--gap)
+  .field:not(:last-child)
+    margin-bottom: 1.5rem
 
-  .field:not(:first-child)
-    margin-top: var(--gap)
+  .books
+    margin-top: 0
+    .field:not(:last-child)
+      margin-bottom: 0.25rem
 
   .help
     color: $grey
     font-size: $size-7
 
-  // iPhoneでselectをタップするとズームするのはフォントサイズが16px未満だから
-  +touch
-    input, textarea, select
-      font-size: 16px
+  // // iPhoneでselectをタップするとズームするのはフォントサイズが16px未満だから
+  // +touch
+  //   input, textarea, select
+  //     font-size: 16px
 </style>

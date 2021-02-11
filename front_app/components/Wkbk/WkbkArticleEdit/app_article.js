@@ -75,7 +75,7 @@ export const app_article = {
           this.toast_ok(`${before_save_button_name}しました`)
 
           // 新規の初期値にするため保存しておく
-          this.default_book_key    = this.article.book_key
+          this.default_book_keys    = this.article.book_key
           this.default_lineage_key = this.article.lineage_key
 
           // this.$router.push({name: "rack-articles", query: {scope: this.article.redirect_scope_after_save}})

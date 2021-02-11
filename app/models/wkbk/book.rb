@@ -3,20 +3,20 @@
 #
 # Book (wkbk_books as Wkbk::Book)
 #
-# |----------------+--------------------+--------------+---------------------+--------------+-------|
-# | name           | desc               | type         | opts                | refs         | index |
-# |----------------+--------------------+--------------+---------------------+--------------+-------|
-# | id             | ID                 | integer(8)   | NOT NULL PK         |              |       |
-# | key            | ユニークなハッシュ | string(255)  | NOT NULL            |              | A     |
-# | user_id        | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | folder_id      | Folder             | integer(8)   | NOT NULL            |              | C     |
-# | sequence_id    | Sequence           | integer(8)   | NOT NULL            |              | D     |
-# | title          | タイトル           | string(255)  |                     |              |       |
-# | description    | 説明               | string(1024) |                     |              |       |
-# | articles_count | Articles count     | integer(4)   | DEFAULT(0) NOT NULL |              |       |
-# | created_at     | 作成日時           | datetime     | NOT NULL            |              |       |
-# | updated_at     | 更新日時           | datetime     | NOT NULL            |              |       |
-# |----------------+--------------------+--------------+---------------------+--------------+-------|
+# |-----------------+--------------------+--------------+---------------------+--------------+-------|
+# | name            | desc               | type         | opts                | refs         | index |
+# |-----------------+--------------------+--------------+---------------------+--------------+-------|
+# | id              | ID                 | integer(8)   | NOT NULL PK         |              |       |
+# | key             | ユニークなハッシュ | string(255)  | NOT NULL            |              | A!    |
+# | user_id         | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | folder_id       | Folder             | integer(8)   | NOT NULL            |              | C     |
+# | sequence_id     | Sequence           | integer(8)   | NOT NULL            |              | D     |
+# | title           | タイトル           | string(100)  | NOT NULL            |              |       |
+# | description     | 説明               | string(5000) | NOT NULL            |              |       |
+# | bookships_count | Bookships count    | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# | created_at      | 作成日時           | datetime     | NOT NULL            |              |       |
+# | updated_at      | 更新日時           | datetime     | NOT NULL            |              |       |
+# |-----------------+--------------------+--------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -43,11 +43,12 @@ module Wkbk
           { key: 3, user: :bot,   folder_key: :public,  },
           { key: 4, user: :bot,   folder_key: :private, },
         ].each do |e|
-          Book.where(key: e[:key]).destroy_all
+          user = User.public_send(e[:user])
           title = "#{e[:user]} - #{e[:folder_key]} - #{e[:key]}"
-          book = User.public_send(e[:user]).wkbk_books.create!(key: e[:key], folder_key: e[:folder_key], title: title)
+          Book.where(key: e[:key]).destroy_all
+          book = user.wkbk_books.create!(key: e[:key], folder_key: e[:folder_key], title: title)
           Article.where(key: e[:key]).destroy_all
-          article = book.articles.create!(key: e[:key], title: title, folder_key: e[:folder_key])
+          book.articles << user.wkbk_articles.create!(key: e[:key], title: title, folder_key: e[:folder_key])
         end
       end
 
@@ -84,7 +85,7 @@ module Wkbk
           :key,
           :title,
           :description,
-          :articles_count,
+          :bookships_count,
           :created_at,
           :updated_at,
         ],
@@ -109,7 +110,7 @@ module Wkbk
           :key,
           :title,
           :description,
-          :articles_count,
+          :bookships_count,
           :created_at,
           :updated_at,
         ],
@@ -134,7 +135,7 @@ module Wkbk
           :key,
           :title,
           :description,
-          :articles_count,
+          :bookships_count,
           :created_at,
           :updated_at,
         ],
@@ -218,19 +219,16 @@ module Wkbk
     end
 
     belongs_to :user, class_name: "::User"
-    # belongs_to :book
-
-    has_many :articles, dependent: :restrict_with_error
 
     before_validation do
-      if Rails.env.test? || Rails.env.development?
-        self.title       ||= "あ" * 80
-        self.description ||= "い" * 128
-      end
-
       self.folder_key ||= :private
       self.sequence_key ||= :shuffle
       self.key ||= secure_random_urlsafe_base64_token
+
+      if Rails.env.test? || Rails.env.development?
+        self.title       ||= key
+        self.description ||= "(description)"
+      end
 
       normalize_zenkaku_to_hankaku(:title, :description)
       normalize_blank_to_empty_string(:title, :description)
@@ -493,7 +491,7 @@ module Wkbk
       ary = [
         title,
         description,
-        articles_count,
+        bookships_count,
       ]
       Digest::MD5.hexdigest(ary.join(":"))
     end
@@ -513,6 +511,13 @@ module Wkbk
 
       def sequence_key=(key)
         self.sequence = Sequence.fetch(key)
+      end
+    end
+
+    concerning :BookshipMethods do
+      included do
+        has_many :bookships, dependent: :destroy # 問題集と問題の中間情報たち
+        has_many :articles, through: :bookships  # 自分に入っている問題たち
       end
     end
   end
