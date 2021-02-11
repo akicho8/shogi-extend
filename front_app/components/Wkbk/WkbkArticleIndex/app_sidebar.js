@@ -16,7 +16,7 @@ export const app_sidebar = {
       set(v) { this.detail_set(v)                    },
     },
     display_option_disabled() {
-      return (this.articles ?? []).length !== 0
+      return (this.articles ?? []).length === 0
     },
   },
 }
