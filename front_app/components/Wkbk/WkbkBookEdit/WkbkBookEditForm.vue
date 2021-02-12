@@ -1,6 +1,6 @@
 <template lang="pug">
 .WkbkBookEditForm
-  .columns.is-gapless
+  .columns.is-variable.is-0-mobile.is-5-tablet.is-6-desktop
     .column
       WkbkBookEditFormUpload(:base="base")
 
@@ -17,9 +17,11 @@
       b-field(label="公開設定" custom-class="is-small" :message="FolderInfo.fetch(base.book.folder_key).message.book")
         b-field.is-marginless
           template(v-for="e in FolderInfo.values")
-            b-radio-button(v-model="base.book.folder_key" :native-value="e.key")
+            b-radio-button(v-model="base.book.folder_key" :native-value="e.key" expanded)
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
+    .column
+      WkbkBookEditArticleIndexTable(:base="base")
 </template>
 
 <script>
@@ -56,22 +58,21 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkBookEditForm
-  +mobile
-    --gap: calc(#{$wkbk_share_gap} * 0.75)
+  // +mobile
+  //   margin: 1rem
+  //   .field:not(:first-child)
+  //     margin-top: 1rem
   +tablet
-    --gap: #{$wkbk_share_gap}
-
-  margin: var(--gap)
-
-  .field:not(:first-child)
-    margin-top: var(--gap)
+    // margin: 1.5rem
+    .field:not(:first-child)
+      margin-top: 1.5rem
 
   .help
     color: $grey
     font-size: $size-7
 
-  // iPhoneでselectをタップするとズームするのはフォントサイズが16px未満だから
-  +touch
-    input, textarea, select
-      font-size: 16px
+  // // iPhoneでselectをタップするとズームするのはフォントサイズが16px未満だから
+  // +touch
+  //   input, textarea, select
+  //     font-size: 16px
 </style>

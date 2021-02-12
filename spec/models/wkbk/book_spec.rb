@@ -32,5 +32,16 @@ module Wkbk
     it "works" do
       assert { Book.first }
     end
+
+    it "articles_order_by_keys" do
+      user = User.create!
+      book = user.wkbk_books.create!
+      book.articles << user.wkbk_articles.create!(key: "a")
+      book.articles << user.wkbk_articles.create!(key: "b")
+
+      assert { book.articles.order(:position).pluck(:key) == ["a", "b"] }
+      book.articles_order_by_keys(["b", "a"])
+      assert { book.articles.order(:position).pluck(:key) == ["b", "a"] }
+    end
   end
 end

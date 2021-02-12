@@ -27,10 +27,10 @@ export default {
 @import "../support.sass"
 .WkbkBookEditFormUpload
   .image
-    img
-      +desktop
-        width: calc(1200px * 0.5)
-        height: calc(630px * 0.5)
+    // img
+    //   +desktop
+    //     width: calc(1200px * 0.5)
+    //     height: calc(630px * 0.5)
 
     // 中央のカメラ
     .position_center
@@ -47,7 +47,7 @@ export default {
       .icon
         filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 1.0))
 
-    // 1200x630 推奨
+    // "1200x630 推奨"
     .position_top_left
       position: absolute
       top: 0
@@ -60,6 +60,7 @@ export default {
         font-weight: bold
         border-radius: 3px
 
+    // 削除
     .position_bottom_right
       position: absolute
       bottom: 0

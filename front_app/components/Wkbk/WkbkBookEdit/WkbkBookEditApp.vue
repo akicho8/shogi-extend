@@ -14,10 +14,9 @@ client-only
     WkbkBookEditNavbar(:base="base")
 
     .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
-      MainSection.is_mobile_padding_zero
+      MainSection.section
         .container
            WkbkBookEditForm(:base="base")
-           WkbkBookEditArticleIndexTable(:base="base")
 
     DebugPre {{$data}}
 </template>
@@ -154,7 +153,10 @@ export default {
 
 .WkbkBookEditApp
   .MainSection.section
-    padding: 0
+    +mobile
+      padding: 0.5rem
+    +tablet
+      padding: 1.5rem
 
   .MainTabs
     .tab-content

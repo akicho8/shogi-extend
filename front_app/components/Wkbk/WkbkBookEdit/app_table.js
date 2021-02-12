@@ -7,8 +7,8 @@ export const app_table = {
       // URLパラメータ
       page:        null,
       per:         null,
-      sort_column: null,
-      sort_order:  null,
+      sort_column: "title",
+      sort_order:  "desc",
       scope:       null,
       tag:         null,
 
@@ -21,6 +21,14 @@ export const app_table = {
     }
   },
   methods: {
+    // :default-sort="[base.sort_column, base.sort_order]"
+    // @sort="base.sort_handle"
+
+    sort_handle(sort_column, sort_order) {
+      this.sound_play("click")
+      this.book.articles = _.orderBy(this.book.articles, sort_column, sort_order)
+    },
+
     detail_set(enabled) {
       this.sound_play('click')
       if (enabled) {
@@ -50,10 +58,6 @@ export const app_table = {
       this.router_replace({page})
     },
 
-    sort_handle(sort_column, sort_order) {
-      this.sound_play("click")
-      this.router_replace({sort_column, sort_order})
-    },
   },
   computed: {
     ArticleIndexColumnInfo()  { return ArticleIndexColumnInfo },

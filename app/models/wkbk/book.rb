@@ -288,14 +288,8 @@ module Wkbk
         assign_attributes(attrs)
         save!
 
-        # acts_as_list の機能をOFFにして一括で設定する
-        Article.acts_as_list_no_update do
-          Array(book[:articles]).each.with_index do |e, i|
-            r = articles.find(e[:id])
-            r.position = i
-            r.save!(validate: false, touch: false)
-          end
-        end
+        keys = book[:articles].collect { |e| e.fetch(:key) }
+        articles_order_by_keys(keys)
       end
 
       # 「公開」フォルダに移動させたときに通知する
@@ -303,6 +297,38 @@ module Wkbk
       if state = saved_after_state
         SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
         ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
+      end
+    end
+
+    # articles の並び替え
+    #
+    #   user = User.create!
+    #   book = user.wkbk_books.create!
+    #   book.articles << user.wkbk_articles.create!(key: "a")
+    #   book.articles << user.wkbk_articles.create!(key: "b")
+    #
+    #   book.articles.order(:position).pluck(:key) # => ["a", "b"]
+    #   book.articles_order_by_keys(["b", "a"])
+    #   book.articles.order(:position).pluck(:key) # => ["b", "a"]
+    #
+    # 次の方法の方がわかりやすいかもしれないけどSQLがさらに articles.count 回発生する
+    #
+    #   Bookship.acts_as_list_no_update do
+    #     keys.each.with_index do |key, i|
+    #       bookship = book.bookships.joins(:article).find_by!(Article.arel_table[:key].eq(key))
+    #       bookship.position = i
+    #       bookship.save!(validate: false, touch: false)
+    #     end
+    #   end
+    #
+    def articles_order_by_keys(keys)
+      table = bookships.inject({}) {|a, e| a.merge(e.article.key => e) }
+      Bookship.acts_as_list_no_update do
+        keys.each.with_index do |key, i|
+          e = table.fetch(key)
+          e.position = i
+          e.save!(validate: false, touch: false)
+        end
       end
     end
 

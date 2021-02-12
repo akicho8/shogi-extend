@@ -1,3 +1,8 @@
+# user = User.create!
+# book = user.wkbk_books.create!
+# book.articles << user.wkbk_articles.create!(key: "a")
+# book.articles << user.wkbk_articles.create!(key: "b")
+
 module Wkbk
   module UserMod
     extend ActiveSupport::Concern
@@ -31,6 +36,13 @@ module Wkbk
       has_many :wkbk_active_articles, through: :wkbk_bookships, source: :article, class_name: "::Wkbk::Article"    # フォルダに入れた記事たち
       has_many :wkbk_active_books,    through: :wkbk_bookships, source: :book, class_name: "::Wkbk::Book"          # 記事を入れられた問題集たち
     end
+
+    # def wkbk_book_create_mock(keys = [])
+    #   book = user.wkbk_books.create!
+    #   book.articles << user.wkbk_articles.create!(key: "a")
+    #   book.articles << user.wkbk_articles.create!(key: "b")
+    #   book
+    # end
 
     concerning :UserInfoMethods do
       # rails r "tp User.first.wkbk_info"
