@@ -31,18 +31,18 @@
       b-field(label="公開設定" custom-class="is-small" :message="FolderInfo.fetch(base.article.folder_key).message.article")
         b-field.is-marginless
           template(v-for="e in FolderInfo.values")
-            b-radio-button(v-model="base.article.folder_key" :native-value="e.key")
+            b-radio-button(v-model="base.article.folder_key" :native-value="e.key" expanded)
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
 
-      .box.is-inline-block
+      .box
         b-field(label="この問題を含める問題集" custom-class="is-medium")
           .control.books
             template(v-for="e in base.books")
               b-field
-                b-checkbox(v-model="base.article.book_keys" :native-value="e.key")
-                  | {{e.title}}
-                  //- b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon")
+                b-checkbox-button(v-model="base.article.book_keys" :native-value="e.key")
+                  b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small")
+                  p {{e.title}}
 </template>
 
 <script>
@@ -106,9 +106,13 @@ export default {
     margin-bottom: 1.5rem
 
   .books
+    // +desktop
+    //   display: inline-block
     margin-top: 0
     .field:not(:last-child)
       margin-bottom: 0.25rem
+    .button
+      justify-content: flex-start
 
   .help
     color: $grey
