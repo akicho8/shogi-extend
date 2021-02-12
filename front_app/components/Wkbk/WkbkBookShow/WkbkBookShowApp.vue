@@ -108,6 +108,7 @@ export default {
     // }
 
     if (process.client) {
+      this.ga_click(`インスタント将棋問題集→${this.book.title}`)
       if (this.development_p) {
         this.journal_test()
       }
@@ -115,7 +116,8 @@ export default {
   },
 
   mounted() {
-    this.clog("book", this.book)
+    // this.clog("book", this.book)
+    // this.ga_click("インスタント将棋問題集")
   },
 
   computed: {

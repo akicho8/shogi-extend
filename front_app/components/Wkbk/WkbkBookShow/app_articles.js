@@ -8,10 +8,6 @@ export const app_articles = {
     }
   },
 
-  mounted() {
-    this.ga_click("問題集を解く")
-  },
-
   methods: {
     play_start() {
       this.sound_play("start")
