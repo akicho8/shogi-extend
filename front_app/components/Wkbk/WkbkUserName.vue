@@ -1,5 +1,7 @@
 <template lang="pug">
 .WkbkUserName
+  .box
+    | 未使用
   nuxt-link(:to="{name: 'users-id', params: {id: user.id}}")
     .is-inline-flex.is-align-items-center
       .image.is-flex-shrink-0
