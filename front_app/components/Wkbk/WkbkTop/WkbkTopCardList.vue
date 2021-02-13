@@ -9,7 +9,7 @@
             img(:src="e.avatar_path" :alt="e.title")
             .position_top_right
               b-tag(rounded type="is-dark")
-                | {{e.bookships_count_by_current_user}}
+                | {{e.bookships_count}}
         .card-content
           .media
             .media-left

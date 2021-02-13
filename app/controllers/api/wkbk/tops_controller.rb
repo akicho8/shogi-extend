@@ -56,10 +56,10 @@ module Api
           s = s.order(updated_at: :desc)
           s = page_scope(s)       # page_mod.rb
 
-          # visible_articles_count のため
-          s.each do |e|
-            e.current_user = current_user
-          end
+          # # visible_articles_count のため
+          # s.each do |e|
+          #   e.current_user = current_user
+          # end
 
           s
         }.call

@@ -414,8 +414,9 @@ module Wkbk
 
         has_many :ordered_bookships, -> { order(:position) }, dependent: :destroy, class_name: "Bookship" # 一発でjsonにしたいため
 
-        attribute :current_user
-        # attribute :bookships_count_by_current_user
+        if false
+          attribute :current_user
+        end
       end
 
       # bookの下にあるものを全削除(超危険)
@@ -425,11 +426,13 @@ module Wkbk
         bookships.destroy_all
       end
 
-      # アクセス可能な問題の数
-      # current_user を考慮して決まるため book.as_json では出せない
-      # なので筋悪だけどあらかじめ current_user を設定してから book.as_json する
-      def bookships_count_by_current_user
-        bookships.joins(:article).access_restriction_by(current_user).count
+      if false
+        # アクセス可能な問題の数
+        # current_user を考慮して決まるため book.as_json では出せない
+        # なので筋悪だけどあらかじめ current_user を設定してから book.as_json する
+        def bookships_count_by_current_user
+          bookships.joins(:article).access_restriction_by(current_user).count
+        end
       end
     end
   end

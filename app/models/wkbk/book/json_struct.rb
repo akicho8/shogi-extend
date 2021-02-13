@@ -18,7 +18,7 @@ module Wkbk
               # :sequence_key,
               # :tweet_body,
               :avatar_path,
-              :bookships_count_by_current_user,
+              # :bookships_count_by_current_user,
             ],
             include: {
               user: {
