@@ -26,7 +26,8 @@ export const app_table = {
 
     sort_handle(sort_column, sort_order) {
       this.sound_play("click")
-      this.book.articles = _.orderBy(this.book.articles, sort_column, sort_order)
+      this.debug_alert(sort_column)
+      this.book.ordered_bookships = _.orderBy(this.book.ordered_bookships, sort_column, sort_order)
     },
 
     detail_set(enabled) {

@@ -52,7 +52,7 @@ module Api
         retv[:config] = ::Wkbk::Config
         article = ::Wkbk::Article.find_by!(key: params[:article_key])
         show_can!(article)
-        retv[:article] = article.as_json(::Wkbk::Article.show_json_struct)
+        retv[:article] = article.as_json(::Wkbk::Article.json_struct_for_show)
         retv[:meta] = article.og_meta
         render json: retv
       end
@@ -90,7 +90,7 @@ module Api
           article.books.order(updated_at: :desc),           # 現在のレコードで選択したもの
           current_user.wkbk_books.order(updated_at: :desc), # その他全部
         ].flatten.compact.uniq
-        retv[:books] = books.as_json(::Wkbk::Book.json_type7)
+        retv[:books] = books.as_json(::Wkbk::Book.json_struct_for_article_edit)
 
         render json: retv
       end

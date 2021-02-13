@@ -206,7 +206,7 @@ module Wkbk
       }
     end
 
-    def self.show_json_struct
+    def self.json_struct_for_show
       {
         only: [
           :id,
@@ -266,7 +266,7 @@ module Wkbk
     acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
     acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
 
-    has_many :moves_answers, dependent: :destroy
+    has_many :moves_answers, -> { order(:position) }, dependent: :destroy
 
     before_validation do
       # if book
@@ -591,6 +591,13 @@ module Wkbk
       included do
         has_many :bookships, dependent: :destroy # 問題集と問題の中間情報たち
         has_many :books, through: :bookships     # 自分が入っている問題集たち
+
+        # 問題集に追加している問題を更新すると問題集たちの更新日時を更新する
+        after_save do
+          books.each do |e|
+            e.update!(updated_at: Time.now)
+          end
+        end
       end
     end
   end

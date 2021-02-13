@@ -28,7 +28,7 @@ module Api
       # http://0.0.0.0:3000/api/wkbk/tops/index.json
       def index
         retv = {}
-        retv[:books] = current_books.as_json(::Wkbk::Book.index_json_type5)
+        retv[:books] = current_books.as_json(::Wkbk::Book.json_struct_for_top)
         retv[:meta]  = ServiceInfo.fetch(:wkbk).og_meta
         render json: retv
       end

@@ -3,16 +3,18 @@ module Wkbk
   class SequenceInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "shuffle",         name: "シャッフル",       apply: -> v { v.shuffle                                              } },
-      { key: "title_asc",       name: "タイトル昇順",     apply: -> v { v.reorder(title: :asc)                                 } },
-      { key: "title_desc",      name: "タイトル降順",     apply: -> v { v.reorder(title: :desc)                                } },
-      { key: "difficulty_asc",  name: "難易度昇順",       apply: -> v { v.reorder(difficulty: :asc).order(Arel.sql("RAND()"))  } },
-      { key: "difficulty_desc", name: "難易度降順",       apply: -> v { v.reorder(difficulty: :desc).order(Arel.sql("RAND()")) } },
-      { key: "created_at_asc",  name: "問題作成日時昇順", apply: -> v { v.reorder(created_at: :asc)                            } },
-      { key: "created_at_desc", name: "問題作成日時降順", apply: -> v { v.reorder(created_at: :desc)                           } },
-      { key: "updated_at_asc",  name: "問題更新日時昇順", apply: -> v { v.reorder(updated_at: :asc)                            } },
-      { key: "updated_at_desc", name: "問題更新日時降順", apply: -> v { v.reorder(updated_at: :desc)                           } },
-      { key: "position_asc",    name: "カスタマイズ",     apply: -> v { v.reorder(position: :asc)                              } },
+      { key: "bookship_shuffle",         name: "シャッフル",        apply: -> v { v.reorder(Arel.sql("RAND()"))                                             } },
+      { key: "article_difficulty_asc",   name: "難易度 (易しい順)", apply: -> v { v.reorder(Article.arel_table[:difficulty].asc).order(Arel.sql("RAND()"))  } },
+      { key: "article_difficulty_desc",  name: "難易度 (難しい順)", apply: -> v { v.reorder(Article.arel_table[:difficulty].desc).order(Arel.sql("RAND()")) } },
+      { key: "article_turn_max_asc",     name: "手数 (少ない順)",   apply: -> v { v.reorder(Article.arel_table[:turn_max].asc)                              } },
+      { key: "article_turn_max_desc",    name: "手数 (多い順)",     apply: -> v { v.reorder(Article.arel_table[:turn_max].desc)                             } },
+      { key: "bookship_created_at_asc",  name: "追加日 (古い順)",   apply: -> v { v.reorder(Bookship.arel_table[:created_at].asc)                           } },
+      { key: "bookship_created_at_desc", name: "追加日 (新しい順)", apply: -> v { v.reorder(Bookship.arel_table[:created_at].desc)                          } },
+      { key: "article_created_at_asc",   name: "作成日 (古い順)",   apply: -> v { v.reorder(Article.arel_table[:created_at].asc)                            } },
+      { key: "article_created_at_desc",  name: "作成日 (新しい順)", apply: -> v { v.reorder(Article.arel_table[:created_at].desc)                           } },
+      { key: "article_title_asc",        name: "タイトル (正順)",   apply: -> v { v.reorder(Article.arel_table[:title].asc)                                 } },
+      { key: "article_title_desc",       name: "タイトル (逆順)",   apply: -> v { v.reorder(Article.arel_table[:title].desc)                                } },
+      { key: "bookship_position_asc",    name: "カスタマイズ",      apply: -> v { v.reorder(Bookship.arel_table[:position].asc)                             } },
     ]
   end
 end

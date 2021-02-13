@@ -67,7 +67,7 @@ export default {
       right: 0
       .icon_box
         margin: 6px
-        padding: 0.3rem 0.4rem 0.2rem
+        padding: 0.4rem 0.4rem 0.2rem
         background-color: change_color($black, $alpha: 0.6)
         border-radius: 3px
         .icon

@@ -76,6 +76,18 @@ export default {
       return _.floor(v, precision)
     },
 
+    ruby_like_modulo(v, n) {
+      if (n === 0) {
+        throw new Error("divided by 0")
+      }
+      v = v % n
+      v = Math.trunc(v)
+      if (v < 0) {
+        v = n + v
+      }
+      return v + 0
+    },
+
     process_now() {
       this.$buefy.loading.open()
     },

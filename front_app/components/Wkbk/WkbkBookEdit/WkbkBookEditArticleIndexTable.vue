@@ -1,10 +1,10 @@
 <template lang="pug">
-.WkbkBookEditArticleIndexTable(v-if="base.book.articles.length >= 1 || true")
+.WkbkBookEditArticleIndexTable(v-if="base.book.ordered_bookships.length >= 1 || true")
   //- .box.is-inline-block
   .title.is-6 並び替え
   .subtitle.is-7.mb-0 出題順序で「カスタマイズ」を選択したときの並び
   b-table.mt-1(
-    :data="base.book.articles"
+    :data="base.book.ordered_bookships"
     :mobile-cards="false"
     :show-header="true"
     hoverable
@@ -30,15 +30,21 @@
         b-button(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
       b-icon.is-hidden-touch.drag_icon(icon="drag-horizontal-variant" size="is-small")
 
-    b-table-column(v-slot="{row}" custom-key="title" field="title" sortable label="タイトル" cell-class="is_line_break_on title_column" header-class="title_column")
-      nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
-        | {{row.title}}
+    b-table-column(v-slot="{row}" custom-key="article.title" field="article.title" sortable label="タイトル" cell-class="is_line_break_on title_column" header-class="title_column")
+      nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.article.key}}" @click.native="sound_play('click')")
+        | {{row.article.title}}
 
-    b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" sortable label="難" numeric)
-      | {{row.difficulty}}
+    b-table-column(v-slot="{row}" custom-key="article.difficulty" field="article.difficulty" sortable centered label="難度" numeric)
+      | {{row.article.difficulty}}
 
-    b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" sortable label="作成日時")
+    b-table-column(v-slot="{row}" custom-key="article.turn_max" field="article.turn_max" sortable centered label="手数" numeric)
+      | {{row.article.turn_max}}
+
+    b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" sortable centered label="追加日")
       | {{row_time_format(row.created_at)}}
+
+    b-table-column(v-slot="{row}" custom-key="article.created_at" field="article.created_at" sortable centered label="作成日")
+      | {{row_time_format(row.article.created_at)}}
 </template>
 
 <script>
@@ -58,9 +64,10 @@ export default {
     }
   },
   methods: {
+    // スマホで↓↑を押したとき
     up_down_handle(object, sign) {
-      const index = this.base.book.articles.findIndex(e => e.key === object.key)
-      this.base.book.articles = this.ary_move(this.base.book.articles, index, index + sign)
+      const index = this.base.book.ordered_bookships.findIndex(e => e.id === object.id)
+      this.base.book.ordered_bookships = this.ary_move(this.base.book.ordered_bookships, index, index + sign)
       if (this.run_count === 0) {
         if (!isMobile.any()) {
           this.toast_ok("マウスでドラッグアンドドロップできますよ")
@@ -69,6 +76,7 @@ export default {
       this.run_count += 1
     },
 
+    // マウスでドラッグ
     dragstart_handle(payload) {
       this.dragging_row = payload.row
       this.from_index = payload.index
@@ -87,26 +95,16 @@ export default {
       payload.event.target.closest("tr").classList.remove("is-selected")
       const to_index = payload.index
       this.debug_alert(`${this.dragging_row.title}: ${this.from_index} -> ${to_index}`)
-      // this.book.articles.splice(to_index, 0, this.book.articles[this.from_index])
-      this.base.book.articles = this.ary_move(this.base.book.articles, this.from_index, to_index)
+      // this.book.ordered_bookships.splice(to_index, 0, this.book.ordered_bookships[this.from_index])
+      this.base.book.ordered_bookships = this.ary_move(this.base.book.ordered_bookships, this.from_index, to_index)
     },
 
+    // list 内のインデックス from の要素を to に移動
     // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
     ary_move(list, from, to) {
       const n = list.length
       list = [...list]
-
-      // -1 なら配列の最後にする
-      // -2 なら配列の最後のひとつ前にする
-      if (to < 0) {
-        to = n + to
-      }
-
-      // 要素2で to=2 なら 0 にする
-      if (to >= n) {
-        to = to - n
-      }
-
+      to = this.ruby_like_modulo(to, n)
       if (from === to || from > n - 1 || to > n - 1) {
         return list
       }

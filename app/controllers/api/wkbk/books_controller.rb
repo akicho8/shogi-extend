@@ -33,7 +33,7 @@ module Api
       # http://0.0.0.0:3000/api/wkbk/books.json?scope=private
       def index
         retv = {}
-        retv[:books]       = sort_scope_for_books(current_books).as_json(::Wkbk::Book.index_json_type5)
+        retv[:books]       = sort_scope_for_books(current_books).as_json(::Wkbk::Book.json_struct_for_top)
         # retv[:book_counts] = book_counts
         retv[:total]       = current_books.total_count
         retv[:meta]        = ServiceInfo.fetch(:wkbk).og_meta
@@ -46,8 +46,8 @@ module Api
         retv[:config] = ::Wkbk::Config
         book = ::Wkbk::Book.find_by!(key: params[:book_key])
         show_can!(book)
-        v = book.as_json(::Wkbk::Book.show_json_struct)
-        articles = book.ordered_articles(current_user).as_json(::Wkbk::Book.show_articles_json_struct)
+        v = book.as_json(::Wkbk::Book.json_struct_for_show)
+        articles = book.sequenced_articles(current_user).as_json(::Wkbk::Book.article_json_struct_for_show)
         v[:articles] = articles.collect.with_index { |e, i| e.merge(index: i) }
         retv[:book] = v
         render json: retv
@@ -62,16 +62,15 @@ module Api
       def edit
         retv = {}
         retv[:config] = ::Wkbk::Config
+        s = current_user.wkbk_books
         if v = params[:book_key]
-          book = current_user.wkbk_books.find_by!(key: v)
+          book = s.find_by!(key: v)
           # edit_permission_valid!(book)
         else
-          book = current_user.wkbk_books.build
+          book = s.build
           book.default_assign
         end
-        v = book.as_json(::Wkbk::Book.json_type5)
-        v[:articles] = book.articles.order(:position).as_json(::Wkbk::Book.edit_articles_json_struct)
-        retv[:book] = v
+        retv[:book] = book.as_json(::Wkbk::Book.json_struct_for_edit)
         retv[:meta] = book.og_meta
         # sleep(3)
         render json: retv
@@ -88,7 +87,7 @@ module Api
         end
         begin
           book.update_from_js(params.to_unsafe_h[:book])
-          retv[:book] = book.as_json(::Wkbk::Book.json_type5)
+          retv[:book] = book.as_json(::Wkbk::Book.json_struct_for_edit)
         rescue ActiveRecord::RecordInvalid => error
           retv[:form_error_message] = error.message
         end

@@ -27,6 +27,7 @@ module Wkbk
     include FolderMod
     include InfoMod
     include AvatarMod
+    include JsonStruct
 
     class << self
       def setup(options = {})
@@ -68,7 +69,7 @@ module Wkbk
     #     # :title        => nil,
     #     # :description  => nil,
     #     :folder_key   => :private,
-    #     :sequence_key => :shuffle,
+    #     :sequence_key => :bookship_shuffle,
     #   }
     #
     #   if Rails.env.development?
@@ -78,151 +79,11 @@ module Wkbk
     #   attrs
     # end
 
-    def self.index_json_type5
-      {
-        only: [
-          :id,
-          :key,
-          :title,
-          :description,
-          :bookships_count,
-          :created_at,
-          :updated_at,
-        ],
-        methods: [
-          :folder_key,
-          :sequence_key,
-          :tweet_body,
-          :avatar_path,
-        ],
-        include: {
-          user: { only: [:key, :id, :name], methods: [:avatar_path] },
-          folder: { only: [:key, :id, :name],},
-        },
-      }
-    end
-
-    # 編集用
-    def self.json_type5
-      {
-        only: [
-          :id,
-          :key,
-          :title,
-          :description,
-          :bookships_count,
-          :created_at,
-          :updated_at,
-        ],
-        methods: [
-          :folder_key,
-          :sequence_key,
-          :tweet_body,
-          :raw_avatar_path,
-        ],
-        include: {
-          user: { only: [:key, :id, :name], methods: [:avatar_path] },
-          folder: { only: [:key, :id, :name],},
-        },
-      }
-    end
-
-    # 出題
-    def self.show_json_struct
-      {
-        only: [
-          :id,
-          :key,
-          :title,
-          :description,
-          :bookships_count,
-          :created_at,
-          :updated_at,
-        ],
-        methods: [
-          :folder_key,
-          :sequence_key,
-          :tweet_body,
-          :og_meta,
-          :avatar_path,
-        ],
-        include: {
-          user: { only: [:key, :id, :name], methods: [:avatar_path],},
-          folder: { only: [:key, :id, :name],},
-        },
-      }
-    end
-
-    # 出題用
-    def self.show_articles_json_struct
-      {
-        only: [
-          :id,
-          :key,
-          :position,
-          :init_sfen,
-          :title,
-          :description,
-          :direction_message,
-          :turn_max,
-        ],
-        methods: [
-          # :lineage_key,
-        ],
-        include: {
-          moves_answers: {
-            only: [
-              :moves_str,
-            ],
-          },
-        },
-      }
-    end
-
-    def self.edit_articles_json_struct
-      {
-        only: [
-          :id,
-          :key,
-          :position,
-          # :init_sfen,
-          :title,
-          :difficulty,
-          # :description,
-          # :direction_message,
-          # :turn_max,
-          :created_at,
-          :updated_at,
-        ],
-        # methods: [
-        #   :lineage_key,
-        # ],
-        # include: {
-        #   moves_answers: {
-        #     only: [
-        #       :moves_str,
-        #     ],
-        #   },
-        # },
-      }
-    end
-
-    # article edit の form の選択肢用
-    def self.json_type7
-      {
-        only: [:id, :key, :title],
-        methods: [:folder_key],
-        include: {
-          folder: { only: [:key, :id, :name],},
-        },
-      }
-    end
-
     belongs_to :user, class_name: "::User"
 
     before_validation do
       self.folder_key ||= :private
-      self.sequence_key ||= :shuffle
+      self.sequence_key ||= :bookship_shuffle
       self.key ||= secure_random_urlsafe_base64_token
 
       if Rails.env.test? || Rails.env.development?
@@ -288,8 +149,8 @@ module Wkbk
         assign_attributes(attrs)
         save!
 
-        keys = book[:articles].collect { |e| e.fetch(:key) }
-        articles_order_by_keys(keys)
+        ids = book[:ordered_bookships].collect { |e| e.fetch(:id) }
+        bookships_order_by_ids(ids)
       end
 
       # 「公開」フォルダに移動させたときに通知する
@@ -308,7 +169,7 @@ module Wkbk
     #   book.articles << user.wkbk_articles.create!(key: "b")
     #
     #   book.articles.order(:position).pluck(:key) # => ["a", "b"]
-    #   book.articles_order_by_keys(["b", "a"])
+    #   book.bookships_order_by_ids(["b", "a"])
     #   book.articles.order(:position).pluck(:key) # => ["b", "a"]
     #
     # 次の方法の方がわかりやすいかもしれないけどSQLがさらに articles.count 回発生する
@@ -321,11 +182,11 @@ module Wkbk
     #     end
     #   end
     #
-    def articles_order_by_keys(keys)
-      table = bookships.inject({}) {|a, e| a.merge(e.article.key => e) }
+    def bookships_order_by_ids(ids)
+      table = bookships.inject({}) {|a, e| a.merge(e.id => e) }
       Bookship.acts_as_list_no_update do
-        keys.each.with_index do |key, i|
-          e = table.fetch(key)
+        ids.each.with_index do |id, i|
+          e = table.fetch(id)
           e.position = i
           e.save!(validate: false, touch: false)
         end
@@ -438,16 +299,6 @@ module Wkbk
     #   end
     # end
 
-    # 所有者だった場合は全部見せる
-    def ordered_articles(current_user)
-      if user == current_user
-        s = articles
-      else
-        s = articles.public_or_limited
-      end
-      sequence.pure_info.apply[s]
-    end
-
     def og_image_path
       # articles.sample&.og_image_path
       avatar_path
@@ -480,7 +331,7 @@ module Wkbk
 
     def default_assign
       self.folder_key ||= :public
-      self.sequence_key ||= :shuffle
+      self.sequence_key ||= :bookship_shuffle
 
       if user
         self.title ||= "#{user.name}のインスタント将棋問題集第#{user.wkbk_books.count.next}弾(仮)"
@@ -538,12 +389,22 @@ module Wkbk
       def sequence_key=(key)
         self.sequence = Sequence.fetch(key)
       end
+
+      def sequenced_articles(current_user)
+        s = bookships.joins(:article).includes(article: :moves_answers)
+        if user != current_user
+          s = s.merge(Article.public_or_limited)
+        end
+        sequence.pure_info.apply[s].collect(&:article)
+      end
     end
 
     concerning :BookshipMethods do
       included do
         has_many :bookships, dependent: :destroy # 問題集と問題の中間情報たち
         has_many :articles, through: :bookships  # 自分に入っている問題たち
+
+        has_many :ordered_bookships, -> { order(:position) }, dependent: :destroy, class_name: "Bookship" # 一発でjsonにしたいため
       end
 
       # bookの下にあるものを全削除(超危険)

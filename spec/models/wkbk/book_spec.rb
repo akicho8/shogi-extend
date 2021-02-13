@@ -33,15 +33,44 @@ module Wkbk
       assert { Book.first }
     end
 
-    it "articles_order_by_keys" do
+    it "ordered_bookships" do
+      assert { Book.first.ordered_bookships }
+    end
+
+    it "bookships_order_by_ids" do
       user = User.create!
       book = user.wkbk_books.create!
       book.articles << user.wkbk_articles.create!(key: "a")
       book.articles << user.wkbk_articles.create!(key: "b")
+      ids = book.ordered_bookship_ids
 
       assert { book.articles.order(:position).pluck(:key) == ["a", "b"] }
-      book.articles_order_by_keys(["b", "a"])
+      book.bookships_order_by_ids(ids.reverse)
       assert { book.articles.order(:position).pluck(:key) == ["b", "a"] }
+    end
+
+    it "sequenced_articles" do
+      user1 = User.create!
+      book1 = user1.wkbk_books.create!(sequence_key: :article_difficulty_desc)
+      book1.articles << user1.wkbk_articles.create!(difficulty: 1, folder_key: :public)
+      book1.articles << user1.wkbk_articles.create!(difficulty: 2, folder_key: :public)
+      book1.articles << user1.wkbk_articles.create!(difficulty: 3, folder_key: :private)
+      user2 = User.create!
+      assert { book1.sequenced_articles(user2).collect(&:difficulty) == [2, 1] }
+    end
+
+    it "[TODO] as_json するまえに articles を preload しても as_json のタイミングで再度 O(n) のSQLが発生する再現" do
+      user = User.create!
+      book = user.wkbk_books.create!
+      3.times do
+        book.articles << user.wkbk_articles.create!
+      end
+
+      # logger = ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
+      # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
+
+      book.bookships.preload(:article).to_a
+      book.as_json(::Wkbk::Book.json_struct_for_edit)
     end
   end
 end
