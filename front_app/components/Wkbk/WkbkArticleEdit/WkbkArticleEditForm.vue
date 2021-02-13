@@ -3,10 +3,10 @@
   .columns.is-gapless
     .column
       b-field(label="タイトル" label-position="on-border")
-        b-input(v-model.trim="base.article.title" required)
+        b-input(v-model.trim="base.article.title" required :maxlength="100" placeholder="問題について説明するタイトルを追加しましょう")
 
       b-field(label="解説" label-position="on-border")
-        b-input(v-model.trim="base.article.description" type="textarea")
+        b-input(v-model.trim="base.article.description" type="textarea" :maxlength="5000" placeholder="解答者に向けて問題の解答の解説をしましょう")
 
       b-field(label="種類" label-position="on-border" v-if="base.LineageInfo")
         b-select(v-model="base.article.lineage_key" expanded)
