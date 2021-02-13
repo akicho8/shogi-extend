@@ -11,7 +11,7 @@ client-only
         .box.has-text-centered
           p {{status_code_with_message}}
           p(v-if="error.message" v-html="error.message")
-          b-button.mt-4(@click="login_handle" v-if="!g_current_user && error_status_code === 403") ログイン
+          b-button.mt-4(@click="sns_login_modal_handle2" v-if="!g_current_user && error_status_code === 403") ログイン
         .emoji.has-text-centered.is-unselectable.is-clickable(@click="charactor_click")
           | {{charactor}}
 
@@ -39,10 +39,6 @@ export default {
   },
 
   methods: {
-    login_handle() {
-      this.sound_play("click")
-      this.sns_login_modal_handle()
-    },
     charactor_click() {
       if (process.client) {
         this.sound_play('click')

@@ -41,14 +41,14 @@ module Api
       end
 
       # http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=1
+      # http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=5
       def show
         retv = {}
         retv[:config] = ::Wkbk::Config
         book = ::Wkbk::Book.find_by!(key: params[:book_key])
         show_can!(book)
         v = book.as_json(::Wkbk::Book.json_struct_for_show)
-        articles = book.sequenced_articles(current_user).as_json(::Wkbk::Book.article_json_struct_for_show)
-        v[:articles] = articles.collect.with_index { |e, i| e.merge(index: i) }
+        v[:articles] = book.sequenced_articles(current_user)
         retv[:book] = v
         render json: retv
       end

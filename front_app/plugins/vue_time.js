@@ -40,6 +40,7 @@ export default {
 
     // 「N分前」形式
     diff_time_format(t) {
+      // const now = dayjs()
       return dayjs(t).fromNow()
     },
 

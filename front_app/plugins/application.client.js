@@ -22,6 +22,11 @@ export default {
       })
     },
 
+    sns_login_modal_handle2() {
+      this.sound_play("click")
+      this.sns_login_modal_handle()
+    },
+
     dialog_ok(message, options = {}) {
       options = {
         type: "info",

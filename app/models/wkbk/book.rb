@@ -37,6 +37,7 @@ module Wkbk
         end
       end
 
+      # rails r 'Wkbk::Book.mock_setup'
       def mock_setup
         [
           { key: 1, user: :sysop, folder_key: :public,  },
@@ -51,6 +52,16 @@ module Wkbk
           Article.where(key: e[:key]).destroy_all
           book.articles << user.wkbk_articles.create!(key: e[:key], title: title, folder_key: e[:folder_key])
         end
+
+        user = User.find_or_create_by(name: "alice")
+        title = "非公開問題を含む公開問題集"
+        user.wkbk_bookships.destroy_all
+        user.wkbk_articles.destroy_all
+        user.wkbk_books.destroy_all
+        book = user.wkbk_books.create!(key: 5, folder_key: :public, title: title, sequence_key: :bookship_position_asc)
+        book.articles << user.wkbk_articles.create!(key: "5-1", title: "(公開)",   folder_key: :public)
+        book.articles << user.wkbk_articles.create!(key: "5-2", title: "(非公開)", folder_key: :private)
+        book.articles << user.wkbk_articles.create!(key: "5-3", title: "(公開)",   folder_key: :public)
       end
 
       def mock_book
@@ -391,10 +402,34 @@ module Wkbk
       end
 
       def sequenced_articles(current_user)
-        s = bookships.access_restriction_by(current_user)
+        s = bookships
+        if false
+          # current_user がアクセスできないものは最初から除外する場合
+          s = bookships.access_restriction_by(current_user)
+        end
         s = sequence.pure_info.apply[s]
         s = s.joins(:article).includes(article: :moves_answers)
-        s.collect(&:article)
+
+        articles = s.collect(&:article).as_json(::Wkbk::Book.article_json_struct_for_show)
+
+        if user != current_user
+          articles.each do |e|
+            if e["folder_key"] == "private"
+              e["init_sfen"]         = ""
+              e["title"]             = "非公開"
+              e["description"]       = ""
+              e["direction_message"] = ""
+              e["turn_max"]          = 0
+              e["moves_answers"]     = []
+            end
+          end
+        end
+
+        articles.each.with_index do |e, i|
+          e["index"] = i
+        end
+
+        articles
       end
     end
 
@@ -414,9 +449,7 @@ module Wkbk
 
         has_many :ordered_bookships, -> { order(:position) }, dependent: :destroy, class_name: "Bookship" # 一発でjsonにしたいため
 
-        if false
-          attribute :current_user
-        end
+        attribute :current_user
       end
 
       # bookの下にあるものを全削除(超危険)
@@ -426,13 +459,11 @@ module Wkbk
         bookships.destroy_all
       end
 
-      if false
-        # アクセス可能な問題の数
-        # current_user を考慮して決まるため book.as_json では出せない
-        # なので筋悪だけどあらかじめ current_user を設定してから book.as_json する
-        def bookships_count_by_current_user
-          bookships.joins(:article).access_restriction_by(current_user).count
-        end
+      # アクセス可能な問題の数
+      # current_user を考慮して決まるため book.as_json では出せない
+      # なので筋悪だけどあらかじめ current_user を設定してから book.as_json する
+      def bookships_count_by_current_user
+        bookships.joins(:article).access_restriction_by(current_user).count
       end
     end
   end

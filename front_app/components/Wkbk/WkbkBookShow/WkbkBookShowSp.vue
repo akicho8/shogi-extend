@@ -28,9 +28,7 @@
         //-   template(v-for="e in base.OxInfo.values")
         //-     b-button.is-outlined(:icon-left="e.icon" @click="base.next_handle(e)")
 
-        .ox_buttons.buttons.my-4.has-addons.is-centered
-          template(v-for="e in base.OxInfo.values.slice().reverse()")
-            b-button.mb-0.is-outlined(:icon-left="e.icon" @click="base.next_handle(e)" type="is-primary")
+        WkbkBookShowOxButtons.mt-4(:base="base")
 
     .column.RightColumn(:key="base.current_article.key" v-if="base.current_article.moves_answers.length >= 1")
       b-tabs.mb-0(
@@ -113,10 +111,6 @@ export default {
       max-width: 68vmin
       padding-top: unset
       padding-bottom: unset
-
-  .ox_buttons
-    .button
-      min-width: 10rem
 
   .box
     margin: 1rem
