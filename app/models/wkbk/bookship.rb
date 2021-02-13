@@ -24,7 +24,7 @@ module Wkbk
     acts_as_list touch_on_update: false, top_of_list: 0, scope: :book
 
     belongs_to :user, class_name: "::User"
-    belongs_to :book, touch: true # 問題集に問題を追加すると問題集の更新日時を更新する
+    belongs_to :book, counter_cache: true, touch: true # 問題集に問題を追加すると問題集の更新日時を更新する
     belongs_to :article
 
     before_validation on: :create do

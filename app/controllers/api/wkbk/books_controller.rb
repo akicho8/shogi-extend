@@ -33,10 +33,10 @@ module Api
       # http://0.0.0.0:3000/api/wkbk/books.json?scope=private
       def index
         retv = {}
-        retv[:books]       = sort_scope_for_books(current_books).as_json(::Wkbk::Book.json_struct_for_top)
-        # retv[:book_counts] = book_counts
         retv[:total]       = current_books.total_count
-        retv[:meta]        = ServiceInfo.fetch(:wkbk).og_meta
+        retv[:books] = sort_scope_for_books(current_books).as_json(::Wkbk::Book.json_struct_for_top)
+        retv[:total] = current_books.total_count
+        retv[:meta]  = ServiceInfo.fetch(:wkbk).og_meta
         render json: retv
       end
 

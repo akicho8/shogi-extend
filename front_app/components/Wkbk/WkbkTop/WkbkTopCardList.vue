@@ -7,6 +7,9 @@
         .card-image
           figure.image
             img(:src="e.avatar_path" :alt="e.title")
+            .position_top_right
+              b-tag(rounded type="is-dark")
+                | {{e.bookships_count_by_current_user}}
         .card-content
           .media
             .media-left
@@ -55,4 +58,15 @@ export default {
       max-height: none
       height: 18px
       width:  18px
+  .card-image
+    figure.image
+
+    // 削除
+    .position_top_right
+      position: absolute
+      top: 0
+      right: 0
+      .tag
+        margin: 6px
+        background-color: change_color($black, $alpha: 0.5)
 </style>

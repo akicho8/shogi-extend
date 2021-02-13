@@ -50,13 +50,13 @@ module Wkbk
     end
 
     it "sequenced_articles" do
-      user1 = User.create!
-      book1 = user1.wkbk_books.create!(sequence_key: :article_difficulty_desc)
-      book1.articles << user1.wkbk_articles.create!(difficulty: 1, folder_key: :public)
-      book1.articles << user1.wkbk_articles.create!(difficulty: 2, folder_key: :public)
-      book1.articles << user1.wkbk_articles.create!(difficulty: 3, folder_key: :private)
-      user2 = User.create!
-      assert { book1.sequenced_articles(user2).collect(&:difficulty) == [2, 1] }
+      user = User.create!
+      book = user.wkbk_books.create!(sequence_key: :article_difficulty_desc)
+      book.articles << user.wkbk_articles.create!(difficulty: 1, folder_key: :public)
+      book.articles << user.wkbk_articles.create!(difficulty: 2, folder_key: :public)
+      book.articles << user.wkbk_articles.create!(difficulty: 3, folder_key: :private)
+      alice = User.create!
+      assert { book.sequenced_articles(alice).collect(&:difficulty) == [2, 1] }
     end
 
     it "[TODO] as_json するまえに articles を preload しても as_json のタイミングで再度 O(n) のSQLが発生する再現" do

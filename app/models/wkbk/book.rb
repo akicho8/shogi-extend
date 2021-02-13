@@ -391,20 +391,31 @@ module Wkbk
       end
 
       def sequenced_articles(current_user)
-        s = bookships.joins(:article).includes(article: :moves_answers)
-        if user != current_user
-          s = s.merge(Article.public_or_limited)
-        end
-        sequence.pure_info.apply[s].collect(&:article)
+        s = bookships.access_restriction_by(current_user)
+        s = sequence.pure_info.apply[s]
+        s = s.joins(:article).includes(article: :moves_answers)
+        s.collect(&:article)
       end
     end
 
     concerning :BookshipMethods do
       included do
-        has_many :bookships, dependent: :destroy # 問題集と問題の中間情報たち
+        has_many :bookships, dependent: :destroy do # 問題集と問題の中間情報たち
+          def access_restriction_by(current_user)
+            s = all
+            if proxy_association.owner.user != current_user
+              s = s.merge(Article.public_or_limited)
+            end
+            s
+          end
+        end
+
         has_many :articles, through: :bookships  # 自分に入っている問題たち
 
         has_many :ordered_bookships, -> { order(:position) }, dependent: :destroy, class_name: "Bookship" # 一発でjsonにしたいため
+
+        attribute :current_user
+        # attribute :bookships_count_by_current_user
       end
 
       # bookの下にあるものを全削除(超危険)
@@ -412,6 +423,13 @@ module Wkbk
       def dependent_records_destroy_all
         articles.each(&:destroy!)
         bookships.destroy_all
+      end
+
+      # アクセス可能な問題の数
+      # current_user を考慮して決まるため book.as_json では出せない
+      # なので筋悪だけどあらかじめ current_user を設定してから book.as_json する
+      def bookships_count_by_current_user
+        bookships.joins(:article).access_restriction_by(current_user).count
       end
     end
   end

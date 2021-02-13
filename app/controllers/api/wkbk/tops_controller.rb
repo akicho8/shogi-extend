@@ -47,11 +47,21 @@ module Api
       def current_books
         @current_books ||= -> {
           s = ::Wkbk::Book.public_only
+
+          # ログインしていればプライベートな問題集も混ぜる
           if current_user
             s = s.or(current_user.wkbk_books.joins(:folder))
           end
+
           s = s.order(updated_at: :desc)
           s = page_scope(s)       # page_mod.rb
+
+          # visible_articles_count のため
+          s.each do |e|
+            e.current_user = current_user
+          end
+
+          s
         }.call
       end
 

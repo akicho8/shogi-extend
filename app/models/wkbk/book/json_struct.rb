@@ -5,24 +5,25 @@ module Wkbk
         def json_struct_for_top
           {
             only: [
-              :id,
+              # :id,
               :key,
               :title,
-              :description,
+              # :description,
               :bookships_count,
-              :created_at,
+              # :created_at,
               :updated_at,
             ],
             methods: [
               :folder_key,
-              :sequence_key,
-              :tweet_body,
+              # :sequence_key,
+              # :tweet_body,
               :avatar_path,
+              :bookships_count_by_current_user,
             ],
             include: {
               user: {
                 only: [
-                  :key,
+                  # :key,
                   :id,
                   :name,
                 ],
@@ -30,13 +31,13 @@ module Wkbk
                   :avatar_path,
                 ],
               },
-              folder: {
-                only: [
-                  :key,
-                  :id,
-                  :name,
-                ],
-              },
+              # folder: {
+              #   only: [
+              #     :key,
+              #     :id,
+              #     :name,
+              #   ],
+              # },
             },
           }
         end
