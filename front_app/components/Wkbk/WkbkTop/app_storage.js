@@ -10,8 +10,8 @@ export const app_storage = {
   computed: {
     ls_default() {
       return {
-        visible_hash: this.as_visible_hash(this.BookIndexColumnInfo.values),
-        scope: this.default_scope,
+        // visible_hash: this.as_visible_hash(this.BookIndexColumnInfo.values),
+        // scope: this.default_scope,
       }
     },
   },

@@ -29,7 +29,7 @@ module Wkbk
       def avatar_create_by_title_force
         blob = CardGenerator.to_blob(body: title)
         io = StringIO.new(blob)
-        avatar.attach(io: io, filename: "avatar.png")
+        avatar.attach(io: io, filename: "#{SecureRandom.hex}.png")
         SlackAgent.message_send(key: self.class.name, body: "カード画像更新(#{title})")
       end
 

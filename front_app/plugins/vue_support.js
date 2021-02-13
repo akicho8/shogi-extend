@@ -367,9 +367,20 @@ export default {
     },
 
     // {a: 1, b: null} => {a: 1}
-    hash_compact(hash) {
+    hash_compact_if_null(hash) {
       return _.reduce(hash, (a, val, key) => {
-        if (val != null) {
+        if (val == null) {
+        } else {
+          a[key] = val
+        }
+        return a
+      }, {})
+    },
+
+    hash_compact_if_blank(hash) {
+      return _.reduce(hash, (a, val, key) => {
+        if (val == null || val === "") {
+        } else {
           a[key] = val
         }
         return a

@@ -6,10 +6,10 @@ export const app_table = {
       // URLパラメータ
       page:        null,
       per:         null,
-      sort_column: null,
-      sort_order:  null,
-      scope:       null,
       tag:         null,
+      // sort_column: null,
+      // sort_order:  null,
+      // scope:       null,
 
       // jsonで貰うもの
       books: null, // null:まだ読み込んでいない [...]:読み込んだ
@@ -29,12 +29,6 @@ export const app_table = {
       }
     },
 
-    tag_search_handle(tag) {
-      this.sound_play("click")
-      this.talk(tag)
-      this.router_replace({tag})
-    },
-
     page_change_handle(page) {
       if (page <= 1) {
         page = null
@@ -52,12 +46,13 @@ export const app_table = {
 
     url_params() {
       return {
-        scope:       this.scope,
+        query:       this.query,
         page:        this.page,
         per:         this.per,
-        sort_column: this.sort_column,
-        sort_order:  this.sort_order,
         tag:         this.tag,
+        // scope:       this.scope,
+        // sort_column: this.sort_column,
+        // sort_order:  this.sort_order,
       }
     },
   },

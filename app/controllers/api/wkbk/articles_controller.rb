@@ -90,7 +90,7 @@ module Api
           article.books.order(updated_at: :desc),           # 現在のレコードで選択したもの
           current_user.wkbk_books.order(updated_at: :desc), # その他全部
         ].flatten.compact.uniq
-        retv[:books] = books.as_json(::Wkbk::Book.json_struct_for_article_edit)
+        retv[:books] = books.as_json(::Wkbk::Book.json_struct_for_article_edit_form)
 
         render json: retv
       end

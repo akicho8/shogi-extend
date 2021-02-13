@@ -4,6 +4,7 @@
     .column.is-one-quarter-widescreen.is-one-third-desktop.is-half-tablet
       //- https://bulma.io/documentation/components/card/
       nuxt-link.card.is-block(:to="{name: 'rack-books-book_key', params: {book_key: e.key}}" @click.native="sound_play('click')")
+        //- .card.is-block
         .card-image
           figure.image
             img(:src="e.avatar_path" :alt="e.title")
@@ -16,12 +17,22 @@
               figure.image.is-48x48
                 img.is-rounded(:src="e.user.avatar_path" :alt="e.user.name")
             .media-content
-               p.title.is-4 {{e.title}}
-               p.subtitle.is-6
-                 | {{e.user.name}}
-                 br
-                 | {{diff_time_format(e.updated_at)}}更新
-                 b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
+              p.title.is-4 {{e.title}}
+              p.subtitle.is-6
+                | {{e.user.name}}
+                br
+                | {{diff_time_format(e.updated_at)}}更新
+                b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
+                template(v-if="e.owner_tag_list.length >= 1")
+                  br
+                  span.tag_links
+                    template(v-for="tag in e.owner_tag_list")
+                      span.has-text-link(@click.prevent.stop="base.tag_search_handle(tag)" :key="`${e.key}_${tag}`") \#{{tag}}
+
+          //- template(v-for="tag in e.owner_tag_list")
+          //-   b-tag.is-clickable.mx-1(@click.native.stop="base.tag_search_handle(tag)" rounded :key="tag")
+          //-     | {{tag}}
+
           .content(v-if="false")
             .description.is_truncate2(v-html="simple_format(auto_link(e.description))")
 
@@ -61,7 +72,7 @@ export default {
   .card-image
     figure.image
 
-    // 削除
+    // 個数
     .position_top_right
       position: absolute
       top: 0
@@ -69,4 +80,8 @@ export default {
       .tag
         margin: 6px
         background-color: change_color($black, $alpha: 0.5)
+
+  .tag_links
+    span:not(:first-child)
+      margin-left: 0.25rem
 </style>

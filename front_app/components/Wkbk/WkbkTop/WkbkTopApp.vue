@@ -1,8 +1,9 @@
 <template lang="pug">
 .WkbkTopApp
   DebugBox
-    p scope: {{scope}}({{tab_index}})
-    p page: {{page}}
+    p query: {{query}}
+    p tag: {{tag}}
+    p search_p: {{search_p}}
 
   p(v-if="$fetchState.error" v-text="$fetchState.error.message")
 
@@ -11,6 +12,7 @@
     WkbkTopNavbar(:base="base")
     MainSection
       .container
+        WkbkTopSearchAppear(:base="base")
         WkbkTopCardList(:base="base")
         //- WkbkTopTab(:base="base")
         //- WkbkTopTable(:base="base")
@@ -43,6 +45,7 @@ import { app_tabs       } from "./app_tabs.js"
 import { app_storage    } from "./app_storage.js"
 import { app_columns    } from "./app_columns.js"
 import { app_sidebar    } from "./app_sidebar.js"
+import { app_search     } from "./app_search.js"
 
 export default {
   name: "WkbkTopApp",
@@ -53,6 +56,7 @@ export default {
     app_storage,
     app_columns,
     app_sidebar,
+    app_search,
   ],
 
   data() {
@@ -72,24 +76,24 @@ export default {
   // fetchOnServer: false,
   fetch() {
     // this.__assert__(this.scope, "this.scope")
-
-    this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
+    this.query       = this.$route.query.query
+    // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per
-    this.sort_column = this.$route.query.sort_column ?? "updated_at"
-    this.sort_order  = this.$route.query.sort_order ?? "desc"
+    // this.sort_column = this.$route.query.sort_column ?? "updated_at"
+    // this.sort_order  = this.$route.query.sort_order ?? "desc"
     this.tag         = this.$route.query.tag
 
     // this.url_params とは異なり最終的な初期値を設定する
     const params = {
-      scope:       this.scope,
+      query:       this.query,
+      // scope:       this.scope,
       page:        this.page,
       per:         this.per,
-      sort_column: this.sort_column,
-      sort_order:  this.sort_order,
+      // sort_column: this.sort_column,
+      // sort_order:  this.sort_order,
       tag:         this.tag,
     }
-
     return this.$axios.$get("/api/wkbk/tops/index.json", {params}).catch(e => {
       this.$nuxt.error(e.response.data)
       return
@@ -99,18 +103,18 @@ export default {
       //   return
       // }
       this.meta        = e.meta
-      this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
+      // this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
       this.books       = e.books.map(e => new Book(e))
       this.total       = e.total
-      this.book_counts = e.book_counts
+      // this.book_counts = e.book_counts
     })
   },
 
   methods: {
     router_replace(params) {
       params = {...this.url_params, ...params}
-      params = this.hash_compact(params)
-      this.$router.replace({name: "rack-books", query: params})
+      params = this.hash_compact_if_blank(params)
+      this.$router.replace({name: "rack", query: params})
     },
   },
 
@@ -124,6 +128,9 @@ export default {
 @import "../support.sass"
 .WkbkTopApp
   .MainSection.section
-    +tablet
-      padding: 1.5rem 0.8rem
+    padding: 1.25rem 0.75rem
+    // +touch
+    //   padding: 1.0rem 0.75rem
+    // +desktop
+    //   padding: 1.0rem 0.75rem
 </style>

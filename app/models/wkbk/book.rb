@@ -92,6 +92,21 @@ module Wkbk
 
     belongs_to :user, class_name: "::User"
 
+    acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
+
+    scope :search, -> params {
+      s = all
+      if v = params[:tag].to_s.split(/[,\s]+/).presence
+        s = s.tagged_with(v)
+      end
+      if v = params[:query].presence
+        s = s.where(["title LIKE ? OR description LIKE ?", "%#{v}%", "%#{v}%"])
+        # s = s.where("title LIKE ?", "%#{v}%")
+        # s = s.or(Book.joins(:folder).where("description LIKE ?", "%#{v}%"))
+      end
+      s
+    }
+
     before_validation do
       self.folder_key ||= :private
       self.sequence_key ||= :bookship_shuffle
@@ -156,6 +171,7 @@ module Wkbk
                              :sequence_key,
                              :new_file_src,    # nil 以外が来たらそれで画像作成
                              :raw_avatar_path, # nil が来たら画像削除
+                             :owner_tag_list,
                            ])
         assign_attributes(attrs)
         save!
@@ -343,6 +359,7 @@ module Wkbk
     def default_assign
       self.folder_key ||= :public
       self.sequence_key ||= :bookship_shuffle
+      self.owner_tag_list ||= []
 
       if user
         self.title ||= "#{user.name}のインスタント将棋問題集第#{user.wkbk_books.count.next}弾(仮)"

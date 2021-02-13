@@ -117,7 +117,7 @@ export default {
   methods: {
     router_replace(params) {
       params = {...this.url_params, ...params}
-      params = this.hash_compact(params)
+      params = this.hash_compact_if_null(params)
       this.$router.replace({name: "rack-books", query: params})
     },
   },

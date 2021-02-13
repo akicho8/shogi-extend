@@ -26,6 +26,7 @@ module Api
   module Wkbk
     class TopsController < ApplicationController
       # http://0.0.0.0:3000/api/wkbk/tops/index.json
+      # http://0.0.0.0:3000/api/wkbk/tops/index.json?query=a&tag=b,c
       def index
         retv = {}
         retv[:books] = current_books.as_json(::Wkbk::Book.json_struct_for_top)
@@ -53,6 +54,7 @@ module Api
             s = s.or(current_user.wkbk_books.joins(:folder))
           end
 
+          s = s.search(params)
           s = s.order(updated_at: :desc)
           s = page_scope(s)       # page_mod.rb
 
