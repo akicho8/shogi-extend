@@ -13,6 +13,7 @@
     MainSection
       .container
         WkbkTopSearchAppear(:base="base")
+        WkbkTopCardListTag(:base="base")
         WkbkTopCardList(:base="base")
         //- WkbkTopTab(:base="base")
         //- WkbkTopTable(:base="base")

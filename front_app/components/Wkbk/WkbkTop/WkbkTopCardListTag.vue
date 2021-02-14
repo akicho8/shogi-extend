@@ -1,5 +1,5 @@
 <template lang="pug">
-.WkbkArticleIndexTag(v-if="tags.length >= 1")
+.WkbkTopCardListTag(v-if="tags.length >= 1")
   b-taglist
     template(v-for="tag in tags")
       b-tag(closable @close="base.tag_remove_handle(tag)")
@@ -11,7 +11,7 @@ import { support_child } from "./support_child.js"
 import _ from "lodash"
 
 export default {
-  name: "WkbkArticleIndexTag",
+  name: "WkbkTopCardListTag",
   mixins: [support_child],
   computed: {
     tags() {
@@ -23,10 +23,15 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkArticleIndexTag
+.WkbkTopCardListTag
+  margin-top: 0rem
+  margin-bottom: 1.25rem
+
   display: flex
-  justify-content: center
-  align-items: center
-  margin-top: 1rem
-  margin-bottom: 0.5rem
+  +mobile
+    justify-content: center
+  +tablet
+    justify-content: flex-start
+  .tags, .tag
+    margin-bottom: 0.00rem
 </style>
