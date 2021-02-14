@@ -15,5 +15,9 @@ module Wkbk
     # before_validation do
     #   self.answer_kind ||= AnswerKind.fetch(:mistake)
     # end
+
+    before_validation do
+      self.spent_sec ||= 0
+    end
   end
 end

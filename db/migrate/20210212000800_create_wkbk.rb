@@ -95,7 +95,8 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.belongs_to :answer_kind, foreign_key: {to_table: :wkbk_answer_kinds}, null: false, comment: "解答"
         t.belongs_to :book,        foreign_key: {to_table: :wkbk_books},        null: false, comment: "対戦部屋"
         t.belongs_to :user,        foreign_key: true,                           null: false, comment: "自分"
-        t.datetime :created_at, index: true                                     null: false
+        t.integer    :spent_sec, index: true,                                   null: false, comment: "使用時間"
+        t.datetime :created_at,  index: true,                                   null: false
       end
     end
 

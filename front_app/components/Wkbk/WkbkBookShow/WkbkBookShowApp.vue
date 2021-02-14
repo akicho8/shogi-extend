@@ -25,19 +25,18 @@ client-only
 
     WkbkBookShowNavbar(:base="base")
     WkbkBookShowSidebar(:base="base")
+
     .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
-      MainSection.is_mobile_padding_zero
-        .container
-          template(v-if="is_standby_p")
-            WkbkBookShowStandby(:base="base")
-          template(v-if="is_running_p")
-            template(v-if="base.current_article.folder_key === 'private'")
-              WkbkBookShowAccessBlock(:base="base")
-            template(v-else)
-              WkbkBookShowSp(:base="base")
-            //- WkbkBookShowAnswer(:base="base")
-          template(v-if="is_goal_p")
-            WkbkBookShowGoal(:base="base")
+      template(v-if="is_standby_p")
+        WkbkBookShowTop(:base="base")
+      template(v-if="is_running_p")
+        template(v-if="base.current_article.folder_key === 'private'")
+          WkbkBookShowAccessBlock(:base="base")
+        template(v-else)
+          WkbkBookShowSp(:base="base")
+        //- WkbkBookShowAnswer(:base="base")
+      template(v-if="is_goal_p")
+        WkbkBookShowGoal(:base="base")
 
     DebugPre
       | {{$data}}
@@ -160,8 +159,8 @@ export default {
       border: 1px dashed change_color($success, $alpha: 0.5)
 
 .WkbkBookShowApp
-  .MainSection.section
-    padding: 0
+  // .MainSection.section
+  //   padding: 0
 
   .MainTabs
     .tab-content

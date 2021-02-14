@@ -48,7 +48,7 @@ module Api
         book = ::Wkbk::Book.find_by!(key: params[:book_key])
         show_can!(book)
         v = book.as_json(::Wkbk::Book.json_struct_for_show)
-        v[:articles] = book.sequenced_xitems(current_user)
+        v[:xitems] = book.to_xitems(current_user)
         retv[:book] = v
         render json: retv
       end

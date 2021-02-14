@@ -15,6 +15,27 @@
 
 module Wkbk
   class AnswerKind < ApplicationRecord
+    class << self
+      def correct_id
+        @correct_id ||= fetch(:correct).id
+      end
+      def mistake_id
+        @mistake_id ||= fetch(:mistake).id
+      end
+      def correct
+        @correct ||= fetch(:correct)
+      end
+      def mistake
+        @mistake ||= fetch(:mistake)
+      end
+      def o
+        @o ||= fetch(:correct)
+      end
+      def x
+        @x ||= fetch(:mistake)
+      end
+    end
+
     include MemoryRecordBind
 
     has_many :answer_logs, dependent: :destroy

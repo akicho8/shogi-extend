@@ -1198,10 +1198,13 @@ ActiveRecord::Schema.define(version: 2021_02_12_000800) do
     t.bigint "answer_kind_id", null: false, comment: "解答"
     t.bigint "book_id", null: false, comment: "対戦部屋"
     t.bigint "user_id", null: false, comment: "自分"
+    t.integer "spent_sec", null: false, comment: "使用時間"
     t.datetime "created_at", null: false
     t.index ["answer_kind_id"], name: "index_wkbk_answer_logs_on_answer_kind_id"
     t.index ["article_id"], name: "index_wkbk_answer_logs_on_article_id"
     t.index ["book_id"], name: "index_wkbk_answer_logs_on_book_id"
+    t.index ["created_at"], name: "index_wkbk_answer_logs_on_created_at"
+    t.index ["spent_sec"], name: "index_wkbk_answer_logs_on_spent_sec"
     t.index ["user_id"], name: "index_wkbk_answer_logs_on_user_id"
   end
 

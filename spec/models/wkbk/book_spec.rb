@@ -49,17 +49,17 @@ module Wkbk
       assert { book.articles.order(:position).pluck(:key) == ["b", "a"] }
     end
 
-    it "sequenced_xitems" do
+    it "to_xitems" do
       user = User.create!
       book = user.wkbk_books.create!(sequence_key: :article_difficulty_desc)
       book.articles << user.wkbk_articles.create!(difficulty: 1, folder_key: :public)
       book.articles << user.wkbk_articles.create!(difficulty: 2, folder_key: :public)
       book.articles << user.wkbk_articles.create!(difficulty: 3, folder_key: :private)
       alice = User.create!
-      assert { book.sequenced_xitems(alice).collect(&:difficulty) == [2, 1] }
+      assert { book.to_xitems(alice).collect(&:difficulty) == [2, 1] }
     end
 
-    it "正誤情報を付与した sequenced_xitems" do
+    it "正誤情報を付与した to_xitems" do
       user = User.create!
       book = user.wkbk_books.create!
       book.articles << user.wkbk_articles.create! # 0 o:2 x:1
@@ -73,7 +73,7 @@ module Wkbk
       answer_log = user.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: x, book: book)
       answer_log = user.wkbk_answer_logs.create!(article: book.articles[1], answer_kind: x, book: book)
 
-      articles = book.sequenced_xitems(user)
+      articles = book.to_xitems(user)
       tp articles
       # |-----+-------------+---------------------------------------------------------------+----------------------------------+-------------+-------------------+----------+------------+---------------+-------+---------+---------+--------------------|
       # | id  | key         | init_sfen                                                     | title                            | description | direction_message | turn_max | folder_key | moves_answers | index | o_count | x_count | ox_rate            |

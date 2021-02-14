@@ -74,9 +74,9 @@ module Wkbk
         book.articles << user.wkbk_articles.create!(key: "6-3", title: "初", folder_key: :public)
         correct = ::Wkbk::AnswerKind.fetch("correct")
         mistake = ::Wkbk::AnswerKind.fetch("mistake")
-        answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: correct, book: book) # o
-        answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: mistake, book: book) # x
-        answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[1], answer_kind: mistake, book: book) # o
+        answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: correct, book: book, spent_sec: 1) # o
+        answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: mistake, book: book, spent_sec: 2) # x
+        answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[1], answer_kind: mistake, book: book, spent_sec: 3) # o
       end
 
       def mock_book
@@ -437,6 +437,10 @@ module Wkbk
       def sequence_key=(key)
         self.sequence = Sequence.fetch(key)
       end
+
+      def to_xitems(current_user)
+        XitemsBuilder.new(current_user: current_user, book: self).to_a
+      end
     end
 
     concerning :BookshipMethods do
@@ -479,97 +483,6 @@ module Wkbk
         has_many :answered_answer_kinds, through: :answer_logs, source: :answer_kind
         has_many :answered_articles, through: :answer_logs, source: :article
         has_many :answered_users,    through: :answer_logs, source: :user
-      end
-    end
-
-    concerning :SequencedXitemsMethods do
-      def sequenced_xitems(current_user)
-        s = bookships
-        if false
-          # current_user がアクセスできないものは最初から除外する場合
-          s = bookships.access_restriction_by(current_user)
-        end
-        s = sequence.pure_info.apply[s]
-        s = s.joins(:article).includes(article: :moves_answers)
-
-        raise unless ::Wkbk::Book.article_json_struct_for_show[:only].include?(:id)
-        articles = s.collect(&:article).as_json(::Wkbk::Book.article_json_struct_for_show)
-
-        # if current_user
-        #   answer_logs = current_user.wkbk_answer_logs.order(updated_at: :desc)
-        # end
-
-        # |----+------------+---------------------------+---------+---------|
-        # | id | article_id | created_at                | o_count | x_count |
-        # |----+------------+---------------------------+---------+---------|
-        # |    |        476 | 2000-01-01 00:00:00 +0900 |       2 |       0 |
-        # |    |        477 | 2000-01-01 00:00:00 +0900 |       1 |       0 |
-        # |----+------------+---------------------------+---------+---------|
-
-        if user != current_user
-          articles.each do |e|
-            if e["folder_key"] == "private"
-              e["init_sfen"]         = ""
-              e["title"]             = "非公開"
-              e["description"]       = ""
-              e["direction_message"] = ""
-              e["turn_max"]          = 0
-              e["moves_answers"]     = []
-            end
-          end
-        end
-
-        articles.each.with_index do |e, i|
-          e["index"] = i
-        end
-
-        # ログインしていればその人の情報を付与する
-        #
-        # answer_logs を article_id でグループする
-        # answer_kind_id が正誤なのでその個数を求めると正解率がわかる
-        # 直近の解答が欲しい
-        #
-        #  +------------+---------------------------+---------+---------|
-        #  | article_id | created_at                | o_count | x_count |
-        #  +------------+---------------------------+---------+---------|
-        #  |        503 | 2000-01-01 00:00:00 +0900 |       2 |       1 |
-        #  |        504 | 2000-01-01 00:00:00 +0900 |       0 |       1 |
-        #  +------------+---------------------------+---------+---------|
-        #
-        if current_user
-          scope = current_user.wkbk_answer_logs.where(book: self) # bookでさらにスコープ制限するとarticle_idはすぐに引ける
-
-          # これまでの記録
-          correct_id = ::Wkbk::AnswerKind.fetch("correct").id
-          mistake_id = ::Wkbk::AnswerKind.fetch("mistake").id
-          o_count = "COUNT(answer_kind_id = #{correct_id} OR NULL) AS o_count"
-          x_count = "COUNT(answer_kind_id = #{mistake_id} OR NULL) AS x_count"
-          select = "article_id, #{o_count}, #{x_count}, MAX(created_at) AS created_at"
-          records = scope.select(select).group("article_id")
-          log_hash = records.inject({}) { |a, e| a.merge(e.article_id => e) }
-          articles.each do |e|
-            if v = log_hash[e["id"]]
-              e[:xmeta] ||= {
-                :o_count => v.o_count,
-                :x_count => v.x_count,
-                :ox_rate => v.o_count.fdiv(v.o_count + v.x_count),
-              }
-            end
-          end
-
-          # 最後の解答
-          article_ids_set = scope.distinct.pluck(:article_id).to_set # 問題数はそれほどないので全部取得してOK
-          articles.each do |article|
-            if article_ids_set.include?(article["id"])
-              if answer_log = scope.where(article_id: article["id"]).order(created_at: :desc).take
-                article[:xmeta] ||= {}
-                article[:xmeta][:latest_answer_kind_key] = answer_log.answer_kind.key
-              end
-            end
-          end
-        end
-
-        articles
       end
     end
   end

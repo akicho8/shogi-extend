@@ -1,5 +1,5 @@
 <template lang="pug">
-.WkbkBookShowArticleIndexTable
+.WkbkBookShowTopSideTable
   //- .card.is-inline-block
   //-   .card-content
   //-     p.title.is-size-6
@@ -174,7 +174,7 @@ import { support_child } from "./support_child.js"
 import { isMobile } from "@/components/models/is_mobile.js"
 
 export default {
-  name: "WkbkBookShowArticleIndexTable",
+  name: "WkbkBookShowTopSideTable",
   mixins: [
     support_child,
   ],
@@ -260,7 +260,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkBookShowArticleIndexTable
+.WkbkBookShowTopSideTable
   // .table
   //   tr, td
   //     height: 5rem
@@ -269,13 +269,14 @@ export default {
   //   th, td
   //     vertical-align: middle
 
+  +mobile
+    // margin-top: 1rem
+    // padding: 0
+  +tablet
+    // padding: 0 1rem 0 0
+
   .panel:not(:first-child)
     margin-top: 1.25rem // 理論的には 1rem が正しいが影で狭く見えるため広くする
-  +mobile
-    margin-top: 1rem
-    padding: 0
-  +tablet
-    padding: 0 1rem 0 0
 
   th
     font-size: $size-7
