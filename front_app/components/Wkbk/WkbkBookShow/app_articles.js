@@ -27,8 +27,8 @@ export const app_articles = {
       }
     },
 
-    next_handle(ox_info) {
-      this.ox_apply(ox_info)
+    next_handle(ox_mark_info) {
+      this.ox_apply(ox_mark_info)
       this.current_index += 1
       this.answer_tab_index = 0
       this.description_open_p = this.mobile_p()

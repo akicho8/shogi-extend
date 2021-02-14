@@ -149,6 +149,9 @@ Rails.application.routes.draw do
         get :edit
         post :save
       end
+      namespace :answer_logs do
+        post :create
+      end
     end
 
     resource :session, only: [] do

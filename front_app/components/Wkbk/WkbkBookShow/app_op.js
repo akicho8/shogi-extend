@@ -5,18 +5,18 @@ export const app_op = {
     // 不正解のみ残す
     op_select_x_handle() {
       this.sound_play("click")
-      if (this.journal_ox_counts.x >= 1 && this.journal_ox_counts.o === 0 && this.journal_ox_counts.blank === 0) {
+      if (this.journal_ox_counts.mistake >= 1 && this.journal_ox_counts.correct === 0 && this.journal_ox_counts.blank === 0) {
         this.toast_warn("すでに不正解だけです")
         return
       }
-      if (this.journal_ox_counts.x === 0) {
+      if (this.journal_ox_counts.mistake === 0) {
         this.toast_warn("不正解が見つかりません")
         return
       }
       this.book.articles = this.book.articles.filter(e => {
-        const ox_info = this.journal_ox_info_for(e)
-        if (ox_info) {
-          return ox_info.key === "x"
+        const ox_mark_info = this.journal_ox_mark_info_for(e)
+        if (ox_mark_info) {
+          return ox_mark_info.key === "mistake"
         }
       })
       this.op_index_set_all()

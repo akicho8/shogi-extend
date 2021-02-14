@@ -25,7 +25,7 @@
         //-     | {{base.answer_turn_offset}}手目までの手順を正解とする
 
         //- .ox_buttons.is-flex.is-justify-content-center.my-4.has-addons
-        //-   template(v-for="e in base.OxInfo.values")
+        //-   template(v-for="e in base.OxMarkInfo.values")
         //-     b-button.is-outlined(:icon-left="e.icon" @click="base.next_handle(e)")
 
         WkbkBookShowOxButtons.mt-4(:base="base")

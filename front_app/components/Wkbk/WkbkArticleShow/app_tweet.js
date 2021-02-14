@@ -19,11 +19,11 @@ export const app_tweet = {
       return url.toString()
     },
     tweet_body() {
-      let o = ""
-      o += "#" + "インスタント将棋問題集" + "\n"
-      o += this.article.title + "\n"
-      o += this.current_url
-      return o
+      let out = ""
+      out += "#" + "インスタント将棋問題集" + "\n"
+      out += this.article.title + "\n"
+      out += this.current_url
+      return out
     },
   },
 }

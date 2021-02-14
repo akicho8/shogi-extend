@@ -109,7 +109,7 @@
           //-     | {{row.title}}
           | {{row.title}}
 
-        b-table-column(v-slot="{row}" custom-key="ox" field="ox" label="解" centered :visible="!!base.journal_hash")
+        b-table-column(v-slot="{row}" custom-key="ox_mark_key" field="ox_mark_key" label="解" centered :visible="!!base.journal_hash")
           b-icon(v-bind="base.journal_row_icon_attrs_for(row)")
 
         b-table-column(v-slot="{row}" custom-key="spent_sec" field="spent_sec" label="時間" centered :visible="!!base.journal_hash")

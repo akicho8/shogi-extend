@@ -48,7 +48,7 @@ module Wkbk
           user = User.public_send(e[:user])
           title = "#{e[:user]} - #{e[:folder_key]} - #{e[:key]}"
           Book.where(key: e[:key]).destroy_all
-          book = user.wkbk_books.create!(key: e[:key], folder_key: e[:folder_key], title: title)
+          book = user.wkbk_books.create!(key: e[:key], folder_key: e[:folder_key], title: title, tag_list: e.values.join(" "))
           Article.where(key: e[:key]).destroy_all
           book.articles << user.wkbk_articles.create!(key: e[:key], title: title, folder_key: e[:folder_key])
         end
@@ -481,6 +481,15 @@ module Wkbk
       # なので筋悪だけどあらかじめ current_user を設定してから book.as_json する
       def bookships_count_by_current_user
         bookships.joins(:article).access_restriction_by(current_user).count
+      end
+    end
+
+    concerning :AnswerLogMethods do
+      included do
+        has_many :answer_logs, dependent: :destroy
+        has_many :answered_ox_marks, through: :answer_logs, source: :ox_mark
+        has_many :answered_articles, through: :answer_logs, source: :article
+        has_many :answered_users,    through: :answer_logs, source: :user
       end
     end
   end

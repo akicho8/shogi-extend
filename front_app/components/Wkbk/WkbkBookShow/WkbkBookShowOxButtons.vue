@@ -1,6 +1,6 @@
 <template lang="pug">
 .WkbkBookShowOxButtons.buttons.mb-0.has-addons.is-centered
-  template(v-for="e in base.OxInfo.values.slice().reverse()")
+  template(v-for="e in base.OxMarkInfo.values.slice().reverse()")
     b-button.mb-0.is-outlined(:icon-left="e.icon" @click="base.next_handle(e)" type="is-primary")
 </template>
 

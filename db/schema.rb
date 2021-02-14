@@ -1184,6 +1184,18 @@ ActiveRecord::Schema.define(version: 2021_02_12_000800) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  create_table "wkbk_answer_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "article_id", null: false, comment: "出題"
+    t.bigint "ox_mark_id", null: false, comment: "解答"
+    t.bigint "book_id", null: false, comment: "対戦部屋"
+    t.bigint "user_id", null: false, comment: "自分"
+    t.datetime "created_at", null: false
+    t.index ["article_id"], name: "index_wkbk_answer_logs_on_article_id"
+    t.index ["book_id"], name: "index_wkbk_answer_logs_on_book_id"
+    t.index ["ox_mark_id"], name: "index_wkbk_answer_logs_on_ox_mark_id"
+    t.index ["user_id"], name: "index_wkbk_answer_logs_on_user_id"
+  end
+
   create_table "wkbk_articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.bigint "user_id", null: false, comment: "作成者"
@@ -1198,6 +1210,7 @@ ActiveRecord::Schema.define(version: 2021_02_12_000800) do
     t.boolean "mate_skip", null: false, comment: "詰みチェックをスキップする"
     t.integer "moves_answers_count", default: 0, null: false, comment: "解答数"
     t.integer "difficulty", null: false, comment: "難易度"
+    t.integer "answer_logs_count", default: 0, null: false, comment: "解答数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["difficulty"], name: "index_wkbk_articles_on_difficulty"
@@ -1217,6 +1230,7 @@ ActiveRecord::Schema.define(version: 2021_02_12_000800) do
     t.string "title", limit: 100, null: false, comment: "タイトル"
     t.string "description", limit: 5000, null: false, comment: "説明"
     t.integer "bookships_count", default: 0, null: false, comment: "記事数"
+    t.integer "answer_logs_count", default: 0, null: false, comment: "解答数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["folder_id"], name: "index_wkbk_books_on_folder_id"
@@ -1270,6 +1284,15 @@ ActiveRecord::Schema.define(version: 2021_02_12_000800) do
     t.index ["article_id"], name: "index_wkbk_moves_answers_on_article_id"
     t.index ["moves_count"], name: "index_wkbk_moves_answers_on_moves_count"
     t.index ["position"], name: "index_wkbk_moves_answers_on_position"
+  end
+
+  create_table "wkbk_ox_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_wkbk_ox_marks_on_key", unique: true
+    t.index ["position"], name: "index_wkbk_ox_marks_on_position"
   end
 
   create_table "wkbk_sequences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -1405,6 +1428,10 @@ ActiveRecord::Schema.define(version: 2021_02_12_000800) do
   add_foreign_key "swars_crawl_reservations", "users"
   add_foreign_key "swars_zip_dl_logs", "swars_users"
   add_foreign_key "swars_zip_dl_logs", "users"
+  add_foreign_key "wkbk_answer_logs", "users"
+  add_foreign_key "wkbk_answer_logs", "wkbk_articles", column: "article_id"
+  add_foreign_key "wkbk_answer_logs", "wkbk_books", column: "book_id"
+  add_foreign_key "wkbk_answer_logs", "wkbk_ox_marks", column: "ox_mark_id"
   add_foreign_key "wkbk_articles", "users"
   add_foreign_key "wkbk_articles", "wkbk_folders", column: "folder_id"
   add_foreign_key "wkbk_articles", "wkbk_lineages", column: "lineage_id"

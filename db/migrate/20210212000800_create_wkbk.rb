@@ -26,6 +26,13 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.timestamps
       end
 
+      # 解答種類
+      create_table :wkbk_ox_marks, force: true do |t|
+        t.string :key, null: false, index: { unique: true }
+        t.integer :position, null: false, index: true
+        t.timestamps
+      end
+
       ################################################################################
 
       create_table :wkbk_bookships, force: true do |t|
@@ -56,6 +63,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         # t.integer :position, null: false, index: true
         t.integer :difficulty,       null: false,  index: true,                                  comment: "難易度"
 
+        t.integer :answer_logs_count, default: 0, null: false, index: false, comment: "解答数"
         t.timestamps
       end
 
@@ -70,17 +78,24 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.timestamps
       end
 
-      ################################################################################
-
       create_table :wkbk_books, force: true do |t|
-        t.string :key,                         null: false, index: { unique: true }
-        t.belongs_to :user,                    null: false, foreign_key: true,                        comment: "作成者"
-        t.belongs_to :folder,                  null: false, foreign_key: {to_table: :wkbk_folders},   comment: "フォルダ"
-        t.belongs_to :sequence,                null: false, foreign_key: {to_table: :wkbk_sequences}, comment: "順序"
-        t.string :title, limit: 100,           null: false,  index: false,                             comment: "タイトル"
-        t.string :description, limit: 5000,    null: false,  index: false,                             comment: "説明"
-        t.integer :bookships_count, default: 0, null: false, index: false,                            comment: "記事数"
+        t.string     :key,                          null: false, index: { unique: true }
+        t.belongs_to :user,                         null: false, foreign_key: true,                        comment: "作成者"
+        t.belongs_to :folder,                       null: false, foreign_key: {to_table: :wkbk_folders},   comment: "フォルダ"
+        t.belongs_to :sequence,                     null: false, foreign_key: {to_table: :wkbk_sequences}, comment: "順序"
+        t.string     :title,       limit: 100,      null: false,                                           comment: "タイトル"
+        t.string     :description, limit: 5000,     null: false,                                           comment: "説明"
+        t.integer    :bookships_count,  default: 0, null: false,                                           comment: "記事数"
+        t.integer    :answer_logs_count, default: 0, null: false,                                           comment: "解答数"
         t.timestamps
+      end
+
+      create_table :wkbk_answer_logs, force: true do |t|
+        t.belongs_to :article, foreign_key: {to_table: :wkbk_articles}, null: false, comment: "出題"
+        t.belongs_to :ox_mark, foreign_key: {to_table: :wkbk_ox_marks}, null: false, comment: "解答"
+        t.belongs_to :book,    foreign_key: {to_table: :wkbk_books},    null: false, comment: "対戦部屋"
+        t.belongs_to :user,    foreign_key: true,                       null: false, comment: "自分"
+        t.datetime :created_at,                                         null: false
       end
     end
 
