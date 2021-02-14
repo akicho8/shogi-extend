@@ -33,6 +33,7 @@ module Wkbk
     include FolderMod
     include ImportExportMod
     include InfoMod
+    include JsonStruct
 
     # 自演評価の無効化
     def self.good_bad_click_by_owner_reject_all
@@ -121,137 +122,6 @@ module Wkbk
     #     { :moves_str => "S*2c 2b3a G*3b",            },
     #   ]
     # end
-
-    # 一覧
-    def self.json_type5_for_index
-      {
-        only: [
-          :id,
-          :key,
-          # :book_keys,
-          :position,
-          :init_sfen,
-          :viewpoint,
-          :title,
-          :description,
-          :owner_tag_list,
-          :direction_message,
-          :difficulty,
-          :turn_max,
-          :mate_skip,
-          :moves_answers_count,
-          :created_at,
-          :updated_at,
-        ],
-        methods: [
-          # :book_keys,
-          :folder_key,
-          :lineage_key,
-        ],
-        include: {
-          user: { only: [:key, :id, :name], methods: [:avatar_path],},
-          folder: { only: [:key, :id, :name],},
-          # moves_answers: {},
-          books: {
-            only: [
-              :key,
-              :title,
-            ],
-            methods: [
-              :folder_key,
-            ],
-          },
-        },
-      }
-    end
-
-    def self.json_type5_for_edit
-      {
-        only: [
-          :id,
-          :key,
-          :position,
-          :init_sfen,
-          :viewpoint,
-          :title,
-          :description,
-          :owner_tag_list,
-          :direction_message,
-          :difficulty,
-          :turn_max,
-          :mate_skip,
-          :moves_answers_count,
-          # :created_at,
-          # :updated_at,
-        ],
-        methods: [
-          :book_keys,
-          :folder_key,
-          :lineage_key,
-        ],
-        include: {
-          user: { only: [:key, :id, :name], methods: [:avatar_path],},
-          folder: { only: [:key, :id, :name],},
-          moves_answers: {},
-          books: {
-            only: [
-              :key,
-              :title,
-            ],
-            methods: [
-              :folder_key,
-            ],
-          },
-        },
-      }
-    end
-
-    def self.json_struct_for_show
-      {
-        only: [
-          :id,
-          :key,
-          :book_keys,
-          :position,
-          :init_sfen,
-          :viewpoint,
-          :title,
-          :description,
-          :owner_tag_list,
-          :direction_message,
-          :difficulty,
-          :turn_max,
-          :mate_skip,
-          :moves_answers_count,
-          :created_at,
-          :updated_at,
-        ],
-        methods: [
-          :book_keys,
-          :folder_key,
-          :lineage_key,
-        ],
-        include: {
-          user: { only: [:key, :id, :name], methods: [:avatar_path],},
-          folder: { only: [:key, :id, :name],},
-          lineage: { only: [:id, :key], methods: [:name]},
-          moves_answers: {},
-          books: {
-            only: [
-              :key,
-              :title,
-              :bookships_count,
-            ],
-            methods: [
-              :folder_key,
-            ],
-            include: {
-              folder: { only: [:key, :id, :name] },
-            },
-          },
-        },
-      }
-    end
 
     # # テーブルでのソートより優先してしまうため default_scope { order(:position) } は指定しない
     # acts_as_list touch_on_update: false, top_of_list: 0, scope: :book

@@ -37,7 +37,7 @@ module Api
       # http://0.0.0.0:3000/api/wkbk/articles/index?_user_id=1&sort_column=id&sort_order=desc
       def index
         retv = {}
-        retv[:articles]       = sort_scope_for_articles(current_articles).as_json(::Wkbk::Article.json_type5_for_index)
+        retv[:articles]       = sort_scope_for_articles(current_articles).as_json(::Wkbk::Article.json_struct_for_index)
         # retv[:article_counts] = article_counts
         retv[:total]          = current_articles.total_count
         retv[:meta]           = ServiceInfo.fetch(:wkbk).og_meta
@@ -81,7 +81,7 @@ module Api
           # retv[:meta] = ::Wkbk::Article.new_og_meta
         end
 
-        retv[:article] = article.as_json(::Wkbk::Article.json_type5_for_edit)
+        retv[:article] = article.as_json(::Wkbk::Article.json_struct_for_edit)
         retv[:meta] = article.og_meta
 
         # チェックしたものが上に来るようにする
@@ -105,7 +105,7 @@ module Api
         end
         begin
           article.update_from_js(params.to_unsafe_h[:article])
-          retv[:article] = article.as_json(::Wkbk::Article.json_type5_for_edit)
+          retv[:article] = article.as_json(::Wkbk::Article.json_struct_for_edit)
         rescue ActiveRecord::RecordInvalid => error
           retv[:form_error_message] = error.message
         end
@@ -135,6 +135,7 @@ module Api
         }.call
       end
 
+      # FIXME: model に移動
       def sort_scope_for_articles(s)
         if sort_column && sort_order
           columns = sort_column.to_s.scan(/\w+/)
