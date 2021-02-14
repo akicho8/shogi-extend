@@ -40,7 +40,7 @@ module Api
         render json: retv
       end
 
-      # http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=1
+      # http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=6&_user_id=1
       # http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=5
       def show
         retv = {}
@@ -48,7 +48,7 @@ module Api
         book = ::Wkbk::Book.find_by!(key: params[:book_key])
         show_can!(book)
         v = book.as_json(::Wkbk::Book.json_struct_for_show)
-        v[:articles] = book.sequenced_articles(current_user)
+        v[:articles] = book.sequenced_xitems(current_user)
         retv[:book] = v
         render json: retv
       end

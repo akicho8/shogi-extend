@@ -112,7 +112,7 @@ export default {
 
     if (process.client) {
       this.ga_click(`インスタント将棋問題集→${this.book.title}`)
-      if (this.development_p) {
+      if (this.development_p && false) {
         this.journal_test()
       }
     }

@@ -149,7 +149,7 @@ module Wkbk
         def article_json_struct_for_show
           {
             only: [
-              :id,
+              :id,              # 必要
               :key,
               :position,
               :init_sfen,

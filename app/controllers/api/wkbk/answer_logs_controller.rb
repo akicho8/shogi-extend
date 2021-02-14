@@ -34,8 +34,8 @@ module Api
         article = book.articles.find(params[:article_id])
         show_can!(article)
         answer_kind = ::Wkbk::AnswerKind.fetch(params[:answer_kind_key])
-        wkbk_answer_log = current_user.wkbk_answer_logs.create!(article: article, answer_kind: answer_kind, book: book)
-        render json: wkbk_answer_log
+        answer_log = current_user.wkbk_answer_logs.create!(article: article, answer_kind: answer_kind, book: book)
+        render json: answer_log
       end
     end
   end
