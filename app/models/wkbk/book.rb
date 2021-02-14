@@ -92,7 +92,7 @@ module Wkbk
 
     belongs_to :user, class_name: "::User"
 
-    acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
+    acts_as_taggable
 
     scope :search, -> params {
       s = all
@@ -171,7 +171,7 @@ module Wkbk
                              :sequence_key,
                              :new_file_src,    # nil 以外が来たらそれで画像作成
                              :raw_avatar_path, # nil が来たら画像削除
-                             :owner_tag_list,
+                             :tag_list,
                            ])
         assign_attributes(attrs)
         save!
@@ -270,7 +270,7 @@ module Wkbk
     #               :id,
     #               :title,
     #               :description,
-    #               :owner_tag_list,
+    #               :tag_list,
     #             ],
     #             methods: [
     #             ],
@@ -359,7 +359,7 @@ module Wkbk
     def default_assign
       self.folder_key ||= :public
       self.sequence_key ||= :bookship_shuffle
-      self.owner_tag_list ||= []
+      self.tag_list ||= []
 
       if user
         self.title ||= "#{user.name}のインスタント将棋問題集第#{user.wkbk_books.count.next}弾(仮)"

@@ -45,7 +45,7 @@ module Wkbk
           :init_sfen        => "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
           :moves_answers    => [{"moves_str"=>"4c5b"}],
           :time_limit_clock => "1999-12-31T15:03:00.000Z",
-          :owner_tag_list   => ["tag1 tag2", "tag3"],
+          :tag_list   => ["tag1 tag2", "tag3"],
         }
       end
 
@@ -57,7 +57,7 @@ module Wkbk
         end
 
         assert { article.persisted? }
-        assert { article.owner_tag_list == ["tag1", "tag2", "tag3"] }
+        assert { article.tag_list == ["tag1", "tag2", "tag3"] }
         assert { article.turn_max == 1 }
 
         # 開発者に通知

@@ -45,7 +45,7 @@ module Wkbk
     # rails r 'Wkbk::Article.tag_normalize_all; tp Wkbk::Article'
     def self.tag_normalize_all
       find_each do |e|
-        e.owner_tag_list = e.owner_tag_list.collect { |s|
+        e.tag_list = e.tag_list.collect { |s|
           s = hankaku_format(s)
           s = s.gsub(/\A(\d+)手詰め\z/, '\1手詰')
           s
@@ -81,7 +81,7 @@ module Wkbk
     #     :title               => nil,
     #     :description         => nil,
     #     :direction_message   => nil,
-    #     :owner_tag_list      => [],
+    #     :tag_list      => [],
     #     :moves_answers       => [],
     #     :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
     #     :viewpoint           => "black",
@@ -133,7 +133,7 @@ module Wkbk
 
     # belongs_to :book, required: false, counter_cache: true, touch: true
 
-    acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
+    acts_as_taggable
 
     has_many :moves_answers, -> { order(:position) }, dependent: :destroy
 
@@ -264,7 +264,7 @@ module Wkbk
                                 :direction_message,
                                 :difficulty,
                                 :mate_skip,
-                                :owner_tag_list,
+                                :tag_list,
                                 :lineage_key,
                               ])
 
@@ -348,7 +348,7 @@ module Wkbk
     #               :viewpoint,
     #               :direction_message,
     #               :mate_skip,
-    #               :owner_tag_list,
+    #               :tag_list,
     #             ],
     #             methods: [
     #             ],
@@ -418,7 +418,7 @@ module Wkbk
       self.viewpoint      ||= "black"
       self.mate_skip      ||= false
       self.difficulty     ||= 1
-      self.owner_tag_list ||= []
+      self.tag_list ||= []
 
       if Rails.env.development?
         self.init_sfen = "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"

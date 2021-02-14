@@ -46,9 +46,9 @@
 
     b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" :label="base.ArticleIndexColumnInfo.fetch('difficulty').name" sortable :visible="!!base.visible_hash.difficulty") {{row.difficulty}}
 
-    b-table-column(v-slot="{row}" custom-key="owner_tag_list"    field="owner_tag_list"  :label="base.ArticleIndexColumnInfo.fetch('owner_tag_list').name" :visible="!!base.visible_hash.owner_tag_list")
+    b-table-column(v-slot="{row}" custom-key="tag_list"    field="tag_list"  :label="base.ArticleIndexColumnInfo.fetch('tag_list').name" :visible="!!base.visible_hash.tag_list")
       //- b-taglist
-      template(v-for="tag in row.owner_tag_list")
+      template(v-for="tag in row.tag_list")
         b-tag.is-clickable.mr-1(@click.native.stop="base.tag_search_handle(tag)" rounded :key="tag")
           | {{tag}}
 

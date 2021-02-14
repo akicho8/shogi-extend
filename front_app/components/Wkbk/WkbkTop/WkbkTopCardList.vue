@@ -23,13 +23,13 @@
                 br
                 | {{diff_time_format(e.updated_at)}}更新
                 b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
-                template(v-if="e.owner_tag_list.length >= 1")
+                template(v-if="e.tag_list.length >= 1")
                   br
                   span.tag_links
-                    template(v-for="tag in e.owner_tag_list")
+                    template(v-for="tag in e.tag_list")
                       span.has-text-link(@click.prevent.stop="base.tag_search_handle(tag)" :key="`${e.key}_${tag}`") \#{{tag}}
 
-          //- template(v-for="tag in e.owner_tag_list")
+          //- template(v-for="tag in e.tag_list")
           //-   b-tag.is-clickable.mx-1(@click.native.stop="base.tag_search_handle(tag)" rounded :key="tag")
           //-     | {{tag}}
 

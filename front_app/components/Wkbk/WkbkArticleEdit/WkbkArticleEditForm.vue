@@ -26,7 +26,7 @@
 
       b-field(label="タグ" label-position="on-border")
         //- https://buefy.org/documentation/taginput
-        b-taginput(v-model="base.article.owner_tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
+        b-taginput(v-model="base.article.tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
 
       b-field(label="公開設定" custom-class="is-small" :message="FolderInfo.fetch(base.article.folder_key).message.article")
         b-field.is-marginless

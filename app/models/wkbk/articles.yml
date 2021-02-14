@@ -16,7 +16,7 @@
   updated_at: '2020-08-04T19:32:30.231+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 手筋
   source_about_key: ascertained
@@ -42,7 +42,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -68,7 +68,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -93,7 +93,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -119,7 +119,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -145,7 +145,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -170,7 +170,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -195,7 +195,7 @@
   updated_at: '2020-08-04T19:44:40.088+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 手筋
   source_about_key: ascertained
@@ -222,7 +222,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -248,7 +248,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -274,7 +274,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -300,7 +300,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死逃れ
   source_about_key: ascertained
   user:
@@ -330,7 +330,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -356,7 +356,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -398,7 +398,7 @@
   updated_at: '2020-07-23T11:35:23.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -423,7 +423,7 @@
   updated_at: '2020-08-04T19:45:09.271+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 手筋
   source_about_key: ascertained
@@ -451,7 +451,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -476,7 +476,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -501,7 +501,7 @@
   updated_at: '2020-08-07T10:13:27.743+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -527,7 +527,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -552,7 +552,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -577,7 +577,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -602,7 +602,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -630,7 +630,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -655,7 +655,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -684,7 +684,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -710,7 +710,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -736,7 +736,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -762,7 +762,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -788,7 +788,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -814,7 +814,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -840,7 +840,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -866,7 +866,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -892,7 +892,7 @@
   updated_at: '2020-07-26T21:44:12.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 古典詰将棋
   lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
@@ -925,7 +925,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -950,7 +950,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -976,7 +976,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -1001,7 +1001,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -1027,7 +1027,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1053,7 +1053,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1079,7 +1079,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1105,7 +1105,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1132,7 +1132,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1159,7 +1159,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1187,7 +1187,7 @@
   updated_at: '2020-07-26T21:44:30.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 古典詰将棋
   lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
@@ -1216,7 +1216,7 @@
   updated_at: '2020-07-26T21:43:13.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 古典詰将棋
   lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
@@ -1254,7 +1254,7 @@
   updated_at: '2020-07-24T10:12:33.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -1279,7 +1279,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -1306,7 +1306,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: "▲36歩を取らせたのは罠でした"
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -1334,7 +1334,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 鬼殺しを受け切れ
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -1359,7 +1359,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1386,7 +1386,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 1手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1412,7 +1412,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -1449,7 +1449,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1476,7 +1476,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -1501,7 +1501,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -1527,7 +1527,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -1554,7 +1554,7 @@
   updated_at: '2020-08-04T19:33:20.846+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   - 嬉野流
   lineage_key: 手筋
@@ -1581,7 +1581,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -1608,7 +1608,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -1633,7 +1633,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1659,7 +1659,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -1692,7 +1692,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -1717,7 +1717,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1743,7 +1743,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1769,7 +1769,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1795,7 +1795,7 @@
   updated_at: '2020-07-21T20:50:50.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1821,7 +1821,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1848,7 +1848,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1875,7 +1875,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1902,7 +1902,7 @@
   updated_at: '2020-07-23T11:35:28.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1928,7 +1928,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1955,7 +1955,7 @@
   updated_at: '2020-07-23T11:35:27.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -1981,7 +1981,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2011,7 +2011,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2038,7 +2038,7 @@
   updated_at: '2020-07-23T23:30:55.000+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -2064,7 +2064,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2089,7 +2089,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2115,7 +2115,7 @@
   updated_at: '2020-08-04T19:34:01.252+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 必死逃れ
   source_about_key: ascertained
@@ -2141,7 +2141,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2167,7 +2167,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2193,7 +2193,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2218,7 +2218,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2243,7 +2243,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2276,7 +2276,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2304,7 +2304,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -2330,7 +2330,7 @@
   updated_at: '2020-08-04T19:38:41.375+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -2355,7 +2355,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2383,7 +2383,7 @@
   updated_at: '2020-08-04T19:46:35.622+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 両取り
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2409,7 +2409,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死逃れ
   source_about_key: ascertained
   user:
@@ -2435,7 +2435,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2462,7 +2462,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -2487,7 +2487,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -2515,7 +2515,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2541,7 +2541,7 @@
   updated_at: '2020-08-04T19:36:00.842+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2568,7 +2568,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -2594,7 +2594,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -2619,7 +2619,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2644,7 +2644,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -2670,7 +2670,7 @@
   updated_at: '2020-08-04T19:34:32.487+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2696,7 +2696,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -2724,7 +2724,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -2752,7 +2752,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2778,7 +2778,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -2804,7 +2804,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -2829,7 +2829,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2854,7 +2854,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -2882,7 +2882,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -2908,7 +2908,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2936,7 +2936,7 @@
   updated_at: '2020-08-04T19:47:45.870+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 手筋
   source_about_key: ascertained
@@ -2962,7 +2962,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -2988,7 +2988,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死逃れ
   source_about_key: ascertained
   user:
@@ -3013,7 +3013,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -3038,7 +3038,7 @@
   updated_at: '2020-07-24T22:59:02.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -3063,7 +3063,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -3088,7 +3088,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -3117,7 +3117,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -3145,7 +3145,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -3171,7 +3171,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 実戦で超級戦での変化です
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 超級戦
   - 3手1組
   lineage_key: 手筋
@@ -3202,7 +3202,7 @@
   updated_at: '2020-07-22T12:24:09.000+09:00'
   direction_message: 古典詰将棋です。
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 古典詰将棋
   - 11手詰め
   lineage_key: 持駒限定詰将棋
@@ -3283,7 +3283,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 古典詰将棋です
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 古典詰将棋
   - 21手詰め
   lineage_key: 持駒限定詰将棋
@@ -3329,7 +3329,7 @@
   updated_at: '2020-07-24T10:46:36.000+09:00'
   direction_message: 詰将棋です。
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 打ち歩詰め回避
   - 7手詰め
   lineage_key: 持駒限定詰将棋
@@ -3360,7 +3360,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 攻め合うよ 居飛車党ならさせないと.......
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 居飛車
   - 5手1組
   lineage_key: 定跡
@@ -3396,7 +3396,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 大駒は近づけて打ってください(無意味に遠ざけて打たないで）)
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 飛車角
   - 5手詰め
   lineage_key: 詰将棋
@@ -3426,7 +3426,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -3456,7 +3456,7 @@
   updated_at: '2020-07-31T12:31:55.978+09:00'
   direction_message: "⚠早詰め注意報"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 美濃囲い
   - 15手詰め
   lineage_key: 持駒限定詰将棋
@@ -3487,7 +3487,7 @@
   updated_at: '2020-07-26T21:13:41.000+09:00'
   direction_message: 合駒は香で統一してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 美濃囲い
   - 19手詰め
   lineage_key: 持駒限定詰将棋
@@ -3518,7 +3518,7 @@
   updated_at: '2020-07-25T17:51:34.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 矢倉
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3544,7 +3544,7 @@
   updated_at: '2020-07-24T16:03:31.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 矢倉囲い
   - 3手1組
   lineage_key: 手筋
@@ -3572,7 +3572,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -3600,7 +3600,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -3626,7 +3626,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -3651,7 +3651,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 一手必至
   lineage_key: 必死
   source_about_key: ascertained
@@ -3680,7 +3680,7 @@
   updated_at: '2020-07-24T22:28:23.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3706,7 +3706,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -3732,7 +3732,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3763,7 +3763,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: "△45香打で飛車が死んじゃう"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3792,7 +3792,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 角の頭を狙われて△95歩▲同歩△同香と進みました
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3821,7 +3821,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3847,7 +3847,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -3879,7 +3879,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3905,7 +3905,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -3932,7 +3932,7 @@
   updated_at: '2020-07-23T11:38:12.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 嬉野流
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3960,7 +3960,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 嬉野流
   lineage_key: 手筋
   source_about_key: ascertained
@@ -3987,7 +3987,7 @@
   updated_at: '2020-08-12T15:53:44.586+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -4015,7 +4015,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -4041,7 +4041,7 @@
   updated_at: '2020-09-17T22:52:25.954+09:00'
   direction_message: 最短手順で解いてください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -4069,7 +4069,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 都合よく3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -4102,7 +4102,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 都合よく3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -4129,7 +4129,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -4156,7 +4156,7 @@
   updated_at: '2020-07-23T11:40:07.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -4185,7 +4185,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -4215,7 +4215,7 @@
   updated_at: '2020-07-25T12:23:57.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 飛車角
   - 桂馬
   - 15手詰め
@@ -4246,7 +4246,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -4274,7 +4274,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -4301,7 +4301,7 @@
   updated_at: '2020-07-21T20:50:51.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -4329,7 +4329,7 @@
   updated_at: '2020-07-21T20:50:52.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 実戦形
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -4362,7 +4362,7 @@
   updated_at: '2020-07-21T23:16:26.000+09:00'
   direction_message: "△29飛成をどう受ける？"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -4391,7 +4391,7 @@
   updated_at: '2020-07-22T23:45:58.000+09:00'
   direction_message: "▲66角打に△44金と受けてきました"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -4422,7 +4422,7 @@
   updated_at: '2020-07-22T20:17:47.000+09:00'
   direction_message: 馬の守りは金銀3枚､それを上手く掻い潜って.......
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 金銀
   - 19手詰め
   lineage_key: 詰将棋
@@ -4456,7 +4456,7 @@
   updated_at: '2020-07-22T17:04:38.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -4485,7 +4485,7 @@
   updated_at: '2020-07-22T23:45:39.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -4511,7 +4511,7 @@
   updated_at: '2020-07-23T01:05:07.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -4536,7 +4536,7 @@
   updated_at: '2020-07-23T00:28:42.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 美濃囲い系
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -4566,7 +4566,7 @@
   updated_at: '2020-07-26T21:12:42.000+09:00'
   direction_message: 盤面をよく見て....意外とどうでも良さそうな手にも注意が必要です
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 飛車
   - 29手詰め
   lineage_key: 持駒限定詰将棋
@@ -4603,7 +4603,7 @@
   updated_at: '2020-07-24T15:51:09.000+09:00'
   direction_message: 初手を指してください。
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -4636,7 +4636,7 @@
   updated_at: '2020-07-26T21:12:29.000+09:00'
   direction_message: 邪道です
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 13手詰め
   lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
@@ -4673,7 +4673,7 @@
   updated_at: '2020-07-23T23:49:17.000+09:00'
   direction_message: 3手指してください。2手目は△87角です
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -4700,7 +4700,7 @@
   updated_at: '2020-07-23T23:48:49.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -4729,7 +4729,7 @@
   updated_at: '2020-07-23T23:57:26.000+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -4756,7 +4756,7 @@
   updated_at: '2020-07-24T02:48:32.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -4783,7 +4783,7 @@
   updated_at: '2020-07-24T17:51:42.000+09:00'
   direction_message: スマートな1手か武骨な5手1組か
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -4811,7 +4811,7 @@
   updated_at: '2020-07-26T21:12:13.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 美濃囲い
   - 9手詰め
   lineage_key: 持駒限定詰将棋
@@ -4843,7 +4843,7 @@
   updated_at: '2020-07-25T12:22:29.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 美濃囲い
   - 9手詰め
   - 実戦形
@@ -4873,7 +4873,7 @@
   updated_at: '2020-07-24T12:04:52.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 美濃囲い
   - 9手詰め
   lineage_key: 実戦詰め筋
@@ -4902,7 +4902,7 @@
   updated_at: '2020-07-24T14:01:35.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -4934,7 +4934,7 @@
   updated_at: '2020-07-25T02:51:48.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -4965,7 +4965,7 @@
   updated_at: '2020-07-26T21:11:46.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 矢倉囲い
   - 15手詰め
   - 実戦形
@@ -5005,7 +5005,7 @@
   updated_at: '2020-07-25T16:29:44.000+09:00'
   direction_message: 早石田の定石を指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -5040,7 +5040,7 @@
   updated_at: '2020-07-24T21:24:43.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -5066,7 +5066,7 @@
   updated_at: '2020-07-25T08:30:56.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -5092,7 +5092,7 @@
   updated_at: '2020-07-25T08:37:18.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -5122,7 +5122,7 @@
   updated_at: '2020-07-24T22:30:25.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 実戦形
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5148,7 +5148,7 @@
   updated_at: '2020-07-24T22:29:55.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5174,7 +5174,7 @@
   updated_at: '2020-07-24T22:36:38.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5203,7 +5203,7 @@
   updated_at: '2020-08-12T18:58:41.276+09:00'
   direction_message: 中盤のおわりぐらいの局面です。45歩か45桂の良いと思うほうを指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -5231,7 +5231,7 @@
   updated_at: '2020-07-25T06:47:55.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -5257,7 +5257,7 @@
   updated_at: '2020-07-25T07:02:02.000+09:00'
   direction_message: 13手詰めです。
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -5287,7 +5287,7 @@
   updated_at: '2020-07-25T20:38:36.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -5315,7 +5315,7 @@
   updated_at: '2020-07-25T21:24:18.000+09:00'
   direction_message: "△62銀は悪手でした"
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -5340,7 +5340,7 @@
   updated_at: '2020-07-25T23:14:38.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -5365,7 +5365,7 @@
   updated_at: '2020-07-26T11:02:24.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5393,7 +5393,7 @@
   updated_at: '2020-07-26T17:05:35.000+09:00'
   direction_message: 必至
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -5448,7 +5448,7 @@
   updated_at: '2020-07-27T07:25:21.000+09:00'
   direction_message: 詰み
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -5473,7 +5473,7 @@
   updated_at: '2020-07-26T20:41:23.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 13手詰め
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5504,7 +5504,7 @@
   updated_at: '2020-07-26T22:31:01.000+09:00'
   direction_message: 角交換を避けて△42銀としてきました
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -5531,7 +5531,7 @@
   updated_at: '2020-07-26T23:10:45.000+09:00'
   direction_message: "▲34飛の状態で9筋を攻められました。都合よく5手指してください"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -5560,7 +5560,7 @@
   updated_at: '2020-07-26T23:19:42.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -5586,7 +5586,7 @@
   updated_at: '2020-07-26T23:28:09.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5612,7 +5612,7 @@
   updated_at: '2020-07-26T23:33:09.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5638,7 +5638,7 @@
   updated_at: '2020-07-26T23:40:33.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5665,7 +5665,7 @@
   updated_at: '2020-07-26T23:48:33.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5691,7 +5691,7 @@
   updated_at: '2020-07-26T23:55:08.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5719,7 +5719,7 @@
   updated_at: '2020-07-26T23:59:26.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5746,7 +5746,7 @@
   updated_at: '2020-07-27T00:20:33.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -5775,7 +5775,7 @@
   updated_at: '2020-07-27T08:36:36.000+09:00'
   direction_message: 3手、指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -5800,7 +5800,7 @@
   updated_at: '2020-07-27T10:16:28.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -5829,7 +5829,7 @@
   updated_at: '2020-07-27T15:37:27.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 飛車角
   - 金銀
   - 11手詰め
@@ -5862,7 +5862,7 @@
   updated_at: '2020-07-27T19:03:54.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -5887,7 +5887,7 @@
   updated_at: '2020-07-27T19:04:55.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -5912,7 +5912,7 @@
   updated_at: '2020-07-27T19:08:00.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -5937,7 +5937,7 @@
   updated_at: '2020-08-02T00:33:32.175+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -5968,7 +5968,7 @@
   updated_at: '2020-07-30T19:46:41.820+09:00'
   direction_message: 駒をバンバン取ります
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 23手詰め
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6009,7 +6009,7 @@
   updated_at: '2020-07-28T10:30:35.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -6034,7 +6034,7 @@
   updated_at: '2020-07-27T20:26:58.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6060,7 +6060,7 @@
   updated_at: '2020-07-27T20:32:31.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6086,7 +6086,7 @@
   updated_at: '2020-07-27T20:39:21.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6115,7 +6115,7 @@
   updated_at: '2020-07-27T21:23:06.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6142,7 +6142,7 @@
   updated_at: '2020-07-27T23:15:25.000+09:00'
   direction_message: "△89飛成に対する応手は？"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -6168,7 +6168,7 @@
   updated_at: '2020-07-28T10:31:46.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -6193,7 +6193,7 @@
   updated_at: '2020-07-28T10:29:39.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -6218,7 +6218,7 @@
   updated_at: '2020-07-28T02:25:09.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -6247,7 +6247,7 @@
   updated_at: '2020-07-28T10:56:47.000+09:00'
   direction_message: 1手、指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -6272,7 +6272,7 @@
   updated_at: '2020-07-28T11:01:22.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6300,7 +6300,7 @@
   updated_at: '2020-07-28T11:06:13.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -6325,7 +6325,7 @@
   updated_at: '2020-07-28T11:46:38.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6351,7 +6351,7 @@
   updated_at: '2020-07-28T13:12:01.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6377,7 +6377,7 @@
   updated_at: '2020-07-28T21:12:26.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6407,7 +6407,7 @@
   updated_at: '2020-07-28T20:02:47.000+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 実戦
   - 9手詰め
   lineage_key: 実戦詰め筋
@@ -6444,7 +6444,7 @@
   updated_at: '2020-07-28T21:12:40.000+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -6470,7 +6470,7 @@
   updated_at: '2020-07-28T22:28:30.000+09:00'
   direction_message: 飛車を取り返せ
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -6496,7 +6496,7 @@
   updated_at: '2020-07-28T22:57:19.000+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -6521,7 +6521,7 @@
   updated_at: '2020-07-29T19:12:32.263+09:00'
   direction_message: ヒント 合駒はしません
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 21手詰め
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6564,7 +6564,7 @@
   updated_at: '2020-07-29T20:21:40.923+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6591,7 +6591,7 @@
   updated_at: '2020-07-29T20:33:13.419+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -6618,7 +6618,7 @@
   updated_at: '2020-07-29T21:11:12.046+09:00'
   direction_message: ここからelmo囲いに向かってください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -6644,7 +6644,7 @@
   updated_at: '2020-07-29T21:23:58.824+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -6669,7 +6669,7 @@
   updated_at: '2020-07-29T23:33:48.255+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -6695,7 +6695,7 @@
   updated_at: '2020-08-11T19:40:59.481+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 美濃囲い系
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -6722,7 +6722,7 @@
   updated_at: '2020-08-05T21:36:24.900+09:00'
   direction_message: 15手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -6754,7 +6754,7 @@
   updated_at: '2020-07-30T21:21:16.260+09:00'
   direction_message: この一手で相手は粘りようもなくなります。
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -6782,7 +6782,7 @@
   updated_at: '2020-07-30T20:46:30.577+09:00'
   direction_message: 詰んでる局面です、3手だけ指して下さい。
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -6822,7 +6822,7 @@
   updated_at: '2020-07-30T20:42:45.401+09:00'
   direction_message: 先手玉には67銀や79角の詰めろがかかってます。
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -6856,7 +6856,7 @@
   updated_at: '2020-07-31T00:46:30.160+09:00'
   direction_message: どこを攻めますか？ 1手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -6885,7 +6885,7 @@
   updated_at: '2020-07-31T14:44:09.260+09:00'
   direction_message: "△86歩は何で取りますか？"
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -6913,7 +6913,7 @@
   updated_at: '2020-08-11T01:31:16.264+09:00'
   direction_message: タップミスしないでね
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -6949,7 +6949,7 @@
   updated_at: '2020-08-11T01:38:34.041+09:00'
   direction_message: クリックミスしないでね
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -6983,7 +6983,7 @@
   updated_at: '2020-08-11T01:43:32.080+09:00'
   direction_message: 後手の2手目は同歩です
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -7019,7 +7019,7 @@
   updated_at: '2020-08-04T20:32:34.597+09:00'
   direction_message: 後手の2手目は同歩です。
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -7046,7 +7046,7 @@
   updated_at: '2020-07-31T20:25:02.734+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7073,7 +7073,7 @@
   updated_at: '2020-07-31T20:50:40.643+09:00'
   direction_message: ゴールは44馬です。
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -7101,7 +7101,7 @@
   updated_at: '2020-08-01T00:55:03.537+09:00'
   direction_message: "△45銀と上がってきました"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 石田流
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7130,7 +7130,7 @@
   updated_at: '2020-08-01T01:05:41.328+09:00'
   direction_message: 飛車をどこに引きますか？
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -7156,7 +7156,7 @@
   updated_at: '2020-08-01T09:07:04.906+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7183,7 +7183,7 @@
   updated_at: '2020-08-01T09:26:43.391+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7210,7 +7210,7 @@
   updated_at: '2020-08-01T12:06:30.285+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -7235,7 +7235,7 @@
   updated_at: '2020-08-01T15:04:24.922+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -7260,7 +7260,7 @@
   updated_at: '2020-08-01T23:08:52.062+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -7289,7 +7289,7 @@
   updated_at: '2020-08-01T23:52:09.069+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -7316,7 +7316,7 @@
   updated_at: '2020-08-02T21:23:58.020+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7342,7 +7342,7 @@
   updated_at: '2020-08-02T19:27:12.908+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7369,7 +7369,7 @@
   updated_at: '2020-08-02T20:46:23.950+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -7394,7 +7394,7 @@
   updated_at: '2020-08-03T22:37:46.713+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -7422,7 +7422,7 @@
   updated_at: '2020-08-05T07:34:49.091+09:00'
   direction_message: "△28龍で詰まされそう"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 必死逃れ
   source_about_key: ascertained
@@ -7450,7 +7450,7 @@
   updated_at: '2020-08-03T23:38:57.704+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -7486,7 +7486,7 @@
   updated_at: '2020-08-04T00:19:24.519+09:00'
   direction_message: 後手番です
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 早石田対策
   lineage_key: 定跡
   source_about_key: ascertained
@@ -7518,7 +7518,7 @@
   updated_at: '2020-08-05T07:34:14.154+09:00'
   direction_message: "▲96歩に対して1手指してください"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 早石田対策
   lineage_key: 定跡
   source_about_key: ascertained
@@ -7546,7 +7546,7 @@
   updated_at: '2020-08-04T17:28:17.530+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 1手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7572,7 +7572,7 @@
   updated_at: '2020-08-04T17:44:42.527+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7607,7 +7607,7 @@
   updated_at: '2020-08-04T17:55:55.999+09:00'
   direction_message: "△22飛車としてきました"
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -7632,7 +7632,7 @@
   updated_at: '2020-08-04T17:56:28.281+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7659,7 +7659,7 @@
   updated_at: '2020-08-04T19:31:48.718+09:00'
   direction_message: 浮いた銀を狙って△69飛打としてきました
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   - 王手飛車
   lineage_key: 手筋
@@ -7689,7 +7689,7 @@
   updated_at: '2020-08-05T00:13:52.420+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -7714,7 +7714,7 @@
   updated_at: '2020-08-06T11:31:09.656+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -7739,7 +7739,7 @@
   updated_at: '2020-08-05T23:40:32.488+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7766,7 +7766,7 @@
   updated_at: '2020-08-06T17:25:18.681+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7793,7 +7793,7 @@
   updated_at: '2020-08-06T18:01:35.628+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -7820,7 +7820,7 @@
   updated_at: '2020-08-06T20:32:23.809+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -7846,7 +7846,7 @@
   updated_at: '2020-08-06T20:32:40.230+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -7872,7 +7872,7 @@
   updated_at: '2020-08-06T20:33:23.388+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -7897,7 +7897,7 @@
   updated_at: '2020-08-06T20:33:35.895+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -7922,7 +7922,7 @@
   updated_at: '2020-08-06T20:33:58.883+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -7947,7 +7947,7 @@
   updated_at: '2020-08-06T20:33:48.011+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -7972,7 +7972,7 @@
   updated_at: '2020-08-06T20:34:09.264+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -7997,7 +7997,7 @@
   updated_at: '2020-08-06T20:34:20.191+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -8022,7 +8022,7 @@
   updated_at: '2020-08-06T20:32:55.507+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -8047,7 +8047,7 @@
   updated_at: '2020-08-06T23:37:10.545+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -8078,7 +8078,7 @@
   updated_at: '2020-08-07T00:31:29.378+09:00'
   direction_message: 攻めを継続する1手を指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -8105,7 +8105,7 @@
   updated_at: '2020-08-07T09:43:02.209+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   - 王手飛車
   lineage_key: 手筋
@@ -8132,7 +8132,7 @@
   updated_at: '2020-08-07T10:15:19.613+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8160,7 +8160,7 @@
   updated_at: '2020-08-07T11:11:03.931+09:00'
   direction_message: 5手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8186,7 +8186,7 @@
   updated_at: '2020-08-08T20:39:44.589+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8214,7 +8214,7 @@
   updated_at: '2020-08-08T20:39:51.886+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8241,7 +8241,7 @@
   updated_at: '2020-08-08T20:39:37.465+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8267,7 +8267,7 @@
   updated_at: '2020-08-08T20:39:18.565+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8295,7 +8295,7 @@
   updated_at: '2020-08-08T20:39:26.948+09:00'
   direction_message: 後手が32金!と変化してきました。
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -8323,7 +8323,7 @@
   updated_at: '2020-08-08T20:39:09.151+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8350,7 +8350,7 @@
   updated_at: '2020-08-09T00:53:10.285+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -8375,7 +8375,7 @@
   updated_at: '2020-08-08T21:46:49.156+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 1手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8402,7 +8402,7 @@
   updated_at: '2020-08-09T02:32:08.925+09:00'
   direction_message: 53龍に63桂合と節約してきました。3手指して下さい。
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -8429,7 +8429,7 @@
   updated_at: '2020-08-09T21:23:11.402+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -8460,7 +8460,7 @@
   updated_at: '2020-08-08T22:13:42.415+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 5手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8487,7 +8487,7 @@
   updated_at: '2020-08-09T21:23:25.977+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8516,7 +8516,7 @@
   updated_at: '2020-08-09T21:23:40.473+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8544,7 +8544,7 @@
   updated_at: '2020-08-09T02:31:45.551+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8571,7 +8571,7 @@
   updated_at: '2020-08-09T21:23:53.551+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8603,7 +8603,7 @@
   updated_at: '2020-08-09T21:24:06.742+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8629,7 +8629,7 @@
   updated_at: '2020-08-11T14:40:47.162+09:00'
   direction_message: 手広く有利な局面ですが、棒金の攻めを炸裂させて下さい。
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -8656,7 +8656,7 @@
   updated_at: '2020-08-09T00:33:16.545+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -8683,7 +8683,7 @@
   updated_at: '2020-08-11T14:40:11.708+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8714,7 +8714,7 @@
   updated_at: '2020-08-09T00:38:12.359+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 4手目32飛戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -8741,7 +8741,7 @@
   updated_at: '2020-08-09T21:24:35.596+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -8768,7 +8768,7 @@
   updated_at: '2020-08-09T21:24:43.291+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -8794,7 +8794,7 @@
   updated_at: '2020-08-09T21:24:51.405+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -8821,7 +8821,7 @@
   updated_at: '2020-08-09T08:57:22.645+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -8846,7 +8846,7 @@
   updated_at: '2020-08-09T09:26:12.151+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -8871,7 +8871,7 @@
   updated_at: '2020-08-09T09:25:04.068+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -8897,7 +8897,7 @@
   updated_at: '2020-08-09T13:02:20.230+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8923,7 +8923,7 @@
   updated_at: '2020-08-09T16:15:23.667+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -8948,7 +8948,7 @@
   updated_at: '2020-08-10T12:26:43.970+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 1手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -8977,7 +8977,7 @@
   updated_at: '2020-08-10T16:02:47.157+09:00'
   direction_message: 銀を活用して飛車の食いとめよ
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9004,7 +9004,7 @@
   updated_at: '2020-08-11T01:24:10.753+09:00'
   direction_message: 35歩同歩となった局面です、3手指して下さい。
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -9037,7 +9037,7 @@
   updated_at: '2020-08-11T01:24:22.625+09:00'
   direction_message: 直前に95歩同歩同香同香と進みました。
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -9065,7 +9065,7 @@
   updated_at: '2020-08-11T13:27:28.817+09:00'
   direction_message: 大駒を活用する1手を指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -9091,7 +9091,7 @@
   updated_at: '2020-08-11T14:20:33.292+09:00'
   direction_message: 後手陣に隙がありました
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9117,7 +9117,7 @@
   updated_at: '2020-08-11T15:24:11.202+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9142,7 +9142,7 @@
   updated_at: '2020-08-11T15:32:18.312+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9167,7 +9167,7 @@
   updated_at: '2020-08-11T16:02:45.404+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 実戦型
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9195,7 +9195,7 @@
   updated_at: '2020-08-11T16:47:32.261+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9222,7 +9222,7 @@
   updated_at: '2020-08-11T17:18:16.468+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9249,7 +9249,7 @@
   updated_at: '2020-08-11T17:24:40.820+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 3手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9277,7 +9277,7 @@
   updated_at: '2020-08-11T20:28:56.554+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9302,7 +9302,7 @@
   updated_at: '2020-08-11T22:45:36.491+09:00'
   direction_message: どこに角が打てますか？
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 矢倉
   lineage_key: 手筋
   source_about_key: ascertained
@@ -9332,7 +9332,7 @@
   updated_at: '2020-08-12T22:15:52.551+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -9357,7 +9357,7 @@
   updated_at: '2020-08-12T22:55:01.959+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9382,7 +9382,7 @@
   updated_at: '2020-08-13T13:04:39.398+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -9407,7 +9407,7 @@
   updated_at: '2020-08-13T13:48:16.787+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -9434,7 +9434,7 @@
   updated_at: '2020-08-13T14:12:17.289+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -9459,7 +9459,7 @@
   updated_at: '2020-08-14T01:20:15.015+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9485,7 +9485,7 @@
   updated_at: '2020-08-14T01:27:44.019+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9510,7 +9510,7 @@
   updated_at: '2020-08-14T01:35:01.637+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -9538,7 +9538,7 @@
   updated_at: '2020-08-14T11:29:40.512+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -9563,7 +9563,7 @@
   updated_at: '2020-08-14T11:52:19.558+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9588,7 +9588,7 @@
   updated_at: '2020-08-14T11:59:35.709+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9613,7 +9613,7 @@
   updated_at: '2020-08-15T08:11:47.889+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9639,7 +9639,7 @@
   updated_at: '2020-08-14T12:32:00.664+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9666,7 +9666,7 @@
   updated_at: '2020-08-15T10:41:18.217+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9691,7 +9691,7 @@
   updated_at: '2020-08-14T12:54:51.771+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -9716,7 +9716,7 @@
   updated_at: '2020-08-14T13:02:26.242+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9741,7 +9741,7 @@
   updated_at: '2020-08-14T13:19:20.359+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9767,7 +9767,7 @@
   updated_at: '2020-08-14T13:29:31.620+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 実戦形
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -9793,7 +9793,7 @@
   updated_at: '2020-08-14T13:39:19.351+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -9819,7 +9819,7 @@
   updated_at: '2020-08-14T13:55:48.672+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9846,7 +9846,7 @@
   updated_at: '2020-08-14T14:35:16.364+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9871,7 +9871,7 @@
   updated_at: '2020-08-14T15:04:04.676+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
@@ -9896,7 +9896,7 @@
   updated_at: '2020-08-14T16:33:28.590+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 持駒限定詰将棋
   source_about_key: ascertained
   user:
@@ -9923,7 +9923,7 @@
   updated_at: '2020-08-14T16:50:20.876+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -9948,7 +9948,7 @@
   updated_at: '2020-08-14T16:56:02.920+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9973,7 +9973,7 @@
   updated_at: '2020-08-14T17:16:36.259+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -9999,7 +9999,7 @@
   updated_at: '2020-08-14T17:19:30.320+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -10029,7 +10029,7 @@
   updated_at: '2020-08-14T17:38:25.758+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10054,7 +10054,7 @@
   updated_at: '2020-08-14T17:37:48.648+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10085,7 +10085,7 @@
   updated_at: '2020-08-14T23:35:12.562+09:00'
   direction_message: 都合よく技を決めてください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10112,7 +10112,7 @@
   updated_at: '2020-08-15T01:09:31.809+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -10139,7 +10139,7 @@
   updated_at: '2020-08-15T10:27:16.468+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 7手詰
   lineage_key: 詰将棋
   source_about_key: ascertained
@@ -10167,7 +10167,7 @@
   updated_at: '2020-08-15T14:54:38.520+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -10193,7 +10193,7 @@
   updated_at: '2020-08-16T11:37:19.811+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -10218,7 +10218,7 @@
   updated_at: '2020-08-16T21:33:02.059+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10243,7 +10243,7 @@
   updated_at: '2020-08-16T22:17:25.525+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -10269,7 +10269,7 @@
   updated_at: '2020-08-18T23:54:26.706+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -10294,7 +10294,7 @@
   updated_at: '2020-08-19T00:20:50.020+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -10320,7 +10320,7 @@
   updated_at: '2020-08-19T01:10:45.017+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10346,7 +10346,7 @@
   updated_at: '2020-08-19T10:36:20.868+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -10371,7 +10371,7 @@
   updated_at: '2020-08-21T23:19:29.341+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -10397,7 +10397,7 @@
   updated_at: '2020-08-23T13:06:09.772+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10429,7 +10429,7 @@
   updated_at: '2020-08-23T13:53:04.449+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10458,7 +10458,7 @@
   updated_at: '2020-08-25T00:19:22.138+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10483,7 +10483,7 @@
   updated_at: '2020-08-26T23:33:44.759+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -10509,7 +10509,7 @@
   updated_at: '2020-08-27T12:16:18.952+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10534,7 +10534,7 @@
   updated_at: '2020-09-04T23:36:26.898+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10560,7 +10560,7 @@
   updated_at: '2020-09-06T10:33:01.708+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -10590,7 +10590,7 @@
   updated_at: '2020-09-05T10:41:23.749+09:00'
   direction_message: 都合よく3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -10619,7 +10619,7 @@
   updated_at: '2020-09-05T19:05:55.304+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -10646,7 +10646,7 @@
   updated_at: '2020-09-05T19:16:21.560+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -10674,7 +10674,7 @@
   updated_at: '2020-09-05T19:54:12.244+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -10700,7 +10700,7 @@
   updated_at: '2020-09-05T20:57:27.305+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -10728,7 +10728,7 @@
   updated_at: '2020-09-05T21:20:11.416+09:00'
   direction_message: 都合よく3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   - 王手飛車
   lineage_key: 手筋
@@ -10756,7 +10756,7 @@
   updated_at: '2020-09-05T21:33:42.142+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10782,7 +10782,7 @@
   updated_at: '2020-09-05T23:09:12.870+09:00'
   direction_message: どっちで取りますか？
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10809,7 +10809,7 @@
   updated_at: '2020-09-05T23:13:43.978+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10836,7 +10836,7 @@
   updated_at: '2020-09-06T00:07:07.750+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10866,7 +10866,7 @@
   updated_at: '2020-09-06T00:31:04.148+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -10892,7 +10892,7 @@
   updated_at: '2020-09-06T14:01:53.745+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10923,7 +10923,7 @@
   updated_at: '2020-09-06T14:28:27.641+09:00'
   direction_message: "△45銀と飛車を狙ってきました"
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -10952,7 +10952,7 @@
   updated_at: '2020-09-06T15:10:10.510+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -10982,7 +10982,7 @@
   updated_at: '2020-09-06T15:29:37.208+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11012,7 +11012,7 @@
   updated_at: '2020-09-06T16:11:57.942+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -11043,7 +11043,7 @@
   updated_at: '2020-09-06T16:34:47.063+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11070,7 +11070,7 @@
   updated_at: '2020-09-06T19:01:01.081+09:00'
   direction_message: 82銀打で粘ってきました
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -11097,7 +11097,7 @@
   updated_at: '2020-09-06T19:23:16.804+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -11123,7 +11123,7 @@
   updated_at: '2020-09-06T22:03:51.705+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -11152,7 +11152,7 @@
   updated_at: '2020-09-06T22:28:53.204+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11179,7 +11179,7 @@
   updated_at: '2020-09-06T23:21:47.825+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -11207,7 +11207,7 @@
   updated_at: '2020-09-07T00:41:57.783+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11234,7 +11234,7 @@
   updated_at: '2020-09-07T12:34:58.979+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -11260,7 +11260,7 @@
   updated_at: '2020-09-07T12:43:38.771+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11287,7 +11287,7 @@
   updated_at: '2020-09-07T20:19:12.807+09:00'
   direction_message: 歩をつくとしたらどこ？
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11316,7 +11316,7 @@
   updated_at: '2020-09-07T20:35:42.353+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11344,7 +11344,7 @@
   updated_at: '2020-09-07T21:03:01.033+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -11370,7 +11370,7 @@
   updated_at: '2020-09-07T21:33:33.007+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -11396,7 +11396,7 @@
   updated_at: '2020-09-07T22:15:29.153+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -11422,7 +11422,7 @@
   updated_at: '2020-09-07T22:19:09.032+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11449,7 +11449,7 @@
   updated_at: '2020-09-07T22:22:02.250+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -11475,7 +11475,7 @@
   updated_at: '2020-09-07T22:41:46.075+09:00'
   direction_message: 嬉野流を阻止してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11511,7 +11511,7 @@
   updated_at: '2020-09-07T23:19:46.793+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11538,7 +11538,7 @@
   updated_at: '2020-09-07T23:34:49.884+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11565,7 +11565,7 @@
   updated_at: '2020-09-08T00:14:34.755+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11592,7 +11592,7 @@
   updated_at: '2020-09-08T00:23:29.334+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11619,7 +11619,7 @@
   updated_at: '2020-09-08T12:28:54.306+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 王手飛車
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11645,7 +11645,7 @@
   updated_at: '2020-09-08T12:45:05.393+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -11674,7 +11674,7 @@
   updated_at: '2020-09-08T13:05:33.718+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11703,7 +11703,7 @@
   updated_at: '2020-09-08T18:58:11.406+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -11732,7 +11732,7 @@
   updated_at: '2020-09-09T09:39:23.606+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11759,7 +11759,7 @@
   updated_at: '2020-09-08T20:51:53.316+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
@@ -11787,7 +11787,7 @@
   updated_at: '2020-09-08T21:19:18.039+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11814,7 +11814,7 @@
   updated_at: '2020-09-08T21:51:58.217+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -11840,7 +11840,7 @@
   updated_at: '2020-09-09T21:55:00.280+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11866,7 +11866,7 @@
   updated_at: '2020-09-09T22:17:34.179+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -11892,7 +11892,7 @@
   updated_at: '2020-09-09T22:36:18.005+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   - 右玉
   lineage_key: 手筋
@@ -11920,7 +11920,7 @@
   updated_at: '2020-09-09T22:51:36.513+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -11946,7 +11946,7 @@
   updated_at: '2020-09-09T23:11:20.371+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -11973,7 +11973,7 @@
   updated_at: '2020-09-09T23:24:22.345+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -11999,7 +11999,7 @@
   updated_at: '2020-09-10T20:18:21.609+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12027,7 +12027,7 @@
   updated_at: '2020-09-10T20:50:49.945+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12056,7 +12056,7 @@
   updated_at: '2020-09-10T21:06:13.811+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12084,7 +12084,7 @@
   updated_at: '2020-09-10T21:48:31.046+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12115,7 +12115,7 @@
   updated_at: '2020-09-10T22:50:01.852+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12144,7 +12144,7 @@
   updated_at: '2020-09-11T00:16:06.870+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12170,7 +12170,7 @@
   updated_at: '2020-09-11T00:27:45.741+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12198,7 +12198,7 @@
   updated_at: '2020-09-11T21:30:37.827+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12224,7 +12224,7 @@
   updated_at: '2020-09-11T21:46:23.325+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12252,7 +12252,7 @@
   updated_at: '2020-09-11T21:59:39.430+09:00'
   direction_message: 都合よく7手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12278,7 +12278,7 @@
   updated_at: '2020-09-11T22:25:15.392+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12304,7 +12304,7 @@
   updated_at: '2020-09-11T23:28:12.191+09:00'
   direction_message: 都合よく5手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 十字飛車
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12331,7 +12331,7 @@
   updated_at: '2020-09-12T00:17:33.708+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12357,7 +12357,7 @@
   updated_at: '2020-09-12T22:17:01.002+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12383,7 +12383,7 @@
   updated_at: '2020-09-12T23:08:13.130+09:00'
   direction_message: 34歩打ちとしてきました。3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12408,7 +12408,7 @@
   updated_at: '2020-09-13T00:50:33.110+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: unknown
   user:
@@ -12435,7 +12435,7 @@
   updated_at: '2020-09-13T22:20:28.121+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12463,7 +12463,7 @@
   updated_at: '2020-09-13T22:31:28.671+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 定跡
   source_about_key: ascertained
@@ -12490,7 +12490,7 @@
   updated_at: '2020-09-13T22:54:41.165+09:00'
   direction_message: 都合よく3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12516,7 +12516,7 @@
   updated_at: '2020-09-13T22:59:18.669+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12542,7 +12542,7 @@
   updated_at: '2020-09-13T23:18:12.636+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12568,7 +12568,7 @@
   updated_at: '2020-09-13T23:51:40.708+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 矢倉
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12595,7 +12595,7 @@
   updated_at: '2020-09-14T00:14:16.431+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12624,7 +12624,7 @@
   updated_at: '2020-09-14T00:22:31.242+09:00'
   direction_message: 都合よく指していってください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12652,7 +12652,7 @@
   updated_at: '2020-09-14T12:50:25.486+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12678,7 +12678,7 @@
   updated_at: '2020-09-14T13:00:55.918+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12705,7 +12705,7 @@
   updated_at: '2020-09-14T22:33:46.578+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12734,7 +12734,7 @@
   updated_at: '2020-09-14T22:55:43.889+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12761,7 +12761,7 @@
   updated_at: '2020-09-14T23:31:24.644+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12787,7 +12787,7 @@
   updated_at: '2020-09-14T23:37:25.869+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12813,7 +12813,7 @@
   updated_at: '2020-09-15T00:17:11.198+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -12839,7 +12839,7 @@
   updated_at: '2020-09-15T22:10:01.096+09:00'
   direction_message: 次の最善手は？
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12870,7 +12870,7 @@
   updated_at: '2020-09-17T23:03:39.965+09:00'
   direction_message: 27桂打としてきました
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -12899,7 +12899,7 @@
   updated_at: '2020-09-17T19:45:20.682+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12925,7 +12925,7 @@
   updated_at: '2020-09-17T20:00:45.923+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -12951,7 +12951,7 @@
   updated_at: '2020-09-17T20:25:46.308+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 必死
   source_about_key: ascertained
@@ -12978,7 +12978,7 @@
   updated_at: '2020-09-17T20:33:39.517+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13008,7 +13008,7 @@
   updated_at: '2020-09-17T23:05:11.042+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -13035,7 +13035,7 @@
   updated_at: '2020-09-17T21:19:38.916+09:00'
   direction_message: 都合よく7手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13065,7 +13065,7 @@
   updated_at: '2020-09-20T00:35:10.087+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13091,7 +13091,7 @@
   updated_at: '2020-09-20T23:08:14.589+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13118,7 +13118,7 @@
   updated_at: '2020-09-20T23:22:06.664+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13145,7 +13145,7 @@
   updated_at: '2020-09-20T23:58:43.692+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13175,7 +13175,7 @@
   updated_at: '2020-09-21T02:38:03.710+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13207,7 +13207,7 @@
   updated_at: '2020-09-21T21:42:02.034+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13234,7 +13234,7 @@
   updated_at: '2020-09-21T21:00:41.346+09:00'
   direction_message: 都合よく3手指してください
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13261,7 +13261,7 @@
   updated_at: '2020-09-21T21:41:37.596+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13287,7 +13287,7 @@
   updated_at: '2020-09-21T22:14:15.534+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13313,7 +13313,7 @@
   updated_at: '2020-09-23T20:55:39.307+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13339,7 +13339,7 @@
   updated_at: '2020-09-23T21:02:41.247+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13365,7 +13365,7 @@
   updated_at: '2020-09-24T21:44:26.978+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13391,7 +13391,7 @@
   updated_at: '2020-09-24T21:58:55.145+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - アヒル戦法
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13418,7 +13418,7 @@
   updated_at: '2020-09-24T22:15:54.736+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -13447,7 +13447,7 @@
   updated_at: '2020-09-24T22:53:53.225+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13473,7 +13473,7 @@
   updated_at: '2020-09-25T23:10:50.390+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -13500,7 +13500,7 @@
   updated_at: '2020-09-26T09:09:03.199+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13528,7 +13528,7 @@
   updated_at: '2020-09-26T09:35:13.742+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13554,7 +13554,7 @@
   updated_at: '2020-09-27T21:51:40.971+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13580,7 +13580,7 @@
   updated_at: '2020-09-27T22:01:25.976+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13606,7 +13606,7 @@
   updated_at: '2020-09-27T23:29:38.181+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13632,7 +13632,7 @@
   updated_at: '2020-09-27T23:56:07.016+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13658,7 +13658,7 @@
   updated_at: '2020-09-27T23:59:13.289+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13684,7 +13684,7 @@
   updated_at: '2020-09-28T00:12:37.818+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13709,7 +13709,7 @@
   updated_at: '2020-09-28T22:14:08.537+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13736,7 +13736,7 @@
   updated_at: '2020-09-29T22:31:31.533+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -13761,7 +13761,7 @@
   updated_at: '2020-09-29T23:08:12.892+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -13788,7 +13788,7 @@
   updated_at: '2020-09-29T23:19:03.789+09:00'
   direction_message: 3手指してください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13814,7 +13814,7 @@
   updated_at: '2020-09-29T23:35:40.711+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13840,7 +13840,7 @@
   updated_at: '2020-09-29T23:52:11.127+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死
   source_about_key: ascertained
   user:
@@ -13867,7 +13867,7 @@
   updated_at: '2020-10-01T00:02:35.430+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13893,7 +13893,7 @@
   updated_at: '2020-10-01T00:16:19.524+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list:
+  tag_list:
   - 嬉野流
   lineage_key: 手筋
   source_about_key: ascertained
@@ -13919,7 +13919,7 @@
   updated_at: '2020-10-01T22:56:48.640+09:00'
   direction_message: 最短で詰ましてください
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -13945,7 +13945,7 @@
   updated_at: '2020-10-02T23:34:15.305+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 実戦詰め筋
   source_about_key: ascertained
   user:
@@ -13972,7 +13972,7 @@
   updated_at: '2020-10-26T22:56:14.961+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 手筋
   source_about_key: ascertained
   user:
@@ -13997,7 +13997,7 @@
   updated_at: '2020-11-10T01:46:33.181+09:00'
   direction_message: 
   mate_skip: true
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -14023,7 +14023,7 @@
   updated_at: '2020-11-12T00:52:07.857+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -14049,7 +14049,7 @@
   updated_at: '2021-01-02T20:05:41.625+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 詰将棋
   source_about_key: ascertained
   user:
@@ -14075,7 +14075,7 @@
   updated_at: '2021-01-02T20:14:28.599+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 定跡
   source_about_key: ascertained
   user:
@@ -14101,7 +14101,7 @@
   updated_at: '2021-01-02T20:32:45.161+09:00'
   direction_message: 
   mate_skip: false
-  owner_tag_list: []
+  tag_list: []
   lineage_key: 必死逃れ
   source_about_key: ascertained
   user:

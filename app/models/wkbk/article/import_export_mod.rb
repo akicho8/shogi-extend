@@ -26,7 +26,7 @@ module Wkbk
                                  :description,
                                  :direction_message,
                                  :difficulty,
-                                 :owner_tag_list,
+                                 :tag_list,
                                  :mate_skip,
                                  :created_at,
                                  :updated_at,
@@ -135,7 +135,7 @@ module Wkbk
           end
 
           if e[:user][:key] == "932ed39bb18095a2fc73e0002f94ecf1"
-            if e[:owner_tag_list].include?("アヒル戦法")
+            if e[:tag_list].include?("アヒル戦法")
               # record.update!(folder_key: "public")
 
               book = user.wkbk_books.find_or_initialize_by(title: "アヒル戦法問題集")

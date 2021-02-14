@@ -19,7 +19,7 @@ module Wkbk
               # :tweet_body,
               :avatar_path,
               :bookships_count_by_current_user,
-              :owner_tag_list,
+              :tag_list,
             ],
             include: {
               user: {
@@ -59,7 +59,7 @@ module Wkbk
               :sequence_key,
               :tweet_body,
               :raw_avatar_path,
-              :owner_tag_list,
+              :tag_list,
             ],
             include: {
               user: {
@@ -121,7 +121,7 @@ module Wkbk
               :tweet_body,
               :og_meta,
               :avatar_path,
-              :owner_tag_list,
+              :tag_list,
             ],
             include: {
               user: {
