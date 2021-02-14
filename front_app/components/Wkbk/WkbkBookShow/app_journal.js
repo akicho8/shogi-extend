@@ -13,12 +13,12 @@ export const app_journal = {
     journal_test() {
       this.journal_init()
       this.current_index = 0
-      if (this.current_article) {
+      if (this.current_xitem) {
         this.journal_next_init()
         this.journal_record("correct")
         this.current_index += 1
       }
-      if (this.current_article) {
+      if (this.current_xitem) {
         this.journal_next_init()
         this.journal_record("mistake")
         this.current_index += 1
@@ -33,14 +33,14 @@ export const app_journal = {
 
     // 時間を進める
     journal_counter() {
-      this.journal_hash[this.current_article.id].spent_sec += 1
+      this.journal_hash[this.current_xitem.id].spent_sec += 1
       this.spent_sec += 1
     },
 
     // O or X を選択したとき
     journal_record(answer_kind_key) {
       this.interval_counter.stop()
-      this.journal_hash[this.current_article.id].answer_kind_key = answer_kind_key
+      this.journal_hash[this.current_xitem.id].answer_kind_key = answer_kind_key
       this.journal_ox_create(answer_kind_key)
     },
 
@@ -49,8 +49,8 @@ export const app_journal = {
       if (this.g_current_user) {
         const params = {
           book_id: this.book.id,
-          article_id: this.current_article.id,
-          spent_sec: this.current_article_spent_sec,
+          article_id: this.current_xitem.id,
+          spent_sec: this.current_xitem_spent_sec,
           answer_kind_key: answer_kind_key,
         }
         return this.$axios.$post("/api/wkbk/answer_logs/create.json", params).catch(e => {
@@ -64,7 +64,7 @@ export const app_journal = {
 
     // 次の問題の準備
     journal_next_init() {
-      this.$set(this.journal_hash, this.current_article.id, {spent_sec: 0, answer_kind_key: null})
+      this.$set(this.journal_hash, this.current_xitem.id, {spent_sec: 0, answer_kind_key: null})
       this.interval_counter.restart()
     },
 
@@ -102,17 +102,17 @@ export const app_journal = {
     AnswerKindInfo() { return AnswerKindInfo },
 
     // 現在表示している問題の経過時間
-    current_article_spent_sec() {
-      return this.journal_hash[this.current_article.id].spent_sec
+    current_xitem_spent_sec() {
+      return this.journal_hash[this.current_xitem.id].spent_sec
     },
 
     // 現在表示している問題の経過時間表記
     current_journal_time_to_s() {
-      return this.journal_row_time_format_at(this.current_article)
+      return this.journal_row_time_format_at(this.current_xitem)
     },
 
     // 「不正解のみ残す」が動作するか？
-    articles_find_all_x_enabled() {
+    xitems_find_all_x_enabled() {
       return this.journal_ox_counts.mistake >= 1 && (this.journal_ox_counts.correct >= 1 || this.journal_ox_counts.blank >= 1)
     },
 
@@ -130,9 +130,9 @@ export const app_journal = {
           return a
         }, a)
       } else {
-        return this.book.articles.reduce((a, article) => {
+        return this.book.xitems.reduce((a, xitem) => {
           const hash = this.journal_hash || {}
-          const e = hash[article.id]
+          const e = hash[xitem.article.id]
           let answer_kind_key = "blank"
           if (e) {
             if (e.answer_kind_key) {

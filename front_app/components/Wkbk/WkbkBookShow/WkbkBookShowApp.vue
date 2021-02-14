@@ -30,7 +30,7 @@ client-only
       template(v-if="is_standby_p")
         WkbkBookShowTop(:base="base")
       template(v-if="is_running_p")
-        template(v-if="base.current_article.folder_key === 'private'")
+        template(v-if="base.current_xitem.folder_key === 'private'")
           WkbkBookShowAccessBlock(:base="base")
         template(v-else)
           WkbkBookShowSp(:base="base")
@@ -47,7 +47,7 @@ import { Book           } from "../models/book.js"
 
 import { support_parent } from "./support_parent.js"
 
-import { app_articles   } from "./app_articles.js"
+import { app_xitems   } from "./app_xitems.js"
 import { app_mode       } from "./app_mode.js"
 import { app_support    } from "./app_support.js"
 import { app_tweet      } from "./app_tweet.js"
@@ -61,7 +61,7 @@ export default {
   name: "WkbkBookShowApp",
   mixins: [
     support_parent,
-    app_articles,
+    app_xitems,
     app_mode,
     app_support,
     app_tweet,
@@ -92,7 +92,7 @@ export default {
     this.config = e.config
     this.book = new Book(e.book)
     this.current_index = 0
-    this.saved_articles = _.cloneDeep(this.book.articles)
+    this.saved_xitems = _.cloneDeep(this.book.xitems)
 
     this.clog("process.client", process.client)
     this.clog("process.server", process.server)

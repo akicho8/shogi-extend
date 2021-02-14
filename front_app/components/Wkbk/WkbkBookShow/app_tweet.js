@@ -59,7 +59,7 @@ export const app_tweet = {
 
   computed: {
     o_count_max() {
-      return this.book.articles.length
+      return this.book.xitems.length
     },
 
     ox_tweet_url() {

@@ -29,24 +29,24 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
     template(slot="start")
       //- WkbkSidebarToggle(@click="base.sidebar_toggle")
       template(v-if="base.is_running_p && false")
-        b-navbar-item(tag="div" v-if="base.current_article")
-          | {{base.current_article.title}}
+        b-navbar-item(tag="div" v-if="base.current_xitem")
+          | {{base.current_xitem.title}}
 
     template(slot="end")
       template(v-if="base.is_running_p")
-        b-navbar-item(tag="div" v-if="base.current_article")
+        b-navbar-item(tag="div" v-if="base.current_xitem")
           span.mx-1.is-family-monospace.is-unselectable {{base.current_index + 1}}/{{base.max_count}}
           span.mx-1.is-family-monospace.is-unselectable {{base.current_journal_time_to_s}}
         //- .slice().reverse()
         template(v-for="e in base.AnswerKindInfo.values.slice().reverse()")
-          b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(e)" v-if="base.current_article")
+          b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(e)" v-if="base.current_xitem")
             b-icon(:icon="e.icon")
 
       template(v-if="base.is_standby_p && development_p")
         b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.book_tweet_handle")
           b-icon(icon="twitter" type="is-white")
 
-      //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_restart" v-if="!base.current_article")
+      //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_restart" v-if="!base.current_xitem")
       //-   | RESTART
 </template>
 

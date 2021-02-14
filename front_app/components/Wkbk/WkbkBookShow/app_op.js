@@ -13,7 +13,7 @@ export const app_op = {
         this.toast_warn("不正解が見つかりません")
         return
       }
-      this.book.articles = this.book.articles.filter(e => {
+      this.book.xitems = this.book.xitems.filter(e => {
         const answer_kind_info = this.journal_answer_kind_info_for(e)
         if (answer_kind_info) {
           return answer_kind_info.key === "mistake"
@@ -27,23 +27,23 @@ export const app_op = {
     // 元に戻す
     op_revert_handle() {
       this.sound_play("click")
-      if (this.book.articles.length === this.saved_articles.length) {
+      if (this.book.xitems.length === this.saved_xitems.length) {
         this.toast_warn("すでに元の状態です")
         return
       }
-      this.book.articles = _.cloneDeep(this.saved_articles)
+      this.book.xitems = _.cloneDeep(this.saved_xitems)
       this.current_index = 0
       this.toast_ok("元に戻しました")
     },
 
     op_shuffle_handle() {
       this.sound_play("click")
-      if (this.book.articles.length <= 1) {
+      if (this.book.xitems.length <= 1) {
         this.toast_warn("シャッフルするほどの問題がありません")
         return
       }
 
-      this.book.articles = _.shuffle(this.book.articles)
+      this.book.xitems = _.shuffle(this.book.xitems)
       this.op_index_set_all()
       this.current_index = 0
       this.toast_ok("シャッフルしました")
@@ -51,7 +51,7 @@ export const app_op = {
 
     // いまいちな感じだけど b-table で扱いやすいように index を埋める
     op_index_set_all() {
-      this.book.articles.forEach((e, i) => e.index = i)
+      this.book.xitems.forEach((e, i) => e.index = i)
     },
   },
 }

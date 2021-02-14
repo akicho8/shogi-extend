@@ -4,14 +4,14 @@
   .column
     .box
 
-    //- b-tabs(v-model="base.answer_tab_index" position="is-centered" :vertical="false" :expanded="true" :animated="false" v-if="base.current_article.moves_answers.length >= 1" @input="sound_play('click')")
-    //-   template(v-for="(e, i) in base.current_article.moves_answers")
+    //- b-tabs(v-model="base.answer_tab_index" position="is-centered" :vertical="false" :expanded="true" :animated="false" v-if="base.current_xitem.moves_answers.length >= 1" @input="sound_play('click')")
+    //-   template(v-for="(e, i) in base.current_xitem.moves_answers")
     //-     b-tab-item(:label="`${i + 1}`")
     //-       .CustomShogiPlayerWrap
     //-         CustomShogiPlayer(
     //-           sp_mobile_vertical="is_mobile_vertical_off"
     //-           sp_run_mode="view_mode"
-    //-           :sp_body="base.current_article.init_sfen_with(e)"
+    //-           :sp_body="base.current_xitem.init_sfen_with(e)"
     //-           :sp_flip_if_white="true"
     //-           :sp_turn="0"
     //-           :sp_sound_body_changed="false"
@@ -20,8 +20,8 @@
     //-           sp_controller="is_controller_on"
     //-           )
     .box.is-shadowless.has-background-white-ter(
-      v-if="base.current_article.description"
-      v-html="simple_format(auto_link(base.current_article.description))"
+      v-if="base.current_xitem.description"
+      v-html="simple_format(auto_link(base.current_xitem.description))"
       )
 </template>
 

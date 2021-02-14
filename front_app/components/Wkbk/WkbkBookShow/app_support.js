@@ -13,9 +13,9 @@ export const app_support = {
       if (this.article_show_p) {
         this.sound_play("click")
         if (false) {
-          this.$router.push({name: "rack-articles-article_key", params: {article_key: this.current_article.key}})
+          this.$router.push({name: "rack-articles-article_key", params: {article_key: this.current_xitem.article.key}})
         } else {
-          const e = this.$router.resolve({name: "rack-articles-article_key", params: {article_key: this.current_article.key}})
+          const e = this.$router.resolve({name: "rack-articles-article_key", params: {article_key: this.current_xitem.article.key}})
           this.other_window_open(e.href)
         }
       }
@@ -58,6 +58,6 @@ export const app_support = {
     },
   },
   computed: {
-    article_show_p() { return this.current_article },
+    article_show_p() { return this.current_xitem },
   },
 }

@@ -31,13 +31,13 @@
       b-button.is-fullwidth(@click="base.op_revert_handle")
         | 元に戻す
     .panel-block
-      b-numberinput(controls-position="compact" expanded v-model="base.current_index_human" :min="1" :max="base.book.articles.length" :exponential="true" @click.native="sound_play('click')")
+      b-numberinput(controls-position="compact" expanded v-model="base.current_index_human" :min="1" :max="base.xitems.length" :exponential="true" @click.native="sound_play('click')")
       //- b-button.is-fullwidth(@click="base.op_select_x_handle")
       //-   | 不正解のみ残す
     .panel-block.is-block
       b-table(
-        v-if="base.book.articles.length >= 1"
-        :data="base.book.articles"
+        v-if="base.xitems.length >= 1"
+        :data="base.xitems"
         :mobile-cards="false"
         :show-header="false"
         @click="row => select_handle(row)"
@@ -107,16 +107,16 @@
           //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
           //-   span.has-text-grey-dark
           //-     | {{row.title}}
-          | {{row.title}}
+          | {{row.article.title}}
 
         b-table-column(v-slot="{row}" custom-key="answer_kind_key" field="answer_kind_key" label="解" centered :visible="!!base.journal_hash")
-          b-icon(v-bind="base.journal_row_icon_attrs_for(row)")
+          b-icon(v-bind="base.journal_row_icon_attrs_for(row.article)")
 
         b-table-column(v-slot="{row}" custom-key="spent_sec" field="spent_sec" label="時間" centered :visible="!!base.journal_hash")
-          | {{base.journal_row_time_format_at(row)}}
+          | {{base.journal_row_time_format_at(row.article)}}
 
         b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="20" centered :visible="false")
-          | {{row.difficulty}}
+          | {{row.article.difficulty}}
 
         //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
         //- | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
@@ -138,7 +138,8 @@
         //-     | {{tag}}
         //-
         //- b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" label="作成日時") {{row_time_format(row.created_at)}}
-        b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" label="最終更新" :visible="false") {{row_time_format(row.updated_at)}}
+        b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" label="最終更新" :visible="false")
+          | {{row_time_format(row.article.updated_at)}}
         //-
         //- b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
         //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
@@ -157,7 +158,7 @@
           //- template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
           //-   nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
 
-        //- template(slot="empty" v-if="base.articles != null")
+        //- template(slot="empty" v-if="base.xitems != null")
         //-   section.section.is-unselectable
         //-     .content.has-text-grey.has-text-centered
         //-       p
@@ -195,8 +196,8 @@ export default {
     },
 
     up_down_handle(object, sign) {
-      const index = this.base.book.articles.findIndex(e => e.key === object.key)
-      this.base.book.articles = this.ary_move(this.base.book.articles, index, index + sign)
+      const index = this.base.book.xitems.findIndex(e => e.key === object.key)
+      this.base.book.xitems = this.ary_move(this.base.book.xitems, index, index + sign)
       if (this.run_count === 0) {
         if (!isMobile.any()) {
           this.toast_ok("マウスでドラッグアンドドロップできますよ")
@@ -223,8 +224,8 @@ export default {
       payload.event.target.closest("tr").classList.remove("is-selected")
       const to_index = payload.index
       this.debug_alert(`${this.dragging_row.title}: ${this.from_index} -> ${to_index}`)
-      // this.book.articles.splice(to_index, 0, this.book.articles[this.from_index])
-      this.base.book.articles = this.ary_move(this.base.book.articles, this.from_index, to_index)
+      // this.book.xitems.splice(to_index, 0, this.book.xitems[this.from_index])
+      this.base.book.xitems = this.ary_move(this.base.book.xitems, this.from_index, to_index)
     },
 
     // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
