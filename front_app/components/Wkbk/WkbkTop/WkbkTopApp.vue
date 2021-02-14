@@ -127,11 +127,13 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
+.STAGE-development
+  .columns
+    border: 1px dashed change_color($danger, $alpha: 0.5)
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+
 .WkbkTopApp
   .MainSection.section
-    padding: 1.25rem 0.75rem
-    // +touch
-    //   padding: 1.0rem 0.75rem
-    // +desktop
-    //   padding: 1.0rem 0.75rem
+    padding: 1.5rem 1.0rem
 </style>

@@ -6,7 +6,7 @@
 <style lang="sass">
 .MainSection.section
   +mobile
-    padding: 1.0rem 0.8rem
+    padding: 1.0rem 0.75rem
     &.is_mobile_padding_zero
       padding: 0
 

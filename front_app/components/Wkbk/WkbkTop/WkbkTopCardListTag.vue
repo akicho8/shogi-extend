@@ -1,9 +1,10 @@
 <template lang="pug">
-.WkbkTopCardListTag(v-if="tags.length >= 1")
-  b-taglist
-    template(v-for="tag in tags")
-      b-tag(closable @close="base.tag_remove_handle(tag)")
-        | {{tag}}
+.WkbkTopCardListTag.columns(v-if="tags.length >= 1")
+  .column
+    b-taglist
+      template(v-for="tag in tags")
+        b-tag(closable @close="base.tag_remove_handle(tag)")
+          | {{tag}}
 </template>
 
 <script>
@@ -24,14 +25,12 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkTopCardListTag
-  margin-top: 0rem
-  margin-bottom: 1.25rem
-
   display: flex
-  +mobile
-    justify-content: center
-  +tablet
-    justify-content: flex-start
+  // +mobile
+  //   justify-content: center
+  // +tablet
+  justify-content: flex-start
   .tags, .tag
-    margin-bottom: 0.00rem
+    margin-top: 0
+    margin-bottom: 0
 </style>

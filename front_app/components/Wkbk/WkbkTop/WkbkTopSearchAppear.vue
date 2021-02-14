@@ -1,6 +1,7 @@
 <template lang="pug">
-.WkbkTopSearchAppear.is-hidden-desktop(v-if="base.search_p")
-  WkbkTopSearch(:base="base")
+.WkbkTopSearchAppear.is-hidden-desktop.columns(v-if="base.search_p")
+  .column
+    WkbkTopSearch(:base="base")
 </template>
 
 <script>
@@ -15,7 +16,4 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkTopSearchAppear
-  +touch
-    margin-top: 0.25rem
-    margin-bottom: 1.25rem
 </style>
