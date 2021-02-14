@@ -1,5 +1,5 @@
 module Wkbk
-  class OxMarkInfo
+  class AnswerKindInfo
     include ApplicationMemoryRecord
     memory_record [
       { key: :correct, name: "正解",   },

@@ -11,7 +11,7 @@ module Wkbk
 
       [
         # Static
-        OxMark,
+        AnswerKind,
         Sequence,
         Folder,
         Lineage,
@@ -38,7 +38,7 @@ module Wkbk
         Lineage,
         Folder,
         Sequence,
-        OxMark,
+        AnswerKind,
       ]
     end
 

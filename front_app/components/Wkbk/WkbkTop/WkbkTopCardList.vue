@@ -23,7 +23,7 @@
                 br
                 | {{diff_time_format(e.updated_at)}}更新
                 b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
-                template(v-if="e.tag_list.length >= 1")
+                templete(v-if="e.tag_list.length >= 1")
                   br
                   span.tag_links
                     template(v-for="tag in e.tag_list")

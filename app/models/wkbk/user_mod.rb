@@ -40,7 +40,7 @@ module Wkbk
       has_many :wkbk_answer_logs, class_name: "Wkbk::AnswerLog", dependent: :destroy
       has_many :wkbk_answered_articles, through: :wkbk_answer_logs, source: :article, class_name: "Wkbk::Article"
       has_many :wkbk_answered_books,    through: :wkbk_answer_logs, source: :book,    class_name: "Wkbk::Book"
-      has_many :wkbk_answered_ox_marks, through: :wkbk_answer_logs, source: :ox_mark, class_name: "Wkbk::OxMark"
+      has_many :wkbk_answered_answer_kinds, through: :wkbk_answer_logs, source: :answer_kind, class_name: "Wkbk::AnswerKind"
     end
 
     # def wkbk_book_create_mock(keys = [])
@@ -74,7 +74,7 @@ module Wkbk
       end
 
       def wkbk_total_x_count
-        wkbk_answer_logs.with_ox_mark(:mistake).count
+        wkbk_answer_logs.with_answer_kind(:mistake).count
       end
 
       def wkbk_today_total_o_count
@@ -82,7 +82,7 @@ module Wkbk
       end
 
       def wkbk_today_total_x_count
-        wkbk_answer_logs.with_today.with_ox_mark(:mistake).count
+        wkbk_answer_logs.with_today.with_answer_kind(:mistake).count
       end
 
       def wkbk_today_total_o_ucount
@@ -90,7 +90,7 @@ module Wkbk
       end
 
       def wkbk_today_total_x_ucount
-        wkbk_answer_logs.with_today.with_ox_mark(:mistake).distinct.count(:article_id)
+        wkbk_answer_logs.with_today.with_answer_kind(:mistake).distinct.count(:article_id)
       end
 
       # rails r "tp User.first.wkbk_info"

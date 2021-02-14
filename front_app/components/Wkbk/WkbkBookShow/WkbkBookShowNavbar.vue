@@ -38,7 +38,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
           span.mx-1.is-family-monospace.is-unselectable {{base.current_index + 1}}/{{base.max_count}}
           span.mx-1.is-family-monospace.is-unselectable {{base.current_journal_time_to_s}}
         //- .slice().reverse()
-        template(v-for="e in base.OxMarkInfo.values.slice().reverse()")
+        template(v-for="e in base.AnswerKindInfo.values.slice().reverse()")
           b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(e)" v-if="base.current_article")
             b-icon(:icon="e.icon")
 

@@ -33,8 +33,8 @@ module Api
         show_can!(book)
         article = book.articles.find(params[:article_id])
         show_can!(article)
-        ox_mark = ::Wkbk::OxMark.fetch(params[:ox_mark_key])
-        wkbk_answer_log = current_user.wkbk_answer_logs.create!(article: article, ox_mark: ox_mark, book: book)
+        answer_kind = ::Wkbk::AnswerKind.fetch(params[:answer_kind_key])
+        wkbk_answer_log = current_user.wkbk_answer_logs.create!(article: article, answer_kind: answer_kind, book: book)
         render json: wkbk_answer_log
       end
     end

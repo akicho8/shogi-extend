@@ -1,5 +1,5 @@
 import dayjs from "dayjs"
-import { OxMarkInfo } from "../models/ox_mark_info.js"
+import { AnswerKindInfo } from "../models/answer_kind_info.js"
 import _ from "lodash"
 
 export const app_journal = {
@@ -38,20 +38,20 @@ export const app_journal = {
     },
 
     // O or X を選択したとき
-    journal_record(ox_mark_key) {
+    journal_record(answer_kind_key) {
       this.interval_counter.stop()
-      this.journal_hash[this.current_article.id].ox_mark_key = ox_mark_key
-      this.journal_ox_create(ox_mark_key)
+      this.journal_hash[this.current_article.id].answer_kind_key = answer_kind_key
+      this.journal_ox_create(answer_kind_key)
     },
 
     // O or X を記録
-    journal_ox_create(ox_mark_key) {
+    journal_ox_create(answer_kind_key) {
       if (this.g_current_user) {
         const params = {
           book_id: this.book.id,
           article_id: this.current_article.id,
           spent_sec: this.current_article_spent_sec,
-          ox_mark_key: ox_mark_key,
+          answer_kind_key: answer_kind_key,
         }
         return this.$axios.$post("/api/wkbk/answer_logs/create.json", params).catch(e => {
           this.$nuxt.error(e.response.data)
@@ -64,7 +64,7 @@ export const app_journal = {
 
     // 次の問題の準備
     journal_next_init() {
-      this.$set(this.journal_hash, this.current_article.id, {spent_sec: 0, ox_mark_key: null})
+      this.$set(this.journal_hash, this.current_article.id, {spent_sec: 0, answer_kind_key: null})
       this.interval_counter.restart()
     },
 
@@ -80,26 +80,26 @@ export const app_journal = {
 
     // b-table の解答用
     journal_row_icon_attrs_for(article) {
-      const ox_mark_info = this.journal_ox_mark_info_for(article)
-      if (ox_mark_info) {
-        return ox_mark_info.icon_attrs
+      const answer_kind_info = this.journal_answer_kind_info_for(article)
+      if (answer_kind_info) {
+        return answer_kind_info.icon_attrs
       }
     },
 
-    // article の ox_mark_info を返す
-    journal_ox_mark_info_for(article) {
+    // article の answer_kind_info を返す
+    journal_answer_kind_info_for(article) {
       if (this.journal_hash) {
         const e = this.journal_hash[article.id]
         if (e != null) {
-          if (e.ox_mark_key != null) {
-            return OxMarkInfo.fetch(e.ox_mark_key)
+          if (e.answer_kind_key != null) {
+            return AnswerKindInfo.fetch(e.answer_kind_key)
           }
         }
       }
     },
   },
   computed: {
-    OxMarkInfo() { return OxMarkInfo },
+    AnswerKindInfo() { return AnswerKindInfo },
 
     // 現在表示している問題の経過時間
     current_article_spent_sec() {
@@ -119,13 +119,13 @@ export const app_journal = {
     // 正解/不正解/空 の個数を返す
     // {correct: 1 mistake: 0, blank: 10} 形式
     journal_ox_counts() {
-      const a = this.OxMarkInfo.values.reduce((a, e) => ({...a, [e.key]: 0}), {}) // {correct: 0, mistake: 0}
+      const a = this.AnswerKindInfo.values.reduce((a, e) => ({...a, [e.key]: 0}), {}) // {correct: 0, mistake: 0}
       a["blank"] = 0
       if (false) {
         return _.reduce(this.journal_hash || {}, (a, e) => {
-          const ox_mark_key = e.ox_mark_key || "blank"
-          if (e.ox_mark_key) {
-            a[e.ox_mark_key] = (a[e.ox_mark_key] || 0) + 1
+          const answer_kind_key = e.answer_kind_key || "blank"
+          if (e.answer_kind_key) {
+            a[e.answer_kind_key] = (a[e.answer_kind_key] || 0) + 1
           }
           return a
         }, a)
@@ -133,13 +133,13 @@ export const app_journal = {
         return this.book.articles.reduce((a, article) => {
           const hash = this.journal_hash || {}
           const e = hash[article.id]
-          let ox_mark_key = "blank"
+          let answer_kind_key = "blank"
           if (e) {
-            if (e.ox_mark_key) {
-              ox_mark_key = e.ox_mark_key
+            if (e.answer_kind_key) {
+              answer_kind_key = e.answer_kind_key
             }
           }
-          a[ox_mark_key] = (a[ox_mark_key] || 0) + 1
+          a[answer_kind_key] = (a[answer_kind_key] || 0) + 1
           return a
         }, a)
       }

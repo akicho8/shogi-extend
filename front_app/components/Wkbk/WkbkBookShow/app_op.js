@@ -14,9 +14,9 @@ export const app_op = {
         return
       }
       this.book.articles = this.book.articles.filter(e => {
-        const ox_mark_info = this.journal_ox_mark_info_for(e)
-        if (ox_mark_info) {
-          return ox_mark_info.key === "mistake"
+        const answer_kind_info = this.journal_answer_kind_info_for(e)
+        if (answer_kind_info) {
+          return answer_kind_info.key === "mistake"
         }
       })
       this.op_index_set_all()

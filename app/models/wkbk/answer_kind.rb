@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Ox mark (wkbk_ox_marks as Wkbk::OxMark)
+# Ox mark (wkbk_answer_kinds as Wkbk::AnswerKind)
 #
 # |------------+--------------------+-------------+-------------+------+-------|
 # | name       | desc               | type        | opts        | refs | index |
@@ -14,7 +14,7 @@
 # |------------+--------------------+-------------+-------------+------+-------|
 
 module Wkbk
-  class OxMark < ApplicationRecord
+  class AnswerKind < ApplicationRecord
     include MemoryRecordBind
 
     has_many :answer_logs, dependent: :destroy

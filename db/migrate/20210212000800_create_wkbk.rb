@@ -27,7 +27,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
       end
 
       # 解答種類
-      create_table :wkbk_ox_marks, force: true do |t|
+      create_table :wkbk_answer_kinds, force: true do |t|
         t.string :key, null: false, index: { unique: true }
         t.integer :position, null: false, index: true
         t.timestamps
@@ -92,7 +92,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
 
       create_table :wkbk_answer_logs, force: true do |t|
         t.belongs_to :article, foreign_key: {to_table: :wkbk_articles}, null: false, comment: "出題"
-        t.belongs_to :ox_mark, foreign_key: {to_table: :wkbk_ox_marks}, null: false, comment: "解答"
+        t.belongs_to :answer_kind, foreign_key: {to_table: :wkbk_answer_kinds}, null: false, comment: "解答"
         t.belongs_to :book,    foreign_key: {to_table: :wkbk_books},    null: false, comment: "対戦部屋"
         t.belongs_to :user,    foreign_key: true,                       null: false, comment: "自分"
         t.datetime :created_at,                                         null: false

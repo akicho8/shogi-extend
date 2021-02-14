@@ -1,6 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
-export class OxMarkInfo extends MemoryRecord {
+export class AnswerKindInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "correct", name: "正解",   sound_key: "o", name: "正解", icon: "circle-outline", type: "is-danger",  },

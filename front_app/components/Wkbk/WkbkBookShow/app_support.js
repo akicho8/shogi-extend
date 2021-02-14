@@ -51,6 +51,11 @@ export const app_support = {
     // second_to_m_ss() {
     //   return dayjs.unix(this.spent_sec).format("m:ss")
     // },
+    tag_search_handle(tag) {
+      this.sound_play("click")
+      this.talk(tag)
+      this.$router.replace({name: "rack", query: {tag: tag}})
+    },
   },
   computed: {
     article_show_p() { return this.current_article },

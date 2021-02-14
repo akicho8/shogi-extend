@@ -473,7 +473,7 @@ module Wkbk
     concerning :AnswerLogMethods do
       included do
         has_many :answer_logs, dependent: :destroy
-        has_many :answered_ox_marks, through: :answer_logs, source: :ox_mark
+        has_many :answered_answer_kinds, through: :answer_logs, source: :answer_kind
         has_many :answered_books, through: :answer_logs, source: :book
         has_many :answered_users, through: :answer_logs, source: :user
       end
