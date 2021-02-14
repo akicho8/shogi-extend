@@ -48,10 +48,10 @@ export const app_journal = {
     journal_ox_create(answer_kind_key) {
       if (this.g_current_user) {
         const params = {
-          book_id: this.book.id,
-          article_id: this.current_xitem.id,
-          spent_sec: this.current_xitem_spent_sec,
+          article_id: this.current_article.id,
           answer_kind_key: answer_kind_key,
+          book_id: this.book.id,
+          spent_sec: this.current_xitem_spent_sec,
         }
         return this.$axios.$post("/api/wkbk/answer_logs/create.json", params).catch(e => {
           this.$nuxt.error(e.response.data)

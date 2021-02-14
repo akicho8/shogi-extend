@@ -8,6 +8,11 @@ export class Book extends ModelBase {
     if (this.articles) {
       this.articles = this.articles.map(e => new Article(e))
     }
+    if (this.xitems) {
+      this.xitems.forEach(e => {
+        e.article = new Article(e.article)
+      })
+    }
 
     this.new_file_info = null   // b-upload で受けとる情報
     this.new_file_src  = null   // 読み込んだ内容

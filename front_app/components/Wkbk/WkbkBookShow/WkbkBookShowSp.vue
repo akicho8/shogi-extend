@@ -4,10 +4,10 @@
     .column.LeftColumn
       .CustomShogiPlayerWrap
         .has-text-centered.is_truncate1
-          span.has-text-weight-bold(v-if="base.current_xitem.title")
-            | {{base.current_xitem.title}}
-          span.ml-1(v-if="base.current_xitem.direction_message")
-            | {{base.current_xitem.direction_message}}
+          span.has-text-weight-bold(v-if="base.current_article.title")
+            | {{base.current_article.title}}
+          span.ml-1(v-if="base.current_article.direction_message")
+            | {{base.current_article.direction_message}}
         CustomShogiPlayer(
           sp_mobile_vertical="is_mobile_vertical_off"
           :sp_body="base.current_sp_body"
@@ -30,7 +30,7 @@
 
         WkbkBookShowOxButtons.mt-4(:base="base")
 
-    .column.RightColumn(:key="base.current_xitem.key" v-if="base.current_xitem.moves_answers.length >= 1")
+    .column.RightColumn(:key="base.current_article.key" v-if="base.current_article.moves_answers.length >= 1")
       b-tabs.mb-0(
         v-model="base.answer_tab_index"
         position="is-centered"
@@ -39,13 +39,13 @@
         :animated="false"
         @input="sound_play('click')"
         )
-        template(v-for="(e, i) in base.current_xitem.moves_answers")
+        template(v-for="(e, i) in base.current_article.moves_answers")
           b-tab-item(:label="`${i + 1}`")
             .CustomShogiPlayerWrap
               CustomShogiPlayer(
                 sp_mobile_vertical="is_mobile_vertical_off"
                 sp_run_mode="view_mode"
-                :sp_body="base.current_xitem.init_sfen_with(e)"
+                :sp_body="base.current_article.init_sfen_with(e)"
                 :sp_flip_if_white="true"
                 :sp_turn="0"
                 :sp_sound_body_changed="false"
@@ -54,10 +54,10 @@
                 sp_controller="is_controller_on"
                 )
 
-      template(v-if="base.current_xitem.description")
+      template(v-if="base.current_article.description")
         .is-flex.is-justify-content-center.my-4(v-if="!base.description_open_p")
           b-button(@click="base.description_open_handle") 解説
-        .box(v-if="base.description_open_p" v-html="simple_format(auto_link(base.current_xitem.description))")
+        .box(v-if="base.description_open_p" v-html="simple_format(auto_link(base.current_article.description))")
 </template>
 
 <script>

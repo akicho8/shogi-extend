@@ -70,8 +70,9 @@ export const app_xitems = {
     goal_p()               { return this.rest_count <= 0                }, // 全問問いた？
     current_exist_p()      { return !!this.xitems[this.current_index] }, // 現在の問題が存在する？
     current_xitem()         { return this.xitems[this.current_index]   }, // 現在の問題
-    current_sp_body()      { return this.current_xitem.init_sfen      }, // 現在の問題のSFEN
-    current_sp_viewpoint() { return this.current_xitem.viewpoint      }, // 現在の問題の視点
+    current_article()       { return this.current_xitem.article   }, // 現在の問題
+    current_sp_body()      { return this.current_article.init_sfen      }, // 現在の問題のSFEN
+    current_sp_viewpoint() { return this.current_article.viewpoint      }, // 現在の問題の視点
     // current_sp_viewpoint() { return this.sfen_parse(this.current_sp_body).base_location.key }, // 現在の問題のSFENの視点
 
     current_index_human: {
