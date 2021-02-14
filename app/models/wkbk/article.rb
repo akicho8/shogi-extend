@@ -133,7 +133,6 @@ module Wkbk
 
     # belongs_to :book, required: false, counter_cache: true, touch: true
 
-    acts_as_taggable_on :user_tags  # 閲覧者が自由につけれるタグ(未使用)
     acts_as_taggable_on :owner_tags # 作成者が自由につけれるタグ
 
     has_many :moves_answers, -> { order(:position) }, dependent: :destroy
