@@ -95,15 +95,20 @@ module Wkbk
     acts_as_taggable
 
     scope :search, -> params {
-      s = all
+      base = all.joins(:folder, :user)
+      s = base
       if v = params[:tag].to_s.split(/[,\s]+/).presence
-        s = s.tagged_with(v)
+        s = s.where(id: tagged_with(v))
       end
       if v = params[:query].presence
-        s = s.where(["title LIKE ? OR description LIKE ?", "%#{v}%", "%#{v}%"])
-        # s = s.where("title LIKE ?", "%#{v}%")
-        # s = s.or(Book.joins(:folder).where("description LIKE ?", "%#{v}%"))
+        v = "%#{v}%"
+        s = s.where(arel_table[:title].matches(v))
+        s = s.or(base.where(arel_table[:description].matches(v)))
+        s = s.or(base.where(User.arel_table[:name].matches(v)))
       end
+      # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE (title LIKE '%a%' OR description LIKE '%a%')"
+      # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE ((title LIKE '%a%' OR description LIKE '%a%') OR users.name LIKE '%a%')"
+      # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE (((title LIKE '%%a%%') OR (description LIKE '%%a%%')) OR users.name LIKE '%a%')"
       s
     }
 
