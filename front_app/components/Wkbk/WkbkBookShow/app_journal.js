@@ -5,7 +5,6 @@ import _ from "lodash"
 export const app_journal = {
   data() {
     return {
-      journal_hash: null, // article.id をキーにして値に正解/不正解と時間を持つハッシュ
     }
   },
   methods: {
@@ -28,20 +27,17 @@ export const app_journal = {
 
     // 最初に呼ぶ
     journal_init() {
-      this.journal_hash = {}
-
       this.book.xitems.forEach(xitem => {
-        const latest_answer_log = {
+        xitem.latest_answer_log = {
           answer_kind_key: null,
           spent_sec: null,
         }
-        this.$set(xitem, "latest_answer_log", latest_answer_log)
       })
     },
 
     // 時間を進める
     journal_counter() {
-      this.journal_hash[this.current_xitem.id].spent_sec += 1
+      // this.journal_hash[this.current_xitem.id].spent_sec += 1
       this.current_xitem.latest_answer_log.spent_sec += 1
       this.spent_sec += 1
     },
@@ -51,7 +47,6 @@ export const app_journal = {
       this.interval_counter.stop()
       this.current_xitem.latest_answer_log.answer_kind_key = answer_kind_key
       this.current_xitem.answer_stat[`${answer_kind_key}_count`] += 1
-      // this.journal_hash[this.current_xitem.id].answer_kind_key = answer_kind_key
       this.journal_ox_create(answer_kind_key)
     },
 
@@ -75,7 +70,7 @@ export const app_journal = {
 
     // 次の問題の準備
     journal_next_init() {
-      this.$set(this.journal_hash, this.current_xitem.id, {spent_sec: 0, answer_kind_key: null})
+      // this.$set(this.journal_hash, this.current_xitem.id, {spent_sec: 0, answer_kind_key: null})
 
       this.current_xitem.latest_answer_log.spent_sec = 0
       this.current_xitem.latest_answer_log.answer_kind_key = null
@@ -85,17 +80,9 @@ export const app_journal = {
 
     // b-table の時間用
     journal_row_time_format_at(xitem) {
-      // const e = this.journal_hash[article.id]
-      // if (e != null) {
-      //   if (e.spent_sec != null) {
-      //     return dayjs.unix(e.spent_sec).format("m:ss")
-      //   }
-      // }
-      if (xitem) {
-        const v = xitem.latest_answer_log.spent_sec
-        if (v != null) {
-          return dayjs.unix(v).format("m:ss")
-        }
+      const v = xitem.latest_answer_log.spent_sec
+      if (v != null) {
+        return dayjs.unix(v).format("m:ss")
       }
     },
 
@@ -128,7 +115,7 @@ export const app_journal = {
 
     // 現在表示している問題の経過時間
     current_xitem_spent_sec() {
-      return this.journal_hash[this.current_xitem.id].spent_sec
+      return this.current_xitem.latest_answer_log.spent_sec
     },
 
     // 現在表示している問題の経過時間表記
@@ -144,30 +131,13 @@ export const app_journal = {
     // 正解/不正解/空 の個数を返す
     // {correct: 1 mistake: 0, blank: 10} 形式
     journal_ox_counts() {
-      const a = this.AnswerKindInfo.values.reduce((a, e) => ({...a, [e.key]: 0}), {}) // {correct: 0, mistake: 0}
+      const a = this.AnswerKindInfo.values.reduce((a, e) => ({...a, [e.key]: 0}), {})
       a["blank"] = 0
-      if (false) {
-        return _.reduce(this.journal_hash || {}, (a, e) => {
-          const answer_kind_key = e.answer_kind_key || "blank"
-          if (e.answer_kind_key) {
-            a[e.answer_kind_key] = (a[e.answer_kind_key] || 0) + 1
-          }
-          return a
-        }, a)
-      } else {
-        return this.book.xitems.reduce((a, xitem) => {
-          const hash = this.journal_hash || {}
-          const e = hash[xitem.article.id]
-          let answer_kind_key = "blank"
-          if (e) {
-            if (e.answer_kind_key) {
-              answer_kind_key = e.answer_kind_key
-            }
-          }
-          a[answer_kind_key] = (a[answer_kind_key] || 0) + 1
-          return a
-        }, a)
-      }
+      // a => {correct: 0, mistake: 0, blank: 0}
+      this.book.xitems.forEach(xitem => {
+        a[xitem.latest_answer_log.answer_kind_key || "blank"] += 1
+      })
+      return a
     }
   },
 }
