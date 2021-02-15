@@ -12,11 +12,13 @@
           .columns
             .column
               WkbkBookShowTopMainCard(:base="base")
+          //- .columns.is-mobile.is-variable.is-1-mobile
+          //- .columns.is-mobile.is-variable.is-1-mobile
           .columns
             .column
-              WkbkBookShowTopTweetBoxRecent(:base="base")
+              WkbkBookShowTopTweetRecent(:base="base")
             .column
-              WkbkBookShowTopTweetBoxStat(:base="base")
+              WkbkBookShowTopTweetStat(:base="base")
 
         //- .column.is-one-third-tablet
         .column

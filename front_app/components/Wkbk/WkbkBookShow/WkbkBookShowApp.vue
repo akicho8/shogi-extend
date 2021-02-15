@@ -2,7 +2,7 @@
 client-only
   .WkbkBookShowApp
     DebugBox
-      p total_sec: {{total_sec}}
+      p re_total_sec: {{re_total_sec}}
       p mode: {{mode}}
       template(v-if="interval_counter")
         p interval_counter.count: {{interval_counter.count}}
@@ -47,8 +47,8 @@ import { support_parent } from "./support_parent.js"
 import { app_xitems   } from "./app_xitems.js"
 import { app_mode       } from "./app_mode.js"
 import { app_support    } from "./app_support.js"
-import { app_tweet      } from "./app_tweet.js"
-import { app_journal   } from "./app_journal.js"
+import { app_tweet_recent      } from "./app_tweet_recent.js"
+import { app_tweet_stat   } from "./app_tweet_stat.js"
 import { app_sidebar    } from "./app_sidebar.js"
 import { app_op  } from "./app_op.js"
 import { app_table  } from "./app_table.js"
@@ -62,8 +62,8 @@ export default {
     app_xitems,
     app_mode,
     app_support,
-    app_tweet,
-    app_journal,
+    app_tweet_recent,
+    app_tweet_stat,
     app_sidebar,
     app_op,
     app_table,

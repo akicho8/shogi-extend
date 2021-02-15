@@ -24,7 +24,7 @@ export const app_xitems = {
 
       this.answer_tab_index = 0
       this.description_open_p = this.mobile_p()
-      this.ox_start()
+      this.re_ox_start()
       if (this.current_xitem) {
         this.journal_next_init()
       } else {
@@ -33,7 +33,7 @@ export const app_xitems = {
     },
 
     next_handle(answer_kind_info) {
-      this.ox_apply(answer_kind_info)
+      this.re_ox_apply(answer_kind_info)
       this.current_index += 1
       this.answer_tab_index = 0
       this.description_open_p = this.mobile_p()
@@ -52,7 +52,7 @@ export const app_xitems = {
       this.__assert__(!this.current_xitem)
       this.mode_set("standby")
       this.sound_play("win")
-      this.ox_stop()
+      this.re_ox_stop()
     },
 
     play_mode_advanced_moves_set(moves) {

@@ -15,7 +15,7 @@ export const app_mode = {
         this.talk("途中で辞めました")
         this.sound_play("click")
         this.mode_set("standby")
-        this.ox_stop()
+        this.re_ox_stop()
       }
     },
 

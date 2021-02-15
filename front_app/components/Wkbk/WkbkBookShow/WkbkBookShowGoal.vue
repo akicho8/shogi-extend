@@ -10,15 +10,15 @@
             //- p.subtitle
             //-   | Jeff Atwood
             p
-              | {{base.recent_summary}}
+              | {{base.re_summary}}
           .card-footer
             p.card-footer-item
-              TweetButton(:body="base.ox_tweet_body1") Tweet
+              TweetButton(:body="base.re_ox_tweet_body1") Tweet
 
       //- .is-flex.is-justify-content-center
       //-   .box.has-text-centered.is-inline-block.is-shadowless
-      //-     | {{base.recent_summary}}
-      //-     TweetButton.mt-2(:body="base.ox_tweet_body1") Tweet
+      //-     | {{base.re_summary}}
+      //-     TweetButton.mt-2(:body="base.re_ox_tweet_body1") Tweet
 
       .buttons.is-centered.mt-4
         //- b-button(@click="base.play_restart") もう一度挑戦する

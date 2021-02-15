@@ -96,10 +96,10 @@ nav.panel.mb-0.WkbkBookShowTopSideTable
         b-icon(v-bind="base.journal_row_icon_attrs_for(row)")
 
       b-table-column(v-slot="{row}" custom-key="spent_sec" field="spent_sec" label="時間" centered)
-        | {{base.table_spent_sec(row)}}
+        | {{base.table_time_format(row.newest_answer_log.spent_sec)}}
 
       b-table-column(v-slot="{row}" custom-key="spent_sec_total" field="spent_sec_total" label="総時間" centered sortable)
-        | {{base.table_spent_sec_total(row)}}
+        | {{base.table_time_format(row.answer_stat.spent_sec_total)}}
 
       b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="20" centered :visible="false")
         | {{row.article.difficulty}}
