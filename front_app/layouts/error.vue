@@ -10,8 +10,8 @@ client-only
       .container
         .box.has-text-centered
           p {{status_code_with_message}}
-          p(v-if="error.message" v-html="error.message")
-          b-button.mt-4(@click="sns_login_modal_handle2" v-if="!g_current_user && error_status_code === 403") ログイン
+          p.has-text-left(v-if="error.message" v-html="error.message")
+          b-button.mt-4(@click="sns_login_modal_handle" v-if="!g_current_user && error_status_code === 403") ログイン
         .emoji.has-text-centered.is-unselectable.is-clickable(@click="charactor_click")
           | {{charactor}}
 
@@ -35,7 +35,7 @@ export default {
   },
 
   mounted() {
-    // this.sns_login_modal_handle()
+    // this.sns_login_modal_open()
   },
 
   methods: {
@@ -66,11 +66,11 @@ export default {
       if (this.error) {
         if (this.error.statusCode) {
           if (this.error.statusCode === 404) {
-            return `${this.error.statusCode} Not Found`
+            return `ページが見つからないか権限がありません`
           } else if (this.error.statusCode === 403) {
-            return `${this.error.statusCode} Forbidden`
+            return `権限がありません`
           } else {
-            return `ぶっこわれました(${this.error.statusCode})`
+            return `ぶっこわれました`
           }
         } else {
           return "??? ステイタスコード不明"
