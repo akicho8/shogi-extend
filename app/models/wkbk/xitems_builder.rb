@@ -56,7 +56,7 @@
 #           ox_rate: 0.5,
 #           last_answered_at: "2021-02-14T22:44:17.000+09:00"
 #         },
-#         latest_answer_log: {
+#         newest_answer_log: {
 #           answer_kind_key: "mistake",
 #           spent_sec: 2,
 #           created_at: "2021-02-14T22:44:17.000+09:00"
@@ -84,7 +84,7 @@
 #           ox_rate: 0,
 #           last_answered_at: "2021-02-14T22:44:17.000+09:00"
 #         },
-#         latest_answer_log: {
+#         newest_answer_log: {
 #           answer_kind_key: "mistake",
 #           spent_sec: 3,
 #           created_at: "2021-02-14T22:44:17.000+09:00"
@@ -147,10 +147,11 @@ module Wkbk
           :answer_stat => {
             :correct_count => 0,
             :mistake_count => 0,
+            :spent_sec_total => 0,
             # :ox_rate          => v.o_count.fdiv(v.o_count + v.x_count),
             # :last_answered_at => v.last_answered_at.to_time,
           },
-          :latest_answer_log => {
+          :newest_answer_log => {
             :answer_kind_key => nil,
             :spent_sec       => nil,
             :created_at      => nil,
@@ -160,27 +161,9 @@ module Wkbk
 
       private_article_blank_write
       answer_stat_embet
-      latest_answer_log_embed
+      newest_answer_log_embed
 
       @xitems
-    end
-
-    private
-
-    # ログインしていれば正解率を入れる
-    def answer_stat_embet
-      if current_user
-        @xitems.each do |e|
-          hash = answer_logs_hash
-          if v = hash[e[:article]["id"]]
-            a = e[:answer_stat]
-            a[:correct_count] = v.correct_count
-            a[:mistake_count] = v.mistake_count
-            # :ox_rate          => v.o_count.fdiv(v.o_count + v.x_count),
-            # :last_answered_at => v.last_answered_at.to_time,
-          end
-        end
-      end
     end
 
     # これが引けるので article_id をキーにしたハッシュにして返す
@@ -192,13 +175,33 @@ module Wkbk
     #  |        504 | 2000-01-01 00:00:00 +0900 |       0 |       1 |
     #  +------------+---------------------------+---------+---------|
     #
-    def answer_logs_hash
+    def answer_log_stat
       DbCop.mysql_convert_tz_with_time_zone_validate!
       correct_count = "COUNT(answer_kind_id = #{AnswerKind.correct.id} OR NULL) AS correct_count"
       mistake_count = "COUNT(answer_kind_id = #{AnswerKind.mistake.id} OR NULL) AS mistake_count"
-      select = "article_id, #{correct_count}, #{mistake_count}, MAX(#{DbCop.tz_adjust(:created_at)}) AS last_answered_at"
-      records = answer_logs.select(select).group("article_id")
-      records.inject({}) { |a, e| a.merge(e.article_id => e) }
+      spent_sec_total = "SUM(spent_sec) AS spent_sec_total"
+      select = "article_id, #{correct_count}, #{mistake_count}, #{spent_sec_total}, MAX(#{DbCop.tz_adjust(:created_at)}) AS last_answered_at"
+      answer_logs.select(select).group("article_id")
+    end
+
+    private
+
+    # ログインしていれば正解率を入れる
+    def answer_stat_embet
+      if current_user
+        @xitems.each do |e|
+          list = answer_log_stat
+          hash = list.inject({}) { |a, e| a.merge(e.article_id => e) }
+          if v = hash[e[:article]["id"]]
+            a = e[:answer_stat]
+            a[:correct_count] = v.correct_count
+            a[:mistake_count] = v.mistake_count
+            a[:spent_sec_total] = v.spent_sec_total
+            # :ox_rate          => v.o_count.fdiv(v.o_count + v.x_count),
+            # :last_answered_at => v.last_answered_at.to_time,
+          end
+        end
+      end
     end
 
     # current_user が見れない問題は無理矢理隠す
@@ -220,13 +223,13 @@ module Wkbk
     end
 
     # 最後の解答の情報を埋める
-    def latest_answer_log_embed
+    def newest_answer_log_embed
       if current_user
         @xitems.each do |e|
           article_id = e[:article]["id"]
           if exist_article_ids.include?(article_id) # ←これはなくてもいいけどSQLをスキップしたいので入れている
             if v = answer_logs.where(article_id: article_id).order(created_at: :desc).take
-              e[:latest_answer_log] = {
+              e[:newest_answer_log] = {
                 :answer_kind_key => v.answer_kind.key,
                 :spent_sec       => v.spent_sec,
                 :created_at      => v.created_at,

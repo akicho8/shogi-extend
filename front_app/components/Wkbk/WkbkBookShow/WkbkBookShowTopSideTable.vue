@@ -181,9 +181,9 @@ export default {
   ],
   data() {
     return {
-      dragging_row: null,
-      from_index: null,
-      run_count: 0,
+      // dragging_row: null,
+      // from_index: null,
+      // run_count: 0,
     }
   },
   methods: {
@@ -195,65 +195,65 @@ export default {
       }
     },
 
-    up_down_handle(object, sign) {
-      const index = this.base.book.xitems.findIndex(e => e.key === object.key)
-      this.base.book.xitems = this.ary_move(this.base.book.xitems, index, index + sign)
-      if (this.run_count === 0) {
-        if (!isMobile.any()) {
-          this.toast_ok("マウスでドラッグアンドドロップできますよ")
-        }
-      }
-      this.run_count += 1
-    },
+    // up_down_handle(object, sign) {
+    //   const index = this.base.book.xitems.findIndex(e => e.key === object.key)
+    //   this.base.book.xitems = this.ary_move(this.base.book.xitems, index, index + sign)
+    //   if (this.run_count === 0) {
+    //     if (!isMobile.any()) {
+    //       this.toast_ok("マウスでドラッグアンドドロップできますよ")
+    //     }
+    //   }
+    //   this.run_count += 1
+    // },
+    //
+    // dragstart_handle(payload) {
+    //   this.dragging_row = payload.row
+    //   this.from_index = payload.index
+    //   payload.event.dataTransfer.effectAllowed = "copy"
+    // },
+    // dragover_handle(payload) {
+    //   payload.event.dataTransfer.dropEffect = "copy"
+    //   payload.event.target.closest("tr").classList.add("is-selected")
+    //   payload.event.preventDefault()
+    // },
+    // dragleave_handle(payload) {
+    //   payload.event.target.closest("tr").classList.remove("is-selected")
+    //   payload.event.preventDefault()
+    // },
+    // drop_handle(payload) {
+    //   payload.event.target.closest("tr").classList.remove("is-selected")
+    //   const to_index = payload.index
+    //   this.debug_alert(`${this.dragging_row.title}: ${this.from_index} -> ${to_index}`)
+    //   // this.book.xitems.splice(to_index, 0, this.book.xitems[this.from_index])
+    //   this.base.book.xitems = this.ary_move(this.base.book.xitems, this.from_index, to_index)
+    // },
 
-    dragstart_handle(payload) {
-      this.dragging_row = payload.row
-      this.from_index = payload.index
-      payload.event.dataTransfer.effectAllowed = "copy"
-    },
-    dragover_handle(payload) {
-      payload.event.dataTransfer.dropEffect = "copy"
-      payload.event.target.closest("tr").classList.add("is-selected")
-      payload.event.preventDefault()
-    },
-    dragleave_handle(payload) {
-      payload.event.target.closest("tr").classList.remove("is-selected")
-      payload.event.preventDefault()
-    },
-    drop_handle(payload) {
-      payload.event.target.closest("tr").classList.remove("is-selected")
-      const to_index = payload.index
-      this.debug_alert(`${this.dragging_row.title}: ${this.from_index} -> ${to_index}`)
-      // this.book.xitems.splice(to_index, 0, this.book.xitems[this.from_index])
-      this.base.book.xitems = this.ary_move(this.base.book.xitems, this.from_index, to_index)
-    },
-
-    // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
-    ary_move(list, from, to) {
-      const n = list.length
-      list = [...list]
-
-      // -1 なら配列の最後にする
-      // -2 なら配列の最後のひとつ前にする
-      if (to < 0) {
-        to = n + to
-      }
-
-      // 要素2で to=2 なら 0 にする
-      if (to >= n) {
-        to = to - n
-      }
-
-      if (from === to || from > n - 1 || to > n - 1) {
-        return list
-      }
-      const v = list[from]
-      const tail = list.slice(from + 1)
-      list.splice(from)
-      Array.prototype.push.apply(list, tail)
-      list.splice(to, 0, v)
-      return list
-    }
+    // // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
+    // ary_move(list, from, to) {
+    //   const n = list.length
+    //   list = [...list]
+    //
+    //   // -1 なら配列の最後にする
+    //   // -2 なら配列の最後のひとつ前にする
+    //   if (to < 0) {
+    //     to = n + to
+    //   }
+    //
+    //   // 要素2で to=2 なら 0 にする
+    //   if (to >= n) {
+    //     to = to - n
+    //   }
+    //
+    //   if (from === to || from > n - 1 || to > n - 1) {
+    //     return list
+    //   }
+    //   const v = list[from]
+    //   const tail = list.slice(from + 1)
+    //   list.splice(from)
+    //   Array.prototype.push.apply(list, tail)
+    //   list.splice(to, 0, v)
+    //   return list
+    // }
 
   },
 }

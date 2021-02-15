@@ -28,7 +28,7 @@ export const app_journal = {
     // 最初に呼ぶ
     journal_init() {
       this.book.xitems.forEach(xitem => {
-        xitem.latest_answer_log = {
+        xitem.newest_answer_log = {
           answer_kind_key: null,
           spent_sec: null,
         }
@@ -38,14 +38,14 @@ export const app_journal = {
     // 時間を進める
     journal_counter() {
       // this.journal_hash[this.current_xitem.id].spent_sec += 1
-      this.current_xitem.latest_answer_log.spent_sec += 1
+      this.current_xitem.newest_answer_log.spent_sec += 1
       this.spent_sec += 1
     },
 
     // O or X を選択したとき
     journal_record(answer_kind_key) {
       this.interval_counter.stop()
-      this.current_xitem.latest_answer_log.answer_kind_key = answer_kind_key
+      this.current_xitem.newest_answer_log.answer_kind_key = answer_kind_key
       this.current_xitem.answer_stat[`${answer_kind_key}_count`] += 1
       this.journal_ox_create(answer_kind_key)
     },
@@ -72,15 +72,15 @@ export const app_journal = {
     journal_next_init() {
       // this.$set(this.journal_hash, this.current_xitem.id, {spent_sec: 0, answer_kind_key: null})
 
-      this.current_xitem.latest_answer_log.spent_sec = 0
-      this.current_xitem.latest_answer_log.answer_kind_key = null
+      this.current_xitem.newest_answer_log.spent_sec = 0
+      this.current_xitem.newest_answer_log.answer_kind_key = null
 
       this.interval_counter.restart()
     },
 
     // b-table の時間用
     journal_row_time_format_at(xitem) {
-      const v = xitem.latest_answer_log.spent_sec
+      const v = xitem.newest_answer_log.spent_sec
       if (v != null) {
         return dayjs.unix(v).format("m:ss")
       }
@@ -96,7 +96,7 @@ export const app_journal = {
 
     // article の answer_kind_info を返す
     journal_answer_kind_info_for(xitem) {
-      const v = xitem.latest_answer_log.answer_kind_key
+      const v = xitem.newest_answer_log.answer_kind_key
       if (v) {
         return AnswerKindInfo.fetch(v)
       }
@@ -115,7 +115,7 @@ export const app_journal = {
 
     // 現在表示している問題の経過時間
     current_xitem_spent_sec() {
-      return this.current_xitem.latest_answer_log.spent_sec
+      return this.current_xitem.newest_answer_log.spent_sec
     },
 
     // 現在表示している問題の経過時間表記
@@ -135,7 +135,7 @@ export const app_journal = {
       a["blank"] = 0
       // a => {correct: 0, mistake: 0, blank: 0}
       this.book.xitems.forEach(xitem => {
-        a[xitem.latest_answer_log.answer_kind_key || "blank"] += 1
+        a[xitem.newest_answer_log.answer_kind_key || "blank"] += 1
       })
       return a
     }
