@@ -1,116 +1,5 @@
 # http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=6&_user_id=1
-#
-# {
-#   config: {
-#     api_articles_fetch_per: 5,
-#     api_books_fetch_per: 5
-#   },
-#   book: {
-#     id: 6,
-#     key: "6",
-#     title: "sysopの解答履歴付き",
-#     description: "(description)",
-#     bookships_count: 3,
-#     created_at: "2021-02-14T22:44:17.252+09:00",
-#     updated_at: "2021-02-14T22:44:17.485+09:00",
-#     folder_key: "public",
-#     sequence_key: "bookship_position_asc",
-#     tweet_body: "sysopの解答履歴付き #インスタント将棋問題集 http://0.0.0.0:4000/rack/books/6",
-#     og_meta: {
-#       title: "sysopの解答履歴付き - bob",
-#       description: "(description)",
-#       og_image: "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8fc2fc8294a9a1980c77265b96adb6cac15641e8/e4f70b36906d181493856942939e0857.png"
-#     },
-#     avatar_path: "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8fc2fc8294a9a1980c77265b96adb6cac15641e8/e4f70b36906d181493856942939e0857.png",
-#     tag_list: [ ],
-#     user: {
-#       id: 4,
-#       key: "76c333487c607bc3c574f954c4ba9802",
-#       name: "bob",
-#       avatar_path: "/assets/human/0002_fallback_avatar_icon-4db2be582c579b81375c3d64ed3581bea717063226098ab5ac8131d5fe18b5bf.png"
-#     },
-#     folder: {
-#       id: 1,
-#       key: "public"
-#     },
-#     xitems: [
-#       {
-#         index: 0,
-#         bookship: {
-#           created_at: "2021-02-14T22:44:17.425+09:00"
-#         },
-#         article: {
-#           id: 8,
-#           key: "6-1",
-#           init_sfen: "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1",
-#           title: "ox",
-#           description: "",
-#           direction_message: "",
-#           turn_max: 0,
-#           folder_key: "public",
-#           moves_answers: [ ]
-#         },
-#         answer_stat: {
-#           o_count: 1,
-#           x_count: 1,
-#           ox_rate: 0.5,
-#           last_answered_at: "2021-02-14T22:44:17.000+09:00"
-#         },
-#         newest_answer_log: {
-#           answer_kind_key: "mistake",
-#           spent_sec: 2,
-#           created_at: "2021-02-14T22:44:17.000+09:00"
-#         }
-#       },
-#       {
-#         index: 1,
-#         bookship: {
-#           created_at: "2021-02-14T22:44:17.456+09:00"
-#         },
-#         article: {
-#           id: 9,
-#           key: "6-2",
-#           init_sfen: "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1",
-#           title: "o",
-#           description: "",
-#           direction_message: "",
-#           turn_max: 0,
-#           folder_key: "public",
-#           moves_answers: [ ]
-#         },
-#         answer_stat: {
-#           o_count: 0,
-#           x_count: 1,
-#           ox_rate: 0,
-#           last_answered_at: "2021-02-14T22:44:17.000+09:00"
-#         },
-#         newest_answer_log: {
-#           answer_kind_key: "mistake",
-#           spent_sec: 3,
-#           created_at: "2021-02-14T22:44:17.000+09:00"
-#         }
-#       },
-#       {
-#         index: 2,
-#         bookship: {
-#           created_at: "2021-02-14T22:44:17.480+09:00"
-#         },
-#         article: {
-#           id: 10,
-#           key: "6-3",
-#           init_sfen: "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1",
-#           title: "初",
-#           description: "",
-#           direction_message: "",
-#           turn_max: 0,
-#           folder_key: "public",
-#           moves_answers: [ ]
-#         }
-#       }
-#     ]
-#   }
-# }
-#
+# rails r "User.sysop.wkbk_answer_logs.destroy_all"
 module Wkbk
   class XitemsBuilder
     attr_accessor :params
@@ -147,7 +36,7 @@ module Wkbk
           :answer_stat => {
             :correct_count => 0,
             :mistake_count => 0,
-            :spent_sec_total => 0,
+            :spent_sec_total => nil,
             # :ox_rate          => v.o_count.fdiv(v.o_count + v.x_count),
             # :last_answered_at => v.last_answered_at.to_time,
           },
@@ -175,7 +64,7 @@ module Wkbk
     #  |        504 | 2000-01-01 00:00:00 +0900 |       0 |       1 |
     #  +------------+---------------------------+---------+---------|
     #
-    def answer_log_stat
+    def answer_log_stat_records
       DbCop.mysql_convert_tz_with_time_zone_validate!
       correct_count = "COUNT(answer_kind_id = #{AnswerKind.correct.id} OR NULL) AS correct_count"
       mistake_count = "COUNT(answer_kind_id = #{AnswerKind.mistake.id} OR NULL) AS mistake_count"
@@ -190,7 +79,7 @@ module Wkbk
     def answer_stat_embet
       if current_user
         @xitems.each do |e|
-          list = answer_log_stat
+          list = answer_log_stat_records
           hash = list.inject({}) { |a, e| a.merge(e.article_id => e) }
           if v = hash[e[:article]["id"]]
             a = e[:answer_stat]

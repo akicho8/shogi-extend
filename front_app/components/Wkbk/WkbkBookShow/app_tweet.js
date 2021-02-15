@@ -5,10 +5,11 @@ export const app_tweet = {
   data() {
     return {
       interval_counter: null,
-      o_count: 0,
-      x_count: 0,
-      spent_sec: 0,
-      ox_summary: null,  // ツイート内容はリアクティブに変化しないようにあえて変数に保存しておく
+      correct_count: 0,
+      mistake_count: 0,
+      total_sec: 0,
+      recent_summary: null,  // ツイート内容はリアクティブに変化しないようにあえて変数に保存しておく
+      begin_pos: null,
     }
   },
 
@@ -25,34 +26,44 @@ export const app_tweet = {
 
   methods: {
     ox_start() {
-      this.o_count = 0
-      this.x_count = 0
-      this.spent_sec = 0
+      this.correct_count = 0
+      this.mistake_count = 0
+      this.total_sec = 0
       this.journal_init()
       this.interval_counter.restart()
+      this.begin_pos = this.current_index
     },
 
     ox_stop() {
-      this.ox_summary = this.ox_summary_generate()
+      this.recent_summary = this.recent_summary_generate()
+      this.jo_summary = this.jo_summary_generate()
       this.interval_counter.stop()
     },
 
     ox_apply(answer_kind_info) {
       this.sound_play(answer_kind_info.key)
       this.journal_record(answer_kind_info.key)
-      if (answer_kind_info.key === "correct") {
-        this.o_count += 1
-      } else {
-        this.x_count += 1
-      }
+      this.$data[`${answer_kind_info.key}_count`] += 1
     },
 
-    ox_summary_generate() {
+    recent_summary_generate() {
       let out = ""
-      out += `${this.book.title}\n`
-      out += `正解率: ${this.ox_rate_per} (${this.o_count}/${this.ox_total})\n`
+      out += `正解率: ${this.ox_rate_per} (${this.correct_count}/${this.ox_total})\n`
+      out += `範囲: ${this.begin_pos + 1}〜${this.current_index}\n`
       out += `タイム: ${this.ox_spent_sec_to_s}\n`
       out += `平均: ${this.ox_time_avg}\n`
+      return out
+    },
+
+    ox_tweet_body_wrap(str) {
+      let out = ""
+      out += "\n"
+      out += `${this.book.title}\n`
+      if (str) {
+        out += str
+      }
+      out += "#" + "インスタント将棋問題集" + "\n"
+      out += this.location_url_without_search_and_hash()
       return out
     },
   },
@@ -63,47 +74,46 @@ export const app_tweet = {
     },
 
     ox_tweet_url() {
-      return this.tweet_url_build_from_text(this.ox_tweet_body)
+      return this.tweet_url_build_from_text(this.ox_tweet_body1)
     },
 
-    ox_tweet_body() {
-      let out = ""
-      out += "\n"
-      out += this.ox_summary
-      out += "#" + "インスタント将棋問題集" + "\n"
-      out += this.location_url_without_search_and_hash()
-      return out
+    ox_tweet_body1() {
+      return this.ox_tweet_body_wrap(this.recent_summary)
+    },
+
+    ox_tweet_body2() {
+      return this.ox_tweet_body_wrap(this.jo_summary)
     },
 
     ox_rate_per() {
       if (this.ox_total === 0) {
         return "0%"
       } else {
-        return this.float_to_perc(this.ox_rate) + "%"
+        return this.float_to_perc2(this.ox_rate) + "%"
       }
     },
 
     ox_rate() {
-      return this.o_count / this.ox_total
+      return this.correct_count / this.ox_total
     },
 
     ox_total() {
-      return this.o_count + this.x_count
+      return this.correct_count + this.mistake_count
     },
 
     ox_rest() {
-      return this.o_count_max - this.o_count
+      return this.o_count_max - this.correct_count
     },
 
     ox_spent_sec_to_s() {
-      return dayjs.unix(this.spent_sec).format("m:ss")
+      return dayjs.unix(this.total_sec).format("m:ss")
     },
 
     ox_time_avg() {
-      if (this.o_count === 0) {
+      if (this.ox_total === 0) {
         return "?"
       } else {
-        return dayjs.unix(this.spent_sec / this.o_count).format("m:ss.SSS")
+        return dayjs.unix(this.total_sec / this.ox_total).format("m:ss.SSS")
       }
     },
   },

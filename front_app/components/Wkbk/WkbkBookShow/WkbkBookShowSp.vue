@@ -10,8 +10,8 @@
             | {{base.current_article.direction_message}}
         CustomShogiPlayer(
           sp_mobile_vertical="is_mobile_vertical_off"
-          :sp_body="base.current_sp_body"
-          :sp_viewpoint="base.current_sp_viewpoint"
+          :sp_body="base.current_article.init_sfen"
+          :sp_viewpoint="base.current_article.viewpoint"
           :sp_turn="0"
           :sp_sound_body_changed="false"
           sp_run_mode="play_mode"

@@ -1,5 +1,6 @@
 import WkbkBookShowDesc from "./WkbkBookShowDesc.vue"
 // import dayjs from "dayjs"
+import _ from "lodash"
 
 export const app_support = {
   methods: {

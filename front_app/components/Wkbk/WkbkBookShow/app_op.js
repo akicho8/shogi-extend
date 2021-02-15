@@ -5,11 +5,11 @@ export const app_op = {
     // 不正解のみ残す
     op_select_x_handle() {
       this.sound_play("click")
-      if (this.journal_ox_counts.mistake >= 1 && this.journal_ox_counts.correct === 0 && this.journal_ox_counts.blank === 0) {
+      if (this.jo_counts.mistake >= 1 && this.jo_counts.correct === 0 && this.jo_counts.blank === 0) {
         this.toast_warn("すでに不正解だけです")
         return
       }
-      if (this.journal_ox_counts.mistake === 0) {
+      if (this.jo_counts.mistake === 0) {
         this.toast_warn("不正解が見つかりません")
         return
       }

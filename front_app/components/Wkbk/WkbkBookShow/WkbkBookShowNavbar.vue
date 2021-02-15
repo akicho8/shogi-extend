@@ -36,7 +36,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false")
       template(v-if="base.is_running_p")
         b-navbar-item(tag="div" v-if="base.current_xitem")
           span.mx-1.is-family-monospace.is-unselectable {{base.current_index + 1}}/{{base.max_count}}
-          span.mx-1.is-family-monospace.is-unselectable {{base.current_journal_time_to_s}}
+          span.mx-1.is-family-monospace.is-unselectable {{base.navbar_display_time}}
         //- .slice().reverse()
         template(v-for="e in base.AnswerKindInfo.values.slice().reverse()")
           b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(e)" v-if="base.current_xitem")

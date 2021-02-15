@@ -5,6 +5,7 @@ import _ from "lodash"
 export const app_journal = {
   data() {
     return {
+      current_spent_sec: null,        // 現在の問題に切り替わってからの経過時間
     }
   },
   methods: {
@@ -27,26 +28,45 @@ export const app_journal = {
 
     // 最初に呼ぶ
     journal_init() {
-      this.book.xitems.forEach(xitem => {
-        xitem.newest_answer_log = {
-          answer_kind_key: null,
-          spent_sec: null,
-        }
-      })
+      // this.book.xitems.forEach(xitem => {
+      //   xitem.newest_answer_log = {
+      //     answer_kind_key: null,
+      //     spent_sec: null,
+      //   }
+      // })
+    },
+
+    // 次の問題の準備
+    journal_next_init() {
+      this.current_spent_sec = 0
+
+      // this.current_xitem.newest_answer_log.spent_sec = 0
+      // this.current_xitem.newest_answer_log.answer_kind_key = null
+      // this.current_xitem.answer_stat.spent_sec_total = this.current_xitem.answer_stat.spent_sec_total || 0
+
+      this.interval_counter.restart()
     },
 
     // 時間を進める
     journal_counter() {
-      // this.journal_hash[this.current_xitem.id].spent_sec += 1
-      this.current_xitem.newest_answer_log.spent_sec += 1
-      this.spent_sec += 1
+      this.current_spent_sec += 1
     },
 
     // O or X を選択したとき
     journal_record(answer_kind_key) {
       this.interval_counter.stop()
+
+      // 「はじめる」してからの経過時間を確定する
+      this.total_sec += this.current_spent_sec
+
+      // 直近のログ
+      this.current_xitem.newest_answer_log.spent_sec = this.current_spent_sec
       this.current_xitem.newest_answer_log.answer_kind_key = answer_kind_key
+
+      // 統計
       this.current_xitem.answer_stat[`${answer_kind_key}_count`] += 1
+      this.current_xitem.answer_stat.spent_sec_total = (this.current_xitem.answer_stat.spent_sec_total || 0) + this.current_spent_sec
+
       this.journal_ox_create(answer_kind_key)
     },
 
@@ -57,7 +77,7 @@ export const app_journal = {
           article_id: this.current_article.id,
           answer_kind_key: answer_kind_key,
           book_id: this.book.id,
-          spent_sec: this.current_xitem_spent_sec,
+          spent_sec: this.current_spent_sec,
         }
         return this.$axios.$post("/api/wkbk/answer_logs/create.json", params).catch(e => {
           this.$nuxt.error(e.response.data)
@@ -68,21 +88,28 @@ export const app_journal = {
       }
     },
 
-    // 次の問題の準備
-    journal_next_init() {
-      // this.$set(this.journal_hash, this.current_xitem.id, {spent_sec: 0, answer_kind_key: null})
-
-      this.current_xitem.newest_answer_log.spent_sec = 0
-      this.current_xitem.newest_answer_log.answer_kind_key = null
-
-      this.interval_counter.restart()
+    // b-table の時間
+    table_spent_sec(xitem) {
+      return this.table_time_format(xitem.newest_answer_log.spent_sec)
     },
 
-    // b-table の時間用
-    journal_row_time_format_at(xitem) {
-      const v = xitem.newest_answer_log.spent_sec
+    // b-table の総時間
+    table_spent_sec_total(xitem) {
+      return this.table_time_format(xitem.answer_stat.spent_sec_total)
+    },
+
+    table_time_format(v) {
       if (v != null) {
-        return dayjs.unix(v).format("m:ss")
+        let f = null
+        if (v >= 60 * 60 * 24) {
+          const h = Math.trunc(v / (60 * 60))
+          return `${h}H`
+        } else if (v >= 60 * 60) {
+          f = "H:mm:ss"
+        } else {
+          f = "m:ss"
+        }
+        return dayjs.unix(v).format(f)
       }
     },
 
@@ -100,37 +127,24 @@ export const app_journal = {
       if (v) {
         return AnswerKindInfo.fetch(v)
       }
-      // if (this.journal_hash) {
-      //   const e = this.journal_hash[article.id]
-      //   if (e != null) {
-      //     if (e.answer_kind_key != null) {
-      //       return AnswerKindInfo.fetch(e.answer_kind_key)
-      //     }
-      //   }
-      // }
     },
   },
   computed: {
     AnswerKindInfo() { return AnswerKindInfo },
 
-    // 現在表示している問題の経過時間
-    current_xitem_spent_sec() {
-      return this.current_xitem.newest_answer_log.spent_sec
-    },
-
     // 現在表示している問題の経過時間表記
-    current_journal_time_to_s() {
-      return this.journal_row_time_format_at(this.current_xitem)
+    navbar_display_time() {
+      this.table_time_format(this.current_spent_sec)
     },
 
     // 「不正解のみ残す」が動作するか？
     xitems_find_all_x_enabled() {
-      return this.journal_ox_counts.mistake >= 1 && (this.journal_ox_counts.correct >= 1 || this.journal_ox_counts.blank >= 1)
+      return this.jo_counts.mistake >= 1 && (this.jo_counts.correct >= 1 || this.jo_counts.blank >= 1)
     },
 
     // 正解/不正解/空 の個数を返す
     // {correct: 1 mistake: 0, blank: 10} 形式
-    journal_ox_counts() {
+    jo_counts() {
       const a = this.AnswerKindInfo.values.reduce((a, e) => ({...a, [e.key]: 0}), {})
       a["blank"] = 0
       // a => {correct: 0, mistake: 0, blank: 0}
@@ -138,6 +152,53 @@ export const app_journal = {
         a[xitem.newest_answer_log.answer_kind_key || "blank"] += 1
       })
       return a
-    }
+    },
+
+    // クリア率
+    jo_clear_rate() {
+      if (this.max_count >= 1) {
+        return this.float_to_perc2(this.jo_counts.correct / this.max_count)
+      }
+    },
+
+    jo_ox_rate() {
+      if (this.jo_ox_total) {
+        return this.float_to_perc2(this.jo_counts.correct / this.jo_ox_total)
+      }
+    },
+
+    jo_ox_total() {
+      return this.jo_counts.correct + this.jo_counts.mistake
+    },
+
+    jo_total_sec() {
+      return _.sumBy(this.xitems, e => e.newest_answer_log.spent_sec || 0)
+    },
+
+    jo_time_avg() {
+      if (this.jo_ox_total === 0) {
+        return "?"
+      } else {
+        const sec = this.jo_total_sec / this.jo_ox_total
+        if (sec < 10) {
+          return dayjs.unix(sec).format("s.SSS") + "秒"
+        }
+        if (sec < 60) {
+          return dayjs.unix(sec).format("s") + "秒"
+        }
+        return dayjs.unix(sec).format("m分s秒")
+      }
+    },
+
+    jo_summary() {
+      let out = ""
+      out += `達成率 ${this.jo_clear_rate}% (${this.jo_counts.correct}/${this.max_count})\n`
+      out += `正解率 ${this.jo_ox_rate} (${this.jo_counts.correct}/${this.jo_ox_total})\n`
+      out += `平均 ${this.jo_time_avg}\n`
+      out += `正解 ${this.jo_counts.correct}\n`
+      out += `不正解 ${this.jo_counts.mistake}\n`
+      out += `未解答 ${this.jo_counts.blank}\n`
+      return out
+    },
   },
 }

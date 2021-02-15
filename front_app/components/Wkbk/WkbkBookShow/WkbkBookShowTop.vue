@@ -8,9 +8,17 @@
       //-     .buttons
       //-       b-button(@click="base.play_restart") スタート
       .columns
-        .column
-          WkbkBookShowTopMainCard(:base="base")
-          //- .is-one-third-tablet.sub_column
+        .column.is-7
+          .columns
+            .column
+              WkbkBookShowTopMainCard(:base="base")
+          .columns
+            .column
+              WkbkBookShowTopTweetBoxRecent(:base="base")
+            .column
+              WkbkBookShowTopTweetBoxStat(:base="base")
+
+        //- .column.is-one-third-tablet
         .column
           WkbkBookShowTopSideTable(:base="base")
 
@@ -77,10 +85,10 @@ export default {
 
   // +mobile
   //   padding: 0.5rem
-  // 
+  //
   // +tablet
   //   padding: 1rem
-  // 
+  //
   // +desktop
   //   padding: 1rem 0rem
 

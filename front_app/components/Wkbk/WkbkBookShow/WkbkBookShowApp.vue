@@ -2,21 +2,18 @@
 client-only
   .WkbkBookShowApp
     DebugBox
-      p spent_sec: {{spent_sec}}
+      p total_sec: {{total_sec}}
       p mode: {{mode}}
       template(v-if="interval_counter")
         p interval_counter.count: {{interval_counter.count}}
       template(v-if="book && false")
-        p journal_ox_counts: {{journal_ox_counts}}
+        p jo_counts: {{jo_counts}}
         p book.user.id: {{book.user && book.user.id}}
         p g_current_user.id: {{g_current_user && g_current_user.id}}
         p goal_p: {{goal_p}}
         p rest_count: {{rest_count}}
         p current_index: {{current_index}}
         p max_count: {{max_count}}
-        template(v-if="current_exist_p")
-          p current_sp_body: {{current_sp_body}}
-          p current_sp_viewpoint: {{current_sp_viewpoint}}
 
     p(v-if="$fetchState.error" v-text="$fetchState.error.message")
     b-loading(:active="$fetchState.pending")
@@ -54,6 +51,7 @@ import { app_tweet      } from "./app_tweet.js"
 import { app_journal   } from "./app_journal.js"
 import { app_sidebar    } from "./app_sidebar.js"
 import { app_op  } from "./app_op.js"
+import { app_table  } from "./app_table.js"
 
 import _ from "lodash"
 
@@ -68,6 +66,7 @@ export default {
     app_journal,
     app_sidebar,
     app_op,
+    app_table,
   ],
 
   data() {
