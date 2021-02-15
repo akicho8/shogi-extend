@@ -8,7 +8,7 @@
             | 非公開問題
           p.subtitle.mt-5
             | この問題を見れるのは作成者本人だけです
-          b-button.mt-1(@click="sns_login_modal_handle2" type="is-primary" ) ログイン
+          b-button.mt-1(@click="sns_login_modal_handle" type="is-primary" ) ログイン
 
       WkbkBookShowOxButtons.mt-5(:base="base")
 </template>

@@ -297,7 +297,7 @@ export default {
     sns_login_required() {
       if (!this.g_current_user) {
         this.toast_ok("ログインしてください")
-        this.sns_login_modal_handle()
+        this.sns_login_modal_open()
         return true
       }
     },

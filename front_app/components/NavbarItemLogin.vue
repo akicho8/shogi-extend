@@ -8,7 +8,7 @@ export default {
   methods: {
     click_handle() {
       this.sound_play("click")
-      this.sns_login_modal_handle()
+      this.sns_login_modal_open()
     },
   },
 }

@@ -11,7 +11,7 @@ export default {
       return document.hidden || document.visibilityState === "hidden"
     },
 
-    sns_login_modal_handle() {
+    sns_login_modal_open() {
       this.$buefy.modal.open({
         customClass: "my-modal-background-background-color-dark",
         width: "20rem",
@@ -22,9 +22,9 @@ export default {
       })
     },
 
-    sns_login_modal_handle2() {
+    sns_login_modal_handle() {
       this.sound_play("click")
-      this.sns_login_modal_handle()
+      this.sns_login_modal_open()
     },
 
     dialog_ok(message, options = {}) {
