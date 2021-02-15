@@ -29,18 +29,29 @@ export const app_journal = {
     // 最初に呼ぶ
     journal_init() {
       this.journal_hash = {}
+
+      this.book.xitems.forEach(xitem => {
+        const latest_answer_log = {
+          answer_kind_key: null,
+          spent_sec: null,
+        }
+        this.$set(xitem, "latest_answer_log", latest_answer_log)
+      })
     },
 
     // 時間を進める
     journal_counter() {
       this.journal_hash[this.current_xitem.id].spent_sec += 1
+      this.current_xitem.latest_answer_log.spent_sec += 1
       this.spent_sec += 1
     },
 
     // O or X を選択したとき
     journal_record(answer_kind_key) {
       this.interval_counter.stop()
-      this.journal_hash[this.current_xitem.id].answer_kind_key = answer_kind_key
+      this.current_xitem.latest_answer_log.answer_kind_key = answer_kind_key
+      this.current_xitem.answer_stat[`${answer_kind_key}_count`] += 1
+      // this.journal_hash[this.current_xitem.id].answer_kind_key = answer_kind_key
       this.journal_ox_create(answer_kind_key)
     },
 
@@ -65,37 +76,51 @@ export const app_journal = {
     // 次の問題の準備
     journal_next_init() {
       this.$set(this.journal_hash, this.current_xitem.id, {spent_sec: 0, answer_kind_key: null})
+
+      this.current_xitem.latest_answer_log.spent_sec = 0
+      this.current_xitem.latest_answer_log.answer_kind_key = null
+
       this.interval_counter.restart()
     },
 
     // b-table の時間用
-    journal_row_time_format_at(article) {
-      const e = this.journal_hash[article.id]
-      if (e != null) {
-        if (e.spent_sec != null) {
-          return dayjs.unix(e.spent_sec).format("m:ss")
+    journal_row_time_format_at(xitem) {
+      // const e = this.journal_hash[article.id]
+      // if (e != null) {
+      //   if (e.spent_sec != null) {
+      //     return dayjs.unix(e.spent_sec).format("m:ss")
+      //   }
+      // }
+      if (xitem) {
+        const v = xitem.latest_answer_log.spent_sec
+        if (v != null) {
+          return dayjs.unix(v).format("m:ss")
         }
       }
     },
 
     // b-table の解答用
-    journal_row_icon_attrs_for(article) {
-      const answer_kind_info = this.journal_answer_kind_info_for(article)
+    journal_row_icon_attrs_for(xitem) {
+      const answer_kind_info = this.journal_answer_kind_info_for(xitem)
       if (answer_kind_info) {
         return answer_kind_info.icon_attrs
       }
     },
 
     // article の answer_kind_info を返す
-    journal_answer_kind_info_for(article) {
-      if (this.journal_hash) {
-        const e = this.journal_hash[article.id]
-        if (e != null) {
-          if (e.answer_kind_key != null) {
-            return AnswerKindInfo.fetch(e.answer_kind_key)
-          }
-        }
+    journal_answer_kind_info_for(xitem) {
+      const v = xitem.latest_answer_log.answer_kind_key
+      if (v) {
+        return AnswerKindInfo.fetch(v)
       }
+      // if (this.journal_hash) {
+      //   const e = this.journal_hash[article.id]
+      //   if (e != null) {
+      //     if (e.answer_kind_key != null) {
+      //       return AnswerKindInfo.fetch(e.answer_kind_key)
+      //     }
+      //   }
+      // }
     },
   },
   computed: {

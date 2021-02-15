@@ -8,9 +8,10 @@
       //-     .buttons
       //-       b-button(@click="base.play_restart") スタート
       .columns
-        .column.main_column
+        .column
           WkbkBookShowTopMainCard(:base="base")
-        .column.is-one-third-tablet.sub_column
+          //- .is-one-third-tablet.sub_column
+        .column
           WkbkBookShowTopSideTable(:base="base")
 
           //- (:to="{name: 'rack-books-book_key', params: {book_key: base.book.key}}" @click.native="sound_play('click')")

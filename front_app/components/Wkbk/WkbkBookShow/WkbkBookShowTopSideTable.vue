@@ -39,7 +39,7 @@
         v-if="base.xitems.length >= 1"
         :data="base.xitems"
         :mobile-cards="false"
-        :show-header="false"
+        :show-header="true"
         @click="row => select_handle(row)"
         :row-class="(e, i) => (i === base.current_index) && 'current_row'"
         hoverable
@@ -109,11 +109,11 @@
           //-     | {{row.title}}
           | {{row.article.title}}
 
-        b-table-column(v-slot="{row}" custom-key="answer_kind_key" field="answer_kind_key" label="解" centered :visible="!!base.journal_hash")
-          b-icon(v-bind="base.journal_row_icon_attrs_for(row.article)")
+        b-table-column(v-slot="{row}" custom-key="answer_kind_key" field="answer_kind_key" label="解" centered)
+          b-icon(v-bind="base.journal_row_icon_attrs_for(row)")
 
-        b-table-column(v-slot="{row}" custom-key="spent_sec" field="spent_sec" label="時間" centered :visible="!!base.journal_hash")
-          | {{base.journal_row_time_format_at(row.article)}}
+        b-table-column(v-slot="{row}" custom-key="spent_sec" field="spent_sec" label="時間" centered)
+          | {{base.journal_row_time_format_at(row)}}
 
         b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="20" centered :visible="false")
           | {{row.article.difficulty}}

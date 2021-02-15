@@ -50,7 +50,7 @@
 #           folder_key: "public",
 #           moves_answers: [ ]
 #         },
-#         ox_attributes: {
+#         answer_stat: {
 #           o_count: 1,
 #           x_count: 1,
 #           ox_rate: 0.5,
@@ -78,7 +78,7 @@
 #           folder_key: "public",
 #           moves_answers: [ ]
 #         },
-#         ox_attributes: {
+#         answer_stat: {
 #           o_count: 0,
 #           x_count: 1,
 #           ox_rate: 0,
@@ -144,11 +144,22 @@ module Wkbk
             created_at: e.created_at, # 追加日
           },
           :article    => e.article.as_json(Book.article_json_struct_for_show),
+          :answer_stat => {
+            :correct_count => 0,
+            :mistake_count => 0,
+            # :ox_rate          => v.o_count.fdiv(v.o_count + v.x_count),
+            # :last_answered_at => v.last_answered_at.to_time,
+          },
+          :latest_answer_log => {
+            :answer_kind_key => nil,
+            :spent_sec       => nil,
+            :created_at      => nil,
+          },
         }
       end
 
       private_article_blank_write
-      ox_attributes_embet
+      answer_stat_embet
       latest_answer_log_embed
 
       @xitems
@@ -157,17 +168,16 @@ module Wkbk
     private
 
     # ログインしていれば正解率を入れる
-    def ox_attributes_embet
+    def answer_stat_embet
       if current_user
         @xitems.each do |e|
           hash = answer_logs_hash
           if v = hash[e[:article]["id"]]
-            e[:ox_attributes] = {
-              :o_count          => v.o_count,
-              :x_count          => v.x_count,
-              :ox_rate          => v.o_count.fdiv(v.o_count + v.x_count),
-              :last_answered_at => v.last_answered_at.to_time,
-            }
+            a = e[:answer_stat]
+            a[:correct_count] = v.correct_count
+            a[:mistake_count] = v.mistake_count
+            # :ox_rate          => v.o_count.fdiv(v.o_count + v.x_count),
+            # :last_answered_at => v.last_answered_at.to_time,
           end
         end
       end
@@ -184,9 +194,9 @@ module Wkbk
     #
     def answer_logs_hash
       DbCop.mysql_convert_tz_with_time_zone_validate!
-      o_count = "COUNT(answer_kind_id = #{AnswerKind.o.id} OR NULL) AS o_count"
-      x_count = "COUNT(answer_kind_id = #{AnswerKind.x.id} OR NULL) AS x_count"
-      select = "article_id, #{o_count}, #{x_count}, MAX(#{DbCop.tz_adjust(:created_at)}) AS last_answered_at"
+      correct_count = "COUNT(answer_kind_id = #{AnswerKind.correct.id} OR NULL) AS correct_count"
+      mistake_count = "COUNT(answer_kind_id = #{AnswerKind.mistake.id} OR NULL) AS mistake_count"
+      select = "article_id, #{correct_count}, #{mistake_count}, MAX(#{DbCop.tz_adjust(:created_at)}) AS last_answered_at"
       records = answer_logs.select(select).group("article_id")
       records.inject({}) { |a, e| a.merge(e.article_id => e) }
     end
