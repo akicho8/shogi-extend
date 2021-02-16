@@ -6,7 +6,7 @@
       //-   .column
       //-     .box.is-shadowless.has-background-white-ter(v-if="base.book.description" v-html="simple_format(auto_link(base.book.description))")
       //-     .buttons
-      //-       b-button(@click="base.play_restart") スタート
+      //-       b-button(@click="base.play_start") スタート
       .columns
         .column.is-7
           .columns
@@ -56,7 +56,7 @@
       //- .columns.is-gapless
       //-   .column
       //-     .buttons
-      //-       b-button(@click="base.play_restart" type="is-primary") START
+      //-       b-button(@click="base.play_start" type="is-primary") START
 </template>
 
 <script>

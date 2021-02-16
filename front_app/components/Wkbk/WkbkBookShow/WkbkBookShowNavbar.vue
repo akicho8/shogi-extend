@@ -46,7 +46,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" wrapper-class="container is-fluid 
         b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.book_tweet_handle")
           b-icon(icon="twitter" type="is-white")
 
-      //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_restart" v-if="!base.current_xitem")
+      //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_start" v-if="!base.current_xitem")
       //-   | RESTART
 </template>
 

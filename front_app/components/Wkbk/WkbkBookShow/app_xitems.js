@@ -10,11 +10,13 @@ export const app_xitems = {
 
   methods: {
     play_start() {
-      this.sound_play("start")
-      this.play_start_process()
-    },
+      if (!this.g_current_user) {
+        this.sound_play("click")
+        this.sns_login_required()
+        return
+      }
 
-    play_start_process() {
+      this.sound_play("start")
       this.mode_set("running")
 
       // 範囲外なら0に戻す
@@ -51,10 +53,6 @@ export const app_xitems = {
       } else {
         this.goal_check()
       }
-    },
-
-    play_restart() {
-      this.play_start()
     },
 
     goal_check() {

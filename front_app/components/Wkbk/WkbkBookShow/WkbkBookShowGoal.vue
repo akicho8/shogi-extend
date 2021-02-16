@@ -21,7 +21,7 @@
       //-     TweetButton.mt-2(:body="base.re_ox_tweet_body1") Tweet
 
       .buttons.is-centered.mt-4
-        //- b-button(@click="base.play_restart") もう一度挑戦する
+        //- b-button(@click="base.play_start") もう一度挑戦する
         b-button(@click="base.close_handle") もどる
 </template>
 
