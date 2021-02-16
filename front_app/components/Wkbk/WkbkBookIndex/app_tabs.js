@@ -18,7 +18,7 @@ export const app_tabs = {
       this.__assert__(index === this.tab_index, "index === this.tab_index")
       this.sound_play("click")
       this.talk(this.current_scope_info.name)
-      this.router_replace({scope: this.current_scope_info.key, page: null})
+      this.router_push({scope: this.current_scope_info.key, page: null})
     },
   },
 

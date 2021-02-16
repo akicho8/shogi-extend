@@ -33,12 +33,12 @@ export const app_table = {
       if (page <= 1) {
         page = null
       }
-      this.router_replace({page})
+      this.router_push({page})
     },
 
     sort_handle(sort_column, sort_order) {
       this.sound_play("click")
-      this.router_replace({sort_column, sort_order})
+      this.router_push({sort_column, sort_order})
     },
   },
   computed: {

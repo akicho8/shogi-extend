@@ -15,16 +15,16 @@
             figure.image.is-48x48
               img.is-rounded(:src="e.user.avatar_path" :alt="e.user.name")
           .media-content
-            .title.is-4 {{e.title}}
-            .subtitle.is-6
-              | {{e.user.name}}
-              br
+            .title.is-4.mb-1 {{e.title}}
+            p {{e.user.name}}
+            p
               | {{updated_time_format(e.updated_at)}}
-              b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
-              br(v-if="e.tag_list.length >= 1")
-              .hashtags.is-inline-block
-                span.has-text-link(v-for="tag in e.tag_list" @click.prevent.stop="base.tag_search_handle(tag)" :key="`${e.key}_${tag}`")
-                  | \#{{tag}}
+              b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
+            p.hashtags.is-inline-block(v-if="e.tag_list.length >= 1")
+              //- nuxt-link(:to="{name: 'rack', query: {tag: tag}}" @click.native="sound_play('click')" v-for="tag in e.tag_list")
+              span.has-text-link(v-for="tag in e.tag_list" @click.prevent.stop="base.tag_search_handle(tag)" :key="`${e.key}_${tag}`")
+                | \#{{tag}}
+
         .content(v-if="false")
           .description.is_truncate2(v-html="simple_format(auto_link(e.description))")
 </template>
@@ -60,6 +60,10 @@ export default {
         background-color: change_color($black, $alpha: 0.5)
 
   .hashtags
-    .span:not(:first-child)
+    span:not(:first-child)
       margin-left: 0.25rem
+
+  .media-content
+    p
+      line-height: 1.25rem
 </style>

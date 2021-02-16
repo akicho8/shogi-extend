@@ -66,7 +66,7 @@ export const app_support = {
     tag_search_handle(tag) {
       this.sound_play("click")
       this.talk(tag)
-      this.$router.replace({name: "rack", query: {tag: tag}})
+      this.$router.push({name: "rack", query: {tag: tag}})
     },
   },
   computed: {

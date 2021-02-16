@@ -43,20 +43,20 @@ export const app_table = {
       this.sound_play("click")
       this.talk(tag)
       tag = this.tags_append(this.tag, tag).join(",")
-      this.router_replace({tag})
+      this.router_push({tag})
     },
 
     tag_remove_handle(tag) {
       this.sound_play("click")
       tag = this.tags_remove(this.tag, tag).join(",")
-      this.router_replace({tag})
+      this.router_push({tag})
     },
 
     page_change_handle(page) {
       if (page <= 1) {
         page = null
       }
-      this.router_replace({page})
+      this.router_push({page})
     },
 
   },

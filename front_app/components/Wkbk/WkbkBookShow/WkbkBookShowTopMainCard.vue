@@ -23,7 +23,7 @@
               | {{base.book.user.name}}
             span.ml-1 {{updated_time_format(base.book.updated_at)}}
             b-icon.ml-1(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
-          .hashtags(v-if="base.book.tag_list.length >= 1")
+          p.hashtags(v-if="base.book.tag_list.length >= 1")
             nuxt-link(:to="{name: 'rack', query: {tag: tag}}" @click.native="sound_play('click')" v-for="tag in base.book.tag_list")
               | \#{{tag}}
             //- @click.prevent.stop="base.tag_search_handle(tag)"
@@ -67,4 +67,8 @@ export default {
   .hashtags
     a:not(:first-child)
       margin-left: 0.25rem
+
+  .media-content
+    p
+      line-height: 1.25rem
 </style>

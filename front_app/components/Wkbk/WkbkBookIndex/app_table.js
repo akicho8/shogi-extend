@@ -32,19 +32,19 @@ export const app_table = {
     tag_search_handle(tag) {
       this.sound_play("click")
       this.talk(tag)
-      this.router_replace({tag})
+      this.router_push({tag})
     },
 
     page_change_handle(page) {
       if (page <= 1) {
         page = null
       }
-      this.router_replace({page})
+      this.router_push({page})
     },
 
     sort_handle(sort_column, sort_order) {
       this.sound_play("click")
-      this.router_replace({sort_column, sort_order})
+      this.router_push({sort_column, sort_order})
     },
   },
   computed: {
