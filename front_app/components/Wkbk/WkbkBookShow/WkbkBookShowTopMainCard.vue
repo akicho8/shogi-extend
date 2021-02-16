@@ -21,7 +21,7 @@
           p.subtitle.is-6
             nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
               | {{base.book.user.name}}
-            span.mx-1 {{diff_time_format(base.book.updated_at)}}更新
+            span.mx-1 {{updated_time_format(base.book.updated_at)}}
             b-icon.mx-1(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
             templete(v-if="base.book.tag_list.length >= 1")
               br

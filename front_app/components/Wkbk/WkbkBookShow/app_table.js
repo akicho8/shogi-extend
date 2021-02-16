@@ -4,8 +4,8 @@ export const app_table = {
   methods: {
     sort_handle(sort_column, sort_order) {
       this.sound_play("click")
-      _.orderBy(this.book.xitems, sort_column, sort_order)
-      if (false) {
+
+      if (true) {
         this.book.xitems = _.orderBy(this.book.xitems, sort_column, sort_order)
       } else {
         let a = this.book.xitems.filter(e => e.answer_stat.spent_sec_total != null)

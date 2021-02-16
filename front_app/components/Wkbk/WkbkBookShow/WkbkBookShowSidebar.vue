@@ -6,7 +6,7 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight :right="false" overlay 
     .mt-4
       b-menu
         b-menu-list(label="Action" v-if="base.is_running_p")
-          b-menu-item(label="やめる"                                          @click.native="base.retire_handle"       :disabled="!base.is_running_p")
+          b-menu-item(label="やめる"                                          @click.native="base.quit_handle"       :disabled="!base.is_running_p")
           b-menu-item(:label="`現在の問題を別タブで開く`" @click.native="base.article_show_handle" :disabled="!base.article_show_p")
 
         b-menu-list(label="管理")

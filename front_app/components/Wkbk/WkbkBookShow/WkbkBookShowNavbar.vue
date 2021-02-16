@@ -9,7 +9,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" wrapper-class="container is-fluid 
           b-icon(icon="chevron-left")
 
       template(v-if="base.is_running_p")
-        b-navbar-item.px_5_if_tablet(@click.native="base.retire_handle")
+        b-navbar-item.px_5_if_tablet(@click.native="base.quit_handle")
           b-icon(icon="chevron-left")
 
       template(v-if="base.is_goal_p")

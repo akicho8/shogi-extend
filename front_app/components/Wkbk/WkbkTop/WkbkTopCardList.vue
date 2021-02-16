@@ -21,7 +21,7 @@
               p.subtitle.is-6
                 | {{e.user.name}}
                 br
-                | {{diff_time_format(e.updated_at)}}更新
+                | {{updated_time_format(e.updated_at)}}
                 b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
                 templete(v-if="e.tag_list.length >= 1")
                   br

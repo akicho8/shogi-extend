@@ -52,6 +52,8 @@ import { app_tweet_stat   } from "./app_tweet_stat.js"
 import { app_sidebar    } from "./app_sidebar.js"
 import { app_op  } from "./app_op.js"
 import { app_table  } from "./app_table.js"
+import { app_keyboard  } from "./app_keyboard.js"
+
 
 import _ from "lodash"
 
@@ -67,6 +69,7 @@ export default {
     app_sidebar,
     app_op,
     app_table,
+    app_keyboard,
   ],
 
   data() {

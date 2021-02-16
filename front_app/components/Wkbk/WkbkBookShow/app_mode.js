@@ -10,7 +10,7 @@ export const app_mode = {
       this.mode = v
     },
 
-    retire_handle() {
+    quit_handle() {
       if (this.is_running_p) {
         this.talk("途中で辞めました")
         this.sound_play("click")

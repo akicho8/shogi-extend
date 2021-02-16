@@ -44,6 +44,21 @@ export default {
       return dayjs(t).fromNow()
     },
 
+    updated_time_format(t) {
+      const date = dayjs(t)
+      // const diff_hour = dayjs().diff(date, "hour")
+      const diff_day = dayjs().diff(date, "day")
+      let v = null
+      if (diff_day === 0) {
+        v = "本日"
+      } else if (diff_day === 1) {
+        v = "昨日"
+      } else {
+        v = date.fromNow()
+      }
+      return v + "更新"
+    },
+
     date_to_custom_format(t) {
       return dayjs(t).format(this.md_or_yyyymmdd_format(t))
     },
