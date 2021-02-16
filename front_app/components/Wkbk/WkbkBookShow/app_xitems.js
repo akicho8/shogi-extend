@@ -34,6 +34,15 @@ export const app_xitems = {
 
     next_handle(answer_kind_info) {
       this.re_ox_apply(answer_kind_info)
+      this.next_process()
+    },
+
+    skip_handle() {
+      this.sound_play("click")
+      this.next_process()
+    },
+
+    next_process() {
       this.current_index += 1
       this.answer_tab_index = 0
       this.description_open_p = this.mobile_p()

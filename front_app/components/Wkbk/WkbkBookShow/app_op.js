@@ -47,6 +47,9 @@ export const app_op = {
       this.op_index_set_all()
       this.current_index = 0
       this.toast_ok("シャッフルしました")
+
+      this.$refs.WkbkBookShowTop.$refs.WkbkBookShowTopXitemList.$refs.WkbkBookShowTopXitemListBtable.resetMultiSorting()
+      this.debug_alert("resetMultiSorting")
     },
 
     // いまいちな感じだけど b-table で扱いやすいように index を埋める

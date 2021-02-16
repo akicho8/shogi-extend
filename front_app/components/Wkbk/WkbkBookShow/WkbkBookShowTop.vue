@@ -16,13 +16,13 @@
           //- .columns.is-mobile.is-variable.is-1-mobile
           .columns
             .column
-              WkbkBookShowTopTweetRecent(:base="base")
-            .column
               WkbkBookShowTopTweetStat(:base="base")
+            .column
+              WkbkBookShowTopTweetRecent(:base="base")
 
         //- .column.is-one-third-tablet
         .column
-          WkbkBookShowTopSideTable(:base="base")
+          WkbkBookShowTopXitemList(:base="base" ref="WkbkBookShowTopXitemList")
 
           //- (:to="{name: 'rack-books-book_key', params: {book_key: base.book.key}}" @click.native="sound_play('click')")
           //- nuxt-link.card-footer-item(:to="{name: 'swars-battles', query: {query: 'ok'}}") リンク
@@ -56,7 +56,7 @@
       //- .columns.is-gapless
       //-   .column
       //-     .buttons
-      //-       b-button(@click="base.play_restart" type="is-primary") はじめる
+      //-       b-button(@click="base.play_restart" type="is-primary") START
 </template>
 
 <script>

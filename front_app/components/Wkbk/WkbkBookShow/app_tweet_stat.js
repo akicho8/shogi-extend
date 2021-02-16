@@ -9,9 +9,24 @@ export const app_tweet_stat = {
     }
   },
   methods: {
+    st_init() {
+      this.current_index = 0
+
+      this.xitems.forEach(e => {
+        this.difficulty_rate_update(e.answer_stat)
+      })
+
+      if (process.client) {
+        this.ga_click(`インスタント将棋問題集→${this.book.title}`)
+        if (this.development_p && false) {
+          this.journal_test()
+        }
+      }
+    },
+
     // 開発テスト用
     journal_test() {
-      this.journal_init()
+      this.st_ox_start()
       this.current_index = 0
       if (this.current_xitem) {
         this.journal_next_init()
@@ -26,8 +41,12 @@ export const app_tweet_stat = {
       this.re_ox_stop()
     },
 
-    // 最初に呼ぶ
-    journal_init() {
+    // 開始時のフック
+    st_ox_start() {
+    },
+
+    // 終了時フック
+    st_ox_stop() {
     },
 
     // 次の問題の準備
@@ -45,16 +64,28 @@ export const app_tweet_stat = {
     journal_record(answer_kind_key) {
       this.interval_counter.stop()
 
-      // 「はじめる」してからの経過時間を確定する
+      // 「START」してからの経過時間を確定する
       this.re_total_sec += this.current_spent_sec
 
       // 直近のログ
-      this.current_xitem.newest_answer_log.spent_sec = this.current_spent_sec
-      this.current_xitem.newest_answer_log.answer_kind_key = answer_kind_key
+      {
+        const e = this.current_xitem.newest_answer_log
+        e.spent_sec = this.current_spent_sec
+        e.answer_kind_key = answer_kind_key
+      }
 
       // 統計
-      this.current_xitem.answer_stat[`${answer_kind_key}_count`] += 1
-      this.current_xitem.answer_stat.spent_sec_total = (this.current_xitem.answer_stat.spent_sec_total || 0) + this.current_spent_sec
+      {
+        const e = this.current_xitem.answer_stat
+        e[`${answer_kind_key}_count`] += 1
+        e.spent_sec_total = (e.spent_sec_total || 0) + this.current_spent_sec
+        const o = e.correct_count
+        const x = e.mistake_count
+        const t = o + x
+        if (t >= 1) {
+          e.difficulty_rate = o / t
+        }
+      }
 
       this.answer_log_create(answer_kind_key)
     },
@@ -104,6 +135,15 @@ export const app_tweet_stat = {
         return AnswerKindInfo.fetch(v)
       }
     },
+
+    difficulty_rate_update(e) {
+      const o = e.correct_count || 0
+      const x = e.mistake_count || 0
+      const t = o + x
+      if (t >= 1) {
+        e.difficulty_rate = o / t
+      }
+    },
   },
   computed: {
     AnswerKindInfo() { return AnswerKindInfo },
@@ -132,15 +172,17 @@ export const app_tweet_stat = {
 
     // クリア率
     st_clear_rate() {
-      if (this.max_count >= 1) {
-        return this.float_to_perc2(this.jo_counts.correct / this.max_count)
+      if (this.max_count === 0) {
+        return "0%"
       }
+      return this.float_to_perc2(this.jo_counts.correct / this.max_count) + "%"
     },
 
     st_ox_rate() {
-      if (this.jo_ox_total) {
-        return this.float_to_perc2(this.jo_counts.correct / this.jo_ox_total)
+      if (this.jo_ox_total === 0) {
+        return "0%"
       }
+      return this.float_to_perc2(this.jo_counts.correct / this.jo_ox_total) + "%"
     },
 
     jo_ox_total() {
@@ -154,21 +196,20 @@ export const app_tweet_stat = {
     jo_time_avg() {
       if (this.jo_ox_total === 0) {
         return "?"
-      } else {
-        const sec = this.jo_total_sec / this.jo_ox_total
-        if (sec < 10) {
-          return dayjs.unix(sec).format("s.SSS") + "秒"
-        }
-        if (sec < 60) {
-          return dayjs.unix(sec).format("s") + "秒"
-        }
-        return dayjs.unix(sec).format("m分s秒")
       }
+      const sec = this.jo_total_sec / this.jo_ox_total
+      if (sec < 10) {
+        return dayjs.unix(sec).format("s.SSS") + "秒"
+      }
+      if (sec < 60) {
+        return dayjs.unix(sec).format("s") + "秒"
+      }
+      return dayjs.unix(sec).format("m分s秒")
     },
 
     st_summary() {
       let out = ""
-      out += `達成率 ${this.st_clear_rate}% (${this.jo_counts.correct}/${this.max_count})\n`
+      out += `達成率 ${this.st_clear_rate} (${this.jo_counts.correct}/${this.max_count})\n`
       out += `正解率 ${this.st_ox_rate} (${this.jo_counts.correct}/${this.jo_ox_total})\n`
       out += `平均 ${this.jo_time_avg}\n`
       out += `正解 ${this.jo_counts.correct}\n`

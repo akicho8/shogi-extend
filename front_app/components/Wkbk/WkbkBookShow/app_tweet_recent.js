@@ -10,7 +10,7 @@ export const app_tweet_recent = {
       re_mistake_count: null,
       re_total_sec: 0,
       re_summary: null,      // ツイート内容はリアクティブに変化しないように変数に保存しておく
-      re_begin_index: null,  // 「はじめる」を押した時点の current_index を保持しておく
+      re_begin_index: null,  // 「START」を押した時点の current_index を保持しておく
     }
   },
 
@@ -30,12 +30,13 @@ export const app_tweet_recent = {
       this.re_correct_count = 0
       this.re_mistake_count = 0
       this.re_total_sec = 0
-      this.journal_init()
+      this.st_ox_start()
       this.interval_counter.restart()
       this.re_begin_index = this.current_index
     },
 
     re_ox_stop() {
+      this.st_ox_stop()
       this.re_summary = this.re_summary_generate()
       this.interval_counter.stop()
     },
@@ -43,15 +44,7 @@ export const app_tweet_recent = {
     re_ox_apply(answer_kind_info) {
       this.sound_play(answer_kind_info.key)
       this.journal_record(answer_kind_info.key)
-      if (false) {
-        this.$data[`re_${answer_kind_info.key}_count`] += 1
-      } else {
-        if (answer_kind_info.key === "correct") {
-          this.re_correct_count += 1
-        } else {
-          this.re_mistake_count += 1
-        }
-      }
+      this.$data[`re_${answer_kind_info.key}_count`] += 1
     },
 
     re_summary_generate() {
@@ -66,10 +59,10 @@ export const app_tweet_recent = {
     tweet_body_wrap(str) {
       let out = ""
       out += "\n"
-      out += `${this.book.title}\n`
       if (str) {
         out += str
       }
+      out += "#" + this.book.title + " "
       out += "#" + "インスタント将棋問題集" + "\n"
       out += this.location_url_without_search_and_hash()
       return out

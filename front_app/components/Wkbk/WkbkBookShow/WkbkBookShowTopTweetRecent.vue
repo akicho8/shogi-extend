@@ -7,7 +7,10 @@
       template(v-if="base.re_summary")
         | {{base.re_summary}}
       template(v-else)
+        br
         | ?
+        br
+        br
     .panel-block
       TweetButton.is-link.is-outlined.is-fullwidth(:body="base.re_ox_tweet_body1" size="" @after_click="sound_play('click')") ツイート
 </template>

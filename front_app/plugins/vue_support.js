@@ -69,7 +69,12 @@ export default {
     // 0.1234 -> 12.34
     float_to_perc2(v) {
       const base = 100
-      return Math.floor(v * 100 * base) / base
+      return Math.trunc(v * 100 * base) / base
+    },
+
+    // 0.1234 -> 12
+    float_to_integer_percentage(v) {
+      return Math.trunc(v * 100)
     },
 
     number_floor(v, precision = 0) {

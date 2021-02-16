@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.WkbkBookShowNavbar(:spaced="false")
+MainNavbar.WkbkBookShowNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
   template(v-if="base.book")
     template(slot="brand")
       WkbkSidebarToggle(@click="base.sidebar_toggle")

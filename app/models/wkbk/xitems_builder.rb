@@ -100,12 +100,12 @@ module Wkbk
         @xitems.each do |xitem|
           e = xitem[:article]
           if e["folder_key"] == "private"
-            e["init_sfen"]         = ""
-            e["title"]             = "非公開"
-            e["description"]       = ""
-            e["direction_message"] = ""
-            e["turn_max"]          = 0
-            e["moves_answers"]     = []
+            e["init_sfen"]         = nil
+            e["title"]             = nil
+            e["description"]       = nil
+            e["direction_message"] = nil
+            e["turn_max"]          = nil
+            e["moves_answers"]     = nil
           end
         end
       end

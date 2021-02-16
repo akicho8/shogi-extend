@@ -25,9 +25,9 @@ client-only
 
     .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
       template(v-if="is_standby_p")
-        WkbkBookShowTop(:base="base")
+        WkbkBookShowTop(:base="base" ref="WkbkBookShowTop")
       template(v-if="is_running_p")
-        template(v-if="base.current_xitem.folder_key === 'private'")
+        template(v-if="base.current_article.folder_key === 'private'")
           WkbkBookShowAccessBlock(:base="base")
         template(v-else)
           WkbkBookShowSp(:base="base")
@@ -90,7 +90,6 @@ export default {
 
     this.config = e.config
     this.book = new Book(e.book)
-    this.current_index = 0
     this.saved_xitems = _.cloneDeep(this.book.xitems)
 
     this.clog("process.client", process.client)
@@ -108,12 +107,7 @@ export default {
     //   this.mode_set("standby")
     // }
 
-    if (process.client) {
-      this.ga_click(`インスタント将棋問題集→${this.book.title}`)
-      if (this.development_p && false) {
-        this.journal_test()
-      }
-    }
+    this.st_init()
   },
 
   mounted() {
