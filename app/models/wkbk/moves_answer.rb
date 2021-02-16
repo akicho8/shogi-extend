@@ -145,6 +145,10 @@ module Wkbk
       end
     end
 
+    after_destroy_commit do
+      article.update_column(:turn_max, article.moves_answers.maximum("moves_count") || 0)
+    end
+
     private
 
     def sfen

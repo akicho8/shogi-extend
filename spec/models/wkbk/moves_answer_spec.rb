@@ -85,11 +85,22 @@ module Wkbk
         assert { moves_answer.errors.present? }
       end
     end
+
+    it "turn_maxの自動更新" do
+      article = user1.wkbk_articles.create!
+      assert { article.turn_max == 0 }
+      article.moves_answers.create!(moves_str: MATE_HAND)
+      assert { article.reload.turn_max == 1 }
+      article.moves_answers.create!(moves_str: "G*5e")
+      assert { article.reload.turn_max == 1 } # 最大手数なので1のまま
+      article.moves_answers.destroy_all
+      assert { article.reload.turn_max == 0 } # 最大手数が0になる
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .......
-# >> 
+# >>
 # >> Finished in 1.79 seconds (files took 2.3 seconds to load)
 # >> 7 examples, 0 failures
-# >> 
+# >>
