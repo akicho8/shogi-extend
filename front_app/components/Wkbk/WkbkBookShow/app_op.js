@@ -26,14 +26,14 @@ export const app_op = {
 
     // 元に戻す
     op_revert_handle() {
-      this.sound_play("click")
-      if (this.book.xitems.length === this.saved_xitems.length) {
-        this.toast_warn("すでに元の状態です")
-        return
-      }
-      this.book.xitems = _.cloneDeep(this.saved_xitems)
-      this.current_index = 0
-      this.toast_ok("元に戻しました")
+      // this.sound_play("click")
+      // if (this.book.xitems.length === this.saved_xitems.length) {
+      //   this.toast_warn("すでに元の状態です")
+      //   return
+      // }
+      // this.book.xitems = _.cloneDeep(this.saved_xitems)
+      // this.current_index = 0
+      // this.toast_ok("元に戻しました")
     },
 
     op_shuffle_handle() {

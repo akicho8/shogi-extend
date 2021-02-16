@@ -3,7 +3,7 @@ export const app_xitems = {
     return {
       current_index: null,  // 問題インデックス
       answer_tab_index: 0,  // 解答タブ
-      saved_xitems: null, // 最初の状態を xitems を保存しておく
+      // saved_xitems: null, // 最初の状態を xitems を保存しておく
       description_open_p: null,
     }
   },

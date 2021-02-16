@@ -90,7 +90,7 @@ export default {
 
     this.config = e.config
     this.book = new Book(e.book)
-    this.saved_xitems = _.cloneDeep(this.book.xitems)
+    // this.saved_xitems = _.cloneDeep(this.book.xitems)
 
     this.clog("process.client", process.client)
     this.clog("process.server", process.server)
