@@ -368,12 +368,12 @@ module Wkbk
     end
 
     def tweet_body
-      o = []
-      o << title
-      # o << description
-      o << "#" + "インスタント将棋問題集"
-      o << page_url
-      o.join("\n")
+      list = [
+        title,
+        *tag_list,
+        "インスタント将棋問題集",
+      ]
+      list.collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
     end
 
     def default_assign

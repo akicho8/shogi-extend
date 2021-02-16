@@ -55,18 +55,6 @@ export const app_tweet_recent = {
       out += `平均: ${this.re_ox_time_avg}\n`
       return out
     },
-
-    tweet_body_wrap(str) {
-      let out = ""
-      out += "\n"
-      if (str) {
-        out += str
-      }
-      out += "#" + this.book.title + " "
-      out += "#" + "インスタント将棋問題集" + "\n"
-      out += this.location_url_without_search_and_hash()
-      return out
-    },
   },
 
   computed: {

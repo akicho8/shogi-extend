@@ -18,6 +18,7 @@ export const app_tweet_stat = {
 
       if (process.client) {
         this.ga_click(`インスタント将棋問題集→${this.book.title}`)
+        this.talk(this.book.title)
         if (this.development_p && false) {
           this.journal_test()
         }
@@ -79,12 +80,7 @@ export const app_tweet_stat = {
         const e = this.current_xitem.answer_stat
         e[`${answer_kind_key}_count`] += 1
         e.spent_sec_total = (e.spent_sec_total || 0) + this.current_spent_sec
-        const o = e.correct_count
-        const x = e.mistake_count
-        const t = o + x
-        if (t >= 1) {
-          e.difficulty_rate = o / t
-        }
+        this.difficulty_rate_update(e)
       }
 
       this.answer_log_create(answer_kind_key)
@@ -150,7 +146,7 @@ export const app_tweet_stat = {
 
     // 現在表示している問題の経過時間表記
     navbar_display_time() {
-      this.table_time_format(this.current_spent_sec)
+      return this.table_time_format(this.current_spent_sec)
     },
 
     // 「不正解のみ残す」が動作するか？

@@ -29,8 +29,19 @@ export const app_support = {
     },
     book_tweet_handle() {
       this.sound_play("click")
-      this.tweet_window_popup({text: `\n${this.book.tweet_body}`})
+      this.tweet_window_popup({text: this.tweet_body_wrap(null)})
     },
+    tweet_body_wrap(str) {
+      let out = ""
+      out += "\n"
+      if (str) {
+        out += str
+      }
+      out += this.book.tweet_body + " "
+      out += this.location_url_without_search_and_hash()
+      return out
+    },
+
     description_handle() {
       this.sound_play("click")
       this.talk_stop()
