@@ -22,6 +22,8 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
+require "nkf"
+
 module Wkbk
   class Book < ApplicationRecord
     include FolderMod
@@ -116,10 +118,14 @@ module Wkbk
         s = s.where(id: tagged_with(v))
       end
       if v = params[:query].presence
-        v = "%#{v}%"
-        s = s.where(arel_table[:title].matches(v))
-        s = s.or(base.where(arel_table[:description].matches(v)))
-        s = s.or(base.where(User.arel_table[:name].matches(v)))
+        v = [
+          v,
+          NKF.nkf("-w --hiragana", v),
+          NKF.nkf("-w --katakana", v),
+        ].uniq.collect { |e| "%#{e}%" }
+        s = s.where(arel_table[:title].matches_any(v))
+        s = s.or(base.where(arel_table[:description].matches_any(v)))
+        s = s.or(base.where(User.arel_table[:name].matches_any(v)))
       end
       # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE (title LIKE '%a%' OR description LIKE '%a%')"
       # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE ((title LIKE '%a%' OR description LIKE '%a%') OR users.name LIKE '%a%')"
