@@ -1,20 +1,22 @@
 <template lang="pug">
-.WkbkArticleEditValidation.columns.is-gapless.is-centered
-  .column
-    .CustomShogiPlayerWrap
-      .has-text-centered(v-if="base.article.direction_message")
-        | {{base.article.direction_message}}
-      CustomShogiPlayer(
-        sp_mobile_vertical="is_mobile_vertical_off"
-        sp_run_mode="play_mode"
-        :sp_body="base.article.init_sfen"
-        :sp_viewpoint="base.article.viewpoint"
-        :sp_turn="0"
-        sp_summary="is_summary_off"
-        sp_slider="is_slider_on"
-        sp_controller="is_controller_on"
-        @update:play_mode_advanced_moves="base.play_mode_advanced_moves_set"
-        )
+MainSection.is_mobile_padding_zero.WkbkArticleEditValidation
+  .container
+    .columns
+      .column
+        .CustomShogiPlayerWrap
+          .has-text-centered(v-if="base.article.direction_message")
+            | {{base.article.direction_message}}
+          CustomShogiPlayer(
+            sp_mobile_vertical="is_mobile_vertical_off"
+            sp_run_mode="play_mode"
+            :sp_body="base.article.init_sfen"
+            :sp_viewpoint="base.article.viewpoint"
+            :sp_turn="0"
+            sp_summary="is_summary_off"
+            sp_slider="is_slider_on"
+            sp_controller="is_controller_on"
+            @update:play_mode_advanced_moves="base.play_mode_advanced_moves_set"
+            )
 </template>
 
 <script>
@@ -31,6 +33,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkArticleEditValidation
+  padding: 0
   .column
     display: flex
     align-items: center

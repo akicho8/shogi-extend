@@ -1,5 +1,5 @@
 <template lang="pug">
-MainSection.is_mobile_padding_zero.WkbkArticleEditForm
+MainSection.WkbkArticleEditForm
   .container
     .columns
       .column
@@ -110,9 +110,9 @@ export default {
 @import "../support.sass"
 .WkbkArticleEditForm
   +mobile
-    margin: 1.0rem
+    padding: 1.0rem
   +tablet
-    margin: 1.5rem
+    padding: 1.5rem
 
   .field:not(:last-child)
     margin-bottom: 1.5rem
