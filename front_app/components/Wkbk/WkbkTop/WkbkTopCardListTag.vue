@@ -9,7 +9,6 @@
 
 <script>
 import { support_child } from "./support_child.js"
-import _ from "lodash"
 
 export default {
   name: "WkbkTopCardListTag",
@@ -26,9 +25,6 @@ export default {
 @import "../support.sass"
 .WkbkTopCardListTag
   display: flex
-  // +mobile
-  //   justify-content: center
-  // +tablet
   justify-content: flex-start
   .tags, .tag
     margin-top: 0

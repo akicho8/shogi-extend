@@ -17,18 +17,21 @@
           //-   span.tag_links
           //-     template(v-for="tag in base.book.tag_list")
           //-       a.has-text-link(@click.prevent.stop="base.tag_search_handle(tag)" :key="`${base.book.key}_${tag}`") \#{{tag}}
-          p.title.is-4 {{base.book.title}}
-          p.subtitle.is-6
+          .title.is-4.mb-1 {{base.book.title}}
+          p
             nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
               | {{base.book.user.name}}
-            span.mx-1 {{updated_time_format(base.book.updated_at)}}
-            b-icon.mx-1(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
-            templete(v-if="base.book.tag_list.length >= 1")
-              br
-              span.tag_links
-                template(v-for="tag in base.book.tag_list")
-                  a.has-text-link(@click.prevent.stop="base.tag_search_handle(tag)" :key="`${base.book.key}_${tag}`") \#{{tag}}
-          .content
+            span.ml-1 {{updated_time_format(base.book.updated_at)}}
+            b-icon.ml-1(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
+          .hashtags(v-if="base.book.tag_list.length >= 1")
+            nuxt-link(:to="{name: 'rack', query: {tag: tag}}" @click.native="sound_play('click')" v-for="tag in base.book.tag_list")
+              | \#{{tag}}
+            //- @click.prevent.stop="base.tag_search_handle(tag)"
+            //- :key="`{base.book.key}_${tag}`"
+            //- )
+            //- | \#{{tag}}
+
+          .content.mt-4(v-if="base.book.description")
             .description(v-html="simple_format(auto_link(base.book.description))")
     .card-footer
       a.card-footer-item.has-text-weight-bold(@click="base.play_start") START
@@ -61,7 +64,7 @@ export default {
         margin: 6px
         background-color: change_color($black, $alpha: 0.5)
 
-  .tag_links
+  .hashtags
     a:not(:first-child)
       margin-left: 0.25rem
 </style>

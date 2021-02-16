@@ -18,7 +18,7 @@ MainNavbar.WkbkTopNavbar(:spaced="false")
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play('click')")
       b-icon(icon="cog")
 
-    WkbkSidebarToggle(@click="base.sidebar_toggle" v-if="false")
+    WkbkSidebarToggle(:base="base" @click="base.sidebar_toggle" v-if="false")
 
     b-navbar-item.is-hidden-desktop.has-text-weight-bold(@click="base.search_field_toggle_handle")
       b-icon(icon="magnify")
