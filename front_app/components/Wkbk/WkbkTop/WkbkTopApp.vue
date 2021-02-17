@@ -104,6 +104,10 @@ export default {
       //   return
       // }
       this.meta        = e.meta
+      if (this.query) {
+        this.meta.title = `${this.query} - ${this.meta.title}`
+      }
+
       // this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
       this.books       = e.books.map(e => new Book(e))
       this.total       = e.total
