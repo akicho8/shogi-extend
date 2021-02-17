@@ -10,7 +10,13 @@ MainNavbar.WkbkBookEditNavbar(:spaced="false")
       template(v-else)
         //- b-navbar-item(tag="div") {{base.book.new_record_p ? '新規' : '編集'}}
     template(slot="end")
-      b-navbar-item.has-text-weight-bold(@click="base.save_handle" :class="{disabled: !base.save_button_enabled}")
+      //- https://buefy.org/documentation/navbar
+      b-navbar-dropdown(arrowless right @click.native="sound_play('click')")
+        //- https://pictogrammers.github.io/@mdi/font/5.4.55/
+        b-icon.px_5_if_tablet(icon="dots-vertical" slot="label")
+        b-navbar-item(@click.prevent.stop="base.book_delete_handle(base.book)") 削除
+
+      b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.book_save_handle" :class="{disabled: !base.save_button_enabled}")
         | {{base.save_button_name}}
 </template>
 
