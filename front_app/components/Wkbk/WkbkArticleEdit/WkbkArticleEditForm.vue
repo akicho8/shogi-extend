@@ -54,7 +54,6 @@ MainSection.WkbkArticleEditForm
                 b-checkbox-button(v-model="base.article.book_keys" :native-value="e.key" expanded @input="sound_play('click')")
                   b-icon(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small")
                   p.ml-2 {{e.title}}
-
 </template>
 
 <script>

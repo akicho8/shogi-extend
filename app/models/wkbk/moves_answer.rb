@@ -39,21 +39,23 @@ module Wkbk
     end
 
     validate do
-      if article.moves_answer_validate_skip
-      else
-        if moves_str.present?
-          [
-            :validate1_leagal_hands,         # 合法手のみで構成されている
-            :validate2_uniq_with_parent,     # 同じ組み合わせがない
-            :validate3_piece_box_is_empty,   # 「詰将棋」なら先手の駒が空
-            :validate4_all_piece_exists,     # 「詰将棋」なら玉方持駒限定になっていない
-            :validate5_all_piece_not_exists, # 「持駒限定詰将棋」なら持駒が不足している
-            :validate6_mate,                 # 「詰将棋」「持駒限定詰将棋」「実戦詰め筋」なら最後は詰んでいる
-          ].each do |e|
-            if errors.present?
-              break
+      if article
+        if article.moves_answer_validate_skip
+        else
+          if moves_str.present?
+            [
+              :validate1_leagal_hands,         # 合法手のみで構成されている
+              :validate2_uniq_with_parent,     # 同じ組み合わせがない
+              :validate3_piece_box_is_empty,   # 「詰将棋」なら先手の駒が空
+              :validate4_all_piece_exists,     # 「詰将棋」なら玉方持駒限定になっていない
+              :validate5_all_piece_not_exists, # 「持駒限定詰将棋」なら持駒が不足している
+              :validate6_mate,                 # 「詰将棋」「持駒限定詰将棋」「実戦詰め筋」なら最後は詰んでいる
+            ].each do |e|
+              if errors.present?
+                break
+              end
+              public_send(e)
             end
-            public_send(e)
           end
         end
       end
@@ -139,14 +141,18 @@ module Wkbk
 
     # 最大の手数を求める
     # SQLで調べているためすべてが保存されてから実行する
-    after_save_commit do
+    after_save do
       if saved_change_to_attribute?(:moves_count)
-        article.update_column(:turn_max, article.moves_answers.maximum("moves_count"))
+        if article
+          article.update_column(:turn_max, article.moves_answers.maximum("moves_count"))
+        end
       end
     end
 
-    after_destroy_commit do
-      article.update_column(:turn_max, article.moves_answers.maximum("moves_count") || 0)
+    after_destroy do
+      if article
+        article.update_column(:turn_max, article.moves_answers.maximum("moves_count") || 0)
+      end
     end
 
     private

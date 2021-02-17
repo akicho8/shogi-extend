@@ -25,7 +25,7 @@
 module Api
   module Wkbk
     class BooksController < ApplicationController
-      before_action :api_login_required, only: [:edit, :save]
+      before_action :api_login_required, only: [:edit, :save, :destroy]
 
       # http://0.0.0.0:3000/api/wkbk/books.json
       # http://0.0.0.0:3000/api/wkbk/books.json?scope=everyone
@@ -92,6 +92,12 @@ module Api
           retv[:form_error_message] = error.message
         end
         render json: retv
+      end
+
+      # DELETE http://0.0.0.0:3000/api/wkbk/books/destroy
+      def destroy
+        current_user.wkbk_books.find(params[:book_id]).destroy!
+        render json: {}
       end
 
       private

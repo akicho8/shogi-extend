@@ -31,7 +31,7 @@
 module Api
   module Wkbk
     class ArticlesController < ApplicationController
-      before_action :api_login_required, only: [:edit, :save]
+      before_action :api_login_required, only: [:edit, :save, :destroy]
 
       # http://0.0.0.0:3000/api/wkbk/articles/index?_user_id=1
       # http://0.0.0.0:3000/api/wkbk/articles/index?_user_id=1&sort_column=id&sort_order=desc
@@ -110,6 +110,12 @@ module Api
           retv[:form_error_message] = error.message
         end
         render json: retv
+      end
+
+      # DELETE http://0.0.0.0:3000/api/wkbk/books/destroy
+      def destroy
+        current_user.wkbk_articles.find(params[:article_id]).destroy!
+        render json: {}
       end
 
       private

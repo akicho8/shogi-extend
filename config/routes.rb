@@ -142,12 +142,14 @@ Rails.application.routes.draw do
         get :show
         get :edit
         post :save
+        delete :destroy
       end
       namespace :articles do
         get :index
         get :show
         get :edit
         post :save
+        delete :destroy
       end
       namespace :answer_logs do
         post :create

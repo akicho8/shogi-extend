@@ -51,6 +51,7 @@ import { app_tabs       } from "./app_tabs.js"
 import { app_answer     } from "./app_answer.js"
 import { app_article    } from "./app_article.js"
 import { app_storage    } from "./app_storage.js"
+import { app_support    } from "./app_support.js"
 
 import { Article     } from "../models/article.js"
 import { Book        } from "../models/book.js"
@@ -65,6 +66,7 @@ export default {
     app_answer,
     app_article,
     app_storage,
+    app_support,
   ],
 
   data() {

@@ -10,6 +10,13 @@ MainNavbar.WkbkArticleEditNavbar(:spaced="false")
       template(v-else)
         //- b-navbar-item(tag="div") {{base.article.new_record_p ? '新規' : '編集'}}
     template(slot="end")
+
+      //- https://buefy.org/documentation/navbar
+      b-navbar-dropdown(arrowless right)
+        //- https://pictogrammers.github.io/@mdi/font/5.4.55/
+        b-icon(icon="dots-vertical" slot="label")
+        b-navbar-item(@click="base.delete_handle") 削除
+
       b-navbar-item.has-text-weight-bold(@click="base.article_save_handle" :class="{disabled: !base.save_button_enabled}")
         | {{base.save_button_name}}
 </template>
