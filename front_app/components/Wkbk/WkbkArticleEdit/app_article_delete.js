@@ -1,8 +1,8 @@
-export const app_support = {
+export const app_article_delete = {
   methods: {
-    delete_handle() {
+    article_delete_handle(article) {
       this.sound_play("click")
-      if (this.article.new_record_p) {
+      if (article.new_record_p) {
         this.toast_warn("まだ保存していません")
       } else {
         this.$buefy.dialog.confirm({
@@ -17,7 +17,7 @@ export const app_support = {
           },
           onConfirm: () => {
             this.sound_play("click")
-            this.$axios.$delete("/api/wkbk/articles/destroy.json", {params: {article_id: this.article.id}}).catch(e => {
+            this.$axios.$delete("/api/wkbk/articles/destroy.json", {params: {article_id: article.id}}).catch(e => {
               this.$nuxt.error(e.response.data)
               return
             }).then(e => {

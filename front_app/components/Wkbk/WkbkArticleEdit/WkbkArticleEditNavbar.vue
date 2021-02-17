@@ -12,12 +12,12 @@ MainNavbar.WkbkArticleEditNavbar(:spaced="false")
     template(slot="end")
 
       //- https://buefy.org/documentation/navbar
-      b-navbar-dropdown(arrowless right)
+      b-navbar-dropdown(arrowless right @click.native="sound_play('click')")
         //- https://pictogrammers.github.io/@mdi/font/5.4.55/
-        b-icon(icon="dots-vertical" slot="label")
-        b-navbar-item(@click="base.delete_handle") 削除
+        b-icon.px_5_if_tablet(icon="dots-vertical" slot="label")
+        b-navbar-item(@click.prevent.stop="base.article_delete_handle(base.article)") 削除
 
-      b-navbar-item.has-text-weight-bold(@click="base.article_save_handle" :class="{disabled: !base.save_button_enabled}")
+      b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.article_save_handle" :class="{disabled: !base.save_button_enabled}")
         | {{base.save_button_name}}
 </template>
 
