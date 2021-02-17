@@ -37,6 +37,10 @@ module Api
         answer_log = current_user.wkbk_answer_logs.create!(article: article, answer_kind: answer_kind, book: book, spent_sec: params[:spent_sec])
         render json: answer_log
       end
+
+      rescue_from "ActiveRecord::RecordNotFound" do |error|
+        render json: { message: "問題を解いている最中に問題または問題集が削除されてしまいました" }
+      end
     end
   end
 end

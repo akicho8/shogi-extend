@@ -99,7 +99,12 @@ export const app_tweet_stat = {
           this.$nuxt.error(e.response.data)
           return
         }).then(e => {
-          this.debug_alert(`ox_create ${e.id}`)
+          if (e.id) {
+            this.debug_alert(`ox_create ${e.id}`)
+          }
+          if (e.message) {
+            this.toast_ok(e.message)
+          }
         })
       }
     },
