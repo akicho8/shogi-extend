@@ -43,6 +43,47 @@ module Wkbk
           }
         end
 
+        def json_struct_for_index
+          {
+            only: [
+              # :id,
+              :key,
+              :title,
+              # :description,
+              :bookships_count,
+              # :created_at,
+              :updated_at,
+            ],
+            methods: [
+              :folder_key,
+              # :sequence_key,
+              :tweet_body,
+              :page_url,
+              :avatar_path,
+              :tag_list,
+            ],
+            include: {
+              user: {
+                only: [
+                  # :key,
+                  :id,
+                  :name,
+                ],
+                methods: [
+                  :avatar_path,
+                ],
+              },
+              # folder: {
+              #   only: [
+              #     :key,
+              #     :id,
+              #     :name,
+              #   ],
+              # },
+            },
+          }
+        end
+
         def json_struct_for_edit
           {
             only: [

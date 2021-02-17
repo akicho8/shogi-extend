@@ -46,6 +46,14 @@ export const app_table = {
       this.sound_play("click")
       this.router_push({sort_column, sort_order})
     },
+
+    tweet_handle(row) {
+      let out = ""
+      out += "\n"
+      out += row.tweet_body + "\n"
+      out += row.page_url
+      this.tweet_window_popup({text: out})
+    },
   },
   computed: {
     BookIndexColumnInfo()  { return BookIndexColumnInfo },

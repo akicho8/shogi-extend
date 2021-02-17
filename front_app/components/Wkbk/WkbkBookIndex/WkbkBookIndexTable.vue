@@ -61,7 +61,7 @@
             nuxt-link(:to="{name: 'rack-articles-new', query: {book_key: row.key}}"        @click.native="sound_play('click')") 問題追加
           //- b-dropdown-item(separator)
           b-dropdown-item(has-link)
-            a(@click="tweet_window_popup({text: row.tweet_body})") ツイート
+            a(@click="base.tweet_handle(row)") ツイート
           b-dropdown-item.is-hidden-desktop(separator)
           b-dropdown-item.is-hidden-desktop(has-link)
             a.deleet キャンセル
