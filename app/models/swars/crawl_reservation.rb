@@ -81,11 +81,11 @@ module Swars
               entry = Zip::Entry.new(zos, "#{target_user.key}/#{encode}/#{battle.key}.#{kifu_format_info.key}")
               entry.time = Zip::DOSTime.from_time(battle.battled_at)
               zos.put_next_entry(entry)
-
+              s = str
               if encode == "Shift_JIS"
-                str = str.encode(encode)
+                s = s.encode(encode)
               end
-              zos.write(str)
+              zos.write(s)
             end
           end
         end
