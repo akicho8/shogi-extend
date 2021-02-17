@@ -1,8 +1,8 @@
 <template lang="pug">
-.WkbkTopCardListTag.columns(v-if="tags.length >= 1")
+.WkbkTopCardListTag.columns(v-if="base.tags.length >= 1")
   .column
     b-taglist
-      template(v-for="tag in tags")
+      template(v-for="tag in base.tags")
         b-tag(closable @close="base.tag_remove_handle(tag)")
           | {{tag}}
 </template>
@@ -13,11 +13,6 @@ import { support_child } from "./support_child.js"
 export default {
   name: "WkbkTopCardListTag",
   mixins: [support_child],
-  computed: {
-    tags() {
-      return this.tags_wrap(this.base.tag)
-    },
-  },
 }
 </script>
 

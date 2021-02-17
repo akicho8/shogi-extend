@@ -48,6 +48,8 @@ import { app_columns    } from "./app_columns.js"
 import { app_sidebar    } from "./app_sidebar.js"
 import { app_search     } from "./app_search.js"
 
+import _ from "lodash"
+
 export default {
   name: "WkbkTopApp",
   mixins: [
@@ -103,9 +105,9 @@ export default {
       //   this.$nuxt.error(e.error)
       //   return
       // }
-      this.meta        = e.meta
-      if (this.query) {
-        this.meta.title = `${this.query} - ${this.meta.title}`
+      this.meta = e.meta
+      if (this.query || this.tag) {
+        this.meta.title = _.compact([this.query, ...this.tags]).join(" ") + ` - ${this.meta.title}`
       }
 
       // this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code

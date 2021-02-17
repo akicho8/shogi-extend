@@ -28,5 +28,8 @@ export const app_search = {
     },
   },
   computed: {
+    tags() {
+      return this.tags_wrap(this.tag)
+    },
   },
 }
