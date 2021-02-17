@@ -3,20 +3,21 @@
 #
 # Book (wkbk_books as Wkbk::Book)
 #
-# |-----------------+--------------------+--------------+---------------------+--------------+-------|
-# | name            | desc               | type         | opts                | refs         | index |
-# |-----------------+--------------------+--------------+---------------------+--------------+-------|
-# | id              | ID                 | integer(8)   | NOT NULL PK         |              |       |
-# | key             | ユニークなハッシュ | string(255)  | NOT NULL            |              | A!    |
-# | user_id         | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | folder_id       | Folder             | integer(8)   | NOT NULL            |              | C     |
-# | sequence_id     | Sequence           | integer(8)   | NOT NULL            |              | D     |
-# | title           | タイトル           | string(100)  | NOT NULL            |              |       |
-# | description     | 説明               | string(5000) | NOT NULL            |              |       |
-# | bookships_count | Bookships count    | integer(4)   | DEFAULT(0) NOT NULL |              |       |
-# | created_at      | 作成日時           | datetime     | NOT NULL            |              |       |
-# | updated_at      | 更新日時           | datetime     | NOT NULL            |              |       |
-# |-----------------+--------------------+--------------+---------------------+--------------+-------|
+# |-------------------+--------------------+--------------+---------------------+--------------+-------|
+# | name              | desc               | type         | opts                | refs         | index |
+# |-------------------+--------------------+--------------+---------------------+--------------+-------|
+# | id                | ID                 | integer(8)   | NOT NULL PK         |              |       |
+# | key               | ユニークなハッシュ | string(255)  | NOT NULL            |              | A!    |
+# | user_id           | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | folder_id         | Folder             | integer(8)   | NOT NULL            |              | C     |
+# | sequence_id       | Sequence           | integer(8)   | NOT NULL            |              | D     |
+# | title             | タイトル           | string(100)  | NOT NULL            |              |       |
+# | description       | 説明               | string(5000) | NOT NULL            |              |       |
+# | bookships_count   | Bookships count    | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# | answer_logs_count | Answer logs count  | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# | created_at        | 作成日時           | datetime     | NOT NULL            |              |       |
+# | updated_at        | 更新日時           | datetime     | NOT NULL            |              |       |
+# |-------------------+--------------------+--------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -55,8 +56,10 @@ module Wkbk
       book.articles << user.wkbk_articles.create!(difficulty: 1, folder_key: :public)
       book.articles << user.wkbk_articles.create!(difficulty: 2, folder_key: :public)
       book.articles << user.wkbk_articles.create!(difficulty: 3, folder_key: :private)
-      alice = User.create!
-      assert { book.to_xitems(alice).collect(&:difficulty) == [2, 1] }
+      other_user = User.create!
+      records = book.to_xitems(other_user)
+      assert { records.collect { |e| e[:article]["difficulty"] } == [3, 2, 1] } # private も空として含めるため3がある
+      assert { records[0][:article].title == nil }                              # private なので title を nil にしている
     end
 
     it "[TODO] as_json するまえに articles を preload しても as_json のタイミングで再度 O(n) のSQLが発生する再現" do
@@ -78,7 +81,7 @@ module Wkbk
         assert { Book.search(query: "a").size === 1 }
         assert { Book.search(query: "a", tag: "b").size === 1 }
       end
-      it "アヒルをあで検索" do
+      it "アヒルを「あ」で検索" do
         Wkbk::Book.destroy_all
         user = User.create!
         book = user.wkbk_books.create!(title: "アヒル")

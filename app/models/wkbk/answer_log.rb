@@ -1,3 +1,24 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Answer log (wkbk_answer_logs as Wkbk::AnswerLog)
+#
+# |----------------+-------------+------------+-------------+--------------+-------|
+# | name           | desc        | type       | opts        | refs         | index |
+# |----------------+-------------+------------+-------------+--------------+-------|
+# | id             | ID          | integer(8) | NOT NULL PK |              |       |
+# | article_id     | Article     | integer(8) | NOT NULL    |              | A     |
+# | answer_kind_id | Answer kind | integer(8) | NOT NULL    |              | B     |
+# | book_id        | Book        | integer(8) | NOT NULL    |              | C     |
+# | user_id        | User        | integer(8) | NOT NULL    | => ::User#id | D     |
+# | spent_sec      | Spent sec   | integer(4) | NOT NULL    |              | E     |
+# | created_at     | 作成日時    | datetime   | NOT NULL    |              | F     |
+# |----------------+-------------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
 module Wkbk
   class AnswerLog < ApplicationRecord
     # with_options(readonly: true) do

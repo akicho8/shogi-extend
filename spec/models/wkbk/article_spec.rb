@@ -20,6 +20,7 @@
 # | mate_skip           | Mate skip           | boolean      | NOT NULL            |              |       |
 # | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | difficulty          | Difficulty          | integer(4)   | NOT NULL            |              | G     |
+# | answer_logs_count   | Answer logs count   | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
 # | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
@@ -35,17 +36,17 @@ module Wkbk
     include WkbkSupportMethods
     include ActiveJob::TestHelper # for perform_enqueued_jobs
 
-    it do
+    it "works" do
       assert { article1.valid? }
     end
 
-    describe "update_from_js 保存" do
+    describe "update_from_js" do
       let :params do
         {
           :init_sfen        => "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
           :moves_answers    => [{"moves_str"=>"4c5b"}],
           :time_limit_clock => "1999-12-31T15:03:00.000Z",
-          :tag_list   => ["tag1 tag2", "tag3"],
+          :tag_list         => ["tag1 tag2", "tag3"],
         }
       end
 
@@ -69,7 +70,7 @@ module Wkbk
         article = user1.wkbk_articles.build
         proc { article.update_from_js(params) }.should raise_error(ActiveRecord::RecordInvalid)
         assert { article.persisted? == false }
-        assert { article.turn_max == nil }
+        assert { article.turn_max == 0 }
       end
     end
 
@@ -127,7 +128,7 @@ module Wkbk
     end
 
     it "page_url" do
-      assert { article1.page_url == "http://0.0.0.0:4000/rack/articles/#{article1.id}/edit" }
+      assert { article1.page_url == "http://0.0.0.0:4000/rack/articles/#{article1.key}" }
     end
 
     it "share_board_png_url" do

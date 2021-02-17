@@ -16,22 +16,6 @@ module WkbkSupportMethods
     let(:article1) do
       user1.wkbk_articles.create_mock1
     end
-
-    # let(:article_message1) do
-    #   article1.messages.create!(user: user2, body: "(body)")
-    # end
-    #
-    # let(:notification1) do
-    #   user1.notifications.create!(article_message: article_message1)
-    # end
-    #
-    # let(:room1) do
-    #   Wkbk::Room.create_with_members!([user1, user2])
-    # end
-    #
-    # let(:battle1) do
-    #   room1.battle_create_with_members!
-    # end
   end
 end
 

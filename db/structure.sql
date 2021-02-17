@@ -1717,6 +1717,44 @@ CREATE TABLE `users` (
   KEY `index_users_on_race_key` (`race_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `wkbk_answer_kinds`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wkbk_answer_kinds` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_wkbk_answer_kinds_on_key` (`key`),
+  KEY `index_wkbk_answer_kinds_on_position` (`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `wkbk_answer_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wkbk_answer_logs` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `article_id` bigint(20) NOT NULL COMMENT '出題',
+  `answer_kind_id` bigint(20) NOT NULL COMMENT '解答',
+  `book_id` bigint(20) NOT NULL COMMENT '対戦部屋',
+  `user_id` bigint(20) NOT NULL COMMENT '自分',
+  `spent_sec` int(11) NOT NULL COMMENT '使用時間',
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_wkbk_answer_logs_on_article_id` (`article_id`),
+  KEY `index_wkbk_answer_logs_on_answer_kind_id` (`answer_kind_id`),
+  KEY `index_wkbk_answer_logs_on_book_id` (`book_id`),
+  KEY `index_wkbk_answer_logs_on_user_id` (`user_id`),
+  KEY `index_wkbk_answer_logs_on_spent_sec` (`spent_sec`),
+  KEY `index_wkbk_answer_logs_on_created_at` (`created_at`),
+  CONSTRAINT `fk_rails_c2fb887f6e` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_d0ad6b6cc7` FOREIGN KEY (`answer_kind_id`) REFERENCES `wkbk_answer_kinds` (`id`),
+  CONSTRAINT `fk_rails_eb31249ac9` FOREIGN KEY (`book_id`) REFERENCES `wkbk_books` (`id`),
+  CONSTRAINT `fk_rails_fd4f2b6aef` FOREIGN KEY (`article_id`) REFERENCES `wkbk_articles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1724,28 +1762,31 @@ CREATE TABLE `wkbk_articles` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `user_id` bigint(20) NOT NULL COMMENT '作成者',
+  `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
   `lineage_id` bigint(20) NOT NULL COMMENT '種類',
-  `book_id` bigint(20) DEFAULT NULL COMMENT '本',
   `init_sfen` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '問題',
   `viewpoint` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '視点',
-  `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'タイトル',
-  `description` varchar(1024) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '説明',
-  `turn_max` int(11) DEFAULT NULL COMMENT '最大手数',
-  `mate_skip` tinyint(1) DEFAULT NULL COMMENT '詰みチェックをスキップする',
-  `direction_message` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'メッセージ',
+  `title` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'タイトル',
+  `description` varchar(5000) COLLATE utf8mb4_bin NOT NULL COMMENT '説明',
+  `direction_message` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'メッセージ',
+  `turn_max` int(11) NOT NULL COMMENT '最大手数',
+  `mate_skip` tinyint(1) NOT NULL COMMENT '詰みチェックをスキップする',
   `moves_answers_count` int(11) NOT NULL DEFAULT '0' COMMENT '解答数',
+  `difficulty` int(11) NOT NULL COMMENT '難易度',
+  `answer_logs_count` int(11) NOT NULL DEFAULT '0' COMMENT '解答数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_wkbk_articles_on_key` (`key`),
+  UNIQUE KEY `index_wkbk_articles_on_key` (`key`),
   KEY `index_wkbk_articles_on_user_id` (`user_id`),
+  KEY `index_wkbk_articles_on_folder_id` (`folder_id`),
   KEY `index_wkbk_articles_on_lineage_id` (`lineage_id`),
-  KEY `index_wkbk_articles_on_book_id` (`book_id`),
   KEY `index_wkbk_articles_on_init_sfen` (`init_sfen`),
   KEY `index_wkbk_articles_on_turn_max` (`turn_max`),
-  CONSTRAINT `fk_rails_0af0afa6ca` FOREIGN KEY (`book_id`) REFERENCES `wkbk_books` (`id`),
+  KEY `index_wkbk_articles_on_difficulty` (`difficulty`),
   CONSTRAINT `fk_rails_7748a2a1da` FOREIGN KEY (`lineage_id`) REFERENCES `wkbk_lineages` (`id`),
-  CONSTRAINT `fk_rails_819a1bdac0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `fk_rails_819a1bdac0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_aad2792528` FOREIGN KEY (`folder_id`) REFERENCES `wkbk_folders` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_books`;
@@ -1757,19 +1798,42 @@ CREATE TABLE `wkbk_books` (
   `user_id` bigint(20) NOT NULL COMMENT '作成者',
   `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
   `sequence_id` bigint(20) NOT NULL COMMENT '順序',
-  `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'タイトル',
-  `description` varchar(1024) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '説明',
-  `articles_count` int(11) NOT NULL DEFAULT '0' COMMENT '記事数',
+  `title` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'タイトル',
+  `description` varchar(5000) COLLATE utf8mb4_bin NOT NULL COMMENT '説明',
+  `bookships_count` int(11) NOT NULL DEFAULT '0' COMMENT '記事数',
+  `answer_logs_count` int(11) NOT NULL DEFAULT '0' COMMENT '解答数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_wkbk_books_on_key` (`key`),
+  UNIQUE KEY `index_wkbk_books_on_key` (`key`),
   KEY `index_wkbk_books_on_user_id` (`user_id`),
   KEY `index_wkbk_books_on_folder_id` (`folder_id`),
   KEY `index_wkbk_books_on_sequence_id` (`sequence_id`),
   CONSTRAINT `fk_rails_44fef78592` FOREIGN KEY (`folder_id`) REFERENCES `wkbk_folders` (`id`),
   CONSTRAINT `fk_rails_e41ea88b96` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_f6d4c81ca5` FOREIGN KEY (`sequence_id`) REFERENCES `wkbk_sequences` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `wkbk_bookships`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wkbk_bookships` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '作成者',
+  `book_id` bigint(20) NOT NULL COMMENT '問題集',
+  `article_id` bigint(20) NOT NULL COMMENT '問題',
+  `position` int(11) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_wkbk_bookships_on_book_id_and_article_id` (`book_id`,`article_id`),
+  KEY `index_wkbk_bookships_on_user_id` (`user_id`),
+  KEY `index_wkbk_bookships_on_book_id` (`book_id`),
+  KEY `index_wkbk_bookships_on_article_id` (`article_id`),
+  KEY `index_wkbk_bookships_on_position` (`position`),
+  CONSTRAINT `fk_rails_086541430d` FOREIGN KEY (`book_id`) REFERENCES `wkbk_books` (`id`),
+  CONSTRAINT `fk_rails_4606d8c214` FOREIGN KEY (`article_id`) REFERENCES `wkbk_articles` (`id`),
+  CONSTRAINT `fk_rails_8f080017eb` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_folders`;
@@ -1779,9 +1843,12 @@ CREATE TABLE `wkbk_folders` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `position` int(11) NOT NULL,
+  `books_count` int(11) NOT NULL DEFAULT '0' COMMENT '問題集数',
+  `articles_count` int(11) NOT NULL DEFAULT '0' COMMENT '問題数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_wkbk_folders_on_key` (`key`),
   KEY `index_wkbk_folders_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1795,6 +1862,7 @@ CREATE TABLE `wkbk_lineages` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_wkbk_lineages_on_key` (`key`),
   KEY `index_wkbk_lineages_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1807,11 +1875,13 @@ CREATE TABLE `wkbk_moves_answers` (
   `moves_count` int(11) NOT NULL COMMENT 'N手',
   `moves_str` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '連続した指し手',
   `moves_human_str` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '人間向け指し手',
+  `position` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_wkbk_moves_answers_on_article_id` (`article_id`),
   KEY `index_wkbk_moves_answers_on_moves_count` (`moves_count`),
+  KEY `index_wkbk_moves_answers_on_position` (`position`),
   CONSTRAINT `fk_rails_c8b1910065` FOREIGN KEY (`article_id`) REFERENCES `wkbk_articles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1825,20 +1895,8 @@ CREATE TABLE `wkbk_sequences` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `index_wkbk_sequences_on_key` (`key`),
   KEY `index_wkbk_sequences_on_position` (`position`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `wkbk_source_abouts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `wkbk_source_abouts` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int(11) NOT NULL,
-  `created_at` datetime(6) NOT NULL,
-  `updated_at` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_wkbk_source_abouts_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xy_master_rules`;
@@ -1908,6 +1966,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20201229171906'),
 ('20201229171907'),
 ('20210121210600'),
-('20210201231200');
+('20210215234700');
 
 

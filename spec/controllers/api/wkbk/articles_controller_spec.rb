@@ -20,6 +20,7 @@
 # | mate_skip           | Mate skip           | boolean      | NOT NULL            |              |       |
 # | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | difficulty          | Difficulty          | integer(4)   | NOT NULL            |              | G     |
+# | answer_logs_count   | Answer logs count   | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
 # | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|

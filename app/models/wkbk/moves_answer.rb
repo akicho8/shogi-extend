@@ -141,7 +141,7 @@ module Wkbk
 
     # 最大の手数を求める
     # SQLで調べているためすべてが保存されてから実行する
-    after_save do
+    after_save_commit do
       if saved_change_to_attribute?(:moves_count)
         if article
           article.update_column(:turn_max, article.moves_answers.maximum("moves_count"))
@@ -149,7 +149,7 @@ module Wkbk
       end
     end
 
-    after_destroy do
+    after_destroy_commit do
       if article
         article.update_column(:turn_max, article.moves_answers.maximum("moves_count") || 0)
       end

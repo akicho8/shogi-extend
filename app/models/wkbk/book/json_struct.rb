@@ -198,6 +198,7 @@ module Wkbk
               :description,
               :direction_message,
               :turn_max,
+              :difficulty,
             ],
             methods: [
               :folder_key,

@@ -3,20 +3,21 @@
 #
 # Book (wkbk_books as Wkbk::Book)
 #
-# |-----------------+--------------------+--------------+---------------------+--------------+-------|
-# | name            | desc               | type         | opts                | refs         | index |
-# |-----------------+--------------------+--------------+---------------------+--------------+-------|
-# | id              | ID                 | integer(8)   | NOT NULL PK         |              |       |
-# | key             | ユニークなハッシュ | string(255)  | NOT NULL            |              | A!    |
-# | user_id         | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | folder_id       | Folder             | integer(8)   | NOT NULL            |              | C     |
-# | sequence_id     | Sequence           | integer(8)   | NOT NULL            |              | D     |
-# | title           | タイトル           | string(100)  | NOT NULL            |              |       |
-# | description     | 説明               | string(5000) | NOT NULL            |              |       |
-# | bookships_count | Bookships count    | integer(4)   | DEFAULT(0) NOT NULL |              |       |
-# | created_at      | 作成日時           | datetime     | NOT NULL            |              |       |
-# | updated_at      | 更新日時           | datetime     | NOT NULL            |              |       |
-# |-----------------+--------------------+--------------+---------------------+--------------+-------|
+# |-------------------+--------------------+--------------+---------------------+--------------+-------|
+# | name              | desc               | type         | opts                | refs         | index |
+# |-------------------+--------------------+--------------+---------------------+--------------+-------|
+# | id                | ID                 | integer(8)   | NOT NULL PK         |              |       |
+# | key               | ユニークなハッシュ | string(255)  | NOT NULL            |              | A!    |
+# | user_id           | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
+# | folder_id         | Folder             | integer(8)   | NOT NULL            |              | C     |
+# | sequence_id       | Sequence           | integer(8)   | NOT NULL            |              | D     |
+# | title             | タイトル           | string(100)  | NOT NULL            |              |       |
+# | description       | 説明               | string(5000) | NOT NULL            |              |       |
+# | bookships_count   | Bookships count    | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# | answer_logs_count | Answer logs count  | integer(4)   | DEFAULT(0) NOT NULL |              |       |
+# | created_at        | 作成日時           | datetime     | NOT NULL            |              |       |
+# | updated_at        | 更新日時           | datetime     | NOT NULL            |              |       |
+# |-------------------+--------------------+--------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -451,7 +452,7 @@ module Wkbk
 
     concerning :BookshipMethods do
       included do
-        has_many :bookships, dependent: :destroy do # 問題集と問題の中間情報たち
+        has_many :bookships, dependent: :destroy, inverse_of: :book do # 問題集と問題の中間情報たち
           def access_restriction_by(current_user)
             s = all
             if proxy_association.owner.user != current_user
@@ -485,7 +486,7 @@ module Wkbk
 
     concerning :AnswerLogMethods do
       included do
-        has_many :answer_logs, dependent: :destroy
+        has_many :answer_logs, dependent: :destroy, inverse_of: :book
         has_many :answered_answer_kinds, through: :answer_logs, source: :answer_kind
         has_many :answered_articles, through: :answer_logs, source: :article
         has_many :answered_users,    through: :answer_logs, source: :user

@@ -20,6 +20,7 @@
 # | mate_skip           | Mate skip           | boolean      | NOT NULL            |              |       |
 # | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | difficulty          | Difficulty          | integer(4)   | NOT NULL            |              | G     |
+# | answer_logs_count   | Answer logs count   | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
 # | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
 # |---------------------+---------------------+--------------+---------------------+--------------+-------|
@@ -135,7 +136,7 @@ module Wkbk
 
     acts_as_taggable
 
-    has_many :moves_answers, -> { order(:position) }, dependent: :destroy
+    has_many :moves_answers, -> { order(:position) }, dependent: :destroy, inverse_of: :article
 
     before_validation do
       # if book
@@ -458,7 +459,7 @@ module Wkbk
 
     concerning :BookshipMethods do
       included do
-        has_many :bookships, dependent: :destroy # 問題集と問題の中間情報たち
+        has_many :bookships, dependent: :destroy, inverse_of: :article # 問題集と問題の中間情報たち
         has_many :books, through: :bookships     # 自分が入っている問題集たち
 
         # 問題集に追加している問題を更新すると問題集たちの更新日時を更新する
@@ -472,7 +473,7 @@ module Wkbk
 
     concerning :AnswerLogMethods do
       included do
-        has_many :answer_logs, dependent: :destroy
+        has_many :answer_logs, dependent: :destroy, inverse_of: :article
         has_many :answered_answer_kinds, through: :answer_logs, source: :answer_kind
         has_many :answered_books, through: :answer_logs, source: :book
         has_many :answered_users, through: :answer_logs, source: :user

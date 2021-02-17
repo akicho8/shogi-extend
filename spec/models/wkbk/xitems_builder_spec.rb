@@ -21,6 +21,7 @@ module Wkbk
       records = xitems_builder.answer_log_stat_records
       assert { records[0].correct_count == 2 }
       assert { records[0].spent_sec_total == 3 }
+      # tp xitems_builder.to_a
 
       # tp records
       # |----+------------+---------------+---------------+-----------------+---------------------|
