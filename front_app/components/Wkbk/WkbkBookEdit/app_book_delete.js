@@ -1,5 +1,9 @@
 export const app_book_delete = {
   methods: {
+    download_url(book) {
+      return `${this.$config.MY_SITE_URL}/api/wkbk/books/download?book_key=${book.key}`
+    },
+    
     book_delete_handle(book) {
       this.sound_play("click")
       if (book.new_record_p) {

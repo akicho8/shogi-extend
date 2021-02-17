@@ -491,5 +491,11 @@ module Wkbk
         has_many :answered_users,    through: :answer_logs, source: :user
       end
     end
+
+    concerning :ZipDownloadMethods do
+      def to_send_data_params(params)
+        BookArchive.new(params.merge(book: self)).to_send_data_params
+      end
+    end
   end
 end

@@ -56,12 +56,13 @@ module Wkbk
       end
     end
 
-    after_create_commit do
-      SlackAgent.message_send(key: "問題集に問題追加", body: "#{user.name}が#{book.title}に#{book.title}を追加")
-    end
-
-    after_destroy_commit do
-      SlackAgent.message_send(key: "問題集から問題除去", body: "#{user.name}が#{book.title}から#{book.title}を除去")
+    if Rails.env.development?
+      after_create_commit do
+        SlackAgent.message_send(key: "問題集に問題追加", body: "#{user.name}が#{book.title}に#{article.title}を追加")
+      end
+      after_destroy_commit do
+        SlackAgent.message_send(key: "問題集から問題除去", body: "#{user.name}が#{book.title}から#{article.title}を除去")
+      end
     end
   end
 end

@@ -155,14 +155,27 @@ module Wkbk
       end
     end
 
+    def to_kif
+      [
+        "*#{article.title}\n",
+        "*#{article.page_url}\n",
+        "*変化#{position.next}\n",
+        parser.to_kif,
+      ].join
+    end
+
     private
 
     def sfen
       "#{article.init_sfen} moves #{moves_str}"
     end
 
+    def parser
+      @parser ||= Converter.parse(sfen)
+    end
+
     def mediator
-      @mediator ||= Converter.parse(sfen).mediator
+      @mediator ||= parser.mediator
     end
 
     # 玉を除いて足りない駒たち

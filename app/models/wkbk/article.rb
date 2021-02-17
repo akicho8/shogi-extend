@@ -206,7 +206,7 @@ module Wkbk
     # end
 
     def page_url(options = {})
-      UrlProxy.wrap2("/rack/articles/#{id}/edit")
+      UrlProxy.wrap2("/rack/articles/#{key}")
     end
 
     def share_board_png_url

@@ -143,6 +143,7 @@ Rails.application.routes.draw do
         get :edit
         post :save
         delete :destroy
+        get :download
       end
       namespace :articles do
         get :index

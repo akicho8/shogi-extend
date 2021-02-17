@@ -25,7 +25,7 @@
 module Api
   module Wkbk
     class BooksController < ApplicationController
-      before_action :api_login_required, only: [:edit, :save, :destroy]
+      before_action :api_login_required, only: [:edit, :save, :destroy, :download]
 
       # http://0.0.0.0:3000/api/wkbk/books.json
       # http://0.0.0.0:3000/api/wkbk/books.json?scope=everyone
@@ -65,7 +65,7 @@ module Api
         s = current_user.wkbk_books
         if v = params[:book_key]
           book = s.find_by!(key: v)
-          # edit_permission_valid!(book)
+        # edit_permission_valid!(book)
         else
           book = s.build
           book.default_assign
@@ -98,6 +98,12 @@ module Api
       def destroy
         current_user.wkbk_books.find(params[:book_id]).destroy!
         render json: {}
+      end
+
+      def download
+        book = ::Wkbk::Book.find_by!(key: params[:book_key])
+        show_can!(book)
+        send_data(*book.to_send_data_params(params.merge(current_user: current_user)))
       end
 
       private

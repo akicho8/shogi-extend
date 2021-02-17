@@ -87,7 +87,7 @@ export default {
   },
 
   methods: {
-    save_handle() {
+    book_save_handle() {
       this.sound_play("click")
 
       if (this.sns_login_required()) {
