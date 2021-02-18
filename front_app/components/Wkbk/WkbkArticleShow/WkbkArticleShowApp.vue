@@ -1,44 +1,45 @@
 <template lang="pug">
-.WkbkArticleShowApp
-  DebugBox
-    template(v-if="article")
-      p article.book_keys: {{article.book_keys}}
-      p article.user.id: {{article.user && article.user.id}}
-      p g_current_user.id: {{g_current_user && g_current_user.id}}
-      p owner_p: {{owner_p}}
-      p editable_p: {{editable_p}}
+client-only
+  .WkbkArticleShowApp
+    DebugBox
+      template(v-if="article")
+        p article.book_keys: {{article.book_keys}}
+        p article.user.id: {{article.user && article.user.id}}
+        p g_current_user.id: {{g_current_user && g_current_user.id}}
+        p owner_p: {{owner_p}}
+        p editable_p: {{editable_p}}
 
-  p(v-if="$fetchState.error" v-text="$fetchState.error.message")
-  b-loading(:active="$fetchState.pending")
+    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    b-loading(:active="$fetchState.pending")
 
-  WkbkArticleShowSidebar(:base="base")
-  WkbkArticleShowNavbar(:base="base")
+    WkbkArticleShowSidebar(:base="base")
+    WkbkArticleShowNavbar(:base="base")
 
-  .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
-    .container
-      b-tabs.MainTabs(v-model="tab_index" expanded @input="show_tab_change_handle" v-if="article")
-        b-tab-item(label="配置")
-        b-tab-item
-          template(slot="header")
-            span
-              | 正解
-              b-tag.ml-1(rounded v-if="article.moves_answers.length >= 1") {{article.moves_answers.length}}
-        b-tab-item(label="情報")
-        b-tab-item
-          template(slot="header")
-            span 検証
+    .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
+      .container
+        b-tabs.MainTabs(v-model="tab_index" expanded @input="show_tab_change_handle" v-if="article")
+          b-tab-item(label="配置")
+          b-tab-item
+            template(slot="header")
+              span.is-inline-flex.is-align-items-center
+                | 正解
+                b-tag.ml-1(rounded v-if="article.moves_answers.length >= 1") {{article.moves_answers.length}}
+          b-tab-item(label="情報")
+          b-tab-item
+            template(slot="header")
+              span 検証
 
-    MainSection.is_mobile_padding_zero
-     .container
-       keep-alive
-         WkbkArticleShowPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleShowPlacement")
-         WkbkArticleShowAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleShowAnswer")
-         WkbkArticleShowForm(:base="base"       v-if="current_tab_info.key === 'form'")
-         WkbkArticleShowValidation(:base="base" v-if="current_tab_info.key === 'validation'")
+      MainSection.is_mobile_padding_zero
+       .container
+         keep-alive
+           WkbkArticleShowPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleShowPlacement")
+           WkbkArticleShowAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleShowAnswer")
+           WkbkArticleShowForm(:base="base"       v-if="current_tab_info.key === 'form'")
+           WkbkArticleShowValidation(:base="base" v-if="current_tab_info.key === 'validation'")
 
-  DebugPre
-    | {{article}}
-    //- | {{books}}
+    DebugPre
+      | {{article}}
+      //- | {{books}}
 </template>
 
 <script>

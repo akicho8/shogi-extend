@@ -2,7 +2,7 @@
 .WkbkArticleIndexTag(v-if="tags.length >= 1")
   b-taglist
     template(v-for="tag in tags")
-      b-tag(closable @close="base.tag_remove_handle(tag)")
+      b-tag(closable type="is-primary is-light" @close="base.tag_remove_handle(tag)")
         | {{tag}}
 </template>
 

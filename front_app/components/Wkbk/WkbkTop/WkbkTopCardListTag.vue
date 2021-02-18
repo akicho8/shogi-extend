@@ -3,7 +3,7 @@
   .column
     b-taglist
       template(v-for="tag in base.tags")
-        b-tag(closable @close="base.tag_remove_handle(tag)")
+        b-tag(closable type="is-primary is-light" @close="base.tag_remove_handle(tag)")
           | {{tag}}
 </template>
 

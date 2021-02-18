@@ -20,13 +20,13 @@ client-only
           b-tab-item(label="配置")
           b-tab-item
             template(slot="header")
-              span
+              span.is-inline-flex.is-align-items-center
                 | 正解
                 b-tag.ml-1(rounded v-if="article.moves_answers.length >= 1") {{article.moves_answers.length}}
           b-tab-item(label="情報")
           b-tab-item
             template(slot="header")
-              span
+              span.is-inline-flex.is-align-items-center
                 | 検証
                 b-tag.ml-1(rounded v-if="valid_count >= 1" type="is-primary") OK
 
