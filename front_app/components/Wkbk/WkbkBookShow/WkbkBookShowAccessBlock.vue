@@ -27,7 +27,7 @@ export default {
 @import "../support.sass"
 .WkbkBookShowAccessBlock
   +touch
-    margin: 1.5rem
+    padding: 1.5rem
   +desktop
-    margin: 1.5rem 0
+    padding: 1.5rem 0
 </style>

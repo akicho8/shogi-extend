@@ -32,9 +32,8 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .WkbkBookShowTop
-  .MainSection.section
-    +mobile
-      padding: 1.0rem 0.75rem
-    +tablet
-      padding: 1.0rem 0.75rem
+  +mobile
+    padding: 1.0rem 0.75rem
+  +tablet
+    padding: 1.0rem 0.75rem
 </style>
