@@ -125,6 +125,7 @@ export default {
       max-height: none
       width:  calc(1200px * 0.15)
       height: calc( 630px * 0.15)
+      border-radius: 6px
 
   .row_title
     margin-left: 0.5rem
