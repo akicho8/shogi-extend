@@ -29,13 +29,11 @@ client-only
             template(slot="header")
               span 検証
 
-      MainSection.is_mobile_padding_zero
-       .container
-         keep-alive
-           WkbkArticleShowPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleShowPlacement")
-           WkbkArticleShowAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleShowAnswer")
-           WkbkArticleShowForm(:base="base"       v-if="current_tab_info.key === 'form'")
-           WkbkArticleShowValidation(:base="base" v-if="current_tab_info.key === 'validation'")
+      keep-alive
+        WkbkArticleShowPlacement(:base="base"  v-if="current_tab_info.key === 'placement'" ref="WkbkArticleShowPlacement")
+        WkbkArticleShowAnswer(:base="base"     v-if="current_tab_info.key === 'answer'" ref="WkbkArticleShowAnswer")
+        WkbkArticleShowForm(:base="base"       v-if="current_tab_info.key === 'form'")
+        WkbkArticleShowValidation(:base="base" v-if="current_tab_info.key === 'validation'")
 
     DebugPre
       | {{article}}
@@ -149,9 +147,8 @@ export default {
       border: 1px dashed change_color($success, $alpha: 0.5)
 
 .WkbkArticleShowApp
-  .MainSection.section
-    padding: 0
-
+  // .MainSection.section
+  //   padding: 0
   .MainTabs
     .tab-content
       display: none

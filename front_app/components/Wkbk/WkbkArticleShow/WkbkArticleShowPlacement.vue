@@ -1,28 +1,30 @@
 <template lang="pug">
-.WkbkArticleShowPlacement.columns.is-gapless.is-centered
-  .column
-    .CustomShogiPlayerWrap
-      CustomShogiPlayer(
-        sp_mobile_vertical="is_mobile_vertical_off"
-        sp_run_mode="edit_mode"
-        :sp_body="base.article.init_sfen"
-        :sp_turn="0"
-        :sp_viewpoint="base.article.viewpoint"
-        :sp_sound_body_changed="false"
-        :sp_sound_enabled="false"
-        sp_slider="is_slider_on"
-        sp_controller="is_controller_on"
-        ref="main_sp"
-        )
-      .footer_buttons
-        .buttons.is-centered.are-small.is-marginless.mt-3
-          b-button(@click="king_formation_auto_set(true)") 詰将棋検討用玉配置
-          b-button(@click="king_formation_auto_set(false)") 玉回収
+MainSection.WkbkArticleShowPlacement
+  .container
+    .columns.is-centered
+      .column
+        .CustomShogiPlayerWrap
+          CustomShogiPlayer(
+            sp_mobile_vertical="is_mobile_vertical_off"
+            sp_run_mode="edit_mode"
+            :sp_body="base.article.init_sfen"
+            :sp_turn="0"
+            :sp_viewpoint="base.article.viewpoint"
+            :sp_sound_body_changed="false"
+            :sp_sound_enabled="false"
+            sp_slider="is_slider_on"
+            sp_controller="is_controller_on"
+            ref="main_sp"
+            )
+          .footer_buttons
+            .buttons.is-centered.are-small.is-marginless.mt-3
+              b-button(@click="king_formation_auto_set(true)") 詰将棋検討用玉配置
+              b-button(@click="king_formation_auto_set(false)") 玉回収
 
-        .buttons.is-centered.are-small.is-marginless.mt-3
-          PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-          KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
-          KifCopyButton(@click="kifu_copy_handle") コピー
+            .buttons.is-centered.are-small.is-marginless.mt-3
+              PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+              KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
+              KifCopyButton(@click="kifu_copy_handle") コピー
 </template>
 
 <script>
@@ -81,6 +83,8 @@ export default {
       border: 1px dashed change_color($danger, $alpha: 0.5)
 
 .WkbkArticleShowPlacement
+  padding: 0
+
   .column
     display: flex
     justify-content: center

@@ -1,21 +1,23 @@
 <template lang="pug">
-.WkbkArticleShowAnswer.columns.is-gapless.is-centered
-  .column
-    b-tabs(v-model="base.answer_tab_index" position="is-centered" :vertical="false" :expanded="true" :animated="false" v-if="base.article.moves_answers.length >= 1" @input="sound_play('click')")
-      template(v-for="(e, i) in base.article.moves_answers")
-        b-tab-item(:label="`${i + 1}`" :key="e.id")
-          .CustomShogiPlayerWrap
-            CustomShogiPlayer(
-              sp_mobile_vertical="is_mobile_vertical_off"
-              sp_run_mode="view_mode"
-              :sp_body="base.article.init_sfen_with(e)"
-              :sp_viewpoint="base.article.viewpoint"
-              :sp_turn="-1"
-              :sp_sound_body_changed="false"
-              sp_summary="is_summary_off"
-              sp_slider="is_slider_on"
-              sp_controller="is_controller_on"
-              )
+MainSection.WkbkArticleShowAnswer
+  .container
+    .columns.is-centered
+      .column
+        b-tabs(v-model="base.answer_tab_index" position="is-centered" :vertical="false" :expanded="true" :animated="false" v-if="base.article.moves_answers.length >= 1" @input="sound_play('click')")
+          template(v-for="(e, i) in base.article.moves_answers")
+            b-tab-item(:label="`${i + 1}`" :key="e.id")
+              .CustomShogiPlayerWrap
+                CustomShogiPlayer(
+                  sp_mobile_vertical="is_mobile_vertical_off"
+                  sp_run_mode="view_mode"
+                  :sp_body="base.article.init_sfen_with(e)"
+                  :sp_viewpoint="base.article.viewpoint"
+                  :sp_turn="-1"
+                  :sp_sound_body_changed="false"
+                  sp_summary="is_summary_off"
+                  sp_slider="is_slider_on"
+                  sp_controller="is_controller_on"
+                  )
 </template>
 
 <script>
@@ -35,6 +37,8 @@ export default {
     border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .WkbkArticleShowAnswer
+  padding: 0
+
   .column
     display: flex
     align-items: center

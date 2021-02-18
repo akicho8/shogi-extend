@@ -59,6 +59,7 @@ export default {
 
 .WkbkArticleEditAnswer
   padding: 0
+
   .LeftColumn.column
     display: flex
     align-items: center

@@ -1,39 +1,40 @@
 <template lang="pug">
-.WkbkArticleShowForm
-  .columns.is-gapless
-    .column
-      b-field(label="タイトル")
-        .control
-          | {{base.article.title}}
-        //- b-input(v-model.trim="base.article.title" required)
+MainSection.WkbkArticleShowForm
+  .container
+    .columns.is-gapless
+      .column
+        b-field(label="タイトル")
+          .control
+            | {{base.article.title}}
+          //- b-input(v-model.trim="base.article.title" required)
 
-      b-field(label="解説")
-        .control
-          p(v-html="simple_format(auto_link(base.article.description))")
+        b-field(label="解説")
+          .control
+            p(v-html="simple_format(auto_link(base.article.description))")
 
-      b-field(label="問題集" v-if="base.book")
-        .control
-          | {{base.article.book.title}}
+        b-field(label="問題集" v-if="base.book")
+          .control
+            | {{base.article.book.title}}
 
-      b-field(label="種類")
-        .control
-          | {{base.article.lineage.name}}
+        b-field(label="種類")
+          .control
+            | {{base.article.lineage.name}}
 
-      b-field(label="出題時の一言")
-        .control
-          | {{base.article.direction_message}}
+        b-field(label="出題時の一言")
+          .control
+            | {{base.article.direction_message}}
 
-      b-field(label="難易度" custom-class="is-small")
-        b-rate(:value="base.article.difficulty" spaced :max="5" :show-score="false" disabled)
+        b-field(label="難易度" custom-class="is-small")
+          b-rate(:value="base.article.difficulty" spaced :max="5" :show-score="false" disabled)
 
-      b-field(label="タグ")
-        .control
-          b-taglist
-            b-tag.is-clickable(v-for="tag in base.article.tag_list" :key="tag" rounded @click.native.prevent.stop="base.tag_search_handle(tag)") {{tag}}
+        b-field(label="タグ")
+          .control
+            b-taglist
+              b-tag.is-clickable(v-for="tag in base.article.tag_list" :key="tag" rounded @click.native.prevent.stop="base.tag_search_handle(tag)") {{tag}}
 
-      b-field(label="公開設定")
-        .control
-          WkbkFolder(:folder_key="base.article.folder_key")
+        b-field(label="公開設定")
+          .control
+            WkbkFolder(:folder_key="base.article.folder_key")
 </template>
 
 <script>
@@ -77,12 +78,10 @@ export default {
 @import "../support.sass"
 .WkbkArticleShowForm
   +mobile
-    --gap: calc(#{$wkbk_share_gap} * 0.75)
+    padding: 1.0rem
   +tablet
-    --gap: #{$wkbk_share_gap}
-
-  margin: var(--gap)
+    padding: 1.5rem
 
   .field:not(:first-child)
-    margin-top: var(--gap)
+    margin-top: 1.5rem
 </style>
