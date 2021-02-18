@@ -24,7 +24,7 @@ MainSection.is_mobile_padding_zero.WkbkArticleEditAnswer
       .column.RightColumn
         b-tabs(v-model="base.answer_tab_index" position="is-centered" :vertical="false" :expanded="true" :animated="false" v-if="base.article.moves_answers.length >= 1" @input="sound_play('click')")
           template(v-for="(e, i) in base.article.moves_answers")
-            b-tab-item(:label="`${i + 1}`" :key="`tab_${i}_${e.moves_str}`")
+            b-tab-item(:label="`${i + 1}`" :key="e.moves_str")
               .CustomShogiPlayerWrap
                 CustomShogiPlayer(
                   sp_mobile_vertical="is_mobile_vertical_off"

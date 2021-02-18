@@ -99,7 +99,12 @@ module Wkbk
                   :name,
                 ],
               },
-              moves_answers: {},
+              moves_answers: {
+                only: [
+                  :id,
+                  :moves_str,
+                ],
+              },
               books: {
                 only: [
                   :key,
@@ -165,7 +170,13 @@ module Wkbk
                   :name,
                 ],
               },
-              moves_answers: {},
+              moves_answers: {
+                only: [
+                  :id,
+                  :moves_str,
+                  :moves_human_str,
+                ],
+              },
               books: {
                 only: [
                   :key,

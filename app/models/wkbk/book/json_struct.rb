@@ -207,7 +207,9 @@ module Wkbk
             include: {
               moves_answers: {
                 only: [
+                  :id,
                   :moves_str,
+                  :moves_human_str,
                 ],
               },
             },
