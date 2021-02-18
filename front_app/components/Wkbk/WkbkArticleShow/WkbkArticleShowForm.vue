@@ -1,7 +1,7 @@
 <template lang="pug">
 MainSection.WkbkArticleShowForm
   .container
-    .columns.is-gapless
+    .columns
       .column
         b-field(label="タイトル")
           .control

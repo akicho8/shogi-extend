@@ -141,7 +141,7 @@ export default {
   .WkbkArticleShowApp
     .container
       border: 1px dashed change_color($danger, $alpha: 0.5)
-    .columns.is-gapless
+    .columns
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .column
       border: 1px dashed change_color($success, $alpha: 0.5)

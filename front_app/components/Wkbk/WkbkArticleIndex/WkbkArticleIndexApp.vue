@@ -21,18 +21,6 @@ client-only
           WkbkArticleIndexTag(:base="base")
           WkbkArticleIndexTable(:base="base")
 
-      //- MainSection
-      //- .container.is-fluid
-      //- .columns.is-gapless
-      //-   .column.is-2
-      //-     b-sidebar(left position="static" open fullheight reduce)
-      //-       WkbkArticleIndexSidebarBody(:base="base")
-      //-   .column
-      //-     .right_block
-      //-       //- WkbkArticleIndexTab(:base="base")
-      //-       WkbkArticleIndexTag(:base="base")
-      //-       WkbkArticleIndexTable(:base="base")
-
     DebugPre {{$data}}
     DebugPre {{$fetchState.pending}}
 </template>

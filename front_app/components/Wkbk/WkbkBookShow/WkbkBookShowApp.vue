@@ -31,7 +31,6 @@ client-only
           WkbkBookShowAccessBlock(:base="base")
         template(v-else)
           WkbkBookShowSp(:base="base")
-        //- WkbkBookShowAnswer(:base="base")
       template(v-if="is_goal_p")
         WkbkBookShowGoal(:base="base")
 
@@ -149,15 +148,12 @@ export default {
   .WkbkBookShowApp
     .container
       border: 1px dashed change_color($danger, $alpha: 0.5)
-    .columns.is-gapless
+    .columns
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .column
       border: 1px dashed change_color($success, $alpha: 0.5)
 
 .WkbkBookShowApp
-  // .MainSection.section
-  //   padding: 0
-
   .MainTabs
     .tab-content
       display: none
