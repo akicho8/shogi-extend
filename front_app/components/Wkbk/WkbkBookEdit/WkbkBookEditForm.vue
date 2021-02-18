@@ -17,7 +17,7 @@
 
       b-field(label="タグ" label-position="on-border")
         //- https://buefy.org/documentation/taginput
-        b-taginput(v-model="base.book.tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
+        b-taginput(v-model="base.book.tag_list" rounded type="is-primary is-light" :on-paste-separators="[',', ' ']" :confirm-keys="[',', 'Tab', 'Enter', ' ']")
 
       b-field(label="公開設定" custom-class="is-small" :message="FolderInfo.fetch(base.book.folder_key).message.book")
         b-field.is-marginless

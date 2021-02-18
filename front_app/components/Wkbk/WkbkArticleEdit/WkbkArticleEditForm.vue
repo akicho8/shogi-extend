@@ -27,7 +27,7 @@ MainSection.WkbkArticleEditForm
 
         b-field(label="タグ" label-position="on-border")
           //- https://buefy.org/documentation/taginput
-          b-taginput(v-model="base.article.tag_list" rounded :confirm-key-codes="[13, 188, 9, 32]")
+          b-taginput(v-model="base.article.tag_list" rounded type="is-primary is-light" :on-paste-separators="[',', ' ']" :confirm-keys="[',', 'Tab', 'Enter', ' ']")
 
         b-field(label="公開設定" custom-class="is-small" :message="FolderInfo.fetch(base.article.folder_key).message.article")
           b-field.is-marginless
@@ -37,7 +37,7 @@ MainSection.WkbkArticleEditForm
                 span {{e.name}}
 
         .box(v-if="false")
-          b-field(label="この問題を含める問題集" custom-class="is-medium")
+          b-field(label="この問題を入れる問題集" custom-class="is-medium")
             .control.book_cb_buttons
               template(v-for="e in base.books")
                 b-field
@@ -47,7 +47,7 @@ MainSection.WkbkArticleEditForm
 
         .panel.mb-0
           .panel-heading
-            | この問題を含める問題集
+            | この問題を入れる問題集
           .panel-block.book_cb_buttons.is-block
             template(v-for="e in base.books")
               b-field
