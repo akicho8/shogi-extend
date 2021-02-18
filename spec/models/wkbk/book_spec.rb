@@ -59,7 +59,7 @@ module Wkbk
       other_user = User.create!
       records = book.to_xitems(other_user)
       assert { records.collect { |e| e[:article]["difficulty"] } == [3, 2, 1] } # private も空として含めるため3がある
-      assert { records[0][:article].title == nil }                              # private なので title を nil にしている
+      assert { records[0][:article]["title"] == nil }                           # private なので title を nil にしている
     end
 
     it "[TODO] as_json するまえに articles を preload しても as_json のタイミングで再度 O(n) のSQLが発生する再現" do

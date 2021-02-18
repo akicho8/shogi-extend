@@ -150,7 +150,7 @@ module Wkbk
     end
 
     after_destroy_commit do
-      if article
+      if article && !article.destroyed?
         article.update_column(:turn_max, article.moves_answers.maximum("moves_count") || 0)
       end
     end
