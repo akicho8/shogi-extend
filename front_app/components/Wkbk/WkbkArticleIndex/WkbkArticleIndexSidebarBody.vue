@@ -36,7 +36,7 @@
           b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
             b-icon(icon="dots-vertical" slot="trigger")
             template(v-for="e in base.ArticleIndexColumnInfo.values")
-              b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
+              b-dropdown-item.px-4(@click.native.prevent.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
                 span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}") {{e.name}}
 
 </template>

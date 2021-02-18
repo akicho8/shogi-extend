@@ -48,7 +48,7 @@
 
     b-table-column(v-slot="{row}" custom-key="tag_list"    field="tag_list"  :label="base.ArticleIndexColumnInfo.fetch('tag_list').name" :visible="!!base.visible_hash.tag_list")
       b-taglist
-        b-tag.is-clickable(v-for="tag in row.tag_list" :key="tag" rounded type="is-primary is-light" @click.native.stop="base.tag_search_handle(tag)") {{tag}}
+        b-tag.is-clickable(v-for="tag in row.tag_list" :key="tag" rounded type="is-primary is-light" @click.native.prevent.stop="base.tag_search_handle(tag)") {{tag}}
 
     b-table-column(v-slot="{row}" custom-key="book_title" field="books.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
       template(v-for="book in row.books")

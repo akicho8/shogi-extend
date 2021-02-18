@@ -15,7 +15,7 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fl
       //- https://pictogrammers.github.io/@mdi/font/5.4.55/
       b-icon(icon="table-row" slot="label")
       template(v-for="e in base.ArticleIndexColumnInfo.values")
-        b-navbar-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
+        b-navbar-item.px-4(@click.native.prevent.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
           .has-text-weight-bold(v-if="base.visible_hash[e.key]")
             | {{e.name}}
           .has-text-grey(v-else)

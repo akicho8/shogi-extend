@@ -130,7 +130,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemList
       //-
       //- b-table-column(v-slot="{row}" custom-key="tag_list"    field="tag_list"  :label="base.ArticleIndexColumnInfo.fetch('tag_list').name" :visible="!!base.visible_hash.tag_list")
       //-   //- b-taglist
-      //-   b-tag.is-clickable.mr-1(v-for="tag in row.tag_list" @click.native.stop="base.tag_search_handle(tag)" rounded)
+      //-   b-tag.is-clickable.mr-1(v-for="tag in row.tag_list" @click.native.prevent.stop="base.tag_search_handle(tag)" rounded)
       //-     | {{tag}}
       //-
       //- b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" label="作成日時") {{row_time_format(row.created_at)}}
@@ -144,7 +144,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemList
       //- b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0")
       //-   b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')" @click.native.prevent)
       //-     b-icon(icon="dots-vertical" slot="trigger")
-          //- b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
+          //- b-dropdown-item.px-4(@click.native.prevent.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
           //-   span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}") {{e.name}}
           //- b-dropdown-item(:separator="true")
           //- b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 7文字

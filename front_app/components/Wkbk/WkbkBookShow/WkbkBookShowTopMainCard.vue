@@ -25,7 +25,7 @@
             b-icon.ml-1(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
 
           b-taglist(v-if="base.book.tag_list.length >= 1")
-            b-tag.is-clickable(v-for="tag in base.book.tag_list" :key="tag" rounded type="is-primary is-light" @click.native.stop="base.tag_search_handle(tag)") {{tag}}
+            b-tag.is-clickable(v-for="tag in base.book.tag_list" :key="tag" rounded type="is-primary is-light" @click.native.prevent.stop="base.tag_search_handle(tag)") {{tag}}
 
           .content.mt-4(v-if="base.book.description")
             .description(v-html="simple_format(auto_link(base.book.description))")
