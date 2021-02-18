@@ -48,7 +48,7 @@ export const app_op = {
       this.current_index = 0
       this.toast_ok("シャッフルしました")
 
-      this.$refs.WkbkBookShowTop.$refs.WkbkBookShowTopXitemList.$refs.WkbkBookShowTopXitemListBtable.resetMultiSorting()
+      this.$refs.WkbkBookShowTop.$refs.WkbkBookShowTopXitemTable.$refs.WkbkBookShowTopXitemTableBtable.resetMultiSorting()
       this.debug_alert("resetMultiSorting")
     },
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-nav.panel.mb-0.WkbkBookShowTopXitemList
+nav.panel.mb-0.WkbkBookShowTopXitemTable
   p.panel-heading
     | 問題リスト
   .panel-block.op_buttons
@@ -15,7 +15,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemList
     //-   | 不正解のみ残す
   .panel-block.is-block
     b-table(
-      ref="WkbkBookShowTopXitemListBtable"
+      ref="WkbkBookShowTopXitemTableBtable"
       v-if="base.xitems.length >= 1"
       :data="base.xitems"
       :mobile-cards="false"
@@ -71,7 +71,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemList
       //-   nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
       //-     | {{row.key}}
 
-      b-table-column(v-slot="{row}" custom-key="index" field="index" label="" centered cell-class="index_column" sortable)
+      b-table-column(v-slot="{row}" custom-key="index" field="index" :width="'2.5rem'" label="#" centered cell-class="index_column" sortable)
         //- template(v-if="row.index === base.current_index")
         //-   b-tag(rounded type="is-primary")
         //-     | {{index + 1}}
@@ -80,8 +80,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemList
         //- b-icon(icon="play" type="is-primary" v-if="row.index === base.current_index")
         //- span.has-text-grey-light(v-else) {{row.index + 1}}
         | {{row.index + 1}}
-
-      b-table-column(v-slot="{row}" custom-key="title"            field="article.title"            label="問題" cell-class="is_line_break_on" sortable)
+      b-table-column(v-slot="{row}" custom-key="title" field="article.title" label="問題" cell-class="is_line_break_on" sortable)
 
         //- b-table-column(v-slot="e" custom-key="spent_sec" field="spent_sec" label="時間" numeric)
         //-   | {{e.index}}
@@ -111,7 +110,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemList
       b-table-column(v-slot="{row}" custom-key="answer_stat.spent_sec_total" field="answer_stat.spent_sec_total" label="総時間" centered sortable)
         | {{base.table_time_format(row.answer_stat.spent_sec_total)}}
 
-      b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="20" centered :visible="false")
+      b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="0" centered :visible="false")
         | {{row.article.difficulty}}
 
       //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
@@ -171,7 +170,7 @@ import { support_child } from "./support_child.js"
 import { isMobile } from "@/components/models/is_mobile.js"
 
 export default {
-  name: "WkbkBookShowTopXitemList",
+  name: "WkbkBookShowTopXitemTable",
   mixins: [
     support_child,
   ],
@@ -257,7 +256,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkBookShowTopXitemList
+.WkbkBookShowTopXitemTable
   // .table
   //   tr, td
   //     height: 5rem
@@ -282,9 +281,9 @@ export default {
     vertical-align: middle
 
   .b-table
-    td
-      &.index_column
-        padding: 0
+    // td
+    //   &.index_column
+    //     padding: 0
     .index_column
       color: $grey-light
     .current_row
@@ -304,4 +303,5 @@ export default {
   // .article_title
   //   // display: inline
   //   // max-width: 14rem
+
 </style>

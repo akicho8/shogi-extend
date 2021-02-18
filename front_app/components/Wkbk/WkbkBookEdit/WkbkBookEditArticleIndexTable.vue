@@ -24,6 +24,9 @@
     )
     //- :default-sort="[base.sort_column, base.sort_order]"
 
+    //- b-table-column(v-slot="{row}" custom-key="index" field="index" :width="'2.5rem'" label="#" centered sortable)
+    //-   | {{row.index + 1}}
+
     b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0" centered cell-class="px-1")
       .up_down_buttons.is-hidden-desktop
         b-button(size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")

@@ -12,7 +12,7 @@ MainSection.WkbkBookShowTop
           .column
             WkbkBookShowTopTweetRecent(:base="base")
       .column
-        WkbkBookShowTopXitemList(:base="base" ref="WkbkBookShowTopXitemList")
+        WkbkBookShowTopXitemTable(:base="base" ref="WkbkBookShowTopXitemTable")
 </template>
 
 <script>
