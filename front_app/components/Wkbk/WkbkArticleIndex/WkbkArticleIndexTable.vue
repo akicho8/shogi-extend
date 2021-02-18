@@ -28,7 +28,7 @@
     // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
     // :has-detailed-visible="row => sound_play('click')"
 
-    b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric :width="0" :visible="!!base.visible_hash.key") {{row.key}}
+    b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable :width="0" :visible="!!base.visible_hash.key") {{row.key}}
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').name" sortable :visible="true" cell-class="is_line_break_on")
       nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
@@ -44,13 +44,11 @@
 
     b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}
 
-    b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" :label="base.ArticleIndexColumnInfo.fetch('difficulty').name" sortable :visible="!!base.visible_hash.difficulty") {{row.difficulty}}
+    b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" :label="base.ArticleIndexColumnInfo.fetch('difficulty').name" sortable centered :visible="!!base.visible_hash.difficulty") {{row.difficulty}}
 
     b-table-column(v-slot="{row}" custom-key="tag_list"    field="tag_list"  :label="base.ArticleIndexColumnInfo.fetch('tag_list').name" :visible="!!base.visible_hash.tag_list")
-      //- b-taglist
-      template(v-for="tag in row.tag_list")
-        b-tag.is-clickable.mr-1(@click.native.stop="base.tag_search_handle(tag)" rounded :key="tag")
-          | {{tag}}
+      b-taglist
+        b-tag.is-clickable(v-for="tag in row.tag_list" :key="tag" rounded type="is-primary is-light" @click.native.stop="base.tag_search_handle(tag)") {{tag}}
 
     b-table-column(v-slot="{row}" custom-key="book_title" field="books.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
       template(v-for="book in row.books")
@@ -109,11 +107,10 @@ export default {
         .mdi:before
           font-size: 12px ! important
 
-    .tags
-      flex-wrap: nowrap
-      .tag
-        // 行が上下が広がってしまうのを防ぐ
-        height: auto
+    // .tags
+    //   flex-wrap: nowrap
+    //   .tag
+    //     height: auto // 行が上下が広がってしまうのを防ぐ
 
     // 複数並ぶ問題集の隙間
     // .book_title:not(:first-child)

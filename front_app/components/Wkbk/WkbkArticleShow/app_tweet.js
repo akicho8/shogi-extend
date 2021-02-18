@@ -20,8 +20,8 @@ export const app_tweet = {
     },
     tweet_body() {
       let out = ""
-      out += "#" + "インスタント将棋問題集" + "\n"
       out += this.article.title + "\n"
+      out += "#" + "インスタント将棋問題集" + "\n"
       out += this.current_url
       return out
     },

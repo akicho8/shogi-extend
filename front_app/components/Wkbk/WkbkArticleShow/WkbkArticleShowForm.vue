@@ -29,8 +29,7 @@
       b-field(label="タグ")
         .control
           b-taglist
-            template(v-for="tag in base.article.tag_list")
-              b-tag(@click="tag_handle(tag)") {{tag}}
+            b-tag.is-clickable(v-for="tag in base.article.tag_list" :key="tag" rounded @click.native.stop="base.tag_search_handle(tag)") {{tag}}
 
       b-field(label="公開設定")
         .control
@@ -52,9 +51,6 @@ export default {
   created() {
   },
   methods: {
-    tag_handle(tag) {
-      this.$router.push({name: 'rack-articles', query: {tag: tag}})
-    },
   },
   watch: {
     "article.lineage_key": {

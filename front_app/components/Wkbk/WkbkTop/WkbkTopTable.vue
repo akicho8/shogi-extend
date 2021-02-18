@@ -19,7 +19,7 @@ b-table.WkbkTopTable(
   @sort="base.sort_handle"
   )
 
-  b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name"               sortable numeric width="1" :visible="!!base.visible_hash.key") {{row.key}}
+  b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name"               sortable numeric :width="0" :visible="!!base.visible_hash.key") {{row.key}}
 
   b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
     nuxt-link(:to="{name: 'rack-books-book_key', params: {book_key: row.key}}" @click.native="sound_play('click')")

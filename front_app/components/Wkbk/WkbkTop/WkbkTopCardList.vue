@@ -20,10 +20,8 @@
             p
               | {{updated_time_format(e.updated_at)}}
               b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
-            p.hashtags.is-inline-block(v-if="e.tag_list.length >= 1")
-              //- nuxt-link(:to="{name: 'rack', query: {tag: tag}}" @click.native="sound_play('click')" v-for="tag in e.tag_list")
-              span.has-text-link(v-for="tag in e.tag_list" @click.prevent.stop="base.tag_search_handle(tag)" :key="`${e.key}_${tag}`")
-                | \#{{tag}}
+            b-taglist(v-if="e.tag_list.length >= 1")
+              b-tag.is-clickable(v-for="tag in e.tag_list" :key="tag" rounded type="is-primary is-light" @click.native.stop="base.tag_search_handle(tag)") {{tag}}
 
         .content(v-if="false")
           .description.is_truncate2(v-html="simple_format(auto_link(e.description))")

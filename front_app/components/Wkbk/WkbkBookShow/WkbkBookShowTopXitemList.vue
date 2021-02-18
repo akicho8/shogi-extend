@@ -57,7 +57,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemList
       // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
       // :has-detailed-visible="row => sound_play('click')"
 
-      //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric width="1" :visible="!!base.visible_hash.key") {{row.key}}
+      //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric :width="0" :visible="!!base.visible_hash.key") {{row.key}}
 
       //- sortable :visible="!!base.visible_hash.title"
 

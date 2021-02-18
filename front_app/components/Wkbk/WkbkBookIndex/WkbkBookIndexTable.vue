@@ -21,7 +21,7 @@
     @sort="base.sort_handle"
     )
 
-    b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name" sortable numeric width="1" :visible="!!base.visible_hash.key")
+    b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name" sortable :width="0" :visible="!!base.visible_hash.key")
       | {{row.key}}
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
@@ -40,6 +40,7 @@
       WkbkFolder(:folder_key="row.folder_key")
 
     b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable :visible="!!base.visible_hash.created_at") {{row_time_format(row.created_at)}}
+
     b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{row_time_format(row.updated_at)}}
 
     b-table-column(v-slot="{row}" custom-key="bookships_count" field="bookships_count" :label="base.BookIndexColumnInfo.fetch('bookships_count').name" sortable numeric :visible="!!base.visible_hash.bookships_count") {{row.bookships_count}}
