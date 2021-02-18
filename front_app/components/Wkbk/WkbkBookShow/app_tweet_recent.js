@@ -50,7 +50,11 @@ export const app_tweet_recent = {
     re_summary_generate() {
       let out = ""
       out += `正解率 ${this.re_ox_rate_per} (${this.re_correct_count}/${this.re_ox_total})\n`
-      out += `範囲: ${this.re_begin_index + 1}〜${this.current_index}\n`
+      if (this.current_index <= this.re_begin_index) {
+        out += `範囲: ${this.re_begin_index + 1}〜?\n`
+      } else {
+        out += `範囲: ${this.re_begin_index + 1}〜${this.current_index}\n`
+      }
       out += `タイム: ${this.re_ox_spent_sec_to_s}\n`
       out += `平均: ${this.re_ox_time_avg}\n`
       return out
