@@ -25,7 +25,7 @@
             b-radio-button(v-model="base.book.folder_key" :native-value="e.key" expanded)
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
-    .column
+    .column(v-if="base.book.ordered_bookships.length >= 1 || true")
       WkbkBookEditArticleIndexTable(:base="base")
 </template>
 

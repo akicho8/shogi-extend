@@ -1,7 +1,12 @@
 export const app_book_delete = {
   methods: {
-    download_url(book) {
-      return `${this.$config.MY_SITE_URL}/api/wkbk/books/download?book_key=${book.key}`
+    download_handle(book) {
+      if (book.new_record_p) {
+        this.sound_play("click")
+        this.toast_warn("まだ保存していません")
+      } else {
+        window.location.href = `${this.$config.MY_SITE_URL}/api/wkbk/books/download?book_key=${book.key}`
+      }
     },
     
     book_delete_handle(book) {

@@ -388,8 +388,10 @@ module Wkbk
       self.sequence_key ||= :bookship_shuffle
       self.tag_list ||= []
 
-      if user
-        self.title ||= "#{user.name}のインスタント将棋問題集第#{user.wkbk_books.count.next}弾(仮)"
+      if Rails.env.development?
+        if user
+          self.title ||= "#{user.name}のインスタント将棋問題集第#{user.wkbk_books.count.next}弾(仮)"
+        end
       end
 
       if Rails.env.development?

@@ -1,5 +1,5 @@
 <template lang="pug">
-.WkbkBookEditArticleIndexTable(v-if="base.book.ordered_bookships.length >= 1 || true")
+.WkbkBookEditArticleIndexTable
   //- .box.is-inline-block
   .title.is-6 並び替え
   .subtitle.is-7.mb-0 出題順序で「カスタマイズ」を選択したときの並び

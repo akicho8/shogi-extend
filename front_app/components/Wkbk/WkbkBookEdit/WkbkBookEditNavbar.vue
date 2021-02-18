@@ -14,7 +14,7 @@ MainNavbar.WkbkBookEditNavbar(:spaced="false")
       b-navbar-dropdown(arrowless right @click.native="sound_play('click')")
         //- https://pictogrammers.github.io/@mdi/font/5.4.55/
         b-icon.px_5_if_tablet(icon="dots-vertical" slot="label")
-        b-navbar-item(tag="a" :href="base.download_url(base.book)") ダウンロード
+        b-navbar-item(@click.prevent.stop="base.download_handle(base.book)") ダウンロード
         b-navbar-item(@click.prevent.stop="base.book_delete_handle(base.book)") 削除
 
       b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.book_save_handle" :class="{disabled: !base.save_button_enabled}")
