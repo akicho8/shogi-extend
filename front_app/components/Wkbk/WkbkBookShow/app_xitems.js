@@ -64,8 +64,13 @@ export const app_xitems = {
 
     play_mode_advanced_moves_set(moves) {
       if (this.current_article.moves_valid_p(moves)) {
-        this.sound_play("o")
-        this.toast_ok("正解")
+        if (true) {
+          this.toast_ok("正解")
+          this.sound_play("o")
+        } else {
+          // 正解したら次に進む
+          this.next_handle(this.AnswerKindInfo.fetch("correct"))
+        }
       }
     },
 
