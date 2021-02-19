@@ -57,4 +57,11 @@ export class Article extends ModelBase {
   get answer_sfen_list() {
     return this.moves_answers.map(e => this.init_sfen_with(e))
   }
+
+  // 非公開になっているか？
+  // folder_key の判定はサーバ側で行っている
+  // クライアント側では有効なデータかどうかだけを見る
+  get invisible_p() {
+    return this.init_sfen == null
+  }
 }

@@ -27,7 +27,7 @@ client-only
       template(v-if="is_standby_p")
         WkbkBookShowTop(:base="base" ref="WkbkBookShowTop")
       template(v-if="is_running_p")
-        template(v-if="base.current_article.init_sfen == null")
+        template(v-if="base.current_article.invisible_p")
           WkbkBookShowAccessBlock(:base="base")
         template(v-else)
           WkbkBookShowSp(:base="base")

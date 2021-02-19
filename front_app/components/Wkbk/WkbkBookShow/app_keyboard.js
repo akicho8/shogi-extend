@@ -37,7 +37,7 @@ export const app_keyboard = {
 
     kb_next_handle(answer_kind_key) {
       if (this.current_xitem) {
-        if (this.current_article.init_sfen == null) {
+        if (this.current_article.invisible_p) {
           this.skip_handle()
         } else {
           this.next_handle(this.AnswerKindInfo.fetch(answer_kind_key))

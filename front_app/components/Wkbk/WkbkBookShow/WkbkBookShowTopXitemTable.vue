@@ -90,7 +90,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable
         //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
         //-   span.has-text-grey-dark
         //-     | {{row.title}}
-        template(v-if="row.article.init_sfen == null")
+        template(v-if="row.article.invisible_p")
           | 非公開
           b-icon.ml-1(:icon="FolderInfo.fetch('private').icon" size="is-small")
         template(v-else)
