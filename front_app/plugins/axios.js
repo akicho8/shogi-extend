@@ -1,4 +1,36 @@
+// 以下のコードのエラー処理をまとめる
+//
+// return this.$axios.$post("/api/wkbk/books/save.json", {book: this.book}).catch(e => {
+//   this.$nuxt.error(e.response.data)
+//   return
+// }).then(e => {
+//
+// const e = await this.$axios.$get("/api/wkbk/articles/show.json", {params}).catch(e => {
+//   this.$nuxt.error(e.response.data)
+//   return
+// })
+
+// https://axios.nuxtjs.org/helpers
+export default function ({$axios, error}) {
+  $axios.onError(e => {
+    if (process.env.NODE_ENV === "development") {
+      console.log(JSON.stringify(e.response, null, 2))
+    }
+
+    // e.data.statusCode // => 403
+    // e.data.message    // => "非公開"
+
+    // e.response.status // => 403
+    // e.statusText      // => "Forbidden"
+
+    error(e.response.data)
+
+    return Promise.resolve(false) // これを返すと console への出力が減る
+  })
+}
+
 // ここで buefy の loading をフックしたらいいのでは？
+
 // Rails が外側にあるわけじゃないのでこれは意味がない
 // See https://axios.nuxtjs.org/helpers
 
@@ -6,7 +38,7 @@
 //   $axios.onRequest(config => {
 //     // window.$loading = $buefy.loading.open()
 //     // console.log(`[axios_mod] loading=${window.$loading}`)
-// 
+//
 //     if (process.client) {
 //       const el = document.querySelector('meta[name="csrf-token"]')
 //       if (el) {
@@ -18,11 +50,11 @@
 //         // Nuxt からいきなり起動しているのでタグがない
 //       }
 //     }
-// 
+//
 //     // config.headers.common['x-csrf-token'] = "foo"
 //     // config.headers.common['ABC'] = "DEF"
 //   })
-// 
+//
 //   if (process.env.NODE_ENV === "development") {
 //     $axios.onRequest(config => {
 //       console.log(`[axios_mod] onRequest`)
@@ -33,12 +65,12 @@
 //     $axios.onResponse(response => {
 //       // if (window.$loading) { window.$loading.close(); window.$loading = null }
 //       console.log(`[axios_mod] onResponse`)
-// 
+//
 //       // if (process.client) {
 //       //   debugger
 //       //   $buefy.toast.open("ok")
 //       // }
-// 
+//
 //     })
 //     $axios.onError(err => {
 //       // if (window.$loading) { window.$loading.close(); window.$loading = null }

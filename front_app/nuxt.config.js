@@ -173,7 +173,7 @@ const config = {
     "~/plugins/local_storage_persistedstate.client.js",
 
     // 両方
-    "~/plugins/axios_mod.js",
+    "~/plugins/axios.js",
     "~/plugins/universal.js",
   ],
   /*
