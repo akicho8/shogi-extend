@@ -88,10 +88,7 @@ export default {
       ...this.$route.params,
       ...this.$route.query,
     }
-    const e = await this.$axios.$get("/api/wkbk/articles/edit.json", {params}).catch(e => {
-      this.$nuxt.error(e.response.data)
-      return
-    })
+    const e = await this.$axios.$get("/api/wkbk/articles/edit.json", {params})
 
     this.meta        = e.meta
     this.LineageInfo = LineageInfo.memory_record_reset(e.LineageInfo)

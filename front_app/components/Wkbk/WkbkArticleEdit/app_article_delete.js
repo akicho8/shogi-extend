@@ -17,10 +17,7 @@ export const app_article_delete = {
           },
           onConfirm: () => {
             this.sound_play("click")
-            this.$axios.$delete("/api/wkbk/articles/destroy.json", {params: {article_id: article.id}}).catch(e => {
-              this.$nuxt.error(e.response.data)
-              return
-            }).then(e => {
+            this.$axios.$delete("/api/wkbk/articles/destroy.json", {params: {article_id: article.id}}).then(e => {
               this.toast_ok("削除しました")
               this.$router.push({name: "rack-articles"})
             })

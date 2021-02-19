@@ -26,10 +26,7 @@ export const app_book_delete = {
           },
           onConfirm: () => {
             this.sound_play("click")
-            this.$axios.$delete("/api/wkbk/books/destroy.json", {params: {book_id: book.id}}).catch(e => {
-              this.$nuxt.error(e.response.data)
-              return
-            }).then(e => {
+            this.$axios.$delete("/api/wkbk/books/destroy.json", {params: {book_id: book.id}}).then(e => {
               this.toast_ok("削除しました")
               this.$router.push({name: "rack-books"})
             })

@@ -85,14 +85,7 @@ export default {
     //   this.play_start()
     // }
 
-    return this.$axios.$get("/api/wkbk/articles/index.json", {params}).catch(e => {
-      this.$nuxt.error(e.response.data)
-      return
-    }).then(e => {
-      // if (e.error) {
-      //   this.$nuxt.error(e.error)
-      //   return
-      // }
+    return this.$axios.$get("/api/wkbk/articles/index.json", {params}).then(e => {
       this.meta           = e.meta
       // this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
       this.articles       = e.articles.map(e => new Article(e))
@@ -120,10 +113,6 @@ export default {
   //   }
   //
   //   const e = await this.$axios.$get("/api/wkbk/articles/index.json", {params})
-  //   if (e.error) {
-  //     this.$nuxt.error(e.error)
-  //     return
-  //   }
   //   this.meta           = e.meta
   //   this.tab_index      = this.IndexScopeInfo.fetch(this.scope).code
   //   this.articles       = e.articles.map(e => new Article(e))

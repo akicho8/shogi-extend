@@ -50,33 +50,13 @@ export default {
     }
   },
 
-  // fetch() {
-  //   const params = {
-  //     ...this.$route.params,
-  //     ...this.$route.query,
-  //   }
-  //   // app/controllers/api/wkbk/books_controller.rb
-  //   return this.$axios.$get("/api/wkbk/books/edit.json", {params}).then(e => {
-  //     if (e.error) {
-  //       this.$nuxt.error(e.error)
-  //       return
-  //     }
-  //     this.config = e.config
-  //     this.book = new Book(e.book)
-  //     this.meta = e.meta
-  //   })
-  // },
-
   async fetch() {
     const params = {
       ...this.$route.params,
       ...this.$route.query,
     }
     // app/controllers/api/wkbk/books_controller.rb
-    const e = await this.$axios.$get("/api/wkbk/books/edit.json", {params}).catch(e => {
-      this.$nuxt.error(e.response.data)
-      return
-    })
+    const e = await this.$axios.$get("/api/wkbk/books/edit.json", {params})
     // if (e.error) {
     //   this.$nuxt.error(e.error)
     //   return
@@ -106,10 +86,7 @@ export default {
 
       // https://day.js.org/docs/en/durations/diffing
       const before_save_button_name = this.save_button_name
-      return this.$axios.$post("/api/wkbk/books/save.json", {book: this.book}).catch(e => {
-        this.$nuxt.error(e.response.data)
-        return
-      }).then(e => {
+      return this.$axios.$post("/api/wkbk/books/save.json", {book: this.book}).then(e => {
         if (e.form_error_message) {
           this.toast_warn(e.form_error_message)
         }

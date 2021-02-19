@@ -85,10 +85,7 @@ export default {
       ...this.$route.params,
       ...this.$route.query,
     }
-    const e = await this.$axios.$get("/api/wkbk/books/show.json", {params}).catch(e => {
-      this.$nuxt.error(e.response.data)
-      return
-    })
+    const e = await this.$axios.$get("/api/wkbk/books/show.json", {params})
 
     this.config = e.config
     this.book = new Book(e.book)

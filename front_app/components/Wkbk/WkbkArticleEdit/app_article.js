@@ -63,10 +63,7 @@ export const app_article = {
 
       const before_save_button_name = this.save_button_name
 
-      return this.$axios.$post("/api/wkbk/articles/save.json", {article: this.article}).catch(e => {
-        this.$nuxt.error(e.response.data)
-        return
-      }).then(e => {
+      return this.$axios.$post("/api/wkbk/articles/save.json", {article: this.article}).then(e => {
         if (e.form_error_message) {
           this.toast_warn(e.form_error_message)
         }

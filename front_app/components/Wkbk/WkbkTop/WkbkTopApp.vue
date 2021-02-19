@@ -97,14 +97,7 @@ export default {
       // sort_order:  this.sort_order,
       tag:         this.tag,
     }
-    return this.$axios.$get("/api/wkbk/tops/index.json", {params}).catch(e => {
-      this.$nuxt.error(e.response.data)
-      return
-    }).then(e => {
-      // if (e.error) {
-      //   this.$nuxt.error(e.error)
-      //   return
-      // }
+    return this.$axios.$get("/api/wkbk/tops/index.json", {params}).then(e => {
       this.meta = e.meta
       if (this.query || this.tag) {
         this.meta.title = _.compact([this.query, ...this.tags]).join(" ") + ` - ${this.meta.title}`

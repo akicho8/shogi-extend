@@ -98,14 +98,7 @@ export default {
       tag:         this.tag,
     }
 
-    return this.$axios.$get("/api/wkbk/books/index.json", {params}).catch(e => {
-      this.$nuxt.error(e.response.data)
-      return
-    }).then(e => {
-      // if (e.error) {
-      //   this.$nuxt.error(e.error)
-      //   return
-      // }
+    return this.$axios.$get("/api/wkbk/books/index.json", {params}).then(e => {
       this.meta        = e.meta
       // this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
       this.books       = e.books.map(e => new Book(e))
