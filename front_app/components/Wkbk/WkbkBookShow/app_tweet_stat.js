@@ -54,6 +54,8 @@ export const app_tweet_stat = {
     journal_next_init() {
       this.current_spent_sec = 0
       this.interval_counter.restart()
+
+      this.talk(this.current_article.title)
     },
 
     // 時間を進める
@@ -63,6 +65,7 @@ export const app_tweet_stat = {
 
     // O or X を選択したとき
     journal_record(answer_kind_key) {
+      this.talk_stop()
       this.interval_counter.stop()
 
       // 「START」してからの経過時間を確定する
