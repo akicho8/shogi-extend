@@ -8,9 +8,9 @@ MainSection.WkbkBookShowTop
             WkbkBookShowTopMainCard(:base="base")
         .columns
           .column
-            WkbkBookShowTopTweetStat(:base="base")
-          .column
             WkbkBookShowTopTweetRecent(:base="base")
+          .column
+            WkbkBookShowTopTweetStat(:base="base")
       .column
         WkbkBookShowTopXitemTable(:base="base" ref="WkbkBookShowTopXitemTable")
 </template>
