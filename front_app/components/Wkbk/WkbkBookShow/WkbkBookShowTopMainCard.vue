@@ -24,8 +24,7 @@
             span.ml-1 {{updated_time_format(base.book.updated_at)}}
             b-icon.ml-1(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
 
-          b-taglist.mt-1(v-if="base.book.tag_list.length >= 1")
-            b-tag.is-clickable(v-for="tag in base.book.tag_list" :key="tag" rounded type="is-primary is-light" @click.native.prevent.stop="base.tag_search_handle(tag)") {{tag}}
+          WkbkTagList.mt-1(:tag_list="base.book.tag_list" :tag_search_handle="base.tag_search_handle")
 
           .content.mt-4(v-if="base.book.description")
             .description(v-html="simple_format(auto_link(base.book.description))")

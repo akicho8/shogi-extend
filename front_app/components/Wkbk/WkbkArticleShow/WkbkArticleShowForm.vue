@@ -29,8 +29,9 @@ MainSection.WkbkArticleShowForm
 
         b-field(label="タグ")
           .control
-            b-taglist
-              b-tag.is-clickable(v-for="tag in base.article.tag_list" :key="tag" rounded @click.native.prevent.stop="base.tag_search_handle(tag)") {{tag}}
+            WkbkTagList(:tag_list="base.article.tag_list" :tag_search_handle="base.tag_search_handle")
+            //- b-taglist
+            //-   b-tag.is-clickable(v-for="tag in base.article.tag_list" :key="tag" rounded @click.native.prevent.stop="base.tag_search_handle(tag)") {{tag}}
 
         b-field(label="公開設定")
           .control

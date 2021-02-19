@@ -20,8 +20,7 @@
             p
               | {{updated_time_format(e.updated_at)}}
               b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
-            b-taglist.mt-1(v-if="e.tag_list.length >= 1")
-              b-tag.is-clickable(v-for="tag in e.tag_list" :key="tag" rounded type="is-primary is-light" @click.native.prevent.stop="base.tag_search_handle(tag)") {{tag}}
+            WkbkTagList.mt-1(:tag_list="e.tag_list" :tag_search_handle="base.tag_search_handle")
 
         .content(v-if="false")
           .description.is_truncate2(v-html="simple_format(auto_link(e.description))")
