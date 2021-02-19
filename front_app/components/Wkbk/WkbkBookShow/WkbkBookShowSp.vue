@@ -73,7 +73,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .MainSection.section.WkbkBookShowSp
-  padding: 0
+  padding: 0 0 1.5rem // 押しやすくするため下を開ける
 
   .column.LeftColumn
     display: flex
