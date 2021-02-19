@@ -12,7 +12,7 @@
 # | folder_id         | Folder             | integer(8)   | NOT NULL            |              | C     |
 # | sequence_id       | Sequence           | integer(8)   | NOT NULL            |              | D     |
 # | title             | タイトル           | string(100)  | NOT NULL            |              |       |
-# | description       | 説明               | string(5000) | NOT NULL            |              |       |
+# | description       | 解説               | string(5000) | NOT NULL            |              |       |
 # | bookships_count   | Bookships count    | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | answer_logs_count | Answer logs count  | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | created_at        | 作成日時           | datetime     | NOT NULL            |              |       |

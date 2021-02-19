@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Moves answer (wkbk_moves_answers as Wkbk::MovesAnswer)
+# 指し手 (wkbk_moves_answers as Wkbk::MovesAnswer)
 #
 # |-----------------+-----------------+-------------+-------------+------+-------|
 # | name            | desc            | type        | opts        | refs | index |
@@ -9,7 +9,7 @@
 # | id              | ID              | integer(8)  | NOT NULL PK |      |       |
 # | article_id      | Article         | integer(8)  | NOT NULL    |      | A     |
 # | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
-# | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
+# | moves_str       | 指し手          | string(255) | NOT NULL    |      |       |
 # | moves_human_str | Moves human str | string(255) |             |      |       |
 # | position        | 順序            | integer(4)  | NOT NULL    |      | C     |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |

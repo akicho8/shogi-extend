@@ -15,7 +15,7 @@
 # | time_limit_sec      | Time limit sec      | integer(4)  |                     |      | F     |
 # | difficulty_level    | Difficulty level    | integer(4)  |                     |      | G     |
 # | title               | タイトル            | string(255) |                     |      |       |
-# | description         | 説明                | string(512) |                     |      |       |
+# | description         | 解説                | string(512) |                     |      |       |
 # | hint_desc           | Hint desc           | string(255) |                     |      |       |
 # | source_author       | Source author       | string(255) |                     |      |       |
 # | source_media_name   | Source media name   | string(255) |                     |      |       |

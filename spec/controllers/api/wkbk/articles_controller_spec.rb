@@ -14,7 +14,7 @@
 # | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
 # | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
 # | title               | タイトル            | string(100)  | NOT NULL            |              |       |
-# | description         | 説明                | string(5000) | NOT NULL            |              |       |
+# | description         | 解説                | string(5000) | NOT NULL            |              |       |
 # | direction_message   | Direction message   | string(100)  | NOT NULL            |              |       |
 # | turn_max            | 手数                | integer(4)   | NOT NULL            |              | F     |
 # | mate_skip           | Mate skip           | boolean      | NOT NULL            |              |       |

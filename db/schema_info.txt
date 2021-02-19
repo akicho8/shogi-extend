@@ -235,7 +235,7 @@
 # | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
 # | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
 # | title               | タイトル            | string(100)  | NOT NULL            |              |       |
-# | description         | 説明                | string(5000) | NOT NULL            |              |       |
+# | description         | 解説                | string(5000) | NOT NULL            |              |       |
 # | direction_message   | Direction message   | string(100)  | NOT NULL            |              |       |
 # | turn_max            | 手数                | integer(4)   | NOT NULL            |              | F     |
 # | mate_skip           | Mate skip           | boolean      | NOT NULL            |              |       |
@@ -266,7 +266,7 @@
 
 # == Schema Information ==
 #
-# Moves answer (wkbk_moves_answers as Wkbk::MovesAnswer)
+# 指し手 (wkbk_moves_answers as Wkbk::MovesAnswer)
 #
 # |-----------------+-----------------+-------------+-------------+------+-------|
 # | name            | desc            | type        | opts        | refs | index |
@@ -274,7 +274,7 @@
 # | id              | ID              | integer(8)  | NOT NULL PK |      |       |
 # | article_id      | Article         | integer(8)  | NOT NULL    |      | A     |
 # | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
-# | moves_str       | Moves str       | string(255) | NOT NULL    |      |       |
+# | moves_str       | 指し手          | string(255) | NOT NULL    |      |       |
 # | moves_human_str | Moves human str | string(255) |             |      |       |
 # | position        | 順序            | integer(4)  | NOT NULL    |      | C     |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
@@ -294,7 +294,7 @@
 # | folder_id         | Folder             | integer(8)   | NOT NULL            |              | C     |
 # | sequence_id       | Sequence           | integer(8)   | NOT NULL            |              | D     |
 # | title             | タイトル           | string(100)  | NOT NULL            |              |       |
-# | description       | 説明               | string(5000) | NOT NULL            |              |       |
+# | description       | 解説               | string(5000) | NOT NULL            |              |       |
 # | bookships_count   | Bookships count    | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | answer_logs_count | Answer logs count  | integer(4)   | DEFAULT(0) NOT NULL |              |       |
 # | created_at        | 作成日時           | datetime     | NOT NULL            |              |       |
@@ -741,7 +741,7 @@
 # | accessed_at   | Accessed at        | datetime       | NOT NULL    |            |       |
 # | user_id       | User               | integer(8)     |             | => User#id | E     |
 # | preset_key    | Preset key         | string(255)    | NOT NULL    |            | F     |
-# | description   | 説明               | text(65535)    | NOT NULL    |            |       |
+# | description   | 解説               | text(65535)    | NOT NULL    |            |       |
 # | sfen_body     | SFEN形式棋譜       | string(8192)   | NOT NULL    |            |       |
 # | sfen_hash     | Sfen hash          | string(255)    | NOT NULL    |            |       |
 # | start_turn    | 開始局面           | integer(4)     |             |            | G     |
@@ -1098,7 +1098,7 @@
 # | time_limit_sec      | Time limit sec      | integer(4)  |                     |      | F     |
 # | difficulty_level    | Difficulty level    | integer(4)  |                     |      | G     |
 # | title               | タイトル            | string(255) |                     |      |       |
-# | description         | 説明                | string(512) |                     |      |       |
+# | description         | 解説                | string(512) |                     |      |       |
 # | hint_desc           | Hint desc           | string(255) |                     |      |       |
 # | source_author       | Source author       | string(255) |                     |      |       |
 # | source_media_name   | Source media name   | string(255) |                     |      |       |

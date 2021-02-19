@@ -18,7 +18,7 @@
 # | accessed_at   | Accessed at        | datetime       | NOT NULL    |            |       |
 # | user_id       | User               | integer(8)     |             | => User#id | E     |
 # | preset_key    | Preset key         | string(255)    | NOT NULL    |            | F     |
-# | description   | 説明               | text(65535)    | NOT NULL    |            |       |
+# | description   | 解説               | text(65535)    | NOT NULL    |            |       |
 # | sfen_body     | SFEN形式棋譜       | string(8192)   | NOT NULL    |            |       |
 # | sfen_hash     | Sfen hash          | string(255)    | NOT NULL    |            |       |
 # | start_turn    | 開始局面           | integer(4)     |             |            | G     |
