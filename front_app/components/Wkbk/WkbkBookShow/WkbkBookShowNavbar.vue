@@ -1,9 +1,7 @@
 <template lang="pug">
-MainNavbar.WkbkBookShowNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
+MainNavbar.WkbkBookShowNavbar(:spaced="false" centered wrapper-class="container is-fluid px-0")
   template(v-if="base.book")
     template(slot="brand")
-      WkbkSidebarToggle(@click="base.sidebar_toggle")
-
       template(v-if="base.is_standby_p")
         b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="sound_play('click')")
           b-icon(icon="chevron-left")
@@ -32,22 +30,27 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" wrapper-class="container is-fluid 
         b-navbar-item(tag="div" v-if="base.current_xitem")
           | {{base.current_xitem.title}}
 
-    template(slot="end")
       template(v-if="base.is_running_p")
         b-navbar-item(tag="div" v-if="base.current_xitem")
-          span.mx-1.is-family-monospace.is-unselectable {{base.current_index + 1}}/{{base.max_count}}
+          span.mx-1.is-family-monospace.is-unselectable {{base.current_difficulty_rate_human}}
           span.mx-1.is-family-monospace.is-unselectable {{base.navbar_display_time}}
-        //- .slice().reverse()
-        template(v-for="e in base.AnswerKindInfo.values.slice().reverse()")
-          b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(e)" v-if="base.current_xitem")
-            b-icon(:icon="e.icon")
+          span.mx-1.is-family-monospace.is-unselectable {{base.current_index + 1}}/{{base.max_count}}
 
-      template(v-if="base.is_standby_p && development_p")
+        //- .slice().reverse()
+        template(v-if="false")
+          template(v-for="e in base.AnswerKindInfo.values.slice().reverse()")
+            b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(e)" v-if="base.current_xitem")
+              b-icon(:icon="e.icon")
+
+    template(slot="end")
+      template(v-if="base.is_standby_p")
         b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.book_tweet_handle")
           b-icon(icon="twitter" type="is-white")
 
       //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_start" v-if="!base.current_xitem")
       //-   | RESTART
+
+      WkbkSidebarToggle(@click="base.sidebar_toggle")
 </template>
 
 <script>

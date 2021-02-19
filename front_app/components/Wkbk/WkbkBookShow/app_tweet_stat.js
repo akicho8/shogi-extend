@@ -135,12 +135,27 @@ export const app_tweet_stat = {
     },
 
     difficulty_rate_update(e) {
+      const v = this.difficulty_rate_value(e)
+      if (v != null) {
+        e.difficulty_rate = v
+      }
+    },
+
+    difficulty_rate_value(e) {
       const o = e.correct_count || 0
       const x = e.mistake_count || 0
       const t = o + x
       if (t >= 1) {
-        e.difficulty_rate = o / t
+        return o / t
       }
+    },
+
+    difficulty_rate_human(e) {
+      const v = this.difficulty_rate_value(e)
+      if (v == null) {
+        return ""
+      }
+      return this.float_to_integer_percentage(v) + "%"
     },
   },
   computed: {
@@ -214,6 +229,10 @@ export const app_tweet_stat = {
       out += `不正解 ${this.jo_counts.mistake}\n`
       out += `未解答 ${this.jo_counts.blank}\n`
       return out
+    },
+
+    current_difficulty_rate_human() {
+      return this.difficulty_rate_human(this.current_xitem.answer_stat)
     },
   },
 }
