@@ -14,14 +14,11 @@
     },
     activerecord: {
       models: {
-        "wkbk/emotion" => "エモーション",
+        "wkbk/moves_answer" => "指し手",
       },
       attributes: {
-        "wkbk/emotion": {
-          :name       => "鍵",
-          :message    => "伝",
-          :voice      => "声",
-          :folder_key => "フォルダ",
+        "wkbk/moves_answer" => {
+          :moves_str => "指し手",
         },
       },
     },

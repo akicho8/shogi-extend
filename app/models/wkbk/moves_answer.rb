@@ -35,6 +35,7 @@ module Wkbk
     end
 
     with_options allow_blank: true do
+      validates :moves_str, length: { maximum: 255, message: "が長すぎて保存できないので最大50手ぐらいにしといてください" }
       validates :moves_str, uniqueness: { scope: :article_id, case_sensitive: true } # JS側でチェックしているので普通は発生しない
     end
 
