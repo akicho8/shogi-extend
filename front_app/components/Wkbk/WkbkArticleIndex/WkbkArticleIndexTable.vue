@@ -4,7 +4,7 @@
   b-table(
     :loading="base.$fetchState.pending"
     :data="base.articles || []"
-    :mobile-cards="true"
+    :mobile-cards="!base.detail_p"
     hoverable
     :narrowed="false"
 
