@@ -137,6 +137,9 @@ module Wkbk
                       :created_at,
                       :updated_at,
                     ],
+                    methods: [
+                      :folder_key,
+                    ],
                   },
                 },
               },

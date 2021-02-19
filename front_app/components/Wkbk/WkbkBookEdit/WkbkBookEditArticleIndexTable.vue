@@ -36,6 +36,7 @@
     b-table-column(v-slot="{row}" custom-key="article.title" field="article.title" sortable label="タイトル" cell-class="is_line_break_on title_column" header-class="title_column")
       nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.article.key}}" @click.native="sound_play('click')")
         | {{row.article.title}}
+        b-icon.ml-1(:icon="FolderInfo.fetch(row.article.folder_key).icon" size="is-small" v-if="row.article.folder_key != 'public'")
 
     b-table-column(v-slot="{row}" custom-key="article.difficulty" field="article.difficulty" sortable centered label="難度" numeric)
       | {{row.article.difficulty}}

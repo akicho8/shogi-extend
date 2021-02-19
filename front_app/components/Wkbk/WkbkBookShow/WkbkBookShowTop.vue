@@ -2,7 +2,7 @@
 MainSection.WkbkBookShowTop
   .container.is-fluid
     .columns
-      .column.is-7
+      .column
         .columns
           .column
             WkbkBookShowTopMainCard(:base="base")

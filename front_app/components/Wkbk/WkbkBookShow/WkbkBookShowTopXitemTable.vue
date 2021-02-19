@@ -90,11 +90,12 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable
         //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
         //-   span.has-text-grey-dark
         //-     | {{row.title}}
-        template(v-if="row.article.folder_key === 'private'")
+        template(v-if="row.article.init_sfen == null")
           | 非公開
           b-icon.ml-1(:icon="FolderInfo.fetch('private').icon" size="is-small")
         template(v-else)
           | {{row.article.title}}
+          b-icon.ml-1(:icon="FolderInfo.fetch(row.article.folder_key).icon" size="is-small" v-if="row.article.folder_key != 'public'")
 
       b-table-column(v-slot="{row}" custom-key="newest_answer_log.answer_kind_key" field="newest_answer_log.answer_kind_key" label="解" centered sortable)
         b-icon(v-bind="base.journal_row_icon_attrs_for(row)" size="is-small")

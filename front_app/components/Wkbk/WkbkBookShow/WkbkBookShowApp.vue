@@ -27,7 +27,7 @@ client-only
       template(v-if="is_standby_p")
         WkbkBookShowTop(:base="base" ref="WkbkBookShowTop")
       template(v-if="is_running_p")
-        template(v-if="base.current_article.folder_key === 'private'")
+        template(v-if="base.current_article.init_sfen == null")
           WkbkBookShowAccessBlock(:base="base")
         template(v-else)
           WkbkBookShowSp(:base="base")
