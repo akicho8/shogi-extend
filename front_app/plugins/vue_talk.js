@@ -16,7 +16,7 @@ export default {
     // しゃべる
     talk(source_text, options = {}) {
       if (process.client) {
-        if (this.tab_is_active_p()) {
+        if (this.tab_is_active_p() && source_text) {
           const params = {
             source_text: source_text,
           }
