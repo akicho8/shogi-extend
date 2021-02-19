@@ -107,7 +107,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkArticleEditForm
+.MainSection.section.WkbkArticleEditForm
   +mobile
     padding: 1.0rem
   +tablet

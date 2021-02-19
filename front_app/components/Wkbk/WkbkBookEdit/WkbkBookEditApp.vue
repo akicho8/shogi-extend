@@ -14,7 +14,7 @@ client-only
     WkbkBookEditNavbar(:base="base")
 
     .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
-      MainSection.section
+      MainSection
         .container
            WkbkBookEditForm(:base="base")
 

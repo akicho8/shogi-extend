@@ -82,7 +82,7 @@ export default {
     .CustomShogiPlayerWrap
       border: 1px dashed change_color($danger, $alpha: 0.5)
 
-.WkbkArticleShowPlacement
+.MainSection.section.WkbkArticleShowPlacement
   padding: 0
 
   .column

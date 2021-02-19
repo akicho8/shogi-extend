@@ -144,8 +144,6 @@ export default {
       border: 1px dashed change_color($success, $alpha: 0.5)
 
 .WkbkArticleShowApp
-  // .MainSection.section
-  //   padding: 0
   .MainTabs
     .tab-content
       display: none

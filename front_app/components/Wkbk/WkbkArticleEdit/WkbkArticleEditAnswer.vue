@@ -1,5 +1,5 @@
 <template lang="pug">
-MainSection.is_mobile_padding_zero.WkbkArticleEditAnswer
+MainSection.WkbkArticleEditAnswer
   .container
     .columns.is-centered
       .column.LeftColumn
@@ -57,7 +57,7 @@ export default {
   .delete_button
     border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.WkbkArticleEditAnswer
+.MainSection.section.WkbkArticleEditAnswer
   padding: 0
 
   .LeftColumn.column

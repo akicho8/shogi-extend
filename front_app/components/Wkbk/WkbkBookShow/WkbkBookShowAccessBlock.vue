@@ -25,7 +25,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkBookShowAccessBlock
+MainSection.section.WkbkBookShowAccessBlock
   +touch
     padding: 1.5rem
   +desktop

@@ -31,7 +31,7 @@ export default {
     .column, .book_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.WkbkBookShowTop
+.MainSection.section.WkbkBookShowTop
   +mobile
     padding: 1.0rem 0.75rem
   +tablet

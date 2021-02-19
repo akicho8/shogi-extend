@@ -36,7 +36,7 @@ export default {
   .delete_button
     border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.WkbkArticleShowAnswer
+.MainSection.section.WkbkArticleShowAnswer
   padding: 0
 
   .column

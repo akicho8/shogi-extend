@@ -1,5 +1,5 @@
 <template lang="pug">
-MainSection.is_mobile_padding_zero.WkbkArticleEditValidation
+MainSection.WkbkArticleEditValidation
   .container
     .columns
       .column
@@ -32,7 +32,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkArticleEditValidation
+.MainSection.section.WkbkArticleEditValidation
   padding: 0
   .column
     display: flex

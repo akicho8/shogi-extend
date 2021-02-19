@@ -72,7 +72,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkBookShowSp
+.MainSection.section.WkbkBookShowSp
   padding: 0
 
   .column.LeftColumn

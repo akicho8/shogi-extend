@@ -32,7 +32,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkArticleShowValidation
+.MainSection.section.WkbkArticleShowValidation
   padding: 0
 
   .column
