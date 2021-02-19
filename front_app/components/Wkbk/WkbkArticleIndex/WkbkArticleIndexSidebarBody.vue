@@ -4,7 +4,9 @@
     //- b-menu-list(label="Action" v-if="development_p")
     //-   b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles-new'}" label="問題作成" @click.native="sound_play('click')")
 
-    WkbkContentMenuItems
+    b-menu-list(label="コンテンツ")
+      b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles'}" label="問題リスト"   @click.native="sound_play('click')")
+      b-menu-item(tag="nuxt-link" :to="{name: 'rack-books'}"    label="問題集リスト" @click.native="sound_play('click')")
 
     b-menu-list(label="表示オプション")
       b-menu-item.sidebar_columns_toggle(:disabled="base.display_option_disabled" @click="sound_play('click')")

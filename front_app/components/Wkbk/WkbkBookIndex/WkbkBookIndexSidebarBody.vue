@@ -1,7 +1,9 @@
 <template lang="pug">
 .WkbkBookIndexSidebarBody
   b-menu
-    WkbkContentMenuItems
+    b-menu-list(label="コンテンツ")
+      b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles'}" label="問題リスト"   @click.native="sound_play('click')")
+      b-menu-item(tag="nuxt-link" :to="{name: 'rack-books'}"    label="問題集リスト" @click.native="sound_play('click')")
 
     b-menu-list(label="表示オプション" v-if="base.visible_hash")
       b-menu-item.sidebar_columns_toggle(@click="sound_play('click')")
