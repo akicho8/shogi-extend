@@ -84,6 +84,9 @@ module Wkbk
           # end
 
           if Rails.env.production?
+            if e[:user][:key] != "932ed39bb18095a2fc73e0002f94ecf1"
+              return
+            end
             user = User.find_by!(key: e[:user][:key])
           elsif Rails.env.staging?
             user = User.find_by(name: e[:user][:name]) || options[:user]
@@ -127,6 +130,7 @@ module Wkbk
             end
           end
 
+          record.folder_key = :private
           record.save!
 
           record.moves_answers.clear
@@ -136,10 +140,10 @@ module Wkbk
 
           if e[:user][:key] == "932ed39bb18095a2fc73e0002f94ecf1"
             if e[:tag_list].include?("アヒル戦法")
-              # record.update!(folder_key: "public")
+              # record.update!(folder_key: "private")
 
               book = user.wkbk_books.find_or_initialize_by(title: "アヒル戦法問題集")
-              book.folder_key = :public
+              book.folder_key = :private
               book.save!
 
               book.articles << record
