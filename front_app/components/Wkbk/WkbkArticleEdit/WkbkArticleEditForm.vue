@@ -27,7 +27,7 @@ MainSection.WkbkArticleEditForm
 
         b-field(label="タグ" label-position="on-border")
           //- https://buefy.org/documentation/taginput
-          b-taginput(v-model="base.article.tag_list" rounded type="is-primary is-light" :on-paste-separators="[',', ' ']" :confirm-keys="[',', 'Tab', 'Enter', ' ']")
+          b-taginput(v-model="base.article.tag_list" rounded type="is-primary is-light" :on-paste-separators="[',', ' ']" :confirm-keys="[',', 'Tab', 'Enter']")
 
         b-field(label="公開設定" custom-class="is-small" :message="FolderInfo.fetch(base.article.folder_key).message.article")
           b-field.is-marginless
