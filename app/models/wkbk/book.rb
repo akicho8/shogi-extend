@@ -384,23 +384,21 @@ module Wkbk
     end
 
     def default_assign
-      self.folder_key ||= :public
-      self.sequence_key ||= :bookship_shuffle
-      self.tag_list ||= []
+      # この2つは localStorage から復帰する
+      # self.folder_key ||= :public
+      # self.sequence_key ||= :bookship_shuffle
 
       if Rails.env.development?
         if user
           self.title ||= "#{user.name}のインスタント将棋問題集第#{user.wkbk_books.count.next}弾(仮)"
         end
-      end
-
-      if Rails.env.development?
         self.title       ||= "あ" * 80
         self.description ||= "い" * 256
       end
 
       self.title       ||= ""
       self.description ||= ""
+      self.tag_list    ||= []
     end
 
     private

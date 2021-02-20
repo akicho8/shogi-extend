@@ -29,6 +29,7 @@ import { support_parent } from "./support_parent.js"
 import { app_table } from "./app_table.js"
 import { app_upload } from "./app_upload.js"
 import { app_book_delete } from "./app_book_delete.js"
+import { app_storage } from "./app_storage.js"
 
 import { Book       } from "../models/book.js"
 import { SequenceInfo } from "../models/sequence_info.js"
@@ -40,6 +41,7 @@ export default {
     app_table,
     app_upload,
     app_book_delete,
+    app_storage,
   ],
 
   data() {
@@ -64,6 +66,17 @@ export default {
     this.config = e.config
     this.book = new Book(e.book)
     this.meta = e.meta
+
+    // 前回保存したときの値を初期値にする
+    if (this.book.new_record_p) {
+      if (!this.book.sequence_key) {
+        this.book.sequence_key = this.default_sequence_key
+      }
+      if (!this.book.folder_key) {
+        this.book.folder_key = this.default_folder_key
+      }
+    }
+
   },
 
   methods: {
@@ -94,6 +107,10 @@ export default {
           this.book = new Book(e.book)
 
           this.toast_ok(`${before_save_button_name}しました`)
+
+          // 新規の初期値にするため保存しておく
+          this.default_sequence_key = this.book.sequence_key
+          this.default_folder_key = this.book.folder_key
 
           // this.$router.push({name: "rack-books", query: {scope: this.book.folder_key}})
           this.$router.push({name: "rack-books"})
