@@ -23,6 +23,9 @@ export default function ({$axios, error}) {
     // e.response.status // => 403
     // e.statusText      // => "Forbidden"
 
+    e.data.statusCode = e.data.statusCode ?? e.response.status
+    e.data.message    = e.data.message ?? e.response.statusText
+
     error(e.response.data)
 
     return Promise.resolve(false) // これを返すと console への出力が減る
