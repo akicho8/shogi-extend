@@ -2,6 +2,7 @@
 client-only
   .WkbkArticleEditApp
     DebugBox
+      p answer_tab_index: {{answer_tab_index}}
       template(v-if="article")
         p article.book_keys: {{article.book_keys}}
         p article.user.id: {{article.user && article.user.id}}

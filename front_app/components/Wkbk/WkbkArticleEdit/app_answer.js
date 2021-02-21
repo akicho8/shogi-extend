@@ -1,3 +1,5 @@
+import _ from "lodash"
+
 export const app_answer = {
   data() {
     return {
@@ -50,8 +52,11 @@ export const app_answer = {
 
     answer_delete_at(index) {
       const new_ary = this.article.moves_answers.filter((e, i) => i !== index)
-      this.$set(this.article, "moves_answers", new_ary)
-      this.$nextTick(() => this.answer_tab_index = _.clamp(this.answer_tab_index, 0, this.article.moves_answers.length - 1))
+      this.$set(this.article, "moves_answers", [])
+      this.$nextTick(() => {
+        this.$set(this.article, "moves_answers", new_ary)
+        this.answer_tab_index = _.clamp(this.answer_tab_index, 0, this.article.moves_answers.length - 1)
+      })
 
       this.sound_play("click")
       this.toast_ok("削除しました")
