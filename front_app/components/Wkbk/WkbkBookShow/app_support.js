@@ -5,7 +5,7 @@ import _ from "lodash"
 export const app_support = {
   methods: {
     book_edit_handle() {
-      if (this.base.owner_p) {
+      if (this.owner_p) {
         this.sound_play("click")
         this.$router.push({name: "rack-books-book_key-edit", params: {book_key: this.book.key}})
       }
@@ -17,6 +17,17 @@ export const app_support = {
           this.$router.push({name: "rack-articles-article_key", params: {article_key: this.current_xitem.article.key}})
         } else {
           const e = this.$router.resolve({name: "rack-articles-article_key", params: {article_key: this.current_xitem.article.key}})
+          this.other_window_open(e.href)
+        }
+      }
+    },
+    article_edit_handle() {
+      if (this.article_edit_p) {
+        this.sound_play("click")
+        if (false) {
+          this.$router.push({name: "rack-articles-article_key-edit", params: {article_key: this.current_xitem.article.key}})
+        } else {
+          const e = this.$router.resolve({name: "rack-articles-article_key-edit", params: {article_key: this.current_xitem.article.key}})
           this.other_window_open(e.href)
         }
       }

@@ -6,7 +6,8 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
     .mt-4
       b-menu
         b-menu-list(label="Action" v-if="base.is_running_p")
-          b-menu-item(label="やめる"                                          @click.native="base.quit_handle"       :disabled="!base.is_running_p")
+          b-menu-item(label="やめる"                                          @click.native="base.quit_handle"       :disabled="!base.is_running_p" v-if="false")
+          b-menu-item(:label="`現在の問題を別タブで編集`" @click.native="base.article_edit_handle" :disabled="!base.current_article_edit_p")
           b-menu-item(:label="`現在の問題を別タブで開く`" @click.native="base.article_show_handle" :disabled="!base.article_show_p")
 
         b-menu-list(label="管理" v-if="development_p && false")

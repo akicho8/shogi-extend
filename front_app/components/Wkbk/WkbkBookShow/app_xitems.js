@@ -88,6 +88,7 @@ export const app_xitems = {
     current_exist_p() { return !!this.xitems[this.current_index]   }, // 現在の問題が存在する？
     current_xitem()   { return this.xitems[this.current_index]     }, // 現在の問題
     current_article() { return this.current_xitem.article          }, // 現在の問題
+    current_article_edit_p() { return this.owner_p                 }, // この問題を編集できるのはこの問題集のオーナーとする
 
     current_index_human: {
       get()  { return this.current_index + 1 },
