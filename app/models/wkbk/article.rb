@@ -36,107 +36,13 @@ module Wkbk
     include InfoMod
     include JsonStruct
 
-    # 自演評価の無効化
-    def self.good_bad_click_by_owner_reject_all
-      p [GoodMark.count, BadMark.count]
-      find_each(&:good_bad_click_by_owner_reject)
-      p [GoodMark.count, BadMark.count]
-    end
-
-    # rails r 'Wkbk::Article.tag_normalize_all; tp Wkbk::Article'
-    def self.tag_normalize_all
-      find_each do |e|
-        e.tag_list = e.tag_list.collect { |s|
-          s = hankaku_format(s)
-          s = s.gsub(/\A(\d+)手詰め\z/, '\1手詰')
-          s
-        }.uniq
-        e.save!(validate: false, touch: false)
-      end
-    end
-
-    # def self.new_og_meta
-    #   {
-    #     :title       => "新規 - 問題",
-    #     :description => "",
-    #     :og_image    => "rack-books",
-    #   }
-    # end
-
-    # def self.mock_article
-    #   raise if Rails.env.production? || Rails.env.staging?
-    #
-    #   user1 = User.find_or_create_by!(name: "user1", email: "user1@localhost")
-    #   user2 = User.find_or_create_by!(name: "user2", email: "user2@localhost")
-    #   user3 = User.find_or_create_by!(name: "user3", email: "user3@localhost")
-    #   article = user1.wkbk_articles.create_mock1
-    #   article.messages.create!(user: user2, body: "user2のコメント")
-    #   article.messages.create!(user: user3, body: "user3のコメント")
-    #   article
-    # end
-
-    # # Vueでリアクティブになるように空でもカラムは作っておくこと
-    # def self.default_attributes
-    #   default = {
-    #     :id                  => nil,
-    #     :title               => nil,
-    #     :description         => nil,
-    #     :direction_message   => nil,
-    #     :tag_list      => [],
-    #     :moves_answers       => [],
-    #     :init_sfen           => "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1",
-    #     :viewpoint           => "black",
-    #     :mate_skip           => false,
-    #     :lineage_key         => nil,
-    #     # :folder_key        => "public",
-    #   }
-    #
-    #   if Rails.env.development?
-    #     default.update({
-    #                      :title            => "(title)",
-    #
-    #                      # :init_sfen => "position sfen 7gk/9/7GG/7N1/9/9/9/9/9 b 2r2bg4s3n4l18p 1",
-    #                      # :moves_answers => [
-    #                      #   :moves_str => "1c1b",
-    #                      #   :end_sfen  => "7gk/8G/7G1/7N1/9/9/9/9/9 w 2r2bg4s3n4l18p 2",
-    #                      # ],
-    #
-    #                      :init_sfen => "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1",
-    #                      :moves_answers => [
-    #                        { :moves_str => "S*2c 2b3c G*4c",            },
-    #                        { :moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c", },
-    #                        { :moves_str => "S*2c 2b1c 2c1b+ 1a1b G*2c", },
-    #                        { :moves_str => "S*2c 2b3a G*3b",            },
-    #                      ],
-    #
-    #                    })
-    #   end
-    #
-    #   default
-    # end
-
-    # def self.default_attributes2
-    #   [
-    #     { :moves_str => "S*2c 2b3c G*4c",            },
-    #     { :moves_str => "S*2c 2b1c 2c1b+ 1c1b G*2c", },
-    #     { :moves_str => "S*2c 2b1c 2c1b+ 1a1b G*2c", },
-    #     { :moves_str => "S*2c 2b3a G*3b",            },
-    #   ]
-    # end
-
-    # # テーブルでのソートより優先してしまうため default_scope { order(:position) } は指定しない
-    # acts_as_list touch_on_update: false, top_of_list: 0, scope: :book
-
-    attribute :moves_answer_validate_skip
-
-    belongs_to :user, class_name: "::User" # 作者
-    belongs_to :lineage
-
-    # belongs_to :book, required: false, counter_cache: true, touch: true
+    belongs_to :user, class_name: "::User"                                                      # 作者
+    belongs_to :lineage                                                                         # 種類
+    has_many :moves_answers, -> { order(:position) }, dependent: :destroy, inverse_of: :article # 解答たち
 
     acts_as_taggable
 
-    has_many :moves_answers, -> { order(:position) }, dependent: :destroy, inverse_of: :article
+    attribute :moves_answer_validate_skip
 
     before_validation do
       # if book
@@ -151,10 +57,6 @@ module Wkbk
       if Rails.env.test?
         self.title ||= "(title#{self.class.count.next})"
       end
-
-      # if Rails.env.test?
-      #   self.lineage_key ||= "手筋"
-      # end
 
       self.viewpoint ||= "black"
       self.lineage_key ||= "次の一手"
@@ -254,10 +156,7 @@ module Wkbk
 
       ActiveRecord::Base.transaction do
         attrs = article.slice(*[
-                                # :book_keys,
-                                :book_keys,
                                 :folder_key,
-                                # :position,
                                 :init_sfen,
                                 :viewpoint,
                                 :title,
@@ -270,14 +169,17 @@ module Wkbk
                               ])
 
         assign_attributes(attrs)
-
         save!
 
-        if records = article[:moves_answers]
+        # bookships の更新
+        self.book_keys = article[:book_keys]
+
+        # moves_answers の更新
+        begin
+          records = article[:moves_answers]
           # 削除
           # [1, 2, 3] があるとき [1, 3] をセットすることで [2] が削除される
           self.moves_answer_ids = records.collect { |e| e[:id] }
-
           # 追加 or 更新
           records.each do |e|
             if v = e[:id]
@@ -302,7 +204,10 @@ module Wkbk
     end
 
     def book_keys=(v)
-      self.books = Book.where(key: v) # このタイミングで(persistedなら) INSERT が走る
+      if new_record?
+        warn "article をDBに保存していないタイミングでは bookships も保存できていない"
+      end
+      self.books = Book.where(key: v) # persisted? なら INSERT が走る
     end
 
     def book_keys
@@ -459,8 +364,8 @@ module Wkbk
 
     concerning :BookshipMethods do
       included do
-        has_many :bookships, dependent: :destroy, inverse_of: :article # 問題集と問題の中間情報たち
-        has_many :books, through: :bookships     # 自分が入っている問題集たち
+        has_many :bookships, dependent: :destroy, inverse_of: :article, autosave: true # 問題集と問題の中間情報たち
+        has_many :books, through: :bookships                           # 自分が入っている問題集たち
 
         # 問題集に追加している問題を更新すると問題集たちの更新日時を更新する
         after_save do

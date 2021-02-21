@@ -41,16 +41,18 @@ module Wkbk
     end
 
     describe "update_from_js" do
-      let :params do
-        {
+      it "works" do
+        user1 = User.create!
+        user1.wkbk_books.create!(key: "book1")
+
+        params = {
           :init_sfen        => "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
           :moves_answers    => [{"moves_str"=>"4c5b"}],
           :time_limit_clock => "1999-12-31T15:03:00.000Z",
           :tag_list         => ["tag1 tag2", "tag3"],
+          :book_keys        => ["book1"],
         }
-      end
 
-      it "works" do
         # 1つ目を作る
         article = user1.wkbk_articles.build
         perform_enqueued_jobs do
@@ -60,6 +62,7 @@ module Wkbk
         assert { article.persisted? }
         assert { article.tag_list == ["tag1", "tag2", "tag3"] }
         assert { article.turn_max == 1 }
+        assert { article.book_keys == ["book1"] }
 
         # 開発者に通知
         mail = ActionMailer::Base.deliveries.last
