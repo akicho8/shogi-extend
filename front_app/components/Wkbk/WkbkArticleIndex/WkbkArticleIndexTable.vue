@@ -12,7 +12,9 @@
     backend-pagination
     pagination-simple
 
-    :page="base.page" :total="base.total" :per-page="base.per"
+    :page="base.page"
+    :total="base.total"
+    :per-page="base.per"
     @page-change="base.page_change_handle"
 
     backend-sorting
