@@ -13,22 +13,24 @@
 // https://axios.nuxtjs.org/helpers
 export default function ({$axios, error}) {
   $axios.onError(e => {
+    const r = e.response
+
     if (process.env.NODE_ENV === "development") {
-      console.log(JSON.stringify(e.response, null, 2))
+      console.log(JSON.stringify(r, null, 2))
     }
 
     // e.data.statusCode // => 403
     // e.data.message    // => "非公開"
 
-    // e.response.status // => 403
+    // e.status          // => 403
     // e.statusText      // => "Forbidden"
 
-    e.data.statusCode = e.data.statusCode ?? e.response.status
-    e.data.message    = e.data.message ?? e.response.statusText
-
-    error(e.response.data)
-
-    return Promise.resolve(false) // これを返すと console への出力が減る
+    if ("statusCode" in r.data) {
+      error(r.data)
+    } else {
+      error({statusCode: r.status, message: r.statusText})
+    }
+    // return Promise.resolve(false) // これを返すと console への出力が減る ？ これがあると error で脱出しない？？？
   })
 }
 
