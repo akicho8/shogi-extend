@@ -11,23 +11,23 @@ export const app_support = {
       }
     },
     article_show_handle() {
-      if (this.article_show_p) {
+      if (this.current_article_show_p) {
         this.sound_play("click")
         if (false) {
-          this.$router.push({name: "rack-articles-article_key", params: {article_key: this.current_xitem.article.key}})
+          this.$router.push({name: "rack-articles-article_key", params: {article_key: this.current_article.key}})
         } else {
-          const e = this.$router.resolve({name: "rack-articles-article_key", params: {article_key: this.current_xitem.article.key}})
+          const e = this.$router.resolve({name: "rack-articles-article_key", params: {article_key: this.current_article.key}})
           this.other_window_open(e.href)
         }
       }
     },
     article_edit_handle() {
-      if (this.article_edit_p) {
+      if (this.current_article_edit_p) {
         this.sound_play("click")
         if (false) {
-          this.$router.push({name: "rack-articles-article_key-edit", params: {article_key: this.current_xitem.article.key}})
+          this.$router.push({name: "rack-articles-article_key-edit", params: {article_key: this.current_article.key}})
         } else {
-          const e = this.$router.resolve({name: "rack-articles-article_key-edit", params: {article_key: this.current_xitem.article.key}})
+          const e = this.$router.resolve({name: "rack-articles-article_key-edit", params: {article_key: this.current_article.key}})
           this.other_window_open(e.href)
         }
       }
@@ -81,6 +81,6 @@ export const app_support = {
     },
   },
   computed: {
-    article_show_p() { return this.current_xitem },
+    current_article_show_p() { return this.current_xitem },
   },
 }
