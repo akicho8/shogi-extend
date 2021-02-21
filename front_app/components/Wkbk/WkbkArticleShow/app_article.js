@@ -37,10 +37,6 @@ export const app_article = {
     // save_button_name()    { return this.article.new_record_p ? "保存" : "更新" },
     // save_button_enabled() { return this.article.moves_answers.length >= 1      },
 
-    //////////////////////////////////////////////////////////////////////////////// 編集権限
-    editable_p() { return this.owner_p                               },
-    disabled_p() { return !this.editable_p                           },
-
     owner_p() {
       if (this.article) {
         return this.g_current_user && this.g_current_user.id === this.article.user.id

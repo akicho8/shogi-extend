@@ -6,7 +6,8 @@ b-sidebar.WkbkArticleShowSidebar.is-unselectable(fullheight right overlay v-mode
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles-article_key-edit', params: {article_key: base.article.key}}" label="編集" @click.native="sound_play('click')" v-if="base.editable_p")
+          //- b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles-article_key-edit', params: {article_key: base.article.key}}" label="編集" @click.native="sound_play('click')" :disabled="!base.owner_p")
+          b-menu-item(label="編集"     @click="base.article_edit_handle" :disabled="!base.owner_p")
           b-menu-item(label="ツイート" @click="base.tweet_handle")
 </template>
 

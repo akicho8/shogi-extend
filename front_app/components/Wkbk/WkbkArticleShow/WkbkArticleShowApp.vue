@@ -7,7 +7,6 @@ client-only
         p article.user.id: {{article.user && article.user.id}}
         p g_current_user.id: {{g_current_user && g_current_user.id}}
         p owner_p: {{owner_p}}
-        p editable_p: {{editable_p}}
 
     p(v-if="$fetchState.error" v-text="$fetchState.error.message")
     b-loading(:active="$fetchState.pending")
