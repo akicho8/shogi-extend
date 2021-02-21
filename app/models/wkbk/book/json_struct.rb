@@ -197,6 +197,7 @@ module Wkbk
               :key,
               :position,
               :init_sfen,
+              :viewpoint,
               :title,
               :description,
               :direction_message,
