@@ -9,7 +9,7 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
           b-menu-item(label="やめる"                                          @click.native="base.quit_handle"       :disabled="!base.is_running_p")
           b-menu-item(:label="`現在の問題を別タブで開く`" @click.native="base.article_show_handle" :disabled="!base.article_show_p")
 
-        b-menu-list(label="管理")
+        b-menu-list(label="管理" v-if="development_p && false")
           //- b-menu-item(label="この問題集の編集"       @click.native="base.book_edit_handle"    :disabled="!base.owner_p")
           //- b-menu-item(label="問題を追加する"         @click.native="base.article_new_handle"  :disabled="!base.owner_p")
           b-menu-item(label="この問題集を編集"       @click.native="base.book_edit_handle"    :disabled="!base.owner_p")
