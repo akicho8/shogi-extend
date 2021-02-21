@@ -50,21 +50,33 @@ export default {
       return dayjs(t).fromNow()
     },
 
+    // fromNow の「昨日」は24時間以上差があるかだけで見ているっぽいので意図したものとは異なる
+    // なので自力で日付だけの情報にして比較する必要がある
     updated_time_format(t) {
       t = dayjs(t)
-      // t = t.hour(0).minute(0).second(0)
+      const t_date    = t.clone().hour(0).minute(0).second(0).millisecond(0)
+      const today     = dayjs().hour(0).minute(0).second(0).millisecond(0)
+      const yesterday = today.clone().add(-1, "day")
+
+      let v = null
+      if (t_date.isSame(today)) {
+        v = "本日"
+      } else if (t_date.isSame(yesterday)) {
+        v = "昨日"
+      } else {
+        v = t.fromNow()
+      }
       // return t
       // const today = dayjs().hour(0).minute(0).second(0)
       // return t.isSame(today, "day")
       // return today
       // const yesterday = today.add(-1, "day")
-      let v = null
+      // let v = null
       // if (t.isSame(today, "day")) {
       //   v = "本日"
       // } else if (t.isSame(yesterday, "day")) {
       //   v = "昨日"
       // } else {
-      v = t.fromNow()
       // }
       return v + "更新"
     },
