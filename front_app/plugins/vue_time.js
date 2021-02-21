@@ -4,6 +4,12 @@ import dayjs from "dayjs"
 import "dayjs/locale/ja.js"
 dayjs.locale('ja')
 
+// import timezone from "dayjs/plugin/timezone.js"
+// import utc from "dayjs/plugin/utc.js"
+// dayjs.extend(timezone)
+// dayjs.extend(utc)
+// dayjs.tz.setDefault("Asia/Tokyo")
+
 // // https://github.com/iamkun/dayjs/blob/master/docs/ja/Plugin.md#isbetween
 // import isBetween from 'dayjs/plugin/isBetween'
 // dayjs.extend(isBetween)
@@ -45,17 +51,21 @@ export default {
     },
 
     updated_time_format(t) {
-      const date = dayjs(t)
-      // const diff_hour = dayjs().diff(date, "hour")
-      const diff_day = dayjs().diff(date, "day")
+      t = dayjs(t)
+      // t = t.hour(0).minute(0).second(0)
+      // return t
+      // const today = dayjs().hour(0).minute(0).second(0)
+      // return t.isSame(today, "day")
+      // return today
+      // const yesterday = today.add(-1, "day")
       let v = null
-      if (diff_day === 0) {
-        v = "本日"
-      } else if (diff_day === 1) {
-        v = "昨日"
-      } else {
-        v = date.fromNow()
-      }
+      // if (t.isSame(today, "day")) {
+      //   v = "本日"
+      // } else if (t.isSame(yesterday, "day")) {
+      //   v = "昨日"
+      // } else {
+      v = t.fromNow()
+      // }
       return v + "更新"
     },
 
