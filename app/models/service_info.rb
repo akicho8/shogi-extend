@@ -27,7 +27,7 @@ class ServiceInfo
     },
     {
       key: :wkbk,
-      display_p: true,
+      display_p: !Rails.env.production?,
       nuxt_link_to: {path: "/rack"},
       title: "インスタント将棋問題集",
       new_p: true,
