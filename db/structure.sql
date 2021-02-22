@@ -1767,7 +1767,7 @@ CREATE TABLE `wkbk_articles` (
   `init_sfen` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '問題',
   `viewpoint` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '視点',
   `title` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'タイトル',
-  `description` varchar(5000) COLLATE utf8mb4_bin NOT NULL COMMENT '説明',
+  `description` text COLLATE utf8mb4_bin NOT NULL COMMENT '説明',
   `direction_message` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'メッセージ',
   `turn_max` int(11) NOT NULL COMMENT '最大手数',
   `mate_skip` tinyint(1) NOT NULL COMMENT '詰みチェックをスキップする',
@@ -1799,7 +1799,7 @@ CREATE TABLE `wkbk_books` (
   `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
   `sequence_id` bigint(20) NOT NULL COMMENT '順序',
   `title` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'タイトル',
-  `description` varchar(5000) COLLATE utf8mb4_bin NOT NULL COMMENT '説明',
+  `description` text COLLATE utf8mb4_bin NOT NULL COMMENT '説明',
   `bookships_count` int(11) NOT NULL DEFAULT '0' COMMENT '記事数',
   `answer_logs_count` int(11) NOT NULL DEFAULT '0' COMMENT '解答数',
   `created_at` datetime(6) NOT NULL,
@@ -1966,6 +1966,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20201229171906'),
 ('20201229171907'),
 ('20210121210600'),
-('20210215234700');
+('20210215234700'),
+('20210222155800');
 
 

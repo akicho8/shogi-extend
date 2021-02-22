@@ -3,27 +3,27 @@
 #
 # Article (wkbk_articles as Wkbk::Article)
 #
-# |---------------------+---------------------+--------------+---------------------+--------------+-------|
-# | name                | desc                | type         | opts                | refs         | index |
-# |---------------------+---------------------+--------------+---------------------+--------------+-------|
-# | id                  | ID                  | integer(8)   | NOT NULL PK         |              |       |
-# | key                 | ユニークなハッシュ  | string(255)  | NOT NULL            |              | A!    |
-# | user_id             | User                | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | folder_id           | Folder              | integer(8)   | NOT NULL            |              | C     |
-# | lineage_id          | Lineage             | integer(8)   | NOT NULL            |              | D     |
-# | init_sfen           | Init sfen           | string(255)  | NOT NULL            |              | E     |
-# | viewpoint           | Viewpoint           | string(255)  | NOT NULL            |              |       |
-# | title               | タイトル            | string(100)  | NOT NULL            |              |       |
-# | description         | 解説                | string(5000) | NOT NULL            |              |       |
-# | direction_message   | Direction message   | string(100)  | NOT NULL            |              |       |
-# | turn_max            | 手数                | integer(4)   | NOT NULL            |              | F     |
-# | mate_skip           | Mate skip           | boolean      | NOT NULL            |              |       |
-# | moves_answers_count | Moves answers count | integer(4)   | DEFAULT(0) NOT NULL |              |       |
-# | difficulty          | Difficulty          | integer(4)   | NOT NULL            |              | G     |
-# | answer_logs_count   | Answer logs count   | integer(4)   | DEFAULT(0) NOT NULL |              |       |
-# | created_at          | 作成日時            | datetime     | NOT NULL            |              |       |
-# | updated_at          | 更新日時            | datetime     | NOT NULL            |              |       |
-# |---------------------+---------------------+--------------+---------------------+--------------+-------|
+# |---------------------+---------------------+-------------+---------------------+--------------+-------|
+# | name                | desc                | type        | opts                | refs         | index |
+# |---------------------+---------------------+-------------+---------------------+--------------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK         |              |       |
+# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |              | A!    |
+# | user_id             | User                | integer(8)  | NOT NULL            | => ::User#id | B     |
+# | folder_id           | Folder              | integer(8)  | NOT NULL            |              | C     |
+# | lineage_id          | Lineage             | integer(8)  | NOT NULL            |              | D     |
+# | init_sfen           | Init sfen           | string(255) | NOT NULL            |              | E     |
+# | viewpoint           | Viewpoint           | string(255) | NOT NULL            |              |       |
+# | title               | タイトル            | string(100) | NOT NULL            |              |       |
+# | description         | 説明                | text(65535) | NOT NULL            |              |       |
+# | direction_message   | Direction message   | string(100) | NOT NULL            |              |       |
+# | turn_max            | 手数                | integer(4)  | NOT NULL            |              | F     |
+# | mate_skip           | Mate skip           | boolean     | NOT NULL            |              |       |
+# | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | difficulty          | Difficulty          | integer(4)  | NOT NULL            |              | G     |
+# | answer_logs_count   | Answer logs count   | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | created_at          | 作成日時            | datetime    | NOT NULL            |              |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL            |              |       |
+# |---------------------+---------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -151,8 +151,9 @@ module Wkbk
     #   article.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
     def update_from_js(params)
+      old_new_record = new_record?
+
       article = params.deep_symbolize_keys
-      @save_before_hash = current_hash
 
       ActiveRecord::Base.transaction do
         attrs = article.slice(*[
@@ -195,11 +196,10 @@ module Wkbk
         end
       end
 
-      # 「公開」フォルダに移動させたときに通知する
-      # created_at をトリガーにすると下書きを作成したときにも通知してしまう
-      if state = saved_after_state
-        SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
-        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
+      if true
+        str = old_new_record ? "作成" : "更新"
+        SlackAgent.message_send(key: "問題#{str}", body: [title, page_url].join(" "))
+        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{str}しました", body: info.to_t).deliver_later
       end
     end
 
@@ -336,31 +336,6 @@ module Wkbk
     end
 
     private
-
-    # 保存直後の状態
-    def saved_after_state
-      if new_record?
-        "投稿"
-      else
-        "更新"
-      end
-    end
-
-    # 公開した直後か？
-    # def public_folder_posted?
-    #   saved_change_to_attribute?(:folder_id) && folder.kind_of?(PublicFolder)
-    # end
-
-    # 変更を検知するためのハッシュ(重要なデータだけにする)
-    def current_hash
-      ary = [
-        init_sfen,
-        *moves_answers.collect(&:moves_str),
-        title,
-        description,
-      ]
-      Digest::MD5.hexdigest(ary.join(":"))
-    end
 
     concerning :BookshipMethods do
       included do

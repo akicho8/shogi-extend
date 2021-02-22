@@ -16,7 +16,7 @@
       kifu_url: "棋譜URL",
       kifu_body: "棋譜",
       title: "タイトル",
-      description: "解説",
+      description: "説明",
       turn_max: "手数",
       start_turn: "開始局面",
       image_turn: "OGP画像の局面",

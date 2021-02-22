@@ -81,9 +81,11 @@ module Wkbk
         s = s.where.not(id: article.id_in_database)
       end
       # その上で手順まで同じのものがあるか？
-      article_ids = self.class.where(article: s).where(moves_str: moves_str).group(:article_id).count
+      article_ids = self.class.where(article: s).where(moves_str: moves_str).group(:article_id).count.keys
       if article_ids.present?
-        errors.add(:base, "配置と正解手順の組み合わせが既出の問題(ID:#{article_ids.keys.join(', ')})と重複しています")
+        articles = Article.find(article_ids)
+        str = articles.collect { |e| "「#{e.title}」" }.join
+        errors.add(:base, "配置と正解手順の組み合わせが既出の問題#{str}と重複しています")
       end
     end
 

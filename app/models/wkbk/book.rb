@@ -3,21 +3,21 @@
 #
 # Book (wkbk_books as Wkbk::Book)
 #
-# |-------------------+--------------------+--------------+---------------------+--------------+-------|
-# | name              | desc               | type         | opts                | refs         | index |
-# |-------------------+--------------------+--------------+---------------------+--------------+-------|
-# | id                | ID                 | integer(8)   | NOT NULL PK         |              |       |
-# | key               | ユニークなハッシュ | string(255)  | NOT NULL            |              | A!    |
-# | user_id           | User               | integer(8)   | NOT NULL            | => ::User#id | B     |
-# | folder_id         | Folder             | integer(8)   | NOT NULL            |              | C     |
-# | sequence_id       | Sequence           | integer(8)   | NOT NULL            |              | D     |
-# | title             | タイトル           | string(100)  | NOT NULL            |              |       |
-# | description       | 解説               | string(5000) | NOT NULL            |              |       |
-# | bookships_count   | Bookships count    | integer(4)   | DEFAULT(0) NOT NULL |              |       |
-# | answer_logs_count | Answer logs count  | integer(4)   | DEFAULT(0) NOT NULL |              |       |
-# | created_at        | 作成日時           | datetime     | NOT NULL            |              |       |
-# | updated_at        | 更新日時           | datetime     | NOT NULL            |              |       |
-# |-------------------+--------------------+--------------+---------------------+--------------+-------|
+# |-------------------+--------------------+-------------+---------------------+--------------+-------|
+# | name              | desc               | type        | opts                | refs         | index |
+# |-------------------+--------------------+-------------+---------------------+--------------+-------|
+# | id                | ID                 | integer(8)  | NOT NULL PK         |              |       |
+# | key               | ユニークなハッシュ | string(255) | NOT NULL            |              | A!    |
+# | user_id           | User               | integer(8)  | NOT NULL            | => ::User#id | B     |
+# | folder_id         | Folder             | integer(8)  | NOT NULL            |              | C     |
+# | sequence_id       | Sequence           | integer(8)  | NOT NULL            |              | D     |
+# | title             | タイトル           | string(100) | NOT NULL            |              |       |
+# | description       | 説明               | text(65535) | NOT NULL            |              |       |
+# | bookships_count   | Bookships count    | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | answer_logs_count | Answer logs count  | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | created_at        | 作成日時           | datetime    | NOT NULL            |              |       |
+# | updated_at        | 更新日時           | datetime    | NOT NULL            |              |       |
+# |-------------------+--------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -188,7 +188,7 @@ module Wkbk
     #
     def update_from_js(params)
       book = params.deep_symbolize_keys
-      @save_before_hash = current_hash
+      old_new_record = new_record?
 
       ActiveRecord::Base.transaction do
         attrs = book.slice(*[
@@ -209,9 +209,10 @@ module Wkbk
 
       # 「公開」フォルダに移動させたときに通知する
       # created_at をトリガーにすると下書きを作成したときにも通知してしまう
-      if state = saved_after_state
-        SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
-        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
+      if true
+        str = old_new_record ? "作成" : "更新"
+        SlackAgent.message_send(key: "問題集#{str}", body: [title, page_url].join(" "))
+        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{str}しました", body: info.to_t).deliver_later
       end
     end
 
@@ -402,16 +403,6 @@ module Wkbk
     end
 
     private
-
-    # 保存直後の状態
-    def saved_after_state
-      case
-      when public_folder_posted?
-        "投稿"
-      when folder_eq(:public) && current_hash != @save_before_hash
-        "更新"
-      end
-    end
 
     # 公開した直後か？
     def public_folder_posted?
