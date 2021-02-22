@@ -46,10 +46,10 @@ LIST_ALL = [
   { url: "/rack/books/4/edit?_user_id=1", validations: { "code" => "404", }},
 
   { url: "/rack/books",              validations: { "og:image" => /rack/, "og:title" => /問題集/, }},
-  { url: "/rack/books/1",            validations: { "og:image" => /share/,                         }},
+  { url: "/rack/books/1",            validations: { "og:image" => /active_storage/,                         }},
   { url: "/rack",                    validations: { "og:image" => /rack/, "og:title" => /問題集/, }},
 
-  { url: "/users/1",                                                                 validations: { "title" => /さん/,                                                                                                                                      }},
+  { url: "/users/1",                                                                 validations: { "code" => "200" }},
 
   { url: "/settings/profile",                                                        validations: { "code" => "404"                                                                                                                                      }},
   { url: "/settings/email",                                                          validations: { "code" => "404",                                                                                                                                      }},
