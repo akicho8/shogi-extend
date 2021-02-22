@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Admin::ScriptsController, type: :controller do
+  include WkbkSupportMethods
+
   def login!
     request.env["HTTP_AUTHORIZATION"] = ActionController::HttpAuthentication::Basic.encode_credentials(SecureRandom.hex, Rails.application.credentials[:admin_password])
   end

@@ -56,8 +56,6 @@ module Wkbk
         end
       end
 
-      private
-
       # なんらかのアバターのパスを返す
       # FALLBACK_ICONS_DEBUG=1 foreman s
       # rails r "p User.first.avatar_path"
@@ -75,6 +73,8 @@ module Wkbk
         uri.path = avatar_path
         uri.to_s
       end
+
+      private
 
       # アバターがあればパスを返す
       def raw_avatar_path

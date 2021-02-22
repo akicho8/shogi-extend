@@ -8,7 +8,7 @@ module Tsl
       elsif Rails.env.test?
         [66]
       else
-        [28, 66, 68]
+        [28, 66, 67, 68]
       end
     end
 
