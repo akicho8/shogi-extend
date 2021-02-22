@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_234700) do
+ActiveRecord::Schema.define(version: 2021_02_22_155800) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1216,7 +1216,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_234700) do
     t.string "init_sfen", null: false, comment: "問題"
     t.string "viewpoint", null: false, comment: "視点"
     t.string "title", limit: 100, null: false, comment: "タイトル"
-    t.string "description", limit: 5000, null: false, comment: "説明"
+    t.text "description", null: false, comment: "説明"
     t.string "direction_message", limit: 100, null: false, comment: "メッセージ"
     t.integer "turn_max", null: false, comment: "最大手数"
     t.boolean "mate_skip", null: false, comment: "詰みチェックをスキップする"
@@ -1240,7 +1240,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_234700) do
     t.bigint "folder_id", null: false, comment: "フォルダ"
     t.bigint "sequence_id", null: false, comment: "順序"
     t.string "title", limit: 100, null: false, comment: "タイトル"
-    t.string "description", limit: 5000, null: false, comment: "説明"
+    t.text "description", null: false, comment: "説明"
     t.integer "bookships_count", default: 0, null: false, comment: "記事数"
     t.integer "answer_logs_count", default: 0, null: false, comment: "解答数"
     t.datetime "created_at", precision: 6, null: false
