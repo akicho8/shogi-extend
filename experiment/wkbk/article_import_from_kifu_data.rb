@@ -27,7 +27,7 @@ module Wkbk
           book.destroy!
         end
 
-        book = user.wkbk_books.create!(title: book_title, folder_key: :private, sequence_key: :position_asc)
+        book = user.wkbk_books.create!(title: book_title, folder_key: :private, sequence_key: :bookship_position_asc)
 
         book_dir.glob("*.kif").sort.take(1000).each do |file|
           str = file.read.strip
