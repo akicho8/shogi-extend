@@ -5,7 +5,7 @@ html(lang="ja" class=([Rails.env]))
   body
     = render partial: "layouts/main_navbar"
     .section
-      .container.main_container
+      .container.is-fluid
         = flash_notify_tag
         = yield
         = ToolBelt::Basic.new(view_context: self).to_html
