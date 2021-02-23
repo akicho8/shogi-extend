@@ -42,8 +42,8 @@ export const app_article = {
         return true
       }
 
-      if (this.article.moves_answers.length === 0 && false) {
-        this.toast_warn("正解を作ってください")
+      if (this.article.moves_answers.length === 0) {
+        this.toast_warn("正解が未登録です")
         return true
       }
 

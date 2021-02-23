@@ -44,16 +44,21 @@ MainSection.WkbkArticleEditForm
                   b-checkbox-button(v-model="base.article.book_keys" :native-value="e.key")
                     b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small")
                     p {{e.title}}
-
+      .column.is-one-third
         .panel.mb-0
           .panel-heading
             | この問題を入れる問題集
-          .panel-block.book_cb_buttons.is-block
-            template(v-for="e in base.books")
-              b-field
-                b-checkbox-button(v-model="base.article.book_keys" :native-value="e.key" expanded @input="sound_play('click')")
-                  b-icon(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small")
-                  p.ml-2 {{e.title}}
+          template(v-if="base.books.length >= 1")
+            .panel-block.book_cb_buttons.is-block
+              template(v-for="e in base.books")
+                b-field
+                  b-checkbox-button(v-model="base.article.book_keys" :native-value="e.key" expanded @input="sound_play('click')")
+                    b-icon(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small")
+                    p.ml-2 {{e.title}}
+          .panel-block.py-4
+            nuxt-link.is-size-7(:to="{name: 'rack-books-new'}" @click.native="sound_play('click')")
+              b-icon(icon="plus" size="is-small")
+              | 新しい問題集
 </template>
 
 <script>
@@ -117,10 +122,11 @@ export default {
     margin-bottom: 1.5rem
 
   .book_cb_buttons
-    padding: 1rem
+    padding-top: 1rem
+    padding-bottom: 1rem
     .field
       &:not(:last-child)
-        margin-bottom: 0.5rem
+        margin-bottom: 0.75rem
       .button
         justify-content: flex-start
 
