@@ -4,6 +4,12 @@ module Api
   class ApplicationController < ::ApplicationController
     include ShogiErrorRescueMod # for bs_error
 
+    def api_login_required
+      unless current_user
+        render json: { statusCode: 403, message: "ログインしてください" }, status: 403
+      end
+    end
+
     def html_fetch(url, options = {})
       options = {
         expires_in: 1.hour,

@@ -10,13 +10,6 @@ module Api
         :updated_at
       end
 
-      # before_action :api_login_required
-      def api_login_required
-        unless current_user
-          render json: { statusCode: 403, message: "ログインしてください" }, status: 403
-        end
-      end
-
       # |----------+------+--------+-------------+-----------------------------|
       # | 種類     | 一覧 | 直リン | 一覧条件    | 直リン表示条件              |
       # |----------+------+--------+-------------+-----------------------------|

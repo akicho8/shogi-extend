@@ -1,14 +1,16 @@
 // https://www.studiok-i.net/kifu/?sfen=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fp1pppp1pp%2F1p4p2%2F9%2F2P4P1%2FPP1PPPP1P%2F1B5R1%2FLNSGKGSNL%20b%20-%201&game_name=&sente_name
 // https://www.studiok-i.net/ps/?sfen=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fp1pppp1pp%2F1p4p2%2F9%2F2P4P1%2FPP1PPPP1P%2F1B5R1%2FLNSGKGSNL%20b%20-%201
 
-import { isMobile } from "../components/models/is_mobile.js"
+import { isMobile } from "@/components/models/is_mobile.js"
+import { MyLocalStorage } from "@/components/models/my_local_storage.js"
+import { PiyoShogiTypeInfo } from "@/components/models/piyo_shogi_type_info.js"
 
 export default {
   methods: {
     // app, web 自動切り替え
     // app のとき path があれば kif の URL を渡す
     piyo_shogi_auto_url(params) {
-      if (this.piyo_shogi_app_p) {
+      if (this.piyo_shogi_app_p()) {
         // モバイル版
         if (params.path) {
           // KIFファイルを渡す方法
@@ -51,7 +53,7 @@ export default {
       params = {...params, num: params.turn} // turn -> num
 
       return [
-        this.piyo_shogi_url_prefix,
+        this.piyo_shogi_url_prefix(),
         "?",
         this.piyo_shogi_url_params_build(params, ordered_keys),
       ].join("")
@@ -62,7 +64,7 @@ export default {
       ordered_keys.forEach(e => {
         let v = params[e]
         if (v != null) {
-          if (this.piyo_shogi_app_p) {
+          if (this.piyo_shogi_app_p()) {
             // 注意点
             // ・「ぴよ将棋」のアプリ版はエンコードするとまったく読めなくなる
             // ・URLの最後に ".kif" の文字列が来ないといけない
@@ -74,17 +76,26 @@ export default {
       })
       return values.join("&")
     },
-  },
 
-  computed: {
     // モバイルアプリ版が起動できるか？
     piyo_shogi_app_p() {
+      const v = MyLocalStorage.get("user_settings")
+      this.clog(v)
+      if (v) {
+        const info = PiyoShogiTypeInfo.fetch(v.piyo_shogi_type_key)
+        if (info.key === "native") {
+          return true
+        }
+        if (info.key === "web") {
+          return false
+        }
+      }
       return isMobile.iOS() || isMobile.Android()
     },
 
     // モバイル or WEB に合わせたプレフィクス
     piyo_shogi_url_prefix() {
-      if (this.piyo_shogi_app_p) {
+      if (this.piyo_shogi_app_p()) {
         return "piyoshogi://"
       } else {
         return "https://www.studiok-i.net/ps/"

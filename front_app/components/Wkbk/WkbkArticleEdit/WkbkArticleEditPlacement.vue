@@ -73,17 +73,27 @@ export default {
       }
     },
 
-    // 棋譜コピー
     kifu_copy_handle() {
       this.sound_play("click")
       this.general_kifu_copy(this.base.article.init_sfen, {to_format: "kif"})
     },
-
   },
 
   computed: {
-    piyo_shogi_app_with_params_url() { return this.piyo_shogi_auto_url({sfen: this.base.article.init_sfen, turn: 0, viewpoint: this.base.article.viewpoint}) },
-    kento_app_with_params_url()      { return this.kento_full_url({sfen: this.base.article.init_sfen, turn: 0, viewpoint: this.base.article.viewpoint}) },
+    piyo_shogi_app_with_params_url() {
+      return this.piyo_shogi_auto_url({
+        turn: 0,
+        sfen: this.base.article.init_sfen,
+        viewpoint: this.base.article.viewpoint,
+      })
+    },
+    kento_app_with_params_url() {
+      return this.kento_full_url({
+        sfen: this.base.article.init_sfen,
+        turn: 0,
+        viewpoint: this.base.article.viewpoint,
+      })
+    },
   },
 }
 </script>
@@ -113,7 +123,7 @@ export default {
 
       width: 100%
       +tablet
-        max-width: 56vmin
+        max-width: 54vmin
       .footer_buttons
         .button
           margin-bottom: 0

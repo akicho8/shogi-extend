@@ -6,6 +6,7 @@
         b-menu
           b-menu-list(label="Action")
             b-menu-item(label="編集"               tag="nuxt-link" :to="{name: 'settings-profile'}"        @click.native="sound_play('click')")
+            b-menu-item(label="ぴよ将棋の種類"     tag="nuxt-link" :to="{name: 'settings-piyo_shogi'}"     @click.native="sound_play('click')")
             b-menu-item(label="メールアドレス変更" tag="nuxt-link" :to="{name: 'settings-email'}"          @click.native="sound_play('click')")
             b-menu-item(label="ウォーズIDの設定"   tag="nuxt-link" :to="{name: 'settings-swars-user-key'}" @click.native="sound_play('click')" v-if="development_p")
           b-menu-list(label="その他")
@@ -17,7 +18,7 @@
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
           | {{page_title}}
       template(slot="end" v-if="g_current_user && g_current_user.id === record.id")
-        b-navbar-item(@click="sidebar_toggle")
+        b-navbar-item.px_5_if_tablet(@click="sidebar_toggle")
           b-icon(icon="menu")
     MainSection
       .container

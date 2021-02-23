@@ -1,11 +1,11 @@
 module Api
   class SettingsController < ::Api::ApplicationController
+    before_action :api_login_required
+
     DIRECCT_EMAIL_SET = true
 
     # curl -d _method=put http://localhost:3000/api/settings/profile_update.json
     def profile_update
-      raise "must not happen" unless current_user
-
       user = current_user
 
       if v = params[:croped_image]
@@ -47,12 +47,10 @@ module Api
 
     # curl -d _method=put http://localhost:3000/api/settings/email_fetch.json
     def email_fetch
-      raise "must not happen" unless current_user
       render json: { email: current_user.email }
     end
 
     def email_update
-      raise "must not happen" unless current_user
       user = current_user
 
       if user.email == params[:email]
@@ -82,7 +80,6 @@ module Api
 
     # curl -d _method=put http://localhost:3000/api/settings/swars_user_key_fetch.json
     def swars_user_key_fetch
-      raise "must not happen" unless current_user
       render json: { swars_user_key: current_user.key }
     end
 
