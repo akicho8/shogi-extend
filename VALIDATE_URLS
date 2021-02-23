@@ -52,6 +52,7 @@
   "https://www.shogi-extend.com/admin/script/actb-room",
   "https://www.shogi-extend.com/admin/script/swars-regular-user",
   "https://www.shogi-extend.com/admin/script/swars-recently-user",
+  "https://www.shogi-extend.com/admin/script/swars-dashboard",
   "https://www.shogi-extend.com/admin/sidekiq",
   "https://www.shogi-extend.com/cpu-battle",
   "https://www.shogi-extend.com/share-board",
