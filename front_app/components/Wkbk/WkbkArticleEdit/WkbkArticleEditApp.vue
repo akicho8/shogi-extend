@@ -47,13 +47,14 @@ client-only
 import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
-import { support_parent } from "./support_parent.js"
-import { app_placement  } from "./app_placement.js"
-import { app_tabs       } from "./app_tabs.js"
-import { app_answer     } from "./app_answer.js"
-import { app_article    } from "./app_article.js"
-import { app_storage    } from "./app_storage.js"
+import { support_parent        } from "./support_parent.js"
+import { app_placement         } from "./app_placement.js"
+import { app_tabs              } from "./app_tabs.js"
+import { app_answer            } from "./app_answer.js"
+import { app_article           } from "./app_article.js"
+import { app_storage           } from "./app_storage.js"
 import { app_article_delete    } from "./app_article_delete.js"
+import { app_kifu_copy_buttons } from "./app_kifu_copy_buttons.js"
 
 import { Article     } from "../models/article.js"
 import { Book        } from "../models/book.js"
@@ -69,6 +70,7 @@ export default {
     app_article,
     app_storage,
     app_article_delete,
+    app_kifu_copy_buttons,
   ],
 
   data() {

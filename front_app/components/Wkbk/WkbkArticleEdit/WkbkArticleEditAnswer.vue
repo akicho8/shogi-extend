@@ -45,9 +45,9 @@ MainSection.WkbkArticleEditAnswer
                   sp_controller="is_controller_on"
                   )
                 .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
-                  PiyoShogiButton.mb-0(:href="base.answer_base_piyo_shogi_app_with_params_url2(e)")
-                  KentoButton.mb-0(tag="a" :href="base.answer_base_kento_app_with_params_url2(e)" target="_blank")
-                  KifCopyButton.mb-0(@click="base.answer_base_kifu_copy_handle2(e)") コピー
+                  PiyoShogiButton.mb-0(:href="base.answers_piyo_shogi_app_with_params_url(e)")
+                  KentoButton.mb-0(tag="a" :href="base.answers_kento_app_with_params_url(e)" target="_blank")
+                  KifCopyButton.mb-0(@click="base.answers_kifu_copy_handle(e)") コピー
 
                 .is-flex.is-justify-content-center.mt-4
                   b-button.delete_button.has-text-danger(@click="base.answer_delete_at(i)" icon-left="trash-can-outline" type="is-text")
