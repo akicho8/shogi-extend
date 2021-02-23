@@ -15,11 +15,18 @@ MainSection.WkbkArticleEditAnswer
             sp_controller="is_controller_on"
             sp_summary="is_summary_off"
             @update:turn_offset="base.turn_offset_set"
+            @update:play_mode_advanced_full_moves_sfen="base.answer_base_play_mode_advanced_full_moves_sfen_set"
             ref="main_sp"
             )
-          .buttons.is-centered.answer_create_handle
-            b-button(@click="base.answer_create_handle" :type="{'is-primary': base.answer_turn_offset >= 1}" size="is-small")
-              | {{base.answer_turn_offset}}手目までの手順を正解とする
+
+          .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
+            PiyoShogiButton.mb-0(:href="base.answer_base_piyo_shogi_app_with_params_url")
+            KentoButton.mb-0(tag="a" :href="base.answer_base_kento_app_with_params_url" target="_blank")
+            KifCopyButton.mb-0(@click="base.answer_base_kifu_copy_handle") コピー
+
+          .buttons.is-centered.mt-4.mb-0
+            b-button.mb-0(@click="base.answer_create_handle" :type="{'is-primary': base.answer_base_turn_offset >= 1}")
+              | {{base.answer_base_turn_offset}}手目までの手順を正解とする
 
       .column.RightColumn
         b-tabs(v-model="base.answer_tab_index" position="is-centered" :vertical="false" :expanded="true" :animated="false" v-if="base.article.moves_answers.length >= 1" @input="sound_play('click')")
@@ -37,6 +44,11 @@ MainSection.WkbkArticleEditAnswer
                   sp_slider="is_slider_on"
                   sp_controller="is_controller_on"
                   )
+                .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
+                  PiyoShogiButton.mb-0(:href="base.answer_base_piyo_shogi_app_with_params_url2(e)")
+                  KentoButton.mb-0(tag="a" :href="base.answer_base_kento_app_with_params_url2(e)" target="_blank")
+                  KifCopyButton.mb-0(@click="base.answer_base_kifu_copy_handle2(e)") コピー
+
                 .is-flex.is-justify-content-center.mt-4
                   b-button.delete_button.has-text-danger(@click="base.answer_delete_at(i)" icon-left="trash-can-outline" type="is-text")
 </template>
@@ -47,6 +59,8 @@ import { support_child } from "./support_child.js"
 export default {
   name: "WkbkArticleEditAnswer",
   mixins: [support_child],
+  methods: {
+  },
 }
 </script>
 
@@ -69,8 +83,6 @@ export default {
         margin-top: 0.5rem
       +tablet
         margin-top: 4rem
-      .answer_create_handle
-        margin-top: 1rem
 
   .RightColumn.column
     +mobile

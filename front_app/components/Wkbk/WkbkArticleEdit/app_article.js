@@ -97,7 +97,7 @@ export const app_article = {
     },
 
     turn_offset_set(v) {
-      this.answer_turn_offset = v
+      this.answer_base_turn_offset = v
     },
   },
 

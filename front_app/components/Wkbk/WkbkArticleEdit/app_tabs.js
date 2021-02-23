@@ -27,6 +27,7 @@ export const app_tabs = {
     },
 
     answer_tab_handle() {
+      this.answer_base_sfen = this.article.init_sfen
       this.tab_set("answer")
     },
 

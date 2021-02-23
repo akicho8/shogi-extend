@@ -2,6 +2,7 @@
 client-only
   .WkbkArticleEditApp
     DebugBox
+      p answer_base_sfen: {{answer_base_sfen}}
       p answer_tab_index: {{answer_tab_index}}
       template(v-if="article")
         p article.book_keys: {{article.book_keys}}
@@ -111,7 +112,7 @@ export default {
     }
 
     this.answer_tab_index = 0 // 解答リストの一番左指す
-    this.answer_turn_offset = 0
+    this.answer_base_turn_offset = 0
     this.valid_count = 0
 
     let performed = false
