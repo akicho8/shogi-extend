@@ -1,6 +1,5 @@
-# http://localhost:3000/admin/script/remake
 module BackendScript
-  class RemakeScript < ::BackendScript::Base
+  class SwarsRemakeScript < ::BackendScript::Base
     include AtomicScript::PostRedirectMod
 
     self.category = "swars"

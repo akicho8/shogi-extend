@@ -1,5 +1,5 @@
 module BackendScript
-  class EmoxKpiScript < ::BackendScript::Base
+  class EmoxDashboardScript < ::BackendScript::Base
     include SortMod
 
     self.category = "emox"

@@ -1,5 +1,5 @@
 module BackendScript
-  class RegularUserScript < RecentlyUserScript
+  class SwarsRegularUserScript < RecentlyUserScript
     self.category = "swars"
     self.script_name = "ウォーズ棋譜検索 利用回数が多いユーザー"
 

@@ -1,5 +1,5 @@
 module BackendScript
-  class ConvertKpiScript < ::BackendScript::Base
+  class ConvertDashboardScript < ::BackendScript::Base
     include SortMod
 
     self.category = "actb"

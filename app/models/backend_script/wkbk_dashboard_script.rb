@@ -1,5 +1,5 @@
 module BackendScript
-  class WkbkKpiScript < ::BackendScript::Base
+  class WkbkDashboardScript < ::BackendScript::Base
     include SortMod
 
     self.category = "wkbk"

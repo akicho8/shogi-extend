@@ -1,5 +1,5 @@
 module BackendScript
-  class RecentlyUserScript < ::BackendScript::Base
+  class SwarsRecentlyUserScript < ::BackendScript::Base
     self.category = "swars"
     self.script_name = "ウォーズ棋譜検索 直近利用ユーザー"
 

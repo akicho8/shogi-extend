@@ -1,5 +1,5 @@
 module BackendScript
-  class ActbKpiScript < ::BackendScript::Base
+  class ActbDashboardScript < ::BackendScript::Base
     include SortMod
 
     self.category = "actb"
