@@ -27,6 +27,16 @@ RSpec.describe "ユーザー", type: :system do
     doc_image
   end
 
+  it "ぴよ将棋設定" do
+    visit "http://0.0.0.0:4000/settings/piyo_shogi"
+    doc_image
+  end
+
+  it "メールアドレス設定" do
+    visit "http://0.0.0.0:4000/settings/email"
+    doc_image
+  end
+
   # it "名前がないときプロフィール設定に飛ばされる" do
   #   alice = create(:user, name: "")
   #   visit "http://localhost:3000/?_user_id=#{alice.id}"

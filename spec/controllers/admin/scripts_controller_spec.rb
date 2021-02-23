@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe Admin::ScriptsController, type: :controller do
   include WkbkSupportMethods
 
+  before(:context) do
+    swars_battle_setup
+  end
+
   def login!
     request.env["HTTP_AUTHORIZATION"] = ActionController::HttpAuthentication::Basic.encode_credentials(SecureRandom.hex, Rails.application.credentials[:admin_password])
   end
