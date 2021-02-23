@@ -6,6 +6,10 @@ module BackendScript
     self.script_name = "将棋ウォーズ棋譜検索 ダッシュボード"
 
     def script_body
+      # if Rails.env.production?
+      #   return "productionではMySQLが死ぬので実行禁止"
+      # end
+
       # # 日別の履歴数を求める
       # answer_log_hash = {}
       # if true
@@ -24,7 +28,8 @@ module BackendScript
 
       # 日別の問題作成回数を求める
       battle_hash = {}
-      if true
+      if Rails.env.production?
+      else
         model = Swars::Battle
         s = model.all
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
@@ -91,9 +96,9 @@ module BackendScript
         row["新規ユーザー数"] = user_hash[date]&.count_all
         row["検索数"]         = search_hash[date]&.count_all
         row["検索人数"]       = search_hash[date]&.unique_user_id_count
-        row["バトル総数"]     = Swars::Battle.where(created_at: range).count
-        row["削除予定数"]     = Swars::Battle.where(created_at: range).kill_scope.count
-        row["対局時情報総数"] = Swars::Membership.where(created_at: range).count
+        # row["バトル総数"]     = Swars::Battle.where(created_at: range).count
+        # row["削除予定数"]     = Swars::Battle.where(created_at: range).kill_scope.count
+        # row["対局時情報総数"] = Swars::Membership.where(created_at: range).count
         row
       end
     end
