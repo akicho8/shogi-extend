@@ -12,7 +12,7 @@ MainSection.WkbkArticleShowAnswer
                   sp_run_mode="view_mode"
                   :sp_body="base.article.init_sfen_with(e)"
                   :sp_viewpoint="base.article.viewpoint"
-                  :sp_turn="-1"
+                  :sp_turn="0"
                   :sp_sound_body_changed="false"
                   sp_summary="is_summary_off"
                   sp_slider="is_slider_on"
