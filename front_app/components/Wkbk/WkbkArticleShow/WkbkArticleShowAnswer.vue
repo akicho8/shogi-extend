@@ -18,6 +18,8 @@ MainSection.WkbkArticleShowAnswer
                   sp_slider="is_slider_on"
                   sp_controller="is_controller_on"
                   )
+                .is-flex.is-justify-content-center.mt-4
+                  | {{e.moves_human_str}}
 </template>
 
 <script>
