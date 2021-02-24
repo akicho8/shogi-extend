@@ -55,7 +55,9 @@ export const app_tweet_stat = {
       this.current_spent_sec = 0
       this.interval_counter.restart()
 
-      this.talk(this.current_article.title)
+      if (false) {
+        this.talk(this.current_article.title)
+      }
     },
 
     // 時間を進める
