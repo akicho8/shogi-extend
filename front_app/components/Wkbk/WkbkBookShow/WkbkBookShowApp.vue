@@ -52,7 +52,7 @@ import { app_sidebar    } from "./app_sidebar.js"
 import { app_op  } from "./app_op.js"
 import { app_table  } from "./app_table.js"
 import { app_keyboard  } from "./app_keyboard.js"
-
+import { app_storage  } from "./app_storage.js"
 
 import _ from "lodash"
 
@@ -69,6 +69,7 @@ export default {
     app_op,
     app_table,
     app_keyboard,
+    app_storage,
   ],
 
   data() {

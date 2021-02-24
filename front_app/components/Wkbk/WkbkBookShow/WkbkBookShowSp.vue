@@ -4,7 +4,7 @@ MainSection.WkbkBookShowSp
     .columns
       .column.LeftColumn
         .CustomShogiPlayerWrap
-          .has-text-centered.is_truncate1
+          .has-text-centered.is_truncate1(v-if="base.article_title_display_info.key === 'display'")
             span.has-text-weight-bold(v-if="base.current_article.title")
               | {{base.current_article.title}}
             span.ml-1(v-if="base.current_article.direction_message")

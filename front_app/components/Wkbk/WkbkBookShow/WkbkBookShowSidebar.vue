@@ -19,19 +19,11 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
         b-menu-list(label="その他")
           b-menu-item(label="ツイート"               @click.native="base.book_tweet_handle")
 
-        b-menu-list(label="表示オプション" v-if="base.visible_hash")
-          b-menu-item.sidebar_columns_toggle(@click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | 表示カラム
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in base.BookShowColumnInfo.values")
-              b-menu-item(
-                v-if="e.togglable"
-                @click.stop="base.cb_toggle_handle(e)"
-                :class="{is_visible_off: !base.visible_hash[e.key], is_visible_on: base.visible_hash[e.key]}"
-                :key="e.key"
-                :label="e.name"
-                )
+      .box.mt-5
+        .title.is-5 カスタマイズ
+        b-field(custom-class="is-small" label="問題タイトルの表示")
+          template(v-for="e in base.ArticleTitleDisplayInfo.values")
+            b-radio-button(size="is-small" v-model="base.article_title_display_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
 </template>
 
 <script>
