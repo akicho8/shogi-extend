@@ -7,7 +7,7 @@ module Wkbk
     end
 
     def run
-      user = User.sysop
+      user = params[:user] || User.sysop
 
       dir = Rails.root.join("kifu_data").expand_path
       dir.glob("*").sort.each do |book_dir|
