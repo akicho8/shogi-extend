@@ -3,6 +3,8 @@ require 'rails_helper'
 module Swars
   RSpec.describe Battle, type: :model do
     before do
+      Swars::Battle.destroy_all
+      Swars::User.destroy_all
       Swars.setup
     end
 
