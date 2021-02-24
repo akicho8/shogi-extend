@@ -56,7 +56,7 @@ module Wkbk
       end
     end
 
-    if Rails.env.development?
+    if Rails.env.development? && false
       after_create do
         SlackAgent.message_send(key: "問題集に問題追加", body: "#{user.name}が#{book.title}に#{article.title}を追加")
       end
