@@ -100,7 +100,7 @@ export const app_tweet_stat = {
           book_id: this.book.id,
           spent_sec: this.current_spent_sec,
         }
-        return this.$axios.$post("/api/wkbk/answer_logs/create.json", params).then(e => {
+        return this.$axios.$post("/api/wkbk/answer_logs/create.json", params, {progress: false}).then(e => {
           if (e.id) {
             this.debug_alert(`ox_create ${e.id}`)
           }
