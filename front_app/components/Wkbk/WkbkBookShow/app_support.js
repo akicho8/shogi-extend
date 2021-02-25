@@ -1,6 +1,4 @@
 import WkbkBookShowDesc from "./WkbkBookShowDesc.vue"
-import { ArticleTitleDisplayInfo } from "../models/article_title_display_info.js"
-import { CorrectBehaviorInfo } from "../models/correct_behavior_info.js"
 
 // import dayjs from "dayjs"
 import _ from "lodash"
@@ -85,9 +83,5 @@ export const app_support = {
   },
   computed: {
     current_article_show_p() { return this.current_xitem },
-    ArticleTitleDisplayInfo() { return ArticleTitleDisplayInfo },
-    article_title_display_info() { return ArticleTitleDisplayInfo.fetch(this.article_title_display_key) },
-    CorrectBehaviorInfo() { return CorrectBehaviorInfo },
-    correct_behavior_info() { return CorrectBehaviorInfo.fetch(this.correct_behavior_key) },
   },
 }
