@@ -6,9 +6,10 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
     .mt-4
       b-menu
         b-menu-list(label="Action" v-if="base.is_running_p")
-          b-menu-item(label="やめる"                                          @click.native="base.quit_handle"       :disabled="!base.is_running_p" v-if="false")
+          b-menu-item(label="やめる" @click.native="base.quit_handle" :disabled="!base.is_running_p" v-if="false")
           b-menu-item(:label="`現在の問題を別タブで編集`" @click="base.article_edit_handle" :disabled="!base.current_article_edit_p")
           b-menu-item(:label="`現在の問題を別タブで開く`" @click="base.article_show_handle" :disabled="!base.current_article_show_p")
+          b-menu-item(:label="`1つ前の問題に戻る`" @click="base.previous_handle")
 
         b-menu-list(label="管理" v-if="development_p && false")
           //- b-menu-item(label="この問題集の編集"       @click.native="base.book_edit_handle"    :disabled="!base.owner_p")
@@ -17,10 +18,20 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
           b-menu-item(label="この問題集に問題を追加" @click="base.article_new_handle"  :disabled="!base.owner_p")
 
         b-menu-list(label="その他")
-          b-menu-item(label="ツイート"               @click.native="base.book_tweet_handle")
+          b-menu-item(label="ツイート" @click.native="base.book_tweet_handle")
+          b-menu-item(label="ｷｰﾎﾞｰﾄﾞｼｮｰﾄｶｯﾄ" @click.native="base.kb_shortcut_modal_toggle_handle")
 
       .box.mt-5
         .title.is-5 設定
+        b-field(custom-class="is-small" label="問題タイトル表示")
+          template(v-for="e in base.ArticleTitleDisplayInfo.values")
+            b-radio-button(size="is-small" v-model="base.article_title_display_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
+        b-field(custom-class="is-small" label="正解と一致したときの挙動")
+          template(v-for="e in base.CorrectBehaviorInfo.values")
+            b-radio-button(size="is-small" v-model="base.correct_behavior_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
+      .box.mt-5
+        .title.is-5 ｷｰﾎﾞｰﾄﾞｼｮｰﾄｶｯﾄ
+        strong 
         b-field(custom-class="is-small" label="問題タイトル表示")
           template(v-for="e in base.ArticleTitleDisplayInfo.values")
             b-radio-button(size="is-small" v-model="base.article_title_display_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}

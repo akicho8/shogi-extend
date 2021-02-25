@@ -12,9 +12,9 @@ export const app_keyboard = {
       if (this.is_running_p || this.development_p) {
         this.clog(e)
         let processed = false
-        if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
-          return
-        }
+        // if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
+        //   return
+        // }
         if (this.focus_on_input_tag_p()) {
           return
         }
@@ -32,6 +32,10 @@ export const app_keyboard = {
         }
         if (e.code === "Backspace") {
           this.previous_handle()
+          processed = true
+        }
+        if (e.key === "?") {
+          this.kb_shortcut_modal_toggle_handle()
           processed = true
         }
         if (processed) {
