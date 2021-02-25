@@ -19,19 +19,10 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
 
         b-menu-list(label="その他")
           b-menu-item(label="ツイート" @click.native="base.book_tweet_handle")
-          b-menu-item(label="ｷｰﾎﾞｰﾄﾞｼｮｰﾄｶｯﾄ" @click.native="base.kb_shortcut_modal_toggle_handle")
+          b-menu-item(label="キーボードショートカット" @click.native="base.kb_shortcut_modal_toggle_handle")
 
       .box.mt-5
         .title.is-5 設定
-        b-field(custom-class="is-small" label="問題タイトル表示")
-          template(v-for="e in base.ArticleTitleDisplayInfo.values")
-            b-radio-button(size="is-small" v-model="base.article_title_display_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
-        b-field(custom-class="is-small" label="正解と一致したときの挙動")
-          template(v-for="e in base.CorrectBehaviorInfo.values")
-            b-radio-button(size="is-small" v-model="base.correct_behavior_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
-      .box.mt-5
-        .title.is-5 ｷｰﾎﾞｰﾄﾞｼｮｰﾄｶｯﾄ
-        strong 
         b-field(custom-class="is-small" label="問題タイトル表示")
           template(v-for="e in base.ArticleTitleDisplayInfo.values")
             b-radio-button(size="is-small" v-model="base.article_title_display_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
@@ -52,11 +43,12 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkBookShowSidebar
+  .sidebar-content
+    width: unset
   .dropdown-menu
     min-width: 0
     a:focus
       outline: none
   .menu-label:not(:first-child)
     margin-top: 2em
-
 </style>
