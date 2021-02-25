@@ -44,8 +44,13 @@ export const app_xitems = {
       this.next_process()
     },
 
-    next_process() {
-      this.current_index += 1
+    previous_handle() {
+      this.sound_play("click")
+      this.next_process(-1)
+    },
+
+    next_process(sign = 1) {
+      this.current_index += sign
       this.answer_tab_index = 0
       this.description_open_p = this.mobile_p()
       if (this.current_xitem) {

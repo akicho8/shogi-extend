@@ -10,6 +10,7 @@ export const app_keyboard = {
   methods: {
     keydown_handle(e) {
       if (this.is_running_p || this.development_p) {
+        this.clog(e)
         let processed = false
         if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
           return
@@ -27,6 +28,10 @@ export const app_keyboard = {
         }
         if (e.key === "q" || e.code === "Escape") {
           this.quit_handle()
+          processed = true
+        }
+        if (e.code === "Backspace") {
+          this.previous_handle()
           processed = true
         }
         if (processed) {
