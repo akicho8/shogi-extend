@@ -7,6 +7,7 @@ export const app_storage = {
   data() {
     return {
       article_title_display_key: null,
+      correct_behavior_key: null,
     }
   },
 
@@ -18,6 +19,7 @@ export const app_storage = {
     ls_default() {
       return {
         article_title_display_key: "display",
+        correct_behavior_key: "go_to_next",
       }
     },
   },

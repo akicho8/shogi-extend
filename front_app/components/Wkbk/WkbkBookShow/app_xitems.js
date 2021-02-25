@@ -64,12 +64,11 @@ export const app_xitems = {
 
     play_mode_advanced_moves_set(moves) {
       if (this.current_article.moves_valid_p(moves)) {
-        if (true) {
+        if (this.correct_behavior_info.key === this.CorrectBehaviorInfo.fetch("go_to_next").key) {
+          this.next_handle(this.AnswerKindInfo.fetch("correct"))
+        } else {
           this.toast_ok("正解")
           this.sound_play("o")
-        } else {
-          // 正解したら次に進む
-          this.next_handle(this.AnswerKindInfo.fetch("correct"))
         }
       }
     },
