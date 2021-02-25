@@ -9,7 +9,7 @@ MainSection.WkbkBookShowAccessBlock
             | 非公開問題
           p.subtitle.mt-5
             | この問題を見れるのは作成者本人だけです
-          b-button.mt-1(@click="sns_login_modal_handle" type="is-primary" ) ログイン
+          b-button.mt-1(@click="sns_login_modal_handle" type="is-primary" v-if="!g_current_user") ログイン
       .buttons.mt-5.mb-0.has-addons.is-centered
         b-button.mb-0.is-outlined(@click="base.skip_handle" type="is-primary") SKIP
 </template>
