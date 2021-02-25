@@ -10,7 +10,7 @@
     .container
       .columns.is-centered
         .column
-          b-field(label="このブラウザから起動するぴよ将棋の種類の設定")
+          b-field(label="このブラウザから起動するぴよ将棋の種類")
             template(v-for="e in PiyoShogiTypeInfo.values")
               b-radio-button(v-model="new_piyo_shogi_type_key" :native-value="e.key" @input="sound_play('click')")
                 | {{e.name}}
@@ -19,13 +19,13 @@
             .content
               p
                 strong 自動判別
-                span.ml-2 一般的なスマホやPCを使っている人用。M1 Mac を使っていない人用
+                span.ml-2 一般的なスマホやPCを使っている人はこちら
               p
                 strong ぴよ将棋
-                span.ml-2 せっかく買った M1 Mac に「ぴよ将棋」を入れたのに「ぴよ将棋ｗ」が起動してしまう人用
+                span.ml-2 M1 Mac に「ぴよ将棋」を入れたのに「ぴよ将棋ｗ」が起動して困っている人はこちら
               p
                 strong ぴよ将棋ｗ
-                span.ml-2 スマホを持っているのになんかしらの理由で「ぴよ将棋」をインストールできなかったり、「ぴよ将棋」を入れているのに「ぴよ将棋ｗ」が使いたい人用
+                span.ml-2 スマホになんかしらの制約で「ぴよ将棋」を入れられなかったり「ぴよ将棋」があるのに「ぴよ将棋ｗ」を使いたい人はこちら
 </template>
 
 <script>
