@@ -17,5 +17,8 @@ export default {
 @import "../support.sass"
 .WkbkBookShowOxButtons
   .button
-    min-width: 10rem
+    +mobile
+      min-width: 46%
+    +tablet
+      min-width: 10rem
 </style>

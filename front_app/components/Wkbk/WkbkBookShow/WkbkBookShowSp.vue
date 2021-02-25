@@ -91,6 +91,7 @@ export default {
   .column.RightColumn
     +mobile
       margin-top: 0.5rem
+      margin-bottom: 3rem // 下を開けないと押しにくい
     display: flex
     align-items: center
     flex-direction: column
