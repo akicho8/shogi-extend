@@ -10,7 +10,7 @@ MainSection.WkbkBookShowSp
             span.ml-1(v-if="base.current_article.direction_message")
               | {{base.current_article.direction_message}}
           CustomShogiPlayer(
-            sp_mobile_vertical="is_mobile_vertical_off"
+            sp_mobile_vertical="is_mobile_vertical_on"
             :sp_body="base.current_article.init_sfen"
             :sp_viewpoint="base.current_article.viewpoint"
             :sp_turn="0"
@@ -84,7 +84,7 @@ export default {
     //     margin-top: $wkbk_share_gap
     .CustomShogiPlayerWrap
       +mobile
-        margin-top: 0.5rem
+        margin-top: 0rem
       +tablet
         margin-top: 2.5rem
 
