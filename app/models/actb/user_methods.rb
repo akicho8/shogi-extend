@@ -50,7 +50,7 @@ module Actb
       end
     end
 
-    concerning :OUcountNotifyMod do
+    concerning :OUcountNotifyMethods do
       # rails r "tp User.first.straight_win_count_notify"
       def straight_win_count_notify
         User.bot.lobby_speak("#{linked_name}さんが#{actb_season_xrecord.straight_win_count}連勝しました")
@@ -170,7 +170,7 @@ module Actb
       end
     end
 
-    concerning :MainXrecordMod do
+    concerning :MainXrecordMethods do
       included do
         has_one :actb_main_xrecord, class_name: "Actb::MainXrecord", dependent: :destroy
 
@@ -193,7 +193,7 @@ module Actb
       end
     end
 
-    concerning :SeasonXrecordMod do
+    concerning :SeasonXrecordMethods do
       included do
         # プロフィール
         with_options class_name: "Actb::SeasonXrecord", dependent: :destroy do
@@ -220,7 +220,7 @@ module Actb
       end
     end
 
-    concerning :SettingMod do
+    concerning :SettingMethods do
       included do
         has_one :actb_setting, class_name: "Actb::Setting", dependent: :destroy
 
@@ -234,7 +234,7 @@ module Actb
       end
     end
 
-    concerning :EmotionMod do
+    concerning :EmotionMethods do
       included do
         # rails r "tp User.first.emotions"
         has_many :emotions, class_name: "Actb::Emotion", dependent: :destroy

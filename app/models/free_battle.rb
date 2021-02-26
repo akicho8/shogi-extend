@@ -281,7 +281,7 @@ class FreeBattle < ApplicationRecord
     end
   end
 
-  concerning :HelperMod do
+  concerning :HelperMethods do
     def piyo_shogi_base_params
       decorator = mini_battle_decorator
       a = {}

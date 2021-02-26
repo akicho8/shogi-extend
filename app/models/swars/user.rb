@@ -87,7 +87,7 @@ module Swars
       "#{user_key} #{grade.name}"
     end
 
-    concerning :UserInfoMod do
+    concerning :UserInfoMethods do
       def user_info(params = {})
         UserInfo.new(self, params)
       end

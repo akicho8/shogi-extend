@@ -44,7 +44,7 @@ module Emox
       end
     end
 
-    concerning :SettingMod do
+    concerning :SettingMethods do
       included do
         has_one :emox_setting, class_name: "Emox::Setting", dependent: :destroy
 

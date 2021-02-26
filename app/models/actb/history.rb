@@ -46,7 +46,7 @@ module Actb
       self.ox_mark ||= OxMark.fetch(:mistake)
     end
 
-    concerning :OUcountNotifyMod  do
+    concerning :OUcountNotifyMethods  do
       included do
         after_save_commit do
           if saved_change_to_attribute?(:ox_mark_id) && ox_mark.key == "correct"

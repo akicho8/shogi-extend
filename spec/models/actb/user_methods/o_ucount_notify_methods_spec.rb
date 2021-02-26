@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Actb
-  RSpec.describe UserMethods::OUcountNotifyMod, type: :model do
+  RSpec.describe UserMethods::OUcountNotifyMethods, type: :model do
     include ActbSupportMethods
 
     it "works" do
