@@ -50,7 +50,7 @@ export default {
         const folder_info = this.FolderInfo.fetch(v)
         this.sound_play("click")
         this.talk_stop()
-        this.talk(folder_info.message.book)
+        this.talk(folder_info.name)
       },
     },
   },
