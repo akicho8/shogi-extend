@@ -2,7 +2,7 @@ import mp3_o             from "@/static/sound_effect/oto_logic/Quiz-Correct_Answ
 import mp3_x             from "@/static/sound_effect/oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
 import mp3_start         from "@/static/sound_effect/oto_logic/Quiz-Question03-1.mp3"
 import mp3_lose          from "@/static/sound_effect/oto_logic/Onmtp-Ding05-1.mp3"
-import mp3_click         from "@/assets/UniversalSoundFX/USER_INTERFACES/Beeps/UI_Beep_Double_Quick_Deep_Muffled_stereo.wav"
+import mp3_click         from "@/assets/UniversalSoundFX/USER_INTERFACES/Beeps/UI_Beep_Double_Quick_Smooth_stereo.wav"
 import mp3_spon          from "@/static/sound_effect/oto_logic/Onmtp-Pop01-4.mp3"
 import mp3_notify        from "@/static/sound_effect/soundeffect_lab/decision29.mp3"
 import mp3_poon          from "@/assets/UniversalSoundFX/PUZZLES/PUZZLE_Success_Bright_Voice_Two_Note_Fast_Delay_stereo.wav"
@@ -25,7 +25,7 @@ export class SoundPreset extends MemoryRecord {
       { key: "start",          source: mp3_start,         volume: 0.15, },
       { key: "lose",           source: mp3_lose,          volume: 0.30, },
       { key: "win",            source: mp3_win,           volume: 0.20, },
-      { key: "click",          source: mp3_click,         volume: 0.60, },
+      { key: "click",          source: mp3_click,         volume: 0.50, },
       { key: "poon",           source: mp3_poon,          volume: 0.10, },
       { key: "deden",          source: mp3_deden,         volume: 0.20, },
       { key: "pipopipo",       source: mp3_pipopipo,      volume: 0.20, },
