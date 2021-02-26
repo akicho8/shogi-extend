@@ -57,7 +57,7 @@ MainSection.WkbkArticleEditForm
                     p.ml-2 {{e.title}}
           .panel-block.py-4
             nuxt-link.is-size-7(:to="{name: 'rack-books-new'}" @click.native="sound_play('click')")
-              b-icon(icon="plus" size="is-small")
+              b-icon(icon="book-plus" size="is-small")
               | 新しい問題集
 </template>
 

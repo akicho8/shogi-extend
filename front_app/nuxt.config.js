@@ -210,6 +210,10 @@ const config = {
         css: false,
         // materialDesignIconsHRef: '//cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css',
         materialDesignIconsHRef: "https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css",
+
+        // ~/src/shogi-extend/front_app/node_modules/buefy/src/utils/config.js
+        defaultTooltipType: "is-primary is-light",
+        defaultTooltipDelay: 20,
       }
     ],
     // Doc: https://axios.nuxtjs.org/usage

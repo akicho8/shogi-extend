@@ -22,7 +22,7 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fl
             | {{e.name}}
 
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play('click')")
-      b-icon(icon="plus")
+      b-icon(icon="file-plus")
 
     WkbkSidebarToggle.is-hidden-desktop(@click="base.sidebar_toggle")
 </template>
