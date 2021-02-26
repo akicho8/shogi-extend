@@ -31,8 +31,8 @@
 
 module Wkbk
   class Article < ApplicationRecord
-    include FolderMod
-    include ImportExportMod
+    include FolderMethods
+    include ImportExportMethods
     include InfoMethods
     include JsonStruct
 

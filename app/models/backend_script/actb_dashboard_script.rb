@@ -1,6 +1,6 @@
 module BackendScript
   class ActbDashboardScript < ::BackendScript::Base
-    include SortMod
+    include SortMethods
 
     self.category = "actb"
     self.script_name = "将棋トレバト KPI"

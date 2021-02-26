@@ -27,9 +27,9 @@ require "nkf"
 
 module Wkbk
   class Book < ApplicationRecord
-    include FolderMod
+    include FolderMethods
     include InfoMethods
-    include AvatarMod
+    include AvatarMethods
     include JsonStruct
 
     class << self

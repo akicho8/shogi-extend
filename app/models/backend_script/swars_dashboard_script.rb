@@ -1,6 +1,6 @@
 module BackendScript
   class SwarsDashboardScript < ::BackendScript::Base
-    include SortMod
+    include SortMethods
 
     self.category = "swars"
     self.script_name = "将棋ウォーズ棋譜検索 ダッシュボード"

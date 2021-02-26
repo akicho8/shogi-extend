@@ -138,7 +138,7 @@ module Api
           if v = params[:tag].to_s.split(/[,\s]+/).presence
             s = s.tagged_with(v)
           end
-          s = page_scope(s)       # page_mod.rb
+          s = page_scope(s)       # page_methods.rb
         }.call
       end
 
@@ -180,7 +180,7 @@ module Api
       #   default_book&.key
       # end
 
-      # PageMod override
+      # PageMethods override
       def default_per
         ::Wkbk::Config[:api_articles_fetch_per]
       end

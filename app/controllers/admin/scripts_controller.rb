@@ -1,6 +1,6 @@
 module Admin
   class ScriptsController < ::Admin::ApplicationController
-    include ScriptsControllerMod
+    include ScriptsControllerMethods
 
     def script_group
       BackendScript

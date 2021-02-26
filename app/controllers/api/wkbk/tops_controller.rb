@@ -56,7 +56,7 @@ module Api
 
           s = s.search(params)
           s = s.order(updated_at: :desc)
-          s = page_scope(s)       # page_mod.rb
+          s = page_scope(s)       # page_methods.rb
 
           # # visible_articles_count のため
           # s.each do |e|
@@ -67,7 +67,7 @@ module Api
         }.call
       end
 
-      # PageMod override
+      # PageMethods override
       def default_per
         50
       end

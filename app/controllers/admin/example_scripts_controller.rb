@@ -1,6 +1,6 @@
 module Admin
   class ExampleScriptsController < ::Admin::ApplicationController
-    include ScriptsControllerMod
+    include ScriptsControllerMethods
 
     def script_group
       AtomicScript::ExampleScript

@@ -1,6 +1,6 @@
 module BackendScript
   class SwarsRemakeScript < ::BackendScript::Base
-    include AtomicScript::PostRedirectMod
+    include AtomicScript::PostRedirectMethods
 
     self.category = "swars"
     self.script_name = "将棋ウォーズ棋譜 タグ再構築"

@@ -14,9 +14,9 @@ tp FreeBattle.create!(kifu_body: "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PP
 # >> <平手>
 # >> <平手>
 # >> "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
-# >> ["/Users/ikeda/src/shogi_web/app/models/battle_model_mod.rb:75", :parser_exec, :平手]
-# >> ["/Users/ikeda/src/shogi_web/app/models/battle_model_mod.rb:94", :parser_exec, "平手"]
-# >> ["/Users/ikeda/src/shogi_web/app/models/battle_model_mod.rb:95", :parser_exec, :平手]
+# >> ["/Users/ikeda/src/shogi_web/app/models/battle_model_methods.rb:75", :parser_exec, :平手]
+# >> ["/Users/ikeda/src/shogi_web/app/models/battle_model_methods.rb:94", :parser_exec, "平手"]
+# >> ["/Users/ikeda/src/shogi_web/app/models/battle_model_methods.rb:95", :parser_exec, :平手]
 # >> |--------------------+-------------------------------------------------------------------------------------------------------------|
 # >> |                 id | 28                                                                                                          |
 # >> |                key | e0b2806d2a1fa7dc23497d40c66bf781                                                                            |

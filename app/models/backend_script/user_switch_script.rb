@@ -1,6 +1,6 @@
 module BackendScript
   class UserSwitchScript < ::BackendScript::Base
-    include AtomicScript::PostRedirectMod
+    include AtomicScript::PostRedirectMethods
 
     self.category = "ユーザー"
     self.script_name = "運営切り替え"

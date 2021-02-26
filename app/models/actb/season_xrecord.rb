@@ -39,7 +39,7 @@
 
 module Actb
   class SeasonXrecord < ApplicationRecord
-    include XrecordShareMod
+    include XrecordShareMethods
 
     belongs_to :season
 

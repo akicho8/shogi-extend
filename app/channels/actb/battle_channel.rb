@@ -1,6 +1,6 @@
 module Actb
   class BattleChannel < BaseChannel
-    include BattleChannelVersusMod
+    include BattleChannelVersusMethods
 
     def subscribed
       __event_notify__(__method__, battle_id: battle_id)

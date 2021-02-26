@@ -36,8 +36,8 @@
 require "open-uri"
 
 class FreeBattle < ApplicationRecord
-  include BattleModelMod
-  include ShareBoardMod
+  include BattleModelMethods
+  include ShareBoardMethods
 
   class << self
     def setup(options = {})
@@ -265,7 +265,7 @@ class FreeBattle < ApplicationRecord
     end
   end
 
-  concerning :TimeChartMod do
+  concerning :TimeChartMethods do
     # FreeBattle の方は preset_info がないため
     def preset_info
       @preset_info ||= fast_parsed_info.preset_info

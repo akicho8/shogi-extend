@@ -1,6 +1,6 @@
 module Actb
   class RoomChannel < BaseChannel
-    include ActiveUsersNotifyMod
+    include ActiveUsersNotifyMethods
 
     class << self
       def redis_key

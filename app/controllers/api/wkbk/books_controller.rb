@@ -126,7 +126,7 @@ module Api
           if v = params[:tag].to_s.split(/[,\s]+/).presence
             s = s.tagged_with(v)
           end
-          s = page_scope(s)       # page_mod.rb
+          s = page_scope(s)       # page_methods.rb
         }.call
       end
 
@@ -153,7 +153,7 @@ module Api
         (params[:scope].presence || :everyone).to_sym
       end
 
-      # PageMod override
+      # PageMethods override
       def default_per
         ::Wkbk::Config[:api_books_fetch_per]
       end

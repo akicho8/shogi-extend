@@ -37,7 +37,7 @@ class FreeBattlesController < ApplicationController
   include ModulableCrud::All
   include BattleControllerBaseMethods
   include BattleControllerSharedMethods
-  include AdapterMod
+  include AdapterMethods
 
   # http://0.0.0.0:3000/x.json?config_fetch=true
   # def index

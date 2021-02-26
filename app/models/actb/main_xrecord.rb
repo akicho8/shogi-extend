@@ -36,7 +36,7 @@
 
 module Actb
   class MainXrecord < ApplicationRecord
-    include XrecordShareMod
+    include XrecordShareMethods
 
     with_options presence: true do
       validates :user_id

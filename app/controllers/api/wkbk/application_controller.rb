@@ -1,8 +1,8 @@
 module Api
   module Wkbk
     class ApplicationController < ::Api::ApplicationController
-      include SortMod
-      include PageMod
+      include SortMethods
+      include PageMethods
 
       class WkbkPermissionError < StandardError; end
 

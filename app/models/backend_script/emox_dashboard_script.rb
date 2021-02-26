@@ -1,6 +1,6 @@
 module BackendScript
   class EmoxDashboardScript < ::BackendScript::Base
-    include SortMod
+    include SortMethods
 
     self.category = "emox"
     self.script_name = "エモ将棋 KPI"

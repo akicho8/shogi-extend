@@ -1,6 +1,6 @@
 module Emox
   class BattleChannel < BaseChannel
-    include BattleChannelVersusMod
+    include BattleChannelVersusMethods
 
     def subscribed
       return reject unless current_user

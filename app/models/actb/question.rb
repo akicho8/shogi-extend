@@ -44,9 +44,9 @@
 
 module Actb
   class Question < ApplicationRecord
-    include FolderMod
-    include ImportExportMod
-    include InfoMod
+    include FolderMethods
+    include ImportExportMethods
+    include InfoMethods
 
     # 自演評価の無効化
     def self.good_bad_click_by_owner_reject_all

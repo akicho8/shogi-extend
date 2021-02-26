@@ -2,7 +2,7 @@ require "open-uri"
 
 module Api
   class ApplicationController < ::ApplicationController
-    include ShogiErrorRescueMod # for bs_error
+    include ShogiErrorRescueMethods # for bs_error
 
     def api_login_required
       unless current_user

@@ -2,7 +2,7 @@
 # rails r "Actb::RoomChannel.active_users_clear"
 module Actb
   class SchoolChannel < BaseChannel
-    include ActiveUsersNotifyMod
+    include ActiveUsersNotifyMethods
 
     class << self
       def redis_key

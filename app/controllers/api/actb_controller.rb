@@ -36,9 +36,9 @@ module Api
     # FIXME: GET, PUT で分けるのではなく関心で分離する
     include GetApi
     include PutApi
-    include ZipDlMod
+    include ZipDlMethods
 
-    include DebugMod
+    include DebugMethods
 
     # self.script_name = "将棋トレーニングバトル"
     # self.page_title = ""

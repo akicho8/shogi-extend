@@ -1,7 +1,7 @@
 module BackendScript
   class RailsConsoleScript < ::BackendScript::Base
-    # include AtomicScript::PostRedirectMod
-    include AtomicScript::ErrorShowMod
+    # include AtomicScript::PostRedirectMethods
+    include AtomicScript::ErrorShowMethods
 
     self.category = "コンソール"
     self.script_name = "コード実行"

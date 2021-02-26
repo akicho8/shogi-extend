@@ -1,6 +1,6 @@
 module Api
   class BlindfoldsController < ::Api::ApplicationController
-    include ShogiErrorRescueMod
+    include ShogiErrorRescueMethods
 
     def show
       render json: { record: current_record.as_json(only: [:sfen_body, :turn_max]) }

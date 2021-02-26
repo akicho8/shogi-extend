@@ -2,7 +2,7 @@ require "etc"
 
 module BackendScript
   class SidekiqDoctorScript < ::BackendScript::Base
-    # include AtomicScript::PostRedirectMod
+    # include AtomicScript::PostRedirectMethods
     self.category = "sidekiq"
     self.script_name = "Sidekiq 動作検証"
 

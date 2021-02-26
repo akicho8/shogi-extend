@@ -1,6 +1,6 @@
 module BackendScript
   class QuestionSearchScript < ::BackendScript::Base
-    include SortMod
+    include SortMethods
     include TargeQuestionsMethods
 
     self.category = "actb"

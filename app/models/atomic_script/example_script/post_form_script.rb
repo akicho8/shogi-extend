@@ -1,7 +1,7 @@
 module AtomicScript
   module ExampleScript
     class PostFormScript < ::AtomicScript::ExampleScript::Base
-      include AtomicScript::PostRedirectMod
+      include AtomicScript::PostRedirectMethods
 
       self.script_name = "POSTフォーム"
 

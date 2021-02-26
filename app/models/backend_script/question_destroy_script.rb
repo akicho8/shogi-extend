@@ -1,6 +1,6 @@
 module BackendScript
   class QuestionDestroyScript < ::BackendScript::Base
-    include AtomicScript::PostRedirectMod
+    include AtomicScript::PostRedirectMethods
     include TargeQuestionsMethods
 
     self.category = "actb"

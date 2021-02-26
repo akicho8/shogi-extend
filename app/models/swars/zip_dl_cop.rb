@@ -10,7 +10,7 @@
 # app/models/swars/zip_dl_scope_info.rb
 #
 # Controller
-# app/controllers/swars/zip_dl_mod.rb
+# app/controllers/swars/zip_dl_methods.rb
 #
 # Experiment
 # experiment/swars/zip_dl_cop.rb
@@ -20,8 +20,8 @@
 
 module Swars
   class ZipDlCop
-    include EncodeMod
-    include SortMod
+    include EncodeMethods
+    include SortMethods
 
     attr_accessor :params
 

@@ -1,10 +1,10 @@
 module Api
   class ActbController
     concern :GetApi do
-      concerning :SortMod do
+      concerning :SortMethods do
         included do
-          include ::SortMod
-          include ::PageMod
+          include ::SortMethods
+          include ::PageMethods
         end
 
         def sort_column_default
@@ -36,7 +36,7 @@ module Api
         if v = params[:tag].presence
           s = s.tagged_with(v)
         end
-        s = page_scope(s)       # page_mod.rb
+        s = page_scope(s)       # page_methods.rb
         s = sort_scope_for_questions(s)
 
         retv = {}

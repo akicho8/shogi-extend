@@ -34,19 +34,19 @@
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
 class User < ApplicationRecord
-  include UserCoreMod
-  include UserAvatarMod
-  include UserProfileMod
-  include UserDeviseMod
-  include UserTagMod
-  include UserRaceMod
-  include UserFreeBattleMod
-  include UserXyMasterMod
-  include UserStaffMod
-  include UserChoreMod
-  include ::Actb::UserMod
-  include ::Emox::UserMod
-  include ::Wkbk::UserMod
-  include UserCrawlReservationMod
-  include UserZipDlLogMod
+  include UserCoreMethods
+  include UserAvatarMethods
+  include UserProfileMethods
+  include UserDeviseMethods
+  include UserTagMethods
+  include UserRaceMethods
+  include UserFreeBattleMethods
+  include UserXyMasterMethods
+  include UserStaffMethods
+  include UserChoreMethods
+  include ::Actb::UserMethods
+  include ::Emox::UserMethods
+  include ::Wkbk::UserMethods
+  include UserCrawlReservationMethods
+  include UserZipDlLogMethods
 end

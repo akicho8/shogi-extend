@@ -1,6 +1,6 @@
 module BackendScript
   class ConvertDashboardScript < ::BackendScript::Base
-    include SortMod
+    include SortMethods
 
     self.category = "actb"
     self.script_name = "なんでも棋譜変換 KPI"

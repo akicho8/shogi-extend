@@ -2,7 +2,7 @@
 # rails r "Emox::RoomChannel.active_users_clear"
 module Emox
   class SchoolChannel < BaseChannel
-    include ActiveUsersNotifyMod
+    include ActiveUsersNotifyMethods
 
     class << self
       def redis_key

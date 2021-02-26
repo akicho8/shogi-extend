@@ -31,8 +31,8 @@
 
 module Swars
   class Membership < ApplicationRecord
-    include TagMod
-    include ::Swars::MembershipTimeChartMod
+    include TagMethods
+    include ::Swars::MembershipTimeChartMethods
 
     belongs_to :battle                      # 対局
     belongs_to :user, touch: true           # 対局者

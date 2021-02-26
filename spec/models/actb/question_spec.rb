@@ -189,7 +189,7 @@ end
 # >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
 # >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
 # >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
-# >> ["/Users/ikeda/src/shogi_web/app/models/actb/question/info_mod.rb:80", :to_kif, "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"]
+# >> ["/Users/ikeda/src/shogi_web/app/models/actb/question/info_methods.rb:80", :to_kif, "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"]
 # >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
 # >> "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"
 # >> ."position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1 moves G*5b"

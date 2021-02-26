@@ -1,6 +1,6 @@
 module BackendScript
   class WkbkDashboardScript < ::BackendScript::Base
-    include SortMod
+    include SortMethods
 
     self.category = "wkbk"
     self.script_name = "インスタント将棋問題集 KPI"

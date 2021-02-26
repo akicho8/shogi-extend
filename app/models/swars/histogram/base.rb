@@ -83,7 +83,7 @@ module Swars
           # いらんタグを消す場合
           if false
             if Rails.env.production? || Rails.env.staging? || Rails.env.test?
-              Array(TagMod.reject_tag_keys[tactic_key]).each do |e|
+              Array(TagMethods.reject_tag_keys[tactic_key]).each do |e|
                 counts_hash.delete(e.to_s)
               end
             end

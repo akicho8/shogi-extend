@@ -35,7 +35,7 @@ require "matrix"
 
 module Swars
   class Battle < ApplicationRecord
-    include BattleModelMod
+    include BattleModelMethods
     include ImportMethods
     include KillMethods
     include ConvertHookMethods
@@ -330,7 +330,7 @@ module Swars
       SlackAgent.message_send(key: "rule_key_bugfix_process", body: c.to_s)
     end
 
-    concerning :TimeChartMod do
+    concerning :TimeChartMethods do
       def time_chart_datasets
         memberships.collect.with_index { |e, i|
           {

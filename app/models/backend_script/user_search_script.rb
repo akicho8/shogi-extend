@@ -1,6 +1,6 @@
 module BackendScript
   class UserSearchScript < ::BackendScript::Base
-    include SortMod
+    include SortMethods
     include TargeUsersMethods
 
     self.category = "その他"

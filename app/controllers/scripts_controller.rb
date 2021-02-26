@@ -1,6 +1,6 @@
 class ScriptsController < ApplicationController
-  include ScriptsControllerMod
-  include EncodeMod
+  include ScriptsControllerMethods
+  include EncodeMethods
 
   def script_group
     FrontendScript

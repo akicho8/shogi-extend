@@ -7,7 +7,7 @@
 #   app/javascript/share_board.vue
 #
 # model
-#   app/models/share_board_mod.rb
+#   app/models/share_board_methods.rb
 #
 # experiment
 #   experiment/0850_share_board.rb
@@ -36,10 +36,10 @@
 #
 
 class ShareBoardsController < ApplicationController
-  concerning :ShareBoardMod do
-    include EncodeMod
-    include KifShowMod
-    include ShogiErrorRescueMod
+  concerning :ShareBoardMethods do
+    include EncodeMethods
+    include KifShowMethods
+    include ShogiErrorRescueMethods
 
     def show
       # slack_message(key: "ShareBoard", body: {

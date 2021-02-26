@@ -1,6 +1,6 @@
 module BackendScript
   class UserDestroyScript < ::BackendScript::Base
-    include AtomicScript::PostRedirectMod
+    include AtomicScript::PostRedirectMethods
     include TargeUsersMethods
 
     self.category = "その他"

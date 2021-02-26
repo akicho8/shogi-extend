@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include CurrentUserMod
+  include CurrentUserMethods
 
   skip_forgery_protection :if => proc { request.format.json? }
 

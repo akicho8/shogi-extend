@@ -1,6 +1,6 @@
 module BackendScript
   class UserTagEditScript < ::BackendScript::Base
-    include AtomicScript::PostRedirectMod
+    include AtomicScript::PostRedirectMethods
     include TargeUsersMethods
 
     self.category = "その他"

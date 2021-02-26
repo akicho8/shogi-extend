@@ -1,6 +1,6 @@
 module BackendScript
   class ActbRoomScript < ::BackendScript::Base
-    include SortMod
+    include SortMethods
 
     self.category = "actb"
     self.script_name = "将棋トレバト 対戦部屋リスト"

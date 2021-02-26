@@ -1,13 +1,13 @@
 module BattleControllerSharedMethods
   extend ActiveSupport::Concern
 
-  include ShogiErrorRescueMod
-  include EncodeMod
-  include KifShowMod
-  include PngShowMod
-  include KentoJsonMod
-  include SortMod
-  include PageMod
+  include ShogiErrorRescueMethods
+  include EncodeMethods
+  include KifShowMethods
+  include PngShowMethods
+  include KentoJsonMethods
+  include SortMethods
+  include PageMethods
 
   concerning :IndexMethods do
     let :current_records do

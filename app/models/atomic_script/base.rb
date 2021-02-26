@@ -18,14 +18,14 @@
 module AtomicScript
   class Base
     include Core
-    include ColumnsColumMod
-    include FormMod
-    include PageTitleMod
-    include SupportMod
-    include LinkMod
-    include AddParamsPrintMod
-    include VisibilityHiddenMod
+    include ColumnsColumMethods
+    include FormMethods
+    include PageTitleMethods
+    include SupportMethods
+    include LinkMethods
+    include AddParamsPrintMethods
+    include VisibilityHiddenMethods
 
-    # include PostRedirectMod
+    # include PostRedirectMethods
   end
 end
