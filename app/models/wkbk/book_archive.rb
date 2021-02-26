@@ -26,8 +26,7 @@ module Wkbk
           e.article.moves_answers.each.with_index(1) do |e, i|
             str = book.kif_header + e.to_kif
             # body_encodes.each do |encode|
-            # path = "#{book_title}/#{encode}/#{title}/#{i}.kif"
-            path = "#{book_title}/#{title}/#{i}.kif"
+            path = "#{book_title}/#{title}-#{"%02d" % i}.kif"
             entry = Zip::Entry.new(zos, path)
             entry.time = Zip::DOSTime.from_time(e.created_at)
             zos.put_next_entry(entry)
