@@ -28,7 +28,7 @@ require "nkf"
 module Wkbk
   class Book < ApplicationRecord
     include FolderMod
-    include InfoMod
+    include InfoMethods
     include AvatarMod
     include JsonStruct
 
@@ -36,7 +36,7 @@ module Wkbk
       def setup(options = {})
         if Rails.env.development?
           mock_setup
-          tp self
+          # tp self
         end
       end
 

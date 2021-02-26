@@ -24,7 +24,7 @@ module Wkbk
         current_scope.each.with_index(1) do |e, i|
           title = ("%03d" % i) + "_" + path_normalize(e.article.title)
           e.article.moves_answers.each.with_index(1) do |e, i|
-            str = kif_body_comment_header + e.to_kif
+            str = book.kif_header + e.to_kif
             # body_encodes.each do |encode|
             # path = "#{book_title}/#{encode}/#{title}/#{i}.kif"
             path = "#{book_title}/#{title}/#{i}.kif"
@@ -55,13 +55,6 @@ module Wkbk
     end
 
     private
-
-    def kif_body_comment_header
-      @kif_body_comment_header ||= [
-        "*#{book.title}\n",
-        "*#{book.page_url}\n",
-      ].join
-    end
 
     def zip_filename
       parts = []

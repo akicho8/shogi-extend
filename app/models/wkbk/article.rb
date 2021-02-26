@@ -33,7 +33,7 @@ module Wkbk
   class Article < ApplicationRecord
     include FolderMod
     include ImportExportMod
-    include InfoMod
+    include InfoMethods
     include JsonStruct
 
     belongs_to :user, class_name: "::User"                                                      # 作者
@@ -107,27 +107,6 @@ module Wkbk
     #     end
     #   end
     # end
-
-    def page_url(options = {})
-      UrlProxy.wrap2("/rack/articles/#{key}")
-    end
-
-    def share_board_png_url
-      Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, format: "png", **share_board_params}])
-    end
-
-    def share_board_url
-      Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, title: title, **share_board_params}])
-    end
-
-    def share_board_params
-      { body: main_sfen, turn: 0, abstract_viewpoint: viewpoint }
-    end
-
-    # Twitter画像が表示できる url_for にそのまま渡すパラメータ
-    def shared_image_params
-      [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, abstract_viewpoint: viewpoint]
-    end
 
     def mock_attrs_set
       if Rails.env.test?
@@ -233,58 +212,6 @@ module Wkbk
     def lineage_key=(key)
       self.lineage = Lineage.fetch_if(key)
     end
-
-    # 配置 + 1問目
-    def main_sfen
-      if moves_answers.blank?
-        init_sfen
-      else
-        "#{init_sfen} moves #{moves_answers.first.moves_str}"
-      end
-    end
-
-    # # 出題用
-    # def as_json_type3
-    #   as_json({
-    #             only: [
-    #               :id,
-    #               :title,
-    #               :description,
-    #               :init_sfen,
-    #               :viewpoint,
-    #               :direction_message,
-    #               :mate_skip,
-    #               :tag_list,
-    #             ],
-    #             methods: [
-    #             ],
-    #             include: {
-    #               user: { only: [:key, :id, :name], methods: [:avatar_path],},
-    #               moves_answers: {
-    #                 only: [:moves_count, :moves_str],
-    #               },
-    #             },
-    #           })
-    # end
-
-    # # 詳細用
-    # def as_json_type6
-    #   raise
-    #
-    #   as_json({
-    #             methods: [
-    #               :lineage_key,
-    #             ],
-    #             include: {
-    #               user: {
-    #                 only: [:id, :key, :name],
-    #                 methods: [:avatar_path],
-    #               },
-    #               moves_answers: {},
-    #               folder: { only: [], methods: [:key, :name, :type] },
-    #             },
-    #           })
-    # end
 
     def linked_title(options = {})
       ApplicationController.helpers.link_to(title, page_url(only_path: true))
