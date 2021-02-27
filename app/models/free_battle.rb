@@ -44,7 +44,7 @@ class FreeBattle < ApplicationRecord
       super
     end
 
-    def old_record_destroy(params = {})
+    def cleanup(params = {})
       params = {
         expires_in: 8.weeks,
       }.merge(params)

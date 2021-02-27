@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 module Swars
@@ -46,7 +45,7 @@ module Swars
 
     it "削除実行" do
       test1("user1", "1級", "user2", "2級")
-      Battle.old_record_destroy(time_limit: nil, expires_in: 0)
+      Battle.cleanup(time_limit: nil, expires_in: 0)
       assert { Battle.count == 0 }
     end
   end

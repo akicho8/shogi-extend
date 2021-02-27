@@ -21,8 +21,8 @@ every("5 3 * * *") do
     # "Swars::Crawler::RecentlyCrawler.run",
 
     "TimeRecord.entry_name_blank_scope.destroy_all",
-    "Swars::Battle.old_record_destroy",
-    "FreeBattle.old_record_destroy",
+    "Swars::Battle.cleanup",
+    "FreeBattle.cleanup",
 
     "ActiveRecord::Base.logger = nil",
     "Swars::Membership.where(:think_all_avg => nil).find_each{|e|e.think_columns_update;e.save!}",
@@ -65,7 +65,7 @@ end
 # every("*/30 * * * *") { runner "Swars::Battle.import(:conditional_import, sleep: 5, limit: 3, page_max: 1, grade_key_gteq: '三段')" }
 # every("30 5 * * *")    { runner "Swars::Battle.import(:remake)"                                                                                   }
 # every("0 */3 * * *")  { runner "General::Battle.import(:all_import, sample: 100)"                                                                }
-# every("0 6 * * *")    { runner "General::Battle.import(:old_record_destroy)"                                                                     }
+# every("0 6 * * *")    { runner "General::Battle.import(:cleanup)"                                                                     }
 
 ################################################################################ 証明書更新
 #

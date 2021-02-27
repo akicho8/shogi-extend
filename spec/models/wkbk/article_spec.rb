@@ -172,5 +172,11 @@ module Wkbk
       article.moves_answers.create!("moves_str" => "G*5b")
       article.destroy!
     end
+
+    describe "developper_notice" do
+      it "works" do
+        tp Article
+      end
+    end
   end
 end

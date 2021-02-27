@@ -976,7 +976,7 @@ Finished in 6 minutes 6 seconds (files took 5.97 seconds to load)
 
 Failed examples:
 
-rspec ./spec/models/swars/battle_old_record_destroy_spec.rb:47 # Swars::Battle 削除実行
+rspec ./spec/models/swars/battle_cleanup_spec.rb:47 # Swars::Battle 削除実行
 rspec ./spec/models/swars/battle_spec.rb:62 # Swars::Battle Twitterカード title
 rspec ./spec/models/swars/battle_spec.rb:51 # Swars::Battle Twitterカード to_twitter_card_params 
 rspec ./spec/models/swars/crawl_reservation_spec.rb:45 # Swars::CrawlReservation should 
