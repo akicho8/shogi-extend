@@ -130,8 +130,6 @@ module Wkbk
     #   article.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
     def update_from_js(params)
-      old_new_record = new_record?
-
       article = params.deep_symbolize_keys
 
       ActiveRecord::Base.transaction do
@@ -175,11 +173,15 @@ module Wkbk
         end
       end
 
-      if true
-        str = old_new_record ? "作成" : "更新"
-        SlackAgent.message_send(key: "問題#{str}", body: [title, page_url].join(" "))
-        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{str}しました", body: info.to_t).deliver_later
-      end
+      developper_notice
+    end
+
+    def developper_notice
+      str = created_at == updated_at ? "作成" : "更新"
+      SlackAgent.message_send(key: "問題#{str}", body: [title, page_url].join(" "))
+      subject = "#{user.name}さんが問題「#{title}」を#{str}"
+      body = info.collect { |k, v| "#{k}: #{v}\n" }.join
+      ApplicationMailer.developper_notice(subject: subject, body: body).deliver_later
     end
 
     def book_keys=(v)

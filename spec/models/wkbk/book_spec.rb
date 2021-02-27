@@ -88,5 +88,16 @@ module Wkbk
         assert { Book.search(query: "あ").size === 1 }
       end
     end
+
+    describe "developper_notice" do
+      it "works" do
+        user = User.create!
+        book = user.wkbk_books.create!
+        perform_enqueued_jobs { book.developper_notice }
+        mail = ActionMailer::Base.deliveries.last
+        assert { mail.to   == ["shogi.extend@gmail.com"] }
+        assert { mail.subject.match?(/問題集.*作成/) }
+      end
+    end
   end
 end

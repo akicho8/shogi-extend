@@ -67,7 +67,8 @@ module Wkbk
         # 開発者に通知
         mail = ActionMailer::Base.deliveries.last
         assert { mail.to   == ["shogi.extend@gmail.com"] }
-        assert { mail.subject.include?("作成しました") }
+        assert { mail.subject.include?("作成") }
+        # puts mail.body
 
         # 同じ2つ目を作る→失敗
         article = user1.wkbk_articles.build
@@ -171,12 +172,6 @@ module Wkbk
       article = user.wkbk_articles.create!(init_sfen: "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1")
       article.moves_answers.create!("moves_str" => "G*5b")
       article.destroy!
-    end
-
-    describe "developper_notice" do
-      it "works" do
-        tp Article
-      end
     end
   end
 end
