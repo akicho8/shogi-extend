@@ -3,7 +3,7 @@ module Swars
     concern :KillMethods do
       included do
         # 削除対象
-        scope :kill_scope, proc { |params = {}|
+        scope :kill_scope, -> params = {} {
           params = {
             expires_in: 3.months,
             skip_users: (Rails.env.production? || Rails.env.staging?) ? Rails.application.credentials[:battles_destroy_skip_users] : ["devuser1"],
