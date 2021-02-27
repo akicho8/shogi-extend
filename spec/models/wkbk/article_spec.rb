@@ -36,8 +36,12 @@ module Wkbk
     include WkbkSupportMethods
     include ActiveJob::TestHelper # for perform_enqueued_jobs
 
-    it "works" do
+    it "valid?" do
       assert { article1.valid? }
+    end
+
+    it "tweet_body" do
+      assert { article1.tweet_body }
     end
 
     describe "update_from_js" do
@@ -80,8 +84,8 @@ module Wkbk
 
     describe "入力補正" do
       it do
-        article1.update!(description: " ａ　　\n　　ｚ\n ")
-        assert { article1.description == "a\nz" }
+        article1.update!(description: " ａ１　　\n　　ｚ\n ")
+        assert { article1.description == "a1\nz" }
       end
     end
 

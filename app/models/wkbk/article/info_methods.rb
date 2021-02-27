@@ -54,6 +54,16 @@ module Wkbk
           "#{init_sfen} moves #{moves_answers.first.moves_str}"
         end
       end
+
+      def tweet_body
+        out = []
+        out << title
+        if description.present?
+          out << description
+        end
+        out << [*tag_list, "インスタント将棋問題集"].collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
+        out.join("\n")
+      end
     end
   end
 end

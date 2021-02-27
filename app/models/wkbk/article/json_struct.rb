@@ -142,6 +142,7 @@ module Wkbk
               :book_keys,
               :folder_key,
               :lineage_key,
+              :tweet_body,
             ],
             include: {
               user: {

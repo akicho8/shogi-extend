@@ -20,9 +20,8 @@ export const app_tweet = {
     },
     tweet_body() {
       let out = ""
-      out += this.article.title + "\n"
-      out += "#" + "インスタント将棋問題集" + "\n"
-      out += this.current_url
+      out += this.article.tweet_body + " "
+      out += this.location_url_without_search_and_hash()
       return out
     },
   },
