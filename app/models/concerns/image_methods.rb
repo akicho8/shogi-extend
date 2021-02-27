@@ -45,7 +45,7 @@ module ImageMethods
     options = param_as_to_png_options(params)
     options_hash = Digest::MD5.hexdigest(options.to_s)
     cache_key = [to_param, "png", sfen_hash, turn, options_hash].join(":") # id:png:board:turn:options
-    Rails.cache.fetch(cache_key, expires_in: 1.week) do
+    Rails.cache.fetch(cache_key, expires_in: 1.days) do
       parser = Bioshogi::Parser.parse(sfen_body, bioshogi_fast_parse_options_for_image.merge(turn_limit: turn))
       parser.to_png(options)
     end
