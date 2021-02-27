@@ -165,6 +165,9 @@ module BattleControllerSharedMethods
     end
 
     def access_log_create(record)
+      if from_googlebot?
+        return
+      end
       record.update_columns(accessed_at: Time.current)
     end
 

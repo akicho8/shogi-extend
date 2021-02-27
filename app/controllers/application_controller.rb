@@ -56,6 +56,10 @@ class ApplicationController < ActionController::Base
     return_to
   end
 
+  def from_googlebot?
+    request.user_agent.match?(/Googlebot/i)
+  end
+
   concerning :ChoreMethods do
     included do
       add_flash_types *FlashInfo.all_keys
