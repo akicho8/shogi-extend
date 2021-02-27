@@ -57,7 +57,9 @@ class ApplicationController < ActionController::Base
   end
 
   def from_googlebot?
-    request.user_agent.match?(/Googlebot/i)
+    if v = request.user_agent
+      v.match?(/Googlebot/i)
+    end
   end
 
   concerning :ChoreMethods do
