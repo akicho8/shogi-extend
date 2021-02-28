@@ -12,6 +12,14 @@ set :output, {standard: "log/#{@environment}_cron.log"}
 job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
+every("0 1 * * *") do
+  runner [
+    "ActiveRecord::Base.logger = nil",
+    "Swars::Crawler::ReservationCrawler.run",
+    "Swars::Battle.cleanup(time_limit: nil)",
+  ].join(";")
+end
+
 # every("5 3 * * *") do
 #   runner [
 #     "ActiveRecord::Base.logger = nil",
