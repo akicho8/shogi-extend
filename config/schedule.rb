@@ -12,36 +12,36 @@ set :output, {standard: "log/#{@environment}_cron.log"}
 job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
-every("5 3 * * *") do
-  runner [
-    "ActiveRecord::Base.logger = nil",
-
-    "Swars::Crawler::ExpertCrawler.run",
-    "Swars::Crawler::ReservationCrawler.run",
-    # "Swars::Crawler::RegularCrawler.run",
-    # "Swars::Crawler::RecentlyCrawler.run",
-
-    # "TsMaster::TimeRecord.entry_name_blank_scope.destroy_all",
-    "Swars::Battle.cleanup",
-    "FreeBattle.cleanup",
-
-    # これは10325件ぐらい残る
-    # "Swars::Membership.where(:think_all_avg => nil).find_each{|e|e.think_columns_update;e.save!}",
-
-    # 全部0件
-    # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
-    # "Swars::Battle.where(:sfen_hash => nil).find_each{|e|e.save!}",
-    # "FreeBattle.where(:sfen_hash => nil).find_each{|e|e.save!}",
-
-    "Tsl::League.setup",
-
-    # 常時オンライン/常時対戦中になっている人を消す
-    "Actb::SchoolChannel.active_users_clear",
-    "Actb::RoomChannel.active_users_clear",
-    "Emox::SchoolChannel.active_users_clear",
-    "Emox::RoomChannel.active_users_clear",
-  ].join(";")
-end
+# every("5 3 * * *") do
+#   runner [
+#     "ActiveRecord::Base.logger = nil",
+#
+#     "Swars::Crawler::ExpertCrawler.run",
+#     "Swars::Crawler::ReservationCrawler.run",
+#     # "Swars::Crawler::RegularCrawler.run",
+#     # "Swars::Crawler::RecentlyCrawler.run",
+#
+#     # "TsMaster::TimeRecord.entry_name_blank_scope.destroy_all",
+#     "Swars::Battle.cleanup",
+#     "FreeBattle.cleanup",
+#
+#     # これは10325件ぐらい残る
+#     # "Swars::Membership.where(:think_all_avg => nil).find_each{|e|e.think_columns_update;e.save!}",
+#
+#     # 全部0件
+#     # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
+#     # "Swars::Battle.where(:sfen_hash => nil).find_each{|e|e.save!}",
+#     # "FreeBattle.where(:sfen_hash => nil).find_each{|e|e.save!}",
+#
+#     "Tsl::League.setup",
+#
+#     # 常時オンライン/常時対戦中になっている人を消す
+#     "Actb::SchoolChannel.active_users_clear",
+#     "Actb::RoomChannel.active_users_clear",
+#     "Emox::SchoolChannel.active_users_clear",
+#     "Emox::RoomChannel.active_users_clear",
+#   ].join(";")
+# end
 
 if @environment == "staging"
   every("5 3 * * *") { runner "Swars::Crawler::ReservationCrawler.run" }
@@ -49,21 +49,21 @@ end
 
 every("15 5 * * *") { command "sudo systemctl restart sidekiq" }
 
-if @environment == "production"
-  every("30 4 * * *") { command %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction --result-file /var/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql shogi_web_production) }
-  every("45 4 * * *") { command %(ruby -r fileutils -e 'files = Dir["/var/backup/*.sql"].sort; FileUtils.rm(files - files.last(10))') }
-  every("0 0 1 * *")  { runner %(Actb::Season.create!) }
-end
+# if @environment == "production"
+#   every("30 4 * * *") { command %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction --result-file /var/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql shogi_web_production) }
+#   every("45 4 * * *") { command %(ruby -r fileutils -e 'files = Dir["/var/backup/*.sql"].sort; FileUtils.rm(files - files.last(10))') }
+#   every("0 0 1 * *")  { runner %(Actb::Season.create!) }
+# end
 
-if @environment == "production"
-  every("15 1 31 12 *") do
-    runner [
-      "SlackAgent.message_send(key: 'Question', body: 'start')",
-      "TsMaster::Question.setup(reset: true)",
-      "SlackAgent.message_send(key: 'Question', body: 'end')",
-    ].join(";")
-  end
-end
+# if @environment == "production"
+#   every("15 1 31 12 *") do
+#     runner [
+#       "SlackAgent.message_send(key: 'Question', body: 'start')",
+#       "TsMaster::Question.setup(reset: true)",
+#       "SlackAgent.message_send(key: 'Question', body: 'end')",
+#     ].join(";")
+#   end
+# end
 
 # every("30 6 * * *")   { runner "Swars::Battle.import(:expert_import, sleep: 5)"                                                                  }
 # every("*/30 * * * *") { runner "Swars::Battle.import(:conditional_import, sleep: 5, limit: 3, page_max: 1, grade_key_gteq: '三段')" }
