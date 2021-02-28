@@ -133,7 +133,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
   describe "show" do
     it "png" do
       get :show, params: {id: record.to_param, format: "png", width: "", turn: 999}
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:redirect)
     end
 
     describe "KIF 表示/DL" do

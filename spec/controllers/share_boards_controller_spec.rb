@@ -7,27 +7,27 @@ RSpec.describe ShareBoardsController, type: :controller do
   end
 
   describe "基本「58玉」" do
-    def test(format)
+    def test(format, status)
       get :show, params: { body: "position startpos moves 5i5h", turn:1, title: "(title)", format: format }
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(status)
     end
     it "works" do
-      test("png")
-      test("kif")
-      test("ki2")
-      test("sfen")
-      test("csa")
+      test("png", :redirect)
+      test("kif", :ok)
+      test("ki2", :ok)
+      test("sfen", :ok)
+      test("csa", :ok)
     end
   end
 
   describe "エラーの場合" do
-    def test(format)
+    def test(format, status)
       get :show, params: { body: "position startpos moves 5i5e", format: format }
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(status)
     end
     it do
-      test("png")
-      test("kif")
+      test("png", :redirect)
+      test("kif", :ok)
     end
   end
 

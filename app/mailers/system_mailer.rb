@@ -11,19 +11,6 @@ class SystemMailer < ApplicationMailer
 
   private
 
-  def subject_prefix
-    parts = []
-    parts << "[#{AppConfig[:app_name]}]"
-    unless Rails.env.production?
-      parts << "[#{Rails.env}]"
-    end
-    parts.join + " "
-  end
-
-  def subject_decorate(subject)
-    [subject_prefix, subject].join
-  end
-
   # 表などが崩れないようにするための固定幅表示
   concerning :FixedFormatMethods do
     included do

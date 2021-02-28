@@ -89,11 +89,11 @@ module Wkbk
       end
     end
 
-    describe "fixed_track" do
+    describe "simple_track" do
       it "works" do
         user = User.create!
         book = user.wkbk_books.create!
-        perform_enqueued_jobs { book.fixed_track }
+        perform_enqueued_jobs { book.simple_track }
         mail = ActionMailer::Base.deliveries.last
         assert { mail.to   == ["shogi.extend@gmail.com"] }
         assert { mail.subject.match?(/問題集.*作成/) }

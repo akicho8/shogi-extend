@@ -94,23 +94,6 @@ RSpec.describe FreeBattle, type: :model do
       end
     end
 
-    it "param_as_to_png_options" do
-      assert { record.param_as_to_png_options                     == {width: 1200, height: 630} }
-      assert { record.param_as_to_png_options("width" => "")      == {width: 1200, height: 630} }
-      assert { record.param_as_to_png_options("width" => "800")   == {width:  800, height: 630} }
-      assert { record.param_as_to_png_options("height" => "9999") == {width: 1200, height: 630} }
-      assert { record.param_as_to_png_options("other" => "12.34") == {width: 1200, height: 630, other: 12.34} }
-      assert { record.param_as_to_png_options("other" => "true")  == {width: 1200, height: 630, other: true}  }
-    end
-
-    it "to_dynamic_png" do
-      assert { record.to_dynamic_png.include?("PNG") }
-    end
-
-    # it "modal_on_index_path" do
-    #   assert { record.modal_on_index_path == "/x?viewpoint=black&modal_id=free_battle1&turn=5" }
-    # end
-
     it "adjust_turn" do
       assert { record.adjust_turn(-1) == 5 }
       assert { record.adjust_turn( 6) == 5 }

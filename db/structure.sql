@@ -1337,7 +1337,7 @@ CREATE TABLE `free_battles` (
   `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'URL識別子',
   `kifu_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '入力した棋譜URL',
   `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-  `kifu_body` mediumtext COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜本文',
+  `kifu_body` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜本文',
   `turn_max` int(11) NOT NULL COMMENT '手数',
   `meta_info` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜メタ情報',
   `battled_at` datetime NOT NULL COMMENT '対局開始日時',
@@ -1346,7 +1346,7 @@ CREATE TABLE `free_battles` (
   `user_id` bigint(20) DEFAULT NULL,
   `preset_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `description` text COLLATE utf8mb4_bin NOT NULL,
-  `sfen_body` varchar(8192) COLLATE utf8mb4_bin NOT NULL,
+  `sfen_body` text COLLATE utf8mb4_bin NOT NULL,
   `sfen_hash` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `start_turn` int(11) DEFAULT NULL COMMENT '???',
   `critical_turn` int(11) DEFAULT NULL COMMENT '開戦',
@@ -1403,7 +1403,7 @@ CREATE TABLE `swars_battles` (
   `meta_info` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜メタ情報',
   `accessed_at` datetime NOT NULL COMMENT '最終参照日時',
   `preset_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `sfen_body` varchar(8192) COLLATE utf8mb4_bin NOT NULL,
+  `sfen_body` text COLLATE utf8mb4_bin NOT NULL,
   `sfen_hash` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `start_turn` int(11) DEFAULT NULL COMMENT '???',
   `critical_turn` int(11) DEFAULT NULL COMMENT '開戦',
@@ -1967,6 +1967,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20201229171907'),
 ('20210121210600'),
 ('20210215234700'),
-('20210222155800');
+('20210222155800'),
+('20210228085800');
 
 
