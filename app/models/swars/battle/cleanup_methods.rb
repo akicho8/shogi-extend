@@ -45,6 +45,7 @@ module Swars
         def cleanup(params = {})
           params = {
             time_limit: 4.hours,  # 最大処理時間(朝4時に実行して6時には必ず終了させる)
+            sleep: 0,
           }.merge(params)
 
           rows = []
@@ -66,10 +67,11 @@ module Swars
                   e.destroy!
                   row["成功"] += 1
                 end
-              rescue ActiveRecord::RecordNotDestroyed => invalid
+              rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked => invalid
                 row["失敗"] += 1
                 errors << invalid
               end
+              sleep(params[:sleep])
             end
           end
           body = [rows.to_t, errors.to_t].reject(&:blank?).join("\n")
