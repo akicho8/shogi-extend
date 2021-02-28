@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_22_155800) do
+ActiveRecord::Schema.define(version: 2021_02_28_085800) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -901,7 +901,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_155800) do
     t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "kifu_url", comment: "入力した棋譜URL"
     t.string "title"
-    t.text "kifu_body", size: :medium, null: false, comment: "棋譜本文"
+    t.text "kifu_body", null: false, comment: "棋譜本文"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "battled_at", null: false, comment: "対局開始日時"
@@ -910,7 +910,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_155800) do
     t.bigint "user_id"
     t.string "preset_key", null: false
     t.text "description", null: false
-    t.string "sfen_body", limit: 8192, null: false
+    t.text "sfen_body", null: false
     t.string "sfen_hash", null: false
     t.integer "start_turn", comment: "???"
     t.integer "critical_turn", comment: "開戦"
@@ -949,7 +949,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_155800) do
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "accessed_at", null: false, comment: "最終参照日時"
     t.string "preset_key", null: false
-    t.string "sfen_body", limit: 8192, null: false
+    t.text "sfen_body", null: false
     t.string "sfen_hash", null: false
     t.integer "start_turn", comment: "???"
     t.integer "critical_turn", comment: "開戦"

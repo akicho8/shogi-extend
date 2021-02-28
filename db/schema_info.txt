@@ -4,29 +4,29 @@
 #
 # 将棋ウォーズ対戦情報 (swars_battles as Swars::Battle)
 #
-# |---------------+------------------+--------------+-------------+-------------------+-------|
-# | name          | desc             | type         | opts        | refs              | index |
-# |---------------+------------------+--------------+-------------+-------------------+-------|
-# | id            | ID               | integer(8)   | NOT NULL PK |                   |       |
-# | key           | 対局ユニークキー | string(255)  | NOT NULL    |                   | A!    |
-# | battled_at    | 対局日時         | datetime     | NOT NULL    |                   | B     |
-# | rule_key      | ルール           | string(255)  | NOT NULL    |                   | C     |
-# | csa_seq       | 棋譜             | text(65535)  | NOT NULL    |                   |       |
-# | final_key     | 結末             | string(255)  | NOT NULL    |                   | D     |
-# | win_user_id   | 勝者             | integer(8)   |             | => Swars::User#id | E     |
-# | turn_max      | 手数             | integer(4)   | NOT NULL    |                   | F     |
-# | meta_info     | メタ情報         | text(65535)  | NOT NULL    |                   |       |
-# | accessed_at   | 最終アクセス日時 | datetime     | NOT NULL    |                   |       |
-# | preset_key    | 手合割           | string(255)  | NOT NULL    |                   | G     |
-# | sfen_body     | SFEN形式棋譜     | string(8192) | NOT NULL    |                   |       |
-# | sfen_hash     | Sfen hash        | string(255)  | NOT NULL    |                   |       |
-# | start_turn    | 開始局面         | integer(4)   |             |                   | H     |
-# | critical_turn | 開戦             | integer(4)   |             |                   | I     |
-# | outbreak_turn | Outbreak turn    | integer(4)   |             |                   | J     |
-# | image_turn    | OGP画像の局面    | integer(4)   |             |                   |       |
-# | created_at    | 作成日時         | datetime     | NOT NULL    |                   |       |
-# | updated_at    | 更新日時         | datetime     | NOT NULL    |                   |       |
-# |---------------+------------------+--------------+-------------+-------------------+-------|
+# |---------------+------------------+-------------+-------------+-------------------+-------|
+# | name          | desc             | type        | opts        | refs              | index |
+# |---------------+------------------+-------------+-------------+-------------------+-------|
+# | id            | ID               | integer(8)  | NOT NULL PK |                   |       |
+# | key           | 対局ユニークキー | string(255) | NOT NULL    |                   | A!    |
+# | battled_at    | 対局日時         | datetime    | NOT NULL    |                   | B     |
+# | rule_key      | ルール           | string(255) | NOT NULL    |                   | C     |
+# | csa_seq       | 棋譜             | text(65535) | NOT NULL    |                   |       |
+# | final_key     | 結末             | string(255) | NOT NULL    |                   | D     |
+# | win_user_id   | 勝者             | integer(8)  |             | => Swars::User#id | E     |
+# | turn_max      | 手数             | integer(4)  | NOT NULL    |                   | F     |
+# | meta_info     | メタ情報         | text(65535) | NOT NULL    |                   |       |
+# | accessed_at   | 最終アクセス日時 | datetime    | NOT NULL    |                   |       |
+# | preset_key    | 手合割           | string(255) | NOT NULL    |                   | G     |
+# | sfen_body     | SFEN形式棋譜     | text(65535) | NOT NULL    |                   |       |
+# | sfen_hash     | Sfen hash        | string(255) | NOT NULL    |                   |       |
+# | start_turn    | 開始局面         | integer(4)  |             |                   | H     |
+# | critical_turn | 開戦             | integer(4)  |             |                   | I     |
+# | outbreak_turn | Outbreak turn    | integer(4)  |             |                   | J     |
+# | image_turn    | OGP画像の局面    | integer(4)  |             |                   |       |
+# | created_at    | 作成日時         | datetime    | NOT NULL    |                   |       |
+# | updated_at    | 更新日時         | datetime    | NOT NULL    |                   |       |
+# |---------------+------------------+-------------+-------------+-------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
@@ -726,31 +726,31 @@
 #
 # 棋譜投稿 (free_battles as FreeBattle)
 #
-# |---------------+--------------------+----------------+-------------+------------+-------|
-# | name          | desc               | type           | opts        | refs       | index |
-# |---------------+--------------------+----------------+-------------+------------+-------|
-# | id            | ID                 | integer(8)     | NOT NULL PK |            |       |
-# | key           | ユニークなハッシュ | string(255)    | NOT NULL    |            | A!    |
-# | kifu_url      | 棋譜URL            | string(255)    |             |            |       |
-# | title         | タイトル           | string(255)    |             |            |       |
-# | kifu_body     | 棋譜               | text(16777215) | NOT NULL    |            |       |
-# | turn_max      | 手数               | integer(4)     | NOT NULL    |            | B     |
-# | meta_info     | 棋譜ヘッダー       | text(65535)    | NOT NULL    |            |       |
-# | battled_at    | Battled at         | datetime       | NOT NULL    |            | C     |
-# | use_key       | Use key            | string(255)    | NOT NULL    |            | D     |
-# | accessed_at   | Accessed at        | datetime       | NOT NULL    |            |       |
-# | user_id       | User               | integer(8)     |             | => User#id | E     |
-# | preset_key    | Preset key         | string(255)    | NOT NULL    |            | F     |
-# | description   | 説明               | text(65535)    | NOT NULL    |            |       |
-# | sfen_body     | SFEN形式棋譜       | string(8192)   | NOT NULL    |            |       |
-# | sfen_hash     | Sfen hash          | string(255)    | NOT NULL    |            |       |
-# | start_turn    | 開始局面           | integer(4)     |             |            | G     |
-# | critical_turn | 開戦               | integer(4)     |             |            | H     |
-# | outbreak_turn | Outbreak turn      | integer(4)     |             |            | I     |
-# | image_turn    | OGP画像の局面      | integer(4)     |             |            |       |
-# | created_at    | 作成日時           | datetime       | NOT NULL    |            |       |
-# | updated_at    | 更新日時           | datetime       | NOT NULL    |            |       |
-# |---------------+--------------------+----------------+-------------+------------+-------|
+# |---------------+--------------------+-------------+-------------+------------+-------|
+# | name          | desc               | type        | opts        | refs       | index |
+# |---------------+--------------------+-------------+-------------+------------+-------|
+# | id            | ID                 | integer(8)  | NOT NULL PK |            |       |
+# | key           | ユニークなハッシュ | string(255) | NOT NULL    |            | A!    |
+# | kifu_url      | 棋譜URL            | string(255) |             |            |       |
+# | title         | タイトル           | string(255) |             |            |       |
+# | kifu_body     | 棋譜               | text(65535) | NOT NULL    |            |       |
+# | turn_max      | 手数               | integer(4)  | NOT NULL    |            | B     |
+# | meta_info     | 棋譜ヘッダー       | text(65535) | NOT NULL    |            |       |
+# | battled_at    | Battled at         | datetime    | NOT NULL    |            | C     |
+# | use_key       | Use key            | string(255) | NOT NULL    |            | D     |
+# | accessed_at   | Accessed at        | datetime    | NOT NULL    |            |       |
+# | user_id       | User               | integer(8)  |             | => User#id | E     |
+# | preset_key    | Preset key         | string(255) | NOT NULL    |            | F     |
+# | description   | 説明               | text(65535) | NOT NULL    |            |       |
+# | sfen_body     | SFEN形式棋譜       | text(65535) | NOT NULL    |            |       |
+# | sfen_hash     | Sfen hash          | string(255) | NOT NULL    |            |       |
+# | start_turn    | 開始局面           | integer(4)  |             |            | G     |
+# | critical_turn | 開戦               | integer(4)  |             |            | H     |
+# | outbreak_turn | Outbreak turn      | integer(4)  |             |            | I     |
+# | image_turn    | OGP画像の局面      | integer(4)  |             |            |       |
+# | created_at    | 作成日時           | datetime    | NOT NULL    |            |       |
+# | updated_at    | 更新日時           | datetime    | NOT NULL    |            |       |
+# |---------------+--------------------+-------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
