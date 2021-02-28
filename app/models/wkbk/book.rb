@@ -207,15 +207,15 @@ module Wkbk
         bookships_order_by_ids(ids)
       end
 
-      developer_notice
+      simple_track
     end
 
-    def developer_notice
+    def simple_track
       str = created_at == updated_at ? "作成" : "更新"
       SlackAgent.message_send(key: "問題集#{str}", body: [title, page_url].join(" "))
       subject = "#{user.name}さんが問題集「#{title}」を#{str}"
       body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-      ApplicationMailer.developer_notice(subject: subject, body: body).deliver_later
+      SystemMailer.simple_track(subject: subject, body: body).deliver_later
     end
 
     # articles の並び替え
