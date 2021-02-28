@@ -54,7 +54,7 @@ class FreeBattle < ApplicationRecord
       s = s.where(arel_table[:accessed_at].lteq(params[:expires_in].ago))
       s.find_in_batches(batch_size: 100) do |g|
         begin
-          g.each(&:destroy)
+          g.each(&:destroy!)
         rescue ActiveRecord::Deadlocked => error
           puts error
         end

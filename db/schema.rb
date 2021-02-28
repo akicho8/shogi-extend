@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_28_085802) do
+ActiveRecord::Schema.define(version: 2021_02_28_170905) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -957,6 +957,7 @@ ActiveRecord::Schema.define(version: 2021_02_28_085802) do
     t.integer "image_turn", comment: "???"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["accessed_at"], name: "index_swars_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
