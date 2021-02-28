@@ -18,7 +18,7 @@ module Swars
 
         # アクセスが今から expires_in 秒前より古いもの
         scope :not_accessed_scope, -> expires_in {
-          where(arel_table[:accessed_at].lteq(expires_in.seconds.ago))
+          where(arel_table[:battled_at].lteq(expires_in.seconds.ago))
         }
 
         # 指導対局を除外したもの
@@ -44,13 +44,13 @@ module Swars
         # rails r 'Swars::Battle.cleanup(time_limit: 0)'
         def cleanup(params = {})
           params = {
-            time_limit: 2.hours,  # 最大処理時間(朝4時に実行して6時には必ず終了させる)
+            time_limit: 4.hours,  # 最大処理時間(朝4時に実行して6時には必ず終了させる)
           }.merge(params)
 
           rows = []
           errors = []
           t = Time.current
-          kill_scope(params).find_in_batches(batch_size: 100) do |g|
+          kill_scope(params).find_in_batches(batch_size: 1000) do |g|
             row = {}
             rows << row
             row["日時"] = Time.current.to_s(:ymdhms)
@@ -62,8 +62,10 @@ module Swars
             end
             g.each do |e|
               begin
-                e.destroy!
-                row["成功"] += 1
+                if e.accessed_at < 3.months.ago
+                  e.destroy!
+                  row["成功"] += 1
+                end
               rescue ActiveRecord::RecordNotDestroyed => invalid
                 row["失敗"] += 1
                 errors << invalid
