@@ -2,7 +2,7 @@ module BattleModelMethods
   extend ActiveSupport::Concern
 
   included do
-    include ImageMethods
+    include BoardImageMethods
     include TagMethods
     include TimeChartMethods
 

@@ -4,7 +4,6 @@ module BattleControllerSharedMethods
   include ShogiErrorRescueMethods
   include EncodeMethods
   include KifShowMethods
-  include PngShowMethods
   include KentoJsonMethods
   include SortMethods
   include PageMethods
@@ -159,7 +158,7 @@ module BattleControllerSharedMethods
 
       respond_to do |format|
         format.html
-        format.png { png_file_send }
+        format.png { redirect_to current_record.to_browser_path(params) }
         format.any { kif_data_send }
       end
     end
