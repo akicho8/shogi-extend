@@ -39,7 +39,8 @@ class CreateFreeBattles < ActiveRecord::Migration[5.1]
       t.string :key,            null: false, index: {unique: true}, charset: 'utf8', collation: 'utf8_bin', comment: "URL識別子"
       t.string :kifu_url,       null: true,                                                                 comment: "入力した棋譜URL"
       t.string :title,          null: true
-      t.text :kifu_body,        null: false, limit: 16777215,                                               comment: "棋譜本文"
+      t.text :kifu_body,        null: false, limit: 655535,                                               comment: "棋譜本文"
+      t.text :sfen_body,        null: false, limit: 655535,
       t.integer :turn_max,      null: false, index: true,                                                   comment: "手数"
       t.text :meta_info,        null: false,                                                                comment: "棋譜メタ情報"
       t.datetime :battled_at,   null: false, index: true,                                                   comment: "対局開始日時"
@@ -48,7 +49,6 @@ class CreateFreeBattles < ActiveRecord::Migration[5.1]
       t.belongs_to :user,       null: true, index: true
       t.string :preset_key,     null: false, index: true
       t.text :description,      null: false
-      t.string :sfen_body,      null: false, limit: 8192
       t.string :sfen_hash,      null: false
 
       t.integer :start_turn,    null: true, index: true, comment: "???"
