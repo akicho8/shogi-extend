@@ -98,7 +98,7 @@ before_fork do
     # ↓動いているのかわからない
     # config.pre_term = -> (worker) {
     #   puts "Worker #{worker.inspect} being killed"
-    #   ApplicationMailer.developer_notice(subject: "再起動", body: worker.inspect).deliver_now
+    #   SystemMailer.fixed_track(subject: "再起動", body: worker.inspect).deliver_now
     #   SlackAgent.message_send(key: "puma再起動", body: worker.inspect)
     # }
 

@@ -71,7 +71,7 @@ module Swars
             end
           end
           body = [rows.to_t, errors.to_t].reject(&:blank?).join("\n")
-          ApplicationMailer.developer_notice(subject: "バトル削除", body: body).deliver_later
+          SystemMailer.fixed_track(subject: "バトル削除", body: body).deliver_later
         end
       end
     end
