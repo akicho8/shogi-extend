@@ -75,8 +75,18 @@ class ShareBoardsController < ApplicationController
       # Twitter画像
       # http://localhost:3000/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
       if request.format.png?
-        png = current_record.to_dynamic_png(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
-        send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
+        # png = current_record.to_dynamic_png(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+        # send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
+
+        # png = current_record.to_dynamic_png(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+        # send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
+
+        if current_disposition == :attachment
+          path = current_record.to_real_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+          send_file path, type: Mime[:png], disposition: current_disposition, filename: current_filename
+        else
+          redirect_to current_record.to_browser_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+        end
         return
       end
 

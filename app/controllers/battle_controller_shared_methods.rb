@@ -158,7 +158,13 @@ module BattleControllerSharedMethods
 
       respond_to do |format|
         format.html
-        format.png { redirect_to current_record.to_browser_path(params) }
+        format.png {
+          if current_disposition == :attachment
+            send_file current_record.to_real_path(params), type: Mime[:png], disposition: current_disposition, filename: current_filename
+          else
+            redirect_to current_record.to_browser_path(params)
+          end
+        }
         format.any { kif_data_send }
       end
     end
