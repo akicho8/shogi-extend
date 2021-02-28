@@ -98,6 +98,7 @@ export default {
       }
 
       // https://day.js.org/docs/en/durations/diffing
+      const new_record_p = this.book.new_record_p
       const before_save_button_name = this.save_button_name
       return this.$axios.$post("/api/wkbk/books/save.json", {book: this.book}).then(e => {
         if (e.form_error_message) {
@@ -109,8 +110,10 @@ export default {
           this.toast_ok(`${before_save_button_name}しました`)
 
           // 新規の初期値にするため保存しておく
-          this.default_sequence_key = this.book.sequence_key
-          this.default_folder_key = this.book.folder_key
+          if (new_record_p) {
+            this.default_sequence_key = this.book.sequence_key
+            this.default_folder_key = this.book.folder_key
+          }
 
           // this.$router.push({name: "rack-books", query: {scope: this.book.folder_key}})
           this.$router.push({name: "rack-books"})

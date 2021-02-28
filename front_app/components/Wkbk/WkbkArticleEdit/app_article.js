@@ -61,6 +61,7 @@ export const app_article = {
         }
       }
 
+      const new_record_p = this.article.new_record_p
       const before_save_button_name = this.save_button_name
 
       return this.$axios.$post("/api/wkbk/articles/save.json", {article: this.article}).then(e => {
@@ -72,9 +73,11 @@ export const app_article = {
           this.toast_ok(`${before_save_button_name}しました`)
 
           // 新規の初期値にするため保存しておく
-          this.default_book_keys   = this.article.book_keys
-          this.default_lineage_key = this.article.lineage_key
-          this.default_folder_key = this.article.folder_key
+          if (new_record_p) {
+            this.default_book_keys   = this.article.book_keys
+            this.default_lineage_key = this.article.lineage_key
+            this.default_folder_key = this.article.folder_key
+          }
 
           // this.$router.push({name: "rack-articles", query: {scope: this.article.redirect_scope_after_save}})
           this.$router.push({name: "rack-articles"})
