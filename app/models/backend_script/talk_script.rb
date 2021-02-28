@@ -16,7 +16,7 @@ module BackendScript
 
     def script_body
       if submitted?
-        c.redirect_to talk_object.mp3_path
+        c.redirect_to talk_object.to_browser_path
       end
     end
 
@@ -25,7 +25,7 @@ module BackendScript
     end
 
     def talk_object
-      Talk.new(source_text: current_message, cache_enable: false)
+      Talk.new(source_text: current_message, disk_cache_enable: false)
     end
   end
 end

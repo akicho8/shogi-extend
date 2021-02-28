@@ -19,33 +19,44 @@ class Talk
 
   cattr_accessor(:pictorial_chars_delete_enable) { true } # 特殊文字の除去 (除去しないとAWS側の変換が特殊文字の直前で停止してしまう)
 
+  class << self
+    def cache_root
+      Rails.public_path.join("system", name.underscore)
+    end
+
+    # rails r 'Talk.cache_delete_all'
+    def cache_delete_all
+      FileUtils.rm_f(cache_root)
+    end
+  end
+
   attr_accessor :params
 
   def initialize(params = {})
     @params = {
       polly_params: {},
-      cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test?,
+      disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test?,
     }.merge(params)
   end
 
-  def mp3_path
-    generate_if_not_exist
+  def to_browser_path
+    not_found_then_generate
     relative_path
   end
 
-  def real_path
-    generate_if_not_exist
-    direct_file_path
+  def to_real_path
+    not_found_then_generate
+    real_path
   end
 
   def as_json(*)
     {
-      mp3_path: mp3_path,
+      browser_path: to_browser_path,
     }
   end
 
   def cache_delete
-    FileUtils.rm_f(direct_file_path)
+    FileUtils.rm_f(real_path)
   end
 
   def normalized_text
@@ -76,8 +87,8 @@ class Talk
     params[:source_text].to_s
   end
 
-  def direct_file_path
-    Rails.public_path.join("system", self.class.name.underscore, *dir_parts, filename)
+  def real_path
+    self.class.cache_root.join(*dir_parts, filename)
   end
 
   def filename
@@ -92,8 +103,8 @@ class Talk
     [polly_params[:voice_id], polly_params[:sample_rate], source_text].join(":")
   end
 
-  def generate_if_not_exist
-    if params[:cache_enable] && direct_file_path.exist?
+  def not_found_then_generate
+    if params[:disk_cache_enable] && real_path.exist?
       return
     end
 
@@ -101,8 +112,8 @@ class Talk
   end
 
   def force_generate
-    params = polly_params.merge(text: normalized_text, response_target: direct_file_path.to_s)
-    direct_file_path.dirname.mkpath
+    params = polly_params.merge(text: normalized_text, response_target: real_path.to_s)
+    real_path.dirname.mkpath
 
     if Rails.env.development? || Rails.env.test?
       Rails.logger.debug(params.to_t)
@@ -112,7 +123,7 @@ class Talk
       resp = client.synthesize_speech(params)
       if Rails.env.development? || Rails.env.test?
         Rails.logger.debug(resp.to_h.to_t)
-        Rails.logger.debug({source_text: source_text,direct_file_path: direct_file_path}.to_t)
+        Rails.logger.debug({source_text: source_text, real_path: real_path}.to_t)
       end
     rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily => error
       # 不安定な環境で実行すると client.synthesize_speech のタイミングで
@@ -137,7 +148,7 @@ class Talk
 
   # system/ だと /s/system になってしまうので / から始めるようにする
   def relative_path
-    "/" + direct_file_path.relative_path_from(Rails.public_path).to_s
+    "/" + real_path.relative_path_from(Rails.public_path).to_s
   end
 
   def dir_parts

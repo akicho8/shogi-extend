@@ -23,8 +23,8 @@ export default {
           // return this.$axios.request({method: "get", url: "/api/talk", params: params}).then(({data}) => this.mp3_talk(data, options))
           // return this.$axios.get("/api/talk", {params: params}).then(({data}) => this.mp3_talk(data, options))
           return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
-            if (e.mp3_path == null) {
-              return Promise.reject("mp3_path is blank")
+            if (e.browser_path == null) {
+              return Promise.reject("browser_path is blank")
             } else {
               this.mp3_talk(e, options)
             }
@@ -37,7 +37,7 @@ export default {
 
     mp3_talk(data, options = {}) {
       window.howl_object = new Howl({
-        src: data.mp3_path,
+        src: data.browser_path,
         autoplay: true,
         volume: options.volume || 1.0,
         rate: options.rate || 1.65,
