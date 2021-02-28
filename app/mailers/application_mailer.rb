@@ -4,9 +4,9 @@ class ApplicationMailer < ActionMailer::Base
 
   layout "mailer"
 
-  # ApplicationMailer.developper_notice.deliver_later
-  # ApplicationMailer.developper_notice.deliver_now
-  def developper_notice(params = {})
+  # ApplicationMailer.developer_notice.deliver_later
+  # ApplicationMailer.developer_notice.deliver_now
+  def developer_notice(params = {})
     mail(fixed_format(params.merge(subject: subject_decorate(params[:subject]))))
   end
 

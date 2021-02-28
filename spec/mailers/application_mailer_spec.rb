@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe ApplicationMailer, type: :mailer do
-  describe "developper_notice" do
+  describe "developer_notice" do
     def mail
-      ApplicationMailer.developper_notice(subject: "(subject)")
+      ApplicationMailer.developer_notice(subject: "(subject)")
     end
     it do
       assert { mail.from    == ["shogi.extend@gmail.com"]       }

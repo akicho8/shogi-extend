@@ -173,15 +173,15 @@ module Wkbk
         end
       end
 
-      developper_notice
+      developer_notice
     end
 
-    def developper_notice
+    def developer_notice
       str = created_at == updated_at ? "作成" : "更新"
       SlackAgent.message_send(key: "問題#{str}", body: [title, page_url].join(" "))
       subject = "#{user.name}さんが問題「#{title}」を#{str}"
       body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-      ApplicationMailer.developper_notice(subject: subject, body: body).deliver_later
+      ApplicationMailer.developer_notice(subject: subject, body: body).deliver_later
     end
 
     def book_keys=(v)

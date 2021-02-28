@@ -385,7 +385,7 @@ module Actb
       # created_at をトリガーにすると下書きを作成したときにも通知してしまう
       if state = saved_after_state
         SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
-        ApplicationMailer.developper_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
+        ApplicationMailer.developer_notice(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
         User.bot.lobby_speak("#{user.name}さんが#{linked_title}を#{state}しました")
       end
     end

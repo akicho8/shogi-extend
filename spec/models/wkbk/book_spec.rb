@@ -89,11 +89,11 @@ module Wkbk
       end
     end
 
-    describe "developper_notice" do
+    describe "developer_notice" do
       it "works" do
         user = User.create!
         book = user.wkbk_books.create!
-        perform_enqueued_jobs { book.developper_notice }
+        perform_enqueued_jobs { book.developer_notice }
         mail = ActionMailer::Base.deliveries.last
         assert { mail.to   == ["shogi.extend@gmail.com"] }
         assert { mail.subject.match?(/問題集.*作成/) }

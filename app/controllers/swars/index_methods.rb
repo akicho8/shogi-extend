@@ -185,7 +185,7 @@ module Swars
                 e[:error].message.strip,
                 "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
               ].join("\n")
-              ApplicationMailer.developper_notice(subject: "【ウォーズ棋譜不整合】#{e[:error].message.lines.first.strip}", body: body).deliver_later
+              ApplicationMailer.developer_notice(subject: "【ウォーズ棋譜不整合】#{e[:error].message.lines.first.strip}", body: body).deliver_later
             end
             message = errors.collect { |e|
               [

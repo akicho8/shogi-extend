@@ -14,7 +14,7 @@ module Swars
 
       def initialize(params = {})
         @params = {
-          developper_notice: true,
+          developer_notice: true,
           sleep: (Rails.env.production? || Rails.env.staging?) ? 4 : 0,
         }.merge(default_params, params)
 
@@ -24,8 +24,8 @@ module Swars
       def run
         @rows.clear
         perform
-        if params[:developper_notice]
-          ApplicationMailer.developper_notice(subject: subject, body: mail_body).deliver_later
+        if params[:developer_notice]
+          ApplicationMailer.developer_notice(subject: subject, body: mail_body).deliver_later
         end
         if Rails.env.development?
           puts params.to_t

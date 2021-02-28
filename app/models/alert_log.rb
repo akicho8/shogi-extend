@@ -42,7 +42,7 @@ class AlertLog < ApplicationRecord
   #     if attachments
   #       params[:attachments] = attachments
   #     end
-  #     MailCop.developper_notice(params).deliver_later
+  #     MailCop.developer_notice(params).deliver_later
   #   end
   #   if slack_notify
   #     Slacker.send_message([subject, body].join("\n").strip)
