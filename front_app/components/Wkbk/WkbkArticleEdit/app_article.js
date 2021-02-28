@@ -54,7 +54,7 @@ export const app_article = {
 
       if (this.article.moves_answers.length >= 1) {
         if (this.article.new_record_p) {
-          if (this.valid_count === 0 && !this.development_p) {
+          if (this.valid_count === 0 && !this.development_p && false) {
             this.toast_warn("検証してください")
             return true
           }
