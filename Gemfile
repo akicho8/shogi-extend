@@ -79,9 +79,18 @@ group :development, :test do
   gem "capistrano-maintenance", require: false
   gem "slackistrano"            # for cap production slack:deploy:test
 
-  gem "rspec-rails"
   gem "rails-controller-testing" # controller で assigns を使うため
-  gem "rspec-power_assert"
+
+  ################################################################################
+  gem "rspec-rails",        "3.9.1"
+  gem "rspec",              "3.9.0"
+  gem "rspec-core",         "3.9.3"
+  gem "rspec-expectations", "3.9.2"
+  gem "rspec-mocks",        "3.9.1"
+  gem "rspec-power_assert", "1.1.0"
+  gem "rspec-support",      "3.9.4"
+  ################################################################################
+
   gem "factory_bot_rails"
 
   gem "test-prof"               # for let_it_be
