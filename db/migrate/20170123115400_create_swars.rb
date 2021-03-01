@@ -21,11 +21,11 @@ class CreateSwars < ActiveRecord::Migration[5.1]
       t.integer :turn_max,      null: false, index: true, comment: "手数"
       t.text :meta_info,        null: false, comment: "棋譜メタ情報"
 
-      t.datetime :accessed_at,  null: false, comment: "最終参照日時"
+      t.datetime :accessed_at,  null: false, index: true, comment: "最終参照日時"
 
       t.string :preset_key,     null: false, index: true
 
-      t.string :sfen_body,      null: false, limit: 8192
+      t.text :sfen_body,        null: false, limit: 65535
       t.string :sfen_hash,      null: false
 
       t.integer :start_turn,    null: true, index: true, comment: "???"
