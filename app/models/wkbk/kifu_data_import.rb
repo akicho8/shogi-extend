@@ -8,6 +8,7 @@ module Wkbk
 
     def run
       user = params[:user] || User.sysop
+      # user.wkbk_articles.destroy_all
 
       dir = Rails.root.join("kifu_data").expand_path
       dir.glob("*").sort.each do |book_dir|
@@ -39,17 +40,18 @@ module Wkbk
             next
           end
 
-          if article = user.wkbk_articles.find_by(init_sfen: init_sfen)
-            article.moves_answers.create!(moves_str: moves_str)
-          else
-            article = user.wkbk_articles.build(init_sfen: init_sfen)
-            article.lineage_key = "手筋"
-            article.title = title
-            article.folder_key = :private
-            article.save!
-            article.moves_answers.create!(moves_str: moves_str)
-            book.articles << article
-          end
+          # if article = user.wkbk_articles.find_by(init_sfen: init_sfen)
+          #   article.moves_answers.create!(moves_str: moves_str)
+          # else
+
+          article = user.wkbk_articles.build(init_sfen: init_sfen)
+          article.lineage_key = "実戦詰め筋"
+          article.title = title
+          article.folder_key = :private
+          article.mate_skip = true
+          article.save!
+          article.moves_answers.create!(moves_str: moves_str)
+          book.articles << article
         end
       end
     end
