@@ -47,9 +47,5 @@ module Swars
     def priority
       code
     end
-
-    def reverse_priority
-      self.class.count.pred - code
-    end
   end
 end

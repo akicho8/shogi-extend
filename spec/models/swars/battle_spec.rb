@@ -15,13 +15,13 @@
 # | win_user_id   | 勝者             | integer(8)  |             | => Swars::User#id | E     |
 # | turn_max      | 手数             | integer(4)  | NOT NULL    |                   | F     |
 # | meta_info     | メタ情報         | text(65535) | NOT NULL    |                   |       |
-# | accessed_at   | 最終アクセス日時 | datetime    | NOT NULL    |                   |       |
-# | preset_key    | 手合割           | string(255) | NOT NULL    |                   | G     |
+# | accessed_at   | 最終アクセス日時 | datetime    | NOT NULL    |                   | G     |
+# | preset_key    | 手合割           | string(255) | NOT NULL    |                   | H     |
 # | sfen_body     | SFEN形式棋譜     | text(65535) | NOT NULL    |                   |       |
 # | sfen_hash     | Sfen hash        | string(255) | NOT NULL    |                   |       |
-# | start_turn    | 開始局面         | integer(4)  |             |                   | H     |
-# | critical_turn | 開戦             | integer(4)  |             |                   | I     |
-# | outbreak_turn | Outbreak turn    | integer(4)  |             |                   | J     |
+# | start_turn    | 開始局面         | integer(4)  |             |                   | I     |
+# | critical_turn | 開戦             | integer(4)  |             |                   | J     |
+# | outbreak_turn | Outbreak turn    | integer(4)  |             |                   | K     |
 # | image_turn    | OGP画像の局面    | integer(4)  |             |                   |       |
 # | created_at    | 作成日時         | datetime    | NOT NULL    |                   |       |
 # | updated_at    | 更新日時         | datetime    | NOT NULL    |                   |       |
@@ -35,10 +35,6 @@ require 'rails_helper'
 
 module Swars
   RSpec.describe Battle, type: :model do
-    before do
-      Swars.setup
-    end
-
     let :record do
       Battle.create!
     end
@@ -49,10 +45,10 @@ module Swars
           record.to_twitter_card_params
         end
         it do
-          assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"           }
-          assert { value[:url]         == nil                                                     }
+          assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"              }
+          assert { value[:url]         == nil                                                        }
           assert { value[:image]       == "http://0.0.0.0:3000/w/battle1.png?turn=5&viewpoint=black" }
-          assert { value[:description] == "嬉野流 vs △３ニ飛戦法"      }
+          assert { value[:description] == "嬉野流 vs △３ニ飛戦法"                                   }
         end
         it "turnを変更できる" do
           assert { record.to_twitter_card_params(turn: 0)[:image].include?("turn=0") }
@@ -146,8 +142,8 @@ module Swars
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..................
-# >>
-# >> Finished in 6.32 seconds (files took 3 seconds to load)
-# >> 18 examples, 0 failures
-# >>
+# >> .................
+# >> 
+# >> Finished in 5.09 seconds (files took 2.5 seconds to load)
+# >> 17 examples, 0 failures
+# >> 

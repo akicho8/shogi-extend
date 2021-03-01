@@ -97,7 +97,7 @@ module BackendScript
         row["検索数"]         = search_hash[date]&.count_all
         row["検索人数"]       = search_hash[date]&.unique_user_id_count
         # row["バトル総数"]     = Swars::Battle.where(created_at: range).count
-        # row["削除予定数"]     = Swars::Battle.where(created_at: range).kill_scope.count
+        # row["削除予定数"]     = Swars::Battle.where(created_at: range).cleanup_scope.count
         # row["対局時情報総数"] = Swars::Membership.where(created_at: range).count
         row
       end

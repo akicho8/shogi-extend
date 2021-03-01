@@ -24,12 +24,6 @@ require 'rails_helper'
 
 module Swars
   RSpec.describe CrawlReservation, type: :model do
-    before do
-      Actb.setup
-      Emox.setup
-      Swars.setup
-    end
-
     let :login_user do
       ::User.create!
     end
@@ -65,7 +59,7 @@ module Swars
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .
-# >> 
-# >> Finished in 1.75 seconds (files took 2.21 seconds to load)
+# >>
+# >> Finished in 1.92 seconds (files took 2.55 seconds to load)
 # >> 1 example, 0 failures
-# >> 
+# >>

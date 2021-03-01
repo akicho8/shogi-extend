@@ -7,10 +7,15 @@ RSpec.configure do |config|
     Actb::OxMark.setup
     Actb::Lineage.setup
     Actb::SourceAbout.setup
+
     Emox::Rule.setup
+
+    Swars::Grade.setup
   end
 
   config.before(:context) do
+    Swars::Battle.destroy_all
+    Swars::User.destroy_all
   end
 
   config.before(:example) do

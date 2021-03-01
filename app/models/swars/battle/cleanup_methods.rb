@@ -3,7 +3,7 @@ module Swars
     concern :CleanupMethods do
       included do
         # 削除対象
-        scope :kill_scope, -> (params = {}) {
+        scope :cleanup_scope, -> (params = {}) {
           params = {
             expires_in: 3.months,
             skip_users: (Rails.env.production? || Rails.env.staging?) ? Rails.application.credentials[:battles_destroy_skip_users] : ["devuser1"],
@@ -54,7 +54,7 @@ module Swars
           rows = []
           errors = []
           t = Time.current
-          kill_scope(params).find_in_batches(batch_size: 1000) do |g|
+          cleanup_scope(params).find_in_batches(batch_size: 1000) do |g|
             row = {}
             rows << row
             row["日時"] = Time.current.to_s(:ymdhms)

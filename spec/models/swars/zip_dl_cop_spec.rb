@@ -2,12 +2,6 @@ require 'rails_helper'
 
 module Swars
   RSpec.describe Battle, type: :model do
-    before do
-      Actb.setup
-      Emox.setup
-      Swars.setup
-    end
-
     let(:current_user) { ::User.create!                  }
     let(:user1)        { User.create!(user_key: "alice") }
     let(:user2)        { User.create!(user_key: "bob")   }

@@ -32,11 +32,11 @@ module Swars
     def to_config
       config = {}
       config[:form_params_default] = {
-        :zip_dl_scope_key  => "zdsk_inherit",
-        :zip_dl_format_key => "kif",
-        :zip_dl_max        => AppConfig[:zip_dl_max_default],
-        :zip_dl_structure_key          => "date",
-        :body_encode       => "UTF-8",
+        :zip_dl_scope_key     => "zdsk_inherit",
+        :zip_dl_format_key    => "kif",
+        :zip_dl_max           => AppConfig[:zip_dl_max_default],
+        :zip_dl_structure_key => "date",
+        :body_encode          => "UTF-8",
       }
 
       if current_user
