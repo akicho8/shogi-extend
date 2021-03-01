@@ -17,7 +17,7 @@ RSpec.describe Admin::ScriptsController, type: :controller do
 
   it "認証していないのでエラーになる" do
     get :show, params: { id: "index" }
-    expect(response).to have_http_status(401)
+    assert { response.status == 401 }
   end
 
   describe "すべてのスクリプト" do
@@ -26,7 +26,7 @@ RSpec.describe Admin::ScriptsController, type: :controller do
       it e.script_name do
         login!
         get :show, params: { id: e.key }
-        expect(response).to have_http_status(:ok)
+        assert { response.status == 200 }
       end
     end
   end

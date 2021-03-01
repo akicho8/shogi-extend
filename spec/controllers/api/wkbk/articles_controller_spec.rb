@@ -42,30 +42,30 @@ RSpec.describe Api::Wkbk::ArticlesController, type: :controller do
   end
 
   [
-    { args: [ :index, params: {                    }],               code: 200, },
-    { args: [ :edit,  params: {                    }],               code: 403, },
-    { args: [ :edit,  params: {                    }], user: :sysop, code: 200, },
-    { args: [ :show,  params: { article_key: 1,    }],               code: 200, },
-    { args: [ :show,  params: { article_key: 2,    }],               code: 403, },
-    { args: [ :show,  params: { article_key: 9999, }],               code: 404, },
-    { args: [ :show,  params: { article_key: 2,    }], user: :sysop, code: 200, },
-    { args: [ :show,  params: { article_key: 4,    }], user: :sysop, code: 403, },
-    { args: [ :edit,  params: { article_key: 1,    }],               code: 403, },
-    { args: [ :edit,  params: { article_key: 1,    }], user: :sysop, code: 200, },
-    { args: [ :edit,  params: { article_key: 2,    }],               code: 403, },
-    { args: [ :edit,  params: { article_key: 2,    }], user: :sysop, code: 200, },
-    { args: [ :edit,  params: { article_key: 3,    }],               code: 403, },
-    { args: [ :edit,  params: { article_key: 3,    }], user: :sysop, code: 404, },
-    { args: [ :edit,  params: { article_key: 4,    }],               code: 403, },
-    { args: [ :edit,  params: { article_key: 4,    }], user: :sysop, code: 404, },
-    { args: [ :edit,  params: { article_key: 9999, }], user: :sysop, code: 404, },
+    { get: [ :index, params: {                    }],               status: 200, },
+    { get: [ :edit,  params: {                    }],               status: 403, },
+    { get: [ :edit,  params: {                    }], user: :sysop, status: 200, },
+    { get: [ :show,  params: { article_key: 1,    }],               status: 200, },
+    { get: [ :show,  params: { article_key: 2,    }],               status: 403, },
+    { get: [ :show,  params: { article_key: 9999, }],               status: 404, },
+    { get: [ :show,  params: { article_key: 2,    }], user: :sysop, status: 200, },
+    { get: [ :show,  params: { article_key: 4,    }], user: :sysop, status: 403, },
+    { get: [ :edit,  params: { article_key: 1,    }],               status: 403, },
+    { get: [ :edit,  params: { article_key: 1,    }], user: :sysop, status: 200, },
+    { get: [ :edit,  params: { article_key: 2,    }],               status: 403, },
+    { get: [ :edit,  params: { article_key: 2,    }], user: :sysop, status: 200, },
+    { get: [ :edit,  params: { article_key: 3,    }],               status: 403, },
+    { get: [ :edit,  params: { article_key: 3,    }], user: :sysop, status: 404, },
+    { get: [ :edit,  params: { article_key: 4,    }],               status: 403, },
+    { get: [ :edit,  params: { article_key: 4,    }], user: :sysop, status: 404, },
+    { get: [ :edit,  params: { article_key: 9999, }], user: :sysop, status: 404, },
   ].each do |e|
     it "アクセス制限" do
       if e[:user]
         user_login(User.sysop)
       end
-      get *e[:args]
-      expect(response).to have_http_status(e[:code])
+      get *e[:get]
+      assert { response.status == e[:status] }
     end
   end
 end

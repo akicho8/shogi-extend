@@ -58,12 +58,12 @@ RSpec.describe Swars::BattlesController, type: :controller do
   describe "index" do
     it "index" do
       get :index
-      expect(response).to have_http_status(:ok)
+      assert { response.status == 200 }
     end
 
     it "index + query" do
       get :index, params: {query: "devuser1"}
-      expect(response).to have_http_status(:ok)
+      assert { response.status == 200 }
       assert { assigns(:current_records).size == 1 }
       assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
     end
@@ -72,12 +72,12 @@ RSpec.describe Swars::BattlesController, type: :controller do
       it do
         get :index, params: {query: "devuser1 turn_max:>=500"}
         assert { controller.current_scope.count == 0 }
-        expect(response).to have_http_status(:ok)
+        assert { response.status == 200 }
       end
       it do
         get :index, params: {query: "devuser1 turn_max:<=500"}
         assert { controller.current_scope.count == 1 }
-        expect(response).to have_http_status(:ok)
+        assert { response.status == 200 }
       end
     end
 
@@ -85,19 +85,19 @@ RSpec.describe Swars::BattlesController, type: :controller do
       it "レコードあり" do
         get :index, params: {query: "https://shogiwars.heroz.jp/games/devuser1-Yamada_Taro-20200101_123401?tw=1"}
         assert { controller.current_scope.count == 1 }
-        expect(response).to have_http_status(:ok)
+        assert { response.status == 200 }
       end
       it "レコードなし" do
         get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
         assert { controller.current_scope.count == 0 }
-        expect(response).to have_http_status(:ok)
+        assert { response.status == 200 }
       end
     end
 
     describe "ZIPダウンロード" do
       def test1(body_encode)
         get :index, params: { query: "devuser1", format: "zip", body_encode: body_encode}
-        expect(response).to have_http_status(:ok)
+        assert { response.status == 200 }
         assert { controller.current_scope.count == 1 }
         assert { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
         assert { response.media_type == "application/zip" }
@@ -117,7 +117,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
 
     it "KENTO棋譜リストAPI" do
       get :index, params: { query: "devuser1", format: "json", format_type: "kento" }
-      expect(response).to have_http_status(:ok)
+      assert { response.status == 200 }
 
       body = JSON.parse(response.body)
       assert { body["api_version"]                       == "2020-02-02"                                                  }
@@ -133,7 +133,7 @@ RSpec.describe Swars::BattlesController, type: :controller do
   describe "show" do
     it "png" do
       get :show, params: {id: record.to_param, format: "png", width: "", turn: 999}
-      expect(response).to have_http_status(:redirect)
+      assert { response.status == 302 }
     end
 
     describe "KIF 表示/DL" do

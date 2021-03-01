@@ -7,6 +7,6 @@ end
 # >> All examples were filtered out
 # >> 
 # >> 
-# >> Finished in 0.01296 seconds (files took 5.2 seconds to load)
+# >> Finished in 0.73324 seconds (files took 2.52 seconds to load)
 # >> 0 examples, 0 failures
 # >> 

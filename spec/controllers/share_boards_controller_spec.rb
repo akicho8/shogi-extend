@@ -3,31 +3,31 @@ require 'rails_helper'
 RSpec.describe ShareBoardsController, type: :controller do
   it "HTMLの要求はNuxt側にリダイレクト" do
     get :show, params: { }
-    expect(response).to have_http_status(:redirect)
+    assert { response.status == 302 }
   end
 
   describe "基本「58玉」" do
     def test(format, status)
       get :show, params: { body: "position startpos moves 5i5h", turn:1, title: "(title)", format: format }
-      expect(response).to have_http_status(status)
+      assert { response.status == status }
     end
     it "works" do
-      test("png", :redirect)
-      test("kif", :ok)
-      test("ki2", :ok)
-      test("sfen", :ok)
-      test("csa", :ok)
+      test("png", 320)
+      test("kif", 200)
+      test("ki2", 200)
+      test("sfen", 200)
+      test("csa", 200)
     end
   end
 
   describe "エラーの場合" do
     def test(format, status)
       get :show, params: { body: "position startpos moves 5i5e", format: format }
-      expect(response).to have_http_status(status)
+      assert { response.status == status }
     end
     it do
-      test("png", :redirect)
-      test("kif", :ok)
+      test("png", 320)
+      test("kif", 200)
     end
   end
 
@@ -37,7 +37,7 @@ RSpec.describe ShareBoardsController, type: :controller do
     end
     it do
       test("png")
-      expect(response).to have_http_status(422)
+      assert { response.status == 422 }
     end
   end
 
@@ -58,24 +58,12 @@ RSpec.describe ShareBoardsController, type: :controller do
 
   it "abstract_viewpoint の値がおかしいときにエラーにしない" do
     get :show, params: { body: "68銀", abstract_viewpoint: "xxxx", format: "json" }
-    expect(response).to have_http_status(:ok)
+    assert { response.status == 200 }
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ...F....
+# >> ........
 # >> 
-# >> Failures:
-# >> 
-# >>   1) ShareBoardsController Twitterカード用の画像パス
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:57:in `block (2 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >> 
-# >> Finished in 1.23 seconds (files took 3.74 seconds to load)
-# >> 8 examples, 1 failure
-# >> 
-# >> Failed examples:
-# >> 
-# >> rspec -:54 # ShareBoardsController Twitterカード用の画像パス
+# >> Finished in 1.44 seconds (files took 2.51 seconds to load)
+# >> 8 examples, 0 failures
 # >> 

@@ -11,7 +11,7 @@ RSpec.describe Api::ActbController, type: :controller do
   #   it "名前を入力してもらう" do
   #     @current_user.update!(name_input_at: nil)
   #     put :update, params: { remote_action: "user_profile_update", name: "(user_name1)" }
-  #     expect(response).to have_http_status(:ok)
+  #     assert { response.status == 200 }
   #     @current_user.reload
   #     assert { @current_user.name_input_at }
   #   end
@@ -19,7 +19,7 @@ RSpec.describe Api::ActbController, type: :controller do
   #     @current_user.update!(name_input_at: nil)
   #
   #     put :update, params: { remote_action: "user_profile_update", name: "(user_name1)", profile_description: "a" * (512 + 1) }
-  #     expect(response).to have_http_status(:ok)
+  #     assert { response.status == 200 }
   #     retv = JSON.parse(response.body)
   #     assert { retv["error_message"] }
   #   end
@@ -34,7 +34,7 @@ RSpec.describe Api::ActbController, type: :controller do
       }
 
       put :update, params: { remote_action: "new_challenge_accept_handle", **params}
-      expect(response).to have_http_status(:ok)
+      assert { response.status == 200 }
       hash = JSON.parse(response.body)
       hash["status"]
     end
@@ -53,7 +53,7 @@ RSpec.describe Api::ActbController, type: :controller do
     it "works" do
       @current_user.actb_questions.create_mock1
       get :show, params: { remote_action: "zip_dl_count_fetch", format: "json" }
-      expect(response).to have_http_status(:ok)
+      assert { response.status == 200 }
       assert { JSON.parse(response.body) == {"count" => 1} }
     end
   end
