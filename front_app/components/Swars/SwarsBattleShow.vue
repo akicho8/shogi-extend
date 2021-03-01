@@ -178,7 +178,6 @@ export default {
       this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: params}).then(e => {
         this.record = e
         this.record_setup()
-        this.slider_focus()
       }),
       this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: {time_chart_fetch: true}}).then(e => {
         this.time_chart_params = e.time_chart_params
