@@ -12,44 +12,43 @@ set :output, {standard: "log/#{@environment}_cron.log"}
 job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
 
-every("0 1 * * *") do
-  runner [
-    "ActiveRecord::Base.logger = nil",
-    "Swars::Crawler::ReservationCrawler.run",
-    "Swars::Battle.cleanup(time_limit: nil)",
-  ].join(";")
-end
-
-# every("5 3 * * *") do
+# every("0 1 * * *") do
 #   runner [
 #     "ActiveRecord::Base.logger = nil",
-#
-#     "Swars::Crawler::ExpertCrawler.run",
 #     "Swars::Crawler::ReservationCrawler.run",
-#     # "Swars::Crawler::RegularCrawler.run",
-#     # "Swars::Crawler::RecentlyCrawler.run",
-#
-#     # "TsMaster::TimeRecord.entry_name_blank_scope.destroy_all",
-#     "Swars::Battle.cleanup",
-#     "FreeBattle.cleanup",
-#
-#     # これは10325件ぐらい残る
-#     # "Swars::Membership.where(:think_all_avg => nil).find_each{|e|e.think_columns_update;e.save!}",
-#
-#     # 全部0件
-#     # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
-#     # "Swars::Battle.where(:sfen_hash => nil).find_each{|e|e.save!}",
-#     # "FreeBattle.where(:sfen_hash => nil).find_each{|e|e.save!}",
-#
-#     "Tsl::League.setup",
-#
-#     # 常時オンライン/常時対戦中になっている人を消す
-#     "Actb::SchoolChannel.active_users_clear",
-#     "Actb::RoomChannel.active_users_clear",
-#     "Emox::SchoolChannel.active_users_clear",
-#     "Emox::RoomChannel.active_users_clear",
+#     "Swars::Battle.cleanup(time_limit: nil)",
 #   ].join(";")
 # end
+
+every("5 3 * * *") do
+  runner [
+    # "ActiveRecord::Base.logger = nil",
+    "Swars::Crawler::ExpertCrawler.run",
+    "Swars::Crawler::ReservationCrawler.run",
+    # "Swars::Crawler::RegularCrawler.run",
+    # "Swars::Crawler::RecentlyCrawler.run",
+
+    # "TsMaster::TimeRecord.entry_name_blank_scope.destroy_all",
+    "Swars::Battle.cleanup",
+    "FreeBattle.cleanup",
+
+    # これは10325件ぐらい残る
+    # "Swars::Membership.where(:think_all_avg => nil).find_each{|e|e.think_columns_update;e.save!}",
+
+    # 全部0件
+    # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
+    # "Swars::Battle.where(:sfen_hash => nil).find_each{|e|e.save!}",
+    # "FreeBattle.where(:sfen_hash => nil).find_each{|e|e.save!}",
+
+    "Tsl::League.setup",
+
+    # 常時オンライン/常時対戦中になっている人を消す
+    "Actb::SchoolChannel.active_users_clear",
+    "Actb::RoomChannel.active_users_clear",
+    "Emox::SchoolChannel.active_users_clear",
+    "Emox::RoomChannel.active_users_clear",
+  ].join(";")
+end
 
 if @environment == "staging"
   every("5 3 * * *") { runner "Swars::Crawler::ReservationCrawler.run" }

@@ -55,7 +55,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.string :init_sfen,                null: false, index: true,                                  comment: "問題"
         t.string :viewpoint,                null: false, index: false,                                 comment: "視点"
         t.string :title, limit: 100,        null: false, index: false,                                 comment: "タイトル"
-        t.string :description, limit: 5000, null: false, index: false,                                 comment: "説明"
+        t.text   :description, limit: 5000, null: false, index: false,                                 comment: "説明"
         t.string :direction_message, limit: 100, null: false,                                                comment: "メッセージ"
         t.integer :turn_max,                null: false, index: true,                                  comment: "最大手数"
         t.boolean :mate_skip,               null: false,                                                comment: "詰みチェックをスキップする"
@@ -84,7 +84,7 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
         t.belongs_to :folder,                       null: false, foreign_key: {to_table: :wkbk_folders},   comment: "フォルダ"
         t.belongs_to :sequence,                     null: false, foreign_key: {to_table: :wkbk_sequences}, comment: "順序"
         t.string     :title,       limit: 100,      null: false,                                           comment: "タイトル"
-        t.string     :description, limit: 5000,     null: false,                                           comment: "説明"
+        t.text       :description, limit: 5000,     null: false,                                           comment: "説明"
         t.integer    :bookships_count,  default: 0, null: false,                                           comment: "記事数"
         t.integer    :answer_logs_count, default: 0, null: false,                                           comment: "解答数"
         t.timestamps

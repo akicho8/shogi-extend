@@ -902,6 +902,7 @@ ActiveRecord::Schema.define(version: 2021_02_28_170905) do
     t.string "kifu_url", comment: "入力した棋譜URL"
     t.string "title"
     t.text "kifu_body", null: false, comment: "棋譜本文"
+    t.text "sfen_body", null: false, comment: "SFEN形式"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "battled_at", null: false, comment: "対局開始日時"
@@ -910,7 +911,6 @@ ActiveRecord::Schema.define(version: 2021_02_28_170905) do
     t.bigint "user_id"
     t.string "preset_key", null: false
     t.text "description", null: false
-    t.text "sfen_body", null: false
     t.string "sfen_hash", null: false
     t.integer "start_turn", comment: "???"
     t.integer "critical_turn", comment: "開戦"
@@ -918,6 +918,7 @@ ActiveRecord::Schema.define(version: 2021_02_28_170905) do
     t.integer "image_turn", comment: "???"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["accessed_at"], name: "index_free_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
     t.index ["key"], name: "index_free_battles_on_key", unique: true

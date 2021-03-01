@@ -1338,6 +1338,7 @@ CREATE TABLE `free_battles` (
   `kifu_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '入力した棋譜URL',
   `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `kifu_body` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜本文',
+  `sfen_body` text COLLATE utf8mb4_bin NOT NULL COMMENT 'SFEN形式',
   `turn_max` int(11) NOT NULL COMMENT '手数',
   `meta_info` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜メタ情報',
   `battled_at` datetime NOT NULL COMMENT '対局開始日時',
@@ -1346,7 +1347,6 @@ CREATE TABLE `free_battles` (
   `user_id` bigint(20) DEFAULT NULL,
   `preset_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `description` text COLLATE utf8mb4_bin NOT NULL,
-  `sfen_body` text COLLATE utf8mb4_bin NOT NULL,
   `sfen_hash` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `start_turn` int(11) DEFAULT NULL COMMENT '???',
   `critical_turn` int(11) DEFAULT NULL COMMENT '開戦',
@@ -1359,6 +1359,7 @@ CREATE TABLE `free_battles` (
   KEY `index_free_battles_on_turn_max` (`turn_max`),
   KEY `index_free_battles_on_battled_at` (`battled_at`),
   KEY `index_free_battles_on_use_key` (`use_key`),
+  KEY `index_free_battles_on_accessed_at` (`accessed_at`),
   KEY `index_free_battles_on_user_id` (`user_id`),
   KEY `index_free_battles_on_preset_key` (`preset_key`),
   KEY `index_free_battles_on_start_turn` (`start_turn`),
@@ -1418,6 +1419,7 @@ CREATE TABLE `swars_battles` (
   KEY `index_swars_battles_on_final_key` (`final_key`),
   KEY `index_swars_battles_on_win_user_id` (`win_user_id`),
   KEY `index_swars_battles_on_turn_max` (`turn_max`),
+  KEY `index_swars_battles_on_accessed_at` (`accessed_at`),
   KEY `index_swars_battles_on_preset_key` (`preset_key`),
   KEY `index_swars_battles_on_start_turn` (`start_turn`),
   KEY `index_swars_battles_on_critical_turn` (`critical_turn`),
@@ -1968,6 +1970,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210121210600'),
 ('20210215234700'),
 ('20210222155800'),
-('20210228085800');
+('20210228170905');
 
 
