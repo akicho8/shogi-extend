@@ -1,3 +1,5 @@
+# cap staging    rails:runner CODE='Wkbk::KifuDataImport.new(user: User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1")).run'
+# cap production rails:runner CODE='Wkbk::KifuDataImport.new(user: User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1")).run'
 module Wkbk
   class KifuDataImport
     attr_accessor :params
