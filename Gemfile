@@ -82,13 +82,13 @@ group :development, :test do
   gem "rails-controller-testing" # controller で assigns を使うため
 
   ################################################################################
-  gem "rspec-rails",        "3.9.1"
-  gem "rspec",              "3.9.0"
-  gem "rspec-core",         "3.9.3"
-  gem "rspec-expectations", "3.9.2"
-  gem "rspec-mocks",        "3.9.1"
-  gem "rspec-power_assert", "1.1.0"
-  gem "rspec-support",      "3.9.4"
+  gem "rspec-rails"
+  gem "rspec"
+  gem "rspec-core"
+  gem "rspec-expectations"
+  gem "rspec-mocks"
+  gem "rspec-power_assert"
+  gem "rspec-support"
   ################################################################################
 
   gem "factory_bot_rails"
