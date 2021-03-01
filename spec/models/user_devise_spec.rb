@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   include ActiveJob::TestHelper
 
-  before(:context) do
-    Actb.setup
-  end
+  # before(:context) do
+  #   Actb.setup
+  # end
 
   it "create! のときに confirmed_at を設定するとメール認証が飛ばない" do
     perform_enqueued_jobs do
@@ -35,6 +35,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ...
 # >> 
-# >> Finished in 1.5 seconds (files took 2.23 seconds to load)
+# >> Finished in 1.82 seconds (files took 3.62 seconds to load)
 # >> 3 examples, 0 failures
 # >> 
