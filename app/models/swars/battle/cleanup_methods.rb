@@ -18,7 +18,7 @@ module Swars
 
         # アクセスが今から expires_in 秒前より古いもの
         scope :not_accessed_scope, -> expires_in {
-          where(arel_table[:battled_at].lteq(expires_in.seconds.ago))
+          where(arel_table[:accessed_at].lteq(expires_in.seconds.ago))
         }
 
         # 指導対局を除外したもの
@@ -47,7 +47,7 @@ module Swars
         #
         def cleanup(params = {})
           params = {
-            time_limit: 4.hours,  # 最大処理時間(朝4時に実行して6時には必ず終了させる)
+            time_limit: 4.hours,  # 最大処理時間(朝2時に実行したら6時には必ず終了させる)
             sleep: 0,
           }.merge(params)
 
@@ -66,10 +66,8 @@ module Swars
             end
             g.each do |e|
               begin
-                if e.accessed_at < 3.months.ago
-                  e.destroy!
-                  row["成功"] += 1
-                end
+                e.destroy!
+                row["成功"] += 1
               rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked => invalid
                 row["失敗"] += 1
                 errors << invalid
