@@ -41,7 +41,10 @@ module Swars
 
       class_methods do
         # 参照されていないレコードを消していく
-        # rails r 'Swars::Battle.cleanup(time_limit: nil)'
+        #
+        #   ActiveRecord::Base.logger = nil
+        #   Swars::Battle.cleanup(time_limit: nil)
+        #
         def cleanup(params = {})
           params = {
             time_limit: 4.hours,  # 最大処理時間(朝4時に実行して6時には必ず終了させる)
