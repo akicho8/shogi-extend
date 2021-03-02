@@ -51,7 +51,7 @@
       .columns.is-centered
         .column.MainColumn
           b-field(:type="input_text_field_type")
-            b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL\nKENTOや将棋DB2のSFENっぽいパラメータを含むURL\n棋譜ファイルへのURLをコンテンツに含むURL\n戦法名, 囲い名\nなどを入力してください")
+            b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFENっぽいパラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むURL。戦法名・囲い名などを入力してください")
 
           b-field.mt-5
             .control
