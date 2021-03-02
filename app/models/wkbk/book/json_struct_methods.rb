@@ -1,6 +1,6 @@
 module Wkbk
   class Book
-    concern :JsonStruct do
+    concern :JsonStructMethods do
       class_methods do
         def json_struct_for_top
           {

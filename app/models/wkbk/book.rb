@@ -30,7 +30,7 @@ module Wkbk
     include FolderMethods
     include InfoMethods
     include AvatarMethods
-    include JsonStruct
+    include JsonStructMethods
     include MockMethods
 
     belongs_to :user, class_name: "::User"

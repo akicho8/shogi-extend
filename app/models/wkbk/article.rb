@@ -34,7 +34,7 @@ module Wkbk
     include FolderMethods
     include ImportExportMethods
     include InfoMethods
-    include JsonStruct
+    include JsonStructMethods
 
     belongs_to :user, class_name: "::User"                                                      # 作者
     has_many :moves_answers, -> { order(:position) }, dependent: :destroy, inverse_of: :article # 解答たち
@@ -44,10 +44,6 @@ module Wkbk
     attribute :moves_answer_validate_skip
 
     before_validation do
-      if book
-        self.user ||= book.user
-      end
-
       if Rails.env.development? || Rails.env.test?
         self.title ||= SecureRandom.hex
         self.init_sfen ||= "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"

@@ -1,6 +1,6 @@
 module Wkbk
   class Article
-    concern :JsonStruct do
+    concern :JsonStructMethods do
       class_methods do
         # 一覧
         def json_struct_for_index
