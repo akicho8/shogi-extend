@@ -15,25 +15,7 @@
 
 module Swars
   class Grade < ApplicationRecord
-    class << self
-      def setup(options = {})
-        super
-
-        GradeInfo.each do |e|
-          record = find_or_initialize_by(key: e.key)
-          record.priority = e.priority
-          record.save!
-        end
-      end
-
-      def fetch(key)
-        find_by!(key: key)
-      end
-
-      def lookup(key)
-        find_by(key: key)
-      end
-    end
+    include MemoryRecordBind::Base
 
     with_options dependent: :destroy do
       has_many :users
@@ -47,16 +29,8 @@ module Swars
       self.priority ||= grade_info.priority
     end
 
-    with_options presence: true do
-      validates :key
-    end
-
-    with_options allow_blank: true do
-      validates :key, inclusion: GradeInfo.keys.collect(&:to_s)
-    end
-
     def grade_info
-      @grade_info ||= GradeInfo.fetch(key)
+      pure_info
     end
 
     def name

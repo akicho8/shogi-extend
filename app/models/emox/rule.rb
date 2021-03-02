@@ -60,7 +60,7 @@ module Emox
       end
     end
 
-    include MemoryRecordBind
+    include MemoryRecordBind::Basic
 
     delegate :redis_key, to: :pure_info
     delegate :redis, :matching_user_ids_broadcast, to: "self.class"

@@ -15,6 +15,6 @@
 
 module XyMaster
   class Rule < ApplicationRecord
-    include MemoryRecordBind
+    include MemoryRecordBind::Basic
   end
 end

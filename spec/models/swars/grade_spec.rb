@@ -18,7 +18,11 @@ require 'rails_helper'
 module Swars
   RSpec.describe Grade, type: :model do
     it "name" do
-      assert { Grade.fetch("十段").name == "十段" }
+      assert { Grade.fetch("初段").name == "初段" }
+    end
+
+    it "priority" do
+      assert { Grade.fetch("初段").priority == 9 }
     end
 
     it "relation" do
@@ -33,8 +37,8 @@ module Swars
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..
+# >> ...
 # >> 
-# >> Finished in 1.04 seconds (files took 2.43 seconds to load)
-# >> 2 examples, 0 failures
+# >> Finished in 1.24 seconds (files took 4.61 seconds to load)
+# >> 3 examples, 0 failures
 # >> 

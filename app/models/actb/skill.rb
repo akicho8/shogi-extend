@@ -15,6 +15,6 @@
 
 module Actb
   class Skill < ApplicationRecord
-    include MemoryRecordBind
+    include MemoryRecordBind::Basic
   end
 end

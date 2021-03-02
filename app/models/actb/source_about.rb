@@ -15,6 +15,6 @@
 
 module Actb
   class SourceAbout < ApplicationRecord
-    include MemoryRecordBind
+    include MemoryRecordBind::Basic
   end
 end

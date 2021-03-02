@@ -36,7 +36,7 @@ module Wkbk
       end
     end
 
-    include MemoryRecordBind
+    include MemoryRecordBind::Basic
 
     has_many :answer_logs, dependent: :destroy
     has_many :articles, through: :answer_logs

@@ -17,7 +17,7 @@
 
 module Wkbk
   class Folder < ApplicationRecord
-    include MemoryRecordBind
+    include MemoryRecordBind::Basic
 
     with_options dependent: :restrict_with_exception do
       has_many :books

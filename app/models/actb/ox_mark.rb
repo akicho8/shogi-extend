@@ -15,6 +15,6 @@
 
 module Actb
   class OxMark < ApplicationRecord
-    include MemoryRecordBind
+    include MemoryRecordBind::Basic
   end
 end

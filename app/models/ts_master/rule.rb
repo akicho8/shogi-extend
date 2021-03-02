@@ -15,6 +15,6 @@
 
 module TsMaster
   class Rule < ApplicationRecord
-    include MemoryRecordBind
+    include MemoryRecordBind::Basic
   end
 end

@@ -15,7 +15,7 @@
 
 module Emox
   class Judge < ApplicationRecord
-    include MemoryRecordBind
+    include MemoryRecordBind::Basic
 
     scope :win_or_lose, -> { where(key: [:win, :lose]) }
 
