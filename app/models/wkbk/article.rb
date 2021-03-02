@@ -37,7 +37,6 @@ module Wkbk
     include JsonStruct
 
     belongs_to :user, class_name: "::User"                                                      # 作者
-    belongs_to :lineage                                                                         # 種類
     has_many :moves_answers, -> { order(:position) }, dependent: :destroy, inverse_of: :article # 解答たち
 
     acts_as_taggable
@@ -45,9 +44,9 @@ module Wkbk
     attribute :moves_answer_validate_skip
 
     before_validation do
-      # if book
-      #   self.user ||= book.user
-      # end
+      if book
+        self.user ||= book.user
+      end
 
       if Rails.env.development? || Rails.env.test?
         self.title ||= SecureRandom.hex
@@ -59,7 +58,6 @@ module Wkbk
       end
 
       self.viewpoint ||= "black"
-      self.lineage_key ||= "次の一手"
       self.key ||= secure_random_urlsafe_base64_token
       self.difficulty ||= 1
       self.turn_max ||= 0
@@ -83,30 +81,36 @@ module Wkbk
     end
 
     with_options allow_blank: true do
-      # validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
+      if false
+        validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
+      end
       validates :title, length: { maximum: 100 }
       validates :description, length: { maximum: 5000 }
     end
 
-    # validate do
-    #   if changes_to_save[:book_keys] || changes_to_save[:user_id]
-    #     if book && user
-    #       if book.user != user
-    #         errors.add(:base, "問題集の所有者と問題の所有者が異なります")
-    #       end
-    #     end
-    #   end
-    # end
+    if false
+      validate do
+        if changes_to_save[:book_keys] || changes_to_save[:user_id]
+          if book && user
+            if book.user != user
+              errors.add(:base, "問題集の所有者と問題の所有者が異なります")
+            end
+          end
+        end
+      end
+    end
 
-    # validate do
-    #   if false
-    #     if changes_to_save[:book_keys] && book
-    #       if book.folder_key == :public && folder_key === :private
-    #         errors.add(:base, "公開している問題集に非公開の問題は入れられません")
-    #       end
-    #     end
-    #   end
-    # end
+    if false
+      validate do
+        if false
+          if changes_to_save[:book_keys] && book
+            if book.folder_key == :public && folder_key === :private
+              errors.add(:base, "公開している問題集に非公開の問題は入れられません")
+            end
+          end
+        end
+      end
+    end
 
     def mock_attrs_set
       if Rails.env.test?
@@ -205,20 +209,6 @@ module Wkbk
       end
     end
 
-    def lineage_key
-      if lineage
-        lineage.key
-      end
-    end
-
-    def lineage_key=(key)
-      self.lineage = Lineage.fetch_if(key)
-    end
-
-    def linked_title(options = {})
-      ApplicationController.helpers.link_to(title, page_url(only_path: true))
-    end
-
     def og_image_path
       if persisted?
         v = {}
@@ -286,6 +276,26 @@ module Wkbk
         has_many :answered_answer_kinds, through: :answer_logs, source: :answer_kind
         has_many :answered_books, through: :answer_logs, source: :book
         has_many :answered_users, through: :answer_logs, source: :user
+      end
+    end
+
+    concerning :LineageMethods do
+      included do
+        belongs_to :lineage
+
+        before_validation do
+          self.lineage_key ||= "次の一手"
+        end
+      end
+
+      def lineage_key
+        if lineage
+          lineage.key
+        end
+      end
+
+      def lineage_key=(key)
+        self.lineage = Lineage.fetch_if(key)
       end
     end
   end

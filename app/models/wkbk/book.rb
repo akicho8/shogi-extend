@@ -31,82 +31,7 @@ module Wkbk
     include InfoMethods
     include AvatarMethods
     include JsonStruct
-
-    class << self
-      def setup(options = {})
-        if Rails.env.development?
-          mock_setup
-          # tp self
-        end
-      end
-
-      # rails r 'Wkbk::Book.mock_setup'
-      def mock_setup
-        [
-          { key: 1, user: :sysop, folder_key: :public,  },
-          { key: 2, user: :sysop, folder_key: :private, },
-          { key: 3, user: :bot,   folder_key: :public,  },
-          { key: 4, user: :bot,   folder_key: :private, },
-        ].each do |e|
-          user = User.public_send(e[:user])
-          title = "#{e[:user]} - #{e[:folder_key]} - #{e[:key]}"
-          Book.where(key: e[:key]).destroy_all
-          book = user.wkbk_books.create!(key: e[:key], folder_key: e[:folder_key], title: title, tag_list: e.values.join(" "))
-          Article.where(key: e[:key]).destroy_all
-          book.articles << user.wkbk_articles.create!(key: e[:key], title: title, folder_key: e[:folder_key])
-        end
-
-        user = User.find_or_create_by(name: "alice")
-        title = "非公開問題を含む公開問題集"
-        user.wkbk_bookships.destroy_all
-        user.wkbk_articles.destroy_all
-        user.wkbk_books.destroy_all
-        book = user.wkbk_books.create!(key: 5, folder_key: :public, title: title, sequence_key: :bookship_position_asc)
-        book.articles << user.wkbk_articles.create!(key: "5-1", title: "(公開)",   folder_key: :public)
-        book.articles << user.wkbk_articles.create!(key: "5-2", title: "(非公開)", folder_key: :private)
-        book.articles << user.wkbk_articles.create!(key: "5-3", title: "(公開)",   folder_key: :public)
-
-        user = User.find_or_create_by(name: "bob")
-        title = "sysopの解答履歴付き"
-        user.wkbk_bookships.destroy_all
-        user.wkbk_articles.destroy_all
-        user.wkbk_books.destroy_all
-        book = user.wkbk_books.create!(key: 6, folder_key: :public, title: title, sequence_key: :bookship_position_asc)
-        book.articles << user.wkbk_articles.create!(key: "6-1", title: "ox", folder_key: :public)
-        book.articles << user.wkbk_articles.create!(key: "6-2", title: "o",  folder_key: :public)
-        book.articles << user.wkbk_articles.create!(key: "6-3", title: "初", folder_key: :public)
-        correct = ::Wkbk::AnswerKind.fetch("correct")
-        mistake = ::Wkbk::AnswerKind.fetch("mistake")
-        answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: correct, book: book, spent_sec: 1) # o
-        answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: mistake, book: book, spent_sec: 2) # x
-        answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[1], answer_kind: mistake, book: book, spent_sec: 3) # o
-      end
-
-      def mock_book
-        raise if Rails.env.production? || Rails.env.staging?
-
-        user1 = User.find_or_create_by!(name: "user1", email: "user1@localhost")
-        book = user1.wkbk_books.create_mock1
-        book
-      end
-    end
-
-    # Vueでリアクティブになるように空でもカラムは作っておくこと
-    # def self.default_attributes
-    #   attrs = {
-    #     # :id           => nil,
-    #     # :title        => nil,
-    #     # :description  => nil,
-    #     :folder_key   => :private,
-    #     :sequence_key => :bookship_shuffle,
-    #   }
-    #
-    #   if Rails.env.development?
-    #     attrs[:title] ||= "(title)"
-    #   end
-    #
-    #   attrs
-    # end
+    include MockMethods
 
     belongs_to :user, class_name: "::User"
 
@@ -148,31 +73,18 @@ module Wkbk
       normalize_blank_to_empty_string(:title, :description)
     end
 
-    # with_options presence: true do
-    #   validates :title
-    #   validates :init_sfen
-    # end
+    with_options presence: true do
+      validates :title
+    end
 
     with_options allow_blank: true do
       validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
       validates :title, length: { maximum: 100 }
       validates :description, length: { maximum: 5000 }
-
-      # validates :init_sfen # , uniqueness: { case_sensitive: true }
-      # validates :difficulty, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     end
 
     def page_url(options = {})
       UrlProxy.wrap2("/rack/books/#{key}")
-    end
-
-    def mock_attrs_set
-      if Rails.env.test?
-        self.init_sfen ||= "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l#{Book.count.next}p 1"
-        if moves_answers.empty?
-          moves_answers.build(moves_str: "G*5b")
-        end
-      end
     end
 
     # jsから来たパラメーターでまとめて更新する
@@ -250,114 +162,7 @@ module Wkbk
       end
     end
 
-    # def source_about_key
-    #   source_about.key
-    # end
-    #
-    # def source_about_key=(key)
-    #   self.source_about = SourceAbout.fetch(key)
-    # end
-    #
-    # def source_about_unknown_name
-    #   if source_about.key == "unknown"
-    #     "作者不詳"
-    #   end
-    # end
-
-    # def init_sfen=(sfen)
-    #   write_attribute(:init_sfen, sfen.to_s.remove(/position sfen /).presence)
-    # end
-
-    # def init_sfen
-    #   if sfen = read_attribute(:init_sfen)
-    #     "position sfen #{sfen}"
-    #   end
-    # end
-
-    # def lineage_key
-    #   if lineage
-    #     lineage.key
-    #   end
-    # end
-    #
-    # def lineage_key=(key)
-    #   self.lineage = Lineage.fetch_if(key)
-    # end
-
-    # # 配置 + 1問目
-    # def main_sfen
-    #   if moves_answers.blank?
-    #     init_sfen
-    #   else
-    #     "#{init_sfen} moves #{moves_answers.first.moves_str}"
-    #   end
-    # end
-
-    # # 出題用
-    # def as_json_type3
-    #   as_json({
-    #             only: [
-    #               :id,
-    #               :title,
-    #               :description,
-    #               :tag_list,
-    #             ],
-    #             methods: [
-    #             ],
-    #             include: {
-    #               user: {
-    #                 only: [:key, :id, :name],
-    #                 methods: [:avatar_path],
-    #               },
-    #             },
-    #           })
-    # end
-
-    # # 詳細用
-    # def as_json_type6
-    #   as_json({
-    #             methods: [
-    #             ],
-    #             include: {
-    #               user: {
-    #                 only: [:id, :key, :name],
-    #                 methods: [:avatar_path],
-    #               },
-    #               moves_answers: {},
-    #               folder: { only: [], methods: [:key, :name] },
-    #               sequence: { only: [], methods: [:key, :name] },
-    #             },
-    #           })
-    # end
-
-    def linked_title(options = {})
-      ApplicationController.helpers.link_to(title, page_url(only_path: true))
-    end
-
-    # def show_can(current_user)
-    #   # case
-    #   # when :show
-    #   folder_eq(:public) || user == current_user
-    #   # when :edit
-    #   #   user && current_user && (user == current_user)
-    #   # else
-    #   #   raise "must not happen"
-    #   # end
-    # end
-
-    # def show_can(action, current_user)
-    #   case
-    #   when :show
-    #     folder_eq(:public) || user == current_user
-    #   when :edit
-    #     user && current_user && (user == current_user)
-    #   else
-    #     raise "must not happen"
-    #   end
-    # end
-
     def og_image_path
-      # articles.sample&.og_image_path
       avatar_path
     end
 
