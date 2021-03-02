@@ -26,3 +26,4 @@ yarn-debug.log*
 /dump.rdb
 /.basic_auth*
 /kifu_data*
+/db/*.gz
