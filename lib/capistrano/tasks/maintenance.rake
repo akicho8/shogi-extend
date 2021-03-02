@@ -1,3 +1,7 @@
+# cap production maintenance:test
+# cap production maintenance:enable
+# cap production maintenance:disable
+
 # for capistrano-maintenance gem
 # cp /usr/local/var/rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/capistrano-maintenance-1.2.1/lib/capistrano/templates/maintenance.html.erb config/
 # として雛形をカスタマイズするために移動したパスに合わせている
