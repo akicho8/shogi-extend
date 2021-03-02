@@ -1,5 +1,5 @@
-# cap production rails:runner CODE='RuleInfo.rebuild'
-# cap production rails:runner CODE='TimeRecord.entry_name_blank_scope.destroy_all'
+# cap production rails:runner CODE='TsMaster::RuleInfo.rebuild'
+# cap production rails:runner CODE='TsMaster::TimeRecord.entry_name_blank_scope.destroy_all'
 # XyRecord.where.not(xy_rule_key: ["xy_rule100t","xy_rule100tw","xy_rule100","xy_rule100w"]).destroy_all
 # RuleInfo.rebuild
 
