@@ -34,6 +34,12 @@ module Wkbk
       assert { Book.first }
     end
 
+    it "sorted" do
+      assert { Book.sorted("id"         => "asc") }
+      assert { Book.sorted("user.id"    => "asc") }
+      assert { Book.sorted("folder.id"  => "asc") }
+    end
+
     it "ordered_bookships" do
       assert { Book.first.ordered_bookships }
     end

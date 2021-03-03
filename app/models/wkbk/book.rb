@@ -37,6 +37,22 @@ module Wkbk
 
     acts_as_taggable
 
+    scope :sorted, -> info {
+      if info[:sort_column] && info[:sort_order]
+        s = all
+        table, column = info[:sort_column].to_s.scan(/\w+/)
+        case table
+        when "user"
+          s = s.joins(:user).merge(User.reorder(column => info[:sort_order]))
+        when "folder"
+          s = s.joins(:folder).merge(Folder.reorder(column => info[:sort_order])) # position の order を避けるため reorder
+        else
+          s = s.order(info[:sort_column] => info[:sort_order])
+          s = s.order(id: :desc) # 順序揺れ防止策
+        end
+      end
+    }
+
     scope :search, -> params {
       base = all.joins(:folder, :user)
       s = base

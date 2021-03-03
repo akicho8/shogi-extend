@@ -40,6 +40,14 @@ module Wkbk
       assert { article1.valid? }
     end
 
+    it "sorted" do
+      assert { Article.sorted("id"         => "asc") }
+      assert { Article.sorted("user.id"    => "asc") }
+      assert { Article.sorted("books.id"   => "asc") }
+      assert { Article.sorted("lineage.id" => "asc") }
+      assert { Article.sorted("folder.id"  => "asc") }
+    end
+
     it "tweet_body" do
       assert { article1.tweet_body }
     end

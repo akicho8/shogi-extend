@@ -34,8 +34,7 @@ module Api
       # http://0.0.0.0:3000/api/wkbk/books.json?scope=private
       def index
         retv = {}
-        retv[:total] = current_books.total_count
-        retv[:books] = sort_scope_for_books(current_books).as_json(::Wkbk::Book.json_struct_for_index)
+        retv[:books] = current_books.sorted(sort_info).as_json(::Wkbk::Book.json_struct_for_index)
         retv[:total] = current_books.total_count
         retv[:meta]  = ServiceInfo.fetch(:wkbk).og_meta
         render json: retv
@@ -128,21 +127,6 @@ module Api
           end
           s = page_scope(s)       # page_methods.rb
         }.call
-      end
-
-      def sort_scope_for_books(s)
-        if sort_column && sort_order
-          columns = sort_column.to_s.scan(/\w+/)
-          case columns.first
-          when "user"
-            s = s.joins(:user).merge(User.reorder(columns.last => sort_order))
-          when "folder"
-            s = s.joins(:folder).merge(::Wkbk::Folder.reorder(columns.last => sort_order)) # position の order を避けるため reorder
-          else
-            s = sort_scope(s)
-          end
-        end
-        s
       end
 
       def current_book_scope_info

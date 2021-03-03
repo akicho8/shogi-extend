@@ -38,10 +38,9 @@ module Api
       # http://0.0.0.0:3000/api/wkbk/articles/index?_user_id=1&sort_column=id&sort_order=desc
       def index
         retv = {}
-        retv[:articles]       = sort_scope_for_articles(current_articles).as_json(::Wkbk::Article.json_struct_for_index)
-        # retv[:article_counts] = article_counts
-        retv[:total]          = current_articles.total_count
-        retv[:meta]           = ServiceInfo.fetch(:wkbk).og_meta
+        retv[:articles] = current_articles.sorted(sort_info).as_json(::Wkbk::Article.json_struct_for_index)
+        retv[:total]    = current_articles.total_count
+        retv[:meta]     = ServiceInfo.fetch(:wkbk).og_meta
         render json: retv
       end
 
@@ -121,12 +120,6 @@ module Api
 
       private
 
-      def article_counts
-        ::Wkbk::ArticleIndexScopeInfo.inject({}) do |a, e|
-          a.merge(e.key => e.query_func[current_user].count)
-        end
-      end
-
       def current_articles
         @current_articles ||= -> {
           # s = current_article_scope_info.query_func[current_user]
@@ -140,26 +133,6 @@ module Api
           end
           s = page_scope(s)       # page_methods.rb
         }.call
-      end
-
-      # FIXME: model に移動
-      def sort_scope_for_articles(s)
-        if sort_column && sort_order
-          columns = sort_column.to_s.scan(/\w+/)
-          case columns.first
-          when "user"
-            s = s.joins(:user).merge(User.reorder(columns.last => sort_order))
-          when "books"
-            s = s.joins(:books).merge(::Wkbk::Book.reorder(columns.last => sort_order))
-          when "lineage"
-            s = s.joins(:lineage).merge(::Wkbk::Lineage.reorder(columns.last => sort_order)) # position の order を避けるため reorder
-          when "folder"
-            s = s.joins(:folder).merge(::Wkbk::Folder.reorder(columns.last => sort_order)) # position の order を避けるため reorder
-          else
-            s = sort_scope(s)
-          end
-        end
-        s
       end
 
       def current_article_scope_info

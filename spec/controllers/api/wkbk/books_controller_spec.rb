@@ -27,19 +27,14 @@ require 'rails_helper'
 
 RSpec.describe Api::Wkbk::BooksController, type: :controller do
   before(:context) do
-    Actb.setup
-    Emox.setup
-    Wkbk.setup
     Wkbk::Book.mock_setup
-    # tp Wkbk.info
-    # tp Wkbk::Book
   end
 
   [
     { get: [ :index, params: {                 }, ],               status: 200, },
     { get: [ :show,  params: { book_key: 1,    }, ],               status: 200, },
     { get: [ :show,  params: { book_key: 2,    }, ],               status: 403, },
-    { get: [ :show,  params: { book_key: 9999, }, ],               status: 404, },
+    { get: [ :show,  params: { book_key: :x,   }, ],               status: 404, },
     { get: [ :edit,  params: { book_key: 2,    }, ], user: :sysop, status: 200, },
     { get: [ :show,  params: { book_key: 4,    }, ], user: :sysop, status: 403, },
     { get: [ :edit,  params: {                 }, ],               status: 403, },

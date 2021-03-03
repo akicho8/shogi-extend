@@ -43,6 +43,26 @@ module Wkbk
 
     attribute :moves_answer_validate_skip
 
+    scope :sorted, -> info { 
+      if info[:sort_column] && info[:sort_order]
+        s = all
+        table, columm = info[:sort_column].to_s.scan(/\w+/)
+        case table
+        when "user"
+          s = s.joins(:user).merge(User.reorder(column => info[:sort_order]))
+        when "books"
+          s = s.joins(:books).merge(Book.reorder(column => info[:sort_order]))
+        when "lineage"
+          s = s.joins(:lineage).merge(Lineage.reorder(column => info[:sort_order])) # position の order を避けるため reorder
+        when "folder"
+          s = s.joins(:folder).merge(Folder.reorder(column => info[:sort_order])) # position の order を避けるため reorder
+        else
+          s = s.order(info[:sort_column] => info[:sort_order])
+          s = s.order(id: :desc) # 順序揺れ防止策
+        end
+      end
+    }
+
     before_validation do
       if Rails.env.development? || Rails.env.test?
         self.title ||= SecureRandom.hex
