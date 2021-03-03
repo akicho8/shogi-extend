@@ -1,5 +1,5 @@
 # -*- coding: utf-8; compile-command: "cap production deploy:upload FILES=config/schedule.rb whenever:update_crontab crontab" -*-
-# capp rails:cron_log
+# cap production rails:cron_log
 
 puts "=== 環境確認 ==="
 puts "ENV['RAILS_ENV'] --> #{ENV['RAILS_ENV'].inspect}"
@@ -7,7 +7,10 @@ puts "@environment     --> #{@environment.inspect}"
 puts "Dir.pwd          --> #{Dir.pwd.inspect}"
 puts "================"
 
-set :output, {standard: "log/#{@environment}_cron.log"}
+# env 'MAILTO', "shogi.extend@gmail.com" # ← こっちにしたら届かないのは謎
+env 'MAILTO', "pinpon.ikeda@gmail.com"
+
+# set :output, {standard: "log/#{@environment}_cron.log"}
 
 job_type :command, "cd :path && :task :output"
 job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output"
@@ -56,11 +59,19 @@ end
 
 every("15 5 * * *") { command "sudo systemctl restart sidekiq" }
 
-# if @environment == "production"
-#   every("30 4 * * *") { command %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction --result-file /var/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql shogi_web_production) }
-#   every("45 4 * * *") { command %(ruby -r fileutils -e 'files = Dir["/var/backup/*.sql"].sort; FileUtils.rm(files - files.last(10))') }
-#   every("0 0 1 * *")  { runner %(Actb::Season.create!) }
-# end
+if @environment == "production"
+  # every("5 11 * * *") { command "ruby -e 'p 1 / 1'" }
+  # every("6 11 * * *") { command "ruby -e 'p 1 / 0'" }
+
+  every("30 4 * * *") do
+    # every("6 9 * * *") do
+    command [
+      %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction shogi_web_production | gzip > /var/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql.gz),
+      %(ruby -r fileutils -e 'files = Dir["/var/backup/*.gz"].sort; FileUtils.rm(files - files.last(3))'),
+    ].join(";")
+  end
+  every("0 0 1 * *")  { runner %(Actb::Season.create!) }
+end
 
 # if @environment == "production"
 #   every("15 1 31 12 *") do
