@@ -12,7 +12,7 @@ client-only
           p {{status_code_with_message}}
           p.has-text-left(v-if="error.message" v-html="error.message")
           b-button.mt-4(@click="sns_login_modal_handle" v-if="!g_current_user && error_status_code === 403") ログイン
-        .emoji.has-text-centered.is-unselectable.is-clickable(@click="charactor_click")
+        .emoji.has-text-centered.is-unselectable.is-clickable
           | {{charactor}}
 
     DebugPre
@@ -35,16 +35,15 @@ export default {
   },
 
   mounted() {
-    // this.sns_login_modal_open()
+    // ブラウザで読み込んだ状態でメンテナンス状態になってもクライアント側は通信するまでわからない
+    // 何か操作したときにサーバーが503を返す
+    // そこでメンテナンス画面に遷移するためトップをリロードする
+    if (this.error_status_code === 503) {
+      location.href = "/"
+    }
   },
 
   methods: {
-    charactor_click() {
-      if (process.client) {
-        this.sound_play('click')
-        this.talk(this.status_code_with_message)
-      }
-    },
     charactor_sample() {
       return _.sample([..."🐰🐥🦉🐔🦔🐻🐹🐷🐮🐯🦁🐱🦊🐺🐶🐵🐸🐛🦋🥀🍀☘🍄"])
     },
@@ -69,6 +68,8 @@ export default {
             return `ページが見つからないか権限がありません`
           } else if (this.error.statusCode === 403) {
             return `権限がありません`
+          } else if (this.error.statusCode === 503) {
+            return ""
           } else {
             return `ぶっこわれました`
           }
