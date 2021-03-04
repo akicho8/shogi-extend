@@ -1335,7 +1335,6 @@ DROP TABLE IF EXISTS `free_battles`;
 CREATE TABLE `free_battles` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'URL識別子',
-  `kifu_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '入力した棋譜URL',
   `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `kifu_body` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜本文',
   `sfen_body` text COLLATE utf8mb4_bin NOT NULL COMMENT 'SFEN形式',
@@ -1966,6 +1965,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20201107095900'),
 ('20201125220100'),
 ('20201229171906'),
-('20210215234700');
+('20210215234700'),
+('20210304082700');
 
 
