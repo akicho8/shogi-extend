@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_234700) do
+ActiveRecord::Schema.define(version: 2021_03_04_082700) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -899,7 +899,6 @@ ActiveRecord::Schema.define(version: 2021_02_15_234700) do
 
   create_table "free_battles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
-    t.string "kifu_url", comment: "入力した棋譜URL"
     t.string "title"
     t.text "kifu_body", null: false, comment: "棋譜本文"
     t.text "sfen_body", null: false, comment: "SFEN形式"

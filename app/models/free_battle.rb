@@ -88,14 +88,6 @@ class FreeBattle < ApplicationRecord
       self.saturn_key ||= ""
     end
 
-
-    if will_save_change_to_attribute?(:kifu_url)
-      if v = kifu_url.presence
-        self.kifu_body = http_get_body(v)
-        self.kifu_url = nil
-      end
-    end
-
     if will_save_change_to_attribute?(:kifu_body) && kifu_body
       if v = UrlEmbedKifuParser.parse(kifu_body)
         self.kifu_body = v
