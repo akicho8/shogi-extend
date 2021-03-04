@@ -36,9 +36,6 @@
 require 'rails_helper'
 
 RSpec.describe FreeBattle, type: :model do
-  before do
-  end
-
   let :record do
     FreeBattle.create!
   end
@@ -71,14 +68,12 @@ RSpec.describe FreeBattle, type: :model do
 
   describe "Twitterカード" do
     describe "to_twitter_card_params" do
-      let :value do
-        record.to_twitter_card_params
-      end
       it do
-        assert { value[:title]       == "5手目"                                                      }
-        assert { value[:url]         == nil                                                          }
-        assert { value[:image]       == "http://0.0.0.0:3000/x/free_battle1.png?turn=5&viewpoint=black" }
-        assert { value[:description] == nil                                                          }
+        params = record.to_twitter_card_params
+        assert { params[:title]       == "5手目"                                                      }
+        assert { params[:url]         == nil                                                          }
+        assert { params[:image]       == "http://0.0.0.0:3000/x/free_battle1.png?turn=5&viewpoint=black" }
+        assert { params[:description] == nil                                                          }
       end
     end
 
