@@ -93,44 +93,23 @@ RSpec.describe FreeBattle, type: :model do
     end
   end
 
-  describe "「**解析」などが含まれる巨大なKIFはいったん綺麗にする" do
-    let :record do
-      FreeBattle.create!(kifu_body: <<~EOT)
-手数----指手---------消費時間--
-**Engines 0 HoneyWaffle WCSC28
-**解析
-*一致率 先手 21% = 14/64  後手 40% = 26/64
-*棋戦詳細：ライバル対決
-   1 ５六歩(57)        ( 0:00/00:00:00)
-**解析
-**候補手
-EOT
-    end
-
+  describe "コメントが含まれるKIFはカラムから溢れるため除去する" do
     it do
-      assert { record.kifu_body == <<~EOT }
-手数----指手---------消費時間--
-*一致率 先手 21% = 14/64  後手 40% = 26/64
-*棋戦詳細：ライバル対決
-   1 ５六歩(57)        ( 0:00/00:00:00)
-EOT
+      record = FreeBattle.create!(kifu_body: "*A\n**B\n1 ５六歩(57)\n")
+      assert { record.kifu_body == "1 ５六歩(57)\n" }
     end
   end
 
   describe "ぴよ将棋？の日付フォーマット読み取り" do
-    let :record do
-      FreeBattle.create!(kifu_body: "開始日時：2020年02月07日(金) 20：36：15")
-    end
     it do
+      record = FreeBattle.create!(kifu_body: "開始日時：2020年02月07日(金) 20：36：15")
       assert { record.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
     end
   end
 
   describe "駒落ち判定" do
-    let :record do
-      FreeBattle.create!(kifu_body: "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1")
-    end
     it do
+      record = FreeBattle.create!(kifu_body: "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1")
       assert { record.preset_info.key == :"角落ち" }
     end
   end
