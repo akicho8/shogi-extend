@@ -12,7 +12,6 @@
 
       # free_battles
       key: "ユニークなハッシュ",
-      kifu_file: "棋譜ファイル",
       kifu_url: "棋譜URL",
       kifu_body: "棋譜",
       title: "タイトル",

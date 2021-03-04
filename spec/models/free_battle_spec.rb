@@ -58,18 +58,6 @@ RSpec.describe FreeBattle, type: :model do
     assert { free_battle.simple_versus_desc == "☗嬉野流 原始棒銀 vs ☖その他" }
   end
 
-  describe "ファイルアップロードして変換" do
-    let :uploaded_file do
-      tempfile = Tempfile.open
-      tempfile.write("68S")
-      ActionDispatch::Http::UploadedFile.new(filename: "嬉野流.kif", type: "text/plain", tempfile: tempfile.open)
-    end
-    let :record do
-      FreeBattle.create!(kifu_file: uploaded_file)
-    end
-    assert { record.kifu_body == "68S" }
-  end
-
   it "raw_sec_list" do
     assert { record.raw_sec_list(:black)     == [ 1, 5, 2]   }
     assert { record.raw_sec_list(:white)     == [ 3, 7]      }

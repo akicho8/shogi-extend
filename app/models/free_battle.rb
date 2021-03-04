@@ -64,8 +64,6 @@ class FreeBattle < ApplicationRecord
 
   has_secure_token :key
 
-  attribute :kifu_file
-
   belongs_to :user, required: false
 
   class << self
@@ -90,11 +88,6 @@ class FreeBattle < ApplicationRecord
       self.saturn_key ||= ""
     end
 
-    if kifu_file
-      v = kifu_file.read
-      v = v.to_s.toutf8 rescue nil
-      self.kifu_body = v
-    end
 
     if will_save_change_to_attribute?(:kifu_url)
       if v = kifu_url.presence
