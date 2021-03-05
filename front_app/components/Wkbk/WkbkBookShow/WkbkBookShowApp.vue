@@ -1,3 +1,4 @@
+
 <template lang="pug">
 client-only
   .WkbkBookShowApp

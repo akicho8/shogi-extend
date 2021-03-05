@@ -61,7 +61,8 @@ module Swars
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
       {}.tap do |hash|
-        hash[:key]        = SecureRandom.hex # vue.js の :key に使うため
+        hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
+
         hash[:sample_max] = sample_max      # サンプル数(棋譜一覧で再検索するときに "sample:n" として渡す)
 
         hash[:user] = { key: user.key }
@@ -78,10 +79,14 @@ module Swars
         hash[:debug_hash] = medal_list.to_debug_hash
         hash[:win_lose_streak_max_hash] = medal_list.win_lose_streak_max_hash
 
+        ################################################################################
+
         hash[:every_day_list]       = every_day_list
+        hash[:every_grade_list]     = every_grade_list
         hash[:every_my_attack_list] = every_my_attack_list
         hash[:every_vs_attack_list] = every_vs_attack_list
-        hash[:every_grade_list]     = every_grade_list
+        hash[:every_my_defense_list] = every_my_defense_list
+        hash[:every_vs_defense_list] = every_vs_defense_list
       end
     end
 
@@ -216,14 +221,24 @@ module Swars
       end
     end
 
-    # 戦法
+    # 戦法 * 自分
     def every_my_attack_list
-      list_build(user.memberships)
+      list_build(user.memberships, context: :attack_tags, judge_flip: false)
     end
 
-    # 相手
+    # 戦法 * 相手
     def every_vs_attack_list
-      list_build(user.op_memberships, judge_flip: true)
+      list_build(user.op_memberships, context: :attack_tags, judge_flip: true)
+    end
+
+    # 囲い * 自分
+    def every_my_defense_list
+      list_build(user.memberships, context: :defense_tags, judge_flip: false)
+    end
+
+    # 囲い * 相手
+    def every_vs_defense_list
+      list_build(user.op_memberships, context: :defense_tags, judge_flip: true)
     end
 
     def list_build(memberships, options = {})
@@ -236,14 +251,14 @@ module Swars
       # sample_max 件で最初に絞らないといけない
       s = Swars::Membership.where(id: s.ids) # 再スコープ化
 
-      tags = s.tag_counts_on(:attack_tags, at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
+      tags = s.tag_counts_on(options[:context], at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
       tags.collect do |tag|
         {}.tap do |hash|
           hash[:tag] = tag.attributes.slice("name", "count")  # 戦法名
           hash[:appear_ratio] = tag.count.fdiv(denominator)         # 使用率, 遭遇率
 
           # 勝ち負け数
-          c = judge_counts_wrap(s.tagged_with(tag.name, on: :attack_tags).group("judge_key").count) # => {"win" => 1, "lose" => 0}
+          c = judge_counts_wrap(s.tagged_with(tag.name, on: options[:context]).group("judge_key").count) # => {"win" => 1, "lose" => 0}
           if options[:judge_flip]
             c["win"], c["lose"] = c["lose"], c["win"] # => {"win" => 0, "lose" => 1}    ; 自分視点に変更
           end

@@ -61,17 +61,16 @@ module Swars
     def swars_users_key_json_render
       if request.format.json? && format_type == "user"
         unless current_swars_user
-          render json: { notice_collector: NoticeCollector.single(:danger, "#{current_swars_user_key}さんが見つかりません", method: "dialog") }
+          render json: {}, status: :not_found
           return
         end
-
         if params[:try_fetch] == "true"
           import_process2
         end
         if Rails.env.test?
           slack_message(key: "新プ情報", body: current_swars_user.key)
         end
-        render json: { user_info: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json }
+        render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
         return
       end
     end
