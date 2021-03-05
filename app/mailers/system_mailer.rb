@@ -1,10 +1,10 @@
 class SystemMailer < ApplicationMailer
-  # SystemMailer.fixed_track.deliver_later
-  # SystemMailer.fixed_track.deliver_now
+  # SystemMailer.fixed_track(subject: "(subject)", body: object.to_t).deliver_later
   def fixed_track(params = {})
     mail(fixed_format(params.merge(subject: subject_decorate(params[:subject]))))
   end
 
+  # SystemMailer.simple_track(subject: "(subject)", body: "(body)").deliver_later
   def simple_track(params = {})
     mail(params.merge(subject: subject_decorate(params[:subject])))
   end
