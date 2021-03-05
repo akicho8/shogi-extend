@@ -13,8 +13,7 @@ end
 desc "本番サーバーの production の DB をローカルの development にコピーする (オプション: TABLES=t1,t2,t3)"
 task :db_sync do
   Rake::Task[:production_db_backup_to_local].invoke
-  system "gzip -df db/shogi_web_production.sql.gz"
-  system "mysql -u root shogi_web_development < db/shogi_web_production.sql"
+  system "zcat db/shogi_web_production.sql.gz | mysql -u root shogi_web_development"
 end
 
 desc "本番サーバーの production の DB をローカルにバックアップする"
