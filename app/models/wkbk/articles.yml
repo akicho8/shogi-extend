@@ -6607,8 +6607,8 @@
     b - 1
   time_limit_sec: 10
   difficulty: 1
-  title: アヒル囲いとみせかけてelmo囲い
-  description: そのあとは▲78玉▲59金右とすればelmo囲いの完成
+  title: アヒル囲いとみせかけてエルモ囲い
+  description: そのあとは▲78玉▲59金右とすればエルモ囲いの完成
   hint_desc: 
   source_author: 
   source_media_name: 
@@ -6616,7 +6616,7 @@
   source_published_on: 
   created_at: '2020-07-29T21:11:12.005+09:00'
   updated_at: '2020-07-29T21:11:12.046+09:00'
-  direction_message: ここからelmo囲いに向かってください
+  direction_message: ここからエルモ囲いに向かってください
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -8592,7 +8592,7 @@
     b 2Pp 1
   time_limit_sec: 10
   difficulty: 1
-  title: elmo囲いvs玉頭銀
+  title: エルモ囲いvs玉頭銀
   description: 以下71飛に72歩や73歩などなど
   hint_desc: 
   source_author: 

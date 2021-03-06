@@ -9,7 +9,7 @@ class Fix2 < ActiveRecord::Migration[6.0]
     ActsAsTaggableOn::Tagging.where(taggable_type: "General::Battle").in_batches.destroy_all
     ActsAsTaggableOn::Tagging.where(taggable_type: "Swars::Battle").in_batches.destroy_all
 
-    ActsAsTaggableOn::Tag.find_by(name: "銀雲雀")&.taggings&.where(context: "defense_tags")&.in_batches.destroy_all
+    ActsAsTaggableOn::Tag.find_by(name: "銀雲雀")&.taggings&.where(context: "defense_tags")&.in_batches&.destroy_all
     ActsAsTaggableOn::Tag.find_by(name: "銀雲雀")&.update!(name: "銀雲雀2")
     ActsAsTaggableOn::Tag.find_by(name: "５筋位取り")&.update!(name: "銀雲雀")
     ActsAsTaggableOn::Tag.find_by(name: "銀雲雀2")&.update!(name: "５筋位取り")
@@ -20,15 +20,15 @@ class Fix2 < ActiveRecord::Migration[6.0]
     ActsAsTaggableOn::Tag.find_by(name: "雁木囲い")&.update!(name: "オールド雁木")
     ActsAsTaggableOn::Tag.find_by(name: "elmo囲い")&.update!(name: "エルモ囲い")
 
-    tp ActsAsTaggableOn::Tag.find_by(name: "片矢倉").taggings.count
-    tp ActsAsTaggableOn::Tag.find_by(name: "天野矢倉").taggings.count
+    tp ActsAsTaggableOn::Tag.find_by(name: "片矢倉")&.taggings&.count
+    tp ActsAsTaggableOn::Tag.find_by(name: "天野矢倉")&.taggings&.count
 
     ActsAsTaggableOn::Tag.find_by(name: "天野矢倉")&.update!(name: "天野矢倉2")
     ActsAsTaggableOn::Tag.find_by(name: "片矢倉")&.update!(name: "天野矢倉")
     ActsAsTaggableOn::Tag.find_by(name: "天野矢倉2")&.update!(name: "片矢倉")
 
-    tp ActsAsTaggableOn::Tag.find_by(name: "片矢倉").taggings.count
-    tp ActsAsTaggableOn::Tag.find_by(name: "天野矢倉").taggings.count
+    tp ActsAsTaggableOn::Tag.find_by(name: "片矢倉")&.taggings&.count
+    tp ActsAsTaggableOn::Tag.find_by(name: "天野矢倉")&.taggings&.count
 
     ActsAsTaggableOn::Tag.find_by(name: "右玉")&.taggings&.where(context: "attack_tags")&.update_all("context = 'defense_tags'")
     ActsAsTaggableOn::Tag.find_by(name: "高田流左玉")&.taggings&.where(context: "attack_tags")&.update_all("context = 'defense_tags'")

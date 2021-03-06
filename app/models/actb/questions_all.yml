@@ -7991,8 +7991,8 @@
   init_sfen: position sfen lnsg1g1nl/3k1s1r1/ppppppbpp/6p2/P6P1/9/1PPPPPP1P/1B1S1S1R1/LNG1KG1NL b - 1
   time_limit_sec: 10
   difficulty_level: 1
-  title: アヒル囲いとみせかけてelmo囲い
-  description: そのあとは▲78玉▲59金右とすればelmo囲いの完成
+  title: アヒル囲いとみせかけてエルモ囲い
+  description: そのあとは▲78玉▲59金右とすればエルモ囲いの完成
   hint_desc: 
   source_author: 
   source_media_name: 
@@ -8000,7 +8000,7 @@
   source_published_on: 
   created_at: '2020-07-29T21:11:12.005+09:00'
   updated_at: '2020-07-29T21:11:12.046+09:00'
-  direction_message: ここからelmo囲いに向かってください
+  direction_message: ここからエルモ囲いに向かってください
   mate_skip: 
   folder_key: active
   owner_tag_list:
@@ -10184,7 +10184,7 @@
   init_sfen: position sfen ln2g1gnl/5skb1/3psp1p1/p5p1p/1prP1S3/4R3P/PPB1PPPP1/4G1SK1/LN3G1NL b 2Pp 1
   time_limit_sec: 10
   difficulty_level: 1
-  title: elmo囲いvs玉頭銀
+  title: エルモ囲いvs玉頭銀
   description: 以下71飛に72歩や73歩などなど
   hint_desc: 
   source_author: 
