@@ -76,8 +76,11 @@ module Swars
         hash[:judge_keys] = current_scope_base.limit(current_ox_max).pluck(:judge_key).reverse
 
         hash[:medal_list] = medal_list.to_a
-        hash[:debug_hash] = medal_list.to_debug_hash
-        hash[:win_lose_streak_max_hash] = medal_list.win_lose_streak_max_hash
+
+        if Rails.env.development?
+          hash[:debug_hash] = medal_list.to_debug_hash
+          hash[:win_lose_streak_max_hash] = medal_list.win_lose_streak_max_hash
+        end
 
         ################################################################################
 
