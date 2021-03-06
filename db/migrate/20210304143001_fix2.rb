@@ -25,7 +25,9 @@ class Fix2 < ActiveRecord::Migration[6.0]
     tp ActsAsTaggableOn::Tag.find_by(name: "片矢倉").taggings.count
     tp ActsAsTaggableOn::Tag.find_by(name: "天野矢倉").taggings.count
     
-    ActsAsTaggableOn::Tag.find_by(name: "右玉").taggings.where(context: "attack_tags")&.update_all("context = 'defense_tags'")
-    ActsAsTaggableOn::Tag.find_by(name: "高田流左玉").taggings.where(context: "attack_tags")&.update_all("context = 'defense_tags'")
+    ActsAsTaggableOn::Tag.find_by(name: "右玉")&.taggings&.where(context: "attack_tags")&.update_all("context = 'defense_tags'")
+    ActsAsTaggableOn::Tag.find_by(name: "高田流左玉")&.taggings&.where(context: "attack_tags")&.update_all("context = 'defense_tags'")
+    
+    ActsAsTaggableOn::Tag.find_by(name: "５筋位取り")&.taggings&.where(context: "attack_tags")&.in_batches.destroy_all
   end
 end
