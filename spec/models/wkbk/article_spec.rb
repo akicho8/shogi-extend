@@ -41,11 +41,11 @@ module Wkbk
     end
 
     it "sorted" do
-      assert { Article.sorted("id"         => "asc") }
-      assert { Article.sorted("user.id"    => "asc") }
-      assert { Article.sorted("books.id"   => "asc") }
-      assert { Article.sorted("lineage.id" => "asc") }
-      assert { Article.sorted("folder.id"  => "asc") }
+      assert { Article.sorted(sort_column: "id",         sort_order: "asc") }
+      assert { Article.sorted(sort_column: "user.id",    sort_order: "asc") }
+      assert { Article.sorted(sort_column: "books.id",   sort_order: "asc") }
+      assert { Article.sorted(sort_column: "lineage.id", sort_order: "asc") }
+      assert { Article.sorted(sort_column: "folder.id",  sort_order: "asc") }
     end
 
     it "tweet_body" do

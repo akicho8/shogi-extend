@@ -43,10 +43,10 @@ module Wkbk
 
     attribute :moves_answer_validate_skip
 
-    scope :sorted, -> info { 
+    scope :sorted, -> info {
       if info[:sort_column] && info[:sort_order]
         s = all
-        table, columm = info[:sort_column].to_s.scan(/\w+/)
+        table, column = info[:sort_column].to_s.scan(/\w+/)
         case table
         when "user"
           s = s.joins(:user).merge(User.reorder(column => info[:sort_order]))

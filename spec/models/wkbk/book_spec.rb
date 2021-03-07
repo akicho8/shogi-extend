@@ -35,9 +35,9 @@ module Wkbk
     end
 
     it "sorted" do
-      assert { Book.sorted("id"         => "asc") }
-      assert { Book.sorted("user.id"    => "asc") }
-      assert { Book.sorted("folder.id"  => "asc") }
+      assert { Book.sorted(sort_column: "id",        sort_order: "asc") }
+      assert { Book.sorted(sort_column: "user.id",   sort_order: "asc") }
+      assert { Book.sorted(sort_column: "folder.id", sort_order: "asc") }
     end
 
     it "ordered_bookships" do
