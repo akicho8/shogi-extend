@@ -33,7 +33,7 @@ module Swars
       end
 
       it "メダル" do
-        assert { @hash["medal_list"] == [{"message" => "居飛車党", "method" => "tag", "name" => "居", "type" => "is-light"}, {"message" => "嬉野流を使ってそこそこ勝った", "method" => "tag", "name" => "嬉", "type" => "is-light"}] }
+        assert { @hash["medal_list"] == [{"message" => "居飛車党", "method" => "tag", "name" => "居", "type" => "is-light"}, {"message" => "嬉野流の使い手", "method" => "tag", "name" => "嬉", "type" => "is-light"}] }
       end
     end
 
@@ -45,6 +45,6 @@ end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .....
 # >> 
-# >> Finished in 1.89 seconds (files took 2.42 seconds to load)
+# >> Finished in 2.28 seconds (files took 3.15 seconds to load)
 # >> 5 examples, 0 failures
 # >> 
