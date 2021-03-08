@@ -45,6 +45,9 @@ module Swars
         assert { w("パックマン戦法").include?("パックマン野郎")             }
         assert { b("耀龍四間飛車").include?("耀龍マン")                     }
         assert { b("耀龍ひねり飛車").include?("耀龍マン")                   }
+        assert { w("右玉").include?("右玉マン")                             }
+        assert { b("糸谷流右玉").include?("右玉マン")                       }
+        assert { w("羽生流右玉").include?("右玉マン")                       }
         assert { b("アヒル囲い").include?("アヒル上級")                     }
         assert { b("UFO銀").include?("UFOマン")                             }
         assert { b("裏アヒル囲い").include?("レアマン")                     }

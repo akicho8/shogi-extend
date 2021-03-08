@@ -180,7 +180,7 @@ module Swars
         s = s.joins(:battle)
         s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
         s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))
-        s = s.tagged_with("居玉", on: :note_tags)
+        s = s.tagged_with("居玉", on: :defense_tags)
         s.count.fdiv(real_count)
       end
     end
