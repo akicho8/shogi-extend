@@ -22,7 +22,7 @@ class BoardImageGenerator
     end
 
     @params = {
-    }.merge(params)
+    }.merge(params.to_options)
 
     @options = {
       disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test?,
@@ -77,6 +77,10 @@ class BoardImageGenerator
     }.call
   end
 
+  def turn
+    @turn ||= record.adjust_turn(params[:turn])
+  end
+
   private
 
   def real_path
@@ -128,10 +132,6 @@ class BoardImageGenerator
 
   def dir_parts
     unique_key.match(/(.{2})(.{2})/).captures
-  end
-
-  def turn
-    @turn ||= record.adjust_turn(params[:turn])
   end
 
   def native_cast(e)

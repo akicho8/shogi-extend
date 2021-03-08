@@ -23,6 +23,22 @@ RSpec.describe BoardImageGenerator, type: :model do
     end
   end
 
+  describe "turn" do
+    def test1(params)
+      obj = BoardImageGenerator.new(FreeBattle.create!, params)
+      obj.turn
+    end
+    it "works" do
+      assert { test1("turn" =>  0)   == 0 }
+      assert { test1("turn" => "0")  == 0 }
+      assert { test1("turn" => "1")  == 1 }
+      assert { test1("turn" => -1)   == 5 }
+      assert { test1("turn" => -2)   == 4 }
+      assert { test1("turn" => "-1") == 5 }
+      assert { test1("turn" => "99") == 5 }
+    end
+  end
+
   describe "cache_delete" do
     it "works" do
       obj = BoardImageGenerator.new(FreeBattle.create!)
@@ -33,3 +49,9 @@ RSpec.describe BoardImageGenerator, type: :model do
     end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> ....
+# >> 
+# >> Finished in 2.63 seconds (files took 2.54 seconds to load)
+# >> 4 examples, 0 failures
+# >> 
