@@ -562,6 +562,8 @@ export default {
     margin-top: 1.5rem
     +mobile
       margin-top: 1rem
+    td
+      vertical-align: middle
 
   // 小さな盤面をたくさん表示
   .CustomShogiPlayer

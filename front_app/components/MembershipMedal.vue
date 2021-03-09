@@ -39,14 +39,14 @@ export default {
 <style lang="sass">
 .MembershipMedal
   &.my_emoji
-    margin-right: 0.2rem
+    margin-right: 0.3rem
   &.my_icon
-    margin-right: 0.4rem
+    margin-right: 0.5rem
 
   +mobile
     &.my_emoji
       // 絵文字によって大きさが異なるのので結局完璧に揃えるのは難しい
-      margin-right: 0.35rem
+      margin-right: 0.45rem
     &.my_icon
-      margin-right: 0.7rem
+      margin-right: 0.8rem
 </style>

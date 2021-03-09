@@ -8,6 +8,7 @@
       template(v-if="base.visible_hash[key]")
         template(v-for="name in m[key]")
           nuxt-link(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="sound_play('click')")
+            //- b-tag(rounded :type="key === 'attack_tag_list' ? 'is-danger' : 'is-warning is-light'") {{name}}
             b-tag(rounded) {{name}}
 </template>
 
@@ -40,25 +41,32 @@ export default {
   .icon_with_name
     +mobile
       font-size: $size-4
+    +tablet
+      font-size: $size-5
 
   .tags
+    margin-bottom: 0
+    +tablet
+      margin-left: 1.5rem
+    .tag
+      margin-bottom: 0
+
     a
       margin: 0           // 右方向にあるマージを除去
       &:not(:first-child)
-        margin-left: 1px  // タグ同士の隙間
+        margin-left: 2px  // タグ同士の隙間
 
     // モバイル時は折り返しありの右より
-    flex-wrap: wrap
-    justify-content: flex-end
-    align-items: center
-    align-content: flex-start
-
-    // デスクトップ以上で1行表示
-    +desktop
-      display: inline-flex  // inlineにするとそのまま名前の右配置になる
-      margin-left: 0.2rem  // 横並びなのでプレイヤー名との隙間を少しあける
-
-    // これを指定しないとモバイルのときタグのしたに隙間がなくなる
     +mobile
-      margin-bottom: 0rem
+      flex-wrap: wrap
+      justify-content: flex-end
+      align-items: center
+      align-content: flex-start
+
+  .SwarsBattleShowUserLink
+    // &.is-win
+    // &.is-lose
+    //   color: $text
+    //   &:hover
+    //     color: $link
 </style>
