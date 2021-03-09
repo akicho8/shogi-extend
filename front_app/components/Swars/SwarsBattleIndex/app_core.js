@@ -7,7 +7,7 @@ import SwarsBattleIndexTableColumn from "./SwarsBattleIndexTableColumn.js"
 import SwarsBattleIndexSearchAction from "./SwarsBattleIndexSearchAction.js"
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
-export default {
+export const app_core = {
   mixins: [
     SwarsBattleIndexTableColumn,
     SwarsBattleIndexSearchAction,

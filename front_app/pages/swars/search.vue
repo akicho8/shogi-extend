@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  SwarsBattleIndex
+  SwarsBattleIndexApp
 </template>
 
 <script>

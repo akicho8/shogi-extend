@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "SwarsBattleIndexMembership",
   mixins: [
-    support,
+    support_child,
   ],
   props: {
     base:       { type: Object, required: true },

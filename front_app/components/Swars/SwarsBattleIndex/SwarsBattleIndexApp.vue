@@ -1,5 +1,5 @@
 <template lang="pug">
-.SwarsBattleIndex
+.SwarsBattleIndexApp
   b-loading(:active="$fetchState.pending")
 
   DebugBox
@@ -8,7 +8,7 @@
     p g_current_user: {{g_current_user && g_current_user.id}}
     p visible_hash: {{visible_hash}}
 
-  b-sidebar.is-unselectable.SwarsBattleIndex-Sidebar(fullheight right overlay v-model="sidebar_p" v-if="config")
+  b-sidebar.is-unselectable.SwarsBattleIndexApp-Sidebar(fullheight right overlay v-model="sidebar_p" v-if="config")
     .mx-4.my-4
       //- .MySidebarMenuIconWithTitle
       //-   b-icon.is-clickable(icon="menu" @click.native="sidebar_p = false")
@@ -262,14 +262,14 @@
 <script>
 import _ from "lodash"
 
-import { support } from "./support.js"
+import { support_parent } from "./support_parent.js"
+import { app_core } from "./app_core.js"
 
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import { ExternalAppInfo } from "@/components/models/external_app_info.js"
 
 import { Location } from "shogi-player/components/models/location.js"
 
-import SwarsBattleIndexCore from "./SwarsBattleIndexCore.js"
 //- import SwarsBattleIndexHistory from "./SwarsBattleIndexHistory.js"
 
 import MemoryRecord from 'js-memory-record'
@@ -291,10 +291,10 @@ class ZipDlInfo extends MemoryRecord {
 }
 
 export default {
-  name: "SwarsBattleIndex",
+  name: "SwarsBattleIndexApp",
   mixins: [
-    support,
-    SwarsBattleIndexCore,
+    support_parent,
+    app_core,
   ],
 
   data() {
@@ -510,6 +510,8 @@ export default {
   },
 
   computed: {
+    base() { return this },
+
     current_route_query() {
       return {
         query:       this.query,
@@ -547,11 +549,11 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsBattleIndex-Sidebar
+.SwarsBattleIndexApp-Sidebar
   .menu-label:not(:first-child)
     margin-top: 2em
 
-.SwarsBattleIndex
+.SwarsBattleIndexApp
   .container
     +mobile
       padding: 0
