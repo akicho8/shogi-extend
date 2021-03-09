@@ -383,7 +383,7 @@ module Swars
         list << { key: :id,             label: "ID",   visible: true, }
       end
       list << { key: :attack_tag_list,  label: "戦型", visible: true,  }
-      list << { key: :defense_tag_list, label: "囲い", visible: false,  }
+      list << { key: :defense_tag_list, label: "囲い", visible: true,  }
       list << { key: :final_info,       label: "結果", visible: false, }
       list << { key: :turn_max,         label: "手数", visible: false, }
       list << { key: :critical_turn,    label: "開戦", visible: false, }
