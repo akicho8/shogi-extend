@@ -85,7 +85,7 @@ module Swars
     end
 
     def all_tag_names_join
-      @all_tag_names_join ||= all_tag_names_hash.keys.join
+      @all_tag_names_join ||= all_tag_names_hash.keys.join("/")
     end
 
     # タグの種類数
@@ -118,6 +118,10 @@ module Swars
 
     def win_and_all_tag_names
       @win_and_all_tag_names ||= win_and_all_tag_names_hash.keys
+    end
+
+    def win_and_all_tag_names_join
+      @win_and_all_tag_names_join ||= win_and_all_tag_names.join(",")
     end
 
     # タグの種類数

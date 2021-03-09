@@ -252,3 +252,21 @@ module Swars
     end
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> .........F
+# >> 
+# >> Failures:
+# >> 
+# >>   1) {:type=>:model} 連勝 example at -:239 (Got an error when generating description from matcher: NoMethodError: undefined method `length' for nil:NilClass -- /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-power_assert-1.1.0/lib/rspec/power_assert.rb:97:in `description')
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:250:in `block (3 levels) in <module:Swars>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 17.18 seconds (files took 5.29 seconds to load)
+# >> 10 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:239 # {:type=>:model} 連勝 example at -:239 (Got an error when generating description from matcher: NoMethodError: undefined method `length' for nil:NilClass -- /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-power_assert-1.1.0/lib/rspec/power_assert.rb:97:in `description')
+# >> 
