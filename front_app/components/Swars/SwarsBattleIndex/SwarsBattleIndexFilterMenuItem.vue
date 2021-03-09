@@ -3,6 +3,7 @@ b-menu-item.SwarsBattleIndexFilterMenuItem(
   v-bind="$attrs"
   v-on="$listeners"
   tag="nuxt-link"
+  active-class=""
   :to="to"
   :class="{'has-text-weight-bold': active_p}"
   @click.native="sound_play('click')"
