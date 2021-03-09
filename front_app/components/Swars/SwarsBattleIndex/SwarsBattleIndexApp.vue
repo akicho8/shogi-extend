@@ -480,11 +480,6 @@ export default {
       })
     },
 
-    cb_toggle_handle(column) {
-      this.sound_play('click')
-      this.$set(this.visible_hash, column.key, !this.visible_hash[column.key])
-    },
-
     row_class(row, index) {
       if (row.judge) {
         return `is-${row.judge.key}` // is- で始めると mobile-cards になったとき消されなくなる
