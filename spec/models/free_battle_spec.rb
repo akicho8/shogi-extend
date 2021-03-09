@@ -43,15 +43,19 @@ RSpec.describe FreeBattle, type: :model do
     FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.ki2").read)
   end
 
-  it "simple_versus_desc" do
-    free_battle = FreeBattle.same_body_fetch(body: "")
-    assert { free_battle.simple_versus_desc == "☗居玉 vs ☖居玉" }
-
-    free_battle = FreeBattle.same_body_fetch(body: "68銀")
-    assert { free_battle.simple_versus_desc == "☗嬉野流 居玉 vs ☖居玉" }
-
-    free_battle = FreeBattle.same_body_fetch(body: "68銀 52玉 26歩 51玉 25歩 52玉 38銀 51玉 27銀")
-    assert { free_battle.simple_versus_desc == "☗嬉野流 原始棒銀 居玉 vs ☖その他" }
+  describe "simple_versus_desc" do
+    it do
+      free_battle = FreeBattle.same_body_fetch(body: "")
+      assert { free_battle.simple_versus_desc == nil }
+    end
+    it do
+      free_battle = FreeBattle.same_body_fetch(body: "68銀")
+      assert { free_battle.simple_versus_desc == "☗嬉野流 vs ☖その他" }
+    end
+    it do
+      free_battle = FreeBattle.same_body_fetch(body: "68銀 52玉 26歩 51玉 25歩 52玉 38銀 51玉 27銀")
+      assert { free_battle.simple_versus_desc == "☗嬉野流 原始棒銀 vs ☖その他" }
+    end
   end
 
   it "raw_sec_list" do

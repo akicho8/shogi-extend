@@ -24,19 +24,19 @@ module Swars
       end
 
       it "各タブの情報" do
-        @hash["every_day_list"] # => [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=>[{"name"=>"嬉野流", "count"=>1}, {"name"=>"居玉", "count"=>1}]}]
+        @hash["every_day_list"] # => [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=>[{"name"=>"嬉野流", "count"=>1}]}]
         @hash["every_grade_list"] # => [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>1.0}]
         @hash["every_my_attack_list"] # => [{"tag"=>{"name"=>"嬉野流", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}]
         @hash["every_vs_attack_list"] # => [{"tag"=>{"name"=>"△３ニ飛戦法", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}]
-        @hash["every_my_defense_list"] # => [{"tag"=>{"name"=>"居玉", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}]
-        @hash["every_vs_defense_list"] # => [{"tag"=>{"name"=>"居玉", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}]
+        @hash["every_my_defense_list"] # => []
+        @hash["every_vs_defense_list"] # => []
 
-        assert { @hash["every_day_list"] == [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=>[{"name"=>"嬉野流", "count"=>1}, {"name"=>"居玉", "count"=>1}]}] }
+        assert { @hash["every_day_list"] == [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=>[{"name"=>"嬉野流", "count"=>1}]}] }
         assert { @hash["every_grade_list"] == [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>1.0}] }
         assert { @hash["every_my_attack_list"] == [{"tag"=>{"name"=>"嬉野流", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
         assert { @hash["every_vs_attack_list"] == [{"tag"=>{"name"=>"△３ニ飛戦法", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
-        assert { @hash["every_my_defense_list"] == [{"tag"=>{"name"=>"居玉", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
-        assert { @hash["every_vs_defense_list"] == [{"tag"=>{"name"=>"居玉", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
+        assert { @hash["every_my_defense_list"] == [] }
+        assert { @hash["every_vs_defense_list"] == [] }
       end
 
       it "メダル" do
@@ -51,19 +51,19 @@ module Swars
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ...F.
-# >> 
+# >>
 # >> Failures:
-# >> 
+# >>
 # >>   1) Swars::Battle to_hash 各タブの情報
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      # -:34:in `block (3 levels) in <module:Swars>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >> 
-# >> Finished in 1.89 seconds (files took 2.63 seconds to load)
+# >>
+# >> Finished in 2.37 seconds (files took 4.95 seconds to load)
 # >> 5 examples, 1 failure
-# >> 
+# >>
 # >> Failed examples:
-# >> 
+# >>
 # >> rspec -:26 # Swars::Battle to_hash 各タブの情報
-# >> 
+# >>

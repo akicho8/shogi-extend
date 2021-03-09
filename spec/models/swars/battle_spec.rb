@@ -48,7 +48,7 @@ module Swars
           assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"              }
           assert { value[:url]         == nil                                                        }
           assert { value[:image]       == "http://0.0.0.0:3000/w/battle1.png?turn=5&viewpoint=black" }
-          assert { value[:description] == "嬉野流 居玉 vs △３ニ飛戦法 居玉"                         }
+          assert { value[:description] == "嬉野流 vs △３ニ飛戦法"                                   }
         end
         it "turnを変更できる" do
           assert { record.to_twitter_card_params(turn: 0)[:image].include?("turn=0") }
@@ -60,7 +60,7 @@ module Swars
       end
 
       it "description" do
-        assert { record.description == "嬉野流 居玉 vs △３ニ飛戦法 居玉" }
+        assert { record.description == "嬉野流 vs △３ニ飛戦法" }
       end
     end
 
