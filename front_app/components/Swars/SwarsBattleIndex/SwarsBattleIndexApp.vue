@@ -510,8 +510,6 @@ export default {
   },
 
   computed: {
-    base() { return this },
-
     current_route_query() {
       return {
         query:       this.query,
