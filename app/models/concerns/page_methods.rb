@@ -6,21 +6,15 @@ module PageMethods
   end
 
   def current_per
-    v = (params[:per].presence || default_per).to_i
-    if v.positive?
-      v
-    end
+    [(params[:per].presence || default_per).to_i, 1].max
   end
 
   def current_page
-    params[:page].presence.to_i
+    [params[:page].to_i, 1].max
   end
 
   def page_scope(s)
-    if v = current_per.presence
-      s = s.page(current_page).per(v)
-    end
-    s
+    s.page(current_page).per(current_per)
   end
 
   def page_info(s)
