@@ -21,6 +21,7 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
         b-menu-list(label="Export")
           b-menu-item(label="局面URLコピー"                                                        @click="base.current_url_cc_copy_handle")
           b-menu-item(label="SFEN コピー"                                                          @click="base.kifu_cc_copy_handle('sfen')")
+          b-menu-item(label="BOD コピー"                                                          @click="base.kifu_cc_copy_handle('bod')")
           b-menu-item(label="KIF ダウンロード"             :href="base.kif_download_url"           @click="sound_play('click')")
           b-menu-item(label="KIF ダウンロード (Shift_JIS)" :href="base.shift_jis_kif_download_url" @click="sound_play('click')")
           b-menu-item(label="画像ダウンロード"             :href="base.snapshot_image_url"         @click="sound_play('click')")
