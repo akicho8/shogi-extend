@@ -547,12 +547,16 @@ export default {
     margin-top: 2em
 
 .SwarsBattleIndexApp
+  .MainSection.section
+    +tablet
+      padding: 1.75rem 0rem
+
   .container
     +mobile
       padding: 0
 
   .b-table
-    margin-top: 1.5rem
+    margin-top: 0rem
     +mobile
       margin-top: 1rem
     td

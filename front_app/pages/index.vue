@@ -1,6 +1,6 @@
 <template lang="pug">
 .service-infos.has-background-white-bis
-  MainNavbar
+  MainNavbar(:spaced="true")
     template(slot="brand")
       b-navbar-item(tag="nuxt-link" :to="{name: 'index'}" @click.native="title_click")
         h1.has-text-weight-bold SHOGI-EXTEND
@@ -36,7 +36,7 @@
     .container
       .columns
         .column.is-4.has-text-centered-tablet
-          .title.is-6.mb-0.has-text-weight-bold App Map
+          .title.is-6.mb-0.has-text-weight-bold Apps
           ul.mt-1
             template(v-for="e in config")
               template(v-if="e.display_p || development_p")
@@ -54,7 +54,6 @@
               nuxt-link(:to="{path: '/about/credit'}" @click.native="sound_play('click')") クレジット
             li
               ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
-
 
         .column.is-4.has-text-centered-tablet
           .title.is-6.mb-0.has-text-weight-bold GitHub
@@ -107,11 +106,15 @@ export default {
 
 <style lang="sass">
 .service-infos
+  .MainSection.section
+    +tablet
+      padding: 1.75rem 0.75rem
+
   .box
     padding-bottom: 2rem
 
   .footer
-    gcolor: $grey
+    color: $grey
     a
       color: inherit
 </style>
