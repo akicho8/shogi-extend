@@ -184,6 +184,7 @@
 
               :show-header  = "config.total >= 1 || true"
               :paginated    = "config.total >= 1 || true"
+              hoverable
 
               backend-pagination
               pagination-simple
@@ -254,9 +255,9 @@
                   KifCopyButton(@click="kifu_copy_handle(row)")
                   DetailButton(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location.key}}" @click.native="sound_play('click')") 詳細
 
-    client-only
-      DebugPre {{config}}
-      DebugPre {{$store.user}}
+  client-only
+    DebugPre {{config}}
+    DebugPre {{$store.user}}
 </template>
 
 <script>
@@ -557,6 +558,7 @@ export default {
 
   .b-table
     margin-top: 0rem
+    // margin-bottom: 2rem
     +mobile
       margin-top: 1rem
     td
