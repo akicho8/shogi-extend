@@ -18,20 +18,19 @@
 
       b-notification(:closable="false")
         .title.is-5 棋譜取得の予約について
-        | 将棋ウォーズ棋譜検索は将棋ウォーズの公式(以下本家)とはあまり同期していません。
-        | 検索という名前をつけているものの、直近の対局をすぐに検討できることを目的としているのと、本家への負荷軽減や、レスポンス速度の兼ね合いもあって、本家から取得するのは各ルール直近10件だけにしています。
+        | 将棋ウォーズ棋譜検索は将棋ウォーズの公式(以下本家)とは同期していません。
+        | 検索としつつも直近の対局の検討を目的としているのと本家への負荷軽減やレスポンス速度の兼ね合いもあり、本家から取得するのは各ルール直近10件だけにしています。
         | <br><br>
-        | そのためたくさん対戦しているはずなのに検索してみたら思ったより表示件数が少なかったり抜けができたりします。
+        | そのため多く対戦していても検索すると思ったより件数が少なかったり抜けができたりします。
         | <br><br>
-        | たとえば3分切れ負けを15局やったあと検索しても直近の10局しか取り込んでないので残り5局が見当たりません。
-        | 最初の5局の中に検討したかった対局がある場合は困るでしょう。
+        | たとえば3分を15戦したあと検索しても直近の10局しか取り込んでないため最初の5局が見当たりません。
+        | 最初の5局に検討したい対局があった場合は困るでしょう。
         | <br><br>
-        | そんなときに<b>棋譜取得の予約</b>をすると残りの5局を取ってきます。
-        | 最大直近1ヶ月分を<b>深夜</b>に探しに行きます。
-        | 終わったら指定のメールアドレスに通知します。
+        | そんなときに<b>棋譜取得の予約</b>をすると残りの5局を取得します。
+        | 最大<b>直近1ヶ月</b>分を深夜に取得し、終わったら指定のメールアドレスに通知します。
         | その際に棋譜データも必要であればZIPファイルの添付を有効にしてください。
         | <br><br>
-        | ZIPファイルには文字コード UTF-8 と Shift_JIS の両方を入れているので、古い Windows アプリで読めないときは Shift_JIS の方を試してみてください。
+        | ZIPには文字コード UTF-8 と Shift_JIS の両方を入れているので古い Windows アプリで読めないときは Shift_JIS の方をお試しください。
 
       b-field.mt-6(label="通知先メールアドレス" label-position="on-border")
         b-input(v-model.trim="to_email" required :disabled="!g_current_user")
@@ -44,7 +43,7 @@
       b-field.mt-5
         .control
           .buttons
-            b-button(@click="yoyaku_handle" :disabled="!g_current_user" :loading="loading_p" icon-left="clock") 棋譜取得の予約
+            b-button(@click="post_handle" :disabled="!g_current_user" :loading="loading_p" icon-left="clock") 棋譜取得の予約
             b-button(@click="crawler_run_handle_handle" v-if="development_p") さばく
 
   DebugPre {{$data}}
@@ -69,7 +68,7 @@ export default {
     }
   },
   methods: {
-    async yoyaku_handle() {
+    async post_handle() {
       if (!this.g_current_user) {
         this.toast_warn("ログインしてください")
         return
