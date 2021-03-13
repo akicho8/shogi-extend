@@ -134,5 +134,8 @@ export default {
 
 .WkbkTopApp
   .MainSection.section
-    padding: 1.5rem 1.0rem
+    +mobile
+      padding: 0.75rem
+    +tablet
+      padding: 1.5rem
 </style>

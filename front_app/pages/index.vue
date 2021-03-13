@@ -119,10 +119,7 @@ export default {
       padding: 1.5rem
 
   .footer
-    +mobile
-      padding-bottom: 3rem
-    +tablet
-      padding-bottom: 8rem
+    padding-bottom: 8rem
 
   .box
     padding-bottom: 2rem

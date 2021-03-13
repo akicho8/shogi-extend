@@ -1,5 +1,5 @@
 <template lang="pug">
-.WkbkTopSearchAppear.is-hidden-desktop.columns(v-if="base.search_p")
+.WkbkTopSearchAppear.is-hidden-desktop.columns(v-if="base.search_p || true")
   .column
     WkbkTopSearch(:base="base")
 </template>

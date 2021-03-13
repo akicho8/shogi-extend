@@ -39,6 +39,14 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkTopCardList
+  +mobile
+    .columns
+      margin: 0
+    .column
+      padding: 0
+      &:not(:first-child)
+        margin-top: 0.75rem
+
   .user_avatar
     img
       max-height: none

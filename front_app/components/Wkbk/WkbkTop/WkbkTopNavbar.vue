@@ -2,7 +2,11 @@
 MainNavbar.WkbkTopNavbar(:spaced="false")
   template(slot="brand")
     NavbarItemHome
-    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack'}") インスタント将棋問題集
+    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack'}")
+      span.is-hidden-mobile
+        | インスタント将棋問題集
+      span.is-hidden-tablet
+        | 問題集
 
   template(slot="start")
     b-navbar-item.is-hidden-touch.with_search_field(tag="div")
@@ -20,8 +24,8 @@ MainNavbar.WkbkTopNavbar(:spaced="false")
 
     WkbkSidebarToggle(:base="base" @click="base.sidebar_toggle" v-if="false")
 
-    b-navbar-item.is-hidden-desktop.has-text-weight-bold(@click="base.search_field_toggle_handle")
-      b-icon(icon="magnify")
+    //- b-navbar-item.is-hidden-desktop.has-text-weight-bold(@click="base.search_field_toggle_handle")
+    //-   b-icon(icon="magnify")
 </template>
 
 <script>
