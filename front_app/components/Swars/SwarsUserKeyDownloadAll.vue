@@ -79,6 +79,11 @@ export default {
         return
       }
 
+      if (this.to_email.includes("localhost")) {
+        this.toast_warn("正しいメールアドレスを入力してください")
+        return
+      }
+
       const params = {
         crawl_reservation: {
           target_user_key: this.$route.params.key,
