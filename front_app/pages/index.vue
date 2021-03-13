@@ -36,7 +36,7 @@
     .container
       .columns
         .column.is-4.has-text-centered-tablet
-          .title.is-6.mb-0.has-text-weight-bold Apps
+          .title.is-5.mb-0.has-text-weight-bold Apps
           ul.mt-1
             template(v-for="e in config")
               template(v-if="e.display_p || development_p")
@@ -44,7 +44,7 @@
                   nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play('click')") {{e.title}}
 
         .column.is-4.has-text-centered-tablet
-          .title.is-6.mb-0.has-text-weight-bold About
+          .title.is-5.mb-0.has-text-weight-bold About
           ul.mt-1
             li
               nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="sound_play('click')") プライバシー
@@ -56,7 +56,7 @@
               ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
 
         .column.is-4.has-text-centered-tablet
-          .title.is-6.mb-0.has-text-weight-bold GitHub
+          .title.is-5.mb-0.has-text-weight-bold GitHub
           ul.mt-1
             li
               ExternalLink(href="https://github.com/akicho8/shogi-extend" beep) shogi-extend
@@ -106,15 +106,29 @@ export default {
 
 <style lang="sass">
 .service-infos
-  .MainSection.section
+  .MainSection.section, .footer
+    +mobile
+      padding: 0.75rem
+      .columns
+        margin: 0
+      .column
+        padding: 0
+        &:not(:first-child)
+          margin-top: 0.75rem
     +tablet
-      padding: 1.75rem 0.75rem
+      padding: 1.5rem
+
+  .footer
+    +mobile
+      padding-bottom: 3rem
+    +tablet
+      padding-bottom: 8rem
 
   .box
     padding-bottom: 2rem
 
   .footer
-    color: $grey
+    color: $text
     a
       color: inherit
 </style>
