@@ -1,7 +1,6 @@
-export default {
+export const app_columns = {
   data() {
     return {
-      visible_hash: null, //  { xxx: true, yyy: false } 形式
     }
   },
   methods: {

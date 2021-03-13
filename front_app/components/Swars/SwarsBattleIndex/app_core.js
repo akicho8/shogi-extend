@@ -2,21 +2,9 @@ import _ from "lodash"
 import dayjs from "dayjs"
 import MemoryRecord from 'js-memory-record'
 
-import app_columns from "./app_columns.js"
-
-import SwarsBattleIndexSearchAction from "./SwarsBattleIndexSearchAction.js"
-import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
-
 export const app_core = {
-  mixins: [
-    app_columns,
-    SwarsBattleIndexSearchAction,
-    ls_support_mixin,
-  ],
-
   data() {
     return {
-      display_key: null, // 何の局面の表示をするか？
     }
   },
 
@@ -66,22 +54,5 @@ export const app_core = {
         viewpoint: record.viewpoint,
       })
     },
-  },
-
-  computed: {
-    //////////////////////////////////////////////////////////////////////////////// ls_support_mixin
-
-    ls_storage_key() {
-      return "swars/battles/index"
-    },
-
-    ls_default() {
-      return {
-        visible_hash: this.as_visible_hash(this.config.table_columns_hash),
-        display_key:  this.config.display_key,
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
   },
 }

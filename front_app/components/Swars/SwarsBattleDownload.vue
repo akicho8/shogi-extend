@@ -79,38 +79,9 @@ import MemoryRecord from "js-memory-record"
 //   }
 // }
 
-class ZipDlFormatInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "kif",  message: "一般的",                               },
-      { key: "ki2",  message: "人間向けで掲示板に貼るのに向いている", },
-      { key: "csa",  message: "コンピュータ将棋用",                   },
-      { key: "sfen", message: "コンピュータ将棋用の1行表記",          },
-    ]
-  }
-
-  get name() {
-    return this.key.toUpperCase()
-  }
-}
-
-class BodyEncodeInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "UTF-8",     message: "一般的な文字コード",                                           },
-      { key: "Shift_JIS", message: "ShogiGUIでは常にこちらで、激指で連続棋譜解析するときもこちら", },
-    ]
-  }
-}
-
-class ZipDlStructureInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "date", name: "対局日毎",   message: "「ウォーズID/2020-01-01/ファイル」のような構造で格納する", },
-      { key: "all",  name: "ごちゃまぜ", message: "「ウォーズID/ファイル」のような構造で格納する",            },
-    ]
-  }
-}
+import { ZipDlFormatInfo } from "@/components/models/zip_dl_format_info.js"
+import { BodyEncodeInfo } from "@/components/models/body_encode_info.js"
+import { ZipDlStructureInfo } from "@/components/models/zip_dl_structure_info.js"
 
 export default {
   name: "SwarsBattleDownload",
