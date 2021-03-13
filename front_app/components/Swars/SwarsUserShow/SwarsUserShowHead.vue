@@ -7,7 +7,7 @@
 
   // 段級位
   .is-flex.rule_container
-    .rule_one(v-for="(row, key) in base.info.rules_hash")
+    nuxt-link.rule_one.is-clickable(v-for="(row, key) in base.info.rules_hash" tag="span" :to="{name: 'swars-search', query: {query: `${base.info.user.key} rule:${row.rule_name}`}}")
       span.rule_name.is-size-7.has-text-grey
         | {{row.rule_name}}
       span.grade_name.is-size-5

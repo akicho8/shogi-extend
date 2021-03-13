@@ -17,7 +17,13 @@ module Swars
       private
 
       def invert_table
-        @invert_table ||= inject({}) {|a, e| a.merge(e.swars_real_key => e) }
+        @invert_table ||= inject({}) do |a, e|
+          a.merge({
+                    e.swars_real_key => e,
+                    e.name           => e,
+                    e.long_name      => e,
+                  })
+        end
       end
     end
 

@@ -284,6 +284,10 @@ module Swars
           s = s.where(key: v)
         end
 
+        if v = query_info.lookup_one(:rule)
+          s = s.where(rule_key: RuleInfo.fetch(v).key)
+        end
+
         if e = query_info.lookup_one_op(:turn_max)
           s = s.where(current_model.arel_table[:turn_max].public_send(e[:operator], e[:value]))
         end
