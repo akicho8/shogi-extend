@@ -397,7 +397,7 @@ export default {
     any_source_read_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.$buefy.modal.open({
+      const modal_instance = this.$buefy.modal.open({
         parent: this,
         hasModalCard: true,
         animation: "",
@@ -414,6 +414,7 @@ export default {
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
                 this.sp_viewpoint = "black"
+                modal_instance.close()
               }
             })
           },
