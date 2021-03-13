@@ -131,63 +131,75 @@ export default {
 
   .b-tabs
     margin-top: 1rem
+    margin-bottom: 0
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  .tab_content
-    margin-top: -0.3rem
+  .boxes
+    margin-top: 1rem
+    margin-bottom: 3rem
 
     .one_box
-      margin: 1rem 0.5rem
-      padding: 1.5rem
+      margin: 0 0.75rem
+      &:not(:first-child)
+        margin-top: 0.75rem
+      padding: 0.75rem
 
       .vs_mark
       .vs_name
         margin-left: 0.5rem
-      .use_rate_label
-        vertical-align: 5%
-      .use_rate
-        margin-left: 0.4rem
-      .use_rate_unit
-        margin-left: 0.2rem
-        vertical-align: 5%
+
+      .one_box_title
+        display: flex
+        align-items: center
+        justify-content: flex-start
+
+        font-weight: bold
+        font-size: $size-5
+
+      .use_rate_block
+        display: flex
+        align-items: center
+        justify-content: center
+        white-space: nowrap
+        font-size: $size-7
+        .use_rate_label
+          color: $grey-light
+        .use_rate_value
+          margin: 0 0.25em
+        .use_rate_unit
+          color: $grey-light
+
       &.two_column
         .WinLoseCircle
           margin-top: 0.25rem
+
       +desktop
         margin-left: auto
         margin-right: auto
         max-width: 28rem
-      .is-flex
+
+      .tactic_name_with_count_blocks
+        display: flex
         flex-direction: column
         justify-content: center
         align-items: center
+
         .tag_wrapper
-          margin: 0rem
           color: inherit
 
-        // flex-wrap: wrap
-        // justify-content: flex-start
-        // align-content: space-around
-        // align-items: center
-        // .buttons
+          display: flex
+          align-items: center
+          justify-content: center
 
-        // align-items: center
-        // display: flex
-        // flex-wrap: wrap
-        // justify-content: flex-start
-
-        // .tag_wrapper
-        //   margin-bottom: 0.5rem
-        //   margin-right: 0.5rem
-
-      // b-taglist は本来 "棒銀 棒金" のようなタグの並びを折り返すためにある
-      // しかし "棒銀[2]" のように数字をくっつける場合にも(不適切な形でbuefyの本家が)使っている
-      // そのため幅が狭いと "棒銀[2]" の数字が改行してしまう場合がある
-      // その対策
-      .tag_wrapper
-        flex-wrap: nowrap
+          // b-taglist は本来 "棒銀 棒金" のようなタグの並びを折り返すためにある
+          // しかし "棒銀[2]" のように数字をくっつける場合にも(不適切な形でbuefyの本家が)使っている
+          // そのため幅が狭いと "棒銀[2]" の数字が改行してしまう場合がある
+          // その対策
+          flex-wrap: nowrap
 
 .STAGE-development
   .SwarsUserShowApp
+    .boxes
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

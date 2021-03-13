@@ -56,7 +56,7 @@ export default {
         margin-left: 0.2rem
 
   .WinLoseCircle
-    margin-top: 1rem
+    margin-top: 0.5rem
 
   .ox_container
     font-size: 0.8rem
