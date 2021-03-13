@@ -1,7 +1,7 @@
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 import { ChessClock     } from "@/components/models/chess_clock.js"
-import { CcRuleInfo       } from "@/components/models/cc_rule_info.js"
-import { Location } from "shogi-player/components/models/location.js"
+import { CcRuleInfo     } from "@/components/models/cc_rule_info.js"
+import { Location       } from "shogi-player/components/models/location.js"
 import ChessClockModal from "./ChessClockModal.vue"
 
 export const app_chess_clock = {
@@ -156,6 +156,7 @@ export const app_chess_clock = {
         this.chess_clock.play_handle()
       }
     },
+    // 指した直後に片方の時計のボタンを押す
     cc_switch_handle(e) {
       this.__assert__(e, "e")
       if (this.chess_clock.running_p) {

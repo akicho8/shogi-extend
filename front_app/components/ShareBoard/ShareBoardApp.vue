@@ -228,9 +228,12 @@ export default {
       this.current_sfen = v
       this.sfen_share({last_move_kif: last_move_info.to_kif_without_from, yomiage: last_move_info.to_yomiage})
 
+      // 時計があれば操作した側のボタンを押す
       if (this.chess_clock) {
         this.cc_switch_handle(this.chess_clock.single_clocks[last_move_info.location.code])
       }
+      // 時計の状態をブロードキャストする
+      this.chess_clock_share()
     },
 
     // デバッグ用
