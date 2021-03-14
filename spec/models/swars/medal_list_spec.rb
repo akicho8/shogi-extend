@@ -29,7 +29,7 @@ module Swars
       end
 
       it do
-        assert { test == {"振り飛車"=>1.0, "△３ニ飛戦法"=>1.0} }
+        assert { test == {"振り飛車"=>1.0, "2手目△３ニ飛戦法"=>1.0} }
       end
     end
 
