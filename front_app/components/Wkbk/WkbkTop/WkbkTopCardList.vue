@@ -20,7 +20,7 @@
             p
               | {{updated_time_format(e.updated_at)}}
               b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
-            WkbkTagList.mt-1(:tag_list="e.tag_list" :tag_search_handle="base.tag_search_handle")
+            WkbkTagList.mt-1(:tag_list="e.tag_list" :tag_search_handle="base.tag_search_handle" v-if="WkbkConfig.fetch('top_tag_display_p').value")
 
         .content(v-if="false")
           .description.is_truncate2(v-html="simple_format(auto_link(e.description))")
