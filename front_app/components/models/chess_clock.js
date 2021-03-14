@@ -10,9 +10,9 @@ export class ChessClock {
       initial_extra_sec: null,  // 猶予(初期値)
       every_plus:        null,  // 1手ごと加算
 
-      time_zero_callback: e => {},
-      clock_switch_hook: () => {},
-      second_decriment_hook: () => {},
+      time_zero_callback:    () => {}, // 残り時間が 0 になったときの処理 (切れ負け/勝ち判定用)
+      clock_switch_hook:     () => {}, // 時計を切り替えた瞬間の処理 (用途不明)
+      second_decriment_hook: () => {}, // 時間が減るたびに呼ぶ処理 (主に秒読み用)
 
       active_value_zero_class:    "",
       active_value_nonzero_class: "",
@@ -24,7 +24,7 @@ export class ChessClock {
     this.timer         = null   // null以外ならタイマー動作中
     this.turn          = null   // 0または1が手番。null:手番が設定されていない
     this.counter       = null   // 手数 (未使用)
-    this.zero_arrival  = null   // 0 になったら true
+    this.zero_arrival  = null   // 残り時間が 0 になったら true
     this.single_clocks = null   // それぞれの時計
     this.running_p     = null   // true:動作中 false:停止中
 
@@ -184,7 +184,7 @@ export class ChessClock {
     v.timer         = this.timer         // null以外ならタイマー動作中
     v.turn          = this.turn          // 0または1が手番。null:手番が設定されていない
     v.counter       = this.counter       // 手数 (未使用)
-    v.zero_arrival  = this.zero_arrival  // 0 になったら true
+    v.zero_arrival  = this.zero_arrival  // 残り時間が 0 になったら true
     v.running_p     = this.running_p     // true:動作中 false:停止中
     v.speed         = this.speed         // タイマー速度
 
