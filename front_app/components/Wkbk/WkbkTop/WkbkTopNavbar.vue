@@ -20,7 +20,7 @@ MainNavbar.WkbkTopNavbar(:spaced="false")
       b-icon(icon="cog")
 
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play('click')")
-      b-icon(icon="file-plus")
+      b-icon(icon="plus")
 
     WkbkSidebarToggle(:base="base" @click="base.sidebar_toggle" v-if="false")
 

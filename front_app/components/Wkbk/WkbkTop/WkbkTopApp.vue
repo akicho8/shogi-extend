@@ -15,26 +15,9 @@
         WkbkTopSearchAppear(:base="base")
         WkbkTopCardListTag(:base="base")
         WkbkTopCardList(:base="base")
-        //- WkbkTopTab(:base="base")
-        //- WkbkTopTable(:base="base")
 
   DebugPre {{$fetchState}}
   DebugPre {{$data}}
-
-  //- .box
-  //-   template(v-if="$fetchState.pending")
-  //-     | pending
-  //-   template(v-else-if="$fetchState.error")
-  //-     | error
-  //-   template(v-else)
-  //-     | htlm
-  //-
-  //- WkbkTopSidebar(:base="base")
-  //- WkbkTopNavbar(:base="base")
-  //- .container
-  //-   WkbkTopTab(:base="base")
-  //-   WkbkTopTable(:base="base")
-
 </template>
 
 <script>

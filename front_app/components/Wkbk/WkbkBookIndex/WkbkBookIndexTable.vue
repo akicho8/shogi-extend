@@ -50,7 +50,7 @@
       //-   b-icon(icon="edit")
       //-   | 編集
       nuxt-link(:to="{name: 'rack-articles-new', query: {book_key: row.key}}" v-if="false")
-        b-icon(icon="book-plus")
+        b-icon(icon="plus")
 
       b-dropdown(append-to-body position="is-bottom-left" @active-change="sound_play('click')")
         a(slot="trigger")
