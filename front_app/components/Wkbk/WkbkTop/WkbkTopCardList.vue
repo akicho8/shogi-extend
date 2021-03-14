@@ -15,7 +15,7 @@
             figure.image.is-48x48
               img.is-rounded(:src="e.user.avatar_path" :alt="e.user.name")
           .media-content
-            .title.is-4.mb-1 {{e.title}}
+            .title.is-5.mb-1 {{e.title}}
             p {{e.user.name}}
             p
               | {{updated_time_format(e.updated_at)}}
