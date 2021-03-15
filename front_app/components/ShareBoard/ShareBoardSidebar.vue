@@ -15,9 +15,11 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
           b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
           b-menu-item.is_active_unset(label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="sound_play('click')")
           b-menu-item.is_active_unset(label="棋譜コピー" @click="base.kifu_cc_copy_handle('kif')")
+
         b-menu-list(label="編集・詰将棋作成")
-          b-menu-item.is_active_unset(label="局面編集"       @click="base.mode_toggle_handle")
+          b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
           b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle")
+
         b-menu-list(label="Export")
           b-menu-item.is_active_unset(label="局面URLコピー"                                                        @click="base.current_url_cc_copy_handle")
           b-menu-item.is_active_unset(label="SFEN コピー"                                                          @click="base.kifu_cc_copy_handle('sfen')")
@@ -25,6 +27,7 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
           b-menu-item.is_active_unset(label="KIF ダウンロード"             :href="base.kif_download_url"           @click="sound_play('click')")
           b-menu-item.is_active_unset(label="KIF ダウンロード (Shift_JIS)" :href="base.shift_jis_kif_download_url" @click="sound_play('click')")
           b-menu-item.is_active_unset(label="画像ダウンロード"             :href="base.snapshot_image_url"         @click="sound_play('click')")
+
         b-menu-list(label="その他")
           b-menu-item.is_active_unset(label="OGP画像の視点設定"             @click="base.abstract_viewpoint_setting_handle")
           b-menu-item.is_active_unset(label="局面URLツイート(合言葉を含む)" @click="base.tweet_handle")
@@ -35,6 +38,7 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
         .title.is-5 スタイル設定
         b-field(custom-class="is-small" label="盤の大きさ(スマホを除く)")
           b-slider(v-bind="slider_attrs" v-model="base.share_board_column_width" :min="0" :max="100" :step="0.1")
+
       .box.mt-5
         .title.is-5 ☠危険な設定
         b-field(custom-class="is-small" label="将棋のルール" message="無視にすると「自分の手番では自分の駒を操作する」の制約を無視するので、自分の手番で相手の駒を操作できる。それを利用して後手のときも先手の駒を動かせば見た目上はずっと先手側を操作できるので先手だけの囲いの手順の棋譜を作ったりするのが簡単になる。しかし反則のため他のアプリでは読めない棋譜になってしまう")
@@ -67,6 +71,7 @@ export default {
 .ShareBoardApp-Sidebar
   .sidebar-content
     width: 20rem
+
   .menu-label
     margin-top: 2em
 

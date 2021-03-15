@@ -22,7 +22,7 @@ client-only
 
     ShareBoardSidebar(:base="base")
 
-    MainNavbar(:spaced="false")
+    MainNavbar(:spaced="false" :type="sp_run_mode === 'edit_mode' ? 'is-dark' : 'is-primary'")
       template(slot="brand")
         b-navbar-item(@click.native="exit_handle")
           b-icon(icon="home")
@@ -35,9 +35,9 @@ client-only
           b-tag.has-text-weight-bold(rounded)
             .has-text-primary {{member_infos.length}}
 
-        b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="tweet_handle" v-if="sp_run_mode === 'play_mode' && !share_p")
+        b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="tweet_modal_handle" v-if="sp_run_mode === 'play_mode' && !share_p")
           b-icon(icon="twitter" type="is-white")
-        b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'")
+        b-navbar-item.has-text-weight-bold(@click="play_mode_handle" v-if="sp_run_mode === 'edit_mode'")
           | 編集完了
         // テストで参照しているので sidebar_toggle_navbar_item は取ったらいけん
         b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
@@ -46,7 +46,7 @@ client-only
     MainSection.is_mobile_padding_zero
       .container.is-fluid
         .columns.is-centered
-          .MainColumn.column
+          .MainColumn.column(:class="main_column_class")
             CustomShogiPlayer.is_mobile_vertical_good_style(
               :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
@@ -71,9 +71,12 @@ client-only
               @update:turn_offset_max="v => turn_offset_max = v"
             )
 
-            .buttons.is-centered.mt-4(v-if="false")
-              TweetButton(:body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="sp_run_mode === 'play_mode'")
-              //- b-button(@click="mode_toggle_handle" v-if="sp_run_mode === 'edit_mode'") 編集完了
+            .buttons.is-centered.mt-4(v-if="true")
+              //- b-tooltip(label="ツイート")
+              //- TweetButton(size="" :body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="sp_run_mode === 'play_mode'")
+              b-button.has-text-weight-bold(:type="advanced_p ? 'is-twitter' : ''" v-if="sp_run_mode === 'play_mode'" icon-left="twitter" @click="tweet_modal_handle") ツイート
+
+              b-button.has-text-weight-bold(type="is-primary" @click="play_mode_handle" v-if="sp_run_mode === 'edit_mode'") 編集完了
 
             .room_code.is-clickable(@click="room_code_modal_handle" v-if="false")
               | {{room_code}}
@@ -116,15 +119,18 @@ import _ from "lodash"
 
 import { support_parent } from "./support_parent.js"
 
-import { app_chess_clock         } from "./app_chess_clock.js"
+import { app_action_log   } from "./app_action_log.js"
+import { app_chess_clock  } from "./app_chess_clock.js"
+import { app_chore        } from "./app_chore.js"
+import { app_edit_mode    } from "./app_edit_mode.js"
 import { app_room         } from "./app_room.js"
 import { app_room_init    } from "./app_room_init.js"
-import { app_action_log   } from "./app_action_log.js"
 import { app_room_members } from "./app_room_members.js"
+import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
+
 import { Location } from "shogi-player/components/models/location.js"
 
-import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.vue"
 import RealtimeShareModal              from "./RealtimeShareModal.vue"
 import AnySourceReadModal              from "@/components/AnySourceReadModal.vue"
 
@@ -132,12 +138,15 @@ export default {
   name: "ShareBoardApp",
   mixins: [
     support_parent,
-    app_storage,
+    app_action_log,
+    app_chess_clock,
+    app_chore,
+    app_edit_mode,
     app_room,
     app_room_init,
-    app_action_log,
     app_room_members,
-    app_chess_clock,
+    app_sidebar,
+    app_storage,
   ],
   props: {
     config: { type: Object, required: true },
@@ -163,8 +172,6 @@ export default {
       sp_run_mode:   this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       internal_rule: this.defval(this.$route.query.internal_rule, INTERNAL_RULE_DEFAULT),        // 操作モードの内部ルール strict or free
 
-      sidebar_p: false,
-
       share_board_column_width: 80, // 盤の大きさ
     }
   },
@@ -187,38 +194,6 @@ export default {
     })
   },
   methods: {
-    exit_handle() {
-      this.sound_play("click")
-      if (this.ac_room || this.chess_clock) {
-
-        const message = "対局中のように思われますが本当に退室しますか？"
-        this.talk(message)
-
-        this.$buefy.dialog.confirm({
-          message: message,
-          cancelText: "キャンセル",
-          confirmText: "退室する",
-          focusOn: "cancel",
-          onCancel: () => {
-            this.talk_stop()
-            this.sound_play("click")
-          },
-          onConfirm: () => {
-            this.talk_stop()
-            this.sound_play("click")
-            this.$router.push({name: "index"})
-          },
-        })
-      } else {
-        this.$router.push({name: "index"})
-      }
-    },
-
-    sidebar_toggle() {
-      this.sound_play("click")
-      this.sidebar_p = !this.sidebar_p
-    },
-
     internal_rule_input_handle() {
       this.sound_play("click")
     },
@@ -269,56 +244,11 @@ export default {
       this.clipboard_copy({text: this.current_url})
     },
 
-    // ツイートする
-    // tweet_handle() {
-    //   this.tweet_window_popup({url: this.current_url, text: this.tweet_hash_tag})
-    // },
-
-    tweet_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-      this.tweet_window_popup({text: this.tweet_body})
-    },
-
-    // 操作←→編集 切り替え
-    mode_toggle_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-
-      if (this.sp_run_mode === "play_mode") {
-        if (this.abstract_viewpoint === "self" && false) {
-          this.toast_ok(`局面を公開したときの画像の視点やURLを開いたときの視点が、デフォルトではリレー将棋向けになっているので、詰将棋を公開する場合は視点設定を先手固定に変更するのがおすすめです`, {duration: 1000 * 10})
-        }
-
-        this.sp_run_mode = "edit_mode"
-        // this.sp_viewpoint = "black" // ▲視点にしておく(お好み)
-      } else {
-        this.sp_run_mode = "play_mode"
-      }
-    },
-
     // private
 
     // url_replace() {
     //   this.$router.replace({query: this.current_url_params})
     // },
-
-    // タイトル編集
-    title_edit() {
-      this.sidebar_p = false
-      this.sound_play("click")
-      this.$buefy.dialog.prompt({
-        title: "タイトル",
-        confirmText: "更新",
-        cancelText: "キャンセル",
-        inputAttrs: { type: "text", value: this.current_title, required: false },
-        onCancel: () => this.sound_play("click"),
-        onConfirm: value => {
-          this.sound_play("click")
-          this.current_title_set(value)
-        },
-      })
-    },
 
     current_title_set(title) {
       title = _.trim(title)
@@ -332,7 +262,6 @@ export default {
       this.sidebar_p = false
       this.sound_play("click")
 
-      // 視点設定変更
       this.$buefy.modal.open({
         component: RealtimeShareModal,
         parent: this,
@@ -340,59 +269,7 @@ export default {
         hasModalCard: true,
         animation: "",
         canCancel: false,
-        props: {
-          base: this.base,
-        },
-        // onCancel: () => this.sound_play("click"),
-        // events: {
-        //   "update:abstract_viewpoint": v => {
-        //     this.abstract_viewpoint = v
-        //   }
-        // },
-      })
-
-      // this.$buefy.dialog.prompt({
-      //   title: "リアルタイム共有",
-      //   size: "is-small",
-      //   message: `
-      //     <div class="content">
-      //       <ul>
-      //         <li>同じ合言葉を設定した人とリアルタイムに盤を共有できます</li>
-      //         <li>合言葉を設定したら同じ合言葉を相手に伝えてください</li>
-      //         <li>合言葉はURLにも付加するのでURLを伝えてもかまいません</li>
-      //       </ul>
-      //     </div>`,
-      //   confirmText: "設定",
-      //   cancelText: "キャンセル",
-      //   inputAttrs: { type: "text", value: this.room_code, required: false },
-      //   onCancel: () => this.sound_play("click"),
-      //   onConfirm: value => {
-      //     this.sound_play("click")
-      //     this.room_code_set(value)
-      //   },
-      // })
-    },
-
-    // 視点設定変更
-    abstract_viewpoint_setting_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-      this.$buefy.modal.open({
-        component: AbstractViewpointKeySelectModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        props: {
-          abstract_viewpoint: this.abstract_viewpoint,
-          permalink_for: this.permalink_for,
-        },
-        onCancel: () => this.sound_play("click"),
-        events: {
-          "update:abstract_viewpoint": v => {
-            this.abstract_viewpoint = v
-          }
-        },
+        props: { base: this.base },
       })
     },
 
@@ -549,6 +426,12 @@ export default {
       }
     },
 
+    main_column_class() {
+      return [
+        `is_sb_${this.sp_run_mode}`, // is_sb_play_mode, is_sb_edit_mode
+      ]
+    },
+
     next_location() {
       return this.sfen_parse(this.current_sfen).next_location
     },
@@ -578,20 +461,29 @@ export default {
       padding: 1.5rem
       .container
         padding: 0
+    +desktop
+      padding: 2.25rem
+      .container
+        padding: 0
 
   .EditToolBlock
-    margin-top: 12px
+    // margin-top: 12px
 
   // .MainColumn
   //   +tablet
   //     padding-top: 0
   //     padding-bottom: 0
 
+  ////////////////////////////////////////////////////////////////////////////////
   .MainColumn
     +tablet
       padding-top: unset
       padding-bottom: unset
-      max-width: calc(var(--share_board_column_width) * 1.0vmin)
+      &.is_sb_play_mode
+        max-width: calc(var(--share_board_column_width) * 1.0vmin)
+      &.is_sb_edit_mode
+        max-width: calc(var(--share_board_column_width) * 1.0vmin * 0.8)
+  ////////////////////////////////////////////////////////////////////////////////
 
   +tablet
     .ShareBoardMemberList

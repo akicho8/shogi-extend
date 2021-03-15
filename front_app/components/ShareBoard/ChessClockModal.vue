@@ -2,7 +2,8 @@
 .modal-card.ChessClockModal
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6
-      | 対局時計
+      span.has-text-weight-bold
+        | 対局時計
       span.mx-1.has-text-grey.is-size-6(v-if="instance") {{instance.human_status}}
     template(v-if="!instance || !instance.running_p")
       b-switch(size="is-small" type="is-primary" v-model="chess_clock_p" @input="chess_clock_switch_handle") 設置
@@ -52,7 +53,7 @@
         b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
           b-numberinput(expanded controls-position="compact" v-model="base.cc_params.every_plus"        :min="0" :max="60*60" :exponential="true")
   footer.modal-card-foot
-    b-button(@click="close_handle" icon-left="chevron-left") 戻る
+    b-button(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
       b-dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")
         b-button(slot="trigger" icon-left="menu-up") プリセット

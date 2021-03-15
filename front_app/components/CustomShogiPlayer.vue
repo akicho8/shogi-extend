@@ -41,6 +41,10 @@ export default {
 <style lang="sass">
 .CustomShogiPlayer
   width: 100%
+  &.is_run_mode_edit_mode
+    --sp_board_color: hsla(149.57,38.12%,35.49%,0.53)
+    // --sp_board_color: hsla(141, 71%, 35%, 1.0)
+    // --sp_board_color: hsla(348.71,65.89%,74.71%,1)
 
   +mobile
     --sp_lifted_origin_bg_color: #{$danger}
