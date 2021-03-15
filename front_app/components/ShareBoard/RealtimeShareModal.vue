@@ -12,7 +12,10 @@
         li 合言葉を設定したら同じ合言葉をこっそり相手に伝えてください
         li メニューにある「合言葉だけを含むURL」を伝えてもかまいません
         li 共有のタイミングは<b>指したときだけ</b>です ← 重要
-        li 間違えて指したときなどは(合意を得た上で)局面を戻して指し直せばよいです
+        li
+          | 「待った」したいときは(合意の上で)局面を
+          b-icon.has-text-weight-bold(icon="chevron-left" size="is-small")
+          | で戻して指し直す
         li 指し手のログの行をタップするとそのときの局面にワープします
     template(v-if="input_show_p")
       b-field(label="合言葉" label-position="on-border" key="input_show_p_true")
