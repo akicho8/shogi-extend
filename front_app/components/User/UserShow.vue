@@ -5,13 +5,13 @@
       .mx-4.my-4
         b-menu
           b-menu-list(label="Action")
-            b-menu-item(label="編集"               tag="nuxt-link" :to="{name: 'settings-profile'}"        @click.native="sound_play('click')")
-            b-menu-item(label="ぴよ将棋の種類"     tag="nuxt-link" :to="{name: 'settings-piyo_shogi'}"     @click.native="sound_play('click')")
-            b-menu-item(label="メールアドレス変更" tag="nuxt-link" :to="{name: 'settings-email'}"          @click.native="sound_play('click')")
-            b-menu-item(label="ウォーズIDの設定"   tag="nuxt-link" :to="{name: 'settings-swars-user-key'}" @click.native="sound_play('click')" v-if="development_p")
+            b-menu-item.is_active_unset(label="編集"               tag="nuxt-link" :to="{name: 'settings-profile'}"        @click.native="sound_play('click')")
+            b-menu-item.is_active_unset(label="ぴよ将棋の種類"     tag="nuxt-link" :to="{name: 'settings-piyo_shogi'}"     @click.native="sound_play('click')")
+            b-menu-item.is_active_unset(label="メールアドレス変更" tag="nuxt-link" :to="{name: 'settings-email'}"          @click.native="sound_play('click')")
+            b-menu-item.is_active_unset(label="ウォーズIDの設定"   tag="nuxt-link" :to="{name: 'settings-swars-user-key'}" @click.native="sound_play('click')" v-if="development_p")
           b-menu-list(label="その他")
-            b-menu-item(label="アカウント連携" :href="`${$config.MY_SITE_URL}/accounts/${record.id}/edit`")
-            b-menu-item(label="ログアウト" @click="logout_handle")
+            b-menu-item.is_active_unset(label="アカウント連携" :href="`${$config.MY_SITE_URL}/accounts/${record.id}/edit`")
+            b-menu-item.is_active_unset(label="ログアウト" @click="logout_handle")
     MainNavbar
       template(slot="brand")
         NavbarItemHome

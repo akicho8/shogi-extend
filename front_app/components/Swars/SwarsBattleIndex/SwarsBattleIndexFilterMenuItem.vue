@@ -1,5 +1,5 @@
 <template lang="pug">
-b-menu-item.SwarsBattleIndexFilterMenuItem(
+b-menu-item.is_active_unset.SwarsBattleIndexFilterMenuItem(
   v-bind="$attrs"
   v-on="$listeners"
   tag="nuxt-link"

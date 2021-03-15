@@ -6,12 +6,12 @@
       b-menu-item(tag="nuxt-link" :to="{name: 'rack-books'}"    label="問題集リスト" @click.native="sound_play('click')")
 
     b-menu-list(label="表示オプション" v-if="base.visible_hash")
-      b-menu-item.sidebar_columns_toggle(@click="sound_play('click')")
+      b-menu-item.is_active_unset.sidebar_columns_toggle(@click="sound_play('click')")
         template(slot="label" slot-scope="props")
           | 表示カラム
           b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
         template(v-for="e in base.BookIndexColumnInfo.values")
-          b-menu-item(
+          b-menu-item.is_active_unset(
             v-if="e.togglable"
             @click.stop="base.cb_toggle_handle(e)"
             :class="{is_visible_off: !base.visible_hash[e.key], is_visible_on: base.visible_hash[e.key]}"

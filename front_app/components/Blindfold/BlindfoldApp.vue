@@ -8,8 +8,8 @@ client-only
         .mt-4
           b-menu
             b-menu-list(label="Action")
-              b-menu-item(label="局面編集" @click="mode_toggle_handle")
-              b-menu-item(label="ツイート" @click="tweet_handle" v-if="scene === 'play_mode'")
+              b-menu-item.is_active_unset(label="局面編集" @click="mode_toggle_handle")
+              b-menu-item.is_active_unset(label="ツイート" @click="tweet_handle" v-if="scene === 'play_mode'")
         .box.mt-5
           .title.is-5 設定
           b-field(custom-class="is-small" label="再生速度")

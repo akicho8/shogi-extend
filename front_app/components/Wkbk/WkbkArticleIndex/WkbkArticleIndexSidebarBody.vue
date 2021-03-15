@@ -2,19 +2,19 @@
 .WkbkArticleIndexSidebarBody
   b-menu
     //- b-menu-list(label="Action" v-if="development_p")
-    //-   b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles-new'}" label="問題作成" @click.native="sound_play('click')")
+    //-   b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'rack-articles-new'}" label="問題作成" @click.native="sound_play('click')")
 
     b-menu-list(label="コンテンツ")
       b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles'}" label="問題リスト"   @click.native="sound_play('click')")
       b-menu-item(tag="nuxt-link" :to="{name: 'rack-books'}"    label="問題集リスト" @click.native="sound_play('click')")
 
     b-menu-list(label="表示オプション")
-      b-menu-item.sidebar_columns_toggle(:disabled="base.display_option_disabled" @click="sound_play('click')")
+      b-menu-item.is_active_unset.sidebar_columns_toggle(:disabled="base.display_option_disabled" @click="sound_play('click')")
         template(slot="label" slot-scope="props")
           | 表示カラム
           b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
         template(v-for="e in base.ArticleIndexColumnInfo.values")
-          b-menu-item(
+          b-menu-item.is_active_unset(
             v-if="e.togglable"
             @click.stop="base.cb_toggle_handle(e)"
             :class="{is_visible_off: !base.visible_hash[e.key], is_visible_on: base.visible_hash[e.key]}"
@@ -22,7 +22,7 @@
             :label="e.name"
             )
 
-      b-menu-item(@click="sound_play('click')" :disabled="base.display_option_disabled")
+      b-menu-item.is_active_unset(@click="sound_play('click')" :disabled="base.display_option_disabled")
         template(slot="label" slot-scope="props")
           | 図面表示
           b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -30,7 +30,7 @@
           b-radio-button(size="is-small" v-model="base.detail_p" :native-value="false") OFF
           b-radio-button(size="is-small" v-model="base.detail_p" :native-value="true") ON
 
-      b-menu-item(:disabled="base.display_option_disabled" v-if="development_p")
+      b-menu-item.is_active_unset(:disabled="base.display_option_disabled" v-if="development_p")
         template(slot="label")
           span 表示カラム
           b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")

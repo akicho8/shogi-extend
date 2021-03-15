@@ -4,18 +4,18 @@
     .mx-4.my-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item(label="最後のタイムだけリセット (r)"   @click="rap_reset"     :disabled="lap_counter === 0")
-          b-menu-item(label="1つ前に戻す (z)"                @click="revert_handle" :disabled="rows.length === 0")
-          b-menu-item(label="最後の解答の正誤を反転する (t)" @click="toggle_handle" :disabled="rows.length === 0")
+          b-menu-item.is_active_unset(label="最後のタイムだけリセット (r)"   @click="rap_reset"     :disabled="lap_counter === 0")
+          b-menu-item.is_active_unset(label="1つ前に戻す (z)"                @click="revert_handle" :disabled="rows.length === 0")
+          b-menu-item.is_active_unset(label="最後の解答の正誤を反転する (t)" @click="toggle_handle" :disabled="rows.length === 0")
 
         b-menu-list(label="再テスト")
-          b-menu-item(label="不正解のみ"         @click="reset_by_x"                :disabled="rows.length === 0 || mode === 'playing'")
-          b-menu-item(label="不正解と指定秒以上" @click="reset_by_x_with_n_seconds" :disabled="rows.length === 0 || mode === 'playing'")
+          b-menu-item.is_active_unset(label="不正解のみ"         @click="reset_by_x"                :disabled="rows.length === 0 || mode === 'playing'")
+          b-menu-item.is_active_unset(label="不正解と指定秒以上" @click="reset_by_x_with_n_seconds" :disabled="rows.length === 0 || mode === 'playing'")
 
         b-menu-list(label="その他")
-          b-menu-item(label="操作を間違えたら？" @click="history_modal_show"   :disabled="mode !== 'standby'")
-          b-menu-item(label="パーマリンク"       @click="parmalink_modal_show" :disabled="mode !== 'standby'")
-          b-menu-item(label="キーボード操作"     @click="keyboard_modal_show"                                )
+          b-menu-item.is_active_unset(label="操作を間違えたら？" @click="history_modal_show"   :disabled="mode !== 'standby'")
+          b-menu-item.is_active_unset(label="パーマリンク"       @click="parmalink_modal_show" :disabled="mode !== 'standby'")
+          b-menu-item.is_active_unset(label="キーボード操作"     @click="keyboard_modal_show"                                )
 
   MainNavbar
     template(slot="brand")

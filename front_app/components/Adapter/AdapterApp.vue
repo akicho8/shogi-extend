@@ -7,36 +7,36 @@
     .mx-4.my-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item(@click="share_board_open_handle" label="共有将棋盤に転送")
-          b-menu-item(@click="style_editor_open_handle" label="スタイルエディタに転送")
+          b-menu-item.is_active_unset(@click="share_board_open_handle" label="共有将棋盤に転送")
+          b-menu-item.is_active_unset(@click="style_editor_open_handle" label="スタイルエディタに転送")
 
         b-menu-list(label="Export")
-          b-menu-item(@click="kifu_paper_handle" label="棋譜用紙 (PDF)")
+          b-menu-item.is_active_unset(@click="kifu_paper_handle" label="棋譜用紙 (PDF)")
 
-          b-menu-item(:expanded="false" @click="sound_play('click')")
+          b-menu-item.is_active_unset(:expanded="false" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | 表示
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
-              b-menu-item(:label="e.name" @click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)")
+              b-menu-item.is_active_unset(:label="e.name" @click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)")
 
-          b-menu-item(@click="sound_play('click')")
+          b-menu-item.is_active_unset(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | コピー
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
               template(v-if="e.clipboard_copyable")
-                b-menu-item(:label="e.name" @click="kifu_copy_handle(e.key)")
+                b-menu-item.is_active_unset(:label="e.name" @click="kifu_copy_handle(e.key)")
 
-          b-menu-item(@click="sound_play('click')")
+          b-menu-item.is_active_unset(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in DlFormatTypeInfo.values")
-              b-menu-item(:label="e.name" @click.prevent="kifu_dl_handle(e)" :href="kifu_dl_url(e)")
+              b-menu-item.is_active_unset(:label="e.name" @click.prevent="kifu_dl_handle(e)" :href="kifu_dl_url(e)")
 
         b-menu-list(label="ANOTHER")
-          b-menu-item(label="対応フォーマットの確認" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play('click')")
+          b-menu-item.is_active_unset(label="対応フォーマットの確認" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play('click')")
 
   MainNavbar
     template(slot="brand")
