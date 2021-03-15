@@ -40,7 +40,7 @@ export default {
         src: data.browser_path,
         autoplay: true,
         volume: options.volume || 1.0,
-        rate: options.rate || 1.65,
+        rate: options.rate || 1.5,
       })
       if (options.onend) {
         window.howl_object.on("end", () => options.onend())
