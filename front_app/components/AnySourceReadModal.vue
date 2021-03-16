@@ -3,9 +3,10 @@
   header.modal-card-head
     p.modal-card-title.is-size-6 棋譜の読み込み
   section.modal-card-body
-    b-input(type="textarea" v-model="any_source" ref="any_source" rows="6" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFENっぽいパラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むURL。戦法名・囲い名などを入力してください")
+    b-input(type="textarea" v-model.trim="any_source" ref="any_source" rows="6" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFENっぽいパラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むURL。戦法名・囲い名などを入力してください")
   footer.modal-card-foot
-    b-button(@click="submit_handle" type="is-primary") 読み込む
+    b-button(@click="cancel_handle") キャンセル
+    b-button(@click="submit_handle" :type="submit_button_type") 読み込む
 </template>
 
 <script>
@@ -25,8 +26,19 @@ export default {
     this.desktop_focus_to(this.$refs.any_source.$refs.textarea)
   },
   methods: {
+    cancel_handle() {
+      this.sound_play("click")
+      this.$emit("close")
+    },
     submit_handle() {
       this.$emit("update:any_source", this.any_source)
+    },
+  },
+  computed: {
+    submit_button_type() {
+      return {
+        "is-primary": (this.any_source != ""),
+      }
     },
   },
 }
@@ -35,7 +47,7 @@ export default {
 <style lang="sass">
 .AnySourceReadModal
   .modal-card-foot
-    justify-content: flex-end
+    justify-content: space-between
     .button
       font-weight: bold
 </style>
