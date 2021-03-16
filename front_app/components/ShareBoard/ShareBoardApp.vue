@@ -86,7 +86,7 @@ client-only
             .block
               b Rails側で作った静的なTwitter画像URL(og:imageにはこっちを指定している)
               p {{config.twitter_card_options.image}}
-              img.is-block(:src="config.twitter_card_options.image" width="256")
+              img.is-block(:src=`$config.MY_SITE_URL + config.twitter_card_options.image` width="256")
             .block
               b this.record
               pre {{JSON.stringify(record, null, 4)}}
