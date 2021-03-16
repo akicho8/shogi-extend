@@ -153,6 +153,12 @@ export const app_room = {
       if (params.from_user_code === this.user_code) {
         // 自分から自分へ
       } else {
+        // もし edit_mode に入っている場合は強制的に解除する
+        if (this.edit_mode_p) {
+          this.debug_alert("指し手のブロードキャストにより編集を解除")
+          this.sp_run_mode = "play_mode"
+        }
+        // 受信したSFENを盤に反映
         this.attributes_set(params)
       }
       if (false) {
