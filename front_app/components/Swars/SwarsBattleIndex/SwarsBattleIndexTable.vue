@@ -9,7 +9,7 @@ b-table.SwarsBattleIndexTable(
 
   :show-header  = "base.config.total >= 1 || true"
   :paginated    = "base.config.total >= 1 || true"
-  hoverable
+  :hoverable="false"
 
   backend-pagination
   pagination-simple
