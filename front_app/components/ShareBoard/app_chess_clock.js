@@ -2,7 +2,9 @@ import { IntervalRunner } from '@/components/models/interval_runner.js'
 import { ChessClock     } from "@/components/models/chess_clock.js"
 import { CcRuleInfo     } from "@/components/models/cc_rule_info.js"
 import { Location       } from "shogi-player/components/models/location.js"
+
 import ChessClockModal from "./ChessClockModal.vue"
+import TimeLimitModal  from "./TimeLimitModal.vue"
 
 export const app_chess_clock = {
   data() {
@@ -14,7 +16,7 @@ export const app_chess_clock = {
 
   mounted() {
     if (this.development_p) {
-      this.cc_params = { initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 0 }
+      this.cc_params = { initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }
       this.cc_create()
       this.cc_params_apply()
       this.chess_clock.play_handle()
@@ -41,6 +43,7 @@ export const app_chess_clock = {
         time_zero_callback: e => {
           this.sound_play("lose")
           this.toast_ok("時間切れ")
+          this.time_limit_modal_handle()
           // this.$buefy.dialog.alert({
           //   message: "時間切れ",
           //   onConfirm: () => { this.cc_stop_handle() },
@@ -284,6 +287,22 @@ export const app_chess_clock = {
       }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 時間切れ
+    time_limit_modal_handle() {
+      // this.sidebar_p = false
+      // this.sound_play("click")
+      this.$buefy.modal.open({
+        component: TimeLimitModal,
+        parent: this,
+        trapFocus: true,
+        hasModalCard: true,
+        animation: "",
+        props: { base: this.base },
+        onCancel: () => this.sound_play("click"),
+      })
+    },
   },
   computed: {
     CcRuleInfo() { return CcRuleInfo },

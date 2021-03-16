@@ -21,27 +21,7 @@ client-only
       //- p サイドバー {{sidebar_p}}
 
     ShareBoardSidebar(:base="base")
-
-    MainNavbar(:spaced="false" :type="sp_run_mode === 'edit_mode' ? 'is-dark' : 'is-primary'")
-      template(slot="brand")
-        b-navbar-item(@click.native="exit_handle")
-          b-icon(icon="home")
-        b-navbar-item.has-text-weight-bold(@click="title_edit")
-          | {{current_title}}
-          span.mx-1(v-if="sp_run_mode === 'play_mode' && turn_offset >= 1") \#{{turn_offset}}
-      template(slot="end")
-        b-navbar-item.is-unselectable(tag="div" v-if="ac_room")
-          b-icon(icon="account")
-          b-tag.has-text-weight-bold(rounded)
-            .has-text-primary {{member_infos.length}}
-
-        b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="tweet_modal_handle" v-if="sp_run_mode === 'play_mode' && !share_p")
-          b-icon(icon="twitter" type="is-white")
-        b-navbar-item.has-text-weight-bold(@click="play_mode_handle" v-if="sp_run_mode === 'edit_mode'")
-          | 編集完了
-        // テストで参照しているので sidebar_toggle_navbar_item は取ったらいけん
-        b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="sp_run_mode === 'play_mode'")
-          b-icon(icon="menu")
+    ShareBoardNavbar(:base="base")
 
     MainSection.is_mobile_padding_zero
       .container.is-fluid
@@ -73,10 +53,10 @@ client-only
 
             .buttons.is-centered.mt-4(v-if="true")
               //- b-tooltip(label="ツイート")
-              //- TweetButton(size="" :body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="sp_run_mode === 'play_mode'")
-              b-button.has-text-weight-bold(:type="advanced_p ? 'is-twitter' : ''" v-if="sp_run_mode === 'play_mode'" icon-left="twitter" @click="tweet_modal_handle") ツイート
+              //- TweetButton(size="" :body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="play_mode_p")
+              b-button.has-text-weight-bold(:type="advanced_p ? 'is-twitter' : ''" v-if="tweet_button_p" icon-left="twitter" @click="tweet_modal_handle") ツイート
 
-              b-button.has-text-weight-bold(type="is-primary" @click="play_mode_handle" v-if="sp_run_mode === 'edit_mode'") 編集完了
+              b-button.has-text-weight-bold(type="is-primary" @click="play_mode_handle" v-if="edit_mode_p") 編集完了
 
             .room_code.is-clickable(@click="room_code_modal_handle" v-if="false")
               | {{room_code}}
@@ -94,6 +74,7 @@ client-only
               b-button(@click="room_destroy") 切断
               b-button(@click="member_add_test") 生存通知
               b-button(@click="al_add_test") 指
+              b-button(@click="time_limit_modal_handle") 時間切れ
 
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
@@ -339,21 +320,19 @@ export default {
   },
 
   computed: {
-    base() { return this },
-
-    page_title() {
-      return `${this.current_title} ${this.turn_offset}手目`
-    },
-
-    strict_p() {
-      return this.internal_rule === "strict"
-    },
+    base()           { return this },
+    play_mode_p()    { return this.sp_run_mode === 'play_mode' },
+    edit_mode_p()    { return this.sp_run_mode === 'edit_mode' },
+    strict_p()       { return this.internal_rule === "strict"  },
+    tweet_button_p() { return this.play_mode_p && !this.share_p },
+    page_title()     { return `${this.current_title} ${this.turn_offset}手目` },
+    advanced_p()     { return this.turn_offset > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     current_url_params() {
       const params = {
-        body:         this.current_body, // 編集モードでもURLを更新するため
-        turn:         this.turn_offset,
-        title:        this.current_title,
+        body:  this.current_body, // 編集モードでもURLを更新するため
+        turn:  this.turn_offset,
+        title: this.current_title,
         abstract_viewpoint: this.abstract_viewpoint,
       }
 
@@ -365,6 +344,7 @@ export default {
       if (this.sp_run_mode !== RUN_MODE_DEFAULT) {
         params["sp_run_mode"] = this.sp_run_mode
       }
+
       if (this.internal_rule !== INTERNAL_RULE_DEFAULT) {
         params["internal_rule"] = this.internal_rule
       }
@@ -402,9 +382,6 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////////////////////
-
-    // 最初に表示した手数より進めたか？
-    advanced_p() { return this.turn_offset > this.config.record.initial_turn },
 
     // 常に画面上の盤面と一致している
     current_body() { return this.current_sfen },

@@ -153,6 +153,24 @@ export class SingleClock {
 
   //////////////////////////////////////////////////////////////////////////////// getter
 
+  // 時間回復系のパラメータになっている？
+  // つまり「秒読み」と「フィッシャー」のときのみ true
+  get time_recovery_mode_p() {
+    return this.initial_read_sec >= 1 || this.every_plus >= 1
+  }
+
+  // 回復するパラメータの名前
+  get time_recovery_params_human() {
+    let a = []
+    if (this.initial_read_sec >= 1) {
+      a.push("秒読み")
+    }
+    if (this.every_plus >= 1) {
+      a.push("1手毎加算秒")
+    }
+    return a.join("と")
+  }
+
   get button_type() {
     if (!this.running_p) {
       return

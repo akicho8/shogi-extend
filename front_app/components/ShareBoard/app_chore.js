@@ -38,11 +38,6 @@ export const app_chore = {
         animation: "",
         props: { base: this.base },
         onCancel: () => this.sound_play("click"),
-        events: {
-          "update:abstract_viewpoint": v => {
-            this.abstract_viewpoint = v
-          }
-        },
       })
     },
 
