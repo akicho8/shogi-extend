@@ -75,6 +75,7 @@ client-only
               b-button(@click="member_add_test") 生存通知
               b-button(@click="al_add_test") 指
               b-button(@click="time_limit_modal_handle") 時間切れ
+              b-button(@click="edit_warn_modal_handle") 編集警告
 
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON

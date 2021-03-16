@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.AbstractViewpointKeySelectModal(style="width:auto")
   header.modal-card-head
-    p.modal-card-title.is-size-6 OGP画像の視点設定
+    p.modal-card-title.is-size-6.has-text-weight-bold OGP画像の視点設定
   section.modal-card-body
     .field.my-1
       b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="self")
@@ -18,11 +18,11 @@
     .preview_image_container.is-flex.mt-3
       .preview_image.is-flex
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
-          | Twitterに投稿した際に表示されるOGP画像の視点
+          | Twitterに投稿した際に表示するOGP画像の視点
         b-image.mr-1(:src="ogp_image_url")
       .preview_image.is-flex
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
-          | ブラウザで開いたときの視点
+          | それをブラウザで開いたときの視点
         b-image.ml-1(:src="opened_image_url")
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
