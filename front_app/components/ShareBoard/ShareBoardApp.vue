@@ -80,7 +80,7 @@ client-only
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
             .block
-              b JS側で作った動的なTwitter画像URL(指定設定プレビューで使用する。Rails側と一致していること)
+              b JS側で作った動的なTwitter画像URL(視点設定プレビューで使用する。Rails側と一致していること)
               p(:key="twitter_card_url") {{twitter_card_url}}
               img.is-block(:src="twitter_card_url" width="256")
             .block
