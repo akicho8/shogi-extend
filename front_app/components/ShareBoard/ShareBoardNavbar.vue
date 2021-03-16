@@ -6,7 +6,7 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
 
     b-navbar-item.has-text-weight-bold(@click="base.title_edit")
       | {{base.current_title}}
-      span.mx-1(v-if="base.play_mode_p && turn_offset >= 1")
+      span.mx-1(v-if="base.play_mode_p && base.turn_offset >= 1")
         | \#{{base.turn_offset}}
 
   template(slot="end")
@@ -15,7 +15,7 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
       b-tag.has-text-weight-bold(rounded)
         .has-text-primary {{base.member_infos.length}}
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="base.tweet_modal_handle" v-if="tweet_button_p")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="base.tweet_modal_handle" v-if="base.tweet_button_p")
       b-icon(icon="twitter" type="is-white")
 
     b-navbar-item.has-text-weight-bold(@click="base.play_mode_handle" v-if="base.edit_mode_p")
