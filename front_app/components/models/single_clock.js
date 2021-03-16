@@ -100,7 +100,7 @@ export class SingleClock {
       // if (!this.base.zero_arrival) {
       if (this.rest === 0) {
         if (this.base.timer) {
-          this.base.zero_arrival = true
+          // this.base.zero_arrival = true
           this.base.params.time_zero_callback(this)
         }
       }

@@ -24,7 +24,7 @@ export class ChessClock {
     this.timer         = null   // null以外ならタイマー動作中
     this.turn          = null   // 0または1が手番。null:手番が設定されていない
     this.counter       = null   // 手数 (未使用)
-    this.zero_arrival  = null   // 残り時間が 0 になったら true
+    // this.zero_arrival  = null   // 残り時間が 0 になったら true
     this.single_clocks = null   // それぞれの時計
     this.running_p     = null   // true:動作中 false:停止中
 
@@ -44,7 +44,7 @@ export class ChessClock {
     this.timer_stop()
     this.turn = this.params.turn // インクリメントしていく
     this.counter = 0             // turn とは異なり手数に相当する
-    this.zero_arrival = false    // 片方が0になったら true になる
+    // this.zero_arrival = false    // 片方が0になったら true になる
     this.single_clocks = Location.values.map((e, i) => new SingleClock(this, i))
     this.running_p = false
   }
@@ -85,7 +85,7 @@ export class ChessClock {
       this.running_p = false
       this.timer_stop()
       this.single_clocks.forEach(e => e.variable_reset())
-      this.zero_arrival = false
+      // this.zero_arrival = false
     }
   }
 
@@ -152,6 +152,11 @@ export class ChessClock {
     return Location.fetch(this.current_index)
   }
 
+  // どちらかの時間が0になっている？
+  get zero_arrival() {
+    return this.single_clocks.some(e => e.rest <= 0)
+  }
+
   get human_status() {
     let v = null
     if (this.running_p) {
@@ -184,7 +189,7 @@ export class ChessClock {
     v.timer         = this.timer         // null以外ならタイマー動作中
     v.turn          = this.turn          // 0または1が手番。null:手番が設定されていない
     v.counter       = this.counter       // 手数 (未使用)
-    v.zero_arrival  = this.zero_arrival  // 残り時間が 0 になったら true
+    // v.zero_arrival  = this.zero_arrival  // 残り時間が 0 になったら true
     v.running_p     = this.running_p     // true:動作中 false:停止中
     v.speed         = this.speed         // タイマー速度
 
@@ -198,7 +203,7 @@ export class ChessClock {
 
     this.turn          = v.turn
     this.counter       = v.counter
-    this.zero_arrival  = v.zero_arrival
+    // this.zero_arrival  = v.zero_arrival
     this.running_p     = v.running_p
     this.speed         = v.speed
 
