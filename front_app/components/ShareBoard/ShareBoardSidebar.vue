@@ -30,7 +30,7 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
 
         b-menu-list(label="その他")
           b-menu-item.is_active_unset(label="OGP画像の視点設定"             @click="base.abstract_viewpoint_setting_handle")
-          b-menu-item.is_active_unset(label="局面URLツイート(合言葉を含む)" @click="base.tweet_handle")
+          b-menu-item.is_active_unset(label="局面URLツイート(合言葉を含む)" @click="base.tweet_modal_handle")
           b-menu-item.is_active_unset(label="タイトル変更"                  @click="base.title_edit")
           b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す"   @click="base.reset_handle")
 
