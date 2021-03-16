@@ -11,7 +11,7 @@
       | しかし今の設定は持ち時間しかないので時間が回復しません。
       | 続行する場合は時計を再設定するとよいでしょう
   footer.modal-card-foot
-    b-button(@click="close_handle" type="is-primary") わかった
+    b-button(@click="close_handle" type="is-primary") 閉じる
 </template>
 
 <script>
