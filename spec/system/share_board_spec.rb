@@ -39,8 +39,6 @@ RSpec.describe "共有将棋盤", type: :system do
     assert { value == "alice" }                                        # 復元されている
     first(".modal-card-foot .button.is-primary").click                 # 共有
 
-    find(".sidebar_toggle_navbar_item").click                          # サイドメニュー起動
-    first(:xpath, "//*[contains(text(), 'URLを開いたときの局面に戻す')]").click # 「合言葉の設定と共有」クリック
     first(".place_5_9").click                                          # 59の歩を持って
     first(".place_5_8").click                                          # 58に移動
     expect(page).to have_content "☗5八玉"                             # 符号が表示されている
