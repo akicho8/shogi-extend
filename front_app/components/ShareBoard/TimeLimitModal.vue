@@ -6,7 +6,7 @@
     ul
       template(v-if="clock")
         template(v-if="clock.running_p")
-          template(v-if="clock.current.time_recovery_mode_p && false")
+          template(v-if="clock.current.time_recovery_mode_p")
             li 時間切れになっても時計は止まっていないので手番の方は(合意の上で)駒を動かして続行できます
           template(v-else)
             li 時間切れになっても手番の方は(合意の上で)駒を動かして続行できます。しかし現在の対局時計の設定では時間が回復しません。続行する場合は対局時計を再スタートさせてください
