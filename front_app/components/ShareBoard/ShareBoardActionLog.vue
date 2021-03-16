@@ -48,6 +48,7 @@ export default {
           focusOn: "cancel", // confirm or cancel
           type: "is-warning",
           hasIcon: true,
+          animation: "",
           onCancel:  () => {
             this.talk_stop()
             this.sound_play("click")
