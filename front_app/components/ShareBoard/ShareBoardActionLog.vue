@@ -42,7 +42,7 @@ export default {
       if (ACTION_LOG_CLICK_CONFIRM_SHOW) {
         this.sound_play("click")
         this.$buefy.dialog.confirm({
-          message: `${this.human_time_format(e)}の時点にワープしますか？<p class="is-size-7 has-text-grey">単に前の局面に戻す場合はｺﾝﾄﾛｰﾗｰのﾎﾞﾀﾝを使ってください</p>`,
+          message: `この時点にワープしますか？<p class="is-size-7 has-text-grey">待ったや前の局面を見るときは下のｺﾝﾄﾛｰﾗｰを使ってください</p>`,
           cancelText: "キャンセル",
           confirmText: `本当にワープする`,
           focusOn: "cancel", // confirm or cancel
