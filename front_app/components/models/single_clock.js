@@ -31,12 +31,14 @@ export class SingleClock {
     this.main_sec  = this.initial_main_sec
     this.extra_sec = this.initial_extra_sec
     this.read_sec  = this.initial_read_sec
+    this.minus_sec = 0
   }
 
   copy_from(o) {
     this.main_sec  = o.main_sec
     this.read_sec  = o.read_sec
     this.extra_sec = o.extra_sec
+    this.minus_sec = o.minus_sec
 
     this.initial_read_sec  = o.initial_read_sec
     this.initial_main_sec  = o.initial_main_sec
@@ -64,6 +66,7 @@ export class SingleClock {
           this.extra_sec += this.read_sec
           this.read_sec = 0
           if (this.extra_sec < 0) {
+            this.minus_sec += this.extra_sec
             this.extra_sec = 0
           }
         }
@@ -94,14 +97,14 @@ export class SingleClock {
       //   }
       // }
 
-      if (!this.base.zero_arrival) {
-        if (this.rest === 0) {
-          if (this.base.timer) {
-            this.base.zero_arrival = true
-            this.base.params.time_zero_callback(this)
-          }
+      // if (!this.base.zero_arrival) {
+      if (this.rest === 0) {
+        if (this.base.timer) {
+          this.base.zero_arrival = true
+          this.base.params.time_zero_callback(this)
         }
       }
+      // }
     }
   }
 
@@ -123,6 +126,7 @@ export class SingleClock {
     if (this.active_p) {
       this.generation_next(this.every_plus)
       this.read_sec_set()
+      this.minus_sec = 0 // 押したらマイナスになったぶんは0に戻しておく。これで再びチーンになる
       this.base.clock_switch()
     }
   }
@@ -243,7 +247,7 @@ export class SingleClock {
   }
 
   get rest() {
-    return this.main_sec + this.read_sec + this.extra_sec
+    return this.main_sec + this.read_sec + this.extra_sec + this.minus_sec
   }
 
   //////////////////////////////////////////////////////////////////////////////// for style
@@ -294,6 +298,7 @@ export class SingleClock {
       main_sec:          this.main_sec,
       read_sec:          this.read_sec,
       extra_sec:         this.extra_sec,
+      minus_sec:         this.minus_sec,
       initial_read_sec:  this.initial_read_sec,
       initial_main_sec:  this.initial_main_sec,
       initial_extra_sec: this.initial_extra_sec,

@@ -1,15 +1,15 @@
 <template lang="pug">
-.modal-card.TimeLimitModal
+.modal-card.TimeLimitModal(v-if="clock_running_p")
   header.modal-card-head
-    p.modal-card-title.is-size-6.has-text-weight-bold 時間切れ
+    p.modal-card-title.is-size-6.has-text-weight-bold
+      | 時間切れで{{clock.current.location.flip.name}}の勝ち
   section.modal-card-body
-    ul
-      template(v-if="clock")
-        template(v-if="clock.running_p")
-          template(v-if="clock.current.time_recovery_mode_p")
-            li 時間切れになっても時計は止まっていないので手番の方は(合意の上で)駒を動かして続行できます
-          template(v-else)
-            li 時間切れになっても手番の方は(合意の上で)駒を動かして続行できます。しかし現在の対局時計の設定では時間が回復しません。続行する場合は対局時計を再スタートさせてください
+    template(v-if="clock.current.time_recovery_mode_p")
+      | 時間切れになっても時計は止まっていないので合意の上で続行できます
+    template(v-else)
+      | 時間切れになっても合意の上で続行できます。
+      | しかし今の設定は持ち時間しかないので時間が回復しません。
+      | 続行する場合は時計を再設定するとよいでしょう
   footer.modal-card-foot
     b-button(@click="close_handle" type="is-primary") わかった
 </template>
@@ -24,6 +24,14 @@ export default {
     return {
     }
   },
+  watch: {
+    // 共有によって時計を止められたり消されたりしたら自動的に閉じる
+    clock_running_p(v) {
+      if (!v) {
+        this.close_handle()
+      }
+    },
+  },
   methods: {
     close_handle() {
       this.sound_play("click")
@@ -34,7 +42,8 @@ export default {
     },
   },
   computed: {
-    clock() { return this.base.chess_clock },
+    clock()           { return this.base.chess_clock              },
+    clock_running_p() { return this.clock && this.clock.running_p },
   },
 }
 </script>

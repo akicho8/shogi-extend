@@ -1,5 +1,5 @@
 <template lang="pug">
-.ChessClockInspector.box
+.ChessClockInspector.box.has-background-primary-light
   p 対局時計 {{chess_clock.human_status}}
 
   .level.is-mobile
@@ -12,7 +12,7 @@
             span.mx-1(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1") {{e.to_time_format}}
             span.mx-1(v-if="e.initial_read_sec >= 1") {{e.read_sec}}
             span.mx-1(v-if="e.initial_extra_sec >= 1") {{e.extra_sec}}
-          p {{e.initial_main_sec}} / {{e.initial_read_sec}} / {{e.initial_extra_sec}} / {{e.every_plus}}
+          p {{e.initial_main_sec}} / {{e.initial_read_sec}} / {{e.initial_extra_sec}} / {{e.every_plus}} / {{e.minus_sec}}
           p active_p:{{e.active_p}} rest:{{e.rest}}
 
   .columns
