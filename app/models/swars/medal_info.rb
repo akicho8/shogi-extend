@@ -47,6 +47,7 @@ module Swars
       { key: "波が激しいマン",     medal_params: { message: "勝ち負けの波が激しい",                   method: "raw",  name: "🌊",                type: nil, },          if_cond: proc { win_lose_streak_max_hash["win"] >= 5 && win_lose_streak_max_hash["lose"] >= 5 },},
 
       { key: "居玉勝ちマン",       medal_params: { message: "居玉の使い手",                           method: "raw",  name: "🗿",                type: nil, },          if_cond: proc { (r = igyoku_win_ratio) && r >= 0.1       },},
+      { key: "入玉勝ちマン",       medal_params: { message: "入玉の使い手",                           method: "raw",  name: "🪳",                type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("入玉") > 0 },},
 
       { key: "切れ負けマン",       medal_params: { message: "切れ負けが多い",                         method: "raw", name: "⌛",                 type: nil, },           if_cond: proc { (r = lose_ratio_of("TIMEOUT")) && r >= 0.25 },},
 
