@@ -66,6 +66,7 @@ module Swars
         assert { b("いちご囲い").include?("スイーツマン")                   }
         assert { b("背水の陣").include?("背水マン")                         }
         assert { b("エルモ囲い").include?("エルモマン")                     }
+        assert { w("銀冠の小部屋").include?("小部屋マン")                   }
         assert { b("レグスペ").include?("レグスペマン")                     }
         assert { b("入玉").include?("入玉勝ちマン")                         }
         assert { test(["無敵囲い"], :lose)[:white].include?("無敵囲いマン") }
@@ -244,10 +245,9 @@ module Swars
         assert { test(["win"]).include?(:"5連勝") }
         assert { test(["win"]).include?(:"5連勝") }
         assert { test(["win"]).include?(:"5連勝") }
-        assert { test(["win"]).include?(:"8連勝") }
-        assert { test(["win"]).include?(:"8連勝") }
-        assert { test(["win"]).include?(:"8連勝") }
-        assert { test(["win"]).include?(:"11連勝") }
+        assert { test(["win"]).include?(:"5連勝") }
+        assert { test(["win"]).include?(:"5連勝") }
+        assert { test(["win"]).include?(:"10連勝") }
 
         assert { test(["lose"] * 5).include?(:"波が激しいマン") }
       end
