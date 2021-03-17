@@ -59,7 +59,7 @@ export const app_placement = {
     base_sfen_set(from_sfen) {
       this.article_init_sfen_set(from_sfen)    // article.init_sfen に設定して正解配列クリア
       this.sp_body = from_sfen                            // CustomShogiPlayer に設定
-      this.$nextTick(() => this.piece_box_piece_couns_adjust()) // 駒箱最適化
+      this.$nextTick(() => this.piece_box_piece_counts_adjust()) // 駒箱最適化
     },
 
     // 棋譜の読み込みタップ時の処理
@@ -89,8 +89,8 @@ export const app_placement = {
     },
 
     // 駒箱正規化
-    piece_box_piece_couns_adjust() {
-      this.$refs.WkbkArticleEditPlacement?.$refs.main_sp.sp_object().mediator.piece_box_piece_couns_adjust()
+    piece_box_piece_counts_adjust() {
+      this.$refs.WkbkArticleEditPlacement?.$refs.main_sp.sp_object().mediator.piece_box_piece_counts_adjust()
     },
   },
 }

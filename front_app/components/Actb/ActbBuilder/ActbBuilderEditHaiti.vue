@@ -57,7 +57,7 @@ export default {
   created() {
     // 更新した init_sfen が shogi-player の kifu_body に渡ると循環する副作用で駒箱が消えてしまうため別にする
     this.sp_body = this.bapp.question.init_sfen
-    this.piece_box_piece_couns_adjust()
+    this.piece_box_piece_counts_adjust()
   },
 
   methods: {
@@ -125,7 +125,7 @@ export default {
     // 直接更新すればいい
     fixed_sfen_set(str) {
       this.sp_body = str
-      this.piece_box_piece_couns_adjust()
+      this.piece_box_piece_counts_adjust()
     },
 
     // 棋譜コピー
@@ -135,8 +135,8 @@ export default {
     },
 
     // 駒箱に足りない駒を補充
-    piece_box_piece_couns_adjust() {
-      // this.$nextTick(() => this.$refs.main_sp.sp_object().mediator.piece_box_piece_couns_adjust())
+    piece_box_piece_counts_adjust() {
+      // this.$nextTick(() => this.$refs.main_sp.sp_object().mediator.piece_box_piece_counts_adjust())
     },
 
   },

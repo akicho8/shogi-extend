@@ -55,7 +55,7 @@ export default {
   },
 
   mounted() {
-    this.base.piece_box_piece_couns_adjust()
+    this.base.piece_box_piece_counts_adjust()
   },
 
   methods: {
@@ -63,7 +63,7 @@ export default {
     king_formation_auto_set(v) {
       this.sound_play("click")
       if (this.$refs.main_sp.sp_object().mediator.king_formation_auto_set_on_off(v)) {
-        this.base.piece_box_piece_couns_adjust() // 玉が増える場合があるので駒箱を調整する
+        this.base.piece_box_piece_counts_adjust() // 玉が増える場合があるので駒箱を調整する
       } else {
         if (v) {
           this.toast_warn("配置する場所がありません")
