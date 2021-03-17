@@ -14,7 +14,7 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
         b-menu-list(label="検討用")
           b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
           b-menu-item.is_active_unset(label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="sound_play('click')")
-          b-menu-item.is_active_unset(label="棋譜コピー" @click="base.kifu_cc_copy_handle('kif')")
+          b-menu-item.is_active_unset(label="棋譜コピー" @click="base.kifu_copy_handle('kif')")
 
         b-menu-list(label="編集・詰将棋作成")
           b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
@@ -22,8 +22,8 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
 
         b-menu-list(label="Export")
           b-menu-item.is_active_unset(label="局面URLコピー"                                                        @click="base.current_url_cc_copy_handle")
-          b-menu-item.is_active_unset(label="SFEN コピー"                                                          @click="base.kifu_cc_copy_handle('sfen')")
-          b-menu-item.is_active_unset(label="BOD コピー"                                                          @click="base.kifu_cc_copy_handle('bod')")
+          b-menu-item.is_active_unset(label="SFEN コピー"                                                          @click="base.kifu_copy_handle('sfen')")
+          b-menu-item.is_active_unset(label="BOD コピー"                                                          @click="base.kifu_copy_handle('bod')")
           b-menu-item.is_active_unset(label="KIF ダウンロード"             :href="base.kif_download_url"           @click="sound_play('click')")
           b-menu-item.is_active_unset(label="KIF ダウンロード (Shift_JIS)" :href="base.shift_jis_kif_download_url" @click="sound_play('click')")
           b-menu-item.is_active_unset(label="画像ダウンロード"             :href="base.snapshot_image_url"         @click="sound_play('click')")

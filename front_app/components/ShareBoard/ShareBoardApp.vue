@@ -28,6 +28,7 @@ client-only
         .columns.is-centered
           .MainColumn.column(:class="main_column_class")
             CustomShogiPlayer.is_mobile_vertical_good_style(
+              ref="main_sp"
               :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
               :sp_turn="turn_offset"
@@ -51,12 +52,25 @@ client-only
               @update:turn_offset_max="v => turn_offset_max = v"
             )
 
+            .footer_buttons(v-if="edit_mode_p")
+              .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
+                b-button(@click="king_formation_auto_set(true)") 詰将棋検討用玉配置
+                b-button(@click="king_formation_auto_set(false)") 玉回収
+
+              .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
+                PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+                KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
+                KifCopyButton(@click="kifu_copy_handle('kif')") コピー
+
+              .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
+                b-button(@click="base.any_source_read_handle") 棋譜の読み込み
+
             .buttons.is-centered.mt-4(v-if="true")
               //- b-tooltip(label="ツイート")
               //- TweetButton(size="" :body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="play_mode_p")
               b-button.has-text-weight-bold(:type="advanced_p ? 'is-twitter' : ''" v-if="tweet_button_p" icon-left="twitter" @click="tweet_modal_handle") ツイート
 
-              b-button.has-text-weight-bold(type="is-primary" @click="play_mode_handle" v-if="edit_mode_p") 編集完了
+              //- b-button.has-text-weight-bold(type="is-primary" @click="play_mode_handle" v-if="edit_mode_p") 編集完了
 
             .room_code.is-clickable(@click="room_code_modal_handle" v-if="false")
               | {{room_code}}
@@ -114,7 +128,6 @@ import { app_storage      } from "./app_storage.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 import RealtimeShareModal              from "./RealtimeShareModal.vue"
-import AnySourceReadModal              from "@/components/AnySourceReadModal.vue"
 
 export default {
   name: "ShareBoardApp",
@@ -215,7 +228,7 @@ export default {
     },
 
     // 棋譜コピー
-    kifu_cc_copy_handle(fomrat) {
+    kifu_copy_handle(fomrat) {
       this.sound_play("click")
       this.general_kifu_copy(this.current_body, {to_format: fomrat})
     },
@@ -252,35 +265,6 @@ export default {
         animation: "",
         canCancel: false,
         props: { base: this.base },
-      })
-    },
-
-    // 棋譜の読み込みタップ時の処理
-    any_source_read_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-      const modal_instance = this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
-        animation: "",
-        component: AnySourceReadModal,
-        onCancel: () => this.sound_play("click"),
-        events: {
-          "update:any_source": any_source => {
-            this.$axios.$post("/api/general/any_source_to.json", {any_source: any_source, to_format: "sfen"}).then(e => {
-              if (e.bs_error) {
-                this.bs_error_message_dialog(e.bs_error)
-              }
-              if (e.body) {
-                this.toast_ok("正常に読み込みました")
-                this.current_sfen = e.body
-                this.turn_offset = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
-                this.sp_viewpoint = "black"
-                modal_instance.close()
-              }
-            })
-          },
-        },
       })
     },
 
@@ -452,6 +436,10 @@ export default {
   //     padding-top: 0
   //     padding-bottom: 0
 
+  .footer_buttons
+    .button
+      margin-bottom: 0
+
   ////////////////////////////////////////////////////////////////////////////////
   .MainColumn
     +tablet
@@ -460,7 +448,7 @@ export default {
       &.is_sb_play_mode
         max-width: calc(var(--share_board_column_width) * 1.0vmin)
       &.is_sb_edit_mode
-        max-width: calc(var(--share_board_column_width) * 1.0vmin * 0.8)
+        max-width: calc(var(--share_board_column_width) * 1.0vmin * 0.75)
   ////////////////////////////////////////////////////////////////////////////////
 
   +tablet
