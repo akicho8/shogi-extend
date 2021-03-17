@@ -110,7 +110,7 @@ module Swars
       @win_and_all_tag_names_hash ||= -> {
         s = win_scope
         s = s.joins(:battle)
-        s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "CHECKMATE"]))
+        s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
         counts = s.all_tag_counts(at_least: at_least_value)
         counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
       }.call
