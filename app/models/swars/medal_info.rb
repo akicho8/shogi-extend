@@ -64,8 +64,8 @@ module Swars
       { key: "大長考マン",         medal_params: { message: "対局放棄に近いありえないほどの長考をしがち",             method: "raw",  name: "🚫",                type: nil, },          if_cond: proc { (r = long_think_ratio) && r > 0 } },
       { key: "長考マン",           medal_params: { message: "考えすぎて負けることが多い",             method: "raw",  name: "🤯",                type: nil, },          if_cond: proc { (r = short_think_ratio) && r > 0.1 } },
 
-      { key: "開幕千日手",         medal_params: { message: "開幕千日手の使い手",                       method: "raw",  name: "❓",                type: nil },           if_cond: proc { (r = start_draw_ratio) && r > 0 } },
-      { key: "ただの千日手",       medal_params: { message: "千日手の使い手",                         method: "icon", name: "💔",                type: nil },          if_cond: proc { (r = draw_ratio) && r > 0 } },
+      { key: "開幕千日手",         medal_params: { message: "開幕千日手の使い手",                     method: "raw",  name: "❓",                type: nil },           if_cond: proc { (r = start_draw_ratio) && r > 0 } },
+      { key: "ただの千日手",       medal_params: { message: "千日手の使い手",                         method: "raw", name: "🍌",                type: nil },          if_cond: proc { (r = draw_ratio) && r > 0 } },
 
       { key: "棋神マン",           medal_params: { message: "棋神召喚疑惑あり",                       method: "raw",  name: "🤖",                type: nil },           if_cond: proc { ai_use_battle_count >= 1 } },
     ]

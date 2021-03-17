@@ -15,7 +15,7 @@ module Swars
       { key: "長考マン",           message: -> m { "考えすぎて負けた。ちなみに一番長かったのは#{m.think_max_s}" },           medal_params: "🤯", if_cond: -> m { (t = m.battle.rule_info.short_leave_alone) && m.think_max >= t && m.judge_key == "lose" } },
       { key: "切れ負けマン",       message: "時間切れで負けた",                                                              medal_params: "⌛",  if_cond: -> m { m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT } },
       { key: "開幕千日手",         message: "最初から千日手にした",                                                          medal_params: "❓", if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max == 12 } },
-      { key: "ただの千日手",       message: "千日手",                                                                        medal_params: "💔", if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max > 12 } },
+      { key: "ただの千日手",       message: "千日手",                                                                        medal_params: "🍌", if_cond: -> m { m.judge_key == "draw" && m.battle.turn_max > 12 } },
 
       {
         key: "段級位差",
