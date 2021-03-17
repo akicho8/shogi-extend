@@ -83,7 +83,8 @@ export const app_chess_clock = {
         trapFocus: true,
         hasModalCard: true,
         animation: "",
-        canCancel: false,
+        canCancel: true,
+        onCancel: () => { this.sound_play("click") },
         props: {
           base: this.base,
         },
