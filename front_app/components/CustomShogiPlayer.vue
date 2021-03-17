@@ -46,7 +46,7 @@ export default {
     // --sp_board_color: hsla(141, 71%, 35%, 1.0)
     // --sp_board_color: hsla(348.71,65.89%,74.71%,1)
 
-  +mobile
+  +touch
     --sp_lifted_origin_bg_color: #{$danger}
     --sp_lifted_origin_opacity: 1.0
   +desktop
