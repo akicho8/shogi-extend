@@ -81,14 +81,13 @@ export default {
     chess_clock_switch_handle(v) {
       this.sound_play("click")
       if (v) {
-        this.toast_ok("置きました")
         this.base.cc_create()
         this.base.cc_params_apply() // すぐにパラメータを反映する
+        this.base.chess_clock_share("設置しました")
       } else {
-        this.toast_ok("捨てました")
         this.base.cc_destroy()
+        this.base.chess_clock_share("捨てました")
       }
-      this.base.chess_clock_share()
     },
     close_handle() {
       this.sound_play("click")
@@ -99,15 +98,13 @@ export default {
       this.sound_play("click")
       this.base.cc_params_apply()
       this.base.cc_play_handle()
-      this.base.chess_clock_share()
-      this.toast_ok("スタート！")
+      this.base.chess_clock_share("開始しました")
     },
     stop_handle() {
       this.sound_play("click")
       if (this.instance.running_p) {
-        this.toast_ok("リセットしました")
         this.base.cc_stop_handle()
-      this.base.chess_clock_share()
+        this.base.chess_clock_share("停止しました")
       } else {
         this.toast_ok("すでにリセットしています")
       }
@@ -115,14 +112,12 @@ export default {
     pause_handle() {
       this.sound_play("click")
       this.base.cc_pause_handle()
-      this.base.chess_clock_share()
-      this.toast_ok("一時停止しました")
+      this.base.chess_clock_share("一時停止しました")
     },
     resume_handle() {
       this.sound_play("click")
       this.base.cc_resume_handle()
-      this.base.chess_clock_share()
-      this.toast_ok("再開しました")
+      this.base.chess_clock_share("再開しました")
     },
     save_handle() {
       this.sound_play("click")
