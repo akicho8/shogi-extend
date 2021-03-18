@@ -310,8 +310,15 @@ export default {
     edit_mode_p()    { return this.sp_run_mode === 'edit_mode' },
     strict_p()       { return this.internal_rule === "strict"  },
     tweet_button_p() { return this.play_mode_p && !this.share_p },
-    page_title()     { return `${this.current_title} ${this.turn_offset}手目` },
     advanced_p()     { return this.turn_offset > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
+
+    page_title() {
+      if (this.turn_offset === 0) {
+        return this.current_title
+      } else {
+        return `${this.current_title} ${this.turn_offset}手目`
+      }
+    },
 
     current_url_params() {
       const params = {

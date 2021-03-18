@@ -152,7 +152,7 @@ class ShareBoardsController < ApplicationController
     end
 
     def turn_full_message
-      if initial_turn.nonzero? || true
+      if initial_turn.nonzero?
         "#{initial_turn}手目"
       end
     end
