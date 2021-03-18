@@ -1,59 +1,10 @@
 <template lang="pug">
-.SwarsBattleShow
+.SwarsBattleShowApp
   b-loading(:active="$fetchState.pending")
   .MainContainer(v-if="!$fetchState.pending")
     client-only
-      b-sidebar.SwarsBattleShow-Sidebar.is-unselectable(type="is-light" fullheight right v-model="sidebar_p")
-        .mx-4.my-4
-          b-menu
-            b-menu-list(label="Action")
-              b-menu-item.is_active_unset(label="問題作成"               tag="nuxt-link" :to="{name: 'rack-articles-new', query: {body: record.sfen_body, turn: new_turn, viewpoint: new_viewpoint}}" @click.native="sound_play('click')")
-              b-menu-item.is_active_unset(label="共有将棋盤に転送"       tag="nuxt-link" :to="{name: 'share-board', query: share_board_query}" @click.native="sound_play('click')")
-              b-menu-item.is_active_unset(label="スタイルエディタに転送" tag="nuxt-link" :to="{name: 'style-editor', query: style_editor_query}" @click.native="sound_play('click')")
-
-            b-menu-list(label="export")
-              b-menu-item.is_active_unset(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: record.key}}" @click.native="sound_play('click')")
-              b-menu-item.is_active_unset(@click="sound_play('click')")
-                template(slot="label" slot-scope="props")
-                  span.ml-1 表示
-                  b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-                b-menu-item.is_active_unset(label="KIF"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.kif`")
-                b-menu-item.is_active_unset(label="KI2"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2`")
-                b-menu-item.is_active_unset(label="CSA"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.csa`")
-                b-menu-item.is_active_unset(label="SFEN" @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen`")
-                b-menu-item.is_active_unset(label="BOD"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?turn=${new_turn}`")
-                b-menu-item.is_active_unset(label="PNG"  @click.native="sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${record.show_path}.png?turn=${new_turn}&viewpoint=${new_viewpoint}&width=`")
-              b-menu-item.is_active_unset(@click="sound_play('click')")
-                template(slot="label" slot-scope="props")
-                  span.ml-1 ダウンロード
-                  b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-                b-menu-item.is_active_unset(label="KIF"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true`")
-                b-menu-item.is_active_unset(label="KIF (Shift_JIS)"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.kif?attachment=true&body_encode=Shift_JIS`")
-                b-menu-item.is_active_unset(label="KI2"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.ki2?attachment=true`")
-                b-menu-item.is_active_unset(label="CSA"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.csa?attachment=true`")
-                b-menu-item.is_active_unset(label="SFEN" @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.sfen?attachment=true`")
-                b-menu-item.is_active_unset(label="BOD"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.bod?attachment=true&turn=${new_turn}`")
-                b-menu-item.is_active_unset(label="PNG"  @click.native="sidebar_close" :href="`${$config.MY_SITE_URL}${record.show_path}.png?attachment=true&turn=${new_turn}&viewpoint=${new_viewpoint}&width=`")
-
-            b-menu-list(label="短かめの直リンコピー")
-              b-menu-item.is_active_unset(label="この画面" @click="current_url_copy")
-              b-menu-item.is_active_unset(label="ぴよ将棋" @click="short_url_copy('piyo_shogi')")
-              b-menu-item.is_active_unset(label="KENTO"    @click="short_url_copy('kento')")
-
-      //- PageCloseButton(@click="back_handle" position="is_absolute" size="is-medium")
-      //- b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text")
-
-      MainNavbar
-        template(slot="brand")
-          b-navbar-item(@click="back_handle")
-            b-icon(icon="chevron-left")
-          b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: new_turn, viewpoint: new_viewpoint}}")
-            | \#{{new_turn}}
-        template(slot="end")
-          b-navbar-item.has-text-weight-bold(@click="tweet_handle")
-            b-icon(icon="twitter")
-          b-navbar-item(@click="sidebar_toggle")
-            b-icon(icon="menu")
+      SwarsBattleShowSidebar(:base="base")
+      SwarsBattleShowNavbar(:base="base")
 
       .FirstView.is-unselectable
         .CustomShogiPlayerWrap
@@ -124,11 +75,18 @@
 </template>
 
 <script>
+import { support_parent  } from "./support_parent.js"
+import { app_chore       } from "./app_chore.js"
+import { app_sidebar     } from "./app_sidebar.js"
+
 export default {
-  name: "SwarsBattleShow",
-  props: {
-    // scene:     { default: "default",           }, // どの局面から開始するか (一覧のturn_keyとは若干型が違う)
-  },
+  name: "SwarsBattleShowApp",
+  mixins: [
+    support_parent,
+    app_chore,
+    app_sidebar,
+  ],
+
   data() {
     return {
       record: null,            // 属性がたくさん入ってる
@@ -139,8 +97,6 @@ export default {
 
       time_chart_p: false,     // 時間チャートを表示する？
       time_chart_params: null, // 時間チャートのデータ
-
-      sidebar_p: false,
     }
   },
 
@@ -195,11 +151,6 @@ export default {
   },
 
   methods: {
-    sidebar_close() {
-      this.sound_play("click")
-      this.sidebar_p = false
-    },
-
     tweet_handle() {
       this.sound_play("click")
       this.tweet_window_popup({text: this.permalink_url})
@@ -316,6 +267,8 @@ export default {
   },
 
   computed: {
+    base() { return this },
+
     meta() {
       // ページ遷移で来たとき head は fetch より前にいきなり呼ばれているためガードが必要
       if (!this.record) {
@@ -445,11 +398,7 @@ export default {
 <style lang="sass">
 $button_z_index: 2
 
-.SwarsBattleShow-Sidebar
-  .menu-label:not(:first-child)
-    margin-top: 2em
-
-.SwarsBattleShow
+.SwarsBattleShowApp
   //////////////////////////////////////////////////////////////////////////////// ヘッダー
   .sidebar_toggle_button
     position: absolute
@@ -496,7 +445,7 @@ $button_z_index: 2
     flex-direction: column
 
 .STAGE-development
-  .SwarsBattleShow
+  .SwarsBattleShowApp
     .column, .FirstView
       border: 1px dashed change_color($primary, $alpha: 0.2)
 </style>
