@@ -3,47 +3,14 @@
   DebugBox
     div change_counter: {{change_counter}}
 
-  b-sidebar.AdapterApp-Sidebar.is-unselectable(fullheight right v-model="sidebar_p")
-    .mx-4.my-4
-      b-menu
-        b-menu-list(label="Action")
-          b-menu-item.is_active_unset(@click="share_board_open_handle" label="共有将棋盤に転送")
-          b-menu-item.is_active_unset(@click="style_editor_open_handle" label="スタイルエディタに転送")
-
-        b-menu-list(label="Export")
-          b-menu-item.is_active_unset(@click="kifu_paper_handle" label="棋譜用紙 (PDF)")
-
-          b-menu-item.is_active_unset(:expanded="false" @click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | 表示
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in FormatTypeInfo.values")
-              b-menu-item.is_active_unset(:label="e.name" @click.prevent="kifu_show_handle(e.key)" :href="kifu_show_url(e.key)")
-
-          b-menu-item.is_active_unset(@click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | コピー
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in FormatTypeInfo.values")
-              template(v-if="e.clipboard_copyable")
-                b-menu-item.is_active_unset(:label="e.name" @click="kifu_copy_handle(e.key)")
-
-          b-menu-item.is_active_unset(@click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | ダウンロード
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in DlFormatTypeInfo.values")
-              b-menu-item.is_active_unset(:label="e.name" @click.prevent="kifu_dl_handle(e)" :href="kifu_dl_url(e)")
-
-        b-menu-list(label="ANOTHER")
-          b-menu-item.is_active_unset(label="対応フォーマットの確認" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play('click')")
+  AdapterSidebar(:base="base")
 
   MainNavbar
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(@click="clear_handle") なんでも棋譜変換
     template(slot="end")
-      b-navbar-item(@click="sidebar_toggle")
+      b-navbar-item.px_5_if_tablet(@click="sidebar_toggle")
         b-icon(icon="menu")
 
   MainSection
@@ -51,7 +18,7 @@
       .columns.is-centered
         .column.MainColumn
           b-field(:type="input_text_field_type")
-            b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFENっぽいパラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むURL。戦法名・囲い名などを入力してください")
+            b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFEN風パラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むサイトのURL。戦法名・囲い名などを入力してください")
 
           b-field.mt-5
             .control
@@ -63,7 +30,7 @@
               .buttons.is-centered
                 PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
                 KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
-                KifCopyButton(@click="kifu_copy_handle('kif')")
+                KifCopyButton(@click="kifu_copy_handle(FormatTypeInfo.fetch('kif'))")
 
       .columns(v-if="record")
         .column
@@ -83,42 +50,22 @@
 <script>
 const AUTO_APP_TO = true
 
+import { support_parent } from "./support_parent.js"
+import { app_chore      } from "./app_chore.js"
+import { app_sidebar    } from "./app_sidebar.js"
+import { DlFormatTypeInfo } from "@/components/models/dl_format_type_info.js"
+import { FormatTypeInfo } from "@/components/models/format_type_info.js"
+
 import _ from "lodash"
-import MemoryRecord from 'js-memory-record'
-
-class FormatTypeInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { key: "kif",  clipboard_copyable: true,  },
-      { key: "ki2",  clipboard_copyable: true,  },
-      { key: "csa",  clipboard_copyable: true,  },
-      { key: "sfen", clipboard_copyable: true,  },
-      { key: "bod",  clipboard_copyable: true,  },
-      { key: "png",  clipboard_copyable: false, },
-    ]
-  }
-
-  get name() {
-    return this.key.toUpperCase()
-  }
-}
-
-class DlFormatTypeInfo extends MemoryRecord {
-  static get define() {
-    return [
-      { name: "KIF",             format_key: "kif",  body_encode: "UTF-8",     },
-      { name: "KIF (Shift_JIS)", format_key: "kif",  body_encode: "Shift_JIS", },
-      { name: "KI2",             format_key: "ki2",  body_encode: "UTF-8",     },
-      { name: "CSA",             format_key: "csa",  body_encode: "UTF-8",     },
-      { name: "SFEN",            format_key: "sfen", body_encode: "UTF-8",     },
-      { name: "BOD",             format_key: "bod",  body_encode: "UTF-8",     },
-      { name: "PNG",             format_key: "png",                            },
-    ]
-  }
-}
 
 export default {
   name: "AdapterApp",
+  mixins: [
+    support_parent,
+    app_chore,
+    app_sidebar,
+  ],
+
   data() {
     return {
       // フォーム関連
@@ -130,7 +77,6 @@ export default {
 
       // その他
       change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
-      sidebar_p: false,
     }
   },
   mounted() {
@@ -187,10 +133,6 @@ export default {
     app_open(url) {
       this.url_open(url, this.target_default)
     },
-    sidebar_toggle() {
-      this.sound_play("click")
-      this.sidebar_p = !this.sidebar_p
-    },
 
     //////////////////////////////////////////////////////////////////////////////// open_handle 4種
     piyo_shogi_open_handle() {
@@ -225,8 +167,8 @@ export default {
     },
     ////////////////////////////////////////////////////////////////////////////////
 
-    kifu_copy_handle(kifu_type) {
-      this.record_fetch(() => this.simple_clipboard_copy(this.record.all_kifs[kifu_type]))
+    kifu_copy_handle(e) {
+      this.record_fetch(() => this.simple_clipboard_copy(this.record.all_kifs[e.format_key]))
     },
     validate_handle() {
       this.record_fetch(() => {
@@ -251,28 +193,28 @@ export default {
     },
 
     // 「KIFダウンロード」
-    kifu_dl_handle(e) {
-      this.record_fetch(() => location.href = this.kifu_dl_url(e))
+    kifu_download_handle(e) {
+      this.record_fetch(() => location.href = this.kifu_download_url(e))
     },
 
     // 「表示」
-    kifu_show_handle(kifu_type) {
+    kifu_show_handle(e) {
       this.record_fetch(() => {
-        const url = this.kifu_show_url(kifu_type)
+        const url = this.kifu_show_url(e)
         this.window_popup(url)
       })
     },
 
     // helper
 
-    kifu_show_url(kifu_type, other_params = {}) {
+    kifu_show_url(e, other_params = {}) {
       if (this.record) {
         const params = {...other_params}
-        if (kifu_type === "png") {
+        if (e.format_key === "png") {
           params["width"] = 1200
           params["turn"] = this.record.turn_max
         }
-        let url = `${this.$config.MY_SITE_URL}${this.show_path}.${kifu_type}`
+        let url = `${this.$config.MY_SITE_URL}${this.show_path}.${e.format_key}`
 
         // 最後に変換
         const p = new URLSearchParams()
@@ -286,8 +228,8 @@ export default {
       }
     },
 
-    kifu_dl_url(e) {
-      return this.kifu_show_url(e.format_key, {attachment: "true", body_encode: e.body_encode})
+    kifu_download_url(e) {
+      return this.kifu_show_url(e, {attachment: "true", body_encode: e.body_encode})
     },
 
     // private
@@ -346,6 +288,8 @@ export default {
   },
 
   computed: {
+    base() { return this },
+
     meta() {
       return {
         title: "なんでも棋譜変換",
@@ -424,16 +368,13 @@ export default {
 </script>
 
 <style lang="sass">
-.AdapterApp-Sidebar
-  .sidebar-content
-    // width: unset
-    // a
-    //   white-space: nowrap
-    .menu-label:not(:first-child)
-      margin-top: 2em
-
 .AdapterApp
-  .MainColumn
+  .MainSection.section
     +tablet
-      max-width: 65ch
+      padding: 2rem
+
+  .MainColumn
+    // +tablet
+    //   max-width: 65ch
+
 </style>

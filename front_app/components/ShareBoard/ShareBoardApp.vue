@@ -82,14 +82,15 @@ client-only
           .column.is-clipped
             ChessClockInspector(:chess_clock="chess_clock" v-if="chess_clock")
 
-            .buttons
-              b-button(@click="room_recreate") 再接続
-              b-button(@click="room_create") 接続
-              b-button(@click="room_destroy") 切断
-              b-button(@click="member_add_test") 生存通知
-              b-button(@click="al_add_test") 指
-              b-button(@click="time_limit_modal_handle") 時間切れ
-              b-button(@click="edit_warn_modal_handle") 編集警告
+            .box
+              .buttons
+                b-button(@click="room_recreate") 再接続
+                b-button(@click="room_create") 接続
+                b-button(@click="room_destroy") 切断
+                b-button(@click="member_add_test") 生存通知
+                b-button(@click="al_add_test") 指
+                b-button(@click="time_limit_modal_handle") 時間切れ
+                b-button(@click="edit_warn_modal_handle") 編集警告
 
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
@@ -124,6 +125,10 @@ import { app_room_init    } from "./app_room_init.js"
 import { app_room_members } from "./app_room_members.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
+import { app_export       } from "./app_export.js"
+
+import { DlFormatTypeInfo } from "@/components/models/dl_format_type_info.js"
+import { FormatTypeInfo   } from "@/components/models/format_type_info.js"
 
 import { Location } from "shogi-player/components/models/location.js"
 
@@ -142,6 +147,7 @@ export default {
     app_room_members,
     app_sidebar,
     app_storage,
+    app_export,
   ],
   props: {
     config: { type: Object, required: true },
@@ -227,18 +233,6 @@ export default {
       }
     },
 
-    // 棋譜コピー
-    kifu_copy_handle(fomrat) {
-      this.sound_play("click")
-      this.general_kifu_copy(this.current_body, {to_format: fomrat})
-    },
-
-    // 局面URLコピー
-    current_url_cc_copy_handle() {
-      this.sound_play("click")
-      this.clipboard_copy({text: this.current_url})
-    },
-
     // private
 
     // url_replace() {
@@ -306,6 +300,9 @@ export default {
 
   computed: {
     base()           { return this },
+    DlFormatTypeInfo() { return DlFormatTypeInfo },
+    FormatTypeInfo()   { return FormatTypeInfo   },
+
     play_mode_p()    { return this.sp_run_mode === 'play_mode' },
     edit_mode_p()    { return this.sp_run_mode === 'edit_mode' },
     strict_p()       { return this.internal_rule === "strict"  },
@@ -345,12 +342,9 @@ export default {
     },
 
     // URL
-    current_url()                { return this.permalink_for()                                                                        },
-    json_debug_url()             { return this.permalink_for({format: "json"})                                                        },
-    twitter_card_url()           { return this.permalink_for({format: "png"})                                                         },
-    snapshot_image_url()         { return this.permalink_for({format: "png", image_viewpoint: this.sp_viewpoint, disposition: "attachment"}) }, // abstract_viewpoint より image_viewpoint の方が優先される
-    kif_download_url()           { return this.permalink_for({format: "kif", disposition: "attachment"})                              },
-    shift_jis_kif_download_url() { return this.permalink_for({format: "kif", disposition: "attachment", body_encode: "Shift_JIS"}) },
+    current_url()      { return this.permalink_for()                 },
+    json_debug_url()   { return this.permalink_for({format: "json"}) },
+    twitter_card_url() { return this.permalink_for({format: "png"})  },
 
     // 外部アプリ
     piyo_shogi_app_with_params_url() {

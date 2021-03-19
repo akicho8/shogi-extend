@@ -14,25 +14,41 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
         b-menu-list(label="検討用")
           b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
           b-menu-item.is_active_unset(label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="sound_play('click')")
-          b-menu-item.is_active_unset(label="棋譜コピー" @click="base.kifu_copy_handle('kif')")
+          b-menu-item.is_active_unset(label="棋譜コピー" @click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif'))")
 
         b-menu-list(label="編集・詰将棋作成")
           b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
           b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="base.share_p")
 
         b-menu-list(label="Export")
-          b-menu-item.is_active_unset(label="局面URLコピー"                                                        @click="base.current_url_cc_copy_handle")
-          b-menu-item.is_active_unset(label="SFEN コピー"                                                          @click="base.kifu_copy_handle('sfen')")
-          b-menu-item.is_active_unset(label="BOD コピー"                                                          @click="base.kifu_copy_handle('bod')")
-          b-menu-item.is_active_unset(label="KIF ダウンロード"             :href="base.kif_download_url"           @click="sound_play('click')")
-          b-menu-item.is_active_unset(label="KIF ダウンロード (Shift_JIS)" :href="base.shift_jis_kif_download_url" @click="sound_play('click')")
-          b-menu-item.is_active_unset(label="画像ダウンロード"             :href="base.snapshot_image_url"         @click="sound_play('click')")
+          b-menu-item.is_active_unset(:expanded="false" @click="sound_play('click')")
+            template(slot="label" slot-scope="props")
+              | 表示
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in base.FormatTypeInfo.values")
+              b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
+
+          b-menu-item.is_active_unset(@click="sound_play('click')")
+            template(slot="label" slot-scope="props")
+              | コピー
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in base.FormatTypeInfo.values")
+              template(v-if="e.clipboard_copyable")
+                b-menu-item.is_active_unset(:label="e.name" @click="base.kifu_copy_handle(e)")
+
+          b-menu-item.is_active_unset(@click="sound_play('click')")
+            template(slot="label" slot-scope="props")
+              | ダウンロード
+              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+            template(v-for="e in base.DlFormatTypeInfo.values")
+              b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(label="OGP画像の視点設定"             @click="base.abstract_viewpoint_setting_handle")
-          b-menu-item.is_active_unset(label="局面URLツイート(合言葉を含む)" @click="base.tweet_modal_handle")
-          b-menu-item.is_active_unset(label="タイトル変更"                  @click="base.title_edit")
-          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す"   @click="base.reset_handle" :disabled="base.share_p")
+          b-menu-item.is_active_unset(label="OGP画像の視点設定"           @click="base.abstract_viewpoint_setting_handle")
+          b-menu-item.is_active_unset(label="局面URLコピー"               @click="base.current_url_copy_handle")
+          b-menu-item.is_active_unset(label="局面URLツイート"             @click="base.tweet_modal_handle")
+          b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
+          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="base.share_p")
 
       .box.mt-5
         .title.is-5 スタイル設定
