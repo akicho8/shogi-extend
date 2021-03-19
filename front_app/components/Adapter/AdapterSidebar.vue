@@ -17,21 +17,22 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
               | 表示
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in base.FormatTypeInfo.values")
-              b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
+              template(v-if="e.show")
+                b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
 
           b-menu-item.is_active_unset(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | コピー
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in base.FormatTypeInfo.values")
-              template(v-if="e.clipboard_copyable")
+              template(v-if="e.clipboard")
                 b-menu-item.is_active_unset(:label="e.name" @click="base.kifu_copy_handle(e)")
 
           b-menu-item.is_active_unset(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               | ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in base.DlFormatTypeInfo.values")
+            template(v-for="e in base.FormatTypeInfo.values")
               b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
 
         b-menu-list(label="ANOTHER")

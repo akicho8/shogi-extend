@@ -127,7 +127,6 @@ import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
 import { app_export       } from "./app_export.js"
 
-import { DlFormatTypeInfo } from "@/components/models/dl_format_type_info.js"
 import { FormatTypeInfo   } from "@/components/models/format_type_info.js"
 
 import { Location } from "shogi-player/components/models/location.js"
@@ -300,8 +299,7 @@ export default {
 
   computed: {
     base()           { return this },
-    DlFormatTypeInfo() { return DlFormatTypeInfo },
-    FormatTypeInfo()   { return FormatTypeInfo   },
+    FormatTypeInfo() { return FormatTypeInfo },
 
     play_mode_p()    { return this.sp_run_mode === 'play_mode' },
     edit_mode_p()    { return this.sp_run_mode === 'edit_mode' },

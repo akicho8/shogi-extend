@@ -53,7 +53,6 @@ const AUTO_APP_TO = true
 import { support_parent } from "./support_parent.js"
 import { app_chore      } from "./app_chore.js"
 import { app_sidebar    } from "./app_sidebar.js"
-import { DlFormatTypeInfo } from "@/components/models/dl_format_type_info.js"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 
 import _ from "lodash"
@@ -299,7 +298,6 @@ export default {
     },
 
     FormatTypeInfo()   { return FormatTypeInfo          },
-    DlFormatTypeInfo() { return DlFormatTypeInfo        },
     show_path()        { return `/x/${this.record.key}` },
     disabled_p()       { return !this.record            },
 
