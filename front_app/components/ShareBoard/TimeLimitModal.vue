@@ -2,13 +2,12 @@
 .modal-card.TimeLimitModal(v-if="clock_running_p")
   header.modal-card-head
     p.modal-card-title.is-size-6.has-text-weight-bold
-      | 時間切れで{{clock.current.location.flip.name}}の勝ち
+      | 時間切れで{{clock.current.location.flip.name}}の勝ち！
   section.modal-card-body
     template(v-if="clock.current.time_recovery_mode_p")
-      | 時間切れになっても時計は止まっていないので合意の上で続行できます
+      | 時間切れになっても時計は止まってないので合意の上で続行できます
     template(v-else)
-      | 時間切れになっても合意の上で続行できます。
-      | しかし今の設定は持ち時間しかないので時間が回復しません。
+      | 時間切れになっても合意の上で続行できますが秒読みやフィッシャーの設定になっていないので時間が回復しません。
       | 続行する場合は時計を再設定するとよいでしょう
   footer.modal-card-foot
     b-button(@click="close_handle" type="is-primary") 閉じる
