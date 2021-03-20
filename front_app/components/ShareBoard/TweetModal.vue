@@ -6,7 +6,7 @@
     .preview_image_container.is-flex
       .preview_image.is-flex
         .is-size-7.has-text-grey.has-text-centered
-          | 意図した視点でない場合は<b>OGP画像の視点設定</b>で変更できます
+          | 意図した視点でない場合は<b>ツイート画像の視点設定</b>で変更できます
         b-image.mr-1(:src="ogp_image_url")
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
