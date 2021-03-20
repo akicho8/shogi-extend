@@ -173,7 +173,7 @@ class ShareBoardsController < ApplicationController
           :title               => current_title,
         })
 
-      # リアルタイム共有
+      # オンライン共有
       attrs = attrs.merge({
           :room_code => params[:room_code] || "",
           :user_code => SecureRandom.hex,

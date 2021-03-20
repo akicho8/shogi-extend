@@ -5,7 +5,7 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
       b-menu
-        b-menu-list(label="リアルタイム共有")
+        b-menu-list(label="オンライン共有")
           b-menu-item.is_active_unset(label="合言葉の設定と共有"           @click="base.room_code_modal_handle")
           b-menu-item.is_active_unset(label="対局時計の設置"               @click="base.cc_modal_handle")
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"  @click="base.room_code_url_copy_handle" :disabled="!base.room_code")

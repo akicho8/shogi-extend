@@ -46,12 +46,13 @@ export default {
     // --sp_board_color: hsla(141, 71%, 35%, 1.0)
     // --sp_board_color: hsla(348.71,65.89%,74.71%,1)
 
-  +touch
-    --sp_lifted_origin_bg_color: #{$danger}
-    --sp_lifted_origin_opacity: 1.0
-  +desktop
-    --sp_lifted_origin_bg_color: hsla(0, 0%, 0%, 0.1)
-    --sp_lifted_origin_opacity: 0.5
+  // ↓この部分は shogi-player に取り込み
+  // +touch
+  //   --sp_lifted_origin_bg_color: #{$danger}
+  //   --sp_lifted_origin_opacity: 1.0
+  // +desktop
+  //   --sp_lifted_origin_bg_color: hsla(0, 0%, 0%, 0.1)
+  //   --sp_lifted_origin_opacity: 0.5
 
   +mobile
     --sp_stand_piece_w:     40px // 駒台のセル(W)

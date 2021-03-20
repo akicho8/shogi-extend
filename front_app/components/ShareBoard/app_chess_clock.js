@@ -97,7 +97,7 @@ export const app_chess_clock = {
       })
 
       // this.$buefy.dialog.prompt({
-      //   title: "リアルタイム共有",
+      //   title: "オンライン共有",
       //   size: "is-small",
       //   message: `
       //     <div class="content">
