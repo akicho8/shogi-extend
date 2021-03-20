@@ -87,7 +87,7 @@ export default {
         border-radius: 0.4rem
         border: 1px solid $grey-lighter
   .modal-card-foot
-    justify-content: flex-end
+    justify-content: space-between
     .button
       font-weight: bold
       min-width: 8rem
