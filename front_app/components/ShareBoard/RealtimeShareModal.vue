@@ -7,17 +7,17 @@
   section.modal-card-body
     .content
       ul
-        li 同じ合言葉を設定した人とリアルタイムに盤を共有します
-        li 合言葉を設定したら同じ合言葉をこっそり相手に伝えてください
-        li メニューにある「合言葉だけを含むURL」を伝えてもかまいません
+        li 同じ合言葉を設定した人と盤を共有します
         li
-          | 盤面の同期タイミングは
+          | 盤の同期タイミングは
           b.is-size-5.mx-1 指したときだけ！
           | ← これ重要
+        li 合言葉を設定したら同じ合言葉を相手にも伝えてください
+        li メニューにある「合言葉だけを含むURL」を伝えてもかまいません
         li
-          | 「待った」は(合意の上で)局面を
+          | 「待った」は局面を下の
           b-icon.has-text-weight-bold(icon="chevron-left" size="is-small")
-          | で戻して指し直す
+          | で戻して指し直してください
         li
           | 指し手のログの行をタップするとそのときの局面にワープします
           .has-text-grey.is-size-7
@@ -92,15 +92,10 @@ export default {
   .modal-card-body
     padding-top: 0.5rem
   .modal-card-foot
-    justify-content: flex-end
+    justify-content: space-between
     .button
       font-weight: bold
       min-width: 8rem
   .field:not(:last-child)
     margin-bottom: 1.5rem
-
-
-
-
-    
 </style>
