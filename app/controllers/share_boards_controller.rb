@@ -1,23 +1,5 @@
 # 共有将棋盤
 #
-# entry
-#   app/controllers/share_boards_controller.rb
-#
-# vue
-#   app/javascript/share_board.vue
-#
-# model
-#   app/models/share_board_methods.rb
-#
-# experiment
-#   experiment/0850_share_board.rb
-#
-# view
-#   app/views/share_boards/show.html.slim
-#
-# test
-#   spec/controllers/share_boards_controller_spec.rb
-#
 # url
 #   http://localhost:3000/share-board
 #   http://localhost:3000/share-board?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&abstract_viewpoint=self
@@ -42,23 +24,10 @@ class ShareBoardsController < ApplicationController
     include ShogiErrorRescueMethods
 
     def show
-      # slack_message(key: "ShareBoard", body: {
-      #     "request.format"        => request.format,
-      #     "request.format.blank?" => request.format.blank?,
-      #     "request.format.html?"  => request.format.html?,
-      #     "params[:format]"       => params[:format],
-      #     "params"                => params,
-      #   })
-
       # http://localhost:3000/share-board
       if params[:format].blank? || request.format.html?
         query = params.permit!.to_h.except(:controller, :action, :format).to_query.presence
         redirect_to UrlProxy.wrap(["/share-board", query].compact.join("?"))
-        # else
-        #   redirect_to ["/app/share-board", query].compact.join("?")
-        # end
-        # redirect_to UrlProxy.wrap(["/share-board", query].compact.join("?"))
-        # redirect_to UrlProxy.wrap(["/app/share-board", query].compact.join("?"))
         return
       end
 
@@ -66,10 +35,8 @@ class ShareBoardsController < ApplicationController
       current_record.update_columns(accessed_at: Time.current)
 
       if request.format.json?
-        # if params[:config_fetch]
         render json: config_params
         return
-        # end
       end
 
       # Twitter画像

@@ -165,6 +165,9 @@ class KifuParser
       :typical_error_case            => :embed,
       :support_for_piyo_shogi_v4_1_5 => false,
     }
+    if to_format == :bod
+      options[:turn_limit] = turn_limit
+    end
     [
       :candidate_enable,
       :validate_enable,
@@ -178,6 +181,12 @@ class KifuParser
 
   def swars_battle_key
     params[:swars_battle_key].presence
+  end
+
+  def turn_limit
+    if v = params[:turn].presence
+      v.to_i
+    end
   end
 
   def true_or_false(v)

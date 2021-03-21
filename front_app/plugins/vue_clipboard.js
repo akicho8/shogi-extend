@@ -14,23 +14,24 @@ export default {
     // 棋譜を渡して指定フォーマットにしたものをコピーする
     // general_kifu_copy(sfen, {to_format: "kif"})
     general_kifu_copy(any_source, options = {}) {
-      const to_format = options.to_format || "kif"
-      const key = [any_source, to_format]
-
-      const body = this.kif_clipboard_copy_cache[key]
-      if (body) {
-        return this.simple_clipboard_copy(body)
-      }
-
-      this.$axios.$post("/api/general/any_source_to.json", {
-        any_source: any_source,
-        to_format: to_format,
+      options = {
         candidate_enable: false,
         validate_enable: false,
-      }).then(e => {
+        any_source: any_source,
+        ...options,
+      }
+      options.to_format = options.to_format || "kif"
+
+      // const key = [any_source, to_format]
+      // const body = this.kif_clipboard_copy_cache[key]
+      // if (body) {
+      //   return this.simple_clipboard_copy(body)
+      // }
+
+      this.$axios.$post("/api/general/any_source_to.json", options).then(e => {
         if (e.body) {
           if (!this.simple_clipboard_copy(e.body)) {
-            this.$set(this.kif_clipboard_copy_cache, key, e.body)
+            // this.$set(this.kif_clipboard_copy_cache, key, e.body)
           }
         }
       })
@@ -47,7 +48,7 @@ export default {
         this.clipboard_copy({text: text})
       } else {
         this.$axios.$get(url).then(text => {
-          this.$set(this.kif_clipboard_copy_cache, url, text)
+          // this.$set(this.kif_clipboard_copy_cache, url, text)
           this.clipboard_copy({text: text})
         })
       }

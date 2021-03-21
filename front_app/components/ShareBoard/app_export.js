@@ -9,7 +9,7 @@ export const app_export = {
     // 指定の棋譜をコピー
     kifu_copy_handle(e) {
       this.sound_play("click")
-      this.general_kifu_copy(this.current_body, {to_format: e.format_key})
+      this.general_kifu_copy(this.current_body, {to_format: e.format_key, turn: this.turn_offset})
     },
 
     //////////////////////////////////////////////////////////////////////////////// show

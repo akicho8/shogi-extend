@@ -24,7 +24,11 @@ module KifShowMethods
   # curl -I http://localhost:3000/x/1.kif?inline=1
   # curl -I http://localhost:3000/x/1.kif?plain=1
   def kif_data_send
-    text_body = current_record.to_xxx(params[:format])
+    if params[:format] === "bod"
+      text_body = KifuParser.new(source: current_record.kifu_body, to_format: "bod", turn: params[:turn]).to_xxx
+    else
+      text_body = current_record.to_xxx(params[:format])
+    end
 
     if current_body_encode == "Shift_JIS"
       text_body = text_body.encode(current_body_encode)
