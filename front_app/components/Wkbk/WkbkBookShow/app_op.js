@@ -43,7 +43,16 @@ export const app_op = {
         return
       }
 
-      this.book.xitems = _.shuffle(this.book.xitems)
+      if (false) {
+        this.book.xitems = _.shuffle(this.book.xitems)
+      } else {
+        let a = this.book.xitems.filter(e => e.answer_stat.spent_sec_total != null)
+        let b = this.book.xitems.filter(e => e.answer_stat.spent_sec_total == null)
+        a = _.shuffle(a)
+        b = _.shuffle(b)
+        this.book.xitems = [...a, ...b]
+      }
+
       this.op_index_set_all()
       this.current_index = 0
       this.toast_ok("シャッフルしました")
