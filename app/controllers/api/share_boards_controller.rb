@@ -1,5 +1,5 @@
 module Api
   class ShareBoardsController < ::Api::ApplicationController
-    include ::ShareBoardsController::ShareBoardMethods
+    include ShareBoardControllerMethods
   end
 end
