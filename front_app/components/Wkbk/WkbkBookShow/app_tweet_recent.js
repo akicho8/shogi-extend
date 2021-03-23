@@ -4,24 +4,11 @@ import dayjs from "dayjs"
 export const app_tweet_recent = {
   data() {
     return {
-      interval_counter: null,
-
       re_correct_count: null,
       re_mistake_count: null,
       re_total_sec: 0,
       re_summary: null,      // ツイート内容はリアクティブに変化しないように変数に保存しておく
       re_begin_index: null,  // 「START」を押した時点の current_index を保持しておく
-    }
-  },
-
-  beforeMount() {
-    this.interval_counter = new IntervalCounter(() => this.interval_counter_callback())
-  },
-
-  beforeDestroy() {
-    if (this.interval_counter) {
-      this.interval_counter.stop()
-      this.interval_counter = null
     }
   },
 

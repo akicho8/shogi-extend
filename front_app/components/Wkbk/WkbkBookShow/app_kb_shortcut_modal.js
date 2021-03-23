@@ -4,7 +4,6 @@ import WkbkBookShowKbShortcutModal from "./WkbkBookShowKbShortcutModal.vue"
 export const app_kb_shortcut_modal = {
   methods: {
     kb_shortcut_modal_toggle_handle() {
-      this.sidebar_p = false
       if (this.kb_shortcut_modal_active_p()) {
         this.kb_shortcut_modal_close()
       } else {
@@ -27,12 +26,18 @@ export const app_kb_shortcut_modal = {
         //   "close": () => { alert("x") },
         // },
       })
+      if (!this.sidebar_p) {
+        this.interval_counter_pause(this.$kb_shortcut_modal)
+      }
     },
     kb_shortcut_modal_close() {
       if (this.$kb_shortcut_modal) {
         this.sound_play("click")
         this.$kb_shortcut_modal.close()
         this.$kb_shortcut_modal = null
+        if (!this.sidebar_p) {
+          this.interval_counter_pause(this.$kb_shortcut_modal)
+        }
       }
     },
     kb_shortcut_modal_active_p() {

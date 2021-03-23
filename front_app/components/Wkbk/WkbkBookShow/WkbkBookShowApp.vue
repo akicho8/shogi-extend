@@ -1,4 +1,3 @@
-
 <template lang="pug">
 client-only
   .WkbkBookShowApp
@@ -6,7 +5,7 @@ client-only
       p re_total_sec: {{re_total_sec}}
       p mode: {{mode}}
       template(v-if="interval_counter")
-        p interval_counter.count: {{interval_counter.count}}
+        p interval_counter.counter: {{interval_counter.counter}}
       template(v-if="book && false")
         p jo_counts: {{jo_counts}}
         p book.user.id: {{book.user && book.user.id}}
@@ -44,17 +43,18 @@ import { Book           } from "../models/book.js"
 
 import { support_parent } from "./support_parent.js"
 
-import { app_xitems   } from "./app_xitems.js"
-import { app_mode       } from "./app_mode.js"
-import { app_support    } from "./app_support.js"
+import { app_xitems            } from "./app_xitems.js"
+import { app_mode              } from "./app_mode.js"
+import { app_support           } from "./app_support.js"
 import { app_tweet_recent      } from "./app_tweet_recent.js"
-import { app_tweet_stat   } from "./app_tweet_stat.js"
-import { app_sidebar    } from "./app_sidebar.js"
-import { app_op  } from "./app_op.js"
-import { app_table  } from "./app_table.js"
-import { app_keyboard  } from "./app_keyboard.js"
-import { app_storage  } from "./app_storage.js"
-import { app_kb_shortcut_modal  } from "./app_kb_shortcut_modal.js"
+import { app_tweet_stat        } from "./app_tweet_stat.js"
+import { app_sidebar           } from "./app_sidebar.js"
+import { app_op                } from "./app_op.js"
+import { app_table             } from "./app_table.js"
+import { app_keyboard          } from "./app_keyboard.js"
+import { app_storage           } from "./app_storage.js"
+import { app_kb_shortcut_modal } from "./app_kb_shortcut_modal.js"
+import { app_interval_counter  } from "./app_interval_counter.js"
 
 import _ from "lodash"
 
@@ -73,6 +73,7 @@ export default {
     app_keyboard,
     app_storage,
     app_kb_shortcut_modal,
+    app_interval_counter,
   ],
 
   data() {

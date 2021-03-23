@@ -40,7 +40,7 @@ export class IntervalBase {
   }
 
   start() {
-    if (this.id == null) {
+    if (this.id === null) {
       // setInterval(this.__callback__, ...) では __callback__ のなかのスコープがインスタンスにならない
       this.__interval_on__()
       this.debug_log("start")
@@ -55,7 +55,6 @@ export class IntervalBase {
       this.__interval_off__()
       this.id = null
     } else {
-
       this.debug_log("stop (skip)")
     }
   }
