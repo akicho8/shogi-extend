@@ -37,7 +37,7 @@ export class IntervalCounter extends IntervalRunner {
   }
 
   start() {
-    if (this.id == null) {
+    if (this.id === null) {
       this.counter_reset()
       super.start()
     }
