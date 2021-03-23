@@ -245,7 +245,8 @@ module Wkbk
       else
         {
           :title       => [title, user.name].join(" - "),
-          :description => description || "",
+          # :description => description || "",
+          :description => direction_message,
           :og_image    => og_image_path || "rack-books",
         }
       end
