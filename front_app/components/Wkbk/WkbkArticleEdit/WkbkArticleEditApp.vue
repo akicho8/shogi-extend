@@ -117,6 +117,7 @@ export default {
     this.answer_base_turn_offset = 0
     this.valid_count = 0
 
+    // 引数で盤面が指定されたときは配置タブにする
     let performed = false
     if (this.article.new_record_p) {
       if (this.development_p && false) {
@@ -136,19 +137,20 @@ export default {
       }
     }
 
+    // 配置タブになっていないときは new_record_p で判断する
     if (!performed) {
-      // 最初に開くタブの決定
       if (this.article.new_record_p) {
         this.placement_tab_handle()
       }
       if (this.article.persisted_p) {
-        this.form_tab_handle()
+        // this.form_tab_handle()
+        this.answer_tab_handle()
       }
     }
   },
 
   computed: {
-    base()       { return this       },
+    base() { return this },
   },
 }
 </script>
