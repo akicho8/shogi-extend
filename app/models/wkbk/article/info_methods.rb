@@ -58,6 +58,9 @@ module Wkbk
       def tweet_body
         out = []
         out << title
+        if direction_message.present?
+          out << direction_message
+        end
         if description.present?
           out << description
         end
