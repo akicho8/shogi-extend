@@ -60,11 +60,6 @@ export const app_tweet_stat = {
       }
     },
 
-    // 時間を進める
-    interval_counter_callback() {
-      this.current_spent_sec += 1
-    },
-
     // O or X を選択したとき
     journal_record(answer_kind_key) {
       this.talk_stop()

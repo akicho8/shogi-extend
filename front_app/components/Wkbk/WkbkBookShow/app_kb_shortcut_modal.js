@@ -1,7 +1,11 @@
-
 import WkbkBookShowKbShortcutModal from "./WkbkBookShowKbShortcutModal.vue"
 
 export const app_kb_shortcut_modal = {
+  data() {
+    return {
+      kb_shortcut_modal_p: false,
+    }
+  },
   methods: {
     kb_shortcut_modal_toggle_handle() {
       if (this.kb_shortcut_modal_active_p()) {
@@ -26,18 +30,21 @@ export const app_kb_shortcut_modal = {
         //   "close": () => { alert("x") },
         // },
       })
-      if (!this.sidebar_p) {
-        this.interval_counter_pause(this.$kb_shortcut_modal)
-      }
+      this.kb_shortcut_modal_p = true
+
+      // if (!this.sidebar_p) {
+      //   this.interval_counter_pause(this.$kb_shortcut_modal)
+      // }
     },
     kb_shortcut_modal_close() {
       if (this.$kb_shortcut_modal) {
         this.sound_play("click")
         this.$kb_shortcut_modal.close()
         this.$kb_shortcut_modal = null
-        if (!this.sidebar_p) {
-          this.interval_counter_pause(this.$kb_shortcut_modal)
-        }
+        this.kb_shortcut_modal_p = false
+        // if (!this.sidebar_p) {
+        //   this.interval_counter_pause(this.$kb_shortcut_modal)
+        // }
       }
     },
     kb_shortcut_modal_active_p() {
