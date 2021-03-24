@@ -168,8 +168,8 @@ export const app_room = {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
       }
       if (true) {
-        // 「aliceさん ▲76歩」と表示しながら
-        this.toast_ok_toast_only(`${this.user_call_name(params.from_user_name)} ${params.last_move_kif}`)
+        // 「alice ▲76歩」と表示しながら
+        this.toast_ok_toast_only(`${params.from_user_name} ${params.last_move_kif}`)
 
         // 「aliceさん」の発声後に「7 6 ふー！」を発声する
         this.talk(this.user_call_name(params.from_user_name), {onend: () => this.talk(params.yomiage)})
