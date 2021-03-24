@@ -58,19 +58,24 @@ module Swars
     end
 
     describe "絶対投了しないマン" do
-      def test1
+      def csa_seq_generate(n)
+        [["+5958OU", 599], ["-5152OU", 599], ["+5859OU", 599], ["-5251OU", 599]].cycle.take(n)
+      end
+
+      def test1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597]], final_key: :TIMEOUT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.first_matched_medal_key_and_message
+        @black.memberships.first.first_matched_medal_key_and_message == [:絶対投了しないマン, "悔しかったので時間切れになるまで9分59秒放置した"]
       end
 
       it do
-        test1                   # => [:絶対投了しないマン, "悔しかったので時間切れになるまで9分59秒放置した"]
-        assert { test1 == [:絶対投了しないマン, "悔しかったので時間切れになるまで9分59秒放置した"] }
+        assert { !test1(13) }
+        assert { test1(14) }
+        assert { test1(15) }
       end
     end
 

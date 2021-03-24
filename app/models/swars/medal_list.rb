@@ -243,6 +243,7 @@ module Swars
         s = s.joins(:battle)
         s = s.where(Swars::Battle.arel_table[:rule_key].eq(rule_info.key))
         s = s.where(Swars::Battle.arel_table[:final_key].eq("TIMEOUT"))
+        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
         s.count
       end
     end
