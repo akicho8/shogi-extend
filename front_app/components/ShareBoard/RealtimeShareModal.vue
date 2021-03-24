@@ -15,9 +15,9 @@
         li 合言葉を設定したら同じ合言葉を相手にも伝えてください
         li メニューにある「合言葉だけを含むURL」を伝えてもかまいません
         li
-          | 「待った」は局面を下の
+          | 「待った」は盤の下の
           b-icon.has-text-weight-bold(icon="chevron-left" size="is-small")
-          | で戻して指し直してください
+          | で局面を戻して指し直してください
         li
           | 指し手のログの行をタップするとそのときの局面にワープします
           .has-text-grey.is-size-7
@@ -29,7 +29,7 @@
       b-field(label="合言葉 (設定済み)" custom-class="is-small" key="input_show_p_false")
         .control
           b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger") 変更
-    b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとからでも変更できます")
+    b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとから変更できます")
       b-input.new_user_name(v-model="new_user_name")
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
