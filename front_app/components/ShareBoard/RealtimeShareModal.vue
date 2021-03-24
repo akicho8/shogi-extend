@@ -12,8 +12,10 @@
           | 盤の同期タイミングは
           b.is-size-5.mx-1 指したときだけ！
           | ← これ重要
-        li 合言葉を設定したら同じ合言葉を相手にも伝えてください
-        li メニューにある「合言葉だけを含むURL」を伝えてもかまいません
+        li
+          | 合言葉を設定したら同じ合言葉を相手にも伝えてください
+          .has-text-grey.is-size-7
+            | メニューにある「合言葉だけを含むURL」を伝えてもよし
         li
           | 「待った」は盤の下の
           b-icon.has-text-weight-bold(icon="chevron-left" size="is-small")
