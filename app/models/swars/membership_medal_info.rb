@@ -38,9 +38,9 @@ module Swars
             when d >= 10
               v = { message: "恐怖の級位者として無双した",                      emoji: "😎" }
             when d >= 2
-              v = { message: "#{s2}格上の人を倒した", icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
+              v = { message: "#{s2}格上の人を倒した",                   icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
             when d >= 1
-              v = { message: "格上のライバルを倒した",                          emoji: "😳" }
+              v = { message: "格上のライバルを倒した",                  icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
             when d >= 0
               v = { message: "ライバルに勝った",                        icon: "star", :class => "has-text-gold" }
             when d >= -1
