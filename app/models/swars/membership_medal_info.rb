@@ -36,11 +36,11 @@ module Swars
           when m.judge_info.key == :win
             case
             when d >= 10
-              v = { message: "恐怖の級位者として無双した", emoji: "😎" }
+              v = { message: "恐怖の級位者として無双した",                      emoji: "😎" }
             when d >= 2
-              v = { message: "#{s2}格上の人を倒した",                   icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
+              v = { message: "#{s2}格上の人を倒した", icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
             when d >= 1
-              v = { message: "格上のライバルを倒した",                  icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }
+              v = { message: "格上のライバルを倒した",                          emoji: "😳" }
             when d >= 0
               v = { message: "ライバルに勝った",                        icon: "star", :class => "has-text-gold" }
             when d >= -1
@@ -51,7 +51,7 @@ module Swars
           when m.judge_info.key == :lose
             case
             when d <= -10
-              v = { message: "達成率をがっつり奪われた", emoji: "😨" }
+              v = { message: "達成率をがっつり奪われた",                        emoji: "😨" }
             when d <= -2
               v = { message: "#{s2}格下の人に、勝ってあたりまえなのに、負けた", emoji: "🥺" }
             when d <= -1
