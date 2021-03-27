@@ -98,7 +98,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
                 b-dropdown-item Action
 
         b-menu-list(label="DEBUG" v-if="development_p")
-          b-menu-item.is_active_unset(label="棋譜の不整合"     @click="$router.push({query: {query: 'Yamada_Taro', error_capture_test: true, force: true}})")
+          b-menu-item.is_active_unset(label="棋譜の不整合"     @click="$router.push({query: {query: 'Yamada_Taro', error_capture_fake: true, force: true}})")
           b-menu-item.is_active_unset(label="棋譜の再取得"     @click="$router.push({query: {query: 'Yamada_Taro', destroy_all: true, force: true}})")
           b-menu-item.is_active_unset(label="棋譜の普通に取得" @click="$router.push({query: {query: 'Yamada_Taro'}})")
           b-menu-item.is_active_unset(label="☗を左に表示"     @click="$router.push({query: {query: 'Yamada_Taro', viewpoint: 'black'}})")

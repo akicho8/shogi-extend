@@ -126,7 +126,7 @@ module Swars
             verbose: Rails.env.development?,
             early_break: false, # 1ページ目で新しいものが見つからなければ終わる
             error_capture: nil, # blockが渡されていれば呼ぶ
-            error_capture_test: false, # trueならわざと例外
+            error_capture_fake: false, # trueならわざと例外
           }.merge(params)
 
           keys = []
@@ -185,14 +185,14 @@ module Swars
             # end
           end
 
-          if params[:error_capture_test]
+          if params[:error_capture_fake]
           else
             keys = keys - where(key: keys).pluck(:key)
           end
 
           keys.each do |key|
             begin
-              if params[:error_capture_test]
+              if params[:error_capture_fake]
                 raise Bioshogi::BioshogiError, "(test1)\n(test2)\n"
               end
               single_battle_import(params.merge(key: key, skip_if_exist: false))

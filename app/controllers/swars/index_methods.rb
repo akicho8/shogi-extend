@@ -129,7 +129,7 @@ module Swars
           :user_key           => current_swars_user_key,
           :page_max           => import_page_max,
           :force              => params[:force],
-          :error_capture_test => params[:error_capture_test],
+          :error_capture_fake => params[:error_capture_fake],
           :error_capture      => -> error { errors << error },
         }
 
@@ -177,7 +177,7 @@ module Swars
           end
 
           # 確認方法
-          # http://localhost:3000/w?query=devuser1&error_capture_test=true&force=true
+          # http://localhost:3000/w?query=devuser1&error_capture_fake=true&force=true
           if errors.present?
             errors.each do |e|
               body = [
