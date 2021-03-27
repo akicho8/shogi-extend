@@ -22,7 +22,11 @@ module Actb::Question::FolderMethods
 
   def folder_key=(key)
     if user
-      self.folder = user.public_send("actb_#{key}_box")
+      if key.blank?
+        self.folder = nil
+      else
+        self.folder = user.public_send("actb_#{key}_box")
+      end
     end
   end
 end
