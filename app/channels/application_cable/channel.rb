@@ -63,5 +63,10 @@ module ApplicationCable
         SlackAgent.message_send(key: "#{self.class.name}##{method_name}", body: body.join)
       end
     end
+
+    # ArgumentError を拾うため
+    rescue_from Exception do |error|
+      ExceptionNotifier.notify_exception(error)
+    end
   end
 end

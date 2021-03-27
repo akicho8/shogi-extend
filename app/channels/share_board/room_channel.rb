@@ -34,7 +34,9 @@ module ShareBoard
     end
 
     def broadcast(bc_action, bc_params)
-      # raise ArgumentError, bc_params.inspect unless bc_params.values.all?
+      if v = bc_params.find_all { |k, v| v.nil? }.presence
+        raise ArgumentError, "値がnilのキーがある : #{v.to_h.inspect}"
+      end
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
   end

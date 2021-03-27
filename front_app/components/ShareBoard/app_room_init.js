@@ -40,7 +40,7 @@ export const app_room_init = {
         this.member_info_share()
 
         this.clog("参加者は対局時計があることも知らないので教えてあげる")
-        this.chess_clock_share()
+        this.chess_clock_share("")
       }
     },
 

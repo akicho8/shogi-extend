@@ -91,6 +91,8 @@ client-only
                 b-button(@click="al_add_test") 指
                 b-button(@click="time_limit_modal_handle") 時間切れ
                 b-button(@click="edit_warn_modal_handle") 編集警告
+                b-button(@click="chess_clock_share('')") 時計同期
+                b-button(@click="chess_clock_share()") 時計同期(message=null)
 
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
@@ -210,8 +212,11 @@ export default {
       if (this.chess_clock) {
         this.cc_switch_handle(this.chess_clock.single_clocks[last_move_info.location.code])
       }
+
       // 時計の状態をブロードキャストする
-      this.chess_clock_share()
+      this.chess_clock_share("")
+
+      this.ga_click(`共有将棋盤【${this.room_code}:${this.member_infos.length}】`)
     },
 
     // デバッグ用

@@ -266,11 +266,11 @@ export const app_chess_clock = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 時計の状態をすべて共有する
-    chess_clock_share(message = null) {
+    chess_clock_share(message) {
+      this.__assert__(message != null, "message != null")
       if (message) {
         this.toast_ok(message)
       }
-
       const params = {}
       params.cc_params = this.cc_params
       params.message = message
@@ -280,10 +280,9 @@ export const app_chess_clock = {
       this.ac_room_perform("chess_clock_share", params) // --> app/channels/share_board/room_channel.rb
     },
     chess_clock_share_broadcasted(params) {
+      this.debug_alert("時計同期")
       if (params.from_user_code === this.user_code) {
-        // this.debug_alert("自分から自分へ")
       } else {
-        // this.debug_alert("自分から相手へ")
         if (params.message) {
           this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.message}`)
         }
