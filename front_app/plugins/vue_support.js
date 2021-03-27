@@ -411,6 +411,16 @@ export default {
     as_visible_hash(v) {
       return _.reduce(v, (a, e) => ({...a, [e.key]: e.visible}), {})
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    hira_to_kata(str) {
+      return str.replace(/[\u3041-\u3096]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 0x60))
+    },
+
+    kata_to_hira(str) {
+      return str.replace(/[\u30A1-\u30FA]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60))
+    },
   },
 
   computed: {
