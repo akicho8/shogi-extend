@@ -11,7 +11,10 @@ client-only
         .box.has-text-centered
           p {{status_code_with_message}}
           p.has-text-left(v-if="error.message" v-html="error.message")
-          b-button.mt-4(@click="sns_login_modal_handle" v-if="!g_current_user && error_status_code === 403") ログイン
+          b-button.mt-4(type="is-primary is-outlined" @click="sns_login_modal_handle" v-if="!g_current_user && error_status_code === 403")
+            | ログイン
+          b-button.mt-4(type="is-primary is-outlined" @click="reload_handle" v-if="error_status_code === 500")
+            | ブラウザをリロードする
         .emoji.has-text-centered.is-unselectable
           | {{charactor}}
     DebugPre
@@ -45,6 +48,9 @@ export default {
   methods: {
     charactor_sample() {
       return _.sample([..."🐰🐥🦉🐔🦔🐻🐹🐷🐮🐯🦁🐱🦊🐺🐶🐵🐸🐛🦋🥀🍀☘🍄"])
+    },
+    reload_handle() {
+      location.reload()
     },
   },
 

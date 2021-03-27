@@ -176,6 +176,9 @@ export default {
     }
   },
   mounted() {
+    // this.$nuxt.error({statusCode: 500, message: "xxx"})
+    // return
+
     // どれかが変更されたらURLを更新
     this.$watch(() => [
       this.sp_run_mode,
