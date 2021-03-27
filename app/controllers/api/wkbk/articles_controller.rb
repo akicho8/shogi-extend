@@ -72,11 +72,7 @@ module Api
         else
           # article = current_user.wkbk_articles.build
           article = current_user.wkbk_articles.build
-          article.default_assign
-          if default_book
-            article.books = [default_book]
-            article.folder_key = default_book.folder_key
-          end
+          article.default_assign(params.merge(book: default_book))
           # retv[:article] = ::Wkbk::Article.default_attributes.merge(book_key: default_book_key)
           # retv[:meta] = ::Wkbk::Article.new_og_meta
         end

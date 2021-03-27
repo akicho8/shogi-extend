@@ -252,15 +252,25 @@ module Wkbk
       end
     end
 
-    def default_assign
+    def default_assign(params = {})
       # "position sfen 4k4/9/9/9/9/9/9/9/9 b 2r2b4g4s4n4l18p 1"
 
       # self.folder_key     ||= :public
-      self.init_sfen      ||= "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
-      self.viewpoint      ||= "black"
-      self.mate_skip      ||= false
-      self.difficulty     ||= 1
-      self.tag_list ||= []
+      self.title       ||= params[:title]
+      self.description ||= params[:description]
+      self.init_sfen   ||= params[:body] || params[:sfen] || params[:init_sfen] || "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
+      self.viewpoint   ||= params[:viewpoint] || "black"
+      self.mate_skip   ||= false
+      self.difficulty  ||= (params[:difficulty] || 1).to_i
+      self.folder_key  ||= params[:folder_key] || params[:folder]
+      self.lineage_key ||= params[:lineage_key] || params[:lineage]
+      self.tag_list    ||= params[:tag_list].to_s.split(/[,\s]+/)
+
+      # コントローラー側で book_key から current_user の保持する book を求めて渡される
+      if book = params[:book]
+        self.books = books.presence || [book]
+        self.folder_key ||= book.folder_key # 問題集と同じ公開設定にしておく
+      end
 
       if Rails.env.development?
         self.init_sfen = "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
