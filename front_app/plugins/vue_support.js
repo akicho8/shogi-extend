@@ -32,6 +32,7 @@ export default {
     ga_click(category) {
       if (this.$ga) {
         if (this.development_p) {
+          category = `(development) ${category}`
           const message = `GA: ${category}`
           this.$buefy.toast.open({message: message, position: "is-top", type: "is-dark", queue: false})
           this.clog(message)
