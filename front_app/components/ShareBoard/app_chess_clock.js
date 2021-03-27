@@ -281,8 +281,9 @@ export const app_chess_clock = {
     },
     chess_clock_share_broadcasted(params) {
       if (params.from_user_code === this.user_code) {
-        // 自分から自分へ
+        // this.debug_alert("自分から自分へ")
       } else {
+        // this.debug_alert("自分から相手へ")
         if (params.message) {
           this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.message}`)
         }

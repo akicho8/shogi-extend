@@ -34,7 +34,7 @@ module ShareBoard
     end
 
     def broadcast(bc_action, bc_params)
-      raise ArgumentError, bc_params.inspect unless bc_params.values.all?
+      # raise ArgumentError, bc_params.inspect unless bc_params.values.all?
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
   end
