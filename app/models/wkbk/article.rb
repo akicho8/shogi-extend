@@ -120,7 +120,7 @@ module Wkbk
       validate do
         if false
           if changes_to_save[:book_keys] && book
-            if book.folder_key == :public && folder_key === :private
+            if book.folder_key == :public && folder_key == :private
               errors.add(:base, "公開している問題集に非公開の問題は入れられません")
             end
           end

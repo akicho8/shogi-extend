@@ -51,13 +51,13 @@ class BoardImageGenerator
     @to_blob_options ||= -> {
       opts = params.deep_dup
 
-      if opts[:image_preset] === "small"
+      if opts[:image_preset] == "small"
         opts.update({
-                         width: 320,
-                         height: 256,
-                         piece_pull_down_rate:  { black: 0.06, white: 0      },
-                         piece_pull_right_rate: { black: 0.06, white: -0.045 },
-                       })
+                      width: 320,
+                      height: 256,
+                      piece_pull_down_rate:  { black: 0.06, white: 0      },
+                      piece_pull_right_rate: { black: 0.06, white: -0.045 },
+                    })
       end
 
       opts                                                # => {"width" => "",   "height" => "1234" }

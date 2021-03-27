@@ -45,7 +45,7 @@ module Swars
     def ordered_memberships(e, v)
       if current_viewpoint
         # 視点指定があるならそれ
-        if current_viewpoint === :white
+        if current_viewpoint == :white
           v = v.reverse
         end
       elsif current_swars_user

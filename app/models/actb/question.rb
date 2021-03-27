@@ -518,14 +518,14 @@ module Actb
       case
       when active_folder_posted?
         "投稿"
-      when folder_key === "active" && current_hash != @save_before_hash
+      when folder_key == "active" && current_hash != @save_before_hash
         "更新"
       end
     end
 
     # 公開した直後か？
     def active_folder_posted?
-      saved_change_to_attribute?(:folder_id) && folder_key === "active"
+      saved_change_to_attribute?(:folder_id) && folder_key == "active"
     end
 
     # 変更を検知するためのハッシュ(重要なデータだけにする)
