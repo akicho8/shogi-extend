@@ -60,4 +60,14 @@ RSpec.describe Api::Wkbk::ArticlesController, type: :controller do
       assert { response.status == e[:status] }
     end
   end
+
+  describe "new" do
+    it "works" do
+      user_login(User.sysop)
+      get :edit, params: { tag_list: "a,b c", book_keys: "1,2" }
+      info = JSON.parse(response.body)
+      assert { info["article"]["tag_list"] == ["a", "b", "c"] }
+      assert { info["books"].collect { |e| e["key"] } == ["1", "2"] }
+    end
+  end
 end

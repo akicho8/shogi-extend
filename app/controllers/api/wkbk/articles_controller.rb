@@ -72,7 +72,7 @@ module Api
         else
           # article = current_user.wkbk_articles.build
           article = current_user.wkbk_articles.build
-          article.default_assign(params.merge(book: default_book))
+          article.default_assign(params.merge(books: default_books))
           # retv[:article] = ::Wkbk::Article.default_attributes.merge(book_key: default_book_key)
           # retv[:meta] = ::Wkbk::Article.new_og_meta
         end
@@ -82,7 +82,7 @@ module Api
 
         # チェックしたものが上に来るようにする
         books = [
-          default_book,                                     # 引数で指定したものが一番上
+          default_books,                                     # 引数で指定したものが一番上
           article.books.order(updated_at: :desc),           # 現在のレコードで選択したもの
           current_user.wkbk_books.order(updated_at: :desc), # その他全部
         ].flatten.compact.uniq
@@ -139,15 +139,11 @@ module Api
         (params[:scope].presence || :everyone).to_sym
       end
 
-      def default_book
-        if v = params[:book_key]
-          current_user.wkbk_books.find_by!(key: v)
-        end
+      def default_books
+        (params[:book_key] || params[:book_keys]).to_s.scan(/\w+/).collect { |key|
+          current_user.wkbk_books.find_by!(key: key)
+        }
       end
-
-      # def default_book_key
-      #   default_book&.key
-      # end
 
       # PageMethods override
       def default_per
