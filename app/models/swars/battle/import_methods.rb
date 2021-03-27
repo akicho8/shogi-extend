@@ -228,6 +228,11 @@ module Swars
           if info[:__final_key] == "DRAW_PLY_LIMIT"
             return
           end
+          # 2021-03-27 緊急メンテナンスが入った日。
+          # 本家では「対局無効」と表示されている
+          if info[:__final_key] == "DRAW_INVALID"
+            return
+          end
 
           # 対局中や引き分けのときは棋譜がないのでスキップ
           unless info[:fetch_successed]
