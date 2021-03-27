@@ -26,10 +26,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::Wkbk::BooksController, type: :controller do
-  before(:context) do
-    Wkbk::Book.mock_setup
-  end
-
+  include WkbkSupportMethods
   [
     { get: [ :index, params: {                 }, ],               status: 200, },
     { get: [ :show,  params: { book_key: 1,    }, ],               status: 200, },

@@ -32,10 +32,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::Wkbk::ArticlesController, type: :controller do
-  before(:context) do
-    Wkbk::Book.mock_setup
-  end
-
+  include WkbkSupportMethods
   [
     { get: [ :index, params: {                  }],               status: 200, },
     { get: [ :edit,  params: {                  }],               status: 403, },

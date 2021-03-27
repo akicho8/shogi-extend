@@ -17,7 +17,7 @@ module Wkbk
     end
 
     def folder_key=(key)
-      self.folder = Folder.fetch(key)
+      self.folder = Folder.fetch_if(key)
     end
 
     def folder_key
@@ -25,7 +25,7 @@ module Wkbk
     end
 
     def folder_eq(key)
-      folder == Folder.fetch(key)
+      folder == Folder.fetch_if(key)
     end
 
     def show_can(current_user)

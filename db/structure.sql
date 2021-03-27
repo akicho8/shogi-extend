@@ -1874,8 +1874,8 @@ CREATE TABLE `wkbk_moves_answers` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `article_id` bigint(20) NOT NULL COMMENT '問題',
   `moves_count` int(11) NOT NULL COMMENT 'N手',
-  `moves_str` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '連続した指し手',
-  `moves_human_str` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '人間向け指し手',
+  `moves_str` text COLLATE utf8mb4_bin COMMENT '連続した指し手',
+  `moves_human_str` text COLLATE utf8mb4_bin COMMENT '人間向け指し手',
   `position` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
@@ -1972,6 +1972,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210307111404'),
 ('20210307111405'),
 ('20210307111406'),
-('20210307111407');
+('20210307111407'),
+('20210307111409');
 
 
