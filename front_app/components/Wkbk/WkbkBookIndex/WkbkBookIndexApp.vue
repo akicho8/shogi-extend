@@ -83,7 +83,7 @@ export default {
 
     // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
-    this.per         = this.$route.query.per || this.WkbkConfig.fetch("per_page").value
+    this.per         = this.$route.query.per || this.WkbkConfig.value_of("per_page")
     this.sort_column = this.$route.query.sort_column ?? "updated_at"
     this.sort_order  = this.$route.query.sort_order ?? "desc"
     this.tag         = this.$route.query.tag

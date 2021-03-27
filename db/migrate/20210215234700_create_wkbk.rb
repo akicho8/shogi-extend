@@ -71,9 +71,8 @@ class CreateWkbk < ActiveRecord::Migration[6.0]
       create_table :wkbk_moves_answers, force: true do |t|
         t.belongs_to :article, foreign_key: {to_table: :wkbk_articles}, null: false,               comment: "問題"
         t.integer :moves_count,                                         null: false, index: true,  comment: "N手"
-        t.string :moves_str,                                            null: false, index: false, comment: "連続した指し手"
-        # t.string :end_sfen,                                             null: true,  index: false, comment: "最後の局面"
-        t.string :moves_human_str,                                      null: true,  index: false, comment: "人間向け指し手"
+        t.text :moves_str,        limit: 1000,                          null: false, index: false, comment: "連続した指し手"
+        t.text :moves_human_str,  limit: 1000,                          null: true,  index: false, comment: "人間向け指し手"
         t.integer :position, null: false, index: true
         t.timestamps
       end

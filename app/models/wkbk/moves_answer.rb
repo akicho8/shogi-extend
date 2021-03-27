@@ -18,6 +18,11 @@
 
 module Wkbk
   class MovesAnswer < ApplicationRecord
+    MOVES_STR_MAX       = 1000
+    MOVES_HUMAN_STR_MAX = 1000
+    SFEN_ONE_LENGTH     = 6     # "1a1b+ " = 6文字
+    MOVES_MAX           = MOVES_STR_MAX / SFEN_ONE_LENGTH
+
     include InfoMethods
     include ValidateMethods
 
@@ -37,7 +42,7 @@ module Wkbk
     end
 
     with_options allow_blank: true do
-      validates :moves_str, length: { maximum: 255, message: "が長すぎて保存できないので最大50手ぐらいにしといてください" }
+      validates :moves_str, length: { maximum: MOVES_STR_MAX, message: "が長すぎて保存できないので最大#{MOVES_MAX}手ぐらいにしといてください" }
       validates :moves_str, uniqueness: { scope: :article_id, case_sensitive: true } # JS側でチェックしているので普通は発生しない
     end
 
@@ -45,7 +50,7 @@ module Wkbk
       if errors.empty?
         if will_save_change_to_attribute?(:moves_str) && moves_str.present?
           str = Converter.sfen_to_ki2_str(sfen)
-          self.moves_human_str = str.truncate(255, omission: "...")
+          self.moves_human_str = str.truncate(MOVES_HUMAN_STR_MAX, omission: "...")
         end
       end
     end

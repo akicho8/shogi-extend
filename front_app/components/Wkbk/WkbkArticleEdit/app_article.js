@@ -42,9 +42,11 @@ export const app_article = {
         return true
       }
 
-      if (this.article.moves_answers.length === 0) {
-        this.toast_warn("正解が未登録です")
-        return true
+      if (this.WkbkConfig.value_of("moves_answers_empty_validate_p")) {
+        if (this.article.moves_answers.length === 0) {
+          this.toast_warn("正解が未登録です")
+          return true
+        }
       }
 
       if (!this.article.title) {
@@ -52,11 +54,13 @@ export const app_article = {
         return true
       }
 
-      if (this.article.moves_answers.length >= 1) {
-        if (this.article.new_record_p) {
-          if (this.valid_count === 0 && !this.development_p && false) {
-            this.toast_warn("検証してください")
-            return true
+      if (this.WkbkConfig.value_of("valid_requied")) {
+        if (this.article.moves_answers.length >= 1) {
+          if (this.article.new_record_p) {
+            if (this.valid_count === 0) {
+              this.toast_warn("検証してください")
+              return true
+            }
           }
         }
       }

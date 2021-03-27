@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_07_111407) do
+ActiveRecord::Schema.define(version: 2021_03_07_111409) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1289,8 +1289,8 @@ ActiveRecord::Schema.define(version: 2021_03_07_111407) do
   create_table "wkbk_moves_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "article_id", null: false, comment: "問題"
     t.integer "moves_count", null: false, comment: "N手"
-    t.string "moves_str", null: false, comment: "連続した指し手"
-    t.string "moves_human_str", comment: "人間向け指し手"
+    t.text "moves_str", comment: "連続した指し手"
+    t.text "moves_human_str", comment: "人間向け指し手"
     t.integer "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
