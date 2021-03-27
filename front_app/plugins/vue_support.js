@@ -31,10 +31,10 @@ export default {
 
     ga_click(category) {
       if (this.$ga) {
-        if (this.$config.STAGE === "production") {
-        } else if (this.$config.STAGE === "staging") {
+        if (this.$config.STAGE !== "production") {
           category = `(${this.$config.STAGE}) ${category}`
-        } else {
+        }
+        if (this.development_p) {
           const message = `GA: ${category}`
           this.$buefy.toast.open({message: message, position: "is-top", type: "is-dark", queue: false})
           this.clog(message)
