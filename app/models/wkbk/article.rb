@@ -256,7 +256,7 @@ module Wkbk
       self.title             ||= params[:title]
       self.description       ||= params[:description]
       self.direction_message ||= params[:direction_message]
-      self.init_sfen         ||= params[:body] || params[:sfen] || params[:init_sfen] || "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
+      self.init_sfen         ||= params[:body] || params[:sfen] || params[:init_sfen] || "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
       self.viewpoint         ||= params[:viewpoint] || "black"
       self.mate_skip         ||= false
       self.difficulty        ||= (params[:difficulty] || 1).to_i
