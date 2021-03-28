@@ -73,7 +73,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
   # cd /Users/ikeda/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '対局時計'
   describe "対局時計" do
-    INITIAL_MAIN_MIN = 3
+    INITIAL_MAIN_MIN = 5
 
     before do
       @window_a = Capybara.open_new_window
