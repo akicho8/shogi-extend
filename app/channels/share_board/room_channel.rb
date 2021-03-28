@@ -6,6 +6,7 @@ module ShareBoard
     end
 
     def sfen_share(data)
+      SlackAgent.message_send(key: "共有将棋盤使用中(#{data["from_user_name"]})", body: data.inspect)
       broadcast(:sfen_share_broadcasted, data)
     end
 
