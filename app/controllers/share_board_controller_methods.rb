@@ -1,3 +1,21 @@
+# 共有将棋盤
+#
+# url
+#   http://localhost:3000/share-board
+#   http://localhost:3000/share-board?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&abstract_viewpoint=self
+#   http://localhost:3000/share-board.png?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&abstract_viewpoint=black
+#
+# ・指したら record を nil に設定している→やめ
+# ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる→やめ
+# ・そこで kif_format_body を入れているので、指したあとの棋譜コピーは常に最新になっている→やめ
+#
+# iPhoneのSafariのみの問題
+#  ・1手動かしてURLを更新する
+#  ・アドレスバーからコピーしてslackに貼る
+#  ・このとき見た目は share-board?body=position だけど
+#  ・リンクは         share-board?body%3Dposition になっている
+#  ・ので不正なアドレスと認識される。Chrome では問題なし
+#
 module ShareBoardControllerMethods
   extend ActiveSupport::Concern
 
@@ -8,7 +26,13 @@ module ShareBoardControllerMethods
   end
 
   def show
-    # http://localhost:3000/share-board
+    # nginx の設定で /share-board.\w+ は Rails 側にリクエストが来る
+    # そこで format の指定がなかったり HTML だったりする場合にのみ Nuxt 側に飛ばす
+    # 本当は Rails 側を経由したくないがこれまでの互換性を考慮するとこうするしかない
+    #
+    #   /share-board.html → /share-board
+    #   /share-board.png  → Rails側で処理
+    #
     if params[:format].blank? || request.format.html?
       query = params.permit!.to_h.except(:controller, :action, :format).to_query.presence
       redirect_to UrlProxy.wrap(["/share-board", query].compact.join("?"))
@@ -85,13 +109,13 @@ module ShareBoardControllerMethods
     # end
 
     # ../../front_app/components/ShareBoard/ShareBoardApp.vue の permalink_for と一致させること
-    args = params.to_unsafe_h.except(:action, :controller, :format).merge({
-                                                                            :turn               => initial_turn,
-                                                                            :title              => current_title,
-                                                                            :body               => current_record.sfen_body,
-                                                                            :abstract_viewpoint => abstract_viewpoint,
-                                                                          })
-
+    args = params.to_unsafe_h.except(:action, :controller, :format)
+    args = args.merge({
+        :turn               => initial_turn,
+        :title              => current_title,
+        :body               => current_record.sfen_body,
+        :abstract_viewpoint => abstract_viewpoint,
+      })
     "/share-board.png?#{args.to_query}"
   end
 
@@ -118,17 +142,17 @@ module ShareBoardControllerMethods
   def current_json
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
     attrs = attrs.merge({
-                          :initial_turn       => initial_turn,
-                          :board_viewpoint    => board_viewpoint,
-                          :abstract_viewpoint => abstract_viewpoint,
-                          :title              => current_title,
-                        })
+        :initial_turn       => initial_turn,
+        :board_viewpoint    => board_viewpoint,
+        :abstract_viewpoint => abstract_viewpoint,
+        :title              => current_title,
+      })
 
     # オンライン共有
     attrs = attrs.merge({
-                          :room_code => params[:room_code] || "",
-                          :user_code => SecureRandom.hex,
-                        })
+        :room_code => params[:room_code] || "",
+        :user_code => SecureRandom.hex,
+      })
 
     attrs
   end

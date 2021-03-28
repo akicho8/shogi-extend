@@ -72,6 +72,15 @@ RSpec.configure do |config|
 end
 
 if true
+  RSpec.configure do |config|
+    config.before(:example, type: :system) do
+      # FIXME: なぜかテスト環境で動かなくなったので開発環境に向けている
+      Capybara.app_host = "http://localhost:4000"
+    end
+  end
+end
+
+if true
   module SystemSupport
     def pause
       puts "[PAUSE]"
@@ -96,6 +105,12 @@ if true
     def debug
       `open #{save_screenshot}`
       `open #{save_page}`
+    end
+
+    # text が含まれる要素をクリック
+    # click_on では link か button でなければ発見できないため、テキストに @click している個所を探しづらい
+    def click_text_match(text)
+      first(:xpath, "//*[contains(text(), '#{text}')]").click
     end
   end
 

@@ -6,7 +6,7 @@
         | 対局時計
       span.mx-1.has-text-grey.is-size-6(v-if="instance") {{instance.human_status}}
     template(v-if="!instance || !instance.running_p")
-      b-switch(size="is-small" type="is-primary" v-model="chess_clock_p" @input="chess_clock_switch_handle") 設置
+      b-switch.chess_clock_switch_handle(size="is-small" type="is-primary" v-model="chess_clock_p" @input="chess_clock_switch_handle") 設置
   section.modal-card-body
     template(v-if="!instance")
       .has-text-centered.has-text-grey.my-6
@@ -45,15 +45,15 @@
               .active_bar(:class="[instance.timer_to_css_class, {is_active: e.active_p}]")
       .fields_container(v-if="!instance.running_p")
         b-field(horizontal label="持ち時間(分)" custom-class="is-small")
-          b-numberinput(expanded controls-position="compact" v-model="base.cc_params.initial_main_min"  :min="0" :max="60*6" :exponential="true")
+          b-numberinput.initial_main_min(expanded controls-position="compact" v-model="base.cc_params.initial_main_min"  :min="0" :max="60*6" :exponential="true")
         b-field(horizontal label="秒読み" custom-class="is-small")
-          b-numberinput(expanded controls-position="compact" v-model="base.cc_params.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
+          b-numberinput.initial_read_sec(expanded controls-position="compact" v-model="base.cc_params.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
         b-field(horizontal label="猶予(秒)" custom-class="is-small")
-          b-numberinput(expanded controls-position="compact" v-model="base.cc_params.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
+          b-numberinput.initial_extra_sec(expanded controls-position="compact" v-model="base.cc_params.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
         b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
-          b-numberinput(expanded controls-position="compact" v-model="base.cc_params.every_plus"        :min="0" :max="60*60" :exponential="true")
+          b-numberinput.every_plus(expanded controls-position="compact" v-model="base.cc_params.every_plus"        :min="0" :max="60*60" :exponential="true")
   footer.modal-card-foot
-    b-button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
       b-dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")
         b-button(slot="trigger" icon-left="menu-up") プリセット

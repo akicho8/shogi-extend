@@ -34,8 +34,8 @@
     b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとから変更できます")
       b-input.new_user_name(v-model="new_user_name")
   footer.modal-card-foot
-    b-button(@click="close_handle") キャンセル
-    b-button(@click="submit_handle" type="is-primary") 共有
+    b-button.cancel_button(@click="close_handle") キャンセル
+    b-button.share_button(@click="submit_handle" type="is-primary") 共有
 </template>
 
 <script>

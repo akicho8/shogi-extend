@@ -50,7 +50,7 @@ export const app_room_members = {
     },
 
     // 誰かが存在することが伝えられた
-    member_share_broadcasted(params) {
+    member_info_share_broadcasted(params) {
       if (params.from_user_code === this.user_code) {
         // 誰かが存在することを自分に伝えられた
       } else {

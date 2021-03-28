@@ -6,6 +6,8 @@ import { Location       } from "shogi-player/components/models/location.js"
 import ChessClockModal from "./ChessClockModal.vue"
 import TimeLimitModal  from "./TimeLimitModal.vue"
 
+const BYOYOMI_TALK_PITCH = 1.65
+
 export const app_chess_clock = {
   data() {
     return {
@@ -15,7 +17,7 @@ export const app_chess_clock = {
   },
 
   mounted() {
-    if (this.development_p) {
+    if (this.development_p && false) {
       this.cc_params = { initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }
       this.cc_create()
       this.cc_params_apply()
@@ -52,17 +54,21 @@ export const app_chess_clock = {
         second_decriment_hook: (single_clock, key, t, m, s) => {
           if (1 <= m && m <= 10) {
             if (s === 0) {
-              this.talk(`${m}分`)
+              this.cc_byoyomi(`${m}分`)
             }
           }
           if (t === 10 || t === 20 || t === 30) {
-            this.talk(`${t}秒`)
+            this.cc_byoyomi(`${t}秒`)
           }
           if (t <= 9) {
-            this.talk(t)
+            this.cc_byoyomi(t)
           }
         },
       })
+    },
+
+    cc_byoyomi(s) {
+      this.talk(s, {rate: BYOYOMI_TALK_PITCH})
     },
 
     cc_destroy() {
