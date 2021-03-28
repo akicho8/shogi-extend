@@ -27,7 +27,7 @@ RSpec.describe "共有将棋盤", type: :system do
   # BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ログインしていない状態から合言葉とニックネームを入力'
   # Capybara.default_max_wait_time = 1
   it "ログインしていない状態から合言葉とニックネームを入力" do
-    share_board_setup("my_room", "alice")
+    room_setup("my_room", "alice")
 
     visit "/share-board"                                      # 再来
     find(".sidebar_toggle_navbar_item").click                 # サイドメニューを起動する
@@ -37,16 +37,16 @@ RSpec.describe "共有将棋盤", type: :system do
     first(".share_button").click                              # 共有ボタンをクリックする
     assert_move("59", "58", "☗5八玉")
                                                               # bob が別の画面でログインする
-    bob_window = Capybara.open_new_window
-    Capybara.within_window(bob_window) do
-      share_board_setup("my_room", "bob")                     # alice と同じ部屋の合言葉を設定する
+    bowindow_b = Capybara.open_new_window
+    Capybara.within_window(bowindow_b) do
+      room_setup("my_room", "bob")                     # alice と同じ部屋の合言葉を設定する
       expect(page).to have_content "alice"                    # すでにaliceがいるのがわかる
       doc_image("bobはaliceの盤面を貰った")
     end
 
     expect(page).to have_content "bob"                        # alice側の画面にはbobが表示されている
 
-    Capybara.within_window(bob_window) do
+    Capybara.within_window(bowindow_b) do
       assert_move("33", "34", "☖3四歩")
     end
 
@@ -57,10 +57,10 @@ RSpec.describe "共有将棋盤", type: :system do
   # cd /Users/ikeda/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e 'タイトル共有'
   describe "タイトル共有" do
     it "works" do
-      share_board_setup("my_room", "alice")    # alceが部屋を作る
-      bob_window = Capybara.open_new_window
-      Capybara.within_window(bob_window) do
-        share_board_setup("my_room", "bob")    # bobもaliceと同じ合言葉で部屋を作る
+      room_setup("my_room", "alice")    # alceが部屋を作る
+      bowindow_b = Capybara.open_new_window
+      Capybara.within_window(bowindow_b) do
+        room_setup("my_room", "bob")    # bobもaliceと同じ合言葉で部屋を作る
         first(".title_edit_navbar_item").click # タイトル変更モーダルを開く
         within(".modal-card") do
           first("input").set("(new_title)")    # 別のタイトルを入力
@@ -76,24 +76,28 @@ RSpec.describe "共有将棋盤", type: :system do
     INITIAL_MAIN_MIN = 3
 
     before do
-      @a_window = Capybara.open_new_window
-      @b_window = Capybara.open_new_window
+      @window_a = Capybara.open_new_window
+      @window_b = Capybara.open_new_window
+    end
+
+    after do
+      [@window_a, @window_b].each(&:close)
     end
 
     def a_block(&block)
-      Capybara.within_window(@a_window, &block)
+      Capybara.within_window(@window_a, &block)
     end
 
     def b_block(&block)
-      Capybara.within_window(@b_window, &block)
+      Capybara.within_window(@window_b, &block)
     end
 
     it "works" do
       a_block do
-        share_board_setup("my_room", "alice")      # aliceが部屋を作る
+        room_setup("my_room", "alice")      # aliceが部屋を作る
       end
       b_block do
-        share_board_setup("my_room", "bob")        # bobも同じ部屋に入る
+        room_setup("my_room", "bob")        # bobも同じ部屋に入る
       end
       a_block do
         find(".sidebar_toggle_navbar_item").click  # サイドメニューを開く
@@ -109,7 +113,6 @@ RSpec.describe "共有将棋盤", type: :system do
         chess_clock_set(0, INITIAL_MAIN_MIN, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
         find(".close_button").click                # 閉じる
-
         assert_move("27", "26", "☗2六歩")          # 初手を指す
         assert_clock_active_white                  # 時計を同時に押したので後手がアクティブになる
       end
@@ -148,7 +151,7 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  def share_board_setup(room_code, user_name)
+  def room_setup(room_code, user_name)
     visit "/share-board"
     find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する
     click_text_match("合言葉の設定と共有")       # 「合言葉の設定と共有」を自分でクリックする
@@ -159,10 +162,10 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def chess_clock_set(initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
-    find(".initial_main_min input").set(initial_main_min)   # "持ち時間(分)"
-    find(".initial_read_sec input").set(initial_read_sec)   # "秒読み"
-    find(".initial_extra_sec input").set(initial_extra_sec) # "猶予(秒)"
-    find(".every_plus input").set(every_plus)               # "1手毎加算(秒)"
+    find(".initial_main_min input").set(initial_main_min)   # 持ち時間(分)
+    find(".initial_read_sec input").set(initial_read_sec)   # 秒読み
+    find(".initial_extra_sec input").set(initial_extra_sec) # 猶予(秒)
+    find(".every_plus input").set(every_plus)               # 1手毎加算(秒)
   end
 
   def assert_clock_active_black
@@ -183,8 +186,8 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def assert_white_read_sec(second)
-    text = find(".is_white .read_sec").text
-    assert { text == second.to_s }
+    v = find(".is_white .read_sec").text.to_i
+    assert { v == second || v == second.pred }
   end
 
   def assert_clock_on
