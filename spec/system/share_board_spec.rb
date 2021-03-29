@@ -33,7 +33,8 @@ RSpec.describe "共有将棋盤", type: :system do
     find(".sidebar_toggle_navbar_item").click                 # サイドメニューを起動する
     click_text_match("合言葉の設定と共有")                    # 「合言葉の設定と共有」を自分でクリックする
     first(".new_room_code input").set("my_room")              # 合言葉を入力する
-    assert { first(".new_user_name input").value == "alice" } # 以前入力したニックネームが復元されている
+    value = first(".new_user_name input").value
+    assert { value == "alice" }                               # 以前入力したニックネームが復元されている
     first(".share_button").click                              # 共有ボタンをクリックする
     assert_move("59", "58", "☗5八玉")
                                                               # bob が別の画面でログインする
