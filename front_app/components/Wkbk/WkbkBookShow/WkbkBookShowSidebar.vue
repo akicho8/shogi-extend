@@ -26,7 +26,7 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
         b-field(custom-class="is-small" label="問題タイトル表示")
           template(v-for="e in base.ArticleTitleDisplayInfo.values")
             b-radio-button(size="is-small" v-model="base.article_title_display_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
-        b-field(custom-class="is-small" label="正解と一致したときの挙動")
+        b-field(custom-class="is-small" label="駒操作で正解したときの挙動")
           template(v-for="e in base.CorrectBehaviorInfo.values")
             b-radio-button(size="is-small" v-model="base.correct_behavior_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
 </template>
