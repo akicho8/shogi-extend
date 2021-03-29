@@ -6,7 +6,7 @@ module SlackAgent
   # rails r "SlackAgent.notify_exception(Exception.new)"
   # rails r "SlackAgent.notify_exception((1/0 rescue $!))"
   def notify_exception(error)
-    body = ["#{error.message} (#{error.class})", error.backtrace].compact.join("\n")
+    body = ["#{error.message} (#{error.class.name})", error.backtrace].compact.join("\n")
     Rails.logger.info(error)
     message_send(key: "ERROR", body: body)
   end
