@@ -30,6 +30,10 @@ module ShareBoard
       broadcast(:member_info_share_broadcasted, data)
     end
 
+    def fake_error(data)
+      broadcast(:fake_error_broadcasted, data)
+    end
+
     def room_code
       params["room_code"].presence
     end

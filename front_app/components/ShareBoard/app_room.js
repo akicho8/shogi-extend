@@ -212,6 +212,15 @@ export const app_room = {
       }
       this.clipboard_copy({text: this.share_board_with_room_code_url})
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    fake_error() {
+      this.ac_room_perform("fake_error", {
+        value: null,
+      }) // --> app/channels/share_board/room_channel.rb
+    },
+    fake_error_broadcasted(params) {
+    },
   },
   computed: {
     share_p() { return this.room_code != "" },

@@ -93,6 +93,7 @@ client-only
                 b-button(@click="edit_warn_modal_handle") 編集警告
                 b-button(@click="chess_clock_share('')") 時計同期
                 b-button(@click="chess_clock_share()") 時計同期(message=null)
+                b-button(@click="fake_error") エラー
 
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
@@ -161,16 +162,16 @@ export default {
   data() {
     return {
       // watch して url に反映するもの
-      current_sfen:        this.config.record.sfen_body,         // 渡している棋譜
-      current_title:       this.config.record.title,             // 現在のタイトル
-      turn_offset:         this.config.record.initial_turn,      // 現在の手数
+      current_sfen:       this.config.record.sfen_body,          // 渡している棋譜
+      current_title:      this.config.record.title,              // 現在のタイトル
+      turn_offset:        this.config.record.initial_turn,       // 現在の手数
       abstract_viewpoint: this.config.record.abstract_viewpoint, // Twitter画像の向き
 
       // urlには反映しない
       sp_viewpoint: this.config.record.board_viewpoint,       // 反転用
       turn_offset_max: null,                         // 最後の手数
 
-      record: this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
+      record:        this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       sp_run_mode:   this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
       internal_rule: this.defval(this.$route.query.internal_rule, INTERNAL_RULE_DEFAULT),        // 操作モードの内部ルール strict or free
 
@@ -233,10 +234,10 @@ export default {
     edit_mode_snapshot_sfen_set(v) {
       if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから
         this.current_sfen = v
-        // if (false) {
-        //   // 意図せず共有してしまうのを防ぐため共有しない
-        //   this.sfen_share()
-        // }
+        // 意図せず共有してしまうのを防ぐため共有しない
+        if (false) {
+          this.sfen_share()
+        }
       }
     },
 

@@ -1,10 +1,22 @@
 class SystemMailer < ApplicationMailer
-  # SystemMailer.fixed_track(subject: "(subject)", body: object.to_t).deliver_later
+  class << self
+    # 例外をメール通知
+    # development でも可
+    #
+    # rails r "p SystemMailer.notify_exception(Exception.new)"
+    # rails r "p SystemMailer.notify_exception((1/0 rescue $!))"
+    #
+    def notify_exception(error)
+      simple_track(subject: "#{error.message} (#{error.class.name})", body: [error.backtrace].compact.join("\n")).deliver_later
+    end
+  end
+
+  # rails r 'p SystemMailer.fixed_track(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
   def fixed_track(params = {})
     mail(fixed_format(params.merge(subject: subject_decorate(params[:subject]))))
   end
 
-  # SystemMailer.simple_track(subject: "(subject)", body: "(body)").deliver_later
+  # rails r 'p SystemMailer.simple_track(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
   def simple_track(params = {})
     mail(params.merge(subject: subject_decorate(params[:subject])))
   end
