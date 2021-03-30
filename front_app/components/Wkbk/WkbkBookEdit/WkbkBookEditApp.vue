@@ -107,6 +107,7 @@ export default {
         if (e.book) {
           this.book = new Book(e.book)
 
+          this.talk_stop()
           this.toast_ok(`${before_save_button_name}しました`)
 
           // 新規の初期値にするため保存しておく
