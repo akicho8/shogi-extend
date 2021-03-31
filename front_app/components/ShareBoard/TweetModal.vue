@@ -5,7 +5,7 @@
   section.modal-card-body
     .preview_image_container.is-flex
       .preview_image.is-flex
-        .is-size-7.has-text-grey.has-text-centered
+        .is-size-7.has-text-grey.has-text-centered(v-if="false")
           | 意図した視点でない場合は<b>ツイート画像の視点設定</b>で変更できます
         b-image.mr-1(:src="ogp_image_url")
   footer.modal-card-foot
