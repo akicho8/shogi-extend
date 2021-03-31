@@ -1,12 +1,19 @@
 <template lang="pug">
 .modal-card.ChessClockModal
+  ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6
       span.has-text-weight-bold
         | 対局時計
       span.mx-1.has-text-grey.is-size-6(v-if="instance") {{instance.human_status}}
+
+    // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
+    a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
+
     template(v-if="!instance || !instance.running_p")
       b-switch.chess_clock_switch_handle(size="is-small" type="is-primary" v-model="chess_clock_p" @input="chess_clock_switch_handle") 設置
+
+  ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
     template(v-if="!instance")
       .has-text-centered.has-text-grey.my-6

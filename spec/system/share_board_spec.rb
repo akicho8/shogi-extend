@@ -37,9 +37,9 @@ RSpec.describe "共有将棋盤", type: :system do
     assert { value == "alice" }                               # 以前入力したニックネームが復元されている
     first(".share_button").click                              # 共有ボタンをクリックする
     assert_move("59", "58", "☗5八玉")
-                                                              # bob が別の画面でログインする
-    bowindow_b = Capybara.open_new_window
-    Capybara.within_window(bowindow_b) do
+    # bob が別の画面でログインする
+    window_b = Capybara.open_new_window
+    Capybara.within_window(window_b) do
       room_setup("my_room", "bob")                     # alice と同じ部屋の合言葉を設定する
       expect(page).to have_content "alice"                    # すでにaliceがいるのがわかる
       doc_image("bobはaliceの盤面を貰った")
@@ -47,7 +47,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
     expect(page).to have_content "bob"                        # alice側の画面にはbobが表示されている
 
-    Capybara.within_window(bowindow_b) do
+    Capybara.within_window(window_b) do
       assert_move("33", "34", "☖3四歩")
     end
 
@@ -59,8 +59,8 @@ RSpec.describe "共有将棋盤", type: :system do
   describe "タイトル共有" do
     it "works" do
       room_setup("my_room", "alice")    # alceが部屋を作る
-      bowindow_b = Capybara.open_new_window
-      Capybara.within_window(bowindow_b) do
+      window_b = Capybara.open_new_window
+      Capybara.within_window(window_b) do
         room_setup("my_room", "bob")    # bobもaliceと同じ合言葉で部屋を作る
         first(".title_edit_navbar_item").click # タイトル変更モーダルを開く
         within(".modal-card") do
@@ -113,8 +113,8 @@ RSpec.describe "共有将棋盤", type: :system do
       a_block do
         chess_clock_set(0, INITIAL_MAIN_MIN, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
-        find(".close_button").click                # 閉じる
-        assert_move("27", "26", "☗2六歩")          # 初手を指す
+        first(".close_button_for_capybara").click  # 閉じる (ヘッダーに置いている)
+        assert_move("27", "26", "☗2六歩")         # 初手を指す
         assert_clock_active_white                  # 時計を同時に押したので後手がアクティブになる
       end
       b_block do
@@ -181,7 +181,8 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def assert_move(from, to, human)
     [from, to].each do |e|
-      find([".place", e.chars].join("_")).click
+      place = [".place", e.chars].join("_")
+      find(place).click
     end
     assert_text(human)
   end
