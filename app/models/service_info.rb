@@ -3,6 +3,7 @@ class ServiceInfo
   memory_record [
     {
       display_p: true,
+      experiment_p: false,
       nuxt_link_to: {name: "swars-search"},
       title: "将棋ウォーズ棋譜検索",
       og_image_key: "swars-search",
@@ -15,6 +16,7 @@ class ServiceInfo
     },
     {
       display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/xy"},
       title: "符号の鬼",
       og_image_key: "xy",
@@ -28,6 +30,7 @@ class ServiceInfo
     {
       key: :wkbk,
       display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/rack"},
       title: "インスタント将棋問題集",
       new_p: true,
@@ -49,6 +52,7 @@ class ServiceInfo
     },
     {
       display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",
       og_image_key: "share-board",
@@ -66,6 +70,7 @@ class ServiceInfo
     },
     {
       display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/adapter"},
       title: "なんでも棋譜変換",
       og_image_key: "adapter",
@@ -78,19 +83,7 @@ class ServiceInfo
     },
     {
       display_p: true,
-      nuxt_link_to: {path: "/practical-checkmate"},
-      title: "実戦詰将棋『一期一会』",
-      new_p: false,
-      og_image_key: "practical-checkmate",
-      description: "やねうら王の詰将棋500万問からﾗﾝﾀﾞﾑに出題",
-      features: [
-        "一度出会った問題には二度と会えないかも",
-        "初見力が試される",
-        "作意がないぶん逆にむずい！？",
-      ],
-    },
-    {
-      display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/stopwatch"},
       title: "詰将棋用ストップウォッチ",
       og_image_key: "stopwatch",
@@ -105,19 +98,7 @@ class ServiceInfo
     },
     {
       display_p: true,
-      nuxt_link_to: {path: "/vs-clock"},
-      title: "対局時計",
-      new_p: false,
-      og_image_key: "vs-clock",
-      description: "大会などで時計が足りないときにどうぞ",
-      features: [
-        "一般的なネット対局のプリセットを用意",
-        "将棋倶楽部24の猶予時間に対応",
-        "フィッシャールール対応",
-      ],
-    },
-    {
-      display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/swars/histograms/attack"},
       title: "将棋ウォーズ戦法分布",
       og_image_key: "swars-histograms-attack",
@@ -130,6 +111,7 @@ class ServiceInfo
     },
     {
       display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/swars/top-group"},
       title: "将棋ウォーズイベント上位の成績",
       og_image_key: "swars-top-group",
@@ -142,6 +124,7 @@ class ServiceInfo
     },
     {
       display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/swars/professional"},
       title: "将棋ウォーズ十段の成績",
       og_image_key: "swars-professional",
@@ -154,6 +137,7 @@ class ServiceInfo
     },
     {
       display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/three-stage-leagues"},
       title: "奨励会三段リーグ成績早見表",
       og_image_key: "three-stage-league-players",
@@ -166,6 +150,7 @@ class ServiceInfo
     },
     {
       display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/cpu-battle"},
       title: "CPU対戦",
       og_image_key: "cpu-battle",
@@ -180,7 +165,35 @@ class ServiceInfo
       ],
     },
     {
+      display_p: true,
+      experiment_p: false,
+      nuxt_link_to: {path: "/vs-clock"},
+      title: "対局時計",
+      new_p: false,
+      og_image_key: "vs-clock",
+      description: "大会などで時計が足りないときにどうぞ",
+      features: [
+        "一般的なネット対局のプリセットを用意",
+        "将棋倶楽部24の猶予時間に対応",
+        "フィッシャールール対応",
+      ],
+    },
+    {
+      display_p: true,
+      experiment_p: false,
+      nuxt_link_to: {path: "/style-editor"},
+      title: "将棋盤スタイルエディタ",
+      new_p: false,
+      og_image_key: "style-editor",
+      description: "将棋盤のスタイルをいじくる開発用ツール",
+      features: [
+        "もともとは将棋盤の動作テスト用に作ったものですが他の用途にも使えそうなので公開しています",
+        "これで加工した画面は自由に使ってもらってかまいません",
+      ],
+    },
+    {
       display_p: Emox::Config[:emox_display_p],
+      experiment_p: true,
       nuxt_link_to: {path: "/emoshogi"},
       title: "エモ将棋",
       new_p: false,
@@ -193,6 +206,7 @@ class ServiceInfo
     },
     {
       display_p: Actb::Config[:actb_display_p],
+      experiment_p: true,
       nuxt_link_to: {path: "/training"},
       title: "将棋トレーニングバトル",
       new_p: false,
@@ -212,18 +226,21 @@ class ServiceInfo
     },
     {
       display_p: true,
-      nuxt_link_to: {path: "/style-editor"},
-      title: "将棋盤スタイルエディタ",
+      experiment_p: true,
+      nuxt_link_to: {path: "/practical-checkmate"},
+      title: "実戦詰将棋『一期一会』",
       new_p: false,
-      og_image_key: "style-editor",
-      description: "将棋盤のスタイルをいじくる開発用ツール",
+      og_image_key: "practical-checkmate",
+      description: "やねうら王の詰将棋500万問からﾗﾝﾀﾞﾑに出題",
       features: [
-        "もともとは将棋盤の動作テスト用に作ったものですが他の用途にも使えそうなので公開しています",
-        "これで加工した画面は自由に使ってもらってかまいません",
+        "一度出会った問題には二度と会えないかも",
+        "初見力が試される",
+        "作意がないぶん逆にむずい！？",
       ],
     },
     {
       display_p: true,
+      experiment_p: true,
       nuxt_link_to: {path: "/blindfold"},
       title: "目隠し詰将棋",
       new_p: false,

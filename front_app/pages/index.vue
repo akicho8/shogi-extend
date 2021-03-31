@@ -15,7 +15,7 @@
     .container
       .columns.is-multiline
         template(v-for="e in config")
-          template(v-if="e.display_p || development_p")
+          template(v-if="(e.display_p && !e.experiment_p) || development_p")
             .column.is-one-third-desktop.is-half-tablet
               nuxt-link.card.is-block(:to="e.nuxt_link_to" @click.native="sound_play('click')")
                 .card-image
@@ -35,15 +35,23 @@
   .footer(v-if="config")
     .container
       .columns
-        .column.is-4.has-text-centered-tablet
+        .column.has-text-centered-tablet
           .title.is-5.mb-0.has-text-weight-bold Apps
           ul.mt-1
             template(v-for="e in config")
-              template(v-if="e.display_p || development_p")
+              template(v-if="e.display_p && !e.experiment_p")
                 li
                   nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play('click')") {{e.title}}
 
-        .column.is-4.has-text-centered-tablet
+        .column.has-text-centered-tablet
+          .title.is-5.mb-0.has-text-weight-bold Experiment
+          ul.mt-1
+            template(v-for="e in config")
+              template(v-if="e.display_p && e.experiment_p")
+                li
+                  nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play('click')") {{e.title}}
+
+        .column.has-text-centered-tablet
           .title.is-5.mb-0.has-text-weight-bold About
           ul.mt-1
             li
@@ -55,7 +63,7 @@
             li
               ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
 
-        .column.is-4.has-text-centered-tablet
+        .column.has-text-centered-tablet
           .title.is-5.mb-0.has-text-weight-bold GitHub
           ul.mt-1
             li
