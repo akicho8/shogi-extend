@@ -11,7 +11,7 @@
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
     //- b-button.submit_handle(@click="submit_handle" type="is-primary") 保存
-    b-button(@click="submit_handle" :type="base.advanced_p ? 'is-twitter' : ''" icon-left="twitter") この画像と合わせてツイート
+    b-button(@click="submit_handle" :type="base.advanced_p ? 'is-twitter' : ''" icon-left="twitter") この局面をツイート
     //- TweetButton(size="" :body="base.tweet_body" :type="base.advanced_p ? 'is-twitter' : ''" v-if="base.play_mode_p") ツイート
 </template>
 
