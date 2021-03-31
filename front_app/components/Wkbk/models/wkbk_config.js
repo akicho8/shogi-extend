@@ -5,7 +5,7 @@ export class WkbkConfig extends MemoryRecord {
     return [
       { key: "per_page",                       value: 50,                                    description: "", },
       { key: "top_tag_display_p",              value: process.env.NODE_ENV !== "production", description: "", },
-      { key: "moves_answers_empty_validate_p", value: false,                                 description: "正解が未登録は許さない", },
+      { key: "moves_answers_empty_validate_p", value: true,                                  description: "正解が未登録は許さない", },
       { key: "valid_requied",                  value: false,                                 description: "必ず検証してもらう",     },
     ]
   }
