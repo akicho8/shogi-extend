@@ -1,3 +1,8 @@
+// 2回目のコピーでコピーを成功させるか？
+// iOS では axios でサーバー通信した直後にクリップボードに入れようとするとなぜか失敗する
+// そのため1回目で失敗したときにキャッシュしておき、2度目で axios のアクセスが発声しないようにすることでコピーを成功させる
+const IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND = true
+
 export default {
   data() {
     return {
@@ -22,16 +27,19 @@ export default {
       }
       options.to_format = options.to_format || "kif"
 
-      // const key = [any_source, to_format]
-      // const body = this.kif_clipboard_copy_cache[key]
-      // if (body) {
-      //   return this.simple_clipboard_copy(body)
-      // }
+      // BODをコピーするときだけ turn が入っているので一応キーに含める
+      const key = [any_source, options.to_format, (options.turn || "")].join("-")
+      const body = this.kif_clipboard_copy_cache[key]
+      if (body) {
+        return this.simple_clipboard_copy(body)
+      }
 
       this.$axios.$post("/api/general/any_source_to.json", options).then(e => {
         if (e.body) {
           if (!this.simple_clipboard_copy(e.body)) {
-            // this.$set(this.kif_clipboard_copy_cache, key, e.body)
+            if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
+              this.$set(this.kif_clipboard_copy_cache, key, e.body)
+            }
           }
         }
       })
@@ -48,7 +56,9 @@ export default {
         this.clipboard_copy({text: text})
       } else {
         this.$axios.$get(url).then(text => {
-          // this.$set(this.kif_clipboard_copy_cache, url, text)
+          if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
+            this.$set(this.kif_clipboard_copy_cache, url, text)
+          }
           this.clipboard_copy({text: text})
         })
       }
