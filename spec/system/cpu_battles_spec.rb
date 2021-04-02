@@ -2,20 +2,20 @@ require "rails_helper"
 
 RSpec.describe "CPU対戦", type: :system do
   it "トップ" do
-    visit "http://localhost:4000/cpu-battle"
+    visit "/cpu-battle"
     expect(page).to have_content "強さ"
     doc_image
   end
 
   it "CPUの強さ変更" do
-    visit "http://localhost:4000/cpu-battle"
+    visit "/cpu-battle"
     # choose("弱い")
     first(:xpath, "//span[text()='弱い']").click
     doc_image
   end
 
   it "対局" do
-    visit "http://localhost:4000/cpu-battle"
+    visit "/cpu-battle"
     first(:xpath, "//span[text()='平手']").click
     first(:xpath, "//span[text()='ルールわかってない']").click
     first(:xpath, "//a[text()='対局開始']").click # click_on("対局開始") が動かないので

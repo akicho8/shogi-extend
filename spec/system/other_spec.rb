@@ -2,27 +2,27 @@ require "rails_helper"
 
 RSpec.describe "その他", type: :system do
   it "トップ" do
-    visit "http://localhost:4000/"
+    visit "/"
     expect(page).to have_content "About"
     doc_image
   end
 
   it "符号の鬼" do
     XyMaster.setup
-    visit "http://localhost:4000/xy"
+    visit "/xy"
     expect(page).to have_content "符号の鬼"
     doc_image
   end
 
   it "実戦詰将棋" do
     TsMaster.setup
-    visit "http://localhost:4000/practical-checkmate"
+    visit "/practical-checkmate"
     expect(page).to have_content "実戦詰将棋"
     doc_image
   end
 
   it "目隠し詰将棋" do
-    visit "http://localhost:4000/blindfold"
+    visit "/blindfold"
     expect(page).to have_content "目隠し詰将棋"
     doc_image
   end
