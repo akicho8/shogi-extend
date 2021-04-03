@@ -13,6 +13,8 @@ class ApplicationRecord < ActiveRecord::Base
     def hankaku_format(s)
       s = s.gsub(/\p{Blank}+/, " ")
       s = s.tr("０-９Ａ-Ｚａ-ｚ", "0-9A-Za-z")
+      s = s.tr("＃", "#")       # 問題番号を表わすのに「＃１」と書く人が実際にいたため
+      s = s.tr("（）", "()")    # 問題番号を表わすのに「（１）」と書く人がいそうなため
       s = s.lines.collect(&:strip).join("\n")
       s = s.strip
     end
