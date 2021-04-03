@@ -18,7 +18,7 @@ module Wkbk
       end
 
       def to_kif
-        str = Converter.sfen_to_kif_str(main_sfen)
+        str = Transform.to_kif_from(main_sfen)
         str = str.gsub(/^.*の備考.*\n/, "")
         str = str.gsub(/^まで.*\n/, "")
 

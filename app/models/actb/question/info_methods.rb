@@ -54,7 +54,7 @@ module Actb::Question::InfoMethods
   end
 
   def to_kif
-    str = Actb::Converter.sfen_to_kif_str(main_sfen)
+    str = Actb::Transform.to_kif_from(main_sfen)
 
     str = str.gsub(/^.*の備考.*\n/, "")
     str = str.gsub(/^まで.*\n/, "")

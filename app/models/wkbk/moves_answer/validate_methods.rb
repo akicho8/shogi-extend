@@ -73,9 +73,11 @@ module Wkbk
 
       # 「詰将棋」なら先手の駒が余っていないことを確認する
       def validate3_piece_box_is_empty
+        return unless Config.fetch(:black_piece_zero_check_on_function_enable)
+
         if article.lineage.pure_info.black_piece_zero_check_on
           if mediator.opponent_player.piece_box.empty?
-          # 攻め手の持駒は空なのでOK
+            # 攻め手の持駒は空なのでOK
           else
             errors.add(:base, "攻め方の持駒が残っています。持駒が残る場合は「実戦詰め筋」とかにしてください")
           end
@@ -102,12 +104,14 @@ module Wkbk
 
       # 「詰将棋」か「持駒限定詰将棋」か「実戦詰め筋」なら詰んでいることを確認
       def validate6_mate
+        return unless Config.fetch(:mate_validate_on_function_enable)
+
         if article.lineage.pure_info.mate_validate_on
           if article.mate_skip?
-          # 「最後は無駄合」なのでチェックしない
+            # 「最後は無駄合」なのでチェックしない
           else
             if mediator.current_player.my_mate?
-            # 詰んでいる
+              # 詰んでいる
             else
               errors.add(:base, "局面が難しすぎます。無駄合いの場合は「最後は無駄合い」に ON にしといてください。詰みチェックしなくなります")
             end
@@ -118,7 +122,7 @@ module Wkbk
       private
 
       def parser
-        @parser ||= Converter.parse(sfen)
+        @parser ||= Transform.parse(sfen)
       end
 
       def mediator

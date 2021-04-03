@@ -127,7 +127,7 @@ module Actb
     after_validation do
       if errors.empty?
         if will_save_change_to_attribute?(:moves_str) && moves_str.present?
-          str = Converter.sfen_to_ki2_str(sfen)
+          str = Transform.to_ki2_from(sfen)
           self.moves_human_str = str.truncate(255, omission: "...")
         end
       end
@@ -148,7 +148,7 @@ module Actb
     end
 
     def mediator
-      @mediator ||= Converter.parse(sfen).mediator
+      @mediator ||= Transform.parse(sfen).mediator
     end
 
     # 玉を除いて足りない駒たち

@@ -16,6 +16,18 @@ module WkbkSupportMethods
     let(:article1) do
       user1.wkbk_articles.create_mock1
     end
+
+    before do
+      @__wkbk_config__ = Wkbk::Config.clone
+      Wkbk::Config.update({
+          :black_piece_zero_check_on_function_enable => true, # 「詰将棋」なら先手の駒が余っていないことを確認するか？
+          :mate_validate_on_function_enable          => true, # 「詰将棋」か「持駒限定詰将棋」か「実戦詰め筋」なら詰んでいることを確認
+        })
+    end
+
+    after do
+      Wkbk::Config.update(@__wkbk_config__)
+    end
   end
 end
 
