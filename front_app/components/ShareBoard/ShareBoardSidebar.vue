@@ -1,5 +1,5 @@
 <template lang="pug">
-b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model="base.sidebar_p")
+b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
@@ -20,29 +20,7 @@ b-sidebar.is-unselectable.ShareBoardApp-Sidebar(fullheight right overlay v-model
           b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
           b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="base.share_p")
 
-        b-menu-list(label="Export")
-          b-menu-item.is_active_unset(:expanded="false" @click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | 表示
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in base.FormatTypeInfo.values")
-              template(v-if="e.show")
-                b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
-
-          b-menu-item.is_active_unset(@click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | コピー
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in base.FormatTypeInfo.values")
-              template(v-if="e.clipboard")
-                b-menu-item.is_active_unset(:label="e.name" @click="base.kifu_copy_handle(e)")
-
-          b-menu-item.is_active_unset(@click="sound_play('click')")
-            template(slot="label" slot-scope="props")
-              | ダウンロード
-              b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="e in base.FormatTypeInfo.values")
-              b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
+        ShareBoardSidebarExport(:base="base")
 
         b-menu-list(label="その他")
           b-menu-item.is_active_unset(label="ツイート画像の視点設定"           @click="base.abstract_viewpoint_setting_handle")
@@ -85,7 +63,7 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 
-.ShareBoardApp-Sidebar
+.ShareBoardSidebar
   .sidebar-content
     width: 20rem
 

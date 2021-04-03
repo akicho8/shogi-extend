@@ -1,0 +1,40 @@
+<template lang="pug">
+.ShareBoardSidebarExport
+  b-menu-list(label="Export")
+    b-menu-item.is_active_unset(:expanded="false" @click="sound_play('click')")
+      template(slot="label" slot-scope="props")
+        | 表示
+        b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+      template(v-for="e in base.FormatTypeInfo.values")
+        template(v-if="e.show")
+          b-menu-item.is_active_unset(:label="e.name_fn(base.turn_offset)" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
+
+    b-menu-item.is_active_unset(@click="sound_play('click')")
+      template(slot="label" slot-scope="props")
+        | コピー
+        b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+      template(v-for="e in base.FormatTypeInfo.values")
+        template(v-if="e.clipboard")
+          b-menu-item.is_active_unset(:label="e.name_fn(base.turn_offset)" @click="base.kifu_copy_handle(e)")
+
+    b-menu-item.is_active_unset(@click="sound_play('click')")
+      template(slot="label" slot-scope="props")
+        | ダウンロード
+        b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+      template(v-for="e in base.FormatTypeInfo.values")
+        b-menu-item.is_active_unset(:label="e.name_fn(base.turn_offset)" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
+</template>
+
+<script>
+import { support_child } from "./support_child.js"
+
+export default {
+  name: "ShareBoardSidebarExport",
+  mixins: [support_child],
+}
+</script>
+
+<style lang="sass">
+@import "./support.sass"
+.ShareBoardSidebarExport
+</style>
