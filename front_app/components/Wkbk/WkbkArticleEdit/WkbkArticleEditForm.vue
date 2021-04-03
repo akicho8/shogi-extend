@@ -20,7 +20,7 @@ MainSection.WkbkArticleEditForm
         b-field(label="難易度" custom-class="is-small")
           b-rate(v-model="base.article.difficulty" spaced :max="5" :show-score="false")
 
-        b-field
+        b-field(v-if="development_p")
           b-switch(v-model="base.article.mate_skip" :disabled="!lineage_info.mate_validate_on")
             span 最後は無駄合い
             span.has-text-grey.is-size-7.ml-1 なので詰みチェックを省略
