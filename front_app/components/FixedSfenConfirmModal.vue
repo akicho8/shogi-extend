@@ -6,6 +6,8 @@
       //- template(v-if="mode === 'to'") 正解手順の最後の局面まで進めてください
       template(v-if="mode === 'from'") 初期配置の局面
       template(v-if="mode === 'to'") 正解手順の局面
+    b-field.sp_turn_input
+      b-numberinput(size="is-small" v-model="sp_turn" :min="0" :controls="false")
   section.modal-card-body
     CustomShogiPlayer(
       sp_mobile_vertical="is_mobile_vertical_off"
@@ -19,7 +21,7 @@
       sp_slider="is_slider_on"
       sp_controller="is_controller_on"
       @update:mediator_snapshot_sfen="v => snapshot_sfen = v"
-      @update:turn_offset="v => turn_offset = v"
+      @update:turn_offset="turn_offset_set"
       )
   footer.modal-card-foot
     .mx-4(v-if="development_p")
@@ -63,6 +65,11 @@ export default {
     this.talk("初期配置とする局面を決めてください")
   },
   methods: {
+    turn_offset_set(v) {
+      this.turn_offset = v
+      this.sp_turn = v          // スライダーを動かしたときに右上の値も変化させるため
+    },
+
     // ここから
     // this.sp_body        // 全体の FULL SFEN
     // this.turn_offset: 2 // 手目まで進めたと仮定
@@ -116,6 +123,9 @@ export default {
 
 <style lang="sass">
 .FixedSfenConfirmModal
+  +tablet
+    max-width: 56vmin
+  
   .modal-card-body
     +mobile
       padding: 0
@@ -125,4 +135,7 @@ export default {
     justify-content: flex-end
     .button
       font-weight: bold
+
+  .sp_turn_input
+    max-width: 4rem
 </style>
