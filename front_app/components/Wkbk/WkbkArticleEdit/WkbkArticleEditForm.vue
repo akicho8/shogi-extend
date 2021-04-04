@@ -14,8 +14,8 @@ MainSection.WkbkArticleEditForm
             option(v-for="e in base.LineageInfo.values" :value="e.key")
               | {{e.name}}
 
-        b-field(label="出題時の一言" label-position="on-border" message="タイトルとは別に一言添えたいときの文章")
-          b-input(v-model.trim="base.article.direction_message" placeholder="3手指してください")
+        b-field(label="出題時の一言" label-position="on-border")
+          b-input(v-model.trim="base.article.direction_message" placeholder="タイトルとは別に一言添えたいときの文言です (省略可)")
 
         b-field(label="難易度" custom-class="is-small")
           b-rate(v-model="base.article.difficulty" spaced :max="5" :show-score="false")
