@@ -52,6 +52,7 @@ import { app_storage    } from "./app_storage.js"
 import { app_sidebar    } from "./app_sidebar.js"
 import { app_tweet    } from "./app_tweet.js"
 import { app_support    } from "./app_support.js"
+import { app_kifu_copy_buttons } from "./app_kifu_copy_buttons.js"
 
 import { Article     } from "../models/article.js"
 import { Book        } from "../models/book.js"
@@ -69,6 +70,7 @@ export default {
     app_sidebar,
     app_tweet,
     app_support,
+    app_kifu_copy_buttons,
   ],
 
   data() {

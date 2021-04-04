@@ -20,6 +20,10 @@ MainSection.WkbkArticleShowAnswer
                   )
                 .is-flex.is-justify-content-center.mt-4
                   | {{e.moves_human_str}}
+                .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
+                  PiyoShogiButton.mb-0(:href="base.answers_piyo_shogi_app_with_params_url(e)")
+                  KentoButton.mb-0(tag="a" :href="base.answers_kento_app_with_params_url(e)" target="_blank")
+                  KifCopyButton.mb-0(@click="base.answers_kifu_copy_handle(e)") コピー
 </template>
 
 <script>
