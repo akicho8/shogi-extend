@@ -11,22 +11,23 @@ export const app_keyboard = {
     keydown_handle(e) {
       if (this.is_running_p || this.development_p) {
         this.clog(e)
-        let processed = false
-        // if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
-        //   return
-        // }
         if (this.focus_on_input_tag_p()) {
           return
         }
-        if (e.key === "x") {
+        let processed = false
+        if (e.key === "?") {
+          this.kb_shortcut_modal_toggle_handle()
+          processed = true
+        }
+        if (this.kb_single_p(e, "x")) {
           this.kb_next_handle("mistake")
           processed = true
         }
-        if (e.key === "o" || e.code === "Enter") {
+        if (this.kb_single_p(e, "o") || e.code === "Enter") {
           this.kb_next_handle("correct")
           processed = true
         }
-        if (e.key === "q" || e.code === "Escape") {
+        if (this.kb_single_p(e, "q") || e.code === "Escape") {
           this.quit_handle()
           processed = true
         }
@@ -34,14 +35,22 @@ export const app_keyboard = {
           this.previous_handle()
           processed = true
         }
-        if (e.key === "?") {
-          this.kb_shortcut_modal_toggle_handle()
+        if (this.kb_single_p(e, "p") || e.code === "Space") {
+          this.sidebar_toggle()
           processed = true
         }
         if (processed) {
           e.preventDefault()
         }
       }
+    },
+
+    kb_meta_p(e) {
+      return e.metaKey || e.altKey || e.ctrlKey || e.shiftKey
+    },
+
+    kb_single_p(e, key) {
+      return !this.kb_meta_p(e) && e.key === key
     },
 
     kb_next_handle(answer_kind_key) {
