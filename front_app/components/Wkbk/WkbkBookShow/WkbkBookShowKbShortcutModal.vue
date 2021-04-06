@@ -16,6 +16,11 @@
         td
           b-tag(type="is-primary") X
       tr
+        th ポーズ(サイドバーを開く)
+        td
+          b-tag(type="is-primary") Space
+          b-tag.ml-1(type="is-primary") P
+      tr
         th 終了
         td
           b-tag(type="is-primary") ESC
