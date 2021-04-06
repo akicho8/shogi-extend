@@ -55,6 +55,12 @@ module Wkbk
         end
       end
 
+      # def main_moves_human_str
+      #   if e = moves_answers.first
+      #     e.moves_human_str
+      #   end
+      # end
+
       def tweet_body
         out = []
         out << title
@@ -64,8 +70,19 @@ module Wkbk
         if description.present?
           out << description
         end
-        out << [*tag_list, "インスタント将棋問題集"].collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
+        moves_answers.each.with_index(1) do |e, i|
+          out << "#{i}. #{e.moves_human_str}"
+        end
+        out << tweet_tag_part
         out.join("\n")
+      end
+
+      private
+
+      def tweet_tag_part
+        [*tag_list, "インスタント将棋問題集"].collect { |e|
+          "#" + e.gsub(/[\p{blank}-]+/, "_")
+        }.join(" ")
       end
     end
   end
