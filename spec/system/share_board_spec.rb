@@ -37,9 +37,10 @@ RSpec.describe "共有将棋盤", type: :system do
     assert { value == "alice" }                               # 以前入力したニックネームが復元されている
     first(".share_button").click                              # 共有ボタンをクリックする
     assert_move("59", "58", "☗5八玉")
+
     # bob が別の画面でログインする
-    window_b = Capybara.open_new_window
-    Capybara.within_window(window_b) do
+    bob_window = Capybara.open_new_window
+    Capybara.within_window(bob_window) do
       room_setup("my_room", "bob")                     # alice と同じ部屋の合言葉を設定する
       expect(page).to have_content "alice"                    # すでにaliceがいるのがわかる
       doc_image("bobはaliceの盤面を貰った")
@@ -47,7 +48,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
     expect(page).to have_content "bob"                        # alice側の画面にはbobが表示されている
 
-    Capybara.within_window(window_b) do
+    Capybara.within_window(bob_window) do
       assert_move("33", "34", "☖3四歩")
     end
 
@@ -59,8 +60,8 @@ RSpec.describe "共有将棋盤", type: :system do
   describe "タイトル共有" do
     it "works" do
       room_setup("my_room", "alice")    # alceが部屋を作る
-      window_b = Capybara.open_new_window
-      Capybara.within_window(window_b) do
+      bob_window = Capybara.open_new_window
+      Capybara.within_window(bob_window) do
         room_setup("my_room", "bob")    # bobもaliceと同じ合言葉で部屋を作る
         first(".title_edit_navbar_item").click # タイトル変更モーダルを開く
         within(".modal-card") do
@@ -77,20 +78,20 @@ RSpec.describe "共有将棋盤", type: :system do
     INITIAL_MAIN_MIN = 5
 
     before do
-      @window_a = Capybara.open_new_window
-      @window_b = Capybara.open_new_window
+      @alice_window = Capybara.open_new_window
+      @bob_window = Capybara.open_new_window
     end
 
     after do
-      [@window_a, @window_b].each(&:close)
+      [@alice_window, @bob_window].each(&:close)
     end
 
     def a_block(&block)
-      Capybara.within_window(@window_a, &block)
+      Capybara.within_window(@alice_window, &block)
     end
 
     def b_block(&block)
-      Capybara.within_window(@window_b, &block)
+      Capybara.within_window(@bob_window, &block)
     end
 
     it "works" do
