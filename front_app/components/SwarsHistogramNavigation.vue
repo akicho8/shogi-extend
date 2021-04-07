@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       items: [
-        { title: "段級", to: { name: "swars-histograms-grade", params: {                  }, }, development_only: false, },
+        { title: "棋力", to: { name: "swars-histograms-grade", params: {                  }, }, development_only: false, },
         { title: "戦型", to: { name: "swars-histograms-key",   params: { key: "attack"    }, }, development_only: false, },
         { title: "囲い", to: { name: "swars-histograms-key",   params: { key: "defense"   }, }, development_only: false, },
         { title: "手筋", to: { name: "swars-histograms-key",   params: { key: "technique" }, }, development_only: true,  },

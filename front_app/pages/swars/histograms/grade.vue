@@ -20,7 +20,7 @@ client-only
               :mobile-cards="false"
               hoverable
               )
-              b-table-column(v-slot="{row}" field="grade.priority"  label="段級" sortable) {{row.grade.key}}
+              b-table-column(v-slot="{row}" field="grade.priority"  label="棋力" sortable) {{row.grade.key}}
               b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{float_to_perc(row.ratio, 2)}} %
               b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable) {{row.count}}
               //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable) {{number_floor(row.deviation_score)}}

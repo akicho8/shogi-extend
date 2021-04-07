@@ -4,7 +4,7 @@ module Swars
       private
 
       def histogram_name
-        "段級"
+        "棋力"
       end
 
       # Swars::Membership.where(id: Swars::Membership.order(id: :desc).limit(5000).pluck(:id)).group(:grade_id).count
