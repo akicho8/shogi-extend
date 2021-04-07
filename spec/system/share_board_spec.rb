@@ -184,7 +184,9 @@ RSpec.describe "共有将棋盤", type: :system do
       place = [".place", e.chars].join("_")
       find(place).click
     end
-    assert_text(human)
+    Capybara.using_wait_time(10) do
+      assert_text(human)
+    end
   end
 
   def assert_white_read_sec(second)
