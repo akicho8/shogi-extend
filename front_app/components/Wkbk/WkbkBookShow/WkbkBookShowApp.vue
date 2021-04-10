@@ -2,12 +2,12 @@
 client-only
   .WkbkBookShowApp
     DebugBox
-      p current_sp_viewpoint: {{current_sp_viewpoint}}
       p re_total_sec: {{re_total_sec}}
       p mode: {{mode}}
       template(v-if="interval_counter")
         p interval_counter.counter: {{interval_counter.counter}}
-      template(v-if="book && false")
+      template(v-if="book")
+        p current_sp_viewpoint: {{current_sp_viewpoint}}
         p jo_counts: {{jo_counts}}
         p book.user.id: {{book.user && book.user.id}}
         p g_current_user.id: {{g_current_user && g_current_user.id}}
