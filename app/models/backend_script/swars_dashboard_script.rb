@@ -70,6 +70,21 @@ module BackendScript
         search_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
       end
 
+      # 古い棋譜を補完
+      crawl_reservation_hash = {}
+      if true
+        model = Swars::CrawlReservation
+        s = model.all
+        s = s.where(model.arel_table[:created_at].gteq(time_begin))
+        records = s.select([
+            "DATE(#{DbCop.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
+            "COUNT(distinct user_id)               AS unique_user_id_count", # ユニーク人数
+            "COUNT(*)                              AS count_all",            # 件数
+          ].join(", ")).group("created_on")                                  # 日付毎
+        # 日付から一発で対応するレコードを求められるようにハッシュ化
+        crawl_reservation_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+      end
+
       # # 日別の問題集作成回数を求める
       # book_hash = {}
       # if true
@@ -96,6 +111,8 @@ module BackendScript
         row["新規ユーザー数"] = user_hash[date]&.count_all
         row["検索数"]         = search_hash[date]&.count_all
         row["検索人数"]       = search_hash[date]&.unique_user_id_count
+        row["棋譜補完"]       = crawl_reservation_hash[date]&.count_all
+        row["棋譜補完人数"]   = crawl_reservation_hash[date]&.unique_user_id_count
         # row["バトル総数"]     = Swars::Battle.where(created_at: range).count
         # row["削除予定数"]     = Swars::Battle.where(created_at: range).cleanup_scope.count
         # row["対局時情報総数"] = Swars::Membership.where(created_at: range).count
