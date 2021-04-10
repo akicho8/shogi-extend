@@ -2,7 +2,7 @@ import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 import { ArticleTitleDisplayInfo } from "../models/article_title_display_info.js"
 import { CorrectBehaviorInfo } from "../models/correct_behavior_info.js"
 import { ViewpointFlipInfo } from "../models/viewpoint_flip_info.js"
-import { ViewpointFlip2Info } from "../models/viewpoint_flip2_info.js"
+import { SoldierHflipInfo } from "../models/soldier_hflip_info.js"
 
 export const app_storage = {
   mixins: [
@@ -13,7 +13,7 @@ export const app_storage = {
       article_title_display_key: null,
       correct_behavior_key: null,
       viewpoint_flip_key: null,
-      viewpoint_flip2_key: null,
+      soldier_hflip_key: null,
     }
   },
   beforeMount() {
@@ -25,7 +25,7 @@ export const app_storage = {
         article_title_display_key: this.ArticleTitleDisplayInfo.values[0].key,
         correct_behavior_key: this.CorrectBehaviorInfo.values[0].key,
         viewpoint_flip_key: this.ViewpointFlipInfo.values[0].key,
-        viewpoint_flip2_key: this.ViewpointFlip2Info.values[0].key,
+        soldier_hflip_key: this.SoldierHflipInfo.values[0].key,
       }
     },
     ArticleTitleDisplayInfo()    { return ArticleTitleDisplayInfo                                       },
@@ -34,7 +34,7 @@ export const app_storage = {
     correct_behavior_info()      { return CorrectBehaviorInfo.fetch(this.correct_behavior_key)          },
     ViewpointFlipInfo()        { return ViewpointFlipInfo                                           },
     viewpoint_flip_info()      { return ViewpointFlipInfo.fetch(this.viewpoint_flip_key)          },
-    ViewpointFlip2Info()        { return ViewpointFlip2Info                                           },
-    viewpoint_flip2_info()      { return ViewpointFlip2Info.fetch(this.viewpoint_flip2_key)          },
+    SoldierHflipInfo()        { return SoldierHflipInfo                                           },
+    soldier_hflip_info()      { return SoldierHflipInfo.fetch(this.soldier_hflip_key)          },
   },
 }

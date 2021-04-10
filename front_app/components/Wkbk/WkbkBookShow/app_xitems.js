@@ -72,7 +72,7 @@ export const app_xitems = {
 
     play_mode_advanced_moves_set(moves) {
       // これをまとめる
-      if (this.viewpoint_flip2_key === "flip_on") {
+      if (this.soldier_hflip_key === "flip_on") {
         moves = SfenFliper.moves_str_flip_h_from_moves_str(moves.join(" ")).split(/\s+/)
       }
       if (this.current_article.moves_valid_p(moves)) {
@@ -92,7 +92,7 @@ export const app_xitems = {
 
     foobar(sfen) {
       let v = sfen
-      if (this.viewpoint_flip2_key === "flip_on") {
+      if (this.soldier_hflip_key === "flip_on") {
         v = SfenFliper.sfen_flip_h_from_sfen(v)
       }
       return v
