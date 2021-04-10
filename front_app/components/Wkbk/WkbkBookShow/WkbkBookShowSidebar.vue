@@ -29,6 +29,9 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
         b-field(custom-class="is-small" label="駒操作で正解したときの挙動")
           template(v-for="e in base.CorrectBehaviorInfo.values")
             b-radio-button(size="is-small" v-model="base.correct_behavior_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
+        b-field(custom-class="is-small" label="駒操作で正解したときの挙動")
+          template(v-for="e in base.CorrectBehavior2Info.values")
+            b-radio-button(size="is-small" v-model="base.correct_behavior2_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
 </template>
 
 <script>

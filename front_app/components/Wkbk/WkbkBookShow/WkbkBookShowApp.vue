@@ -2,6 +2,7 @@
 client-only
   .WkbkBookShowApp
     DebugBox
+      p current_sp_viewpoint: {{current_sp_viewpoint}}
       p re_total_sec: {{re_total_sec}}
       p mode: {{mode}}
       template(v-if="interval_counter")

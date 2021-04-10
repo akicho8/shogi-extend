@@ -1,3 +1,5 @@
+import { Location } from "shogi-player/components/models/location.js"
+
 export const app_xitems = {
   data() {
     return {
@@ -91,8 +93,14 @@ export const app_xitems = {
     goal_p()          { return this.rest_count <= 0                }, // 全問問いた？
     current_exist_p() { return !!this.xitems[this.current_index]   }, // 現在の問題が存在する？
     current_xitem()   { return this.xitems[this.current_index]     }, // 現在の問題
-    current_article() { return this.current_xitem.article          }, // 現在の問題
+    current_article() { return this.current_xitem.article          }, // 現在の問題のマスター
     current_article_edit_p() { return this.owner_p                 }, // この問題を編集できるのはこの問題集のオーナーとする
+
+    // 現在の向き
+    // correct_behavior2_key が flip_on なら反転する
+    current_sp_viewpoint() {
+      return Location.fetch(this.current_article.viewpoint).flip_if(this.correct_behavior2_key === "flip_on").key
+    },
 
     current_index_human: {
       get()  { return this.current_index + 1 },
