@@ -12,18 +12,19 @@ module Swars
         s = CrawlReservation.where(processed_at: nil)
         s.each do |record|
           key = record.target_user_key
-
           report_for(key) do
-            other_options = battle_imported_count(key) do
+            other_options = battle_count_diff_block(key) do
               Battle.user_import(params.merge(user_key: key))
             end
             record.update!(processed_at: Time.current)
-            p UserMailer.battle_fetch_notify(record, other_options).deliver_later
+            UserMailer.battle_fetch_notify(record, other_options).deliver_later
           end
         end
       end
 
-      def battle_imported_count(key)
+      private
+
+      def battle_count_diff_block(key)
         user = User.find_by(key: key)
         before_count = 0
         after_count = 0
