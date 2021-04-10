@@ -11,7 +11,7 @@ MainSection.WkbkBookShowSp
               | {{base.current_article.direction_message}}
           CustomShogiPlayer(
             sp_mobile_vertical="is_mobile_vertical_on"
-            :sp_body="base.current_article.init_sfen"
+            :sp_body="base.foobar(base.current_article.init_sfen)"
             :sp_viewpoint="base.current_sp_viewpoint"
             :sp_turn="0"
             :sp_sound_body_changed="false"

@@ -1,4 +1,5 @@
-import { Location } from "shogi-player/components/models/location.js"
+import { Location   } from "shogi-player/components/models/location.js"
+import { SfenFliper } from 'shogi-player/components/models/sfen_fliper.js'
 
 export const app_xitems = {
   data() {
@@ -70,6 +71,10 @@ export const app_xitems = {
     },
 
     play_mode_advanced_moves_set(moves) {
+      // これをまとめる
+      if (this.viewpoint_flip2_key === "flip_on") {
+        moves = SfenFliper.moves_str_flip_h_from_moves_str(moves.join(" ")).split(/\s+/)
+      }
       if (this.current_article.moves_valid_p(moves)) {
         if (this.correct_behavior_info.key === this.CorrectBehaviorInfo.fetch("go_to_next").key) {
           this.next_handle(this.AnswerKindInfo.fetch("correct"))
@@ -84,6 +89,14 @@ export const app_xitems = {
       this.sound_play("click")
       this.description_open_p = !this.description_open_p
     },
+
+    foobar(sfen) {
+      let v = sfen
+      if (this.viewpoint_flip2_key === "flip_on") {
+        v = SfenFliper.sfen_flip_h_from_sfen(v)
+      }
+      return v
+    },
   },
 
   computed: {
@@ -97,9 +110,11 @@ export const app_xitems = {
     current_article_edit_p() { return this.owner_p                 }, // この問題を編集できるのはこの問題集のオーナーとする
 
     // 現在の向き
-    // correct_flip_key が flip_on なら反転する
+    // viewpoint_flip_key が flip_on なら反転する
     current_sp_viewpoint() {
-      return Location.fetch(this.current_article.viewpoint).flip_if(this.correct_flip_key === "flip_on").key
+      if (this.current_exist_p) {
+        return Location.fetch(this.current_article.viewpoint).flip_if(this.viewpoint_flip_key === "flip_on").key
+      }
     },
 
     current_index_human: {
