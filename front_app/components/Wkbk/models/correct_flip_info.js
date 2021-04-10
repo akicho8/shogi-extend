@@ -1,6 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
-export class CorrectBehavior2Info extends MemoryRecord {
+export class CorrectFlipInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "flip_off", name: "反転しない", },

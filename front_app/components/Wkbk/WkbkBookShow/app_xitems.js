@@ -97,9 +97,9 @@ export const app_xitems = {
     current_article_edit_p() { return this.owner_p                 }, // この問題を編集できるのはこの問題集のオーナーとする
 
     // 現在の向き
-    // correct_behavior2_key が flip_on なら反転する
+    // correct_flip_key が flip_on なら反転する
     current_sp_viewpoint() {
-      return Location.fetch(this.current_article.viewpoint).flip_if(this.correct_behavior2_key === "flip_on").key
+      return Location.fetch(this.current_article.viewpoint).flip_if(this.correct_flip_key === "flip_on").key
     },
 
     current_index_human: {
