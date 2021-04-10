@@ -29,9 +29,11 @@
           .content.mt-4(v-if="base.book.description")
             .description(v-html="simple_format(auto_link(base.book.description))")
     .card-footer
-      .card-footer-item
-        b-button.has-text-weight-bold(type="is-primary" @click="base.play_start")
-          | START
+      //- .card-footer-item
+      //-   b-button.has-text-weight-bold(type="is-primary" @click="base.play_start")
+      //-     | START
+      .card-footer-item.has-text-weight-bold.is-clickable.has-background-primary.has-text-white(@click="base.play_start")
+        | START
       //- nuxt-link.card-footer-item(:to="{name: 'rack-articles-new', query: {book_key: base.book.key}}"        @click.native="sound_play('click')" v-if="base.owner_p") 問題追加
       //- nuxt-link.card-footer-item(:to="{name: 'rack-books-book_key-edit', params: {book_key: base.book.key}}" @click.native="sound_play('click')" v-if="base.owner_p") 編集
 </template>
