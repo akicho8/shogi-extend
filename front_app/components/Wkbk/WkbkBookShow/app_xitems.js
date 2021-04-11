@@ -1,5 +1,5 @@
 import { Location   } from "shogi-player/components/models/location.js"
-import { SfenFliper } from 'shogi-player/components/models/sfen_fliper.js'
+import { MoveHash } from 'shogi-player/components/models/move_hash.js'
 
 export const app_xitems = {
   data() {
@@ -72,7 +72,7 @@ export const app_xitems = {
 
     play_mode_advanced_moves_set(moves) {
       if (this.soldier_hflip_info.key === "flip_on") {
-        moves = SfenFliper.moves_str_flip_h_from_moves_str(moves.join(" ")).split(/\s+/)
+        moves = MoveHash.line_hflip(moves.join(" ")).split(/\s+/)
       }
       if (this.current_article.moves_valid_p(moves)) {
         if (this.correct_behavior_info.key === this.CorrectBehaviorInfo.fetch("go_to_next").key) {
