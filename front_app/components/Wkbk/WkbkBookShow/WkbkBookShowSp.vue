@@ -11,7 +11,7 @@ MainSection.WkbkBookShowSp
               | {{base.current_article.direction_message}}
           CustomShogiPlayer(
             sp_mobile_vertical="is_mobile_vertical_on"
-            :sp_body="base.foobar(base.current_article.init_sfen)"
+            :sp_body="base.sfen_transform(base.current_article.init_sfen)"
             :sp_viewpoint="base.current_sp_viewpoint"
             :sp_turn="0"
             :sp_sound_body_changed="false"
@@ -46,7 +46,7 @@ MainSection.WkbkBookShowSp
                 CustomShogiPlayer(
                   sp_mobile_vertical="is_mobile_vertical_off"
                   sp_run_mode="view_mode"
-                  :sp_body="base.current_article.init_sfen_with(e)"
+                  :sp_body="base.sfen_transform(base.current_article.init_sfen_with(e))"
                   :sp_turn="0"
                   :sp_viewpoint="base.current_sp_viewpoint"
                   :sp_sound_body_changed="false"

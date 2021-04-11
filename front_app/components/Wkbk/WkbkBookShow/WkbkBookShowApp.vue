@@ -7,7 +7,6 @@ client-only
       template(v-if="interval_counter")
         p interval_counter.counter: {{interval_counter.counter}}
       template(v-if="book")
-        p current_sp_viewpoint: {{current_sp_viewpoint}}
         p jo_counts: {{jo_counts}}
         p book.user.id: {{book.user && book.user.id}}
         p g_current_user.id: {{g_current_user && g_current_user.id}}
@@ -45,6 +44,7 @@ import { Book           } from "../models/book.js"
 import { support_parent } from "./support_parent.js"
 
 import { app_xitems            } from "./app_xitems.js"
+import { app_article           } from "./app_article.js"
 import { app_mode              } from "./app_mode.js"
 import { app_support           } from "./app_support.js"
 import { app_tweet_recent      } from "./app_tweet_recent.js"
@@ -64,6 +64,7 @@ export default {
   mixins: [
     support_parent,
     app_xitems,
+    app_article,
     app_mode,
     app_support,
     app_tweet_recent,

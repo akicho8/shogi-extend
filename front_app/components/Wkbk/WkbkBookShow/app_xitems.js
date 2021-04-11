@@ -71,8 +71,7 @@ export const app_xitems = {
     },
 
     play_mode_advanced_moves_set(moves) {
-      // これをまとめる
-      if (this.soldier_hflip_key === "flip_on") {
+      if (this.soldier_hflip_info.key === "flip_on") {
         moves = SfenFliper.moves_str_flip_h_from_moves_str(moves.join(" ")).split(/\s+/)
       }
       if (this.current_article.moves_valid_p(moves)) {
@@ -89,14 +88,6 @@ export const app_xitems = {
       this.sound_play("click")
       this.description_open_p = !this.description_open_p
     },
-
-    foobar(sfen) {
-      let v = sfen
-      if (this.soldier_hflip_key === "flip_on") {
-        v = SfenFliper.sfen_flip_h_from_sfen(v)
-      }
-      return v
-    },
   },
 
   computed: {
@@ -108,14 +99,6 @@ export const app_xitems = {
     current_xitem()   { return this.xitems[this.current_index]     }, // 現在の問題
     current_article() { return this.current_xitem.article          }, // 現在の問題のマスター
     current_article_edit_p() { return this.owner_p                 }, // この問題を編集できるのはこの問題集のオーナーとする
-
-    // 現在の向き
-    // viewpoint_flip_key が flip_on なら反転する
-    current_sp_viewpoint() {
-      if (this.current_exist_p) {
-        return Location.fetch(this.current_article.viewpoint).flip_if(this.viewpoint_flip_key === "flip_on").key
-      }
-    },
 
     current_index_human: {
       get()  { return this.current_index + 1 },
