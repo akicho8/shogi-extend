@@ -148,7 +148,7 @@ module ShareBoardControllerMethods
         :title              => current_title,
       })
 
-    # オンライン共有
+    # リアルタイム共有
     attrs = attrs.merge({
         :room_code => params[:room_code] || "",
         :user_code => SecureRandom.hex,

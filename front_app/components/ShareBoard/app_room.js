@@ -6,7 +6,7 @@ const DESTROY_AFTER_WAIT = 3.0
 export const app_room = {
   data() {
     return {
-      room_code: this.config.record.room_code, // オンライン共有合言葉
+      room_code: this.config.record.room_code, // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
       ac_room: null,
       room_creating_busy: 0,
