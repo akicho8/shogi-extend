@@ -17,38 +17,38 @@ module Wkbk
 
         def export_all
           json = all.as_json({
-                               only: [
-                                 :key,
-                                 :position,
-                                 :init_sfen,
-                                 :viewpoint,
-                                 :title,
-                                 :description,
-                                 :direction_message,
-                                 :difficulty,
-                                 :tag_list,
-                                 :mate_skip,
-                                 :created_at,
-                                 :updated_at,
-                               ],
-                               methods: [
-                                 :lineage_key,
-                               ],
-                               include: {
-                                 :user => {
-                                   only: [
-                                     :id,
-                                     :key,
-                                     :name,
-                                   ],
-                                 },
-                                 :moves_answers => {
-                                   only: [
-                                     :moves_str,
-                                   ],
-                                 },
-                               },
-                             })
+              only: [
+                :key,
+                :position,
+                :init_sfen,
+                :viewpoint,
+                :title,
+                :description,
+                :direction_message,
+                :difficulty,
+                :tag_list,
+                :mate_skip,
+                :created_at,
+                :updated_at,
+              ],
+              methods: [
+                :lineage_key,
+              ],
+              include: {
+                :user => {
+                  only: [
+                    :id,
+                    :key,
+                    :name,
+                  ],
+                },
+                :moves_answers => {
+                  only: [
+                    :moves_str,
+                  ],
+                },
+              },
+            })
 
           body = json.to_yaml(line_width: -1)
 
@@ -97,17 +97,17 @@ module Wkbk
           # record = user.wkbk_articles.find_or_initialize_by(key: e[:key])
           record = user.wkbk_articles.build
           record.assign_attributes(e.slice(*[
-                                             :lineage_key,
-                                             :init_sfen,
-                                             :viewpoint,
-                                             :title,
-                                             :description,
-                                             :direction_message,
-                                             :difficulty,
-                                             :mate_skip,
-                                             :created_at,
-                                             :updated_at,
-                                           ]))
+                :lineage_key,
+                :init_sfen,
+                :viewpoint,
+                :title,
+                :description,
+                :direction_message,
+                :difficulty,
+                :mate_skip,
+                :created_at,
+                :updated_at,
+              ]))
 
           # record.folder_key = "private"
 

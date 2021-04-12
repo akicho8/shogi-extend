@@ -73,8 +73,6 @@ module Wkbk
               :turn_max,
               :mate_skip,
               :moves_answers_count,
-              # :created_at,
-              # :updated_at,
             ],
             methods: [
               :book_keys,

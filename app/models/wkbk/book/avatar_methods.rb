@@ -78,6 +78,7 @@ module Wkbk
 
       # アバターがあればパスを返す
       def raw_avatar_path
+
         if avatar.attached?
           # ▼Activestorrage service_url missing default_url_options[:host] · Issue #32866 · rails/rails
           # https://github.com/rails/rails/issues/32866
