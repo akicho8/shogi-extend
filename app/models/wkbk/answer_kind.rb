@@ -38,6 +38,8 @@ module Wkbk
 
     include MemoryRecordBind::Basic
 
+    delegate :mark, to: :pure_info
+
     has_many :answer_logs, dependent: :destroy
     has_many :articles, through: :answer_logs
     has_many :books, through: :answer_logs
