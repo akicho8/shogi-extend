@@ -121,6 +121,7 @@ import { support_parent } from "./support_parent.js"
 
 import { app_action_log   } from "./app_action_log.js"
 import { app_chess_clock  } from "./app_chess_clock.js"
+import { app_turn_notification  } from "./app_turn_notification.js"
 import { app_chore        } from "./app_chore.js"
 import { app_edit_mode    } from "./app_edit_mode.js"
 import { app_room         } from "./app_room.js"
@@ -142,6 +143,7 @@ export default {
     support_parent,
     app_action_log,
     app_chess_clock,
+    app_turn_notification,
     app_chore,
     app_edit_mode,
     app_room,
