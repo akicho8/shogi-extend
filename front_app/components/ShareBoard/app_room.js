@@ -26,7 +26,11 @@ export const app_room = {
       }
     } else {
       // 通常の起動
+      if (this.development_p) {
+        this.room_code_set("__room_code__", "alice")
+      }
     }
+
   },
   beforeDestroy() {
     if (this.ac_room) {
