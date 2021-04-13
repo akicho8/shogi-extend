@@ -7,8 +7,8 @@
         span.ml-1 {{e.from_user_name}}
         span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
         span.ml-1(v-if="development_p") r{{e.revision}}
-        span.ml-1(v-if="development_p") 年{{e.user_age}}
-        span.ml-1(v-if="development_p") 秒{{base.member_elapsed_second(e)}}
+        span.ml-1(v-if="development_p") {{e.user_age}}歳
+        span.ml-1(v-if="development_p") {{base.member_elapsed_second(e)}}秒前
 </template>
 
 <script>
