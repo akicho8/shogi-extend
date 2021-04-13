@@ -80,7 +80,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ChessClockModalApp",
+  name: "ChessClockModal",
   mixins: [
     support_child,
   ],
