@@ -82,7 +82,6 @@ export const app_chess_clock = {
       this.sidebar_p = false
       this.sound_play("click")
 
-      // 視点設定変更
       this.$buefy.modal.open({
         component: ChessClockModal,
         parent: this,
