@@ -153,6 +153,17 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '手番が来たら知らせる設定'
+  it "手番が来たら知らせる設定" do
+    room_setup("my_room", "alice")
+    find(".sidebar_toggle_navbar_item").click       # サイドメニュー起動する
+    click_text_match("手番が来たら知らせる設定")    # 「手番が来たら知らせる設定」を自分でクリックする
+    find(".TurnNotifyModal select").select("alice") # 上家設定
+    find(".TurnNotifyModal .apply_button").click    # 適用
+    assert_move("77", "76", "☗7六歩")              # aliceが1手指す
+    assert_text("あなたの手番です")                 # 通知があった
+  end
+
   def room_setup(room_code, user_name)
     visit "/share-board"
     find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する

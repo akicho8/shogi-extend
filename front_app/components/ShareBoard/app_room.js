@@ -27,7 +27,7 @@ export const app_room = {
     } else {
       // 通常の起動
       if (this.development_p) {
-        this.room_code_set("__room_code__", "alice")
+        // this.room_code_set("__room_code__", "alice")
       }
     }
 
@@ -174,6 +174,7 @@ export const app_room = {
       if (true) {
         if (params.from_user_name === this.previous_user_name) {
           this.sound_play_random(["moo1", "moo2", "moo3", "moo4"])
+          this.debug_alert("あなたの手番です")
         }
 
         // 「alice ▲76歩」と表示しながら
