@@ -172,6 +172,10 @@ export const app_room = {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
       }
       if (true) {
+        if (params.from_user_name === this.previous_user_name) {
+          this.sound_play_random(["moo1", "moo2", "moo3", "moo4"])
+        }
+
         // 「alice ▲76歩」と表示しながら
         this.toast_ok_toast_only(`${params.from_user_name} ${params.last_move_kif}`)
 

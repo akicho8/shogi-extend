@@ -1,5 +1,6 @@
 import { SoundPreset } from "@/components/models/sound_preset.js"
 import { Howl, Howler } from "howler"
+import _ from "lodash"
 
 export default {
   methods: {
@@ -15,6 +16,10 @@ export default {
       return new Howl(params)
     },
 
+    sound_play_random(keys, options = {}) {
+      return this.sound_play(_.sample(keys), options)
+    },
+    
     click_play() {
       this.sound_play("click")
     },

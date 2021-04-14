@@ -7,7 +7,7 @@ export const app_edit_mode = {
 
       this.$buefy.dialog.confirm({
         title: "共有中の局面編集は危険",
-        message: `編集するとこれまでの棋譜が消えてしまいます<p>基本的に共有中の局面編集は駒落ちで対戦するときの配置設定の用途だけに使ってください</p><p class="is-size-7 has-text-grey">「待った」したいときは下のｺﾝﾄﾛｰﾗｰで少し前に戻って新しい手を指してください</span>`,
+        message: `編集するとこれまでの棋譜が消えてしまいます<p>基本的に共有中の局面編集は駒落ちで対戦するときの初期配置設定だけに使ってください</p><p class="is-size-7 has-text-grey">「待った」したいときは下のｺﾝﾄﾛｰﾗｰで少し前に戻って新しい手を指してください</span>`,
         cancelText: "キャンセル",
         confirmText: `理解した上で編集する`,
         focusOn: "cancel", // confirm or cancel

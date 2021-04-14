@@ -6,6 +6,12 @@ import mp3_click         from "@/assets/UniversalSoundFX/USER_INTERFACES/Beeps/U
 import mp3_spon          from "@/static/sound_effect/oto_logic/Onmtp-Pop01-4.mp3"
 import mp3_notify        from "@/static/sound_effect/soundeffect_lab/decision29.mp3"
 import mp3_poon          from "@/assets/UniversalSoundFX/PUZZLES/PUZZLE_Success_Bright_Voice_Two_Note_Fast_Delay_stereo.wav"
+import mp3_bird          from "@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Bird_Crow_01_mono.wav"
+import mp3_rooster       from "@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Rooster_Crow_01_mono.wav"
+import mp3_moo1          from "@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Cow_Moo_01_mono.wav"
+import mp3_moo2          from "@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Cow_Moo_02_mono.wav"
+import mp3_moo3          from "@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Cow_Moo_03_mono.wav"
+import mp3_moo4          from "@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Cow_Moo_04_mono.wav"
 import mp3_deden         from "@/static/sound_effect/soundeffect_lab/deden.mp3"
 import mp3_pipopipo      from "@/static/sound_effect/soundeffect_lab/pipopipo.mp3"
 import mp3_win           from "@/static/sound_effect/soundeffect_lab/kansei.mp3"
@@ -27,6 +33,12 @@ export class SoundPreset extends MemoryRecord {
       { key: "win",            source: mp3_win,           volume: 0.20, },
       { key: "click",          source: mp3_click,         volume: 0.50, },
       { key: "poon",           source: mp3_poon,          volume: 0.10, },
+      { key: "bird",           source: mp3_bird,          volume: 0.50, },
+      { key: "rooster",        source: mp3_rooster,       volume: 0.50, },
+      { key: "moo1",           source: mp3_moo1,          volume: 0.50, },
+      { key: "moo2",           source: mp3_moo2,          volume: 0.50, },
+      { key: "moo3",           source: mp3_moo3,          volume: 0.50, },
+      { key: "moo4",           source: mp3_moo4,          volume: 0.50, },
       { key: "deden",          source: mp3_deden,         volume: 0.20, },
       { key: "pipopipo",       source: mp3_pipopipo,      volume: 0.20, },
       { key: "correct",        source: mp3_o,             volume: 0.20, },

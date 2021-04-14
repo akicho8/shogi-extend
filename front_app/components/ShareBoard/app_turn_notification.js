@@ -3,7 +3,7 @@ import TurnNotificationModal from "./TurnNotificationModal.vue"
 export const app_turn_notification = {
   data() {
     return {
-      cn_from_user_name: null,
+      previous_user_name: null, // 上家の名前
     }
   },
   methods: {
@@ -24,7 +24,5 @@ export const app_turn_notification = {
         },
       })
     },
-  },
-  computed: {
   },
 }
