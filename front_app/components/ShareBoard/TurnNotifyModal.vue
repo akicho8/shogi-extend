@@ -4,7 +4,7 @@
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6
       span.has-text-weight-bold
-        | 手番お知らせサポート
+        | 手番が来たら知らせる設定
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
     .is-flex.is-justify-content-center.is-align-items-center
