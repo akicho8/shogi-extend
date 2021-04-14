@@ -1,6 +1,6 @@
-import TurnNotificationModal from "./TurnNotificationModal.vue"
+import TurnNotifyModal from "./TurnNotifyModal.vue"
 
-export const app_turn_notification = {
+export const app_turn_notify = {
   data() {
     return {
       previous_user_name: null, // 上家の名前
@@ -12,7 +12,7 @@ export const app_turn_notification = {
       this.sound_play("click")
 
       this.$buefy.modal.open({
-        component: TurnNotificationModal,
+        component: TurnNotifyModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,

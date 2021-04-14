@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.TurnNotificationModal(style="width:auto")
+.modal-card.TurnNotifyModal(style="width:auto")
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6
@@ -27,7 +27,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "TurnNotificationModal",
+  name: "TurnNotifyModal",
   mixins: [
     support_child,
   ],
@@ -83,11 +83,11 @@ export default {
 @import "support.sass"
 
 .STAGE-development
-  .TurnNotificationModal
+  .TurnNotifyModal
     .modal-card-body, .field
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.TurnNotificationModal
+.TurnNotifyModal
   .modal-card-foot
     justify-content: space-between
     .button
