@@ -2,6 +2,7 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox
+      p ordered_members: {{ordered_members}}
       template(v-if="chess_clock")
         p next_location: {{next_location.key}}
         p timer: {{chess_clock.timer}}
@@ -122,6 +123,7 @@ import { support_parent } from "./support_parent.js"
 import { app_action_log   } from "./app_action_log.js"
 import { app_chess_clock  } from "./app_chess_clock.js"
 import { app_turn_notify  } from "./app_turn_notify.js"
+import { app_member_order } from "./app_member_order.js"
 import { app_chore        } from "./app_chore.js"
 import { app_edit_mode    } from "./app_edit_mode.js"
 import { app_room         } from "./app_room.js"
@@ -144,6 +146,7 @@ export default {
     app_action_log,
     app_chess_clock,
     app_turn_notify,
+    app_member_order,
     app_chore,
     app_edit_mode,
     app_room,

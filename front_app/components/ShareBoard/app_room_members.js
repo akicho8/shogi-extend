@@ -16,15 +16,6 @@ export const app_room_members = {
     }
   },
 
-  mounted() {
-    // const foo = [
-    //   {id: 1, name: "a"},
-    //   {id: 2, name: "a"},
-    // ]
-    // console.log(_.orderBy(foo, "id", "desc"))
-    // console.log(_.orderBy(foo, "id", "asc"))
-  },
-
   beforeDestroy() {
     if (this.member_bc_interval_runner) {
       this.member_bc_interval_runner.stop()
