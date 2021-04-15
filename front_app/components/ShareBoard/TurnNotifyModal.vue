@@ -20,6 +20,7 @@
     //-   | 順序が固定されている場合に指定の上家が指し終わったときにお知らせします
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.test_button(@click="test_handle" v-if="development_p") テスト
     b-button.apply_button(@click="apply_handle" :type="{'is-primary': form_changed_p}") 適用
 </template>
 
@@ -43,6 +44,10 @@ export default {
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
+    },
+    test_handle() {
+      this.sound_play("click")
+      this.base.tn_notify()
     },
     apply_handle() {
       if (this.base.previous_user_name === this.new_previous_user_name) {

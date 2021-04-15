@@ -173,8 +173,7 @@ export const app_room = {
       }
       if (true) {
         if (params.from_user_name === this.previous_user_name) {
-          this.sound_play_random(["moo1", "moo2", "moo3", "moo4"])
-          this.debug_alert("あなたの手番です")
+          this.tn_notify()
         }
 
         // 「alice ▲76歩」と表示しながら

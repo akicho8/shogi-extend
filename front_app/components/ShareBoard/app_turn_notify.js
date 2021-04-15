@@ -7,6 +7,11 @@ export const app_turn_notify = {
     }
   },
   methods: {
+    tn_notify() {
+      this.sound_play_random(["moo1", "moo2", "moo3"])
+      this.debug_alert("あなたの手番です")
+    },
+
     tn_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
