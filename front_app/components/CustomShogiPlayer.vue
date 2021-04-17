@@ -32,6 +32,7 @@ export default {
         // sp_setting: this.development_p,
         sp_sound_enabled: true,
         sp_sound_volume: 0.5,
+        sp_play_effect_type: this.development_p ? "fw_type_3" : null,
       }
     },
   },
