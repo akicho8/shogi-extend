@@ -20,6 +20,9 @@
     //-
     //- hr
     //- | {{new_ordered_members}}
+    p group_members_most_min={{group_members_most_min}}
+    p empty_group_location={{empty_group_location}}
+    p group_hash={{group_hash}}
 
     b-table(
       :data="new_ordered_members"
@@ -35,8 +38,12 @@
       //- default-sort-direction="desc"
       b-table-column(v-slot="{row}" field="user_name"    label="名前") {{row.user_name}}
       b-table-column(v-slot="{row}" field="location_key" label="ﾁｰﾑ" centered)
+        b-button(@click="sanka_handle(row)") {{row.sanka_p}}
         b-button(@click="location_toggle_handle(row)")
-          | {{Location.fetch(row.location_key).name}}
+          template(v-if="row.location_key")
+            | {{Location.fetch(row.location_key).name}}
+          template(v-else)
+            | 観戦
       b-table-column(v-slot="{row}" field="order_index"     label="ﾁｰﾑ内の順番" centered) {{row.order_index + 1}}
       //- b-table-column(v-slot="props" field="entry_name" label="名前"  sortable) {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
       //- b-table-column(v-slot="props" field="spent_sec"  label="タイム") {{base.time_format_from_msec(props.row.spent_sec)}}
@@ -58,7 +65,7 @@
       span.has-text-weight-bold 全体の順番
       .is-inline-block.ml-2
         template(v-for="(row, i) in real_order_members")
-          b-tag.has-text-weight-bold(rounded :type="foo_type(row)")
+          b-tag.has-text-weight-bold(rounded :type="tag_type_for(row)")
             //- | {{Location.fetch(row.location_key).name}}
             | {{row.user_name}}
           span.mx-1.has-text-grey-light.is-size-7(v-if="i < real_order_members.length - 1")
@@ -121,14 +128,41 @@ export default {
       this.new_ordered_members.push(row)
     },
 
+    sanka_handle(row) {
+      row.sanka_p = !row.sanka_p
+    },
+
     location_toggle_handle(row) {
+      // if (row.location_key === null) {
+      //   row.location_key = "black"
+      // } else if (row.location_key === "black") {
+      //   row.location_key = "white"
+      // } else if (row.location_key === "white") {
+      //   row.location_key = null
+      //   // if (row.location_key === _.last(Location.values).key) {
+      //   //   row.location_key = null
+      //   // } else {
+      // } else {
+      //   row.location_key = null
+      // }
+
+      // if (row.location_key === null) {
+      //   row.location_key = Location.values[0].key
+      // } else {
+      //   if (row.location_key === Location.values[0].key) {
+      //     row.location_key = null
+      //   }
+      // }
+
       row.location_key = Location.fetch(row.location_key).flip.key
       this.order_index_update()
     },
 
     order_index_update() {
       this.new_ordered_members.forEach(e => {
-        e.order_index = this.group_list_hash[e.location_key].findIndex(v => e.user_name === v.user_name)
+        // if (e.sanka_p) {
+        e.order_index = this.group_hash[e.location_key].findIndex(v => e.user_name === v.user_name)
+        // }
       })
       // return list
       // const list = location_hash[row.location_key]
@@ -138,7 +172,7 @@ export default {
       // }
     },
 
-    foo_type(row) {
+    tag_type_for(row) {
       if (row.location_key === 'black') {
         return "is-primary"
       }
@@ -154,21 +188,24 @@ export default {
       return this.base.ordered_members !== this.new_ordered_members
     },
     real_order_members() {
+      if (this.group_members_most_min === 0) {
+        return []
+      }
+
       // const location_hash = Location.values.reduce((a, e, i) => ({...a, [e.key]: 0}), {})
       // this.new_ordered_members.map(e => hash[e.location_key].push(e))
 
-      const tmp_names = this.new_ordered_members.map(e => e.user_name)
-
-      const cycle_list = Location.values.map(e => new CycleIterator(this.group_list_hash[e.key]))
+      const names = this.new_ordered_members.filter(e => e.sanka_p).map(e => e.user_name)
+      const its = Location.values.map(e => new CycleIterator(this.group_hash[e.key]))
 
       const list = []
       let done = false
       while (!done) {
-        _.forEach(cycle_list, it => {
-          const v = it.next
-          list.push(v)
-          _.pull(tmp_names, v.user_name)
-          if (_.isEmpty(tmp_names)) {
+        _.forEach(its, it => {
+          const e = it.next
+          list.push(e)
+          _.pull(names, e.user_name)
+          if (_.isEmpty(names)) {
             done = true
             return false        // break (_.forEachなら可能)
           }
@@ -176,19 +213,36 @@ export default {
       }
       return list
     },
-    group_list_hash() {
+
+    group_hash() {
       const hash = Location.values.reduce((a, e, i) => ({...a, [e.key]: []}), {})
-      this.new_ordered_members.forEach(e => hash[e.location_key].push(e))
+      this.new_ordered_members.forEach(e => {
+        if (e.sanka_p) {
+          hash[e.location_key].push(e)
+        }
+      })
       return hash
     },
+
+    // どちらかのグループの所属メンバーの数の一番小さい値
+    group_members_most_min() {
+      return Math.min(..._.map(this.group_hash, (ary, key) => ary.length))
+    },
+
+    // 1人も所属していない側のキー "black" or "white" を返す
+    empty_group_location() {
+      const key = _.findKey(this.group_hash, (ary, key) => ary.length === 0) // group_hash.find { |k, v| v.empty? }.first
+      return Location.fetch_if(key)
+    },
+
     default_ordered_members() {
       if (this.development_p) {
         return [
-          { order_index: null, user_name: "alice", location_key: "black", },
-          { order_index: null, user_name: "bob",   location_key: "black", },
-          { order_index: null, user_name: "carol", location_key: "white", },
-          { order_index: null, user_name: "dave",  location_key: "white", },
-          { order_index: null, user_name: "ellen", location_key: "white", },
+          { sanka_p: true, order_index: null, user_name: "alice", location_key: "black", },
+          { sanka_p: true, order_index: null, user_name: "bob",   location_key: "black", },
+          { sanka_p: true, order_index: null, user_name: "carol", location_key: "white", },
+          { sanka_p: true, order_index: null, user_name: "dave",  location_key: "white", },
+          { sanka_p: true, order_index: null, user_name: "ellen", location_key: "white", },
         ]
       }
 
