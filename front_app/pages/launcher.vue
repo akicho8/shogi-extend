@@ -71,6 +71,7 @@ export default {
         { title: "符号の鬼",                           to: { name: "xy"                              }, },
       ],
       experiment_items: [
+        { title: "パーティクルテスト",         to: { name: "experiment-particle_test",    }  },
         { title: "store 動作検証",             to: { name: "experiment-store_test"        }, },
         { title: "fetch 動作検証",             to: { name: "experiment-fetch_test"        }, },
         { title: "users/_id 動作検証",         to: { name: "experiment-users-id"          }, },
