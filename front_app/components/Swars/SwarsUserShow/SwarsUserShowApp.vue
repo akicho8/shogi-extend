@@ -57,7 +57,10 @@ export default {
         this.$router.replace({
           name: "swars-users-key",
           params: { key: this.info.user.key },
-          query: { tab_index: this.tab_index },
+          query: {
+            tab_index: this.tab_index,
+            sample_max: this.$route.query.sample_max,
+          },
         }).catch(err => {})
       }
     },
