@@ -50,19 +50,7 @@ export default {
       this.base.tn_notify()
     },
     apply_handle() {
-      if (this.base.previous_user_name === this.new_previous_user_name) {
-        if (this.base.previous_user_name) {
-          this.toast_ok(`すでに適用済みです`)
-        }
-      } else {
-        this.base.previous_user_name = this.new_previous_user_name
-        if (this.base.previous_user_name) {
-          const name = this.user_call_name(this.base.previous_user_name)
-          this.toast_ok(`${name}が指したら牛が鳴きます`)
-        } else {
-          this.toast_ok(`解除しました`)
-        }
-      }
+      this.base.tn_previous_user_name_set(this.new_previous_user_name)
       this.sound_play("click")
       this.$emit("close")
     },

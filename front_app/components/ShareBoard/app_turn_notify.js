@@ -12,6 +12,22 @@ export const app_turn_notify = {
       this.debug_alert("あなたの手番です")
     },
 
+    // user_name が指し終わったら自分の手番とする
+    tn_previous_user_name_set(user_name) {
+      if (this.previous_user_name === user_name) {
+        if (this.previous_user_name) {
+          this.toast_ok(`すでに適用済みです`)
+        }
+      } else {
+        if (user_name) {
+          this.toast_ok(`${this.user_call_name(user_name)}が指したら牛が鳴きます`)
+        } else {
+          this.toast_ok(`解除しました`)
+        }
+        this.previous_user_name = user_name
+      }
+    },
+
     tn_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")

@@ -19,7 +19,7 @@
     //-       | {{row.from_user_name}}
     //-
     //- hr
-    //- | {{new_ordered_members}}
+    //- p {{real_order_members.length}}
     //- p group_members_most_min={{group_members_most_min}}
     //- p empty_group_location={{empty_group_location}}
     //- p group_hash={{group_hash}}
@@ -31,6 +31,7 @@
     b-table(
       :data="new_ordered_members"
       :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
+      :mobile-cards="false"
       )
       //- :paginated="true"
       //- :per-page="base.config.per_page"
@@ -42,25 +43,29 @@
       //- )
       //- default-sort-direction="desc"
 
-      b-table-column(v-slot="{row}" field="user_name" label="名前")
-        span(:class="{'has-text-grey': !row.enabled_p}")
+      b-table-column(v-slot="{row}" field="order_index" label="手番" centered :width="0")
+        template(v-if="row.order_index != null")
+          //- b-tag(rounded)
+          | {{row.order_index + 1}}
+
+      b-table-column(v-slot="{row}" field="user_name" label="面子")
+        span(:class="{'x-has-text-weight-bold': row.enabled_p}")
           | {{row.user_name}}
+
       b-table-column(v-slot="{row}" field="enabled_p"   label="参加" centered)
-        b-button(size="is-small" @click="sanka_handle(row)" :type="{'is-primary': row.enabled_p}")
+        b-button(size="is-small" @click="enable_toggle_handle(row)" :type="{'is-primary': row.enabled_p}")
           template(v-if="row.enabled_p")
             | OK
           template(v-else)
             | 観戦
-      b-table-column(v-slot="{row}" field="location_key" label="ﾁｰﾑ" centered)
-        template(v-if="row.enabled_p")
-          b-button(size="is-small" @click="location_toggle_handle(row)")
-            | {{Location.fetch(row.location_key).name}}
-      b-table-column(v-slot="{row}" field="order_index"     label="ﾁｰﾑ内の順番" centered)
-        template(v-if="row.order_index != null")
-          | {{row.order_index + 1}}
+
+      //- b-table-column(v-slot="{row}" field="location_key" label="ﾁｰﾑ" centered)
+      //-   template(v-if="row.enabled_p")
+      //-     b-button(size="is-small" @click="location_toggle_handle(row)")
+      //-       | {{Location.fetch(row.location_key).name}}
 
       b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0" centered cell-class="px-1")
-        template(v-if="row.enabled_p")
+        template(v-if="row.enabled_p || true")
           b-button(size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")
           b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
 
@@ -80,15 +85,15 @@
     //-   | リレー将棋で自分の手番をまちがいがちな方向けのサポート機能です<br>
     //-   | 順序が固定されている場合に指定の上家が指し終わったときにお知らせします
 
-    .py-4
-      span.has-text-weight-bold 全体の順番
-      .is-inline-block.ml-2
-        template(v-for="(row, i) in real_order_members")
-          b-tag.has-text-weight-bold(rounded :type="tag_type_for(row)")
-            //- | {{Location.fetch(row.location_key).name}}
-            | {{row.user_name}}
-          span.mx-1.has-text-grey-light.is-size-7(v-if="i < real_order_members.length - 1")
-            | →
+    //- .py-4
+    //-   span.has-text-weight-bold 全体の順番
+    //-   .is-inline-block.ml-2
+    //-     template(v-for="(row, i) in real_order_members")
+    //-       b-tag.has-text-weight-bold(rounded :type="tag_type_for(row)")
+    //-         //- | {{Location.fetch(row.location_key).name}}
+    //-         | {{row.user_name}}
+    //-       span.mx-1.has-text-grey-light.is-size-7(v-if="i < real_order_members.length - 1")
+    //-         | →
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -110,12 +115,30 @@ export default {
   data() {
     return {
       new_ordered_members: null,
-      checked_rows: [],
+      // checked_rows: [],
     }
   },
   beforeMount() {
-    this.new_ordered_members = [...(this.base.ordered_members || this.default_ordered_members)]
-    this.order_index_update()
+    if (this.base.ordered_members == null) {
+      // 1度も設定されていないので全員を「参加」状態で入れる
+      this.new_ordered_members = [...this.default_ordered_members]
+    } else {
+      // 1度自分で設定または他者から共有されている ordered_members を使う
+      this.new_ordered_members = [...this.base.ordered_members]
+
+      // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
+      if (false) {
+        this.default_ordered_members.forEach(m => {
+          if (!this.new_ordered_members.some(e => e.user_name === m.user_name)) {
+            this.new_ordered_members.push({
+              ...m,
+              order_index: null,  // 順番なし
+              enabled_p: false,   // 観戦
+            })
+          }
+        })
+      }
+    }
   },
   methods: {
     close_handle() {
@@ -127,26 +150,36 @@ export default {
       this.base.tn_notify()
     },
     apply_handle() {
-      if (_.isEqual(this.base.ordered_members, this.new_ordered_members)) {
+      this.sound_play("click")
+
+      if (false) {
+        if (this.real_order_members.length % 2 !== 0) {
+          this.toast_warn("参加者は偶数の人数にしてください")
+          return
+        }
+      }
+
+      if (_.isEqual(this.base.ordered_members, this.real_order_members)) {
         if (this.base.ordered_members) {
           this.toast_ok(`すでに適用済みです`)
         }
       } else {
-        this.base.ordered_members = [...this.new_ordered_members]
+        this.base.ordered_members = [...this.real_order_members]
+        this.base.ordered_members_share()
         if (this.base.ordered_members) {
-          const name = this.user_call_name(this.base.ordered_members)
-          this.toast_ok(`${name}が指したら牛が鳴きます`)
+          // const name = this.user_call_name(this.base.ordered_members)
+          this.toast_ok(`設定しました`)
         } else {
           this.toast_ok(`解除しました`)
         }
       }
-      this.sound_play("click")
-      this.$emit("close")
+
+      // this.$emit("close")
     },
 
-        // スマホで↓↑を押したとき
-    up_down_handle(object, sign) {
-      const index = this.new_ordered_members.findIndex(e => e.user_name === object.user_name)
+    // ↓↑を押したとき
+    up_down_handle(row, sign) {
+      const index = this.new_ordered_members.findIndex(e => e.user_name === row.user_name)
       this.new_ordered_members = this.ary_move(this.new_ordered_members, index, index + sign)
       this.order_index_update()
     },
@@ -155,62 +188,58 @@ export default {
       this.new_ordered_members.push(row)
     },
 
-    sanka_handle(row) {
+    enable_toggle_handle(row) {
       row.enabled_p = !row.enabled_p
       this.order_index_update()
     },
 
-    location_toggle_handle(row) {
-      // if (row.location_key === null) {
-      //   row.location_key = "black"
-      // } else if (row.location_key === "black") {
-      //   row.location_key = "white"
-      // } else if (row.location_key === "white") {
-      //   row.location_key = null
-      //   // if (row.location_key === _.last(Location.values).key) {
-      //   //   row.location_key = null
-      //   // } else {
-      // } else {
-      //   row.location_key = null
-      // }
-
-      // if (row.location_key === null) {
-      //   row.location_key = Location.values[0].key
-      // } else {
-      //   if (row.location_key === Location.values[0].key) {
-      //     row.location_key = null
-      //   }
-      // }
-
-      row.location_key = Location.fetch(row.location_key).flip.key
-      this.order_index_update()
-    },
+    // location_toggle_handle(row) {
+    //   // if (row.location_key === null) {
+    //   //   row.location_key = "black"
+    //   // } else if (row.location_key === "black") {
+    //   //   row.location_key = "white"
+    //   // } else if (row.location_key === "white") {
+    //   //   row.location_key = null
+    //   //   // if (row.location_key === _.last(Location.values).key) {
+    //   //   //   row.location_key = null
+    //   //   // } else {
+    //   // } else {
+    //   //   row.location_key = null
+    //   // }
+    //
+    //   // if (row.location_key === null) {
+    //   //   row.location_key = Location.values[0].key
+    //   // } else {
+    //   //   if (row.location_key === Location.values[0].key) {
+    //   //     row.location_key = null
+    //   //   }
+    //   // }
+    //
+    //   row.location_key = Location.fetch(row.location_key).flip.key
+    //   this.order_index_update()
+    // },
 
     order_index_update() {
+      let index = 0
       this.new_ordered_members.forEach(e => {
         if (e.enabled_p) {
-          e.order_index = this.group_hash[e.location_key].findIndex(v => e.user_name === v.user_name)
+          e.order_index = index
+          index += 1
         } else {
           e.order_index = null
         }
       })
-      // return list
-      // const list = location_hash[row.location_key]
-      // const index = list.findIndex(e => e.user_name === row.user_name)
-      // if (index >= 0) {
-      //   return index + 1
-      // }
     },
 
-    tag_type_for(row) {
-      if (row.location_key === 'black') {
-        return "is-primary"
-      }
-      if (row.location_key === 'white') {
-        return "is-primary is-light"
-      }
-      return
-    },
+    // tag_type_for(row) {
+    //   if (row.location_key === 'black') {
+    //     return "is-primary"
+    //   }
+    //   if (row.location_key === 'white') {
+    //     return "is-primary is-light"
+    //   }
+    //   return
+    // },
   },
   computed: {
     Location() { return Location },
@@ -218,30 +247,32 @@ export default {
       return this.base.ordered_members !== this.new_ordered_members
     },
     real_order_members() {
-      if (this.group_members_most_min === 0) {
-        return []
-      }
+      // if (this.group_members_most_min === 0) {
+      //   return []
+      // }
 
       // const location_hash = Location.values.reduce((a, e, i) => ({...a, [e.key]: 0}), {})
       // this.new_ordered_members.map(e => hash[e.location_key].push(e))
 
-      const names = this.new_ordered_members.filter(e => e.enabled_p).map(e => e.user_name)
-      const its = Location.values.map(e => new CycleIterator(this.group_hash[e.key]))
+      return this.new_ordered_members.filter(e => e.enabled_p)
 
-      const list = []
-      let done = false
-      while (!done) {
-        _.forEach(its, it => {
-          const e = it.next
-          list.push(e)
-          _.pull(names, e.user_name)
-          if (_.isEmpty(names)) {
-            done = true
-            return false        // break (_.forEachなら可能)
-          }
-        })
-      }
-      return list
+      // const names = this.new_ordered_members.filter(e => e.enabled_p).map(e => e.user_name)
+      // const its = Location.values.map(e => new CycleIterator(this.group_hash[e.key]))
+      //
+      // const list = []
+      // let done = false
+      // while (!done) {
+      //   _.forEach(its, it => {
+      //     const e = it.next
+      //     list.push(e)
+      //     _.pull(names, e.user_name)
+      //     if (_.isEmpty(names)) {
+      //       done = true
+      //       return false        // break (_.forEachなら可能)
+      //     }
+      //   })
+      // }
+      // return list
     },
 
     group_hash() {
@@ -276,12 +307,12 @@ export default {
         ]
       }
 
-      let v = this.base.member_infos
-      v = _.uniqBy(v, "from_user_name")
-      v = v.map((e, i) => {
+      return this.name_uniqued_member_infos.map((e, i) => {
         return {
+          enabled_p: true,
+          order_index: i,
           user_name: e.from_user_name,
-          location_key: Location.fetch(i).key,
+          // location_key: Location.fetch(i).key,
         }
       })
       return v

@@ -38,7 +38,18 @@ export const app_member_order = {
     ordered_members_share_broadcasted(params) {
       if (params.from_user_code === this.user_code) {
       } else {
-        this.ordered_members = {...params.ordered_members} // モーダルのパラメータを同じにする
+      }
+
+      this.ordered_members = [...params.ordered_members]
+
+      const index = this.ordered_members.findIndex(e => e.user_name === this.user_name)
+      if (index >= 0) {
+        const previous_index = this.ruby_like_modulo(index - 1, this.ordered_members.length)
+        const ordered_member = this.ordered_members[previous_index]
+        this.tn_previous_user_name_set(ordered_member.user_name)
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が手番の通知を一括設定しました`)
+      } else {
+        this.toast_warn(`${this.user_call_name(params.from_user_name)}が手番の通知を一括設定しましたが${this.user_call_name(this.user_name)}の名前は含まれていませんでした`)
       }
     },
   },

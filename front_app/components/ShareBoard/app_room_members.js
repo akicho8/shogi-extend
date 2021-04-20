@@ -83,4 +83,9 @@ export const app_room_members = {
       this.member_bc_interval_runner.restart()
     },
   },
+  components: {
+    name_uniqued_member_infos() {
+      return _.uniqBy(this.member_infos, "from_user_name")
+    },
+  },
 }
