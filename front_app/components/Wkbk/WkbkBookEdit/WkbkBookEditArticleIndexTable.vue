@@ -102,24 +102,6 @@ export default {
       // this.book.ordered_bookships.splice(to_index, 0, this.book.ordered_bookships[this.from_index])
       this.base.book.ordered_bookships = this.ary_move(this.base.book.ordered_bookships, this.from_index, to_index)
     },
-
-    // list 内のインデックス from の要素を to に移動
-    // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
-    ary_move(list, from, to) {
-      const n = list.length
-      list = [...list]
-      to = this.ruby_like_modulo(to, n)
-      if (from === to || from > n - 1 || to > n - 1) {
-        return list
-      }
-      const v = list[from]
-      const tail = list.slice(from + 1)
-      list.splice(from)
-      Array.prototype.push.apply(list, tail)
-      list.splice(to, 0, v)
-      return list
-    }
-
   },
 }
 </script>

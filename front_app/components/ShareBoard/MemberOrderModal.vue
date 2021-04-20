@@ -20,12 +20,17 @@
     //-
     //- hr
     //- | {{new_ordered_members}}
-    p group_members_most_min={{group_members_most_min}}
-    p empty_group_location={{empty_group_location}}
-    p group_hash={{group_hash}}
+    //- p group_members_most_min={{group_members_most_min}}
+    //- p empty_group_location={{empty_group_location}}
+    //- p group_hash={{group_hash}}
+
+    //- checkable
+    //- :header-checkable="false"
+    //- :checked-rows.sync="checked_rows"
 
     b-table(
       :data="new_ordered_members"
+      :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
       )
       //- :paginated="true"
       //- :per-page="base.config.per_page"
@@ -36,15 +41,29 @@
       //- :narrowed="true"
       //- )
       //- default-sort-direction="desc"
-      b-table-column(v-slot="{row}" field="user_name"    label="名前") {{row.user_name}}
-      b-table-column(v-slot="{row}" field="location_key" label="ﾁｰﾑ" centered)
-        b-button(@click="sanka_handle(row)") {{row.sanka_p}}
-        b-button(@click="location_toggle_handle(row)")
-          template(v-if="row.location_key")
-            | {{Location.fetch(row.location_key).name}}
+
+      b-table-column(v-slot="{row}" field="user_name" label="名前")
+        span(:class="{'has-text-grey': !row.enabled_p}")
+          | {{row.user_name}}
+      b-table-column(v-slot="{row}" field="enabled_p"   label="参加" centered)
+        b-button(size="is-small" @click="sanka_handle(row)" :type="{'is-primary': row.enabled_p}")
+          template(v-if="row.enabled_p")
+            | OK
           template(v-else)
             | 観戦
-      b-table-column(v-slot="{row}" field="order_index"     label="ﾁｰﾑ内の順番" centered) {{row.order_index + 1}}
+      b-table-column(v-slot="{row}" field="location_key" label="ﾁｰﾑ" centered)
+        template(v-if="row.enabled_p")
+          b-button(size="is-small" @click="location_toggle_handle(row)")
+            | {{Location.fetch(row.location_key).name}}
+      b-table-column(v-slot="{row}" field="order_index"     label="ﾁｰﾑ内の順番" centered)
+        template(v-if="row.order_index != null")
+          | {{row.order_index + 1}}
+
+      b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0" centered cell-class="px-1")
+        template(v-if="row.enabled_p")
+          b-button(size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")
+          b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
+
       //- b-table-column(v-slot="props" field="entry_name" label="名前"  sortable) {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
       //- b-table-column(v-slot="props" field="spent_sec"  label="タイム") {{base.time_format_from_msec(props.row.spent_sec)}}
       //- b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!base.curent_scope.date_visible") {{base.time_default_format(props.row.created_at)}}
@@ -91,6 +110,7 @@ export default {
   data() {
     return {
       new_ordered_members: null,
+      checked_rows: [],
     }
   },
   beforeMount() {
@@ -124,12 +144,20 @@ export default {
       this.$emit("close")
     },
 
+        // スマホで↓↑を押したとき
+    up_down_handle(object, sign) {
+      const index = this.new_ordered_members.findIndex(e => e.user_name === object.user_name)
+      this.new_ordered_members = this.ary_move(this.new_ordered_members, index, index + sign)
+      this.order_index_update()
+    },
+
     user_name_click(row) {
       this.new_ordered_members.push(row)
     },
 
     sanka_handle(row) {
-      row.sanka_p = !row.sanka_p
+      row.enabled_p = !row.enabled_p
+      this.order_index_update()
     },
 
     location_toggle_handle(row) {
@@ -160,9 +188,11 @@ export default {
 
     order_index_update() {
       this.new_ordered_members.forEach(e => {
-        // if (e.sanka_p) {
-        e.order_index = this.group_hash[e.location_key].findIndex(v => e.user_name === v.user_name)
-        // }
+        if (e.enabled_p) {
+          e.order_index = this.group_hash[e.location_key].findIndex(v => e.user_name === v.user_name)
+        } else {
+          e.order_index = null
+        }
       })
       // return list
       // const list = location_hash[row.location_key]
@@ -195,7 +225,7 @@ export default {
       // const location_hash = Location.values.reduce((a, e, i) => ({...a, [e.key]: 0}), {})
       // this.new_ordered_members.map(e => hash[e.location_key].push(e))
 
-      const names = this.new_ordered_members.filter(e => e.sanka_p).map(e => e.user_name)
+      const names = this.new_ordered_members.filter(e => e.enabled_p).map(e => e.user_name)
       const its = Location.values.map(e => new CycleIterator(this.group_hash[e.key]))
 
       const list = []
@@ -217,7 +247,7 @@ export default {
     group_hash() {
       const hash = Location.values.reduce((a, e, i) => ({...a, [e.key]: []}), {})
       this.new_ordered_members.forEach(e => {
-        if (e.sanka_p) {
+        if (e.enabled_p) {
           hash[e.location_key].push(e)
         }
       })
@@ -238,11 +268,11 @@ export default {
     default_ordered_members() {
       if (this.development_p) {
         return [
-          { sanka_p: true, order_index: null, user_name: "alice", location_key: "black", },
-          { sanka_p: true, order_index: null, user_name: "bob",   location_key: "black", },
-          { sanka_p: true, order_index: null, user_name: "carol", location_key: "white", },
-          { sanka_p: true, order_index: null, user_name: "dave",  location_key: "white", },
-          { sanka_p: true, order_index: null, user_name: "ellen", location_key: "white", },
+          { enabled_p: true, order_index: null, user_name: "alice", location_key: "black", },
+          { enabled_p: true, order_index: null, user_name: "bob",   location_key: "black", },
+          { enabled_p: true, order_index: null, user_name: "carol", location_key: "white", },
+          { enabled_p: true, order_index: null, user_name: "dave",  location_key: "white", },
+          { enabled_p: true, order_index: null, user_name: "ellen", location_key: "white", },
         ]
       }
 
@@ -269,6 +299,10 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .MemberOrderModal
+  .table
+    td
+      vertical-align: center
+
   .modal-card-foot
     justify-content: space-between
     .button
