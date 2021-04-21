@@ -16,7 +16,9 @@ export const app_turn_notify = {
     tn_previous_user_name_set(user_name) {
       if (this.previous_user_name === user_name) {
         if (this.previous_user_name) {
-          this.toast_ok(`すでに適用済みです`)
+          this.toast_ok(`手番の通知は設定済みです`)
+        } else {
+          this.toast_ok(`手番の通知は未設定のままです`)
         }
       } else {
         if (user_name) {
