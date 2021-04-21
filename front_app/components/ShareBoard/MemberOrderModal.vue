@@ -8,40 +8,11 @@
         | 手番通知一括設定
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    //- hr
-    //- b-taglist
-    //-   template(v-for="row in default_ordered_members")
-    //-     b-tag(rounded type="is-primary")
-    //-       | {{row.from_user_name}}
-    //- .buttons
-    //-   template(v-for="row in default_ordered_members")
-    //-     b-button(rounded type="is-primary" size="is-small" @click="user_name_click(row)")
-    //-       | {{row.from_user_name}}
-    //-
-    //- hr
-    //- p {{real_order_members.length}}
-    //- p group_members_most_min={{group_members_most_min}}
-    //- p empty_group_location={{empty_group_location}}
-    //- p group_hash={{group_hash}}
-
-    //- checkable
-    //- :header-checkable="false"
-    //- :checked-rows.sync="checked_rows"
-
     b-table(
       :data="new_ordered_members"
       :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
       :mobile-cards="false"
       )
-      //- :paginated="true"
-      //- :per-page="base.config.per_page"
-      //- :current-page.sync="base.current_pages[base.current_rule_index]"
-      //- :pagination-simple="false"
-      //- :mobile-cards="false"
-      //- :row-class="(row, index) => row.id === (base.time_record && base.time_record.id) && 'is-selected'"
-      //- :narrowed="true"
-      //- )
-      //- default-sort-direction="desc"
 
       b-table-column(v-slot="{row}" field="order_index" label="手番" centered :width="0")
         template(v-if="row.order_index != null")
@@ -59,49 +30,20 @@
           template(v-else)
             | 観戦
 
-      //- b-table-column(v-slot="{row}" field="location_key" label="ﾁｰﾑ" centered)
-      //-   template(v-if="row.enabled_p")
-      //-     b-button(size="is-small" @click="location_toggle_handle(row)")
-      //-       | {{Location.fetch(row.location_key).name}}
-
       b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0" centered cell-class="px-1")
         template(v-if="row.enabled_p || true")
-          b-button(size="is-small" icon-left="arrow-up"   @click="up_down_handle(row, -1)")
+          b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row,-1)")
           b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
-
-      //- b-table-column(v-slot="props" field="entry_name" label="名前"  sortable) {{string_truncate(props.row.entry_name || '？？？', {length: 15})}}
-      //- b-table-column(v-slot="props" field="spent_sec"  label="タイム") {{base.time_format_from_msec(props.row.spent_sec)}}
-      //- b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!base.curent_scope.date_visible") {{base.time_default_format(props.row.created_at)}}
-
-    //- .is-flex.is-justify-content-center.is-align-items-center
-    //-   p.control
-    //-     | 上家の
-    //-   b-select.mx-1(v-model="new_ordered_members")
-    //-     option(:value="null")
-    //-     option(v-for="e in base.member_infos" :value="e.from_user_name" v-text="e.from_user_name")
-    //-   p.control
-    //-     | さんが指したら自分だけに知らせる
-    //- p.has-text-centered.is-size-7.has-text-grey-light
-    //-   | リレー将棋で自分の手番をまちがいがちな方向けのサポート機能です<br>
-    //-   | 順序が固定されている場合に指定の上家が指し終わったときにお知らせします
-
-    //- .py-4
-    //-   span.has-text-weight-bold 全体の順番
-    //-   .is-inline-block.ml-2
-    //-     template(v-for="(row, i) in real_order_members")
-    //-       b-tag.has-text-weight-bold(rounded :type="tag_type_for(row)")
-    //-         //- | {{Location.fetch(row.location_key).name}}
-    //-         | {{row.user_name}}
-    //-       span.mx-1.has-text-grey-light.is-size-7(v-if="i < real_order_members.length - 1")
-    //-         | →
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
-    b-button.apply_button(@click="apply_handle" :type="{'is-primary': form_changed_p}") 適用
+    b-button.apply_button(@click="apply_handle" :type="{'is-primary': changed_p}") 適用
 </template>
 
 <script>
+const FAKE_P = true
+
 import { support_child } from "./support_child.js"
 import _ from "lodash"
 import { Location } from "shogi-player/components/models/location.js"
@@ -184,40 +126,10 @@ export default {
       this.order_index_update()
     },
 
-    user_name_click(row) {
-      this.new_ordered_members.push(row)
-    },
-
     enable_toggle_handle(row) {
       row.enabled_p = !row.enabled_p
       this.order_index_update()
     },
-
-    // location_toggle_handle(row) {
-    //   // if (row.location_key === null) {
-    //   //   row.location_key = "black"
-    //   // } else if (row.location_key === "black") {
-    //   //   row.location_key = "white"
-    //   // } else if (row.location_key === "white") {
-    //   //   row.location_key = null
-    //   //   // if (row.location_key === _.last(Location.values).key) {
-    //   //   //   row.location_key = null
-    //   //   // } else {
-    //   // } else {
-    //   //   row.location_key = null
-    //   // }
-    //
-    //   // if (row.location_key === null) {
-    //   //   row.location_key = Location.values[0].key
-    //   // } else {
-    //   //   if (row.location_key === Location.values[0].key) {
-    //   //     row.location_key = null
-    //   //   }
-    //   // }
-    //
-    //   row.location_key = Location.fetch(row.location_key).flip.key
-    //   this.order_index_update()
-    // },
 
     order_index_update() {
       let index = 0
@@ -230,16 +142,6 @@ export default {
         }
       })
     },
-
-    // tag_type_for(row) {
-    //   if (row.location_key === 'black') {
-    //     return "is-primary"
-    //   }
-    //   if (row.location_key === 'white') {
-    //     return "is-primary is-light"
-    //   }
-    //   return
-    // },
   },
   computed: {
     Location() { return Location },
