@@ -9,7 +9,7 @@
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
     b-table(
-      :data="current_members"
+      :data="table_rows"
       :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
       :mobile-cards="false"
       )
@@ -55,22 +55,22 @@ export default {
   ],
   data() {
     return {
-      current_members: null,
+      table_rows: null,
     }
   },
   beforeMount() {
     if (this.base.ordered_members == null) {
       // 1度も設定されていないので全員を「参加」状態で入れる
-      this.current_members = [...this.default_ordered_members]
+      this.table_rows = [...this.default_ordered_members]
     } else {
       // 1度自分で設定または他者から共有されている ordered_members を使う
-      this.current_members = [...this.base.ordered_members]
+      this.table_rows = [...this.base.ordered_members]
 
       // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
       if (true) {
         this.default_ordered_members.forEach(m => {
-          if (!this.current_members.some(e => e.user_name === m.user_name)) {
-            this.current_members.push({
+          if (!this.table_rows.some(e => e.user_name === m.user_name)) {
+            this.table_rows.push({
               ...m,
               order_index: null,  // 順番なし
               enabled_p: false,   // 観戦
@@ -93,21 +93,15 @@ export default {
       this.sound_play("click")
 
       if (true) {
-        if (this.real_order_members.length % 2 !== 0) {
+        if (this.new_ordered_members.length % 2 !== 0) {
           this.toast_warn("参加者は偶数の人数にしてください")
           return
         }
       }
 
-      // if (_.isEqual(this.base.ordered_members, this.real_order_members)) {
       if (this.changed_p || true) {
-        // this.base.ordered_members = [...this.real_order_members]
-        this.base.ordered_members_share(this.real_order_members)
-        // if (this.base.ordered_members) {
-        //   this.toast_ok(`設定しました`)
-        // } else {
-        //   this.toast_ok(`解除しました`)
-        // }
+        this.debug_alert(`ordered_members_share`)
+        this.base.ordered_members_share(this.new_ordered_members)
       } else {
         if (this.base.ordered_members) {
           this.toast_ok(`すでに適用済みです`)
@@ -122,8 +116,8 @@ export default {
 
     // ↓↑を押したとき
     up_down_handle(row, sign) {
-      const index = this.current_members.findIndex(e => e.user_name === row.user_name)
-      this.current_members = this.ary_move(this.current_members, index, index + sign)
+      const index = this.table_rows.findIndex(e => e.user_name === row.user_name)
+      this.table_rows = this.ary_move(this.table_rows, index, index + sign)
       this.order_index_update()
     },
 
@@ -134,7 +128,7 @@ export default {
 
     order_index_update() {
       let index = 0
-      this.current_members.forEach(e => {
+      this.table_rows.forEach(e => {
         if (e.enabled_p) {
           e.order_index = index
           index += 1
@@ -148,11 +142,11 @@ export default {
     Location() { return Location },
 
     changed_p() {
-      return !_.isEqual(this.base.ordered_members, this.real_order_members)
+      return !_.isEqual(this.base.ordered_members, this.new_ordered_members)
     },
 
-    real_order_members() {
-      return this.current_members.filter(e => e.enabled_p)
+    new_ordered_members() {
+      return this.table_rows.filter(e => e.enabled_p)
     },
 
     default_ordered_members() {

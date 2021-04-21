@@ -2,6 +2,7 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox
+      p previous_user_name: {{previous_user_name}}
       p ordered_members: {{ordered_members}}
       template(v-if="chess_clock")
         p next_location: {{next_location.key}}
