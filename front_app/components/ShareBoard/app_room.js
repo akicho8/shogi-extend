@@ -150,10 +150,12 @@ export const app_room = {
       this.ac_room_perform("sfen_share", {
         title: this.current_title,
         ...params,
-        ...this.current_sfen_attrs,
+        ...this.current_sfen_attrs, // turn_offset は含まれる
       }) // --> app/channels/share_board/room_channel.rb
     },
     sfen_share_broadcasted(params) {
+      // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
+
       if (params.from_user_code === this.user_code) {
         // 自分から自分へ
       } else {
@@ -172,7 +174,12 @@ export const app_room = {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
       }
       if (true) {
-        if (params.from_user_name === this.previous_user_name) {
+        const next_user_name = this.user_name_by_turn(params.turn_offset)
+
+        // if (params.from_user_name === this.previous_user_name) {
+        //   this.tn_notify()
+        // }
+        if (params.from_user_name === next_user_name) {
           this.tn_notify()
         }
 
@@ -180,7 +187,15 @@ export const app_room = {
         this.toast_ok_toast_only(`${params.from_user_name} ${params.last_move_kif}`)
 
         // 「aliceさん」の発声後に「7 6 ふー！」を発声する
-        this.talk(this.user_call_name(params.from_user_name), {onend: () => this.talk(params.yomiage)})
+        this.talk(this.user_call_name(params.from_user_name), {
+          onend: () => this.talk(params.yomiage, {
+            onend: () => {
+              if (next_user_name) {
+                this.toast_ok(`次は${this.user_call_name(next_user_name)}の番です`)
+              }
+            },
+          }),
+        })
       }
       this.al_add(params)
     },
@@ -238,7 +253,7 @@ export const app_room = {
     current_sfen_attrs() {
       return {
         sfen:              this.current_sfen,
-        turn_offset:       this.current_sfen_info.turn_offset_max,
+        turn_offset:       this.current_sfen_info.turn_offset_max, // これを入れない方が早い？
         last_location_key: this.current_sfen_info.last_location.key,
       }
     },

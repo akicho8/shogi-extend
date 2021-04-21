@@ -2,6 +2,8 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox
+      p current_turn_user_name: {{current_turn_user_name}}
+      p turn_offset: {{turn_offset}}
       p previous_user_name: {{previous_user_name}}
       p ordered_members: {{ordered_members}}
       template(v-if="chess_clock")
@@ -211,9 +213,13 @@ export default {
     },
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
+    // 局面0で1手指したとき last_move_info.turn_offset は 0
     play_mode_advanced_full_moves_sfen2_set(v, last_move_info) {
       this.current_sfen = v
-      this.sfen_share({last_move_kif: last_move_info.to_kif_without_from, yomiage: last_move_info.to_yomiage})
+      this.sfen_share({
+        last_move_kif: last_move_info.to_kif_without_from,
+        yomiage: last_move_info.to_yomiage,
+      })
 
       // 時計があれば操作した側のボタンを押す
       if (this.chess_clock) {

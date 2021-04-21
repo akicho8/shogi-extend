@@ -1,9 +1,11 @@
 import MemberOrderModal from "./MemberOrderModal.vue"
+import { StrictInfo } from "@/components/models/strict_info.js"
 
 export const app_member_order = {
   data() {
     return {
       ordered_members: null, // 出走順の配列
+      strict_key: "turn_strict_on",
     }
   },
   methods: {
@@ -27,9 +29,20 @@ export const app_member_order = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ordered_members_share(new_ordered_members) {
-      const params = {}
-      params.ordered_members = new_ordered_members
+    ordered_members_cycle_at(index) {
+      return this.ary_cycle_at(this.ordered_members, index)
+    },
+
+    // 局面 turn の手番のメンバーの名前
+    user_name_by_turn(turn) {
+      if (this.ordered_members && this.ordered_members.length >= 1) {
+        return this.ordered_members_cycle_at(turn).user_name
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ordered_members_share(params) {
       this.ac_room_perform("ordered_members_share", params) // --> app/channels/share_board/room_channel.rb
     },
     ordered_members_share_broadcasted(params) {
@@ -39,18 +52,43 @@ export const app_member_order = {
         this.debug_alert("自分→他者")
       }
 
-      this.ordered_members = [...params.ordered_members]
-
-      const member = this.ordered_members.find(e => e.user_name === this.user_name)
-      if (member) {
-        const previous_index = this.ruby_like_modulo(member.order_index - 1, this.ordered_members.length)
-        const ordered_member = this.ordered_members[previous_index]
-        this.previous_user_name = ordered_member.user_name
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${this.user_call_name(this.user_name)}の手番の通知を有効にしました`)
-      } else {
-        this.previous_user_name = null
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${this.user_call_name(this.user_name)}の手番の通知を無効にしました`)
+      if (true) {
+        this.ordered_members = [...params.ordered_members]
+        const member = this.ordered_members.find(e => e.user_name === this.user_name)
+        if (member) {
+          const previous_index = this.ruby_like_modulo(member.order_index - 1, this.ordered_members.length)
+          const ordered_member = this.ordered_members[previous_index]
+          this.previous_user_name = ordered_member.user_name
+          this.toast_ok(`${this.user_call_name(params.from_user_name)}が${this.user_call_name(this.user_name)}の手番の通知を有効にしました`)
+        } else {
+          this.previous_user_name = null
+          this.toast_ok(`${this.user_call_name(params.from_user_name)}が${this.user_call_name(this.user_name)}の手番の通知を無効にしました`)
+        }
       }
+
+      this.strict_key = params.strict_key
     },
+  },
+
+  computed: {
+    StrictInfo()  { return StrictInfo                                },
+    strict_info() { return this.StrictInfo.fetch_if(this.strict_key) },
+
+    current_turn_user_name() { return this.user_name_by_turn(this.turn_offset) }, // 現在の局面のメンバーの名前
+
+    // my_ordered_member() {
+    //   return this.ordered_members.find(e => e.user_name === this.user_name)
+    // },
+
+    // const previous_index = this.ruby_like_modulo(member.order_index - 1, this.ordered_members.length)
+    //       const ordered_member = this.ordered_members[previous_index]
+    //       this.previous_user_name = ordered_member.user_name
+    //       this.toast_ok(`${this.user_call_name(params.from_user_name)}が${this.user_call_name(this.user_name)}の手番の通知を有効にしました`)
+
+    // jibun_index() {
+    //   this.turn_offset
+    //
+    // },
+
   },
 }

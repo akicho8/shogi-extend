@@ -14,7 +14,7 @@
       :mobile-cards="false"
       )
 
-      b-table-column(v-slot="{row}" field="order_index" label="手番" centered :width="0")
+      b-table-column(v-slot="{row}" field="order_index" label="順番" centered :width="0")
         template(v-if="row.order_index != null")
           | {{row.order_index + 1}}
 
@@ -34,6 +34,12 @@
           b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row,-1)")
           b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
 
+    b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(new_strict_key).message")
+      b-field.is-marginless
+        template(v-for="e in base.StrictInfo.values")
+          b-radio-button(v-model="new_strict_key" :native-value="e.key" size="is-small")
+            | {{e.name}}
+
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
@@ -45,7 +51,7 @@ const FAKE_P = true
 
 import { support_child } from "./support_child.js"
 import _ from "lodash"
-import { Location } from "shogi-player/components/models/location.js"
+// import { Location } from "shogi-player/components/models/location.js"
 import { CycleIterator } from "@/components/models/cycle_iterator.js"
 
 export default {
@@ -56,6 +62,7 @@ export default {
   data() {
     return {
       table_rows: null,
+      new_strict_key: null,
     }
   },
   beforeMount() {
@@ -79,6 +86,8 @@ export default {
         })
       }
     }
+
+    this.new_strict_key = this.base.strict_key
   },
   methods: {
     close_handle() {
@@ -99,9 +108,11 @@ export default {
         }
       }
 
-      if (this.changed_p || true) {
-        this.debug_alert(`ordered_members_share`)
-        this.base.ordered_members_share(this.new_ordered_members)
+      if (this.changed_p) {
+        this.base.ordered_members_share({
+          ordered_members: this.new_ordered_members,
+          strict_key: this.new_strict_key,
+        })
       } else {
         if (this.base.ordered_members) {
           this.toast_ok(`すでに適用済みです`)
@@ -116,12 +127,14 @@ export default {
 
     // ↓↑を押したとき
     up_down_handle(row, sign) {
+      this.sound_play("click")
       const index = this.table_rows.findIndex(e => e.user_name === row.user_name)
       this.table_rows = this.ary_move(this.table_rows, index, index + sign)
       this.order_index_update()
     },
 
     enable_toggle_handle(row) {
+      this.sound_play("click")
       row.enabled_p = !row.enabled_p
       this.order_index_update()
     },
@@ -139,10 +152,13 @@ export default {
     },
   },
   computed: {
-    Location() { return Location },
-
+    // 変更されたか？
     changed_p() {
-      return !_.isEqual(this.base.ordered_members, this.new_ordered_members)
+      if (false) {
+        return !_.isEqual(this.base.ordered_members, this.new_ordered_members)
+      } else {
+        return true
+      }
     },
 
     new_ordered_members() {
@@ -178,7 +194,7 @@ export default {
 
 .STAGE-development
   .MemberOrderModal
-    .modal-card-body, .field
+    .modal-card-body
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .MemberOrderModal
