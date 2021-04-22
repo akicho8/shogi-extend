@@ -11,46 +11,51 @@
     a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
 
     //- template(v-if="!instance")
-    b-switch.foobar_switch_handle(size="is-small" type="is-primary" v-model="foobar_p" @input="foobar_switch_handle") 有効
+    b-switch.ordered_run_switch_handle(size="is-small" type="is-primary" v-model="base.ordered_run_p" @input="ordered_run_switch_handle") 有効
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    b-table(
-      :data="table_rows"
-      :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
-      :mobile-cards="false"
-      )
+    template(v-if="!base.ordered_run_p")
+      .has-text-centered.has-text-grey.my-6
+        | 使う場合は右上のスイッチを有効にしてください
+    template(v-if="base.ordered_run_p")
+      b-table(
+        :data="table_rows"
+        :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
+        :mobile-cards="false"
+        )
 
-      b-table-column(v-slot="{row}" field="order_index" label="順番" centered :width="0")
-        template(v-if="row.order_index != null")
-          | {{row.order_index + 1}}
+        b-table-column(v-slot="{row}" field="order_index" label="順番" centered :width="0")
+          template(v-if="row.order_index != null")
+            | {{row.order_index + 1}}
 
-      b-table-column(v-slot="{row}" field="user_name" label="面子")
-        span(:class="{'x-has-text-weight-bold': row.enabled_p}")
-          | {{row.user_name}}
+        b-table-column(v-slot="{row}" field="user_name" label="面子")
+          span(:class="{'x-has-text-weight-bold': row.enabled_p}")
+            | {{row.user_name}}
 
-      b-table-column(v-slot="{row}" field="enabled_p"   label="参加" centered)
-        b-button(size="is-small" @click="enable_toggle_handle(row)" :type="{'is-primary': row.enabled_p}")
-          template(v-if="row.enabled_p")
-            | OK
-          template(v-else)
-            | 観戦
+        b-table-column(v-slot="{row}" field="enabled_p"   label="参加" centered)
+          b-button(size="is-small" @click="enable_toggle_handle(row)" :type="{'is-primary': row.enabled_p}")
+            template(v-if="row.enabled_p")
+              | OK
+            template(v-else)
+              | 観戦
 
-      b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0" centered cell-class="px-1")
-        template(v-if="row.enabled_p || true")
-          b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row,-1)")
-          b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
+        b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0" centered cell-class="px-1")
+          template(v-if="row.enabled_p || true")
+            b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row,-1)")
+            b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
 
-    b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(new_strict_key).message")
-      b-field.is-marginless
-        template(v-for="e in base.StrictInfo.values")
-          b-radio-button(v-model="new_strict_key" :native-value="e.key" size="is-small")
-            | {{e.name}}
+      b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(new_strict_key).message")
+        b-field.is-marginless
+          template(v-for="e in base.StrictInfo.values")
+            b-radio-button(v-model="new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+              | {{e.name}}
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
-    b-button.test_button(@click="test_handle" v-if="development_p") テスト
-    b-button.apply_button(@click="apply_handle" :type="{'is-primary': changed_p}") 適用
+    template(v-if="base.ordered_run_p")
+      b-button.test_button(@click="test_handle" v-if="development_p") テスト
+      b-button.apply_button(@click="apply_handle" :type="{'is-primary': changed_p}") 適用
 </template>
 
 <script>
@@ -73,30 +78,41 @@ export default {
     }
   },
   beforeMount() {
-    if (this.base.ordered_members == null) {
-      // 1度も設定されていないので全員を「参加」状態で入れる
-      this.table_rows = [...this.default_ordered_members]
-    } else {
-      // 1度自分で設定または他者から共有されている ordered_members を使う
-      this.table_rows = [...this.base.ordered_members]
-
-      // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
-      if (true) {
-        this.default_ordered_members.forEach(m => {
-          if (!this.table_rows.some(e => e.user_name === m.user_name)) {
-            this.table_rows.push({
-              ...m,
-              order_index: null,  // 順番なし
-              enabled_p: false,   // 観戦
-            })
-          }
-        })
-      }
-    }
-
+    this.table_rows_setup()
     this.new_strict_key = this.base.strict_key
   },
   methods: {
+    table_rows_setup() {
+      if (this.base.ordered_members == null) {
+        // 1度も設定されていないので全員を「参加」状態で入れる
+        this.table_rows = [...this.default_ordered_members]
+      } else {
+        // 1度自分で設定または他者から共有されている ordered_members を使う
+        this.table_rows = [...this.base.ordered_members]
+
+        // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
+        if (true) {
+          this.default_ordered_members.forEach(m => {
+            if (!this.table_rows.some(e => e.user_name === m.user_name)) {
+              this.table_rows.push({
+                ...m,
+                order_index: null,  // 順番なし
+                enabled_p: false,   // 観戦
+              })
+            }
+          })
+        }
+      }
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// イベント
+
+    ordered_run_switch_handle(v) {
+      this.sound_play("click")
+      this.base.ordered_run_share({ordered_run_p: v})
+      this.content_share()
+    },
+
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
@@ -104,12 +120,6 @@ export default {
     test_handle() {
       this.sound_play("click")
       this.base.tn_notify()
-    },
-    foobar_switch_handle(v) {
-      this.sound_play("click")
-      if (v) {
-      } else {
-      }
     },
     apply_handle() {
       this.sound_play("click")
@@ -122,10 +132,7 @@ export default {
       }
 
       if (this.changed_p) {
-        this.base.ordered_members_share({
-          ordered_members: this.new_ordered_members,
-          strict_key: this.new_strict_key,
-        })
+        this.content_share()
       } else {
         if (this.base.ordered_members) {
           this.toast_ok(`すでに適用済みです`)
@@ -161,6 +168,13 @@ export default {
         } else {
           e.order_index = null
         }
+      })
+    },
+
+    content_share() {
+      this.base.ordered_members_share({
+        ordered_members: this.new_ordered_members,
+        strict_key: this.new_strict_key,
       })
     },
   },
