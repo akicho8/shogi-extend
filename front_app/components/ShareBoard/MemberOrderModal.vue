@@ -124,7 +124,7 @@ export default {
     apply_handle() {
       this.sound_play("click")
 
-      if (true) {
+      if (false) {
         if (this.new_ordered_members.length % 2 !== 0) {
           this.toast_warn("参加者は偶数の人数にしてください")
           return
