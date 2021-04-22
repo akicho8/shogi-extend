@@ -4,7 +4,7 @@ import { StrictInfo } from "@/components/models/strict_info.js"
 export const app_member_order = {
   data() {
     return {
-      ordered_run_p: false,
+      order_func_p: false,
       ordered_members: null, // 出走順の配列
       strict_key: "turn_strict_on",
     }
@@ -46,16 +46,16 @@ export const app_member_order = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ordered_run_share(params) {
-      this.ac_room_perform("ordered_run_share", params) // --> app/channels/share_board/room_channel.rb
+    order_func_share(params) {
+      this.ac_room_perform("order_func_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    ordered_run_share_broadcasted(params) {
+    order_func_share_broadcasted(params) {
       if (params.from_user_code === this.user_code) {
         this.debug_alert("自分→自分")
       } else {
         this.debug_alert("自分→他者")
       }
-      this.ordered_run_p = params.ordered_run_p
+      this.order_func_p = params.order_func_p
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +101,7 @@ export const app_member_order = {
     // 条件 自分の手番はないとき
     sp_human_side() {
       let retv = "both"
-      if (this.ordered_run_p) {
+      if (this.order_func_p) {
         if (this.ac_room) {
           // メンバーリストが揃っているなら
           // if (this.ordered_members_blank_p) {

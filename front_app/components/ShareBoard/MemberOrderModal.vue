@@ -11,14 +11,14 @@
     a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
 
     //- template(v-if="!instance")
-    b-switch.ordered_run_switch_handle(size="is-small" type="is-primary" v-model="base.ordered_run_p" @input="ordered_run_switch_handle") 有効
+    b-switch.order_func_switch_handle(size="is-small" type="is-primary" v-model="base.order_func_p" @input="order_func_switch_handle") 有効
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    template(v-if="!base.ordered_run_p")
+    template(v-if="!base.order_func_p")
       .has-text-centered.has-text-grey.my-6
         | 使う場合は右上のスイッチを有効にしてください
-    template(v-if="base.ordered_run_p")
+    template(v-if="base.order_func_p")
       b-table(
         :data="table_rows"
         :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
@@ -53,7 +53,7 @@
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
-    template(v-if="base.ordered_run_p")
+    template(v-if="base.order_func_p")
       b-button.test_button(@click="test_handle" v-if="development_p") テスト
       b-button.apply_button(@click="apply_handle" :type="{'is-primary': changed_p}") 適用
 </template>
@@ -107,9 +107,9 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// イベント
 
-    ordered_run_switch_handle(v) {
+    order_func_switch_handle(v) {
       this.sound_play("click")
-      this.base.ordered_run_share({ordered_run_p: v})
+      this.base.order_func_share({order_func_p: v})
       this.content_share()
     },
 
