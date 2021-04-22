@@ -34,7 +34,7 @@
             | {{row.user_name}}
 
         b-table-column(v-slot="{row}" field="enabled_p"   label="参加" centered)
-          b-button(size="is-small" @click="enable_toggle_handle(row)" :type="{'is-primary': row.enabled_p}")
+          b-button.enable_toggle_handle(size="is-small" @click="enable_toggle_handle(row)" :type="{'is-primary': row.enabled_p}")
             template(v-if="row.enabled_p")
               | OK
             template(v-else)
@@ -234,4 +234,7 @@ export default {
     .button
       min-width: 6rem
       font-weight: bold
+
+  .enable_toggle_handle
+    min-width: 4rem
 </style>
