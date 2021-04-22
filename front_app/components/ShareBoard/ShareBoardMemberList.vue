@@ -4,7 +4,7 @@
     template(v-for="(e, i) in member_infos")
       .member_info.is_line_break_off.is-clickable(:key="e.from_user_code" @click="member_info_click_handle(e)")
         b-icon(icon="account" size="is-small" :type="member_icon_type(e)")
-        span.ml-1 {{e.from_user_name}}
+        span.ml-1(:class="{'has-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
         span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
         span.ml-1(v-if="development_p") r{{e.revision}}
         span.ml-1(v-if="development_p") {{e.user_age}}歳
@@ -28,6 +28,11 @@ export default {
     },
     time_format(v) {
       return dayjs.unix(v.performed_at).format("HH:mm:ss")
+    },
+    turn_active_p(e) {
+      if (this.base.order_func_p) {
+        return this.base.current_turn_user_name === e.from_user_name
+      }
     },
   },
   computed: {
