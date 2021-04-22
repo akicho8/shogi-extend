@@ -35,7 +35,7 @@ export const app_member_order = {
 
     // 局面 turn の手番のメンバーの名前
     user_name_by_turn(turn) {
-      if (this.ordered_members && this.ordered_members.length >= 1) {
+      if (this.ordered_members_present_p) {
         return this.ordered_members_cycle_at(turn).user_name
       }
     },
@@ -74,38 +74,30 @@ export const app_member_order = {
     StrictInfo()  { return StrictInfo                                },
     strict_info() { return this.StrictInfo.fetch_if(this.strict_key) },
 
-    current_turn_user_name() { return this.user_name_by_turn(this.turn_offset)        }, // 現在の局面のメンバーの名前
-    current_turn_self_p()    { return this.current_turn_user_name === this.user_name  }, // 現在自分の手番か？
-
     // 手番制限
-    // 条件1. 共有中のとき
-    // 条件2. 手番制限をしたいとき
-    // 条件3. 自分の手番はないとき
+    // 条件 共有中のとき
+    // 条件 手番制限ON
+    // 条件 メンバーリストが揃っている
+    // 条件 自分の手番はないとき
     sp_human_side() {
       let retv = "both"
       if (this.ac_room) {
-        if (this.strict_info.key === StrictInfo.fetch("turn_strict_on").key) {
-          if (!this.current_turn_self_p) {
-            retv = "none"
+        if (this.turn_strict_on) {
+          // 手番制限なら観戦者含めて全体を「禁止」にする
+          retv = "none"
+          if (this.current_turn_self_p) {
+            // そのあとで対象者だけを指せるようにする
+            retv = "both"
           }
         }
       }
       return retv
-    }
+    },
 
-    // my_ordered_member() {
-    //   return this.ordered_members.find(e => e.user_name === this.user_name)
-    // },
-
-    // const previous_index = this.ruby_like_modulo(member.order_index - 1, this.ordered_members.length)
-    //       const ordered_member = this.ordered_members[previous_index]
-    //       this.previous_user_name = ordered_member.user_name
-    //       this.toast_ok(`${this.user_call_name(params.from_user_name)}が${this.user_call_name(this.user_name)}の手番の通知を有効にしました`)
-
-    // jibun_index() {
-    //   this.turn_offset
-    //
-    // },
-
+    // private
+    ordered_members_present_p() { return (this.ordered_members || []).length >= 1       }, // メンバーリストがある？
+    current_turn_user_name()    { return this.user_name_by_turn(this.turn_offset)       }, // 現在の局面のメンバーの名前
+    current_turn_self_p()       { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
+    turn_strict_on()            { return this.strict_info.key === "turn_strict_on"      }, // 手番制限ON ?
   },
 }
