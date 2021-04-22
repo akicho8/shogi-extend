@@ -20,7 +20,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="編集・詰将棋作成")
           b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
-          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="base.share_p")
+          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="base.room_code_valid_p")
 
         ShareBoardSidebarExport(:base="base")
 
@@ -29,7 +29,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="局面URLコピー"               @click="base.current_url_copy_handle")
           b-menu-item.is_active_unset(label="局面URLツイート"             @click="base.tweet_modal_handle")
           b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
-          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="base.share_p")
+          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="base.room_code_valid_p")
 
       .box.mt-5
         .title.is-5 スタイル設定

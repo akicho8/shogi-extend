@@ -29,7 +29,7 @@ export const app_edit_mode = {
     edit_mode_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-      if (this.share_p) {
+      if (this.room_code_valid_p) {
         this.edit_warn_modal_handle()
       } else {
         this.sp_run_mode = "edit_mode"

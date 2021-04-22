@@ -191,7 +191,7 @@ export const app_room = {
           onend: () => this.talk(params.yomiage, {
             onend: () => {
               if (next_user_name) {
-                this.toast_ok(`次は${this.user_call_name(next_user_name)}の番です`)
+                this.toast_ok(`次は${this.user_call_name(next_user_name)}の手番です`)
               }
             },
           }),
@@ -246,8 +246,8 @@ export const app_room = {
     },
   },
   computed: {
-    share_p() { return this.room_code != "" },
-    connectable_p() { return this.room_code && this.user_name },
+    room_code_valid_p() { return this.room_code != "" },             // 合言葉があるか？
+    connectable_p()     { return this.room_code && this.user_name }, // 合言葉と名前が入力済みなので共有可能か？
 
     ////////////////////////////////////////////////////////////////////////////////
     current_sfen_attrs() {

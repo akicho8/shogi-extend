@@ -2,6 +2,8 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox
+      p sp_human_side: {{sp_human_side}}
+      p current_turn_self_p: {{current_turn_self_p}}
       p current_turn_user_name: {{current_turn_user_name}}
       p turn_offset: {{turn_offset}}
       p previous_user_name: {{previous_user_name}}
@@ -40,10 +42,10 @@ client-only
               :sp_sound_enabled="true"
               :sp_viewpoint.sync="sp_viewpoint"
               :sp_player_info="sp_player_info"
+              :sp_human_side="sp_human_side"
               sp_summary="is_summary_off"
               sp_slider="is_slider_on"
               sp_controller="is_controller_on"
-              sp_human_side="both"
 
               :sp_play_mode_legal_move_only="strict_p"
               :sp_play_mode_only_own_piece_to_move="strict_p"
@@ -79,8 +81,8 @@ client-only
             .room_code.is-clickable(@click="room_code_modal_handle" v-if="false")
               | {{room_code}}
 
-          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="share_p")
-          ShareBoardMemberList(:base="base" v-if="share_p")
+          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="room_code_valid_p")
+          ShareBoardMemberList(:base="base" v-if="room_code_valid_p")
 
         .columns(v-if="development_p")
           .column.is-clipped
@@ -325,7 +327,7 @@ export default {
     play_mode_p()    { return this.sp_run_mode === 'play_mode' },
     edit_mode_p()    { return this.sp_run_mode === 'edit_mode' },
     strict_p()       { return this.internal_rule === "strict"  },
-    tweet_button_p() { return this.play_mode_p && !this.share_p },
+    tweet_button_p() { return this.play_mode_p && !this.room_code_valid_p },
     advanced_p()     { return this.turn_offset > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     page_title() {
