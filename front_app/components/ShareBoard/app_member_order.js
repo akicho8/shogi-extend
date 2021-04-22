@@ -6,6 +6,7 @@ export const app_member_order = {
     return {
       ordered_members: null, // 出走順の配列
       strict_key: "turn_strict_on",
+      foobar_p: false,
     }
   },
   methods: {
@@ -52,8 +53,18 @@ export const app_member_order = {
         this.debug_alert("自分→他者")
       }
 
-      if (true) {
+      if (params.ordered_members) {
         this.ordered_members = [...params.ordered_members]
+      }
+      if (params.strict_key) {
+        this.strict_key = params.strict_key
+      }
+      if (params.foobar_p) {
+        this.foobar_p = params.foobar_p
+      }
+      this.mo_update()
+
+      if (false) {
         const member = this.ordered_members.find(e => e.user_name === this.user_name)
         if (member) {
           const previous_index = this.ruby_like_modulo(member.order_index - 1, this.ordered_members.length)
@@ -66,8 +77,12 @@ export const app_member_order = {
         }
       }
 
-      this.strict_key = params.strict_key
     },
+
+    mo_update() {
+      
+    },
+
   },
 
   computed: {
@@ -76,18 +91,21 @@ export const app_member_order = {
 
     // 手番制限
     // 条件 共有中のとき
-    // 条件 手番制限ON
     // 条件 メンバーリストが揃っている
+    // 条件 手番制限ON
     // 条件 自分の手番はないとき
     sp_human_side() {
       let retv = "both"
       if (this.ac_room) {
-        if (this.turn_strict_on) {
-          // 手番制限なら観戦者含めて全体を「禁止」にする
-          retv = "none"
-          if (this.current_turn_self_p) {
-            // そのあとで対象者だけを指せるようにする
-            retv = "both"
+        // メンバーリストが揃っているなら
+        if (this.ordered_members_present_p) {
+          if (this.turn_strict_on) {
+            // 手番制限なら観戦者含めて全体を「禁止」にする
+            retv = "none"
+            if (this.current_turn_self_p) {
+              // そのあとで対象者だけを指せるようにする
+              retv = "both"
+            }
           }
         }
       }

@@ -5,7 +5,14 @@
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6
       span.has-text-weight-bold
-        | 手番通知一括設定
+        | 順番の設定と制限
+
+    // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
+    a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
+
+    //- template(v-if="!instance")
+    b-switch.foobar_switch_handle(size="is-small" type="is-primary" v-model="foobar_p" @input="foobar_switch_handle") 有効
+
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
     b-table(
@@ -97,6 +104,12 @@ export default {
     test_handle() {
       this.sound_play("click")
       this.base.tn_notify()
+    },
+    foobar_switch_handle(v) {
+      this.sound_play("click")
+      if (v) {
+      } else {
+      }
     },
     apply_handle() {
       this.sound_play("click")
