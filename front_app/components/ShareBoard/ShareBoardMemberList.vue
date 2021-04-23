@@ -2,7 +2,7 @@
 .ShareBoardMemberList.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
-      .member_info.is_line_break_off.is-clickable.is-flex.is-align-items-center(:key="e.from_user_code" @click="member_info_click_handle(e)")
+      .member_info.is_line_break_off.is-clickable.is-flex.is-align-items-center(:key="e.from_user_code" @click="row_click_handle(e)")
         b-icon(:icon="icon_for(e)" :type="icon_type_for(e)")
         span.ml-1(:class="{'has-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
         span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
@@ -20,12 +20,13 @@ export default {
   name: "ShareBoardMemberList",
   mixins: [support_child],
   methods: {
-    member_info_click_handle(e) {
+    row_click_handle(e) {
       this.talk(`${this.base.user_call_name(e.from_user_name)}`)
     },
     time_format(v) {
       return dayjs.unix(v.performed_at).format("HH:mm:ss")
     },
+    // 自分のターンか？
     turn_active_p(e) {
       if (this.base.order_func_p) {
         if (this.base.ordered_members) {
@@ -33,6 +34,7 @@ export default {
         }
       }
     },
+    // 自分のアイコン
     icon_for(e) {
       if (this.base.order_func_p) {
         if (this.base.ordered_members) {
@@ -48,6 +50,8 @@ export default {
       }
       return "account"
     },
+    // 自分のアイコンの色
+    // 反応がなくなったら灰色になる
     icon_type_for(e) {
       return this.base.member_alive_p(e) ? "is-primary" : "is-grey"
     },
@@ -74,6 +78,7 @@ export default {
       }
       return this.base.member_infos
     },
+    // 名前からO(1)で ordered_members の要素を引くためのハッシュ
     user_names_hash() {
       if (this.base.order_func_p) {
         if (this.base.ordered_members) {
