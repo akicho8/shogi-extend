@@ -14,18 +14,30 @@ export const app_member_order = {
       this.sidebar_p = false
       this.sound_play("click")
 
-      this.$buefy.modal.open({
+      this.__assert__(this.$mo_modal_instance == null, "this.$mo_modal_instance == null")
+      this.$mo_modal_instance = this.$buefy.modal.open({
         component: MemberOrderModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
         animation: "",
         canCancel: true,
-        onCancel: () => { this.sound_play("click") },
+        onCancel: () => {
+          this.sound_play("click")
+          this.mo_modal_close()
+        },
         props: {
           base: this.base,
         },
       })
+    },
+
+    mo_modal_close() {
+      if (this.$mo_modal_instance) {
+        this.$mo_modal_instance.close()
+        this.$mo_modal_instance = null
+        this.debug_alert("this.$mo_modal_instance = null")
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -51,9 +63,9 @@ export const app_member_order = {
     },
     order_func_share_broadcasted(params) {
       if (params.from_user_code === this.user_code) {
-        this.debug_alert("自分→自分")
+        this.debug_alert("order_func_share 自分→自分")
       } else {
-        this.debug_alert("自分→他者")
+        this.debug_alert("order_func_share 自分→他者")
       }
       this.order_func_p = params.order_func_p
       if (params.message) {
@@ -68,13 +80,15 @@ export const app_member_order = {
     },
     ordered_members_share_broadcasted(params) {
       if (params.from_user_code === this.user_code) {
-        this.debug_alert("自分→自分")
+        this.debug_alert("ordered_members_share 自分→自分")
       } else {
-        this.debug_alert("自分→他者")
+        this.debug_alert("ordered_members_share 自分→他者")
+        this.mo_modal_close() // もし他者が順番設定を開いていたら閉じる
       }
 
       this.ordered_members = [...params.ordered_members]
       this.strict_key = params.strict_key
+
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}しました`)
       }

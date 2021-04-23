@@ -17,7 +17,7 @@
   section.modal-card-body
     template(v-if="!base.order_func_p")
       .has-text-centered.has-text-grey.my-6
-        | 使う場合は右上のスイッチを有効にしてください
+        | 設定する場合は右上のスイッチを有効にしてください
     template(v-if="base.order_func_p")
       b-table(
         :data="table_rows"
@@ -122,6 +122,7 @@ export default {
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
+      this.base.mo_modal_close()
     },
     test_handle() {
       this.sound_play("click")
