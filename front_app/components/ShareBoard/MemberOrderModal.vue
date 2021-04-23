@@ -85,10 +85,10 @@ export default {
     table_rows_setup() {
       if (this.base.ordered_members == null) {
         // 1度も設定されていないので全員を「参加」状態で入れる
-        this.table_rows = [...this.default_ordered_members]
+        this.table_rows = _.cloneDeep(this.default_ordered_members)
       } else {
         // 1度自分で設定または他者から共有されている ordered_members を使う
-        this.table_rows = [...this.base.ordered_members]
+        this.table_rows = _.cloneDeep(this.base.ordered_members)
 
         // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
         if (true) {
