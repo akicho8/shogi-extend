@@ -21,7 +21,7 @@
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
-    b-button.apply_button(@click="apply_handle" type="is-primary") 適用
+    b-button.apply_button(@click="apply_handle" type="is-primary") 更新
 </template>
 
 <script>

@@ -30,8 +30,8 @@ module ShareBoard
       broadcast(:member_info_share_broadcasted, data)
     end
 
-    def ordered_run_share(data)
-      broadcast(:ordered_run_share_broadcasted, data)
+    def order_func_share(data)
+      broadcast(:order_func_share_broadcasted, data)
     end
 
     def ordered_members_share(data)

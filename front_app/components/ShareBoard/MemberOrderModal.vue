@@ -5,7 +5,7 @@
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6
       span.has-text-weight-bold
-        | 順番の設定と制限
+        | 順番設定
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
@@ -29,7 +29,7 @@
           template(v-if="row.order_index != null")
             | {{row.order_index + 1}}
 
-        b-table-column(v-slot="{row}" field="user_name" label="面子")
+        b-table-column(v-slot="{row}" field="user_name" label="メンバー")
           span(:class="{'x-has-text-weight-bold': row.enabled_p}")
             | {{row.user_name}}
 
@@ -55,7 +55,7 @@
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="base.order_func_p")
       b-button.test_button(@click="test_handle" v-if="development_p") テスト
-      b-button.apply_button(@click="apply_handle" :type="{'is-primary': changed_p}") 適用
+      b-button.apply_button(@click="apply_handle" :type="{'is-primary': changed_p}") 更新
 </template>
 
 <script>
@@ -109,8 +109,14 @@ export default {
 
     order_func_switch_handle(v) {
       this.sound_play("click")
-      this.base.order_func_share({order_func_p: v})
-      this.content_share()
+      this.base.order_func_share({order_func_p: v, message: v ? "有効" : "無効"})
+
+      // 一番最初に有効にしたときは1度更新を押した状態にする
+      if (v) {
+        if (this.base.ordered_members == null) {
+          this.content_share("")
+        }
+      }
     },
 
     close_handle() {
@@ -132,17 +138,17 @@ export default {
       }
 
       if (this.changed_p) {
-        this.content_share()
+        this.content_share("更新")
       } else {
         if (this.base.ordered_members) {
-          this.toast_ok(`すでに適用済みです`)
+          this.toast_ok(`すでに更新済みです`)
         }
       }
 
-      if (this.development_p) {
-      } else {
-        this.$emit("close")
-      }
+      // if (this.development_p) {
+      // } else {
+      //   this.$emit("close")
+      // }
     },
 
     // ↓↑を押したとき
@@ -171,10 +177,11 @@ export default {
       })
     },
 
-    content_share() {
+    content_share(message) {
       this.base.ordered_members_share({
         ordered_members: this.new_ordered_members,
         strict_key: this.new_strict_key,
+        message: message,
       })
     },
   },

@@ -56,6 +56,9 @@ export const app_member_order = {
         this.debug_alert("自分→他者")
       }
       this.order_func_p = params.order_func_p
+      if (params.message) {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`)
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +75,9 @@ export const app_member_order = {
 
       this.ordered_members = [...params.ordered_members]
       this.strict_key = params.strict_key
+      if (params.message) {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}しました`)
+      }
 
       if (false) {
         const member = this.ordered_members.find(e => e.user_name === this.user_name)
