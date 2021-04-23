@@ -2,8 +2,8 @@
 .ShareBoardMemberList.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
-      .member_info.is_line_break_off.is-clickable(:key="e.from_user_code" @click="member_info_click_handle(e)")
-        b-icon(icon="account" size="is-small" :type="member_icon_type(e)")
+      .member_info.is_line_break_off.is-clickable.is-flex.is-align-items-center(:key="e.from_user_code" @click="member_info_click_handle(e)")
+        b-icon(:icon="icon_for(e)" :type="icon_type_for(e)")
         span.ml-1(:class="{'has-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
         span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
         span.ml-1(v-if="development_p") r{{e.revision}}
@@ -20,9 +20,6 @@ export default {
   name: "ShareBoardMemberList",
   mixins: [support_child],
   methods: {
-    member_icon_type(e) {
-      return this.base.member_active_p(e) ? "is-primary" : "is-grey"
-    },
     member_info_click_handle(e) {
       this.talk(`${this.base.user_call_name(e.from_user_name)}`)
     },
@@ -31,14 +28,58 @@ export default {
     },
     turn_active_p(e) {
       if (this.base.order_func_p) {
-        return this.base.current_turn_user_name === e.from_user_name
+        if (this.base.ordered_members) {
+          return this.base.current_turn_user_name === e.from_user_name
+        }
       }
+    },
+    icon_for(e) {
+      if (this.base.order_func_p) {
+        if (this.base.ordered_members) {
+          const found = this.user_names_hash[e.from_user_name]
+          if (found) {
+            if (this.base.current_turn_user_name === e.from_user_name) {
+              return ["numeric", found.order_index + 1, "box"].join("-")
+            } else {
+              return ["numeric", found.order_index + 1, "box", "outline"].join("-")
+            }
+          }
+        }
+      }
+      return "account"
+    },
+    icon_type_for(e) {
+      return this.base.member_alive_p(e) ? "is-primary" : "is-grey"
     },
   },
   computed: {
     member_infos() {
-      // return _.reverse(this.base.member_infos.slice())
+      if (this.base.order_func_p) {
+        if (this.base.ordered_members) {
+          return _.sortBy(this.base.member_infos, e => {
+            let found = null
+            if (false) {
+              found = this.base.ordered_members.find(v => v.user_name === e.from_user_name) // O(n)
+            } else {
+              found = this.user_names_hash[e.from_user_name] // O(1)
+            }
+            if (found) {
+              return found.order_index
+            } else {
+              // 見つからなかった人は「観戦」なので一番下に移動させておく
+              return this.base.member_infos.length
+            }
+          })
+        }
+      }
       return this.base.member_infos
+    },
+    user_names_hash() {
+      if (this.base.order_func_p) {
+        if (this.base.ordered_members) {
+          return this.base.ordered_members.reduce((a, e) => ({...a, [e.user_name]: e}), {})
+        }
+      }
     },
   },
 }
@@ -72,7 +113,7 @@ export default {
       vertical-align: middle
     .member_info
       text-overflow: ellipsis
-      padding: 0.2rem 0.5rem
+      padding: 0.25rem 0.5rem
       color: inherit
       &:hover
         background-color: $grey-lighter

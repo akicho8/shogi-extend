@@ -92,8 +92,8 @@ export const app_room_members = {
       return list.filter(e => this.member_elapsed_second(e) <= MEMBER_TTL)
     },
 
-    // アクティブか？
-    member_active_p(e) {
+    // 生きているか？
+    member_alive_p(e) {
       return this.member_elapsed_second(e) <= ACTIVE_LIMIT
     },
 
