@@ -5,7 +5,7 @@ import { IntervalRunner } from '@/components/models/interval_runner.js'
 
 const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
 const ACTIVE_LIMIT          = 60*1.25 // N秒以内なら活発とみなして青くする
-const MEMBER_TTL            = 60*1.50 // 通知がN秒前より古いユーザーは破棄
+const MEMBER_TTL            = 60*2    // 通知がN秒前より古いユーザーは破棄
 const FAKE_P = true
 
 export const app_room_members = {
