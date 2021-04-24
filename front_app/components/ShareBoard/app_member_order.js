@@ -86,8 +86,8 @@ export const app_member_order = {
         this.mo_modal_close() // もし他者が順番設定を開いていたら閉じる
       }
 
-      this.ordered_members = [...params.ordered_members]
-      this.strict_key = params.strict_key
+      this.ordered_members = params.ordered_members
+      this.strict_key      = params.strict_key
 
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}しました`)
@@ -105,13 +105,30 @@ export const app_member_order = {
           this.toast_ok(`${this.user_call_name(params.from_user_name)}が${this.user_call_name(this.user_name)}の手番の通知を無効にしました`)
         }
       }
+    },
 
+    mo_vars_copy_from(params) {
+      this.__assert__("order_func_p" in params, '"order_func_p" in params')
+      this.debug_alert("順番設定パラメータを先代から受信")
+
+      this.order_func_p    = params.order_func_p
+      this.ordered_members = params.ordered_members
+      this.strict_key      = params.strict_key
     },
   },
 
   computed: {
     StrictInfo()  { return StrictInfo                                },
     strict_info() { return this.StrictInfo.fetch_if(this.strict_key) },
+
+    // あとから接続した人に伝える内容
+    mo_setup_vars() {
+      return {
+        order_func_p:    this.order_func_p,
+        ordered_members: this.ordered_members,
+        strict_key:      this.strict_key,
+      }
+    },
 
     // 手番制限
     // 条件 機能ON

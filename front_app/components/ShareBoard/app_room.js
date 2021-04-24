@@ -165,7 +165,7 @@ export const app_room = {
           this.sp_run_mode = "play_mode"
         }
         // 受信したSFENを盤に反映
-        this.attributes_set(params)
+        this.setup_by_params(params)
       }
       if (false) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.turn_offset}手目を指しました`)
@@ -209,19 +209,22 @@ export const app_room = {
       if (params.from_user_code === this.user_code) {
         // 自分から自分へ
       } else {
-        this.attributes_set(params)
+        this.setup_by_params(params)
       }
       this.toast_ok(`${this.user_call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    attributes_set(params) {
+    setup_by_params(params) {
       if (params.title) {
         this.current_title = params.title
       }
       if (params.sfen) {
         this.current_sfen = params.sfen
         this.turn_offset = params.turn_offset
+      }
+      if ("order_func_p" in params) {
+        this.mo_vars_copy_from(params)
       }
     },
 

@@ -48,9 +48,12 @@ export const app_room_init = {
     setup_info_send(to_user) {
       this.clog(`${to_user} に送る`)
       this.ac_room_perform("setup_info_send", {
-        to_user: to_user,         // 送り先
-        title: this.current_title,
-        ...this.current_sfen_attrs,
+        to_user: to_user,           // 送り先
+        ////////////////////////////////////////////////////////////////////////////////
+        title: this.current_title,  // タイトル
+        ...this.current_sfen_attrs, // 盤の状態
+        ...this.mo_setup_vars,      // 順番設定
+        ////////////////////////////////////////////////////////////////////////////////
       }) // --> app/channels/share_board/room_channel.rb
     },
     setup_info_send_broadcasted(params) {
@@ -65,7 +68,7 @@ export const app_room_init = {
             this.clog(`自分より古参の情報なので反映する`)
             this.debug_alert(`${this.user_call_name(params.from_user_name)}から最新の状態を共有してもらいました`)
             this.$revision = params.revision
-            this.attributes_set(params)
+            this.setup_by_params(params)
           } else {
             this.clog(`自分より新参の情報なので反映しない`)
           }
