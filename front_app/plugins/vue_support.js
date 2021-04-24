@@ -17,6 +17,27 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // lodash の _.isEmpty は不自然な挙動なので使うべからず
+    blank_p(value) {
+      return value === undefined ||
+        value === null ||
+        (typeof value === "object" && Object.keys(value).length === 0) ||
+        (typeof value === "string" && value.trim().length === 0)
+    },
+
+    present_p(value) {
+      return !this.blank_p(value)
+    },
+
+    presence(value) {
+      if (this.blank_p(value)) {
+        return null
+      }
+      return value
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     delay_block(seconds, block) {
       return setTimeout(block, 1000 * seconds)
     },
