@@ -154,7 +154,7 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '手番が来たら知らせる設定'
-  it "手番が来たら知らせる設定" do
+  xit "手番が来たら知らせる設定" do
     room_setup("my_room", "alice")
     find(".sidebar_toggle_navbar_item").click       # サイドメニュー起動する
     click_text_match("手番が来たら知らせる設定")    # 「手番が来たら知らせる設定」を自分でクリックする
@@ -164,6 +164,70 @@ RSpec.describe "共有将棋盤", type: :system do
     assert_text("あなたの手番です")                 # 通知があった
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定'
+  describe "順番設定" do
+    before do
+      @alice_window = Capybara.open_new_window
+      @bob_window = Capybara.open_new_window
+    end
+
+    after do
+      [@alice_window, @bob_window].each(&:close)
+    end
+
+    def a_block(&block)
+      Capybara.within_window(@alice_window, &block)
+    end
+
+    def b_block(&block)
+      Capybara.within_window(@bob_window, &block)
+    end
+
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")      # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                       # bobも同じ部屋に入る
+        find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
+        click_text_match("順番設定")                       # 「順番設定」モーダルを開く
+      end
+      a_block do
+        find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
+        click_text_match("順番設定")                       # 「順番設定」モーダルを開く
+        find(".order_func_switch_handle").click            # 有効化 (この時点で内容も送信している)
+        assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことが自分に伝わった
+        first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+      end
+      b_block do
+        assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことがbobに伝わった
+        assert_selector(".OrderSettingModal .b-table")     # bob側のモーダルも有効になっている
+        first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        assert_member_list(1, "is_player")                 # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_standby")                # 2人目(bob)は待機中
+        assert_no_move("77", "76", "☗7六歩")               # なので2番目のbobは指せない
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩")                  # aliceが1番目なので指せる
+      end
+      b_block do
+        debug
+        assert_text("あなたの手番です")                     # bobさんだけに牛が知らせている
+      end
+      a_block do
+        assert_text("次はbobさんの手番です")
+        assert_no_move("33", "34", "☖3四歩")               # aliceもう指したので指せない
+        assert_member_list(1, "is_standby")                # 1人目(alice)に丸がついていない
+        assert_member_list(2, "is_player")                 # 2人目(bob)は指せるので丸がついている 
+      end
+      b_block do
+        assert_move("33", "34", "☖3四歩")                  # 2番目のbobは指せる
+        assert_no_text("あなたの手番です")                  # aliceさんの手番なので出ない
+        assert_text("次はaliceさんの手番です")
+      end
+    end
+  end
+  
   def room_setup(room_code, user_name)
     visit "/share-board"
     find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する
@@ -192,15 +256,26 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def assert_move(from, to, human)
-    [from, to].each do |e|
-      place = [".place", e.chars].join("_")
-      find(place).click
-    end
+    place_click(from, to)
     Capybara.using_wait_time(10) do
       assert_text(human)
     end
   end
 
+  def assert_no_move(from, to, human)
+    place_click(from, to)
+    Capybara.using_wait_time(10) do
+      assert_no_text(human)
+    end
+  end
+  
+  def place_click(from, to)
+    [from, to].each do |e|
+      place = [".place", e.chars].join("_")
+      find(place).click
+    end
+  end
+  
   def assert_white_read_sec(second)
     v = find(".is_white .read_sec").text.to_i
     assert { v == second || v == second.pred }
@@ -212,5 +287,9 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def assert_clock_off
     assert_no_selector(".MembershipLocationPlayerInfoTime")
+  end
+  
+  def assert_member_list(i, klass)
+    assert_selector(".ShareBoardMemberList .member_info:nth-child(#{i}) .#{klass}")
   end
 end
