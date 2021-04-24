@@ -48,8 +48,12 @@ module ShareBoard
 
     def broadcast(bc_action, bc_params)
       if v = bc_params.find_all { |k, v| v.nil? }.presence
-        raise ArgumentError, "値が nil のキーがある : #{v.to_h.inspect}"
+        v = v.to_h.except(*Array(bc_params["__nil_check_skip_keys__"]))
+        if v.present?
+          raise ArgumentError, "値が nil のキーがある : #{v.inspect}"
+        end
       end
+
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
   end

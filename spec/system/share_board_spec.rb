@@ -24,9 +24,10 @@ RSpec.describe "共有将棋盤", type: :system do
     doc_image
   end
 
-  # BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ログインしていない状態から合言葉とニックネームを入力'
+  # BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'あとから来たbobはaliceの局面を貰う'
   # Capybara.default_max_wait_time = 1
-  it "ログインしていない状態から合言葉とニックネームを入力" do
+  # このテストは ordered_members が nil のまま共有されるのをスキップできるのを保証するので消してはいけない
+  it "あとから来たbobはaliceの局面を貰う" do
     room_setup("my_room", "alice")
 
     visit "/share-board"                                      # 再来
@@ -36,21 +37,20 @@ RSpec.describe "共有将棋盤", type: :system do
     value = first(".new_user_name input").value
     assert { value == "alice" }                               # 以前入力したニックネームが復元されている
     first(".share_button").click                              # 共有ボタンをクリックする
-    assert_move("59", "58", "☗5八玉")
+    assert_move("59", "58", "☗5八玉")                        # aliceは一人で初手を指した
 
     # bob が別の画面でログインする
     bob_window = Capybara.open_new_window
     Capybara.within_window(bob_window) do
       room_setup("my_room", "bob")                            # alice と同じ部屋の合言葉を設定する
       assert_text("alice")                                    # すでにaliceがいるのがわかる
-      doc_image("bobはaliceの盤面を貰った")
+      doc_image("bobはaliceの盤面を貰った")                   # この時点で▲58玉が共有されている
     end
 
     assert_text("bob")                                        # alice側の画面にはbobが表示されている
 
     Capybara.within_window(bob_window) do
-      debugger
-      assert_move("33", "34", "☖3四歩")
+      assert_move("33", "34", "☖3四歩")                      # bobは2手目の後手を指せる
     end
 
     assert_text("☖3四歩")                                    # aliceの画面にもbobの指し手の符号が表示されている

@@ -160,6 +160,7 @@ export const app_ordered_members = {
         order_func_p:    this.order_func_p,
         ordered_members: this.ordered_members,
         strict_key:      this.strict_key,
+        __nil_check_skip_keys__: "ordered_members", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
     },
 
