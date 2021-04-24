@@ -73,9 +73,9 @@ export default {
       // const found = this.order_lookup(e)
       // if (found) {
       if (this.base.current_turn_user_name === e.from_user_name) {
-        return "is-primary"
+        return "is_player"
       } else {
-        return "is_inactive"
+        return "is_standby"
       }
       // }
     },
@@ -142,10 +142,11 @@ export default {
     .time_format
       vertical-align: middle
     .member_info
+      line-height: 2.25
       &.is_zombie
         opacity: 0.3
       text-overflow: ellipsis
-      padding: 0.3rem 0.5rem
+      padding: 0 0.5rem
       color: inherit
       &:hover
         background-color: $grey-lighter
@@ -154,9 +155,13 @@ export default {
       .tag
         // font-size: unset
         // height: unset
-        // padding: 0 0.5rem
-        &.is_inactive
+        padding: 0 0.4rem
+        &.is_player
+          border: 2px solid $primary
+          background-color: $white
+        &.is_standby
           background-color: unset
+          // border: 2px solid change_color($primary, $alpha: 0.2)
 
 .STAGE-development
   .ShareBoardMemberList
