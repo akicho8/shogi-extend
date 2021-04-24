@@ -29,12 +29,12 @@ export const app_room_init = {
     setup_info_request_broadcasted(params) {
       this.debug_alert(`${this.user_call_name(params.from_user_name)}が入室しました`)
       this.sound_play("pon")
-      this.clog(`${params.from_user_code} が欲しいと言っている`)
+      this.clog(`${params.from_user_code} が要求`)
       if (params.from_user_code === this.user_code) {
         this.clog(`自分から自分へ`)
       } else {
         this.clog("参加者に盤の状態を教えてあげる")
-        this.board_info_send(params.from_user_code)
+        this.setup_info_send(params.from_user_code)
 
         this.clog("参加者はこの部屋に誰がいるのかわかってないので自分がいることも教えてあげる")
         this.member_info_share()
@@ -45,15 +45,15 @@ export const app_room_init = {
     },
 
     // 盤面の情報を送って欲しい人がいるので送ってあげる
-    board_info_send(to_user) {
+    setup_info_send(to_user) {
       this.clog(`${to_user} に送る`)
-      this.ac_room_perform("board_info_send", {
+      this.ac_room_perform("setup_info_send", {
         to_user: to_user,         // 送り先
         title: this.current_title,
         ...this.current_sfen_attrs,
       }) // --> app/channels/share_board/room_channel.rb
     },
-    board_info_send_broadcasted(params) {
+    setup_info_send_broadcasted(params) {
       if (params.from_user_code === this.user_code) {
         this.clog(`自分から自分へ`)
       } else {

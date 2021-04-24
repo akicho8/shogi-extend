@@ -18,8 +18,8 @@ module ShareBoard
       broadcast(:setup_info_request_broadcasted, data)
     end
 
-    def board_info_send(data)
-      broadcast(:board_info_send_broadcasted, data)
+    def setup_info_send(data)
+      broadcast(:setup_info_send_broadcasted, data)
     end
 
     def chess_clock_share(data)
