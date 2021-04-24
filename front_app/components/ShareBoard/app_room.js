@@ -176,10 +176,6 @@ export const app_room = {
       if (true) {
         const next_user_name = this.user_name_by_turn(params.turn_offset)
 
-        // if (params.from_user_name === this.previous_user_name) {
-        //   this.tn_notify()
-        // }
-        // params.from_user_name
         if (this.user_name === next_user_name) {
           this.tn_notify()
         }

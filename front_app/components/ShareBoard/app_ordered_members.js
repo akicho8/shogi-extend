@@ -87,6 +87,10 @@ export const app_ordered_members = {
 
     // 局面 turn の手番のメンバーの名前
     user_name_by_turn(turn) {
+      if (!this.order_func_p) {
+        // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
+        return null
+      }
       if (this.ordered_members_blank_p) {
         return null
       }
@@ -160,6 +164,7 @@ export const app_ordered_members = {
         order_func_p:    this.order_func_p,
         ordered_members: this.ordered_members,
         strict_key:      this.strict_key,
+
         __nil_check_skip_keys__: "ordered_members", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
     },
@@ -209,7 +214,7 @@ export const app_ordered_members = {
     },
 
     // private
-    ordered_members_blank_p() { return (this.ordered_members || []).length === 0      }, // メンバーリストが空？
+    ordered_members_blank_p() { return this.blank_p(this.ordered_members)             }, // メンバーリストが空？
     current_turn_user_name()  { return this.user_name_by_turn(this.turn_offset)       }, // 現在の局面のメンバーの名前
     current_turn_self_p()     { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
     turn_strict_on()          { return this.strict_info.key === "turn_strict_on"      }, // 手番制限ON ?

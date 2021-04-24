@@ -131,11 +131,12 @@ export default {
       })
     },
 
-    // フォームの内容を新しい値として配信(自分も含めて受信して更新する)
+    // フォームの内容を新しい値として配信
+    // 自分も含めて受信して更新する
     form_params_share(message) {
       this.base.ordered_members_share({
         ordered_members: this.new_ordered_members,
-        strict_key:      this.base.new_strict_key,
+        strict_key: this.base.new_strict_key,
         message: message,
       })
     },
