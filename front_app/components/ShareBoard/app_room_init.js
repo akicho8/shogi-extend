@@ -22,11 +22,11 @@ export const app_room_init = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 盤面の情報を送ってほしい
-    board_info_request() {
-      this.ac_room_perform("board_info_request", {
+    setup_info_request() {
+      this.ac_room_perform("setup_info_request", {
       }) // --> app/channels/share_board/room_channel.rb
     },
-    board_info_request_broadcasted(params) {
+    setup_info_request_broadcasted(params) {
       this.debug_alert(`${this.user_call_name(params.from_user_name)}が入室しました`)
       this.sound_play("pon")
       this.clog(`${params.from_user_code} が欲しいと言っている`)

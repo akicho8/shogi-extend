@@ -116,7 +116,7 @@ export const app_room = {
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: () => {
           this.revision_increment_timer.restart()
-          this.board_info_request()
+          this.setup_info_request()
           this.member_bc_interval_runner.restart()
         },
         disconnected: () => {

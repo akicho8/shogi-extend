@@ -5,8 +5,8 @@ module Blindfold
       stream_from "blindfold/room_channel/#{room_code}"
     end
 
-    def board_info_request(data)
-      broadcast(:board_info_request_broadcasted, data)
+    def setup_info_request(data)
+      broadcast(:setup_info_request_broadcasted, data)
     end
 
     def board_info_send(data)

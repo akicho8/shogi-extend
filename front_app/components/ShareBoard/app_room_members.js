@@ -61,6 +61,15 @@ export const app_room_members = {
 
     // 処理順序重要
     member_infos_normalize() {
+      if (this.development_p && FAKE_P) {
+        return ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
+          performed_at: dayjs().unix(),
+          user_age: 1,
+          from_user_code: i,
+          from_user_name: e,
+        }))
+      }
+
       this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")  // 新しいもの順に並べてから
       this.member_infos = _.uniqBy(this.member_infos, "from_user_code")         // ユーザーの重複を防ぐ(新しい方を採取できる)
 
@@ -68,23 +77,6 @@ export const app_room_members = {
       // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる
       this.member_infos = _.uniqBy(this.member_infos, "from_user_name")         // ユーザー名が重複するのを防ぐ (再接続したとき不自然に見えるのを防ぐため)
       this.member_infos = _.orderBy(this.member_infos, "user_age", "desc")      // 順序固定のために年寄順に並べる
-
-      if (this.development_p && FAKE_P) {
-        // return [
-        //   { enabled_p: true, order_index: null, user_name: "alice", },
-        //   { enabled_p: true, order_index: null, user_name: "bob",   },
-        //   { enabled_p: true, order_index: null, user_name: "carol", },
-        //   { enabled_p: true, order_index: null, user_name: "dave",  },
-        //   { enabled_p: true, order_index: null, user_name: "ellen", },
-        // ]
-        this.member_infos = [
-          { performed_at: dayjs().unix(), user_age: 1, from_user_code: 1, from_user_name: "alice", },
-          { performed_at: dayjs().unix(), user_age: 1, from_user_code: 2, from_user_name: "bob",   },
-          { performed_at: dayjs().unix(), user_age: 1, from_user_code: 3, from_user_name: "carol", },
-          { performed_at: dayjs().unix(), user_age: 1, from_user_code: 4, from_user_name: "dave",  },
-          { performed_at: dayjs().unix(), user_age: 1, from_user_code: 5, from_user_name: "ellen", },
-        ]
-      }
     },
 
     // 通知が来た日時が最近の人だけを採取する
