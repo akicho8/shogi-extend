@@ -1,6 +1,5 @@
 <template lang="pug">
-//- .modal-card.OrderSettingModal(style="width:auto")
-.modal-card.OrderSettingModal
+.modal-card.OrderSettingModal(style="width:auto")
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6
