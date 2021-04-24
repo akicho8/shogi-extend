@@ -59,7 +59,7 @@
 </template>
 
 <script>
-const FAKE_P = true
+const FAKE_P = false
 
 import { support_child } from "./support_child.js"
 import _ from "lodash"
@@ -202,15 +202,12 @@ export default {
 
     default_ordered_members() {
       if (this.development_p && FAKE_P) {
-        return [
-          "alice",
-          "bob",
-          "carol",
-          "dave",
-          "ellen",
-        ].map((e, i) => ({ enabled_p: true, order_index: i, user_name: e }))
+        return ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
+          enabled_p: true,
+          order_index: i,
+          user_name: e,
+        }))
       }
-
       return this.base.name_uniqued_member_infos.map((e, i) => {
         return {
           enabled_p: true,
