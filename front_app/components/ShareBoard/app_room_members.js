@@ -6,7 +6,7 @@ import { IntervalRunner } from '@/components/models/interval_runner.js'
 const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
 const ACTIVE_LIMIT          = 60*1.25 // N秒以内なら活発とみなして青くする
 const MEMBER_TTL            = 60*2    // 通知がN秒前より古いユーザーは破棄
-const FAKE_P = false
+const FAKE_P = true
 
 export const app_room_members = {
   data() {
@@ -59,7 +59,7 @@ export const app_room_members = {
     // 処理順序重要
     member_infos_normalize() {
       if (this.development_p && FAKE_P) {
-        return ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
+        this.member_infos = ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
           performed_at: dayjs().unix(),
           user_age: 1,
           from_user_code: i,
@@ -84,6 +84,10 @@ export const app_room_members = {
     // 生きているか？
     member_alive_p(e) {
       return this.member_elapsed_second(e) <= ACTIVE_LIMIT
+    },
+    // 寝ているか？
+    member_sleep_p(e) {
+      return !this.member_alive_p(e)
     },
 
     // 通達があってからの経過秒数

@@ -7,8 +7,11 @@
           template(v-if="order_lookup(e)")
             b-tag(:type="tag_type_for(e)" rounded) {{tag_body_for(e)}}
           template(v-else)
-            b-icon(:icon="icon_for(e)" :type="icon_type_for(e)")
-        span.ml-1(:class="{'has-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
+            b-icon(:icon="icon_for(e)" :type="icon_type_for(e)" size="is-small")
+        //- b-icon(icon="sleep" type="is-danger" size="is-small")
+        //- b-icon(icon="lan-disconnect" type="is-danger" size="is-small")
+        span.mx-1(:class="{'has-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
+        b-icon.ml-1(icon="lan-disconnect" type="is-primary" size="is-small" v-if="base.member_sleep_p(e) || development_p")
         span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
         span.ml-1(v-if="development_p") r{{e.revision}}
         span.ml-1(v-if="development_p") {{e.user_age}}歳
@@ -25,7 +28,11 @@ export default {
   mixins: [support_child],
   methods: {
     row_click_handle(e) {
-      this.talk(`${this.base.user_call_name(e.from_user_name)}`)
+      if (this.base.member_sleep_p(e)) {
+        this.talk(`${this.base.user_call_name(e.from_user_name)}は反応がありません`)
+      } else {
+        this.talk(`${this.base.user_call_name(e.from_user_name)}は生きています`)
+      }
     },
     time_format(v) {
       return dayjs.unix(v.performed_at).format("HH:mm:ss")
@@ -38,9 +45,12 @@ export default {
         }
       }
     },
-    // 自分のアイコン
     icon_for(e) {
-      return "account"
+      if (this.base.order_func_p) {
+        return "account"        // 観戦中のアイコン
+      } else {
+        return "account"        // 通常のアイコン
+      }
     },
     // 自分のアイコンの色
     // 反応がなくなったら灰色になる
@@ -151,14 +161,15 @@ export default {
       &:hover
         background-color: $grey-lighter
     .left_tag_or_icon
-      min-width: 2rem
+      min-width: 1.75rem
       .tag
         // font-size: unset
         // height: unset
         padding: 0 0.4rem
         &.is_player
           border: 2px solid $primary
-          background-color: $white
+          // background-color: $white
+          background-color: unset
         &.is_standby
           background-color: unset
           // border: 2px solid change_color($primary, $alpha: 0.2)
