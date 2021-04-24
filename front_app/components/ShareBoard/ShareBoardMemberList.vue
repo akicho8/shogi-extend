@@ -83,9 +83,9 @@ export default {
       // const found = this.order_lookup(e)
       // if (found) {
       if (this.base.current_turn_user_name === e.from_user_name) {
-        return "is_player"
+        return "is_current_player"
       } else {
-        return "is_standby"
+        return "is_other_player"
       }
       // }
     },
@@ -166,11 +166,11 @@ export default {
         // font-size: unset
         // height: unset
         padding: 0 0.4rem
-        &.is_player
+        &.is_current_player
           border: 2px solid $primary
           // background-color: $white
           background-color: unset
-        &.is_standby
+        &.is_other_player
           background-color: unset
           // border: 2px solid change_color($primary, $alpha: 0.2)
 

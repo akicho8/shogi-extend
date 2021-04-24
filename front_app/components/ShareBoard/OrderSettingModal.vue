@@ -10,7 +10,7 @@
     a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
 
     //- template(v-if="!instance")
-    b-switch.order_func_switch_handle(size="is-small" type="is-primary" v-model="base.order_func_p" @input="order_func_switch_handle") 有効
+    b-switch.main_switch(size="is-small" type="is-primary" v-model="base.order_func_p" @input="main_switch_handle") 有効
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
@@ -74,7 +74,7 @@ export default {
   methods: {
     //////////////////////////////////////////////////////////////////////////////// イベント
 
-    order_func_switch_handle(v) {
+    main_switch_handle(v) {
       this.sound_play("click")
       this.base.order_func_share({order_func_p: v, message: v ? "有効" : "無効"})
 

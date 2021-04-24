@@ -41,18 +41,19 @@ RSpec.describe "共有将棋盤", type: :system do
     # bob が別の画面でログインする
     bob_window = Capybara.open_new_window
     Capybara.within_window(bob_window) do
-      room_setup("my_room", "bob")                     # alice と同じ部屋の合言葉を設定する
-      expect(page).to have_content "alice"                    # すでにaliceがいるのがわかる
+      room_setup("my_room", "bob")                            # alice と同じ部屋の合言葉を設定する
+      assert_text("alice")                                    # すでにaliceがいるのがわかる
       doc_image("bobはaliceの盤面を貰った")
     end
 
-    expect(page).to have_content "bob"                        # alice側の画面にはbobが表示されている
+    assert_text("bob")                                        # alice側の画面にはbobが表示されている
 
     Capybara.within_window(bob_window) do
+      debugger
       assert_move("33", "34", "☖3四歩")
     end
 
-    expect(page).to have_content "☖3四歩"                     # aliceの画面にもbobの指し手の符号が表示されている
+    assert_text("☖3四歩")                                    # aliceの画面にもbobの指し手の符号が表示されている
     doc_image("aliceとbobは画面を共有している")
   end
 
@@ -105,7 +106,7 @@ RSpec.describe "共有将棋盤", type: :system do
         find(".sidebar_toggle_navbar_item").click  # サイドメニューを開く
         click_text_match("対局時計の設置")         # 「対局時計の設置」モーダルを開く
         assert_clock_off                           # 時計はまだ設置されていない
-        find(".chess_clock_switch_handle").click   # 設置する
+        find(".main_switch").click   # 設置する
         assert_clock_on                            # 時計が設置された
       end
       b_block do
@@ -185,44 +186,45 @@ RSpec.describe "共有将棋盤", type: :system do
 
     it "works" do
       a_block do
-        room_setup("my_room", "alice")      # aliceが部屋を作る
+        room_setup("my_room", "alice")                     # aliceが部屋を作る
       end
       b_block do
         room_setup("my_room", "bob")                       # bobも同じ部屋に入る
         find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
-        click_text_match("順番設定")                       # 「順番設定」モーダルを開く
+        click_text_match("順番設定")                       # 「順番設定」モーダルを開く (まだ無効の状態)
       end
       a_block do
         find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
         click_text_match("順番設定")                       # 「順番設定」モーダルを開く
-        find(".order_func_switch_handle").click            # 有効化 (この時点で内容も送信している)
-        assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことが自分に伝わった
+        find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+        assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
         first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
       end
       b_block do
         assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことがbobに伝わった
-        assert_selector(".OrderSettingModal .b-table")     # bob側のモーダルも有効になっている
+        assert_selector(".OrderSettingModal .b-table")     # 同期しているのでbob側のモーダルも有効になっている
         first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
-        assert_member_list(1, "is_player")                 # 1人目(alice)に丸がついている
-        assert_member_list(2, "is_standby")                # 2人目(bob)は待機中
-        assert_no_move("77", "76", "☗7六歩")               # なので2番目のbobは指せない
+        assert_member_list(1, "is_current_player")         # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_other_player")           # 2人目(bob)は待機中
+        assert_no_move("77", "76", "☗7六歩")              # なので2番目のbobは指せない
       end
       a_block do
-        assert_move("77", "76", "☗7六歩")                  # aliceが1番目なので指せる
+        assert_member_list(1, "is_current_player")         # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_other_player")           # 2人目(bob)は待機中
+        assert_move("77", "76", "☗7六歩")                 # aliceが1番目なので指せる
       end
       b_block do
-        debug
-        assert_text("あなたの手番です")                     # bobさんだけに牛が知らせている
+        assert_text("あなたの手番です")                    # bobさんだけに牛が知らせている
       end
       a_block do
         assert_text("次はbobさんの手番です")
-        assert_no_move("33", "34", "☖3四歩")               # aliceもう指したので指せない
-        assert_member_list(1, "is_standby")                # 1人目(alice)に丸がついていない
-        assert_member_list(2, "is_player")                 # 2人目(bob)は指せるので丸がついている 
+        assert_no_move("33", "34", "☖3四歩")              # aliceもう指したので指せない
+        assert_member_list(1, "is_other_player")           # 1人目(alice)に丸がついていない
+        assert_member_list(2, "is_current_player")         # 2人目(bob)は指せるので丸がついている 
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")                  # 2番目のbobは指せる
-        assert_no_text("あなたの手番です")                  # aliceさんの手番なので出ない
+        assert_move("33", "34", "☖3四歩")                 # 2番目のbobは指せる
+        assert_no_text("あなたの手番です")                 # aliceさんの手番なので出ない
         assert_text("次はaliceさんの手番です")
       end
     end

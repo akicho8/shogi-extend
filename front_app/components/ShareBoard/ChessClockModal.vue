@@ -11,7 +11,7 @@
     a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
 
     template(v-if="!instance || !instance.running_p")
-      b-switch.chess_clock_switch_handle(size="is-small" type="is-primary" v-model="chess_clock_p" @input="chess_clock_switch_handle") 設置
+      b-switch.main_switch(size="is-small" type="is-primary" v-model="chess_clock_p" @input="main_switch_handle") 設置
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
@@ -85,7 +85,7 @@ export default {
     support_child,
   ],
   methods: {
-    chess_clock_switch_handle(v) {
+    main_switch_handle(v) {
       this.sound_play("click")
       if (v) {
         this.base.cc_create()
