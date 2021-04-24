@@ -72,13 +72,15 @@ export const app_room_members = {
         }))
       }
 
-      this.member_infos = _.orderBy(this.member_infos, ["performed_at", "desc"])  // 新しいもの順に並べてから
-      this.member_infos = _.uniqBy(this.member_infos, "from_user_code")         // ユーザーの重複を防ぐ(新しい方を採取できる)
+      if (true) {
+        this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")  // 新しいもの順に並べてから
+        this.member_infos = _.uniqBy(this.member_infos, "from_user_code")         // ユーザーの重複を防ぐ(新しい方を採取できる)
 
-      this.member_infos = this.member_infos_find_all_newest(this.member_infos)  // 通知が来た時間が最近の人だけを採取する
-      // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる
-      this.member_infos = _.uniqBy(this.member_infos, "from_user_name")         // ユーザー名が重複するのを防ぐ (再接続したとき不自然に見えるのを防ぐため)
-      this.member_infos = _.orderBy(this.member_infos, [["user_age", "desc"], ["revision", "desc"]]) // 順序固定のために年寄順に並べる(同じ場合はrevision順)
+        this.member_infos = this.member_infos_find_all_newest(this.member_infos)  // 通知が来た時間が最近の人だけを採取する
+        // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる
+        this.member_infos = _.uniqBy(this.member_infos, "from_user_name")         // ユーザー名が重複するのを防ぐ (再接続したとき不自然に見えるのを防ぐため)
+        this.member_infos = _.orderBy(this.member_infos, ["user_age", "revision"], ["desc", "desc"]) // 順序固定のために年寄順に並べる(同じ場合はrevision順)
+      }
     },
 
     // 通知が来た日時が最近の人だけを採取する
