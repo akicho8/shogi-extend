@@ -179,7 +179,8 @@ export const app_room = {
         // if (params.from_user_name === this.previous_user_name) {
         //   this.tn_notify()
         // }
-        if (params.from_user_name === next_user_name) {
+        // params.from_user_name
+        if (this.user_name === next_user_name) {
           this.tn_notify()
         }
 
