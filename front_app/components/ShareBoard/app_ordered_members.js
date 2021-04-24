@@ -1,9 +1,9 @@
-import MemberOrderModal from "./MemberOrderModal.vue"
+import OrderSettingModal from "./OrderSettingModal.vue"
 import { StrictInfo } from "@/components/models/strict_info.js"
 import _ from "lodash"
 const FAKE_P = false
 
-export const app_member_order = {
+export const app_ordered_members = {
   data() {
     return {
       // 共有する変数
@@ -13,7 +13,7 @@ export const app_member_order = {
 
       // ローカルのモーダルで使うテンポラリ変数
       // 「適用」してはじめて実変数に反映する
-      table_rows:     null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
+      os_table_rows:  null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
       new_strict_key: null, // 手番制限
     }
   },
@@ -24,7 +24,7 @@ export const app_member_order = {
 
       this.__assert__(this.$mo_modal_instance == null, "this.$mo_modal_instance == null")
       this.$mo_modal_instance = this.$buefy.modal.open({
-        component: MemberOrderModal,
+        component: OrderSettingModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
@@ -59,16 +59,16 @@ export const app_member_order = {
     table_rows_setup() {
       if (this.ordered_members == null) {
         // 1度も設定されていないので全員を「参加」状態で入れる
-        this.table_rows = _.cloneDeep(this.default_ordered_members)
+        this.os_table_rows = _.cloneDeep(this.default_ordered_members)
       } else {
         // 1度自分で設定または他者から共有されている ordered_members を使う
-        this.table_rows = _.cloneDeep(this.ordered_members)
+        this.os_table_rows = _.cloneDeep(this.ordered_members)
 
         // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
         if (true) {
           this.default_ordered_members.forEach(m => {
-            if (!this.table_rows.some(e => e.user_name === m.user_name)) {
-              this.table_rows.push({
+            if (!this.os_table_rows.some(e => e.user_name === m.user_name)) {
+              this.os_table_rows.push({
                 ...m,
                 order_index: null,  // 順番なし
                 enabled_p: false,   // 観戦
@@ -131,9 +131,8 @@ export const app_member_order = {
       this.ordered_members = params.ordered_members
       this.strict_key      = params.strict_key
 
+      // 
       if (this.$mo_modal_instance) {
-        this.__assert__("component" in this.$mo_modal_instance, "'component' in this.$mo_modal_instance")
-        this.__assert__(this.$mo_modal_instance.component.name === "MemberOrderModal", "this.$mo_modal_instance.component.name === 'MemberOrderModal'")
         this.mo_vars_update()
       }
 
@@ -178,7 +177,7 @@ export const app_member_order = {
       }
     },
 
-    // モーダル用の table_rows の初期値
+    // モーダル用の os_table_rows の初期値
     default_ordered_members() {
       if (this.development_p && FAKE_P) {
         return ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({

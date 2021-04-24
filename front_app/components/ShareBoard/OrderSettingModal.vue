@@ -1,6 +1,6 @@
 <template lang="pug">
-//- .modal-card.MemberOrderModal(style="width:auto")
-.modal-card.MemberOrderModal
+//- .modal-card.OrderSettingModal(style="width:auto")
+.modal-card.OrderSettingModal
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6
@@ -18,9 +18,10 @@
     template(v-if="!base.order_func_p")
       .has-text-centered.has-text-grey.my-6
         | 設定する場合は右上のスイッチを有効にしてください
+
     template(v-if="base.order_func_p")
       b-table(
-        :data="base.table_rows"
+        :data="base.os_table_rows"
         :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
         :mobile-cards="false"
         )
@@ -42,8 +43,8 @@
 
         b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0" centered cell-class="px-1")
           template(v-if="row.enabled_p || true")
-            b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row,-1)")
-            b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
+            b-button(     size="is-small" icon-left="arrow-up"   @click="arrow_handle(row,-1)")
+            b-button.ml-1(size="is-small" icon-left="arrow-down" @click="arrow_handle(row, 1)")
 
       b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message")
         b-field.is-marginless
@@ -61,11 +62,10 @@
 <script>
 import { support_child } from "./support_child.js"
 import _ from "lodash"
-// import { Location } from "shogi-player/components/models/location.js"
 import { CycleIterator } from "@/components/models/cycle_iterator.js"
 
 export default {
-  name: "MemberOrderModal",
+  name: "OrderSettingModal",
   mixins: [
     support_child,
   ],
@@ -73,7 +73,6 @@ export default {
     this.base.mo_vars_update()
   },
   methods: {
-
     //////////////////////////////////////////////////////////////////////////////// イベント
 
     order_func_switch_handle(v) {
@@ -121,23 +120,26 @@ export default {
       // }
     },
 
-    // ↓↑を押したとき
-    up_down_handle(row, sign) {
+    // 上下矢印ボタン
+    arrow_handle(row, sign) {
       this.sound_play("click")
-      const index = this.base.table_rows.findIndex(e => e.user_name === row.user_name)
-      this.base.table_rows = this.ary_move(this.base.table_rows, index, index + sign)
+      const index = this.base.os_table_rows.findIndex(e => e.user_name === row.user_name)
+      this.base.os_table_rows = this.ary_move(this.base.os_table_rows, index, index + sign)
       this.order_index_update()
     },
 
+    // 参加 or 不参加ボタン
     enable_toggle_handle(row) {
       this.sound_play("click")
       row.enabled_p = !row.enabled_p
       this.order_index_update()
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     order_index_update() {
       let index = 0
-      this.base.table_rows.forEach(e => {
+      this.base.os_table_rows.forEach(e => {
         if (e.enabled_p) {
           e.order_index = index
           index += 1
@@ -150,7 +152,7 @@ export default {
     content_share(message) {
       this.base.ordered_members_share({
         ordered_members: this.new_ordered_members,
-        strict_key: this.base.new_strict_key,
+        strict_key:      this.base.new_strict_key,
         message: message,
       })
     },
@@ -166,7 +168,7 @@ export default {
     },
 
     new_ordered_members() {
-      return this.base.table_rows.filter(e => e.enabled_p)
+      return this.base.os_table_rows.filter(e => e.enabled_p)
     },
   },
 }
@@ -176,11 +178,11 @@ export default {
 @import "support.sass"
 
 .STAGE-development
-  .MemberOrderModal
+  .OrderSettingModal
     .modal-card-body
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.MemberOrderModal
+.OrderSettingModal
   .table
     td
       vertical-align: center
