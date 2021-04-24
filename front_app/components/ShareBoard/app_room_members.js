@@ -17,9 +17,6 @@ export const app_room_members = {
     }
   },
 
-  beforeMount() {
-  },
-
   beforeDestroy() {
     if (this.member_bc_interval_runner) {
       this.member_bc_interval_runner.stop()

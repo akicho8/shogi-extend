@@ -56,7 +56,7 @@
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="base.order_func_p")
       b-button.test_button(@click="test_handle" v-if="development_p") テスト
-      b-button.apply_button(@click="apply_handle" :type="{'is-primary': changed_p}") 更新
+      b-button.apply_button(@click="apply_handle" type="is-primary") 更新
 </template>
 
 <script>
@@ -70,7 +70,7 @@ export default {
     support_child,
   ],
   beforeMount() {
-    this.base.mo_vars_update()
+    this.base.os_modal_vars_setup()
   },
   methods: {
     //////////////////////////////////////////////////////////////////////////////// イベント
@@ -82,7 +82,7 @@ export default {
       // 一番最初に有効にしたときは1度更新を押した状態にする
       if (v) {
         if (this.base.ordered_members == null) {
-          this.content_share("")
+          this.form_params_share("")
         }
       }
     },
@@ -90,34 +90,17 @@ export default {
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
-      this.base.mo_modal_close()
+      this.base.os_modal_close()
     },
+
     test_handle() {
       this.sound_play("click")
       this.base.tn_notify()
     },
+
     apply_handle() {
       this.sound_play("click")
-
-      if (false) {
-        if (this.new_ordered_members.length % 2 !== 0) {
-          this.toast_warn("参加者は偶数の人数にしてください")
-          return
-        }
-      }
-
-      if (this.changed_p) {
-        this.content_share("更新")
-      } else {
-        if (this.base.ordered_members) {
-          this.toast_ok(`すでに更新済みです`)
-        }
-      }
-
-      // if (this.development_p) {
-      // } else {
-      //   this.$emit("close")
-      // }
+      this.form_params_share("更新")
     },
 
     // 上下矢印ボタン
@@ -149,7 +132,8 @@ export default {
       })
     },
 
-    content_share(message) {
+    // フォームの内容を新しい値として配信(自分も含めて受信して更新する)
+    form_params_share(message) {
       this.base.ordered_members_share({
         ordered_members: this.new_ordered_members,
         strict_key:      this.base.new_strict_key,
@@ -157,16 +141,9 @@ export default {
       })
     },
   },
-  computed: {
-    // 変更されたか？
-    changed_p() {
-      if (false) {
-        return !_.isEqual(this.base.ordered_members, this.new_ordered_members)
-      } else {
-        return true
-      }
-    },
 
+  computed: {
+    // 参加者だけの配列
     new_ordered_members() {
       return this.base.os_table_rows.filter(e => e.enabled_p)
     },

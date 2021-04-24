@@ -224,7 +224,7 @@ export const app_room = {
         this.turn_offset = params.turn_offset
       }
       if ("order_func_p" in params) {
-        this.mo_vars_copy_from(params)
+        this.om_vars_copy_from(params)
       }
     },
 

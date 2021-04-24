@@ -52,7 +52,7 @@ export const app_room_init = {
         ////////////////////////////////////////////////////////////////////////////////
         title: this.current_title,  // タイトル
         ...this.current_sfen_attrs, // 盤の状態
-        ...this.mo_setup_vars,      // 順番設定
+        ...this.om_vars,      // 順番設定
         ////////////////////////////////////////////////////////////////////////////////
       }) // --> app/channels/share_board/room_channel.rb
     },
