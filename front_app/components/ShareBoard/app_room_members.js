@@ -7,9 +7,9 @@ const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
 const ACTIVE_LIMIT          = 60*1.25 // N秒以内なら活発とみなして青くする
 const MEMBER_TTL            = 60*2    // 通知がN秒前より古いユーザーは破棄
 
-// const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
-// const ACTIVE_LIMIT          = 60*1.25 // N秒以内なら活発とみなして青くする
-// const MEMBER_TTL            = 60*2    // 通知がN秒前より古いユーザーは破棄
+// const ALIVE_NOTIFY_INTERVAL = 5
+// const ACTIVE_LIMIT          = 10
+// const MEMBER_TTL            = 20
 
 const FAKE_P = false
 

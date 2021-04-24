@@ -2,7 +2,7 @@
 .ShareBoardMemberList.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
-      .member_info.is_line_break_off.is-clickable.is-flex.is-align-items-center(:key="e.from_user_code" @click="row_click_handle(e)" :class="{is_zombie: !base.member_alive_p(e)}")
+      .member_info.is_line_break_off.is-clickable.is-flex.is-align-items-center(:key="e.from_user_code" @click="row_click_handle(e)" :class="{is_sleep: base.member_sleep_p(e)}")
         span.left_tag_or_icon.is-inline-flex.is-justify-content-center.is-align-items-center
           template(v-if="order_lookup(e)")
             b-tag(:type="tag_type_for(e)" rounded) {{tag_body_for(e)}}
@@ -28,10 +28,10 @@ export default {
   mixins: [support_child],
   methods: {
     row_click_handle(e) {
-      if (this.base.member_sleep_p(e)) {
-        this.talk(`${this.base.user_call_name(e.from_user_name)}は反応がありません`)
-      } else {
+      if (this.base.member_alive_p(e)) {
         this.talk(`${this.base.user_call_name(e.from_user_name)}は生きています`)
+      } else {
+        this.talk(`${this.base.user_call_name(e.from_user_name)}は反応がありません`)
       }
     },
     time_format(v) {
@@ -153,7 +153,7 @@ export default {
       vertical-align: middle
     .member_info
       line-height: 2.25
-      &.is_zombie
+      &.is_sleep
         opacity: 0.3
       text-overflow: ellipsis
       padding: 0 0.5rem
