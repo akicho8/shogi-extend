@@ -6,7 +6,12 @@ import { IntervalRunner } from '@/components/models/interval_runner.js'
 const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
 const ACTIVE_LIMIT          = 60*1.25 // N秒以内なら活発とみなして青くする
 const MEMBER_TTL            = 60*2    // 通知がN秒前より古いユーザーは破棄
-const FAKE_P = true
+
+// const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
+// const ACTIVE_LIMIT          = 60*1.25 // N秒以内なら活発とみなして青くする
+// const MEMBER_TTL            = 60*2    // 通知がN秒前より古いユーザーは破棄
+
+const FAKE_P = false
 
 export const app_room_members = {
   data() {
@@ -67,13 +72,13 @@ export const app_room_members = {
         }))
       }
 
-      this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")  // 新しいもの順に並べてから
+      this.member_infos = _.orderBy(this.member_infos, ["performed_at", "desc"])  // 新しいもの順に並べてから
       this.member_infos = _.uniqBy(this.member_infos, "from_user_code")         // ユーザーの重複を防ぐ(新しい方を採取できる)
 
       this.member_infos = this.member_infos_find_all_newest(this.member_infos)  // 通知が来た時間が最近の人だけを採取する
       // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる
       this.member_infos = _.uniqBy(this.member_infos, "from_user_name")         // ユーザー名が重複するのを防ぐ (再接続したとき不自然に見えるのを防ぐため)
-      this.member_infos = _.orderBy(this.member_infos, "user_age", "desc")      // 順序固定のために年寄順に並べる
+      this.member_infos = _.orderBy(this.member_infos, [["user_age", "desc"], ["revision", "desc"]]) // 順序固定のために年寄順に並べる(同じ場合はrevision順)
     },
 
     // 通知が来た日時が最近の人だけを採取する
