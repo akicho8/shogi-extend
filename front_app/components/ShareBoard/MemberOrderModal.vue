@@ -20,7 +20,7 @@
         | 設定する場合は右上のスイッチを有効にしてください
     template(v-if="base.order_func_p")
       b-table(
-        :data="table_rows"
+        :data="base.table_rows"
         :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
         :mobile-cards="false"
         )
@@ -45,10 +45,10 @@
             b-button(     size="is-small" icon-left="arrow-up"   @click="up_down_handle(row,-1)")
             b-button.ml-1(size="is-small" icon-left="arrow-down" @click="up_down_handle(row, 1)")
 
-      b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(new_strict_key).message")
+      b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message")
         b-field.is-marginless
           template(v-for="e in base.StrictInfo.values")
-            b-radio-button(v-model="new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+            b-radio-button(v-model="base.new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
               | {{e.name}}
 
   footer.modal-card-foot
@@ -59,8 +59,6 @@
 </template>
 
 <script>
-const FAKE_P = false
-
 import { support_child } from "./support_child.js"
 import _ from "lodash"
 // import { Location } from "shogi-player/components/models/location.js"
@@ -71,39 +69,10 @@ export default {
   mixins: [
     support_child,
   ],
-  data() {
-    return {
-      table_rows: null,
-      new_strict_key: null,
-    }
-  },
   beforeMount() {
-    this.table_rows_setup()
-    this.new_strict_key = this.base.strict_key
+    this.base.mo_vars_update()
   },
   methods: {
-    table_rows_setup() {
-      if (this.base.ordered_members == null) {
-        // 1度も設定されていないので全員を「参加」状態で入れる
-        this.table_rows = _.cloneDeep(this.default_ordered_members)
-      } else {
-        // 1度自分で設定または他者から共有されている ordered_members を使う
-        this.table_rows = _.cloneDeep(this.base.ordered_members)
-
-        // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
-        if (true) {
-          this.default_ordered_members.forEach(m => {
-            if (!this.table_rows.some(e => e.user_name === m.user_name)) {
-              this.table_rows.push({
-                ...m,
-                order_index: null,  // 順番なし
-                enabled_p: false,   // 観戦
-              })
-            }
-          })
-        }
-      }
-    },
 
     //////////////////////////////////////////////////////////////////////////////// イベント
 
@@ -155,8 +124,8 @@ export default {
     // ↓↑を押したとき
     up_down_handle(row, sign) {
       this.sound_play("click")
-      const index = this.table_rows.findIndex(e => e.user_name === row.user_name)
-      this.table_rows = this.ary_move(this.table_rows, index, index + sign)
+      const index = this.base.table_rows.findIndex(e => e.user_name === row.user_name)
+      this.base.table_rows = this.ary_move(this.base.table_rows, index, index + sign)
       this.order_index_update()
     },
 
@@ -168,7 +137,7 @@ export default {
 
     order_index_update() {
       let index = 0
-      this.table_rows.forEach(e => {
+      this.base.table_rows.forEach(e => {
         if (e.enabled_p) {
           e.order_index = index
           index += 1
@@ -181,7 +150,7 @@ export default {
     content_share(message) {
       this.base.ordered_members_share({
         ordered_members: this.new_ordered_members,
-        strict_key: this.new_strict_key,
+        strict_key: this.base.new_strict_key,
         message: message,
       })
     },
@@ -197,26 +166,8 @@ export default {
     },
 
     new_ordered_members() {
-      return this.table_rows.filter(e => e.enabled_p)
+      return this.base.table_rows.filter(e => e.enabled_p)
     },
-
-    default_ordered_members() {
-      if (this.development_p && FAKE_P) {
-        return ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
-          enabled_p: true,
-          order_index: i,
-          user_name: e,
-        }))
-      }
-      return this.base.name_uniqued_member_infos.map((e, i) => {
-        return {
-          enabled_p: true,
-          order_index: i,
-          user_name: e.from_user_name,
-        }
-      })
-      return v
-    }
   },
 }
 </script>

@@ -1,12 +1,20 @@
 import MemberOrderModal from "./MemberOrderModal.vue"
 import { StrictInfo } from "@/components/models/strict_info.js"
+import _ from "lodash"
+const FAKE_P = false
 
 export const app_member_order = {
   data() {
     return {
-      order_func_p: false,
-      ordered_members: null, // 出走順の配列
-      strict_key: "turn_strict_on",
+      // 共有する変数
+      order_func_p: false,          // 順番設定 true:有効 false:無効 モーダル内では元変数を直接変更している
+      ordered_members: null,        // 出走順の実配列
+      strict_key: "turn_strict_on", // 手番制限
+
+      // ローカルのモーダルで使うテンポラリ変数
+      // 「適用」してはじめて実変数に反映する
+      table_rows:     null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
+      new_strict_key: null, // 手番制限
     }
   },
   methods: {
@@ -37,6 +45,37 @@ export const app_member_order = {
         this.$mo_modal_instance.close()
         this.$mo_modal_instance = null
         this.debug_alert("this.$mo_modal_instance = null")
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    mo_vars_update() {
+      this.debug_alert("mo_vars_update")
+      this.table_rows_setup()
+      this.new_strict_key = this.strict_key
+    },
+
+    table_rows_setup() {
+      if (this.ordered_members == null) {
+        // 1度も設定されていないので全員を「参加」状態で入れる
+        this.table_rows = _.cloneDeep(this.default_ordered_members)
+      } else {
+        // 1度自分で設定または他者から共有されている ordered_members を使う
+        this.table_rows = _.cloneDeep(this.ordered_members)
+
+        // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
+        if (true) {
+          this.default_ordered_members.forEach(m => {
+            if (!this.table_rows.some(e => e.user_name === m.user_name)) {
+              this.table_rows.push({
+                ...m,
+                order_index: null,  // 順番なし
+                enabled_p: false,   // 観戦
+              })
+            }
+          })
+        }
       }
     },
 
@@ -83,11 +122,20 @@ export const app_member_order = {
         this.debug_alert("ordered_members_share 自分→自分")
       } else {
         this.debug_alert("ordered_members_share 自分→他者")
-        this.mo_modal_close() // もし他者が順番設定を開いていたら閉じる
+        if (false) {
+          this.mo_modal_close() // もし他者が順番設定を開いていたら閉じる
+        } else {
+        }
       }
 
       this.ordered_members = params.ordered_members
       this.strict_key      = params.strict_key
+
+      if (this.$mo_modal_instance) {
+        this.__assert__("component" in this.$mo_modal_instance, "'component' in this.$mo_modal_instance")
+        this.__assert__(this.$mo_modal_instance.component.name === "MemberOrderModal", "this.$mo_modal_instance.component.name === 'MemberOrderModal'")
+        this.mo_vars_update()
+      }
 
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}しました`)
@@ -128,6 +176,25 @@ export const app_member_order = {
         ordered_members: this.ordered_members,
         strict_key:      this.strict_key,
       }
+    },
+
+    // モーダル用の table_rows の初期値
+    default_ordered_members() {
+      if (this.development_p && FAKE_P) {
+        return ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
+          enabled_p: true,
+          order_index: i,
+          user_name: e,
+        }))
+      }
+      return this.name_uniqued_member_infos.map((e, i) => {
+        return {
+          enabled_p: true,
+          order_index: i,
+          user_name: e.from_user_name,
+        }
+      })
+      return v
     },
 
     // 手番制限
