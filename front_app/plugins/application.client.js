@@ -69,33 +69,33 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// FIXME 冗長すぎる
 
     toast_ok(message, options = {}) {
-      this.x_toast({message: message, ...options})
+      this.toast_primitive({message: message, ...options})
     },
 
     toast_warn(message, options = {}) {
-      this.x_toast({message: message, type: "is-warning", ...options})
+      this.toast_primitive({message: message, type: "is-warning", ...options})
     },
 
     toast_ng(message, options = {}) {
-      this.x_toast({message: message, type: "is-danger", ...options})
+      this.toast_primitive({message: message, type: "is-danger", ...options})
     },
 
-    //////////////////////////////////////////////////////////////////////////////// FIXME 冗長すぎる
-
-    x_toast(params = {}) {
-      const toast_params = {
+    toast_primitive(params = {}) {
+      params = {
         position: "is-bottom",
         type: "is-primary",
         queue: false,
         ...params,
       }
-      toast_params.message = params.toast_message || params.message
-      if (toast_params.message) {
-        this.$buefy.toast.open(toast_params)
+      if (params.message) {
+        if (!params.talk_only) {
+          this.$buefy.toast.open(params)
+        }
+        if (!params.toast_only) {
+          // volume, rate, onend は talk 用オプション
+          this.talk(params.message, params)
+        }
       }
-
-      // volume, rate, onend は talk 用オプション
-      this.talk(params.talk_message || params.message, params)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
