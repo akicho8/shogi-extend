@@ -97,16 +97,16 @@ RSpec.describe "共有将棋盤", type: :system do
 
     it "works" do
       a_block do
-        room_setup("my_room", "alice")      # aliceが部屋を作る
+        room_setup("my_room", "alice")             # aliceが部屋を作る
       end
       b_block do
-        room_setup("my_room", "bob")        # bobも同じ部屋に入る
+        room_setup("my_room", "bob")               # bobも同じ部屋に入る
       end
       a_block do
         find(".sidebar_toggle_navbar_item").click  # サイドメニューを開く
         click_text_match("対局時計の設置")         # 「対局時計の設置」モーダルを開く
         assert_clock_off                           # 時計はまだ設置されていない
-        find(".main_switch").click   # 設置する
+        find(".main_switch").click                 # 設置する
         assert_clock_on                            # 時計が設置された
       end
       b_block do
@@ -116,7 +116,7 @@ RSpec.describe "共有将棋盤", type: :system do
         chess_clock_set(0, INITIAL_MAIN_MIN, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
         first(".close_button_for_capybara").click  # 閉じる (ヘッダーに置いている)
-        assert_move("27", "26", "☗2六歩")         # 初手を指す
+        assert_move("27", "26", "☗2六歩")          # 初手を指す
         assert_clock_active_white                  # 時計を同時に押したので後手がアクティブになる
       end
       b_block do
@@ -162,7 +162,7 @@ RSpec.describe "共有将棋盤", type: :system do
     find(".TurnNotifyModal select").select("alice") # 上家設定
     find(".TurnNotifyModal .apply_button").click    # 適用
     assert_move("77", "76", "☗7六歩")              # aliceが1手指す
-    assert_text("あなたの手番です")                 # 通知があった
+    assert_text("(通知効果音)")                 # 通知があった
   end
 
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定'
@@ -214,7 +214,7 @@ RSpec.describe "共有将棋盤", type: :system do
         assert_move("77", "76", "☗7六歩")                 # aliceが1番目なので指せる
       end
       b_block do
-        assert_text("あなたの手番です")                    # bobさんだけに牛が知らせている
+        assert_text("(通知効果音)")                    # bobさんだけに牛が知らせている
       end
       a_block do
         assert_text("次はbobさんの手番です")
@@ -224,7 +224,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       b_block do
         assert_move("33", "34", "☖3四歩")                 # 2番目のbobは指せる
-        assert_no_text("あなたの手番です")                 # aliceさんの手番なので出ない
+        assert_no_text("(通知効果音)")                 # aliceさんの手番なので出ない
         assert_text("次はaliceさんの手番です")
       end
     end
