@@ -80,7 +80,7 @@ export const app_edit_mode = {
               }
               if (e.body) {
                 this.sound_play("click")
-                this.toast_ok("正常に読み込みました")
+                this.toast_ok("読み込みました")
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
                 this.sp_viewpoint = "black"
