@@ -278,8 +278,8 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       a_block do
         find(".message_modal_handle").click          # aliceがメッセージモーダルを開く
-        find(".SpeekerModal input").set("(message)") # メッセージ入力
-        find(".SpeekerModal .send_button").click     # 送信
+        find(".MessageSendModal input").set("(message)") # メッセージ入力
+        find(".MessageSendModal .send_button").click     # 送信
         assert_text("(message)")                     # 自分自身にメッセージが届く
       end
       b_block do
