@@ -29,7 +29,7 @@ export default {
     }
   },
   mounted() {
-    this.desktop_focus_to(this.$refs.message_input_tag)
+    this.focus_to_input()
   },
   methods: {
     close_handle() {
@@ -41,8 +41,11 @@ export default {
         this.sound_play("click")
         this.base.speeker_share({message: this.speeker_message})
         this.speeker_message = ""
-        // this.$emit("close")
+        this.focus_to_input()
       }
+    },
+    focus_to_input() {
+      this.desktop_focus_to(this.$refs.message_input_tag)
     },
   },
 }
