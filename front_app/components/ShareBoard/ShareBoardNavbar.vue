@@ -12,10 +12,14 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
         | (編集モード)
 
   template(slot="end")
-    b-navbar-item.is-unselectable(tag="div" v-if="base.ac_room")
+    b-navbar-item.is-unselectable(tag="div" v-if="base.ac_room && development_p")
       b-icon(icon="account")
       b-tag.has-text-weight-bold(rounded)
         .has-text-primary {{base.member_infos.length}}
+
+    b-navbar-item.is-unselectable.sx_click_handle.is-clickable(tag="div" @click="base.sx_click_handle" v-if="base.ac_room")
+      b-icon.account_icon(icon="account")
+      b-icon.message_icon(icon="message" size="is-small")
 
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="base.tweet_modal_handle" v-if="base.tweet_button_p")
       b-icon(icon="twitter" type="is-white")
@@ -42,4 +46,13 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .ShareBoardNavbar
+  .sx_click_handle
+    .icon
+      position: relative
+      &.account_icon
+        top: 4px
+        left: 2px
+      &.message_icon
+        left: -2px
+        top: -6px
 </style>

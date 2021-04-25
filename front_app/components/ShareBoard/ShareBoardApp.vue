@@ -134,6 +134,7 @@ import { app_edit_mode    } from "./app_edit_mode.js"
 import { app_room         } from "./app_room.js"
 import { app_room_init    } from "./app_room_init.js"
 import { app_room_members } from "./app_room_members.js"
+import { app_speeker } from "./app_speeker.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
 import { app_export       } from "./app_export.js"
@@ -157,6 +158,7 @@ export default {
     app_room,
     app_room_init,
     app_room_members,
+    app_speeker,
     app_sidebar,
     app_storage,
     app_export,
