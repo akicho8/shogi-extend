@@ -29,7 +29,7 @@ export default {
   methods: {
     row_click_handle(e) {
       if (this.base.member_alive_p(e)) {
-        this.talk(`${this.base.user_call_name(e.from_user_name)}は生きています`)
+        this.talk(`${this.base.user_call_name(e.from_user_name)}は元気です`)
       } else {
         this.talk(`${this.base.user_call_name(e.from_user_name)}は反応がありません`)
       }
