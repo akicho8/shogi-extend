@@ -116,6 +116,10 @@ if true
     def click_text_match(text)
       first(:xpath, "//*[contains(text(), '#{text}')]").click
     end
+
+    def menu_item_click(text)
+      first(:xpath, "//*[text()=' #{text} ']").click
+    end
   end
 
   RSpec.configure do |config|
