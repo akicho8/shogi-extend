@@ -11,11 +11,19 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def a_block(&block)
-    Capybara.within_window(@alice_window, &block)
+    if block
+      Capybara.within_window(@alice_window, &block)
+    else
+      Capybara.switch_to_window(@alice_window)
+    end
   end
 
   def b_block(&block)
-    Capybara.within_window(@bob_window, &block)
+    if block
+      Capybara.within_window(@bob_window, &block)
+    else
+      Capybara.switch_to_window(@bob_window)
+    end
   end
 
   it "最初に来たときのタイトルが正しい" do
