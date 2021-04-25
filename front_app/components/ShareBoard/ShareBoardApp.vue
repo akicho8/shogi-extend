@@ -126,6 +126,7 @@ import _ from "lodash"
 import { support_parent } from "./support_parent.js"
 
 import { app_action_log   } from "./app_action_log.js"
+import { app_message_log   } from "./app_message_log.js"
 import { app_chess_clock  } from "./app_chess_clock.js"
 import { app_turn_notify  } from "./app_turn_notify.js"
 import { app_ordered_members } from "./app_ordered_members.js"
@@ -150,6 +151,7 @@ export default {
   mixins: [
     support_parent,
     app_action_log,
+    app_message_log,
     app_chess_clock,
     app_turn_notify,
     app_ordered_members,

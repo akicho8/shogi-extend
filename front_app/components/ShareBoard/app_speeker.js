@@ -3,6 +3,12 @@ import dayjs from "dayjs"
 import SpeekerModal from "./SpeekerModal.vue"
 
 export const app_speeker = {
+  data() {
+    return {
+      messages: [],
+    }
+  },
+
   methods: {
     sx_click_handle() {
       this.sidebar_p = false
@@ -31,6 +37,7 @@ export const app_speeker = {
       if (params.message) {
         this.$buefy.toast.open({container: ".BoardWood", message: `${params.from_user_name}: ${params.message}`, position: "is-top", type: "is-primary", queue: false})
         this.talk(params.message)
+        this.ml_add(params)
       }
     },
   },

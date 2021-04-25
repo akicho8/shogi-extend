@@ -3,15 +3,17 @@
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6.has-text-weight-bold
-      | メッセージ
+      | コメント
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
+    ShareBoardMessageLogs(:base="base" ref="ShareBoardMessageLog")
     b-field
       b-input(v-model.trim="speeker_message" ref="message_input_tag")
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.test_button(@click="test_handle" v-if="development_p") 追加
     b-button.apply_button(@click="send_handle" type="is-primary") 送信
 </template>
 
@@ -29,22 +31,31 @@ export default {
     }
   },
   mounted() {
-    this.focus_to_input()
+    this.input_focus()
+
+    // 本当は ShareBoardMessageLogs.vue の mounted で実行したかったが
+    // まだコンポーネントが表示されてないので効かなかった
+    // おそらく modal が表示されるまでに1フレームぐらいかかってるっぽい
+    this.base.ml_scroll_to_bottom()
   },
   methods: {
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
     },
+    test_handle() {
+      this.sound_play("click")
+      this.base.ml_add_test()
+    },
     send_handle() {
       if (this.speeker_message) {
         this.sound_play("click")
         this.base.speeker_share({message: this.speeker_message})
         this.speeker_message = ""
-        this.focus_to_input()
+        this.input_focus()
       }
     },
-    focus_to_input() {
+    input_focus() {
       this.desktop_focus_to(this.$refs.message_input_tag)
     },
   },
@@ -56,6 +67,8 @@ export default {
 .SpeekerModal
   +desktop
     width: 40ch
+  .modal-card-body
+    padding: 1.0rem
   .modal-card-foot
     justify-content: space-between
     .button

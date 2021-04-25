@@ -374,7 +374,9 @@ export default {
     // 一番下までスクロール
     scroll_to_bottom(elem) {
       if (elem) {
-        this.$nextTick(() => elem.scrollTop = elem.scrollHeight)
+        this.$nextTick(() => {
+          elem.scrollTop = elem.scrollHeight
+        })
       }
     },
 
