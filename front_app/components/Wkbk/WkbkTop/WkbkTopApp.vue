@@ -1,6 +1,6 @@
 <template lang="pug">
 .WkbkTopApp
-  DebugBox
+  DebugBox(v-if="development_p")
     p query: {{query}}
     p tag: {{tag}}
     p search_p: {{search_p}}

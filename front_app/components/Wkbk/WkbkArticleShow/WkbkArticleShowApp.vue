@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .WkbkArticleShowApp
-    DebugBox
+    DebugBox(v-if="development_p")
       template(v-if="article")
         p article.book_keys: {{article.book_keys}}
         p article.user.id: {{article.user && article.user.id}}

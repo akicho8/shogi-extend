@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .WkbkBookShowApp
-    DebugBox
+    DebugBox(v-if="development_p")
       p re_total_sec: {{re_total_sec}}
       p mode: {{mode}}
       template(v-if="interval_counter")

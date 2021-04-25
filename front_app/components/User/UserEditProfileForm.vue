@@ -1,6 +1,6 @@
 <template lang="pug">
 .UserEditProfileForm.has-background-white-bis
-  DebugBox
+  DebugBox(v-if="development_p")
     div valid_p        = {{valid_p}}
     div name_invalid_p = {{name_invalid_p}}
 

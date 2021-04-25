@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .WkbkArticleEditApp
-    DebugBox
+    DebugBox(v-if="development_p")
       p answer_base_sfen: {{answer_base_sfen}}
       p answer_tab_index: {{answer_tab_index}}
       template(v-if="article")

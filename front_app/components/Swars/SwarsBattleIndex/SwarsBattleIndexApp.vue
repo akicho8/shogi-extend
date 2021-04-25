@@ -2,7 +2,7 @@
 .SwarsBattleIndexApp
   b-loading(:active="$fetchState.pending")
 
-  DebugBox
+  DebugBox(v-if="development_p")
     p current_route_query: {{current_route_query}}
     p $route.query: {{$route.query}}
     p g_current_user: {{g_current_user && g_current_user.id}}

@@ -1,6 +1,6 @@
 <template lang="pug">
 .ThreeStageLeaguePlayerApp
-  DebugBox
+  DebugBox(v-if="development_p")
     p http://0.0.0.0:3000/api/three_stage_league_player
     p http://0.0.0.0:3000/api/three_stage_league_player?name=西山朋佳
 

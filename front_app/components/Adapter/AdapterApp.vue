@@ -1,6 +1,6 @@
 <template lang="pug">
 .AdapterApp
-  DebugBox
+  DebugBox(v-if="development_p")
     div change_counter: {{change_counter}}
 
   AdapterSidebar(:base="base")
