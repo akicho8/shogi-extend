@@ -64,7 +64,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
       visit "/share-board"                                      # 再来
       find(".sidebar_toggle_navbar_item").click                 # サイドメニューを起動する
-      click_text_match("合言葉の設定と共有")                    # 「合言葉の設定と共有」を自分でクリックする
+      menu_item_click("合言葉の設定と共有")                    # 「合言葉の設定と共有」を自分でクリックする
       first(".new_room_code input").set("my_room")              # 合言葉を入力する
       value = first(".new_user_name input").value
       assert { value == "alice" }                               # 以前入力したニックネームが復元されている
@@ -122,7 +122,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       a_block do
         find(".sidebar_toggle_navbar_item").click  # サイドメニューを開く
-        click_text_match("対局時計の設置")         # 「対局時計の設置」モーダルを開く
+        menu_item_click("対局時計の設置")         # 「対局時計の設置」モーダルを開く
         assert_clock_off                           # 時計はまだ設置されていない
         find(".main_switch").click                 # 設置する
         assert_clock_on                            # 時計が設置された
@@ -176,7 +176,7 @@ RSpec.describe "共有将棋盤", type: :system do
   xit "手番が来たら知らせる設定" do
     room_setup("my_room", "alice")
     find(".sidebar_toggle_navbar_item").click       # サイドメニュー起動する
-    click_text_match("手番が来たら知らせる設定")    # 「手番が来たら知らせる設定」を自分でクリックする
+    menu_item_click("手番が来たら知らせる設定")    # 「手番が来たら知らせる設定」を自分でクリックする
     find(".TurnNotifyModal select").select("alice") # 上家設定
     find(".TurnNotifyModal .apply_button").click    # 適用
     assert_move("77", "76", "☗7六歩")              # aliceが1手指す
@@ -192,12 +192,11 @@ RSpec.describe "共有将棋盤", type: :system do
       b_block do
         room_setup("my_room", "bob")                       # bobも同じ部屋に入る
         find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
-        click_text_match("順番設定")                       # 「順番設定」モーダルを開く (まだ無効の状態)
-        debugger
+        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く (まだ無効の状態)
       end
       a_block do
         find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
-        click_text_match("順番設定")                       # 「順番設定」モーダルを開く
+        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
         first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
@@ -235,7 +234,7 @@ RSpec.describe "共有将棋盤", type: :system do
   def room_setup(room_code, user_name)
     visit "/share-board"
     find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する
-    click_text_match("合言葉の設定と共有")       # 「合言葉の設定と共有」を自分でクリックする
+    menu_item_click("合言葉の設定と共有")       # 「合言葉の設定と共有」を自分でクリックする
     first(".new_room_code input").set(room_code) # 合言葉を入力する
     first(".new_user_name input").set(user_name) # ハンドルネームを入力する
     first(".share_button").click                 # 共有ボタンをクリックする
