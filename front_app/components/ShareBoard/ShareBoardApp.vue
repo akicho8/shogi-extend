@@ -126,7 +126,7 @@ import _ from "lodash"
 import { support_parent } from "./support_parent.js"
 
 import { app_action_log   } from "./app_action_log.js"
-import { app_message_log   } from "./app_message_log.js"
+import { app_message_logs   } from "./app_message_logs.js"
 import { app_chess_clock  } from "./app_chess_clock.js"
 import { app_turn_notify  } from "./app_turn_notify.js"
 import { app_ordered_members } from "./app_ordered_members.js"
@@ -135,7 +135,7 @@ import { app_edit_mode    } from "./app_edit_mode.js"
 import { app_room         } from "./app_room.js"
 import { app_room_init    } from "./app_room_init.js"
 import { app_room_members } from "./app_room_members.js"
-import { app_speeker } from "./app_speeker.js"
+import { app_message } from "./app_message.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
 import { app_export       } from "./app_export.js"
@@ -151,7 +151,7 @@ export default {
   mixins: [
     support_parent,
     app_action_log,
-    app_message_log,
+    app_message_logs,
     app_chess_clock,
     app_turn_notify,
     app_ordered_members,
@@ -160,7 +160,7 @@ export default {
     app_room,
     app_room_init,
     app_room_members,
-    app_speeker,
+    app_message,
     app_sidebar,
     app_storage,
     app_export,

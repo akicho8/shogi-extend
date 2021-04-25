@@ -38,8 +38,8 @@ module ShareBoard
       broadcast(:ordered_members_share_broadcasted, data)
     end
 
-    def speeker_share(data)
-      broadcast(:speeker_share_broadcasted, data)
+    def message_share(data)
+      broadcast(:message_share_broadcasted, data)
     end
 
     def fake_error(data)

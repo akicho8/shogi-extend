@@ -17,7 +17,7 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
       b-tag.has-text-weight-bold(rounded)
         .has-text-primary {{base.member_infos.length}}
 
-    b-navbar-item.px_5_if_tablet.is-unselectable.sx_click_handle(tag="a" @click="base.sx_click_handle" v-if="base.ac_room")
+    b-navbar-item.px_5_if_tablet.is-unselectable.message_modal_handle(tag="a" @click="base.message_modal_handle" v-if="base.ac_room")
       b-icon.account_icon(icon="account")
       b-icon.message_icon(icon="message" size="is-small")
 
@@ -46,7 +46,7 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .ShareBoardNavbar
-  .sx_click_handle
+  .message_modal_handle
     .icon
       position: relative
       &.account_icon

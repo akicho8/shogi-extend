@@ -89,7 +89,7 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  # cd /Users/ikeda/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e 'タイトル共有'
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'タイトル共有'
   describe "タイトル共有" do
     it "works" do
       a_block do
@@ -109,7 +109,7 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  # cd /Users/ikeda/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '対局時計'
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '対局時計'
   describe "対局時計" do
     INITIAL_MAIN_MIN = 5
 
@@ -172,7 +172,7 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '手番が来たら知らせる設定'
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '手番が来たら知らせる設定'
   xit "手番が来たら知らせる設定" do
     room_setup("my_room", "alice")
     find(".sidebar_toggle_navbar_item").click       # サイドメニュー起動する
@@ -183,7 +183,7 @@ RSpec.describe "共有将棋盤", type: :system do
     assert_text("(通知効果音)")                     # 通知があった
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定'
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定'
   describe "順番設定" do
     it "works" do
       a_block do
@@ -231,7 +231,7 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定のあと一時的に機能OFFにしたので通知されない'
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定のあと一時的に機能OFFにしたので通知されない'
   describe "順番設定のあと一時的に機能OFFにしたので通知されない" do
     it "works" do
       a_block do
@@ -264,6 +264,27 @@ RSpec.describe "共有将棋盤", type: :system do
       find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
       assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
       first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'メッセージ'
+  describe "メッセージ" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")               # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                 # bobも同じ部屋に入る
+      end
+      a_block do
+        find(".message_modal_handle").click          # aliceがメッセージモーダルを開く
+        find(".SpeekerModal input").set("(message)") # メッセージ入力
+        find(".SpeekerModal .send_button").click     # 送信
+        assert_text("(message)")                     # 自分自身にメッセージが届く
+      end
+      b_block do
+        assert_text("(message)")                     # bobにもメッセージが届く
+      end
     end
   end
 

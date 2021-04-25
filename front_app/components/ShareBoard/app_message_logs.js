@@ -4,7 +4,7 @@ import dayjs from "dayjs"
 const MESSAGE_LOG_MAX = 100
 const MESSAGE_LOG_PUSH_TO = "bottom"
 
-export const app_message_log = {
+export const app_message_logs = {
   data() {
     return {
       message_logs: [],

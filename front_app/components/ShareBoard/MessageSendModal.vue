@@ -1,33 +1,33 @@
 <template lang="pug">
-.modal-card.SpeekerModal
+.modal-card.MessageSendModal
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6.has-text-weight-bold
-      | コメント
+      | メッセージ
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
     ShareBoardMessageLogs(:base="base" ref="ShareBoardMessageLog")
     b-field
-      b-input(v-model.trim="speeker_message" ref="message_input_tag")
+      b-input(v-model.trim="message_body" ref="message_input_tag")
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.test_button(@click="test_handle" v-if="development_p") 追加
-    b-button.apply_button(@click="send_handle" type="is-primary") 送信
+    b-button.send_button(@click="send_handle" type="is-primary") 送信
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "SpeekerModal",
+  name: "MessageSendModal",
   mixins: [
     support_child,
   ],
   data() {
     return {
-      speeker_message: "",
+      message_body: "",
     }
   },
   mounted() {
@@ -48,10 +48,10 @@ export default {
       this.base.ml_add_test()
     },
     send_handle() {
-      if (this.speeker_message) {
+      if (this.message_body) {
         this.sound_play("click")
-        this.base.speeker_share({message: this.speeker_message})
-        this.speeker_message = ""
+        this.base.message_share({message: this.message_body})
+        this.message_body = ""
         this.input_focus()
       }
     },
@@ -64,7 +64,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.SpeekerModal
+.MessageSendModal
   +desktop
     width: 40ch
   .modal-card-body
