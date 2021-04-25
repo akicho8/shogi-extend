@@ -1,99 +1,109 @@
 require "rails_helper"
 
 RSpec.describe "共有将棋盤", type: :system do
+  before do
+    @alice_window = Capybara.open_new_window
+    @bob_window = Capybara.open_new_window
+  end
+
+  after do
+    [@alice_window, @bob_window].each(&:close)
+  end
+
+  def a_block(&block)
+    Capybara.within_window(@alice_window, &block)
+  end
+
+  def b_block(&block)
+    Capybara.within_window(@bob_window, &block)
+  end
+
   it "最初に来たときのタイトルが正しい" do
-    visit "/share-board"
-    expect(page).to have_content "共有将棋盤"
-    doc_image
+    a_block do
+      visit "/share-board"
+      assert_text("共有将棋盤")
+      doc_image
+    end
   end
 
   it "駒落ちで開始したとき△側が下に来ている" do
-    visit "/share-board?body=position+sfen+4k4%2F9%2F9%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+w+-+1&turn=0&title=%E6%8C%87%E3%81%97%E7%B6%99%E3%81%8E%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B"
-    assert_selector(".CustomShogiPlayer .is_viewpoint_white")
-    doc_image
+    a_block do
+      visit "/share-board?body=position+sfen+4k4%2F9%2F9%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+w+-+1&turn=0&title=%E6%8C%87%E3%81%97%E7%B6%99%E3%81%8E%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B"
+      assert_selector(".CustomShogiPlayer .is_viewpoint_white")
+      doc_image
+    end
   end
 
   it "合言葉を含むURLから来てハンドルネーム入力して接続して駒を動かす" do
-    visit "/share-board?room_code=foo"                # 合言葉を含むURLから来る
-    assert_selector(".RealtimeShareModal")            # 「合言葉の設定と共有」のモーダルが自動的に表示されている
-    expect(page).to have_content "合言葉の設定と共有" # 「合言葉の設定と共有」のモーダルのタイトルも正しい
-    first(".new_user_name input").set("alice")        # ハンドルネームを入力する
-    first(".share_button").click                      # 共有ボタンをクリックする
-    expect(page).to have_content "alice"              # 入力したハンドルネームの人がメンバーリストに表示されている
-    assert_move("77", "76", "☗7六歩")
-    doc_image
+    a_block do
+      visit "/share-board?room_code=foo"                # 合言葉を含むURLから来る
+      assert_selector(".RealtimeShareModal")            # 「合言葉の設定と共有」のモーダルが自動的に表示されている
+      assert_text("合言葉の設定と共有")                 # 「合言葉の設定と共有」のモーダルのタイトルも正しい
+      first(".new_user_name input").set("alice")        # ハンドルネームを入力する
+      first(".share_button").click                      # 共有ボタンをクリックする
+      assert_text("alice")                              # 入力したハンドルネームの人がメンバーリストに表示されている
+      assert_move("77", "76", "☗7六歩")
+      doc_image
+    end
   end
 
   # BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'あとから来たbobはaliceの局面を貰う'
   # Capybara.default_max_wait_time = 1
   # このテストは ordered_members が nil のまま共有されるのをスキップできるのを保証するので消してはいけない
   it "あとから来たbobはaliceの局面を貰う" do
-    room_setup("my_room", "alice")
+    a_block do
+      room_setup("my_room", "alice")
 
-    visit "/share-board"                                      # 再来
-    find(".sidebar_toggle_navbar_item").click                 # サイドメニューを起動する
-    click_text_match("合言葉の設定と共有")                    # 「合言葉の設定と共有」を自分でクリックする
-    first(".new_room_code input").set("my_room")              # 合言葉を入力する
-    value = first(".new_user_name input").value
-    assert { value == "alice" }                               # 以前入力したニックネームが復元されている
-    first(".share_button").click                              # 共有ボタンをクリックする
-    assert_move("59", "58", "☗5八玉")                        # aliceは一人で初手を指した
-
-    # bob が別の画面でログインする
-    bob_window = Capybara.open_new_window
-    Capybara.within_window(bob_window) do
+      visit "/share-board"                                      # 再来
+      find(".sidebar_toggle_navbar_item").click                 # サイドメニューを起動する
+      click_text_match("合言葉の設定と共有")                    # 「合言葉の設定と共有」を自分でクリックする
+      first(".new_room_code input").set("my_room")              # 合言葉を入力する
+      value = first(".new_user_name input").value
+      assert { value == "alice" }                               # 以前入力したニックネームが復元されている
+      first(".share_button").click                              # 共有ボタンをクリックする
+      assert_move("59", "58", "☗5八玉")                        # aliceは一人で初手を指した
+    end
+    b_block do
+      # bob が別の画面でログインする
       room_setup("my_room", "bob")                            # alice と同じ部屋の合言葉を設定する
       assert_text("alice")                                    # すでにaliceがいるのがわかる
       doc_image("bobはaliceの盤面を貰った")                   # この時点で▲58玉が共有されている
     end
-
-    assert_text("bob")                                        # alice側の画面にはbobが表示されている
-
-    Capybara.within_window(bob_window) do
+    a_block do
+      assert_text("bob")                                        # alice側の画面にはbobが表示されている
+    end
+    b_block do
       assert_move("33", "34", "☖3四歩")                      # bobは2手目の後手を指せる
     end
-
-    assert_text("☖3四歩")                                    # aliceの画面にもbobの指し手の符号が表示されている
-    doc_image("aliceとbobは画面を共有している")
+    a_block do
+      assert_text("☖3四歩")                                    # aliceの画面にもbobの指し手の符号が表示されている
+      doc_image("aliceとbobは画面を共有している")
+    end
   end
 
   # cd /Users/ikeda/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e 'タイトル共有'
   describe "タイトル共有" do
     it "works" do
-      room_setup("my_room", "alice")    # alceが部屋を作る
-      bob_window = Capybara.open_new_window
-      Capybara.within_window(bob_window) do
-        room_setup("my_room", "bob")    # bobもaliceと同じ合言葉で部屋を作る
+      a_block do
+        room_setup("my_room", "alice")         # alceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")           # bobもaliceと同じ合言葉で部屋を作る
         first(".title_edit_navbar_item").click # タイトル変更モーダルを開く
         within(".modal-card") do
           first("input").set("(new_title)")    # 別のタイトルを入力
           find(".button.is-primary").click     # 更新ボタンを押す
         end
       end
-      assert_text("(new_title)")               # alice側のタイトルが変更されている
+      a_block do
+        assert_text("(new_title)")             # alice側のタイトルが変更されている
+      end
     end
   end
 
   # cd /Users/ikeda/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '対局時計'
   describe "対局時計" do
     INITIAL_MAIN_MIN = 5
-
-    before do
-      @alice_window = Capybara.open_new_window
-      @bob_window = Capybara.open_new_window
-    end
-
-    after do
-      [@alice_window, @bob_window].each(&:close)
-    end
-
-    def a_block(&block)
-      Capybara.within_window(@alice_window, &block)
-    end
-
-    def b_block(&block)
-      Capybara.within_window(@bob_window, &block)
-    end
 
     it "works" do
       a_block do
@@ -162,28 +172,11 @@ RSpec.describe "共有将棋盤", type: :system do
     find(".TurnNotifyModal select").select("alice") # 上家設定
     find(".TurnNotifyModal .apply_button").click    # 適用
     assert_move("77", "76", "☗7六歩")              # aliceが1手指す
-    assert_text("(通知効果音)")                 # 通知があった
+    assert_text("(通知効果音)")                     # 通知があった
   end
 
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定'
   describe "順番設定" do
-    before do
-      @alice_window = Capybara.open_new_window
-      @bob_window = Capybara.open_new_window
-    end
-
-    after do
-      [@alice_window, @bob_window].each(&:close)
-    end
-
-    def a_block(&block)
-      Capybara.within_window(@alice_window, &block)
-    end
-
-    def b_block(&block)
-      Capybara.within_window(@bob_window, &block)
-    end
-
     it "works" do
       a_block do
         room_setup("my_room", "alice")                     # aliceが部屋を作る
@@ -192,6 +185,7 @@ RSpec.describe "共有将棋盤", type: :system do
         room_setup("my_room", "bob")                       # bobも同じ部屋に入る
         find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
         click_text_match("順番設定")                       # 「順番設定」モーダルを開く (まだ無効の状態)
+        debugger
       end
       a_block do
         find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
@@ -220,7 +214,7 @@ RSpec.describe "共有将棋盤", type: :system do
         assert_text("次はbobさんの手番です")
         assert_no_move("33", "34", "☖3四歩")              # aliceもう指したので指せない
         assert_member_list(1, "is_other_player")           # 1人目(alice)に丸がついていない
-        assert_member_list(2, "is_current_player")         # 2人目(bob)は指せるので丸がついている 
+        assert_member_list(2, "is_current_player")         # 2人目(bob)は指せるので丸がついている
       end
       b_block do
         assert_move("33", "34", "☖3四歩")                 # 2番目のbobは指せる
@@ -229,7 +223,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
     end
   end
-  
+
   def room_setup(room_code, user_name)
     visit "/share-board"
     find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する
@@ -237,7 +231,7 @@ RSpec.describe "共有将棋盤", type: :system do
     first(".new_room_code input").set(room_code) # 合言葉を入力する
     first(".new_user_name input").set(user_name) # ハンドルネームを入力する
     first(".share_button").click                 # 共有ボタンをクリックする
-    expect(page).to have_content user_name       # 入力したハンドルネームの人が参加している
+    assert_text("user_name")       # 入力したハンドルネームの人が参加している
   end
 
   def chess_clock_set(initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
@@ -270,14 +264,14 @@ RSpec.describe "共有将棋盤", type: :system do
       assert_no_text(human)
     end
   end
-  
+
   def place_click(from, to)
     [from, to].each do |e|
       place = [".place", e.chars].join("_")
       find(place).click
     end
   end
-  
+
   def assert_white_read_sec(second)
     v = find(".is_white .read_sec").text.to_i
     assert { v == second || v == second.pred }
@@ -290,7 +284,7 @@ RSpec.describe "共有将棋盤", type: :system do
   def assert_clock_off
     assert_no_selector(".MembershipLocationPlayerInfoTime")
   end
-  
+
   def assert_member_list(i, klass)
     assert_selector(".ShareBoardMemberList .member_info:nth-child(#{i}) .#{klass}")
   end
