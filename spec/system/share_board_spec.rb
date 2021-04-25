@@ -231,6 +231,42 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec /Users/ikeda/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定のあと一時的に機能OFFにしたので通知されない'
+  describe "順番設定のあと一時的に機能OFFにしたので通知されない" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")                     # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                       # bobも同じ部屋に入る
+      end
+      a_block do
+        order_modal_main_switch_click("有効")              # 順番設定ON
+        assert_move("77", "76", "☗7六歩")                 # aliceが指す
+      end
+      b_block do
+        assert_text("(通知効果音)")                        # aliceが指し終わったのでbobに通知
+        assert_move("33", "34", "☖3四歩")                 # bobが指す
+      end
+      a_block do
+        assert_text("(通知効果音)")                        # bobがが指し終わったのでaliceに通知
+        order_modal_main_switch_click("無効")              # 順番設定OFF
+        assert_move("27", "26", "☗2六歩")                 # aliceが指す
+      end
+      b_block do
+        assert_no_text("(通知効果音)")                     # 順番設定OFFなので通知されない
+      end
+    end
+
+    def order_modal_main_switch_click(stat)
+      find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
+      menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
+      find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+      assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
+      first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+    end
+  end
+
   def room_setup(room_code, user_name)
     visit "/share-board"
     find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する
