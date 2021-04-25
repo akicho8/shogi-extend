@@ -35,7 +35,7 @@ export const app_speeker = {
     },
     speeker_share_broadcasted(params) {
       if (params.message) {
-        this.$buefy.toast.open({container: ".BoardWood", message: `${params.from_user_name}: ${params.message}`, position: "is-top", type: "is-primary", queue: false})
+        this.$buefy.toast.open({container: ".BoardWood", message: `${params.from_user_name}: ${params.message}`, position: "is-top", type: "is-white", queue: false})
         this.talk(params.message)
         this.ml_add(params)
       }

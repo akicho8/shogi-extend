@@ -181,7 +181,7 @@ export const app_room = {
         }
 
         // 「alice ▲76歩」と表示しながら
-        this.toast_ok_toast_only(`${params.from_user_name} ${params.last_move_kif}`)
+        this.x_toast({toast_message: `${params.from_user_name} ${params.last_move_kif}`})
 
         // 「aliceさん」の発声後に「7 6 ふー！」を発声する
         this.talk(this.user_call_name(params.from_user_name), {

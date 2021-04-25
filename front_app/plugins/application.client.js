@@ -69,22 +69,33 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// FIXME 冗長すぎる
 
     toast_ok(message, options = {}) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-primary", queue: false, ...options})
-      this.talk(message, options)
-    },
-
-    toast_ok_toast_only(message, options = {}) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-primary", queue: false, ...options})
+      this.x_toast({message: message, ...options})
     },
 
     toast_warn(message, options = {}) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-warning", queue: false, ...options})
-      this.talk(message, options)
+      this.x_toast({message: message, type: "is-warning", ...options})
     },
 
     toast_ng(message, options = {}) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger", queue: false, ...options})
-      this.talk(message, options)
+      this.x_toast({message: message, type: "is-danger", ...options})
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// FIXME 冗長すぎる
+
+    x_toast(params = {}) {
+      const toast_params = {
+        position: "is-bottom",
+        type: "is-primary",
+        queue: false,
+        ...params,
+      }
+      toast_params.message = params.toast_message || params.message
+      if (toast_params.message) {
+        this.$buefy.toast.open(toast_params)
+      }
+
+      // volume, rate, onend は talk 用オプション
+      this.talk(params.talk_message || params.message, params)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
