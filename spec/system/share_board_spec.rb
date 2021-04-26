@@ -4,10 +4,11 @@ RSpec.describe "共有将棋盤", type: :system do
   before do
     @alice_window = Capybara.open_new_window
     @bob_window = Capybara.open_new_window
+    @carol_window = Capybara.open_new_window
   end
 
   after do
-    [@alice_window, @bob_window].each(&:close)
+    [@alice_window, @bob_window, @carol_window].each(&:close)
   end
 
   def a_block(&block)
@@ -23,6 +24,14 @@ RSpec.describe "共有将棋盤", type: :system do
       Capybara.within_window(@bob_window, &block)
     else
       Capybara.switch_to_window(@bob_window)
+    end
+  end
+
+  def c_block(&block)
+    if block
+      Capybara.within_window(@carol_window, &block)
+    else
+      Capybara.switch_to_window(@carol_window)
     end
   end
 
@@ -231,6 +240,47 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '2人対戦で1人観戦'
+  describe "2人対戦で1人観戦" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")                     # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                       # bobも同じ部屋に入る
+      end
+      c_block do
+        room_setup("my_room", "carol")                     # carolは観戦目的で同じ部屋に入る
+      end
+      a_block do
+        find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
+        menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
+        find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+        order_toggle(3)                                    # 3番目のcarolさんの「OK」をクリックして「観戦」に変更
+        first(".apply_button").click                       # 適用クリック
+        first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+      end
+      c_block do
+        assert_member_list(1, "is_current_player")         # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_other_player")           # 2人目(bob)は待機中
+        assert_member_list(3, "is_watching")               # 3人目(carol)は観戦中
+        assert_no_move("77", "76", "☗7六歩")              # なので3番目のcarolは指せない
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩")                 # 1番目のaliceが指す
+      end
+      b_block do
+        assert_move("33", "34", "☖3四歩")                 # 2番目のbobが指す
+      end
+      c_block do
+        assert_no_move("27", "26", "☗2六歩")              # 3番目のcarolは観戦者なので指せない
+      end
+      a_block do
+        assert_move("27", "26", "☗2六歩")                 # 1順してaliceが3手目を指す
+      end
+    end
+  end
+
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定のあと一時的に機能OFFにしたので通知されない'
   describe "順番設定のあと一時的に機能OFFにしたので通知されない" do
     it "works" do
@@ -363,6 +413,11 @@ RSpec.describe "共有将棋盤", type: :system do
     find([".place", place.chars].join("_")).click #
   end
 
+  # OK or 観戦 トグルボタンのクリック
+  def order_toggle(n)
+    find(".OrderSettingModal table tr:nth-child(#{n}) .enable_toggle_handle").click
+  end
+
   def assert_white_read_sec(second)
     v = find(".is_white .read_sec").text.to_i
     assert { v == second || v == second.pred }
@@ -377,6 +432,6 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def assert_member_list(i, klass)
-    assert_selector(".ShareBoardMemberList .member_info:nth-child(#{i}) .#{klass}")
+    assert_selector(".ShareBoardMemberList .member_info:nth-child(#{i}).#{klass}")
   end
 end
