@@ -363,6 +363,31 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '局面を戻していても同期されると最後の局面になる'
+  describe "局面を戻していても同期されると最後の局面になる" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")                     # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                       # bobも同じ部屋に入る
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩")                 # aliceが指す
+      end
+      b_block do
+        assert_move("33", "34", "☖3四歩")                 # bobが指す
+        sp_controller_click("first")                       # bobは最初の局面に戻した
+      end
+      a_block do
+        assert_move("27", "26", "☗2六歩")                 # aliceが指す
+      end
+      b_block do
+        assert_move("83", "84", "☖8四歩")                 # 最後の局面になっている(bobの手番になっている)のでbobが指せる
+      end
+    end
+  end
+
   def room_setup(room_code, user_name)
     visit "/share-board"
     find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する
@@ -433,5 +458,9 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def assert_member_list(i, klass)
     assert_selector(".ShareBoardMemberList .member_info:nth-child(#{i}).#{klass}")
+  end
+
+  def sp_controller_click(klass)
+    find(".ShogiPlayer .NavigateBlock .button.#{klass}").click
   end
 end
