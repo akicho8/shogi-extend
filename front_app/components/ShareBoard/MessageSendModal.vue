@@ -9,7 +9,7 @@
   section.modal-card-body
     ShareBoardMessageLogs(:base="base" ref="ShareBoardMessageLog")
     b-field
-      b-input(v-model.trim="message_body" ref="message_input_tag")
+      b-input(v-model="base.message_body" ref="message_input_tag")
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -25,11 +25,6 @@ export default {
   mixins: [
     support_child,
   ],
-  data() {
-    return {
-      message_body: "",
-    }
-  },
   mounted() {
     this.input_focus()
 
@@ -48,10 +43,10 @@ export default {
       this.base.ml_add_test()
     },
     send_handle() {
-      if (this.message_body) {
+      if (this.present_p(this.base.message_body)) {
         this.sound_play("click")
-        this.base.message_share({message: this.message_body})
-        this.message_body = ""
+        this.base.message_share({message: this.base.message_body})
+        this.base.message_body = ""
         this.input_focus()
       }
     },

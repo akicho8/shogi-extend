@@ -3,6 +3,12 @@ import dayjs from "dayjs"
 import MessageSendModal from "./MessageSendModal.vue"
 
 export const app_message = {
+  data() {
+    return {
+      message_body: "",
+    }
+  },
+
   methods: {
     message_modal_handle() {
       this.sidebar_p = false
