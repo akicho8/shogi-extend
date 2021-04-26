@@ -19,7 +19,7 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
 
     b-navbar-item.px_5_if_tablet.is-unselectable.message_modal_handle(tag="a" @click="base.message_modal_handle" v-if="base.ac_room")
       b-icon.account_icon(icon="account")
-      b-icon.message_icon(icon="message" size="is-small")
+      b-icon.message_icon(icon="chat-processing")
 
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="base.tweet_modal_handle" v-if="base.tweet_button_p")
       b-icon(icon="twitter" type="is-white")
@@ -50,9 +50,9 @@ export default {
     .icon
       position: relative
       &.account_icon
-        top: 4px
-        left: 2px
+        top: 5px
+        left: 3px
       &.message_icon
-        left: -2px
-        top: -6px
+        top: -7px
+        left: -3px
 </style>
