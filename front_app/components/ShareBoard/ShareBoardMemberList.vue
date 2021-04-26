@@ -47,7 +47,7 @@ export default {
     },
     icon_for(e) {
       if (this.base.order_func_p) {
-        return "account"        // 観戦中のアイコン
+        return "account-outline" // 観戦中のアイコン
       } else {
         return "account"        // 通常のアイコン
       }
