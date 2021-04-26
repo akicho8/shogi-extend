@@ -31,11 +31,11 @@ export default {
       if (this.base.member_alive_p(e)) {
         this.talk(`${this.base.user_call_name(e.from_user_name)}は元気です`)
       } else {
-        this.talk(`${this.base.user_call_name(e.from_user_name)}は反応がありません`)
+        this.talk(`${this.base.user_call_name(e.from_user_name)}の霊圧が……消えた……？`)
       }
     },
-    time_format(v) {
-      return dayjs.unix(v.performed_at).format("HH:mm:ss")
+    time_format(e) {
+      return dayjs.unix(e.performed_at).format("HH:mm:ss")
     },
     // 自分のターンか？
     turn_active_p(e) {
