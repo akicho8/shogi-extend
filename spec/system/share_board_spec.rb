@@ -288,6 +288,31 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '片方が駒移動中に同期'
+  describe "片方が駒移動中に同期" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")    # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")      # bobも同じ部屋に入る
+      end
+      b_block do
+        place_click("27")                 # bobさんが手番を間違えて▲26歩しようとして27の歩を持ち上げた
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩") # そのタイミングでaliceさんが▲76歩と指した
+      end
+      b_block do                          # bobさんの27クリックはキャンセルされた
+        assert_move("33", "34", "☖3四歩") # bobが指す
+        piece_move("88", "22")            # bobは2手指しで▲22角成をしようとして確認モーダルが表示されている
+      end
+      a_block do
+        assert_move("27", "26", "☗2六歩") # そのタイミングでaliceさんが▲26歩と指してbobさんの2手指差未遂はキャンセルされた
+      end
+    end
+  end
+
   def room_setup(room_code, user_name)
     visit "/share-board"
     find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する
@@ -316,24 +341,26 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def assert_move(from, to, human)
-    place_click(from, to)
+    piece_move(from, to)
     Capybara.using_wait_time(10) do
       assert_text(human)
     end
   end
 
   def assert_no_move(from, to, human)
-    place_click(from, to)
+    piece_move(from, to)
     Capybara.using_wait_time(10) do
       assert_no_text(human)
     end
   end
 
-  def place_click(from, to)
-    [from, to].each do |e|
-      place = [".place", e.chars].join("_")
-      find(place).click
-    end
+  def piece_move(from, to)
+    [from, to].each { |e| place_click(e) }
+  end
+
+  # place_click("76") は find(".place_7_6").click 相当
+  def place_click(place)
+    find([".place", place.chars].join("_")).click #
   end
 
   def assert_white_read_sec(second)
