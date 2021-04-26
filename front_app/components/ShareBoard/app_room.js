@@ -174,10 +174,17 @@ export const app_room = {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
       }
       if (true) {
+        const prev_user_name = this.user_name_by_turn(params.turn_offset - 1)
         const next_user_name = this.user_name_by_turn(params.turn_offset)
 
         if (this.user_name === next_user_name) {
           this.tn_notify()
+        }
+
+        if (prev_user_name) {
+          if (params.from_user_name !== prev_user_name) {
+            this.debug_alert(`${this.user_call_name(prev_user_name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
+          }
         }
 
         // 「alice ▲76歩」と表示しながら
