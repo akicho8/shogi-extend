@@ -58,6 +58,7 @@ module Swars
 
     scope :win_lose_only, -> { where.not(win_user_id: nil) } # 勝敗が必ずあるもの
     scope :newest_order, -> { order(battled_at: :desc) }     # 新しい順
+    scope :rule_eq, -> v { where(rule_key: RuleInfo.fetch(v).key) } # ルール "10分" や "ten_min" どちらでもOK
 
     before_validation on: :create do
       if Rails.env.development? || Rails.env.test?

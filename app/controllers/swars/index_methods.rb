@@ -285,7 +285,7 @@ module Swars
         end
 
         if v = query_info.lookup_one(:rule)
-          s = s.where(rule_key: RuleInfo.fetch(v).key)
+          s = s.rule_eq(v)
         end
 
         if e = query_info.lookup_one_op(:turn_max)
