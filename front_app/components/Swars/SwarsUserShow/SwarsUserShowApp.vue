@@ -28,6 +28,7 @@ import { support_parent } from "./support_parent.js"
 import { app_storage    } from "./app_storage.js"
 import { app_search     } from "./app_search.js"
 import { app_support    } from "./app_support.js"
+import { RuleSelectInfo  } from "./rule_select_info.js"
 
 export default {
   name: "SwarsUserShowApp",
@@ -47,6 +48,7 @@ export default {
 
   watch: {
     // tab_index を除外するため
+    "$route.query.rule": "$fetch",
     "$route.query.sample_max": "$fetch",
     "$route.query.query":      "$fetch",
     "$route.query.try_fetch":  "$fetch",
@@ -95,6 +97,7 @@ export default {
         query: {
           tab_index: this.tab_index,
           sample_max: this.$route.query.sample_max,
+          rule: this.$route.query.rule,
           ...options,
         },
       }).catch(err => {})
@@ -114,6 +117,8 @@ export default {
 
   computed: {
     base() { return this },
+    RuleSelectInfo() { return RuleSelectInfo },
+    current_rule() { return this.$route.query.rule },
   },
 }
 </script>

@@ -7,15 +7,17 @@
 
   // 段級位
   .is-flex.rule_container
-    nuxt-link.rule_one.is-clickable(v-for="(row, key) in base.info.rules_hash" tag="span" :to="{name: 'swars-search', query: {query: `${base.info.user.key} rule:${row.rule_name}`}}" :key="key")
-      span.rule_name.is-size-7.has-text-grey
-        | {{row.rule_name}}
-      span.grade_name.is-size-5
-        template(v-if="row.grade_name")
-          | {{row.grade_name}}
-        template(v-else)
-          span.has-text-grey-lighter
-            | ？
+    template(v-for="(row, key) in base.info.rules_hash")
+      template(v-if="blank_p(base.current_rule) || base.current_rule === row.rule_name")
+        nuxt-link.rule_one.is-clickable(tag="span" :to="{name: 'swars-search', query: {query: `${base.info.user.key} rule:${row.rule_name}`}}" :key="key")
+          span.rule_name.is-size-7.has-text-grey
+            | {{row.rule_name}}
+          span.grade_name.is-size-5
+            template(v-if="row.grade_name")
+              | {{row.grade_name}}
+            template(v-else)
+              span.has-text-grey-lighter
+                | ？
 
   // 勝率
   WinLoseCircle(:info="base.info" :click_func="base.win_lose_click_handle")
