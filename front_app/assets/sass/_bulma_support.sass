@@ -35,6 +35,26 @@ a
   &:not(:hover)
     background-color: unset
 
+// デフォルトのダイアログのレイアウトが崩れているのを直す
+
+.dialog
+  .modal-card
+    .modal-card-title
+      font-size: 1rem                // タイトルが大きすぎる
+    .modal-card-body
+      .field
+        margin-top: unset            // 上に無駄な隙間があるのを取る
+        .help
+          &:empty
+            display: none            // ヘルプを表示していないときでも(高さを持っているため)無駄な隙間ができるのを防ぐ
+    .modal-card-foot
+      // 次のようにししたいが左側から並べられるのでできない
+      // OK だけのとき左側に来てしまう
+      // | [キャンセル]   [OK] |
+      // |                [OK] |
+      // flex-direction: row-reverse    // OKしかないときは右側に配置させるため
+      // justify-content: space-between // キャンセルは左側
+
 ////////////////////////////////////////////////////////////////////////////////
 +mobile
   html
