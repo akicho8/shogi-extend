@@ -53,15 +53,7 @@ export default {
 
     tab_index(v) {
       if (this.info) {
-        // https://github.com/vuejs/vue-router/issues/2872
-        this.$router.replace({
-          name: "swars-users-key",
-          params: { key: this.info.user.key },
-          query: {
-            tab_index: this.tab_index,
-            sample_max: this.$route.query.sample_max,
-          },
-        }).catch(err => {})
+        this.update_handle({})
       }
     },
   },
@@ -102,6 +94,7 @@ export default {
         params: { key: this.info.user.key },
         query: {
           tab_index: this.tab_index,
+          sample_max: this.$route.query.sample_max,
           ...options,
         },
       }).catch(err => {})
