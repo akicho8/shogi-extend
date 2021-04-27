@@ -1,7 +1,13 @@
 <template lang="pug">
 client-only
   .ShareBoardApp(:style="component_style")
-    DebugBox
+    DebugBox(v-if="development_p")
+      p sp_human_side: {{sp_human_side}}
+      p current_turn_self_p: {{current_turn_self_p}}
+      p current_turn_user_name: {{current_turn_user_name}}
+      p turn_offset: {{turn_offset}}
+      p previous_user_name: {{previous_user_name}}
+      p ordered_members: {{ordered_members}}
       template(v-if="chess_clock")
         p next_location: {{next_location.key}}
         p timer: {{chess_clock.timer}}
@@ -36,10 +42,10 @@ client-only
               :sp_sound_enabled="true"
               :sp_viewpoint.sync="sp_viewpoint"
               :sp_player_info="sp_player_info"
+              :sp_human_side="sp_human_side"
               sp_summary="is_summary_off"
               sp_slider="is_slider_on"
               sp_controller="is_controller_on"
-              sp_human_side="both"
 
               :sp_play_mode_legal_move_only="strict_p"
               :sp_play_mode_only_own_piece_to_move="strict_p"
@@ -75,8 +81,8 @@ client-only
             .room_code.is-clickable(@click="room_code_modal_handle" v-if="false")
               | {{room_code}}
 
-          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="share_p")
-          ShareBoardMemberList(:base="base" v-if="share_p")
+          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="room_code_valid_p")
+          ShareBoardMemberList(:base="base" v-if="room_code_valid_p")
 
         .columns(v-if="development_p")
           .column.is-clipped
@@ -120,13 +126,16 @@ import _ from "lodash"
 import { support_parent } from "./support_parent.js"
 
 import { app_action_log   } from "./app_action_log.js"
+import { app_message_logs   } from "./app_message_logs.js"
 import { app_chess_clock  } from "./app_chess_clock.js"
 import { app_turn_notify  } from "./app_turn_notify.js"
+import { app_ordered_members } from "./app_ordered_members.js"
 import { app_chore        } from "./app_chore.js"
 import { app_edit_mode    } from "./app_edit_mode.js"
 import { app_room         } from "./app_room.js"
 import { app_room_init    } from "./app_room_init.js"
 import { app_room_members } from "./app_room_members.js"
+import { app_message } from "./app_message.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
 import { app_export       } from "./app_export.js"
@@ -142,13 +151,16 @@ export default {
   mixins: [
     support_parent,
     app_action_log,
+    app_message_logs,
     app_chess_clock,
     app_turn_notify,
+    app_ordered_members,
     app_chore,
     app_edit_mode,
     app_room,
     app_room_init,
     app_room_members,
+    app_message,
     app_sidebar,
     app_storage,
     app_export,
@@ -207,9 +219,13 @@ export default {
     },
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
+    // 局面0で1手指したとき last_move_info.turn_offset は 0
     play_mode_advanced_full_moves_sfen2_set(v, last_move_info) {
       this.current_sfen = v
-      this.sfen_share({last_move_kif: last_move_info.to_kif_without_from, yomiage: last_move_info.to_yomiage})
+      this.sfen_share({
+        last_move_kif: last_move_info.to_kif_without_from,
+        yomiage: last_move_info.to_yomiage,
+      })
 
       // 時計があれば操作した側のボタンを押す
       if (this.chess_clock) {
@@ -315,7 +331,7 @@ export default {
     play_mode_p()    { return this.sp_run_mode === 'play_mode' },
     edit_mode_p()    { return this.sp_run_mode === 'edit_mode' },
     strict_p()       { return this.internal_rule === "strict"  },
-    tweet_button_p() { return this.play_mode_p && !this.share_p },
+    tweet_button_p() { return this.play_mode_p && !this.room_code_valid_p },
     advanced_p()     { return this.turn_offset > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     page_title() {

@@ -54,8 +54,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     it do
       data = { user_code: SecureRandom.hex }
       expect {
-        subscription.board_info_request(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "board_info_request_broadcasted", bc_params: data)
+        subscription.setup_info_request(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "setup_info_request_broadcasted", bc_params: data)
     end
   end
 
@@ -66,8 +66,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     it do
       data = { user_code: SecureRandom.hex }
       expect {
-        subscription.board_info_send(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "board_info_send_broadcasted", bc_params: data)
+        subscription.setup_info_send(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "setup_info_send_broadcasted", bc_params: data)
     end
   end
 

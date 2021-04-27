@@ -116,7 +116,7 @@ export const app_room = {
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: () => {
           this.revision_increment_timer.restart()
-          this.board_info_request()
+          this.setup_info_request()
           this.member_bc_interval_runner.restart()
         },
         disconnected: () => {
@@ -150,10 +150,12 @@ export const app_room = {
       this.ac_room_perform("sfen_share", {
         title: this.current_title,
         ...params,
-        ...this.current_sfen_attrs,
+        ...this.current_sfen_attrs, // turn_offset は含まれる
       }) // --> app/channels/share_board/room_channel.rb
     },
     sfen_share_broadcasted(params) {
+      // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
+
       if (params.from_user_code === this.user_code) {
         // 自分から自分へ
       } else {
@@ -163,7 +165,7 @@ export const app_room = {
           this.sp_run_mode = "play_mode"
         }
         // 受信したSFENを盤に反映
-        this.attributes_set(params)
+        this.setup_by_params(params)
       }
       if (false) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.turn_offset}手目を指しました`)
@@ -172,15 +174,32 @@ export const app_room = {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
       }
       if (true) {
-        if (params.from_user_name === this.previous_user_name) {
+        const prev_user_name = this.user_name_by_turn(params.turn_offset - 1)
+        const next_user_name = this.user_name_by_turn(params.turn_offset)
+
+        if (this.user_name === next_user_name) {
           this.tn_notify()
         }
 
+        if (prev_user_name) {
+          if (params.from_user_name !== prev_user_name) {
+            this.debug_alert(`${this.user_call_name(prev_user_name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
+          }
+        }
+
         // 「alice ▲76歩」と表示しながら
-        this.toast_ok_toast_only(`${params.from_user_name} ${params.last_move_kif}`)
+        this.toast_ok(`${params.from_user_name} ${params.last_move_kif}`, {toast_only: true})
 
         // 「aliceさん」の発声後に「7 6 ふー！」を発声する
-        this.talk(this.user_call_name(params.from_user_name), {onend: () => this.talk(params.yomiage)})
+        this.talk(this.user_call_name(params.from_user_name), {
+          onend: () => this.talk(params.yomiage, {
+            onend: () => {
+              if (next_user_name) {
+                this.toast_ok(`次は${this.user_call_name(next_user_name)}の手番です`)
+              }
+            },
+          }),
+        })
       }
       this.al_add(params)
     },
@@ -194,19 +213,22 @@ export const app_room = {
       if (params.from_user_code === this.user_code) {
         // 自分から自分へ
       } else {
-        this.attributes_set(params)
+        this.setup_by_params(params)
       }
       this.toast_ok(`${this.user_call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    attributes_set(params) {
+    setup_by_params(params) {
       if (params.title) {
         this.current_title = params.title
       }
       if (params.sfen) {
         this.current_sfen = params.sfen
         this.turn_offset = params.turn_offset
+      }
+      if ("order_func_p" in params) {
+        this.om_vars_copy_from(params)
       }
     },
 
@@ -231,14 +253,14 @@ export const app_room = {
     },
   },
   computed: {
-    share_p() { return this.room_code != "" },
-    connectable_p() { return this.room_code && this.user_name },
+    room_code_valid_p() { return this.room_code != "" },             // 合言葉があるか？
+    connectable_p()     { return this.room_code && this.user_name }, // 合言葉と名前が入力済みなので共有可能か？
 
     ////////////////////////////////////////////////////////////////////////////////
     current_sfen_attrs() {
       return {
         sfen:              this.current_sfen,
-        turn_offset:       this.current_sfen_info.turn_offset_max,
+        turn_offset:       this.current_sfen_info.turn_offset_max, // これを入れない方が早い？
         last_location_key: this.current_sfen_info.last_location.key,
       }
     },

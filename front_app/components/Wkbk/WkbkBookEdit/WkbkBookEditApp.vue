@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .WkbkBookEditApp
-    DebugBox
+    DebugBox(v-if="development_p")
       template(v-if="book")
         p book.user.id: {{book.user && book.user.id}}
         p g_current_user.id: {{g_current_user && g_current_user.id}}

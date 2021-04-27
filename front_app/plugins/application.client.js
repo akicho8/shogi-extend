@@ -2,14 +2,24 @@ import SnsLoginContainer         from "@/components/SnsLoginContainer.vue"
 
 export default {
   methods: {
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // タブが見えている状態か？
+    // ブラウザ自体が非アクティブ状態(フォーカスされてない状態)でも true になる
+    // つまり2窓で隣にYoutubeを開いてチャットを入力中であっても左側のブラウザは true になる
+    // setInterval(() => console.log(this.tab_is_active_p()), 1000)
     tab_is_active_p() {
       return !this.tab_is_hidden_p()
     },
 
+    // https://developer.mozilla.org/ja/docs/Web/API/Document/visibilityState
+    // document.visibilityState は visible か hidden を返す
     tab_is_hidden_p() {
       // console.log("[hidden, visibilityState]", [document.hidden, document.visibilityState])
       return document.hidden || document.visibilityState === "hidden"
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     sns_login_modal_open() {
       this.$buefy.modal.open({
@@ -26,6 +36,8 @@ export default {
       this.sound_play("click")
       this.sns_login_modal_open()
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     dialog_ok(message, options = {}) {
       options = {
@@ -54,24 +66,39 @@ export default {
       this.dialog_ok(message, params)
     },
 
-    toast_ok(message, options = {}) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-primary", queue: false, ...options})
-      this.talk(message, options)
-    },
+    //////////////////////////////////////////////////////////////////////////////// FIXME 冗長すぎる
 
-    toast_ok_toast_only(message, options = {}) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-primary", queue: false, ...options})
+    toast_ok(message, options = {}) {
+      this.toast_primitive({message: message, ...options})
     },
 
     toast_warn(message, options = {}) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-warning", queue: false, ...options})
-      this.talk(message, options)
+      this.toast_primitive({message: message, type: "is-warning", ...options})
     },
 
     toast_ng(message, options = {}) {
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-danger", queue: false, ...options})
-      this.talk(message, options)
+      this.toast_primitive({message: message, type: "is-danger", ...options})
     },
+
+    toast_primitive(params = {}) {
+      params = {
+        position: "is-bottom",
+        type: "is-primary",
+        queue: false,
+        ...params,
+      }
+      if (params.message) {
+        if (!params.talk_only) {
+          this.$buefy.toast.open(params)
+        }
+        if (!params.toast_only) {
+          // volume, rate, onend は talk 用オプション
+          this.talk(params.message, params)
+        }
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     error_message_dialog(message) {
       this.$buefy.dialog.alert({

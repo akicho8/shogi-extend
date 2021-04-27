@@ -1,6 +1,6 @@
 <template lang="pug">
 .Xclock(:class="chess_clock.running_p ? 'is_xclock_active' : 'is_xclock_inactive'")
-  DebugBox
+  DebugBox(v-if="development_p")
     div turn: {{chess_clock.turn}}
     div running_p: {{chess_clock.running_p}}
     div timer: {{chess_clock.timer}}

@@ -9,7 +9,25 @@ export const app_turn_notify = {
   methods: {
     tn_notify() {
       this.sound_play_random(["moo1", "moo2", "moo3"])
-      this.debug_alert("あなたの手番です")
+      this.debug_alert("(通知効果音)")
+    },
+
+    // user_name が指し終わったら自分の手番とする
+    tn_previous_user_name_set(user_name) {
+      if (this.previous_user_name === user_name) {
+        if (this.previous_user_name) {
+          this.toast_ok(`手番の通知は設定済みです`)
+        } else {
+          this.toast_ok(`手番の通知は未設定のままです`)
+        }
+      } else {
+        if (user_name) {
+          this.toast_ok(`${this.user_call_name(user_name)}が指したら牛が鳴きます`)
+        } else {
+          this.toast_ok(`解除しました`)
+        }
+        this.previous_user_name = user_name
+      }
     },
 
     tn_modal_handle() {

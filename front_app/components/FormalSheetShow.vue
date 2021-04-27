@@ -285,11 +285,21 @@ export default {
 
 <style lang="sass">
 @import "FormalSheetShow/_all.sass"
+
+// https://fonts.google.com/specimen/Noto+Serif+JP?subset=japanese
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap')
+
 .FormalSheetShow
   .is_mincho
     // YuGothic  ← Mac
     // Yu Gothic ← Windows
-    font-family: "YuMincho", "Yu Mincho", serif
+    //
+    // もともと次のようにしていたが Android では serif に対応する明朝体フォントを持ってない
+    // font-family: "YuMincho", "Yu Mincho", serif
+    //
+    // そのため Google Fonts を利用
+    font-family: 'Noto Serif JP', serif
+    // font-weight: 400            // 400 = normal
   .b-radio
     min-width: 5rem
 

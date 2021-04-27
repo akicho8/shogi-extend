@@ -4,9 +4,9 @@
 #
 class Talk
   cattr_accessor :replace_table do
-    # {
-    #   "手指" => "てさ",
-    # }
+    {
+      "手番" => "てばん",
+    }
   end
 
   cattr_accessor :default_polly_params do

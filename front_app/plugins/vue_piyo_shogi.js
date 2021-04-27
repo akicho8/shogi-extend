@@ -61,10 +61,11 @@ export default {
 
     piyo_shogi_url_params_build(params, ordered_keys) {
       const values = []
+      const piyo_shogi_app_p = this.piyo_shogi_app_p()
       ordered_keys.forEach(e => {
         let v = params[e]
         if (v != null) {
-          if (this.piyo_shogi_app_p()) {
+          if (piyo_shogi_app_p) {
             // 注意点
             // ・「ぴよ将棋」のアプリ版はエンコードするとまったく読めなくなる
             // ・URLの最後に ".kif" の文字列が来ないといけない

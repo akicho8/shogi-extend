@@ -14,12 +14,12 @@ module ShareBoard
       broadcast(:title_share_broadcasted, data)
     end
 
-    def board_info_request(data)
-      broadcast(:board_info_request_broadcasted, data)
+    def setup_info_request(data)
+      broadcast(:setup_info_request_broadcasted, data)
     end
 
-    def board_info_send(data)
-      broadcast(:board_info_send_broadcasted, data)
+    def setup_info_send(data)
+      broadcast(:setup_info_send_broadcasted, data)
     end
 
     def chess_clock_share(data)
@@ -28,6 +28,18 @@ module ShareBoard
 
     def member_info_share(data)
       broadcast(:member_info_share_broadcasted, data)
+    end
+
+    def order_func_share(data)
+      broadcast(:order_func_share_broadcasted, data)
+    end
+
+    def ordered_members_share(data)
+      broadcast(:ordered_members_share_broadcasted, data)
+    end
+
+    def message_share(data)
+      broadcast(:message_share_broadcasted, data)
     end
 
     def fake_error(data)
@@ -40,8 +52,12 @@ module ShareBoard
 
     def broadcast(bc_action, bc_params)
       if v = bc_params.find_all { |k, v| v.nil? }.presence
-        raise ArgumentError, "値が nil のキーがある : #{v.to_h.inspect}"
+        v = v.to_h.except(*Array(bc_params["__nil_check_skip_keys__"]))
+        if v.present?
+          raise ArgumentError, "値が nil のキーがある : #{v.inspect}"
+        end
       end
+
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
   end

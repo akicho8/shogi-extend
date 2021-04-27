@@ -21,7 +21,7 @@
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
-    b-button.apply_button(@click="apply_handle" :type="{'is-primary': form_changed_p}") 適用
+    b-button.apply_button(@click="apply_handle" type="is-primary") 更新
 </template>
 
 <script>
@@ -50,19 +50,7 @@ export default {
       this.base.tn_notify()
     },
     apply_handle() {
-      if (this.base.previous_user_name === this.new_previous_user_name) {
-        if (this.base.previous_user_name) {
-          this.toast_ok(`すでに適用済みです`)
-        }
-      } else {
-        this.base.previous_user_name = this.new_previous_user_name
-        if (this.base.previous_user_name) {
-          const name = this.user_call_name(this.base.previous_user_name)
-          this.toast_ok(`${name}が指したら牛が鳴きます`)
-        } else {
-          this.toast_ok(`解除しました`)
-        }
-      }
+      this.base.tn_previous_user_name_set(this.new_previous_user_name)
       this.sound_play("click")
       this.$emit("close")
     },

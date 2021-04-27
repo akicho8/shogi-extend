@@ -1,7 +1,7 @@
 <template lang="pug">
 .WkbkBookIndexApp
   client-only
-    DebugBox
+    DebugBox(v-if="development_p")
       p visible_hash: {{visible_hash}}
       p scope: {{scope}}({{tab_index}})
       p page: {{page}}

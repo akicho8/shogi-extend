@@ -17,6 +17,26 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // lodash の _.isEmpty は不自然な挙動なので使うべからず
+    blank_p(value) {
+      return value === undefined || value === null ||
+        (typeof value === "object" && Object.keys(value).length === 0) ||
+        (typeof value === "string" && value.trim().length === 0)
+    },
+
+    present_p(value) {
+      return !this.blank_p(value)
+    },
+
+    presence(value) {
+      if (this.blank_p(value)) {
+        return null
+      }
+      return value
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     delay_block(seconds, block) {
       return setTimeout(block, 1000 * seconds)
     },
@@ -94,6 +114,27 @@ export default {
         v = n + v
       }
       return v + 0
+    },
+
+    ary_cycle_at(ary, index) {
+      return ary[this.ruby_like_modulo(index, ary.length)]
+    },
+
+    // list 内のインデックス from の要素を to に移動
+    // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
+    ary_move(list, from, to) {
+      const n = list.length
+      list = [...list]
+      to = this.ruby_like_modulo(to, n)
+      if (from === to || from > n - 1 || to > n - 1) {
+        return list
+      }
+      const v = list[from]
+      const tail = list.slice(from + 1)
+      list.splice(from)
+      Array.prototype.push.apply(list, tail)
+      list.splice(to, 0, v)
+      return list
     },
 
     process_now() {
@@ -333,7 +374,9 @@ export default {
     // 一番下までスクロール
     scroll_to_bottom(elem) {
       if (elem) {
-        this.$nextTick(() => elem.scrollTop = elem.scrollHeight)
+        this.$nextTick(() => {
+          elem.scrollTop = elem.scrollHeight
+        })
       }
     },
 

@@ -8,7 +8,8 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         b-menu-list(label="リアルタイム共有")
           b-menu-item.is_active_unset(label="合言葉の設定と共有"           @click="base.room_code_modal_handle")
           b-menu-item.is_active_unset(label="対局時計の設置"               @click="base.cc_modal_handle")
-          b-menu-item.is_active_unset(label="手番が来たら知らせる設定"         @click="base.tn_modal_handle"           :disabled="!base.room_code")
+          b-menu-item.is_active_unset(label="手番が来たら知らせる設定"     @click="base.tn_modal_handle"           :disabled="!base.room_code" v-if="development_p")
+          b-menu-item.is_active_unset(label="順番設定"             @click="base.os_modal_handle"           :disabled="!base.room_code")
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"  @click="base.room_code_url_copy_handle" :disabled="!base.room_code")
           b-menu-item.is_active_unset(label="再接続(なんかおかしいとき用)" @click="base.room_recreate_handle"      :disabled="!base.connectable_p")
 
@@ -19,7 +20,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="編集・詰将棋作成")
           b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
-          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="base.share_p")
+          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="base.room_code_valid_p")
 
         ShareBoardSidebarExport(:base="base")
 
@@ -28,7 +29,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="局面URLコピー"               @click="base.current_url_copy_handle")
           b-menu-item.is_active_unset(label="局面URLツイート"             @click="base.tweet_modal_handle")
           b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
-          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="base.share_p")
+          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="base.room_code_valid_p")
 
       .box.mt-5
         .title.is-5 スタイル設定

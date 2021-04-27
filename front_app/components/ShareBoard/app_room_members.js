@@ -3,9 +3,15 @@ import dayjs from "dayjs"
 
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 
-const ALIVE_NOTIFY_INTERVAL = 60     // N秒ごとに存在を通知する
-const MEMBER_TTL            = 60*3   // 通知がN秒前より古いユーザーは破棄
-const ACTIVE_LIMIT          = 60*1.5 // N秒以内なら活発とみなして青くする
+const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
+const ACTIVE_LIMIT          = 60*1.25 // N秒以内なら活発とみなして青くする
+const MEMBER_TTL            = 60*3    // 通知がN秒前より古いユーザーは破棄
+
+// const ALIVE_NOTIFY_INTERVAL = 5
+// const ACTIVE_LIMIT          = 10
+// const MEMBER_TTL            = 20
+
+const FAKE_P = false
 
 export const app_room_members = {
   data() {
@@ -14,15 +20,6 @@ export const app_room_members = {
       member_bc_interval_runner: new IntervalRunner(this.member_bc_interval_callback, {early: true, interval: ALIVE_NOTIFY_INTERVAL}),
       user_age: 0,
     }
-  },
-
-  mounted() {
-    // const foo = [
-    //   {id: 1, name: "a"},
-    //   {id: 2, name: "a"},
-    // ]
-    // console.log(_.orderBy(foo, "id", "desc"))
-    // console.log(_.orderBy(foo, "id", "asc"))
   },
 
   beforeDestroy() {
@@ -66,11 +63,24 @@ export const app_room_members = {
 
     // 処理順序重要
     member_infos_normalize() {
-      this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")  // 新しいもの順に並べる
-      this.member_infos = _.uniqBy(this.member_infos, "from_user_code")         // ユーザーの重複を防ぐ(新しい方を採取する)
-      this.member_infos = this.member_infos_find_all_newest(this.member_infos)  // 通知が来た時間が最近の人だけを採取する
-      // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる
-      this.member_infos = _.orderBy(this.member_infos, "user_age", "desc")      // 順序固定のために年寄順に並べる
+      if (this.development_p && FAKE_P) {
+        this.member_infos = ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
+          performed_at: dayjs().unix(),
+          user_age: 1,
+          from_user_code: i,
+          from_user_name: e,
+        }))
+      }
+
+      if (true) {
+        this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")  // 新しいもの順に並べてから
+        this.member_infos = _.uniqBy(this.member_infos, "from_user_code")         // ユーザーの重複を防ぐ(新しい方を採取できる)
+
+        this.member_infos = this.member_infos_find_all_newest(this.member_infos)  // 通知が来た時間が最近の人だけを採取する
+        // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる
+        this.member_infos = _.uniqBy(this.member_infos, "from_user_name")         // ユーザー名が重複するのを防ぐ (再接続したとき不自然に見えるのを防ぐため)
+        this.member_infos = _.orderBy(this.member_infos, ["user_age", "revision"], ["desc", "desc"]) // 順序固定のために年寄順に並べる(同じ場合はrevision順)
+      }
     },
 
     // 通知が来た日時が最近の人だけを採取する
@@ -78,9 +88,13 @@ export const app_room_members = {
       return list.filter(e => this.member_elapsed_second(e) <= MEMBER_TTL)
     },
 
-    // アクティブか？
-    member_active_p(e) {
+    // 生きているか？
+    member_alive_p(e) {
       return this.member_elapsed_second(e) <= ACTIVE_LIMIT
+    },
+    // 寝ているか？
+    member_sleep_p(e) {
+      return !this.member_alive_p(e)
     },
 
     // 通達があってからの経過秒数
@@ -90,6 +104,11 @@ export const app_room_members = {
 
     member_add_test() {
       this.member_bc_interval_runner.restart()
+    },
+  },
+  computed: {
+    name_uniqued_member_infos() {
+      return _.uniqBy(this.member_infos, "from_user_name")
     },
   },
 }

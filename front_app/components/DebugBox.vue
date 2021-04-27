@@ -1,5 +1,8 @@
 <template lang="pug">
-.DebugBox(v-if="development_p && show_p" @click="click_handle" :class="position")
+// ここで v-if="development_p" を入れてはいけない
+// 入れても slot はこれが呼ばれる前に作られるので意味がない
+// 面倒なことに DebugBox を呼び出す側で DebugBox(v-if="development_p") としないといけない
+.DebugBox(v-if="show_p" @click="click_handle" :class="position")
   slot
 </template>
 
