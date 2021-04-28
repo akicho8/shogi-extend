@@ -2,14 +2,14 @@
 .SwarsUserShowHead
   // 名前
   .is-flex.is-justify-content-center.mt-2
-    .has-text-weight-bold.is-clickable(@click="base.name_click_handle")
+    .user_key.has-text-weight-bold.is-clickable(@click="base.name_click_handle")
       | {{base.info.user.key}}
 
   // 段級位
   .is-flex.rule_container
     template(v-for="(row, key) in base.info.rules_hash")
       template(v-if="blank_p(base.current_rule) || base.current_rule === row.rule_name")
-        nuxt-link.rule_one.is-clickable(tag="span" :to="{name: 'swars-search', query: {query: `${base.info.user.key} rule:${row.rule_name}`}}" :key="key")
+        nuxt-link.rule_one.is-clickable(tag="span" :to="{name: 'swars-search', query: {query: `${base.info.user.key} rule:${row.rule_name}`}}" :key="key" @click.native="sound_play('click')")
           span.rule_name.is-size-7.has-text-grey
             | {{row.rule_name}}
           span.grade_name.is-size-5
@@ -47,11 +47,20 @@ export default {
   padding-bottom: 0.2rem // アイコンの下の隙間
   border-bottom: 1px solid $grey-lighter
 
+  .user_key
+    &:hover
+      background-color: $white-ter
+      border-radius: 3px
+      padding: 0 0.5rem
+
   .rule_container
     justify-content: center
     // 一つのルール
     .rule_one
-      margin: 0 0.5rem
+      &:hover
+        background-color: $white-ter
+        border-radius: 3px
+      padding: 0 0.5rem
       font-weight: bold
       .rule_name
       .grade_name

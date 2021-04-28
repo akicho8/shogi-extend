@@ -2,11 +2,11 @@
 .WinLoseCircle.is-unselectable(:class="[size, {'is-narrow': narrowed}]")
   .level.is-mobile.win_lose_container
     .level-item.has-text-centered.win.win_lose_counts
-      div(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('win')")
+      .heading_with_title(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('win')")
         .heading WIN
         .title {{info.judge_counts["win"]}}
     .level-item.has-text-centered.doughnut.is-narrow
-      div.chart_container
+      .chart_container
         //- view-source:https://www.chartjs.org/samples/latest/charts/doughnut.html
         .canvas_holder(:style="{width: (size === 'is-small' ? 68 : 92) + 'px'}")
           canvas(ref="main_canvas")
@@ -19,7 +19,7 @@
         .total.has-text-weight-bold(v-if="total_show_p && total >= 1")
           | {{total}}
     .level-item.has-text-centered.lose.win_lose_counts
-      div(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('lose')")
+      .heading_with_title(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('lose')")
         .heading LOSE
         .title {{info.judge_counts["lose"]}}
 </template>
@@ -165,9 +165,16 @@ export default {
       .title
         font-size: 2.3em
 
+      .heading_with_title
+        padding: 0.5rem
+        &.is-clickable
+          &:hover
+            background-color: $white-ter
+            border-radius: 3px
+
   // 中央の勝率
   .chart_container
-    margin: 0 1em             // 小さくすると WIN LOSE が寄る
+    margin: 0 0.75em             // 小さくすると WIN LOSE が寄る
     position: relative
 
     // 浮かせて中央へ
