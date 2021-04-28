@@ -30,6 +30,17 @@ DotsMenuButton.SwarsUserShowDropdownMenu
 
   b-dropdown-item(separator)
 
+  template(v-for="e in base.RuleSelectInfo.values")
+    b-dropdown-item(@click="base.update_handle({rule: e.name})" :class="{'is-active': base.current_rule === e.name}")
+      b-icon(icon="filter-variant" size="is-small")
+      span {{e.name}}
+
+  b-dropdown-item(@click="base.update_handle({rule: ''})")
+    b-icon(icon="filter-variant" size="is-small")
+    span すべてのルール
+
+  b-dropdown-item(separator)
+
   b-dropdown-item(:href="base.twitter_search_url" :target="target_default")
     b-icon(icon="twitter" size="is-small" type="is-twitter")
     span Twitter検索

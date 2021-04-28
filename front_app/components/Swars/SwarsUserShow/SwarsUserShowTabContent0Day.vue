@@ -13,7 +13,7 @@
             | {{date_to_wday(row.battled_on)}}
       .columns.is-mobile.is-gapless
         .column.is-paddingless
-          WinLoseCircle(:info="row" size="is-small" narrowed)
+          WinLoseCircle(:info="row" size="is-small" :narrowed="true")
         .column.is-paddingless.tactic_name_with_count_blocks
           template(v-for="tag in row.all_tags")
             nuxt-link.tag_wrapper.has-text-weight-bold.is-size-6(

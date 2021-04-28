@@ -159,6 +159,10 @@ module Swars
       s = s.joins(:battle)
       s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
       s = s.merge(Swars::Battle.newest_order)  # 直近のものから取得
+      if v = params[:rule].presence
+        s = s.merge(Swars::Battle.rule_eq(v))
+      end
+      s
     end
 
     private
