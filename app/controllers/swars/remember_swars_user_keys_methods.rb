@@ -9,7 +9,11 @@ module Swars
     def remember_swars_user_keys_update
       if remember_swars_user_keys_max
         if user = current_swars_user
-          list = [user.key, *session[:remember_swars_user_keys]]
+          list = [
+            user.key,
+            # *query_info.lookup(:"vs"),
+            *session[:remember_swars_user_keys],
+          ]
           session[:remember_swars_user_keys] = remember_swars_user_keys_normalize(list)
         end
       end

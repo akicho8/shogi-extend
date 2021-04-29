@@ -8,6 +8,7 @@ export const app_storage = {
     return {
       visible_hash: null, //  { xxx: true, yyy: false } 形式
       display_key: null,  // 何の局面の表示をするか？
+      moto_list: null,    // 対戦相手の補完リスト
     }
   },
   computed: {
@@ -18,6 +19,7 @@ export const app_storage = {
       return {
         visible_hash: this.as_visible_hash(this.config.table_columns_hash),
         display_key:  this.config.display_key,
+        moto_list: [],
       }
     },
   },

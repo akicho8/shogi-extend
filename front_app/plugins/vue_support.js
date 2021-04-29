@@ -146,7 +146,7 @@ export default {
       str = str.replace(/[\s,]+/g, " ")     // セパレータを半角スペースで統一
       str = _.trim(str)                     // 左右のスペースを除去
       if (str.length >= 1) {
-        return str.split(/\s+/)
+        return _.uniq(str.split(/\s+/))
       } else {
         return []
       }
