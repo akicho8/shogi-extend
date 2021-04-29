@@ -1,47 +1,24 @@
 <template lang="pug">
 .modal-card.VsInputModal
-  ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-6.has-text-weight-bold
       | 対戦相手で絞る
 
-  ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    //- b-notification.mb-4(:closable="false")
-    //-   | この機能を使う場合はいったんログインしてください
-    //- p vs_user_key={{vs_user_key}}
-    //- p filtered_list={{filtered_list}}
-
     b-field
-      //- b-input(v-model="vs_user_key" ref="main_input_tag" placeholder="対戦相手のウォーズIDを入力")
-      //- b-taginput(
-      //-   v-model="vs_user_key"
-      //-   :data="filtered_list"
-      //-   autocomplete
-      //-   allow-new
-      //-   placeholder="対戦相手のウォーズIDを入力"
-      //-   open-on-focus
-      //-   append-to-body
-      //-   @typing="filtered_list_update"
-      //- )
-
+      //- https://buefy.org/documentation/autocomplete
       b-autocomplete(
         ref="main_input_tag"
         max-height="25vh"
-        v-model="vs_user_key"
+        v-model="input_body"
         :data="complete_list"
         placeholder="ウォーズIDを入力(複数指定可)"
+        @keydown.native.enter="search_handle"
         append-to-body
-        expanded
         )
-        //- open-on-focus
-        //- expanded
-        //- clearable
-        //- type="search"
-        //- size="is-medium"
-        //- @select="search_select_handle"
-        //- @keydown.native.enter="search_enter_handle"
-        //- ref="main_search_form"
+    .box(v-if="development_p && false")
+      p remember_vs_input_lines={{base.remember_vs_input_lines}}
+      p complete_list={{complete_list}}
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
@@ -59,23 +36,20 @@ export default {
   ],
   data() {
     return {
-      vs_user_key: "",
-      // filtered_list: null,
+      input_body: "",
     }
-  },
-  created() {
-    // this.filtered_list = this.base.remember_vs_input_field
   },
   mounted() {
     this.input_focus()
+    document.querySelector("body").classList.add("foo")
+  },
+  beforeDestroy() {
+    document.querySelector("body").classList.remove("foo")
   },
   methods: {
-    // filtered_list_update(text) {
-    //   this.filtered_list = this.base.remember_vs_input_field.filter((option) => {
-    //     return option.toString().toLowerCase().indexOf(text.toLowerCase()) >= 0
-    //   })
-    // },
-
+    input_focus() {
+      this.desktop_focus_to(this.$refs.main_input_tag)
+    },
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
@@ -83,22 +57,16 @@ export default {
     search_handle() {
       this.sound_play("click")
       this.$emit("close")
-      this.base.vs_input_filter_run_handle(this.vs_user_key)
-    },
-    input_focus() {
-      this.desktop_focus_to(this.$refs.main_input_tag)
+      this.base.vs_input_remember(this.input_body)
+      this.base.vs_input_filter_run_handle(this.input_body)
     },
   },
   computed: {
     complete_list() {
-      // const list = this.base.config.remember_swars_user_keys
-      const list = this.base.remember_vs_input_field
+      const list = this.base.remember_vs_input_lines
       if (list) {
-        // list = _.reject(list, e => e === this.base.config.current_swars_user_key)
         return list.filter((option) => {
-          // if (option != this.base.config.current_swars_user_key) {
-          return option.toString().toLowerCase().indexOf((this.vs_user_key || "").toLowerCase()) >= 0
-          // }
+          return option.toString().toLowerCase().indexOf((this.input_body || "").toLowerCase()) >= 0
         })
       }
     },
@@ -107,12 +75,14 @@ export default {
 </script>
 
 <style lang="sass">
-.dropdown-content
-  max-width: 200px
+// BUG: append-to-body すると横の長さが最大化してしまう。最新の buefy では直っている可能性あり
+body.foo > .autocomplete
+  .dropdown-menu
+    max-width: calc((46ch - 1rem * 2) * 0.66) ! important
 
 .VsInputModal
   +desktop
-    width: 40ch
+    width: 46ch
   .modal-card-body
     padding: 1.0rem
   .modal-card-foot
