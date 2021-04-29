@@ -16,7 +16,7 @@ module Api
 
       render json: {
         page_title: page_title,
-        leagues: Tsl::League.all.as_json(only: [:generation]),
+        leagues: Tsl::League.order(generation: :desc).as_json(only: [:generation]),
         league: current_league.as_json({
             only: [
               :generation,
