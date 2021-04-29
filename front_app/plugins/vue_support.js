@@ -171,7 +171,7 @@ export default {
     debug_alert(message) {
       if (this.development_p) {
         if (message != null) {
-          this.$buefy.toast.open({message: message.toString(), position: "is-bottom", type: "is-danger", duration: 1000 * 1.0, queue: false})
+          this.$buefy.toast.open({message: message.toString(), position: "is-bottom", type: "is-danger", duration: 1000 * 2.0, queue: false})
         }
       }
     },
