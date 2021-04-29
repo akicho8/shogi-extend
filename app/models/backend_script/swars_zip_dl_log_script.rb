@@ -18,14 +18,14 @@ module BackendScript
     def row_build(record)
       {
         "ID"       => record.id,
-        "対象棋譜" => record.swars_user.user_key,
         "取得者"   => user_link_to("#{record.user.name}(#{record.user.swars_zip_dl_logs.count})", record.user),
+        "対象棋譜" => record.swars_user.user_key,
         "クエリ"   => record.query,
         "個数"     => record.dl_count,
         "個数"     => record.dl_count,
         "範囲"     => record.begin_at.to_s(:ymdhm),
         "...範囲"  => record.end_at.to_s(:ymdhm),
-        "DL日時"   => record.created_at.to_s(:ymdhm),
+        "DL日時"   => record.created_at.to_s(:ymdhms),
       }
     end
   end
