@@ -14,12 +14,11 @@
 
   MainSection
     .container
-      .columns
+      .columns.is-gapless
         .column
           .box.is-shadowless.is-inline-block.is-marginless
             .buttons.are-small
               template(v-for="league in config.leagues")
-                //- exact-active-class="is-primary"
                 b-button(tag="nuxt-link" :to="{name: 'three-stage-leagues-generation', params: {generation: league.generation}}" exact-active-class="is-primary" @click.native="sound_play('click')")
                   | {{league.generation}}
 
@@ -72,7 +71,5 @@ export default {
 <style lang="sass">
 .ThreeStageLeagueApp
   .MainSection.section
-    +mobile
-      padding-right: 0.25rem
-      padding-left: 0.25rem
+    padding: 0
 </style>
