@@ -26,8 +26,8 @@
 
 module Swars
   class ZipDlLog < ApplicationRecord
-    belongs_to :user,       class_name: "::User"
-    belongs_to :swars_user, class_name: "::Swars::User"
+    belongs_to :user,       class_name: "::User"        # ダウンロードしようとしている人
+    belongs_to :swars_user, class_name: "::Swars::User" # ダウンロードされようとしている人
 
     with_options presence: true do
       validates :begin_at

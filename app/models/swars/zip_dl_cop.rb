@@ -66,7 +66,7 @@ module Swars
       io = to_zip_output_stream
 
       sec = "%.2f s" % (Time.current - t)
-      SlackAgent.message_send(key: "ZIP #{sec}", body: zip_filename)
+      SlackAgent.message_send(key: "ZIP #{sec}", body: "[#{current_user.key}] #{zip_filename}")
 
       # 前回から続きのスコープが変化すると zip_filename にも影響するので最後の最後に呼ぶ
       swars_zip_dl_logs_create!
@@ -182,7 +182,7 @@ module Swars
     end
 
     def current_user
-      params[:current_user]
+      params[:current_user] or raise ArgumentError
     end
 
     def swars_user

@@ -102,6 +102,10 @@ export default {
 
   fetchOnServer: false,
   fetch() {
+    if (this.sns_login_required()) {
+      return
+    }
+
     if (true) {
       const e = this.current_params
       if (e.query && e.sort_column && e.sort_order) {
