@@ -95,6 +95,10 @@ RSpec.describe Swars::BattlesController, type: :controller do
     end
 
     describe "ZIPダウンロード" do
+      before do
+        user_login
+      end
+
       def test1(body_encode)
         get :index, params: { query: "devuser1", format: "zip", body_encode: body_encode}
         assert { response.status == 200 }
