@@ -83,6 +83,7 @@ import { app_core        } from "./app_core.js"
 import { app_search      } from "./app_search.js"
 import { app_sidebar     } from "./app_sidebar.js"
 import { app_storage     } from "./app_storage.js"
+import { app_vs_input     } from "./app_vs_input.js"
 
 import { ExternalAppInfo } from "@/components/models/external_app_info.js"
 import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
@@ -98,6 +99,7 @@ export default {
     app_sidebar,
     app_chore,
     app_storage,
+    app_vs_input,
   ],
 
   data() {

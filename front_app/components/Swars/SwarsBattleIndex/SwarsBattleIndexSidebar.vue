@@ -41,7 +41,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             SwarsBattleIndexFilterMenuItem(:base="base" label="50手以下で負け"  q="turn_max:<=50 judge:lose")
             SwarsBattleIndexFilterMenuItem(:base="base" label="なし"            q="")
 
-          b-menu-item.is_active_unset(@click="base.vs_input_handle" label="対戦相手で絞る" :disabled="menu_item_disabled")
+          b-menu-item.is_active_unset(@click="base.vs_input_modal_handle" label="対戦相手で絞る" :disabled="menu_item_disabled")
 
         b-menu-list(label="一括取得")
           //- b-menu-item.is_active_unset(:disabled="menu_item_disabled" :expanded.sync="dl_menu_item_expanded_p" @click="sound_play('click')")

@@ -137,6 +137,21 @@ export default {
       return list
     },
 
+    // str_to_keywords("　,　a　,b,") // => ["a", "b"]
+    // str_to_keywords(",")           // => []
+    // str_to_keywords("")            // => []
+    str_to_keywords(str) {
+      str = str ?? []
+      str = str.replace(/\p{blank}+/g, " ") // 全角スペース → 半角スペース
+      str = str.replace(/[\s,]+/g, " ")     // セパレータを半角スペースで統一
+      str = _.trim(str)                     // 左右のスペースを除去
+      if (str.length >= 1) {
+        return str.split(/\s+/)
+      } else {
+        return []
+      }
+    },
+
     process_now() {
       this.$buefy.loading.open()
     },

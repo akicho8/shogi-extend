@@ -328,9 +328,9 @@ module Swars
             s = s.where(id: m.pluck(:battle_id))
             filtered = true
           end
-          if v = query_info.lookup_one(:"vs") # 相手
-            user = Swars::User.find_by(user_key: v)
-            m = current_swars_user.op_memberships.where(user: user)
+          if v = query_info.lookup(:"vs") # 相手
+            users = Swars::User.where(user_key: v)
+            m = current_swars_user.op_memberships.where(user: users)
             s = s.where(id: m.pluck(:battle_id))
             filtered = true
           end
