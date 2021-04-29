@@ -38,9 +38,9 @@ export const app_message = {
     message_share_broadcasted(params) {
       if (params.message) {
         this.$buefy.toast.open({
-          container: ".CustomShogiPlayer",
+          container: ".BoardWood",
           message: `${params.from_user_name}: ${params.message}`,
-          position: "is-bottom",
+          position: "is-top",
           type: "is-white",
           queue: false,
         })

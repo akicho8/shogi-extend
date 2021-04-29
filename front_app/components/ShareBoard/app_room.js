@@ -188,7 +188,7 @@ export const app_room = {
         }
 
         // 「alice ▲76歩」と表示しながら
-        this.toast_ok(`${params.from_user_name} ${params.last_move_kif}`, {toast_only: true, container: ".CustomShogiPlayer"})
+        this.toast_ok(`${params.from_user_name} ${params.last_move_kif}`, {toast_only: true})
 
         // 「aliceさん」の発声後に「7 6 ふー！」を発声する
         this.talk(this.user_call_name(params.from_user_name), {
