@@ -57,6 +57,10 @@ export default {
   },
   fetchOnServer: false,
   fetch() {
+    if (this.sns_login_required()) {
+      return
+    }
+
     if (this.g_current_user) {
       return this.$axios.$get("/api/settings/email_fetch").then(e => {
         this.to_email = e.email
