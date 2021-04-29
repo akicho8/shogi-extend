@@ -12,7 +12,7 @@
         @keydown.native.enter="search_handle"
         placeholder="ウォーズIDを入力(複数指定可)"
         )
-    b-taglist
+    b-taglist(v-if="present_p(base.remember_vs_user_keys)")
       template(v-for="str in base.remember_vs_user_keys")
         b-tag.is-clickable(@click.native="toggle_handle(str)" :type="{'is-primary': vs_user_keys.includes(str)}")
           | {{str}}
