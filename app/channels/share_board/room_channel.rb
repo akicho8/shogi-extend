@@ -39,6 +39,7 @@ module ShareBoard
     end
 
     def message_share(data)
+      SlackAgent.message_send(key: "共有将棋盤チャット", body: %(#{data["from_user_name"]}: #{data["message"]}))
       broadcast(:message_share_broadcasted, data)
     end
 
