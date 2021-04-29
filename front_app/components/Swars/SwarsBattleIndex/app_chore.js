@@ -1,4 +1,5 @@
 import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
+import _ from "lodash"
 
 export const app_chore = {
   methods: {
@@ -62,6 +63,24 @@ export const app_chore = {
             this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を補完」のほうを使ってください`)
           },
         })
+      })
+    },
+
+    vs_input_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
+      this.$buefy.dialog.prompt({
+        title: "対戦相手で絞る",
+        confirmText: "実行",
+        cancelText: "キャンセル",
+        inputAttrs: { type: "text", value: "", required: false, placeholder: "対戦相手のウォーズIDを入力" },
+        onCancel: () => this.sound_play("click"),
+        onConfirm: value => {
+          this.sound_play("click")
+          value = _.trim(value)
+          const new_query = [this.config.current_swars_user_key, `vs:${value}`].join(" ")
+          this.$router.push({name: "swars-search", query: {query: new_query}})
+        },
       })
     },
   },
