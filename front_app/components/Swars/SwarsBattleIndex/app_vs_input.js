@@ -27,7 +27,7 @@ export const app_vs_input = {
     },
 
     // 入力値 str を正規化して再検索
-    vs_input_filter_run_handle(str) {
+    vs_filter_run_handle(str) {
       const keywords = this.str_to_keywords(str)
       if (keywords.length >= 1) {
         str = "vs:" + keywords.join(",")
@@ -38,11 +38,11 @@ export const app_vs_input = {
       this.$router.push({name: "swars-search", query: {query: new_query}})
     },
 
-    // 入力値 str を正規化してスペース区切りにして補完リストとして localStorage に入れておく
-    vs_input_remember(str) {
+    // 入力値 str を正規化して補完リストとして localStorage に入れておく
+    vs_user_keys_remember(str) {
       const keywords = this.str_to_keywords(str)
       if (keywords.length >= 1) {
-        this.remember_vs_input_lines = _.take(_.uniq([keywords.join(" "), ...this.remember_vs_input_lines]), VS_INPUT_REMEMBER_MAX)
+        this.remember_vs_user_keys = _.take(_.uniq([...keywords, ...this.remember_vs_user_keys]), VS_INPUT_REMEMBER_MAX)
       }
     },
   },

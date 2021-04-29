@@ -152,6 +152,18 @@ export default {
       }
     },
 
+    // keywords_str_toggle("a b", "c")   //=> "a b c"
+    // keywords_str_toggle("a b c", "c") //=> "a b"
+    keywords_str_toggle(keywords_str, str) {
+      let keywords = this.str_to_keywords(keywords_str)
+      if (keywords.includes(str)) {
+        _.pull(keywords, str)
+      } else {
+        keywords.push(str)
+      }
+      return keywords.join(" ")
+    },
+
     process_now() {
       this.$buefy.loading.open()
     },

@@ -6,19 +6,16 @@
 
   section.modal-card-body
     b-field
-      //- https://buefy.org/documentation/autocomplete
-      b-autocomplete(
-        ref="main_input_tag"
-        max-height="25vh"
+      b-input(
         v-model="input_body"
-        :data="complete_list"
-        placeholder="ウォーズIDを入力(複数指定可)"
+        ref="main_input_tag"
         @keydown.native.enter="search_handle"
-        append-to-body
+        placeholder="ウォーズIDを入力(複数指定可)"
         )
-    .box(v-if="development_p && false")
-      p remember_vs_input_lines={{base.remember_vs_input_lines}}
-      p complete_list={{complete_list}}
+    b-taglist
+      template(v-for="str in base.remember_vs_user_keys")
+        b-tag.is-clickable(@click.native="toggle_handle(str)" :type="{'is-primary': vs_user_keys.includes(str)}")
+          | {{str}}
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
@@ -41,14 +38,17 @@ export default {
   },
   mounted() {
     this.input_focus()
-    document.querySelector("body").classList.add("foo")
-  },
-  beforeDestroy() {
-    document.querySelector("body").classList.remove("foo")
   },
   methods: {
     input_focus() {
       this.desktop_focus_to(this.$refs.main_input_tag)
+    },
+    toggle_handle(str) {
+      this.sound_play("click")
+      this.input_body = this.keywords_str_toggle(this.input_body, str)
+      if (this.input_body.length >= 1) {
+        this.input_body += " "
+      }
     },
     close_handle() {
       this.sound_play("click")
@@ -56,30 +56,20 @@ export default {
     },
     search_handle() {
       this.sound_play("click")
+      this.base.vs_user_keys_remember(this.input_body)
+      this.base.vs_filter_run_handle(this.input_body)
       this.$emit("close")
-      this.base.vs_input_remember(this.input_body)
-      this.base.vs_input_filter_run_handle(this.input_body)
     },
   },
   computed: {
-    complete_list() {
-      const list = this.base.remember_vs_input_lines
-      if (list) {
-        return list.filter((option) => {
-          return option.toString().toLowerCase().indexOf((this.input_body || "").toLowerCase()) >= 0
-        })
-      }
+    vs_user_keys() {
+      return this.str_to_keywords(this.input_body)
     },
   },
 }
 </script>
 
 <style lang="sass">
-// BUG: append-to-body すると横の長さが最大化してしまう。最新の buefy では直っている可能性あり
-body.foo > .autocomplete
-  .dropdown-menu
-    max-width: calc((46ch - 1rem * 2) * 0.66) ! important
-
 .VsInputModal
   +desktop
     width: 46ch
