@@ -64,14 +64,14 @@ export default {
     }
   },
   created() {
-    // this.filtered_list = this.base.moto_list
+    // this.filtered_list = this.base.remember_vs_input_field
   },
   mounted() {
     this.input_focus()
   },
   methods: {
     // filtered_list_update(text) {
-    //   this.filtered_list = this.base.moto_list.filter((option) => {
+    //   this.filtered_list = this.base.remember_vs_input_field.filter((option) => {
     //     return option.toString().toLowerCase().indexOf(text.toLowerCase()) >= 0
     //   })
     // },
@@ -92,7 +92,7 @@ export default {
   computed: {
     complete_list() {
       // const list = this.base.config.remember_swars_user_keys
-      const list = this.base.moto_list
+      const list = this.base.remember_vs_input_field
       if (list) {
         // list = _.reject(list, e => e === this.base.config.current_swars_user_key)
         return list.filter((option) => {

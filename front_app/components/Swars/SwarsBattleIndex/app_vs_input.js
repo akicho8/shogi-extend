@@ -27,7 +27,7 @@ export const app_vs_input = {
     vs_input_filter_run_handle(str) {
       const keywords = this.str_to_keywords(str)
       if (keywords.length >= 1) {
-        this.moto_list = _.take(_.uniq([keywords.join(" "), ...this.moto_list]), 30)
+        this.remember_vs_input_field = _.take(_.uniq([keywords.join(" "), ...this.remember_vs_input_field]), 30)
         str = "vs:" + keywords.join(",")
       } else {
         str = null
