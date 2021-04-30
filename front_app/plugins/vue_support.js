@@ -432,10 +432,13 @@ export default {
       return strip_tags(...args)
     },
 
-    // call_name("SOS団")  → "SOS団"
-    // call_name("ありす") → "ありすさん"
+    // user_call_name("SOS団")             → "SOS団"
+    // user_call_name("ありす")            → "ありすさん"
+    // user_call_name("ありす123(居飛車)") → "ありすさん"
     user_call_name(name) {
-      name = name.replace(/(\D+)\d+/, "$1")    // "foo123" → "foo"
+      name = name.replace(/(.+)\(.*\)$/, "$1") // "foo123(xxx)"   → "foo123"
+      name = name.replace(/(.+)（.*）$/, "$1") // "foo123（xxx）" → "foo123"
+      name = name.replace(/(\D+)\d+$/, "$1")   // "foo123"        → "foo"
       if (name.match(/.(さん|サン|ｻﾝ|くん|クン|ｸﾝ|ちゃん|チャン|ﾁｬﾝ|マン|さま|サマ|ｻﾏ|様|氏|段|級|団|冠)[!！]?$/)) {
         return name
       }
