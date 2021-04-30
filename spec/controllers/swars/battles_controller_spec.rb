@@ -43,15 +43,31 @@ RSpec.describe Swars::BattlesController, type: :controller do
   end
 
   describe "詳細検索" do
-    it "vs:tag" do
-      user1, user2 = record.memberships.collect { |e| e.user.key }
-      get :index, params: {query: "#{user1} vs:#{user2}"}
+    it "vs" do
+      get :index, params: {query: "Yamada_Taro vs:devuser1"}
       assert { controller.current_scope.count == 1 }
     end
 
-    it "judge:tag" do
+    it "judge" do
       get :index, params: {query: "devuser1 judge:win"}
       assert { controller.current_scope.count == 1 }
+    end
+
+    it "vs-grade" do
+      get :index, params: {query: "devuser1 vs-grade:四段"}
+      assert { controller.current_scope.count == 1 }
+    end
+
+    it "turn_max:>=500" do
+      get :index, params: {query: "devuser1 turn_max:>=500"}
+      assert { controller.current_scope.count == 0 }
+      assert { response.status == 200 }
+    end
+
+    it "turn_max:<=500" do
+      get :index, params: {query: "devuser1 turn_max:<=500"}
+      assert { controller.current_scope.count == 1 }
+      assert { response.status == 200 }
     end
   end
 
@@ -66,19 +82,6 @@ RSpec.describe Swars::BattlesController, type: :controller do
       assert { response.status == 200 }
       assert { assigns(:current_records).size == 1 }
       assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
-    end
-
-    describe "turn_max:>=500" do
-      it do
-        get :index, params: {query: "devuser1 turn_max:>=500"}
-        assert { controller.current_scope.count == 0 }
-        assert { response.status == 200 }
-      end
-      it do
-        get :index, params: {query: "devuser1 turn_max:<=500"}
-        assert { controller.current_scope.count == 1 }
-        assert { response.status == 200 }
-      end
     end
 
     describe "ウォーズの対局キーが含まれるURLで検索" do
@@ -167,9 +170,3 @@ RSpec.describe Swars::BattlesController, type: :controller do
     end
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> ...............
-# >>
-# >> Finished in 10.73 seconds (files took 2.32 seconds to load)
-# >> 15 examples, 0 failures
-# >>
