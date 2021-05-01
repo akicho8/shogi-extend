@@ -15,6 +15,10 @@ export const app_room = {
   mounted() {
     this.ls_setup() // user_name の復帰
 
+    if (this.$route.query.force_user_name) {
+      this.user_name = this.$route.query.force_user_name
+    }
+
     if (this.room_code) {
       if (this.user_name) {
         // 合言葉設定済みURLから来て名前は設定しているのですぐに共有する
