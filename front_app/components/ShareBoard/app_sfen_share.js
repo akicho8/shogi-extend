@@ -7,11 +7,11 @@ const RETRY_CHECK_DELAY      = 5    // N秒後に相手からの通知の結果(
 export const app_sfen_share = {
   data() {
     return {
-      sequence_code: 0,         // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
-      sequence_codes: [],       // それを最大 SEQUENCE_CODES_MAX 件保持しておく
-      send_success_p: false,    // 直近のSFENの同期が成功したか？
-      sfen_share_params: null,  // リトライするとき用に送るパラメータを保持しておく
-      retry_check_delay_id: null,           // 送信してから RETRY_CHECK_DELAY 秒後に動かすための setTimeout の戻値
+      sequence_code: 0,             // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
+      sequence_codes: [],           // それを最大 SEQUENCE_CODES_MAX 件保持しておく
+      send_success_p: false,        // 直近のSFENの同期が成功したか？
+      sfen_share_params: null,      // リトライするとき用に送るパラメータを保持しておく
+      retry_check_delay_id: null,   // 送信してから RETRY_CHECK_DELAY 秒後に動かすための setTimeout の戻値
     }
   },
   beforeDestroy() {
@@ -169,6 +169,6 @@ export const app_sfen_share = {
     },
   },
   computed: {
-    RETRY_CHECK_DELAY() { parseInt(this.$route.query.RETRY_CHECK_DELAY ?? RETRY_CHECK_DELAY) }
+    RETRY_CHECK_DELAY() { parseFloat(this.$route.query.RETRY_CHECK_DELAY ?? RETRY_CHECK_DELAY) }
   },
 }
