@@ -17,7 +17,27 @@ export const app_ordered_members = {
       new_strict_key: null, // 手番制限
     }
   },
+
+  created() {
+    this.os_setup_by_url_params()
+  },
+
   methods: {
+    // alice bob carol dave の順番で設定する場合は
+    // ordered_member_names=alice,bob,carol,dave とする
+    os_setup_by_url_params() {
+      const names = this.str_to_keywords(this.$route.query.ordered_member_names)
+      if (this.present_p(names)) {
+        this.order_func_p = true
+        this.ordered_members = names.map((e, i) => ({
+          enabled_p: true,
+          order_index: i,
+          user_name: e,
+        }))
+      }
+    },
+
+    // 順番設定モーダル起動
     os_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
