@@ -141,7 +141,7 @@ export default {
     // str_to_keywords(",")           // => []
     // str_to_keywords("")            // => []
     str_to_keywords(str) {
-      str = str ?? []
+      str = str ?? ""
       str = str.replace(/\p{blank}+/g, " ") // 全角スペース → 半角スペース
       str = str.replace(/[\s,]+/g, " ")     // セパレータを半角スペースで統一
       str = _.trim(str)                     // 左右のスペースを除去
