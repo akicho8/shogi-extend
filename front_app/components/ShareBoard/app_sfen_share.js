@@ -11,7 +11,7 @@ export const app_sfen_share = {
       sequence_codes: [],       // それを最大 SEQUENCE_CODES_MAX 件保持しておく
       send_success_p: false,    // 直近のSFENの同期が成功したか？
       sfen_share_params: null,  // リトライするとき用に送るパラメータを保持しておく
-      delay_id: null,           // 送信してから RETRY_CHECK_DELAY 秒後に動かすための setTimeout の戻値
+      retry_check_delay_id: null,           // 送信してから RETRY_CHECK_DELAY 秒後に動かすための setTimeout の戻値
     }
   },
   beforeDestroy() {
@@ -41,7 +41,7 @@ export const app_sfen_share = {
       if (RETRY_FUNCTION_ENABLED) {
         if (this.order_func_p && this.ordered_members_present_p) {
           this.retry_confirm_cancel()
-          this.delay_id = this.delay_block(RETRY_CHECK_DELAY, () => {
+          this.retry_check_delay_id = this.delay_block(this.RETRY_CHECK_DELAY, () => {
             if (!this.send_success_p) {
               this.retry_confirm()
             }
@@ -51,9 +51,9 @@ export const app_sfen_share = {
     },
 
     retry_confirm_cancel() {
-      if (this.delay_id) {
-        this.delay_stop(this.delay_id)
-        this.delay_id = null
+      if (this.retry_check_delay_id) {
+        this.delay_stop(this.retry_check_delay_id)
+        this.retry_check_delay_id = null
       }
     },
 
@@ -167,5 +167,8 @@ export const app_sfen_share = {
         }
       }
     },
+  },
+  computed: {
+    RETRY_CHECK_DELAY() { parseInt(this.$route.query.RETRY_CHECK_DELAY ?? RETRY_CHECK_DELAY) }
   },
 }
