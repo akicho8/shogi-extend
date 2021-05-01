@@ -60,6 +60,8 @@ export const app_ordered_members = {
       })
     },
 
+    // 順番設定モーダルを閉じる
+    // 別のところから強制的に閉じたいとき用
     os_modal_close() {
       if (this.$os_modal_instance) {
         this.$os_modal_instance.close()
@@ -70,6 +72,7 @@ export const app_ordered_members = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // 順番設定モーダル内で使うデータの準備
     os_modal_vars_setup() {
       this.debug_alert("os_modal_vars_setup")
       this.os_table_rows_build()
@@ -78,7 +81,7 @@ export const app_ordered_members = {
 
     os_table_rows_build() {
       if (this.ordered_members == null) {
-        // 1度も設定されていないので全員を「参加」状態で入れる
+        // 最初は全員を「参加」状態で入れる
         this.os_table_rows = _.cloneDeep(this.os_table_rows_default)
       } else {
         // 1度自分で設定または他者から共有されている ordered_members を使う

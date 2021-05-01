@@ -2,6 +2,7 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox(v-if="development_p")
+      p $route.query: {{$route.query}}
       p sp_human_side: {{sp_human_side}}
       p current_turn_self_p: {{current_turn_self_p}}
       p current_turn_user_name: {{current_turn_user_name}}

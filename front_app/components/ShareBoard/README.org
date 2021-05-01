@@ -1,3 +1,20 @@
+* URLパラメータ
+
+  |----------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
+  | key                  | desc                                       | Example                                                                                  |
+  |----------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
+  | default_user_name    | localStorage が空のときの user_name 初期値 | http://0.0.0.0:4000/share-board?room_code=a&default_user_name=bob                        |
+  | force_user_name      | localStorage に関係なくこの名前にする      | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice                        |
+  | send_success_skip    | SFEN受信OKの返信しても送信完了にしない     | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&send_success_skip=true |
+  | ordered_member_names | 順番設定の名前(複数)                       |                                                                                          |
+  |                      | 時計の設定                                 |                                                                                          |
+  |----------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
+
+** alice と bob の部屋aを作るには？
+
+  http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice
+  http://0.0.0.0:4000/share-board?room_code=a&force_user_name=bob
+
 * 最初の盤共有について (app_room_init.js)
 
   盤情報が送られてきたときどの情報がいちばん正しいのかがわからない
