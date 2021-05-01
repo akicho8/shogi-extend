@@ -1,8 +1,8 @@
 import _ from "lodash"
 
 const RETRY_FUNCTION_ENABLED = true // この機能を有効にするか？
-const SEQUENCE_CODES_MAX     = 10   // sequence_code は直近N件保持しておく
-const RETRY_CHECK_DELAY      = 5    // N秒後に相手からの通知の結果(send_success_p)を確認する
+const SEQUENCE_CODES_MAX     = 5    // sequence_code は直近N件保持しておく
+const RETRY_CHECK_DELAY      = 3    // N秒後に相手からの通知の結果(send_success_p)を確認する
 
 export const app_sfen_share = {
   data() {
@@ -41,11 +41,13 @@ export const app_sfen_share = {
       if (RETRY_FUNCTION_ENABLED) {
         if (this.order_func_p && this.ordered_members_present_p) {
           this.retry_confirm_cancel()
-          this.retry_check_delay_id = this.delay_block(this.RETRY_CHECK_DELAY, () => {
-            if (!this.send_success_p) {
-              this.retry_confirm()
-            }
-          })
+          if (this.RETRY_CHECK_DELAY >= 0) {
+            this.retry_check_delay_id = this.delay_block(this.RETRY_CHECK_DELAY, () => {
+              if (!this.send_success_p) {
+                this.retry_confirm()
+              }
+            })
+          }
         }
       }
     },
@@ -151,6 +153,7 @@ export const app_sfen_share = {
 
     //////////////////////////////////////////////////////////////////////////////// share_sfen した人に受信したこと通知する
     received_ok(params) {
+      this.debug_alert("受信OK")
       this.ac_room_perform("received_ok", {
         ...params,
       }) // --> app/channels/share_board/room_channel.rb
@@ -159,16 +162,17 @@ export const app_sfen_share = {
       const { received_params } = params                                   // 自分が送って相手が受信した内容
       if (received_params.from_user_code === this.user_code) {             // いろんな人に届くため送信元の確認
         if (this.sequence_codes.includes(received_params.sequence_code)) { // 最近送ったものなら
-          if (this.development_p && this.$route.query.send_success_skip) {
+          if (this.development_p && this.$route.query.send_success_skip === "true") {
             // 送信成功としない
           } else {
             this.send_success_p = true                                    // 送信成功とする
+            this.debug_alert("送信OK")
           }
         }
       }
     },
   },
   computed: {
-    RETRY_CHECK_DELAY() { parseFloat(this.$route.query.RETRY_CHECK_DELAY ?? RETRY_CHECK_DELAY) }
+    RETRY_CHECK_DELAY() { return parseFloat(this.$route.query.RETRY_CHECK_DELAY ?? RETRY_CHECK_DELAY) }
   },
 }

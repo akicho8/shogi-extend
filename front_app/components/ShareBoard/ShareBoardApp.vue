@@ -2,6 +2,8 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox(v-if="development_p")
+      p send_success_p={{send_success_p}}
+      p sequence_codes={{sequence_codes}}
       p $route.query: {{$route.query}}
       p sp_human_side: {{sp_human_side}}
       p current_turn_self_p: {{current_turn_self_p}}
@@ -347,7 +349,14 @@ export default {
     },
 
     current_url_params() {
-      const params = {
+      let params = {}
+
+      if (this.development_p || true) {
+        params = { ...this.$route.query, ...params }
+      }
+
+      params = {
+        ...params,
         body:  this.current_body, // 編集モードでもURLを更新するため
         turn:  this.turn_offset,
         title: this.current_title,
