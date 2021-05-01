@@ -2,9 +2,6 @@ import _ from "lodash"
 import dayjs from "dayjs"
 
 const DESTROY_AFTER_WAIT = 3.0
-const SEQUENCE_QUEUE_MAX = 10
-
-const DOREDAKEMATUKA = 2
 
 export const app_room = {
   data() {
@@ -13,11 +10,6 @@ export const app_room = {
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
       room_creating_busy: 0,                   // 1以上なら接続を試みている最中
       ac_room: null,
-      sequence_key: 0,
-      sequence_queue: [],
-      received_p: false,
-      sfen_share_last_params: null,
-      delay_id: null,
     }
   },
   mounted() {
@@ -148,139 +140,6 @@ export const app_room = {
 
       if (this.ac_room) {
         this.ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-    sfen_share2(params) {
-      this.__assert__(this.current_sfen, "this.current_sfen")
-
-      this.sequence_queue.push(this.sequence_key)
-      this.sequence_queue = _.takeRight(this.sequence_queue, SEQUENCE_QUEUE_MAX)
-
-      this.sfen_share_last_params = {
-        sequence_key: this.sequence_key,
-        ...params,
-        ...this.current_sfen_attrs, // turn_offset は含まれる
-      }
-
-      this.sequence_key += 1
-
-      this.sfen_share()
-    },
-
-    sfen_share() {
-      this.received_p = false
-      this.ac_room_perform("sfen_share", this.sfen_share_last_params) // --> app/channels/share_board/room_channel.rb
-
-      if (this.order_func_p && this.ordered_members_present_p) {
-        this.delay_stop(this.delay_id)
-        this.delay_id = this.delay_block(DOREDAKEMATUKA, () => {
-          if (!this.received_p) {
-            this.retry_confirm()
-          }
-        })
-      }
-    },
-
-    retry_confirm() {
-      this.sound_play("click")
-
-      const next_user_name = this.user_name_by_turn(this.sfen_share_last_params.turn_offset)
-      const message = `次の手番の${this.user_call_name(next_user_name)}の反応がないため再送しますか？`
-      this.talk(message)
-
-      this.$buefy.dialog.confirm({
-        type: "is-warning",
-        hasIcon: true,
-        title: "同期失敗",
-        message: message,
-        cancelText: "諦める",
-        confirmText: "再送する",
-        focusOn: "confirm",
-        onCancel: () => {
-          this.talk_stop()
-          this.sound_play("click")
-        },
-        onConfirm: () => {
-          this.talk_stop()
-          this.sound_play("click")
-          this.sfen_share()
-        },
-      })
-    },
-
-    sfen_share_broadcasted(params) {
-      // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
-
-      if (params.from_user_code === this.user_code) {
-        // 自分から自分へ
-      } else {
-        // もし edit_mode に入っている場合は強制的に解除する
-        if (this.edit_mode_p) {
-          this.debug_alert("指し手のブロードキャストにより編集を解除")
-          this.sp_run_mode = "play_mode"
-        }
-        // 受信したSFENを盤に反映
-        this.setup_by_params(params)
-      }
-      if (false) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.turn_offset}手目を指しました`)
-      }
-      if (false) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
-      }
-      if (true) {
-        const prev_user_name = this.user_name_by_turn(params.turn_offset - 1)
-        const next_user_name = this.user_name_by_turn(params.turn_offset)
-        const next_user_received_p = this.user_name === next_user_name
-
-        if (next_user_received_p) {
-          this.tn_notify()
-        }
-
-        if (prev_user_name) {
-          if (params.from_user_name !== prev_user_name) {
-            this.debug_alert(`${this.user_call_name(prev_user_name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
-          }
-        }
-
-        // 「alice ▲76歩」と表示しながら
-        this.toast_ok(`${params.from_user_name} ${params.last_move_kif}`, {toast_only: true})
-
-        // 「aliceさん」の発声後に「7 6 ふー！」を発声する
-        this.talk(this.user_call_name(params.from_user_name), {
-          onend: () => this.talk(params.yomiage, {
-            onend: () => {
-              if (next_user_name) {
-                this.toast_ok(`次は${this.user_call_name(next_user_name)}の手番です`)
-              }
-            },
-          }),
-        })
-
-        if (this.order_func_p) {
-          if (next_user_received_p) {
-            this.received_ok({
-              received_params: params,
-              next_user_received_p: next_user_received_p,
-            })
-          }
-        }
-      }
-
-      this.al_add(params)
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-    received_ok(params) {
-      this.ac_room_perform("received_ok", {
-        ...params,
-      }) // --> app/channels/share_board/room_channel.rb
-    },
-    received_ok_broadcasted(params) {
-      if (this.sequence_queue.includes(params.received_params.sequence_key)) {
-        this.received_p = true
       }
     },
 

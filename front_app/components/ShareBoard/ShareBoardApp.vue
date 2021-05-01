@@ -139,7 +139,7 @@ import { app_message } from "./app_message.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
 import { app_export       } from "./app_export.js"
-import { app_share_retry  } from "./app_share_retry.js"
+import { app_sfen_share  } from "./app_sfen_share.js"
 
 import { FormatTypeInfo   } from "@/components/models/format_type_info.js"
 
@@ -223,10 +223,11 @@ export default {
     // 局面0で1手指したとき last_move_info.turn_offset は 1
     play_mode_advanced_full_moves_sfen2_set(v, last_move_info) {
       this.current_sfen = v
-      this.sfen_share2({
+      this.sfen_share_params_set({
         last_move_kif: last_move_info.to_kif_without_from,
         yomiage: last_move_info.to_yomiage,
       })
+      this.sfen_share()
 
       // 時計があれば操作した側のボタンを押す
       if (this.chess_clock) {
@@ -255,7 +256,7 @@ export default {
         this.current_sfen = v
         // 意図せず共有してしまうのを防ぐため共有しない
         // if (false) {
-        //   this.sfen_share2()
+        //   this.sfen_share_params_set()
         // }
       }
     },
