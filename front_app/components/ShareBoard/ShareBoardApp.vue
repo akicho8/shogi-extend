@@ -219,7 +219,7 @@ export default {
     },
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
-    // 局面0で1手指したとき last_move_info.turn_offset は 0
+    // 局面0で1手指したとき last_move_info.turn_offset は 1
     play_mode_advanced_full_moves_sfen2_set(v, last_move_info) {
       this.current_sfen = v
       this.sfen_share({
