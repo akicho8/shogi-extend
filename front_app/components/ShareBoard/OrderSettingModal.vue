@@ -135,7 +135,7 @@ export default {
     // 自分も含めて受信して更新する
     form_params_share(message) {
       this.base.ordered_members_share({
-        ordered_members: this.new_ordered_members,
+        ordered_members: this.base.new_ordered_members,
         strict_key: this.base.new_strict_key,
         message: message,
       })
@@ -143,10 +143,6 @@ export default {
   },
 
   computed: {
-    // 参加者だけの配列
-    new_ordered_members() {
-      return this.base.os_table_rows.filter(e => e.enabled_p)
-    },
   },
 }
 </script>

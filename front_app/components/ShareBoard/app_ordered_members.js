@@ -188,6 +188,11 @@ export const app_ordered_members = {
       return v
     },
 
+    // 参加者だけの配列
+    new_ordered_members() {
+      return this.os_table_rows.filter(e => e.enabled_p)
+    },
+
     // 手番制限
     // 条件 機能ON
     // 条件 共有中のとき
