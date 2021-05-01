@@ -165,6 +165,7 @@ export default {
     app_sidebar,
     app_storage,
     app_export,
+    app_sfen_share,
   ],
   props: {
     config: { type: Object, required: true },

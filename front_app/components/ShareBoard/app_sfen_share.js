@@ -1,11 +1,10 @@
 import _ from "lodash"
 
-const RETRY_FUNCTION_ENABLED = true  // この機能を有効にするか？
+const RETRY_FUNCTION_ENABLED = true // この機能を有効にするか？
+const SEQUENCE_CODES_MAX     = 10   // sequence_code は直近N件保持しておく
+const RETRY_CHECK_DELAY      = 5    // N秒後に相手からの通知の結果(send_success_p)を確認する
 
-const SEQUENCE_CODES_MAX = 10  // sequence_code は直近N件保持しておく
-const RETRY_CHECK_DELAY  = 5   // N秒後に相手からの通知の結果(send_success_p)を確認する
-
-export const app_share_retry = {
+export const app_sfen_share = {
   data() {
     return {
       sequence_code: 0,         // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
@@ -87,7 +86,6 @@ export const app_share_retry = {
 
     sfen_share_broadcasted(params) {
       // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
-
       if (params.from_user_code === this.user_code) {
         // 自分から自分へ
       } else {
@@ -161,7 +159,11 @@ export const app_share_retry = {
       const { received_params } = params                                   // 自分が送って相手が受信した内容
       if (received_params.from_user_code === this.user_code) {             // いろんな人に届くため送信元の確認
         if (this.sequence_codes.includes(received_params.sequence_code)) { // 最近送ったものなら
-          this.send_success_p = true                                    // 送信成功とする
+          if (this.development_p && this.$route.query.send_success_skip) {
+            // 送信成功としない
+          } else {
+            this.send_success_p = true                                    // 送信成功とする
+          }
         }
       }
     },
