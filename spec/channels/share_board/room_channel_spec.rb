@@ -28,7 +28,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       subscribe(room_code: room_code)
     end
     it do
-      data = { user_code: SecureRandom.hex, sfen: "(sfen)", title: "(title)" }
+      data = { user_code: SecureRandom.hex, sfen: "(sfen)", }
       expect {
         subscription.sfen_share(data)
       }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "sfen_share_broadcasted", bc_params: data)

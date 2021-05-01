@@ -2,14 +2,22 @@ import _ from "lodash"
 import dayjs from "dayjs"
 
 const DESTROY_AFTER_WAIT = 3.0
+const SEQUENCE_QUEUE_MAX = 10
+
+const DOREDAKEMATUKA = 2
 
 export const app_room = {
   data() {
     return {
       room_code: this.config.record.room_code, // リアルタイム共有合言葉
-      user_code: this.config.record.user_code, // 自分と他者を区別するためのコード
+      user_code: this.config.record.user_code, // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
+      room_creating_busy: 0,                   // 1以上なら接続を試みている最中
       ac_room: null,
-      room_creating_busy: 0,
+      sequence_key: 0,
+      sequence_queue: [],
+      received_p: false,
+      sfen_share_last_params: null,
+      delay_id: null,
     }
   },
   mounted() {
@@ -144,15 +152,64 @@ export const app_room = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    sfen_share(params) {
+    sfen_share2(params) {
       this.__assert__(this.current_sfen, "this.current_sfen")
 
-      this.ac_room_perform("sfen_share", {
-        title: this.current_title,
+      this.sequence_queue.push(this.sequence_key)
+      this.sequence_queue = _.takeRight(this.sequence_queue, SEQUENCE_QUEUE_MAX)
+
+      this.sfen_share_last_params = {
+        sequence_key: this.sequence_key,
         ...params,
         ...this.current_sfen_attrs, // turn_offset は含まれる
-      }) // --> app/channels/share_board/room_channel.rb
+      }
+
+      this.sequence_key += 1
+
+      this.sfen_share()
     },
+
+    sfen_share() {
+      this.received_p = false
+      this.ac_room_perform("sfen_share", this.sfen_share_last_params) // --> app/channels/share_board/room_channel.rb
+
+      if (this.order_func_p && this.ordered_members_present_p) {
+        this.delay_stop(this.delay_id)
+        this.delay_id = this.delay_block(DOREDAKEMATUKA, () => {
+          if (!this.received_p) {
+            this.retry_confirm()
+          }
+        })
+      }
+    },
+
+    retry_confirm() {
+      this.sound_play("click")
+
+      const next_user_name = this.user_name_by_turn(this.sfen_share_last_params.turn_offset)
+      const message = `次の手番の${this.user_call_name(next_user_name)}の反応がないため再送しますか？`
+      this.talk(message)
+
+      this.$buefy.dialog.confirm({
+        type: "is-warning",
+        hasIcon: true,
+        title: "同期失敗",
+        message: message,
+        cancelText: "諦める",
+        confirmText: "再送する",
+        focusOn: "confirm",
+        onCancel: () => {
+          this.talk_stop()
+          this.sound_play("click")
+        },
+        onConfirm: () => {
+          this.talk_stop()
+          this.sound_play("click")
+          this.sfen_share()
+        },
+      })
+    },
+
     sfen_share_broadcasted(params) {
       // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
 
@@ -176,8 +233,9 @@ export const app_room = {
       if (true) {
         const prev_user_name = this.user_name_by_turn(params.turn_offset - 1)
         const next_user_name = this.user_name_by_turn(params.turn_offset)
+        const next_user_received_p = this.user_name === next_user_name
 
-        if (this.user_name === next_user_name) {
+        if (next_user_received_p) {
           this.tn_notify()
         }
 
@@ -200,9 +258,32 @@ export const app_room = {
             },
           }),
         })
+
+        if (this.order_func_p) {
+          if (next_user_received_p) {
+            this.received_ok({
+              received_params: params,
+              next_user_received_p: next_user_received_p,
+            })
+          }
+        }
       }
+
       this.al_add(params)
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    received_ok(params) {
+      this.ac_room_perform("received_ok", {
+        ...params,
+      }) // --> app/channels/share_board/room_channel.rb
+    },
+    received_ok_broadcasted(params) {
+      if (this.sequence_queue.includes(params.received_params.sequence_key)) {
+        this.received_p = true
+      }
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
     title_share(share_sfen) {
       this.ac_room_perform("title_share", {

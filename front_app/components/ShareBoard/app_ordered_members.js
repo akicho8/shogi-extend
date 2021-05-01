@@ -214,9 +214,10 @@ export const app_ordered_members = {
     },
 
     // private
-    ordered_members_blank_p() { return this.blank_p(this.ordered_members)             }, // メンバーリストが空？
-    current_turn_user_name()  { return this.user_name_by_turn(this.turn_offset)       }, // 現在の局面のメンバーの名前
-    current_turn_self_p()     { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
-    turn_strict_on()          { return this.strict_info.key === "turn_strict_on"      }, // 手番制限ON ?
+    ordered_members_blank_p()   { return this.blank_p(this.ordered_members)             }, // メンバーリストが空？
+    ordered_members_present_p() { return this.present_p(this.ordered_members)           }, // メンバーリストがある？
+    current_turn_user_name()    { return this.user_name_by_turn(this.turn_offset)       }, // 現在の局面のメンバーの名前
+    current_turn_self_p()       { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
+    turn_strict_on()            { return this.strict_info.key === "turn_strict_on"      }, // 手番制限ON ?
   },
 }

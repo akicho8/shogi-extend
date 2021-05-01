@@ -10,6 +10,11 @@ module ShareBoard
       broadcast(:sfen_share_broadcasted, data)
     end
 
+    def received_ok(data)
+      SlackAgent.message_send(key: "受信OK(#{data["from_user_name"]})", body: data.inspect)
+      broadcast(:received_ok_broadcasted, data)
+    end
+
     def title_share(data)
       broadcast(:title_share_broadcasted, data)
     end
