@@ -31,6 +31,8 @@ module Swars
       @params = params
     end
 
+    # JS側のコンポーネントに渡す
+    # --> ~/src/shogi-extend/app/controllers/swars/zip_dl_methods.rb
     def to_config
       config = {}
       config[:form_params_default] = {
@@ -47,6 +49,12 @@ module Swars
         config[:swars_zip_dl_logs] = {
           :count => s.count,
           :last  => s.last,
+        }
+
+        config[:dl_limit_info] = {
+          :dli_over_p       => dli_over?,             # ダウンロード禁止状態か？
+          :dli_recent_count => dli_recent_count,      # 最近のダウンロード数
+          :dli_message      => dli_message,           # 禁止メッセージ
         }
       end
 
@@ -133,6 +141,29 @@ module Swars
     def oldest_log_create
       scope = current_index_scope.order(battled_at: :asc).limit(1)
       log_create(scope)
+    end
+
+    if true
+      # 直近のダウンロード数が多すぎるか？
+      def dli_over?
+        dli_recent_count >= (50 * 0)
+      end
+
+      # 直近のダウンロード棋譜総数
+      def dli_recent_count
+        @dli_recent_count ||= -> {
+          s = current_user.swars_zip_dl_logs
+          s = s.where(ZipDlLog.arel_table[:created_at].gteq(1.days.ago))
+          s.sum(:dl_count)
+        }.call
+      end
+
+      # 直近のダウンロード数が多すぎるときのエラーメッセージ
+      def dli_message
+        if dli_over?
+          "短時間にダウンロードしすぎです。常識的な範囲でご利用ください"
+        end
+      end
     end
 
     private

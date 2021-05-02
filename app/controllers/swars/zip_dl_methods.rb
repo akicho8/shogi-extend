@@ -8,6 +8,10 @@ module Swars
       # あらかじめいろんなスコープでダウンロードできる数などを返す
       # GET http://0.0.0.0:3000/w.json?query=Yamada_Taro&download_config_fetch=true
       if params[:download_config_fetch]
+        unless current_user
+          render json: {}, status: 401
+          return
+        end
         render json: zip_dl_cop.to_config
         return
       end
@@ -26,6 +30,16 @@ module Swars
       # 特定のスコープでダウンロードする
       # GET http://0.0.0.0:3000/w.zip?query=Yamada_Taro
       if request.format.zip?
+        unless current_user
+          render plain: "ログインしてください", status: 401
+          return
+        end
+
+        if zip_dl_cop.dli_over?
+          render plain: zip_dl_cop.dli_message, status: 404
+          return
+        end
+
         send_data(zip_dl_cop.to_zip.string, type: Mime[params[:format]], filename: zip_dl_cop.zip_filename, disposition: "attachment")
       end
     end

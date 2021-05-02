@@ -13,6 +13,10 @@
 
   MainSection(v-if="config")
     .container
+      template(v-if="config.dl_limit_info.dli_over_p")
+        b-notification(type="is-warning" :closable="false")
+          | {{config.dl_limit_info.dli_message}}
+
       .level.has-background-primary-light.py-5.box.is-shadowless
         .level-item.has-text-centered
           div

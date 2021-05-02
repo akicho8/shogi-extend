@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_07_111409) do
+ActiveRecord::Schema.define(version: 2021_03_07_111410) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1048,6 +1048,7 @@ ActiveRecord::Schema.define(version: 2021_03_07_111409) do
     t.datetime "end_at", null: false, comment: "スコープ(終了)"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_swars_zip_dl_logs_on_created_at"
     t.index ["end_at"], name: "index_swars_zip_dl_logs_on_end_at"
     t.index ["swars_user_id"], name: "index_swars_zip_dl_logs_on_swars_user_id"
     t.index ["user_id"], name: "index_swars_zip_dl_logs_on_user_id"
