@@ -26,22 +26,21 @@ export const app_force_sync = {
 
     force_sync() {
       const params = {
-        ...this.current_sfen_attrs,
-        message: "同期",
+        sfen: this.current_sfen,
+        turn_offset: this.turn_offset,
       }
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
 
     force_sync_broadcasted(params) {
-      if (params.from_user_code === this.user_code) {
-        this.debug_alert("自分受信")
-      } else {
-        this.debug_alert("相手受信")
-        this.setup_by_params(params)
-      }
-      if (params.message) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
-      }
+      // if (params.from_user_code === this.user_code) {
+      //   this.debug_alert("自分受信")
+      //   this.toast_ok(`${this.user_call_name(params.from_user_name)}の盤の状態をみんなに送ってセットしました`)
+      // } else {
+      //   this.debug_alert("相手受信")
+      this.setup_by_params(params)
+      this.toast_ok(`${this.user_call_name(params.from_user_name)}から送られてきた盤の状態に合わせました`)
+      // }
     },
   },
 }

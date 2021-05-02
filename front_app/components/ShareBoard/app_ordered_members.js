@@ -182,7 +182,7 @@ export const app_ordered_members = {
     strict_info() { return this.StrictInfo.fetch_if(this.strict_key) },
 
     // あとから接続した人に伝える内容
-    om_vars() {
+    om_params() {
       return {
         order_func_p:    this.order_func_p,
         ordered_members: this.ordered_members,
