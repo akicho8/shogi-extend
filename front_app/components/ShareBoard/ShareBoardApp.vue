@@ -143,6 +143,7 @@ import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
 import { app_export       } from "./app_export.js"
 import { app_sfen_share  } from "./app_sfen_share.js"
+import { app_force_sync  } from "./app_force_sync.js"
 
 import { FormatTypeInfo   } from "@/components/models/format_type_info.js"
 
@@ -169,6 +170,7 @@ export default {
     app_storage,
     app_export,
     app_sfen_share,
+    app_force_sync,
   ],
   props: {
     config: { type: Object, required: true },
