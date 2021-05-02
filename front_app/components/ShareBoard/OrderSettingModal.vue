@@ -14,9 +14,10 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    template(v-if="!base.order_func_p")
-      .has-text-centered.has-text-grey.my-6
-        | 設定する場合は右上のスイッチを有効にしてください
+    .usage(v-if="!base.order_func_p")
+      p 設定する場合は右上のスイッチを有効にしてください
+      p 設定すると手番を知らせるのと手番の人だけが駒を動かせるようになります
+      p 対局後に<b>感想戦</b>をするときは(自由に駒を動かせるようにするために)スイッチを無効に戻してください
 
     template(v-if="base.order_func_p")
       b-table(
@@ -159,6 +160,11 @@ export default {
   .table
     td
       vertical-align: center
+
+  .usage
+    max-width: 40ch
+    p:not(:first-child)
+      margin-top: 1rem
 
   .modal-card-foot
     justify-content: space-between
