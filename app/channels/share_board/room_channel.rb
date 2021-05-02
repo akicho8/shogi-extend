@@ -95,11 +95,11 @@ module ShareBoard
     def track(data, action, body)
       prefix = data["from_user_name"] + ":"
       body = [prefix, body].compact.join(" ")
-      SlackAgent.message_send(key: "共有将棋盤 #{room_code} #{action}", body: body)
+      SlackAgent.message_send(key: "共有将棋盤 #{action} [#{room_code}]", body: body)
     end
 
     def simple_track(action)
-      SlackAgent.message_send(key: "共有将棋盤 #{room_code} #{action}", body: current_user ? current_user.name : "(不明)")
+      SlackAgent.message_send(key: "共有将棋盤 #{action} [#{room_code}]", body: current_user ? current_user.name : "(不明)")
     end
   end
 end
