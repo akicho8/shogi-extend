@@ -28,12 +28,28 @@ class ApplicationRecord < ActiveRecord::Base
     def double_blank_lines_to_one_line(s)
       s.gsub(/\R{3,}/, "\n\n")
     end
+
+    # devise では欲しい長さの4/3倍の文字数が得られるのを予測して3/4倍しているがこれはいまいち
+    # 実際はおおよそ4/3倍なので指定の文字数に足りない場合がある
+    # なのでN文字欲しければN文字以上生成させて先頭からN文字拾えばよい
+    # わかりやすい名前はARの内部のメソッドとかぶりそうなので注意
+    def secure_random_urlsafe_base64_token(length = 11)
+      if false
+        SecureRandom.urlsafe_base64(length).slice(0, length)
+      else
+        v = SecureRandom.urlsafe_base64(length * 2)
+        v = v.gsub(/[-_]/, "")
+        v = v.slice(/[a-z].{#{length-1}}/i)
+        v or raise "must not happen"
+      end
+    end
   end
 
   delegate *[
     :hankaku_format,
     :script_tag_escape,
     :double_blank_lines_to_one_line,
+    :secure_random_urlsafe_base64_token,
   ], to: "self.class"
 
   # "" → nil
@@ -65,18 +81,4 @@ class ApplicationRecord < ActiveRecord::Base
     end
   end
 
-  # devise では欲しい長さの4/3倍の文字数が得られるのを予測して3/4倍しているがこれはいまいち
-  # 実際はおおよそ4/3倍なので指定の文字数に足りない場合がある
-  # なのでN文字欲しければN文字以上生成させて先頭からN文字拾えばよい
-  # わかりやすい名前はARの内部のメソッドとかぶりそうなので注意
-  def secure_random_urlsafe_base64_token(length = 11)
-    if false
-      SecureRandom.urlsafe_base64(length).slice(0, length)
-    else
-      v = SecureRandom.urlsafe_base64(length * 2)
-      v = v.gsub(/[-_]/, "")
-      v = v.slice(/[a-z].{#{length-1}}/i)
-      v or raise "must not happen"
-    end
-  end
 end
