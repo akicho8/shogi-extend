@@ -151,7 +151,7 @@ module ShareBoardControllerMethods
     # リアルタイム共有
     attrs = attrs.merge({
         :room_code => params[:room_code] || "",
-        :user_code => SecureRandom.hex,
+        :user_code => ApplicationRecord.secure_random_urlsafe_base64_token,
       })
 
     attrs
