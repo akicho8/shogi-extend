@@ -68,6 +68,8 @@ class Talk
       if replace_table
         s = s.gsub(/#{replace_table.keys.join("|")}/o, replace_table)
       end
+      s = s.gsub(/[wｗ]+\z/) { |s| "わら" * s.size }
+
       s = Loofah.fragment(s).scrub!(:whitewash).to_text # タグを除去。副作用で > が &gt; になったり改行が入る
       s = s.remove(/&\w+;/)                             # エスケープされたタグを除去する
 
