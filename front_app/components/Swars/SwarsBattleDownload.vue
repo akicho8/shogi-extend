@@ -264,8 +264,7 @@ export default {
 <style lang="sass">
 .SwarsBattleDownload
   .MainSection.section
-    +mobile
-      padding: 1.4rem 1.5rem
+    padding: 1.5rem
 
     .container
       max-width: 65ch
