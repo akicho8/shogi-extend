@@ -1,24 +1,38 @@
+* 共有将棋盤
+
+  http://0.0.0.0:4000/share-board
+  https://shogi-flow.xyz/share-board
+  https://www.shogi-extend.com/share-board
+
 * URLパラメータ
 
-  |----------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
-  | key                  | desc                                       | Example                                                                                  |
-  |----------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
-  | default_user_name    | localStorage が空のときの user_name 初期値 | http://0.0.0.0:4000/share-board?room_code=a&default_user_name=bob                        |
-  | force_user_name      | localStorage に関係なくこの名前にする      | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice                        |
-  | send_success_skip    | SFEN受信OKの返信しても送信完了にしない     | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&send_success_skip=true |
-  | RETRY_CHECK_DELAY    | SFEN送信後N秒待ってから返答をチェックする  |                                                                                          |
-  | ordered_member_names | 順番設定の名前(複数)                       |                                                                                          |
-  |                      | 時計の設定                                 |                                                                                          |
-  |----------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
+  |-------------------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
+  | key                           | desc                                       | Example                                                                                  |
+  |-------------------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
+  | default_user_name             | localStorage が空のときの user_name 初期値 | http://0.0.0.0:4000/share-board?room_code=a&default_user_name=bob                        |
+  | force_user_name               | localStorage に関係なくこの名前にする      | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice                        |
+  | send_success_skip             | SFEN受信OKの返信しても送信完了にしない     | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&send_success_skip=true |
+  | RETRY_CHECK_DELAY             | SFEN送信後N秒待ってから返答をチェックする  |                                                                                          |
+  | ordered_member_names          | 順番設定の名前(複数)                       |                                                                                          |
+  | chess_clock.initial_main_min  | 持ち時間(分)                               |                                                                                          |
+  | chess_clock.initial_read_sec  | 秒読み(秒)                                 |                                                                                          |
+  | chess_clock.initial_extra_sec | 猶予(秒)                                   |                                                                                          |
+  | chess_clock.every_plus        | 1手毎加算(秒)                              |                                                                                          |
+  | chess_clock.play_handle       | true なら即開始                            |                                                                                          |
+  |-------------------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
 
-** alice と bob の部屋aを作るには？
+** alice と bob の部屋を作るには？
 
-  http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice
-  http://0.0.0.0:4000/share-board?room_code=a&force_user_name=bob
+  http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=alice
+  http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=bob
 
-** RETRY_CHECK_DELAY
+** 再送モーダル発動確認するには？
 
-   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_CHECK_DELAY=3
+   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_CHECK_DELAY=0
+
+** 時計設定済みで部屋に入るには？
+
+   http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=alice&chess_clock.initial_main_min=1&chess_clock.initial_read_sec=30&chess_clock.initial_extra_sec=60&chess_clock.every_plus=0&chess_clock.play_handle=true
 
 * 最初の盤共有について (app_room_init.js)
 

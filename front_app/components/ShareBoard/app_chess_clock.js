@@ -6,7 +6,7 @@ import { Location       } from "shogi-player/components/models/location.js"
 import ChessClockModal from "./ChessClockModal.vue"
 import TimeLimitModal  from "./TimeLimitModal.vue"
 
-const BYOYOMI_TALK_PITCH = 1.65
+const BYOYOMI_TALK_PITCH = 1.65 // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
 
 export const app_chess_clock = {
   data() {
@@ -16,9 +16,19 @@ export const app_chess_clock = {
     }
   },
 
+  created() {
+    this.cc_setup_by_url_params()
+  },
+
   mounted() {
     if (this.development_p && false) {
       this.cc_params = { initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }
+      this.cc_create()
+      this.cc_params_apply()
+      this.chess_clock.play_handle()
+    }
+
+    if (this.$route.query["chess_clock.play_handle"] === "true") {
       this.cc_create()
       this.cc_params_apply()
       this.chess_clock.play_handle()
@@ -30,6 +40,16 @@ export const app_chess_clock = {
   },
 
   methods: {
+    cc_setup_by_url_params() {
+      ["initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus"].forEach(key => {
+        const argv = this.$route.query[`chess_clock.${key}`]
+        if (this.present_p(argv)) {
+          const value = parseInt(argv)
+          this.$set(this.cc_params, key, value)
+        }
+      })
+    },
+
     cc_create_unless_exist() {
       if (!this.chess_clock) {
         this.cc_create()
