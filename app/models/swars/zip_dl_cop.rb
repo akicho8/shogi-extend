@@ -22,6 +22,13 @@ require "active_support/core_ext/benchmark"
 
 module Swars
   class ZipDlCop
+    cattr_accessor(:dli_recent_period)    { 1.days  } # 直近のこの期間に
+    cattr_accessor(:dli_recent_count_max) { 50 * 10 } # これだけDLすると禁止 (DL数回数ではなくDLに含む棋譜総数)
+
+    if Rails.env.development?
+      self.dli_recent_count_max = 3 # これだけDLすると禁止 (DL数回数ではなくDLに含む棋譜総数)
+    end
+
     include EncodeMethods
     include SortMethods
 
@@ -52,9 +59,12 @@ module Swars
         }
 
         config[:dl_limit_info] = {
-          :dli_over_p       => dli_over?,             # ダウンロード禁止状態か？
-          :dli_recent_count => dli_recent_count,      # 最近のダウンロード数
-          :dli_message      => dli_message,           # 禁止メッセージ
+          :dli_over_p           => dli_over?,            # ダウンロード禁止状態か？
+          :dli_message          => dli_message,          # 禁止メッセージ
+          # 以下はJS側では未使用
+          :dli_recent_count     => dli_recent_count,     # 最近のダウンロード数
+          :dli_recent_period    => dli_recent_period,    # 直近のこの期間に
+          :dli_recent_count_max => dli_recent_count_max, # これだけDLすると禁止 (DL数回数ではなくDLに含む棋譜総数)
         }
       end
 
@@ -90,6 +100,9 @@ module Swars
       if @processed_sec
         a << "%.2fs" % @processed_sec
       end
+      # if dli_over?
+      #   a << "制#{dli_recent_count}"
+      # end
       a << zip_filename
       a.join(" ")
     end
@@ -146,14 +159,14 @@ module Swars
     if true
       # 直近のダウンロード数が多すぎるか？
       def dli_over?
-        dli_recent_count >= (50 * 0)
+        dli_recent_count >= dli_recent_count_max
       end
 
       # 直近のダウンロード棋譜総数
       def dli_recent_count
         @dli_recent_count ||= -> {
           s = current_user.swars_zip_dl_logs
-          s = s.where(ZipDlLog.arel_table[:created_at].gteq(1.days.ago))
+          s = s.where(ZipDlLog.arel_table[:created_at].gteq(dli_recent_period.ago))
           s.sum(:dl_count)
         }.call
       end
@@ -161,7 +174,7 @@ module Swars
       # 直近のダウンロード数が多すぎるときのエラーメッセージ
       def dli_message
         if dli_over?
-          "短時間にダウンロードしすぎです。常識的な範囲でご利用ください"
+          "短時間にダウンロードしすぎなのでしばらくしてからお試しください"
         end
       end
     end
