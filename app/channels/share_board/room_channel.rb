@@ -15,6 +15,10 @@ module ShareBoard
       broadcast(:received_ok_broadcasted, data)
     end
 
+    def sfen_share_not_reach(data)
+      track(data, "指し手不達", "#{data['sfen_share_not_reach_count']}回目")
+      raise StandardError, "指し手不達(#{data['sfen_share_not_reach_count']}回目) : #{data}"
+    end
     def title_share(data)
       broadcast(:title_share_broadcasted, data)
     end

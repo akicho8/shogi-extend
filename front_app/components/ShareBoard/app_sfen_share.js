@@ -7,11 +7,12 @@ const RETRY_CHECK_DELAY      = 3    // N秒後に相手からの通知の結果(
 export const app_sfen_share = {
   data() {
     return {
-      sequence_code: 0,             // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
-      sequence_codes: [],           // それを最大 SEQUENCE_CODES_MAX 件保持しておく
-      send_success_p: false,        // 直近のSFENの同期が成功したか？
-      sfen_share_params: null,      // リトライするとき用に送るパラメータを保持しておく
-      retry_check_delay_id: null,   // 送信してから RETRY_CHECK_DELAY 秒後に動かすための setTimeout の戻値
+      sequence_code: 0,              // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
+      sequence_codes: [],            // それを最大 SEQUENCE_CODES_MAX 件保持しておく
+      send_success_p: false,         // 直近のSFENの同期が成功したか？
+      sfen_share_params: null,       // リトライするとき用に送るパラメータを保持しておく
+      retry_check_delay_id: null,    // 送信してから RETRY_CHECK_DELAY 秒後に動かすための setTimeout の戻値
+      sfen_share_not_reach_count: 0, // SFEN送信に失敗した回数(不具合解析用)
     }
   },
   beforeDestroy() {
@@ -61,6 +62,8 @@ export const app_sfen_share = {
 
     retry_confirm() {
       this.sound_play("click")
+
+      this.sfen_share_not_reach()
 
       const next_user_name = this.user_name_by_turn(this.sfen_share_params.turn_offset)
       const message = `次の手番の${this.user_call_name(next_user_name)}の反応がないため再送しますか？`
@@ -170,6 +173,18 @@ export const app_sfen_share = {
           }
         }
       }
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// 失敗したことをRails側に通知
+    sfen_share_not_reach() {
+      this.sfen_share_not_reach_count += 1
+      const params = {
+        sfen_share_not_reach_count: this.sfen_share_not_reach_count,
+      }
+      this.ac_room_perform("sfen_share_not_reach", params) // --> app/channels/share_board/room_channel.rb
+    },
+    sfen_share_not_reach_broadcasted(params) {
+      alert("must not happen")
     },
   },
   computed: {
