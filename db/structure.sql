@@ -1537,6 +1537,7 @@ CREATE TABLE `swars_zip_dl_logs` (
   KEY `index_swars_zip_dl_logs_on_user_id` (`user_id`),
   KEY `index_swars_zip_dl_logs_on_swars_user_id` (`swars_user_id`),
   KEY `index_swars_zip_dl_logs_on_end_at` (`end_at`),
+  KEY `index_swars_zip_dl_logs_on_created_at` (`created_at`),
   CONSTRAINT `fk_rails_5edb845d8e` FOREIGN KEY (`swars_user_id`) REFERENCES `swars_users` (`id`),
   CONSTRAINT `fk_rails_ffe7d8a4c6` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -1973,6 +1974,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210307111405'),
 ('20210307111406'),
 ('20210307111407'),
-('20210307111409');
+('20210307111409'),
+('20210307111410');
 
 
