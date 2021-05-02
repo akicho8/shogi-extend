@@ -273,9 +273,9 @@ export const app_chess_clock = {
     // 時計の状態をすべて共有する
     chess_clock_share(message) {
       this.__assert__(message != null, "message != null")
-      if (message) {
-        this.toast_ok(message)
-      }
+      // if (message) {
+      //   this.toast_ok(message)
+      // }
       const params = {}
       params.cc_params = this.cc_params
       params.message = message
@@ -288,9 +288,6 @@ export const app_chess_clock = {
       this.debug_alert("時計同期")
       if (params.from_user_code === this.user_code) {
       } else {
-        if (params.message) {
-          this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.message}`)
-        }
         if (params.chess_clock_attributes) {
           this.cc_create_unless_exist()                               // 時計がなければ作って
           this.chess_clock.attributes = params.chess_clock_attributes // 内部状態を同じにする
@@ -298,6 +295,9 @@ export const app_chess_clock = {
         } else {
           this.cc_destroy()
         }
+      }
+      if (params.message) {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.message}`)
       }
     },
 
