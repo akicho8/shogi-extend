@@ -2,13 +2,21 @@ module SlackAgent
   extend self
 
   mattr_accessor(:default_channel) { "#shogi_web" }
+  mattr_accessor(:backtrace_lines_max) { 4 }
 
   # rails r "SlackAgent.notify_exception(Exception.new)"
   # rails r "SlackAgent.notify_exception((1/0 rescue $!))"
   def notify_exception(error)
-    body = ["#{error.message} (#{error.class.name})", error.backtrace].compact.join("\n")
     Rails.logger.info(error)
-    message_send(key: "ERROR", body: body)
+
+    out = []
+    if error.message
+      out << error.message
+    end
+    if error.backtrace
+      out += error.backtrace.take(backtrace_lines_max)
+    end
+    message_send(key: error.class.name, body: out.compact.join("\n"))
   end
 
   # rails r 'SlackAgent.message_send(key: "(key)", body: "(body)")'
