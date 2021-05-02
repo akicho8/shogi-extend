@@ -16,7 +16,7 @@ module ShareBoard
     end
 
     def sfen_share(data)
-      track(data, "指し手送信", data.slice("last_move_kif", "turn_offset", "performed_at", "retry_count", "sfen"))
+      track(data, "指し手送信", data.slice("last_move_kif", "turn_offset", "performed_at", "retry_count"))
       broadcast(:sfen_share_broadcasted, data)
     end
 
@@ -36,32 +36,33 @@ module ShareBoard
     end
 
     def setup_info_request(data)
-      track(data, "セットアップ情報の要求", data)
+      track(data, "セットアップ情報の要求", "")
       broadcast(:setup_info_request_broadcasted, data)
     end
 
     def setup_info_send(data)
-      track(data, "セットアップ情報の送信", data)
+      track(data, "セットアップ情報の送信", "→ #{data["to_user"]}")
       broadcast(:setup_info_send_broadcasted, data)
     end
 
     def chess_clock_share(data)
-      track(data, "対局時計の共有", data)
+      track(data, "対局時計の共有", data["message"]) if data["message"].present?
       broadcast(:chess_clock_share_broadcasted, data)
     end
 
     def member_info_share(data)
-      track(data, "生存報告", data)
+      track(data, "生存報告", data) unless Rails.env.production?
       broadcast(:member_info_share_broadcasted, data)
     end
 
     def order_func_share(data)
-      track(data, "順番設定有効化", data["order_func_p"])
+      track(data, "順番機能", data["order_func_p"] ? "ON" : "OFF")
       broadcast(:order_func_share_broadcasted, data)
     end
 
     def ordered_members_share(data)
-      track(data, "順番設定", data["order_func_p"])
+      user_names = data["ordered_members"].collect { |e| e["user_name"] }.join(" ")
+      track(data, "順番設定", user_names)
       broadcast(:ordered_members_share_broadcasted, data)
     end
 
@@ -95,11 +96,11 @@ module ShareBoard
     def track(data, action, body)
       prefix = data["from_user_name"] + ":"
       body = [prefix, body].compact.join(" ")
-      SlackAgent.message_send(key: "共有将棋盤 #{action} [#{room_code}]", body: body)
+      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: body)
     end
 
     def simple_track(action)
-      SlackAgent.message_send(key: "共有将棋盤 #{action} [#{room_code}]", body: current_user ? current_user.name : "(不明)")
+      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: current_user ? current_user.name : "(不明)")
     end
   end
 end
