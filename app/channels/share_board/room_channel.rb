@@ -2,16 +2,26 @@ module ShareBoard
   class RoomChannel < ApplicationCable::Channel
     def subscribed
       return reject unless room_code
+      simple_track("subscribed")
       stream_from "share_board/room_channel/#{room_code}"
     end
 
+    def unsubscribed
+      simple_track("unsubscribed")
+    end
+
+    def force_sync(data)
+      track(data, "強制盤同期", data.slice("turn_offset", "sfen"))
+      broadcast(:force_sync_broadcasted, data)
+    end
+
     def sfen_share(data)
-      SlackAgent.message_send(key: "共有将棋盤使用中(#{data["from_user_name"]})", body: data.inspect)
+      track(data, "指し手送信", data.slice("last_move_kif", "turn_offset", "performed_at", "retry_count", "sfen"))
       broadcast(:sfen_share_broadcasted, data)
     end
 
     def received_ok(data)
-      SlackAgent.message_send(key: "受信OK(#{data["from_user_name"]})", body: data.inspect)
+      track(data, "指し手受信", data.slice("performed_at", "received_params"))
       broadcast(:received_ok_broadcasted, data)
     end
 
@@ -19,40 +29,49 @@ module ShareBoard
       track(data, "指し手不達", "#{data['sfen_share_not_reach_count']}回目")
       raise StandardError, "指し手不達(#{data['sfen_share_not_reach_count']}回目) : #{data}"
     end
+
     def title_share(data)
+      track(data, "タイトル変更", data["title"])
       broadcast(:title_share_broadcasted, data)
     end
 
     def setup_info_request(data)
+      track(data, "セットアップ情報の要求", data)
       broadcast(:setup_info_request_broadcasted, data)
     end
 
     def setup_info_send(data)
+      track(data, "セットアップ情報の送信", data)
       broadcast(:setup_info_send_broadcasted, data)
     end
 
     def chess_clock_share(data)
+      track(data, "対局時計の共有", data)
       broadcast(:chess_clock_share_broadcasted, data)
     end
 
     def member_info_share(data)
+      track(data, "生存報告", data)
       broadcast(:member_info_share_broadcasted, data)
     end
 
     def order_func_share(data)
+      track(data, "順番設定有効化", data["order_func_p"])
       broadcast(:order_func_share_broadcasted, data)
     end
 
     def ordered_members_share(data)
+      track(data, "順番設定", data["order_func_p"])
       broadcast(:ordered_members_share_broadcasted, data)
     end
 
     def message_share(data)
-      SlackAgent.message_send(key: "共有将棋盤チャット", body: %(#{data["from_user_name"]}: #{data["message"]}))
+      track(data, "チャット", data["message"])
       broadcast(:message_share_broadcasted, data)
     end
 
     def fake_error(data)
+      track(data, "意図的なエラー発動", data)
       broadcast(:fake_error_broadcasted, data)
     end
 
@@ -69,6 +88,18 @@ module ShareBoard
       end
 
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
+    end
+
+    private
+
+    def track(data, action, body)
+      prefix = data["from_user_name"] + ":"
+      body = [prefix, body].compact.join(" ")
+      SlackAgent.message_send(key: "共有将棋盤 #{room_code} #{action}", body: body)
+    end
+
+    def simple_track(action)
+      SlackAgent.message_send(key: "共有将棋盤 #{room_code} #{action}", body: current_user ? current_user.name : "(不明)")
     end
   end
 end
