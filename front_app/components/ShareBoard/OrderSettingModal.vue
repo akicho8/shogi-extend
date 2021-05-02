@@ -45,7 +45,7 @@
             b-button(     size="is-small" icon-left="arrow-up"   @click="arrow_handle(row,-1)")
             b-button.ml-1(size="is-small" icon-left="arrow-down" @click="arrow_handle(row, 1)")
 
-      b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message")
+      b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message" v-if="development_p")
         b-field.is-marginless
           template(v-for="e in base.StrictInfo.values")
             b-radio-button(v-model="base.new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
