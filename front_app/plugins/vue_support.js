@@ -64,6 +64,7 @@ export default {
     },
 
     // ../../../node_modules/autolinker/README.md
+    // newWindow: true で target="_blank" になる
     auto_link(str, options = {}) {
       return Autolinker.link(str, {newWindow: true, truncate: 30, mention: "twitter", ...options})
     },
