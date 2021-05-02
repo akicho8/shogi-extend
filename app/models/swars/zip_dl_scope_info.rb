@@ -4,9 +4,7 @@ module Swars
     memory_record [
       {
         key: :zdsk_continue,
-        name: proc {
-          "前回の続きから"
-        },
+        name: "前回の続きから",
         message: proc {
           if current_user
             if continue_begin_at
@@ -33,9 +31,7 @@ module Swars
 
       {
         key: :zdsk_today,
-        name: proc {
-          "本日"
-        },
+        name: "本日",
         message: proc {
           "本日分に絞って日時昇順で最大#{zip_dl_max}件取得する"
         },
@@ -50,9 +46,7 @@ module Swars
 
       {
         key: :zdsk_inherit,
-        name: proc {
-          "そのまま"
-        },
+        name: "そのまま",
         message: proc {
           "一覧で表示した通りに画面の上から順に最大#{zip_dl_max}件を取得する"
         },

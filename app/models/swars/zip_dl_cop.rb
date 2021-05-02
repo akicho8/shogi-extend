@@ -18,6 +18,8 @@
 # Test
 # spec/models/swars/zip_dl_cop_spec.rb
 
+require "active_support/core_ext/benchmark"
+
 module Swars
   class ZipDlCop
     include EncodeMethods
@@ -51,7 +53,7 @@ module Swars
       config[:scope_info] = ZipDlScopeInfo.inject({}) do |a, e|
         a.merge(e.key => {
             :key     => e.key,
-            :name    => instance_eval(&e.name),
+            :name    => e.name,
             :count   => instance_eval(&e.scope).count,
             :message => instance_eval(&e.message),
           })
@@ -61,17 +63,27 @@ module Swars
     end
 
     def to_zip
-      t = Time.current
-
-      io = to_zip_output_stream
-
-      sec = "%.2f s" % (Time.current - t)
-      SlackAgent.message_send(key: "ZIP #{sec}", body: "[#{current_user.key}] #{zip_filename}")
+      io = nil
+      @processed_sec = Benchmark.realtime { io = to_zip_output_stream }
+      SlackAgent.message_send(key: "ウォーズ棋譜ZIP-DL", body: to_summary)
 
       # 前回から続きのスコープが変化すると zip_filename にも影響するので最後の最後に呼ぶ
       swars_zip_dl_logs_create!
 
       io
+    end
+
+    def to_summary
+      a = []
+      a << "#{current_user.name}(#{swars_zip_dl_logs.count}):"
+      a << swars_user.key
+      a << zip_dl_scope_info.name
+      a << "#{zip_dl_scope.count}件"
+      if @processed_sec
+        a << "%.2fs" % @processed_sec
+      end
+      a << zip_filename
+      a.join(" ")
     end
 
     def to_zip_output_stream
