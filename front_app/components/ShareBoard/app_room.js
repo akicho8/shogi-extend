@@ -164,10 +164,10 @@ export const app_room = {
 
     ////////////////////////////////////////////////////////////////////////////////
     setup_by_params(params) {
-      if (params.title) {
+      if ("title" in params) {
         this.current_title = params.title
       }
-      if (params.sfen) {
+      if ("sfen" in params) {
         this.current_sfen = params.sfen
         this.turn_offset = params.turn_offset
       }
