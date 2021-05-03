@@ -190,7 +190,7 @@ export default {
         align-items: center
         .field-label.is-small
           padding-top: 0
-          margin-right: 0.5rem
+          margin-right: 1rem
           .label
             white-space: nowrap
             width: 6rem
