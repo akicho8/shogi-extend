@@ -121,6 +121,7 @@ export const app_room_members = {
     // 通達があってからの経過秒数
     member_elapsed_second(e) {
       return dayjs().valueOf() - e.performed_at
+      return (dayjs().valueOf() - e.performed_at) / 1000
     },
 
     member_add_test() {
