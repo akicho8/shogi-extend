@@ -16,12 +16,13 @@ module ShareBoard
     end
 
     def sfen_share(data)
-      track(data, "指し手送信", data.slice("last_move_kif", "turn_offset", "performed_at", "retry_count"))
+      # track(data, "指し手送信", data.slice("last_move_kif", "turn_offset", "performed_at", "retry_count"))
+      track(data, "指し手送信", "[#{data["turn_offset"]}] #{data["last_move_kif"]} (R#{data["retry_count"]} #{data["sequence_code"]}回目 from #{data['from_user_code']})")
       broadcast(:sfen_share_broadcasted, data)
     end
 
     def received_ok(data)
-      track(data, "指し手受信", data.slice("performed_at", "received_params"))
+      track(data, "指し手受信", "OK > #{data['to_user_name']}(#{data['to_user_code']})")
       broadcast(:received_ok_broadcasted, data)
     end
 
@@ -31,22 +32,22 @@ module ShareBoard
     end
 
     def title_share(data)
-      track(data, "タイトル変更", data["title"])
+      track(data, "タイトル変更", "#{data["title"].inspect} に変更しました")
       broadcast(:title_share_broadcasted, data)
     end
 
     def setup_info_request(data)
-      track(data, "セットアップ情報の要求", "")
+      track(data, "セットアップ情報の要求", "ください > みなさん")
       broadcast(:setup_info_request_broadcasted, data)
     end
 
     def setup_info_send(data)
-      track(data, "セットアップ情報の送信", "→ #{data["to_user"]}")
+      track(data, "セットアップ情報の送信", "あげます > #{data["to_user_name"]}")
       broadcast(:setup_info_send_broadcasted, data)
     end
 
     def chess_clock_share(data)
-      track(data, "対局時計の共有", data["message"]) if data["message"].present?
+      track(data, "対局時計", data["message"]) if data["message"].present?
       broadcast(:chess_clock_share_broadcasted, data)
     end
 
@@ -61,7 +62,7 @@ module ShareBoard
     end
 
     def ordered_members_share(data)
-      user_names = data["ordered_members"].collect { |e| e["user_name"] }.join(" ")
+      user_names = data["ordered_members"].collect { |e| e["user_name"].inspect }.join(" → ")
       track(data, "順番設定", user_names)
       broadcast(:ordered_members_share_broadcasted, data)
     end
@@ -72,9 +73,11 @@ module ShareBoard
     end
 
     def fake_error(data)
-      track(data, "意図的なエラー発動", data)
+      track(data, "エラー発動確認", data)
       broadcast(:fake_error_broadcasted, data)
     end
+
+    private
 
     def room_code
       params["room_code"].presence
@@ -91,8 +94,6 @@ module ShareBoard
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
 
-    private
-
     def track(data, action, body)
       prefix = data["from_user_name"] + ":"
       body = [prefix, body].compact.join(" ")
@@ -100,7 +101,12 @@ module ShareBoard
     end
 
     def simple_track(action)
-      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: current_user ? current_user.name : "(不明)")
+      if current_user
+        body = current_user.name
+      else
+        body = "(非ログインにより不明)"
+      end
+      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: body)
     end
   end
 end

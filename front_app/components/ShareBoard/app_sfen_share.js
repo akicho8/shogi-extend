@@ -141,10 +141,9 @@ export const app_sfen_share = {
           if (this.order_func_p) {
             if (next_user_received_p) {
               this.received_ok({
-                received_params: {
-                  sequence_code: params.sequence_code,
-                  from_user_code: params.from_user_code,
-                },
+                to_user_code: params.from_user_code, // alice さんから来たので alice さんに送信
+                to_user_name: params.from_user_name,
+                sequence_code: params.sequence_code,
               })
             }
           }
@@ -162,9 +161,8 @@ export const app_sfen_share = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     received_ok_broadcasted(params) {
-      const { received_params } = params                                   // 自分が送って相手が受信した内容
-      if (received_params.from_user_code === this.user_code) {             // いろんな人に届くため送信元の確認
-        if (this.sequence_codes.includes(received_params.sequence_code)) { // 最近送ったものなら
+      if (params.to_user_code === this.user_code) {             // いろんな人に届くため送信元の確認
+        if (this.sequence_codes.includes(params.sequence_code)) { // 最近送ったものなら
           if (this.development_p && this.$route.query.send_success_skip === "true") {
             // 送信成功としない
           } else {
