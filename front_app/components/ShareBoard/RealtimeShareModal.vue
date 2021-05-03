@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.RealtimeShareModal(style="width:auto")
+.modal-card.RealtimeShareModal
   header.modal-card-head
     .modal-card-title.is-size-6.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
       | 合言葉の設定と共有
@@ -7,20 +7,19 @@
   section.modal-card-body
     .content
       ul
-        li 同じ合言葉を設定した人と盤を共有します
         li
-          | 盤の同期タイミングは
-          b.is-size-5.mx-1 指したときだけ！
-          | ← これ重要
+          | 同じ合言葉を設定した人と盤を共有します
         li
           | 合言葉を設定したら同じ合言葉を相手にも伝えてください
           .has-text-grey.is-size-7
             | メニューにある「合言葉だけを含むURL」を伝えてもよし
         li
-          | 「待った」は盤の下の
-          b-icon.has-text-weight-bold(icon="chevron-left" size="is-small")
-          | で局面を戻して指し直してください
+          | <b>待った</b>や<b>反則の取り消し</b>は(合意の上)で左矢印で局面を戻して指し直してください
         li
+          | 盤の同期タイミングは
+          b.is-size-5.mx-1 指したときだけ！
+          | ← これ重要
+        li(v-if="false")
           | 指し手のログの行をタップするとそのときの局面にワープします
           .has-text-grey.is-size-7
             | 何か問題が起きたとき用で基本的には使わないでよい
@@ -91,8 +90,10 @@ export default {
 
 <style lang="sass">
 .RealtimeShareModal
+  +tablet
+    width: 50ch
   .modal-card-body
-    padding-top: 0.5rem
+    padding: 0.5rem 1rem 1rem
   .modal-card-foot
     justify-content: space-between
     .button

@@ -428,8 +428,8 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自分の盤の配置を全員の盤に反映'
-  describe "自分の盤の配置を全員の盤に反映" do
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自分の盤を全員に反映'
+  describe "自分の盤を全員に反映" do
     it "works" do
       a_block do
         room_setup("my_room", "alice")                    # aliceが部屋を作る
@@ -455,7 +455,7 @@ RSpec.describe "共有将棋盤", type: :system do
         sp_controller_click("previous")
 
         find(".sidebar_toggle_navbar_item").click         # サイドメニューを開く
-        menu_item_click("自分の盤の配置を全員の盤に反映") # モーダルを開く
+        menu_item_click("自分の盤を全員に反映") # モーダルを開く
         first(".sync_button").click                       # 反映する
       end
       b_block do
