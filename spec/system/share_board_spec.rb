@@ -146,13 +146,17 @@ RSpec.describe "共有将棋盤", type: :system do
         chess_clock_set(0, INITIAL_MAIN_MIN, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
         first(".close_button_for_capybara").click  # 閉じる (ヘッダーに置いている)
-        assert_move("27", "26", "☗2六歩")          # 初手を指す
+      end
+      b_block do
+        assert_white_read_sec(INITIAL_MAIN_MIN)    # bob側は秒読みが満タン
+      end
+      a_block do
+        assert_move("27", "26", "☗2六歩")         # 初手を指す
         assert_clock_active_white                  # 時計を同時に押したので後手がアクティブになる
       end
       b_block do
         assert_clock_active_white                  # bob側も後手がアクティブになっている
-        assert_white_read_sec(INITIAL_MAIN_MIN)    # 秒読みが満タン
-        sleep(INITIAL_MAIN_MIN)                    # 秒読みぶん待つ
+        sleep(INITIAL_MAIN_MIN)                    # ここでは3秒ぐらいになってるけどさらに秒読みぶん待つ
         assert_white_read_sec(0)                   # 秒読みが0になっている
         assert_text("時間切れで☗の勝ち！")         # 時間切れのダイアログの表示(1回目)
         find(".button.is-primary").click           # それを閉じる
