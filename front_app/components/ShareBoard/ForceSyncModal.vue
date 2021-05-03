@@ -8,18 +8,20 @@
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
     p
-      | 反映するのは基本的には<b>新しい手を指したときだけ</b>ですが、
-      | これを使うと{{base.user_name}}さんの現在の盤の状態をそのまま全員の盤に反映します
+      | 基本的に盤の同期は<b>新しい手を指したときだけ</b>としていますが、
+      | これを使うと例外的に自分({{base.user_name}})の盤を全員の盤に反映(上書きコピー)します
     p
-      | 二歩や王手放置の取り消しはそれをしてしまった人が(合意の上で)小さい矢印で1手戻して指し直すだけで続行できるのですが、当人が成れていなくて動揺している場合は他者が1手戻した局面を全員に反映してあげてメッセージで当人に指し直しを促せばよいでしょう
-      |
+      | よくありそうな使い道は<b>反則の取り消し</b>と<b>待った</b>です。
+      | 本来は反則をした人が(合意の上で)小さい左矢印で1手戻して指し直すだけでよいのですが、当人が慣れてない場合は他の人が1手戻した局面を反映してあげてメッセージで当人に指し直しを促せばよいでしょう
     p
-      | また対局後に検討したい局面に合わせたり、再対局のために盤を初期配置に戻したり、カスタマイズした配置(例えば駒落ち)の初期配置にセットしたりするときにも使えます
+      | 同様に<b>続けて初手から対局する</b>場合も初手を指す人が左矢印で初手に戻してから指せばよいのですが、いったん全員の盤が初期配置になっていないと不安でしょうから誰かが戻した初期配置を全員に配ってから始めるとよいでしょう
+    p
+      | その他には対局後に<b>検討したい局面</b>に合わせたり、慣れた人がカスタマイズした配置(例えば駒落ち)の初期配置を配るときにも使えます
 
   footer.modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_button(@click="close_handle" icon-left="chevron-left") やめとく
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
-    b-button.sync_button(@click="sync_handle" type="is-primary") 反映する
+    b-button.sync_button(@click="sync_handle" type="is-danger") 本当に反映する
 </template>
 
 <script>
@@ -52,9 +54,9 @@ export default {
 @import "support.sass"
 .ForceSyncModal
   +tablet
-    width: 48ch
+    width: 50ch
   .modal-card-body
-    padding: 1.0rem
+    padding: 1.5rem
     p:not(:first-child)
       margin-top: 0.75rem
   .modal-card-foot
