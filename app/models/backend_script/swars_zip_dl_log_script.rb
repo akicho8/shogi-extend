@@ -22,7 +22,6 @@ module BackendScript
         "対象棋譜" => record.swars_user.user_key,
         "クエリ"   => record.query,
         "個数"     => record.dl_count,
-        "個数"     => record.dl_count,
         "範囲"     => record.begin_at.to_s(:ymdhm),
         "...範囲"  => record.end_at.to_s(:ymdhm),
         "DL日時"   => record.created_at.to_s(:ymdhms),
