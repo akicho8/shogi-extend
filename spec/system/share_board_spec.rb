@@ -436,7 +436,7 @@ RSpec.describe "共有将棋盤", type: :system do
     first(".new_room_code input").set(room_code) # 合言葉を入力する
     first(".new_user_name input").set(user_name) # ハンドルネームを入力する
     first(".share_button").click                 # 共有ボタンをクリックする
-    assert_text("user_name")       # 入力したハンドルネームの人が参加している
+    assert_text(user_name)                       # 入力したハンドルネームの人が参加している
   end
 
   def chess_clock_set(initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
