@@ -4,12 +4,12 @@ import dayjs from "dayjs"
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 
 const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
-const ACTIVE_LIMIT          = 60*1.25 // N秒以内なら活発とみなして青くする
-const MEMBER_TTL            = 60*3    // 通知がN秒前より古いユーザーは破棄
+const ALIVE_SEC             = 60*1.25 // N秒未満なら活発とみなして青くする
+const KILL_SEC              = 60*3    // 通知がN秒前より古いユーザーは破棄
 
 // const ALIVE_NOTIFY_INTERVAL = 5
-// const ACTIVE_LIMIT          = 10
-// const MEMBER_TTL            = 20
+// const ALIVE_SEC          = 10
+// const KILL_SEC            = 20
 
 const FAKE_P = false
 
@@ -100,18 +100,19 @@ export const app_room_members = {
 
         // this.member_infos = _.orderBy(this.member_infos, ["user_age", "revision"], ["desc", "desc"]) // 順序固定のために年寄順に並べる(同じ場合はrevision順)
         // this.member_infos = _.orderBy(this.member_infos, ["from_user_name"], ["asc"]) // 順序固定のために名前順
+
         this.member_infos = _.orderBy(this.member_infos, ["room_joined_at"], ["asc"]) // 上から古参順に並べる
       }
     },
 
     // 通知が来た日時が最近の人だけを採取する
     member_infos_find_all_newest(list) {
-      return list.filter(e => this.member_elapsed_second(e) <= MEMBER_TTL)
+      return list.filter(e => this.member_elapsed_sec(e) < KILL_SEC)
     },
 
     // 生きているか？
     member_alive_p(e) {
-      return this.member_elapsed_second(e) <= ACTIVE_LIMIT
+      return this.member_elapsed_sec(e) < ALIVE_SEC
     },
     // 寝ているか？
     member_sleep_p(e) {
@@ -119,8 +120,7 @@ export const app_room_members = {
     },
 
     // 通達があってからの経過秒数
-    member_elapsed_second(e) {
-      return dayjs().valueOf() - e.performed_at
+    member_elapsed_sec(e) {
       return (dayjs().valueOf() - e.performed_at) / 1000
     },
 

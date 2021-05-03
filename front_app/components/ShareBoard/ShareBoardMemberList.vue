@@ -17,7 +17,7 @@
         span.ml-1(v-if="development_p") {{e.room_joined_at}}
         span.ml-1(v-if="development_p") r{{e.revision}}
         span.ml-1(v-if="development_p") {{e.user_age}}歳
-        span.ml-1(v-if="development_p") {{base.member_elapsed_second(e)}}秒前
+        span.ml-1(v-if="development_p") {{base.member_elapsed_sec(e)}}秒前
 </template>
 
 <script>

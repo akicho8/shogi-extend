@@ -64,20 +64,23 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  # BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'あとから来たbobはaliceの局面を貰う'
+  # BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '一度入力したハンドルネームは記憶'
   # Capybara.default_max_wait_time = 1
   # このテストは ordered_members が nil のまま共有されるのをスキップできるのを保証するので消してはいけない
-  it "あとから来たbobはaliceの局面を貰う" do
+  it "一度入力したハンドルネームは記憶" do
     a_block do
       room_setup("my_room", "alice")
 
-      visit "/share-board"                                      # 再来
-      find(".sidebar_toggle_navbar_item").click                 # サイドメニューを起動する
-      menu_item_click("合言葉の設定と共有")                    # 「合言葉の設定と共有」を自分でクリックする
-      first(".new_room_code input").set("my_room")              # 合言葉を入力する
-      value = first(".new_user_name input").value
-      assert { value == "alice" }                               # 以前入力したニックネームが復元されている
-      first(".share_button").click                              # 共有ボタンをクリックする
+      begin
+        visit "/share-board"                                      # 再来
+        find(".sidebar_toggle_navbar_item").click                 # サイドメニューを起動する
+        menu_item_click("合言葉の設定と共有")                    # 「合言葉の設定と共有」を自分でクリックする
+        first(".new_room_code input").set("my_room")              # 合言葉を入力する
+        value = first(".new_user_name input").value
+        assert { value == "alice" }                               # 以前入力したニックネームが復元されている
+        first(".share_button").click                              # 共有ボタンをクリックする
+      end
+
       assert_move("59", "58", "☗5八玉")                        # aliceは一人で初手を指した
     end
     b_block do
@@ -432,7 +435,7 @@ RSpec.describe "共有将棋盤", type: :system do
   def room_setup(room_code, user_name)
     visit "/share-board"
     find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する
-    menu_item_click("合言葉の設定と共有")       # 「合言葉の設定と共有」を自分でクリックする
+    menu_item_click("合言葉の設定と共有")        # 「合言葉の設定と共有」を自分でクリックする
     first(".new_room_code input").set(room_code) # 合言葉を入力する
     first(".new_user_name input").set(user_name) # ハンドルネームを入力する
     first(".share_button").click                 # 共有ボタンをクリックする
