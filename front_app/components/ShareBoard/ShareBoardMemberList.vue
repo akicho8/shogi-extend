@@ -37,7 +37,7 @@ export default {
       }
     },
     time_format(e) {
-      return dayjs.unix(e.performed_at).format("HH:mm:ss")
+      return dayjs(e.performed_at).format("HH:mm:ss")
     },
     // 自分のターンか？
     turn_active_p(e) {

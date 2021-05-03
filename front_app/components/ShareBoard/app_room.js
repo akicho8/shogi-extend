@@ -139,7 +139,7 @@ export const app_room = {
       params = Object.assign({}, {
         from_user_code: this.user_code, // 送信者識別子
         from_user_name: this.user_name, // 送信者名
-        performed_at: dayjs().unix(),   // 実行日時
+        performed_at: dayjs().valueOf(),  // 実行日時(ms)
         revision: this.$revision,       // 盤リビジョン(高い方が信憑性のある情報)
       }, params)
 

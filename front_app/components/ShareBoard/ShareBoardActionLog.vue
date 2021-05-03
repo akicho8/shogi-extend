@@ -71,10 +71,10 @@ export default {
       this.base.turn_offset = e.turn_offset
     },
     time_format(v) {
-      return dayjs.unix(v.performed_at).format("HH:mm:ss")
+      return dayjs(v.performed_at).format("HH:mm:ss")
     },
     human_time_format(v) {
-      return dayjs.unix(v.performed_at).format("H時m分s秒")
+      return dayjs(v.performed_at).format("H時m分s秒")
     },
   },
   computed: {

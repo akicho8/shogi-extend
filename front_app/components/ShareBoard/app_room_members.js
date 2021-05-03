@@ -76,7 +76,7 @@ export const app_room_members = {
       if (this.development_p && FAKE_P) {
         const room_joined_at = dayjs().valueOf()
         this.member_infos = ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
-          performed_at: dayjs().unix(),
+          performed_at: dayjs().valueOf(),
           user_age: 1,
           room_joined_at: room_joined_at + i,
           from_user_code: i,
@@ -120,7 +120,7 @@ export const app_room_members = {
 
     // 通達があってからの経過秒数
     member_elapsed_second(e) {
-      return dayjs().unix() - e.performed_at
+      return dayjs().valueOf() - e.performed_at
     },
 
     member_add_test() {
