@@ -60,9 +60,9 @@
         b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
           b-numberinput.every_plus(expanded controls-position="compact" v-model="base.cc_params.every_plus"        :min="0" :max="60*60" :exponential="true")
   footer.modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_button.mx-0(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
-      b-dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")
+      b-dropdown.mx-2(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")
         b-button(slot="trigger" icon-left="menu-up") プリセット
         template(v-for="e in base.CcRuleInfo.values")
           b-dropdown-item(@click="cc_params_set_handle(e)") {{e.name}}
@@ -155,6 +155,8 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .ChessClockModal
+  +tablet
+    width: 54ch
   .modal-card-body
     padding: 2.0rem 2.0rem
   .modal-card-foot
@@ -188,4 +190,8 @@ export default {
         align-items: center
         .field-label.is-small
           padding-top: 0
+          margin-right: 0.5rem
+          .label
+            white-space: nowrap
+            width: 6rem
 </style>
