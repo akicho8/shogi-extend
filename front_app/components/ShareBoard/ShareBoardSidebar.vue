@@ -12,7 +12,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="順番設定"             @click="base.os_modal_handle"           :disabled="!base.room_code")
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"  @click="base.room_code_url_copy_handle" :disabled="!base.room_code")
           b-menu-item.is_active_unset(label="再接続(なんかおかしいとき用)" @click="base.room_recreate_handle"      :disabled="!base.connectable_p")
-          b-menu-item.is_active_unset(label="自分の盤の配置をみんなの盤に反映"         @click="base.force_sync_modal_handle"   :disabled="!base.connectable_p")
+          b-menu-item.is_active_unset(label="自分の盤の配置を全員の盤に反映"         @click="base.force_sync_modal_handle"   :disabled="!base.connectable_p")
 
         b-menu-list(label="検討用")
           b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")

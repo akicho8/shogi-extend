@@ -428,6 +428,43 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自分の盤の配置を全員の盤に反映'
+  describe "自分の盤の配置を全員の盤に反映" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")                    # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                      # bobも同じ部屋に入る
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩")                 # 1手目
+      end
+      b_block do
+        assert_move("33", "34", "☖3四歩")                 # 2手目
+      end
+      a_block do
+        assert_move("27", "26", "☗2六歩")                 # 3手目
+      end
+      b_block do
+        assert_move("83", "84", "☖8四歩")                 # 4手目
+      end
+      a_block do
+        sp_controller_click("previous")                   # 3手戻す
+        sp_controller_click("previous")
+        sp_controller_click("previous")
+
+        find(".sidebar_toggle_navbar_item").click         # サイドメニューを開く
+        menu_item_click("自分の盤の配置を全員の盤に反映") # モーダルを開く
+        first(".sync_button").click                       # 反映する
+        first(".close_button").click                      # 閉じる
+      end
+      b_block do
+        assert_move("33", "34", "☖3四歩")                 # aliceが局面を戻したので再びbobは2手目を指せる
+      end
+    end
+  end
+
   def visit_with_args(args)
     visit "/share-board?#{args.to_query}"
   end
