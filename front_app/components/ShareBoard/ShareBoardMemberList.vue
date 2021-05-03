@@ -10,10 +10,11 @@
             b-icon(:icon="icon_for(e)" :type="icon_type_for(e)" size="is-small")
         //- b-icon(icon="sleep" type="is-danger" size="is-small")
         //- b-icon(icon="lan-disconnect" type="is-danger" size="is-small")
-        span.mx-1(:class="{'has-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
+        span.mx-1.user_name(:class="{'has-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
         b-icon.ml-1(icon="lan-disconnect" type="is-primary" size="is-small" v-if="base.member_sleep_p(e) || development_p")
         span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
         //- span.ml-1(v-if="development_p") {{member_info_class(e)}}
+        span.ml-1(v-if="development_p") {{e.room_joined_at}}
         span.ml-1(v-if="development_p") r{{e.revision}}
         span.ml-1(v-if="development_p") {{e.user_age}}歳
         span.ml-1(v-if="development_p") {{base.member_elapsed_second(e)}}秒前

@@ -119,6 +119,7 @@ export const app_room = {
       this.__assert__(this.ac_room == null, "this.ac_room == null")
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: () => {
+          this.member_room_connected()
           this.revision_increment_timer.restart()
           this.setup_info_request()
           this.member_bc_interval_runner.restart()

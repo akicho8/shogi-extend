@@ -192,8 +192,8 @@ RSpec.describe "共有将棋盤", type: :system do
     assert_text("(通知効果音)")                     # 通知があった
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定'
-  describe "順番設定" do
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定で手番お知らせ'
+  describe "順番設定で手番お知らせ" do
     it "works" do
       a_block do
         room_setup("my_room", "alice")                     # aliceが部屋を作る
@@ -214,13 +214,13 @@ RSpec.describe "共有将棋盤", type: :system do
         assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことがbobに伝わった
         assert_selector(".OrderSettingModal .b-table")     # 同期しているのでbob側のモーダルも有効になっている
         first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
-        assert_member_list(1, "is_current_player")         # 1人目(alice)に丸がついている
-        assert_member_list(2, "is_other_player")           # 2人目(bob)は待機中
+        assert_member_list(1, "is_current_player", "alice")         # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_other_player", "bob")           # 2人目(bob)は待機中
         assert_no_move("77", "76", "☗7六歩")              # なので2番目のbobは指せない
       end
       a_block do
-        assert_member_list(1, "is_current_player")         # 1人目(alice)に丸がついている
-        assert_member_list(2, "is_other_player")           # 2人目(bob)は待機中
+        assert_member_list(1, "is_current_player", "alice")         # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_other_player", "bob")    # 2人目(bob)は待機中
         assert_move("77", "76", "☗7六歩")                 # aliceが1番目なので指せる
       end
       b_block do
@@ -229,8 +229,8 @@ RSpec.describe "共有将棋盤", type: :system do
       a_block do
         assert_text("次はbobさんの手番です")
         assert_no_move("33", "34", "☖3四歩")              # aliceもう指したので指せない
-        assert_member_list(1, "is_other_player")           # 1人目(alice)に丸がついていない
-        assert_member_list(2, "is_current_player")         # 2人目(bob)は指せるので丸がついている
+        assert_member_list(1, "is_other_player", "alice")  # 1人目(alice)に丸がついていない
+        assert_member_list(2, "is_current_player", "bob")  # 2人目(bob)は指せるので丸がついている
       end
       b_block do
         assert_move("33", "34", "☖3四歩")                 # 2番目のbobは指せる
@@ -261,10 +261,10 @@ RSpec.describe "共有将棋盤", type: :system do
         first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
       end
       c_block do
-        assert_member_list(1, "is_current_player")         # 1人目(alice)に丸がついている
-        assert_member_list(2, "is_other_player")           # 2人目(bob)は待機中
-        assert_member_list(3, "is_watching")               # 3人目(carol)は観戦中
-        assert_no_move("77", "76", "☗7六歩")              # なので3番目のcarolは指せない
+        assert_member_list(1, "is_current_player", "alice") # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_other_player", "bob")     # 2人目(bob)は待機中
+        assert_member_list(3, "is_watching", "carol")       # 3人目(carol)は観戦中
+        assert_no_move("77", "76", "☗7六歩")              #  なので3番目のcarolは指せない
       end
       a_block do
         assert_move("77", "76", "☗7六歩")                 # 1番目のaliceが指す
@@ -497,8 +497,16 @@ RSpec.describe "共有将棋盤", type: :system do
     assert_no_selector(".MembershipLocationPlayerInfoTime")
   end
 
-  def assert_member_list(i, klass)
-    assert_selector(".ShareBoardMemberList .member_info:nth-child(#{i}).#{klass}")
+  # メンバーリストの上からi番目の状態と名前
+  def assert_member_list(i, klass, user_name)
+    Capybara.within(".ShareBoardMemberList") do
+      # 手番・手番待ち・観戦者のどれか確認
+      assert_selector(".member_info:nth-child(#{i}).#{klass}")
+
+      # 名前の確認
+      text = find(".member_info:nth-child(#{i}).#{klass} .user_name").text
+      assert { text === user_name }
+    end
   end
 
   def sp_controller_click(klass)

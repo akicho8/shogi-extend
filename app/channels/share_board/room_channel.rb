@@ -17,7 +17,7 @@ module ShareBoard
 
     def sfen_share(data)
       # track(data, "指し手送信", data.slice("last_move_kif", "turn_offset", "performed_at", "retry_count"))
-      track(data, "指し手送信", "[#{data["turn_offset"]}] #{data["last_move_kif"]} (R#{data["retry_count"]} #{data["sequence_code"]}回目 from #{data['from_user_code']})")
+      track(data, "指し手送信", "[#{data["turn_offset"]}] #{data["last_move_kif"]} (#{data["sequence_code"]}回目 from #{data['from_user_code']})")
       broadcast(:sfen_share_broadcasted, data)
     end
 
@@ -37,7 +37,7 @@ module ShareBoard
     end
 
     def setup_info_request(data)
-      track(data, "セットアップ情報の要求", "ください > みなさん")
+      track(data, "セットアップ情報の要求", "ください > みなさん (#{data['from_user_code']})")
       broadcast(:setup_info_request_broadcasted, data)
     end
 
@@ -52,7 +52,7 @@ module ShareBoard
     end
 
     def member_info_share(data)
-      track(data, "生存報告", data) unless Rails.env.production?
+      track(data, "生存通知", "#{data['user_age']}歳 r#{data['revision']} (#{data['from_user_code']})") unless Rails.env.production?
       broadcast(:member_info_share_broadcasted, data)
     end
 
@@ -97,6 +97,9 @@ module ShareBoard
     def track(data, action, body)
       prefix = data["from_user_name"] + ":"
       body = [prefix, body].compact.join(" ")
+      if Rails.env.development?
+        body = [body, data].join(" ")
+      end
       SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: body)
     end
 

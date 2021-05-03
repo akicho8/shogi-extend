@@ -134,7 +134,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
-  describe "生存報告" do
+  describe "生存通知" do
     before do
       subscribe(room_code: room_code)
     end

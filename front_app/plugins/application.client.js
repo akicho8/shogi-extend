@@ -88,6 +88,10 @@ export default {
         ...params,
       }
       if (params.message) {
+        if (this.development_p) {
+          this.clog(params.message)
+        }
+
         if (!params.talk_only) {
           this.$buefy.toast.open(params)
         }

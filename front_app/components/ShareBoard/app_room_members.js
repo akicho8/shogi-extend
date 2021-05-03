@@ -18,7 +18,8 @@ export const app_room_members = {
     return {
       member_infos: [],
       member_bc_interval_runner: new IntervalRunner(this.member_bc_interval_callback, {early: true, interval: ALIVE_NOTIFY_INTERVAL}),
-      user_age: 0,
+      user_age: 0,              // 生存通知を送信した回数
+      room_joined_at: null,     // 部屋に接続した時間(ms)
     }
   },
 
@@ -33,6 +34,14 @@ export const app_room_members = {
       this.member_infos = []
     },
 
+    // 初めて接続したときの時間を room_joined_at に入れる
+    // そうすると room_joined_at desc で古参順になる
+    member_room_connected() {
+      if (this.blank_p(this.room_joined_at)) {
+        this.room_joined_at = dayjs().valueOf()
+      }
+    },
+
     member_bc_interval_callback() {
       this.debug_alert("member_bc_interval_callback")
       this.user_age += 1
@@ -43,6 +52,7 @@ export const app_room_members = {
     member_info_share() {
       this.ac_room_perform("member_info_share", {
         user_age: this.user_age,
+        room_joined_at: this.room_joined_at,
       }) // --> app/channels/share_board/room_channel.rb
     },
 
@@ -64,22 +74,33 @@ export const app_room_members = {
     // 処理順序重要
     member_infos_normalize() {
       if (this.development_p && FAKE_P) {
+        const room_joined_at = dayjs().valueOf()
         this.member_infos = ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
           performed_at: dayjs().unix(),
           user_age: 1,
+          room_joined_at: room_joined_at + i,
           from_user_code: i,
           from_user_name: e,
         }))
       }
 
       if (true) {
-        this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")  // 新しいもの順に並べてから
+        this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")  // 情報が新しいもの順に並べてから
         this.member_infos = _.uniqBy(this.member_infos, "from_user_code")         // ユーザーの重複を防ぐ(新しい方を採取できる)
 
         this.member_infos = this.member_infos_find_all_newest(this.member_infos)  // 通知が来た時間が最近の人だけを採取する
-        // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる
-        this.member_infos = _.uniqBy(this.member_infos, "from_user_name")         // ユーザー名が重複するのを防ぐ (再接続したとき不自然に見えるのを防ぐため)
-        this.member_infos = _.orderBy(this.member_infos, ["user_age", "revision"], ["desc", "desc"]) // 順序固定のために年寄順に並べる(同じ場合はrevision順)
+        // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる(ランダムな固定)
+
+        if (false) {
+          // 自分の名前と同じ名前で入ってきたことがわからず、イタズラで勝手に操作されると、本人はホラーに感じる
+          this.member_infos = _.uniqBy(this.member_infos, "from_user_name")         // ユーザー名が重複するのを防ぐ (再接続したとき不自然に見えるのを防ぐため)
+        } else {
+          // 自分の名前と同じ名前で入ってきたときなんとなく状況がわかる
+        }
+
+        // this.member_infos = _.orderBy(this.member_infos, ["user_age", "revision"], ["desc", "desc"]) // 順序固定のために年寄順に並べる(同じ場合はrevision順)
+        // this.member_infos = _.orderBy(this.member_infos, ["from_user_name"], ["asc"]) // 順序固定のために名前順
+        this.member_infos = _.orderBy(this.member_infos, ["room_joined_at"], ["asc"]) // 上から古参順に並べる
       }
     },
 
