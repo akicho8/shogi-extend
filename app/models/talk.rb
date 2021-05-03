@@ -128,16 +128,15 @@ class Talk
         Rails.logger.debug(resp.to_h.to_t)
         Rails.logger.debug({source_text: source_text, real_path: real_path}.to_t)
       end
-    rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily => error
-      # 不安定な環境で実行すると client.synthesize_speech のタイミングで
+    rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily, Seahorse::Client::NetworkingError => error
+      # インターネットに接続していないと client.synthesize_speech のタイミングで
       # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
-      # のエラーになることがある
-      # が、よくわからんので例外に含めていない
-      if Rails.env.development?
-        # ログが見えなくなるので出力しない
-      else
-        SlackAgent.notify_exception(error)
-      end
+      # のエラーになる
+      # if Rails.env.development?
+      #   # ログが見えなくなるので出力しない
+      # else
+      SlackAgent.notify_exception(error)
+      # end
     end
   end
 
