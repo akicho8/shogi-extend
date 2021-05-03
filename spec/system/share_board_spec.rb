@@ -457,7 +457,6 @@ RSpec.describe "共有将棋盤", type: :system do
         find(".sidebar_toggle_navbar_item").click         # サイドメニューを開く
         menu_item_click("自分の盤の配置を全員の盤に反映") # モーダルを開く
         first(".sync_button").click                       # 反映する
-        first(".close_button").click                      # 閉じる
       end
       b_block do
         assert_move("33", "34", "☖3四歩")                 # aliceが局面を戻したので再びbobは2手目を指せる
