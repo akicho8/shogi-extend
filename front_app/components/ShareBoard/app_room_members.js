@@ -37,6 +37,7 @@ export const app_room_members = {
     member_infos_clear() {
       this.member_infos = []
       this.room_joined_at = null // 再接続したら最後に追加する (先輩であってもあとから再接続したら後輩とする)
+      this.user_age = 0
     },
 
     // 初めて接続したときの時間を room_joined_at に入れる
