@@ -1,14 +1,11 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 
-const DESTROY_AFTER_WAIT = 3.0
-
 export const app_room = {
   data() {
     return {
       room_code: this.config.record.room_code, // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
-      room_creating_busy: 0,                   // 1以上なら接続を試みている最中
       ac_room: null,
     }
   },
@@ -80,33 +77,6 @@ export const app_room = {
           this.room_destroy()
         }
       }
-    },
-
-    // ac_room.unsubscribe() をした直後に subscribe すると subscribe が無効になる
-    // なので少し待ってから実行する
-    room_recreate() {
-      if (this.room_creating_busy >= 1) {
-        this.toast_ng("共有作業中です")
-        return
-      }
-      if (this.ac_room) {
-        this.room_destroy()
-        this.room_creating_busy += 1
-        const loading = this.$buefy.loading.open()
-        this.delay_block(DESTROY_AFTER_WAIT, () => {
-          this.room_create()
-          this.room_creating_busy = 0
-          loading.close()
-        })
-      } else {
-        this.room_create()
-      }
-    },
-
-    room_recreate_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-      this.room_recreate()
     },
 
     room_create() {

@@ -32,7 +32,7 @@ client-only
     ShareBoardSidebar(:base="base")
     ShareBoardNavbar(:base="base")
 
-    MainSection.is_mobile_padding_zero
+    MainSection.is_mobile_padding_zero(v-if="room_creating_busy === 0")
       .container.is-fluid
         .columns.is-centered
           .MainColumn.column(:class="main_column_class")
@@ -144,6 +144,7 @@ import { app_storage      } from "./app_storage.js"
 import { app_export       } from "./app_export.js"
 import { app_sfen_share  } from "./app_sfen_share.js"
 import { app_force_sync  } from "./app_force_sync.js"
+import { app_room_recreate  } from "./app_room_recreate.js"
 
 import { FormatTypeInfo   } from "@/components/models/format_type_info.js"
 
@@ -171,6 +172,7 @@ export default {
     app_export,
     app_sfen_share,
     app_force_sync,
+    app_room_recreate,
   ],
   props: {
     config: { type: Object, required: true },
