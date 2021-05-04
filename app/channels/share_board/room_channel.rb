@@ -71,6 +71,10 @@ module ShareBoard
       broadcast(:message_share_broadcasted, data)
     end
 
+    def aclog(data)
+      track(data, data["subject"], data["body"])
+    end
+
     def fake_error(data)
       track(data, "エラー発動確認", data)
       broadcast(:fake_error_broadcasted, data)

@@ -83,10 +83,12 @@ export const app_chore = {
           onCancel: () => {
             this.talk_stop()
             this.sound_play("click")
+            this.aclog("退室", "キャンセル")
           },
           onConfirm: () => {
             this.talk_stop()
             this.sound_play("click")
+            this.aclog("退室", "実行")
             this.$router.push({name: "index"})
           },
         })

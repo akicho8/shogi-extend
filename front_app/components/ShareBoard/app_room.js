@@ -162,6 +162,11 @@ export const app_room = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
+    aclog(subject = "", body = "") {
+      this.ac_room_perform("aclog", { subject, body })
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
     fake_error() {
       this.ac_room_perform("fake_error", {
         value: null,
@@ -169,6 +174,7 @@ export const app_room = {
     },
     fake_error_broadcasted(params) {
     },
+
   },
   computed: {
     room_code_valid_p() { return this.room_code != "" },             // 合言葉があるか？

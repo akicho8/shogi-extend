@@ -187,6 +187,16 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
+  describe "ログ記録" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it do
+      data = data_factory("subject" => "(subject)", "body" => "body")
+      subscription.aclog(data)
+    end
+  end
+
   describe "エラー発動確認" do
     before do
       subscribe(room_code: room_code)

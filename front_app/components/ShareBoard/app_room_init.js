@@ -77,7 +77,7 @@ export const app_room_init = {
           this.clog("要求した情報を受信した")
           this.clog(`先輩度比較: 相手(${params.active_level}) > 自分(${this.active_level}) --> ${params.active_level > this.active_level}`)
           if (params.active_level > this.active_level) {
-            this.clog("自分より古参の情報なので反映する")
+            this.aclog("情報設定", `${params.from_user_name}の情報を利用 (${this.active_level} < ${params.active_level})`)
             this.debug_alert("最新の状態を共有してもらった")
             this.active_level = params.active_level
             this.setup_by_params(params)
