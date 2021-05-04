@@ -2,27 +2,26 @@ module ShareBoard
   class RoomChannel < ApplicationCable::Channel
     def subscribed
       return reject unless room_code
-      simple_track("subscribed")
+      simple_track("IN")
       stream_from "share_board/room_channel/#{room_code}"
     end
 
     def unsubscribed
-      simple_track("unsubscribed")
+      simple_track("OUT")
     end
 
     def force_sync(data)
-      track(data, "強制盤同期", data.slice("turn_offset", "sfen"))
+      track(data, "局面配布", data.slice("turn_offset", "sfen"))
       broadcast(:force_sync_broadcasted, data)
     end
 
     def sfen_share(data)
-      # track(data, "指し手送信", data.slice("last_move_kif", "turn_offset", "performed_at", "retry_count"))
-      track(data, "指し手送信", "[#{data["turn_offset"]}] #{data["last_move_kif"]} (#{data["sequence_code"]}回目 from #{data['from_user_code']})")
+      track(data, "指し手送信", "[#{data["turn_offset"]}] #{data["last_move_kif"]}")
       broadcast(:sfen_share_broadcasted, data)
     end
 
     def received_ok(data)
-      track(data, "指し手受信", "OK > #{data['to_user_name']}(#{data['to_user_code']})")
+      track(data, "指し手受信", "OK > #{data['to_user_name']}")
       broadcast(:received_ok_broadcasted, data)
     end
 
@@ -37,7 +36,7 @@ module ShareBoard
     end
 
     def setup_info_request(data)
-      track(data, "セットアップ情報の要求", "ください > みなさん (#{data['from_user_code']})")
+      track(data, "セットアップ情報の要求", "ください > ALL")
       broadcast(:setup_info_request_broadcasted, data)
     end
 
@@ -95,11 +94,12 @@ module ShareBoard
     end
 
     def track(data, action, body)
+      if Rails.env.development?
+        SlackAgent.message_send(key: "[DATA] 共有将棋盤 [#{room_code}] #{action}", body: data)
+      end
+
       prefix = data["from_user_name"] + ":"
       body = [prefix, body].compact.join(" ")
-      if Rails.env.development?
-        body = [body, data].join(" ")
-      end
       SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: body)
     end
 

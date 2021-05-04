@@ -33,7 +33,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     }.merge(params)
   end
 
-  describe "強制盤同期" do
+  describe "局面配布" do
     before do
       subscribe(room_code: room_code)
     end
