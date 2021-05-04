@@ -16,11 +16,15 @@ const FAKE_P = false
 export const app_room_members = {
   data() {
     return {
-      member_infos: [],
+      member_infos:   null, // 参加者たち
+      room_joined_at: null, // 部屋に接続した時間(ms)
+      user_age:       null, // 生存通知を送信した回数
+
       member_bc_interval_runner: new IntervalRunner(this.member_bc_interval_callback, {early: true, interval: ALIVE_NOTIFY_INTERVAL}),
-      user_age: 0,              // 生存通知を送信した回数
-      room_joined_at: null,     // 部屋に接続した時間(ms)
     }
+  },
+  created() {
+    this.member_infos_clear()
   },
 
   beforeDestroy() {
@@ -32,6 +36,7 @@ export const app_room_members = {
   methods: {
     member_infos_clear() {
       this.member_infos = []
+      this.room_joined_at = null // 再接続したら最後に追加する (先輩であってもあとから再接続したら後輩とする)
     },
 
     // 初めて接続したときの時間を room_joined_at に入れる
@@ -98,7 +103,7 @@ export const app_room_members = {
           // 自分の名前と同じ名前で入ってきたときなんとなく状況がわかる
         }
 
-        // this.member_infos = _.orderBy(this.member_infos, ["user_age", "revision"], ["desc", "desc"]) // 順序固定のために年寄順に並べる(同じ場合はrevision順)
+        // this.member_infos = _.orderBy(this.member_infos, ["user_age", "active_level"], ["desc", "desc"]) // 順序固定のために年寄順に並べる(同じ場合はactive_level順)
         // this.member_infos = _.orderBy(this.member_infos, ["from_user_name"], ["asc"]) // 順序固定のために名前順
 
         this.member_infos = _.orderBy(this.member_infos, ["room_joined_at"], ["asc"]) // 上から古参順に並べる

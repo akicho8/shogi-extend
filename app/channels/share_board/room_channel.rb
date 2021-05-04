@@ -52,7 +52,7 @@ module ShareBoard
     end
 
     def member_info_share(data)
-      track(data, "生存通知", "#{data['user_age']}歳 r#{data['revision']} (#{data['from_user_code']})") unless Rails.env.production?
+      track(data, "生存通知", "#{data['user_age']}回目 LV:#{data['active_level']} (#{data['from_user_code']})") unless Rails.env.production?
       broadcast(:member_info_share_broadcasted, data)
     end
 

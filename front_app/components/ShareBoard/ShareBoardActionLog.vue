@@ -29,7 +29,7 @@ export default {
   },
   mounted() {
     if (this.development_p) {
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 5; i++) {
         this.base.al_add_test()
       }
     }

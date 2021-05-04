@@ -29,7 +29,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       "from_user_code" => SecureRandom.hex,
       "from_user_name" => "alice",
       "performed_at"   => Time.current.to_i,
-      "revision"       => 1,
+      "active_level"   => 1,
     }.merge(params)
   end
 

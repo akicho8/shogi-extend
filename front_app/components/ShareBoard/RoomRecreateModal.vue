@@ -17,7 +17,7 @@
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
-    b-button.sync_button(@click="apply_handle" type="is-danger") 実行
+    b-button.apply_button(@click="apply_handle" type="is-danger") 実行
 </template>
 
 <script>

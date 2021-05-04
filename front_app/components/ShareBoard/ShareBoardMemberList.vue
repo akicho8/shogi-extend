@@ -15,7 +15,7 @@
         span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
         //- span.ml-1(v-if="development_p") {{member_info_class(e)}}
         span.ml-1(v-if="development_p") {{e.room_joined_at}}
-        span.ml-1(v-if="development_p") r{{e.revision}}
+        span.ml-1(v-if="development_p") LV:{{e.active_level}}
         span.ml-1(v-if="development_p") {{e.user_age}}歳
         span.ml-1(v-if="development_p") {{base.member_elapsed_sec(e)}}秒前
 </template>

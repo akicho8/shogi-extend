@@ -85,13 +85,14 @@ export const app_room = {
       this.__assert__(this.room_code, "this.room_code")
 
       this.member_infos_clear()
-      // this.room_destroy()
       this.active_level_reset()
+
+      // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再接続される場合があるためそれを考慮すること
       this.__assert__(this.ac_room == null, "this.ac_room == null")
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: () => {
           this.member_room_connected()
-          this.revision_increment_timer.restart()
+          this.active_level_increment_timer.restart()
           this.setup_info_request()
           this.member_bc_interval_runner.restart()
         },
@@ -112,7 +113,7 @@ export const app_room = {
         from_user_code: this.user_code, // 送信者識別子
         from_user_name: this.user_name, // 送信者名
         performed_at: dayjs().valueOf(),  // 実行日時(ms)
-        revision: this.$revision,       // 盤リビジョン(高い方が信憑性のある情報)
+        active_level: this.active_level,  // 先輩度(高い方が信憑性のある情報)
       }, params)
 
       if (this.ac_room) {

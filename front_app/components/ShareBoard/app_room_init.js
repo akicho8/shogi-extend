@@ -3,20 +3,26 @@ import { IntervalRunner } from '@/components/models/interval_runner.js'
 export const app_room_init = {
   data() {
     return {
-      revision_increment_timer: new IntervalRunner(this.revision_increment_timer_callback, {early: false, interval: 1.0}),
+      active_level_increment_timer: new IntervalRunner(this.active_level_increment_timer_callback, {early: false, interval: 1.0}),
+      active_level: null, // 先輩度
     }
   },
   created() {
-    this.$revision = 0
+    this.active_level_reset()
   },
   beforeDestroy() {
-    if (this.revision_increment_timer) {
-      this.revision_increment_timer.stop()
+    if (this.active_level_increment_timer) {
+      this.active_level_increment_timer.stop()
     }
   },
   methods: {
-    revision_increment_timer_callback() {
-      this.$revision += 1
+    active_level_reset() {
+      this.active_level = 0
+    },
+
+    // 入室中に1秒毎に呼ばれる
+    active_level_increment_timer_callback() {
+      this.active_level += 1
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -69,11 +75,11 @@ export const app_room_init = {
         this.clog(`${params.from_user_name} が ${params.to_user_name} に ${params.sfen} を送信したものを ${this.user_name} が受信`)
         if (params.to_user_code === this.user_code) {
           this.clog("要求した情報を受信した")
-          this.clog(`リビジョン比較: 相手(${params.revision}) > 自分(${this.$revision}) --> ${params.revision > this.$revision}`)
-          if (params.revision > this.$revision) {
+          this.clog(`先輩度比較: 相手(${params.active_level}) > 自分(${this.active_level}) --> ${params.active_level > this.active_level}`)
+          if (params.active_level > this.active_level) {
             this.clog("自分より古参の情報なので反映する")
             this.debug_alert("最新の状態を共有してもらった")
-            this.$revision = params.revision
+            this.active_level = params.active_level
             this.setup_by_params(params)
           } else {
             this.clog("自分より新参の情報なので反映しない")
