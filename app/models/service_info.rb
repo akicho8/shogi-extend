@@ -22,7 +22,7 @@ class ServiceInfo
       og_image_key: "xy",
       description: "符号マスター養成所",
       features: [
-        "タップするルールはスマホ用",
+        "棋書を読むのが楽になる！？",
         "100問正解するまでの時間を競う",
         "1分半切ったら卒業",
       ],
