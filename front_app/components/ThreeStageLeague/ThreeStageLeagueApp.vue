@@ -72,4 +72,6 @@ export default {
 .ThreeStageLeagueApp
   .MainSection.section
     padding: 0
+    +tablet
+      padding: 0.5rem 0
 </style>
