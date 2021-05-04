@@ -9,7 +9,7 @@ module Swars
           if current_user
             if continue_begin_at
               time = continue_begin_at.to_s(:battle_medium)
-              "#{time} 以降を日時昇順で最大#{zip_dl_max}件取得する"
+              "#{time} 以降を日時昇順で最大#{zip_dl_max}件取得する (推奨)"
             else
               "「前回の続きから」以外の方法で一度ダウンロードすると使えるようになります"
             end
