@@ -36,12 +36,12 @@ module ShareBoard
     end
 
     def setup_info_request(data)
-      track(data, "セットアップ情報の要求", "ください > ALL")
+      track(data, "情報要求", "ください > ALL")
       broadcast(:setup_info_request_broadcasted, data)
     end
 
     def setup_info_send(data)
-      track(data, "セットアップ情報の送信", "あげます > #{data["to_user_name"]}")
+      track(data, "情報送信", "あげます > #{data["to_user_name"]}")
       broadcast(:setup_info_send_broadcasted, data)
     end
 
@@ -107,7 +107,7 @@ module ShareBoard
       if current_user
         body = current_user.name
       else
-        body = "(非ログインにより不明)"
+        body = ""
       end
       SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: body)
     end

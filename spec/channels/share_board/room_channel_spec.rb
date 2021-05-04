@@ -98,7 +98,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
-  describe "セットアップ情報の要求" do
+  describe "情報要求" do
     before do
       subscribe(room_code: room_code)
     end
@@ -110,7 +110,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
-  describe "セットアップ情報の送信" do
+  describe "情報送信" do
     before do
       subscribe(room_code: room_code)
     end
