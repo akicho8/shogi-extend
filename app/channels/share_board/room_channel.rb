@@ -46,7 +46,10 @@ module ShareBoard
     end
 
     def chess_clock_share(data)
-      track(data, "対局時計", data["message"]) if data["message"].present?
+      if data["message"].present?
+        values = data["cc_params"].fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus")
+        track(data, "対局時計", "#{data["message"]} (#{values.join(" ")})")
+      end
       broadcast(:chess_clock_share_broadcasted, data)
     end
 
@@ -61,7 +64,7 @@ module ShareBoard
     end
 
     def ordered_members_share(data)
-      user_names = data["ordered_members"].collect { |e| e["user_name"].inspect }.join(" → ")
+      user_names = data["ordered_members"].collect { |e| e["user_name"] }.join(" → ")
       track(data, "順番設定", user_names)
       broadcast(:ordered_members_share_broadcasted, data)
     end
