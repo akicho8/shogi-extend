@@ -6,6 +6,15 @@ module Swars
     let(:user1)        { User.create!(user_key: "alice") }
     let(:user2)        { User.create!(user_key: "bob")   }
 
+    let(:base_params) {
+      {
+        :current_user         => current_user,   # ログインしている人
+        :current_index_scope  => user1.battles,  # 対象レコードたち
+        :swars_user           => user1,          # 対象者のキー
+        :query                => "alice",        # デバッグ用にいれておく。いまのところ user1.name と同一
+      }
+    }
+
     describe "継続ダウンロード" do
       def test1(seconds)
         Timecop.freeze(Time.current + seconds) do
@@ -20,10 +29,7 @@ module Swars
         test1(3)  #3 3回目
 
         zip_dl_cop = ZipDlCop.new({
-            :current_user         => current_user,   # ログインしている人
-            :current_index_scope  => user1.battles,  # 対象レコードたち
-            :swars_user           => user1,          # 対象者のキー
-            :query                => "alice",        # デバッグ用にいれておく。いまのところ user1.name と同一
+            **base_params,
             :zip_dl_max           => 2,              # 一度にダウンロードする数
             :zip_dl_scope_key     => :zdsk_continue, # 前回の続きから
             :zip_dl_format_key    => "ki2",
@@ -76,12 +82,7 @@ module Swars
       end
 
       def zip_dl_cop
-        ZipDlCop.new({
-            :current_user         => current_user,   # ログインしている人
-            :current_index_scope  => user1.battles,  # 対象レコードたち
-            :swars_user           => user1,          # 対象者のキー
-            :query                => "alice",        # デバッグ用にいれておく。いまのところ user1.name と同一
-          })
+        ZipDlCop.new(base_params)
       end
 
       it "works" do
@@ -101,11 +102,15 @@ module Swars
         assert { zip_dl_cop.dli_over? == true  }
       end
     end
+
+    describe "to_summary" do
+      def zip_dl_cop
+        ZipDlCop.new(base_params)
+      end
+
+      it "works" do
+        assert { zip_dl_cop.to_summary }
+      end
+    end
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> .
-# >>
-# >> Finished in 2.2 seconds (files took 2.41 seconds to load)
-# >> 1 example, 0 failures
-# >>

@@ -93,7 +93,7 @@ module Swars
 
     def to_summary
       a = []
-      a << "#{current_user.name}(#{swars_zip_dl_logs.count}):"
+      a << "#{current_user.name}(#{current_user.swars_zip_dl_logs.count}):"
       a << swars_user.key
       a << zip_dl_scope_info.name
       a << "#{zip_dl_scope.count}件"
