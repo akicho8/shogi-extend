@@ -95,6 +95,7 @@ export const app_room = {
           this.member_bc_interval_runner.restart()
         },
         disconnected: () => {
+          this.active_level_increment_timer.stop() // 切断されているときはアクティブなレベルを上げないようにする
         },
       })
     },
