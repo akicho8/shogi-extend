@@ -73,11 +73,10 @@ export const app_chore = {
       this.sound_play("click")
       if (this.ac_room || this.chess_clock) {
 
-        const message = "対局中のように思われますが本当に退室しますか？"
-        this.talk(message)
+        this.talk("本当に退室してもよろしいですか？")
 
         this.$buefy.dialog.confirm({
-          message: message,
+          message: "本当に退室してもよろしいですか？<p class='has-text-grey is-size-7 mt-2'>初期配置に戻すために退室する必要はありません<br>左矢印で初期配置に戻ります</p>",
           cancelText: "キャンセル",
           confirmText: "退室する",
           focusOn: "cancel",
