@@ -73,7 +73,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
       begin
         visit "/share-board"                                      # 再来
-        find(".sidebar_toggle_navbar_item").click                 # サイドメニューを起動する
+        side_menu_open
         menu_item_click("合言葉の設定と共有")                    # 「合言葉の設定と共有」を自分でクリックする
         first(".new_room_code input").set("my_room")              # 合言葉を入力する
         value = first(".new_user_name input").value
@@ -133,7 +133,7 @@ RSpec.describe "共有将棋盤", type: :system do
         room_setup("my_room", "bob")               # bobも同じ部屋に入る
       end
       a_block do
-        find(".sidebar_toggle_navbar_item").click  # サイドメニューを開く
+        side_menu_open
         menu_item_click("対局時計の設置")         # 「対局時計の設置」モーダルを開く
         assert_clock_off                           # 時計はまだ設置されていない
         find(".main_switch").click                 # 設置する
@@ -191,7 +191,7 @@ RSpec.describe "共有将棋盤", type: :system do
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '手番が来たら知らせる設定'
   xit "手番が来たら知らせる設定" do
     room_setup("my_room", "alice")
-    find(".sidebar_toggle_navbar_item").click       # サイドメニュー起動する
+    side_menu_open
     menu_item_click("手番が来たら知らせる設定")    # 「手番が来たら知らせる設定」を自分でクリックする
     find(".TurnNotifyModal select").select("alice") # 上家設定
     find(".TurnNotifyModal .apply_button").click    # 適用
@@ -207,11 +207,11 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       b_block do
         room_setup("my_room", "bob")                       # bobも同じ部屋に入る
-        find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
+        side_menu_open
         menu_item_click("順番設定")                       # 「順番設定」モーダルを開く (まだ無効の状態)
       end
       a_block do
-        find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
+        side_menu_open
         menu_item_click("順番設定")                       # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
@@ -260,7 +260,7 @@ RSpec.describe "共有将棋盤", type: :system do
         room_setup("my_room", "carol")                     # carolは観戦目的で同じ部屋に入る
       end
       a_block do
-        find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
+        side_menu_open
         menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         order_toggle(3)                                    # 3番目のcarolさんの「OK」をクリックして「観戦」に変更
@@ -316,7 +316,7 @@ RSpec.describe "共有将棋盤", type: :system do
     end
 
     def order_modal_main_switch_click(stat)
-      find(".sidebar_toggle_navbar_item").click          # サイドメニューを開く
+      side_menu_open
       menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
       find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
       assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
@@ -328,19 +328,19 @@ RSpec.describe "共有将棋盤", type: :system do
   describe "メッセージ" do
     it "works" do
       a_block do
-        room_setup("my_room", "alice")               # aliceが部屋を作る
+        room_setup("my_room", "alice")                   # aliceが部屋を作る
       end
       b_block do
-        room_setup("my_room", "bob")                 # bobも同じ部屋に入る
+        room_setup("my_room", "bob")                     # bobも同じ部屋に入る
       end
       a_block do
-        find(".message_modal_handle").click          # aliceがメッセージモーダルを開く
+        find(".message_modal_handle").click              # aliceがメッセージモーダルを開く
         find(".MessageSendModal input").set("(message)") # メッセージ入力
         find(".MessageSendModal .send_button").click     # 送信
-        assert_text("(message)")                     # 自分自身にメッセージが届く
+        assert_text("(message)")                         # 自分自身にメッセージが届く
       end
       b_block do
-        assert_text("(message)")                     # bobにもメッセージが届く
+        assert_text("(message)")                         # bobにもメッセージが届く
       end
     end
   end
@@ -458,12 +458,37 @@ RSpec.describe "共有将棋盤", type: :system do
         sp_controller_click("previous")
         sp_controller_click("previous")
 
-        find(".sidebar_toggle_navbar_item").click         # サイドメニューを開く
+        side_menu_open
         menu_item_click("自分の盤を全員に反映") # モーダルを開く
         first(".sync_button").click                       # 反映する
       end
       b_block do
         assert_move("33", "34", "☖3四歩")                 # aliceが局面を戻したので再びbobは2手目を指せる
+      end
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '再接続'
+  describe "再接続" do
+    it "先輩であっても再接続したら後輩になる" do
+      a_block do
+        room_setup("my_room", "alice")                    # alice先輩が部屋を作る
+        assert_member_list(1, "is_joined", "alice")       # 一番上にaliceがいる
+        sleep(2)                                          # 先輩後輩は最低1秒毎の差なので2秒待てば確実にbobは後輩になる
+      end
+      b_block do
+        room_setup("my_room", "bob")                      # bob後輩が同じ部屋に入る
+        assert_member_list(2, "is_joined", "bob")         # 最後に追加される
+        sleep(2)                                          # これでbobをレベル2ぐらいにはなる(aliceはレベル4)
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩")                # aliceが指してbobの盤も同じになる
+        sp_controller_click("first")                      # 再接続時にbobから受けとったか確認しやすいように0手目にしておく
+
+        room_recreate_apply                               # 再接続実行
+        assert_turn_offset(1)                             # bobからもらったので1手目になっている
+        assert_member_list(1, "is_joined", "bob")         # 並びは後輩だったbobが先輩に
+        assert_member_list(2, "is_joined", "alice")       # 先輩だったaliceは後輩になっている
       end
     end
   end
@@ -474,7 +499,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def room_setup(room_code, user_name)
     visit "/share-board"
-    find(".sidebar_toggle_navbar_item").click    # サイドメニュー起動する
+    side_menu_open
     menu_item_click("合言葉の設定と共有")        # 「合言葉の設定と共有」を自分でクリックする
     first(".new_room_code input").set(room_code) # 合言葉を入力する
     first(".new_user_name input").set(user_name) # ハンドルネームを入力する
@@ -554,5 +579,19 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def sp_controller_click(klass)
     find(".ShogiPlayer .NavigateBlock .button.#{klass}").click
+  end
+
+  def room_recreate_apply
+    side_menu_open
+    menu_item_click("再接続 (なんかおかしいとき用)")  # モーダルを開く
+    first(".apply_button").click                      # 実行する
+  end
+
+  def side_menu_open
+    find(".sidebar_toggle_navbar_item").click
+  end
+
+  def assert_turn_offset(turn_offset)
+    assert_text("##{turn_offset}")
   end
 end
