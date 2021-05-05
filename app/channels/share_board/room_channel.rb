@@ -111,13 +111,13 @@ module ShareBoard
     end
 
     def track(data, action, body)
+      key = "共有将棋盤 [#{room_code}] #{action}"
       if Rails.env.development?
-        SlackAgent.message_send(key: "[DATA] 共有将棋盤 [#{room_code}] #{action}", body: data)
+        SlackAgent.message_send(key: key, body: data)
       end
-
       prefix = data["from_user_name"] + ":"
       body = [prefix, body].compact.join(" ")
-      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: body)
+      SlackAgent.message_send(key: key, body: body)
     end
 
     def simple_track(action)
