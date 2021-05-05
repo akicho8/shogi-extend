@@ -73,8 +73,19 @@ export const app_room_members = {
     },
 
     member_add(params) {
+      const size = this.member_infos.length
+
       this.member_infos.push(params)
       this.member_infos_normalize()
+
+      if (this.current_member_is_leader_p) {
+        if (this.member_infos.length === size) {
+          // 個数変化なし
+        } else {
+          // 個数変化あり
+          this.aclog("仲間一覧", this.member_infos.map(e => e.from_user_name))
+        }
+      }
     },
 
     // 処理順序重要
@@ -137,6 +148,14 @@ export const app_room_members = {
   computed: {
     name_uniqued_member_infos() {
       return _.uniqBy(this.member_infos, "from_user_name")
+    },
+
+    // 一番上にいる人は自分か？
+    // つまり最古参メンバーか？
+    current_member_is_leader_p() {
+      if (this.present_p(this.member_infos)) {
+        return this.member_infos[0].from_user_code === this.user_code
+      }
     },
   },
 }
