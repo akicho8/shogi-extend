@@ -101,6 +101,9 @@ export const app_room = {
         disconnected: () => {
           this.active_level_increment_timer.stop() // 切断されているときはアクティブなレベルを上げないようにする
         },
+        received: e => {
+          this.api_version_valid(e.bc_params.API_VERSION)
+        },
       })
     },
 
@@ -176,7 +179,6 @@ export const app_room = {
     },
     fake_error_broadcasted(params) {
     },
-
   },
   computed: {
     room_code_valid_p() { return this.room_code != "" },             // 合言葉があるか？

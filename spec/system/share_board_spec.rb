@@ -336,6 +336,7 @@ RSpec.describe "共有将棋盤", type: :system do
       a_block do
         find(".message_modal_handle").click              # aliceがメッセージモーダルを開く
         find(".MessageSendModal input").set("(message)") # メッセージ入力
+        doc_image
         find(".MessageSendModal .send_button").click     # 送信
         assert_text("(message)")                         # 自分自身にメッセージが届く
       end
@@ -505,6 +506,7 @@ RSpec.describe "共有将棋盤", type: :system do
       a_block do
         member_list_click(2)
         assert_text("bobさんの反応速度は")
+        doc_image
       end
     end
     it "失敗" do
@@ -522,6 +524,27 @@ RSpec.describe "共有将棋盤", type: :system do
         member_list_click(2)    # 続けて押すと
         assert_text("PING実行中...")
         assert_text("bobさんの反応がありません")
+        doc_image
+      end
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'バージョンチェック'
+  describe "バージョンチェック" do
+    it "最新" do
+      @API_VERSION = ShareBoardControllerMethods::API_VERSION
+      a_block do
+        visit_with_args(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
+        assert_no_text("新しいプログラムがあるのでブラウザをリロードします")
+      end
+    end
+    it "更新" do
+      @API_VERSION = ShareBoardControllerMethods::API_VERSION + 1
+      a_block do
+        visit_with_args(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
+        assert_text("新しいプログラムがあるのでブラウザをリロードします")
+        doc_image
+        find(".modal button").click
       end
     end
   end

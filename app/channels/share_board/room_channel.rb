@@ -107,6 +107,8 @@ module ShareBoard
         end
       end
 
+      bc_params = bc_params.merge("API_VERSION" => ShareBoardControllerMethods::API_VERSION)
+
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
 

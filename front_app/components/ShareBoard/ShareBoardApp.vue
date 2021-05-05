@@ -103,6 +103,7 @@ client-only
                 b-button(@click="chess_clock_share('')") 時計同期
                 b-button(@click="chess_clock_share()") 時計同期(message=null)
                 b-button(@click="fake_error") エラー
+                b-button(@click="reload_modal_handle") リロード確認
 
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
@@ -139,6 +140,7 @@ import { app_room         } from "./app_room.js"
 import { app_room_init    } from "./app_room_init.js"
 import { app_room_members } from "./app_room_members.js"
 import { app_ping    } from "./app_ping.js"
+import { app_update    } from "./app_update.js"
 import { app_message } from "./app_message.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
@@ -168,6 +170,7 @@ export default {
     app_room_init,
     app_room_members,
     app_ping,
+    app_update,
     app_message,
     app_sidebar,
     app_storage,
