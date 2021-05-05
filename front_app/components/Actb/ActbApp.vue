@@ -182,7 +182,7 @@ export default {
         if (this.base.config.revision === e.revision) {
           this.debug_alert(`revision: ${this.base.config.revision} OK`)
         } else {
-          this.ok_notice("新しいプログラムがあるので更新します", {onend: () => location.reload(true)})
+          this.ok_notice("新しいプログラムがあるので更新します", {onend: () => location.reload()})
         }
       })
     },
