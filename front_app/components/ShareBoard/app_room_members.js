@@ -44,7 +44,7 @@ export const app_room_members = {
     // そうすると room_joined_at desc で古参順になる
     member_room_connected() {
       if (this.blank_p(this.room_joined_at)) {
-        this.room_joined_at = dayjs().valueOf()
+        this.room_joined_at = this.time_current_ms()
       }
     },
 
@@ -80,9 +80,9 @@ export const app_room_members = {
     // 処理順序重要
     member_infos_normalize() {
       if (this.development_p && FAKE_P) {
-        const room_joined_at = dayjs().valueOf()
+        const room_joined_at = this.time_current_ms()
         this.member_infos = ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
-          performed_at: dayjs().valueOf(),
+          performed_at: this.time_current_ms(),
           alive_notice_count: 1,
           room_joined_at: room_joined_at + i,
           from_user_code: i,
@@ -127,7 +127,7 @@ export const app_room_members = {
 
     // 通達があってからの経過秒数
     member_elapsed_sec(e) {
-      return (dayjs().valueOf() - e.performed_at) / 1000
+      return (this.time_current_ms() - e.performed_at) / 1000
     },
 
     member_add_test() {

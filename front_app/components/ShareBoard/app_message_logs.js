@@ -26,7 +26,7 @@ export const app_message_logs = {
         from_user_name: "alice",
         from_user_code: this.message_logs.length,
         message: this.message_logs.length.toString(),
-        performed_at: dayjs().valueOf(),
+        performed_at: this.time_current_ms(),
       })
     },
     ml_scroll_to_bottom() {

@@ -27,7 +27,7 @@ export const app_action_log = {
         turn_offset: this.base.action_logs.length,
         last_location_key: "white",
         sfen: "position startpos",
-        performed_at: dayjs().valueOf(),
+        performed_at: this.time_current_ms(),
       })
     },
     al_scroll_to_bottom() {

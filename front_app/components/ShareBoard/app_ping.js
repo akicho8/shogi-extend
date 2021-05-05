@@ -35,12 +35,12 @@ export const app_ping = {
       this.ac_room_perform("ping_command", {
         to_user_name: e.from_user_name,
         to_user_code: e.from_user_code,
-        ping_at: dayjs().valueOf(),
+        ping_at: this.time_current_ms(),
       }) // --> app/channels/share_board/room_channel.rb
     },
     ping_command_broadcasted(params) {
       if (params.to_user_code === this.user_code) {
-        const now = dayjs().valueOf()
+        const now = this.time_current_ms()
         this.delay_block(this.PONG_DELAY, () => this.pong_command(params))
         this.aclog("PING", `${params.from_user_name} → ${this.user_name} ${now - params.ping_at}ms`)
       }
@@ -50,7 +50,7 @@ export const app_ping = {
         to_user_name: params.from_user_name,
         to_user_code: params.from_user_code,
         ping_at: params.ping_at,
-        pong_at: dayjs().valueOf(),
+        pong_at: this.time_current_ms(),
       }) // --> app/channels/share_board/room_channel.rb
     },
     pong_command_broadcasted(params) {
@@ -59,7 +59,7 @@ export const app_ping = {
           return
         }
         this.ping_done()
-        const now = dayjs().valueOf()
+        const now = this.time_current_ms()
         const gap = now - params.ping_at
         this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {toast_only: true})
         this.aclog("PONG", `${this.user_name} ← ${params.from_user_name} ${now - params.pong_at}ms`)
