@@ -31,7 +31,7 @@ module ShareBoard
     end
 
     def title_share(data)
-      track(data, "タイトル", "「#{data["title"].inspect}」に変更")
+      track(data, "タイトル", "#{data["title"].inspect} に変更")
       broadcast(:title_share_broadcasted, data)
     end
 
