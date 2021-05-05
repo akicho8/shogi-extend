@@ -25,10 +25,6 @@ module SlackAgent
       return
     end
 
-    if ENV["SLACK_AGENT_DISABLE"].to_s == "1"
-      return
-    end
-
     if ENV["SLACK_AGENT_RAISE"]
       raise Slack::Web::Api::Errors::SlackError, 1
     end
@@ -40,6 +36,10 @@ module SlackAgent
 
     if Rails.env.test?
       return params
+    end
+
+    if ENV["SLACK_AGENT_DISABLE"].to_s == "true"
+      return
     end
 
     SlackAgentMessageSendJob.perform_later(params)
