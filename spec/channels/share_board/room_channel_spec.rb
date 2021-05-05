@@ -30,6 +30,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       "from_user_name" => "alice",
       "performed_at"   => Time.current.to_i,
       "active_level"   => 1,
+      "API_VERSION"    => ShareBoardControllerMethods::API_VERSION, # サーバー側で生める
     }.merge(params)
   end
 
@@ -74,7 +75,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
-  describe "指し手不達" do
+  describe "指手不達" do
     before do
       subscribe(room_code: room_code)
     end
@@ -82,7 +83,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       data = data_factory("sfen_share_not_reach_count" => 1)
       expect {
         subscription.sfen_share_not_reach(data)
-      }.to raise_error(StandardError, /指し手不達.*1回目/)
+      }.to raise_error(StandardError, /指手不達.*1回目/)
     end
   end
 
