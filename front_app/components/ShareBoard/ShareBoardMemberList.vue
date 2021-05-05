@@ -30,11 +30,12 @@ export default {
   mixins: [support_child],
   methods: {
     row_click_handle(e) {
-      if (this.base.member_alive_p(e)) {
-        this.talk(`${this.base.user_call_name(e.from_user_name)}は元気です`)
-      } else {
-        this.talk(`${this.base.user_call_name(e.from_user_name)}の霊圧が……消えた……？`)
-      }
+      this.base.member_info_click_handle(e)
+      // if (this.base.member_alive_p(e)) {
+      //   this.talk(`${this.base.user_call_name(e.from_user_name)}は元気です`)
+      // } else {
+      //   this.talk(`${this.base.user_call_name(e.from_user_name)}の霊圧が……消えた……？`)
+      // }
     },
     time_format(e) {
       return dayjs(e.performed_at).format("HH:mm:ss")

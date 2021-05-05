@@ -74,6 +74,16 @@ module ShareBoard
       broadcast(:message_share_broadcasted, data)
     end
 
+    def ping_command(data)
+      # track(data, "PING", data["start_at"])
+      broadcast(:ping_command_broadcasted, data)
+    end
+
+    def pong_command(data)
+      # track(data, "PONG", data["start_at"])
+      broadcast(:pong_command_broadcasted, data)
+    end
+
     def aclog(data)
       track(data, data["subject"], data["body"])
     end

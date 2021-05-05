@@ -138,6 +138,7 @@ import { app_edit_mode    } from "./app_edit_mode.js"
 import { app_room         } from "./app_room.js"
 import { app_room_init    } from "./app_room_init.js"
 import { app_room_members } from "./app_room_members.js"
+import { app_ping    } from "./app_ping.js"
 import { app_message } from "./app_message.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
@@ -166,6 +167,7 @@ export default {
     app_room,
     app_room_init,
     app_room_members,
+    app_ping,
     app_message,
     app_sidebar,
     app_storage,

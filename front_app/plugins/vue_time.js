@@ -101,5 +101,9 @@ export default {
     date_to_wday(t) {
       return dayjs(t).format("ddd")
     },
+
+    time_current_ms() {
+      return dayjs().valueOf()
+    },
   },
 }
