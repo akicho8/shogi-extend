@@ -2,12 +2,12 @@ module ShareBoard
   class RoomChannel < ApplicationCable::Channel
     def subscribed
       return reject unless room_code
-      simple_track("IN")
+      simple_track("購読開始")
       stream_from "share_board/room_channel/#{room_code}"
     end
 
     def unsubscribed
-      simple_track("OUT")
+      simple_track("購読停止")
     end
 
     def force_sync(data)
@@ -16,22 +16,22 @@ module ShareBoard
     end
 
     def sfen_share(data)
-      track(data, "指し手送信", "[#{data["turn_offset"]}] #{data["last_move_kif"]}")
+      track(data, "指手送信", "[#{data["turn_offset"]}] #{data["last_move_kif"]}")
       broadcast(:sfen_share_broadcasted, data)
     end
 
     def received_ok(data)
-      track(data, "指し手受信", "OK > #{data['to_user_name']}")
+      track(data, "指手受信", "OK > #{data['to_user_name']}")
       broadcast(:received_ok_broadcasted, data)
     end
 
     def sfen_share_not_reach(data)
-      track(data, "指し手不達", "#{data['sfen_share_not_reach_count']}回目")
-      raise StandardError, "指し手不達(#{data['sfen_share_not_reach_count']}回目) : #{data}"
+      track(data, "指手不達", "#{data['sfen_share_not_reach_count']}回目")
+      raise StandardError, "指手不達(#{data['sfen_share_not_reach_count']}回目) : #{data}"
     end
 
     def title_share(data)
-      track(data, "タイトル変更", "#{data["title"].inspect} に変更しました")
+      track(data, "タイトル", "「#{data["title"].inspect}」に変更")
       broadcast(:title_share_broadcasted, data)
     end
 
@@ -114,7 +114,7 @@ module ShareBoard
 
     def track(data, action, body)
       key = "共有将棋盤 [#{room_code}] #{action}"
-      if Rails.env.development?
+      if Rails.env.development? && false
         SlackAgent.message_send(key: key, body: data)
       end
       prefix = data["from_user_name"] + ":"
