@@ -84,6 +84,8 @@ export const app_room = {
       this.__assert__(this.user_name, "this.user_name")
       this.__assert__(this.room_code, "this.room_code")
 
+      this.ga_click(`共有将棋盤【${this.room_code}】`)
+
       this.member_infos_clear()
       this.active_level_reset()
 

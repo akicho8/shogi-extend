@@ -246,8 +246,6 @@ export default {
 
       // 時計の状態をブロードキャストする
       this.chess_clock_share("")
-
-      this.ga_click(`共有将棋盤【${this.room_code}:${this.member_infos.length}】`)
     },
 
     // デバッグ用
