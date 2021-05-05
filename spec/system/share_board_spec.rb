@@ -493,6 +493,39 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'PING'
+  describe "PING" do
+    it "成功" do
+      a_block do
+        room_setup("my_room", "alice")                    # alice先輩が部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                      # bob後輩が同じ部屋に入る
+      end
+      a_block do
+        member_list_click(2)
+        assert_text("bobさんの反応速度は")
+      end
+    end
+    it "失敗" do
+      @PING_OK_SEC = 3 # N秒以内ならPINGを成功とみなす
+      @PONG_DELAY  = 5 # PONGするまでの秒数(デバッグ時には PING_OK_SEC 以上の値にする)
+      a_block do
+        visit_with_args(room_code: :my_room, force_user_name: "alice", PING_OK_SEC: @PING_OK_SEC)
+      end
+      b_block do
+        visit_with_args(room_code: :my_room, force_user_name: "bob", PONG_DELAY: @PONG_DELAY)
+      end
+      a_block do
+        # debugger
+        member_list_click(2)    # 1回押し
+        member_list_click(2)    # 続けて押すと
+        assert_text("PING実行中...")
+        assert_text("bobさんの反応がありません")
+      end
+    end
+  end
+
   def visit_with_args(args)
     visit "/share-board?#{args.to_query}"
   end
@@ -575,6 +608,10 @@ RSpec.describe "共有将棋盤", type: :system do
       text = find(".member_info:nth-child(#{i}).#{klass} .user_name").text
       assert { text === user_name }
     end
+  end
+
+  def member_list_click(i)
+    find(".ShareBoardMemberList .member_info:nth-child(#{i})").click
   end
 
   def sp_controller_click(klass)

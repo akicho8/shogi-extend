@@ -1,7 +1,8 @@
 import dayjs from "dayjs"
 
-const PING_OK_SEC = 3  // N秒以内ならPINGを成功とみなす
-const PONG_DELAY  = 0  // PONGするまでの秒数(デバッグ時には PING_OK_SEC 以上の値にする)
+const PING_OK_SEC           = 3    // N秒以内ならPINGを成功とみなす
+const PONG_DELAY            = 0    // PONGするまでの秒数(デバッグ時には PING_OK_SEC 以上の値にする)
+const SLOW_AND_PONG_IGNORED = true // すでに PING_OK_SEC を超えていたら反応があっても通知しない
 
 export const app_ping = {
   data() {
@@ -54,6 +55,9 @@ export const app_ping = {
     },
     pong_command_broadcasted(params) {
       if (params.to_user_code === this.user_code) {
+        if (SLOW_AND_PONG_IGNORED && !this.ping_running_p()) {
+          return
+        }
         this.ping_done()
         const now = dayjs().valueOf()
         const gap = now - params.ping_at
@@ -97,7 +101,7 @@ export const app_ping = {
   },
 
   computed: {
-    PING_OK_SEC() { return this.$route.PING_OK_SEC || PING_OK_SEC },
-    PONG_DELAY()  { return this.$route.PONG_DELAY || PONG_DELAY   },
+    PING_OK_SEC() { return this.$route.query.PING_OK_SEC || PING_OK_SEC },
+    PONG_DELAY()  { return this.$route.query.PONG_DELAY || PONG_DELAY   },
   },
 }
