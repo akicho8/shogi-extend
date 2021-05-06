@@ -118,8 +118,7 @@ module ShareBoard
         SlackAgent.message_send(key: key, body: data)
       end
       prefix = data["from_user_name"] + ":"
-      body = [prefix, body].compact.join(" ")
-      SlackAgent.message_send(key: key, body: body)
+      SlackAgent.message_send(key: key, body: "#{prefix} #{body}")
     end
 
     def simple_track(action)
