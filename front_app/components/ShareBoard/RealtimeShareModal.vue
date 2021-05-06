@@ -2,7 +2,7 @@
 .modal-card.RealtimeShareModal
   header.modal-card-head
     .modal-card-title.is-size-6.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
-      | 合言葉の設定と共有
+      | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room") 共有中
   section.modal-card-body
     .content
