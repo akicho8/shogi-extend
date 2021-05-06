@@ -43,7 +43,7 @@ export const app_room_recreate = {
         this.room_destroy()
         this.room_creating_busy += 1
         const loading = this.$buefy.loading.open()
-        this.toast_ok("退室しました", {duration: ROOM_DESTROY_AFTER_DELAY_SEC * 1000})
+        this.toast_ok("退室しました", {duration: this.ROOM_DESTROY_AFTER_DELAY_SEC * 1000})
         this.delay_block(this.ROOM_DESTROY_AFTER_DELAY_SEC, () => {
           this.room_create()
           this.room_creating_busy = 0
