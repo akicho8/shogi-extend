@@ -34,7 +34,7 @@
       b-input.new_user_name(v-model="new_user_name")
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
-    b-button.share_button(@click="submit_handle" type="is-primary") 共有
+    b-button.share_button(@click="submit_handle" type="is-primary") 入室
 </template>
 
 <script>
