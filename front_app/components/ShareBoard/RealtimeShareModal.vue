@@ -30,7 +30,7 @@
       b-field(label="合言葉 (設定済み)" custom-class="is-small" key="input_show_p_false")
         .control
           b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger") 変更
-    b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとから変更できます")
+    b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとから変更できますが順番設定後は再度順番設定しないといけなくなります")
       b-input.new_user_name(v-model="new_user_name")
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
