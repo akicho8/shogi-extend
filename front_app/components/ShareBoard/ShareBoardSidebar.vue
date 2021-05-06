@@ -6,7 +6,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
     .mt-4
       b-menu
         b-menu-list(label="リアルタイム共有")
-          b-menu-item.is_active_unset(label="合言葉の設定と共有"            @click="base.room_code_modal_handle")
+          b-menu-item.is_active_unset(label="部屋に入る"            @click="base.room_code_modal_handle")
           b-menu-item.is_active_unset(label="対局時計の設置"                @click="base.cc_modal_handle")
           b-menu-item.is_active_unset(label="手番が来たら知らせる設定"      @click="base.tn_modal_handle"           :disabled="!base.room_code" v-if="development_p")
           b-menu-item.is_active_unset(label="順番設定"                      @click="base.os_modal_handle"           :disabled="!base.room_code")

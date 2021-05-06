@@ -54,8 +54,8 @@ RSpec.describe "共有将棋盤", type: :system do
   it "合言葉を含むURLから来てハンドルネーム入力して接続して駒を動かす" do
     a_block do
       visit "/share-board?room_code=foo"                # 合言葉を含むURLから来る
-      assert_selector(".RealtimeShareModal")            # 「合言葉の設定と共有」のモーダルが自動的に表示されている
-      assert_text("合言葉の設定と共有")                 # 「合言葉の設定と共有」のモーダルのタイトルも正しい
+      assert_selector(".RealtimeShareModal")            # 「部屋に入る」のモーダルが自動的に表示されている
+      assert_text("部屋に入る")                 # 「部屋に入る」のモーダルのタイトルも正しい
       first(".new_user_name input").set("alice")        # ハンドルネームを入力する
       first(".share_button").click                      # 共有ボタンをクリックする
       assert_text("alice")                              # 入力したハンドルネームの人がメンバーリストに表示されている
@@ -74,7 +74,7 @@ RSpec.describe "共有将棋盤", type: :system do
       begin
         visit "/share-board"                                      # 再来
         side_menu_open
-        menu_item_click("合言葉の設定と共有")                    # 「合言葉の設定と共有」を自分でクリックする
+        menu_item_click("部屋に入る")                    # 「部屋に入る」を自分でクリックする
         first(".new_room_code input").set("my_room")              # 合言葉を入力する
         value = first(".new_user_name input").value
         assert { value == "alice" }                               # 以前入力したニックネームが復元されている
@@ -556,7 +556,7 @@ RSpec.describe "共有将棋盤", type: :system do
   def room_setup(room_code, user_name)
     visit "/share-board"
     side_menu_open
-    menu_item_click("合言葉の設定と共有")        # 「合言葉の設定と共有」を自分でクリックする
+    menu_item_click("部屋に入る")        # 「部屋に入る」を自分でクリックする
     first(".new_room_code input").set(room_code) # 合言葉を入力する
     first(".new_user_name input").set(user_name) # ハンドルネームを入力する
     first(".share_button").click                 # 共有ボタンをクリックする
