@@ -2,7 +2,7 @@
 .modal-card.TurnNotifyModal(style="width:auto")
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-6
+    p.modal-card-title.is-size-5
       span.has-text-weight-bold
         | 手番が来たら知らせる設定
   ////////////////////////////////////////////////////////////////////////////////

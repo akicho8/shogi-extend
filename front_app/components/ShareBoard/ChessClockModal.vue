@@ -2,7 +2,7 @@
 .modal-card.ChessClockModal
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-6
+    p.modal-card-title.is-size-5
       span.has-text-weight-bold
         | 対局時計
       span.mx-1.has-text-grey.is-size-6(v-if="instance") {{instance.human_status}}

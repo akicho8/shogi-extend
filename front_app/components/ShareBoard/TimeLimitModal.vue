@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.TimeLimitModal(v-if="clock_running_p")
   header.modal-card-head
-    p.modal-card-title.is-size-6.has-text-weight-bold
+    p.modal-card-title.is-size-5.has-text-weight-bold
       | 時間切れで{{clock.current.location.flip.name}}の勝ち！
   section.modal-card-body
     template(v-if="clock.current.time_recovery_mode_p")

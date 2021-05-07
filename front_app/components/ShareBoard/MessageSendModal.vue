@@ -2,7 +2,7 @@
 .modal-card.MessageSendModal
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-6.has-text-weight-bold
+    p.modal-card-title.is-size-5.has-text-weight-bold
       | メッセージ
 
   ////////////////////////////////////////////////////////////////////////////////

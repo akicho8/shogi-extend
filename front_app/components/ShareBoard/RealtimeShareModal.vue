@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.RealtimeShareModal
   header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-6.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
+    p.modal-card-title.is-size-5.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
       | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room") 入室中
 

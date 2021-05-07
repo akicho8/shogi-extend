@@ -2,7 +2,7 @@
 .modal-card.ForceSyncModal
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-6.has-text-weight-bold
+    p.modal-card-title.is-size-5.has-text-weight-bold
       | 自分の盤を全員に反映
 
   ////////////////////////////////////////////////////////////////////////////////
