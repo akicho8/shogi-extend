@@ -7,7 +7,7 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    ShareBoardMessageLogs(:base="base" ref="ShareBoardMessageLog")
+    ShareBoardMessageLog(:base="base" ref="ShareBoardMessageLog")
     b-field
       b-input(v-model="base.message_body" ref="message_input_tag")
 
@@ -28,7 +28,7 @@ export default {
   mounted() {
     this.input_focus()
 
-    // 本当は ShareBoardMessageLogs.vue の mounted で実行したかったが
+    // 本当は ShareBoardMessageLog.vue の mounted で実行したかったが
     // まだコンポーネントが表示されてないので効かなかった
     // おそらく modal が表示されるまでに1フレームぐらいかかってるっぽい
     this.base.ml_scroll_to_bottom()
@@ -60,7 +60,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .MessageSendModal
-  +desktop
+  +tablet
     width: 40ch
   .modal-card-body
     padding: 1.0rem

@@ -6,7 +6,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
     .mt-4
       b-menu
         b-menu-list(label="リアルタイム共有")
-          b-menu-item.is_active_unset(label="部屋に入る"            @click="base.room_code_modal_handle")
+          b-menu-item.is_active_unset(label="部屋に入る"            @click="base.room_setup_modal_handle")
           b-menu-item.is_active_unset(label="対局時計の設置"                @click="base.cc_modal_handle")
           b-menu-item.is_active_unset(label="手番が来たら知らせる設定"      @click="base.tn_modal_handle"            :disabled="!base.ac_room" v-if="development_p")
           b-menu-item.is_active_unset(label="順番設定"                      @click="base.os_modal_handle"            :disabled="!base.ac_room")
@@ -31,6 +31,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="局面URLツイート"             @click="base.tweet_modal_handle")
           b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
           b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="base.room_code_valid_p")
+          b-menu-item.is_active_unset(label="デバッグ用ログ"              @click="base.track_log_modal_handle" v-if="development_p")
 
       .box.mt-5
         .title.is-5 スタイル設定

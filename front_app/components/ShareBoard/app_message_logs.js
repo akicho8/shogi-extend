@@ -30,7 +30,7 @@ export const app_message_logs = {
       })
     },
     ml_scroll_to_bottom() {
-      const elem = document.querySelector(".ShareBoardMessageLogs .scroll_block")
+      const elem = document.querySelector(".ShareBoardMessageLog .scroll_block")
       if (elem) {
         this.scroll_to_bottom(elem)
       }

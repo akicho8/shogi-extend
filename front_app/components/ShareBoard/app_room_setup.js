@@ -29,7 +29,7 @@ export const app_room_setup = {
       } else {
         // 合言葉設定済みURLから来て名前は設定していない
         this.toast_ok("ハンドルネームを入力してください")
-        this.room_code_modal_handle()
+        this.room_setup_modal_handle()
       }
     } else {
       // 通常の起動
@@ -43,7 +43,7 @@ export const app_room_setup = {
     this.room_destroy()
   },
   methods: {
-    room_code_modal_handle() {
+    room_setup_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
 
@@ -95,17 +95,24 @@ export const app_room_setup = {
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再接続される場合があるためそれを考慮すること
       this.__assert__(this.ac_room == null, "this.ac_room == null")
+      this.tl_add("USER", `subscriptions.create ${this.room_code}`)
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
-        connected: () => {
+        connected: (e) => {
+          this.tl_add("HOOK", "connected", e)
           this.member_room_connected()
           this.active_level_increment_timer.restart()
           this.setup_info_request()
           this.member_bc_interval_runner.restart()
         },
         disconnected: () => {
+          this.tl_add("HOOK", "disconnected")
           this.active_level_increment_timer.stop() // 切断されているときはアクティブなレベルを上げないようにする
         },
+        rejected: () => {
+          this.tl_add("HOOK", "rejected")
+        },
         received: e => {
+          this.tl_add("HOOK", `received: ${e.bc_action}`, e)
           this.api_version_valid(e.bc_params.API_VERSION)
         },
       })
@@ -117,6 +124,7 @@ export const app_room_setup = {
         // this.toast_ok("出ました")
         this.debug_alert("room_destroy")
         this.ac_unsubscribe("ac_room")
+        this.tl_add("USER", "unsubscribe")
         this.member_infos_clear()
         this.active_level_reset()
         this.active_level_increment_timer.stop()
@@ -136,6 +144,7 @@ export const app_room_setup = {
 
       if (this.ac_room) {
         this.ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
+        this.tl_add("USER", action)
       }
     },
 

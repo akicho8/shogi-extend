@@ -81,7 +81,7 @@ client-only
 
               //- b-button.has-text-weight-bold(type="is-primary" @click="play_mode_handle" v-if="edit_mode_p") 編集完了
 
-            .room_code.is-clickable(@click="room_code_modal_handle" v-if="false")
+            .room_code.is-clickable(@click="room_setup_modal_handle" v-if="false")
               | {{room_code}}
 
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="room_code_valid_p")
@@ -137,6 +137,7 @@ import { app_ordered_members } from "./app_ordered_members.js"
 import { app_chore        } from "./app_chore.js"
 import { app_edit_mode    } from "./app_edit_mode.js"
 import { app_room_setup         } from "./app_room_setup.js"
+import { app_track_log         } from "./app_track_log.js"
 import { app_room_board_setup    } from "./app_room_board_setup.js"
 import { app_room_members } from "./app_room_members.js"
 import { app_ping    } from "./app_ping.js"
@@ -165,6 +166,7 @@ export default {
     app_chore,
     app_edit_mode,
     app_room_setup,
+    app_track_log,
     app_room_board_setup,
     app_room_members,
     app_ping,

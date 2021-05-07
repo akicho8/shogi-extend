@@ -12,6 +12,12 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
         | (編集モード)
 
   template(slot="end")
+    b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="base.track_log_modal_handle" v-if="development_p")
+      | ログ
+      b-tag.has-text-weight-bold.ml-2(rounded)
+        .has-text-primary
+          | {{base.track_logs.length}}
+
     b-navbar-item.is-unselectable(tag="div" v-if="base.ac_room && development_p")
       b-icon(icon="account")
       b-tag.has-text-weight-bold(rounded)
