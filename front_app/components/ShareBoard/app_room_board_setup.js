@@ -1,6 +1,6 @@
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 
-export const app_room_init = {
+export const app_room_board_setup = {
   data() {
     return {
       active_level_increment_timer: new IntervalRunner(this.active_level_increment_timer_callback, {early: false, interval: 1.0}),

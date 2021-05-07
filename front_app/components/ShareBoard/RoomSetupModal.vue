@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.RealtimeShareModal
+.modal-card.RoomSetupModal
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-5.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
       | 部屋に入る
@@ -50,7 +50,7 @@ import _ from "lodash"
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "RealtimeShareModal",
+  name: "RoomSetupModal",
   mixins: [support_child],
   data() {
     return {
@@ -120,7 +120,7 @@ export default {
 </script>
 
 <style lang="sass">
-.RealtimeShareModal
+.RoomSetupModal
   +tablet
     width: 54ch
   .modal-card-body

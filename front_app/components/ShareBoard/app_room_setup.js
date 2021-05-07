@@ -1,7 +1,8 @@
 import _ from "lodash"
 import dayjs from "dayjs"
+import RoomSetupModal              from "./RoomSetupModal.vue"
 
-export const app_room = {
+export const app_room_setup = {
   data() {
     return {
       // room_code: this.config.record.room_code, // リアルタイム共有合言葉
@@ -42,6 +43,22 @@ export const app_room = {
     this.room_destroy()
   },
   methods: {
+    room_code_modal_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
+
+      this.$buefy.modal.open({
+        component: RoomSetupModal,
+        parent: this,
+        trapFocus: true,
+        hasModalCard: true,
+        animation: "",
+        canCancel: true,
+        onCancel: () => { this.sound_play("click") },
+        props: { base: this.base },
+      })
+    },
+
     room_code_set(room_code, user_name) {
       this.__assert__(user_name, "user_name")
       this.__assert__(room_code, "room_code")

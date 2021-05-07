@@ -55,8 +55,8 @@ RSpec.describe "共有将棋盤", type: :system do
   it "合言葉を含むURLから来てハンドルネーム入力して接続して駒を動かす" do
     a_block do
       visit "/share-board?room_code=my_room"     # 合言葉を含むURLから来る
-      assert_selector(".RealtimeShareModal")     # 「部屋に入る」のモーダルが自動的に表示されている
-      Capybara.within(".RealtimeShareModal") do
+      assert_selector(".RoomSetupModal")     # 「部屋に入る」のモーダルが自動的に表示されている
+      Capybara.within(".RoomSetupModal") do
         assert_text("部屋に入る")                # 「部屋に入る」のモーダルのタイトルも正しい
         find(".new_user_name input").set("alice") # ハンドルネームを入力する
         find(".entry_button").click               # 共有ボタンをクリックする
@@ -586,7 +586,7 @@ RSpec.describe "共有将棋盤", type: :system do
     visit "/share-board"
     side_menu_open
     menu_item_click("部屋に入る")        # 「部屋に入る」を自分でクリックする
-    Capybara.within(".RealtimeShareModal") do
+    Capybara.within(".RoomSetupModal") do
       find(".new_room_code input").set(room_code) # 合言葉を入力する
       find(".new_user_name input").set(user_name) # ハンドルネームを入力する
       find(".entry_button").click                 # 共有ボタンをクリックする

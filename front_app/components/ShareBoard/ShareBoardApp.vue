@@ -136,8 +136,8 @@ import { app_turn_notify  } from "./app_turn_notify.js"
 import { app_ordered_members } from "./app_ordered_members.js"
 import { app_chore        } from "./app_chore.js"
 import { app_edit_mode    } from "./app_edit_mode.js"
-import { app_room         } from "./app_room.js"
-import { app_room_init    } from "./app_room_init.js"
+import { app_room_setup         } from "./app_room_setup.js"
+import { app_room_board_setup    } from "./app_room_board_setup.js"
 import { app_room_members } from "./app_room_members.js"
 import { app_ping    } from "./app_ping.js"
 import { app_update    } from "./app_update.js"
@@ -153,8 +153,6 @@ import { FormatTypeInfo   } from "@/components/models/format_type_info.js"
 
 import { Location } from "shogi-player/components/models/location.js"
 
-import RealtimeShareModal              from "./RealtimeShareModal.vue"
-
 export default {
   name: "ShareBoardApp",
   mixins: [
@@ -166,8 +164,8 @@ export default {
     app_ordered_members,
     app_chore,
     app_edit_mode,
-    app_room,
-    app_room_init,
+    app_room_setup,
+    app_room_board_setup,
     app_room_members,
     app_ping,
     app_update,
@@ -284,21 +282,6 @@ export default {
         this.current_title = title
         this.title_share(this.current_title)
       }
-    },
-
-    room_code_modal_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-
-      this.$buefy.modal.open({
-        component: RealtimeShareModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: false,
-        props: { base: this.base },
-      })
     },
 
     // ../../../app/controllers/share_boards_controller.rb の current_og_image_path と一致させること
