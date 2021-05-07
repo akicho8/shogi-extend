@@ -7,15 +7,18 @@
 
   section.modal-card-body
     .content
-      ul
+      ol
         li
           | 同じ合言葉を設定した人と盤を共有します
         li
           | 合言葉を設定したら同じ合言葉を相手にも伝えてください
           .has-text-grey.is-size-7
             | メニューにある「合言葉だけを含むURL」を伝えてもよし
+          .is-flex.is-align-items-center(v-if="false")
+            b-button(@click="base.room_code_url_copy_handle" icon-left="clipboard-plus-outline" outlined :disabled="!base.room_code") 合言葉だけを含むURL
+            span.ml-1 を伝えてもよし
         li
-          | <b>待った</b>や<b>反則の取り消し</b>は(合意の上)で左矢印で局面を戻して指し直してください
+          | <b>待った</b>や<b>反則の取り消し</b>は合意の上、当人が下の左矢印で局面を戻して指し直してください
         li
           | 盤の同期タイミングは
           b.is-size-5.mx-1 指したときだけ！
@@ -125,6 +128,9 @@ export default {
     width: 54ch
   .modal-card-body
     padding: 0.5rem 1.5rem 1rem
+    li:not(:first-child)
+      margin-top: 0.75rem
+
   .modal-card-foot
     justify-content: space-between
     .button
