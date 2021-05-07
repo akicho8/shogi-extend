@@ -51,21 +51,24 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '合言葉を含むURLから来てハンドルネーム入力して接続して駒を動かす'
   it "合言葉を含むURLから来てハンドルネーム入力して接続して駒を動かす" do
     a_block do
-      visit "/share-board?room_code=foo"                # 合言葉を含むURLから来る
-      assert_selector(".RealtimeShareModal")            # 「部屋に入る」のモーダルが自動的に表示されている
-      assert_text("部屋に入る")                 # 「部屋に入る」のモーダルのタイトルも正しい
-      first(".new_user_name input").set("alice")        # ハンドルネームを入力する
-      first(".share_button").click                      # 共有ボタンをクリックする
-      assert_text("alice")                              # 入力したハンドルネームの人がメンバーリストに表示されている
+      visit "/share-board?room_code=my_room"     # 合言葉を含むURLから来る
+      assert_selector(".RealtimeShareModal")     # 「部屋に入る」のモーダルが自動的に表示されている
+      Capybara.within(".RealtimeShareModal") do
+        assert_text("部屋に入る")                # 「部屋に入る」のモーダルのタイトルも正しい
+        find(".new_user_name input").set("alice") # ハンドルネームを入力する
+        find(".entry_button").click               # 共有ボタンをクリックする
+        find(".close_button").click               # 閉じる
+      end
+      assert_text("alice")                       # 入力したハンドルネームの人がメンバーリストに表示されている
       assert_move("77", "76", "☗7六歩")
       doc_image
     end
   end
 
-  # BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '一度入力したハンドルネームは記憶'
-  # Capybara.default_max_wait_time = 1
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '一度入力したハンドルネームは記憶'
   # このテストは ordered_members が nil のまま共有されるのをスキップできるのを保証するので消してはいけない
   it "一度入力したハンドルネームは記憶" do
     a_block do
@@ -78,7 +81,8 @@ RSpec.describe "共有将棋盤", type: :system do
         first(".new_room_code input").set("my_room")              # 合言葉を入力する
         value = first(".new_user_name input").value
         assert { value == "alice" }                               # 以前入力したニックネームが復元されている
-        first(".share_button").click                              # 共有ボタンをクリックする
+        first(".entry_button").click                              # 共有ボタンをクリックする
+        first(".close_button").click                              # 共有ボタンをクリックする
       end
 
       assert_move("59", "58", "☗5八玉")                        # aliceは一人で初手を指した
@@ -91,6 +95,32 @@ RSpec.describe "共有将棋盤", type: :system do
     end
     a_block do
       assert_text("bob")                                        # alice側の画面にはbobが表示されている
+    end
+    b_block do
+      assert_move("33", "34", "☖3四歩")                      # bobは2手目の後手を指せる
+    end
+    a_block do
+      assert_text("☖3四歩")                                    # aliceの画面にもbobの指し手の符号が表示されている
+      doc_image("aliceとbobは画面を共有している")
+    end
+  end
+
+  # ordered_members が nil のまま共有されるレアケースのテストなので消してはいけない
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定OFF状態で共有'
+  it "順番設定OFF状態で共有" do
+    a_block do
+      room_setup("my_room", "alice")
+      assert_move("59", "58", "☗5八玉")                        # aliceは一人で初手を指した
+    end
+    b_block do
+      room_setup("my_room", "bob")                            # alice と同じ部屋の合言葉を設定する
+      assert_member_exist("alice")
+      assert_member_exist("bob")
+      doc_image("bobはaliceの盤面を貰った")                   # この時点で▲58玉が共有されている
+    end
+    a_block do
+      assert_member_exist("alice")
+      assert_member_exist("bob")
     end
     b_block do
       assert_move("33", "34", "☖3四歩")                      # bobは2手目の後手を指せる
@@ -519,7 +549,6 @@ RSpec.describe "共有将棋盤", type: :system do
         visit_with_args(room_code: :my_room, force_user_name: "bob", PONG_DELAY: @PONG_DELAY)
       end
       a_block do
-        # debugger
         member_list_click(2)    # 1回押し
         member_list_click(2)    # 続けて押すと
         assert_text("PING実行中...")
@@ -557,9 +586,12 @@ RSpec.describe "共有将棋盤", type: :system do
     visit "/share-board"
     side_menu_open
     menu_item_click("部屋に入る")        # 「部屋に入る」を自分でクリックする
-    first(".new_room_code input").set(room_code) # 合言葉を入力する
-    first(".new_user_name input").set(user_name) # ハンドルネームを入力する
-    first(".share_button").click                 # 共有ボタンをクリックする
+    Capybara.within(".RealtimeShareModal") do
+      find(".new_room_code input").set(room_code) # 合言葉を入力する
+      find(".new_user_name input").set(user_name) # ハンドルネームを入力する
+      find(".entry_button").click                 # 共有ボタンをクリックする
+      find(".close_button").click                 # 閉じる
+    end
     assert_text(user_name)                       # 入力したハンドルネームの人が参加している
   end
 
@@ -622,15 +654,21 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   # メンバーリストの上からi番目の状態と名前
+  # 一気に調べるのではなく段階的に調べる
   def assert_member_list(i, klass, user_name)
     Capybara.within(".ShareBoardMemberList") do
-      # 手番・手番待ち・観戦者のどれか確認
-      assert_selector(".member_info:nth-child(#{i}).#{klass}")
-
-      # 名前の確認
-      text = find(".member_info:nth-child(#{i}).#{klass} .user_name").text
-      assert { text === user_name }
+      assert_selector(".member_info:nth-child(#{i})")             # まずi番目が存在する
+      assert_selector(".member_info:nth-child(#{i}).#{klass}")    # 次にi番目の種類
     end
+    # i 番目のメンバーは user_name である
+    Capybara.within(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]") do
+      assert_selector(:xpath, "//*[contains(@class, 'member_info')][#{i}]//*[text()='#{user_name}']")
+    end
+  end
+
+  # メンバーが存在する
+  def assert_member_exist(user_name)
+    assert_selector(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]//*[text()='#{user_name}']")
   end
 
   def member_list_click(i)
@@ -653,5 +691,10 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def assert_turn_offset(turn_offset)
     assert_text("##{turn_offset}")
+  end
+
+  # 順番設定後の待ち
+  def apply_after_wait
+    sleep(2)
   end
 end

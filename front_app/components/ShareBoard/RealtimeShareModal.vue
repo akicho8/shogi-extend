@@ -1,9 +1,10 @@
 <template lang="pug">
 .modal-card.RealtimeShareModal
-  header.modal-card-head
-    .modal-card-title.is-size-6.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
+  header.modal-card-head.is-justify-content-space-between
+    p.modal-card-title.is-size-6.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
       | 部屋に入る
-      b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room") 共有中
+      b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room") 入室中
+
   section.modal-card-body
     .content
       ul
@@ -23,18 +24,25 @@
           | 指し手のログの行をタップするとそのときの局面にワープします
           .has-text-grey.is-size-7
             | 何か問題が起きたとき用で基本的には使わないでよい
-    template(v-if="input_show_p")
-      b-field(label="合言葉" label-position="on-border" key="input_show_p_true")
-        b-input.new_room_code(v-model="new_room_code")
-    template(v-else)
-      b-field(label="合言葉 (設定済み)" custom-class="is-small" key="input_show_p_false")
-        .control
-          b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger") 変更
-    b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとから変更できますが順番設定後は再度順番設定しないといけなくなります")
-      b-input.new_user_name(v-model="new_user_name")
+
+    template(v-if="!base.ac_room")
+      template(v-if="room_code_field_locked")
+        b-field(label="合言葉 (設定済み)" custom-class="is-small" key="room_code_field_locked_false")
+          .control
+            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger") 変更
+      template(v-else)
+        b-field(label="合言葉" label-position="on-border" key="room_code_field_locked_true")
+          b-input.new_room_code(v-model="new_room_code")
+
+      b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとから変更できますが順番設定後は再度順番設定が必要です")
+        b-input.new_user_name(v-model="new_user_name")
+
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
-    b-button.share_button(@click="submit_handle" type="is-primary") 入室
+    template(v-if="base.ac_room")
+      b-button.leave_button(@click="leave_handle" type="is-danger") 退室
+    template(v-else)
+      b-button.entry_button(@click="entry_handle" type="is-primary") 入室
 </template>
 
 <script>
@@ -44,25 +52,35 @@ import { support_child } from "./support_child.js"
 export default {
   name: "RealtimeShareModal",
   mixins: [support_child],
-  props: {
-  },
   data() {
     return {
       new_room_code: this.base.room_code,
       new_user_name: this.base.user_name,
-      input_show_p: !this.base.room_code,
+      room_code_field_locked: null,
     }
   },
+  created() {
+    this.room_code_field_lock()
+  },
   methods: {
+    leave_handle() {
+      this.sound_play("click")
+      if (this.base.ac_room) {
+        this.toast_ok("退室しました")
+        this.base.room_destroy()
+      } else {
+        this.toast_warn("今は部屋の外です")
+      }
+    },
     room_code_show_toggle_handle() {
       this.sound_play("click")
-      this.input_show_p = true
+      this.room_code_field_unlock()
     },
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
     },
-    submit_handle() {
+    entry_handle() {
       this.sound_play("click")
 
       this.new_room_code = _.trim(this.new_room_code)
@@ -79,11 +97,24 @@ export default {
       }
 
       this.base.room_code_set(this.new_room_code, this.new_user_name)
+      this.room_code_field_lock()
 
-      this.$emit("close")
+      if (this.development_p) {
+      } else {
+        this.$emit("close")
+      }
     },
-  },
-  computed: {
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 鍵有効 (合言葉が入力済みのとき)
+    room_code_field_lock() {
+      this.room_code_field_locked = this.present_p(this.base.room_code)
+    },
+    // 鍵解除
+    room_code_field_unlock() {
+      this.room_code_field_locked = false
+    },
   },
 }
 </script>
@@ -91,9 +122,9 @@ export default {
 <style lang="sass">
 .RealtimeShareModal
   +tablet
-    width: 50ch
+    width: 54ch
   .modal-card-body
-    padding: 0.5rem 1rem 1rem
+    padding: 0.5rem 1.5rem 1rem
   .modal-card-foot
     justify-content: space-between
     .button

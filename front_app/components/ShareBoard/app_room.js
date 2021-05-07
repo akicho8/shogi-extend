@@ -4,13 +4,18 @@ import dayjs from "dayjs"
 export const app_room = {
   data() {
     return {
-      room_code: this.config.record.room_code, // リアルタイム共有合言葉
+      // room_code: this.config.record.room_code, // リアルタイム共有合言葉
+      room_code: null, // リアルタイム共有合言葉
       user_code: this.config.record.user_code, // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
       ac_room: null,
     }
   },
   mounted() {
     this.ls_setup() // user_name の復帰
+
+    if (this.$route.query.room_code) {
+      this.room_code = this.$route.query.room_code
+    }
 
     if (this.$route.query.force_user_name) {
       this.user_name = this.$route.query.force_user_name
@@ -34,49 +39,31 @@ export const app_room = {
 
   },
   beforeDestroy() {
-    if (this.ac_room) {
-      this.toast_ok("共有を解除して退室しました")
-    }
     this.room_destroy()
   },
   methods: {
     room_code_set(room_code, user_name) {
-      let apply = false
+      this.__assert__(user_name, "user_name")
+      this.__assert__(room_code, "room_code")
 
       room_code = _.trim(room_code)
-      if (this.room_code === room_code) {
-        if (this.ac_room) {
-          this.toast_ok("すでに共有しています")
-        } else {
-          this.debug_alert("URL経由で飛んできてハンドルネームを入力した直後に接続する")
-          apply = true
-        }
-      } else {
-        this.room_code = room_code
-        apply = true
-        if (this.room_code) {
-          this.toast_ok("合言葉を設定しました")
-        } else {
-          this.toast_ok("合言葉を削除して退室しました")
-        }
-      }
-
       user_name = _.trim(user_name)
-      if (this.user_name != user_name) {
+
+      if (this.user_name !== user_name) {
         this.user_name = user_name
         if (this.ac_room) {
-          this.toast_ok("ニックネームの変更を共有しました")
-          this.member_bc_interval_runner.restart()
+          this.member_bc_interval_runner.restart() // ハンドルネームの変更すぐに反映するため
         }
       }
 
-      if (apply) {
-        if (this.room_code) {
-          this.room_recreate()
-        } else {
-          this.room_destroy()
-        }
+      if (this.ac_room) {
+        this.toast_warn("すでに入室しています")
+        return
       }
+
+      this.room_code = room_code
+      this.room_create()
+      this.toast_ok("入室しました")
     },
 
     room_create() {
@@ -108,8 +95,17 @@ export const app_room = {
     },
 
     room_destroy() {
-      this.debug_alert("room_destroy")
-      this.ac_unsubscribe("ac_room")
+      // this.sound_play("click")
+      if (this.ac_room) {
+        // this.toast_ok("出ました")
+        this.debug_alert("room_destroy")
+        this.ac_unsubscribe("ac_room")
+        this.member_infos_clear()
+        this.active_level_reset()
+        this.active_level_increment_timer.stop()
+      } else {
+        // this.toast_ok("すでに出ています")
+      }
     },
 
     // perform のラッパーで共通のパラメータを入れる
