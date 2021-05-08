@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 
-const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
+const ALIVE_NOTIFY_INTERVAL = 60       // N秒ごとに存在を通知する
 const ALIVE_SEC             = 60 + 8  // N秒未満なら活発とみなして青くする
 const KILL_SEC              = 60 + 30 // 通知がN秒前より古いユーザーは破棄
 
@@ -36,16 +36,13 @@ export const app_room_members = {
   methods: {
     member_infos_clear() {
       this.member_infos = []
-      this.room_joined_at = null // 再接続したら最後に追加する (先輩であってもあとから再接続したら後輩とする)
-      this.alive_notice_count = 0
     },
 
-    // 初めて接続したときの時間を room_joined_at に入れる
-    // そうすると room_joined_at desc で古参順になる
-    member_room_connected() {
-      if (this.blank_p(this.room_joined_at)) {
-        this.room_joined_at = this.time_current_ms()
-      }
+    // 接続するタイミングで初期化
+    // room_joined_at は古参度でソートするため
+    member_info_init() {
+      this.alive_notice_count = 0
+      this.room_joined_at = this.time_current_ms()
     },
 
     // インターバル実行の再スタートで即座にメンバー情報を反映する

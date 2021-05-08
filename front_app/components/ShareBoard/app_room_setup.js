@@ -91,6 +91,7 @@ export const app_room_setup = {
       this.ga_click(`共有将棋盤【${this.room_code}】`)
 
       this.member_infos_clear()
+      this.member_info_init()
       this.active_level_reset()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再接続される場合があるためそれを考慮すること
@@ -99,7 +100,6 @@ export const app_room_setup = {
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: (e) => {
           this.tl_add("HOOK", "connected", e)
-          this.member_room_connected()
           this.active_level_increment_timer.restart()
           this.setup_info_request()
           this.member_info_bc_restart()
