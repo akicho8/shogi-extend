@@ -52,7 +52,6 @@ export const app_room_members = {
     },
 
     member_bc_interval_callback() {
-      this.debug_alert("生存通知")
       this.member_info_share()
     },
 
