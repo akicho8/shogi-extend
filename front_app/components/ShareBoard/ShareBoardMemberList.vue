@@ -8,8 +8,8 @@
         b-icon.account_icon(:icon="icon_for(e)" :type="icon_type_for(e)" size="is-small")
         //- b-icon(icon="sleep" type="is-danger" size="is-small")
         //- b-icon(icon="lan-disconnect" type="is-danger" size="is-small")
-        .mx-1.user_name(:class="{'xhas-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
-        .mx-1(v-if="base.user_code === e.from_user_code") (自分)
+        .user_name {{e.from_user_name}}
+        .mx-1(v-if="development_p && (base.user_code === e.from_user_code)") (自分)
         b-icon.mx-1(icon="lan-disconnect" type="is-danger" size="is-small" v-if="base.member_disconnect_p(e) || development_p")
         template(v-if="development_p")
           .mx-1 {{time_format(e)}}
@@ -179,6 +179,9 @@ export default {
       color: inherit
       &:hover
         background-color: $grey-lighter
+    .user_name
+      margin: 0 0.25rem
+
     .left_tag_or_icon
       min-width: 1.75rem
       .tag
@@ -200,11 +203,11 @@ export default {
       &.is_disconnect
         opacity: 0.25
       &.is_self
+        font-weight: bold
       &.is_turn_inactive
       &.is_turn_active
         // .account_icon
         //   color: $warning
-        font-weight: bold
         .left_tag_or_icon
           .tag
             border: 2px solid $primary

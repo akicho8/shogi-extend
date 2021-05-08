@@ -103,8 +103,9 @@ export const app_room_members = {
           performed_at: this.time_current_ms(),
           alive_notice_count: 1,
           room_joined_at: room_joined_at + i,
-          from_user_code: i,
+          from_user_code: i === 0 ? this.user_code : i,
           from_user_name: e,
+          window_active_count: 1,
         }))
       }
 
