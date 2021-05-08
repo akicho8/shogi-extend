@@ -69,7 +69,7 @@ export const app_room_setup = {
       if (this.user_name !== user_name) {
         this.user_name = user_name
         if (this.ac_room) {
-          this.member_bc_interval_runner.restart() // ハンドルネームの変更すぐに反映するため
+          this.member_info_bc_restart() // ハンドルネームの変更すぐに反映するため
         }
       }
 
@@ -102,7 +102,7 @@ export const app_room_setup = {
           this.member_room_connected()
           this.active_level_increment_timer.restart()
           this.setup_info_request()
-          this.member_bc_interval_runner.restart()
+          this.member_info_bc_restart()
         },
         disconnected: () => {
           this.tl_add("HOOK", "disconnected")

@@ -96,7 +96,7 @@ client-only
                 b-button(@click="room_recreate") 再接続
                 b-button(@click="room_create") 接続
                 b-button(@click="room_destroy") 切断
-                b-button(@click="member_add_test") 生存通知
+                b-button(@click="member_info_bc_restart") 生存通知
                 b-button(@click="al_add_test") 指
                 b-button(@click="time_limit_modal_handle") 時間切れ
                 b-button(@click="edit_warn_modal_handle") 編集警告

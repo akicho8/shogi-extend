@@ -48,6 +48,12 @@ export const app_room_members = {
       }
     },
 
+    // インターバル実行の再スタートで即座にメンバー情報を反映する
+    // 即座に member_bc_interval_callback を実行する
+    member_info_bc_restart() {
+      this.member_bc_interval_runner.restart()
+    },
+
     member_bc_interval_callback() {
       this.debug_alert("生存通知")
       this.alive_notice_count += 1
@@ -139,10 +145,6 @@ export const app_room_members = {
     // 通達があってからの経過秒数
     member_elapsed_sec(e) {
       return (this.time_current_ms() - e.performed_at) / 1000
-    },
-
-    member_add_test() {
-      this.member_bc_interval_runner.restart()
     },
   },
   computed: {
