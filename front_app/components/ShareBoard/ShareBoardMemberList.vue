@@ -95,7 +95,7 @@ export default {
       // if (this.base.current_turn_user_name === e.from_user_name) {
       //   return "is_turn_active"
       // } else {
-      //   return "is_turn_inactive"
+      //   return "is_turn_standby"
       // }
       // }
     },
@@ -105,7 +105,7 @@ export default {
         is_joined:        !this.base.order_func_p,                                                       // 初期状態
         is_disconnect:    this.base.member_disconnect_p(e),                                              // 霊圧が消えかけ
         is_turn_active:   this.order_lookup(e) && this.base.current_turn_user_name === e.from_user_name, // 手番の人
-        is_turn_inactive: this.order_lookup(e) && this.base.current_turn_user_name !== e.from_user_name, // 手番待ちの人
+        is_turn_standby: this.order_lookup(e) && this.base.current_turn_user_name !== e.from_user_name, // 手番待ちの人
         is_watching:      this.base.order_func_p && !this.order_lookup(e),                               // 観戦
         is_self:          this.base.user_code === e.from_user_code,                                      // 自分？
         is_window_blur:   e.window_active_count === 0,                                                   // Windowが非アクティブ状態か？
@@ -193,7 +193,7 @@ export default {
         //   border: 2px solid $primary
         //   // background-color: $white
         //   background-color: unset
-        // &.is_turn_inactive
+        // &.is_turn_standby
         //   background-color: unset
         //   // border: 2px solid change_color($primary, $alpha: 0.2)
 
@@ -204,7 +204,7 @@ export default {
         opacity: 0.25
       &.is_self
         font-weight: bold
-      &.is_turn_inactive
+      &.is_turn_standby
       &.is_turn_active
         // .account_icon
         //   color: $warning
