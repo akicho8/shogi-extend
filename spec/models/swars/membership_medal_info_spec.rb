@@ -97,23 +97,22 @@ module Swars
     end
 
     describe "長考" do
-      def test(min)
+      def test(min, judge_key)
         seconds = min.minutes
 
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: [["+7968GI", 600 - seconds], ["-8232HI", 597], ["+5756FU", 600 - seconds - 1]], final_key: :CHECKMATE) do |e|
-          e.memberships.build(user: @black, judge_key: :lose)
-          e.memberships.build(user: @white, judge_key: :win)
+          e.memberships.build(user: @black, judge_key: judge_key)
+          e.memberships.build(user: @white)
         end
         @black.memberships.first.first_matched_medal_key_and_message
       end
 
       it do
-        test(2.5)             # => [:長考マン, "考えすぎて負けた。ちなみに一番長かったのは2分30秒"]
-        test(3.0)             # => [:大長考マン, "対局放棄に近い、ありえないほどの長考をした。ちなみに3分"]
-        assert { test(2.5) == [:長考マン, "考えすぎて負けた。ちなみに一番長かったのは2分30秒"] }
-        assert { test(3.0) == [:大長考マン, "対局放棄と受け取られかねない3分の長考をした"] }
+        assert { test(2.5, :lose) == [:長考マン, "考えすぎて負けた。ちなみに一番長かったのは2分30秒"] }
+        assert { test(3.0, :win)  == [:大長考マン, "対局放棄と受け取られかねない3分の長考をした"] }
+        assert { test(3.0, :lose) == [:大長考負けマン, "対局放棄と受け取られかねない3分の長考をしたあげく負けた"] }
       end
     end
 
