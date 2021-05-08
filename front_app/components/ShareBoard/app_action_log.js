@@ -26,7 +26,7 @@ export const app_action_log = {
       this.al_add({
         from_user_name: "あいうえおあいうえお",
         lmi: {
-          kif_without_from:    "☗7六歩",
+          kif_without_from:    "☗00歩",
           next_turn_offset:    i,
           player_location_key: "black",
           yomiage:             "ななろくふ",
