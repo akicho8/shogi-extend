@@ -3,6 +3,16 @@ import TweetModal from "./TweetModal.vue"
 
 export const app_chore = {
   methods: {
+    //////////////////////////////////////////////////////////////////////////////// Windowアクティブチェック
+    window_focus_user_after_hook() {
+      this.tl_add("WINDOW", `[${this.window_active_count}] focus`)
+      this.aclog("WINDOW", `[${this.window_active_count}] focus`)
+    },
+    window_blur_user_after_hook() {
+      this.tl_add("WINDOW", `[${this.window_active_count}] blur`)
+      this.aclog("WINDOW", `[${this.window_active_count}] blur`)
+    },
+
     // 視点設定変更
     abstract_viewpoint_setting_handle() {
       this.sidebar_p = false
