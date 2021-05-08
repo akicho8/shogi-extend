@@ -111,6 +111,7 @@ const COUNTDOWN_INTERVAL = 0.5  // カウントダウンはN秒毎に進む
 const COUNTDOWN_MAX      = 3    // カウントダウンはNから開始する
 const DIMENSION          = 9    // 盤面の辺サイズ
 const CONGRATS_LTEQ      = 10   // N位以内ならおめでとう
+const NEXT_IF_X          = "false" // 間違えたら次の問題にするか？
 
 export default {
   name: "XyMasterApp",
@@ -447,7 +448,9 @@ export default {
       } else {
         this.x_count++
         this.sound_play("x")
-        // this.place_next_set()
+        if (this.NEXT_IF_X === "true") {
+          this.place_next_set()
+        }
       }
     },
 
@@ -548,6 +551,8 @@ export default {
     is_mode_idol()   { return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal' },
     is_mode_active() { return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready' },
     countdown()      { return COUNTDOWN_MAX - this.countdown_counter },
+
+    NEXT_IF_X()      { return this.$route.query.NEXT_IF_X || NEXT_IF_X },
 
     component_style() {
       return {
