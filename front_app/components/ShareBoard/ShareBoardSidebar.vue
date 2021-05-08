@@ -11,7 +11,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="手番が来たら知らせる設定"      @click="base.tn_modal_handle"            :disabled="!base.ac_room" v-if="development_p")
           b-menu-item.is_active_unset(label="順番設定"                      @click="base.os_modal_handle"            :disabled="!base.ac_room")
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"   @click="base.room_code_url_copy_handle"  :disabled="!base.ac_room")
-          b-menu-item.is_active_unset(label="自分の盤を全員に反映"          @click="base.force_sync_modal_handle"    :disabled="!base.ac_room")
+          b-menu-item.is_active_unset(label="自分の盤を全員に転送"          @click="base.force_sync_modal_handle"    :disabled="!base.ac_room")
           b-menu-item.is_active_unset(label="再接続 (なんかおかしいとき用)" @click="base.room_recreate_modal_handle" :disabled="!base.ac_room")
 
         b-menu-list(label="検討用")
