@@ -234,17 +234,16 @@ export default {
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     // 局面0で1手指したとき last_move_info.turn_offset は 1
-    play_mode_advanced_full_moves_sfen2_set(v, last_move_info) {
-      this.current_sfen = v
-      this.sfen_share_params_set({
-        last_move_kif: last_move_info.to_kif_without_from,
-        yomiage: last_move_info.to_yomiage,
-      })
+    play_mode_advanced_full_moves_sfen2_set(sfen, last_move_info) {
+      this.current_sfen = sfen
+      this.sfen_share_params_set(last_move_info)
       this.sfen_share()
 
       // 時計があれば操作した側のボタンを押す
+      // last_move_info.player_location なら指した人の色で判定
+      // last_move_info.to_location なら駒の色で判定
       if (this.chess_clock) {
-        this.cc_switch_handle(this.chess_clock.single_clocks[last_move_info.location.code])
+        this.cc_switch_handle(this.chess_clock.single_clocks[last_move_info.player_location.code])
       }
 
       // 時計の状態をブロードキャストする

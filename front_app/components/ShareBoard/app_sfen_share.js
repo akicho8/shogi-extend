@@ -20,11 +20,26 @@ export const app_sfen_share = {
   },
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
-    sfen_share_params_set(params) {
+    sfen_share_params_set(last_move_info) {
+      const lmi = last_move_info
+
+      this.tl_add("SP", lmi.to_kif_without_from, lmi)
       this.__assert__(this.current_sfen, "this.current_sfen")
+      this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_offset, "lmi.next_turn_offset === this.current_sfen_turn_offset")
+
       this.sfen_share_params = {
-        ...params,
-        ...this.current_sfen_attrs, // turn_offset は含まれる
+        lmi: {
+          kif_without_from:    lmi.to_kif_without_from, // "☗7六歩"
+          next_turn_offset:    lmi.next_turn_offset,    // 1
+          player_location_key: lmi.player_location.key, // "black"
+          yomiage:             lmi.to_yomiage,          // "ななろくふ"
+        },
+        ...this.current_sfen_attrs, // turn_offset が含まれる
+      }
+
+      const next_user_name = this.user_name_by_turn(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
+      if (next_user_name) {
+        this.sfen_share_params["next_user_name"] = next_user_name
       }
 
       if (RETRY_FUNCTION_ENABLED) {
@@ -103,32 +118,35 @@ export const app_sfen_share = {
         this.setup_by_params(params)
       }
       if (false) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.turn_offset}手目を指しました`)
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.lmi.next_turn_offset}手目を指しました`)
       }
       if (false) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
       }
       if (true) {
-        const prev_user_name = this.user_name_by_turn(params.turn_offset - 1)
-        const next_user_name = this.user_name_by_turn(params.turn_offset)
-        const next_user_received_p = this.user_name === next_user_name
+        const prev_user_name = this.user_name_by_turn(params.lmi.next_turn_offset - 1) // alice, bob がいて初手を指したら alice
+        // const next_user_name = this.user_name_by_turn(params.lmi.next_turn_offset)     // alice, bob がいて初手を指したら bob
+        const next_user_name = params.next_user_name
+        const next_user_received_p = this.user_name === next_user_name                 // コンテキストが bob なら true
 
         if (next_user_received_p) {
           this.tn_notify()
         }
 
-        if (prev_user_name) {
-          if (params.from_user_name !== prev_user_name) {
-            this.debug_alert(`${this.user_call_name(prev_user_name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
+        if (this.development_p) {
+          if (prev_user_name) {
+            if (params.from_user_name !== prev_user_name) {
+              this.debug_alert(`${this.user_call_name(prev_user_name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
+            }
           }
         }
 
         // 「alice ▲76歩」と表示しながら
-        this.toast_ok(`${params.from_user_name} ${params.last_move_kif}`, {toast_only: true})
+        this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
 
         // 「aliceさん」の発声後に「7 6 ふー！」を発声する
         this.talk(this.user_call_name(params.from_user_name), {
-          onend: () => this.talk(params.yomiage, {
+          onend: () => this.talk(params.lmi.yomiage, {
             onend: () => {
               if (next_user_name) {
                 this.toast_ok(`次は${this.user_call_name(next_user_name)}の手番です`)

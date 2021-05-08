@@ -22,11 +22,18 @@ export const app_action_log = {
       }
     },
     al_add_test() {
+      const i = this.base.action_logs.length
       this.al_add({
         from_user_name: "あいうえおあいうえお",
-        turn_offset: this.base.action_logs.length,
-        last_location_key: "white",
+        lmi: {
+          kif_without_from:    "☗7六歩",
+          next_turn_offset:    i,
+          player_location_key: "black",
+          yomiage:             "ななろくふ",
+        },
         sfen: "position startpos",
+        turn_offset: i,
+        last_location_key: "white",
         performed_at: this.time_current_ms(),
       })
     },

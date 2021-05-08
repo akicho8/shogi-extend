@@ -3,8 +3,8 @@
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
       a.is-clickable.is-block.is_line_break_off(:key="action_log_key(e)" @click="action_log_click_handle(e)")
-        span {{e.turn_offset}}
-        span.ml-1(v-if="e.last_move_kif") {{e.last_move_kif}}
+        span {{e.lmi.next_turn_offset}}
+        span.ml-1 {{e.lmi.kif_without_from}}
         span.ml-1 {{e.from_user_name}}
         span.ml-1.is-size-7.time_format.has-text-grey-light {{time_format(e)}}
 </template>

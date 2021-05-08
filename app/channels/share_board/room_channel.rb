@@ -16,7 +16,9 @@ module ShareBoard
     end
 
     def sfen_share(data)
-      track(data, "指手送信", "[#{data["turn_offset"]}] #{data["last_move_kif"]}")
+      lmi = data["lmi"]
+      player_location = Bioshogi::Location.fetch(lmi["player_location_key"])
+      track(data, "指手送信", "[#{lmi["next_turn_offset"]}] #{player_location.mark} #{lmi["kif_without_from"]} > #{data["next_user_name"] || '?'}")
       broadcast(:sfen_share_broadcasted, data)
     end
 
@@ -114,7 +116,7 @@ module ShareBoard
 
     def track(data, action, body)
       key = "共有将棋盤 [#{room_code}] #{action}"
-      if Rails.env.development? && false
+      if Rails.env.development?
         SlackAgent.message_send(key: key, body: data)
       end
       prefix = data["from_user_name"] + ":"

@@ -52,10 +52,17 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
     it do
       data = data_factory({
-          "sfen"          => "(sfen)",
-          "last_move_kif" => "(指し手)",
-          "turn_offset"   => 1,
-          "sequence_code" => 1,
+          "sfen"              => "(sfen)",
+          "turn_offset"       => 1,
+          "last_location_key" => "white",
+          "sequence_code"     => 1,
+          "next_user_name"    => "bob",
+          "lmi" => {
+            "kif_without_from"    => "☗7六歩",
+            "next_turn_offset"    => 1,
+            "player_location_key" => "black",
+            "yomiage"             => "ななろくふ",
+          },
         })
       expect {
         subscription.sfen_share(data)
