@@ -122,6 +122,7 @@ client-only
 </template>
 
 <script>
+const SHARE_BOARD_TITLE     = "共有将棋盤"
 const RUN_MODE_DEFAULT      = "play_mode"
 const INTERNAL_RULE_DEFAULT = "strict"
 
@@ -342,31 +343,28 @@ export default {
     },
 
     current_url_params() {
-      let params = {}
-
-      if (this.development_p || true) {
-        params = { ...this.$route.query, ...params }
-      }
-
-      params = {
-        ...params,
-        body:  this.current_body, // 編集モードでもURLを更新するため
-        turn:  this.turn_offset,
-        title: this.current_title,
+      let params = {
+        ...this.$route.query,                  // デバッグ用パラメータを保持するため
+        body:               this.current_body, // 編集モードでもURLを更新するため
+        turn:               this.turn_offset,
+        title:              this.current_title,
         abstract_viewpoint: this.abstract_viewpoint,
+        room_code:          this.room_code,
+        sp_run_mode:        this.sp_run_mode,
+        internal_rule:      this.internal_rule,
       }
 
-      if (this.room_code) {
-        params["room_code"] = this.room_code
+      if (this.blank_p(params.title) || params.title === SHARE_BOARD_TITLE) {
+        delete params.title
       }
-
-      // 編集モードでの状態を維持したいのでURLに含めておく
-      if (this.sp_run_mode !== RUN_MODE_DEFAULT) {
-        params["sp_run_mode"] = this.sp_run_mode
+      if (this.blank_p(params.room_code)) {
+        delete params.room_code
       }
-
-      if (this.internal_rule !== INTERNAL_RULE_DEFAULT) {
-        params["internal_rule"] = this.internal_rule
+      if (params.sp_run_mode === RUN_MODE_DEFAULT) {
+        delete params.sp_run_mode
+      }
+      if (params.internal_rule === INTERNAL_RULE_DEFAULT) {
+        delete params.internal_rule
       }
 
       return params
