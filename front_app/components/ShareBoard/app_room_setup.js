@@ -112,7 +112,7 @@ export const app_room_setup = {
           this.tl_add("HOOK", "rejected")
         },
         received: e => {
-          this.tl_add("HOOK", `received: ${e.bc_action}`, e)
+          // this.tl_add("HOOK", `received: ${e.bc_action}`, e)
           this.api_version_valid(e.bc_params.API_VERSION)
         },
       })
@@ -144,7 +144,7 @@ export const app_room_setup = {
 
       if (this.ac_room) {
         this.ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
-        this.tl_add("USER", action)
+        // this.tl_add("USER", action)
       }
     },
 
