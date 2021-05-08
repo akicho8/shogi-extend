@@ -189,8 +189,8 @@ export const app_room_setup = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    aclog(subject = "", body = "") {
-      this.ac_room_perform("aclog", { subject, body })
+    ac_log(subject = "", body = "") {
+      this.ac_room_perform("ac_log", { subject, body })
     },
 
     ////////////////////////////////////////////////////////////////////////////////

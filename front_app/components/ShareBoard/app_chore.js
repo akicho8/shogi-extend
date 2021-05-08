@@ -6,11 +6,11 @@ export const app_chore = {
     //////////////////////////////////////////////////////////////////////////////// Windowアクティブチェック
     window_focus_user_after_hook() {
       this.tl_add("WINDOW", `[${this.window_active_count}] focus`)
-      this.aclog("WINDOW", `[${this.window_active_count}] focus`)
+      this.ac_log("WINDOW", `[${this.window_active_count}] focus`)
     },
     window_blur_user_after_hook() {
       this.tl_add("WINDOW", `[${this.window_active_count}] blur`)
-      this.aclog("WINDOW", `[${this.window_active_count}] blur`)
+      this.ac_log("WINDOW", `[${this.window_active_count}] blur`)
     },
 
     // 視点設定変更
@@ -93,12 +93,12 @@ export const app_chore = {
           onCancel: () => {
             this.talk_stop()
             this.sound_play("click")
-            this.aclog("退室", "キャンセル")
+            this.ac_log("退室", "キャンセル")
           },
           onConfirm: () => {
             this.talk_stop()
             this.sound_play("click")
-            this.aclog("退室", "実行")
+            this.ac_log("退室", "実行")
             this.$router.push({name: "index"})
           },
         })

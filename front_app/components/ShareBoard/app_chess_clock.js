@@ -72,7 +72,7 @@ export const app_chess_clock = {
         time_zero_callback: e => {
           this.sound_play("lose")
           this.toast_ok("時間切れ")
-          this.aclog("対局時計", "時間切れ")
+          this.ac_log("対局時計", "時間切れ")
           this.time_limit_modal_handle()
           // this.$buefy.dialog.alert({
           //   message: "時間切れ",

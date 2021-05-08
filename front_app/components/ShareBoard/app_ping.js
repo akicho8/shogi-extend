@@ -42,7 +42,7 @@ export const app_ping = {
       if (params.to_user_code === this.user_code) {
         const now = this.time_current_ms()
         this.delay_block(this.PONG_DELAY, () => this.pong_command(params))
-        this.aclog("PING", `${params.from_user_name} → ${this.user_name} ${now - params.ping_at}ms`)
+        this.ac_log("PING", `${params.from_user_name} → ${this.user_name} ${now - params.ping_at}ms`)
       }
     },
     pong_command(params) {
@@ -62,7 +62,7 @@ export const app_ping = {
         const now = this.time_current_ms()
         const gap = now - params.ping_at
         this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {toast_only: true})
-        this.aclog("PONG", `${this.user_name} ← ${params.from_user_name} ${now - params.pong_at}ms`)
+        this.ac_log("PONG", `${this.user_name} ← ${params.from_user_name} ${now - params.pong_at}ms`)
       }
     },
 
