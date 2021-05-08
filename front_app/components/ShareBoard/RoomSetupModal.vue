@@ -43,7 +43,7 @@
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="base.ac_room")
-      b-button.leave_button(@click="leave_handle" type="is-danger") 退室
+      b-button.leave_button(@click="leave_handle" type="is-primary") 退室
     template(v-else)
       b-button.entry_button(@click="entry_handle" type="is-primary") 入室
 </template>
