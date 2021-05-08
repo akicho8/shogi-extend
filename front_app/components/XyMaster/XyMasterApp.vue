@@ -131,6 +131,7 @@ export default {
       mode: "is_mode_stop",
       countdown_counter:  null, // カウントダウン用カウンター
       before_place:       null, // 前のセル
+      tapped_place:       null, // タップしたセル
       current_place:      null, // 今のセル
       next_place:         null, // 次のセル
       key_queue:          null, // PCモードでの押したキー
@@ -157,7 +158,7 @@ export default {
 
   beforeMount() {
     this.interval_counter = new IntervalCounter(this.countdown_func, {early: true, interval: COUNTDOWN_INTERVAL})
-    this.interval_frame   = new IntervalFrame(this.time_add_func)
+    this.interval_frame   = new IntervalFrame(this.time_add_func, {debug: false})
   },
 
   mounted() {
@@ -230,8 +231,8 @@ export default {
     sp_board_piece_back_user_class(place) {
       if (this.tap_method_p) {
         if (this.mode === "is_mode_run") {
-          if (this.before_place) {
-            if (this.xy_equal_p(this.before_place, place)) {
+          if (this.tapped_place) {
+            if (this.xy_equal_p(this.tapped_place, place)) {
               return "has-background-primary-light"
             }
           }
@@ -264,6 +265,7 @@ export default {
     init_other_variables() {
       this.countdown_counter = 0
       this.micro_seconds = 0
+      this.tapped_place = null
       this.before_place = null
       this.current_place = null
       this.o_count = 0
@@ -434,6 +436,7 @@ export default {
     },
 
     input_valid(xy) {
+      this.tapped_place = xy
       if (this.active_p(xy)) {
         this.sound_play("o")
         this.o_count++
@@ -444,6 +447,7 @@ export default {
       } else {
         this.x_count++
         this.sound_play("x")
+        // this.place_next_set()
       }
     },
 
