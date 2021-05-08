@@ -9,7 +9,7 @@
         //- b-icon(icon="sleep" type="is-danger" size="is-small")
         //- b-icon(icon="lan-disconnect" type="is-danger" size="is-small")
         .user_name {{e.from_user_name}}
-        .mx-1(v-if="development_p && (base.user_code === e.from_user_code)") (自分)
+        .mx-1(v-if="base.user_code === e.from_user_code") (自分)
         b-icon.mx-1(icon="lan-disconnect" type="is-danger" size="is-small" v-if="base.member_disconnect_p(e) || development_p")
         template(v-if="development_p")
           .mx-1 {{time_format(e)}}
@@ -203,9 +203,9 @@ export default {
       &.is_disconnect
         opacity: 0.25
       &.is_self
-        font-weight: bold
       &.is_turn_standby
       &.is_turn_active
+        font-weight: bold
         // .account_icon
         //   color: $warning
         .left_tag_or_icon
