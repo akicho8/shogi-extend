@@ -57,7 +57,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable
       // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
       // :has-detailed-visible="row => sound_play('click')"
 
-      //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric :width="0" :visible="!!base.visible_hash.key") {{row.key}}
+      //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric :width="1" :visible="!!base.visible_hash.key") {{row.key}}
 
       //- sortable :visible="!!base.visible_hash.title"
 
@@ -111,7 +111,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable
       b-table-column(v-slot="{row}" custom-key="answer_stat.spent_sec_total" field="answer_stat.spent_sec_total" label="総時間" centered sortable)
         | {{base.table_time_format(row.answer_stat.spent_sec_total)}}
 
-      b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="0" centered :visible="false")
+      b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="1" centered :visible="false")
         | {{row.article.difficulty}}
 
       //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play('click')")
@@ -141,7 +141,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable
       //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
       //-     nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
 
-      //- b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0")
+      //- b-table-column(v-slot="{row}" custom-key="operation" label="" :width="1")
       //-   b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')" @click.native.prevent)
       //-     b-icon(icon="dots-vertical" slot="trigger")
           //- b-dropdown-item.px-4(@click.native.prevent.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")

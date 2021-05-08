@@ -21,7 +21,7 @@
     @sort="base.sort_handle"
     )
 
-    b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name" sortable :width="0" :visible="!!base.visible_hash.key")
+    b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name" sortable :width="1" :visible="!!base.visible_hash.key")
       | {{row.key}}
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)

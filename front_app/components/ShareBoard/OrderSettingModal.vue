@@ -34,7 +34,7 @@
         :mobile-cards="false"
         )
 
-        b-table-column(v-slot="{row}" field="order_index" label="順番" centered :width="0")
+        b-table-column(v-slot="{row}" field="order_index" label="順番" centered :width="1")
           template(v-if="row.order_index != null")
             | {{row.order_index + 1}}
 
@@ -49,7 +49,7 @@
             template(v-else)
               | 観戦
 
-        b-table-column(v-slot="{row}" custom-key="operation" label="" :width="0" centered cell-class="px-1")
+        b-table-column(v-slot="{row}" custom-key="operation" label="" :width="1" centered cell-class="px-1")
           template(v-if="row.enabled_p || true")
             b-button(     size="is-small" icon-left="arrow-up"   @click="arrow_handle(row,-1)")
             b-button.ml-1(size="is-small" icon-left="arrow-down" @click="arrow_handle(row, 1)")
