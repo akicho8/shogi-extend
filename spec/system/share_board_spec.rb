@@ -251,13 +251,13 @@ RSpec.describe "共有将棋盤", type: :system do
         assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことがbobに伝わった
         assert_selector(".OrderSettingModal .b-table")     # 同期しているのでbob側のモーダルも有効になっている
         first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
-        assert_member_list(1, "is_current_player", "alice")         # 1人目(alice)に丸がついている
-        assert_member_list(2, "is_other_player", "bob")           # 2人目(bob)は待機中
+        assert_member_list(1, "is_turn_active", "alice")         # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_turn_inactive", "bob")           # 2人目(bob)は待機中
         assert_no_move("77", "76", "☗7六歩")              # なので2番目のbobは指せない
       end
       a_block do
-        assert_member_list(1, "is_current_player", "alice")         # 1人目(alice)に丸がついている
-        assert_member_list(2, "is_other_player", "bob")    # 2人目(bob)は待機中
+        assert_member_list(1, "is_turn_active", "alice")         # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_turn_inactive", "bob")    # 2人目(bob)は待機中
         assert_move("77", "76", "☗7六歩")                 # aliceが1番目なので指せる
       end
       b_block do
@@ -266,8 +266,8 @@ RSpec.describe "共有将棋盤", type: :system do
       a_block do
         assert_text("次はbobさんの手番です")
         assert_no_move("33", "34", "☖3四歩")              # aliceもう指したので指せない
-        assert_member_list(1, "is_other_player", "alice")  # 1人目(alice)に丸がついていない
-        assert_member_list(2, "is_current_player", "bob")  # 2人目(bob)は指せるので丸がついている
+        assert_member_list(1, "is_turn_inactive", "alice")  # 1人目(alice)に丸がついていない
+        assert_member_list(2, "is_turn_active", "bob")  # 2人目(bob)は指せるので丸がついている
       end
       b_block do
         assert_move("33", "34", "☖3四歩")                 # 2番目のbobは指せる
@@ -298,8 +298,8 @@ RSpec.describe "共有将棋盤", type: :system do
         first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
       end
       c_block do
-        assert_member_list(1, "is_current_player", "alice") # 1人目(alice)に丸がついている
-        assert_member_list(2, "is_other_player", "bob")     # 2人目(bob)は待機中
+        assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_turn_inactive", "bob")     # 2人目(bob)は待機中
         assert_member_list(3, "is_watching", "carol")       # 3人目(carol)は観戦中
         assert_no_move("77", "76", "☗7六歩")              #  なので3番目のcarolは指せない
       end

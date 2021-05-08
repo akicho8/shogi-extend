@@ -56,15 +56,16 @@ export const app_room_members = {
 
     member_bc_interval_callback() {
       this.debug_alert("生存通知")
-      this.alive_notice_count += 1
       this.member_info_share()
     },
 
     // 自分が存在することをみんなに伝える
     member_info_share() {
+      this.alive_notice_count += 1
       this.ac_room_perform("member_info_share", {
-        alive_notice_count: this.alive_notice_count,
-        room_joined_at: this.room_joined_at,
+        alive_notice_count:  this.alive_notice_count,   // 通知した回数
+        room_joined_at:      this.room_joined_at,       // 部屋に入った日時(古参比較用)
+        window_active_count: this.window_active_count,  // Windowの状態
       }) // --> app/channels/share_board/room_channel.rb
     },
 
@@ -138,7 +139,7 @@ export const app_room_members = {
       return this.member_elapsed_sec(e) < ALIVE_SEC
     },
     // 寝ているか？
-    member_sleep_p(e) {
+    member_disconnect_p(e) {
       return !this.member_alive_p(e)
     },
 

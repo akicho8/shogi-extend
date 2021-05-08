@@ -12,6 +12,9 @@ export const app_chore = {
       this.tl_add("WINDOW", `[${this.window_active_count}] blur`)
       this.ac_log("WINDOW", `[${this.window_active_count}] blur`)
     },
+    window_focus_blur_user_hook(focus_p) {
+      this.member_info_bc_restart()
+    },
 
     // 視点設定変更
     abstract_viewpoint_setting_handle() {

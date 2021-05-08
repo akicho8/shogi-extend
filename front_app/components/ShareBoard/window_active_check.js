@@ -45,6 +45,9 @@ export const window_active_check = {
           this.window_blur_user_after_hook()
         }
       }
+      if (this.window_focus_blur_user_hook) {
+        this.window_focus_blur_user_hook(focus_p)
+      }
     },
   },
 }

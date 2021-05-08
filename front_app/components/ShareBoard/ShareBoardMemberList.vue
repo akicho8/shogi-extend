@@ -3,21 +3,20 @@
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
       .member_info.is_line_break_off.is-clickable.is-flex.is-align-items-center(:key="e.from_user_code" @click="row_click_handle(e)" :class="member_info_class(e)")
-        span.left_tag_or_icon.is-inline-flex.is-justify-content-center.is-align-items-center
-          template(v-if="order_lookup(e)")
-            b-tag(rounded) {{tag_body_for(e)}}
-          template(v-else)
-            b-icon(:icon="icon_for(e)" :type="icon_type_for(e)" size="is-small")
+        .left_tag_or_icon.is-inline-flex.is-justify-content-center.is-align-items-center(v-if="order_lookup(e)")
+          b-tag(rounded) {{tag_body_for(e)}}
+        b-icon.account_icon(:icon="icon_for(e)" :type="icon_type_for(e)" size="is-small")
         //- b-icon(icon="sleep" type="is-danger" size="is-small")
         //- b-icon(icon="lan-disconnect" type="is-danger" size="is-small")
-        span.mx-1.user_name(:class="{'has-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
-        b-icon.ml-1(icon="lan-disconnect" type="is-primary" size="is-small" v-if="base.member_sleep_p(e) || development_p")
-        span.ml-1.is-size-7.time_format.has-text-grey-light(v-if="development_p") {{time_format(e)}}
-        //- span.ml-1(v-if="development_p") {{member_info_class(e)}}
-        span.ml-1(v-if="development_p") {{e.room_joined_at}}
-        span.ml-1(v-if="development_p") LV:{{e.active_level}}
-        span.ml-1(v-if="development_p") 通知{{e.alive_notice_count}}回目
-        span.ml-1(v-if="development_p") {{base.member_elapsed_sec(e)}}秒前
+        .mx-1.user_name(:class="{'xhas-text-weight-bold': turn_active_p(e)}") {{e.from_user_name}}
+        .mx-1(v-if="base.user_code === e.from_user_code") (自分)
+        b-icon.mx-1(icon="lan-disconnect" type="is-danger" size="is-small" v-if="base.member_disconnect_p(e) || development_p")
+        template(v-if="development_p")
+          .mx-1 {{time_format(e)}}
+          .mx-1 {{e.room_joined_at}}
+          .mx-1 LV:{{e.active_level}}
+          .mx-1 通知{{e.alive_notice_count}}回目
+          .mx-1 {{base.member_elapsed_sec(e)}}秒前
 </template>
 
 <script>
@@ -49,15 +48,23 @@ export default {
       }
     },
     icon_for(e) {
-      if (this.base.order_func_p) {
-        return "account-outline" // 観戦中のアイコン
-      } else {
-        return "account"         // 通常のアイコン
-      }
+      // if (this.base.member_disconnect_p(e)) {
+      //   return "account-off"
+      // }
+      // if (this.base.order_func_p) {
+      // if (this.base.order_func_p) {
+      //   return "account-outline" // 観戦中のアイコン
+      // } else {
+      //   return "account"         // 通常のアイコン
+      // }
+      return "account"         // 通常のアイコン
     },
     // 自分のアイコンの色
     // 反応がなくなったら灰色になる
     icon_type_for(e) {
+      if (this.base.member_disconnect_p(e)) {
+        return "is-grey"
+      }
       // if (!this.base.member_alive_p(e)) {
       //   return "is-grey"
       // }
@@ -86,20 +93,22 @@ export default {
       // const found = this.order_lookup(e)
       // if (found) {
       // if (this.base.current_turn_user_name === e.from_user_name) {
-      //   return "is_current_player"
+      //   return "is_turn_active"
       // } else {
-      //   return "is_other_player"
+      //   return "is_turn_inactive"
       // }
       // }
     },
 
     member_info_class(e) {
       return {
-        is_joined:        !this.base.order_func_p,                                                        // 初期状態
-        is_sleep:          this.base.member_sleep_p(e),                                                   // 霊圧が消えかけ
-        is_current_player: this.order_lookup(e) && this.base.current_turn_user_name === e.from_user_name, // 手番の人
-        is_other_player:   this.order_lookup(e) && this.base.current_turn_user_name !== e.from_user_name, // 手番待ちの人
-        is_watching:       this.base.order_func_p && !this.order_lookup(e),                               // 観戦
+        is_joined:        !this.base.order_func_p,                                                       // 初期状態
+        is_disconnect:    this.base.member_disconnect_p(e),                                              // 霊圧が消えかけ
+        is_turn_active:   this.order_lookup(e) && this.base.current_turn_user_name === e.from_user_name, // 手番の人
+        is_turn_inactive: this.order_lookup(e) && this.base.current_turn_user_name !== e.from_user_name, // 手番待ちの人
+        is_watching:      this.base.order_func_p && !this.order_lookup(e),                               // 観戦
+        is_self:          this.base.user_code === e.from_user_code,                                      // 自分？
+        is_window_blur:   e.window_active_count === 0,                                                   // Windowが非アクティブ状態か？
       }
     },
   },
@@ -154,8 +163,7 @@ export default {
   .scroll_block
     @extend %overlay
 
-    overflow-y: auto
-    overflow-x: hidden
+    overflow: auto
 
     border-radius: 3px
     background-color: $white-ter
@@ -165,9 +173,8 @@ export default {
       vertical-align: middle
     .member_info
       line-height: 2.25
-      &.is_sleep
-        opacity: 0.3
-      text-overflow: ellipsis
+      // text-overflow: ellipsis
+      // overflow-x: auto
       padding: 0 0.5rem
       color: inherit
       &:hover
@@ -179,17 +186,25 @@ export default {
         // font-size: unset
         // height: unset
         padding: 0 0.4rem
-        // &.is_current_player
+        // &.is_turn_active
         //   border: 2px solid $primary
         //   // background-color: $white
         //   background-color: unset
-        // &.is_other_player
+        // &.is_turn_inactive
         //   background-color: unset
         //   // border: 2px solid change_color($primary, $alpha: 0.2)
 
     .member_info
-      &.is_other_player
-      &.is_current_player
+      &.is_window_blur
+        opacity: 0.5
+      &.is_disconnect
+        opacity: 0.25
+      &.is_self
+      &.is_turn_inactive
+      &.is_turn_active
+        // .account_icon
+        //   color: $warning
+        font-weight: bold
         .left_tag_or_icon
           .tag
             border: 2px solid $primary
