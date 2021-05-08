@@ -62,6 +62,7 @@ export const app_chore = {
         title: "タイトル",
         confirmText: "更新",
         cancelText: "キャンセル",
+        animation: "",
         inputAttrs: { type: "text", value: this.current_title, required: false },
         onCancel: () => this.sound_play("click"),
         onConfirm: value => {
@@ -93,6 +94,7 @@ export const app_chore = {
           cancelText: "キャンセル",
           confirmText: "退室する",
           focusOn: "cancel",
+          animation: "",
           onCancel: () => {
             this.talk_stop()
             this.sound_play("click")
