@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     time_format(t) {
-      return dayjs(t).format("hh:mm:ss.SSS")
+      return dayjs(t).format("HH:mm:ss.SSS")
     },
   },
 }
