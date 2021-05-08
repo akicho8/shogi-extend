@@ -28,6 +28,7 @@ export const app_update = {
       this.talk_stop()
       this.$buefy.dialog.alert({
         message: MESSAGE,
+        animation: "",
         confirmText: "OK",
         onConfirm: () => this.force_reload(),
       })
