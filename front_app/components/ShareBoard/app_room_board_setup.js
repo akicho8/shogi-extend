@@ -8,7 +8,7 @@ export const app_room_board_setup = {
     }
   },
   created() {
-    this.active_level_reset()
+    this.active_level_init()
   },
   beforeDestroy() {
     if (this.active_level_increment_timer) {
@@ -16,7 +16,7 @@ export const app_room_board_setup = {
     }
   },
   methods: {
-    active_level_reset() {
+    active_level_init() {
       this.active_level = 0
     },
 

@@ -24,7 +24,7 @@ export const app_room_members = {
     }
   },
   created() {
-    this.member_infos_clear()
+    this.member_infos_init()
   },
 
   beforeDestroy() {
@@ -34,7 +34,7 @@ export const app_room_members = {
   },
 
   methods: {
-    member_infos_clear() {
+    member_infos_init() {
       this.member_infos = []
     },
 

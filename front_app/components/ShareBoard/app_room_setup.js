@@ -7,7 +7,6 @@ export const app_room_setup = {
     return {
       // room_code: this.config.record.room_code, // リアルタイム共有合言葉
       room_code: null, // リアルタイム共有合言葉
-      user_code: this.config.record.user_code, // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
       ac_room: null,
     }
   },
@@ -37,7 +36,6 @@ export const app_room_setup = {
         // this.room_code_set("__room_code__", "alice")
       }
     }
-
   },
   beforeDestroy() {
     this.room_destroy()
@@ -87,15 +85,15 @@ export const app_room_setup = {
       this.debug_alert("room_create")
       this.__assert__(this.user_name, "this.user_name")
       this.__assert__(this.room_code, "this.room_code")
+      this.__assert__(this.ac_room == null, "this.ac_room == null")
 
-      this.ga_click(`共有将棋盤【${this.room_code}】`)
+      this.ga_click(`共有将棋盤 [${this.room_code}] 入室`)
 
-      this.member_infos_clear()
+      this.member_infos_init()
       this.member_info_init()
-      this.active_level_reset()
+      this.active_level_init()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再接続される場合があるためそれを考慮すること
-      this.__assert__(this.ac_room == null, "this.ac_room == null")
       this.tl_add("USER", `subscriptions.create ${this.room_code}`)
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         connected: (e) => {
@@ -119,29 +117,27 @@ export const app_room_setup = {
     },
 
     room_destroy() {
-      // this.sound_play("click")
       if (this.ac_room) {
-        // this.toast_ok("出ました")
         this.debug_alert("room_destroy")
+
         this.ac_unsubscribe("ac_room")
         this.tl_add("USER", "unsubscribe")
-        this.member_infos_clear()
-        this.active_level_reset()
+
+        this.member_infos_init()
+        this.active_level_init()
         this.active_level_increment_timer.stop()
-      } else {
-        // this.toast_ok("すでに出ています")
       }
     },
 
     // perform のラッパーで共通のパラメータを入れる
     ac_room_perform(action, params = {}) {
-      params = Object.assign({}, {
-        from_user_code: this.user_code, // 送信者識別子
-        from_user_name: this.user_name, // 送信者名
-        performed_at: this.time_current_ms(),  // 実行日時(ms)
-        active_level: this.active_level,  // 先輩度(高い方が信憑性のある情報)
-      }, params)
-
+      params = {
+        from_user_code: this.user_code,         // 送信者識別子
+        from_user_name: this.user_name,         // 送信者名
+        performed_at:   this.time_current_ms(), // 実行日時(ms)
+        active_level:   this.active_level,      // 先輩度(高い方が信憑性のある情報)
+        ...params,
+      }
       if (this.ac_room) {
         this.ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
         // this.tl_add("USER", action)
@@ -203,8 +199,11 @@ export const app_room_setup = {
     },
   },
   computed: {
-    room_code_valid_p() { return this.room_code != "" },             // 合言葉があるか？
-    connectable_p()     { return this.room_code && this.user_name }, // 合言葉と名前が入力済みなので共有可能か？
+    // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
+    user_code() { return this.config.record.user_code },
+
+    // 合言葉と名前が入力済みなので共有可能か？
+    connectable_p() { return this.present_p(this.room_code) && this.present_p(this.user_name) },
 
     ////////////////////////////////////////////////////////////////////////////////
     current_sfen_attrs() {
@@ -234,6 +233,5 @@ export const app_room_setup = {
       }
       return url.toString()
     },
-
   },
 }
