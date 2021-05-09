@@ -488,13 +488,14 @@ RSpec.describe "共有将棋盤", type: :system do
         sp_controller_click("previous")                   # 3手戻す
         sp_controller_click("previous")
         sp_controller_click("previous")
+        assert_turn_offset(1)
 
         side_menu_open
-        menu_item_click("自分の盤を全員に転送") # モーダルを開く
+        menu_item_click("自分の盤を全員に転送")           # モーダルを開く
         first(".sync_button").click                       # 反映する
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")                 # aliceが局面を戻したので再びbobは2手目を指せる
+        assert_turn_offset(1)                             # bobの局面が戻っている
       end
     end
   end
