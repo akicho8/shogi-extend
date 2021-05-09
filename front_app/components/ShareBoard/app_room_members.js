@@ -61,7 +61,7 @@ export const app_room_members = {
         return
       }
       this.debug_alert("生存通知")
-      this.tl_add("USER", "member_info_share")
+      // this.tl_add("USER", "member_info_share")
       this.alive_notice_count += 1
       this.ac_room_perform("member_info_share", {
         alive_notice_count:  this.alive_notice_count,   // 通知した回数

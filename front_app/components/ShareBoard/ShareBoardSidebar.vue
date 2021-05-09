@@ -15,6 +15,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"   @click="base.room_code_url_copy_handle"  :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="自分の盤を全員に転送"          @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="再接続 (なんかおかしいとき用)" @click="base.room_recreate_modal_handle" :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(label="初期配置に戻す"                @click="base.board_init_modal_handle"         :disabled="blank_p(base.ac_room)")
 
         b-menu-list(label="検討用")
           b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")

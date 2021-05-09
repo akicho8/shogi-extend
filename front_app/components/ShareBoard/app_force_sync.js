@@ -4,6 +4,43 @@ import ForceSyncModal from "./ForceSyncModal.vue"
 
 export const app_force_sync = {
   methods: {
+    board_init_modal_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
+
+      this.$buefy.dialog.confirm({
+        title: "初期配置に戻す",
+        message: `
+          <p>これは次のショートカットです</p>
+          <div class="content">
+            <ol>
+              <li>左矢印で局面を0手目に移動</li>
+              <li><b>自分の盤を全員に転送</b>の実行</li>
+            </ol>
+          </div>
+        `,
+        cancelText: "キャンセル",
+        confirmText: "本当に実行",
+        type: "is-danger",
+        focusOn: "cancel",
+        animation: "",
+        onCancel: () => {
+          this.sound_play("click")
+        },
+        onConfirm: () => {
+          this.sound_play("click")
+          this.board_init()
+        },
+      })
+    },
+
+    board_init() {
+      this.turn_offset = 0
+      this.base.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     force_sync_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
@@ -24,8 +61,9 @@ export const app_force_sync = {
       })
     },
 
-    force_sync() {
+    force_sync(message) {
       const params = {
+        message,
         sfen: this.current_sfen,
         turn_offset: this.turn_offset,
       }
@@ -38,8 +76,15 @@ export const app_force_sync = {
       //   this.toast_ok(`${this.user_call_name(params.from_user_name)}の盤の状態をみんなに送ってセットしました`)
       // } else {
       //   this.debug_alert("相手受信")
+
+      // this.tl_add("FORCE_SYNCED", params.sfen)
+      // this.tl_add("FORCE_SYNCED", params.turn_offset)
+
       this.setup_by_params(params)
-      this.toast_ok(`${this.user_call_name(params.from_user_name)}から送られてきた盤の状態に合わせました`)
+      if (params.message) {
+        this.toast_ok(params.message)
+        // this.toast_ok(`${this.user_call_name(params.from_user_name)}から送られてきた盤の状態に合わせました`)
+      }
       // }
     },
   },

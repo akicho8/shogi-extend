@@ -39,7 +39,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       subscribe(room_code: room_code)
     end
     it do
-      data = data_factory("sfen" => "(sfen)", "turn_offset" => 0)
+      data = data_factory("sfen" => "(sfen)", "turn_offset" => 0, message: "(message)")
       expect {
         subscription.force_sync(data)
       }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "force_sync_broadcasted", bc_params: data)

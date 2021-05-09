@@ -40,11 +40,11 @@ export default {
     },
     test_handle() {
       this.sound_play("click")
-      this.base.force_sync()
+      this.base.force_sync("テスト転送")
     },
     sync_handle() {
       this.sound_play("click")
-      this.base.force_sync()
+      this.base.force_sync(`${this.user_call_name(this.user_name)}から送られてきた盤の状態に合わせました`)
       this.$emit("close")
     },
   },

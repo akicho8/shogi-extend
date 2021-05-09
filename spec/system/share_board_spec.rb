@@ -578,6 +578,34 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '初期配置に戻す'
+  describe "初期配置に戻す" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")                    # alice先輩が部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                      # bob後輩が同じ部屋に入る
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩")                # aliceが指す
+        assert_turn_offset(1)                             # 1手進んでいる
+      end
+      b_block do
+        assert_turn_offset(1)                             # bob側も1手進んでいる
+      end
+      a_block do
+        side_menu_open
+        menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
+        find(".modal button.is-danger").click             # 「本当に実行」クリック
+        assert_turn_offset(0)                             # 0手に戻っている
+      end
+      b_block do
+        assert_turn_offset(0)                             # bob側も0手に戻っている
+      end
+    end
+  end
+
   def visit_with_args(args)
     visit "/share-board?#{args.to_query}"
   end
@@ -690,7 +718,11 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def assert_turn_offset(turn_offset)
-    assert_text("##{turn_offset}")
+    if turn_offset >= 1
+      assert_text("##{turn_offset}")
+    else
+      assert_no_text("##{turn_offset}")
+    end
   end
 
   # 順番設定後の待ち
