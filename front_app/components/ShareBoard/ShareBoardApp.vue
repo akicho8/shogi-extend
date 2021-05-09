@@ -77,7 +77,7 @@ client-only
             .buttons.is-centered.mt-4(v-if="true")
               //- b-tooltip(label="ツイート")
               //- TweetButton(size="" :body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="play_mode_p")
-              b-button.has-text-weight-bold(:type="advanced_p ? 'is-twitter' : ''" v-if="tweet_button_p" icon-left="twitter" @click="tweet_modal_handle") ツイート
+              b-button.has-text-weight-bold(:type="advanced_p ? 'is-twitter' : ''" v-if="tweet_button_show_p" icon-left="twitter" @click="tweet_modal_handle") ツイート
 
               //- b-button.has-text-weight-bold(type="is-primary" @click="play_mode_handle" v-if="edit_mode_p") 編集完了
 
@@ -128,33 +128,33 @@ const INTERNAL_RULE_DEFAULT = "strict"
 
 import _ from "lodash"
 
-import { support_parent } from "./support_parent.js"
+import { FormatTypeInfo } from "@/components/models/format_type_info.js"
+import { Location       } from "shogi-player/components/models/location.js"
 
-import { app_action_log   } from "./app_action_log.js"
-import { app_message_logs   } from "./app_message_logs.js"
-import { app_chess_clock  } from "./app_chess_clock.js"
-import { app_turn_notify  } from "./app_turn_notify.js"
-import { app_ordered_members } from "./app_ordered_members.js"
-import { app_chore        } from "./app_chore.js"
-import { app_edit_mode    } from "./app_edit_mode.js"
-import { app_room_setup         } from "./app_room_setup.js"
-import { app_track_log         } from "./app_track_log.js"
-import { app_room_board_setup    } from "./app_room_board_setup.js"
-import { app_room_members } from "./app_room_members.js"
-import { app_ping    } from "./app_ping.js"
-import { app_update    } from "./app_update.js"
-import { app_message } from "./app_message.js"
-import { app_sidebar      } from "./app_sidebar.js"
-import { app_storage      } from "./app_storage.js"
-import { app_export       } from "./app_export.js"
-import { app_sfen_share  } from "./app_sfen_share.js"
-import { app_force_sync  } from "./app_force_sync.js"
-import { app_room_recreate  } from "./app_room_recreate.js"
+import { support_parent       } from "./support_parent.js"
+
+import { app_action_log       } from "./app_action_log.js"
+import { app_message_logs     } from "./app_message_logs.js"
+import { app_chess_clock      } from "./app_chess_clock.js"
+import { app_turn_notify      } from "./app_turn_notify.js"
+import { app_ordered_members  } from "./app_ordered_members.js"
+import { app_chore            } from "./app_chore.js"
+import { app_edit_mode        } from "./app_edit_mode.js"
+import { app_room_setup       } from "./app_room_setup.js"
+import { app_track_log        } from "./app_track_log.js"
+import { app_room_board_setup } from "./app_room_board_setup.js"
+import { app_room_members     } from "./app_room_members.js"
+import { app_ping             } from "./app_ping.js"
+import { app_tweet            } from "./app_tweet.js"
+import { app_update           } from "./app_update.js"
+import { app_message          } from "./app_message.js"
+import { app_sidebar          } from "./app_sidebar.js"
+import { app_storage          } from "./app_storage.js"
+import { app_export           } from "./app_export.js"
+import { app_sfen_share       } from "./app_sfen_share.js"
+import { app_force_sync       } from "./app_force_sync.js"
+import { app_room_recreate    } from "./app_room_recreate.js"
 import { window_active_check  } from "./window_active_check.js"
-
-import { FormatTypeInfo   } from "@/components/models/format_type_info.js"
-
-import { Location } from "shogi-player/components/models/location.js"
 
 export default {
   name: "ShareBoardApp",
@@ -172,6 +172,7 @@ export default {
     app_room_board_setup,
     app_room_members,
     app_ping,
+    app_tweet,
     app_update,
     app_message,
     app_sidebar,
@@ -331,7 +332,6 @@ export default {
     play_mode_p()    { return this.sp_run_mode === 'play_mode' },
     edit_mode_p()    { return this.sp_run_mode === 'edit_mode' },
     strict_p()       { return this.internal_rule === "strict"  },
-    tweet_button_p() { return this.play_mode_p && !this.room_code_valid_p },
     advanced_p()     { return this.turn_offset > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     page_title() {
@@ -400,17 +400,6 @@ export default {
 
     // 常に画面上の盤面と一致している
     current_body() { return this.current_sfen },
-
-    tweet_body() {
-      let o = ""
-      o += "\n"
-      if (this.current_title) {
-        o += "#" + this.current_title
-      }
-      o += "\n"
-      o += this.current_url
-      return o
-    },
 
     component_style() {
       return {

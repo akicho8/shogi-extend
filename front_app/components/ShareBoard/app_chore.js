@@ -1,5 +1,4 @@
 import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.vue"
-import TweetModal from "./TweetModal.vue"
 
 export const app_chore = {
   methods: {
@@ -39,21 +38,6 @@ export const app_chore = {
       })
     },
 
-    // ツイート
-    tweet_modal_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-      this.$buefy.modal.open({
-        component: TweetModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        props: { base: this.base },
-        onCancel: () => this.sound_play("click"),
-      })
-    },
-
     // タイトル編集
     title_edit() {
       this.sidebar_p = false
@@ -70,17 +54,6 @@ export const app_chore = {
           this.current_title_set(value)
         },
       })
-    },
-
-    // ツイートする
-    // tweet_handle() {
-    //   this.tweet_window_popup({url: this.current_url, text: this.tweet_hash_tag})
-    // },
-
-    tweet_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-      this.tweet_window_popup({text: this.tweet_body})
     },
 
     exit_handle() {

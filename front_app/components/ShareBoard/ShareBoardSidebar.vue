@@ -7,14 +7,14 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
       b-menu
         b-menu-list(label="リアルタイム共有")
           b-menu-item.is_active_unset(label="部屋に入る"            @click="base.room_setup_modal_handle")
-          b-menu-item.is_active_unset(label="順番設定"              @click="base.os_modal_handle" :disabled="!base.ac_room")
+          b-menu-item.is_active_unset(label="順番設定"              @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="対局時計"              @click="base.cc_modal_handle")
 
         b-menu-list(label="共有サポート")
-          b-menu-item.is_active_unset(label="手番が来たら知らせる設定"      @click="base.tn_modal_handle"            :disabled="!base.ac_room" v-if="development_p")
-          b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"   @click="base.room_code_url_copy_handle"  :disabled="!base.ac_room")
-          b-menu-item.is_active_unset(label="自分の盤を全員に転送"          @click="base.force_sync_modal_handle"    :disabled="!base.ac_room")
-          b-menu-item.is_active_unset(label="再接続 (なんかおかしいとき用)" @click="base.room_recreate_modal_handle" :disabled="!base.ac_room")
+          b-menu-item.is_active_unset(label="手番が来たら知らせる設定"      @click="base.tn_modal_handle"            :disabled="blank_p(base.ac_room)" v-if="development_p")
+          b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"   @click="base.room_code_url_copy_handle"  :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(label="自分の盤を全員に転送"          @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(label="再接続 (なんかおかしいとき用)" @click="base.room_recreate_modal_handle" :disabled="blank_p(base.ac_room)")
 
         b-menu-list(label="検討用")
           b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
@@ -23,17 +23,19 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="編集・詰将棋作成")
           b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
-          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="base.room_code_valid_p")
+          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="blank_p(base.room_code)")
 
-        ShareBoardSidebarExport(:base="base")
+        b-menu-list(label="Twitter")
+          b-menu-item.is_active_unset(label="ツイートする"                @click="base.tweet_modal_handle")
+          b-menu-item.is_active_unset(label="ツイートURLだけコピー"       @click="base.current_url_copy_handle")
+          b-menu-item.is_active_unset(label="ツイート画像の視点設定"      @click="base.abstract_viewpoint_setting_handle")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(label="ツイート画像の視点設定"           @click="base.abstract_viewpoint_setting_handle")
-          b-menu-item.is_active_unset(label="局面URLコピー"               @click="base.current_url_copy_handle")
-          b-menu-item.is_active_unset(label="局面URLツイート"             @click="base.tweet_modal_handle")
           b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
-          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="base.room_code_valid_p")
+          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.room_code)")
           b-menu-item.is_active_unset(label="デバッグ用ログ"              @click="base.track_log_modal_handle" v-if="development_p")
+
+        ShareBoardSidebarExport(:base="base")
 
       .box.mt-5
         .title.is-5 スタイル設定
