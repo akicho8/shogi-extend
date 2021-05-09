@@ -50,7 +50,7 @@ export default {
 @import "support.sass"
 .RoomRecreateModal
   +tablet
-    width: 50ch
+    width: 26rem
   .modal-card-body
     padding: 1.5rem
     p:not(:first-child)

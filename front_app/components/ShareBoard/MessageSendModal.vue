@@ -61,7 +61,7 @@ export default {
 @import "support.sass"
 .MessageSendModal
   +tablet
-    width: 40ch
+    width: 24rem
   .modal-card-body
     padding: 1.0rem
   .modal-card-foot

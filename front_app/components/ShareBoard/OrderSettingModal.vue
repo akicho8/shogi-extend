@@ -170,7 +170,7 @@ export default {
       vertical-align: center
 
   .usage
-    max-width: 40ch
+    max-width: 25rem
     p:not(:first-child)
       margin-top: 0.75rem
 

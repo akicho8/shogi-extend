@@ -50,7 +50,7 @@ export default {
 <style lang="sass">
 .TimeLimitModal
   +tablet
-    max-width: 40ch
+    max-width: 25rem
   .modal-card-body
     p:not(:first-child)
       margin-top: 0.75rem

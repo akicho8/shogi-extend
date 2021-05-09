@@ -24,7 +24,7 @@
           b.is-size-5.mx-1 指したときだけ！
           | ← これ重要
           .has-text-grey.is-size-7
-            | あと「初期配置に戻す」と「1手戻す」のときも
+            | あと「初期配置に戻す」と「1手戻す」のときも同期する
 
         li(v-if="false")
           | 指し手のログの行をタップするとそのときの局面にワープします
@@ -128,7 +128,7 @@ export default {
 <style lang="sass">
 .RoomSetupModal
   +tablet
-    width: 54ch
+    width: 32rem
   .modal-card-body
     padding: 0.5rem 1.5rem 1rem
     li:not(:first-child)

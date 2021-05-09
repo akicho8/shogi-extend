@@ -156,7 +156,7 @@ export default {
 
 .ChessClockModal
   +tablet
-    width: 54ch
+    width: 32rem
   .modal-card-body
     padding: 2.0rem 2.0rem
   .modal-card-foot

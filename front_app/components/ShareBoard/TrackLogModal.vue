@@ -44,7 +44,7 @@ export default {
 .TrackLogModal
   height: 80vh
   +tablet
-    width: 80ch
+    width: 50rem
   .modal-card-body
     padding: 0rem
     // background-color: $black-bis
