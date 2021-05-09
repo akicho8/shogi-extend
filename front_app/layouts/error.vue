@@ -73,6 +73,8 @@ export default {
             return `ページが見つからないか権限がありません`
           } else if (this.error.statusCode === 403) {
             return `権限がありません`
+          } else if (this.error.statusCode === 400) {
+            return `正しく処理できません`
           } else if (this.error.statusCode === 503) {
             return ""
           } else {
