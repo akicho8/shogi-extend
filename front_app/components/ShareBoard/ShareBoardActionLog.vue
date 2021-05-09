@@ -42,13 +42,17 @@ export default {
       if (ACTION_LOG_CLICK_CONFIRM_SHOW) {
         this.sound_play("click")
         this.$buefy.dialog.confirm({
-          title: "飛ぶ",
-          message: `${this.human_time_format(e)}の時点に飛びますか？<p class="is-size-7 has-text-grey">待ったや前の局面を見るときは下のｺﾝﾄﾛｰﾗｰを使ってください</p>`,
+          title: `${this.human_time_format(e)}の時点に飛びますか？`,
+          message: `
+            <p class="is-size-6">棋譜を破棄してその時点の棋譜をコピーします</p>
+            <p class="is-size-6 mt-4">なので例えば対局後の検討で棋譜が消えてしまっても投了付近に飛べば棋譜を復元できます</p>
+            <p class="is-size-7 has-text-grey mt-4">待ったや前の局面を見るときは盤の下のｺﾝﾄﾛｰﾗｰを使ってください</p>
+          `,
           cancelText: "キャンセル",
           confirmText: `本当に飛ぶ`,
           focusOn: "cancel", // confirm or cancel
           type: "is-warning",
-          hasIcon: true,
+          // hasIcon: true,
           animation: "",
           onCancel:  () => {
             this.talk_stop()
@@ -75,7 +79,7 @@ export default {
       return dayjs(v.performed_at).format("HH:mm:ss")
     },
     human_time_format(v) {
-      return dayjs(v.performed_at).format("H時m分s秒")
+      return dayjs(v.performed_at).format("H時m分")
     },
   },
   computed: {
