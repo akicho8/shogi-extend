@@ -31,7 +31,7 @@
               .has-text-weight-bold Twitter
               a(:href="twitter_url" :target="target_default") @{{twitter_key}}
             .mt-4.box.description.has-background-white-ter.is-shadowless(v-if="record.description" v-html="auto_link(record.description)")
-  DebugPre {{record}}
+  DebugPre(v-if="development_p") {{record}}
 </template>
 
 <script>

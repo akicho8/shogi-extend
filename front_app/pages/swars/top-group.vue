@@ -16,7 +16,7 @@ client-only
                   | {{row.user.name}}
               b-table-column(v-slot="{row}" field="win_ratio"  label="直近の勝敗" sortable cell-class="ox_sequense is_line_break_on")
                 | {{row.judge}}
-    DebugPre {{records}}
+    DebugPre(v-if="development_p") {{records}}
 </template>
 
 <script>

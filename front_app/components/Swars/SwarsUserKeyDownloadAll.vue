@@ -46,7 +46,7 @@
             b-button(@click="post_handle" :disabled="!g_current_user" :loading="loading_p" icon-left="clock") 棋譜取得の予約
             b-button(@click="crawler_run_handle_handle" v-if="development_p") さばく
 
-  DebugPre {{$data}}
+  DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>

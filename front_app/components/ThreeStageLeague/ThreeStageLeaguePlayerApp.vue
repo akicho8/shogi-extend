@@ -33,7 +33,7 @@
               b-button(tag="nuxt-link" :to="{name: 'three-stage-league-players-name', params: {name: user.name}}" :class="{'has-text-weight-bold': (user.level_up_generation || user.runner_up_count >= 2)}" exact-active-class="is-active")
                 | {{user.name}}
 
-  DebugPre {{config}}
+  DebugPre(v-if="development_p") {{config}}
 </template>
 
 <script>

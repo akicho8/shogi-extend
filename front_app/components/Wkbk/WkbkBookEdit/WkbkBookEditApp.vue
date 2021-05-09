@@ -18,7 +18,7 @@ client-only
         .container
            WkbkBookEditForm(:base="base")
 
-    DebugPre {{$data}}
+    DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>

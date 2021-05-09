@@ -14,7 +14,7 @@ client-only
                 nuxt-link(:to="{name: 'swars-search', query: {query: row.user.key}}" @click.native="sound_play('click')") {{row.user.name}}
               b-table-column(v-slot="{row}" field="judge"      label="勝敗" sortable cell-class="ox_sequense is_line_break_on")
                 | {{row.judge}}
-    DebugPre {{records}}
+    DebugPre(v-if="development_p") {{records}}
 </template>
 
 <script>

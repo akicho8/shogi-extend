@@ -98,7 +98,7 @@
             .has-text-centered
               TweetButton(:body="tweet_body")
 
-  DebugPre
+  DebugPre(v-if="development_p")
     div rows = {{rows}}
 </template>
 

@@ -20,7 +20,7 @@
     SwarsUserShowTabContent4MyDefense(:base="base")
     SwarsUserShowTabContent5VsDefense(:base="base")
 
-  DebugPre {{info}}
+  DebugPre(v-if="development_p") {{info}}
 </template>
 
 <script>

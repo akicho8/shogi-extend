@@ -47,7 +47,7 @@
             b-table-column(v-slot="{row}")
               a.no-decoration.has-text-grey(:href="image_search_url(row.user.name)" target="_blank" @click="sound_play('click')")
                 b-icon(icon="account-question" size="is-small")
-  DebugPre {{config}}
+  DebugPre(v-if="development_p") {{config}}
 </template>
 
 <script>

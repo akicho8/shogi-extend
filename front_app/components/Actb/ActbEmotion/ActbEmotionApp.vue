@@ -3,7 +3,7 @@
   ActbFooter(:base="base")
   ActbEmotionIndex(:base="base" v-if="current_component === 'ActbEmotionIndex'")
   ActbEmotionEdit( :base="base" v-if="current_component === 'ActbEmotionEdit'")
-  DebugPre {{$data}}
+  DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>

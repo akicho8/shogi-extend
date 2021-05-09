@@ -34,7 +34,7 @@ client-only
       template(v-if="is_goal_p")
         WkbkBookShowGoal(:base="base")
 
-    DebugPre
+    DebugPre(v-if="development_p")
       | {{$data}}
 </template>
 

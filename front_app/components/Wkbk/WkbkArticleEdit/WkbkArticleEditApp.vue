@@ -38,7 +38,7 @@ client-only
         WkbkArticleEditForm(:base="base"       v-if="current_tab_info.key === 'form'")
         WkbkArticleEditValidation(:base="base" v-if="current_tab_info.key === 'validation'")
 
-    DebugPre
+    DebugPre(v-if="development_p")
       | {{article}}
       | {{books}}
 </template>

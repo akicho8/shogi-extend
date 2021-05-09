@@ -61,7 +61,7 @@
       //-     .buttons.is-centered
       //-       //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
 
-      //-   DebugPre
+      //-   DebugPre(v-if="development_p")
       //-     | start_turn: {{start_turn}}
       //-     | new_turn: {{new_turn}}
       //-     | record.turn: {{record.turn}}
@@ -71,7 +71,7 @@
       //-     | record.turn_max: {{record.turn_max}}
       //-     | record.turn: {{record.turn}}
       //-     | new_viewpoint: {{new_viewpoint}}
-  DebugPre {{record}}
+  DebugPre(v-if="development_p") {{record}}
 </template>
 
 <script>

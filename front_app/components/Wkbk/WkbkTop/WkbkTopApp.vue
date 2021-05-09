@@ -16,8 +16,8 @@
         WkbkTopCardListTag(:base="base")
         WkbkTopCardList(:base="base")
 
-  DebugPre {{$fetchState}}
-  DebugPre {{$data}}
+  DebugPre(v-if="development_p") {{$fetchState}}
+  DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>

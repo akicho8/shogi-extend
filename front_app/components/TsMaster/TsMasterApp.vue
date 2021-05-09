@@ -84,8 +84,8 @@
 
         TsMasterRanking(:base="base")
       TsMasterChart(:base="base" ref="TsMasterChart")
-  DebugPre {{$data}}
-  DebugPre {{config}}
+  DebugPre(v-if="development_p") {{$data}}
+  DebugPre(v-if="development_p") {{config}}
 </template>
 
 <script>

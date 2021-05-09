@@ -118,7 +118,7 @@ client-only
             .block
               b this.record
               pre {{JSON.stringify(record, null, 4)}}
-  //- DebugPre {{$data}}
+  //- DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>

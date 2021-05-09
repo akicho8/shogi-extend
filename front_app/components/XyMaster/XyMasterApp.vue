@@ -73,7 +73,7 @@
         XyMasterRanking(:base="base")
 
       XyMasterChart(:base="base" ref="XyMasterChart")
-  DebugPre {{$data}}
+  DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>

@@ -44,7 +44,8 @@
               template(v-for="row in test_kifu_body_list")
                 .button(@click="input_test_handle(row.input_text)") {{row.name}}
 
-  DebugPre(v-if="record") {{record}}
+  DebugPre(v-if="development_p")
+    | {{record}}
 </template>
 
 <script>

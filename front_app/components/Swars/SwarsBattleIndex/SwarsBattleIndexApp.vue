@@ -69,8 +69,8 @@
           template(v-if="display_key === 'table'")
             SwarsBattleIndexTable(:base="base")
   client-only
-    DebugPre {{config}}
-    DebugPre {{$store.user}}
+    DebugPre(v-if="development_p") {{config}}
+    DebugPre(v-if="development_p") {{$store.user}}
 </template>
 
 <script>

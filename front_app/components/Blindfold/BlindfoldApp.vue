@@ -49,7 +49,7 @@ client-only
               sp_human_side="both"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
             )
-    DebugPre {{$data}}
+    DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>

@@ -17,7 +17,7 @@ client-only
             | ブラウザをリロードする
         .emoji.has-text-centered.is-unselectable
           | {{charactor}}
-    DebugPre
+    DebugPre(v-if="development_p")
       | {{error}}
 </template>
 

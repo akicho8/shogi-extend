@@ -62,8 +62,7 @@
         b-button(@click="swars_zip_dl_logs_destroy_all" v-if="development_p") クリア
         b-button(@click="oldest_log_create_handle" v-if="development_p") 古い1件をDLしたことにする
 
-  DebugPre {{$data}}
-  //- DebugPre(v-if="!$fetchState.pending") {{ls_default}}
+  DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>

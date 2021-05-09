@@ -21,8 +21,8 @@ client-only
           WkbkArticleIndexTag(:base="base")
           WkbkArticleIndexTable(:base="base")
 
-    DebugPre {{$data}}
-    DebugPre {{$fetchState.pending}}
+    DebugPre(v-if="development_p") {{$data}}
+    DebugPre(v-if="development_p") {{$fetchState.pending}}
 </template>
 
 <script>
