@@ -44,7 +44,7 @@ export default {
     },
     sync_handle() {
       this.sound_play("click")
-      this.base.force_sync(`${this.user_call_name(this.base.user_name)}が局面を変更しました`)
+      this.base.force_sync(`${this.user_call_name(this.base.user_name)}が${this.base.turn_offset}手目に変更しました`)
       this.$emit("close")
     },
   },
@@ -55,7 +55,7 @@ export default {
 @import "support.sass"
 .ForceSyncModal
   +tablet
-    width: 50ch
+    width: 40rem
   .modal-card-body
     padding: 1.5rem
     p:not(:first-child)
