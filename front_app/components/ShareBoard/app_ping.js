@@ -79,7 +79,7 @@ export const app_ping = {
       this.ping_callback_stop()
       this.ping_runner_id = this.delay_block(this.PING_OK_SEC, () => {
         if (!this.ping_success) {
-          this.toast_ok(`${this.user_call_name(e.from_user_name)}の反応がありません`)
+          this.toast_ok(`${this.user_call_name(e.from_user_name)}の霊圧が消えました`)
         }
         this.ping_callback_stop()
       })

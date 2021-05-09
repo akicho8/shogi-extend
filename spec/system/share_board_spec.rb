@@ -553,7 +553,7 @@ RSpec.describe "共有将棋盤", type: :system do
         member_list_click(2)    # 1回押し
         member_list_click(2)    # 続けて押すと
         assert_text("PING実行中...")
-        assert_text("bobさんの反応がありません")
+        assert_text("bobさんの霊圧が消えました")
         doc_image
       end
     end

@@ -201,7 +201,7 @@ export default {
       &.is_window_blur
         opacity: 0.5
       &.is_disconnect
-        opacity: 0.25
+        opacity: 0.1
       &.is_self
       &.is_turn_standby
       &.is_turn_active
