@@ -573,7 +573,7 @@ RSpec.describe "共有将棋盤", type: :system do
         visit_with_args(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
         assert_text("新しいプログラムがあるのでブラウザをリロードします")
         doc_image
-        find(".modal button").click
+        buefy_dialog_button_click
       end
     end
   end
@@ -597,11 +597,38 @@ RSpec.describe "共有将棋盤", type: :system do
       a_block do
         side_menu_open
         menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
-        find(".modal button.is-danger").click             # 「本当に実行」クリック
+        buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
         assert_turn_offset(0)                             # 0手に戻っている
       end
       b_block do
         assert_turn_offset(0)                             # bob側も0手に戻っている
+      end
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '1手戻す'
+  describe "1手戻す" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")                    # alice先輩が部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                      # bob後輩が同じ部屋に入る
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩")                # aliceが指す
+      end
+      b_block do
+        assert_move("33", "34", "☖3四歩")                # bobが指す
+      end
+      a_block do
+        side_menu_open
+        menu_item_click("1手戻す (待った・反則取り消し)") # 「1手戻す」モーダルを開く
+        buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
+        assert_turn_offset(1)                             # 1手目に戻っている
+      end
+      b_block do
+        assert_turn_offset(1)                             # bob側も1手に戻っている
       end
     end
   end
@@ -728,5 +755,9 @@ RSpec.describe "共有将棋盤", type: :system do
   # 順番設定後の待ち
   def apply_after_wait
     sleep(2)
+  end
+
+  def buefy_dialog_button_click(type = "")
+    find(".modal button#{type}").click
   end
 end

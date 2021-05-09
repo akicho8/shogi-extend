@@ -4,6 +4,8 @@ import ForceSyncModal from "./ForceSyncModal.vue"
 
 export const app_force_sync = {
   methods: {
+    ////////////////////////////////////////////////////////////////////////////////
+
     board_init_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
@@ -37,6 +39,43 @@ export const app_force_sync = {
     board_init() {
       this.turn_offset = 0
       this.base.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    board_revert_modal_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
+
+      this.$buefy.dialog.confirm({
+        title: "1手戻す",
+        message: `
+          <p>これは次のショートカットです</p>
+          <div class="content">
+            <ol>
+              <li>小さい左矢印で局面を1手戻す</li>
+              <li><b>自分の盤を全員に転送</b>の実行</li>
+            </ol>
+          </div>
+        `,
+        cancelText: "キャンセル",
+        confirmText: "本当に実行",
+        type: "is-danger",
+        focusOn: "cancel",
+        animation: "",
+        onCancel: () => {
+          this.sound_play("click")
+        },
+        onConfirm: () => {
+          this.sound_play("click")
+          this.board_revert()
+        },
+      })
+    },
+
+    board_revert() {
+      this.turn_offset -= 1
+      this.base.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////

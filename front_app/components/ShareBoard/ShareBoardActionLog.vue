@@ -44,7 +44,7 @@ export default {
         this.$buefy.dialog.confirm({
           title: `${this.human_time_format(e)}の時点に飛びますか？`,
           message: `
-            <p class="is-size-6">棋譜を破棄してその時点の棋譜をコピーします</p>
+            <p class="is-size-6">この時点の棋譜に変更します</p>
             <p class="is-size-6 mt-4">なので例えば対局後の検討で棋譜が消えてしまっても投了付近に飛べば棋譜を復元できます</p>
             <p class="is-size-7 has-text-grey mt-4">待ったや前の局面を見るときは盤の下のｺﾝﾄﾛｰﾗｰを使ってください</p>
           `,
