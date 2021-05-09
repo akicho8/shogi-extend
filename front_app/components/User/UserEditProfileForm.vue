@@ -101,10 +101,10 @@ export default {
 
     // 名前が不正か？
     name_invalid_p() {
-      if (_.isEmpty(this.base.new_name)) {
+      if (this.blank_p(this.base.new_name)) {
         return true
       }
-      if (/^([._])$/.test(this.base.new_name)) {
+      if (/^([._])$/.test(this.base.new_name)) { // これはなんだ？？？ デバッグ用？
         return true
       }
       return false

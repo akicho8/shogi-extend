@@ -7,13 +7,13 @@ import _ from "lodash"
 
 export default {
   name: "blindfold",
-  async asyncData({ $axios, query }) {
+  async asyncData({ $axios, query }) { // FIXME: nuxtError に飛ばすためにfetchに変更するべき。
     // http://0.0.0.0:3000/api/blindfold
     const config = await $axios.$get("/api/blindfold", {params: query})
     return { config }
   },
   mounted() {
-    if (_.isEmpty(this.$route.query)) {
+    if (this.blank_p(this.$route.query)) {
       this.ga_click("目隠し詰将棋")
     } else {
       this.ga_click("目隠し詰将棋●")
