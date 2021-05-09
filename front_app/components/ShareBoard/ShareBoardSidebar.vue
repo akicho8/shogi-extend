@@ -25,7 +25,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="編集・詰将棋作成")
           b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
-          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="blank_p(base.room_code)")
+          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle")
 
         b-menu-list(label="Twitter")
           b-menu-item.is_active_unset(label="ツイートする"                @click="base.tweet_modal_handle")
@@ -34,7 +34,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="その他")
           b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
-          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.room_code)")
+          b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="デバッグ用ログ"              @click="base.track_log_modal_handle" v-if="development_p")
 
         ShareBoardSidebarExport(:base="base")

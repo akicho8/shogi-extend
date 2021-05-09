@@ -84,8 +84,8 @@ client-only
             .room_code.is-clickable(@click="room_setup_modal_handle" v-if="false")
               | {{room_code}}
 
-          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="present_p(room_code)")
-          ShareBoardMemberList(:base="base" v-if="present_p(room_code)")
+          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="ac_room")
+          ShareBoardMemberList(:base="base" v-if="ac_room")
 
         .columns(v-if="development_p")
           .column.is-clipped
