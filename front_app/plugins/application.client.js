@@ -106,10 +106,11 @@ export default {
 
     error_message_dialog(message) {
       this.$buefy.dialog.alert({
+        title: "失敗",
         message: message,
         canCancel: ["outside", "escape"],
         type: "is-danger",
-        size: "is-small",
+        // size: "is-small",
         hasIcon: false,
         trapFocus: true,
         onConfirm: () => this.sound_play("click"),
