@@ -17,12 +17,15 @@
           .is-flex.is-align-items-center(v-if="false")
             b-button(@click="base.room_code_url_copy_handle" icon-left="clipboard-plus-outline" outlined :disabled="!base.room_code") 合言葉だけを含むURL
             span.ml-1 を伝えてもよし
-        li
+        li(v-if="false")
           | <b>待った</b>や<b>反則の取り消し</b>は合意の上、当人が下の左矢印で局面を戻して指し直してください
         li
-          | 盤の同期タイミングは
+          | 基本的に盤の同期は
           b.is-size-5.mx-1 指したときだけ！
           | ← これ重要
+          .has-text-grey.is-size-7
+            | あと「初期配置に戻す」と「1手戻す」のときも
+
         li(v-if="false")
           | 指し手のログの行をタップするとそのときの局面にワープします
           .has-text-grey.is-size-7
