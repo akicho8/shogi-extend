@@ -258,6 +258,7 @@ export default {
       const params = {
         input_text: this.input_text,
         edit_mode: "adapter",
+        __STATUS_200_IF_ERROR__: true, // エラーをthen側で返す(関係なし)
       }
       const loading = this.$buefy.loading.open()
       this.$axios.$post("/api/adapter/record_create", params).then(e => {
@@ -267,7 +268,6 @@ export default {
           this.bs_error = e.bs_error
           this.error_show()
         }
-
         if (e.record) {
           this.record = e.record
           this.__assert__(this.record.display_turn != null, "this.record.display_turn != null")
@@ -275,14 +275,21 @@ export default {
           this.__assert__(this.record.piyo_shogi_base_params != null, "this.record.piyo_shogi_base_params != null")
           callback()
         }
+      // }).catch(e => {
+      //   const bs_error = e.response.data.bs_error
+      //   if (bs_error) {
+      //     this.bs_error = bs_error
+      //     this.error_show()
+      //   }
       }).finally(() => {
         loading.close()
       })
     },
 
     error_show() {
-      this.bs_error_message_dialog(this.bs_error, this.append_message)
-      this.talk(this.bs_error.message)
+      // this.bs_error_message_dialog(this.bs_error, this.append_message)
+      // this.talk(this.bs_error.message)
+      this.bs_error_message_dialog(this.bs_error)
     },
   },
 

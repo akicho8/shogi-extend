@@ -25,8 +25,13 @@ module ShogiErrorRescueMethods
 
       case
       when request.format.json?
-        # なんでも棋譜変換の場合は頻繁にエラーになるため ExceptionNotifier しない
-        render json: as_bs_error(error) # status: 500 としたいが production で json を HTML で上書きされてしまう
+        # 400で返すと axios.js のところにjsonの内容を返せないので結局200で返すしかない
+        if params[:__STATUS_200_IF_ERROR__] || true
+          status = 200          # なんでも棋譜変換だけ特別にエラーとせずアプリ内でエラーを表示する
+        else
+          status = 400
+        end
+        render json: as_bs_error(error), status: status
       when request.format.png?
         # https://developer.mozilla.org/ja/docs/Web/HTTP/Status/422
         send_file Rails.root.join("app/assets/images/fallback.png"), type: Mime[:png], disposition: "inline", status: 422
