@@ -133,7 +133,11 @@ export default {
     },
     cc_params_set_handle(e) {
       this.base.cc_params = {...e.cc_params}
-      this.toast_ok(`${e.name}のプリセットを読み込みました`)
+      if (false) {
+        this.toast_ok(`${e.name}のプリセットを読み込みました`)
+      } else {
+        this.toast_ok(`読み込みました`, {toast_only: true})
+      }
     },
   },
   computed: {
