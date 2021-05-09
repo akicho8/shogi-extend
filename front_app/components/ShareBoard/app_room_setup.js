@@ -222,13 +222,17 @@ export const app_room_setup = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 合言葉だけを付与したURL
-    // といいつつタイトルあれば含める
+    // といいつつタイトルあれば含める → やめ
     share_board_with_room_code_url() {
       const url = new URL(this.$config.MY_SITE_URL + `/share-board`)
       if (this.room_code) {
         url.searchParams.set("room_code", this.room_code)
+      }
+      if (false) {
         if (this.present_p(this.current_title)) {
-          url.searchParams.set("title", this.current_title)
+          if (this.current_title !== "共有将棋盤") {
+            url.searchParams.set("title", this.current_title)
+          }
         }
       }
       return url.toString()
