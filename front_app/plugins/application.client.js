@@ -123,7 +123,7 @@ export default {
         message += `<p>${bs_error.message_prefix}</p>`
       }
       if (bs_error.message) {
-        message += `<p class="mt-2">${bs_error.message}</p>`
+        message += `<p class="mt-2 is_line_break_on">${bs_error.message}</p>`
       }
       if (bs_error.board) {
         message += `<div class="mt-2 mb-0 error_message_pre has-background-white-ter box is-shadowless">${bs_error.board}</div>`
