@@ -164,7 +164,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       a_block do
         side_menu_open
-        menu_item_click("対局時計の設置")         # 「対局時計の設置」モーダルを開く
+        menu_item_click("対局時計")                # 「対局時計」モーダルを開く
         assert_clock_off                           # 時計はまだ設置されていない
         find(".main_switch").click                 # 設置する
         assert_clock_on                            # 時計が設置された
