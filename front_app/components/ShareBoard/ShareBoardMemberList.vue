@@ -5,7 +5,7 @@
       .member_info.is_line_break_off.is-clickable.is-flex.is-align-items-center(:key="e.from_user_code" @click="row_click_handle(e)" :class="member_info_class(e)")
         .left_tag_or_icon.is-inline-flex.is-justify-content-center.is-align-items-center(v-if="order_lookup(e)")
           b-tag(rounded) {{tag_body_for(e)}}
-        b-icon.account_icon(:icon="icon_for(e)" :type="icon_type_for(e)" size="is-small")
+        b-icon.account_icon(:icon="icon_for(e)" size="is-small")
         //- b-icon(icon="sleep" type="is-danger" size="is-small")
         //- b-icon(icon="lan-disconnect" type="is-danger" size="is-small")
         .user_name {{e.from_user_name}}
@@ -61,15 +61,15 @@ export default {
     },
     // 自分のアイコンの色
     // 反応がなくなったら灰色になる
-    icon_type_for(e) {
-      if (this.base.member_disconnect_p(e)) {
-        return "is-grey"
-      }
-      // if (!this.base.member_alive_p(e)) {
-      //   return "is-grey"
-      // }
-      return "is-primary"
-    },
+    // icon_type_for(e) {
+    //   // if (this.base.member_disconnect_p(e)) {
+    //   //   return "is-grey"
+    //   // }
+    //   // // // if (!this.base.member_alive_p(e)) {
+    //   // // //   return "is-grey"
+    //   // // // }
+    //   // return "is-primary"
+    // },
 
     order_lookup(e) {
       if (this.base.order_func_p) {
@@ -179,6 +179,7 @@ export default {
       color: inherit
       &:hover
         background-color: $grey-lighter
+
     .user_name
       margin: 0 0.25rem
 
@@ -197,11 +198,16 @@ export default {
         //   background-color: unset
         //   // border: 2px solid change_color($primary, $alpha: 0.2)
 
+    .account_icon
+      color: $primary
+
     .member_info
       &.is_window_blur
         opacity: 0.5
       &.is_disconnect
-        opacity: 0.1
+        opacity: 0.25
+        .account_icon
+          color: unset
       &.is_self
       &.is_turn_standby
       &.is_turn_active
