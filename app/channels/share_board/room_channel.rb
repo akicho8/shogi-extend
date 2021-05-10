@@ -11,7 +11,7 @@ module ShareBoard
     end
 
     def force_sync(data)
-      track(data, "局面配布", data.slice("turn_offset", "sfen"))
+      track(data, "局面転送", data.slice("turn_offset", "sfen"))
       broadcast(:force_sync_broadcasted, data)
     end
 
