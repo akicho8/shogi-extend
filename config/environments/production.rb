@@ -133,6 +133,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = ["https://shogi-flow.xyz"]
   # config.action_cable.url = "wss://shogi-flow.xyz:28081"
   config.action_cable.mount_path = "/maincable"
+  config.action_cable.worker_pool_size = 16
 
   # ################################################################################ active_job
   config.active_job.queue_adapter = :sidekiq
