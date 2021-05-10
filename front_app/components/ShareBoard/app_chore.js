@@ -3,15 +3,9 @@ import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.v
 export const app_chore = {
   methods: {
     //////////////////////////////////////////////////////////////////////////////// Windowアクティブチェック
-    window_focus_user_after_hook() {
-      this.tl_add("WINDOW", `[${this.window_active_count}] focus`)
-      this.ac_log("WINDOW", `[${this.window_active_count}] focus`)
-    },
-    window_blur_user_after_hook() {
-      this.tl_add("WINDOW", `[${this.window_active_count}] blur`)
-      this.ac_log("WINDOW", `[${this.window_active_count}] blur`)
-    },
-    window_focus_blur_user_hook(focus_p) {
+    window_active_change_user_hook(focus_p) {
+      this.tl_add("FOCUS", focus_p)
+      this.ac_log("FOCUS", focus_p)
       this.member_info_bc_restart()
     },
 
