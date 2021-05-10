@@ -25,7 +25,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="編集・詰将棋作成")
           b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
-          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="base.ac_room")
+          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="present_p(base.ac_room)")
 
         b-menu-list(label="Twitter")
           b-menu-item.is_active_unset(label="ツイートする"                @click="base.tweet_modal_handle")
