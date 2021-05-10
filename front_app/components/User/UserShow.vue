@@ -113,7 +113,7 @@ export default {
 
   .column
     +tablet
-      max-width: 65ch
+      max-width: 40rem
 
 .STAGE-development
   .UserShow

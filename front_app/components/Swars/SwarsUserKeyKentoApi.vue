@@ -68,7 +68,7 @@ export default {
       padding-top: 2.6rem
 
     .container
-      max-width: 65ch
+      max-width: 40rem
 
     .block:not(:first-child)
       margin-top: 2rem

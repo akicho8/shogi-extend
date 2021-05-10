@@ -76,5 +76,5 @@ export default {
   min-height: 100vh
 
   .column
-    max-width: 65ch
+    max-width: 40rem
 </style>

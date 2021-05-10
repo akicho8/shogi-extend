@@ -71,8 +71,8 @@ export default {
 
 <style lang="sass">
 .VsInputModal
-  +desktop
-    width: 46ch
+  +tablet
+    width: 30rem
   .modal-card-body
     padding: 1.0rem
   .modal-card-foot

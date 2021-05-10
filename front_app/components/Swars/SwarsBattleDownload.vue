@@ -273,7 +273,7 @@ export default {
       padding: 1.5rem
 
     .container
-      max-width: 65ch
+      max-width: 40rem
 
     .field:not(:last-child)
       margin-bottom: 1.5rem

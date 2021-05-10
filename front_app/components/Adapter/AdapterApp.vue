@@ -381,6 +381,6 @@ export default {
 
   .MainColumn
     // +tablet
-    //   max-width: 65ch
+    //   max-width: 40rem
 
 </style>

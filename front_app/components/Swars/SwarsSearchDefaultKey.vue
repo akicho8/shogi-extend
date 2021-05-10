@@ -78,7 +78,7 @@ export default {
 .SwarsSearchDefaultKey
   .MainSection.section
     .container
-      max-width: 65ch
+      max-width: 40rem
     .notification
       padding-right: 1.25rem // notification はクローズボタンを考慮して右のpaddingが広くなっているため左と同じにする
 </style>
