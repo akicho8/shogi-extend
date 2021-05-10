@@ -39,7 +39,7 @@ export const app_force_sync = {
     board_init() {
       this.ac_log("局面操作", "初期配置に戻す")
       this.turn_offset = 0
-      this.base.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
+      this.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +77,7 @@ export const app_force_sync = {
     board_revert() {
       this.ac_log("局面操作", "1手戻す")
       this.turn_offset -= 1
-      this.base.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
+      this.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
