@@ -30,29 +30,35 @@ export default {
       console.log(`${params.channel} 接続開始`)
 
       return consumer.subscriptions.create(params, {
-        connected: () => {
+        initialized: e => {
+          console.log(`${params.channel} initialized()`)
+          if (callbacks.initialized) {
+            callbacks.initialized(e)
+          }
+        },
+        connected: e => {
           console.log(`${params.channel} 接続完了`)
           this.debug_alert("connected")
           this.ac_info_update()
           if (callbacks.connected) {
-            callbacks.connected()
+            callbacks.connected(e)
           }
         },
-        disconnected: () => {
+        disconnected: e => {
           // 切断したときこのコードはもう存在しないので実行されない？
           console.log(`${params.channel} 切断完了`)
           this.debug_alert("disconnected")
           this.ac_info_update()
           if (callbacks.disconnected) {
-            callbacks.disconnected()
+            callbacks.disconnected(e)
           }
         },
-        rejected: () => {
+        rejected: e => {
           console.log(`${params.channel} 接続失敗`)
           this.debug_alert("rejected")
           this.ac_info_update()
           if (callbacks.rejected) {
-            callbacks.rejected()
+            callbacks.rejected(e)
           }
         },
         received: data => {

@@ -96,18 +96,21 @@ export const app_room_setup = {
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再接続される場合があるためそれを考慮すること
       this.tl_add("USER", `subscriptions.create ${this.room_code}`)
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
-        connected: (e) => {
+        initialized: e => {
+          this.tl_add("HOOK", "initialized", e)
+        },
+        connected: e => {
           this.tl_add("HOOK", "connected", e)
           this.active_level_increment_timer.restart()
           this.setup_info_request()
           this.member_info_bc_restart()
         },
-        disconnected: () => {
-          this.tl_add("HOOK", "disconnected")
+        disconnected: e => {
+          this.tl_add("HOOK", "disconnected", e)
           this.active_level_increment_timer.stop() // 切断されているときはアクティブなレベルを上げないようにする
         },
-        rejected: () => {
-          this.tl_add("HOOK", "rejected")
+        rejected: e => {
+          this.tl_add("HOOK", "rejected", e)
         },
         received: e => {
           // this.tl_add("HOOK", `received: ${e.bc_action}`, e)
