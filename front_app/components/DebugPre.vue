@@ -1,4 +1,11 @@
 <template lang="pug">
-pre.is_line_break_on
+pre.DebugPre
   slot
 </template>
+
+<style lang="sass">
+.DebugPre
+  color: $white
+  background-color: $grey-dark
+  overflow-x: scroll
+</style>
