@@ -46,7 +46,7 @@ export class SoundPreset extends MemoryRecord {
       { key: "new_challenge",  source: mp3_new_challenge, volume: 0.30, },
       { key: "notify",         source: mp3_notify,        volume: 0.30, },
       { key: "spon",           source: mp3_spon,          volume: 0.50, },
-      { key: "pon",            source: wav_pon,           volume: 0.50, },
+      { key: "pon",            source: wav_pon,           volume: 0.40, },
       { key: "piece_sound",    source: wav_piece_sound,   volume: 0.20, },
     ]
   }
