@@ -46,10 +46,14 @@
           b-radio-button(size="is-small" v-model="body_encode" :native-value="e.key" @input="body_encode_change_handle")
             | {{e.name}}
 
-      b-field.zip_dl_max(label="件数最大" custom-class="is-small" v-if="development_p")
-        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play('click')")   0
-        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')")   1
-        b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
+      b-field.zip_dl_max(label="最大件数" custom-class="is-small" :message="current_zip_dl_max_info.message")
+        template(v-for="e in ZipDlMaxInfo.values")
+          b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="e.value" @input="zip_dl_max_change_handle")
+            | {{e.name}}
+      //- b-field.zip_dl_max(label="最大件数" custom-class="is-small" message="これ以上一気にダウンロードするときは「古い棋譜を補完」のほうを使ってください")
+      //-   //- b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play('click')" v-if="development_p")   0
+      //-   //- b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')" v-if="development_p")   1
+      //-   b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
 
       b-field(label="ZIPの構造" custom-class="is-small" :message="current_zip_dl_structure_info.message")
         template(v-for="e in ZipDlStructureInfo.values")
@@ -84,6 +88,7 @@ import MemoryRecord from "js-memory-record"
 
 import { ZipDlFormatInfo } from "@/components/models/zip_dl_format_info.js"
 import { BodyEncodeInfo } from "@/components/models/body_encode_info.js"
+import { ZipDlMaxInfo } from "@/components/models/zip_dl_max_info.js"
 import { ZipDlStructureInfo } from "@/components/models/zip_dl_structure_info.js"
 
 export default {
@@ -157,6 +162,10 @@ export default {
       if (v === "sfen" && false) {
         this.toast_ok("よくわからない場合は KIF にしてください")
       }
+    },
+    zip_dl_max_change_handle(v) {
+      this.sound_play("click")
+      this.talk(this.current_zip_dl_max_info.name)
     },
     body_encode_change_handle(v) {
       this.sound_play("click")
@@ -242,16 +251,18 @@ export default {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    ZipDlFormatInfo() { return ZipDlFormatInfo },
-    BodyEncodeInfo()  { return BodyEncodeInfo  },
-    ZipDlStructureInfo()        { return ZipDlStructureInfo        },
-    Dictionary()      { return Dictionary      },
+    ZipDlFormatInfo()    { return ZipDlFormatInfo                                                },
+    BodyEncodeInfo()     { return BodyEncodeInfo                                                 },
+    ZipDlStructureInfo() { return ZipDlStructureInfo                                             },
+    ZipDlMaxInfo()       { return ZipDlMaxInfo                                                   },
+    Dictionary()         { return Dictionary                                                     },
 
-    current_params()             { return this.$route.query                             },
-    current_zip_dl_scope_info()  { return this.config.scope_info[this.zip_dl_scope_key] },
-    current_zip_dl_format_info() { return ZipDlFormatInfo.fetch(this.zip_dl_format_key) },
-    current_zip_dl_structure_info()          { return ZipDlStructureInfo.fetch(this.zip_dl_structure_key)                 },
-    current_body_encode_info()   { return BodyEncodeInfo.fetch(this.body_encode)        },
+    current_params()                { return this.$route.query                                   },
+    current_zip_dl_scope_info()     { return this.config.scope_info[this.zip_dl_scope_key]       },
+    current_zip_dl_format_info()    { return ZipDlFormatInfo.fetch(this.zip_dl_format_key)       },
+    current_zip_dl_structure_info() { return ZipDlStructureInfo.fetch(this.zip_dl_structure_key) },
+    current_zip_dl_max_info()       { return ZipDlMaxInfo.fetch(this.zip_dl_max.toString())      },
+    current_body_encode_info()      { return BodyEncodeInfo.fetch(this.body_encode)              },
 
     //////////////////////////////////////////////////////////////////////////////// for ls_support_mixin
     ls_storage_key() {
@@ -284,7 +295,8 @@ export default {
 
     // buefy の不具合で b-radio-button が1つのとき最大横幅になる対策
     .zip_dl_max
-      max-width: 3rem
+      .b-radio
+        width: 3rem
 
     .level
       .title
