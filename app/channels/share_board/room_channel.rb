@@ -86,7 +86,7 @@ module ShareBoard
       broadcast(:pong_command_broadcasted, data)
     end
 
-    def aclog(data)
+    def ac_log(data)
       track(data, data["subject"], data["body"])
     end
 
