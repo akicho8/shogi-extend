@@ -13,10 +13,10 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         b-menu-list(label="共有サポート")
           b-menu-item.is_active_unset(label="初期配置に戻す"                 @click="base.board_init_modal_handle"    :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="1手戻す (待った・反則取り消し)" @click="base.board_revert_modal_handle"  :disabled="blank_p(base.ac_room)")
-          b-menu-item.is_active_unset(label="局面を全員に転送"           @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(label="局面を全員に転送"               @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"    @click="base.room_code_url_copy_handle"  :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="手番が来たら知らせる設定"       @click="base.tn_modal_handle"            :disabled="blank_p(base.ac_room)" v-if="development_p")
-          b-menu-item.is_active_unset(label="再接続 (なんかおかしいとき用)"  @click="base.room_recreate_modal_handle" :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(label="再接続"                         @click="base.room_recreate_modal_handle" :disabled="blank_p(base.ac_room)")
 
         b-menu-list(label="検討用")
           b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
@@ -29,7 +29,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="Twitter")
           b-menu-item.is_active_unset(label="ツイートする"                @click="base.tweet_modal_handle")
-          b-menu-item.is_active_unset(label="ツイートURLだけコピー"       @click="base.current_url_copy_handle")
+          b-menu-item.is_active_unset(label="ツイートURLのコピー"         @click="base.current_url_copy_handle")
           b-menu-item.is_active_unset(label="ツイート画像の視点設定"      @click="base.abstract_viewpoint_setting_handle")
 
         b-menu-list(label="その他")

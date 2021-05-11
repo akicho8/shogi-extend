@@ -795,8 +795,8 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def room_recreate_apply
     side_menu_open
-    menu_item_click("再接続 (なんかおかしいとき用)")  # モーダルを開く
-    first(".apply_button").click                      # 実行する
+    menu_item_click("再接続")     # モーダルを開く
+    first(".apply_button").click  # 実行する
   end
 
   def side_menu_open
