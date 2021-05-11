@@ -2,6 +2,10 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox(v-if="development_p")
+      template(v-if="chess_clock")
+        p next_location: {{next_location.key}}
+        p timer: {{chess_clock.timer}}
+        p running_p: {{chess_clock.running_p}}
       p send_success_p={{send_success_p}}
       p sequence_codes={{sequence_codes}}
       p $route.query: {{$route.query}}
@@ -11,10 +15,6 @@ client-only
       p turn_offset: {{turn_offset}}
       p previous_user_name: {{previous_user_name}}
       p ordered_members: {{ordered_members}}
-      template(v-if="chess_clock")
-        p next_location: {{next_location.key}}
-        p timer: {{chess_clock.timer}}
-        p running_p: {{chess_clock.running_p}}
       p sp_viewpoint: {{sp_viewpoint}}
       p sp_player_info: {{JSON.stringify(sp_player_info)}}
       //- p room_code: {{JSON.stringify(room_code)}}
@@ -247,7 +247,7 @@ export default {
       // last_move_info.player_location なら指した人の色で判定
       // last_move_info.to_location なら駒の色で判定
       if (this.chess_clock) {
-        this.cc_switch_handle(this.chess_clock.single_clocks[last_move_info.player_location.code])
+        this.chess_clock.tap_on(last_move_info.player_location)
       }
 
       // 時計の状態をブロードキャストする
@@ -411,10 +411,6 @@ export default {
       return [
         `is_sb_${this.sp_run_mode}`, // is_sb_play_mode, is_sb_edit_mode
       ]
-    },
-
-    next_location() {
-      return this.sfen_parse(this.current_sfen).next_location
     },
   },
 }

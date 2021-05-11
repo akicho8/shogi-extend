@@ -65,7 +65,7 @@ export const app_chess_clock = {
     cc_create() {
       this.cc_destroy()
       this.chess_clock = new ChessClock({
-        turn: this.next_location.code, // this.current_sfen を元にした現在の手番
+        turn: this.current_location.code, // this.current_sfen を元にした現在の手番
         clock_switch_hook: () => {
           // this.sound_play("click")
         },
@@ -194,14 +194,11 @@ export const app_chess_clock = {
       }
     },
     // 指した直後に片方の時計のボタンを押す
-    cc_switch_handle(e) {
-      this.__assert__(e, "e")
-      if (this.chess_clock.running_p) {
-        e.simple_switch_handle()
-      } else {
-        e.tap_and_auto_start_handle()
-      }
-    },
+    // cc_switch_handle(player_location) {
+    //   if (this.chess_clock.running_p) {
+    //     this.chess_clock.tap_on(player_location)
+    //   }
+    // },
     cc_copy_handle() {
       this.sound_play("click")
       this.talk("左の設定を右にコピーしますか？")

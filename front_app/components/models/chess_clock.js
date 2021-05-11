@@ -21,12 +21,12 @@ export class ChessClock {
       ...params,
     }
 
-    this.timer         = null   // null以外ならタイマー動作中
-    this.turn          = null   // 0または1が手番。null:手番が設定されていない
+    this.timer         = null   // null以外ならタイマー動作中 (nullで一時停止)
+    this.turn          = null   // 0または1が手番。null:手番が設定されていない。順番ではなく 0:黒 1:白 と決まっているため駒落ちの場合1にすること
     this.counter       = null   // 手数 (未使用)
     // this.zero_arrival  = null   // 残り時間が 0 になったら true
     this.single_clocks = null   // それぞれの時計
-    this.running_p     = null   // true:動作中 false:停止中
+    this.running_p     = null   // [PLAY] で true になり [STOP] で false になる
 
     this.speed = 1.0
 
@@ -51,12 +51,28 @@ export class ChessClock {
 
   // 切り替え
   clock_switch() {
+    this.__assert__(this.turn != null, "this.turn != null")
     this.turn += 1
     this.counter += 1
     if (this.timer) {
       this.timer_restart()
     }
     this.params.clock_switch_hook()
+  }
+
+  // location 側のボタンを押す
+  tap_on(location) {
+    this.single_clocks[Location.fetch(location).code].tap_on()
+  }
+
+  // location 側のターンに強制変更
+  // これは1手戻すなどのときに使う
+  turn_to(location) {
+    if (true) {
+      // 今のターンの人が不利にならないよう秒読みは元に戻してあげる
+      this.current.rebirth()
+    }
+    this.turn = Location.fetch(location).code
   }
 
   // 時間経過
@@ -211,6 +227,14 @@ export class ChessClock {
 
     if (v.timer) {
       this.timer_start()
+    }
+  }
+
+  __assert__(value, message = null) {
+    if (!value) {
+      console.error(value)
+      alert(message || "must not happen")
+      debugger
     }
   }
 }

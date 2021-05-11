@@ -121,7 +121,14 @@ export const app_force_sync = {
       // this.tl_add("FORCE_SYNCED", params.sfen)
       // this.tl_add("FORCE_SYNCED", params.turn_offset)
 
-      this.setup_by_params(params)
+      this.setup_by_params(params) // これで current_location が更新される
+      if (this.chess_clock) {
+        // this.tl_add("current_location", this.current_location.key)
+        // this.tl_add("LOCATION", this.chess_clock.current_location.key)
+        this.chess_clock.turn_to(this.current_location)
+        // this.tl_add("LOCATION", this.chess_clock.current_location.key)
+      }
+
       if (params.message) {
         this.toast_ok(params.message)
         // this.toast_ok(`${this.user_call_name(params.from_user_name)}から送られてきた盤の状態に合わせました`)

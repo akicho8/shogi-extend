@@ -42,7 +42,7 @@ export const application_battle_versus = {
     },
 
     vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
-      this.chess_clock.single_clocks[this.current_membership.location.code].simple_switch_handle()
+      this.chess_clock.tap_on(this.current_membership.location)
       this.vs_func_play_board_share(long_sfen)
     },
 
@@ -61,7 +61,7 @@ export const application_battle_versus = {
         // 自分の操作を相手の盤面で動かす
         this.vs_share_sfen = params.vs_share_sfen
         // this.sound_play("piece_sound") // shogi-player で音が鳴らないのでここで鳴らす
-        this.chess_clock.single_clocks[this.opponent_membership.location.code].simple_switch_handle()
+        this.chess_clock.tap_on(this.opponent_membership.location)
       }
     },
 

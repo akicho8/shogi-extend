@@ -153,7 +153,9 @@ RSpec.describe "共有将棋盤", type: :system do
 
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '対局時計'
   describe "対局時計" do
-    INITIAL_MAIN_MIN = 5
+    before do
+      @INITIAL_SEC = 5
+    end
 
     it "works" do
       a_block do
@@ -173,12 +175,12 @@ RSpec.describe "共有将棋盤", type: :system do
         assert_clock_on                            # 同期してbob側にも設置されている
       end
       a_block do
-        chess_clock_set(0, INITIAL_MAIN_MIN, 0, 0) # aliceが時計を設定する
+        chess_clock_set(0, @INITIAL_SEC, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
         first(".close_button_for_capybara").click  # 閉じる (ヘッダーに置いている)
       end
       b_block do
-        assert_white_read_sec(INITIAL_MAIN_MIN)    # bob側は秒読みが満タン
+        assert_white_read_sec(@INITIAL_SEC)    # bob側は秒読みが満タン
       end
       a_block do
         assert_move("27", "26", "☗2六歩")         # 初手を指す
@@ -186,7 +188,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       b_block do
         assert_clock_active_white                  # bob側も後手がアクティブになっている
-        sleep(INITIAL_MAIN_MIN)                    # ここでは3秒ぐらいになってるけどさらに秒読みぶん待つ
+        sleep(@INITIAL_SEC)                    # ここでは3秒ぐらいになってるけどさらに秒読みぶん待つ
         assert_white_read_sec(0)                   # 秒読みが0になっている
         assert_text("時間切れで☗の勝ち！")         # 時間切れのダイアログの表示(1回目)
         find(".button.is-primary").click           # それを閉じる
@@ -197,18 +199,18 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       b_block do
         assert_move("33", "34", "☖3四歩")          # bobは時間切れになったがそれを無視して指した
-        assert_white_read_sec(INITIAL_MAIN_MIN)    # すると秒読みが復活した
+        assert_white_read_sec(@INITIAL_SEC)    # すると秒読みが復活した
         assert_clock_active_black                  # 時計も相手に切り替わった
       end
       a_block do
         assert_clock_active_black                  # alice側もaliceがアクティブになった
-        assert_white_read_sec(INITIAL_MAIN_MIN)    # bobの秒読みが復活している
+        assert_white_read_sec(@INITIAL_SEC)    # bobの秒読みが復活している
         assert_move("77", "76", "☗7六歩")          # aliceは3手目を指した
         assert_clock_active_white                  # bobに時計が切り替わった
       end
       b_block do
         assert_clock_active_white                  # bob側もbob側にの時計に切り替わった
-        sleep(INITIAL_MAIN_MIN)                    # bobは再び時間切れになるまで待った
+        sleep(@INITIAL_SEC)                    # bobは再び時間切れになるまで待った
         assert_white_read_sec(0)                   # また0時間切れになった
         assert_text("時間切れで☗の勝ち！")         # 2度目のダイアログが出た
       end
@@ -496,6 +498,54 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       b_block do
         assert_turn_offset(1)                             # bobの局面が戻っている
+      end
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '局面転送時に時計の手番調整'
+  describe "局面転送時に時計の手番調整" do
+    before do
+      @INITIAL_SEC = 30
+    end
+    
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")            # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")              # bobが部屋を作る
+      end
+      a_block do
+        side_menu_open
+        menu_item_click("対局時計")               # 「対局時計」モーダルを開く
+        find(".main_switch").click                # 設置する
+        assert_clock_on                           # 時計が設置された
+
+        chess_clock_set(0, @INITIAL_SEC, 0, 0)    # 秒読みだけを設定
+        find(".play_button").click                # 開始
+        first(".close_button_for_capybara").click # 閉じる (ヘッダーに置いている)
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩")        # 初手を指す
+      end
+      b_block do
+        assert_clock_active_white                 # 時計は後手
+        assert_turn_offset(1)                     # 手数1
+        sleep(1)                                  # bobは1秒考えていた
+      end
+      a_block do
+        sp_controller_click("previous")           # 1手戻す
+        assert_turn_offset(0)                     # 0手目に戻せてる
+
+        side_menu_open
+        menu_item_click("局面を全員に転送")       # モーダルを開く
+        first(".sync_button").click               # 反映する
+
+        assert_clock_active_black                 # 時計は先手に切り替わっている
+      end
+      b_block do
+        assert_clock_active_black                 # bob側も時計が先手になっている
+        assert_white_read_sec(@INITIAL_SEC)       # 秒読みも復活している
       end
     end
   end

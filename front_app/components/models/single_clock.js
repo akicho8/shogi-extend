@@ -114,40 +114,58 @@ export class SingleClock {
     this.base.params.second_decriment_hook(this, key, t, m, s)
   }
 
-  switch_handle() {
-    if (this.running_p) {
-      this.tap_and_auto_start_handle()
-    } else {
-      this.set_or_tap_handle()
-    }
-  }
-
-  simple_switch_handle() {
+  // 指した直後に時計のボタンを押す
+  tap_on() {
     if (this.active_p) {
-      this.generation_next(this.every_plus)
-      this.read_sec_set()
-      this.minus_sec = 0 // 押したらマイナスになったぶんは0に戻しておく。これで再びチーンになる
-      this.base.clock_switch()
-    }
-  }
-
-  tap_and_auto_start_handle() {
-    if (!this.running_p) {
-      this.base.initial_boot_from(this.index)
-      this.base.clock_switch()
-      return
-    }
-    this.simple_switch_handle()
-  }
-
-  set_or_tap_handle() {
-    if (!this.running_p) {
-      if (this.turn == null) {
-        this.base.turn = this.index
+      if (this.running_p) {
+        this.rebirth()
       }
+      this.base.clock_switch()
     }
-    this.base.clock_switch()
   }
+
+  // 1手戻すとしたとき秒読みが減ったままだとかわいそうなので元に戻してあげる
+  rebirth() {
+    this.generation_next(this.every_plus)
+    this.read_sec_set()
+    this.minus_sec = 0 // 押したらマイナスになったぶんは0に戻しておく。これで再びチーンになる
+  }
+
+  // switch_handle() {
+  //   if (this.running_p) {
+  //     // this.tap_and_auto_start_handle()
+  //     this.simple_switch_handle()
+  //   } else {
+  //     this.set_or_tap_handle()
+  //   }
+  // }
+
+  // simple_switch_handle() {
+  //   if (this.active_p) {
+  //     this.generation_next(this.every_plus)
+  //     this.read_sec_set()
+  //     this.minus_sec = 0 // 押したらマイナスになったぶんは0に戻しておく。これで再びチーンになる
+  //     this.base.clock_switch()
+  //   }
+  // }
+
+  // tap_and_auto_start_handle() {
+  //   if (!this.running_p) {
+  //     this.base.initial_boot_from(this.index)
+  //     this.base.clock_switch()
+  //     return
+  //   }
+  //   this.simple_switch_handle()
+  // }
+
+  // set_or_tap_handle() {
+  //   // if (!this.running_p) {
+  //   //   if (this.turn == null) {
+  //   //     this.base.turn = this.index
+  //   //   }
+  //   // }
+  //   this.base.clock_switch()
+  // }
 
   read_sec_set() {
     // if (this.read_sec < this.initial_read_sec) {

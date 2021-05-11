@@ -222,6 +222,14 @@ export const app_room_setup = {
     current_sfen_turn_offset() {
       return this.current_sfen_info.turn_offset_max
     },
+    // this.current_sfen_info.location_by_offset(this.current_sfen_turn_offset) と同じ
+    next_location() {
+      return this.current_sfen_info.next_location
+    },
+    current_location() {
+      return this.current_sfen_info.location_by_offset(this.turn_offset)
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // 合言葉だけを付与したURL

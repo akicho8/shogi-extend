@@ -13,7 +13,7 @@
     .screen_container.is-flex
       .level.is-mobile.is-unselectable.is-marginless
         template(v-for="(e, i) in chess_clock.single_clocks")
-          .level-item.has-text-centered.is-marginless(@pointerdown="switch_handle(e)" :class="e.dom_class")
+          .level-item.has-text-centered.is-marginless(@pointerdown="xswitch_handle(e)" :class="e.dom_class")
             .active_current_bar(:class="e.bar_class" v-if="e.active_p")
             .inactive_current_bar(v-else)
             .wide_container.form.is-flex
@@ -36,7 +36,7 @@
       b-icon.controll_button.stop.is-clickable(icon="stop" v-if="!chess_clock.timer" @click.native="stop_handle")
       .level.is-mobile.is-unselectable.is-marginless
         template(v-for="(e, i) in chess_clock.single_clocks")
-          .level-item.has-text-centered.is-marginless(@pointerdown="switch_handle(e)" :class="e.dom_class")
+          .level-item.has-text-centered.is-marginless(@pointerdown="xswitch_handle(e)" :class="e.dom_class")
             .active_current_bar(:class="e.bar_class" v-if="e.active_p && chess_clock.timer")
             .inactive_current_bar(v-else)
             .wide_container.time_fields.is-flex(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
@@ -207,12 +207,14 @@ export default {
       }
       return s
     },
-    switch_handle(e) {
-      if (this.chess_clock.running_p) {
-        e.simple_switch_handle()
-      } else {
-        e.tap_and_auto_start_handle()
+    xswitch_handle(e) {
+      // 開始前の状態では条件なく手番を切り替える
+      if (!this.chess_clock.running_p) {
+        this.chess_clock.clock_switch()
+        return
       }
+
+      e.tap_on()
     },
     copy_handle() {
       this.sound_play("click")

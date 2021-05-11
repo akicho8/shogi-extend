@@ -29,13 +29,13 @@ export const app_keyboard_shortcut = {
 
       // 左
       if (["ShiftLeft", "ControlLeft", "Tab"].includes(e.code)) {
-        this.switch_handle(this.chess_clock.single_clocks[0])
+        this.xswitch_handle(this.chess_clock.single_clocks[0])
         e.preventDefault()
       }
 
       // 右
       if (["ShiftRight", "ControlRight", "Enter", "ArrowRight", "ArrowUp", "ArrowDown", "ArrowLeft"].includes(e.code)) {
-        this.switch_handle(this.chess_clock.single_clocks[1])
+        this.xswitch_handle(this.chess_clock.single_clocks[1])
         e.preventDefault()
       }
     },

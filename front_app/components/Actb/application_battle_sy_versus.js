@@ -36,7 +36,7 @@ export const application_battle_sy_versus = {
       //       this.ops_interval_restart()
       //     }
       //
-      this.chess_clock.single_clocks[this.current_membership.location.code].tap_and_auto_start_handle()
+      this.chess_clock.tap_on(this.current_membership.location)
       this.vs_func_play_board_share(long_sfen)
       //   }
       //
