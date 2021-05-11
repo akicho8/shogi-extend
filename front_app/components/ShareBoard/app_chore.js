@@ -4,8 +4,8 @@ export const app_chore = {
   methods: {
     //////////////////////////////////////////////////////////////////////////////// Windowアクティブチェック
     window_active_change_user_hook(focus_p) {
-      this.tl_add("FOCUS", focus_p)
-      this.ac_log("FOCUS", focus_p)
+      this.tl_add("WINDOW", focus_p ? "IN" : "OUT")
+      this.ac_log("WINDOW", focus_p ? "IN" : "OUT")
       this.member_info_bc_restart()
     },
 
