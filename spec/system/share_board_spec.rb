@@ -175,7 +175,7 @@ RSpec.describe "共有将棋盤", type: :system do
         assert_clock_on                            # 同期してbob側にも設置されている
       end
       a_block do
-        chess_clock_set(0, @INITIAL_SEC, 0, 0) # aliceが時計を設定する
+        clock_box_set(0, @INITIAL_SEC, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
         first(".close_button_for_capybara").click  # 閉じる (ヘッダーに置いている)
       end
@@ -521,7 +521,7 @@ RSpec.describe "共有将棋盤", type: :system do
         find(".main_switch").click                # 設置する
         assert_clock_on                           # 時計が設置された
 
-        chess_clock_set(0, @INITIAL_SEC, 0, 0)    # 秒読みだけを設定
+        clock_box_set(0, @INITIAL_SEC, 0, 0)    # 秒読みだけを設定
         find(".play_button").click                # 開始
         first(".close_button_for_capybara").click # 閉じる (ヘッダーに置いている)
       end
@@ -709,7 +709,7 @@ RSpec.describe "共有将棋盤", type: :system do
     assert_text(user_name)                       # 入力したハンドルネームの人が参加している
   end
 
-  def chess_clock_set(initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
+  def clock_box_set(initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
     find(".initial_main_min input").set(initial_main_min)   # 持ち時間(分)
     find(".initial_read_sec input").set(initial_read_sec)   # 秒読み
     find(".initial_extra_sec input").set(initial_extra_sec) # 猶予(秒)

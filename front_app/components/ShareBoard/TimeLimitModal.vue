@@ -41,7 +41,7 @@ export default {
     },
   },
   computed: {
-    clock()           { return this.base.chess_clock              },
+    clock()           { return this.base.clock_box              },
     clock_running_p() { return this.clock && this.clock.running_p },
   },
 }

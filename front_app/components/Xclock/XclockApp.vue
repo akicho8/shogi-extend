@@ -1,18 +1,18 @@
 <template lang="pug">
-.Xclock(:class="chess_clock.running_p ? 'is_xclock_active' : 'is_xclock_inactive'")
+.Xclock(:class="clock_box.running_p ? 'is_xclock_active' : 'is_xclock_inactive'")
   DebugBox(v-if="development_p")
-    div turn: {{chess_clock.turn}}
-    div running_p: {{chess_clock.running_p}}
-    div timer: {{chess_clock.timer}}
-    div counter: {{chess_clock.counter}}
-    div zero_arrival: {{chess_clock.zero_arrival}}
+    div turn: {{clock_box.turn}}
+    div running_p: {{clock_box.running_p}}
+    div timer: {{clock_box.timer}}
+    div counter: {{clock_box.counter}}
+    div zero_arrival: {{clock_box.zero_arrival}}
     div mouse_cursor_p: {{mouse_cursor_p}}
 
   //////////////////////////////////////////////////////////////////////////////// form
-  template(v-if="!chess_clock.running_p")
+  template(v-if="!clock_box.running_p")
     .screen_container.is-flex
       .level.is-mobile.is-unselectable.is-marginless
-        template(v-for="(e, i) in chess_clock.single_clocks")
+        template(v-for="(e, i) in clock_box.single_clocks")
           .level-item.has-text-centered.is-marginless(@pointerdown="xswitch_handle(e)" :class="e.dom_class")
             .active_current_bar(:class="e.bar_class" v-if="e.active_p")
             .inactive_current_bar(v-else)
@@ -28,16 +28,16 @@
       XclockAppFooter(:base="base" ref="XclockAppFooter")
 
   //////////////////////////////////////////////////////////////////////////////// 実行中
-  template(v-if="chess_clock.running_p")
-    .pause_bg(v-if="!chess_clock.timer")
+  template(v-if="clock_box.running_p")
+    .pause_bg(v-if="!clock_box.timer")
     .screen_container.is-flex(:class="{mouse_cursor_hidden_p: mouse_cursor_hidden_p}")
-      b-icon.controll_button.pause.is-clickable(icon="pause" v-if="chess_clock.timer" @click.native="pause_handle")
-      b-icon.controll_button.resume.is-clickable(icon="play" v-if="!chess_clock.timer" @click.native="resume_handle")
-      b-icon.controll_button.stop.is-clickable(icon="stop" v-if="!chess_clock.timer" @click.native="stop_handle")
+      b-icon.controll_button.pause.is-clickable(icon="pause" v-if="clock_box.timer" @click.native="pause_handle")
+      b-icon.controll_button.resume.is-clickable(icon="play" v-if="!clock_box.timer" @click.native="resume_handle")
+      b-icon.controll_button.stop.is-clickable(icon="stop" v-if="!clock_box.timer" @click.native="stop_handle")
       .level.is-mobile.is-unselectable.is-marginless
-        template(v-for="(e, i) in chess_clock.single_clocks")
+        template(v-for="(e, i) in clock_box.single_clocks")
           .level-item.has-text-centered.is-marginless(@pointerdown="xswitch_handle(e)" :class="e.dom_class")
-            .active_current_bar(:class="e.bar_class" v-if="e.active_p && chess_clock.timer")
+            .active_current_bar(:class="e.bar_class" v-if="e.active_p && clock_box.timer")
             .inactive_current_bar(v-else)
             .wide_container.time_fields.is-flex(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
               .field(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1")
@@ -55,14 +55,14 @@
 
   //////////////////////////////////////////////////////////////////////////////// form
   .debug_container.mt-5(v-if="development_p")
-    ChessClockInspector(:chess_clock="chess_clock" v-if="chess_clock")
+    ClockBoxInspector(:clock_box="clock_box" v-if="clock_box")
     .box
       p mouse_cursor_p: {{mouse_cursor_p}}
 
 </template>
 
 <script>
-import { ChessClock   } from "@/components/models/chess_clock.js"
+import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { DeviseAngle  } from "@/components/models/devise_angle.js"
 import { isMobile     } from "@/components/models/is_mobile.js"
 import { FullScreenController   } from "@/components/models/full_screen_controller.js"
@@ -84,12 +84,12 @@ export default {
   ],
   data() {
     return {
-      chess_clock: null,
+      clock_box: null,
       full_screen: null,
     }
   },
   created() {
-    this.chess_clock = new ChessClock({
+    this.clock_box = new ClockBox({
       turn: 0,
       clock_switch_hook: () => {
         this.sound_play("click")
@@ -145,19 +145,19 @@ export default {
   },
   beforeDestroy() {
     this.full_screen.off()
-    this.chess_clock.timer_stop()
+    this.clock_box.timer_stop()
   },
   methods: {
     resume_handle() {
       this.sound_play("click")
-      this.chess_clock.resume_handle()
+      this.clock_box.resume_handle()
       this.talk_stop()
     },
     pause_handle() {
-      if (this.chess_clock.running_p) {
+      if (this.clock_box.running_p) {
         this.talk_stop()
         this.sound_play("click")
-        this.chess_clock.pause_handle()
+        this.clock_box.pause_handle()
 
         if (false) {
           this.$buefy.dialog.confirm({
@@ -176,21 +176,21 @@ export default {
       }
     },
     stop_handle() {
-      if (this.chess_clock.running_p) {
+      if (this.clock_box.running_p) {
         this.full_screen.off()
         this.talk_stop()
         this.sound_play("click")
-        this.chess_clock.stop_handle()
+        this.clock_box.stop_handle()
       }
     },
     play_handle() {
-      if (this.chess_clock.running_p) {
+      if (this.clock_box.running_p) {
       } else {
         this.full_screen.on()
         this.sound_play("start")
         this.ga_click("対局時計●")
         this.say(this.play_talk_message())
-        this.chess_clock.play_handle()
+        this.clock_box.play_handle()
       }
     },
     play_talk_message() {
@@ -209,8 +209,8 @@ export default {
     },
     xswitch_handle(e) {
       // 開始前の状態では条件なく手番を切り替える
-      if (!this.chess_clock.running_p) {
-        this.chess_clock.clock_switch()
+      if (!this.clock_box.running_p) {
+        this.clock_box.clock_switch()
         return
       }
 
@@ -231,7 +231,7 @@ export default {
         onConfirm: () => {
           this.talk_stop()
           this.sound_play("click")
-          this.chess_clock.copy_1p_to_2p()
+          this.clock_box.copy_1p_to_2p()
           this.say("コピーしました")
         },
         onCancel: () => {
@@ -273,14 +273,14 @@ export default {
       params = {...params}
       this.__assert__("initial_main_min" in params, '"initial_main_min" in params')
       params.initial_main_sec = params.initial_main_min * 60
-      this.chess_clock.rule_set_all(params)
+      this.clock_box.rule_set_all(params)
     },
   },
   computed: {
     base() { return this },
     CcRuleInfo() { return CcRuleInfo },
     mouse_cursor_hidden_p() {
-      return this.chess_clock.timer && !this.mouse_cursor_p
+      return this.clock_box.timer && !this.mouse_cursor_p
     },
   },
 }

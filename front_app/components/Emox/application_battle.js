@@ -94,7 +94,7 @@ export const application_battle = {
     ////////////////////////////////////////////////////////////////////////////////
 
     result_setup(battle) {
-      this.chess_clock_free()
+      this.clock_box_free()
       this.battle = new Battle(battle)
       this.mode = "result"
       this.sound_play(this.base.current_membership.judge.key)

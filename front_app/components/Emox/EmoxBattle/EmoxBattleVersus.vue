@@ -26,21 +26,21 @@
       //-   b-button.has-text-weight-bold(@click="base.vs_func_toryo_handle(false)") 投了
       //-   b-button.has-text-weight-bold(@click="base.vs_func_toryo_handle(true)" v-if="development_p") 相手投了
 
-  template(v-if="development_p && base.chess_clock")
+  template(v-if="development_p && base.clock_box")
     .buttons.are-small.is-centered
-      b-button(@click="base.chess_clock.generation_next(-1)") -1
-      b-button(@click="base.chess_clock.generation_next(-60)") -60
-      b-button(@click="base.chess_clock.generation_next(1)") +1
-      b-button(@click="base.chess_clock.generation_next(60)") +60
-      b-button(@click="base.chess_clock.clock_switch()") 切り替え
-      b-button(@click="base.chess_clock.timer_start()") START
-      b-button(@click="base.chess_clock.timer_stop()") STOP
-      b-button(@click="base.chess_clock.params.every_plus = 5") フィッシャールール
-      b-button(@click="base.chess_clock.params.every_plus = 0") 通常ルール
-      b-button(@click="base.chess_clock.reset()") RESET
-      b-button(@click="base.chess_clock.main_sec_set(3)") 両方残り3秒
+      b-button(@click="base.clock_box.generation_next(-1)") -1
+      b-button(@click="base.clock_box.generation_next(-60)") -60
+      b-button(@click="base.clock_box.generation_next(1)") +1
+      b-button(@click="base.clock_box.generation_next(60)") +60
+      b-button(@click="base.clock_box.clock_switch()") 切り替え
+      b-button(@click="base.clock_box.timer_start()") START
+      b-button(@click="base.clock_box.timer_stop()") STOP
+      b-button(@click="base.clock_box.params.every_plus = 5") フィッシャールール
+      b-button(@click="base.clock_box.params.every_plus = 0") 通常ルール
+      b-button(@click="base.clock_box.reset()") RESET
+      b-button(@click="base.clock_box.main_sec_set(3)") 両方残り3秒
     b-message
-      | 1手毎に{{base.chess_clock.params.every_plus}}秒加算
+      | 1手毎に{{base.clock_box.params.every_plus}}秒加算
 
 </template>
 
@@ -59,8 +59,8 @@ export default {
       return this.base.current_membership.location_key
     },
     sp_player_info() {
-      if (this.base.chess_clock) {
-        return this.base.chess_clock.single_clocks.reduce((a, e, i) => {
+      if (this.base.clock_box) {
+        return this.base.clock_box.single_clocks.reduce((a, e, i) => {
           return {
             ...a,
             [Location.fetch(i).key]: {time: e.to_time_format},

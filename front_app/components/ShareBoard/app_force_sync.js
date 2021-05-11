@@ -113,8 +113,8 @@ export const app_force_sync = {
 
     force_sync_broadcasted(params) {
       this.setup_by_params(params) // これで current_location が更新される
-      if (this.chess_clock) {
-        this.chess_clock.location_to(this.current_location)
+      if (this.clock_box) {
+        this.clock_box.location_to(this.current_location)
       }
       if (params.message) {
         this.toast_ok(params.message)

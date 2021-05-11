@@ -47,12 +47,12 @@ module ShareBoard
       broadcast(:setup_info_send_broadcasted, data)
     end
 
-    def chess_clock_share(data)
+    def clock_box_share(data)
       if data["message"].present?
         values = data["cc_params"].fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus")
         track(data, "対局時計", "#{data["message"]} (#{values.join(" ")})")
       end
-      broadcast(:chess_clock_share_broadcasted, data)
+      broadcast(:clock_box_share_broadcasted, data)
     end
 
     def member_info_share(data)

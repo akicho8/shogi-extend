@@ -14,11 +14,11 @@
   | send_success_skip             | SFEN受信OKの返信しても送信完了にしない     | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&send_success_skip=true |
   | RETRY_CHECK_DELAY             | SFEN送信後N秒待ってから返答をチェックする  |                                                                                          |
   | ordered_member_names          | 順番設定の名前(複数)                       |                                                                                          |
-  | chess_clock.initial_main_min  | 持ち時間(分)                               |                                                                                          |
-  | chess_clock.initial_read_sec  | 秒読み(秒)                                 |                                                                                          |
-  | chess_clock.initial_extra_sec | 猶予(秒)                                   |                                                                                          |
-  | chess_clock.every_plus        | 1手毎加算(秒)                              |                                                                                          |
-  | chess_clock.play_handle       | true なら即開始                            |                                                                                          |
+  | clock_box.initial_main_min  | 持ち時間(分)                               |                                                                                          |
+  | clock_box.initial_read_sec  | 秒読み(秒)                                 |                                                                                          |
+  | clock_box.initial_extra_sec | 猶予(秒)                                   |                                                                                          |
+  | clock_box.every_plus        | 1手毎加算(秒)                              |                                                                                          |
+  | clock_box.play_handle       | true なら即開始                            |                                                                                          |
   |-------------------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
 
 ** alice と bob の部屋を作るには？
@@ -32,7 +32,7 @@
 
 ** 時計設定済みで部屋に入るには？
 
-   http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=alice&chess_clock.initial_main_min=1&chess_clock.initial_read_sec=30&chess_clock.initial_extra_sec=60&chess_clock.every_plus=0&chess_clock.play_handle=true
+   http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_sec=60&clock_box.every_plus=0&clock_box.play_handle=true
 
 * 最初の盤共有について (app_room_board_setup.js)
 

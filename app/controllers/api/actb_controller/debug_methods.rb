@@ -31,7 +31,7 @@ module Api
                 "ユーザー詳細"                 => :ov_user_info,
                 "ログインしている状態"         => :login_lobby,
                 "ログインしていない状態"       => :no_login_lobby,
-                "対局時計動作確認"       => :chess_clock,
+                "対局時計動作確認"       => :clock_box,
               },
             },
           ]
@@ -189,7 +189,7 @@ module Api
         info.delete(:current_user)
       end
 
-      def debug_for_chess_clock(info)
+      def debug_for_clock_box(info)
         sysop_login_unless_logout
       end
 

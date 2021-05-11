@@ -137,8 +137,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     it do
       data = data_factory
       expect {
-        subscription.chess_clock_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "chess_clock_share_broadcasted", bc_params: data)
+        subscription.clock_box_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "clock_box_share_broadcasted", bc_params: data)
     end
   end
 
@@ -201,7 +201,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
     it do
       data = data_factory("subject" => "(subject)", "body" => "body")
-      subscription.aclog(data)
+      subscription.ac_log(data)
     end
   end
 

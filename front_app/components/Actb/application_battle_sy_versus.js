@@ -1,24 +1,24 @@
-import { ChessClock   } from "@/components/models/chess_clock.js"
+import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 export const application_battle_sy_versus = {
   data() {
     return {
       vs_share_sfen: "",
-      chess_clock: null,
+      clock_box: null,
     }
   },
 
   created() {
-    this.chess_clock = new ChessClock({time_zero_callback: e => {
+    this.clock_box = new ClockBox({time_zero_callback: e => {
       this.vs_func_time_zero_handle(e)
     }})
   },
 
   methods: {
     vs_func_init() {
-      // this.chess_clock.initial_boot_from(this.current_membership.location.code)
-      this.chess_clock.initial_boot_from(0) // ▲から始まる
+      // this.clock_box.initial_boot_from(this.current_membership.location.code)
+      this.clock_box.initial_boot_from(0) // ▲から始まる
     },
 
     vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
@@ -36,7 +36,7 @@ export const application_battle_sy_versus = {
       //       this.ops_interval_restart()
       //     }
       //
-      this.chess_clock.tap_on(this.current_membership.location)
+      this.clock_box.tap_on(this.current_membership.location)
       this.vs_func_play_board_share(long_sfen)
       //   }
       //

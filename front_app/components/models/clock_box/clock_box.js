@@ -1,7 +1,7 @@
 import { SingleClock } from "./single_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
 
-export class ChessClock {
+export class ClockBox {
   constructor(params = {}) {
     this.params = {
       // ここらのハッシュキーはリアクティブにするため null でも定義が必要

@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.ChessClockModal
+.modal-card.ClockBoxModal
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-5
@@ -11,7 +11,7 @@
     a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
 
     template(v-if="!instance || !instance.running_p")
-      b-switch.main_switch(size="is-small" type="is-primary" v-model="chess_clock_p" @input="main_switch_handle") 設置
+      b-switch.main_switch(size="is-small" type="is-primary" v-model="clock_box_p" @input="main_switch_handle") 設置
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
@@ -80,7 +80,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ChessClockModal",
+  name: "ClockBoxModal",
   mixins: [
     support_child,
   ],
@@ -90,10 +90,10 @@ export default {
       if (v) {
         this.base.cc_create()
         this.base.cc_params_apply() // すぐにパラメータを反映する
-        this.base.chess_clock_share("設置しました")
+        this.base.clock_box_share("設置しました")
       } else {
         this.base.cc_destroy()
-        this.base.chess_clock_share("捨てました")
+        this.base.clock_box_share("捨てました")
       }
     },
     close_handle() {
@@ -105,13 +105,13 @@ export default {
       this.sound_play("click")
       this.base.cc_params_apply()
       this.base.cc_play_handle()
-      this.base.chess_clock_share("開始しました")
+      this.base.clock_box_share("開始しました")
     },
     stop_handle() {
       this.sound_play("click")
       if (this.instance.running_p) {
         this.base.cc_stop_handle()
-        this.base.chess_clock_share("停止しました")
+        this.base.clock_box_share("停止しました")
       } else {
         this.toast_ok("すでにリセットしています")
       }
@@ -119,12 +119,12 @@ export default {
     pause_handle() {
       this.sound_play("click")
       this.base.cc_pause_handle()
-      this.base.chess_clock_share("一時停止しました")
+      this.base.clock_box_share("一時停止しました")
     },
     resume_handle() {
       this.sound_play("click")
       this.base.cc_resume_handle()
-      this.base.chess_clock_share("再開しました")
+      this.base.clock_box_share("再開しました")
     },
     save_handle() {
       this.sound_play("click")
@@ -141,8 +141,8 @@ export default {
     },
   },
   computed: {
-    instance() { return this.base.chess_clock },
-    chess_clock_p: {
+    instance() { return this.base.clock_box },
+    clock_box_p: {
       get()  { return !!this.instance },
       set(v) {},
     },
@@ -154,11 +154,11 @@ export default {
 @import "support.sass"
 
 .STAGE-development
-  .ChessClockModal
+  .ClockBoxModal
     .modal-card-body, .field
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.ChessClockModal
+.ClockBoxModal
   +tablet
     width: 32rem
   .modal-card-body
@@ -180,8 +180,8 @@ export default {
     &.is_active
       background-color: $primary
       &.is_pause_off
-        animation: chess_clock_modal_bar_blink 0.5s ease-in-out 0s infinite alternate
-        @keyframes chess_clock_modal_bar_blink
+        animation: clock_box_modal_bar_blink 0.5s ease-in-out 0s infinite alternate
+        @keyframes clock_box_modal_bar_blink
           0%
             opacity: 1.0
           100%

@@ -1,34 +1,34 @@
-import { ChessClock   } from "@/components/models/chess_clock.js"
+import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 export const application_battle_versus = {
   data() {
     return {
       vs_share_sfen: "",
-      chess_clock: null,
+      clock_box: null,
     }
   },
 
   beforeDestroy() {
-    this.chess_clock_free()
+    this.clock_box_free()
   },
 
   methods: {
-    chess_clock_free() {
-      if (this.chess_clock) {
-        this.chess_clock.timer_stop()
-        this.chess_clock = null
+    clock_box_free() {
+      if (this.clock_box) {
+        this.clock_box.timer_stop()
+        this.clock_box = null
       }
     },
 
     membership_clock_time_format(membership) {
-      return this.chess_clock.single_clocks[membership.position].to_time_format
+      return this.clock_box.single_clocks[membership.position].to_time_format
     },
 
     vs_func_init() {
-      // this.chess_clock.initial_boot_from(this.current_membership.location.code)
-      this.chess_clock_free()
-      this.chess_clock = new ChessClock({
+      // this.clock_box.initial_boot_from(this.current_membership.location.code)
+      this.clock_box_free()
+      this.clock_box = new ClockBox({
         initial_main_sec:  this.current_rule_info.initial_main_sec,
         initial_read_sec:  this.current_rule_info.initial_read_sec,
         initial_extra_sec: this.current_rule_info.initial_extra_sec,
@@ -38,11 +38,11 @@ export const application_battle_versus = {
           this.vs_func_time_zero_handle(e)
         },
       })
-      this.chess_clock.initial_boot_from(0) // ▲から始まる
+      this.clock_box.initial_boot_from(0) // ▲から始まる
     },
 
     vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
-      this.chess_clock.tap_on(this.current_membership.location)
+      this.clock_box.tap_on(this.current_membership.location)
       this.vs_func_play_board_share(long_sfen)
     },
 
@@ -61,7 +61,7 @@ export const application_battle_versus = {
         // 自分の操作を相手の盤面で動かす
         this.vs_share_sfen = params.vs_share_sfen
         // this.sound_play("piece_sound") // shogi-player で音が鳴らないのでここで鳴らす
-        this.chess_clock.tap_on(this.opponent_membership.location)
+        this.clock_box.tap_on(this.opponent_membership.location)
       }
     },
 

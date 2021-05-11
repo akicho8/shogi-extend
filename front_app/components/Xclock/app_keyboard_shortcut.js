@@ -18,24 +18,24 @@ export const app_keyboard_shortcut = {
       }
 
       // 動作中かつポーズ中は操作禁止
-      if (this.chess_clock.running_p && this.chess_clock.timer == null) {
+      if (this.clock_box.running_p && this.clock_box.timer == null) {
         return
       }
 
       // 時間切れになったあとは操作禁止
-      if (this.chess_clock.zero_arrival) {
+      if (this.clock_box.zero_arrival) {
         return
       }
 
       // 左
       if (["ShiftLeft", "ControlLeft", "Tab"].includes(e.code)) {
-        this.xswitch_handle(this.chess_clock.single_clocks[0])
+        this.xswitch_handle(this.clock_box.single_clocks[0])
         e.preventDefault()
       }
 
       // 右
       if (["ShiftRight", "ControlRight", "Enter", "ArrowRight", "ArrowUp", "ArrowDown", "ArrowLeft"].includes(e.code)) {
-        this.xswitch_handle(this.chess_clock.single_clocks[1])
+        this.xswitch_handle(this.clock_box.single_clocks[1])
         e.preventDefault()
       }
     },

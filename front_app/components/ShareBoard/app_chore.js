@@ -52,7 +52,7 @@ export const app_chore = {
 
     exit_handle() {
       this.sound_play("click")
-      if (this.ac_room || this.chess_clock) {
+      if (this.ac_room || this.clock_box) {
 
         this.talk("本当に退室してもよろしいですか？")
 

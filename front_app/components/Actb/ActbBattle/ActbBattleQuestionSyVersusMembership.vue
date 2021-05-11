@@ -12,7 +12,7 @@
       //- | {{membership.position}}
       //- | {{membership.location.name}}
     .time_format.has-text-centered.fixed_font.ml-3.has-background-white-ter
-      | {{base.chess_clock.single_clocks[membership.position].to_time_format}}
+      | {{base.clock_box.single_clocks[membership.position].to_time_format}}
 </template>
 
 <script>

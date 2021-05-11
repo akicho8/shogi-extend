@@ -1,6 +1,6 @@
 <template lang="pug">
 .EmoxBattleVersusMembership.has-text-centered
-  span.time_format.fixed_font.has-background-white-ter.px-3.py-3.is-size-3(v-if="base.chess_clock")
+  span.time_format.fixed_font.has-background-white-ter.px-3.py-3.is-size-3(v-if="base.clock_box")
     | {{base.membership_clock_time_format(membership)}}
 </template>
 

@@ -2,10 +2,10 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox(v-if="development_p")
-      template(v-if="chess_clock")
+      template(v-if="clock_box")
         p next_location: {{next_location.key}}
-        p timer: {{chess_clock.timer}}
-        p running_p: {{chess_clock.running_p}}
+        p timer: {{clock_box.timer}}
+        p running_p: {{clock_box.running_p}}
       p send_success_p={{send_success_p}}
       p sequence_codes={{sequence_codes}}
       p $route.query: {{$route.query}}
@@ -89,7 +89,7 @@ client-only
 
         .columns(v-if="development_p")
           .column.is-clipped
-            ChessClockInspector(:chess_clock="chess_clock" v-if="chess_clock")
+            ClockBoxInspector(:clock_box="clock_box" v-if="clock_box")
 
             .box
               .buttons
@@ -100,8 +100,8 @@ client-only
                 b-button(@click="al_add_test") 指
                 b-button(@click="time_limit_modal_handle") 時間切れ
                 b-button(@click="edit_warn_modal_handle") 編集警告
-                b-button(@click="chess_clock_share('')") 時計同期
-                b-button(@click="chess_clock_share()") 時計同期(message=null)
+                b-button(@click="clock_box_share('')") 時計同期
+                b-button(@click="clock_box_share()") 時計同期(message=null)
                 b-button(@click="fake_error") エラー
                 b-button(@click="reload_modal_handle") リロード確認
 
@@ -135,7 +135,7 @@ import { support_parent       } from "./support_parent.js"
 
 import { app_action_log       } from "./app_action_log.js"
 import { app_message_logs     } from "./app_message_logs.js"
-import { app_chess_clock      } from "./app_chess_clock.js"
+import { app_clock_box      } from "./app_clock_box.js"
 import { app_turn_notify      } from "./app_turn_notify.js"
 import { app_ordered_members  } from "./app_ordered_members.js"
 import { app_chore            } from "./app_chore.js"
@@ -162,7 +162,7 @@ export default {
     support_parent,
     app_action_log,
     app_message_logs,
-    app_chess_clock,
+    app_clock_box,
     app_turn_notify,
     app_ordered_members,
     app_chore,
@@ -246,12 +246,12 @@ export default {
       // 時計があれば操作した側のボタンを押す
       // last_move_info.player_location なら指した人の色で判定
       // last_move_info.to_location なら駒の色で判定
-      if (this.chess_clock) {
-        this.chess_clock.tap_on(last_move_info.player_location)
+      if (this.clock_box) {
+        this.clock_box.tap_on(last_move_info.player_location)
       }
 
       // 時計の状態をブロードキャストする
-      this.chess_clock_share("")
+      this.clock_box_share("")
     },
 
     // デバッグ用

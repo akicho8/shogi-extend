@@ -10,7 +10,7 @@
   ActbHistoryApp( :base="base" v-if="mode === 'history'")
   ActbBuilderApp( :base="base" v-if="mode === 'builder'" ref="builder")
   ActbMenuApp(    :base="base" v-if="mode === 'menu'")
-  ActbChessClock( :base="base" v-if="mode === 'chess_clock'")
+  ActbClockBox( :base="base" v-if="mode === 'clock_box'")
 
   details(v-if="base.debug_read_p")
     summary DEBUG
@@ -160,8 +160,8 @@ export default {
         if (this.info.warp_to === "history") {
           this.history_handle()
         }
-        if (this.info.warp_to === "chess_clock") {
-          this.chess_clock_handle()
+        if (this.info.warp_to === "clock_box") {
+          this.clock_box_handle()
         }
         if (this.info.warp_to === "ov_question_info") {
           this.ov_question_info_set(this.info.question_id)
@@ -411,11 +411,11 @@ export default {
       }
     },
 
-    chess_clock_handle() {
-      if (this.mode === "chess_clock") {
+    clock_box_handle() {
+      if (this.mode === "clock_box") {
       } else {
         this.lobby_unsubscribe()
-        this.mode = "chess_clock"
+        this.mode = "clock_box"
       }
     },
   },

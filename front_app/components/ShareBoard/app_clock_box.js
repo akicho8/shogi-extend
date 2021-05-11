@@ -1,9 +1,9 @@
 import { IntervalRunner } from '@/components/models/interval_runner.js'
-import { ChessClock     } from "@/components/models/chess_clock.js"
+import { ClockBox     } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo     } from "@/components/models/cc_rule_info.js"
 import { Location       } from "shogi-player/components/models/location.js"
 
-import ChessClockModal from "./ChessClockModal.vue"
+import ClockBoxModal from "./ClockBoxModal.vue"
 import TimeLimitModal  from "./TimeLimitModal.vue"
 
 const BYOYOMI_TALK_PITCH = 1.65 // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
@@ -15,10 +15,10 @@ const CC_DEFAULT_PARAMS = {
   every_plus:        0, // 1手毎加算
 }
 
-export const app_chess_clock = {
+export const app_clock_box = {
   data() {
     return {
-      chess_clock: null,
+      clock_box: null,
       cc_params: {...CC_DEFAULT_PARAMS},
     }
   },
@@ -32,13 +32,13 @@ export const app_chess_clock = {
       this.cc_params = { initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }
       this.cc_create()
       this.cc_params_apply()
-      this.chess_clock.play_handle()
+      this.clock_box.play_handle()
     }
 
-    if (this.$route.query["chess_clock.play_handle"] === "true") {
+    if (this.$route.query["clock_box.play_handle"] === "true") {
       this.cc_create()
       this.cc_params_apply()
-      this.chess_clock.play_handle()
+      this.clock_box.play_handle()
     }
   },
 
@@ -49,7 +49,7 @@ export const app_chess_clock = {
   methods: {
     cc_setup_by_url_params() {
       ["initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus"].forEach(key => {
-        const argv = this.$route.query[`chess_clock.${key}`]
+        const argv = this.$route.query[`clock_box.${key}`]
         if (this.present_p(argv)) {
           const value = parseInt(argv)
           this.$set(this.cc_params, key, value)
@@ -58,13 +58,13 @@ export const app_chess_clock = {
     },
 
     cc_create_unless_exist() {
-      if (!this.chess_clock) {
+      if (!this.clock_box) {
         this.cc_create()
       }
     },
     cc_create() {
       this.cc_destroy()
-      this.chess_clock = new ChessClock({
+      this.clock_box = new ClockBox({
         turn: this.current_location.code, // this.current_sfen を元にした現在の手番
         clock_switch_hook: () => {
           // this.sound_play("click")
@@ -100,9 +100,9 @@ export const app_chess_clock = {
     },
 
     cc_destroy() {
-      if (this.chess_clock) {
-        this.chess_clock.timer_stop()
-        this.chess_clock = null
+      if (this.clock_box) {
+        this.clock_box.timer_stop()
+        this.clock_box = null
       }
     },
 
@@ -111,7 +111,7 @@ export const app_chess_clock = {
       this.sound_play("click")
 
       this.$buefy.modal.open({
-        component: ChessClockModal,
+        component: ClockBoxModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
@@ -153,14 +153,14 @@ export const app_chess_clock = {
 
     cc_resume_handle() {
       // this.sound_play("click")
-      this.chess_clock.resume_handle()
+      this.clock_box.resume_handle()
       this.talk_stop()
     },
     cc_pause_handle() {
-      if (this.chess_clock.running_p) {
+      if (this.clock_box.running_p) {
         // this.talk_stop()
         // this.sound_play("click")
-        this.chess_clock.pause_handle()
+        this.clock_box.pause_handle()
 
         if (false) {
           this.$buefy.dialog.confirm({
@@ -179,24 +179,24 @@ export const app_chess_clock = {
       }
     },
     cc_stop_handle() {
-      if (this.chess_clock.running_p) {
+      if (this.clock_box.running_p) {
         // this.talk_stop()
         // this.sound_play("click")
-        this.chess_clock.stop_handle()
+        this.clock_box.stop_handle()
       }
     },
     cc_play_handle() {
-      if (this.chess_clock.running_p) {
+      if (this.clock_box.running_p) {
       } else {
         // this.sound_play("start")
         // this.ga_click("対局時計●")
-        this.chess_clock.play_handle()
+        this.clock_box.play_handle()
       }
     },
     // 指した直後に片方の時計のボタンを押す
     // cc_switch_handle(player_location) {
-    //   if (this.chess_clock.running_p) {
-    //     this.chess_clock.tap_on(player_location)
+    //   if (this.clock_box.running_p) {
+    //     this.clock_box.tap_on(player_location)
     //   }
     // },
     cc_copy_handle() {
@@ -214,7 +214,7 @@ export const app_chess_clock = {
         onConfirm: () => {
           this.talk_stop()
           this.sound_play("click")
-          this.chess_clock.copy_1p_to_2p()
+          this.clock_box.copy_1p_to_2p()
           this.talk("コピーしました")
         },
         onCancel: () => {
@@ -238,7 +238,7 @@ export const app_chess_clock = {
         initial_extra_sec: this.cc_params.initial_extra_sec,
         every_plus:        this.cc_params.every_plus,
       }
-      this.chess_clock.rule_set_all(params)
+      this.clock_box.rule_set_all(params)
     },
 
     cc_params_set_by_cc_rule_key(cc_rule_key) {
@@ -296,7 +296,7 @@ export const app_chess_clock = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 時計の状態をすべて共有する
-    chess_clock_share(message) {
+    clock_box_share(message) {
       this.__assert__(message != null, "message != null")
       // if (message) {
       //   this.toast_ok(message)
@@ -304,18 +304,18 @@ export const app_chess_clock = {
       const params = {}
       params.cc_params = this.cc_params
       params.message = message
-      if (this.chess_clock) {
-        params.chess_clock_attributes = this.chess_clock.attributes
+      if (this.clock_box) {
+        params.clock_box_attributes = this.clock_box.attributes
       }
-      this.ac_room_perform("chess_clock_share", params) // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("clock_box_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    chess_clock_share_broadcasted(params) {
+    clock_box_share_broadcasted(params) {
       this.debug_alert("時計同期")
       if (params.from_user_code === this.user_code) {
       } else {
-        if (params.chess_clock_attributes) {
+        if (params.clock_box_attributes) {
           this.cc_create_unless_exist()                               // 時計がなければ作って
-          this.chess_clock.attributes = params.chess_clock_attributes // 内部状態を同じにする
+          this.clock_box.attributes = params.clock_box_attributes // 内部状態を同じにする
           this.cc_params = {...params.cc_params}                      // モーダルのパラメータを同じにする
         } else {
           this.cc_destroy()
@@ -347,16 +347,16 @@ export const app_chess_clock = {
     CcRuleInfo() { return CcRuleInfo },
 
     // return {
-    //   black: { name: "先手", time: this.chess_clock.single_clocks[0].to_time_format },
-    //   white: { name: "後手", time: this.chess_clock.single_clocks[1].to_time_format },
+    //   black: { name: "先手", time: this.clock_box.single_clocks[0].to_time_format },
+    //   white: { name: "後手", time: this.clock_box.single_clocks[1].to_time_format },
     // }
     sp_player_info() {
-      if (this.chess_clock) {
+      if (this.clock_box) {
         return Location.values.reduce((a, e, i) => {
           return {
             ...a,
             [e.key]: {
-              ...this.cc_player_info(this.chess_clock.single_clocks[i]),
+              ...this.cc_player_info(this.clock_box.single_clocks[i]),
             },
           }
         }, {})
