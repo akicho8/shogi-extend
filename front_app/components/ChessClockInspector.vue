@@ -30,8 +30,8 @@
           .buttons
             b-button(@click="chess_clock.tap_on('black')") ☗
             b-button(@click="chess_clock.tap_on('white')") ☖
-            b-button(@click="chess_clock.turn_to('black')") ☗
-            b-button(@click="chess_clock.turn_to('white')") ☖
+            b-button(@click="chess_clock.location_to('black')") ☗
+            b-button(@click="chess_clock.location_to('white')") ☖
             b-button(@click="chess_clock.clock_switch()"  icon-left="arrow-left-right")
             b-button(@click="chess_clock.stop_handle()"   icon-left="stop")
             b-button(@click="chess_clock.pause_handle()"  icon-left="pause")

@@ -112,28 +112,13 @@ export const app_force_sync = {
     },
 
     force_sync_broadcasted(params) {
-      // if (params.from_user_code === this.user_code) {
-      //   this.debug_alert("自分受信")
-      //   this.toast_ok(`${this.user_call_name(params.from_user_name)}の盤の状態をみんなに送ってセットしました`)
-      // } else {
-      //   this.debug_alert("相手受信")
-
-      // this.tl_add("FORCE_SYNCED", params.sfen)
-      // this.tl_add("FORCE_SYNCED", params.turn_offset)
-
       this.setup_by_params(params) // これで current_location が更新される
       if (this.chess_clock) {
-        // this.tl_add("current_location", this.current_location.key)
-        // this.tl_add("LOCATION", this.chess_clock.current_location.key)
-        this.chess_clock.turn_to(this.current_location)
-        // this.tl_add("LOCATION", this.chess_clock.current_location.key)
+        this.chess_clock.location_to(this.current_location)
       }
-
       if (params.message) {
         this.toast_ok(params.message)
-        // this.toast_ok(`${this.user_call_name(params.from_user_name)}から送られてきた盤の状態に合わせました`)
       }
-      // }
     },
   },
 }

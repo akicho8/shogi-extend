@@ -117,18 +117,18 @@ export class SingleClock {
   // 指した直後に時計のボタンを押す
   tap_on() {
     if (this.active_p) {
-      if (this.running_p) {
-        this.rebirth()
-      }
+      this.rebirth()
       this.base.clock_switch()
     }
   }
 
-  // 1手戻すとしたとき秒読みが減ったままだとかわいそうなので元に戻してあげる
+  // 1手指したときに再生する値
   rebirth() {
-    this.generation_next(this.every_plus)
-    this.read_sec_set()
-    this.minus_sec = 0 // 押したらマイナスになったぶんは0に戻しておく。これで再びチーンになる
+    if (this.running_p) {
+      this.generation_next(this.every_plus)
+      this.read_sec_set()
+      this.minus_sec = 0 // 押したらマイナスになったぶんは0に戻しておく。これで再びチーンになる
+    }
   }
 
   // switch_handle() {

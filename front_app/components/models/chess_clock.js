@@ -67,11 +67,8 @@ export class ChessClock {
 
   // location 側のターンに強制変更
   // これは1手戻すなどのときに使う
-  turn_to(location) {
-    if (true) {
-      // 今のターンの人が不利にならないよう秒読みは元に戻してあげる
-      this.current.rebirth()
-    }
+  location_to(location) {
+    this.current.rebirth() // 戻るときに今のターンの人が損にならないように秒読みを戻してあげる(フィッシャー分も加算)
     this.turn = Location.fetch(location).code
   }
 
@@ -144,6 +141,7 @@ export class ChessClock {
   ////////////////////////////////////////////////////////////////////////////////
 
   turn_wrap(v) {
+    this.__assert__(v != null, "v != null")
     return v % Location.values.length
   }
 
