@@ -26,7 +26,7 @@ class Talk
 
     # rails r 'Talk.cache_delete_all'
     def cache_delete_all
-      FileUtils.rm_f(cache_root)
+      FileUtils.rm_rf(cache_root)
     end
   end
 
