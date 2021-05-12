@@ -85,13 +85,13 @@ RSpec.describe "共有将棋盤", type: :system do
         first(".close_button").click                              # 共有ボタンをクリックする
       end
 
-      assert_move("59", "58", "☗5八玉")                        # aliceは一人で初手を指した
+      assert_move("17", "16", "☗1六歩")                      # aliceは一人で初手を指した
     end
     b_block do
       # bob が別の画面でログインする
       room_setup("my_room", "bob")                            # alice と同じ部屋の合言葉を設定する
       assert_text("alice")                                    # すでにaliceがいるのがわかる
-      doc_image("bobはaliceの盤面を貰った")                   # この時点で▲58玉が共有されている
+      doc_image("bobはaliceの盤面を貰った")                   # この時点で▲16歩が共有されている
     end
     a_block do
       assert_text("bob")                                        # alice側の画面にはbobが表示されている
@@ -110,13 +110,13 @@ RSpec.describe "共有将棋盤", type: :system do
   it "順番設定OFF状態で共有" do
     a_block do
       room_setup("my_room", "alice")
-      assert_move("59", "58", "☗5八玉")                        # aliceは一人で初手を指した
+      assert_move("17", "16", "☗1六歩")                      # aliceは一人で初手を指した
     end
     b_block do
       room_setup("my_room", "bob")                            # alice と同じ部屋の合言葉を設定する
       assert_member_exist("alice")
       assert_member_exist("bob")
-      doc_image("bobはaliceの盤面を貰った")                   # この時点で▲58玉が共有されている
+      doc_image("bobはaliceの盤面を貰った")                   # この時点で▲16歩が共有されている
     end
     a_block do
       assert_member_exist("alice")
