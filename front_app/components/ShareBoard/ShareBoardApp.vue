@@ -128,6 +128,8 @@ const INTERNAL_RULE_DEFAULT = "strict"
 
 import _ from "lodash"
 
+import { DotSfen } from "@/components/models/dot_sfen.js"
+
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 import { Location       } from "shogi-player/components/models/location.js"
 
@@ -345,7 +347,7 @@ export default {
     current_url_params() {
       let params = {
         ...this.$route.query,                  // デバッグ用パラメータを保持するため
-        body:               this.current_body, // 編集モードでもURLを更新するため
+        body:               DotSfen.escape(this.current_body), // 編集モードでもURLを更新するため
         turn:               this.turn_offset,
         title:              this.current_title,
         abstract_viewpoint: this.abstract_viewpoint,
