@@ -5,7 +5,8 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
       b-icon(icon="home")
 
     b-navbar-item.has-text-weight-bold.title_edit_navbar_item(@click="base.title_edit")
-      | {{base.current_title || '？'}}
+      span.current_title.is_truncate
+        | {{base.current_title || '？'}}
       span.mx-1(v-if="base.play_mode_p && base.turn_offset >= 1")
         | \#{{base.turn_offset}}
       span.mx-1(v-if="base.edit_mode_p")
@@ -52,7 +53,13 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .ShareBoardNavbar
-  .message_modal_handle
+  .current_title
+    +mobile
+      width: 12rem
+      display: inline-block
+
+  // メッセージアイコンは2つをずらして組み合わせる
+  .message_navbar_item
     .icon
       position: relative
       &.account_icon
