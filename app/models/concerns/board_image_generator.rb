@@ -123,7 +123,7 @@ class BoardImageGenerator
   def force_generate
     real_path.dirname.mkpath
     real_path.binwrite(to_blob)
-    real_path.sub_ext(".rb").write(to_blob_options.pretty_inspect)
+    real_path.sub_ext(".rb").write(to_blob_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
   end
 
   # system/ だと /s/system になってしまうので / から始めるようにする
