@@ -24,6 +24,7 @@ class Talk
       Rails.public_path.join("system", name.underscore)
     end
 
+    # cap production rails:runner CODE='Talk.cache_delete_all'
     # rails r 'Talk.cache_delete_all'
     def cache_delete_all
       FileUtils.rm_rf(cache_root)

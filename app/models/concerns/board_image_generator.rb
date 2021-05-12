@@ -6,6 +6,7 @@ class BoardImageGenerator
       Rails.public_path.join("system", "board_images")
     end
 
+    # cap production rails:runner CODE='BoardImageGenerator.cache_delete_all'
     def cache_delete_all
       FileUtils.rm_rf(cache_root)
     end
