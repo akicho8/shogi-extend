@@ -72,7 +72,7 @@ export default {
     leave_handle() {
       this.sound_play("click")
       if (this.base.ac_room) {
-        this.toast_ok("退室しました")
+        // this.toast_ok("退室しました")
         this.base.room_destroy()
       } else {
         this.toast_warn("今は部屋の外です")

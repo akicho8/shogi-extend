@@ -79,8 +79,7 @@ export const app_room_members = {
         // 他の人が存在することを自分に伝えられた
       }
       if (params.alive_notice_count === 1) {
-        this.sound_play("new_challenge")
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`)
+        this.room_entry_call(params.from_user_name)
       }
       this.member_add(params)
     },
@@ -153,6 +152,11 @@ export const app_room_members = {
     // 通達があってからの経過秒数
     member_elapsed_sec(e) {
       return (this.time_current_ms() - e.performed_at) / 1000
+    },
+
+    // 退出
+    member_reject(leave_info) {
+      this.member_infos = _.reject(this.member_infos, e => e.from_user_code === leave_info.from_user_code)
     },
   },
   computed: {

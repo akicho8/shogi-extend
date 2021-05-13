@@ -104,6 +104,8 @@ client-only
                 b-button(@click="clock_box_share()") 時計同期(message=null)
                 b-button(@click="fake_error") エラー
                 b-button(@click="reload_modal_handle") リロード確認
+                b-button(@click="room_entry_call('alice')") 入室コール
+                b-button(@click="room_leave_call('alice')") 退室コール
 
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
@@ -143,6 +145,7 @@ import { app_ordered_members  } from "./app_ordered_members.js"
 import { app_chore            } from "./app_chore.js"
 import { app_edit_mode        } from "./app_edit_mode.js"
 import { app_room_setup       } from "./app_room_setup.js"
+import { app_room_leave       } from "./app_room_leave.js"
 import { app_track_log        } from "./app_track_log.js"
 import { app_room_board_setup } from "./app_room_board_setup.js"
 import { app_room_members     } from "./app_room_members.js"
@@ -170,6 +173,7 @@ export default {
     app_chore,
     app_edit_mode,
     app_room_setup,
+    app_room_leave,
     app_track_log,
     app_room_board_setup,
     app_room_members,

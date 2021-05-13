@@ -507,7 +507,7 @@ RSpec.describe "共有将棋盤", type: :system do
     before do
       @INITIAL_SEC = 30
     end
-    
+
     it "works" do
       a_block do
         room_setup("my_room", "alice")            # aliceが部屋を作る
@@ -692,6 +692,33 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '退室するとメンバー一覧から即削除'
+  describe "退室するとメンバー一覧から即削除" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice") # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")   # bobも同じ部屋に入る
+        assert_member_exist("alice")   # alice がいる
+        assert_member_exist("bob")     # bob もいる
+      end
+      a_block do
+        assert_member_exist("alice")   # alice の部屋にも alice と
+        assert_member_exist("bob")     # bob がいる
+
+        side_menu_open
+        menu_item_click("部屋に入る")  # 「部屋に入る」を自分でクリックする
+        first(".leave_button").click   # 退室ボタンをクリックする
+        first(".close_button").click   # 閉じる
+      end
+      b_block do
+        assert_member_missing("alice") # bob 側の alice が即座に消えた
+        assert_member_exist("bob")     # bob は、おる
+      end
+    end
+  end
+
   def visit_with_args(args)
     visit "/share-board?#{args.to_query}"
   end
@@ -783,6 +810,11 @@ RSpec.describe "共有将棋盤", type: :system do
   # メンバーが存在する
   def assert_member_exist(user_name)
     assert_selector(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]//*[text()='#{user_name}']")
+  end
+
+  # メンバーが存在しない
+  def assert_member_missing(user_name)
+    assert_no_selector(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]//*[text()='#{user_name}']")
   end
 
   def member_list_click(i)

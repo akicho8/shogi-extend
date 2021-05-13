@@ -10,6 +10,11 @@ module ShareBoard
       simple_track("購読停止")
     end
 
+    def room_leave(data)
+      track(data, "部屋退出", "BYE")
+      broadcast(:room_leave_broadcasted, data)
+    end
+
     def force_sync(data)
       track(data, "局面転送", data.slice("turn_offset", "sfen"))
       broadcast(:force_sync_broadcasted, data)
