@@ -62,7 +62,9 @@ module ShareBoardControllerMethods
         path = current_record.to_real_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
         send_file path, type: Mime[:png], disposition: current_disposition, filename: current_filename
       else
-        redirect_to current_record.to_browser_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+        # redirect_to current_record.to_browser_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+        path = current_record.to_real_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+        send_file path, type: Mime[:png], disposition: current_disposition, filename: current_filename
       end
       return
     end
