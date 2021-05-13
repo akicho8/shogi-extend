@@ -48,17 +48,17 @@ export const window_active_check = {
 
     window_active_change_hook(focus_p) {
       if (focus_p) {
-        this.window_active_count += 1
+        this.window_active_count = 1
         if (this.window_focus_user_after_hook) {
           this.window_focus_user_after_hook()
         }
       } else {
-        this.window_active_count -= 1
+        this.window_active_count = 0
         if (this.window_blur_user_after_hook) {
           this.window_blur_user_after_hook()
         }
       }
-      this.__assert__(this.window_active_count === 0 || this.window_active_count === 1, "this.window_active_count === 0 || this.window_active_count === 1")
+      // this.__assert__(this.window_active_count === 0 || this.window_active_count === 1, "this.window_active_count === 0 || this.window_active_count === 1")
       if (this.window_active_change_user_hook) {
         this.window_active_change_user_hook(focus_p)
       }
