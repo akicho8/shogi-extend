@@ -5,7 +5,7 @@
 
 // const USE_VISIBILITYCHANGE = true
 
-export const window_active_check = {
+export const window_active_detector = {
   data() {
     return {
       window_active_p: null, // ここで this.native_window_active_p() を呼ぶと SSR でひっかる

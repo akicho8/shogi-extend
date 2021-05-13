@@ -156,7 +156,7 @@ import { app_export           } from "./app_export.js"
 import { app_sfen_share       } from "./app_sfen_share.js"
 import { app_force_sync       } from "./app_force_sync.js"
 import { app_room_recreate    } from "./app_room_recreate.js"
-import { window_active_check  } from "./window_active_check.js"
+import { window_active_detector  } from "./window_active_detector.js"
 
 export default {
   name: "ShareBoardApp",
@@ -183,7 +183,7 @@ export default {
     app_sfen_share,
     app_force_sync,
     app_room_recreate,
-    window_active_check,
+    window_active_detector,
   ],
   props: {
     config: { type: Object, required: true },
