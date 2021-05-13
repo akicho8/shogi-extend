@@ -33,7 +33,7 @@ export const app_room_board_setup = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     setup_info_request_broadcasted(params) {
-      this.debug_alert(`${this.user_call_name(params.from_user_name)}が入室しました`)
+      // this.debug_alert(`${this.user_call_name(params.from_user_name)}が入室しました`)
       this.sound_play("pon")
       this.clog(`${params.from_user_code} が要求`)
       if (params.from_user_code === this.user_code) {

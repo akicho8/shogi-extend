@@ -78,7 +78,7 @@ export const app_room_setup = {
 
       this.room_code = room_code
       this.room_create()
-      this.toast_ok("入室しました")
+      // this.toast_ok("入室しました")
     },
 
     room_create() {

@@ -48,7 +48,7 @@ export const app_room_recreate = {
           this.room_create()
           this.room_creating_busy = 0
           loading.close()
-          this.toast_ok("入室しました")
+          // this.toast_ok("入室しました")
         })
       } else {
         this.room_create()

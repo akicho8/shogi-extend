@@ -58,6 +58,7 @@ export const app_room_members = {
     // 自分が存在することをみんなに伝える
     member_info_share() {
       if (!this.ac_room) {
+        // alive_notice_count が変化しないようにするため
         return
       }
       this.debug_alert("生存通知")
@@ -76,6 +77,10 @@ export const app_room_members = {
         // 誰かが存在することを自分に伝えられた
       } else {
         // 他の人が存在することを自分に伝えられた
+      }
+      if (params.alive_notice_count === 1) {
+        this.sound_play("new_challenge")
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`)
       }
       this.member_add(params)
     },
