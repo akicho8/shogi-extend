@@ -1,5 +1,7 @@
 # -*- mode: ruby -*-
 [
+  "https://www.shogi-extend.com/robots.txt",
+
   "https://www.shogi-extend.com/rack",
   "https://www.shogi-extend.com/rack/books",
   "https://www.shogi-extend.com/rack/articles",
