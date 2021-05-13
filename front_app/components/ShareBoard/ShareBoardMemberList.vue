@@ -108,7 +108,7 @@ export default {
         is_turn_standby: this.order_lookup(e) && this.base.current_turn_user_name !== e.from_user_name, // 手番待ちの人
         is_watching:      this.base.order_func_p && !this.order_lookup(e),                               // 観戦
         is_self:          this.base.user_code === e.from_user_code,                                      // 自分？
-        is_window_blur:   e.window_active_count === 0,                                                   // Windowが非アクティブ状態か？
+        is_window_blur:   !e.window_active_p,                                                            // Windowが非アクティブ状態か？
       }
     },
   },

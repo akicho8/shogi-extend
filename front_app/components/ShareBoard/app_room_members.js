@@ -64,9 +64,9 @@ export const app_room_members = {
       // this.tl_add("USER", "member_info_share")
       this.alive_notice_count += 1
       this.ac_room_perform("member_info_share", {
-        alive_notice_count:  this.alive_notice_count,   // 通知した回数
-        room_joined_at:      this.room_joined_at,       // 部屋に入った日時(古参比較用)
-        window_active_count: this.window_active_count,  // Windowの状態
+        alive_notice_count:  this.alive_notice_count, // 通知した回数
+        room_joined_at:      this.room_joined_at,     // 部屋に入った日時(古参比較用)
+        window_active_p:     this.window_active_p,    // Windowの状態
       }) // --> app/channels/share_board/room_channel.rb
     },
 
@@ -106,7 +106,7 @@ export const app_room_members = {
           room_joined_at: room_joined_at + i,
           from_user_code: i === 0 ? this.user_code : i,
           from_user_name: e,
-          window_active_count: 1,
+          window_active_p: true,
         }))
       }
 
