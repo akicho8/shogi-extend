@@ -85,7 +85,7 @@ class BoardImageGenerator
   private
 
   def real_path
-    self.class.cache_root.join(*dir_parts, filename)
+    @real_path ||= self.class.cache_root.join(*dir_parts, filename)
   end
 
   def filename
