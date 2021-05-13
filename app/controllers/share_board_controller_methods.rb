@@ -51,21 +51,44 @@ module ShareBoardControllerMethods
 
     # Twitter画像
     # http://localhost:3000/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
+    # パラメータで画像が変化するためキャッシュは危険
+    # Rails側でレコードを作ってキャッシュするときに見ているのはSFENだけ
     if request.format.png?
-      # png = current_record.to_dynamic_png(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
-      # send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
+      # if stale?(current_record)
+      # expires_in 3.hours, public: true
 
       # png = current_record.to_dynamic_png(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
       # send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
 
-      if current_disposition == :attachment
-        path = current_record.to_real_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
-        send_file path, type: Mime[:png], disposition: current_disposition, filename: current_filename
-      else
-        # redirect_to current_record.to_browser_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
-        path = current_record.to_real_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+      # png = current_record.to_dynamic_png(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+      # send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
+
+      # ダウンロードの場合
+
+      # リダイレクトしつつ disposition: attachment で返すことはできないので必然的に send_file を使うことになる
+      # if current_disposition == :attachment
+      #   path = current_record.to_real_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+      #   if stale?(last_modified: Pathname(path).mtime, public: true)
+      #     send_file path, type: Mime[:png], disposition: current_disposition, filename: current_filename
+      #   end
+      #   return
+      # end
+
+      # # ブラウザで直接表示
+      # if params[:redirect_to]
+      #   # Slackなどはこちらでもよい
+      #   # redirect_to current_record.to_browser_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+      # else
+      # end
+
+      # リダイレクトすると Twitter Card が不安定になり、Card Validator では実際警告が出ているため、
+      # Twitter では og:image のパスは直接画像を返さないといけない
+      # Developer Tool でキャッシュOFFでリロードすると確認すると2回目が 302 で返され send_file がスキップされていることがわかる
+      path = current_record.to_real_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+      if stale?(last_modified: path.mtime, public: true)
         send_file path, type: Mime[:png], disposition: current_disposition, filename: current_filename
       end
+
       return
     end
 

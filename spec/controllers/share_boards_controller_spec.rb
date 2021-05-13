@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ShareBoardsController, type: :controller do
   it "HTMLの要求はNuxt側にリダイレクト" do
     get :show, params: { }
-    assert { response.status == 302 }
+    assert { response.status == 200 }
   end
 
   describe "基本「58玉」" do
@@ -12,7 +12,7 @@ RSpec.describe ShareBoardsController, type: :controller do
       assert { response.status == status }
     end
     it "works" do
-      test("png", 302)
+      test("png", 200)
       test("kif", 200)
       test("ki2", 200)
       test("sfen", 200)
@@ -26,7 +26,7 @@ RSpec.describe ShareBoardsController, type: :controller do
       assert { response.status == status }
     end
     it do
-      test("png", 302)
+      test("png", 200)
       test("kif", 200)
     end
   end
