@@ -1,0 +1,5 @@
+# -*- compile-command: "scp staging.robots.txt s:/var/www/shogi_web_staging/current/front_app/static/robots.txt" -*-
+
+User-agent: Googlebot
+Disallow: /
+

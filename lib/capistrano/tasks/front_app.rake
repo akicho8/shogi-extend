@@ -25,9 +25,12 @@ namespace :front_app do
       on roles(:web) do |host|
         execute :rm, "-rf", "#{release_path}/public/app"
         execute :rm, "-rf", "#{release_path}/public/s"
+        execute :rm, "-rf", "#{release_path}/front_app/static"
         execute :rm, "-rf", "#{release_path}/front_app/.nuxts"
+        upload! "front_app/static", "#{release_path}/front_app/", recursive: true # static は .nuxt の下に入らずそのまま配信されるため
         upload! "front_app/.nuxt", "#{release_path}/front_app/", recursive: true
         upload! "front_app/.env.#{fetch(:stage)}", "#{release_path}/front_app/"
+        upload! "front_app/static/#{fetch(:stage)}.robots.txt", "#{release_path}/front_app/static/"
 
         within "#{release_path}/front_app" do
           execute :yarn
