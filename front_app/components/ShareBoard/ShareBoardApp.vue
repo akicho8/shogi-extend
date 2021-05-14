@@ -54,7 +54,7 @@ client-only
               :sp_play_mode_only_own_piece_to_move="strict_p"
               :sp_play_mode_can_not_kill_same_team_soldier="strict_p"
 
-              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen2_set"
+              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
               @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
               @update:turn_offset="v => turn_offset = v"
