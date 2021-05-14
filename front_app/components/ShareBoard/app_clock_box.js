@@ -9,10 +9,10 @@ import TimeLimitModal  from "./TimeLimitModal.vue"
 const BYOYOMI_TALK_PITCH = 1.65 // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
 
 const CC_DEFAULT_PARAMS = {
-  initial_main_min: 10, // 持ち時間(分)
-  initial_read_sec: 30, // 秒読み
-  initial_extra_sec: 0, // 猶予(秒)
-  every_plus:        0, // 1手毎加算
+  initial_main_min:   0, // 持ち時間(分)
+  initial_read_sec:  30, // 秒読み
+  initial_extra_sec: 30, // 猶予(秒)
+  every_plus:         0, // 1手毎加算
 }
 
 export const app_clock_box = {
