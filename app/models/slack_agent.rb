@@ -1,7 +1,7 @@
 module SlackAgent
   extend self
 
-  mattr_accessor(:default_channel) { "#shogi_web" }
+  mattr_accessor(:default_channel) { "#shogi-extend-#{Rails.env}" }
   mattr_accessor(:backtrace_lines_max) { 4 }
 
   # rails r "SlackAgent.notify_exception(Exception.new)"
