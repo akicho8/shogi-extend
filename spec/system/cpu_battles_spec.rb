@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "CPU対戦", type: :system do
   it "トップ" do
     visit "/cpu-battle"
-    expect(page).to have_content "強さ"
+    assert_text "強さ"
     doc_image
   end
 
@@ -24,7 +24,7 @@ RSpec.describe "CPU対戦", type: :system do
     first(".place_7_9").click
     first(".place_6_8").click
     doc_image("1手目")
-    expect(page).to have_content "#2" # CPUがすぐに指したため2手になっている
+    assert_text "#2" # CPUがすぐに指したため2手になっている
 
     # 3手目「５一飛成」を指す
     if false
@@ -32,9 +32,9 @@ RSpec.describe "CPU対戦", type: :system do
       first(".place_5_1").click
       doc_image("3手目")
       first(".promote_on_button").click
-      # expect(page).to have_content "成りますか？"
+      # assert_text "成りますか？"
       # click_on("成る")
-      expect(page).to have_content "反則負け"
+      assert_text "反則負け"
       doc_image("反則負け")
     end
   end

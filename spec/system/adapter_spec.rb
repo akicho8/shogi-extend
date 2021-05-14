@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "なんでも棋譜変換", type: :system do
   it "フォームを開く" do
     visit "/adapter"
-    expect(page).to have_content "なんでも棋譜変換"
+    assert_text "なんでも棋譜変換"
     doc_image
   end
 
@@ -11,15 +11,16 @@ RSpec.describe "なんでも棋譜変換", type: :system do
     visit "/adapter"
     find("textarea").set("68S")
     find(".KifCopyButton").click
-    expect(page).to have_content "コピーしました"
+    assert_text "コピーしました"
     doc_image
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/adapter_spec.rb -e 'エラー'
   it "エラー" do
     visit "/adapter"
     find("textarea").set("11玉")
     find(".KifCopyButton").click
-    expect(page).to have_content "駒の上に打とうとしています"
+    assert_text "駒の上に打とうとしています"
     doc_image
   end
 

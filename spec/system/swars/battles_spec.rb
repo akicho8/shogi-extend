@@ -11,14 +11,14 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
   it "ダウンロード" do
     visit "/swars/direct-download?query=Yamada_Taro&sort_column=battled_at&sort_order=desc"
-    expect(page).to have_content "ダウンロード"
+    assert_text "ダウンロード"
     doc_image
   end
 
   describe "index" do
     it "トップ" do
       visit "/swars/search"
-      expect(page).to have_content "将棋ウォーズ棋譜検索"
+      assert_text "将棋ウォーズ棋譜検索"
       expect(page).to have_field "query"
       doc_image
     end
@@ -27,7 +27,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       visit "/swars/search"
       fill_in "query", with: "devuser1"
       find(".search_form_submit_button").click
-      expect(page).to have_content "相手"
+      assert_text "相手"
       doc_image
     end
 
@@ -36,7 +36,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       find(".usage_modal_open_handle").click
       find(".usage_modal .piyo_shogi_button").click
       doc_image("検索画面下の使い方表示")
-      expect(page).to have_content "ホーム画面に追加してください"
+      assert_text "ホーム画面に追加してください"
       doc_image
     end
 
@@ -50,7 +50,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
     # it "連打対策" do
     #   visit "/swars/search?query=devuser1&raise_duplicate_key_error=1"
-    #   expect(page).to have_content "データ収集中なのであと15秒ぐらいしてからお試しください"
+    #   assert_text "データ収集中なのであと15秒ぐらいしてからお試しください"
     #   doc_image
     # end
 
@@ -69,7 +69,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     xit "検索フォームでオートコンプリート作動" do
       visit "/swars/search"
       fill_in "query", with: "補完される文字列"
-      expect(page).to have_content "補完される文字列の全体"
+      assert_text "補完される文字列の全体"
       doc_image
     end
 
@@ -77,14 +77,14 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
       visit "/swars/search?modal_id=#{record.to_param}"
       find(".delete").click
       page.refresh
-      expect(page).to have_content "1-1"
+      assert_text "1-1"
       doc_image
     end
 
     it "一応KENTOに飛べる" do
       visit "/swars/search?query=devuser1"
       find(".KentoButton").click
-      expect(page).to have_content "KENTO" # "☗ KENTO\nLOGIN\n歩\nLOADING...\nKENTO にログイン\nログインすることにより、利用規約・プライバシーポリシーを読み、これに同意するものとします。\nGoogle でログイン\nTwitter でログイン\nまたは\nメールアドレスにログインリンクを送信".
+      assert_text "KENTO" # "☗ KENTO\nLOGIN\n歩\nLOADING...\nKENTO にログイン\nログインすることにより、利用規約・プライバシーポリシーを読み、これに同意するものとします。\nGoogle でログイン\nTwitter でログイン\nまたは\nメールアドレスにログインリンクを送信".
       doc_image
     end
 
@@ -93,8 +93,8 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
       visit "/swars/search?query=devuser1"
       find(".KentoButton").click
-      expect(page).to have_content "KENTO"
-      expect(page).to have_content "#34"
+      assert_text "KENTO"
+      assert_text "#34"
       doc_image
     end
   end
@@ -102,7 +102,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   describe "show" do
     it "詳細" do
       visit "/swars/battles/#{record.to_param}"
-      expect(page).to have_content "devuser1"
+      assert_text "devuser1"
       doc_image
     end
 
@@ -118,20 +118,20 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
 
     it "棋譜用紙" do
       visit "http://0.0.0.0:4000/swars/battles/devuser2-Yamada_Taro-20200101_123402/formal-sheet"
-      expect(page).to have_content "記録係"
+      assert_text "記録係"
       doc_image
     end
 
     xit "棋譜用紙(デバッグ)" do
       visit "/swars/battles/#{record.to_param}?formal_sheet=true&formal_sheet_debug=true"
-      expect(page).to have_content "記録係"
+      assert_text "記録係"
       doc_image
     end
 
     xit "レイアウト崩れの原因を伝えるダイアログ表示" do
       visit "/swars/battles/#{record.to_param}?formal_sheet=true"
       click_on("レイアウトが崩れていませんか？")
-      expect(page).to have_content "最小フォントサイズ"
+      assert_text "最小フォントサイズ"
       doc_image
     end
   end

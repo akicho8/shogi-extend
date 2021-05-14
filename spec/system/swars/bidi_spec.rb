@@ -9,7 +9,7 @@ RSpec.describe "BiDi問題", type: :system do
     visit "/swars/search"
     fill_in "query", with: "\u{202A}devuser1\u{202C}"
     find(".search_form_submit_button").click
-    expect(page).to have_content "相手"
+    assert_text "相手"
     doc_image
   end
 end

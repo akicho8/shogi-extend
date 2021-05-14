@@ -8,14 +8,14 @@ RSpec.describe "棋譜投稿", type: :system do
   # describe "一覧" do
   #   xit "表示" do
   #     visit "/x"
-  #     expect(page).to have_content "一覧"
+  #     assert_text "一覧"
   #   end
   #
   #   xit "modal_id の指定があるときモーダルが出て閉じたとき一覧にも1件表示されている" do
   #     visit "/x?modal_id=#{record.to_param}"
   #     find(".delete").click
   #     page.refresh
-  #     expect(page).to have_content "1-1"
+  #     assert_text "1-1"
   #     doc_image
   #   end
   # end
@@ -36,10 +36,10 @@ RSpec.describe "棋譜投稿", type: :system do
   #     doc_image("入力")
   #     click_button "保存"
   #
-  #     expect(page).to have_content "(題名)"
+  #     assert_text "(題名)"
   #
-  #     # expect(page).to have_content "嬉野流"
-  #     # expect(page).to have_content "６八銀"
+  #     # assert_text "嬉野流"
+  #     # assert_text "６八銀"
   #
   #     doc_image("詳細")
   #   end
@@ -50,13 +50,13 @@ RSpec.describe "棋譜投稿", type: :system do
   #   #   visit "/x/#{record.to_param}"
   #   #   click_on "コピペ新規"
   #   #   text_input_click
-  #   #   expect(page).to have_content "48玉"
+  #   #   assert_text "48玉"
   #   #   doc_image
   #   # end
   #
   #   xit "詳細" do
   #     visit "/x/#{record.to_param}"
-  #     expect(page).to have_content "(test_title)"
+  #     assert_text "(test_title)"
   #   end
   # end
   #
