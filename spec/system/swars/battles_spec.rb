@@ -117,7 +117,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     end
 
     it "棋譜用紙" do
-      visit "http://0.0.0.0:4000/swars/battles/devuser2-Yamada_Taro-20200101_123402/formal-sheet"
+      visit "/swars/battles/devuser2-Yamada_Taro-20200101_123402/formal-sheet"
       assert_text "記録係"
       doc_image
     end

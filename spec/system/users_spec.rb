@@ -28,12 +28,12 @@ RSpec.describe "ユーザー", type: :system do
   end
 
   it "ぴよ将棋設定" do
-    visit "http://0.0.0.0:4000/settings/piyo_shogi"
+    visit "/settings/piyo_shogi"
     doc_image
   end
 
   it "メールアドレス設定" do
-    visit "http://0.0.0.0:4000/settings/email"
+    visit "/settings/email"
     doc_image
   end
 
