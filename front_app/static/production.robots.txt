@@ -12,10 +12,12 @@ disallow: /swars/users/*/kento-api
 
 disallow: /launcher
 
-disallow: /*.kif
-disallow: /*.ki2
-disallow: /*.sfen
-disallow: /*.csa
-disallow: /*.bod
+# "/*.sfen" matches "position.sfen.lnsgkgsnl"
+# "/*.sfen$" not matches "position.sfen.lnsgkgsnl"
+# disallow: /*.kif$
+# disallow: /*.ki2$
+# disallow: /*.sfen$
+# disallow: /*.csa$
+# disallow: /*.bod$
 
 sitemap: https://www.shogi-extend.com/sitemap.xml.gz
