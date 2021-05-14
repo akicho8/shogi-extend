@@ -161,7 +161,7 @@ export const application_battle = {
       }
     },
 
-    play_mode_advanced_full_moves_sfen_set(long_sfen) {
+    play_mode_advanced_full_moves_sfen_set(e) {
       if (this.sub_mode === "sm4_tactic") {
 
         if (this.current_strategy_key === "sy_singleton") {
@@ -175,10 +175,10 @@ export const application_battle = {
             this.ops_interval_restart()
           }
 
-          this.play_board_share(long_sfen)
+          this.play_board_share(e.sfen)
         }
 
-        if (this.current_question.sfen_valid_p(long_sfen)) {
+        if (this.current_question.sfen_valid_p(e.sfen)) {
           this.kotae_sentaku("correct")
         }
       }

@@ -304,7 +304,8 @@ export default {
 
     // 1手実行
     one_hand_exec() {
-      this.play_mode_advanced_full_moves_sfen_set(this.$refs.main_sp.sp_object().play_mode_full_moves_sfen)
+      const sfen = this.$refs.main_sp.sp_object().play_mode_full_moves_sfen
+      this.play_mode_advanced_full_moves_sfen_set({sfen})
     },
 
     // 待った
@@ -348,11 +349,11 @@ export default {
       this.post_apply({candidate_sfen: this.sp_body})
     },
 
-    play_mode_advanced_full_moves_sfen_set(long_sfen) {
+    play_mode_advanced_full_moves_sfen_set(e) {
       if (this.mode === "standby") {
         return
       }
-      this.post_apply({kifu_body: long_sfen})
+      this.post_apply({kifu_body: e.sfen})
     },
 
     post_apply(params) {

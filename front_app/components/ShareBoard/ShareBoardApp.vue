@@ -54,7 +54,7 @@ client-only
               :sp_play_mode_only_own_piece_to_move="strict_p"
               :sp_play_mode_can_not_kill_same_team_soldier="strict_p"
 
-              @update:play_mode_advanced_full_moves_sfen2="play_mode_advanced_full_moves_sfen2_set"
+              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen2_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
               @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
               @update:turn_offset="v => turn_offset = v"
@@ -244,16 +244,16 @@ export default {
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     // 局面0で1手指したとき last_move_info.turn_offset は 1
-    play_mode_advanced_full_moves_sfen2_set(sfen, last_move_info) {
-      this.current_sfen = sfen
-      this.sfen_share_params_set(last_move_info)
+    play_mode_advanced_full_moves_sfen_set(e) {
+      this.current_sfen = e.sfen
+      this.sfen_share_params_set(e.last_move_info)
       this.sfen_share()
 
       // 時計があれば操作した側のボタンを押す
       // last_move_info.player_location なら指した人の色で判定
       // last_move_info.to_location なら駒の色で判定
       if (this.clock_box) {
-        this.clock_box.tap_on(last_move_info.player_location)
+        this.clock_box.tap_on(e.last_move_info.player_location)
       }
 
       // 時計の状態をブロードキャストする
