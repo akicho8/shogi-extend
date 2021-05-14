@@ -322,7 +322,16 @@ export const app_clock_box = {
         }
       }
       if (params.message) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.message}`)
+        const attrs = params.clock_box_attributes
+        if (this.development_p) {
+          if (attrs.play_count === 1 && attrs.pause_count === 0 && attrs.resume_count === 0) {
+            this.sound_play("rooster")
+          }
+        }
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.message}`, {onend: () => {
+          if (attrs) {
+          }
+        }})
       }
     },
 

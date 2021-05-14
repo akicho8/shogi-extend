@@ -19,11 +19,15 @@
     .column
       b-field(label="内部値")
         .control
-          p turn: {{clock_box.turn}}
-          p counter: {{clock_box.counter}}
-          p zero_arrival: {{clock_box.zero_arrival}}
           p running_p: {{clock_box.running_p}}
+          p timer: {{clock_box.timer}}
+          p turn: {{clock_box.turn}}
+          p zero_arrival: {{clock_box.zero_arrival}}
           p speed: {{clock_box.speed}}
+          p play_count: {{clock_box.play_count}}
+          p pause_count: {{clock_box.pause_count}}
+          p resume_count: {{clock_box.resume_count}}
+          p switch_count: {{clock_box.switch_count}}
     .column
       b-field(label="コントローラー")
         .control

@@ -23,10 +23,13 @@ export class ClockBox {
 
     this.timer         = null   // null以外ならタイマー動作中 (nullで一時停止)
     this.turn          = null   // 0または1が手番。null:手番が設定されていない。順番ではなく 0:黒 1:白 と決まっているため駒落ちの場合1にすること
-    this.counter       = null   // 手数 (未使用)
     // this.zero_arrival  = null   // 残り時間が 0 になったら true
     this.single_clocks = null   // それぞれの時計
     this.running_p     = null   // [PLAY] で true になり [STOP] で false になる
+    this.play_count    = null   // stop で 0 になり play のたびに +1
+    this.pause_count   = null   // stop で 0 になり pause のたびに +1
+    this.resume_count  = null   // stop で 0 になり resume のたびに +1
+    this.switch_count  = null   // 時計を切り替えた回数
 
     this.speed = 1.0
 
@@ -43,17 +46,24 @@ export class ClockBox {
   reset() {
     this.timer_stop()
     this.turn = this.params.turn // インクリメントしていく
-    this.counter = 0             // turn とは異なり手数に相当する
     // this.zero_arrival = false    // 片方が0になったら true になる
     this.single_clocks = Location.values.map((e, i) => new SingleClock(this, i))
+    this._var_init()
+  }
+
+  _var_init() {
     this.running_p = false
+    this.play_count = 0
+    this.pause_count = 0
+    this.resume_count = 0
+    this.switch_count = 0
   }
 
   // 切り替え
   clock_switch() {
     this.__assert__(this.turn != null, "this.turn != null")
     this.turn += 1
-    this.counter += 1
+    this.switch_count += 1
     if (this.timer) {
       this.timer_restart()
     }
@@ -87,7 +97,7 @@ export class ClockBox {
   play_handle() {
     if (!this.running_p) {
       this.running_p = true
-      this.counter = 0
+      this.play_count += 1
       this.single_clocks.forEach(e => e.variable_reset())
       this.timer_start()
     }
@@ -95,8 +105,8 @@ export class ClockBox {
 
   stop_handle() {
     if (this.running_p) {
-      this.running_p = false
       this.timer_stop()
+      this._var_init()
       this.single_clocks.forEach(e => e.variable_reset())
       // this.zero_arrival = false
     }
@@ -105,15 +115,21 @@ export class ClockBox {
   ////////////////////////////////////////////////////////////////////////////////
 
   pause_handle() {
-    this.timer_stop()
+    if (this.timer) {
+      this.timer_stop()
+      this.pause_count += 1
+    }
   }
 
   resume_handle() {
-    this.timer_start()
+    if (this.timer == null) {
+      this.timer_start()
+      this.resume_count += 1
+    }
   }
 
   timer_start() {
-    if (!this.timer) {
+    if (this.timer == null) {
       this.timer = setInterval(() => this.generation_next(-1), 1000 / this.speed)
     }
   }
@@ -202,9 +218,12 @@ export class ClockBox {
 
     v.timer         = this.timer         // null以外ならタイマー動作中
     v.turn          = this.turn          // 0または1が手番。null:手番が設定されていない
-    v.counter       = this.counter       // 手数 (未使用)
     // v.zero_arrival  = this.zero_arrival  // 残り時間が 0 になったら true
     v.running_p     = this.running_p     // true:動作中 false:停止中
+    v.play_count    = this.play_count   // play で +1
+    v.pause_count   = this.pause_count
+    v.resume_count  = this.resume_count   // resume で +1
+    v.switch_count  = this.switch_count       // 時計を切り替えた回数
     v.speed         = this.speed         // タイマー速度
 
     return v
@@ -216,9 +235,12 @@ export class ClockBox {
     Object.assign(this.params, v.params)
 
     this.turn          = v.turn
-    this.counter       = v.counter
     // this.zero_arrival  = v.zero_arrival
     this.running_p     = v.running_p
+    this.play_count    = v.play_count
+    this.pause_count   = v.pause_count
+    this.resume_count  = v.resume_count
+    this.switch_count  = v.switch_count
     this.speed         = v.speed
 
     v.single_clocks.forEach((e, i) => this.single_clocks[i].attributes = e)
