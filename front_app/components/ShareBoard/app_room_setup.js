@@ -10,9 +10,11 @@ export const app_room_setup = {
       ac_room: null,           // subscriptions.create のインスタンス
     }
   },
-  mounted() {
+  beforeMount() {
+    this.tl_add("beforeMount", "ls_setup")
     this.ls_setup() // user_name の復帰
-
+  },
+  mounted() {
     if (this.$route.query.room_code) {
       this.room_code = this.$route.query.room_code
     }

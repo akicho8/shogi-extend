@@ -28,6 +28,8 @@ export const app_clock_box = {
   },
 
   mounted() {
+    this.tl_add("clock_box", "mounted")
+
     if (this.development_p && false) {
       this.cc_params = { initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }
       this.cc_create()
