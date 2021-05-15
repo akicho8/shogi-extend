@@ -106,6 +106,11 @@ client-only
                 b-button(@click="reload_modal_handle") リロード確認
                 b-button(@click="room_entry_call('alice')") 入室コール
                 b-button(@click="room_leave_call('alice')") 退室コール
+                b-button(@click="room_leave_call('alice')") 退室コール
+
+                b-button(@click="cc_params_load") cc_params_load
+                b-button(@click="cc_params_save") cc_params_save
+                b-button(@click="cc_params_reset") cc_params_reset
 
             .buttons
               b-button(tag="a" :href="json_debug_url") JSON
@@ -140,6 +145,7 @@ import { support_parent       } from "./support_parent.js"
 import { app_action_log       } from "./app_action_log.js"
 import { app_message_logs     } from "./app_message_logs.js"
 import { app_clock_box      } from "./app_clock_box.js"
+import { app_persistent_cc_params      } from "./app_persistent_cc_params.js"
 import { app_turn_notify      } from "./app_turn_notify.js"
 import { app_ordered_members  } from "./app_ordered_members.js"
 import { app_chore            } from "./app_chore.js"
@@ -169,6 +175,7 @@ export default {
     app_action_log,
     app_message_logs,
     app_clock_box,
+    app_persistent_cc_params,
     app_turn_notify,
     app_ordered_members,
     app_chore,

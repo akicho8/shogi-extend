@@ -7,6 +7,7 @@ export const app_storage = {
   data() {
     return {
       user_name: null,
+      persistent_cc_params: null,
     }
   },
   computed: {
@@ -32,6 +33,7 @@ export const app_storage = {
     ls_default() {
       return {
         user_name: this.default_user_name,
+        persistent_cc_params: this.default_persistent_cc_params,
       }
     },
   },

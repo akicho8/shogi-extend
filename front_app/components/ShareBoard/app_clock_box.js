@@ -8,27 +8,19 @@ import TimeLimitModal  from "./TimeLimitModal.vue"
 
 const BYOYOMI_TALK_PITCH = 1.65 // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
 
-const CC_DEFAULT_PARAMS = {
-  initial_main_min:   0, // 持ち時間(分)
-  initial_read_sec:  30, // 秒読み
-  initial_extra_sec: 30, // 猶予(秒)
-  every_plus:         0, // 1手毎加算
-}
-
 export const app_clock_box = {
   data() {
     return {
       clock_box: null,
-      cc_params: {...CC_DEFAULT_PARAMS},
+      cc_params: null,
     }
-  },
-
-  created() {
-    this.cc_setup_by_url_params()
   },
 
   mounted() {
     this.tl_add("clock_box", "mounted")
+
+    this.cc_params_load()
+    this.cc_setup_by_url_params()
 
     if (this.development_p && false) {
       this.cc_params = { initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }
@@ -233,6 +225,8 @@ export const app_clock_box = {
       }
     },
 
+    // cc_params を clock_box に適用する
+    // このタイミングで cc_params を localStorage に保存する
     cc_params_apply() {
       const params = {
         initial_main_sec:  this.cc_params.initial_main_min * 60,
@@ -241,6 +235,7 @@ export const app_clock_box = {
         every_plus:        this.cc_params.every_plus,
       }
       this.clock_box.rule_set_all(params)
+      this.cc_params_save()
     },
 
     cc_params_set_by_cc_rule_key(cc_rule_key) {
