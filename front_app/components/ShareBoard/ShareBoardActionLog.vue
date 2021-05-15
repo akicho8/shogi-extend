@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     action_log_key(e) {
-      return [e.performed_at, e.turn_offset, e.from_user_code].join("-")
+      return [e.performed_at, e.turn_offset, e.from_connection_id].join("-")
     },
     action_log_click_handle(e) {
       if (ACTION_LOG_CLICK_CONFIRM_SHOW) {

@@ -106,7 +106,7 @@ export const app_sfen_share = {
 
     sfen_share_broadcasted(params) {
       // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
-      if (params.from_user_code === this.user_code) {
+      if (params.from_connection_id === this.connection_id) {
         // 自分から自分へ
       } else {
         // もし edit_mode に入っている場合は強制的に解除する
@@ -159,7 +159,7 @@ export const app_sfen_share = {
           if (this.order_func_p) {
             if (next_user_received_p) {
               this.received_ok({
-                to_user_code: params.from_user_code, // alice さんから来たので alice さんに送信
+                to_connection_id: params.from_connection_id, // alice さんから来たので alice さんに送信
                 to_user_name: params.from_user_name,
                 sequence_code: params.sequence_code,
               })
@@ -179,7 +179,7 @@ export const app_sfen_share = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     received_ok_broadcasted(params) {
-      if (params.to_user_code === this.user_code) {             // いろんな人に届くため送信元の確認
+      if (params.to_connection_id === this.connection_id) {             // いろんな人に届くため送信元の確認
         if (this.sequence_codes.includes(params.sequence_code)) { // 最近送ったものなら
           if (this.development_p && this.$route.query.send_success_skip === "true") {
             // 送信成功としない

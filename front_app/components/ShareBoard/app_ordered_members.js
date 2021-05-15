@@ -126,7 +126,7 @@ export const app_ordered_members = {
       this.ac_room_perform("order_func_share", params) // --> app/channels/share_board/room_channel.rb
     },
     order_func_share_broadcasted(params) {
-      if (params.from_user_code === this.user_code) {
+      if (params.from_connection_id === this.connection_id) {
         this.debug_alert("order_func_share 自分→自分")
       } else {
         this.debug_alert("order_func_share 自分→他者")
@@ -143,7 +143,7 @@ export const app_ordered_members = {
       this.ac_room_perform("ordered_members_share", params) // --> app/channels/share_board/room_channel.rb
     },
     ordered_members_share_broadcasted(params) {
-      if (params.from_user_code === this.user_code) {
+      if (params.from_connection_id === this.connection_id) {
         this.debug_alert("ordered_members_share 自分→自分")
       } else {
         this.debug_alert("ordered_members_share 自分→他者")

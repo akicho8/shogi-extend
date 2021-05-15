@@ -311,7 +311,7 @@ export const app_clock_box = {
     },
     clock_box_share_broadcasted(params) {
       this.debug_alert("時計同期")
-      if (params.from_user_code === this.user_code) {
+      if (params.from_connection_id === this.connection_id) {
       } else {
         if (params.clock_box_attributes) {
           this.cc_create_unless_exist()                               // 時計がなければ作って

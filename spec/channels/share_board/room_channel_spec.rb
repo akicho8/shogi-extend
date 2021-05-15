@@ -26,7 +26,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
   # front_app/components/ShareBoard/app_room.js の ac_room_perform に合わせる
   def data_factory(params = {})
     {
-      "from_user_code" => SecureRandom.hex,
+      "from_connection_id" => SecureRandom.hex,
       "from_user_name" => "alice",
       "performed_at"   => Time.current.to_i,
       "active_level"   => 1,
@@ -75,7 +75,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       subscribe(room_code: room_code)
     end
     it do
-      data = data_factory("to_user_name" => "alice", "to_user_code" => SecureRandom.hex)
+      data = data_factory("to_user_name" => "alice", "to_connection_id" => SecureRandom.hex)
       expect {
         subscription.received_ok(data)
       }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "received_ok_broadcasted", bc_params: data)

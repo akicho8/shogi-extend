@@ -18,7 +18,7 @@ export const app_room_leave = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     room_leave_broadcasted(params) {
-      if (params.from_user_code === this.user_code) {
+      if (params.from_connection_id === this.connection_id) {
         // 自分から自分へ
         // room_leave を呼んだ直後に接続を切っているのでここには来ない
       } else {

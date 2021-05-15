@@ -2,7 +2,7 @@
 .ShareBoardMessageLog(v-if="base.message_logs.length >= 1")
   .scroll_block
     template(v-for="(e, i) in base.message_logs")
-      .message_log.is_line_break_on(:key="`${e.from_user_code}_${i}`")
+      .message_log.is_line_break_on(:key="`${e.from_connection_id}_${i}`")
         span.has-text-primary {{e.from_user_name}}
         span.ml-1(v-html="auto_link(e.message)")
 </template>

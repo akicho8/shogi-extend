@@ -178,7 +178,7 @@ module ShareBoardControllerMethods
     # リアルタイム共有
     attrs = attrs.merge({
         # :room_code => params[:room_code] || "",
-        :user_code => ApplicationRecord.secure_random_urlsafe_base64_token,
+        :connection_id => ApplicationRecord.secure_random_urlsafe_base64_token,
         :API_VERSION => API_VERSION, # これとActionCableで返すバージョンを比較する
       })
 

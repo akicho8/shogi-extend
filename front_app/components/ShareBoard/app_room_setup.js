@@ -136,7 +136,7 @@ export const app_room_setup = {
     // perform のラッパーで共通のパラメータを入れる
     ac_room_perform(action, params = {}) {
       params = {
-        from_user_code: this.user_code,         // 送信者識別子
+        from_connection_id: this.connection_id,         // 送信者識別子
         from_user_name: this.user_name,         // 送信者名
         performed_at:   this.time_current_ms(), // 実行日時(ms)
         active_level:   this.active_level,      // 先輩度(高い方が信憑性のある情報)
@@ -155,7 +155,7 @@ export const app_room_setup = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     room_leave_broadcasted(params) {
-      if (params.from_user_code === this.user_code) {
+      if (params.from_connection_id === this.connection_id) {
         // 自分から自分へ
       } else {
         this.room_leave_call(params.from_user_name)
@@ -174,7 +174,7 @@ export const app_room_setup = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     title_share_broadcasted(params) {
-      if (params.from_user_code === this.user_code) {
+      if (params.from_connection_id === this.connection_id) {
         // 自分から自分へ
       } else {
         this.setup_by_params(params)
@@ -223,7 +223,7 @@ export const app_room_setup = {
   },
   computed: {
     // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
-    user_code() { return this.config.record.user_code },
+    connection_id() { return this.config.record.connection_id },
 
     // 合言葉と名前が入力済みなので共有可能か？
     connectable_p() { return this.present_p(this.room_code) && this.present_p(this.user_name) },

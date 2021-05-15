@@ -34,12 +34,12 @@ export const app_ping = {
       this.ping_callback_set(e)
       this.ac_room_perform("ping_command", {
         to_user_name: e.from_user_name,
-        to_user_code: e.from_user_code,
+        to_connection_id: e.from_connection_id,
         ping_at: this.time_current_ms(),
       }) // --> app/channels/share_board/room_channel.rb
     },
     ping_command_broadcasted(params) {
-      if (params.to_user_code === this.user_code) {
+      if (params.to_connection_id === this.connection_id) {
         const now = this.time_current_ms()
         this.delay_block(this.PONG_DELAY, () => this.pong_command(params))
         this.ac_log("PING", `${params.from_user_name} → ${this.user_name} ${now - params.ping_at}ms`)
@@ -48,13 +48,13 @@ export const app_ping = {
     pong_command(params) {
       this.ac_room_perform("pong_command", {
         to_user_name: params.from_user_name,
-        to_user_code: params.from_user_code,
+        to_connection_id: params.from_connection_id,
         ping_at: params.ping_at,
         pong_at: this.time_current_ms(),
       }) // --> app/channels/share_board/room_channel.rb
     },
     pong_command_broadcasted(params) {
-      if (params.to_user_code === this.user_code) {
+      if (params.to_connection_id === this.connection_id) {
         if (SLOW_AND_PONG_IGNORED && !this.ping_running_p()) {
           return
         }

@@ -73,7 +73,7 @@ export const app_room_members = {
 
     // 誰かが存在することが伝えられた
     member_info_share_broadcasted(params) {
-      if (params.from_user_code === this.user_code) {
+      if (params.from_connection_id === this.connection_id) {
         // 誰かが存在することを自分に伝えられた
       } else {
         // 他の人が存在することを自分に伝えられた
@@ -108,7 +108,7 @@ export const app_room_members = {
           performed_at: this.time_current_ms(),
           alive_notice_count: 1,
           room_joined_at: room_joined_at + i,
-          from_user_code: i === 0 ? this.user_code : i,
+          from_connection_id: i === 0 ? this.connection_id : i,
           from_user_name: e,
           window_active_p: true,
         }))
@@ -116,10 +116,10 @@ export const app_room_members = {
 
       if (true) {
         this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")  // 情報が新しいもの順に並べてから
-        this.member_infos = _.uniqBy(this.member_infos, "from_user_code")         // ユーザーの重複を防ぐ(新しい方を採取できる)
+        this.member_infos = _.uniqBy(this.member_infos, "from_connection_id")         // ユーザーの重複を防ぐ(新しい方を採取できる)
 
         this.member_infos = this.member_infos_find_all_newest(this.member_infos)  // 通知が来た時間が最近の人だけを採取する
-        // this.member_infos = _.orderBy(this.member_infos, "from_user_code", "asc") // 順序固定のためにユーザーコードで並べる(ランダムな固定)
+        // this.member_infos = _.orderBy(this.member_infos, "from_connection_id", "asc") // 順序固定のためにユーザーコードで並べる(ランダムな固定)
 
         if (false) {
           // 自分の名前と同じ名前で入ってきたことがわからず、イタズラで勝手に操作されると、本人はホラーに感じる
@@ -156,7 +156,7 @@ export const app_room_members = {
 
     // 退出
     member_reject(leave_info) {
-      this.member_infos = _.reject(this.member_infos, e => e.from_user_code === leave_info.from_user_code)
+      this.member_infos = _.reject(this.member_infos, e => e.from_connection_id === leave_info.from_connection_id)
     },
   },
   computed: {
@@ -168,7 +168,7 @@ export const app_room_members = {
     // つまり最古参メンバーか？
     current_member_is_leader_p() {
       if (this.present_p(this.member_infos)) {
-        return this.member_infos[0].from_user_code === this.user_code
+        return this.member_infos[0].from_connection_id === this.connection_id
       }
     },
   },

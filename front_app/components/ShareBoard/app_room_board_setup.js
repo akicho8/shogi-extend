@@ -37,13 +37,13 @@ export const app_room_board_setup = {
       if (this.development_p) {
         this.sound_play("pon")
       }
-      this.clog(`${params.from_user_code} が要求`)
-      if (params.from_user_code === this.user_code) {
+      this.clog(`${params.from_connection_id} が要求`)
+      if (params.from_connection_id === this.connection_id) {
         this.clog(`自分から自分へ`)
       } else {
         this.clog("参加者に盤の状態を教えてあげる")
         this.setup_info_send({
-          to_user_code: params.from_user_code,
+          to_connection_id: params.from_connection_id,
           to_user_name: params.from_user_name,
         })
 
@@ -57,12 +57,12 @@ export const app_room_board_setup = {
 
     // 盤面の情報を送って欲しい人がいるので送ってあげる
     setup_info_send(params) {
-      this.__assert__(params.to_user_code != null, "params.to_user_code != null")
+      this.__assert__(params.to_connection_id != null, "params.to_connection_id != null")
       this.__assert__(params.to_user_name != null, "params.to_user_name != null")
 
       this.clog(`${params.to_user_name} に送る`)
       this.ac_room_perform("setup_info_send", {
-        ...params,                  // 送り先 to_user_code, to_user_name
+        ...params,                  // 送り先 to_connection_id, to_user_name
         ////////////////////////////////////////////////////////////////////////////////
         title: this.current_title,  // タイトル
         ...this.current_sfen_attrs, // 盤の状態
@@ -71,11 +71,11 @@ export const app_room_board_setup = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     setup_info_send_broadcasted(params) {
-      if (params.from_user_code === this.user_code) {
+      if (params.from_connection_id === this.connection_id) {
         this.clog("自分から自分へ")
       } else {
         this.clog(`${params.from_user_name} が ${params.to_user_name} に ${params.sfen} を送信したものを ${this.user_name} が受信`)
-        if (params.to_user_code === this.user_code) {
+        if (params.to_connection_id === this.connection_id) {
           this.clog("要求した情報を受信した")
           this.clog(`先輩度比較: 相手(${params.active_level}) > 自分(${this.active_level}) --> ${params.active_level > this.active_level}`)
           if (params.active_level > this.active_level) {
