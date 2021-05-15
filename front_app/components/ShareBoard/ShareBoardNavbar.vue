@@ -7,10 +7,10 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
     b-navbar-item.has-text-weight-bold.title_edit_navbar_item(@click="base.title_edit")
       span.current_title.is_truncate
         | {{base.current_title || '？'}}
-      span.mx-1(v-if="base.play_mode_p && base.turn_offset >= 1")
-        | \#{{base.turn_offset}}
-      span.mx-1(v-if="base.edit_mode_p")
-        | (編集モード)
+        span.mx-1(v-if="base.play_mode_p && base.turn_offset >= 1")
+          | \#{{base.turn_offset}}
+        span.mx-1(v-if="base.edit_mode_p")
+          | (編集モード)
 
   template(slot="end")
     b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="base.track_log_modal_handle" v-if="development_p")
