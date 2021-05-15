@@ -145,6 +145,7 @@ import { app_ordered_members  } from "./app_ordered_members.js"
 import { app_chore            } from "./app_chore.js"
 import { app_edit_mode        } from "./app_edit_mode.js"
 import { app_room_setup       } from "./app_room_setup.js"
+import { app_devise       } from "./app_devise.js"
 import { app_room_leave       } from "./app_room_leave.js"
 import { app_track_log        } from "./app_track_log.js"
 import { app_room_board_setup } from "./app_room_board_setup.js"
@@ -173,6 +174,7 @@ export default {
     app_chore,
     app_edit_mode,
     app_room_setup,
+    app_devise,
     app_room_leave,
     app_track_log,
     app_room_board_setup,

@@ -31,7 +31,7 @@ module SlackAgent
 
     params = {
       :channel => channel || default_channel,
-      :text    => "[#{timestamp}] #{env}【#{key}】#{body}",
+      :text    => "#{timestamp}#{env}【#{key}】#{body}",
     }
 
     if Rails.env.test?
@@ -48,10 +48,12 @@ module SlackAgent
   private
 
   def timestamp
-    Time.current.to_s(:ymdhms)
+    Time.current.strftime("%T")
   end
 
   def env
+    return ""
+
     if Rails.env.production?
       ""
     else

@@ -6,8 +6,8 @@ export const app_room_setup = {
   data() {
     return {
       // room_code: this.config.record.room_code, // リアルタイム共有合言葉
-      room_code: null, // リアルタイム共有合言葉
-      ac_room: null,
+      room_code: null,         // 合言葉
+      ac_room: null,           // subscriptions.create のインスタンス
     }
   },
   mounted() {
@@ -17,6 +17,10 @@ export const app_room_setup = {
       this.room_code = this.$route.query.room_code
     }
 
+    // 名前の優先順位
+    // 1. query.user_name         (URL引数)
+    // 2. query.default_user_name (URL引数)
+    // 3. g_current_user_name     (ログイン名)
     if (this.$route.query.force_user_name) {
       this.user_name = this.$route.query.force_user_name
     }
@@ -101,6 +105,7 @@ export const app_room_setup = {
         },
         connected: e => {
           this.tl_add("HOOK", "connected", e)
+          this.ua_notify_once()
           this.active_level_increment_timer.restart()
           this.setup_info_request()
           this.member_info_bc_restart()
@@ -136,10 +141,11 @@ export const app_room_setup = {
     // perform のラッパーで共通のパラメータを入れる
     ac_room_perform(action, params = {}) {
       params = {
-        from_connection_id: this.connection_id,         // 送信者識別子
-        from_user_name: this.user_name,         // 送信者名
-        performed_at:   this.time_current_ms(), // 実行日時(ms)
-        active_level:   this.active_level,      // 先輩度(高い方が信憑性のある情報)
+        from_connection_id: this.connection_id,     // 送信者識別子
+        from_user_name:     this.user_name,         // 送信者名
+        performed_at:       this.time_current_ms(), // 実行日時(ms)
+        active_level:       this.active_level,      // 先輩度(高い方が信憑性のある情報)
+        ua_icon:            this.ua_icon,           // 端末の種類を表すアイコン文字列
         ...params,
       }
       if (this.ac_room) {

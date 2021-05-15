@@ -125,7 +125,7 @@ module ShareBoard
         SlackAgent.message_send(key: key, body: data)
       end
       prefix = data["from_user_name"] + ":"
-      SlackAgent.message_send(key: key, body: "#{prefix} #{body}")
+      SlackAgent.message_send(key: key, body: "#{data["ua_icon"]} #{prefix} #{body}")
     end
 
     def simple_track(action)

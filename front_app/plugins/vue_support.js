@@ -15,6 +15,23 @@ export default {
     mobile_p()  { return isMobile.any()  },
     desktop_p() { return !isMobile.any() },
 
+    ua_icon_detect() {
+      if (typeof window === "undefined") {
+        return "(window undefined)"
+      } else {
+        if (this.mobile_p()) {
+          const ua = window.navigator.userAgent.toLowerCase()
+          if (ua.indexOf("ipad") > -1 || (ua.indexOf("macintosh") > -1 && "ontouchend" in document)) {
+            return ":tablet:"
+          } else {
+            return ":iphone:"
+          }
+        } else {
+          return ":desktop_computer:"
+        }
+      }
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // lodash の _.isEmpty は不自然な挙動なので使うべからず
