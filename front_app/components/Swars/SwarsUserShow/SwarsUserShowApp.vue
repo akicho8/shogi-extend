@@ -13,12 +13,14 @@
       b-tab-item(label="対攻")
       b-tab-item(label="囲い")
       b-tab-item(label="対囲")
+      b-tab-item(label="他情" v-if="development_p")
     SwarsUserShowTabContent0Day(:base="base")
     SwarsUserShowTabContent1Grade(:base="base")
     SwarsUserShowTabContent2MyAttack(:base="base")
     SwarsUserShowTabContent3VsAttack(:base="base")
     SwarsUserShowTabContent4MyDefense(:base="base")
     SwarsUserShowTabContent5VsDefense(:base="base")
+    SwarsUserShowTabContent6MetaInfo(:base="base")
 
   DebugPre(v-if="development_p") {{info}}
 </template>
