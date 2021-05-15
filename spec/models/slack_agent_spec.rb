@@ -5,11 +5,11 @@ RSpec.describe SlackAgent do
 
   it do
     ret_hash = SlackAgent.message_send(key: "(key)", body: "(body)")
-    assert { ret_hash[:text] == "[test]【(key)】(body)" }
+    assert { ret_hash[:text] == "00:00:00【(key)】(body)" }
   end
 
   it "OS不明の場合" do
     ret_hash = SlackAgent.message_send(key: "(key)", body: "(body)")
-    assert { ret_hash[:text] == "[test]【(key)】(body)" }
+    assert { ret_hash[:text] == "00:00:00【(key)】(body)" }
   end
 end
