@@ -16,6 +16,9 @@
 export class MyLocalStorage {
   static set(key, value) {
     if (this.core) {
+      if (this.development_p) {
+        console.log(`storage.set('${key}', ${JSON.stringify(value)})`)
+      }
       this.core.setItem(key, JSON.stringify(value))
     }
   }
@@ -87,5 +90,9 @@ export class MyLocalStorage {
 
   static get storage() {
     return localStorage
+  }
+
+  static get development_p() {
+    return process.env.NODE_ENV === "development"
   }
 }
