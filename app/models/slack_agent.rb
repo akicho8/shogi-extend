@@ -26,12 +26,12 @@ module SlackAgent
     end
 
     if ENV["SLACK_AGENT_RAISE"]
-      raise Slack::Web::Api::Errors::SlackError, 1
+      raise Slack::Web::Api::Errors::SlackError, "(message)"
     end
 
     params = {
       :channel => channel || default_channel,
-      :text    => "#{env}【#{key}】#{body}",
+      :text    => "[#{timestamp}] #{env}【#{key}】#{body}",
     }
 
     if Rails.env.test?
@@ -47,8 +47,14 @@ module SlackAgent
 
   private
 
+  def timestamp
+    Time.current.to_s(:ymdhms)
+  end
+
   def env
-    unless Rails.env.production?
+    if Rails.env.production?
+      ""
+    else
       "[#{Rails.env}]"
     end
   end
