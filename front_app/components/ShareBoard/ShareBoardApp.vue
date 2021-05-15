@@ -46,9 +46,9 @@ client-only
               :sp_viewpoint.sync="sp_viewpoint"
               :sp_player_info="sp_player_info"
               :sp_human_side="sp_human_side"
+              :sp_controller="controller_disabled_p ? 'is_controller_off' : 'is_controller_on'"
+              :sp_slider="controller_disabled_p ? 'is_slider_off' : 'is_slider_on'"
               sp_summary="is_summary_off"
-              sp_slider="is_slider_on"
-              sp_controller="is_controller_on"
 
               :sp_play_mode_legal_move_only="strict_p"
               :sp_play_mode_only_own_piece_to_move="strict_p"
@@ -417,6 +417,14 @@ export default {
       return [
         `is_sb_${this.sp_run_mode}`, // is_sb_play_mode, is_sb_edit_mode
       ]
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 将棋盤の下のコントローラーを表示しない条件
+    // 対局時計が設置されていて STOP または PAUSE 状態のとき
+    controller_disabled_p() {
+      return this.clock_box && this.clock_box.working_p
     },
   },
 }

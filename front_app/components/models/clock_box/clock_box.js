@@ -187,6 +187,29 @@ export class ClockBox {
     return this.single_clocks.some(e => e.rest <= 0)
   }
 
+  // STOP または PAUSE している状態か？
+  get stop_or_pause_p() {
+    if (this.running_p) {
+      if (this.timer) {
+      } else {
+        return true
+      }
+    } else {
+      return true
+    }
+  }
+
+  // 動いている状態か？
+  get working_p() {
+    if (this.running_p) {
+      if (this.timer) {
+        return true
+      } else {
+      }
+    } else {
+    }
+  }
+
   get human_status() {
     let v = null
     if (this.running_p) {
