@@ -17,7 +17,7 @@
 #  ・ので不正なアドレスと認識される。Chrome では問題なし
 #
 module ShareBoardControllerMethods
-  API_VERSION = 2
+  API_VERSION = 3
 
   extend ActiveSupport::Concern
 

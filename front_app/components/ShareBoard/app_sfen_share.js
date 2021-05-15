@@ -42,6 +42,10 @@ export const app_sfen_share = {
         this.sfen_share_params["next_user_name"] = next_user_name
       }
 
+      if (this.clock_box) {
+        this.sfen_share_params["elapsed_sec"] = this.clock_box.elapsed_sec
+      }
+
       if (RETRY_FUNCTION_ENABLED) {
         this.sequence_code += 1
         this.sequence_codes.push(this.sequence_code)

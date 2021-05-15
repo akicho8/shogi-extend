@@ -23,7 +23,7 @@ module ShareBoard
     def sfen_share(data)
       lmi = data["lmi"]
       player_location = Bioshogi::Location.fetch(lmi["player_location_key"])
-      track(data, "指手送信", "[#{lmi["next_turn_offset"]}] #{player_location.mark} #{lmi["kif_without_from"]} > #{data["next_user_name"] || '?'}")
+      track(data, "指手送信", "[#{lmi["next_turn_offset"]}] #{player_location.mark} #{lmi["kif_without_from"]} > #{data["next_user_name"] || '?'} #{data["elapsed_sec"] || '?'}s")
       broadcast(:sfen_share_broadcasted, data)
     end
 

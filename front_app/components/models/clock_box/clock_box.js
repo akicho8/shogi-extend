@@ -30,6 +30,7 @@ export class ClockBox {
     this.pause_count   = null   // stop で 0 になり pause のたびに +1
     this.resume_count  = null   // stop で 0 になり resume のたびに +1
     this.switch_count  = null   // 時計を切り替えた回数
+    this.elapsed_sec       = 0      // 直近の経過時間
 
     this.speed = 1.0
 
@@ -57,6 +58,7 @@ export class ClockBox {
     this.pause_count = 0
     this.resume_count = 0
     this.switch_count = 0
+    this.elapsed_sec = 0
   }
 
   // 切り替え
@@ -64,6 +66,7 @@ export class ClockBox {
     this.__assert__(this.turn != null, "this.turn != null")
     this.turn += 1
     this.switch_count += 1
+    this.elapsed_sec = 0
     if (this.timer) {
       this.timer_restart()
     }
@@ -85,6 +88,7 @@ export class ClockBox {
   // 時間経過
   generation_next(value) {
     if (this.timer) {
+      this.elapsed_sec += value
       this.current.generation_next(value)
     }
   }
@@ -247,6 +251,7 @@ export class ClockBox {
     v.pause_count   = this.pause_count
     v.resume_count  = this.resume_count   // resume で +1
     v.switch_count  = this.switch_count       // 時計を切り替えた回数
+    v.elapsed_sec       = this.elapsed_sec
     v.speed         = this.speed         // タイマー速度
 
     return v
@@ -264,6 +269,7 @@ export class ClockBox {
     this.pause_count   = v.pause_count
     this.resume_count  = v.resume_count
     this.switch_count  = v.switch_count
+    this.elapsed_sec       = v.elapsed_sec
     this.speed         = v.speed
 
     v.single_clocks.forEach((e, i) => this.single_clocks[i].attributes = e)

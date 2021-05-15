@@ -32,6 +32,7 @@ export class SingleClock {
     this.extra_sec = this.initial_extra_sec
     this.read_sec  = this.initial_read_sec
     this.minus_sec = 0
+    this.elapsed_sec = 0
   }
 
   copy_from(o) {
@@ -39,6 +40,7 @@ export class SingleClock {
     this.read_sec  = o.read_sec
     this.extra_sec = o.extra_sec
     this.minus_sec = o.minus_sec
+    this.elapsed_sec   = o.elapsed_sec
 
     this.initial_read_sec  = o.initial_read_sec
     this.initial_main_sec  = o.initial_main_sec
@@ -57,6 +59,8 @@ export class SingleClock {
 
   generation_next(value) {
     if (value != null) {
+
+      this.elapsed_sec += value
 
       this.main_sec += value
       if (this.main_sec < 0) {
@@ -125,9 +129,11 @@ export class SingleClock {
   // 1手指したときに再生する値
   rebirth() {
     if (this.running_p) {
-      this.generation_next(this.every_plus)
+      this.main_sec += this.every_plus
+      // this.generation_next(this.every_plus)
       this.read_sec_set()
       this.minus_sec = 0 // 押したらマイナスになったぶんは0に戻しておく。これで再びチーンになる
+      this.elapsed_sec = 0
     }
   }
 
@@ -317,6 +323,7 @@ export class SingleClock {
       read_sec:          this.read_sec,
       extra_sec:         this.extra_sec,
       minus_sec:         this.minus_sec,
+      elapsed_sec:           this.elapsed_sec,
       initial_read_sec:  this.initial_read_sec,
       initial_main_sec:  this.initial_main_sec,
       initial_extra_sec: this.initial_extra_sec,

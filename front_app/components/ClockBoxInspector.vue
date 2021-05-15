@@ -13,12 +13,13 @@
             span.mx-1(v-if="e.initial_read_sec >= 1") {{e.read_sec}}
             span.mx-1(v-if="e.initial_extra_sec >= 1") {{e.extra_sec}}
           p {{e.initial_main_sec}} / {{e.initial_read_sec}} / {{e.initial_extra_sec}} / {{e.every_plus}} / {{e.minus_sec}}
-          p active_p:{{e.active_p}} rest:{{e.rest}}
+          p active_p:{{e.active_p}} rest:{{e.rest}} elapsed_sec:{{e.elapsed_sec}}
 
   .columns
     .column
       b-field(label="内部値")
         .control
+          p elapsed_sec: {{clock_box.elapsed_sec}}
           p running_p: {{clock_box.running_p}}
           p timer: {{clock_box.timer}}
           p turn: {{clock_box.turn}}
