@@ -17,7 +17,7 @@ export const app_force_sync = {
           <div class="content">
             <ol>
               <li>左矢印で局面を0手目に移動</li>
-              <li><b>局面を全員に転送</b>の実行</li>
+              <li><b>局面同期</b>の実行</li>
             </ol>
           </div>
         `,
@@ -49,7 +49,7 @@ export const app_force_sync = {
           <div class="content">
             <ol>
               <li>小さい左矢印で局面を1手戻す</li>
-              <li><b>局面を全員に転送</b>の実行</li>
+              <li><b>局面同期</b>の実行</li>
             </ol>
           </div>
         `,
