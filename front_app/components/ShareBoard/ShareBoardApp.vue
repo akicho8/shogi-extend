@@ -245,8 +245,20 @@ export default {
       // パラメータだけ変更するときは変更してくれるけどエラーになるっぽいのでエラーにぎりつぶす(いいのか？)
       this.$router.replace({query: this.current_url_params}).catch(e => {})
     })
+
+    this.autoexec()
   },
   methods: {
+    // http://0.0.0.0:4000/share-board?autoexec=general_setting_modal
+    autoexec() {
+      this.$nextTick(() => {
+        const v = this.$route.query.autoexec
+        if (v) {
+          this[v]()
+        }
+      })
+    },
+
     internal_rule_input_handle() {
       this.sound_play("click")
     },
