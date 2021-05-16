@@ -59,7 +59,7 @@ export default {
       display: inline-block
 
   // メッセージアイコンは2つをずらして組み合わせる
-  .message_navbar_item
+  .message_modal_handle
     .icon
       position: relative
       &.account_icon
