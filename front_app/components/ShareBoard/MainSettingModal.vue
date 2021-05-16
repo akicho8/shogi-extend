@@ -13,6 +13,9 @@
     b-field.yomiage_mode(label="部屋内で検討時の棋譜読み上げ")
       b-radio-button.is_yomiage_mode_on(v-model="base.yomiage_mode" native-value="is_yomiage_mode_on") する
       b-radio-button.is_yomiage_mode_off(v-model="base.yomiage_mode" native-value="is_yomiage_mode_off") しない
+    b-field.sync_mode(label="同期方法" v-if="development_p")
+      b-radio-button.is_sync_mode_on(v-model="base.sync_mode" native-value="is_sync_mode_hard") 完全同期
+      b-radio-button.is_sync_mode_off(v-model="base.sync_mode" native-value="is_sync_mode_soft") 着手
     b-field.debug_mode(label="デバッグモード")
       b-radio-button.is_debug_mode_off(v-model="base.debug_mode" native-value="is_debug_mode_off") OFF
       b-radio-button.is_debug_mode_on(v-model="base.debug_mode" native-value="is_debug_mode_on") ON
