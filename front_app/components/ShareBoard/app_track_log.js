@@ -41,7 +41,7 @@ export const app_track_log = {
       this.tl_add("(test)", `message${this.track_logs.length}`)
     },
     tl_add(section, message, detail_info = null) {
-      if (!this.development_p) {
+      if (!this.debug_mode_p) {
         return
       }
       const params = {

@@ -160,6 +160,7 @@ import { app_ping             } from "./app_ping.js"
 import { app_tweet            } from "./app_tweet.js"
 import { app_update           } from "./app_update.js"
 import { app_message          } from "./app_message.js"
+import { app_main_setting          } from "./app_main_setting.js"
 import { app_sidebar          } from "./app_sidebar.js"
 import { app_storage          } from "./app_storage.js"
 import { app_export           } from "./app_export.js"
@@ -190,6 +191,7 @@ export default {
     app_tweet,
     app_update,
     app_message,
+    app_main_setting,
     app_sidebar,
     app_storage,
     app_export,
@@ -250,11 +252,12 @@ export default {
   },
   methods: {
     // http://0.0.0.0:4000/share-board?autoexec=general_setting_modal
+    // http://0.0.0.0:4000/share-board?autoexec=debug_mode_on,general_setting_modal
     autoexec() {
       this.$nextTick(() => {
-        const v = this.$route.query.autoexec
-        if (v) {
-          this[v]()
+        const s = this.$route.query.autoexec
+        if (s) {
+          s.split(/[,\s]+/).forEach(e => this[e]())
         }
       })
     },
@@ -449,7 +452,11 @@ export default {
         return false
       }
 
-      return this.clock_box && this.clock_box.working_p
+      if (this.ctrl_mode === "is_ctrl_mode_hidden") {
+        if (this.clock_box) {
+          return this.clock_box.working_p
+        }
+      }
     },
   },
 }
