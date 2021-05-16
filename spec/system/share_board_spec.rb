@@ -165,11 +165,7 @@ RSpec.describe "共有将棋盤", type: :system do
         room_setup("my_room", "bob")               # bobも同じ部屋に入る
       end
       a_block do
-        side_menu_open
-        menu_item_click("対局時計")                # 「対局時計」モーダルを開く
-        assert_clock_off                           # 時計はまだ設置されていない
-        find(".main_switch").click                 # 設置する
-        assert_clock_on                            # 時計が設置された
+        clock_open
       end
       b_block do
         assert_clock_on                            # 同期してbob側にも設置されている
@@ -516,10 +512,7 @@ RSpec.describe "共有将棋盤", type: :system do
         room_setup("my_room", "bob")              # bobが部屋を作る
       end
       a_block do
-        side_menu_open
-        menu_item_click("対局時計")               # 「対局時計」モーダルを開く
-        find(".main_switch").click                # 設置する
-        assert_clock_on                           # 時計が設置された
+        clock_open
 
         clock_box_set(0, @INITIAL_SEC, 0, 0)    # 秒読みだけを設定
         find(".play_button").click                # 開始
@@ -719,6 +712,23 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '対局時計初期値永続化'
+  describe "対局時計初期値永続化" do
+    it "works" do
+      @CLOCK_VALUES = [1, 2, 3, 4]
+
+      visit "/share-board"
+
+      clock_open
+      clock_box_set(*@CLOCK_VALUES)                 # aliceが時計を設定する
+      find(".play_button").click                    # 開始 (このタイミングで初期値として保存する)
+
+      visit(current_path)                           # リロード
+      clock_open
+      assert { clock_box_values === @CLOCK_VALUES } # 時計の初期値が復帰している
+    end
+  end
+
   def visit_with_args(args)
     visit "/share-board?#{args.to_query}"
   end
@@ -741,6 +751,15 @@ RSpec.describe "共有将棋盤", type: :system do
     find(".initial_read_sec input").set(initial_read_sec)   # 秒読み
     find(".initial_extra_sec input").set(initial_extra_sec) # 猶予(秒)
     find(".every_plus input").set(every_plus)               # 1手毎加算(秒)
+  end
+
+  def clock_box_values
+    [
+      find(".initial_main_min input").value,
+      find(".initial_read_sec input").value,
+      find(".initial_extra_sec input").value,
+      find(".every_plus input").value,
+    ].collect(&:to_i)
   end
 
   def assert_clock_active_black
@@ -850,5 +869,13 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def buefy_dialog_button_click(type = "")
     find(".modal button#{type}").click
+  end
+
+  def clock_open
+    side_menu_open
+    menu_item_click("対局時計")                # 「対局時計」モーダルを開く
+    assert_clock_off                           # 時計はまだ設置されていない
+    find(".main_switch").click                 # 設置する
+    assert_clock_on                            # 時計が設置された
   end
 end

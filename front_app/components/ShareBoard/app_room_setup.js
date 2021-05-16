@@ -28,13 +28,13 @@ export const app_room_setup = {
     }
 
     if (this.room_code) {
-      if (this.user_name) {
-        // 合言葉設定済みURLから来て名前は設定しているのですぐに共有する
-        this.room_create()
-      } else {
+      if (this.blank_p(this.user_name)) {
         // 合言葉設定済みURLから来て名前は設定していない
         this.toast_ok("ハンドルネームを入力してください")
         this.room_setup_modal_handle()
+      } else {
+        // 合言葉設定済みURLから来て名前は設定しているのですぐに共有する
+        this.room_create()
       }
     } else {
       // 通常の起動
