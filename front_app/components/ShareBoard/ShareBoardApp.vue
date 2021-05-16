@@ -93,7 +93,7 @@ client-only
 
             .box
               .buttons
-                b-button(@click="room_recreate") 再接続
+                b-button(@click="room_recreate") 再起動
                 b-button(@click="room_create") 接続
                 b-button(@click="room_destroy") 切断
                 b-button(@click="member_info_bc_restart") 生存通知

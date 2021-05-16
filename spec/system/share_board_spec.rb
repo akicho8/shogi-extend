@@ -548,9 +548,9 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '再接続'
-  describe "再接続" do
-    it "先輩であっても再接続したら後輩になる" do
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '再起動'
+  describe "再起動" do
+    it "先輩であっても再起動したら後輩になる" do
       a_block do
         room_setup("my_room", "alice")                    # alice先輩が部屋を作る
         assert_member_list(1, "is_joined", "alice")       # 一番上にaliceがいる
@@ -563,9 +563,9 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       a_block do
         assert_move("77", "76", "☗7六歩")                # aliceが指してbobの盤も同じになる
-        sp_controller_click("first")                      # 再接続時にbobから受けとったか確認しやすいように0手目にしておく
+        sp_controller_click("first")                      # 再起動時にbobから受けとったか確認しやすいように0手目にしておく
 
-        room_recreate_apply                               # 再接続実行
+        room_recreate_apply                               # 再起動実行
         assert_turn_offset(1)                             # bobからもらったので1手目になっている
         assert_member_list(1, "is_joined", "bob")         # 並びは後輩だったbobが先輩に
         assert_member_list(2, "is_joined", "alice")       # 先輩だったaliceは後輩になっている
@@ -851,7 +851,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def room_recreate_apply
     side_menu_open
-    menu_item_click("再接続")     # モーダルを開く
+    menu_item_click("再起動")     # モーダルを開く
     first(".apply_button").click  # 実行する
   end
 

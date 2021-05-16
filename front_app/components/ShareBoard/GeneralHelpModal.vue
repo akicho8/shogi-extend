@@ -26,10 +26,8 @@
         .faq_block
           .faq_q ハンドルネームを変更するには？
           .faq_a
-            .content
-              ol.mt-2
-                li メニューから<b>部屋に入る</b>
-                li いったん<b>退室</b>
+            p
+              | メニューの「部屋に入る」から「退室」
 
         .faq_block(v-if="development_p")
           .faq_q タイトル

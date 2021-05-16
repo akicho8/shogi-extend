@@ -2,6 +2,8 @@ import RoomRecreateModal from "./RoomRecreateModal.vue"
 
 const ROOM_DESTROY_AFTER_DELAY_SEC = 3.0 // 切断後に接続するまで待つ秒数(0にすると切断が終わる前に切断を開始して失敗する)
 
+const APP_RELOAD_IF_RECREATE = true // 再起動するときリロードする？
+
 export const app_room_recreate = {
   data() {
     return {
@@ -10,7 +12,7 @@ export const app_room_recreate = {
   },
 
   methods: {
-    // 再接続モーダル起動
+    // 再起動モーダル起動
     room_recreate_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
@@ -36,7 +38,7 @@ export const app_room_recreate = {
     // なので少し待ってから実行する
     room_recreate() {
       if (this.room_creating_busy >= 1) {
-        this.toast_ng("再接続実行中")
+        this.toast_ng("再起動実行中")
         return
       }
       if (this.ac_room) {
@@ -45,10 +47,14 @@ export const app_room_recreate = {
         const loading = this.$buefy.loading.open()
         // this.toast_ok("退室しました", {duration: this.ROOM_DESTROY_AFTER_DELAY_SEC * 1000})
         this.delay_block(this.ROOM_DESTROY_AFTER_DELAY_SEC, () => {
-          this.room_create()
-          this.room_creating_busy = 0
-          loading.close()
-          // this.toast_ok("入室しました")
+          if (APP_RELOAD_IF_RECREATE) {
+            this.force_reload()
+          } else {
+            this.room_create()
+            this.room_creating_busy = 0
+            loading.close()
+            // this.toast_ok("入室しました")
+          }
         })
       } else {
         this.room_create()

@@ -123,7 +123,7 @@ export const app_room_members = {
 
         if (false) {
           // 自分の名前と同じ名前で入ってきたことがわからず、イタズラで勝手に操作されると、本人はホラーに感じる
-          this.member_infos = _.uniqBy(this.member_infos, "from_user_name")         // ユーザー名が重複するのを防ぐ (再接続したとき不自然に見えるのを防ぐため)
+          this.member_infos = _.uniqBy(this.member_infos, "from_user_name")         // ユーザー名が重複するのを防ぐ (再起動したとき不自然に見えるのを防ぐため)
         } else {
           // 自分の名前と同じ名前で入ってきたときなんとなく状況がわかる
         }
