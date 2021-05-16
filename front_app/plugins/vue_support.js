@@ -454,9 +454,9 @@ export default {
     // user_call_name("ありす")            → "ありすさん"
     // user_call_name("ありす123(居飛車)") → "ありすさん"
     user_call_name(name) {
-      name = name.replace(/(.+)\(.*\)$/, "$1") // "foo123(xxx)"   → "foo123"
-      name = name.replace(/(.+)（.*）$/, "$1") // "foo123（xxx）" → "foo123"
-      name = name.replace(/(\D+)\d+$/, "$1")   // "foo123"        → "foo"
+      name = name.replace(/(.+)\(.*\)$/, "$1") // "name123(xxx)"   → "name123"
+      name = name.replace(/(.+)（.*）$/, "$1") // "name123（xxx）" → "name123"
+      name = name.replace(/(\D+)\d+$/, "$1")   // "name123"        → "name"
       if (name.match(/.(さん|サン|ｻﾝ|くん|クン|ｸﾝ|ちゃん|チャン|ﾁｬﾝ|マン|さま|サマ|ｻﾏ|様|氏|段|級|団|冠)[!！]?$/)) {
         return name
       }
