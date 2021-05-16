@@ -461,8 +461,8 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '局面同期'
-  describe "局面同期" do
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '局面の転送'
+  describe "局面の転送" do
     it "works" do
       a_block do
         room_setup("my_room", "alice")                    # aliceが部屋を作る
@@ -489,7 +489,7 @@ RSpec.describe "共有将棋盤", type: :system do
         assert_turn_offset(1)
 
         side_menu_open
-        menu_item_click("局面同期")           # モーダルを開く
+        menu_item_click("局面の転送")           # モーダルを開く
         first(".sync_button").click                       # 反映する
       end
       b_block do
@@ -536,7 +536,7 @@ RSpec.describe "共有将棋盤", type: :system do
         assert_turn_offset(0)                     # 0手目に戻せてる
 
         side_menu_open
-        menu_item_click("局面同期")       # モーダルを開く
+        menu_item_click("局面の転送")       # モーダルを開く
         first(".sync_button").click               # 反映する
 
         assert_clock_active_black                 # 時計は先手に切り替わっている
