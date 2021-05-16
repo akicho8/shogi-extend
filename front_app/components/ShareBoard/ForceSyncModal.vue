@@ -44,8 +44,7 @@ export default {
     },
     sync_handle() {
       this.sound_play("click")
-      this.base.ac_log("ショートカット", `${this.base.turn_offset}手目`)
-      this.base.force_sync(`${this.user_call_name(this.base.user_name)}が${this.base.turn_offset}手目に変更しました`)
+      this.base.force_sync_direct()
       this.$emit("close")
     },
   },

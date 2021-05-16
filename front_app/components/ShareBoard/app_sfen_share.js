@@ -148,7 +148,7 @@ export const app_sfen_share = {
         // 「alice ▲76歩」と表示しながら
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
 
-        if (this.clock_box || this.read_mode === "is_read_mode_on") {
+        if (this.yomiagable_p) {
           // 「aliceさん」の発声後に「7 6 ふー！」を発声する
           this.talk(this.user_call_name(params.from_user_name), {
             onend: () => this.talk(params.lmi.yomiage, {
@@ -210,6 +210,12 @@ export const app_sfen_share = {
     },
   },
   computed: {
-    RETRY_CHECK_DELAY() { return parseFloat(this.$route.query.RETRY_CHECK_DELAY ?? RETRY_CHECK_DELAY) }
+    RETRY_CHECK_DELAY() { return parseFloat(this.$route.query.RETRY_CHECK_DELAY ?? RETRY_CHECK_DELAY) },
+
+    // 時計が設置されてなくて読み上げOFFのときはダメ
+    // 時計が設置されている または 読み上げON はOK
+    yomiagable_p() {
+      return this.clock_box || this.yomiage_mode === "is_yomiage_mode_on"
+    },
   },
 }

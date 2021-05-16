@@ -7,15 +7,15 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    b-field(label="対局時計が動作しているとき盤面下のコントローラーを")
-      b-radio-button(size="is-small" v-model="base.ctrl_mode" native-value="is_ctrl_mode_hidden") 誤タップしないように隠す
-      b-radio-button(size="is-small" v-model="base.ctrl_mode" native-value="is_ctrl_mode_visible") 表示したままにする
-    b-field(label="デバッグモード")
-      b-radio-button(size="is-small" v-model="base.debug_mode" native-value="is_debug_mode_off") OFF
-      b-radio-button(size="is-small" v-model="base.debug_mode" native-value="is_debug_mode_on") ON
-    b-field(label="部屋内で検討時の棋譜読み上げ")
-      b-radio-button(size="is-small" v-model="base.read_mode" native-value="is_read_mode_on") する
-      b-radio-button(size="is-small" v-model="base.read_mode" native-value="is_read_mode_off") しない
+    b-field.ctrl_mode(label="対局時計動作時の盤面下のコントローラー")
+      b-radio-button.is_ctrl_mode_hidden(v-model="base.ctrl_mode" native-value="is_ctrl_mode_hidden") 誤タップしないように隠す
+      b-radio-button.is_ctrl_mode_visible(v-model="base.ctrl_mode" native-value="is_ctrl_mode_visible") 表示したままにする
+    b-field.yomiage_mode(label="部屋内で検討時の棋譜読み上げ")
+      b-radio-button.is_yomiage_mode_on(v-model="base.yomiage_mode" native-value="is_yomiage_mode_on") する
+      b-radio-button.is_yomiage_mode_off(v-model="base.yomiage_mode" native-value="is_yomiage_mode_off") しない
+    b-field.debug_mode(label="デバッグモード")
+      b-radio-button.is_debug_mode_off(v-model="base.debug_mode" native-value="is_debug_mode_off") OFF
+      b-radio-button.is_debug_mode_on(v-model="base.debug_mode" native-value="is_debug_mode_on") ON
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる

@@ -448,9 +448,9 @@ export default {
     // 将棋盤の下のコントローラーを表示しない条件
     // 対局時計が設置されていて STOP または PAUSE 状態のとき
     controller_disabled_p() {
-      if (this.development_p) {
-        return false
-      }
+      // if (this.development_p) {
+      //   return false
+      // }
 
       if (this.ctrl_mode === "is_ctrl_mode_hidden") {
         if (this.clock_box) {

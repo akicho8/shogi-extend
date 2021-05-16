@@ -31,20 +31,14 @@ export const app_force_sync = {
         },
         onConfirm: () => {
           this.sound_play("click")
-          this.board_init()
+          this.force_sync_turn_zero()
         },
       })
     },
 
-    board_init() {
-      this.ac_log("局面操作", "初期配置に戻す")
-      this.turn_offset = 0
-      this.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
-    board_revert_modal_handle() {
+    force_sync_turn_previous_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
 
@@ -69,15 +63,9 @@ export const app_force_sync = {
         },
         onConfirm: () => {
           this.sound_play("click")
-          this.board_revert()
+          this.force_sync_turn_previous()
         },
       })
-    },
-
-    board_revert() {
-      this.ac_log("局面操作", "1手戻す")
-      this.turn_offset -= 1
-      this.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -101,6 +89,27 @@ export const app_force_sync = {
         },
       })
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    force_sync_direct() {
+      this.ac_log("局面操作", `直接${this.turn_offset}手目`)
+      this.force_sync(`${this.user_call_name(this.user_name)}が${this.turn_offset}手目に変更しました`)
+    },
+
+    force_sync_turn_zero() {
+      this.ac_log("局面操作", "初期配置に戻す")
+      this.turn_offset = 0
+      this.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
+    },
+
+    force_sync_turn_previous() {
+      this.ac_log("局面操作", "1手戻す")
+      this.turn_offset -= 1
+      this.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     force_sync(message) {
       const params = {

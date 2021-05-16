@@ -527,6 +527,11 @@ RSpec.describe "共有将棋盤", type: :system do
         sleep(1)                                  # bobは1秒考えていた
       end
       a_block do
+        # debugger
+        # side_menu_open
+        # menu_item_click("設定")               # モーダルを開く
+        # first(".sync_button").click           # 反映する
+        # find(".is_ctrl_mode_visible").click   # 表示したままにする
         sp_controller_click("previous")           # 1手戻す
         assert_turn_offset(0)                     # 0手目に戻せてる
 
