@@ -131,7 +131,6 @@ client-only
 <script>
 const SHARE_BOARD_TITLE     = "共有将棋盤"
 const RUN_MODE_DEFAULT      = "play_mode"
-const INTERNAL_RULE_DEFAULT = "strict"
 
 import _ from "lodash"
 
@@ -224,7 +223,6 @@ export default {
 
       record:        this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       sp_run_mode:   this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
-      internal_rule: this.defval(this.$route.query.internal_rule, INTERNAL_RULE_DEFAULT),        // 操作モードの内部ルール strict or free
 
       share_board_column_width: 80, // 盤の大きさ
     }
@@ -264,9 +262,9 @@ export default {
       })
     },
 
-    internal_rule_input_handle() {
-      this.sound_play("click")
-    },
+    // internal_rule_input_handle() {
+    //   this.sound_play("click")
+    // },
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
     // 局面0で1手指したとき last_move_info.turn_offset は 1
@@ -363,7 +361,6 @@ export default {
 
     play_mode_p()    { return this.sp_run_mode === 'play_mode' },
     edit_mode_p()    { return this.sp_run_mode === 'edit_mode' },
-    strict_p()       { return this.internal_rule === "strict"  },
     advanced_p()     { return this.turn_offset > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     page_title() {
@@ -395,7 +392,7 @@ export default {
       if (params.sp_run_mode === RUN_MODE_DEFAULT) {
         delete params.sp_run_mode
       }
-      if (params.internal_rule === INTERNAL_RULE_DEFAULT) {
+      if (params.internal_rule === this.default_internal_rule) {
         delete params.internal_rule
       }
 

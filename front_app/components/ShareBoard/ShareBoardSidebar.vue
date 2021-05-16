@@ -18,7 +18,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="手番が来たら知らせる設定"       @click="base.tn_modal_handle"            :disabled="blank_p(base.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(label="再起動"                         @click="base.room_recreate_modal_handle" :disabled="blank_p(base.ac_room)")
 
-        b-menu-list(label="検討用")
+        b-menu-list(label="外部アプリで検討")
           b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play('click')")
           b-menu-item.is_active_unset(label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="sound_play('click')")
           b-menu-item.is_active_unset(label="棋譜コピー" @click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif'))")
@@ -46,11 +46,11 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         b-field(custom-class="is-small" label="盤の大きさ(スマホを除く)")
           b-slider(v-bind="slider_attrs" v-model="base.share_board_column_width" :min="0" :max="100" :step="1.0")
 
-      .box.mt-5
-        .title.is-5 ☠危険な設定
-        b-field(custom-class="is-small" label="将棋のルール" message="無視にすると「自分の手番では自分の駒を操作する」の制約を無視するので、自分の手番で相手の駒を操作できる。それを利用して後手のときも先手の駒を動かせば見た目上はずっと先手側を操作できるので先手だけの囲いの手順の棋譜を作ったりするのが簡単になる。しかし反則のため他のアプリでは読めない棋譜になってしまう")
-          b-radio-button(size="is-small" v-model="base.internal_rule" native-value="strict" @input="base.internal_rule_input_handle") 守る
-          b-radio-button(size="is-small" v-model="base.internal_rule" native-value="free"   @input="base.internal_rule_input_handle" type="is-danger") 無視
+      //- .box.mt-5(v-if="false")
+      //-   .title.is-5 ☠危険な設定
+      //-   b-field(custom-class="is-small" label="将棋のルール" message="無視にすると「自分の手番では自分の駒を操作する」の制約を無視するので、自分の手番で相手の駒を操作できる。それを利用して後手のときも先手の駒を動かせば見た目上はずっと先手側を操作できるので先手だけの囲いの手順の棋譜を作ったりするのが簡単になる。しかし反則のため他のアプリでは読めない棋譜になってしまう")
+      //-     b-radio-button(size="is-small" v-model="base.internal_rule" native-value="strict" @input="base.internal_rule_input_handle") 守る
+      //-     b-radio-button(size="is-small" v-model="base.internal_rule" native-value="free"   @input="base.internal_rule_input_handle" type="is-danger") 無視
 
 </template>
 
