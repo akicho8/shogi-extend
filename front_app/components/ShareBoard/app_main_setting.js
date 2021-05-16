@@ -21,7 +21,7 @@ export const app_main_setting = {
     is_debug_mode_on()  { this.debug_mode = "is_debug_mode_on" },
     is_sync_mode_hard() { this.sync_mode = "is_sync_mode_hard" },
 
-    general_setting_modal() {
+    general_setting_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
 

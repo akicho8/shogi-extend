@@ -14,7 +14,7 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    .usage(v-if="!base.order_func_p")
+    .description(v-if="!base.order_func_p")
       p 設定する場合は右上のスイッチを<b>有効</b>にしてください
       p
         | 設定すると次の2つが機能します
@@ -169,7 +169,7 @@ export default {
     td
       vertical-align: center
 
-  .usage
+  .description
     max-width: 26rem
     p:not(:first-child)
       margin-top: 0.75rem
