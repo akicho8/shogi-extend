@@ -5,18 +5,20 @@ import MainSettingModal from "./MainSettingModal.vue"
 export const app_main_setting = {
   data() {
     return {
-      ctrl_mode: null,     // 対局時計が動作しているとき盤面下のコントローラーの表示有無
-      debug_mode: null,    // デバッグモード (bool型にしてはいけない)
+      ctrl_mode: null,   // 対局時計が動作しているとき盤面下のコントローラーの表示有無
+      debug_mode: null,  // デバッグモード (bool型にしてはいけない)
+      read_mode: null, // 検討時の読み上げの有無
     }
   },
   created() {
     this.ctrl_mode = "is_ctrl_mode_hidden"
     this.debug_mode = this.development_p ? "is_debug_mode_on" : "is_debug_mode_off"
+    this.read_mode = "is_read_mode_on"
   },
 
   methods: {
     // for autoexec
-    debug_mode_on() {
+    is_debug_mode_on() {
       this.debug_mode = "is_debug_mode_on"
     },
 

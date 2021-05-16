@@ -148,16 +148,18 @@ export const app_sfen_share = {
         // 「alice ▲76歩」と表示しながら
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
 
-        // 「aliceさん」の発声後に「7 6 ふー！」を発声する
-        this.talk(this.user_call_name(params.from_user_name), {
-          onend: () => this.talk(params.lmi.yomiage, {
-            onend: () => {
-              if (next_user_name) {
-                this.toast_ok(`次は${this.user_call_name(next_user_name)}の手番です`)
-              }
-            },
-          }),
-        })
+        if (this.clock_box || this.read_mode === "is_read_mode_on") {
+          // 「aliceさん」の発声後に「7 6 ふー！」を発声する
+          this.talk(this.user_call_name(params.from_user_name), {
+            onend: () => this.talk(params.lmi.yomiage, {
+              onend: () => {
+                if (next_user_name) {
+                  this.toast_ok(`次は${this.user_call_name(next_user_name)}の手番です`)
+                }
+              },
+            }),
+          })
+        }
 
         if (RETRY_FUNCTION_ENABLED) {
           if (this.order_func_p) {

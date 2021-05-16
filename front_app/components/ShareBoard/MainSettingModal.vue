@@ -13,6 +13,9 @@
     b-field(label="デバッグモード")
       b-radio-button(size="is-small" v-model="base.debug_mode" native-value="is_debug_mode_off") OFF
       b-radio-button(size="is-small" v-model="base.debug_mode" native-value="is_debug_mode_on") ON
+    b-field(label="部屋内で検討時の棋譜読み上げ")
+      b-radio-button(size="is-small" v-model="base.read_mode" native-value="is_read_mode_on") する
+      b-radio-button(size="is-small" v-model="base.read_mode" native-value="is_read_mode_off") しない
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
