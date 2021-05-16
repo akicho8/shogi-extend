@@ -21,7 +21,9 @@ export default {
       } else {
         const ua = window.navigator.userAgent.toLowerCase()
         if (this.mobile_p()) {
-          if (ua.indexOf("ipad") >= 0 || (ua.indexOf("macintosh") >= 0 && "ontouchend" in document)) {
+          if (ua.indexOf("android") >= 0) {
+            return ":android:"
+          } else if (ua.indexOf("ipad") >= 0 || (ua.indexOf("macintosh") >= 0 && "ontouchend" in document)) {
             return ":tablet:"
           } else {
             return ":iphone:"
