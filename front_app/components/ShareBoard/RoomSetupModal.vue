@@ -7,7 +7,7 @@
 
   section.modal-card-body
     .content
-      ol
+      ul
         li
           | 同じ合言葉を設定した人と部屋を共有します
         li
@@ -19,7 +19,7 @@
             span.ml-1 を伝えてもよし
         li(v-if="false")
           | <b>待った</b>や<b>反則の取り消し</b>は合意の上、当人が下の左矢印で局面を戻して指し直してください
-        li
+        li(v-if="false")
           | 基本的に盤の同期は
           b.is-size-5.mx-1 指したときだけ！
           | ← これ重要
@@ -33,14 +33,14 @@
 
     template(v-if="!base.ac_room")
       template(v-if="room_code_field_locked")
-        b-field(label="合言葉 (設定済み)" custom-class="is-small" key="room_code_field_locked_false")
+        b-field(label="合言葉" custom-class="is-small" key="room_code_field_locked_false")
           .control
-            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger") 変更
+            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger")
       template(v-else)
         b-field(label="合言葉" label-position="on-border" key="room_code_field_locked_true")
           b-input.new_room_code(v-model="new_room_code")
 
-      b-field(label="ハンドルネーム" label-position="on-border" message="ハンドルネームはあとから変更できますが順番設定後は再度順番設定が必要です")
+      b-field(label="ハンドルネーム" label-position="on-border" message="順番設定後に変更すると再度順番設定が必要になります")
         b-input.new_user_name(v-model="new_user_name")
 
   footer.modal-card-foot
