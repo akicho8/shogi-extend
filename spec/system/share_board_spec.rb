@@ -672,7 +672,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       a_block do
         side_menu_open
-        menu_item_click("1手戻す (待った・反則取り消し)") # 「1手戻す」モーダルを開く
+        menu_item_click("1手戻す")                        # 「1手戻す」モーダルを開く
         buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
         assert_turn_offset(1)                             # 1手目に戻っている
       end
