@@ -19,15 +19,19 @@ export default {
       if (typeof window === "undefined") {
         return "(window undefined)"
       } else {
+        const ua = window.navigator.userAgent.toLowerCase()
         if (this.mobile_p()) {
-          const ua = window.navigator.userAgent.toLowerCase()
-          if (ua.indexOf("ipad") > -1 || (ua.indexOf("macintosh") > -1 && "ontouchend" in document)) {
+          if (ua.indexOf("ipad") >= 0 || (ua.indexOf("macintosh") >= 0 && "ontouchend" in document)) {
             return ":tablet:"
           } else {
             return ":iphone:"
           }
         } else {
-          return ":desktop_computer:"
+          if (ua.indexOf("windows") >= 0) {
+            return ":windows:"
+          } else {
+            return ":desktop_computer:"
+          }
         }
       }
     },
