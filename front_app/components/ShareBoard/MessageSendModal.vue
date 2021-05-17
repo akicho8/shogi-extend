@@ -43,12 +43,16 @@ export default {
       this.base.ml_add_test()
     },
     send_handle() {
-      if (this.present_p(this.base.message_body)) {
-        this.sound_play("click")
-        this.base.message_share({message: this.base.message_body})
+      if (this.blank_p(this.base.message_body)) {
+        this.sound_play("x")
         this.base.message_body = ""
         this.input_focus()
+        return
       }
+      this.sound_play("click")
+      this.base.message_share({message: this.base.message_body})
+      this.base.message_body = ""
+      this.input_focus()
     },
     input_focus() {
       this.desktop_focus_to(this.$refs.message_input_tag)
