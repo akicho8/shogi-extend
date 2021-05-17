@@ -7,33 +7,31 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    .buttons
-      b-dropdown(v-model="base.komaochi_preset_key" position="is-bottom-right" @active-change="e => base.komaochi_preset_info_dropdown_active_change(e)")
-        b-button(slot="trigger" icon-left="menu-down") 種類
-        template(v-for="e in base.KomaochiPresetInfo.values")
-          b-dropdown-item(@click="base.komaochi_preset_info_set_handle(e)") {{e.name}}
-      b-button(@click="komaochi_henkou(-1)") ←
-      b-button(@click="komaochi_henkou(1)") →
+    .select_container
+      b-select(v-model="base.komaochi_preset_key" @input="sound_play('click')")
+        option(v-for="e in base.KomaochiPresetInfo.values" :value="e.key" v-text="e.name")
 
-    //- CustomShogiPlayer(
-    //-   :sp_body="base.komaochi_preset_info.sfen"
-    //- )
-    CustomShogiPlayer(
-      sp_summary="is_summary_off"
-      sp_run_mode="view_mode"
-      :sp_sound_enabled="false"
-      :sp_turn="0"
-      :sp_body="base.komaochi_preset_info.sfen"
-      :sp_viewpoint.sync="sp_viewpoint"
-    )
+    .sp_container.mt-4
+      CustomShogiPlayer(
+        sp_summary="is_summary_off"
+        sp_run_mode="view_mode"
+        sp_mobile_vertical="is_mobile_vertical_off"
+        sp_layout="is_horizontal"
+        sp_pi_variant="is_pi_variant_b"
+        :sp_hidden_if_piece_stand_blank="true"
+        :sp_op_disabled="true"
+        :sp_sound_enabled="false"
+        :sp_turn="0"
+        :sp_body="base.komaochi_preset_info.sfen"
+      )
 
-    //- .buttons
-    //-   b-button()
+    .buttons_container.buttons.has-addons.is-centered.mb-0.mt-4
+      b-button.mb-0(@click="komaochi_henkou(-1)" icon-left="chevron-left")
+      b-button.mb-0(@click="komaochi_henkou(1)" icon-left="chevron-right")
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
-    b-button.test_button(@click="test_handle" v-if="development_p") テスト
-    b-button.sync_button(@click="sync_handle" type="is-danger") 本当に転送する
+    b-button.sync_button(@click="apply_handle" type="is-primary") 適用
 </template>
 
 <script>
@@ -46,31 +44,19 @@ export default {
   ],
   methods: {
     komaochi_henkou(v) {
-      const info = this.base.KomaochiPresetInfo.fetch(this.base.komaochi_preset_key)
-      const index = this.ruby_like_modulo(info.code + v, this.base.KomaochiPresetInfo.values.length)
-      const next_info = this.base.KomaochiPresetInfo.fetch(index)
-      this.base.komaochi_preset_key = next_info.key
+      this.sound_play("click")
+      const i = this.base.komaochi_preset_info.code + v
+      const new_index = this.ruby_like_modulo(i, this.base.KomaochiPresetInfo.values.length)
+      const next = this.base.KomaochiPresetInfo.fetch(new_index)
+      this.base.komaochi_preset_key = next.key
     },
-
-    cc_dropdown_active_change(on) {
-      if (on) {
-        this.sound_play("click")
-      } else {
-        this.sound_play("click")
-      }
-    },
-
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
     },
-    test_handle() {
+    apply_handle() {
       this.sound_play("click")
-      this.base.force_sync("テスト転送")
-    },
-    sync_handle() {
-      this.sound_play("click")
-      this.base.force_sync_direct()
+      this.base.force_sync_komaochi()
       this.$emit("close")
     },
   },
@@ -81,14 +67,42 @@ export default {
 @import "support.sass"
 .KomaochiSetModal
   +tablet
-    width: 40rem
+    width: 32rem
   .modal-card-body
-    padding: 1.5rem
-    p:not(:first-child)
-      margin-top: 0.75rem
+    padding: 1.25rem
+    .select_container
+      display: flex
+      justify-content: center
+    .sp_container
+      display: flex
+      justify-content: center
+    .buttons_container
+      .button
+        min-width: 8rem
   .modal-card-foot
     justify-content: space-between
     .button
       min-width: 6rem
       font-weight: bold
+
+  .CustomShogiPlayer
+    width: 20rem
+    --sp_board_padding: 0
+    --sp_board_color: transparent
+    --sp_shadow_offset: 0
+    --sp_shadow_blur: 0
+    --sp_grid_outer_stroke: 2
+    --sp_grid_outer_color: hsl(0, 0%, 80%)
+    --sp_grid_color:       hsl(0, 0%, 80%)
+    --sp_stand_piece_w: 20px
+    --sp_stand_piece_h: 25px
+
+.STAGE-development
+  .KomaochiSetModal
+    .sp_container
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    // .CustomShogiPlayer
+    //   border: 1px dashed change_color($danger, $alpha: 0.5)
+    .modal-card-body
+      border: 1px dashed change_color($info, $alpha: 0.5)
 </style>
