@@ -1,11 +1,11 @@
 <template lang="pug">
-.modal-card.GeneralHelpModal
+.modal-card.ShareBoardHelpModal
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-5.has-text-weight-bold
       | 使い方
     b-tooltip(position="is-left" label="パーマリンク")
-      a(href="/share-board/help" target="_blank")
+      a.permalink(href="/share-board/help" target="_blank")
         b-icon(icon="link")
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
@@ -18,7 +18,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "GeneralHelpModal",
+  name: "ShareBoardHelpModal",
   mixins: [
     support_child,
   ],
@@ -33,7 +33,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.GeneralHelpModal
+.ShareBoardHelpModal
   height: 80vh
 
   // +tablet

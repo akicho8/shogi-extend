@@ -734,6 +734,30 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '使い方'
+  describe "使い方" do
+    it "モーダルで開く" do
+      visit "/share-board"
+      side_menu_open
+      menu_item_click("使い方")
+      find(".close_button").click
+    end
+
+    it "モーダルからパーマリンクで飛ぶ" do
+      visit "/share-board"
+      side_menu_open
+      menu_item_click("使い方")
+      find(".permalink").click       # 固定URLを別タブで開く
+      switch_to_window(windows.last) # 別タブに移動する
+      assert { current_path == "/share-board/help" }
+    end
+
+    it "ほぼ静的ページ" do
+      visit "/share-board/help"
+      assert_text("FAQ")
+    end
+  end
+
   def visit_with_args(args)
     visit "/share-board?#{args.to_query}"
   end

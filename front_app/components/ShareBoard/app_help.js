@@ -1,13 +1,13 @@
-import GeneralHelpModal from "./GeneralHelpModal.vue"
+import ShareBoardHelpModal from "./ShareBoardHelpModal.vue"
 
-export const app_general_help = {
+export const app_help = {
   methods: {
     general_help_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
 
       this.$buefy.modal.open({
-        component: GeneralHelpModal,
+        component: ShareBoardHelpModal,
         fullScreen: false,
         parent: this,
         trapFocus: true,

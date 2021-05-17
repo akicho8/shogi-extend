@@ -160,7 +160,7 @@ import { app_tweet            } from "./app_tweet.js"
 import { app_update           } from "./app_update.js"
 import { app_message          } from "./app_message.js"
 import { app_main_setting          } from "./app_main_setting.js"
-import { app_general_help          } from "./app_general_help.js"
+import { app_help          } from "./app_help.js"
 import { app_sidebar          } from "./app_sidebar.js"
 import { app_storage          } from "./app_storage.js"
 import { app_export           } from "./app_export.js"
@@ -193,7 +193,7 @@ export default {
     app_update,
     app_message,
     app_main_setting,
-    app_general_help,
+    app_help,
     app_sidebar,
     app_storage,
     app_export,
