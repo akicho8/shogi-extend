@@ -42,9 +42,9 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="デバッグ用ログ"              @click="base.track_log_modal_handle" v-if="development_p")
 
-      .box.mt-5
+      .style_container.box.mt-5
         .title.is-5 スタイル設定
-        b-field(custom-class="is-small" label="盤の大きさ(スマホを除く)")
+        b-field(custom-class="is-small" label="盤の大きさ")
           b-slider(v-bind="slider_attrs" v-model="base.share_board_column_width" :min="0" :max="100" :step="1.0")
 
       //- .box.mt-5(v-if="false")
@@ -88,4 +88,8 @@ export default {
       .b-slider-thumb
         padding: 8px 4px
         font-size: 10px
+
+  .style_container
+    +mobile
+      display: none
 </style>
