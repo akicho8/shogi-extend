@@ -9,7 +9,7 @@
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle") 閉じる
-    b-button.close_button(@click="test_handle") テスト
+    b-button.close_button(@click="test_handle" v-if="development_p") テスト
     b-button.close_button(@click="clear_handle") クリア
 </template>
 
