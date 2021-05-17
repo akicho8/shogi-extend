@@ -6,6 +6,7 @@ export const app_storage = {
   ],
   data() {
     return {
+      share_board_column_width: null,
       user_name: null,
       persistent_cc_params: null,
     }
@@ -34,6 +35,7 @@ export const app_storage = {
 
     ls_default() {
       return {
+        share_board_column_width: 80,
         user_name: this.default_user_name,
         persistent_cc_params: this.default_persistent_cc_params,
       }

@@ -225,8 +225,6 @@ export default {
 
       record:        this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       sp_run_mode:   this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
-
-      share_board_column_width: 80, // 盤の大きさ
     }
   },
   mounted() {
