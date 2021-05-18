@@ -770,7 +770,7 @@ RSpec.describe "共有将棋盤", type: :system do
       a_block do
         side_menu_open
         menu_item_click("手合割")
-        find(".KomaochiSetModal .komaochi_preset_key").select("香落ち")
+        find(".HandicapSetModal .handicap_preset_key").select("香落ち")
         find(".apply_button").click
       end
       b_block do

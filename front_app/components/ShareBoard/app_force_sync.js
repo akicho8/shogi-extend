@@ -109,11 +109,11 @@ export const app_force_sync = {
       this.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
     },
 
-    force_sync_komaochi() {
+    force_sync_handicap() {
       this.turn_offset = 0
-      this.current_sfen = this.komaochi_preset_info.sfen
-      this.ac_log("駒落適用", this.komaochi_preset_info.name)
-      this.force_sync(`${this.user_call_name(this.user_name)}が${this.komaochi_preset_info.name}に変更しました`)
+      this.current_sfen = this.handicap_preset_info.sfen
+      this.ac_log("駒落適用", this.handicap_preset_info.name)
+      this.force_sync(`${this.user_call_name(this.user_name)}が${this.handicap_preset_info.name}に変更しました`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////

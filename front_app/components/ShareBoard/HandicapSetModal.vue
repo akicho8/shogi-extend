@@ -1,18 +1,18 @@
 <template lang="pug">
-.modal-card.KomaochiSetModal
+.modal-card.HandicapSetModal
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-5.has-text-weight-bold
       | 手合割
     p
-      template(v-if="base.komaochi_preset_info.handicap_level >= 1") +
-      | {{base.komaochi_preset_info.handicap_level}}
+      template(v-if="base.handicap_preset_info.handicap_level >= 1") +
+      | {{base.handicap_preset_info.handicap_level}}
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
     .select_container
-      b-select.komaochi_preset_key(v-model="base.komaochi_preset_key" @input="sound_play('click')")
-        option(v-for="e in base.KomaochiPresetInfo.values" :value="e.key" v-text="e.name")
+      b-select.handicap_preset_key(v-model="base.handicap_preset_key" @input="sound_play('click')")
+        option(v-for="e in base.HandicapPresetInfo.values" :value="e.key" v-text="e.name")
 
     .sp_container.mt-4
       CustomShogiPlayer(
@@ -25,15 +25,15 @@
         :sp_op_disabled="true"
         :sp_sound_enabled="false"
         :sp_turn="0"
-        :sp_body="base.komaochi_preset_info.sfen"
+        :sp_body="base.handicap_preset_info.sfen"
       )
     .description_container.mt-4
       .description
-        | {{base.komaochi_preset_info.description}}
+        | {{base.handicap_preset_info.description}}
 
     .buttons_container.buttons.has-addons.is-centered.mb-0.mt-4
-      b-button.mb-0(@click="komaochi_henkou(-1)" icon-left="chevron-left")
-      b-button.mb-0(@click="komaochi_henkou(1)" icon-left="chevron-right")
+      b-button.mb-0(@click="handicap_henkou(-1)" icon-left="chevron-left")
+      b-button.mb-0(@click="handicap_henkou(1)" icon-left="chevron-right")
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -44,17 +44,17 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "KomaochiSetModal",
+  name: "HandicapSetModal",
   mixins: [
     support_child,
   ],
   methods: {
-    komaochi_henkou(v) {
+    handicap_henkou(v) {
       this.sound_play("click")
-      const i = this.base.komaochi_preset_info.code + v
-      const new_index = this.ruby_like_modulo(i, this.base.KomaochiPresetInfo.values.length)
-      const next = this.base.KomaochiPresetInfo.fetch(new_index)
-      this.base.komaochi_preset_key = next.key
+      const i = this.base.handicap_preset_info.code + v
+      const new_index = this.ruby_like_modulo(i, this.base.HandicapPresetInfo.values.length)
+      const next = this.base.HandicapPresetInfo.fetch(new_index)
+      this.base.handicap_preset_key = next.key
     },
     close_handle() {
       this.sound_play("click")
@@ -62,7 +62,7 @@ export default {
     },
     apply_handle() {
       this.sound_play("click")
-      this.base.force_sync_komaochi()
+      this.base.force_sync_handicap()
       this.$emit("close")
     },
   },
@@ -71,7 +71,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.KomaochiSetModal
+.HandicapSetModal
   +tablet
     width: 32rem
   .modal-card-body
@@ -109,7 +109,7 @@ export default {
     --sp_stand_piece_h: 22px
 
 .STAGE-development
-  .KomaochiSetModal
+  .HandicapSetModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
     // .CustomShogiPlayer

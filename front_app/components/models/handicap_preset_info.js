@@ -1,6 +1,6 @@
 import MemoryRecord from "js-memory-record"
 
-export class KomaochiPresetInfo extends MemoryRecord {
+export class HandicapPresetInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "平手",           handicap_level:    59, sfen: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1", description: "ハンデなし", },

@@ -1,22 +1,22 @@
-import { KomaochiPresetInfo } from "@/components/models/komaochi_preset_info.js"
-import KomaochiSetModal from "./KomaochiSetModal.vue"
+import { HandicapPresetInfo } from "@/components/models/handicap_preset_info.js"
+import HandicapSetModal from "./HandicapSetModal.vue"
 
-export const app_komaochi_set = {
+export const app_handicap_set = {
   data() {
     return {
-      komaochi_preset_key: "平手",
+      handicap_preset_key: "平手",
     }
   },
 
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
-    komaochi_set_modal_handle() {
+    handicap_set_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
 
       this.$buefy.modal.open({
-        component: KomaochiSetModal,
+        component: HandicapSetModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
@@ -32,7 +32,7 @@ export const app_komaochi_set = {
     },
   },
   computed: {
-    KomaochiPresetInfo()   { return KomaochiPresetInfo                                      },
-    komaochi_preset_info() { return this.KomaochiPresetInfo.fetch(this.komaochi_preset_key) },
+    HandicapPresetInfo()   { return HandicapPresetInfo                                      },
+    handicap_preset_info() { return this.HandicapPresetInfo.fetch(this.handicap_preset_key) },
   },
 }
