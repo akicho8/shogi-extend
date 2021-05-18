@@ -11,8 +11,8 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="対局時計"              @click="base.cc_modal_handle")
 
         b-menu-list(label="共有サポート")
-          b-menu-item.is_active_unset(label="初期配置に戻す"                 @click="base.board_init_modal_handle"    :disabled="blank_p(base.ac_room)")
-          b-menu-item.is_active_unset(label="1手戻す"                        @click="base.force_sync_turn_previous_modal_handle"  :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(label="初期配置に戻す"                 @click="base.board_init_modal_handle")
+          b-menu-item.is_active_unset(label="1手戻す"                        @click="base.force_sync_turn_previous_modal_handle")
           b-menu-item.is_active_unset(label="局面の転送"                     @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="駒落ち設定"                     @click="base.komaochi_set_modal_handle")
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"    @click="base.room_code_url_copy_handle"  :disabled="blank_p(base.ac_room)")
@@ -26,7 +26,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="編集・詰将棋作成")
           b-menu-item.is_active_unset(label="局面編集"       @click="base.edit_mode_handle")
-          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle" :disabled="present_p(base.ac_room)")
+          b-menu-item.is_active_unset(label="棋譜の読み込み" @click="base.any_source_read_handle")
 
         b-menu-list(label="Twitter")
           b-menu-item.is_active_unset(label="ツイートする"                @click="base.tweet_modal_handle")
