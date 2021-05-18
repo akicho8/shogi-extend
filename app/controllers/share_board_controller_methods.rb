@@ -223,7 +223,7 @@ module ShareBoardControllerMethods
   end
 
   def abstract_viewpoint
-    AbstractViewpointInfo.valid_key(params[:abstract_viewpoint], :self)
+    AbstractViewpointInfo.valid_key(params[:abstract_viewpoint], AbstractViewpointInfo.default_key)
   end
 
   # 駒落ちを考慮した擬似ターン数

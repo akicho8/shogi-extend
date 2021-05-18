@@ -9,11 +9,13 @@
 # | 駒落ち | △(1) |    2 |    3 |       | ▲が指したので反転しない             |
 # |--------+-------+------+------+-------+--------------------------------------|
 class AbstractViewpointInfo
+  cattr_accessor(:default_key) { :black }
+
   include ApplicationMemoryRecord
   memory_record [
-    { key: :self,     name: "自分", image_viewpoint: -> e { e.even? ? :white : :black }, board_viewpoint: -> e { e.odd? ? :white : :black } },
-    { key: :opponent, name: "相手", image_viewpoint: -> e { e.odd? ? :white : :black  }, board_viewpoint: -> e { e.odd? ? :white : :black } },
     { key: :black,    name: "☗",   image_viewpoint: -> e { :black                    }, board_viewpoint: -> e { :black                   } },
     { key: :white,    name: "☖",   image_viewpoint: -> e { :white                    }, board_viewpoint: -> e { :white                   } },
+    { key: :self,     name: "自分", image_viewpoint: -> e { e.even? ? :white : :black }, board_viewpoint: -> e { e.odd? ? :white : :black } },
+    { key: :opponent, name: "相手", image_viewpoint: -> e { e.odd? ? :white : :black  }, board_viewpoint: -> e { e.odd? ? :white : :black } },
   ]
 end

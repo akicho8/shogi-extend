@@ -4,17 +4,17 @@
     p.modal-card-title.is-size-5.has-text-weight-bold ツイート画像の視点設定
   section.modal-card-body
     .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="self")
-        | 1手指し継いだとき自分の視点 (リレー将棋向け・初期値)
-    .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="opponent")
-        | 1手指し継いだとき相手の視点 (リレー将棋向け)
-    .field.my-1
       b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="black")
         | 常に☗ (詰将棋向け)
     .field.my-1
       b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="white")
         | 常に☖ (逃れ将棋向け)
+    .field.my-1
+      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="self")
+        | 1手指し継いだとき自分の視点 (リレー将棋のときのおすすめ)
+    .field.my-1
+      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="opponent")
+        | 1手指し継いだとき相手の視点 (リレー将棋向け)
     .preview_image_container.is-flex.mt-3
       .preview_image.is-flex
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
@@ -22,7 +22,7 @@
         b-image.mr-1(:src="ogp_image_url")
       .preview_image.is-flex
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
-          | それをブラウザで開いたときの共有将棋盤の視点
+          | それをブラウザで開いたときの盤の視点
         b-image.ml-1(:src="opened_image_url")
   footer.modal-card-foot
     b-button(@click="close_handle") キャンセル
