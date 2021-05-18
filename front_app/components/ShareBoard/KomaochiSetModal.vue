@@ -8,7 +8,7 @@
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
     .select_container
-      b-select(v-model="base.komaochi_preset_key" @input="sound_play('click')")
+      b-select.komaochi_preset_key(v-model="base.komaochi_preset_key" @input="sound_play('click')")
         option(v-for="e in base.KomaochiPresetInfo.values" :value="e.key" v-text="e.name")
 
     .sp_container.mt-4
@@ -18,7 +18,7 @@
         sp_mobile_vertical="is_mobile_vertical_off"
         sp_layout="is_horizontal"
         sp_pi_variant="is_pi_variant_b"
-        :sp_hidden_if_piece_stand_blank="true"
+        :sp_hidden_if_piece_stand_blank="false"
         :sp_op_disabled="true"
         :sp_sound_enabled="false"
         :sp_turn="0"
@@ -31,7 +31,7 @@
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
-    b-button.sync_button(@click="apply_handle" type="is-primary") 適用
+    b-button.apply_button(@click="apply_handle" type="is-primary") 適用
 </template>
 
 <script>
@@ -94,8 +94,8 @@ export default {
     --sp_grid_outer_stroke: 2
     --sp_grid_outer_color: hsl(0, 0%, 80%)
     --sp_grid_color:       hsl(0, 0%, 80%)
-    --sp_stand_piece_w: 20px
-    --sp_stand_piece_h: 25px
+    --sp_stand_piece_w: 30px
+    --sp_stand_piece_h: 30px
 
 .STAGE-development
   .KomaochiSetModal
