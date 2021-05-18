@@ -22,7 +22,7 @@
       b-radio-button(@input="sound_play('click')" size="is-small" v-model="base.internal_rule" native-value="free" type="is-danger") 無視
     b-field.debug_mode(custom-size="is-small" label="デバッグモード")
       b-radio-button.is_debug_mode_off(@input="sound_play('click')" size="is-small" v-model="base.debug_mode" native-value="is_debug_mode_off") OFF
-      b-radio-button.is_debug_mode_on(@input="sound_play('click')" size="is-small" v-model="base.debug_mode" native-value="is_debug_mode_on") ON
+      b-radio-button.is_debug_mode_on(@input="sound_play('click')" size="is-small" v-model="base.debug_mode" native-value="is_debug_mode_on" type="is-danger") ON
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
