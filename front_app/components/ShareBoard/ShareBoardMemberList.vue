@@ -9,8 +9,8 @@
         //- b-icon(icon="sleep" type="is-danger" size="is-small")
         //- b-icon(icon="lan-disconnect" type="is-danger" size="is-small")
         .user_name {{e.from_user_name}}
-        .mx-1(v-if="base.connection_id === e.from_connection_id") (自分)
         b-icon.mx-1(icon="lan-disconnect" type="is-danger" size="is-small" v-if="base.member_disconnect_p(e) || development_p")
+        b-icon.mx-1(icon="arrow-left" size="is-small" v-if="base.connection_id === e.from_connection_id")
         template(v-if="development_p")
           .mx-1 {{time_format(e)}}
           .mx-1 {{e.room_joined_at}}
