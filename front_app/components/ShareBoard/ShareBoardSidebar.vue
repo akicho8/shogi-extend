@@ -14,7 +14,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="初期配置に戻す"                 @click="base.board_init_modal_handle")
           b-menu-item.is_active_unset(label="1手戻す"                        @click="base.force_sync_turn_previous_modal_handle")
           b-menu-item.is_active_unset(label="局面の転送"                     @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
-          b-menu-item.is_active_unset(label="駒落ち設定"                     @click="base.komaochi_set_modal_handle")
+          b-menu-item.is_active_unset(label="手合割"                         @click="base.komaochi_set_modal_handle")
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"    @click="base.room_code_url_copy_handle"  :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="手番が来たら知らせる設定"       @click="base.tn_modal_handle"            :disabled="blank_p(base.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(label="再起動"                         @click="base.room_recreate_modal_handle" :disabled="blank_p(base.ac_room)")
@@ -36,7 +36,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         ShareBoardSidebarExport(:base="base")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(label="使い方"                      @click="base.general_help_modal_handle" v-if="development_p")
+          b-menu-item.is_active_unset(label="使い方"                      @click="base.general_help_modal_handle")
           b-menu-item.is_active_unset(label="設定"                        @click="base.general_setting_modal_handle")
           b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
           b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)")

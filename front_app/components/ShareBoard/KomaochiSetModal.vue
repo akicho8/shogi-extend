@@ -3,7 +3,10 @@
   ////////////////////////////////////////////////////////////////////////////////
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-5.has-text-weight-bold
-      | 駒落ち設定
+      | 手合割
+    p
+      template(v-if="base.komaochi_preset_info.handicap_level >= 1") +
+      | {{base.komaochi_preset_info.handicap_level}}
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
@@ -24,6 +27,9 @@
         :sp_turn="0"
         :sp_body="base.komaochi_preset_info.sfen"
       )
+    .description_container.mt-4
+      .description
+        | {{base.komaochi_preset_info.description}}
 
     .buttons_container.buttons.has-addons.is-centered.mb-0.mt-4
       b-button.mb-0(@click="komaochi_henkou(-1)" icon-left="chevron-left")
@@ -76,6 +82,11 @@ export default {
     .sp_container
       display: flex
       justify-content: center
+    .description_container
+      display: flex
+      justify-content: center
+      //- .description
+    //- width: 20rem
     .buttons_container
       .button
         min-width: 8rem
@@ -86,16 +97,16 @@ export default {
       font-weight: bold
 
   .CustomShogiPlayer
-    width: 20rem
+    width: 16rem
     --sp_board_padding: 0
     --sp_board_color: transparent
     --sp_shadow_offset: 0
     --sp_shadow_blur: 0
-    --sp_grid_outer_stroke: 2
+    --sp_grid_outer_stroke: 0
     --sp_grid_outer_color: hsl(0, 0%, 80%)
     --sp_grid_color:       hsl(0, 0%, 80%)
-    --sp_stand_piece_w: 30px
-    --sp_stand_piece_h: 30px
+    --sp_stand_piece_w: 22px
+    --sp_stand_piece_h: 22px
 
 .STAGE-development
   .KomaochiSetModal

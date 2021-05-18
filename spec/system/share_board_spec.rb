@@ -758,8 +758,8 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '駒落ち設定'
-  describe "駒落ち設定" do
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '手合割'
+  describe "手合割" do
     it "works" do
       a_block do
         room_setup("my_room", "alice") # aliceが部屋を作る
@@ -769,7 +769,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
       a_block do
         side_menu_open
-        menu_item_click("駒落ち設定")
+        menu_item_click("手合割")
         find(".KomaochiSetModal .komaochi_preset_key").select("香落ち")
         find(".apply_button").click
       end
