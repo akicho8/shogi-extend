@@ -6258,7 +6258,7 @@ hosted-git-info@^2.1.4:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.8.tgz#7539bd4bc1e0e0a895815a2e0262420b12858488"
   integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
 
-howler@^2.2.1, howler@latest:
+howler@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/howler/-/howler-2.2.1.tgz#a521a9b495841e8bb9aa12e651bebba0affc179e"
   integrity sha512-0iIXvuBO/81CcrQ/HSSweYmbT50fT2mIc9XMFb+kxIfk2pW/iKzDbX1n3fZmDXMEIpYvyyfrB+gXwPYSDqUxIQ==
@@ -10834,10 +10834,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shogi-player@^0.0.276:
-  version "0.0.276"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.276.tgz#79a0bf0b43fef09169c1058a73f31e95a7549945"
-  integrity sha512-ruvn/LxeJfEKlgSu7vkPnvq6cksCuZrE0ZzSFpr9v6xE88wfbs7Hd/DFOaYjrNIQLIlMwZ/tHBKn2lbkZV66cw==
+shogi-player@^0.0.277:
+  version "0.0.277"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.277.tgz#98cd88bc4d3cbeb0c853ba3bb4b946552dc08cea"
+  integrity sha512-uG0GUvudI5Vi7zhtMlTIH93U5PrSKIYoRImzBchHCi+MczTMGH7xpHSNN815kdh8s4utH0Ax5DxpIgbw+zhVVA==
   dependencies:
     autolinker latest
     buefy "^0.9.4"
@@ -10845,7 +10845,7 @@ shogi-player@^0.0.276:
     chroma-js "^2.1.0"
     dayjs latest
     file-loader "^6.2.0"
-    howler latest
+    howler "^2.2.1"
     js-memory-record "^0.0.18"
     lodash latest
     node-sass ">= 4.0.0 < 5.0.0"
