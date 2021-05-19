@@ -20,6 +20,7 @@
     "babel-core": "^6.26.3",
     "chart.js": "^2.9.4",
     "fabric": "^4.2.0",
+    "howler": "^2.2.1",
     "js-memory-record": "^0.0.18",
     "lzma": "^2.3.2",
     "nuxt": "^2.14.7",
