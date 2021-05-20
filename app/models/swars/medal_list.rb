@@ -4,7 +4,7 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :sample_max, :current_scope, :condition_add, :all_tag_names_hash, to: :user_info
+    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :sample_max, :current_scope, :condition_add, :all_tag_names_hash, :ai_use_battle_count, :win_scope, :win_count, :lose_scope, :lose_count, :turn_max_gteq, to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
@@ -320,32 +320,6 @@ module Swars
 
     ################################################################################
 
-    # 棋神
-    # turn_max >= 2 なら think_all_avg と think_end_avg は nil ではないので turn_max >= 2 の条件を必ず入れること
-    def ai_use_battle_count
-      @ai_use_battle_count ||= -> {
-        # A
-        s = win_scope                                                                           # 勝っている
-        s = s.joins(:battle)
-        s = s.where(Swars::Membership.arel_table[:grade_diff].gteq(0)) if false                 # 自分と同じか格上に対して
-        # s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) # もともと CHECKMATE だけだったが……いらない？
-        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
-
-        if false
-          # (B or C)
-          a = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(3))       # 指し手平均3秒以下
-          a = a.or(Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
-
-          # A and (B or C)
-          s = s.merge(a)
-        else
-          s = s.where(Swars::Membership.arel_table[:two_serial_max].gteq(15))
-        end
-
-        s.count
-      }.call
-    end
-
     ################################################################################ 連勝
 
     def win_lose_streak_max_hash
@@ -362,11 +336,6 @@ module Swars
     end
 
     private
-
-    # 最低でも2以上にすること
-    def turn_max_gteq
-      50
-    end
 
     # 勝率
     def win_ratio
@@ -402,24 +371,6 @@ module Swars
           all_tag_names_hash["居飛車"].fdiv(d)
         end
       }.call
-    end
-
-    ########################################
-
-    def win_scope
-      @win_scope ||= ids_scope.where(judge_key: "win")
-    end
-
-    def win_count
-      @win_count ||= win_scope.count
-    end
-
-    def lose_scope
-      @lose_scope ||= ids_scope.where(judge_key: "lose")
-    end
-
-    def lose_count
-      @lose_count ||= lose_scope.count
     end
   end
 end

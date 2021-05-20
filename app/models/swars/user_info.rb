@@ -63,9 +63,10 @@ module Swars
     def to_hash
       {}.tap do |hash|
         hash[:etc_list] = [
-          { name: "戦型", list: formation_types    },
-          { name: "勝ち", list: judge_types(:win)  },
-          { name: "負け", list: judge_types(:lose) },
+          { name: "戦型",           list: formation_info_records    },
+          { name: "勝ち",           list: judge_info_records(:win)  },
+          { name: "負け",           list: judge_info_records(:lose) },
+          { name: "棋神召喚の疑い", list: kishin_info_records },
         ]
 
         hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
@@ -179,6 +180,53 @@ module Swars
         counts = ids_scope.all_tag_counts(at_least: at_least_value)
         counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
       }.call
+    end
+
+    # 棋神
+    # turn_max >= 2 なら think_all_avg と think_end_avg は nil ではないので turn_max >= 2 の条件を必ず入れること
+    def ai_use_battle_count
+      @ai_use_battle_count ||= -> {
+        # A
+        s = win_scope                                                                           # 勝っている
+        s = s.joins(:battle)
+        s = s.where(Swars::Membership.arel_table[:grade_diff].gteq(0)) if false                 # 自分と同じか格上に対して
+        # s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) # もともと CHECKMATE だけだったが……いらない？
+        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
+
+        if false
+          # (B or C)
+          a = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(3))       # 指し手平均3秒以下
+          a = a.or(Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
+
+          # A and (B or C)
+          s = s.merge(a)
+        else
+          s = s.where(Swars::Membership.arel_table[:two_serial_max].gteq(15))
+        end
+
+        s.count
+      }.call
+    end
+
+    def win_scope
+      @win_scope ||= ids_scope.where(judge_key: "win")
+    end
+
+    def win_count
+      @win_count ||= win_scope.count
+    end
+
+    def lose_scope
+      @lose_scope ||= ids_scope.where(judge_key: "lose")
+    end
+
+    def lose_count
+      @lose_count ||= lose_scope.count
+    end
+
+    # 最低でも2以上にすること
+    def turn_max_gteq
+      50
     end
 
     private
@@ -307,7 +355,7 @@ module Swars
       end
     end
 
-    def judge_types(judge_key)
+    def judge_info_records(judge_key)
       s = current_scope
       s = s.where(judge_key: judge_key)
       battle_ids = s.pluck(:battle_id)
@@ -330,13 +378,20 @@ module Swars
       end
     end
 
-    def formation_types
+    def formation_info_records
       ["居飛車", "振り飛車"].collect { |e|
         count = all_tag_names_hash[e]
-        if count >= 1
+        if count >= 1 || true
           { name: e, value: count }
         end
       }.compact
+    end
+
+    def kishin_info_records
+      [
+        { name: "無し", value: win_count - ai_use_battle_count, },
+        { name: "有り", value: ai_use_battle_count,             },
+      ]
     end
   end
 end

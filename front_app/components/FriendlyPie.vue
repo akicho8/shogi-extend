@@ -28,7 +28,7 @@ const CHART_CONFIG_DEFAULT = {
   // https://misc.0o0o.org/chartjs-doc-ja/charts/doughnut.html
   options: {
     cutoutPercentage: 0,       // ドーナッツの円の切り抜き度合(0〜100)
-    rotation: Math.PI * 1.5,    // 真上を0とする
+    rotation: Math.PI * 0.5,   // 真下を0とする
     aspectRatio: 3.0, // 大きいほど横長方形になる。円=正方形としたいので1.0
     // circumference: 200,
 
