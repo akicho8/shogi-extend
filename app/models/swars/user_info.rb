@@ -62,7 +62,11 @@ module Swars
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
       {}.tap do |hash|
-        hash[:lose_list] = lose_list
+        hash[:etc_list] = [
+          { name: "戦型", list: formation_types    },
+          { name: "勝ち", list: judge_types(:win)  },
+          { name: "負け", list: judge_types(:lose) },
+        ]
 
         hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
 
@@ -166,6 +170,15 @@ module Swars
         s = s.merge(Swars::Battle.rule_eq(v))
       end
       s
+    end
+
+    # all_tag_names_hash["居飛車"]         # => 1
+    # all_tag_names_hash["存在しない戦法"] # => 0
+    def all_tag_names_hash
+      @all_tag_names_hash ||= -> {
+        counts = ids_scope.all_tag_counts(at_least: at_least_value)
+        counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
+      }.call
     end
 
     private
@@ -294,9 +307,9 @@ module Swars
       end
     end
 
-    def lose_list
+    def judge_types(judge_key)
       s = current_scope
-      s = s.where(judge_key: "lose")
+      s = s.where(judge_key: judge_key)
       battle_ids = s.pluck(:battle_id)
 
       # raise battle_ids.inspect
@@ -310,10 +323,20 @@ module Swars
         final_info = FinalInfo.fetch(final_key)
         {
           :key   => final_key,
+          # :name  => final_info.name2(judge_key),
           :name  => final_info.name,
           :value => value,
         }
       end
+    end
+
+    def formation_types
+      ["居飛車", "振り飛車"].collect { |e|
+        count = all_tag_names_hash[e]
+        if count >= 1
+          { name: e, value: count }
+        end
+      }.compact
     end
   end
 end

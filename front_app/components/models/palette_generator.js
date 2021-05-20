@@ -57,9 +57,12 @@ export const PaletteGenerator = {
     const e = params
     const f = chroma.scale(e.colors)
     const list = []
+    let d = 0
+    if (e.count >= 2) {
+      d = e.range / (e.count - 1)
+    }
     for (let i = 0; i < e.count; i++) {
-      const c = f(e.range * i / (e.count - 1)).css()
-      console.log(c)
+      const c = f(i * d).css()
       list.push(c)
     }
     return list

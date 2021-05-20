@@ -43,5 +43,12 @@ module Swars
         "has-text-#{label_color}"
       end
     end
+
+    # def name2(judge_key)
+    #   if judge_key == :win && key == :CHECKMATE
+    #     "詰ました"
+    #   end
+    #   name
+    # end
   end
 end

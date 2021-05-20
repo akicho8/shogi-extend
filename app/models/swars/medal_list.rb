@@ -4,7 +4,7 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :sample_max, :current_scope, :condition_add, to: :user_info
+    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :sample_max, :current_scope, :condition_add, :all_tag_names_hash, to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
@@ -69,15 +69,6 @@ module Swars
       else
         0
       end
-    end
-
-    # all_tag_names_hash["居飛車"]         # => 1
-    # all_tag_names_hash["存在しない戦法"] # => 0
-    def all_tag_names_hash
-      @all_tag_names_hash ||= -> {
-        counts = ids_scope.all_tag_counts(at_least: at_least_value)
-        counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
-      }.call
     end
 
     def all_tag_names
