@@ -63,7 +63,7 @@ module Swars
     def to_hash
       {}.tap do |hash|
         hash[:etc_list] = [
-          { name: "派閥",           list: formation_info_records    },
+          { name: "党派",           list: formation_info_records    },
           { name: "勝ち",           list: judge_info_records(:win)  },
           { name: "負け",           list: judge_info_records(:lose) },
           { name: "棋神召喚の疑い", list: kishin_info_records },
