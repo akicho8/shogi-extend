@@ -3,8 +3,7 @@ import AnySourceReadModal from "@/components/AnySourceReadModal.vue"
 export const app_edit_mode = {
   methods: {
     edit_warn_modal_handle() {
-      this.toast_warn("「待った」したいときは下のｺﾝﾄﾛｰﾗｰで少し前に戻って新しい手を指してください")
-
+      // this.toast_warn("「待った」したいときは下のｺﾝﾄﾛｰﾗｰで少し前に戻って新しい手を指してください")
       this.$buefy.dialog.confirm({
         title: "共有中の局面編集は危険",
         message: `
@@ -97,9 +96,5 @@ export const app_edit_mode = {
         },
       })
     },
-
   },
-  computed: {
-  },
-
 }
