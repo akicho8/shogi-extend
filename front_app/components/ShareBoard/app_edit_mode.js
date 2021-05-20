@@ -88,6 +88,7 @@ export const app_edit_mode = {
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
                 this.sp_viewpoint = "black"
+                this.ac_log("棋譜読込", e.body)
                 modal_instance.close()
               }
             })
