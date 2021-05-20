@@ -201,7 +201,7 @@ module Swars
           # A and (B or C)
           s = s.merge(a)
         else
-          s = s.where(Swars::Membership.arel_table[:two_serial_max].gteq(15))
+          s = s.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
         end
 
         s.count
