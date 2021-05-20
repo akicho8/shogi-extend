@@ -7,11 +7,11 @@ export const PaletteGenerator = {
     params = {
       diff: 10,     // 1回で進む差
       count: 10,    // これで割った数だけ1度に進む
-      alpha: 0.4,   // 非透明度
+      alpha: 0.5,   // 非透明度
       ...params,
     }
     const e = params
-    const base_color = PaletteInfo.fetch("success").base_color.alpha(e.alpha)
+    const base_color = PaletteInfo.fetch("info").base_color.alpha(e.alpha)
     const base_hue = base_color.get("hsl.h")
     const list = []
     for (let i = 0; i < e.count; i++) {

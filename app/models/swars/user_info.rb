@@ -69,6 +69,18 @@ module Swars
           { name: "棋神召喚の疑い", list: kishin_info_records },
         ]
 
+        if Rails.env.development?
+          hash[:etc_list] << {
+            name: "テスト",
+            list: [
+              { name: "a", value: 1 },
+              { name: "b", value: 2 },
+              { name: "c", value: 3 },
+              { name: "d", value: 4 },
+            ],
+          }
+        end
+
         hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
 
         hash[:sample_max] = sample_max      # サンプル数(棋譜一覧で再検索するときに "sample:n" として渡す)

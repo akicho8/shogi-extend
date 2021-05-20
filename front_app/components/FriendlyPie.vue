@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import { PaletteInfo } from "@/components/models/palette_info.js"
-import chroma from 'chroma-js'
 import { PaletteGenerator } from "@/components/models/palette_generator.js"
 
 const CHART_CONFIG_DEFAULT = {
@@ -73,8 +71,8 @@ export default {
     this._chart_config.data.labels = this.extract_labels
     this._chart_config.data.datasets[0].data = this.extract_values
 
-    // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type0({diff: 30, count: this.data_count})
-    this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2({count: this.data_count})
+    this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type0({diff: 45, count: this.data_count})
+    // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2({count: this.data_count})
     // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2()
 
     if (this.development_p) {
