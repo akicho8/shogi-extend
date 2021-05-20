@@ -24,6 +24,7 @@ export const app_edit_mode = {
         },
         onConfirm: () => {
           this.talk_stop()
+          this.sound_play("click")
           this.sp_run_mode = "edit_mode"
         },
       })
