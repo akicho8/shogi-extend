@@ -1,5 +1,5 @@
 <template lang="pug">
-.FriendlyPie.is-unselectable(:class="[size, {'is-narrow': narrowed}]")
+.FriendlyPie.is-unselectable
   //- .level.is-mobile.win_lose_container
   //-   //- .level-item.has-text-centered.win.win_lose_counts
   //-   //-   .heading_with_title(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('win')")
@@ -26,25 +26,29 @@
 
 <script>
 import { PaletteInfo } from "@/components/models/palette_info.js"
+import chroma from 'chroma-js'
+import { PaletteGenerator } from "@/components/models/palette_generator.js"
 
 const CHART_CONFIG_DEFAULT = {
   type: 'doughnut',
   data: {
     labels: null,
     datasets: [{
-      backgroundColor: [
-        PaletteInfo.fetch("danger").alpha(1),
-        PaletteInfo.fetch("success").alpha(0.4),
-      ],
-      borderWidth: 0,
+      // backgroundColor: [
+      //   // PaletteInfo.fetch("danger").alpha(1),
+      //   // PaletteInfo.fetch("success").alpha(0.4),
+      //   // PaletteInfo.fetch("info").base_color.set('hsl.h', 0.1).css(),
+      //   PaletteInfo.fetch("primary").base_color.alpha(0.4).set('hsl.h', 180).css(),
+      // ],
+      borderWidth: 1,
       // hoverOffset: 3,
       weight: 1,
     }],
   },
   // https://misc.0o0o.org/chartjs-doc-ja/charts/doughnut.html
   options: {
-    cutoutPercentage: 50,       // ドーナッツの円の切り抜き度合(0〜100)
-    rotation: Math.PI * 1.0,    // 真上が0とする
+    cutoutPercentage: 75,       // ドーナッツの円の切り抜き度合(0〜100)
+    rotation: Math.PI * 1.5,    // 真上を0とする
     aspectRatio: 1.0, // 大きいほど横長方形になる。円=正方形としたいので1.0
     // circumference: 200,
 
@@ -63,7 +67,7 @@ const CHART_CONFIG_DEFAULT = {
     },
 
     tooltips: {
-      enabled: false,
+      enabled: true,
     },
   }
 }
@@ -72,16 +76,12 @@ import chart_mixin from '@/components/models/chart_mixin.js'
 
 // http://localhost:3000/w?query=kinakom0chi&user_info_show=true
 export default {
-  mixins: [chart_mixin],
-
+  mixins: [
+    chart_mixin,
+  ],
   props: {
-    info:         { required: true,                },  // {win: 1, lose: 2}
-    size:         { default: "is-default",         },  // is-default or is-small
-    narrowed:     { default: false,                },  // true: 狭くする
-    total_show_p: { default: true,                 },  // true: win + lose の合計を表示する
-    click_func:   { type: Function, default: null, },  // $emit にしていないのは is-clickable のフラグとするためでもある
+    info: { type: Array, required: true, },  // [{name: ..., value: ...}, ...]
   },
-
   created() {
     // ・this._chart_config = Object.assign({}, CHART_CONFIG_DEFAULT) はダメ
     // ・shallow copy は this._chart_config.data.datasets[0] のポインタがコピーされていない
@@ -90,63 +90,25 @@ export default {
     // ・ただし function が消える
     // ・function が必要なときは直接 Vue の方に書いた方がいいのかもしれない
     this._chart_config = _.cloneDeep(CHART_CONFIG_DEFAULT)
-    this._chart_config.data.labels = this.get_labels
-    this._chart_config.data.datasets[0].data = this.win_lose_pair
-    this._chart_config.data.datasets[0].data = this.win_lose_pair
-    
-    
-    
+    this._chart_config.data.labels = this.extract_labels
+    this._chart_config.data.datasets[0].data = this.extract_values
+
+    // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type0({diff: 30, count: this.data_count})
+    this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2({count: this.data_count})
+    // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2()
 
     if (this.development_p) {
       this._chart_config.options.animation.animateScale = true
       this._chart_config.options.animation.animateRotate = true
     }
   },
-
   mounted() {
     this.chart_create()
   },
-
-  methods: {
-    click_handle(key) {
-      if (this.click_func) {
-        this.click_func(key)
-      }
-    }
-  },
-
   computed: {
-    // win_lose_clickable_p() { return !!this.click_func },
-
-    // rate_human() {
-    //   if (this.total === 0) {
-    //     return ""
-    //   }
-    //   return Math.floor(this.rate * 100)
-    // },
-    //
-    // rate() {
-    //   return this.win / this.total
-    // },
-    //
-    get_labels() {
-      return this.info.map(e => e.name)
-    },
-    win_lose_pair() {
-      return this.info.map(e => e.value)
-    },
-    //
-    // total() {
-    //   return this.win + this.lose
-    // },
-
-    // win() {
-    //   return this.info.judge_counts["win"]
-    // },
-    //
-    // lose() {
-    //   return this.info.judge_counts["lose"]
-    // },
+    data_count()     { return this.info.length            },
+    extract_labels() { return this.info.map(e => e.name)  },
+    extract_values() { return this.info.map(e => e.value) },
   },
 }
 </script>
@@ -183,7 +145,7 @@ export default {
     //     margin-bottom: 0
     //   .title
     //     font-size: 2.3em
-    // 
+    //
     //   .heading_with_title
     //     padding: 0.5rem
     //     &.is-clickable
@@ -195,7 +157,7 @@ export default {
   // .chart_container
   //   margin: 0 0.75em             // 小さくすると WIN LOSE が寄る
   //   position: relative
-  // 
+  //
   //   // 浮かせて中央へ
   //   .win_rate_container
   //     height: inherit
@@ -204,7 +166,7 @@ export default {
   //     right: 0%
   //     bottom: 1.8em     // 大きくすると勝率が上に移動する
   //     margin: auto
-  // 
+  //
   //     .win_rate_label
   //       position: relative
   //       top: 0.1em
@@ -229,7 +191,7 @@ export default {
   //   font-size: 10px
   //   .win_rate_container
   //     bottom: 1.9em       // 大きくすると勝率が上に移動する
-  // 
+  //
   // &.is-narrow
   //   .chart_container
   //     margin: auto -0.1em // win lose を中央に寄せる

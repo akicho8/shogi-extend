@@ -56,11 +56,14 @@ module Swars
       @params = default_params.merge(params)
     end
 
+    # http://localhost:3000/w.json?query=kinakom0chi&format_type=user
     # http://localhost:3000/w.json?query=devuser1&format_type=user
     # http://localhost:3000/w.json?query=devuser1&format_type=user&debug=true
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
       {}.tap do |hash|
+        hash[:lose_list] = lose_list
+
         hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
 
         hash[:sample_max] = sample_max      # サンプル数(棋譜一覧で再検索するときに "sample:n" として渡す)
@@ -288,6 +291,28 @@ module Swars
         :info
       when HolidayJp.holiday?(t)
         :danger
+      end
+    end
+
+    def lose_list
+      s = current_scope
+      s = s.where(judge_key: "lose")
+      battle_ids = s.pluck(:battle_id)
+
+      # raise battle_ids.inspect
+
+      s = Battle.where(id: battle_ids)
+      s = s.group(:final_key)
+      s = s.order("count_all DESC")
+      s = s.count               # { TORYO: 3, CHECKMATE: 1 }
+
+      s.collect do |final_key, value|
+        final_info = FinalInfo.fetch(final_key)
+        {
+          :key   => final_key,
+          :name  => final_info.name,
+          :value => value,
+        }
       end
     end
   end
