@@ -13,7 +13,7 @@
       b-tab-item(label="対攻")
       b-tab-item(label="囲い")
       b-tab-item(label="対囲")
-      b-tab-item(label="他" v-if="development_p")
+      b-tab-item(label="他")
     SwarsUserShowTabContent0Day(:base="base")
     SwarsUserShowTabContent1Grade(:base="base")
     SwarsUserShowTabContent2MyAttack(:base="base")
