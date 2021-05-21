@@ -45,7 +45,7 @@ const CHART_CONFIG_DEFAULT = {
     },
 
     tooltips: {
-      enabled: true,
+      enabled: false,
     },
   }
 }

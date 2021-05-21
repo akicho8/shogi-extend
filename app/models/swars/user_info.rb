@@ -62,24 +62,8 @@ module Swars
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
       {}.tap do |hash|
-        hash[:etc_list] = [
-          { name: "党派",           list: formation_info_records    },
-          { name: "勝ち",           list: judge_info_records(:win)  },
-          { name: "負け",           list: judge_info_records(:lose) },
-          { name: "棋神召喚の疑い", list: kishin_info_records },
-        ]
-
-        if Rails.env.development?
-          hash[:etc_list] << {
-            name: "テスト",
-            list: [
-              { name: "a", value: 1 },
-              { name: "b", value: 2 },
-              { name: "c", value: 3 },
-              { name: "d", value: 4 },
-            ],
-          }
-        end
+        hash[:etc_pie_list] = etc_pie_list
+        hash[:etc_value_list] = etc_value_list
 
         hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
 
@@ -127,7 +111,8 @@ module Swars
     end
 
     # all_tag_counts を使う場合 current_scope の条件で引いたもので id だけを取得してSQLを作り直した方が若干速い
-    # また group するときも order が入っていると MySQL では group に order のカラムも含めないと正しく動かなくてわけわからんんことになるのでそれの回避
+    # また group するときも order が入っていると MySQL では group に order のカラムも含めないと、
+    # 正しく動かなくてわけわからんんことになるのでそれの回避
     def ids_scope
       Swars::Membership.where(id: current_scope.ids) # 再スコープ化
     end
@@ -250,6 +235,7 @@ module Swars
     def current_scope_base
       s = user.memberships
       s = condition_add(s)
+      # s = s.none
     end
 
     # memberships が配列になっているとき用
@@ -367,12 +353,34 @@ module Swars
       end
     end
 
+    ################################################################################
+
+    def etc_pie_list
+      list = [
+        { name: "党派",           list: formation_info_records    },
+        { name: "勝ち",           list: judge_info_records(:win)  },
+        { name: "負け",           list: judge_info_records(:lose) },
+        { name: "棋神召喚の疑い", list: kishin_info_records       },
+      ]
+      if Rails.env.development?
+        list.unshift({
+            name: "テスト",
+            list: [
+              { name: "a", value: 1 },
+              { name: "b", value: 2 },
+              { name: "c", value: 3 },
+              { name: "d", value: 4 },
+              { name: "e", value: 5 },
+            ],
+          })
+      end
+      list
+    end
+
     def judge_info_records(judge_key)
       s = current_scope
       s = s.where(judge_key: judge_key)
       battle_ids = s.pluck(:battle_id)
-
-      # raise battle_ids.inspect
 
       s = Battle.where(id: battle_ids)
       s = s.group(:final_key)
@@ -404,6 +412,112 @@ module Swars
         { name: "無し", value: win_count - ai_use_battle_count, },
         { name: "有り", value: ai_use_battle_count,             },
       ]
+    end
+
+    ################################################################################
+
+    def etc_value_list
+      list = [
+        { name: "最大長考",                      type: "second",                          value: max_of_think_max,              },
+        { name: "平均考慮",                      type: "second",                          value: avg_of_think_all_avg,          },
+        { name: "平均手数",                      type: "numeric_with_unit", unit: "手",   value: avg_of_turn_max,               },
+        { name: "対戦相手との段級差の平均",      type: "raw",                             value: avg_of_grade_diff,             },
+        { name: "切断逃亡",                      type: "numeric_with_unit", unit: "回",   value: disconnect_count,              },
+        { name: "投了せずに放置した回数",        type: "numeric_with_unit", unit: "回",   value: count_of_timeout_think_last,   },
+        { name: "投了せずに放置した最長",        type: "second",                          value: max_of_timeout_think_last,     },
+        { name: "1手詰を焦らして悦に入った回数", type: "numeric_with_unit", unit: "回",   value: count_of_checkmate_think_last, },
+        { name: "1手詰を焦らして悦に入った最長", type: "second",                          value: max_of_checkmate_think_last,   },
+        { name: "投了時の平均手数",              type: "numeric_with_unit", unit: "手",   value: avg_of_toryo_turn_max,         },
+      ]
+    end
+
+    def max_of_think_max
+      ids_scope.maximum(:think_max)
+    end
+
+    def avg_of_think_all_avg
+      if v = ids_scope.average(:think_all_avg)
+        v.to_f.round(2)
+      end
+    end
+
+    def avg_of_turn_max
+      s = Swars::Battle.where(id: current_scope.pluck(:battle_id))
+      if v = s.average(:turn_max)
+        v.to_i
+      end
+    end
+
+    def avg_of_grade_diff
+      if v = current_scope.average(:grade_diff)
+        v.to_f.round(2)
+      end
+    end
+
+    ################################################################################
+
+    def timeout_think_last_scope
+      s = lose_scope
+      s = s.joins(:battle)
+      s = s.where(Swars::Membership.arel_table[:think_last].gteq(60))
+      s = s.where(Swars::Battle.arel_table[:final_key].eq("TIMEOUT"))
+      s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
+    end
+
+    def count_of_timeout_think_last
+      timeout_think_last_scope.count
+    end
+
+    def max_of_timeout_think_last
+      if v = timeout_think_last_scope.maximum(:think_last)
+        v
+      else
+        # "─"
+      end
+    end
+
+    ################################################################################
+
+    def checkmate_think_last_scope
+      s = win_scope
+      s = s.joins(:battle)
+      s = s.where(Swars::Membership.arel_table[:think_last].gteq(30))
+      s = s.where(Swars::Battle.arel_table[:final_key].eq("CHECKMATE"))
+      # s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
+    end
+
+    def count_of_checkmate_think_last
+      checkmate_think_last_scope.count
+    end
+
+    def max_of_checkmate_think_last
+      if v = checkmate_think_last_scope.maximum(:think_last)
+        v
+      else
+        # "─"
+      end
+    end
+
+    ################################################################################
+
+    def disconnect_count
+      s = ids_scope
+      s = s.joins(:battle)
+      s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
+      s = s.where(Swars::Battle.arel_table[:final_key].eq("DISCONNECT"))
+      s.count
+    end
+
+    ################################################################################
+
+    # SELECT AVG(swars_battles.turn_max) FROM swars_memberships INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id WHERE swars_memberships.id IN (92, 93, 96, 97, 100, 101, 103, 105, 107, 110) AND swars_memberships.judge_key = 'lose' AND swars_battles.final_key = 'TORYO'
+    def avg_of_toryo_turn_max
+      s = lose_scope
+      s = s.joins(:battle)
+      s = s.where(Swars::Battle.arel_table[:final_key].eq("TORYO"))
+      if v = s.average(Swars::Battle.arel_table[:turn_max])
+        v.to_i
+      end
     end
   end
 end

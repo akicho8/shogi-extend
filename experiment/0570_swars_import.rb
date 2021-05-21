@@ -6,7 +6,8 @@ Swars::Battle.count             # => 41
 # Swars::Battle.user_import(user_key: "itoshinTV", run_remote: true)
 # Swars::Battle.user_import(user_key: "SuzutukiZ", run_remote: true)
 # Swars::Battle.user_import(user_key: "youface", run_remote: true)
-Swars::Battle.user_import(user_key: "asa2yoru", run_remote: true)
+# Swars::Battle.user_import(user_key: "asa2yoru", run_remote: true)
+Swars::Battle.user_import(user_key: "morikenTV", run_remote: true)
 Swars::Battle.count             # => 41
 
 # >> |---------------------------------------------|
