@@ -16,7 +16,7 @@
     "@nuxtjs/proxy": "^2.0.1",
     "@nuxtjs/pwa": "^3.2.2",
     "@nuxtjs/sitemap": "^2.4.0",
-    "@rails/actioncable": "^6.0.3-4",
+    "@rails/actioncable": "^6.0.3-7",
     "babel-core": "^6.26.3",
     "chart.js": "^2.9.4",
     "fabric": "^4.2.0",

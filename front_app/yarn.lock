@@ -2366,10 +2366,10 @@
     mustache "^2.3.0"
     stack-trace "0.0.10"
 
-"@rails/actioncable@^6.0.3-4":
-  version "6.0.3-4"
-  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.0.3-4.tgz#f17c0ef2235d1624d6052b749005608260bd55ef"
-  integrity sha512-uie5McTpl69vHnXCVzKj7iYpVKFfLuE7aqul/I7MX5zVd+yVyyC/g75T1Q10GofyqHYNYWgPiIxgQIoYPyyeKw==
+"@rails/actioncable@^6.0.3-7":
+  version "6.0.3-7"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.0.3-7.tgz#9993c12bd86e254889c5f401be4df7bb2414d180"
+  integrity sha512-ND+0rRj0NQVrv8SYSLSjKyHaXLcFEB02/9+1hsbz7BgufhJcOr/eJ7Y+a/278nAmzKd7mLDQYusHwZ0Dmn7rRw==
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
