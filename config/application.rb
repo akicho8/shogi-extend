@@ -47,5 +47,20 @@ module ShogiWeb
         "<span class=\"has-error\">#{html_tag}</span>".html_safe
       end
     }
+
+    # $ bin/rails zeitwerk:check
+    # Hold on, I am eager loading the application.
+    #
+    # WARNING: The following directories will only be checked if you configure
+    # them to be eager loaded:
+    #
+    #   #{Rails.root}/spec/mailers/previews
+    #
+    # You may verify them manually, or add them to config.eager_load_paths
+    # in config/application.rb and run zeitwerk:check again.
+    #
+    # ↑となるため development 以外では使わないけど仕方なく指定
+    #
+    config.eager_load_paths += ["#{Rails.root}/spec/mailers/previews"]
   end
 end
