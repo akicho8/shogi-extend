@@ -30,6 +30,8 @@ chdir APP_ROOT do
   # system! "rm -fr front_app/node_modules"
   # system! "cd front_app && yarn"
 
+  system! "bin/rails zeitwerk:check"
+
   system! "rm -fr public/system"
   system! 'rails dev:cache'
 
