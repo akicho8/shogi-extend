@@ -62,8 +62,7 @@ module Swars
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
       {}.tap do |hash|
-        hash[:etc_pie_list] = etc_pie_list
-        hash[:etc_value_list] = etc_value_list
+        hash[:etc_list] = etc_list
 
         hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
 
@@ -355,17 +354,33 @@ module Swars
 
     ################################################################################
 
-    def etc_pie_list
+    def etc_list
       list = [
-        { name: "党派",           list: formation_info_records    },
-        { name: "勝ち",           list: judge_info_records(:win)  },
-        { name: "負け",           list: judge_info_records(:lose) },
-        { name: "棋神召喚の疑い", list: kishin_info_records       },
+        { name: "党",                                  type1: "pie",    type2: nil,                             body: formation_info_records,        },
+
+        { name: "最大長考",                            type1: "simple", type2: "second",                        body: max_of_think_max,              },
+        { name: "平均考慮",                            type1: "simple", type2: "second",                        body: avg_of_think_all_avg,          },
+        { name: "平均手数",                            type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_turn_max,               },
+        { name: "対戦相手との段級差の平均",            type1: "simple", type2: "raw",                           body: avg_of_grade_diff,             },
+
+        { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      },
+        { name: "棋神召喚の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records,           },
+        { name: "1手詰を焦らして悦に入った回数",       type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_checkmate_think_last, },
+        { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
+
+        { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     },
+        { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
+        { name: "投了時の平均手数",                    type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_toryo_turn_max,         },
+        { name: "投了せずに放置した回数",              type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_timeout_think_last,   },
+        { name: "投了せずに放置した時間(最長)",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
+
       ]
       if Rails.env.development?
         list.unshift({
             name: "テスト",
-            list: [
+            type1: "pie",
+            type2: nil,
+            body: [
               { name: "a", value: 1 },
               { name: "b", value: 2 },
               { name: "c", value: 3 },
@@ -415,21 +430,6 @@ module Swars
     end
 
     ################################################################################
-
-    def etc_value_list
-      list = [
-        { name: "最大長考",                      type: "second",                          value: max_of_think_max,              },
-        { name: "平均考慮",                      type: "second",                          value: avg_of_think_all_avg,          },
-        { name: "平均手数",                      type: "numeric_with_unit", unit: "手",   value: avg_of_turn_max,               },
-        { name: "対戦相手との段級差の平均",      type: "raw",                             value: avg_of_grade_diff,             },
-        { name: "切断逃亡",                      type: "numeric_with_unit", unit: "回",   value: disconnect_count,              },
-        { name: "投了せずに放置した回数",        type: "numeric_with_unit", unit: "回",   value: count_of_timeout_think_last,   },
-        { name: "投了せずに放置した最長",        type: "second",                          value: max_of_timeout_think_last,     },
-        { name: "1手詰を焦らして悦に入った回数", type: "numeric_with_unit", unit: "回",   value: count_of_checkmate_think_last, },
-        { name: "1手詰を焦らして悦に入った最長", type: "second",                          value: max_of_checkmate_think_last,   },
-        { name: "投了時の平均手数",              type: "numeric_with_unit", unit: "手",   value: avg_of_toryo_turn_max,         },
-      ]
-    end
 
     def max_of_think_max
       ids_scope.maximum(:think_max)

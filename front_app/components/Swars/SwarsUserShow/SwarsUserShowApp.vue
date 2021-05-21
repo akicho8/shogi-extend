@@ -20,7 +20,7 @@
     SwarsUserShowTabContent3VsAttack(:base="base")
     SwarsUserShowTabContent4MyDefense(:base="base")
     SwarsUserShowTabContent5VsDefense(:base="base")
-    SwarsUserShowTabContent6MetaInfo(:base="base")
+    SwarsUserShowTabContent6Etc(:base="base")
 
   DebugPre(v-if="development_p") {{info}}
 </template>
