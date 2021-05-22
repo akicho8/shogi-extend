@@ -66,13 +66,11 @@ module Swars
     describe "党派 formation_info_records" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def test1(csa_seq)
         Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
-          e.memberships.build(user: @white)
         end
         @black.user_info.formation_info_records.collect { |e| e[:value] }
       end
@@ -87,13 +85,11 @@ module Swars
     describe "勝敗別平均手数 avg_win_lose_turn_max" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def test1(judge_key, n)
         Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
-          e.memberships.build(user: @white)
         end
         @black.user_info.avg_win_lose_turn_max.collect { |e| e[:value] }
       end
@@ -109,13 +105,11 @@ module Swars
     describe "投了時の平均手数 avg_of_toryo_turn_max" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def test1(n, final_key, judge_key)
         Battle.create!(csa_seq: csa_seq_generate(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
-          e.memberships.build(user: @white)
         end
         @black.user_info.avg_of_toryo_turn_max
       end
@@ -130,13 +124,11 @@ module Swars
     describe "平均手数 avg_of_turn_max" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def test1(n)
         Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black)
-          e.memberships.build(user: @white)
         end
         @black.user_info.avg_of_turn_max
       end
@@ -150,7 +142,6 @@ module Swars
     describe "最大長考 max_of_think_max 平均考慮 avg_of_think_all_avg" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def csa_seq_generate
@@ -165,7 +156,6 @@ module Swars
       def test1
         Battle.create!(csa_seq: csa_seq_generate) do |e|
           e.memberships.build(user: @black)
-          e.memberships.build(user: @white)
         end
         [
           @black.user_info.max_of_think_max,
@@ -203,13 +193,11 @@ module Swars
     describe "勝ち 負け judge_info_records" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def test1(final_key, judge_key)
         Battle.create!(final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
-          e.memberships.build(user: @white)
         end
         [
           @black.user_info.judge_info_records(:win).collect  { |e| [e[:name], e[:value]] },
@@ -228,7 +216,6 @@ module Swars
     describe "詰ます速度(1手平均) avg_of_think_end_avg" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def csa_seq_generate
@@ -243,7 +230,6 @@ module Swars
       def test1(final_key)
         Battle.create!(csa_seq: csa_seq_generate, final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
-          e.memberships.build(user: @white)
         end
         @black.user_info.avg_of_think_end_avg
       end
@@ -258,7 +244,6 @@ module Swars
     describe "棋神召喚の疑い kishin_info_records" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def csa_seq_generate(n)
@@ -271,7 +256,6 @@ module Swars
       def test1(n)
         Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black, judge_key: :win)
-          e.memberships.build(user: @white)
         end
         @black.user_info.kishin_info_records.collect { |e| e[:value] }
       end
@@ -286,7 +270,6 @@ module Swars
     describe "棋神乱用の疑い kishin_info_records_lv2" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def csa_seq_generate(n)
@@ -299,7 +282,6 @@ module Swars
       def test1(n)
         Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black, judge_key: :win)
-          e.memberships.build(user: @white)
         end
         @black.user_info.kishin_info_records.collect { |e| e[:value] }
       end
@@ -314,7 +296,6 @@ module Swars
     describe "1手詰を焦らして悦に入った回数 count_of_checkmate_think_last" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def csa_seq_generate(sec)
@@ -324,7 +305,6 @@ module Swars
       def test1(sec)
         Battle.create!(csa_seq: csa_seq_generate(sec), final_key: "CHECKMATE") do |e|
           e.memberships.build(user: @black)
-          e.memberships.build(user: @white)
         end
         user_info = @black.user_info
         [
@@ -343,7 +323,6 @@ module Swars
     describe "切断逃亡 disconnect_count" do
       before do
         @black = User.create!
-        @white = User.create!
       end
       def csa_seq_generate(n)
         [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
@@ -352,7 +331,6 @@ module Swars
       def test1(n)
         Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black)
-          e.memberships.build(user: @white)
         end
         @black.user_info.disconnect_count
       end
@@ -367,7 +345,6 @@ module Swars
     describe "投了せずに放置した回数 投了せずに放置した時間 count_of_timeout_think_last max_of_timeout_think_last" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def csa_seq_generate(n)
@@ -377,7 +354,6 @@ module Swars
       def test1(n)
         Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
-          e.memberships.build(user: @white, judge_key: :win)
         end
         user_info = @black.user_info
         [
@@ -396,13 +372,11 @@ module Swars
     describe "右玉度 migigyoku migigyoku2" do
       before do
         @black = User.create!
-        @white = User.create!
       end
 
       def test1
         Battle.create!(tactic_key: "糸谷流右玉") do |e|
           e.memberships.build(user: @black)
-          e.memberships.build(user: @white)
         end
         @black.user_info.migigyoku.collect { |e| e[:value] }
       end
