@@ -129,6 +129,27 @@ module Swars
       Swars::Membership.where(id: current_scope.ids) # 再スコープ化
     end
 
+    def win_scope
+      @win_scope ||= ids_scope.where(judge_key: "win")
+    end
+
+    def win_count
+      @win_count ||= win_scope.count
+    end
+
+    def lose_scope
+      @lose_scope ||= ids_scope.where(judge_key: "lose")
+    end
+
+    def lose_count
+      @lose_count ||= lose_scope.count
+    end
+
+    # 最低でも2以上にすること
+    def turn_max_gteq
+      50
+    end
+
     def real_count
       @real_count ||= current_scope.count
     end
@@ -193,8 +214,8 @@ module Swars
 
     # 棋神
     # turn_max >= 2 なら think_all_avg と think_end_avg は nil ではないので turn_max >= 2 の条件を必ず入れること
-    def ai_use_battle_count
-      @ai_use_battle_count ||= -> {
+    def ai_use_battle_count_lv1
+      @ai_use_battle_count_lv1 ||= -> {
         # A
         s = win_scope                                                                           # 勝っている
         s = s.joins(:battle)
@@ -237,27 +258,6 @@ module Swars
       }.call
     end
 
-    def win_scope
-      @win_scope ||= ids_scope.where(judge_key: "win")
-    end
-
-    def win_count
-      @win_count ||= win_scope.count
-    end
-
-    def lose_scope
-      @lose_scope ||= ids_scope.where(judge_key: "lose")
-    end
-
-    def lose_count
-      @lose_count ||= lose_scope.count
-    end
-
-    # 最低でも2以上にすること
-    def turn_max_gteq
-      50
-    end
-
     ################################################################################
 
     def etc_list
@@ -292,8 +292,8 @@ module Swars
 
         ################################################################################
 
-        { name: "右玉度",                              type1: "pie",    type2: nil,                             body: migigyoku,                     pie_type: "is_pie_s" },
-        { name: "右玉ファミリー",                      type1: "pie",    type2: nil,                             body: migigyoku2,                    pie_type: "is_pie_x" },
+        { name: "右玉度",                              type1: "pie",    type2: nil,                             body: migigyoku_levels,                     pie_type: "is_pie_s" },
+        { name: "右玉ファミリー",                      type1: "pie",    type2: nil,                             body: migigyoku_kinds,                    pie_type: "is_pie_x" },
       ]
       if Rails.env.development?
         list.unshift({
@@ -340,8 +340,8 @@ module Swars
 
     def kishin_info_records
       [
-        { name: "有り", value: ai_use_battle_count,             },
-        { name: "無し", value: win_count - ai_use_battle_count, },
+        { name: "有り", value: ai_use_battle_count_lv1,             },
+        { name: "無し", value: win_count - ai_use_battle_count_lv1, },
       ]
     end
 
@@ -486,7 +486,7 @@ module Swars
 
     ################################################################################
 
-    def migigyoku
+    def migigyoku_levels
       total = migigyoku_family.sum { |e| all_tag_names_hash[e] }
       if total.positive?
         [
@@ -496,7 +496,7 @@ module Swars
       end
     end
 
-    def migigyoku2
+    def migigyoku_kinds
       list = migigyoku_family.find_all { |e| all_tag_names_hash[e].positive? }
       if list.present?
         list.collect { |e|

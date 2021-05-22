@@ -4,7 +4,7 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :sample_max, :current_scope, :condition_add, :all_tag_names_hash, :ai_use_battle_count, :win_scope, :win_count, :lose_scope, :lose_count, :turn_max_gteq, to: :user_info
+    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :sample_max, :current_scope, :condition_add, :all_tag_names_hash, :ai_use_battle_count_lv1, :win_scope, :win_count, :lose_scope, :lose_count, :turn_max_gteq, to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
@@ -49,7 +49,7 @@ module Swars
         "1手詰を詰まさないでじらした割合" => jirasi_ratio,
         "絶対投了しない率"                => zettai_toryo_sinai_ratio,
         "大長考または放置率"              => long_think_ratio,
-        "棋神降臨疑惑対局数"              => ai_use_battle_count,
+        "棋神降臨疑惑対局数"              => ai_use_battle_count_lv1,
         "長考または放置率"                => short_think_ratio,
         "最大連勝連敗"                    => win_lose_streak_max_hash,
         "タグの重み"                      => all_tag_names_hash,

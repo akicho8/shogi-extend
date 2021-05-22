@@ -369,7 +369,7 @@ module Swars
       end
     end
 
-    describe "右玉度 migigyoku migigyoku2" do
+    describe "右玉度 migigyoku_levels migigyoku_kinds" do
       before do
         @black = User.create!
       end
@@ -378,14 +378,14 @@ module Swars
         Battle.create!(tactic_key: "糸谷流右玉") do |e|
           e.memberships.build(user: @black)
         end
-        @black.user_info.migigyoku.collect { |e| e[:value] }
+        @black.user_info.migigyoku_levels.collect { |e| e[:value] }
       end
 
       it do
         assert { test1 == [1, 0] }
         assert { test1 == [2, 0] }
         
-        assert { @black.user_info.migigyoku2 == [{name: "糸谷流右玉", value: 2}] }
+        assert { @black.user_info.migigyoku_kinds == [{name: "糸谷流右玉", value: 2}] }
       end
     end
   end
