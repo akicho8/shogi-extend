@@ -189,16 +189,22 @@ module Swars
         # s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) # もともと CHECKMATE だけだったが……いらない？
         s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
 
-        if false
-          # (B or C)
-          a = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(3))       # 指し手平均3秒以下
-          a = a.or(Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
+        # if false
+        #   # (B or C)
+        #   a = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(3))       # 指し手平均3秒以下
+        #   a = a.or(Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
+        #
+        #   # A and (B or C)
+        #   s = s.merge(a)
+        # else
+        s = s.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
+        # end
 
-          # A and (B or C)
-          s = s.merge(a)
-        else
-          s = s.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
-        end
+        # c1 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
+        # c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(5))
+        # c3 = Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))
+        # c4 = c1.or(c2.merge(c3))     # c1 or c2 and c3 は c1 or (c2 and c3) のこと
+        # s = s.merge(c4)
 
         s.count
       }.call
