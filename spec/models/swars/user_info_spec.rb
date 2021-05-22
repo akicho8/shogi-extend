@@ -127,13 +127,30 @@ module Swars
       end
     end
     
-    
-    
+    describe "平均手数 avg_of_turn_max" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def test1(n)
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+          e.memberships.build(user: @black)
+          e.memberships.build(user: @white)
+        end
+        @black.user_info.avg_of_turn_max
+      end
+
+      it "works" do
+        assert { test1(10) == 10 }
+        assert { test1(90) == 50 }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..
+# >> ....
 # >> 
-# >> Finished in 2.39 seconds (files took 2.49 seconds to load)
-# >> 2 examples, 0 failures
+# >> Finished in 3.5 seconds (files took 2.61 seconds to load)
+# >> 4 examples, 0 failures
 # >> 

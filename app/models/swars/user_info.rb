@@ -321,9 +321,17 @@ module Swars
     end
 
     def avg_of_turn_max
-      s = Swars::Battle.where(id: current_scope.pluck(:battle_id))
-      if v = s.average(:turn_max)
-        v.to_i
+      if false
+        s = Swars::Battle.where(id: current_scope.pluck(:battle_id))
+        if v = s.average(:turn_max)
+          v.to_i
+        end
+      else
+        s = ids_scope
+        s = s.joins(:battle)
+        if v = s.average(Swars::Battle.arel_table[:turn_max])
+          v.to_i
+        end
       end
     end
 
