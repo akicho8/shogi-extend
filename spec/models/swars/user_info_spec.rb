@@ -161,7 +161,7 @@ module Swars
           ["-5251OU", 600],
         ]
       end
-      
+
       def test1
         Swars::Battle.create!(csa_seq: csa_seq_generate) do |e|
           e.memberships.build(user: @black)
@@ -177,7 +177,7 @@ module Swars
         assert { test1 ==  [200, 150.0] }
       end
     end
-    
+
     describe "対戦相手との段級差の平均 avg_of_grade_diff" do
       before do
         @black = User.create!
@@ -199,11 +199,36 @@ module Swars
         assert { test1("二段", "四段") == 1.5 }
       end
     end
+
+    describe "勝ち 負け judge_info_records" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def test1(final_key, judge_key)
+        Swars::Battle.create!(final_key: final_key) do |e|
+          e.memberships.build(user: @black, judge_key: judge_key)
+          e.memberships.build(user: @white)
+        end
+        [
+          @black.user_info.judge_info_records(:win).collect  { |e| [e[:name], e[:value]] },
+          @black.user_info.judge_info_records(:lose).collect { |e| [e[:name], e[:value]] },
+        ]
+      end
+
+      it "works" do
+        assert { test1(:CHECKMATE,  :win ) == [[["詰み", 1]], []] }
+        assert { test1(:CHECKMATE,  :win ) == [[["詰み", 2]], []] }
+        assert { test1(:TORYO,      :lose) == [[["詰み", 2]], [["投了", 1]]] }
+        assert { test1(:DISCONNECT, :lose) == [[["詰み", 2]], [["投了", 1], ["切断", 1]]] }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ......
+# >> .......
 # >> 
-# >> Finished in 3.45 seconds (files took 2.48 seconds to load)
-# >> 6 examples, 0 failures
+# >> Finished in 4.26 seconds (files took 3.22 seconds to load)
+# >> 7 examples, 0 failures
 # >> 
