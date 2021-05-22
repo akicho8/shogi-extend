@@ -35,8 +35,8 @@ export const app_kifu_copy_buttons = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 解答元の指し手の長いSFENを同期取得
-    answer_base_play_mode_advanced_full_moves_sfen_set(sfen) {
-      this.answer_base_sfen = sfen
+    answer_base_play_mode_advanced_full_moves_sfen_set(e) {
+      this.answer_base_sfen = e.sfen
     },
 
     // 解答元の指し手のコピー処理

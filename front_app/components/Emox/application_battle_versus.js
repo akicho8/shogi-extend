@@ -41,9 +41,9 @@ export const application_battle_versus = {
       this.clock_box.initial_boot_from(0) // ▲から始まる
     },
 
-    vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
+    vs_func_play_mode_advanced_full_moves_sfen_set(e) {
       this.clock_box.tap_on(this.current_membership.location)
-      this.vs_func_play_board_share(long_sfen)
+      this.vs_func_play_board_share(e.sfen)
     },
 
     vs_func_play_board_share(vs_share_sfen) {

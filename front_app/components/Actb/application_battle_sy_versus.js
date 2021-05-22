@@ -21,8 +21,8 @@ export const application_battle_sy_versus = {
       this.clock_box.initial_boot_from(0) // ▲から始まる
     },
 
-    vs_func_play_mode_advanced_full_moves_sfen_set(long_sfen) {
-      this.debug_alert(long_sfen)
+    vs_func_play_mode_advanced_full_moves_sfen_set(e) {
+      this.debug_alert(e.sfen)
       // if (this.sub_mode === "sm4_tactic") {
       //
       //   if (this.current_strategy_key === "sy_singleton") {
@@ -37,10 +37,10 @@ export const application_battle_sy_versus = {
       //     }
       //
       this.clock_box.tap_on(this.current_membership.location)
-      this.vs_func_play_board_share(long_sfen)
+      this.vs_func_play_board_share(e.sfen)
       //   }
       //
-      //   if (this.current_question.sfen_valid_p(long_sfen)) {
+      //   if (this.current_question.sfen_valid_p(e.sfen)) {
       //     this.kotae_sentaku("correct")
       //   }
       // }
