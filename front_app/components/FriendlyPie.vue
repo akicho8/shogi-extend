@@ -1,6 +1,6 @@
 <template lang="pug">
 .FriendlyPie.is-unselectable
-  .canvas_holder
+  .canvas_holder(:class="`pie_type_${info.pie_type}`")
     canvas(ref="main_canvas")
 </template>
 
@@ -28,7 +28,7 @@ const CHART_CONFIG_DEFAULT = {
     cutoutPercentage: 0,       // ドーナッツの円の切り抜き度合(0〜100)
     rotation: Math.PI * 0.5,   // 真下を0とする
     aspectRatio: 3.0, // 大きいほど横長方形になる。円=正方形としたいので1.0
-    // circumference: 200,
+    circumference: 2 * Math.PI * 1.0, // 全体の円
 
     legend: {
       position: "top",
@@ -58,7 +58,8 @@ export default {
     chart_mixin,
   ],
   props: {
-    info: { type: Array, required: true, },  // [{name: ..., value: ...}, ...]
+    info: { type: Object, required: true, },  // [{name: ..., value: ...}, ...]
+    // chart_options: { type: Object, default: {}, },
   },
   created() {
     // ・this._chart_config = Object.assign({}, CHART_CONFIG_DEFAULT) はダメ
@@ -71,9 +72,16 @@ export default {
     this._chart_config.data.labels = this.extract_labels
     this._chart_config.data.datasets[0].data = this.extract_values
 
-    this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type0({diff: 45, count: this.data_count})
     // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2({count: this.data_count})
     // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2()
+
+    if (this.info.pie_type === "is_pie_x") {
+      this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type0({diff: 45, count: this.data_count})
+    }
+    if (this.info.pie_type === "is_pie_s") {
+      this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type3()
+      // this._chart_config.options.legend.display = false
+    }
 
     if (this.development_p) {
       this._chart_config.options.animation.animateScale = true
@@ -84,9 +92,9 @@ export default {
     this.chart_create()
   },
   computed: {
-    data_count()     { return this.info.length            },
-    extract_labels() { return this.info.map(e => e.name)  },
-    extract_values() { return this.info.map(e => e.value) },
+    data_count()     { return this.info.body.length            },
+    extract_labels() { return this.info.body.map(e => e.name)  },
+    extract_values() { return this.info.body.map(e => e.value) },
   },
 }
 </script>
@@ -97,6 +105,10 @@ export default {
   align-items: center
   justify-content: center
   .canvas_holder
+    // &.pie_type_is_pie_s
+    //   margin-top: 0.5rem
+    //   width: calc(256px + 64px)
+    // &.pie_type_is_pie_x
     width: calc(256px + 128px + 32px)
 
 .STAGE-development

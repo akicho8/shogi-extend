@@ -364,11 +364,31 @@ module Swars
         assert { test1(15) == [2, 599] }
       end
     end
+
+    describe "右玉度 migigyoku" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def test1
+        Swars::Battle.create!(tactic_key: "糸谷流右玉") do |e|
+          e.memberships.build(user: @black)
+          e.memberships.build(user: @white)
+        end
+        @black.user_info.migigyoku.collect { |e| e[:value] }
+      end
+
+      it do
+        assert { test1 == [1, 0] }
+        assert { test1 == [2, 0] }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .................
+# >> ..................
 # >> 
-# >> Finished in 7.3 seconds (files took 5.13 seconds to load)
-# >> 17 examples, 0 failures
+# >> Finished in 7.62 seconds (files took 2.51 seconds to load)
+# >> 18 examples, 0 failures
 # >> 

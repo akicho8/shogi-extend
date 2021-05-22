@@ -9,7 +9,7 @@
         .columns.is-gapless.is-centered
           .column.is-paddingless.has-text-weight-bold.is-size-1.is-flex.is-justify-content-center
             template(v-if="row.type1 === 'pie'")
-              FriendlyPie(:info="row.body" size="is-small")
+              FriendlyPie(:info="row")
             template(v-if="row.type1 === 'simple'")
               .value_block.py-1(:class="`is_type2-${row.type2}`")
                 //- template(v-if="row.body == null")

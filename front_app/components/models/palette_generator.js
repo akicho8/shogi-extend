@@ -67,4 +67,17 @@ export const PaletteGenerator = {
     }
     return list
   },
+
+  palette_type3(params = {}) {
+    params = {
+      alpha: 0.5,   // 非透明度
+      ...params,
+    }
+    const e = params
+    const base_color = PaletteInfo.fetch("danger").base_color.alpha(e.alpha)
+    return [
+      base_color.css(),
+      base_color.set('hsl.s', 0).set('hsl.l', 0.8).css(),
+    ]
+  },
 }
