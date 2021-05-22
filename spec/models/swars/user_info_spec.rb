@@ -254,11 +254,39 @@ module Swars
         assert { test1("CHECKMATE") == 150.0 } # 平均なので変化してない
       end
     end
+    
+    describe "棋神召喚の疑い kishin_info_records" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def csa_seq_generate(n)
+        n.times.flat_map do |i|
+          seconds = 600 - (i * 4.seconds)
+          [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
+        end
+      end
+
+      def test1(n)
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+          e.memberships.build(user: @black, judge_key: :win)
+          e.memberships.build(user: @white)
+        end
+        @black.user_info.kishin_info_records.collect { |e| e[:value] }
+      end
+
+      it "works" do
+        assert { test1(12) == [1, 0] } # 12 * 4 = 48 は50未満なので対象外
+        assert { test1(13) == [1, 1] } # 13 * 4 = 52 は50以上なので対象
+        assert { test1(14) == [1, 2] }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ........
+# >> .........
 # >> 
-# >> Finished in 4.58 seconds (files took 2.49 seconds to load)
-# >> 8 examples, 0 failures
+# >> Finished in 4.96 seconds (files took 2.47 seconds to load)
+# >> 9 examples, 0 failures
 # >> 
