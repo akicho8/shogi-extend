@@ -330,7 +330,7 @@ module Swars
 
       def test1(n)
         Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
-          e.memberships.build(user: @black)
+          e.memberships.build(user: @black, judge_key: :lose)
         end
         @black.user_info.disconnect_count
       end

@@ -269,7 +269,7 @@ module Swars
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_pie_x" },
         { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
         { name: "棋神召喚の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records,           pie_type: "is_pie_s" },
-        { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pie_s" },
+        # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pie_s" },
         { name: "1手詰を焦らして悦に入った回数",       type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_checkmate_think_last, },
         { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
 
@@ -441,7 +441,7 @@ module Swars
     ################################################################################
 
     def disconnect_count
-      s = ids_scope
+      s = lose_scope
       s = s.joins(:battle)
       s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
       s = s.where(Swars::Battle.arel_table[:final_key].eq("DISCONNECT"))
