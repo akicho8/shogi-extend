@@ -347,10 +347,14 @@ module Swars
     end
 
     def kishin_info_records_lv2
-      [
-        { name: "有り", value: ai_use_battle_count_lv2,             },
-        { name: "無し", value: win_count - ai_use_battle_count_lv2, },
-      ]
+      if v = ai_use_battle_count_lv2
+        if v.positive?
+          [
+            { name: "有り", value: v,             },
+            { name: "無し", value: win_count - v, },
+          ]
+        end
+      end
     end
 
     ################################################################################
