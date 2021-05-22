@@ -126,7 +126,7 @@ module Swars
         assert { test1(9, :DISCONNECT, :lose) == 5 } # TORYO で lose 専用なので結果は変わらない
       end
     end
-    
+
     describe "平均手数 avg_of_turn_max" do
       before do
         @black = User.create!
@@ -177,11 +177,33 @@ module Swars
         assert { test1 ==  [200, 150.0] }
       end
     end
+    
+    describe "対戦相手との段級差の平均 avg_of_grade_diff" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def test1(black_grade_key, white_grade_key)
+        @black.update!(grade_key: black_grade_key)
+        @white.update!(grade_key: white_grade_key)
+        Swars::Battle.create! do |e|
+          e.memberships.build(user: @black)
+          e.memberships.build(user: @white)
+        end
+        @black.user_info.avg_of_grade_diff
+      end
+
+      it "works" do
+        assert { test1("二段", "三段") == 1.0 }
+        assert { test1("二段", "四段") == 1.5 }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ....
+# >> ......
 # >> 
-# >> Finished in 3.5 seconds (files took 2.61 seconds to load)
-# >> 4 examples, 0 failures
+# >> Finished in 3.45 seconds (files took 2.48 seconds to load)
+# >> 6 examples, 0 failures
 # >> 
