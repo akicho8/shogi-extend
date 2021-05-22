@@ -233,7 +233,7 @@ module Swars
         #   s = s.merge(a)
         # else
         c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(1))
-        c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(6))
+        c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
         s = s.merge(c1.or(c2))
         # end
 
