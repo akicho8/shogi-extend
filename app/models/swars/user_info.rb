@@ -225,138 +225,11 @@ module Swars
       50
     end
 
-    private
-
-    def current_ox_max
-      [(params[:ox_max].presence || default_params[:ox_max]).to_i, 100].min
-    end
-
-    def current_scope_base
-      s = user.memberships
-      s = condition_add(s)
-      # s = s.none
-    end
-
-    # memberships が配列になっているとき用
-    def judge_counts_of(memberships)
-      group = memberships.group_by(&:judge_key)
-      ["win", "lose"].inject({}) { |a, e| a.merge(e => (group[e] || []).count) }
-    end
-
-    def rules_hash
-      group = current_scope.includes(:battle).group_by { |e| e.battle.rule_key }
-
-      Swars::RuleInfo.inject({}) do |a, e|
-        hash = {}
-        hash[:rule_name] = e.name
-        if membership = (group[e.key.to_s] || []).first
-          hash[:grade_name] = membership.grade.name # grade へのアクセスはここだけなので includes しない方がよい
-        else
-          hash[:grade_name] = nil
-        end
-        a.merge(e.key => hash)
-      end
-    end
-
-    def every_day_list
-      group = current_scope.includes(:battle).group_by { |e| e.battle.battled_at.midnight }
-      group.collect do |battled_at, memberships|
-
-        hash = {}
-        hash[:battled_on]   = battled_at.to_date
-        hash[:day_type]    = day_type_for(battled_at)
-        hash[:judge_counts] = judge_counts_of(memberships)
-
-        s = Swars::Membership.where(id: memberships.collect(&:id)) # 再スコープ化
-
-        # 戦法と囲いをまぜて一番使われている順にN個表示する場合
-        if false
-          tags = [:attack_tags, :defense_tags].flat_map do |tags_method|
-            s.tag_counts_on(tags_method, at_least: at_least_value, order: "count desc")
-          end
-          tags = tags.sort_by { |e| -e.count }
-          hash[:all_tags] = tags.take(2).collect { |e| e.attributes.slice("name", "count") }
-        end
-
-        # 戦法と囲いそれぞれ一番使われているもの1個ずつ計2個
-        if true
-          hash[:all_tags] = [:attack_tags, :defense_tags].flat_map { |tags_method|
-            s.tag_counts_on(tags_method, at_least: at_least_value, order: "count desc", limit: 1)
-          }.collect{ |e| e.attributes.slice("name", "count") }
-        end
-
-        hash
-      end
-    end
-
-    # 戦法 * 自分
-    def every_my_attack_list
-      list_build(user.memberships, context: :attack_tags, judge_flip: false)
-    end
-
-    # 戦法 * 相手
-    def every_vs_attack_list
-      list_build(user.op_memberships, context: :attack_tags, judge_flip: true)
-    end
-
-    # 囲い * 自分
-    def every_my_defense_list
-      list_build(user.memberships, context: :defense_tags, judge_flip: false)
-    end
-
-    # 囲い * 相手
-    def every_vs_defense_list
-      list_build(user.op_memberships, context: :defense_tags, judge_flip: true)
-    end
-
-    def list_build(memberships, options = {})
-      s = memberships
-      s = condition_add(s)
-      s = s.limit(sample_max)
-      denominator = s.count
-
-      # tag_counts_on をシンプルなSQLで実行させると若干速くなるが、それのためではなく
-      # sample_max 件で最初に絞らないといけない
-      s = Swars::Membership.where(id: s.ids) # 再スコープ化
-
-      tags = s.tag_counts_on(options[:context], at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
-      tags.collect do |tag|
-        {}.tap do |hash|
-          hash[:tag] = tag.attributes.slice("name", "count")  # 戦法名
-          hash[:appear_ratio] = tag.count.fdiv(denominator)         # 使用率, 遭遇率
-
-          # 勝ち負け数
-          c = judge_counts_wrap(s.tagged_with(tag.name, on: options[:context]).group("judge_key").count) # => {"win" => 1, "lose" => 0}
-          if options[:judge_flip]
-            c["win"], c["lose"] = c["lose"], c["win"] # => {"win" => 0, "lose" => 1}    ; 自分視点に変更
-          end
-          hash[:judge_counts] = c
-        end
-      end
-    end
-
-    # judge_counts_wrap({})         # => {"win" => 0, "lose" => 0}
-    # judge_counts_wrap("win" => 1) # => {"win" => 1, "lose" => 0}
-    def judge_counts_wrap(hash)
-      {"win" => 0, "lose" => 0}.merge(hash) # JudgeInfo.inject({}) { |a, e| a.merge(e.key.to_s => 0) }.merge(hash)
-    end
-
-    def day_type_for(t)
-      case
-      when t.sunday?
-        :danger
-      when t.saturday?
-        :info
-      when HolidayJp.holiday?(t)
-        :danger
-      end
-    end
-
     ################################################################################
 
     def etc_list
       list = [
-        { name: "党",                                  type1: "pie",    type2: nil,                             body: formation_info_records,        },
+        { name: "党派",                                type1: "pie",    type2: nil,                             body: formation_info_records,        },
 
         ################################################################################
         { name: "勝敗別平均手数",                      type1: "pie",    type2: nil,                             body: avg_win_lose_turn_max,        },
@@ -423,12 +296,9 @@ module Swars
     end
 
     def formation_info_records
-      ["居飛車", "振り飛車"].collect { |e|
-        count = all_tag_names_hash[e]
-        if count >= 1 || true
-          { name: e, value: count }
-        end
-      }.compact
+      ["居飛車", "振り飛車"].collect do |e|
+        { name: e, value: all_tag_names_hash[e] }
+      end
     end
 
     def kishin_info_records
@@ -559,5 +429,133 @@ module Swars
     end
 
     ################################################################################
+
+    private
+
+    def current_ox_max
+      [(params[:ox_max].presence || default_params[:ox_max]).to_i, 100].min
+    end
+
+    def current_scope_base
+      s = user.memberships
+      s = condition_add(s)
+      # s = s.none
+    end
+
+    # memberships が配列になっているとき用
+    def judge_counts_of(memberships)
+      group = memberships.group_by(&:judge_key)
+      ["win", "lose"].inject({}) { |a, e| a.merge(e => (group[e] || []).count) }
+    end
+
+    def rules_hash
+      group = current_scope.includes(:battle).group_by { |e| e.battle.rule_key }
+
+      Swars::RuleInfo.inject({}) do |a, e|
+        hash = {}
+        hash[:rule_name] = e.name
+        if membership = (group[e.key.to_s] || []).first
+          hash[:grade_name] = membership.grade.name # grade へのアクセスはここだけなので includes しない方がよい
+        else
+          hash[:grade_name] = nil
+        end
+        a.merge(e.key => hash)
+      end
+    end
+
+    def every_day_list
+      group = current_scope.includes(:battle).group_by { |e| e.battle.battled_at.midnight }
+      group.collect do |battled_at, memberships|
+
+        hash = {}
+        hash[:battled_on]   = battled_at.to_date
+        hash[:day_type]    = day_type_for(battled_at)
+        hash[:judge_counts] = judge_counts_of(memberships)
+
+        s = Swars::Membership.where(id: memberships.collect(&:id)) # 再スコープ化
+
+        # 戦法と囲いをまぜて一番使われている順にN個表示する場合
+        if false
+          tags = [:attack_tags, :defense_tags].flat_map do |tags_method|
+            s.tag_counts_on(tags_method, at_least: at_least_value, order: "count desc")
+          end
+          tags = tags.sort_by { |e| -e.count }
+          hash[:all_tags] = tags.take(2).collect { |e| e.attributes.slice("name", "count") }
+        end
+
+        # 戦法と囲いそれぞれ一番使われているもの1個ずつ計2個
+        if true
+          hash[:all_tags] = [:attack_tags, :defense_tags].flat_map { |tags_method|
+            s.tag_counts_on(tags_method, at_least: at_least_value, order: "count desc", limit: 1)
+          }.collect{ |e| e.attributes.slice("name", "count") }
+        end
+
+        hash
+      end
+    end
+
+    # 戦法 * 自分
+    def every_my_attack_list
+      list_build(user.memberships, context: :attack_tags, judge_flip: false)
+    end
+
+    # 戦法 * 相手
+    def every_vs_attack_list
+      list_build(user.op_memberships, context: :attack_tags, judge_flip: true)
+    end
+
+    # 囲い * 自分
+    def every_my_defense_list
+      list_build(user.memberships, context: :defense_tags, judge_flip: false)
+    end
+
+    # 囲い * 相手
+    def every_vs_defense_list
+      list_build(user.op_memberships, context: :defense_tags, judge_flip: true)
+    end
+
+    def list_build(memberships, options = {})
+      s = memberships
+      s = condition_add(s)
+      s = s.limit(sample_max)
+      denominator = s.count
+
+      # tag_counts_on をシンプルなSQLで実行させると若干速くなるが、それのためではなく
+      # sample_max 件で最初に絞らないといけない
+      s = Swars::Membership.where(id: s.ids) # 再スコープ化
+
+      tags = s.tag_counts_on(options[:context], at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
+      tags.collect do |tag|
+        {}.tap do |hash|
+          hash[:tag] = tag.attributes.slice("name", "count")  # 戦法名
+          hash[:appear_ratio] = tag.count.fdiv(denominator)         # 使用率, 遭遇率
+
+          # 勝ち負け数
+          c = judge_counts_wrap(s.tagged_with(tag.name, on: options[:context]).group("judge_key").count) # => {"win" => 1, "lose" => 0}
+          if options[:judge_flip]
+            c["win"], c["lose"] = c["lose"], c["win"] # => {"win" => 0, "lose" => 1}    ; 自分視点に変更
+          end
+          hash[:judge_counts] = c
+        end
+      end
+    end
+
+    # judge_counts_wrap({})         # => {"win" => 0, "lose" => 0}
+    # judge_counts_wrap("win" => 1) # => {"win" => 1, "lose" => 0}
+    def judge_counts_wrap(hash)
+      {"win" => 0, "lose" => 0}.merge(hash) # JudgeInfo.inject({}) { |a, e| a.merge(e.key.to_s => 0) }.merge(hash)
+    end
+
+    def day_type_for(t)
+      case
+      when t.sunday?
+        :danger
+      when t.saturday?
+        :info
+      when HolidayJp.holiday?(t)
+        :danger
+      end
+    end
+
   end
 end
