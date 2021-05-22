@@ -336,7 +336,7 @@ module Swars
       end
 
       it do
-        assert { test1(13) == 0 }
+        assert { test1(13) == nil }
         assert { test1(14) == 1 }
         assert { test1(14) == 2 }
       end
@@ -363,7 +363,7 @@ module Swars
       end
 
       it do
-        assert { test1(13) == [0, nil] }
+        assert { test1(13) == [nil, nil] }
         assert { test1(14) == [1, 599] }
         assert { test1(15) == [2, 599] }
       end

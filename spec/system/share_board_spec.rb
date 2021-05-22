@@ -906,7 +906,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def assert_turn_offset(turn_offset)
     if turn_offset >= 1
-      assert_text("##{turn_offset}")
+      assert_text("##{turn_offset}", wait: 10)
     else
       assert_no_text("##{turn_offset}")
     end
