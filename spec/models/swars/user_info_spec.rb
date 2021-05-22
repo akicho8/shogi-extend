@@ -146,6 +146,37 @@ module Swars
         assert { test1(90) == 50 }
       end
     end
+
+    describe "最大長考 max_of_think_max 平均考慮 avg_of_think_all_avg" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def csa_seq_generate
+        [
+          ["+5958OU", 500], # 100秒
+          ["-5152OU", 600],
+          ["+5859OU", 300], # 200秒
+          ["-5251OU", 600],
+        ]
+      end
+      
+      def test1
+        Swars::Battle.create!(csa_seq: csa_seq_generate) do |e|
+          e.memberships.build(user: @black)
+          e.memberships.build(user: @white)
+        end
+        [
+          @black.user_info.max_of_think_max,
+          @black.user_info.avg_of_think_all_avg,
+        ]
+      end
+
+      it "works" do
+        assert { test1 ==  [200, 150.0] }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
