@@ -62,7 +62,6 @@ module Swars
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
       {}.tap do |hash|
-        hash[:etc_list] = etc_list
 
         hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
 
@@ -93,6 +92,7 @@ module Swars
         hash[:every_vs_attack_list] = every_vs_attack_list
         hash[:every_my_defense_list] = every_my_defense_list
         hash[:every_vs_defense_list] = every_vs_defense_list
+        hash[:etc_list] = etc_list
       end
     end
 
@@ -352,9 +352,9 @@ module Swars
     def timeout_think_last_scope
       s = lose_scope
       s = s.joins(:battle)
+      s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
       s = s.where(Swars::Membership.arel_table[:think_last].gteq(60))
       s = s.where(Swars::Battle.arel_table[:final_key].eq("TIMEOUT"))
-      s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
     end
 
     def count_of_timeout_think_last

@@ -17,51 +17,51 @@ module Swars
       ].cycle.take(n)
     end
 
-    # # before do
-    # #   Swars::Battle.destroy_all
-    # #   Swars::User.destroy_all
-    # #   Swars.setup
-    # # end
-    # describe "to_hash" do
-    #   before do
-    #     @record = Battle.create!
-    #     @hash = @record.memberships.first.user.user_info.to_hash.as_json
-    #   end
-    #
-    #   it "ユーザーのサマリー" do
-    #     assert { @hash["user"]         == {"key" => "user1"} }
-    #     assert { @hash["rules_hash"]   == {"ten_min" => {"rule_name" => "10分", "grade_name" => "30級"}, "three_min" => {"rule_name" => "3分", "grade_name" => nil}, "ten_sec" => {"rule_name" => "10秒", "grade_name" => nil}} }
-    #     assert { @hash["judge_counts"] == {"win" => 1, "lose" => 0} }
-    #   end
-    #
-    #   it "勝ち負け" do
-    #     assert { @hash["judge_keys"]   == ["win"] }
-    #   end
-    #
-    #   it "各タブの情報" do
-    #     @hash["every_day_list"] # => [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=>[{"name"=>"嬉野流", "count"=>1}]}]
-    #     @hash["every_grade_list"] # => [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>1.0}]
-    #     @hash["every_my_attack_list"] # => [{"tag"=>{"name"=>"嬉野流", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}]
-    #     @hash["every_vs_attack_list"] # => [{"tag"=>{"name"=>"2手目△３ニ飛戦法", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}]
-    #     @hash["every_my_defense_list"] # => []
-    #     @hash["every_vs_defense_list"] # => []
-    #
-    #     assert { @hash["every_day_list"] == [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=>[{"name"=>"嬉野流", "count"=>1}]}] }
-    #     assert { @hash["every_grade_list"] == [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>1.0}] }
-    #     assert { @hash["every_my_attack_list"] == [{"tag"=>{"name"=>"嬉野流", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
-    #     assert { @hash["every_vs_attack_list"] == [{"tag"=>{"name"=>"2手目△３ニ飛戦法", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
-    #     assert { @hash["every_my_defense_list"] == [] }
-    #     assert { @hash["every_vs_defense_list"] == [] }
-    #   end
-    #
-    #   it "メダル" do
-    #     assert { @hash["medal_list"] == [{"message" => "居飛車党", "method" => "tag", "name" => "居", "type" => "is-light"}, {"message" => "嬉野流の使い手", "method" => "tag", "name" => "嬉", "type" => "is-light"}] }
-    #   end
+    # before do
+    #   Swars::Battle.destroy_all
+    #   Swars::User.destroy_all
+    #   Swars.setup
     # end
-    #
-    # it "対局数0" do
-    #   assert { User.create!.user_info.to_hash }
-    # end
+    describe "to_hash" do
+      before do
+        @record = Battle.create!
+        @hash = @record.memberships.first.user.user_info.to_hash.as_json
+      end
+
+      it "ユーザーのサマリー" do
+        assert { @hash["user"]         == {"key" => "user1"} }
+        assert { @hash["rules_hash"]   == {"ten_min" => {"rule_name" => "10分", "grade_name" => "30級"}, "three_min" => {"rule_name" => "3分", "grade_name" => nil}, "ten_sec" => {"rule_name" => "10秒", "grade_name" => nil}} }
+        assert { @hash["judge_counts"] == {"win" => 1, "lose" => 0} }
+      end
+
+      it "勝ち負け" do
+        assert { @hash["judge_keys"]   == ["win"] }
+      end
+
+      it "各タブの情報" do
+        @hash["every_day_list"] # => [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=>[{"name"=>"嬉野流", "count"=>1}]}]
+        @hash["every_grade_list"] # => [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>1.0}]
+        @hash["every_my_attack_list"] # => [{"tag"=>{"name"=>"嬉野流", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}]
+        @hash["every_vs_attack_list"] # => [{"tag"=>{"name"=>"2手目△３ニ飛戦法", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}]
+        @hash["every_my_defense_list"] # => []
+        @hash["every_vs_defense_list"] # => []
+
+        assert { @hash["every_day_list"] == [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=>[{"name"=>"嬉野流", "count"=>1}]}] }
+        assert { @hash["every_grade_list"] == [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>1.0}] }
+        assert { @hash["every_my_attack_list"] == [{"tag"=>{"name"=>"嬉野流", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
+        assert { @hash["every_vs_attack_list"] == [{"tag"=>{"name"=>"2手目△３ニ飛戦法", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
+        assert { @hash["every_my_defense_list"] == [] }
+        assert { @hash["every_vs_defense_list"] == [] }
+      end
+
+      it "メダル" do
+        assert { @hash["medal_list"] == [{"message" => "居飛車党", "method" => "tag", "name" => "居", "type" => "is-light"}, {"message" => "嬉野流の使い手", "method" => "tag", "name" => "嬉", "type" => "is-light"}] }
+      end
+    end
+
+    it "対局数0" do
+      assert { User.create!.user_info.to_hash }
+    end
 
     describe "党派 formation_info_records" do
       before do
@@ -254,7 +254,7 @@ module Swars
         assert { test1("CHECKMATE") == 150.0 } # 平均なので変化してない
       end
     end
-    
+
     describe "棋神召喚の疑い kishin_info_records" do
       before do
         @black = User.create!
@@ -282,11 +282,93 @@ module Swars
         assert { test1(14) == [1, 2] }
       end
     end
+
+    describe "1手詰を焦らして悦に入った回数 count_of_checkmate_think_last" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def csa_seq_generate(sec)
+        [["+7968GI", 600], ["-8232HI", 597], ["+5756FU", 600 - sec]]
+      end
+
+      def test1(sec)
+        Swars::Battle.create!(csa_seq: csa_seq_generate(sec), final_key: "CHECKMATE") do |e|
+          e.memberships.build(user: @black)
+          e.memberships.build(user: @white)
+        end
+        user_info = @black.user_info
+        [
+          user_info.count_of_checkmate_think_last,
+          user_info.max_of_checkmate_think_last,
+        ]
+      end
+
+      it "works" do
+        assert { test1(400) == [1, 400] }
+        assert { test1(500) == [2, 500] }
+        assert { test1(300) == [3, 500] }
+      end
+    end
+
+    describe "切断逃亡 disconnect_count" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      end
+
+      def test1(n)
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
+          e.memberships.build(user: @black)
+          e.memberships.build(user: @white)
+        end
+        @black.user_info.disconnect_count
+      end
+
+      it do
+        assert { test1(13) == 0 }
+        assert { test1(14) == 1 }
+        assert { test1(14) == 2 }
+      end
+    end
+
+    describe "投了せずに放置した回数 投了せずに放置した時間 count_of_timeout_think_last max_of_timeout_think_last" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def csa_seq_generate(n)
+        [["+5958OU", 599], ["-5152OU", 599], ["+5859OU", 599], ["-5251OU", 599]].cycle.take(n)
+      end
+
+      def test1(n)
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
+          e.memberships.build(user: @black, judge_key: :lose)
+          e.memberships.build(user: @white, judge_key: :win)
+        end
+        user_info = @black.user_info
+        [
+          user_info.count_of_timeout_think_last,
+          user_info.max_of_timeout_think_last,
+        ]
+      end
+
+      it do
+        assert { test1(13) == [0, nil] }
+        assert { test1(14) == [1, 599] }
+        assert { test1(15) == [2, 599] }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .........
+# >> .................
 # >> 
-# >> Finished in 4.96 seconds (files took 2.47 seconds to load)
-# >> 9 examples, 0 failures
+# >> Finished in 7.3 seconds (files took 5.13 seconds to load)
+# >> 17 examples, 0 failures
 # >> 
