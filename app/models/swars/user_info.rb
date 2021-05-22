@@ -232,7 +232,7 @@ module Swars
         #   # A and (B or C)
         #   s = s.merge(a)
         # else
-        c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(2))
+        c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(1))
         c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(5))
         s = s.merge(c1.or(c2))
         # end
@@ -252,7 +252,7 @@ module Swars
         s = win_scope
         s = s.joins(:battle)
         s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))
-        c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(2))
+        c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(1))
         c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
         s = s.merge(c1.or(c2))
         s.count
