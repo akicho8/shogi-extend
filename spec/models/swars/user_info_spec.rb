@@ -106,6 +106,26 @@ module Swars
       end
     end
 
+    describe "投了時の平均手数 avg_of_toryo_turn_max" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def test1(n, final_key, judge_key)
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: final_key) do |e|
+          e.memberships.build(user: @black, judge_key: judge_key)
+          e.memberships.build(user: @white)
+        end
+        @black.user_info.avg_of_toryo_turn_max
+      end
+
+      it "works" do
+        assert { test1(2, :TORYO, :lose)      == 2 }
+        assert { test1(8, :TORYO, :lose)      == 5 }
+        assert { test1(9, :DISCONNECT, :lose) == 5 } # TORYO で lose 専用なので結果は変わらない
+      end
+    end
     
     
     
