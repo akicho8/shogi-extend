@@ -358,19 +358,28 @@ module Swars
       list = [
         { name: "党",                                  type1: "pie",    type2: nil,                             body: formation_info_records,        },
 
+        ################################################################################
+        { name: "勝敗別平均手数",                      type1: "pie",    type2: nil,                             body: avg_win_lose_turn_max,        },
+        { name: "投了時の平均手数",                    type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_toryo_turn_max,         },
+        { name: "平均手数",                            type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_turn_max,               },
+
+        ################################################################################
         { name: "最大長考",                            type1: "simple", type2: "second",                        body: max_of_think_max,              },
         { name: "平均考慮",                            type1: "simple", type2: "second",                        body: avg_of_think_all_avg,          },
-        { name: "平均手数",                            type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_turn_max,               },
+
+        ################################################################################
         { name: "対戦相手との段級差の平均",            type1: "simple", type2: "raw",                           body: avg_of_grade_diff,             },
 
+        ################################################################################
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      },
+        { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
         { name: "棋神召喚の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records,           },
         { name: "1手詰を焦らして悦に入った回数",       type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_checkmate_think_last, },
         { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
 
+        ################################################################################
         { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     },
         { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
-        { name: "投了時の平均手数",                    type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_toryo_turn_max,         },
         { name: "投了せずに放置した回数",              type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_timeout_think_last,   },
         { name: "投了せずに放置した時間(最長)",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
 
@@ -449,7 +458,7 @@ module Swars
     end
 
     def avg_of_grade_diff
-      if v = current_scope.average(:grade_diff)
+      if v = current_scope.average(:grade_diff) # FIXME: 恐怖の級位者がいるので6以上離れていたら除外した方がいい
         v.to_f.round(2)
       end
     end
@@ -519,5 +528,36 @@ module Swars
         v.to_i
       end
     end
+
+    ################################################################################
+
+    def avg_of_think_end_avg
+      s = win_scope
+      s = s.joins(:battle)
+      s = s.where(Swars::Battle.arel_table[:final_key].eq("CHECKMATE"))
+      if v = s.average(:think_end_avg)
+        v.to_f.round(2)
+      end
+    end
+
+    ################################################################################
+
+    def avg_win_lose_turn_max
+      [:win, :lose].collect do |key|
+        info = JudgeInfo.fetch(key)
+        { name: info.name, value: avg_turn_max_for(key) || 0 }
+      end
+    end
+
+    def avg_turn_max_for(judge_key)
+      s = ids_scope.where(judge_key: judge_key)
+      s = s.joins(:battle)
+      s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
+      if v = s.average(:turn_max)
+        v.to_i
+      end
+    end
+
+    ################################################################################
   end
 end
