@@ -277,9 +277,37 @@ module Swars
       end
 
       it "works" do
-        assert { test1(12) == [1, 0] } # 12 * 4 = 48 は50未満なので対象外
+        assert { test1(12) == [0, 1] } # 12 * 4 = 48 は50未満なので対象外
         assert { test1(13) == [1, 1] } # 13 * 4 = 52 は50以上なので対象
-        assert { test1(14) == [1, 2] }
+        assert { test1(14) == [2, 1] }
+      end
+    end
+
+    describe "棋神乱用の疑い kishin_info_records_lv2" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def csa_seq_generate(n)
+        n.times.flat_map do |i|
+          seconds = 600 - (i * 4.seconds)
+          [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
+        end
+      end
+
+      def test1(n)
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+          e.memberships.build(user: @black, judge_key: :win)
+          e.memberships.build(user: @white)
+        end
+        @black.user_info.kishin_info_records.collect { |e| e[:value] }
+      end
+
+      it "works" do
+        assert { test1(12) == [0, 1] } # 12 * 4 = 48 は50未満なので対象外
+        assert { test1(13) == [1, 1] } # 13 * 4 = 52 は50以上なので対象
+        assert { test1(14) == [2, 1] }
       end
     end
 
@@ -365,7 +393,7 @@ module Swars
       end
     end
 
-    describe "右玉度 migigyoku" do
+    describe "右玉度 migigyoku migigyoku2" do
       before do
         @black = User.create!
         @white = User.create!
@@ -382,13 +410,15 @@ module Swars
       it do
         assert { test1 == [1, 0] }
         assert { test1 == [2, 0] }
+        
+        assert { @black.user_info.migigyoku2 == [{name: "糸谷流右玉", value: 2}] }
       end
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..................
+# >> ...................
 # >> 
-# >> Finished in 7.62 seconds (files took 2.51 seconds to load)
-# >> 18 examples, 0 failures
+# >> Finished in 8.48 seconds (files took 5.45 seconds to load)
+# >> 19 examples, 0 failures
 # >> 

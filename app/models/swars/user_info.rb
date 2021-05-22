@@ -39,6 +39,19 @@
 
 module Swars
   class UserInfo
+    cattr_accessor(:migigyoku_family) {
+      [
+        "矢倉右玉",
+        "右玉",
+        "糸谷流右玉",
+        "羽生流右玉",
+        "角換わり右玉",
+        "雁木右玉",
+        "ツノ銀型右玉",
+        "三段右玉",
+      ]
+    }
+
     attr_accessor :user
     attr_accessor :params
 
@@ -197,7 +210,9 @@ module Swars
         #   # A and (B or C)
         #   s = s.merge(a)
         # else
-        s = s.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
+        c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lt(3))
+        c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(5))
+        s = s.merge(c1.or(c2))
         # end
 
         # c1 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
@@ -206,6 +221,18 @@ module Swars
         # c4 = c1.or(c2.merge(c3))     # c1 or c2 and c3 は c1 or (c2 and c3) のこと
         # s = s.merge(c4)
 
+        s.count
+      }.call
+    end
+
+    def ai_use_battle_count_lv2
+      @ai_use_battle_count_lv2 ||= -> {
+        s = win_scope
+        s = s.joins(:battle)
+        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))
+        c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lt(3))
+        c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
+        s = s.merge(c1.or(c2))
         s.count
       }.call
     end
@@ -236,7 +263,20 @@ module Swars
     def etc_list
       list = [
         { name: "党派",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_pie_x" },
-        { name: "右玉度",                              type1: "pie",    type2: nil,                             body: migigyoku,                     pie_type: "is_pie_s" },
+
+        ################################################################################
+        { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_pie_x" },
+        { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
+        { name: "棋神召喚の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records,           pie_type: "is_pie_s" },
+        { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pie_s" },
+        { name: "1手詰を焦らして悦に入った回数",       type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_checkmate_think_last, },
+        { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
+
+        ################################################################################
+        { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_pie_x" },
+        { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
+        { name: "投了せずに放置した回数",              type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_timeout_think_last,   },
+        { name: "投了せずに放置した時間(最長)",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
 
         ################################################################################
         { name: "勝敗別平均手数",                      type1: "pie",    type2: nil,                             body: avg_win_lose_turn_max,        pie_type: "is_pie_x" },
@@ -251,18 +291,9 @@ module Swars
         { name: "対戦相手との段級差の平均",            type1: "simple", type2: "raw",                           body: avg_of_grade_diff,             },
 
         ################################################################################
-        { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_pie_x" },
-        { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
-        { name: "棋神召喚の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records,           pie_type: "is_pie_s" },
-        { name: "1手詰を焦らして悦に入った回数",       type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_checkmate_think_last, },
-        { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
 
-        ################################################################################
-        { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_pie_x" },
-        { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
-        { name: "投了せずに放置した回数",              type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_timeout_think_last,   },
-        { name: "投了せずに放置した時間(最長)",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
-
+        { name: "右玉度",                              type1: "pie",    type2: nil,                             body: migigyoku,                     pie_type: "is_pie_s" },
+        { name: "右玉ファミリー",                      type1: "pie",    type2: nil,                             body: migigyoku2,                    pie_type: "is_pie_x" },
       ]
       if Rails.env.development?
         list.unshift({
@@ -316,6 +347,13 @@ module Swars
       ]
     end
 
+    def kishin_info_records_lv2
+      [
+        { name: "有り", value: ai_use_battle_count_lv2,             },
+        { name: "無し", value: win_count - ai_use_battle_count_lv2, },
+      ]
+    end
+
     ################################################################################
 
     def max_of_think_max
@@ -360,14 +398,16 @@ module Swars
     end
 
     def count_of_timeout_think_last
-      timeout_think_last_scope.count
+      if v = timeout_think_last_scope.count
+        # if v.positive?
+        v
+        # end
+      end
     end
 
     def max_of_timeout_think_last
       if v = timeout_think_last_scope.maximum(:think_last)
         v
-      else
-        # "─"
       end
     end
 
@@ -382,14 +422,16 @@ module Swars
     end
 
     def count_of_checkmate_think_last
-      checkmate_think_last_scope.count
+      if v = checkmate_think_last_scope.count
+        # if v.positive?
+        v
+        # end
+      end
     end
 
     def max_of_checkmate_think_last
       if v = checkmate_think_last_scope.maximum(:think_last)
         v
-      else
-        # "─"
       end
     end
 
@@ -447,21 +489,22 @@ module Swars
     ################################################################################
 
     def migigyoku
-      total = [
-        "矢倉右玉",
-        "右玉",
-        "糸谷流右玉",
-        "羽生流右玉",
-        "角換わり右玉",
-        "雁木右玉",
-        "ツノ銀型右玉",
-        "三段右玉",
-      ].sum { |e| all_tag_names_hash[e] }
+      total = migigyoku_family.sum { |e| all_tag_names_hash[e] }
+      if total.positive?
+        [
+          { name: "右玉",   value: total              },
+          { name: "その他", value: real_count - total },
+        ]
+      end
+    end
 
-      [
-        { name: "右玉",   value: total              },
-        { name: "その他", value: real_count - total },
-      ]
+    def migigyoku2
+      list = migigyoku_family.find_all { |e| all_tag_names_hash[e].positive? }
+      if list.present?
+        list.collect { |e|
+          { name: e, value: all_tag_names_hash[e] }
+        }.sort_by { |e| -e[:value] }
+      end
     end
 
     private
