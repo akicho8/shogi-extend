@@ -18,8 +18,8 @@ module Swars
     end
 
     # before do
-    #   Swars::Battle.destroy_all
-    #   Swars::User.destroy_all
+    #   Battle.destroy_all
+    #   User.destroy_all
     #   Swars.setup
     # end
     describe "to_hash" do
@@ -70,7 +70,7 @@ module Swars
       end
 
       def test1(csa_seq)
-        Swars::Battle.create!(csa_seq: csa_seq) do |e|
+        Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
           e.memberships.build(user: @white)
         end
@@ -91,7 +91,7 @@ module Swars
       end
 
       def test1(judge_key, n)
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+        Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
           e.memberships.build(user: @white)
         end
@@ -113,7 +113,7 @@ module Swars
       end
 
       def test1(n, final_key, judge_key)
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: final_key) do |e|
+        Battle.create!(csa_seq: csa_seq_generate(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
           e.memberships.build(user: @white)
         end
@@ -134,7 +134,7 @@ module Swars
       end
 
       def test1(n)
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+        Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black)
           e.memberships.build(user: @white)
         end
@@ -163,7 +163,7 @@ module Swars
       end
 
       def test1
-        Swars::Battle.create!(csa_seq: csa_seq_generate) do |e|
+        Battle.create!(csa_seq: csa_seq_generate) do |e|
           e.memberships.build(user: @black)
           e.memberships.build(user: @white)
         end
@@ -187,7 +187,7 @@ module Swars
       def test1(black_grade_key, white_grade_key)
         @black.update!(grade_key: black_grade_key)
         @white.update!(grade_key: white_grade_key)
-        Swars::Battle.create! do |e|
+        Battle.create! do |e|
           e.memberships.build(user: @black)
           e.memberships.build(user: @white)
         end
@@ -207,7 +207,7 @@ module Swars
       end
 
       def test1(final_key, judge_key)
-        Swars::Battle.create!(final_key: final_key) do |e|
+        Battle.create!(final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
           e.memberships.build(user: @white)
         end
@@ -241,7 +241,7 @@ module Swars
       end
 
       def test1(final_key)
-        Swars::Battle.create!(csa_seq: csa_seq_generate, final_key: final_key) do |e|
+        Battle.create!(csa_seq: csa_seq_generate, final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white)
         end
@@ -269,7 +269,7 @@ module Swars
       end
 
       def test1(n)
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+        Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white)
         end
@@ -297,7 +297,7 @@ module Swars
       end
 
       def test1(n)
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+        Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white)
         end
@@ -322,7 +322,7 @@ module Swars
       end
 
       def test1(sec)
-        Swars::Battle.create!(csa_seq: csa_seq_generate(sec), final_key: "CHECKMATE") do |e|
+        Battle.create!(csa_seq: csa_seq_generate(sec), final_key: "CHECKMATE") do |e|
           e.memberships.build(user: @black)
           e.memberships.build(user: @white)
         end
@@ -350,7 +350,7 @@ module Swars
       end
 
       def test1(n)
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
+        Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black)
           e.memberships.build(user: @white)
         end
@@ -375,7 +375,7 @@ module Swars
       end
 
       def test1(n)
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
+        Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -400,7 +400,7 @@ module Swars
       end
 
       def test1
-        Swars::Battle.create!(tactic_key: "糸谷流右玉") do |e|
+        Battle.create!(tactic_key: "糸谷流右玉") do |e|
           e.memberships.build(user: @black)
           e.memberships.build(user: @white)
         end
