@@ -224,11 +224,41 @@ module Swars
         assert { test1(:DISCONNECT, :lose) == [[["詰み", 2]], [["投了", 1], ["切断", 1]]] }
       end
     end
+
+    describe "詰ます速度(1手平均) avg_of_think_end_avg" do
+      before do
+        @black = User.create!
+        @white = User.create!
+      end
+
+      def csa_seq_generate
+        [
+          ["+5958OU", 500], # 100秒
+          ["-5152OU", 600],
+          ["+5859OU", 300], # 200秒
+          ["-5251OU", 600],
+        ]
+      end
+
+      def test1(final_key)
+        Swars::Battle.create!(csa_seq: csa_seq_generate, final_key: final_key) do |e|
+          e.memberships.build(user: @black, judge_key: :win)
+          e.memberships.build(user: @white)
+        end
+        @black.user_info.avg_of_think_end_avg
+      end
+
+      it "works" do
+        assert { test1("DISCONNECT") == nil  } # CHECKMATE専用
+        assert { test1("CHECKMATE") == 150.0 }
+        assert { test1("CHECKMATE") == 150.0 } # 平均なので変化してない
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .......
+# >> ........
 # >> 
-# >> Finished in 4.26 seconds (files took 3.22 seconds to load)
-# >> 7 examples, 0 failures
+# >> Finished in 4.58 seconds (files took 2.49 seconds to load)
+# >> 8 examples, 0 failures
 # >> 
