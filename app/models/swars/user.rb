@@ -42,7 +42,6 @@ module Swars
 
     has_many :op_memberships, class_name: "Membership", foreign_key: "op_user_id", dependent: :destroy # (対戦相手の)対局時の情報(複数)
 
-    belongs_to :grade                          # すべてのモードのなかで一番よい段級位
     has_many :search_logs, dependent: :destroy # 明示的に取り込んだ日時の記録
 
     before_validation do
@@ -50,25 +49,6 @@ module Swars
         self.user_key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
       end
       self.user_key ||= SecureRandom.hex
-
-      if Rails.env.development? || Rails.env.test?
-        if Grade.count.zero?
-          Swars.setup
-        end
-      end
-
-      self.grade ||= Grade.last
-
-      # Grade が下がらないようにする
-      # 例えば10分メインの人が3分を1回やっただけで30級に戻らないようにする
-      if will_save_change_to_attribute?(:grade_id)
-        ov, nv = attribute_change_to_be_saved(:grade_id)
-        if ov && nv
-          if Grade.find(ov).priority < Grade.find(nv).priority
-            self.grade_id = ov
-          end
-        end
-      end
     end
 
     with_options presence: true do
@@ -83,8 +63,45 @@ module Swars
       user_key
     end
 
-    def name_with_grade
-      "#{user_key} #{grade.name}"
+    concerning :GradeMethods do
+      included do
+        belongs_to :grade                          # すべてのモードのなかで一番よい段級位
+
+        before_validation do
+          if Rails.env.development? || Rails.env.test?
+            if Grade.count.zero?
+              Swars.setup
+            end
+          end
+
+          self.grade ||= Grade.last
+
+          # Grade が下がらないようにする
+          # 例えば10分メインの人が3分を1回やっただけで30級に戻らないようにする
+          if will_save_change_to_attribute?(:grade_id)
+            ov, nv = attribute_change_to_be_saved(:grade_id)
+            if ov && nv
+              if Grade.find(ov).priority < Grade.find(nv).priority
+                self.grade_id = ov
+              end
+            end
+          end
+        end
+      end
+
+      def grade_key=(key)
+        self.grade = Grade.find_by!(key: key)
+      end
+
+      def grade_key
+        if grade
+          grade.key
+        end
+      end
+
+      def name_with_grade
+        "#{user_key} #{grade.name}"
+      end
     end
 
     concerning :UserInfoMethods do

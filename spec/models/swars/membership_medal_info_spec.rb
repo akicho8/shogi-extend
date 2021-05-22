@@ -191,7 +191,7 @@ module Swars
       def test1(*keys)
         Battle.create! { |e|
           keys.each do |key|
-            e.memberships.build(user: User.create!(grade: Grade.find_by(key: key)))
+            e.memberships.build(user: User.create!(grade_key: key))
           end
         }.memberships.collect { |e| e.medal_params[:message] }
       end
