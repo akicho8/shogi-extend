@@ -314,12 +314,10 @@ module Swars
     end
 
     def judge_info_records(judge_key)
-      s = current_scope
+      s = ids_scope
       s = s.where(judge_key: judge_key)
-      battle_ids = s.pluck(:battle_id)
-
-      s = Battle.where(id: battle_ids)
-      s = s.group(:final_key)
+      s = s.joins(:battle)
+      s = s.group(Swars::Battle.arel_table[:final_key])
       s = s.order("count_all DESC")
       s = s.count               # { TORYO: 3, CHECKMATE: 1 }
 
