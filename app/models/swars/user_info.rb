@@ -233,7 +233,7 @@ module Swars
         #   s = s.merge(a)
         # else
         c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(1))
-        c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(5))
+        c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(6))
         s = s.merge(c1.or(c2))
         # end
 
@@ -402,9 +402,9 @@ module Swars
 
     def count_of_timeout_think_last
       if v = timeout_think_last_scope.count
-        # if v.positive?
-        v
-        # end
+        if v.positive?
+          v
+        end
       end
     end
 
@@ -426,9 +426,9 @@ module Swars
 
     def count_of_checkmate_think_last
       if v = checkmate_think_last_scope.count
-        # if v.positive?
-        v
-        # end
+        if v.positive?
+          v
+        end
       end
     end
 
@@ -445,7 +445,11 @@ module Swars
       s = s.joins(:battle)
       s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
       s = s.where(Swars::Battle.arel_table[:final_key].eq("DISCONNECT"))
-      s.count
+      if v = s.count
+        if v.positive?
+          v
+        end
+      end
     end
 
     ################################################################################
