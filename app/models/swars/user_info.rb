@@ -216,7 +216,7 @@ module Swars
     end
 
     # 棋神
-    # turn_max >= 2 なら think_all_avg と think_end_avg は nil ではないので turn_max >= 2 の条件を必ず入れること
+    # turn_max >= 2 なら obt_think_avg と think_end_avg は nil ではないので turn_max >= 2 の条件を必ず入れること
     def ai_use_battle_count_lv1
       @ai_use_battle_count_lv1 ||= -> {
         # A
@@ -229,15 +229,16 @@ module Swars
 
         # if false
         #   # (B or C)
-        #   a = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(3))       # 指し手平均3秒以下
+        #   a = Swars::Membership.where(Swars::Membership.arel_table[:obt_think_avg].lteq(3))       # 指し手平均3秒以下
         #   a = a.or(Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
         #
         #   # A and (B or C)
         #   s = s.merge(a)
         # else
 
-        # c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(1))
-        c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
+        # c1 = Swars::Membership.where(Swars::Membership.arel_table[:obt_think_avg].lteq(1))
+        # c2 = Swars::Membership.where(Swars::Membership.arel_table[:obt_auto_max].gteq(10))
+        c2 = Swars::Membership.where(Swars::Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
         # s = s.merge(c1.or(c2))
         s = s.merge(c2)
 
@@ -259,8 +260,8 @@ module Swars
         s = s.joins(:battle)
         s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))
         s = s.where(Swars::Battle.arel_table[:rule_key].not_eq(:three_min))                      # 3分は除く
-        # c1 = Swars::Membership.where(Swars::Membership.arel_table[:think_all_avg].lteq(1))
-        c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
+        # c1 = Swars::Membership.where(Swars::Membership.arel_table[:obt_think_avg].lteq(1))
+        c2 = Swars::Membership.where(Swars::Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
         # s = s.merge(c1.or(c2))
         s = s.merge(c2)
         s.count

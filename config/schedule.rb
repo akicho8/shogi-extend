@@ -25,6 +25,8 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 
 every("5 3 * * *") do
   runner [
+    %(SlackAgent.message_send(key: "schedule", body: "begin")),
+
     # "ActiveRecord::Base.logger = nil",
     "Swars::Crawler::ExpertCrawler.run",
     "Swars::Crawler::ReservationCrawler.run",
@@ -35,8 +37,7 @@ every("5 3 * * *") do
     "Swars::Battle.cleanup",
     "FreeBattle.cleanup",
 
-    # これは10325件ぐらい残る
-    # "Swars::Membership.where(:think_all_avg => nil).find_each{|e|e.think_columns_update;e.save!}",
+    'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(3.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; SlackAgent.message_send(key: "obt_auto_max", body: i) }',
 
     # 全部0件
     # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
@@ -50,6 +51,8 @@ every("5 3 * * *") do
     "Actb::RoomChannel.active_users_clear",
     "Emox::SchoolChannel.active_users_clear",
     "Emox::RoomChannel.active_users_clear",
+
+    %(SlackAgent.message_send(key: "schedule", body: "end")),
   ].join(";")
 end
 

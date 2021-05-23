@@ -1007,9 +1007,11 @@ ActiveRecord::Schema.define(version: 2021_03_07_111420) do
     t.integer "two_serial_max", comment: "2秒の指し手が連続した回数"
     t.integer "think_last", comment: "最後の指し手の秒数"
     t.integer "think_max", comment: "最大考慮秒数"
-    t.integer "think_all_avg2", comment: "開戦後の指し手の平均秒数"
-    t.integer "two_serial_max2", comment: "開戦後の2秒の指し手が連続した回数"
     t.integer "think_max2", comment: "開戦後の最大考慮秒数"
+    t.integer "think_all_avg2", comment: "開戦後の指し手の平均秒数"
+    t.integer "two_serial_max2", comment: "開戦後の1または2秒の指し手が連続した回数"
+    t.integer "obt_think_avg", comment: "開戦後の指し手の平均秒数"
+    t.integer "obt_auto_max", comment: "開戦後に1,2秒の指し手が続く最大"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true

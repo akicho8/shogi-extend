@@ -171,8 +171,8 @@ module Swars
       think_columns_update2
     end
 
-    # t.integer :think_all_avg2,   null: true, comment: "開戦後の指し手の平均秒数"
-    # t.integer :two_serial_max2,  null: true, comment: "開戦後の2秒の指し手が連続した回数"
+    # t.integer :obt_think_avg,   null: true, comment: "開戦後の指し手の平均秒数"
+    # t.integer :obt_auto_max,  null: true, comment: "開戦後の2秒の指し手が連続した回数"
     # t.integer :think_max2,       null: true, comment: "開戦後の最大考慮秒数"
     def think_columns_update2
       list = sec_list
@@ -183,6 +183,11 @@ module Swars
       end
 
       if battle.outbreak_turn
+        # 全体が [a i b j c k d l]
+        # 自分側の list が [a b c d e]
+        # outbreak_turn が c の部分の 5 とすると
+        # 5 / 2 で 2 なので [a b c d e].drop(2) で [c d e] が list に残る
+        # これが開戦後の指し手
         from = battle.outbreak_turn / 2
         list = list.drop(from)
 
@@ -191,16 +196,20 @@ module Swars
         d = list.size
         c = list.sum
         if d.positive?
-          self.think_all_avg2 = c.fdiv(d)
+          self.obt_think_avg = c.div(d)
         end
 
-        a = list                                   # => [2, 3, 3, 2, 2, 2]
-        x = a.chunk { |e| e == 1 || e == 2 }       # => [[true, [2]], [false, [3, 3], [true, [2, 2, 2]]
+        a = list                                   # => [2, 3, 3, 2, 1, 2]
+        x = a.chunk { |e| e == 1 || e == 2 }       # => [[true, [2]], [false, [3, 3], [true, [2, 1, 2]]
         x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
         v = x.compact.max                          # => 3
         if v
-          self.two_serial_max2 = v
+          self.obt_auto_max = v
         end
+
+        # if Rails.env.development?
+        #   p [obt_think_avg, obt_auto_max]
+        # end
       end
     end
 
