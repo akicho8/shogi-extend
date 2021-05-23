@@ -1477,6 +1477,8 @@ CREATE TABLE `swars_memberships` (
   `two_serial_max` int(11) DEFAULT NULL COMMENT '2秒の指し手が連続した回数',
   `think_last` int(11) DEFAULT NULL COMMENT '最後の指し手の秒数',
   `think_max` int(11) DEFAULT NULL COMMENT '最大考慮秒数',
+  `obt_think_avg` int(11) DEFAULT NULL COMMENT '開戦後の指し手の平均秒数',
+  `obt_auto_max` int(11) DEFAULT NULL COMMENT '開戦後に1,2秒の指し手が続く最大',
   PRIMARY KEY (`id`),
   UNIQUE KEY `memberships_sbri_lk` (`battle_id`,`location_key`),
   UNIQUE KEY `memberships_sbri_sbui` (`battle_id`,`user_id`),
@@ -1975,6 +1977,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210307111406'),
 ('20210307111407'),
 ('20210307111409'),
-('20210307111410');
+('20210307111410'),
+('20210307111420');
 
 

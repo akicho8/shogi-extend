@@ -398,6 +398,8 @@
 # | two_serial_max | Two serial max | integer(4)  |             |                   |            |
 # | think_last     | Think last     | integer(4)  |             |                   |            |
 # | think_max      | Think max      | integer(4)  |             |                   |            |
+# | obt_think_avg  | Obt think avg  | integer(4)  |             |                   |            |
+# | obt_auto_max   | Obt auto max   | integer(4)  |             |                   |            |
 # |----------------+----------------+-------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------

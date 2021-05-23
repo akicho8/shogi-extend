@@ -258,7 +258,7 @@ module Swars
       end
 
       def csa_seq_generate(n)
-        n.times.flat_map do |i|
+        outbreak_csa + n.times.flat_map do |i|
           seconds = 600 - (i * 4.seconds)
           [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
         end
@@ -272,9 +272,9 @@ module Swars
       end
 
       it "works" do
-        assert { test1(12) == [0, 1] } # 12 * 4 = 48 は50未満なので対象外
-        assert { test1(13) == [1, 1] } # 13 * 4 = 52 は50以上なので対象
-        assert { test1(14) == [2, 1] }
+        assert { test1(10) == [0, 1] }
+        assert { test1(11) == [1, 1] }
+        assert { test1(11) == [2, 1] }
       end
     end
 
@@ -284,7 +284,7 @@ module Swars
       end
 
       def csa_seq_generate(n)
-        n.times.flat_map do |i|
+        outbreak_csa + n.times.flat_map do |i|
           seconds = 600 - (i * 4.seconds)
           [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
         end
@@ -298,9 +298,9 @@ module Swars
       end
 
       it "works" do
-        assert { test1(12) == [0, 1] } # 12 * 4 = 48 は50未満なので対象外
-        assert { test1(13) == [1, 1] } # 13 * 4 = 52 は50以上なので対象
-        assert { test1(14) == [2, 1] }
+        assert { test1(10) == [0, 1] }
+        assert { test1(11) == [1, 1] }
+        assert { test1(12) == [2, 1] }
       end
     end
 
@@ -418,20 +418,20 @@ module Swars
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .................F..
+# >> ..............F.....
 # >> 
 # >> Failures:
 # >> 
-# >>   1) Swars::Battle 投了せずに放置した回数 投了せずに放置した時間 count_of_timeout_think_last max_of_timeout_think_last example at -:368 (Got an error when generating description from matcher: NoMethodError: undefined method `length' for nil:NilClass -- /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-power_assert-1.1.0/lib/rspec/power_assert.rb:97:in `description')
+# >>   1) Swars::Battle 棋神乱用の疑い kishin_info_records_lv2 works
 # >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:370:in `block (3 levels) in <module:Swars>'
+# >>      # -:301:in `block (3 levels) in <module:Swars>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
 # >> 
-# >> Finished in 8.5 seconds (files took 2.5 seconds to load)
+# >> Finished in 8.38 seconds (files took 5.16 seconds to load)
 # >> 20 examples, 1 failure
 # >> 
 # >> Failed examples:
 # >> 
-# >> rspec -:368 # Swars::Battle 投了せずに放置した回数 投了せずに放置した時間 count_of_timeout_think_last max_of_timeout_think_last example at -:368 (Got an error when generating description from matcher: NoMethodError: undefined method `length' for nil:NilClass -- /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-power_assert-1.1.0/lib/rspec/power_assert.rb:97:in `description')
+# >> rspec -:300 # Swars::Battle 棋神乱用の疑い kishin_info_records_lv2 works
 # >> 

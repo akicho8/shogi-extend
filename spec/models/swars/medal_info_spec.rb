@@ -215,7 +215,7 @@ module Swars
 
     describe "棋神マン" do
       def csa_seq_generate(n)
-        n.times.flat_map do |i|
+        outbreak_csa + n.times.flat_map do |i|
           seconds = 600 - (i * 4.seconds)
           [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
         end
