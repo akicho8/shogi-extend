@@ -75,10 +75,10 @@ export default {
     // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2({count: this.data_count})
     // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2()
 
-    if (this.info.pie_type === "is_pie_x") {
+    if (this.info.pie_type === "is_many_values") {
       this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type0({diff: 45, count: this.data_count})
     }
-    if (this.info.pie_type === "is_pie_s") {
+    if (this.info.pie_type === "is_pair_values") {
       this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type3()
       // this._chart_config.options.legend.display = false
     }
@@ -105,10 +105,10 @@ export default {
   align-items: center
   justify-content: center
   .canvas_holder
-    // &.pie_type_is_pie_s
+    // &.pie_type_is_pair_values
     //   margin-top: 0.5rem
     //   width: calc(256px + 64px)
-    // &.pie_type_is_pie_x
+    // &.pie_type_is_many_values
     width: calc(256px + 128px + 32px)
 
 .STAGE-development

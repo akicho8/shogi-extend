@@ -263,24 +263,24 @@ module Swars
 
     def etc_list
       list = [
-        { name: "党派",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_pie_x" },
+        { name: "党派",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
 
         ################################################################################
-        { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_pie_x" },
+        { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
         { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
-        { name: "棋神召喚の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records,           pie_type: "is_pie_s" },
-        # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pie_s" },
+        { name: "棋神召喚の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records,           pie_type: "is_pair_values" },
+        # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pair_values" },
         { name: "1手詰を焦らして悦に入った回数",       type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_checkmate_think_last, },
         { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
 
         ################################################################################
-        { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_pie_x" },
+        { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_many_values" },
         { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
-        { name: "投了せずに放置した回数",              type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_timeout_think_last,   },
+        { name: "投了せずに放置した回数",              type1: "pie",    type2: nil,                             body: count_of_timeout_think_last,   pie_type: "is_many_values" },
         { name: "投了せずに放置した時間(最長)",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
 
         ################################################################################
-        { name: "勝敗別平均手数",                      type1: "pie",    type2: nil,                             body: avg_win_lose_turn_max,        pie_type: "is_pie_x" },
+        { name: "勝敗別平均手数",                      type1: "pie",    type2: nil,                             body: avg_win_lose_turn_max,        pie_type: "is_many_values" },
         { name: "投了時の平均手数",                    type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_toryo_turn_max,         },
         { name: "平均手数",                            type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_turn_max,               },
 
@@ -293,8 +293,8 @@ module Swars
 
         ################################################################################
 
-        { name: "右玉度",                              type1: "pie",    type2: nil,                             body: migigyoku_levels,                     pie_type: "is_pie_s" },
-        { name: "右玉ファミリー",                      type1: "pie",    type2: nil,                             body: migigyoku_kinds,                    pie_type: "is_pie_x" },
+        { name: "右玉度",                              type1: "pie",    type2: nil,                             body: migigyoku_levels,                     pie_type: "is_pair_values" },
+        { name: "右玉ファミリー",                      type1: "pie",    type2: nil,                             body: migigyoku_kinds,                    pie_type: "is_many_values" },
       ]
       if Rails.env.development?
         list.unshift({
@@ -308,7 +308,7 @@ module Swars
               { name: "d", value: 4 },
               { name: "e", value: 5 },
             ],
-            pie_type: "is_pie_x",
+            pie_type: "is_many_values",
           })
       end
       list
