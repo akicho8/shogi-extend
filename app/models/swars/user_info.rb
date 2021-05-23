@@ -280,6 +280,9 @@ module Swars
         { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
         { name: "投了せずに放置した頻度",              type1: "pie",    type2: nil,                             body: count_of_timeout_think_last,   pie_type: "is_many_values" },
         { name: "投了せずに放置した時間(最長)",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
+        { name: "投了までの心の準備",                  type1: "pie",    type2: nil,                             body: count_of_toryo_think_last,   pie_type: "is_many_values" },
+        { name: "投了までの心の準備(平均)",            type1: "simple", type2: "second",                        body: avg_of_toryo_think_last,     },
+        # { name: "投了までの最長",                      type1: "simple", type2: "second",                        body: max_of_toryo_think_last,     },
 
         ################################################################################
         { name: "勝敗別平均手数",                      type1: "pie",    type2: nil,                             body: avg_win_lose_turn_max,        pie_type: "is_many_values" },
@@ -435,6 +438,48 @@ module Swars
     def max_of_timeout_think_last
       if v = timeout_think_last_scope.maximum(:think_last)
         v
+      end
+    end
+
+    ################################################################################
+
+    def toryo_think_last_gteq
+      30
+    end
+
+    def toryo_think_last_scope
+      s = lose_scope
+      s = s.joins(:battle)
+      s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
+      s = s.where(Swars::Battle.arel_table[:final_key].eq("TORYO"))
+      s = s.where(Swars::Membership.arel_table[:think_last].gteq(toryo_think_last_gteq))
+    end
+
+    def count_of_toryo_think_last
+      s = toryo_think_last_scope
+      # s = ids_scope
+      h = s.group("think_last DIV 60").order("count_all desc").count
+      if h.present?
+        h.collect do |min, count|
+          if min.zero?
+            min = "#{toryo_think_last_gteq}秒"
+          else
+            min = "#{min}分"
+          end
+          { name: min, value: count }
+        end
+      end
+    end
+
+    def max_of_toryo_think_last
+      if v = toryo_think_last_scope.maximum(:think_last)
+        v
+      end
+    end
+
+    def avg_of_toryo_think_last
+      if v = toryo_think_last_scope.average(:think_last)
+        v.to_f.round(2)
       end
     end
 

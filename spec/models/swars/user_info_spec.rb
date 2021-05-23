@@ -17,6 +17,17 @@ module Swars
       ].cycle.take(n)
     end
 
+    def csa_seq_generate1(n)
+      [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+    end
+
+    def csa_seq_generate2(n, sec)
+      list = csa_seq_generate1(n)
+      v = list.pop
+      v = [v.first, 600 - sec]
+      list + [v]
+    end
+
     # before do
     #   Battle.destroy_all
     #   User.destroy_all
@@ -206,10 +217,10 @@ module Swars
       end
 
       it "works" do
-        assert { test1(:CHECKMATE,  :win ) == [[["詰み", 1]], []] }
-        assert { test1(:CHECKMATE,  :win ) == [[["詰み", 2]], []] }
-        assert { test1(:TORYO,      :lose) == [[["詰み", 2]], [["投了", 1]]] }
-        assert { test1(:DISCONNECT, :lose) == [[["詰み", 2]], [["投了", 1], ["切断", 1]]] }
+        assert { test1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 1]], [["投了", 0], ["時間切れ", 0], ["詰み", 0]]] }
+        assert { test1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 0], ["時間切れ", 0], ["詰み", 0]]] }
+        assert { test1(:TORYO,      :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0]]] }
+        assert { test1(:DISCONNECT, :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0], ["切断", 1]]] }
       end
     end
 
@@ -298,12 +309,8 @@ module Swars
         @black = User.create!
       end
 
-      def csa_seq_generate(sec)
-        [["+7968GI", 600], ["-8232HI", 597], ["+5756FU", 600 - sec]]
-      end
-
       def test1(sec)
-        Battle.create!(csa_seq: csa_seq_generate(sec), final_key: "CHECKMATE") do |e|
+        Battle.create!(csa_seq: csa_seq_generate2(3, sec), final_key: "CHECKMATE") do |e|
           e.memberships.build(user: @black)
         end
         user_info = @black.user_info
@@ -314,9 +321,9 @@ module Swars
       end
 
       it "works" do
-        assert { test1(400) == [1, 400] }
-        assert { test1(500) == [2, 500] }
-        assert { test1(300) == [3, 500] }
+        assert { test1(400) == [[{name: "6分", value: 1}], 400] }
+        assert { test1(500) == [[{name: "6分", value: 1}, {name: "8分", value: 1}], 500] }
+        assert { test1(300) == [[{name: "6分", value: 1}, {name: "8分", value: 1}, {name: "5分", value: 1}], 500] }
       end
     end
 
@@ -347,12 +354,8 @@ module Swars
         @black = User.create!
       end
 
-      def csa_seq_generate(n)
-        [["+5958OU", 599], ["-5152OU", 599], ["+5859OU", 599], ["-5251OU", 599]].cycle.take(n)
-      end
-
       def test1(n)
-        Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
+        Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         user_info = @black.user_info
@@ -364,8 +367,32 @@ module Swars
 
       it do
         assert { test1(13) == [nil, nil] }
-        assert { test1(14) == [1, 599] }
-        assert { test1(15) == [2, 599] }
+        assert { test1(14) == [[{name: "10分", value: 1}], 600] }
+        assert { test1(15) == [[{name: "10分", value: 2}], 600] }
+      end
+    end
+
+    describe "投了までの心の準備 投了までの心の準備(平均) count_of_toryo_think_last max_of_toryo_think_last" do
+      before do
+        @black = User.create!
+      end
+
+      def test1(n, sec)
+        Battle.create!(csa_seq: csa_seq_generate2(n, sec), final_key: :TORYO) do |e|
+          e.memberships.build(user: @black, judge_key: :lose)
+        end
+        user_info = @black.user_info
+        [
+          user_info.count_of_toryo_think_last,
+          user_info.max_of_toryo_think_last,
+          user_info.avg_of_toryo_think_last,
+        ]
+      end
+
+      it do
+        assert { test1(15, 15) ==  [nil, nil, nil] } # 15秒 >= 30 じゃないので無視
+        assert { test1(15, 30) ==  [[{name: "30秒", value: 1}],                          30, 30] }
+        assert { test1(15, 90) ==  [[{name: "30秒", value: 1}, {name: "1分", value: 1}], 90, 60] }
       end
     end
 
@@ -384,15 +411,27 @@ module Swars
       it do
         assert { test1 == [1, 0] }
         assert { test1 == [2, 0] }
-        
+
         assert { @black.user_info.migigyoku_kinds == [{name: "糸谷流右玉", value: 2}] }
       end
     end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ...................
+# >> .................F..
 # >> 
-# >> Finished in 8.48 seconds (files took 5.45 seconds to load)
-# >> 19 examples, 0 failures
+# >> Failures:
+# >> 
+# >>   1) Swars::Battle 投了せずに放置した回数 投了せずに放置した時間 count_of_timeout_think_last max_of_timeout_think_last example at -:368 (Got an error when generating description from matcher: NoMethodError: undefined method `length' for nil:NilClass -- /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-power_assert-1.1.0/lib/rspec/power_assert.rb:97:in `description')
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:370:in `block (3 levels) in <module:Swars>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 8.5 seconds (files took 2.5 seconds to load)
+# >> 20 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:368 # Swars::Battle 投了せずに放置した回数 投了せずに放置した時間 count_of_timeout_think_last max_of_timeout_think_last example at -:368 (Got an error when generating description from matcher: NoMethodError: undefined method `length' for nil:NilClass -- /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-power_assert-1.1.0/lib/rspec/power_assert.rb:97:in `description')
 # >> 
