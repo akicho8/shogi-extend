@@ -25,13 +25,13 @@ module Swars
   class FinalInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "TORYO",         name: "投了",      label_color: nil,       last_action_key: "TORYO",      draw: false, toryo_or_tsumi: true},
-      { key: "TIMEOUT",       name: "時間切れ",  label_color: nil,       last_action_key: "TIME_UP",    draw: false, toryo_or_tsumi: false},
-      { key: "CHECKMATE",     name: "詰み",      label_color: nil,       last_action_key: "TSUMI",      draw: false, toryo_or_tsumi: true},
-      { key: "DISCONNECT",    name: "切断",      label_color: "danger",  last_action_key: "CHUDAN",     draw: false, toryo_or_tsumi: false},
-      { key: "ENTERINGKING",  name: "入玉",      label_color: "primary", last_action_key: "KACHI",      draw: false, toryo_or_tsumi: false},
-      { key: "DRAW_SENNICHI", name: "千日手",    label_color: "danger",  last_action_key: "SENNICHITE", draw: true,  toryo_or_tsumi: false}, # これだけは (SENTE|GOTE)_WIN の型で来てない
-      { key: "OUTE_SENNICHI", name: "千日手",    label_color: "danger",  last_action_key: "SENNICHITE", draw: false, toryo_or_tsumi: false}, # 連続王手の千日手 https://ja.wikipedia.org/wiki/%E5%8D%83%E6%97%A5%E6%89%8B#%E9%80%A3%E7%B6%9A%E7%8E%8B%E6%89%8B%E3%81%AE%E5%8D%83%E6%97%A5%E6%89%8B
+      { key: "TORYO",         name: "投了",      label_color: nil,       last_action_key: "TORYO",      draw: false, toryo_or_tsumi: true,  chart_required: true,  },
+      { key: "TIMEOUT",       name: "時間切れ",  label_color: nil,       last_action_key: "TIME_UP",    draw: false, toryo_or_tsumi: false, chart_required: true,  },
+      { key: "CHECKMATE",     name: "詰み",      label_color: nil,       last_action_key: "TSUMI",      draw: false, toryo_or_tsumi: true,  chart_required: true,  },
+      { key: "DISCONNECT",    name: "切断",      label_color: "danger",  last_action_key: "CHUDAN",     draw: false, toryo_or_tsumi: false, chart_required: false, },
+      { key: "ENTERINGKING",  name: "入玉",      label_color: "primary", last_action_key: "KACHI",      draw: false, toryo_or_tsumi: false, chart_required: false, },
+      { key: "DRAW_SENNICHI", name: "千日手",    label_color: "danger",  last_action_key: "SENNICHITE", draw: true,  toryo_or_tsumi: false, chart_required: false, }, # これだけは (SENTE|GOTE)_WIN の型で来てない
+      { key: "OUTE_SENNICHI", name: "千日手",    label_color: "danger",  last_action_key: "SENNICHITE", draw: false, toryo_or_tsumi: false, chart_required: false, }, # 連続王手の千日手 https://ja.wikipedia.org/wiki/%E5%8D%83%E6%97%A5%E6%89%8B#%E9%80%A3%E7%B6%9A%E7%8E%8B%E6%89%8B%E3%81%AE%E5%8D%83%E6%97%A5%E6%89%8B
     ]
 
     def csa_key

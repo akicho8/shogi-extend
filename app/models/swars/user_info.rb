@@ -272,7 +272,7 @@ module Swars
         { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
         { name: "棋神召喚の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records,           pie_type: "is_pair_values" },
         # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pair_values" },
-        { name: "1手詰を焦らして悦に入った回数",       type1: "simple", type2: "numeric_with_unit", unit: "回", body: count_of_checkmate_think_last, },
+        { name: "1手詰を焦らして悦に入った頻度",       type1: "pie",   type2:  nil,                             body: count_of_checkmate_think_last, pie_type: "is_many_values" },
         { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
 
         ################################################################################
@@ -424,9 +424,11 @@ module Swars
     def count_of_timeout_think_last
       s = timeout_think_last_scope
       # s = ids_scope
-      counts_hash = s.group("think_last DIV 60").order("count_all desc").count
-      counts_hash.collect do |min, count|
-        { name: "#{min}分", value: count }
+      h = s.group("think_last DIV 60").order("count_all desc").count
+      if h.present?
+        h.collect do |min, count|
+          { name: "#{min}分", value: count }
+        end
       end
     end
 
@@ -438,18 +440,36 @@ module Swars
 
     ################################################################################
 
+    def checkmate_think_last_gteq
+      30
+    end
+
     def checkmate_think_last_scope
       s = win_scope
       s = s.joins(:battle)
-      s = s.where(Swars::Membership.arel_table[:think_last].gteq(30))
+      s = s.where(Swars::Membership.arel_table[:think_last].gteq(checkmate_think_last_gteq))
       s = s.where(Swars::Battle.arel_table[:final_key].eq("CHECKMATE"))
       # s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
     end
 
     def count_of_checkmate_think_last
-      if v = checkmate_think_last_scope.count
-        if v.positive?
-          v
+      # if v = checkmate_think_last_scope.count
+      #   if v.positive?
+      #     v
+      #   end
+      # end
+
+      s = checkmate_think_last_scope
+      # s = ids_scope
+      h = s.group("think_last DIV 60").order("count_all desc").count
+      if h.present?
+        h.collect do |min, count|
+          if min.zero?
+            min = "#{checkmate_think_last_gteq}秒"
+          else
+            min = "#{min}分"
+          end
+          { name: min, value: count }
         end
       end
     end
