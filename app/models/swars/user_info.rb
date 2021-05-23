@@ -278,7 +278,7 @@ module Swars
         ################################################################################
         { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_many_values" },
         { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
-        { name: "投了せずに放置した回数",              type1: "pie",    type2: nil,                             body: count_of_timeout_think_last,   pie_type: "is_many_values" },
+        { name: "投了せずに放置した頻度",              type1: "pie",    type2: nil,                             body: count_of_timeout_think_last,   pie_type: "is_many_values" },
         { name: "投了せずに放置した時間(最長)",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
 
         ################################################################################
@@ -417,15 +417,16 @@ module Swars
       s = lose_scope
       s = s.joins(:battle)
       s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
-      s = s.where(Swars::Membership.arel_table[:think_last].gteq(60))
       s = s.where(Swars::Battle.arel_table[:final_key].eq("TIMEOUT"))
+      s = s.where(Swars::Membership.arel_table[:think_last].gteq(60))
     end
 
     def count_of_timeout_think_last
-      if v = timeout_think_last_scope.count
-        if v.positive?
-          v
-        end
+      s = timeout_think_last_scope
+      # s = ids_scope
+      counts_hash = s.group("think_last DIV 60").order("count_all desc").count
+      counts_hash.collect do |min, count|
+        { name: "#{min}分", value: count }
       end
     end
 

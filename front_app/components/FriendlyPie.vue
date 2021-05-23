@@ -92,9 +92,10 @@ export default {
     this.chart_create()
   },
   computed: {
-    data_count()     { return this.info.body.length            },
-    extract_labels() { return this.info.body.map(e => e.name)  },
-    extract_values() { return this.info.body.map(e => e.value) },
+    data_list()      { return this.info.body || []             },
+    data_count()     { return this.data_list.length            },
+    extract_labels() { return this.data_list.map(e => e.name)  },
+    extract_values() { return this.data_list.map(e => e.value) },
   },
 }
 </script>
