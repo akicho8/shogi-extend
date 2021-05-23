@@ -39,6 +39,8 @@
 
 module Swars
   class UserInfo
+    JUDGE_INFO_RECORDS_INCLUDE_EMPTY_LABEL = true # 勝ち負けのラベルの並びを共通化させるため「投了」がなくても「投了」を含める
+
     cattr_accessor(:migigyoku_family) {
       [
         "矢倉右玉",
@@ -319,13 +321,32 @@ module Swars
       s = s.where(judge_key: judge_key)
       s = s.joins(:battle)
       s = s.group(Swars::Battle.arel_table[:final_key])
-      s = s.order("count_all DESC")
-      s = s.count               # { TORYO: 3, CHECKMATE: 1 }
+      if JUDGE_INFO_RECORDS_INCLUDE_EMPTY_LABEL
+      else
+        s = s.order("count_all DESC")
+      end
+      counts_hash = s.count # { TORYO: 3, CHECKMATE: 1 }
 
-      s.collect do |final_key, value|
-        final_info = FinalInfo.fetch(final_key)
+      if JUDGE_INFO_RECORDS_INCLUDE_EMPTY_LABEL
+        counts_hash = counts_hash.symbolize_keys
+        h = {}
+        FinalInfo.each do |e|
+          if v = counts_hash[e.key]
+            h[e.key] = v
+          else
+            if e.chart_required
+              h[e.key] = 0
+            end
+          end
+        end
+      else
+        h = counts_hash
+      end
+
+      h.collect do |key, value|
+        final_info = FinalInfo.fetch(key)
         {
-          :key   => final_key,
+          :key   => key,
           # :name  => final_info.name2(judge_key),
           :name  => final_info.name,
           :value => value,
