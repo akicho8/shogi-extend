@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_07_111410) do
+ActiveRecord::Schema.define(version: 2021_03_07_111420) do
 
   create_table "actb_bad_marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1007,6 +1007,9 @@ ActiveRecord::Schema.define(version: 2021_03_07_111410) do
     t.integer "two_serial_max", comment: "2秒の指し手が連続した回数"
     t.integer "think_last", comment: "最後の指し手の秒数"
     t.integer "think_max", comment: "最大考慮秒数"
+    t.integer "think_all_avg2", comment: "開戦後の指し手の平均秒数"
+    t.integer "two_serial_max2", comment: "開戦後の2秒の指し手が連続した回数"
+    t.integer "think_max2", comment: "開戦後の最大考慮秒数"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true

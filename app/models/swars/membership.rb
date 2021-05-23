@@ -167,6 +167,41 @@ module Swars
       if v
         self.two_serial_max = v
       end
+
+      think_columns_update2
+    end
+
+    # t.integer :think_all_avg2,   null: true, comment: "開戦後の指し手の平均秒数"
+    # t.integer :two_serial_max2,  null: true, comment: "開戦後の2秒の指し手が連続した回数"
+    # t.integer :think_max2,       null: true, comment: "開戦後の最大考慮秒数"
+    def think_columns_update2
+      list = sec_list
+
+      if Rails.env.development? || Rails.env.test?
+        # パックマン戦法のKIFには時間が入ってなくて、その場合、時間が nil になるため。ただしそれは基本開発環境のみ
+        list = list.compact
+      end
+
+      if battle.outbreak_turn
+        from = battle.outbreak_turn / 2
+        list = list.drop(from)
+
+        # self.think_max2  = list.max || 0
+
+        d = list.size
+        c = list.sum
+        if d.positive?
+          self.think_all_avg2 = c.fdiv(d)
+        end
+
+        a = list                                   # => [2, 3, 3, 2, 2, 2]
+        x = a.chunk { |e| e == 1 || e == 2 }       # => [[true, [2]], [false, [3, 3], [true, [2, 2, 2]]
+        x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
+        v = x.compact.max                          # => 3
+        if v
+          self.two_serial_max2 = v
+        end
+      end
     end
 
     concerning :MedalMethods do
