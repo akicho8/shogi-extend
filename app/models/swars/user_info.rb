@@ -277,7 +277,6 @@ module Swars
         ################################################################################
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
         { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
-        { name: "棋神召喚の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records,           pie_type: "is_pair_values" },
         # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pair_values" },
         { name: "1手詰を焦らして悦に入った頻度",       type1: "pie",   type2:  nil,                             body: count_of_checkmate_think_last, pie_type: "is_many_values" },
         { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
@@ -307,6 +306,9 @@ module Swars
 
         { name: "右玉度",                              type1: "pie",    type2: nil,                             body: migigyoku_levels,                     pie_type: "is_pair_values" },
         { name: "右玉ファミリー",                      type1: "pie",    type2: nil,                             body: migigyoku_kinds,                    pie_type: "is_many_values" },
+
+        ################################################################################
+        { name: "将棋ウォーズの運営を支える力",        type1: "pie",    type2: nil,                            body: kishin_info_records,           pie_type: "is_pair_values" },
       ]
       if Rails.env.development?
         list.unshift({
@@ -371,10 +373,14 @@ module Swars
     end
 
     def kishin_info_records
-      [
-        { name: "有り", value: ai_use_battle_count_lv1,             },
-        { name: "無し", value: win_count - ai_use_battle_count_lv1, },
-      ]
+      if v = ai_use_battle_count_lv1
+        if v.positive?
+          [
+            { name: "有り", value: ai_use_battle_count_lv1,             },
+            { name: "無し", value: win_count - ai_use_battle_count_lv1, },
+          ]
+        end
+      end
     end
 
     def kishin_info_records_lv2

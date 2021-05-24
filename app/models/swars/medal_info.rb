@@ -49,11 +49,11 @@ module Swars
       { key: "飛車不成マン",       medal_params: { message: "飛車不成で舐めプした",                         method: "raw",  name: "💀",                type: nil, },          if_cond: proc { all_tag_ratio_for("飛車不成") > 0 }           },
       { key: "1手詰じらしマン",    medal_params: { message: "1手詰を焦らして歪んだ優越感に浸った",          method: "raw",  name: "😈",                type: nil, },          if_cond: proc { (r = jirasi_ratio) && r > 0 } },
       { key: "絶対投了しないマン", medal_params: { message: "負けそうになったら時間切れまで放置した",       method: "raw",  name: "🧟",                type: nil, },          if_cond: proc { (r = zettai_toryo_sinai_ratio) && r > 0 } },
-      { key: "大長考マン",         medal_params: { message: "対局放棄と受け取られかねない長考をした",     method: "raw",  name: "🚫",                type: nil, },          if_cond: proc { (r = long_think_ratio) && r > 0 } },
+      { key: "大長考マン",         medal_params: { message: "対局放棄と受け取られかねない長考をした",       method: "raw",  name: "🚫",                type: nil, },          if_cond: proc { (r = long_think_ratio) && r > 0 } },
       { key: "長考マン",           medal_params: { message: "考えすぎて負けがち",                           method: "raw",  name: "🤯",                type: nil, },          if_cond: proc { (r = short_think_ratio) && r > 0.1 } },
       { key: "開幕千日手",         medal_params: { message: "開幕千日手をした",                             method: "raw",  name: "❓",                type: nil },           if_cond: proc { (r = start_draw_ratio) && r > 0 } },
       { key: "ただの千日手",       medal_params: { message: "千日手があった",                               method: "raw",  name: "🍌",                type: nil },           if_cond: proc { (r = draw_ratio) && r > 0 } },
-      { key: "棋神マン",           medal_params: { message: "棋神召喚疑惑あり",                             method: "raw",  name: "🤖",                type: nil },           if_cond: proc { ai_use_battle_count_lv1 >= 1 } },
+      { key: "棋神マン",           medal_params: { message: "将棋ウォーズの運営を支える力がある",             method: "raw",  name: "🧙‍♂️",                type: nil },           if_cond: proc { ai_use_battle_count_lv1 >= 1 } },
     ]
   end
 end

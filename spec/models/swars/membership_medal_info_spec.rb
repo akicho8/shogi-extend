@@ -182,8 +182,8 @@ module Swars
       end
 
       it do
-        test(20)                # => [:棋神マン, "棋神召喚疑惑あり"]
-        assert { test(20) == [:棋神マン, "棋神召喚疑惑あり"] }
+        test(20)                # =>
+        assert { test(20) == [:棋神マン, "将棋ウォーズの運営を支える力がある"] }
       end
     end
 

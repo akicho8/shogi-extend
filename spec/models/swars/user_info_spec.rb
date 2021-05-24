@@ -252,7 +252,7 @@ module Swars
       end
     end
 
-    describe "棋神召喚の疑い kishin_info_records" do
+    describe "将棋ウォーズの運営を支える力 kishin_info_records" do
       before do
         @black = User.create!
       end
@@ -268,11 +268,11 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
-        @black.user_info.kishin_info_records.collect { |e| e[:value] }
+        @black.user_info.kishin_info_records&.collect { |e| e[:value] }
       end
 
       it "works" do
-        assert { test1(10) == [0, 1] }
+        assert { test1(10) == nil    }
         assert { test1(11) == [1, 1] }
         assert { test1(11) == [2, 1] }
       end
@@ -294,11 +294,11 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
-        @black.user_info.kishin_info_records.collect { |e| e[:value] }
+        @black.user_info.kishin_info_records_lv2&.collect { |e| e[:value] }
       end
 
       it "works" do
-        assert { test1(10) == [0, 1] }
+        assert { test1(10) == nil    }
         assert { test1(11) == [1, 1] }
         assert { test1(12) == [2, 1] }
       end
