@@ -276,18 +276,17 @@ module Swars
 
         ################################################################################
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
-        { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
         # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pair_values" },
         { name: "1手詰を焦らして悦に入った頻度",       type1: "pie",   type2:  nil,                             body: count_of_checkmate_think_last, pie_type: "is_many_values" },
-        { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
+        { name: "1手詰を焦らして悦に入った時間の最長", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
 
         ################################################################################
         { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_many_values" },
         { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
         { name: "投了せずに放置した頻度",              type1: "pie",    type2: nil,                             body: count_of_timeout_think_last,   pie_type: "is_many_values" },
-        { name: "投了せずに放置した時間(最長)",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
+        { name: "投了せずに放置した時間の最長",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
         { name: "投了までの心の準備",                  type1: "pie",    type2: nil,                             body: count_of_toryo_think_last,   pie_type: "is_many_values" },
-        { name: "投了までの心の準備(平均)",            type1: "simple", type2: "second",                        body: avg_of_toryo_think_last,     },
+        { name: "投了までの心の準備の平均",            type1: "simple", type2: "second",                        body: avg_of_toryo_think_last,     },
         # { name: "投了までの最長",                      type1: "simple", type2: "second",                        body: max_of_toryo_think_last,     },
 
         ################################################################################
@@ -298,6 +297,7 @@ module Swars
         ################################################################################
         { name: "最大長考",                            type1: "simple", type2: "second",                        body: max_of_think_max,              },
         { name: "平均考慮",                            type1: "simple", type2: "second",                        body: avg_of_think_all_avg,          },
+        { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
 
         ################################################################################
         { name: "対戦相手との段級差の平均",            type1: "simple", type2: "raw",                           body: avg_of_grade_diff,             },
