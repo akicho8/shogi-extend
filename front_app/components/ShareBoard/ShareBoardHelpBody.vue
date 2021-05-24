@@ -56,6 +56,17 @@
           li ツイートボタンからツイート
 
     article
+      h2 盤を反転するには？
+      .article_body
+        p ☗または☖をタップ
+        p 対局中に相手の視点で確認したいときにもどうぞ
+
+    article
+      h2 いまどちらの手番？
+      .article_body
+        p ☗または☖の大きい方
+
+    article
       h2 盤が同期してなくない？
       .article_body
         p
