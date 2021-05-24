@@ -225,7 +225,7 @@ module Swars
         s = s.where(Swars::Membership.arel_table[:grade_diff].gteq(0)) if false                 # 自分と同じか格上に対して
         # s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) # もともと CHECKMATE だけだったが……いらない？
         s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
-        # s = s.where(Swars::Battle.arel_table[:rule_key].not_eq(:three_min))                     # 3分は除く
+        s = s.where(Swars::Battle.arel_table[:rule_key].not_eq(:three_min))                     # 3分は除く
 
         # if false
         #   # (B or C)
@@ -259,7 +259,7 @@ module Swars
         s = win_scope
         s = s.joins(:battle)
         s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))
-        # s = s.where(Swars::Battle.arel_table[:rule_key].not_eq(:three_min))                      # 3分は除く
+        s = s.where(Swars::Battle.arel_table[:rule_key].not_eq(:three_min))                      # 3分は除く
         # c1 = Swars::Membership.where(Swars::Membership.arel_table[:obt_think_avg].lteq(1))
         c2 = Swars::Membership.where(Swars::Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
         # s = s.merge(c1.or(c2))
