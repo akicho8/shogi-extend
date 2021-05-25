@@ -38,7 +38,7 @@ every("5 3 * * *") do
     "FreeBattle.cleanup",
 
     %(SlackAgent.message_send(key: "schedule", body: "obt_auto_max update")),
-    'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(30.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; SlackAgent.message_send(key: "obt_auto_max", body: i) }',
+    'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(45.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; SlackAgent.message_send(key: "obt_auto_max", body: i) }',
 
     # 全部0件
     # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
