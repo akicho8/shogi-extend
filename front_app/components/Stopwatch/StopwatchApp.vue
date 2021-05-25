@@ -66,7 +66,7 @@
                   | 問題番号
                   a.mx-1.is-link(@click.prevent="current_track = 1") (1に設定)
                 .control
-                  b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true")
+                  b-numberinput(v-model.number="current_track" :min="1" controls-position="compact" :expanded="true" :exponential="true")
 
           .field.mt-5(v-if="mode === 'standby'")
             .control
@@ -81,10 +81,10 @@
           .columns.mt-3(v-if="mode === 'standby'")
             .column
               b-field(label="1問毎のタイムアウト(秒)" expanded)
-                b-numberinput(v-model.number="timeout_sec" :min="0" step="1" controls-position="compact" :expanded="true")
+                b-numberinput(v-model.number="timeout_sec" :min="0" step="1" controls-position="compact" :expanded="true" :exponential="true")
             .column
               b-field(label="全体の制限時間(分)" expanded)
-                b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true")
+                b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" :exponential="true")
 
         .column
           b-tabs.result_body(expanded v-model="format_index" @input="sound_play('click')")
