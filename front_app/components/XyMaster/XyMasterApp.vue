@@ -276,6 +276,7 @@ export default {
     },
 
     start_handle() {
+      this.talk_stop()
       this.sound_play("click")
       this.mode = "is_mode_ready"
       this.init_other_variables()
