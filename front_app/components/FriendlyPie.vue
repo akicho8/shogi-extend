@@ -1,7 +1,6 @@
 <template lang="pug">
-.FriendlyPie.is-unselectable
-  .canvas_holder(:class="`pie_type_${info.pie_type}`")
-    canvas(ref="main_canvas")
+.FriendlyPie.is-unselectable(:class="`pie_type_${info.pie_type}`")
+  canvas(ref="main_canvas")
 </template>
 
 <script>
@@ -27,6 +26,7 @@ const CHART_CONFIG_DEFAULT = {
   options: {
     cutoutPercentage: 0,       // ドーナッツの円の切り抜き度合(0〜100)
     rotation: Math.PI * 0.5,   // 真下を0とする
+    // aspectRatio: 3.0, // 大きいほど横長方形になる
     aspectRatio: 3.0, // 大きいほど横長方形になる。円=正方形としたいので1.0
     circumference: 2 * Math.PI * 1.0, // 全体の円
 
@@ -102,18 +102,5 @@ export default {
 
 <style lang="sass">
 .FriendlyPie
-  display: flex
-  align-items: center
-  justify-content: center
-  .canvas_holder
-    // &.pie_type_is_pair_values
-    //   margin-top: 0.5rem
-    //   width: calc(256px + 64px)
-    // &.pie_type_is_many_values
-    width: calc(256px + 128px + 32px)
-
-.STAGE-development
-  .FriendlyPie
-    .canvas_holder
-      border: 1px dashed change_color($primary, $alpha: 0.5)
+  width: 100%
 </style>
