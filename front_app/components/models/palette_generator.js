@@ -74,7 +74,7 @@ export const PaletteGenerator = {
       ...params,
     }
     const e = params
-    const base_color = PaletteInfo.fetch("danger").base_color.alpha(e.alpha)
+    const base_color = PaletteInfo.fetch("info").base_color.alpha(e.alpha)
     return [
       base_color.css(),
       base_color.set('hsl.s', 0).set('hsl.l', 0.8).css(),
