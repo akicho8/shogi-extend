@@ -42,7 +42,7 @@
           KifCopyButton(@click="kifu_copy_handle")
         .buttons.is-centered(v-if="false")
           b-button(@click="back_handle" icon-left="chevron-left" size="is-small")
-          TweetButton(:body="permalink_url")
+          TweetButton(:body="permalink_url" @after_click="sound_play('click')")
           b-button(icon-left="menu" @click="sidebar_toggle" size="is-small")
 
       .battle_title_container.has-background-grey-lighter.py-6.battle_title.has-text-grey-dark.is-size-7-mobile

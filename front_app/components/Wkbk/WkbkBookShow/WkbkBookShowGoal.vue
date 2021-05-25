@@ -14,7 +14,7 @@ Mainsection.WkbkBookShowGoal
                 | {{base.re_summary}}
             .card-footer
               p.card-footer-item
-                TweetButton(:body="base.re_ox_tweet_body1") Tweet
+                TweetButton(:body="base.re_ox_tweet_body1" @after_click="sound_play('click')") Tweet
 
         //- .is-flex.is-justify-content-center
         //-   .box.has-text-centered.is-inline-block.is-shadowless

@@ -80,7 +80,7 @@
 
           .box.tweet_box_container.has-text-centered(v-if="mode === 'is_mode_goal'")
             | {{summary}}
-            TweetButton.mt-2(:body="tweet_body")
+            TweetButton.mt-2(:body="tweet_body" @after_click="sound_play('click')")
 
         TsMasterRanking(:base="base")
       TsMasterChart(:base="base" ref="TsMasterChart")

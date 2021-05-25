@@ -96,7 +96,7 @@
 
           template(v-if="rows.length >= 1")
             .has-text-centered
-              TweetButton(:body="tweet_body")
+              TweetButton(:body="tweet_body" @after_click="sound_play('click')")
 
   DebugPre(v-if="development_p")
     div rows = {{rows}}

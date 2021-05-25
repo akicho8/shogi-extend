@@ -123,7 +123,7 @@
       KifCopyButton(@click="kifu_copy_handle") コピー
 
     .tweet_button_container.buttons.is-centered.mt-6
-      TweetButton(:body="tweet_body")
+      TweetButton(:body="tweet_body" @after_click="sound_play('click')")
 
     .box.question_description.has-background-white-ter.is-shadowless.is-size-7.mt-6(v-if="question.description")
       | {{question.description}}
