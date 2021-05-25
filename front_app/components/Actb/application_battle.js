@@ -347,7 +347,7 @@ export const application_battle = {
         return
       }
 
-      this.talk_stop()          // クエストを読み上げている場合は停止する
+      this.sound_stop_all()          // クエストを読み上げている場合は停止する
       this.sound_play("poon")
       const mi = this.member_infos_hash[params.membership_id]
       if (params.membership_id === this.current_membership.id) {

@@ -277,7 +277,7 @@ export default {
         this.mode = "is_mode_ready"
         this.init_other_variables()
         this.latest_rule = this.current_rule
-        this.talk_stop()
+        this.sound_stop_all()
         this.interval_counter.start()
         this.scroll_set(false)
       })

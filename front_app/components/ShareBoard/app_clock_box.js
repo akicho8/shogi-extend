@@ -148,11 +148,11 @@ export const app_clock_box = {
     cc_resume_handle() {
       // this.sound_play("click")
       this.clock_box.resume_handle()
-      this.talk_stop()
+      this.sound_stop_all()
     },
     cc_pause_handle() {
       if (this.clock_box.running_p) {
-        // this.talk_stop()
+        // this.sound_stop_all()
         // this.sound_play("click")
         this.clock_box.pause_handle()
 
@@ -174,7 +174,7 @@ export const app_clock_box = {
     },
     cc_stop_handle() {
       if (this.clock_box.running_p) {
-        // this.talk_stop()
+        // this.sound_stop_all()
         // this.sound_play("click")
         this.clock_box.stop_handle()
       }
@@ -206,13 +206,13 @@ export const app_clock_box = {
         hasIcon: false,
         trapFocus: true,
         onConfirm: () => {
-          this.talk_stop()
+          this.sound_stop_all()
           this.sound_play("click")
           this.clock_box.copy_1p_to_2p()
           this.talk("コピーしました")
         },
         onCancel: () => {
-          this.talk_stop()
+          this.sound_stop_all()
           this.sound_play("click")
         },
       })

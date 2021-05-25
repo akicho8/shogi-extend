@@ -97,11 +97,11 @@ export const app_sfen_share = {
         type: "is-warning",
         focusOn: "confirm",
         onCancel: () => {
-          this.talk_stop()
+          this.sound_stop_all()
           this.sound_play("click")
         },
         onConfirm: () => {
-          this.talk_stop()
+          this.sound_stop_all()
           this.sound_play("click")
           this.sfen_share()
         },

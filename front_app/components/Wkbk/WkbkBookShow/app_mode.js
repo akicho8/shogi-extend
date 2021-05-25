@@ -12,7 +12,7 @@ export const app_mode = {
 
     quit_handle() {
       if (this.is_running_p) {
-        this.talk_stop()
+        this.sound_stop_all()
         this.talk("途中で辞めました")
         this.sound_play("click")
         this.mode_set("standby")

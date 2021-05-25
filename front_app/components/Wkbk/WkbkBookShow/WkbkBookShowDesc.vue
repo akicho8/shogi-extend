@@ -20,7 +20,7 @@ export default {
   mixins: [support_child],
   methods: {
     submit_handle() {
-      this.talk_stop()
+      this.sound_stop_all()
       this.sound_play("click")
       this.$emit("close")
     },

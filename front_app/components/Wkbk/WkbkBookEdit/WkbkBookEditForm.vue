@@ -49,7 +49,7 @@ export default {
       handler(v) {
         const folder_info = this.FolderInfo.fetch(v)
         this.sound_play("click")
-        this.talk_stop()
+        this.sound_stop_all()
         this.talk(folder_info.name)
       },
     },

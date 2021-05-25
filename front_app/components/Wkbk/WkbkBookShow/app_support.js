@@ -56,7 +56,7 @@ export const app_support = {
 
     description_handle() {
       this.sound_play("click")
-      this.talk_stop()
+      this.sound_stop_all()
       this.talk(this.book.description)
       this.$buefy.modal.open({
         component: WkbkBookShowDesc,
@@ -67,7 +67,7 @@ export const app_support = {
         animation: "",
         canCancel: true,
         onCancel:  () => {
-          this.talk_stop()
+          this.sound_stop_all()
           this.sound_play("click")
         },
       })

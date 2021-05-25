@@ -55,11 +55,11 @@ export default {
           // hasIcon: true,
           animation: "",
           onCancel:  () => {
-            this.talk_stop()
+            this.sound_stop_all()
             this.sound_play("click")
           },
           onConfirm: () => {
-            this.talk_stop()
+            this.sound_stop_all()
             this.action_log_jump(e)
           },
         })

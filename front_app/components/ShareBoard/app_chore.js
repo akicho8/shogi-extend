@@ -63,12 +63,12 @@ export const app_chore = {
           focusOn: "cancel",
           animation: "",
           onCancel: () => {
-            this.talk_stop()
+            this.sound_stop_all()
             this.sound_play("click")
             this.ac_log("退室", "キャンセル")
           },
           onConfirm: () => {
-            this.talk_stop()
+            this.sound_stop_all()
             this.sound_play("click")
             this.ac_log("退室", "実行")
             this.$router.push({name: "index"})

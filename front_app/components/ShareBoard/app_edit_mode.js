@@ -18,11 +18,11 @@ export const app_edit_mode = {
         hasIcon: true,
         animation: "",
         onCancel:  () => {
-          this.talk_stop()
+          this.sound_stop_all()
           this.sound_play("click")
         },
         onConfirm: () => {
-          this.talk_stop()
+          this.sound_stop_all()
           this.sound_play("click")
           this.sp_run_mode = "edit_mode"
         },

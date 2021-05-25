@@ -46,7 +46,7 @@ export const app_rule_dialog = {
     // private
 
     rule_dialog_cancel_process() {
-      this.talk_stop()
+      this.sound_stop_all()
       this.sound_play("click")
     },
   },

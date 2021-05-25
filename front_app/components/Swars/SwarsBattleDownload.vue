@@ -150,7 +150,7 @@ export default {
       if (v === "zdsk_continue") {
         if (!this.g_current_user) {
           if (false) {
-            this.talk_stop()
+            this.sound_stop_all()
             this.toast_ok("前回の続きからダウンロードするにはいったんログインして、そのあと初回だけ「前回の続きから」以外の方法でダウンロードしてください。そうすると使えるようになります")
           }
         }

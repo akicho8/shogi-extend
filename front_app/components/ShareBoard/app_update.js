@@ -25,7 +25,7 @@ export const app_update = {
     },
     reload_modal_handle() {
       this.talk(MESSAGE)
-      this.talk_stop()
+      this.sound_stop_all()
       this.$buefy.dialog.alert({
         message: MESSAGE,
         animation: "",

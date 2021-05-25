@@ -37,7 +37,7 @@ export default {
       }
     },
 
-    talk_stop() {
+    sound_stop_all() {
       if (process.client) {
         Howler.stop()
       }

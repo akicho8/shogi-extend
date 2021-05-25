@@ -101,14 +101,14 @@ export default {
         })
       }
       if (this.yomiage_body) {
-        this.talk_stop()
+        this.sound_stop_all()
         this.talk_now = true
         this.talk(this.yomiage_body, {rate: this.talk_rate, onend: () => this.talk_now = false})
       }
     },
 
     stop_handle() {
-      this.talk_stop()
+      this.sound_stop_all()
       this.talk_now = false
       this.sound_play('click')
     },

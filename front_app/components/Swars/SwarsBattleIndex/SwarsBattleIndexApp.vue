@@ -116,7 +116,7 @@ export default {
     // ダウンロードメニューを開いたときだけしゃべる
     dl_menu_item_expanded_p(v) {
       if (v) {
-        this.talk_stop()
+        this.sound_stop_all()
         this.toast_ok("Windowsアプリで棋譜が読めないときは Shift_JIS のほうを試してみてください")
       }
     },

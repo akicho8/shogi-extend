@@ -74,7 +74,7 @@ export const app_article = {
         }
         if (e.article) {
           this.article = new Article(e.article)
-          this.talk_stop()
+          this.sound_stop_all()
           this.toast_ok(`${before_save_button_name}しました`)
 
           // 新規の初期値にするため保存しておく
