@@ -278,7 +278,7 @@ module Swars
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
         # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pair_values" },
         { name: "1手詰を焦らして悦に入った頻度",       type1: "pie",   type2:  nil,                             body: count_of_checkmate_think_last, pie_type: "is_many_values" },
-        { name: "1手詰を焦らして悦に入った時間の最長", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
+        { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
 
         ################################################################################
         { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_many_values" },
