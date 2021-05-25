@@ -1,18 +1,10 @@
-if (process.client) {
-  window.howl_object = null
-}
+const TALK_VOLUME = 0.5
+const TALK_RATE   = 1.5
+
+import { Howl, Howler } from "howler"
 
 export default {
   methods: {
-    talk_stop() {
-      if (process.client) {
-        if (window.howl_object) {
-          window.howl_object.stop()
-          window.howl_object = null
-        }
-      }
-    },
-
     // しゃべる
     // ・tab_is_active_p() のときだけ条件を入れてはいけない
     // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなる
@@ -43,18 +35,24 @@ export default {
       }
     },
 
+    talk_stop() {
+      if (process.client) {
+        Howler.stop()
+      }
+    },
+
     // private
 
     mp3_talk(data, options = {}) {
-      window.howl_object = new Howl({
+      // https://github.com/goldfire/howler.js#documentation
+      options = {
         src: data.browser_path,
         autoplay: true,
-        volume: options.volume || 1.0,
-        rate: options.rate || 1.5,
-      })
-      if (options.onend) {
-        window.howl_object.on("end", () => options.onend())
+        volume: TALK_VOLUME,
+        rate: TALK_RATE,
+        ...options,
       }
+      new Howl(options)
     },
   },
 }
