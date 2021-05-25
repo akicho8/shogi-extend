@@ -3,6 +3,8 @@ const TALK_RATE   = 1.5
 
 import { Howl, Howler } from "howler"
 
+Howler.autoSuspend = false
+
 export default {
   methods: {
     // しゃべる
