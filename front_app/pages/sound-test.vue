@@ -1,14 +1,21 @@
 <template lang="pug">
 .sound-test
-  MainNavbar
+  MainNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'sound-test'}") サウンドテスト
   MainSection
-    .container
+    .container.is-fluid
       .buttons
         template(v-for="e of SoundPreset.values")
           b-button(@click="sound_play(e.key)") {{e.key}}
+
+      .box
+        p Howler
+        .buttons
+          b-button(@click="all_play") すべて再生
+          b-button(@click="Howler.stop()") stop()
+          b-button(@click="Howler.unload()") unload()
 
       b Main Volume
       b-numberinput(size="is-small" controls-position="compact" v-model="main_volume" :step="0.1" exponential)
@@ -45,6 +52,9 @@ export default {
   methods: {
     row_play(row) {
       this.sound_play(row.key, {volume: this.volumes[row.key]})
+    },
+    all_play() {
+      SoundPreset.values.forEach(e => this.row_play(e))
     },
   },
   computed: {
