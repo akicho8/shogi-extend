@@ -33,8 +33,8 @@ module ShareBoard
     end
 
     def sfen_share_not_reach(data)
-      track(data, "指手不達", "#{data['sfen_share_not_reach_count']}回目")
-      raise StandardError, "指手不達(#{data['sfen_share_not_reach_count']}回目) : #{data}"
+      track(data, "指手不達", "#{data['sfen_share_not_reach_count_total']}回目")
+      raise StandardError, "指手不達(#{data['sfen_share_not_reach_count_total']}回目) : #{data}"
     end
 
     def title_share(data)

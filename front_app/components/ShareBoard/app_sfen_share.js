@@ -12,7 +12,8 @@ export const app_sfen_share = {
       send_success_p: false,         // 直近のSFENの同期が成功したか？
       sfen_share_params: null,       // リトライするとき用に送るパラメータを保持しておく
       retry_check_delay_id: null,    // 送信してから RETRY_CHECK_DELAY 秒後に動かすための setTimeout の戻値
-      sfen_share_not_reach_count: 0, // SFEN送信に失敗した回数(不具合解析用)
+      sfen_share_not_reach_count_total: 0,  // SFEN送信に失敗した総回数(不具合解析用)
+      sfen_share_not_reach_count: 0, // 直近の指し手のSFEN送信に失敗して回数(表示用)
     }
   },
   beforeDestroy() {
@@ -26,6 +27,8 @@ export const app_sfen_share = {
       this.tl_add("SP", lmi.to_kif_without_from, lmi)
       this.__assert__(this.current_sfen, "this.current_sfen")
       this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_offset, "lmi.next_turn_offset === this.current_sfen_turn_offset")
+
+      this.sfen_share_not_reach_count = 0
 
       this.sfen_share_params = {
         lmi: {
@@ -56,7 +59,11 @@ export const app_sfen_share = {
 
     sfen_share() {
       this.send_success_p = false
-      this.ac_room_perform("sfen_share", this.sfen_share_params) // --> app/channels/share_board/room_channel.rb
+      const params = {
+        // sfen_share_not_reach_count: this.sfen_share_not_reach_count,
+        ...this.sfen_share_params,
+      }
+      this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
 
       if (RETRY_FUNCTION_ENABLED) {
         if (this.order_func_p && this.ordered_members_present_p) {
@@ -190,7 +197,8 @@ export const app_sfen_share = {
           if (this.development_p && this.$route.query.send_success_skip === "true") {
             // 送信成功としない
           } else {
-            this.send_success_p = true                                    // 送信成功とする
+            this.send_success_p = true           // 送信成功とする
+            this.sfen_share_not_reach_count = 0  // 失敗回数リセット
             this.debug_alert("送信OK")
           }
         }
@@ -200,8 +208,9 @@ export const app_sfen_share = {
     //////////////////////////////////////////////////////////////////////////////// 失敗したことをRails側に通知
     sfen_share_not_reach() {
       this.sfen_share_not_reach_count += 1
+      this.sfen_share_not_reach_count_total += 1
       const params = {
-        sfen_share_not_reach_count: this.sfen_share_not_reach_count,
+        sfen_share_not_reach_count_total: this.sfen_share_not_reach_count_total,
       }
       this.ac_room_perform("sfen_share_not_reach", params) // --> app/channels/share_board/room_channel.rb
     },
