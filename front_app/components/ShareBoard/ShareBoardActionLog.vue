@@ -3,6 +3,7 @@
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
       a.is-clickable.is-block.is_line_break_off(:key="action_log_key(e)" @click="action_log_click_handle(e)")
+        b-tag.mr-1(type="is-warning" v-if="e.x_retry_count >= 1") 再送{{e.x_retry_count}}
         span {{e.lmi.next_turn_offset}}
         span.ml-1 {{e.lmi.kif_without_from}}
         span.ml-1 {{e.from_user_name}}

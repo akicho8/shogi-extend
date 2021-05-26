@@ -1,24 +1,10 @@
 import _ from "lodash"
 
-const RETRY_FUNCTION_ENABLED = true // この機能を有効にするか？
-const SEQUENCE_CODES_MAX     = 5    // sequence_code は直近N件保持しておく
-const RETRY_CHECK_DELAY_BASE = 3    // N秒後に相手からの通知の結果(send_success_p)を確認する
-const RETRY_CHECK_DELAY_MAX  = 8    // 最大N秒待つ
-
 export const app_sfen_share = {
   data() {
     return {
-      sequence_code: 0,              // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
-      sequence_codes: [],            // それを最大 SEQUENCE_CODES_MAX 件保持しておく
-      send_success_p: false,         // 直近のSFENの同期が成功したか？
       sfen_share_params: null,       // リトライするとき用に送るパラメータを保持しておく
-      retry_check_delay_id: null,    // 送信してから RETRY_CHECK_DELAY_BASE 秒後に動かすための setTimeout の戻値
-      x_retry_count_total: 0,  // SFEN送信に失敗した総回数(不具合解析用)
-      x_retry_count: 0, // 直近の指し手のSFEN送信に失敗して回数(表示用)
     }
-  },
-  beforeDestroy() {
-    this.retry_confirm_cancel()
   },
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
@@ -50,12 +36,7 @@ export const app_sfen_share = {
         this.sfen_share_params["elapsed_sec"] = this.clock_box.elapsed_sec
       }
 
-      if (RETRY_FUNCTION_ENABLED) {
-        this.sequence_code += 1
-        this.sequence_codes.push(this.sequence_code)
-        this.sequence_codes = _.takeRight(this.sequence_codes, SEQUENCE_CODES_MAX)
-        this.sfen_share_params.sequence_code = this.sequence_code
-      }
+      this.sequence_code_embed()
     },
 
     sfen_share() {
@@ -66,63 +47,8 @@ export const app_sfen_share = {
         ...this.sfen_share_params,
       }
       this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
-
-      if (RETRY_FUNCTION_ENABLED) {
-        if (this.order_func_p && this.ordered_members_present_p) {
-          if (this.RETRY_CHECK_DELAY_BASE >= 0) {
-            this.retry_confirm_cancel()
-            this.retry_check_delay_id = this.delay_block(this.retry_check_delay2, () => {
-              if (this.send_success_p) {
-                // 相手から応答があった
-                // this.x_retry_count = 0  // 失敗回数リセット
-              } else {
-                // 結構待ったけど相手から応答がまだない
-                this.retry_confirm()
-              }
-            })
-          }
-        }
-      }
+      this.sfen_share_afetr_check()
     },
-
-    retry_confirm_cancel() {
-      if (this.retry_check_delay_id) {
-        this.delay_stop(this.retry_check_delay_id)
-        this.retry_check_delay_id = null
-      }
-    },
-
-    retry_confirm() {
-      this.sound_play("click")
-
-      this.sfen_share_not_reach()
-
-      const next_user_name = this.user_name_by_turn(this.sfen_share_params.turn_offset)
-      const message1 = `次の手番の${this.user_call_name(next_user_name)}の反応がないため再送しますか？`
-      const message2 = `<span class="has-text-grey">(${this.retry_check_delay2}秒後に再チェック)</span>`
-      const message3 = `${message1}${message2}`
-      this.talk(message1)
-
-      this.$buefy.dialog.confirm({
-        title: `同期失敗 (${this.x_retry_count}回目)`,
-        message: message3,
-        cancelText: "諦める",
-        confirmText: "再送する",
-        hasIcon: true,
-        type: "is-warning",
-        focusOn: "confirm",
-        onCancel: () => {
-          this.sound_stop_all()
-          this.sound_play("click")
-        },
-        onConfirm: () => {
-          this.sound_stop_all()
-          this.sound_play("click")
-          this.sfen_share()
-        },
-      })
-    },
-
     sfen_share_broadcasted(params) {
       // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
       if (params.from_connection_id === this.connection_id) {
@@ -176,67 +102,13 @@ export const app_sfen_share = {
           })
         }
 
-        if (RETRY_FUNCTION_ENABLED) {
-          if (this.order_func_p) {
-            if (next_user_received_p) {
-              this.received_ok({
-                to_connection_id: params.from_connection_id, // alice さんから来たので alice さんに送信
-                to_user_name: params.from_user_name,
-                sequence_code: params.sequence_code,
-              })
-            }
-          }
-        }
+        this.received_ok_send(params)
       }
 
       this.al_add(params)
     },
-
-    //////////////////////////////////////////////////////////////////////////////// share_sfen した人に受信したこと通知する
-    received_ok(params) {
-      this.debug_alert("受信OK")
-      this.ac_room_perform("received_ok", {
-        ...params,
-      }) // --> app/channels/share_board/room_channel.rb
-    },
-    received_ok_broadcasted(params) {
-      if (params.to_connection_id === this.connection_id) {             // いろんな人に届くため送信元の確認
-        if (this.sequence_codes.includes(params.sequence_code)) { // 最近送ったものなら
-          if (this.development_p && this.$route.query.send_success_skip === "true") {
-            // 送信成功としない
-          } else {
-            // this.send_success_p = true           // 送信成功とする
-            this.debug_alert("送信OK")
-          }
-        }
-      }
-    },
-
-    //////////////////////////////////////////////////////////////////////////////// 失敗したことをRails側に通知
-    sfen_share_not_reach() {
-      this.x_retry_count_total += 1
-      this.x_retry_count += 1
-      const params = {
-        x_retry_count_total: this.x_retry_count_total,
-        x_retry_count: this.x_retry_count,
-      }
-      this.ac_room_perform("sfen_share_not_reach", params) // --> app/channels/share_board/room_channel.rb
-    },
-    sfen_share_not_reach_broadcasted(params) {
-      alert("must not happen")
-    },
   },
   computed: {
-    RETRY_CHECK_DELAY_BASE() { return parseFloat(this.$route.query.RETRY_CHECK_DELAY_BASE ?? RETRY_CHECK_DELAY_BASE) },
-
-    retry_check_delay2() {
-      let v = this.RETRY_CHECK_DELAY_BASE + this.x_retry_count
-      if (v > RETRY_CHECK_DELAY_MAX) {
-        v = RETRY_CHECK_DELAY_MAX
-      }
-      return v
-    },
-
     // 時計が設置されてなくて読み上げOFFのときはダメ
     // 時計が設置されている または 読み上げON はOK
     yomiagable_p() {

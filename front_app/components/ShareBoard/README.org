@@ -9,20 +9,20 @@ http://0.0.0.0:4000/share-board?autoexec=general_setting_modal_handle&body=posit
 
 * URLパラメータ
 
-  |-----------------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
-  | key                         | desc                                       | Example                                                                                  |
-  |-----------------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
-  | default_user_name           | localStorage が空のときの user_name 初期値 | http://0.0.0.0:4000/share-board?room_code=a&default_user_name=bob                        |
-  | force_user_name             | localStorage に関係なくこの名前にする      | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice                        |
-  | send_success_skip           | SFEN受信OKの返信しても送信完了にしない     | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&send_success_skip=true |
-  | RETRY_CHECK_DELAY_BASE           | SFEN送信後N秒待ってから返答をチェックする  |                                                                                          |
-  | ordered_member_names        | 順番設定の名前(複数)                       |                                                                                          |
-  | clock_box.initial_main_min  | 持ち時間(分)                               |                                                                                          |
-  | clock_box.initial_read_sec  | 秒読み(秒)                                 |                                                                                          |
-  | clock_box.initial_extra_sec | 猶予(秒)                                   |                                                                                          |
-  | clock_box.every_plus        | 1手毎加算(秒)                              |                                                                                          |
-  | clock_box.play_handle       | true なら即開始                            |                                                                                          |
-  |-----------------------------+--------------------------------------------+------------------------------------------------------------------------------------------|
+  |-----------------------------+--------------------------------------------+-----------------------------------------------------------------------------------------|
+  | key                         | desc                                       | Example                                                                                 |
+  |-----------------------------+--------------------------------------------+-----------------------------------------------------------------------------------------|
+  | default_user_name           | localStorage が空のときの user_name 初期値 | http://0.0.0.0:4000/share-board?room_code=a&default_user_name=bob                       |
+  | force_user_name             | localStorage に関係なくこの名前にする      | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice                       |
+  | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)  | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&SEND_SUCCESS_DELAY=-1 |
+  | RETRY_CHECK_DELAY_BASE      | SFEN送信後N秒待ってから返答をチェックする  |                                                                                         |
+  | ordered_member_names        | 順番設定の名前(複数)                       |                                                                                         |
+  | clock_box.initial_main_min  | 持ち時間(分)                               |                                                                                         |
+  | clock_box.initial_read_sec  | 秒読み(秒)                                 |                                                                                         |
+  | clock_box.initial_extra_sec | 猶予(秒)                                   |                                                                                         |
+  | clock_box.every_plus        | 1手毎加算(秒)                              |                                                                                         |
+  | clock_box.play_handle       | true なら即開始                            |                                                                                         |
+  |-----------------------------+--------------------------------------------+-----------------------------------------------------------------------------------------|
 
 ** alice と bob の部屋を作るには？
 
@@ -33,9 +33,13 @@ http://0.0.0.0:4000/share-board?autoexec=general_setting_modal_handle&body=posit
 
    http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice
 
+** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
+
+   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_CHECK_DELAY_BASE=0&SEND_SUCCESS_DELAY=3
+
 ** 再送モーダル発動確認するには？
 
-   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_CHECK_DELAY_BASE=0
+   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&SEND_SUCCESS_DELAY=-1
 
 ** 時計設定済みで部屋に入るには？
 
