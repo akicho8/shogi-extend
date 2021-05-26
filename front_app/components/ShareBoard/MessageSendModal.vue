@@ -20,7 +20,7 @@
 <script>
 import { support_child } from "./support_child.js"
 
-const CLOSE_IF_BLANK_MESSAGE_POST = true
+const CLOSE_IF_BLANK_MESSAGE_POST = false // 空送信で閉じる
 
 export default {
   name: "MessageSendModal",
