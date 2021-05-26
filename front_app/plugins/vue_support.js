@@ -521,6 +521,17 @@ export default {
     kata_to_hira(str) {
       return str.replace(/[\u30A1-\u30FA]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60))
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    vibrate(argv) {
+      if (window.navigator.vibrate) {
+        window.navigator.vibrate(argv)
+      }
+    },
+    click_vibrate() {
+      this.vibrate(10)
+    },
   },
 
   computed: {

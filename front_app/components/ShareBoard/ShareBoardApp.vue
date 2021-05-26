@@ -273,6 +273,7 @@ export default {
     // 局面0で1手指したとき last_move_info.turn_offset は 1
     play_mode_advanced_full_moves_sfen_set(e) {
       this.current_sfen = e.sfen
+      this.vibrate(10)
       this.sfen_share_params_set(e.last_move_info)
       this.sfen_share()
 

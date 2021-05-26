@@ -61,6 +61,7 @@ export const app_sfen_share = {
         }
         // 受信したSFENを盤に反映
         this.setup_by_params(params)
+        this.vibrate(10)
       }
       if (false) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.lmi.next_turn_offset}手目を指しました`)
