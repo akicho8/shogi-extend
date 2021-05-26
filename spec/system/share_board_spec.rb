@@ -796,6 +796,35 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '時計の初回PLAYで手番の人を示す'
+  describe "時計の初回PLAYで手番の人を示す" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")               # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")                 # bobも同じ部屋に入る
+      end
+      b_block do
+        side_menu_open
+        menu_item_click("順番設定")                  # 「順番設定」モーダルを開く
+        find(".main_switch").click                   # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+        first(".close_button_for_capybara").click    # 閉じる (ヘッダーに置いている)
+
+        clock_open                                   # 対局時計を開いて
+        find(".play_button").click                   # 開始
+        first(".close_button_for_capybara").click    # 閉じる (ヘッダーに置いている)
+      end
+      a_block do
+        assert_text("(通知効果音)")                  # 最初はaliceさんなので牛が鳴いた
+      end
+      b_block do
+        assert_text("aliceさんから開始してください") # bobさんの方でも誰から開始するかが示された
+        doc_image
+      end
+    end
+  end
+
   def visit_with_args(args)
     visit "/share-board?#{args.to_query}"
   end

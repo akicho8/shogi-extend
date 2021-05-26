@@ -320,13 +320,22 @@ export const app_clock_box = {
       }
       if (params.message) {
         const attrs = params.clock_box_attributes
-        if (this.development_p) {
-          if (attrs.play_count === 1 && attrs.pause_count === 0 && attrs.resume_count === 0) {
-            this.sound_play("rooster")
+        if (attrs) {
+          if (this.first_play_trigger_p(attrs)) { // PLAYの初回で
+            if (this.current_turn_self_p) {       // 自分が手番なら
+              this.tn_notify()                    // 牛
+              // this.sound_play("rooster")
+            }
           }
         }
+
+        // 誰が操作したかを通知
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.message}`, {onend: () => {
           if (attrs) {
+            // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
+            if (this.first_play_trigger_p(attrs)) {
+              this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
+            }
           }
         }})
       }
@@ -347,6 +356,12 @@ export const app_clock_box = {
         props: { base: this.base },
         onCancel: () => this.sound_play("click"),
       })
+    },
+
+    // private
+
+    first_play_trigger_p(attrs) {
+      return attrs.play_count === 1 && attrs.pause_count === 0 && attrs.resume_count === 0
     },
   },
   computed: {
