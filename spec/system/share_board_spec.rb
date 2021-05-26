@@ -428,28 +428,27 @@ RSpec.describe "共有将棋盤", type: :system do
   describe "局面再送" do
     def test1
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_CHECK_DELAY_BASE: @RETRY_CHECK_DELAY_BASE, SEND_SUCCESS_DELAY: @SEND_SUCCESS_DELAY)
+        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_CONFIRM_DELAY: @RETRY_CONFIRM_DELAY, SEND_SUCCESS_DELAY: @SEND_SUCCESS_DELAY)
       end
       b_block do
         visit_with_args(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
       end
       a_block do
         assert_move("77", "76", "☗7六歩")     # aliceが指した直後bobから応答OKが0.75秒ぐらいで帰ってくる
-        sleep(@RETRY_CHECK_DELAY_BASE)         # 再送ダイアログが出るころまで待つ
+        sleep(@RETRY_CONFIRM_DELAY)         # 再送ダイアログが出るころまで待つ
       end
     end
-
     it "同期成功" do
-      @SEND_SUCCESS_DELAY     = 0 # 最速で応答する
-      @RETRY_CHECK_DELAY_BASE = 1 # 1秒後に応答確認
+      @SEND_SUCCESS_DELAY  = 0 # 最速で応答する
+      @RETRY_CONFIRM_DELAY = 1 # 1秒後に応答確認
       test1
       a_block do
         assert_no_text("同期失敗")             # 同期OKになっているので「同期失敗」ダイアログは出ない
       end
     end
     it "再送ダイアログ表示" do
-      @SEND_SUCCESS_DELAY     = -1   # 応答しない
-      @RETRY_CHECK_DELAY_BASE = 0    # しかも0秒後に応答確認
+      @SEND_SUCCESS_DELAY  = -1 # 応答しない
+      @RETRY_CONFIRM_DELAY = 0  # しかも0秒後に応答確認
       test1
       a_block do
         assert_text("同期失敗 (1回目)")
@@ -467,8 +466,8 @@ RSpec.describe "共有将棋盤", type: :system do
       end
     end
     it "再送ダイアログ表示キャンセル" do
-      @RETRY_CHECK_DELAY_BASE = 0   # 0秒後に返信をチェックするのですぐにダイアログ表示
-      @SEND_SUCCESS_DELAY     = 3   # しかし3秒後に成功したのでダイアログを消される
+      @RETRY_CONFIRM_DELAY = 0 # 0秒後に返信をチェックするのですぐにダイアログ表示
+      @SEND_SUCCESS_DELAY  = 3 # しかし3秒後に成功したのでダイアログを消される
       test1
       a_block do
         assert_text("同期失敗")

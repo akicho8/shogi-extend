@@ -1,22 +1,22 @@
 import _ from "lodash"
 
-const RETRY_FUNCTION_ENABLED = true   // この機能を有効にするか？
-const SEQUENCE_CODES_MAX     = 5      // sequence_code は直近N件保持しておく
-const RETRY_CHECK_DELAY_BASE = 3      // 再送ダイアログ発動までN秒待つ
-const RETRY_CHECK_DELAY_MAX  = 8      // 再送ダイアログ発動まで最大N秒待つ
-const RETRY_TOAST_DISPLAY_SEC = 6     // 再送のtoastを何秒表示するか？
-const SEND_SUCCESS_DELAY     = 0      // 受信OKするまでの秒数(本番では0にすること) 再送ダイアログ発動より長いと再送ダイアログをcloseする
+const RETRY_FUNCTION          = true // この機能を有効にするか？
+const SEQUENCE_CODES_MAX      = 5    // sequence_code は直近N件保持しておく
+const RETRY_CONFIRM_DELAY     = 3    // 再送ダイアログ発動までN秒待つ
+const RETRY_CONFIRM_DELAY_MAX = 8    // 再送ダイアログ発動まで最大N秒待つ
+const RETRY_TOAST_SEC         = 6    // 再送のtoastを何秒表示するか？
+const SEND_SUCCESS_DELAY      = 0    // 受信OKするまでの秒数(本番では0にすること) 再送ダイアログ発動より長いと再送ダイアログをcloseする
 
 export const app_sfen_share_retry = {
   data() {
     return {
-      sequence_code: 0,           // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
-      sequence_codes: [],         // それを最大 SEQUENCE_CODES_MAX 件保持しておく
-      send_success_p: false,      // 直近のSFENの同期が成功したか？
-      retry_check_delay_id: null, // 送信してから RETRY_CHECK_DELAY_BASE 秒後に動かすための setTimeout の戻値
-      x_retry_count_total: 0,     // SFEN送信に失敗した総回数(不具合解析用)
-      x_retry_count: 0,           // 直近の指し手のSFEN送信に失敗して回数(表示用)
-      retry_confirm_instance: null,       //
+      sequence_code: 0,             // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
+      sequence_codes: [],           // それを最大 SEQUENCE_CODES_MAX 件保持しておく
+      send_success_p: false,        // 直近のSFENの同期が成功したか？
+      retry_confirm_delay_id: null, // 送信してから RETRY_CONFIRM_DELAY 秒後に動かすための setTimeout の戻値
+      x_retry_count_total: 0,       // SFEN送信に失敗した総回数(不具合解析用)
+      x_retry_count: 0,             // 直近の指し手のSFEN送信に失敗して回数(表示用)
+      retry_confirm_instance: null, // $buefy.dialog.confirm のインスタンス
     }
   },
   beforeDestroy() {
@@ -25,7 +25,7 @@ export const app_sfen_share_retry = {
   },
   methods: {
     sequence_code_embed() {
-      if (RETRY_FUNCTION_ENABLED) {
+      if (RETRY_FUNCTION) {
         this.sequence_code += 1
         this.sequence_codes.push(this.sequence_code)
         this.sequence_codes = _.takeRight(this.sequence_codes, SEQUENCE_CODES_MAX)
@@ -33,11 +33,11 @@ export const app_sfen_share_retry = {
       }
     },
     sfen_share_afetr_check() {
-      if (RETRY_FUNCTION_ENABLED) {
+      if (RETRY_FUNCTION) {
         if (this.order_func_p && this.ordered_members_present_p) {
-          if (this.RETRY_CHECK_DELAY_BASE >= 0) {
+          if (this.RETRY_CONFIRM_DELAY >= 0) {
             this.retry_confirm_cancel()
-            this.retry_check_delay_id = this.delay_block(this.retry_check_delay, () => {
+            this.retry_confirm_delay_id = this.delay_block(this.retry_check_delay, () => {
               if (this.send_success_p) {
                 // 相手から応答があった
                 // this.x_retry_count = 0  // 失敗回数リセット
@@ -51,9 +51,9 @@ export const app_sfen_share_retry = {
       }
     },
     retry_confirm_cancel() {
-      if (this.retry_check_delay_id) {
-        this.delay_stop(this.retry_check_delay_id)
-        this.retry_check_delay_id = null
+      if (this.retry_confirm_delay_id) {
+        this.delay_stop(this.retry_confirm_delay_id)
+        this.retry_confirm_delay_id = null
       }
     },
     retry_confirm() {
@@ -113,11 +113,11 @@ export const app_sfen_share_retry = {
 
     // 指し手を受信した次に人が sfen_share_broadcasted のなかで呼ぶ
     received_ok_send(params) {
-      if (RETRY_FUNCTION_ENABLED) {
+      if (RETRY_FUNCTION) {
         if (this.order_func_p) {
           // 何で何回も指しているのかわからないので再送していることを伝える(自分も含めて)
           if (params.x_retry_count >= 1) {
-            this.toast_warn(`次の手番の${this.user_call_name(params.next_user_name)}の反応がないため${this.user_call_name(params.from_user_name)}が再送しました(${params.x_retry_count}回目)`, {duration: 1000 * RETRY_TOAST_DISPLAY_SEC, toast_only: true})
+            this.toast_warn(`次の手番の${this.user_call_name(params.next_user_name)}の反応がないため${this.user_call_name(params.from_user_name)}が再送しました(${params.x_retry_count}回目)`, {duration: 1000 * RETRY_TOAST_SEC, toast_only: true})
           }
           if (params.next_user_name === this.user_name) {
             // 自分が下家なので上家に受信したことを伝える
@@ -153,13 +153,13 @@ export const app_sfen_share_retry = {
   },
 
   computed: {
-    RETRY_CHECK_DELAY_BASE() { return parseFloat(this.$route.query.RETRY_CHECK_DELAY_BASE || RETRY_CHECK_DELAY_BASE) },
-    SEND_SUCCESS_DELAY()     { return parseFloat(this.$route.query.SEND_SUCCESS_DELAY || SEND_SUCCESS_DELAY) },
+    RETRY_CONFIRM_DELAY() { return parseFloat(this.$route.query.RETRY_CONFIRM_DELAY || RETRY_CONFIRM_DELAY) },
+    SEND_SUCCESS_DELAY()  { return parseFloat(this.$route.query.SEND_SUCCESS_DELAY || SEND_SUCCESS_DELAY) },
 
     retry_check_delay() {
-      let v = this.RETRY_CHECK_DELAY_BASE + this.x_retry_count
-      if (v > RETRY_CHECK_DELAY_MAX) {
-        v = RETRY_CHECK_DELAY_MAX
+      let v = this.RETRY_CONFIRM_DELAY + this.x_retry_count
+      if (v > RETRY_CONFIRM_DELAY_MAX) {
+        v = RETRY_CONFIRM_DELAY_MAX
       }
       return v
     },
