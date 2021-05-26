@@ -7,6 +7,7 @@ client-only
         p timer: {{clock_box.timer}}
         p running_p: {{clock_box.running_p}}
       p send_success_p={{send_success_p}}
+      p x_retry_count={{x_retry_count}}
       p sequence_codes={{sequence_codes}}
       p $route.query: {{$route.query}}
       p sp_human_side: {{sp_human_side}}
@@ -165,6 +166,7 @@ import { app_sidebar          } from "./app_sidebar.js"
 import { app_storage          } from "./app_storage.js"
 import { app_export           } from "./app_export.js"
 import { app_sfen_share       } from "./app_sfen_share.js"
+import { app_sfen_share_retry       } from "./app_sfen_share_retry.js"
 import { app_force_sync       } from "./app_force_sync.js"
 import { app_handicap_set       } from "./app_handicap_set.js"
 import { app_room_recreate    } from "./app_room_recreate.js"
@@ -198,6 +200,7 @@ export default {
     app_storage,
     app_export,
     app_sfen_share,
+    app_sfen_share_retry,
     app_force_sync,
     app_handicap_set,
     app_room_recreate,

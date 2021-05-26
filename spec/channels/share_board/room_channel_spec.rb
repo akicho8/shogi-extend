@@ -87,7 +87,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       subscribe(room_code: room_code)
     end
     it do
-      data = data_factory("sfen_share_not_reach_count_total" => 1)
+      data = data_factory("x_retry_count" => 1)
       expect {
         subscription.sfen_share_not_reach(data)
       }.to raise_error(StandardError, /指手不達.*1回目/)

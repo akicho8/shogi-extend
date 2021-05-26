@@ -427,23 +427,23 @@ RSpec.describe "共有将棋盤", type: :system do
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '局面再送'
   describe "局面再送" do
     it "同期成功" do
-      @RETRY_CHECK_DELAY = 1    # N秒後に返信をチェックする
+      @RETRY_CHECK_DELAY_BASE = 1    # N秒後に返信をチェックする
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_CHECK_DELAY: @RETRY_CHECK_DELAY)
+        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_CHECK_DELAY_BASE: @RETRY_CHECK_DELAY_BASE)
       end
       b_block do
         visit_with_args(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
       end
       a_block do
         assert_move("77", "76", "☗7六歩")                # aliceが指した直後bobから応答OKが0.75秒ぐらいで帰ってくる
-        sleep(@RETRY_CHECK_DELAY)                         # なので1秒待って alice 側はチェックする
+        sleep(@RETRY_CHECK_DELAY_BASE)                         # なので1秒待って alice 側はチェックする
         assert_no_text("同期失敗")                        # 同期OKになっているので「同期失敗」ダイアログは出ない
       end
     end
     it "同期失敗" do
-      # RETRY_CHECK_DELAY を 0 にすることで返信前にチェックしてしまうので失敗ダイアログが出る
+      # RETRY_CHECK_DELAY_BASE を 0 にすることで返信前にチェックしてしまうので失敗ダイアログが出る
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_CHECK_DELAY: 0)
+        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_CHECK_DELAY_BASE: 0)
       end
       b_block do
         visit_with_args(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
