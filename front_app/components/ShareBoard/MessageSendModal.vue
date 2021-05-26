@@ -20,6 +20,8 @@
 <script>
 import { support_child } from "./support_child.js"
 
+const CLOSE_IF_BLANK_MESSAGE_POST = true
+
 export default {
   name: "MessageSendModal",
   mixins: [
@@ -44,10 +46,15 @@ export default {
     },
     send_handle() {
       if (this.blank_p(this.base.message_body)) {
-        this.sound_play("x")
-        this.base.message_body = ""
-        this.input_focus()
-        return
+        if (CLOSE_IF_BLANK_MESSAGE_POST) {
+          this.close_handle()
+          return
+        } else {
+          this.sound_play("x")
+          this.base.message_body = ""
+          this.input_focus()
+          return
+        }
       }
       this.sound_play("click")
       this.base.message_share({message: this.base.message_body})
