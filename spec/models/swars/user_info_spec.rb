@@ -372,7 +372,7 @@ module Swars
       end
     end
 
-    describe "投了までの心の準備 投了までの心の準備(平均) count_of_toryo_think_last max_of_toryo_think_last" do
+    describe "投了までの心の準備系 count_of_toryo_think_last max_of_toryo_think_last avg_of_toryo_think_last" do
       before do
         @black = User.create!
       end
@@ -390,9 +390,12 @@ module Swars
       end
 
       it do
-        assert { test1(15, 15) ==  [nil, nil, nil] } # 15秒 >= 30 じゃないので無視
-        assert { test1(15, 30) ==  [[{name: "30秒", value: 1}],                          30, 30] }
-        assert { test1(15, 90) ==  [[{name: "30秒", value: 1}, {name: "1分", value: 1}], 90, 60] }
+        assert { test1(15, 9)  == [[{name: "10秒未満", value: 1}], 9, 9.0] }
+        assert { test1(15, 10) == [[{name: "10秒未満", value: 1}, {name: "10秒", value: 1}], 10, 9.5] }
+        assert { test1(15, 11) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}], 11, 10.0] }
+        assert { test1(15, 59) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}], 59, 22.25] }
+        assert { test1(15, 60) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 1}], 60, 29.8] }
+        assert { test1(15, 61) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 2}], 61, 35.0] }
       end
     end
 
@@ -415,23 +418,30 @@ module Swars
         assert { @black.user_info.migigyoku_kinds == [{name: "糸谷流右玉", value: 2}] }
       end
     end
+
+    describe "1日の平均対局数 avg_of_avg_battles_count_per_day migigyoku_kinds" do
+      before do
+        @black = User.create!
+      end
+
+      def test1
+        Battle.create! do |e|
+          e.memberships.build(user: @black)
+        end
+        @black.user_info.avg_of_avg_battles_count_per_day
+      end
+
+      it do
+        assert { Timecop.freeze("2000-01-01") { test1 } == 1.0 }
+        assert { Timecop.freeze("2000-01-01") { test1 } == 2.0 }
+        assert { Timecop.freeze("2000-01-02") { test1 } == 1.5 }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> ..............F.....
-# >> 
-# >> Failures:
-# >> 
-# >>   1) Swars::Battle 棋神乱用の疑い kishin_info_records_lv2 works
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:301:in `block (3 levels) in <module:Swars>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >> 
-# >> Finished in 8.38 seconds (files took 5.16 seconds to load)
-# >> 20 examples, 1 failure
-# >> 
-# >> Failed examples:
-# >> 
-# >> rspec -:300 # Swars::Battle 棋神乱用の疑い kishin_info_records_lv2 works
-# >> 
+# >> .....................
+# >>
+# >> Finished in 9.46 seconds (files took 2.54 seconds to load)
+# >> 21 examples, 0 failures
+# >>
