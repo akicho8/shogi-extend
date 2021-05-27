@@ -300,7 +300,11 @@ module Swars
         { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
 
         ################################################################################
-        { name: "対戦相手との段級差の平均",            type1: "simple", type2: "raw",                           body: avg_of_grade_diff,             },
+        { name: "対戦相手との段級差(平均)",           type1: "simple", type2: "raw",                           body: avg_of_grade_diff,             },
+
+        ################################################################################
+
+        { name: "1日の平均対局数",                     type1: "simple", type2: "numeric_with_unit", unit: "局", body: avg_of_avg_battles_count_per_day,              },
 
         ################################################################################
 
@@ -611,6 +615,36 @@ module Swars
         list.collect { |e|
           { name: e, value: all_tag_names_hash[e] }
         }.sort_by { |e| -e[:value] }
+      end
+    end
+
+    ################################################################################
+
+    # 1日の平均対局数
+    def avg_of_avg_battles_count_per_day
+      battle_ids = ids_scope.pluck(:battle_id)
+      # battle_ids = []
+      if battle_ids.present?
+        # まず日別の対局数を求める
+        sql = <<~EOT
+            SELECT DATE(#{DbCop.tz_adjust('battled_at')}) AS battled_on, COUNT(*) AS count_all
+            FROM swars_battles
+            WHERE id IN (#{battle_ids.join(', ')})
+            GROUP BY battled_on
+        EOT
+        if Rails.env.development?
+          Rails.logger.debug(ActiveRecord::Base.connection.select_all(sql).to_a.to_t)
+          # |------------+-----------|
+          # | battled_on | count_all |
+          # |------------+-----------|
+          # | 2021-05-18 |         3 |
+          # | 2021-05-19 |         1 |
+          # | 2021-05-20 |         2 |
+          # |------------+-----------|
+        end
+        # count_all の値たちの平均を求める
+        sql = "SELECT AVG(count_all) FROM (#{sql}) as grouping" # (3 + 1 + 2) / 3 => 2
+        ActiveRecord::Base.connection.select_value(sql).to_f.round(2)
       end
     end
 
