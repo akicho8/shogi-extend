@@ -428,19 +428,19 @@ RSpec.describe "共有将棋盤", type: :system do
   describe "局面再送" do
     def test1
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_CONFIRM_DELAY: @RETRY_CONFIRM_DELAY, SEND_SUCCESS_DELAY: @SEND_SUCCESS_DELAY)
+        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_DELAY: @RETRY_DELAY, SEND_SUCCESS_DELAY: @SEND_SUCCESS_DELAY)
       end
       b_block do
         visit_with_args(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
       end
       a_block do
         assert_move("77", "76", "☗7六歩")     # aliceが指した直後bobから応答OKが0.75秒ぐらいで帰ってくる
-        sleep(@RETRY_CONFIRM_DELAY)         # 再送ダイアログが出るころまで待つ
+        sleep(@RETRY_DELAY)         # 再送ダイアログが出るころまで待つ
       end
     end
     it "同期成功" do
       @SEND_SUCCESS_DELAY  = 0 # 最速で応答する
-      @RETRY_CONFIRM_DELAY = 1 # 1秒後に応答確認
+      @RETRY_DELAY = 1 # 1秒後に応答確認
       test1
       a_block do
         assert_no_text("同期失敗")             # 同期OKになっているので「同期失敗」ダイアログは出ない
@@ -448,7 +448,7 @@ RSpec.describe "共有将棋盤", type: :system do
     end
     it "再送ダイアログ表示" do
       @SEND_SUCCESS_DELAY  = -1 # 応答しない
-      @RETRY_CONFIRM_DELAY = 0  # しかも0秒後に応答確認
+      @RETRY_DELAY = 0  # しかも0秒後に応答確認
       test1
       a_block do
         assert_text("同期失敗 (1回目)")
@@ -466,7 +466,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
     end
     it "再送ダイアログ表示キャンセル" do
-      @RETRY_CONFIRM_DELAY = 0 # 0秒後に返信をチェックするのですぐにダイアログ表示
+      @RETRY_DELAY = 0 # 0秒後に返信をチェックするのですぐにダイアログ表示
       @SEND_SUCCESS_DELAY  = 3 # しかし3秒後に成功したのでダイアログを消される
       test1
       a_block do
@@ -721,11 +721,7 @@ RSpec.describe "共有将棋盤", type: :system do
       a_block do
         assert_member_exist("alice")   # alice の部屋にも alice と
         assert_member_exist("bob")     # bob がいる
-
-        side_menu_open
-        menu_item_click("部屋に入る")  # 「部屋に入る」を自分でクリックする
-        first(".leave_button").click   # 退室ボタンをクリックする
-        first(".close_button").click   # 閉じる
+        room_leave                     # 退室
       end
       b_block do
         assert_member_missing("alice") # bob 側の alice が即座に消えた
@@ -821,6 +817,20 @@ RSpec.describe "共有将棋盤", type: :system do
       b_block do
         assert_text("aliceさんから開始してください") # bobさんの方でも誰から開始するかが示された
         doc_image
+      end
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '「順番設定有効→退室→指す」では退室しているので再送は発動しない'
+  describe "「順番設定有効→退室→指す」では退室しているので再送は発動しない" do
+    it "works" do
+      @RETRY_DELAY = 3
+      a_block do
+        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", RETRY_DELAY: @RETRY_DELAY)
+        room_leave
+        piece_move("77", "76")
+        sleep(@RETRY_DELAY)
+        assert_no_text("同期失敗")
       end
     end
   end
@@ -973,5 +983,13 @@ RSpec.describe "共有将棋盤", type: :system do
     assert_clock_off                           # 時計はまだ設置されていない
     find(".main_switch").click                 # 設置する
     assert_clock_on                            # 時計が設置された
+  end
+
+  # 退室
+  def room_leave
+    side_menu_open
+    menu_item_click("部屋に入る")  # 「部屋に入る」を自分でクリックする
+    first(".leave_button").click   # 退室ボタンをクリックする
+    first(".close_button").click   # 閉じる
   end
 end

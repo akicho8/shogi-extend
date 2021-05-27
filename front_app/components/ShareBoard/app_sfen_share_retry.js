@@ -2,10 +2,10 @@ import _ from "lodash"
 
 const RETRY_FUNCTION          = true // この機能を有効にするか？
 const SEQUENCE_CODES_MAX      = 5    // sequence_code は直近N件保持しておく
-const RETRY_CONFIRM_DELAY     = 3    // 再送ダイアログ発動までN秒待つ
-const RETRY_CONFIRM_DELAY_MAX = 8    // 再送ダイアログ発動まで最大N秒待つ
-const RETRY_TOAST_SEC         = 6    // 再送のtoastを何秒表示するか？
-const SEND_SUCCESS_DELAY      = 0    // 受信OKするまでの秒数(本番では0にすること) 再送ダイアログ発動より長いと再送ダイアログをcloseする
+const RETRY_DELAY        = 3    // 再送ダイアログ発動までN秒待つ
+const RETRY_DELAY_MAX    = 8    // 再送ダイアログ発動まで最大N秒待つ
+const RETRY_TOAST_SEC    = 6    // 再送のtoastを何秒表示するか？
+const SEND_SUCCESS_DELAY = 0    // 受信OKするまでの秒数(本番では0にすること) 再送ダイアログ発動より長いと再送ダイアログをcloseする
 
 export const app_sfen_share_retry = {
   data() {
@@ -13,14 +13,14 @@ export const app_sfen_share_retry = {
       sequence_code: 0,             // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
       sequence_codes: [],           // それを最大 SEQUENCE_CODES_MAX 件保持しておく
       send_success_p: false,        // 直近のSFENの同期が成功したか？
-      retry_confirm_delay_id: null, // 送信してから RETRY_CONFIRM_DELAY 秒後に動かすための setTimeout の戻値
+      retry_delay_id: null, // 送信してから RETRY_DELAY 秒後に動かすための setTimeout の戻値
       x_retry_count_total: 0,       // SFEN送信に失敗した総回数(不具合解析用)
       x_retry_count: 0,             // 直近の指し手のSFEN送信に失敗して回数(表示用)
       retry_confirm_instance: null, // $buefy.dialog.confirm のインスタンス
     }
   },
   beforeDestroy() {
-    this.retry_confirm_cancel()
+    this.retry_delay_cancel()
     this.retry_confirm_close()
   },
   methods: {
@@ -35,9 +35,9 @@ export const app_sfen_share_retry = {
     sfen_share_afetr_check() {
       if (RETRY_FUNCTION) {
         if (this.order_func_p && this.ordered_members_present_p) {
-          if (this.RETRY_CONFIRM_DELAY >= 0) {
-            this.retry_confirm_cancel()
-            this.retry_confirm_delay_id = this.delay_block(this.retry_check_delay, () => {
+          if (this.RETRY_DELAY >= 0) {
+            this.retry_delay_cancel()
+            this.retry_delay_id = this.delay_block(this.retry_check_delay, () => {
               if (this.send_success_p) {
                 // 相手から応答があった
                 // this.x_retry_count = 0  // 失敗回数リセット
@@ -50,10 +50,10 @@ export const app_sfen_share_retry = {
         }
       }
     },
-    retry_confirm_cancel() {
-      if (this.retry_confirm_delay_id) {
-        this.delay_stop(this.retry_confirm_delay_id)
-        this.retry_confirm_delay_id = null
+    retry_delay_cancel() {
+      if (this.retry_delay_id) {
+        this.delay_stop(this.retry_delay_id)
+        this.retry_delay_id = null
       }
     },
     retry_confirm() {
@@ -153,13 +153,13 @@ export const app_sfen_share_retry = {
   },
 
   computed: {
-    RETRY_CONFIRM_DELAY() { return parseFloat(this.$route.query.RETRY_CONFIRM_DELAY || RETRY_CONFIRM_DELAY) },
+    RETRY_DELAY() { return parseFloat(this.$route.query.RETRY_DELAY || RETRY_DELAY) },
     SEND_SUCCESS_DELAY()  { return parseFloat(this.$route.query.SEND_SUCCESS_DELAY || SEND_SUCCESS_DELAY) },
 
     retry_check_delay() {
-      let v = this.RETRY_CONFIRM_DELAY + this.x_retry_count
-      if (v > RETRY_CONFIRM_DELAY_MAX) {
-        v = RETRY_CONFIRM_DELAY_MAX
+      let v = this.RETRY_DELAY + this.x_retry_count
+      if (v > RETRY_DELAY_MAX) {
+        v = RETRY_DELAY_MAX
       }
       return v
     },
