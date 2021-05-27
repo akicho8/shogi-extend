@@ -1,7 +1,7 @@
 import _ from "lodash"
 
-const RETRY_FUNCTION          = true // この機能を有効にするか？
-const SEQUENCE_CODES_MAX      = 5    // sequence_code は直近N件保持しておく
+const RETRY_FUNCTION     = true // この機能を有効にするか？
+const SEQUENCE_CODES_MAX = 5    // sequence_code は直近N件保持しておく
 const RETRY_DELAY        = 3    // 再送ダイアログ発動までN秒待つ
 const RETRY_DELAY_MAX    = 8    // 再送ダイアログ発動まで最大N秒待つ
 const RETRY_TOAST_SEC    = 6    // 再送のtoastを何秒表示するか？
@@ -13,7 +13,7 @@ export const app_sfen_share_retry = {
       sequence_code: 0,             // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
       sequence_codes: [],           // それを最大 SEQUENCE_CODES_MAX 件保持しておく
       send_success_p: false,        // 直近のSFENの同期が成功したか？
-      retry_delay_id: null, // 送信してから RETRY_DELAY 秒後に動かすための setTimeout の戻値
+      retry_delay_id: null,         // 送信してから RETRY_DELAY 秒後に動かすための setTimeout の戻値
       x_retry_count_total: 0,       // SFEN送信に失敗した総回数(不具合解析用)
       x_retry_count: 0,             // 直近の指し手のSFEN送信に失敗して回数(表示用)
       retry_confirm_instance: null, // $buefy.dialog.confirm のインスタンス
