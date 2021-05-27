@@ -40,14 +40,15 @@ export const app_sfen_share = {
     },
 
     sfen_share() {
-      this.send_success_p = false // 数ms後に相手から応答があると true になる
-
-      const params = {
-        x_retry_count: this.x_retry_count, // 0:初回 1以上:再送回数
-        ...this.sfen_share_params,
+      if (this.ac_room) { // ac_room が有効でないときに sfen_share_callback_set を呼ばないようにするため
+        this.send_success_p = false // 数ms後に相手から応答があると true になる
+        const params = {
+          x_retry_count: this.x_retry_count, // 0:初回 1以上:再送回数
+          ...this.sfen_share_params,
+        }
+        this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
+        this.sfen_share_callback_set()
       }
-      this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
-      this.sfen_share_afetr_check()
     },
     sfen_share_broadcasted(params) {
       // ここでの params は current_sfen_attrs を元にしているので 1 が入っている

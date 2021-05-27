@@ -36,7 +36,6 @@ export const app_room_members = {
   methods: {
     // created, room_create, room_destroy で呼ばれる
     member_infos_init() {
-      this.order_func_p = false // room_destroy でこれを無効にしないと退室したあとも同期失敗ダイアログが出てしまう
       this.member_infos = []
     },
 

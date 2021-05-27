@@ -32,7 +32,7 @@ export const app_sfen_share_retry = {
         this.sfen_share_params.sequence_code = this.sequence_code
       }
     },
-    sfen_share_afetr_check() {
+    sfen_share_callback_set() {
       if (RETRY_FUNCTION) {
         if (this.order_func_p && this.ordered_members_present_p) {
           if (this.RETRY_DELAY >= 0) {
