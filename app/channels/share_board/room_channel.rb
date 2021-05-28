@@ -1,7 +1,13 @@
 module ShareBoard
   class RoomChannel < ApplicationCable::Channel
+    class SfenNotReachError < StandardError
+    end
+
     def subscribed
-      return reject unless room_code
+      if room_code.blank?
+        reject
+        return
+      end
       simple_track("購読開始")
       stream_from "share_board/room_channel/#{room_code}"
     end
@@ -21,9 +27,7 @@ module ShareBoard
     end
 
     def sfen_share(data)
-      lmi = data["lmi"]
-      player_location = Bioshogi::Location.fetch(lmi["player_location_key"])
-      track(data, "指手送信", "[#{lmi["next_turn_offset"]}] #{player_location.mark} #{lmi["kif_without_from"]} > #{data["next_user_name"] || '?'} #{data["elapsed_sec"] || '?'}s")
+      track(data, "指手送信", sfen_share_track_body(data))
       broadcast(:sfen_share_broadcasted, data)
     end
 
@@ -33,8 +37,9 @@ module ShareBoard
     end
 
     def sfen_share_not_reach(data)
-      track(data, "指手不達", "#{data['x_retry_count']}回目")
-      raise StandardError, "指手不達(#{data['x_retry_count']}回目) : #{data}"
+      x_retry_count = data['x_retry_count']
+      track(data, "指手不達", "#{x_retry_count}回目")
+      raise SfenNotReachError, "指手不達(#{x_retry_count}回目) : #{data}"
     end
 
     def title_share(data)
@@ -113,9 +118,7 @@ module ShareBoard
           raise ArgumentError, "値が nil のキーがある : #{v.inspect}"
         end
       end
-
       bc_params = bc_params.merge("API_VERSION" => ShareBoardControllerMethods::API_VERSION)
-
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
 
@@ -135,6 +138,23 @@ module ShareBoard
         body = ""
       end
       SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: body)
+    end
+
+    def sfen_share_track_body(data)
+      lmi = data["lmi"]
+      player_location = Bioshogi::Location.fetch(lmi["player_location_key"])
+
+      s = []
+      s << %([#{lmi["next_turn_offset"]}])
+      s << player_location.mark
+      s << lmi["kif_without_from"]
+      if v = data["next_user_name"]
+        s << "> #{v}"
+      end
+      if v = data["elapsed_sec"]
+        s << "#{-v}秒"
+      end
+      s.join(" ")
     end
   end
 end
