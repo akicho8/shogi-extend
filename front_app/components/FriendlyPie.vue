@@ -46,8 +46,9 @@ const CHART_CONFIG_DEFAULT = {
 
     tooltips: {
       enabled: true,
+      displayColors: false, // 左に「■」を表示するか？
     },
-  }
+  },
 }
 
 import chart_mixin from '@/components/models/chart_mixin.js'
