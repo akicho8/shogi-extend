@@ -305,6 +305,7 @@ module Swars
         ################################################################################
 
         { name: "1日の平均対局数",                     type1: "simple", type2: "numeric_with_unit", unit: "局", body: avg_of_avg_battles_count_per_day,              },
+        { name: "対局時間帯",                          type1: "bar",    type2: nil,                             body: battle_count_per_hour_records,  bar_type: "is_default", },
 
         ################################################################################
 
@@ -659,6 +660,20 @@ module Swars
         # count_all の値たちの平均を求める
         sql = "SELECT AVG(count_all) FROM (#{sql}) as grouping" # (3 + 1 + 2) / 3 => 2
         ActiveRecord::Base.connection.select_value(sql).to_f.round(2)
+      end
+    end
+
+    def battle_count_per_hour_records
+      battle_ids = ids_scope.pluck(:battle_id)
+      # battle_ids = []
+      if battle_ids.present?
+        # まず日別の対局数を求める
+        battled_at = DbCop.tz_adjust("battled_at")
+        s = Swars::Battle.where(id: battle_ids)
+        counts_hash = s.group("HOUR(#{battled_at})").count
+        [*4..23, *0..3].collect do |hour|
+          { name: hour.to_s, value: counts_hash[hour] || 0 }
+        end
       end
     end
 

@@ -80,4 +80,36 @@ export const PaletteGenerator = {
       base_color.set('hsl.s', 0).set('hsl.l', 0.8).css(),
     ]
   },
+
+  palette_type4(params = {}) {
+    params = {
+      alpha: 0.5,
+      ...params,
+    }
+    const e = params
+    const base_color = PaletteInfo.fetch("info").base_color.alpha(e.alpha)
+    return base_color.css()
+  },
+
+  palette_transparent(params = {}) {
+    params = {
+      alpha: 0,
+      ...params,
+    }
+    const e = params
+    const base_color = PaletteInfo.fetch("primary").base_color.alpha(e.alpha)
+    return base_color.css()
+  },
+
+  palette_of(params = {}) {
+    params = {
+      alpha: 0.5,
+      key: "danger",
+      ...params,
+    }
+    const e = params
+    const base_color = PaletteInfo.fetch(e.key).base_color.alpha(e.alpha)
+    return base_color.css()
+  },
+
 }

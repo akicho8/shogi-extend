@@ -419,7 +419,7 @@ module Swars
       end
     end
 
-    describe "1日の平均対局数 avg_of_avg_battles_count_per_day migigyoku_kinds" do
+    describe "1日の平均対局数 avg_of_avg_battles_count_per_day" do
       before do
         @black = User.create!
       end
@@ -437,11 +437,30 @@ module Swars
         assert { Timecop.freeze("2000-01-02") { test1 } == 1.5 }
       end
     end
+
+    describe "対局時間帯 battle_count_per_hour_records" do
+      before do
+        @black = User.create!
+      end
+
+      def test1
+        Battle.create! do |e|
+          e.memberships.build(user: @black)
+        end
+        @black.user_info.battle_count_per_hour_records.find_all { |e| e[:value].positive? }
+      end
+
+      it do
+        assert { Timecop.freeze("2000-01-01 00:00") { test1 } == [{name: "0", value: 1}] }
+        assert { Timecop.freeze("2000-01-01 00:59") { test1 } == [{name: "0", value: 2}] }
+        assert { Timecop.freeze("2000-01-01 01:00") { test1 } == [{name: "0", value: 2}, {name: "1", value: 1}] }
+      end
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .....................
-# >>
-# >> Finished in 9.46 seconds (files took 2.54 seconds to load)
-# >> 21 examples, 0 failures
-# >>
+# >> ......................
+# >> 
+# >> Finished in 10.36 seconds (files took 3.99 seconds to load)
+# >> 22 examples, 0 failures
+# >> 

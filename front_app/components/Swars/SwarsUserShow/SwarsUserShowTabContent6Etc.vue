@@ -8,6 +8,8 @@
             | {{row.name}}
         .columns.is-gapless.is-centered
           .column.is-paddingless.has-text-weight-bold.is-size-1.is-flex.is-justify-content-center
+            template(v-if="row.type1 === 'bar'")
+              FriendlyBar(:info="row")
             template(v-if="row.type1 === 'pie'")
               FriendlyPie(:info="row")
             template(v-if="row.type1 === 'simple'")
