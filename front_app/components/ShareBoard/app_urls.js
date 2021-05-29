@@ -1,12 +1,23 @@
 import { DotSfen } from "@/components/models/dot_sfen.js"
 
-export const app_any_urls = {
+export const app_urls = {
   methods: {
-    // 棋譜だけを含むURLのコピー
-    url_without_room_code_copy_handle() {
+    ////////////////////////////////////////////////////////////////////////////////
+    room_code_only_url_copy_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.clipboard_copy({text: this.url_without_room_code})
+      if (!this.room_code) {
+        this.toast_warn("まだ合言葉を設定してません")
+        return
+      }
+      this.clipboard_copy({text: this.room_code_only_url})
+    },
+
+    // 棋譜だけを含むURLのコピー
+    room_code_except_url_copy_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
+      this.clipboard_copy({text: this.room_code_except_url})
     },
   },
   computed: {
@@ -60,13 +71,24 @@ export const app_any_urls = {
       })
     },
 
-    // 棋譜だけを含むURL
-    url_without_room_code() {
-      const e = {...this.current_url_params}
-      if (this.present_p(e.room_code)) {
-        delete e.room_code
+    // 合言葉だけを付与したURL
+    room_code_only_url() {
+      const params = {
+        room_code: this.room_code,
+        title: this.current_title,
       }
-      return this.permalink_from_params(e)
+      return this.permalink_from_params(params)
+    },
+
+    // 棋譜だけを含むURL
+    room_code_except_url() {
+      const params = {
+        ...this.current_url_params,
+      }
+      if (this.present_p(params.room_code)) {
+        delete params.room_code
+      }
+      return this.permalink_from_params(params)
     },
   },
 }

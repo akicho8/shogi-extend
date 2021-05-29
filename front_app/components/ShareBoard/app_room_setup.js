@@ -205,17 +205,6 @@ export const app_room_setup = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    room_code_url_copy_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-      if (!this.room_code) {
-        this.toast_warn("まだ合言葉を設定してません")
-        return
-      }
-      this.clipboard_copy({text: this.share_board_with_room_code_url})
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
     ac_log(subject = "", body = "") {
       this.ac_room_perform("ac_log", { subject, body })
     },
@@ -259,22 +248,5 @@ export const app_room_setup = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-
-    // 合言葉だけを付与したURL
-    // といいつつタイトルあれば含める → やめ
-    share_board_with_room_code_url() {
-      const url = new URL(this.$config.MY_SITE_URL + `/share-board`)
-      if (this.room_code) {
-        url.searchParams.set("room_code", this.room_code)
-      }
-      if (false) {
-        if (this.present_p(this.current_title)) {
-          if (this.current_title !== "共有将棋盤") {
-            url.searchParams.set("title", this.current_title)
-          }
-        }
-      }
-      return url.toString()
-    },
   },
 }

@@ -132,41 +132,41 @@ client-only
 <script>
 import _ from "lodash"
 
-import { FormatTypeInfo } from "@/components/models/format_type_info.js"
-import { Location       } from "shogi-player/components/models/location.js"
+import { FormatTypeInfo           } from "@/components/models/format_type_info.js"
+import { Location                 } from "shogi-player/components/models/location.js"
 
-import { support_parent       } from "./support_parent.js"
+import { support_parent           } from "./support_parent.js"
 
-import { app_action_log       } from "./app_action_log.js"
-import { app_message_logs     } from "./app_message_logs.js"
-import { app_clock_box      } from "./app_clock_box.js"
-import { app_persistent_cc_params      } from "./app_persistent_cc_params.js"
-import { app_turn_notify      } from "./app_turn_notify.js"
-import { app_ordered_members  } from "./app_ordered_members.js"
-import { app_chore            } from "./app_chore.js"
-import { app_any_urls         } from "./app_any_urls.js"
-import { app_edit_mode        } from "./app_edit_mode.js"
-import { app_room_setup       } from "./app_room_setup.js"
-import { app_devise       } from "./app_devise.js"
-import { app_room_leave       } from "./app_room_leave.js"
-import { app_track_log        } from "./app_track_log.js"
-import { app_room_board_setup } from "./app_room_board_setup.js"
-import { app_room_members     } from "./app_room_members.js"
-import { app_ping             } from "./app_ping.js"
-import { app_tweet            } from "./app_tweet.js"
-import { app_update           } from "./app_update.js"
-import { app_message          } from "./app_message.js"
-import { app_main_setting          } from "./app_main_setting.js"
-import { app_help          } from "./app_help.js"
-import { app_sidebar          } from "./app_sidebar.js"
-import { app_storage          } from "./app_storage.js"
-import { app_export           } from "./app_export.js"
-import { app_sfen_share       } from "./app_sfen_share.js"
-import { app_sfen_share_retry       } from "./app_sfen_share_retry.js"
-import { app_force_sync       } from "./app_force_sync.js"
-import { app_handicap_set       } from "./app_handicap_set.js"
-import { app_room_recreate    } from "./app_room_recreate.js"
-import { window_active_detector  } from "./window_active_detector.js"
+import { app_action_log           } from "./app_action_log.js"
+import { app_message_logs         } from "./app_message_logs.js"
+import { app_clock_box            } from "./app_clock_box.js"
+import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
+import { app_turn_notify          } from "./app_turn_notify.js"
+import { app_ordered_members      } from "./app_ordered_members.js"
+import { app_chore                } from "./app_chore.js"
+import { app_urls                 } from "./app_urls.js"
+import { app_edit_mode            } from "./app_edit_mode.js"
+import { app_room_setup           } from "./app_room_setup.js"
+import { app_devise               } from "./app_devise.js"
+import { app_room_leave           } from "./app_room_leave.js"
+import { app_track_log            } from "./app_track_log.js"
+import { app_room_board_setup     } from "./app_room_board_setup.js"
+import { app_room_members         } from "./app_room_members.js"
+import { app_ping                 } from "./app_ping.js"
+import { app_tweet                } from "./app_tweet.js"
+import { app_update               } from "./app_update.js"
+import { app_message              } from "./app_message.js"
+import { app_main_setting         } from "./app_main_setting.js"
+import { app_help                 } from "./app_help.js"
+import { app_sidebar              } from "./app_sidebar.js"
+import { app_storage              } from "./app_storage.js"
+import { app_export               } from "./app_export.js"
+import { app_sfen_share           } from "./app_sfen_share.js"
+import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
+import { app_force_sync           } from "./app_force_sync.js"
+import { app_handicap_set         } from "./app_handicap_set.js"
+import { app_room_recreate        } from "./app_room_recreate.js"
+import { window_active_detector   } from "./window_active_detector.js"
 
 export default {
   name: "ShareBoardApp",
@@ -179,7 +179,7 @@ export default {
     app_turn_notify,
     app_ordered_members,
     app_chore,
-    app_any_urls,
+    app_urls,
     app_edit_mode,
     app_room_setup,
     app_devise,
