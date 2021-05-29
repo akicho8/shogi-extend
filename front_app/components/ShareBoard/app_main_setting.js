@@ -11,11 +11,11 @@ export const app_main_setting = {
     }
   },
   created() {
-    this.ctrl_mode     = this.$route.query.ctrl_mode || (this.development_p ? "is_ctrl_mode_visible" : "is_ctrl_mode_hidden")
-    this.debug_mode    = this.$route.query.debug_mode || (this.development_p ? "is_debug_mode_on" : "is_debug_mode_off")
-    this.sync_mode     = this.$route.query.sync_mode || (this.development_p ? "is_sync_mode_soft" : "is_sync_mode_soft")
-    this.internal_rule = this.$route.query.internal_rule || this.default_internal_rule
-    this.yomiage_mode  = this.$route.query.yomiage_mode || (this.development_p ? "is_yomiage_mode_on" : "is_yomiage_mode_on")
+    this.ctrl_mode     = this.$route.query.ctrl_mode     || this.DEFAULT_VARS.ctrl_mode
+    this.debug_mode    = this.$route.query.debug_mode    || this.DEFAULT_VARS.debug_mode
+    this.sync_mode     = this.$route.query.sync_mode     || this.DEFAULT_VARS.sync_mode
+    this.internal_rule = this.$route.query.internal_rule || this.DEFAULT_VARS.internal_rule
+    this.yomiage_mode  = this.$route.query.yomiage_mode  || this.DEFAULT_VARS.yomiage_mode
   },
 
   methods: {
@@ -44,8 +44,6 @@ export const app_main_setting = {
     },
   },
   computed: {
-    default_internal_rule() { return "strict" },
-
     debug_mode_p() { return this.debug_mode === "is_debug_mode_on" },
     hard_sync_p()  { return this.sync_mode === "is_sync_mode_hard" },
     strict_p()     { return this.internal_rule === "strict"  },

@@ -130,12 +130,7 @@ client-only
 </template>
 
 <script>
-const SHARE_BOARD_TITLE     = "共有将棋盤"
-const RUN_MODE_DEFAULT      = "play_mode"
-
 import _ from "lodash"
-
-import { DotSfen } from "@/components/models/dot_sfen.js"
 
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 import { Location       } from "shogi-player/components/models/location.js"
@@ -149,6 +144,7 @@ import { app_persistent_cc_params      } from "./app_persistent_cc_params.js"
 import { app_turn_notify      } from "./app_turn_notify.js"
 import { app_ordered_members  } from "./app_ordered_members.js"
 import { app_chore            } from "./app_chore.js"
+import { app_any_urls         } from "./app_any_urls.js"
 import { app_edit_mode        } from "./app_edit_mode.js"
 import { app_room_setup       } from "./app_room_setup.js"
 import { app_devise       } from "./app_devise.js"
@@ -183,6 +179,7 @@ export default {
     app_turn_notify,
     app_ordered_members,
     app_chore,
+    app_any_urls,
     app_edit_mode,
     app_room_setup,
     app_devise,
@@ -227,9 +224,13 @@ export default {
       turn_offset_max: null,                         // 最後の手数
 
       record:        this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
-      sp_run_mode:   this.defval(this.$route.query.sp_run_mode, RUN_MODE_DEFAULT),  // 操作モードと局面編集モードの切り替え用
+      sp_run_mode:   null, // 操作モードと局面編集モードの切り替え用
     }
   },
+  created() {
+    this.sp_run_mode = this.$route.query.sp_run_mode || this.DEFAULT_VARS.sp_run_mode
+  },
+
   mounted() {
     // this.$nuxt.error({statusCode: 500, message: "xxx"})
     // return
@@ -360,6 +361,18 @@ export default {
     base()           { return this },
     FormatTypeInfo() { return FormatTypeInfo },
 
+    DEFAULT_VARS() {
+      return {
+        title: "共有将棋盤",
+        sp_run_mode: "play_mode",
+        internal_rule: "strict",
+        ctrl_mode: this.development_p ? "is_ctrl_mode_visible" : "is_ctrl_mode_hidden",
+        debug_mode: this.development_p ? "is_debug_mode_on" : "is_debug_mode_off",
+        sync_mode: this.development_p ? "is_sync_mode_soft" : "is_sync_mode_soft",
+        yomiage_mode: this.development_p ? "is_yomiage_mode_on" : "is_yomiage_mode_on",
+      }
+    },
+
     play_mode_p()    { return this.sp_run_mode === 'play_mode' },
     edit_mode_p()    { return this.sp_run_mode === 'edit_mode' },
     advanced_p()     { return this.turn_offset > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
@@ -370,58 +383,6 @@ export default {
       } else {
         return `${this.current_title} ${this.turn_offset}手目`
       }
-    },
-
-    current_url_params() {
-      let params = {
-        ...this.$route.query,                  // デバッグ用パラメータを保持するため
-        body:               DotSfen.escape(this.current_body), // 編集モードでもURLを更新するため
-        turn:               this.turn_offset,
-        title:              this.current_title,
-        abstract_viewpoint: this.abstract_viewpoint,
-        room_code:          this.room_code,
-        sp_run_mode:        this.sp_run_mode,
-        internal_rule:      this.internal_rule,
-      }
-
-      if (this.blank_p(params.title) || params.title === SHARE_BOARD_TITLE) {
-        delete params.title
-      }
-      if (this.blank_p(params.room_code)) {
-        delete params.room_code
-      }
-      if (params.sp_run_mode === RUN_MODE_DEFAULT) {
-        delete params.sp_run_mode
-      }
-      if (params.internal_rule === this.default_internal_rule) {
-        delete params.internal_rule
-      }
-
-      return params
-    },
-
-    // URL
-    current_url()      { return this.permalink_for()                 },
-    json_debug_url()   { return this.permalink_for({format: "json"}) },
-    twitter_card_url() { return this.permalink_for({format: "png"})  },
-
-    // 外部アプリ
-    piyo_shogi_app_with_params_url() {
-      return this.piyo_shogi_auto_url({
-        path: this.current_url,
-        sfen: this.current_sfen,
-        turn: this.turn_offset,
-        viewpoint: this.sp_viewpoint,
-        game_name: this.current_title,
-      })
-    },
-
-    kento_app_with_params_url() {
-      return this.kento_full_url({
-        sfen: this.current_sfen,
-        turn: this.turn_offset,
-        viewpoint: this.sp_viewpoint,
-      })
     },
 
     ////////////////////////////////////////////////////////////////////////////////

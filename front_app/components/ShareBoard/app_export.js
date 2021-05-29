@@ -48,22 +48,7 @@ export const app_export = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-
-    // 棋譜だけを含むURLのコピー
-    url_without_room_code_copy_handle() {
-      this.sidebar_p = false
-      this.sound_play("click")
-      this.clipboard_copy({text: this.url_without_room_code})
-    },
   },
   computed: {
-    // 棋譜だけを含むURL
-    url_without_room_code() {
-      const e = {...this.current_url_params}
-      if (this.present_p(e.room_code)) {
-        delete e.room_code
-      }
-      return this.permalink_from_params(e)
-    },
   },
 }
