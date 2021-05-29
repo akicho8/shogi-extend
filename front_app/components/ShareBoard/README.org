@@ -1,3 +1,4 @@
+http://0.0.0.0:4000/share-board?autoexec=auto_matching_modal_handle
 http://0.0.0.0:4000/share-board?autoexec=is_sync_mode_hard
 http://0.0.0.0:4000/share-board?autoexec=general_setting_modal_handle&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.7g7f.3c3d.5g5f.2c2d.2g2f.4c4d.6g6f.6c6d.2f2e.2d2e.2h2e.3d3e.9g9f.8c8d&turn=14&abstract_viewpoint=self&room_code=a
 
@@ -15,7 +16,7 @@ http://0.0.0.0:4000/share-board?autoexec=general_setting_modal_handle&body=posit
   | default_user_name           | localStorage が空のときの user_name 初期値 | http://0.0.0.0:4000/share-board?room_code=a&default_user_name=bob                       |
   | force_user_name             | localStorage に関係なくこの名前にする      | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice                       |
   | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)  | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&SEND_SUCCESS_DELAY=-1 |
-  | RETRY_DELAY      | SFEN送信後N秒待ってから返答をチェックする  |                                                                                         |
+  | RETRY_DELAY                 | SFEN送信後N秒待ってから返答をチェックする  |                                                                                         |
   | ordered_member_names        | 順番設定の名前(複数)                       |                                                                                         |
   | clock_box.initial_main_min  | 持ち時間(分)                               |                                                                                         |
   | clock_box.initial_read_sec  | 秒読み(秒)                                 |                                                                                         |
