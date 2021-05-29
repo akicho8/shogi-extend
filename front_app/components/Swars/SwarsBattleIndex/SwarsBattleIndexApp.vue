@@ -222,6 +222,7 @@ export default {
     --sp_piece_count_gap_bottom: 64%
 
 .STAGE-development
-  .column
-    border: 1px dashed change_color($primary, $alpha: 0.5)
+  .SwarsBattleIndexApp
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
