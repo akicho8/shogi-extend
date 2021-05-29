@@ -324,20 +324,18 @@ export default {
     },
 
     // ../../../app/controllers/share_boards_controller.rb の current_og_image_path と一致させること
+    // AbstractViewpointKeySelectModal から新しい abstract_viewpoint が渡されるので params で上書きする
     permalink_for(params = {}) {
+      return this.permalink_from_params({...this.current_url_params, ...params})
+    },
+
+    permalink_from_params(params = {}) {
       let url = null
       if (params.format) {
         url = new URL(this.$config.MY_SITE_URL + `/share-board.${params.format}`)
       } else {
         url = new URL(this.$config.MY_SITE_URL + `/share-board`)
       }
-
-      // AbstractViewpointKeySelectModal から新しい abstract_viewpoint が渡されるので params で上書きすること
-      params = {
-        ...this.current_url_params,
-        ...params,
-      }
-
       _.each(params, (v, k) => {
         if (k !== "format") {
           if (v || true) {              // if (v) にしてしまうと turn = 0 のとき turn=0 が URL に含まれない
@@ -345,7 +343,6 @@ export default {
           }
         }
       })
-
       return url.toString()
     },
 
