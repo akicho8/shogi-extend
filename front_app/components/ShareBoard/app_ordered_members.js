@@ -28,13 +28,18 @@ export const app_ordered_members = {
     os_setup_by_url_params() {
       const names = this.str_to_keywords(this.$route.query.ordered_member_names)
       if (this.present_p(names)) {
-        this.order_func_p = true
-        this.ordered_members = names.map((e, i) => ({
-          enabled_p: true,
-          order_index: i,
-          user_name: e,
-        }))
+        this.os_setup_by_names(names)
       }
+    },
+
+    os_setup_by_names(names) {
+      this.ordered_members = names.map((e, i) => ({
+        enabled_p: true,
+        order_index: i,
+        user_name: e,
+      }))
+
+      this.order_func_p = true  // 有効化
     },
 
     // 順番設定モーダル起動
