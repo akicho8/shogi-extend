@@ -463,7 +463,7 @@ export default {
       name = name.replace(/(.+)\(.*\)$/, "$1") // "name123(xxx)"   → "name123"
       name = name.replace(/(.+)（.*）$/, "$1") // "name123（xxx）" → "name123"
       name = name.replace(/(\D+)\d+$/, "$1")   // "name123"        → "name"
-      if (name.match(/.(さん|サン|ｻﾝ|くん|クン|ｸﾝ|ちゃん|チャン|ﾁｬﾝ|マン|さま|サマ|ｻﾏ|様|氏|段|級|団|冠)[!！]?$/)) {
+      if (name.match(/.(ん|ン|ﾝ|さま|サマ|ｻﾏ|様|氏|段|級|団|冠)[!！]?$/)) {
         return name
       }
       if (name.match(/.(コ|ｺ|こ|子)$/)) {
