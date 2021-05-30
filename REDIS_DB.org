@@ -10,8 +10,7 @@
 |      |  5 | sidekiq                | production | redis_db_for_sidekiq   |
 |      |  6 | ActionCable            | production | cable.yml              |
 |      |  7 | エモ将棋               | production | redis_db_for_emox      |
-|      |  7 |                        |            |                        |
-|      |  8 |                        |            |                        |
+|      |  8 | sbx                    | production | redis_db_for_sbx       |
 |      |  9 |                        |            |                        |
 |      | 10 |                        |            |                        |
 |      | 11 |                        |            |                        |
@@ -35,5 +34,5 @@
 |      | 12 | sidekiq                | staging    | redis_db_for_sidekiq   |
 |      | 13 | ActionCable            | staging    | cable.yml              |
 |      | 14 | エモ将棋               | staging    | redis_db_for_emox      |
-|      | 15 |                        |            |                        |
+|      | 15 | sbx                    | staging    | redis_db_for_emox      |
 |------+----+------------------------+------------+------------------------|

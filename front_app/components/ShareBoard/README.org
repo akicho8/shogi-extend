@@ -1,4 +1,4 @@
-http://0.0.0.0:4000/share-board?autoexec=auto_matching_modal_handle
+http://0.0.0.0:4000/share-board?autoexec=xmatch_modal_handle
 http://0.0.0.0:4000/share-board?autoexec=is_sync_mode_hard
 http://0.0.0.0:4000/share-board?autoexec=general_setting_modal_handle&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.7g7f.3c3d.5g5f.2c2d.2g2f.4c4d.6g6f.6c6d.2f2e.2d2e.2h2e.3d3e.9g9f.8c8d&turn=14&abstract_viewpoint=self&room_code=a
 

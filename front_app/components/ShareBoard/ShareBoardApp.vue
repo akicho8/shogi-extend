@@ -150,7 +150,7 @@ import { app_room_setup           } from "./app_room_setup.js"
 import { app_devise               } from "./app_devise.js"
 import { app_room_leave           } from "./app_room_leave.js"
 import { app_track_log            } from "./app_track_log.js"
-import { app_auto_matching           } from "./app_auto_matching.js"
+import { app_xmatch           } from "./app_xmatch.js"
 import { app_room_board_setup     } from "./app_room_board_setup.js"
 import { app_room_members         } from "./app_room_members.js"
 import { app_ping                 } from "./app_ping.js"
@@ -186,7 +186,7 @@ export default {
     app_devise,
     app_room_leave,
     app_track_log,
-    app_auto_matching,
+    app_xmatch,
     app_room_board_setup,
     app_room_members,
     app_ping,
