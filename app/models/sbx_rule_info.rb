@@ -1,3 +1,18 @@
+# require "redis"
+# r = Redis.new
+# r.select(0)
+# r.flushdb
+# r.hset("key", "a", "v1") # => true
+# r.hset("key", "b", "v2") # => true
+# r.hset("key", "c", "-")  # => true
+# r.hset("key", "c", "v3") # => false
+# r.hlen("key")            # => 3
+# r.hdel("key", "b")       # => 1
+# r.hdel("key", "b")       # => 0
+# r.hgetall("key")         # => {"a"=>"v1", "c"=>"v3"}
+# r.hset("key", "b", "v2") # => true
+# r.hvals("key")           # => ["v1", "v3", "v2"]
+#
 class SbxRuleInfo
   include ApplicationMemoryRecord
   memory_record [
@@ -9,10 +24,11 @@ class SbxRuleInfo
 
   class << self
     def sbx_info
-      inject({}) do |a, e|
-        sbx_members = redis.hvals(e.redis_key).collect { |e| JSON.parse(e) }
-        a.merge(e.key => sbx_members)
-      end
+      inject({}) { |a, e| a.merge(e.key => e.values) }
+    end
+
+    def clear_all
+      redis.flushdb
     end
 
     def redis
@@ -20,31 +36,54 @@ class SbxRuleInfo
     end
   end
 
-  delegate :redis, to: "self.class"
+  delegate :redis, :clear_all, to: "self.class"
 
   def member_add(data)
-    # redis.flushdb
-    # redis.hdel(redis_key, data["current_user_id"])
-
-    self.class.each do |e|
-      if e.key != key
-        redis.hdel(e.redis_key, data["current_user_id"])
-      end
+    if false
+      redis.hdel(redis_key, data["current_user_id"])
     end
 
+    other_rule_delete(data) # 他のルールを選択している場合はいったん削除する
+
     redis.hset(redis_key, data["current_user_id"], data.to_json) # 初回なら true
-    size = redis.hlen(redis_key)
+
     h = {}
-    if size >= members_count_max
+    if members_count >= members_count_max
+      if true
+        keys = redis.hkeys(redis_key).take(members_count_max) # キーたちを members_count_max 件に絞る
+        values = redis.hmget(redis_key, *keys)                # 値たちを取得
+        redis.hdel(redis_key, *keys)                          # DBから削除
+        member_names = values.collect { |e| JSON.parse(e)["from_user_name"] }
+        # member_names = member_names.shuffle
+        h[:member_names] = member_names
+      end
+
       h[:room_code] = SecureRandom.hex
-      member_infos = redis.hvals(redis_key).collect { |e| JSON.parse(e) }
-      member_names = member_infos.collect { |e| e["from_user_name"] } # シャッフル可
-      h[:member_names] = member_names
     end
     h
   end
 
   def redis_key
     [self.class.name.underscore, key].join("/")
+  end
+
+  def values
+    redis.hvals(redis_key).collect { |e| JSON.parse(e) }
+  end
+
+  private
+
+  # 他のルールを選択している場合はいったん削除する
+  def other_rule_delete(data)
+    self.class.each do |e|
+      if e.key != key
+        redis.hdel(e.redis_key, data["current_user_id"])
+      end
+    end
+  end
+
+  # このルールを選択しているメンバー数
+  def members_count
+    redis.hlen(redis_key)
   end
 end
