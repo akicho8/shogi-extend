@@ -13,6 +13,11 @@ module ShogiErrorRescueMethods
       end
     end
 
+    rescue_from "ActiveRecord::ValueTooLong" do |error|
+      bs_error = { message: "容量が大きすぎます" }
+      render json: { bs_error: bs_error }, status: 200
+    end
+
     rescue_from "Bioshogi::BioshogiError" do |error|
       if Rails.env.development?
         Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, error])
