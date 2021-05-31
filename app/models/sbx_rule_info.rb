@@ -23,7 +23,7 @@ class SbxRuleInfo
   ]
 
   class << self
-    def sbx_info
+    def sbx_rules_members
       inject({}) { |a, e| a.merge(e.key => e.values) }
     end
 
@@ -62,7 +62,7 @@ class SbxRuleInfo
       h[:room_code] = SecureRandom.hex
     end
 
-    h[:sbx_info] = SbxRuleInfo.sbx_info
+    h[:sbx_rules_members] = SbxRuleInfo.sbx_rules_members
     h
   end
 

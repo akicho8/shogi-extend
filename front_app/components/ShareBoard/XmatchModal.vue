@@ -10,8 +10,8 @@
           .has-text-weight-bold
             | {{sbx_rule_info.name}}
           b-taglist.mt-2
-            template(v-if="base.sbx_info[sbx_rule_info.key]")
-              template(v-for="e in base.sbx_info[sbx_rule_info.key]")
+            template(v-if="base.sbx_rules_members[sbx_rule_info.key]")
+              template(v-for="e in base.sbx_rules_members[sbx_rule_info.key]")
                 b-tag(rounded type="is-primary")
                   span(:class="user_name_class(e)")
                     | {{e.from_user_name}}
@@ -20,7 +20,7 @@
 
       // b-loading(:active="!base.ac_lobby")
       | {{!!base.ac_lobby}}
-      pre {{base.sbx_info}}
+      pre {{base.sbx_rules_members}}
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle") 閉じる
@@ -54,11 +54,11 @@ export default {
     },
     sbx_rule_click(e) {
       this.sound_play("click")
-      this.base.lobby_rule_select(e)
+      this.base.rule_select(e)
     },
 
     rest_count(sbx_rule_info) {
-      let r = sbx_rule_info.members_count_max - (this.base.sbx_info[sbx_rule_info.key] || []).length
+      let r = sbx_rule_info.members_count_max - (this.base.sbx_rules_members[sbx_rule_info.key] || []).length
       if (r < 0) {
         r = 0
       }

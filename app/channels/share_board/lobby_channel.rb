@@ -10,7 +10,7 @@ module ShareBoard
       simple_track("購読開始")
       stream_from "share_board/lobby_channel"
 
-      data = { sbx_info: SbxRuleInfo.sbx_info }
+      data = { sbx_rules_members: SbxRuleInfo.sbx_rules_members }
       broadcast(:subscribed_broadcasted, data)
     end
 
@@ -18,11 +18,11 @@ module ShareBoard
       simple_track("購読停止")
     end
 
-    def lobby_rule_select(data)
-      track(data, "選択", "")
+    def rule_select(data)
       sbx_rule_info = SbxRuleInfo.fetch(data["sbx_rule_key"])
+      track(data, "規則選択", sbx_rule_info.key)
       data = data.merge(sbx_rule_info.member_add(data))
-      broadcast(:lobby_rule_select_broadcasted, data)
+      broadcast(:rule_select_broadcasted, data)
     end
 
     private

@@ -8,7 +8,7 @@ export const app_xmatch = {
   data() {
     return {
       ac_lobby: null,           // subscriptions.create のインスタンス
-      sbx_info: {},
+      sbx_rules_members: {},
       xmatch_modal_instance: null,
     }
   },
@@ -108,16 +108,16 @@ export const app_xmatch = {
     },
 
     subscribed_broadcasted(params) {
-      this.sbx_info = params.sbx_info
+      this.sbx_rules_members = params.sbx_rules_members
     },
 
     // //////////////////////////////////////////////////////////////////////////////// 退室
-    lobby_rule_select(e) {
-      this.ac_lobby_perform("lobby_rule_select", {
+    rule_select(e) {
+      this.ac_lobby_perform("rule_select", {
         sbx_rule_key: e.key,
       }) // --> app/channels/share_board/lobby_channel.rb
     },
-    lobby_rule_select_broadcasted(params) {
+    rule_select_broadcasted(params) {
       if (params.from_connection_id === this.connection_id) {
         // 自分から自分
       } else {
@@ -125,7 +125,7 @@ export const app_xmatch = {
       }
 
       // マッチング画面の情報
-      this.sbx_info = params.sbx_info
+      this.sbx_rules_members = params.sbx_rules_members
 
       // 合言葉がある場合マッチングが成立している
       if (params.room_code) {
