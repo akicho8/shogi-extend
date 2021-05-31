@@ -48,18 +48,21 @@ class SbxRuleInfo
     redis.hset(redis_key, data["current_user_id"], data.to_json) # 初回なら true
 
     h = {}
+
     if members_count >= members_count_max
       if true
         keys = redis.hkeys(redis_key).take(members_count_max) # キーたちを members_count_max 件に絞る
         values = redis.hmget(redis_key, *keys)                # 値たちを取得
         redis.hdel(redis_key, *keys)                          # DBから削除
-        member_names = values.collect { |e| JSON.parse(e)["from_user_name"] }
-        # member_names = member_names.shuffle
-        h[:member_names] = member_names
+        members = values.collect { |e| JSON.parse(e) }
+        # members = members.shuffle
+        h[:members] = members
       end
 
       h[:room_code] = SecureRandom.hex
     end
+
+    h[:sbx_info] = SbxRuleInfo.sbx_info
     h
   end
 

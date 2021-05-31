@@ -22,7 +22,6 @@ module ShareBoard
       track(data, "選択", "")
       sbx_rule_info = SbxRuleInfo.fetch(data["sbx_rule_key"])
       data = data.merge(sbx_rule_info.member_add(data))
-      data = data.merge("sbx_info" => SbxRuleInfo.sbx_info)
       broadcast(:lobby_rule_select_broadcasted, data)
     end
 

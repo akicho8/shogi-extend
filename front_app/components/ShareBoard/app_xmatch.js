@@ -129,39 +129,42 @@ export const app_xmatch = {
 
       // 合言葉がある場合マッチングが成立している
       if (params.room_code) {
-        this.__assert__(params.member_names, "params.member_names")
+        this.__assert__(params.members, "params.members")
+        if (params.members.some(e => e.from_connection_id === this.connection_id)) { // 自分が含まれていれば
 
-        if (this.development_p) {
-        } else {
-          this.xmatch_modal_close()
+          if (this.development_p) {
+          } else {
+            this.xmatch_modal_close()
+          }
+
+          // 順番設定
+          if (true) {
+            const names = params.members.map(e => e.from_user_name)
+            this.os_setup_by_names(names)
+          }
+
+          // チェスクロック
+          if (true) {
+            const sbx_rule_info = SbxRuleInfo.fetch(params.sbx_rule_key)
+            this.cc_params = {...sbx_rule_info.cc_params} // チェスクロック時間設定
+            this.cc_create()                              // チェスクロック起動
+            this.cc_params_apply()                        // チェスクロックに時間設定を適用
+            this.clock_box.play_handle()                  // PLAY押す
+          }
+
+          // 部屋に入る
+          // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる
+          // めちゃくちゃだけどホストの概念がないのでこれでいい
+          if (true) {
+            this.room_destroy()               // デバッグ時にダイアログの選択肢再選択も耐えるため
+            this.room_code = params.room_code // サーバー側で決めた共通の合言葉を使う
+            this.room_create()
+          }
+
+          this.delay_block(START_TOAST_DELAY, () => {
+            this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
+          })
         }
-
-        // 順番設定
-        if (true) {
-          this.os_setup_by_names(params.member_names)
-        }
-
-        // チェスクロック
-        if (true) {
-          const sbx_rule_info = SbxRuleInfo.fetch(params.sbx_rule_key)
-          this.cc_params = {...sbx_rule_info.cc_params} // チェスクロック時間設定
-          this.cc_create()                              // チェスクロック起動
-          this.cc_params_apply()                        // チェスクロックに時間設定を適用
-          this.clock_box.play_handle()                  // PLAY押す
-        }
-
-        // 部屋に入る
-        // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる
-        // めちゃくちゃだけどホストの概念がないのでこれでいい
-        if (true) {
-          this.room_destroy()               // デバッグ時にダイアログの選択肢再選択も耐えるため
-          this.room_code = params.room_code // サーバー側で決めた共通の合言葉を使う
-          this.room_create()
-        }
-
-        this.delay_block(START_TOAST_DELAY, () => {
-          this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
-        })
       }
     },
   },
