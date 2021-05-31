@@ -131,41 +131,57 @@ export const app_xmatch = {
       if (params.room_code) {
         this.__assert__(params.members, "params.members")
         if (params.members.some(e => e.from_connection_id === this.connection_id)) { // 自分が含まれていれば
-
           if (this.development_p) {
           } else {
             this.xmatch_modal_close()
           }
-
-          // 順番設定
-          if (true) {
-            const names = params.members.map(e => e.from_user_name)
-            this.os_setup_by_names(names)
-          }
-
-          // チェスクロック
-          if (true) {
-            const sbx_rule_info = SbxRuleInfo.fetch(params.sbx_rule_key)
-            this.cc_params = {...sbx_rule_info.cc_params} // チェスクロック時間設定
-            this.cc_create()                              // チェスクロック起動
-            this.cc_params_apply()                        // チェスクロックに時間設定を適用
-            this.clock_box.play_handle()                  // PLAY押す
-          }
-
-          // 部屋に入る
-          // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる
-          // めちゃくちゃだけどホストの概念がないのでこれでいい
-          if (true) {
-            this.room_destroy()               // デバッグ時にダイアログの選択肢再選択も耐えるため
-            this.room_code = params.room_code // サーバー側で決めた共通の合言葉を使う
-            this.room_create()
-          }
-
-          this.delay_block(START_TOAST_DELAY, () => {
-            this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
-          })
+          this.xmatch_setup1(params) // 順番設定(必ず最初)
+          this.xmatch_setup2(params) // 手合割
+          this.xmatch_setup3(params) // チェスクロック
+          this.xmatch_setup4(params) // 部屋に入る
+          this.xmatch_setup5(params) // 「開始してください」コール
         }
       }
+    },
+    // 順番設定
+    xmatch_setup1(params) {
+      const names = params.members.map(e => e.from_user_name)
+      this.os_setup_by_names(names)
+      this.tl_add("順番設定", names, this.ordered_members)
+    },
+    // 手合割と視点設定
+    xmatch_setup2(params) {
+      const sbx_rule_info = SbxRuleInfo.fetch(params.sbx_rule_key)
+
+      this.turn_offset = 0                                              // 手数0から始める
+      this.current_sfen = sbx_rule_info.handicap_preset_info.sfen       // 手合割の反映
+
+      this.__assert__(this.user_name, "this.user_name")
+      const index = this.turn_by_name(this.user_name)                   // 順番設定から自分の番号(0..)を取得
+      this.tl_add("順番番号", index)
+      this.__assert__(this.present_p(index), "this.present_p(index)")
+      const location = this.current_sfen_info.location_by_offset(index) // その番号を手番すると自分の最初の場所がわかる
+      this.tl_add("場所確定", location.key)
+      this.sp_viewpoint = location.key                                  // その視点に変更する
+    },
+    xmatch_setup3(params) {
+      const sbx_rule_info = SbxRuleInfo.fetch(params.sbx_rule_key)
+      this.cc_params = {...sbx_rule_info.cc_params} // チェスクロック時間設定
+      this.cc_create()                              // チェスクロック起動 (先後は current_location.code で決める)
+      this.cc_params_apply()                        // チェスクロックに時間設定を適用
+      this.clock_box.play_handle()                  // PLAY押す
+    },
+    xmatch_setup4(params) {
+      // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる
+      // めちゃくちゃだけどホストの概念がないのでこれでいい
+      this.room_destroy()               // デバッグ時にダイアログの選択肢再選択も耐えるため
+      this.room_code = params.room_code // サーバー側で決めた共通の合言葉を使う
+      this.room_create()
+    },
+    xmatch_setup5() {
+      this.delay_block(START_TOAST_DELAY, () => {
+        this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
+      })
     },
   },
   computed: {

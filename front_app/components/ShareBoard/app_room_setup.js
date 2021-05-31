@@ -205,29 +205,5 @@ export const app_room_setup = {
 
     // 合言葉と名前が入力済みなので共有可能か？
     connectable_p() { return this.present_p(this.room_code) && this.present_p(this.user_name) },
-
-    ////////////////////////////////////////////////////////////////////////////////
-    current_sfen_attrs() {
-      return {
-        sfen:              this.current_sfen,
-        turn_offset:       this.current_sfen_info.turn_offset_max, // これを入れない方が早い？
-        last_location_key: this.current_sfen_info.last_location.key,
-      }
-    },
-    current_sfen_info() {
-      return this.sfen_parse(this.current_sfen)
-    },
-    current_sfen_turn_offset() {
-      return this.current_sfen_info.turn_offset_max
-    },
-    // this.current_sfen_info.location_by_offset(this.current_sfen_turn_offset) と同じ
-    next_location() {
-      return this.current_sfen_info.next_location
-    },
-    current_location() {
-      return this.current_sfen_info.location_by_offset(this.turn_offset)
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
   },
 }

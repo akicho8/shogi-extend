@@ -394,6 +394,20 @@ export default {
     // 常に画面上の盤面と一致している
     current_body() { return this.current_sfen },
 
+    ////////////////////////////////////////////////////////////////////////////////
+    current_sfen_attrs() {
+      return {
+        sfen:              this.current_sfen,
+        turn_offset:       this.current_sfen_info.turn_offset_max, // これを入れない方が早い？
+        last_location_key: this.current_sfen_info.last_location.key,
+      }
+    },
+    current_sfen_info()        { return this.sfen_parse(this.current_sfen)                          },
+    current_sfen_turn_offset() { return this.current_sfen_info.turn_offset_max                      },
+    next_location()            { return this.current_sfen_info.next_location                        },
+    current_location()         { return this.current_sfen_info.location_by_offset(this.turn_offset) },
+    base_location()            { return this.current_sfen_info.location_by_offset(0)                },
+
     component_style() {
       return {
         "--share_board_column_width": this.share_board_column_width,
