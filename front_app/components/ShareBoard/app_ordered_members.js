@@ -221,6 +221,15 @@ export const app_ordered_members = {
       this.ordered_members = params.ordered_members
       this.strict_key      = params.strict_key
     },
+
+    // 自分の場所を調べて正面をその視点にする
+    sp_viewpoint_set() {
+      this.__assert__(this.user_name, "this.user_name")
+      const location = this.location_by_name(this.user_name) // 自分の▲△
+      if (location) {
+        this.sp_viewpoint = location.key                     // その視点に変更する
+      }
+    },
   },
 
   computed: {
