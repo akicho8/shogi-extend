@@ -36,10 +36,11 @@
 
         b-table-column(v-slot="{row}" field="order_index" label="順番" centered :width="1")
           template(v-if="row.order_index != null")
+            | {{base.current_sfen_info.location_by_offset(row.order_index).name}}
             | {{row.order_index + 1}}
 
         b-table-column(v-slot="{row}" field="user_name" label="メンバー")
-          span(:class="{'x-has-text-weight-bold': row.enabled_p}")
+          span(:class="{'has-text-weight-bold': row.order_index === base.order_index_by_turn(base.turn_offset)}")
             | {{row.user_name}}
 
         b-table-column(v-slot="{row}" field="enabled_p"   label="参加" centered)
