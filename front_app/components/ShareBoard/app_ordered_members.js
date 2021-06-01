@@ -125,16 +125,16 @@ export const app_ordered_members = {
       return this.ordered_members_cycle_at(turn).user_name
     },
 
-    // 指定の名前の人は何番目か？
-    turn_by_name(name) {
+    // 指定の名前の人のインデックス
+    turn_by_name(user_name) {
+      // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
       if (!this.order_func_p) {
-        // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
         return null
       }
       if (this.ordered_members_blank_p) {
         return null
       }
-      const e = this.ordered_members.find(e => e.user_name === this.user_name)
+      const e = this.ordered_members.find(e => e.user_name === user_name)
       if (e) {
         if (e.enabled_p) {
           return e.order_index

@@ -157,11 +157,8 @@ export const app_xmatch = {
       this.current_sfen = sbx_rule_info.handicap_preset_info.sfen       // 手合割の反映
 
       this.__assert__(this.user_name, "this.user_name")
-      const index = this.turn_by_name(this.user_name)                   // 順番設定から自分の番号(0..)を取得
-      this.tl_add("順番番号", index)
-      this.__assert__(this.present_p(index), "this.present_p(index)")
-      const location = this.current_sfen_info.location_by_offset(index) // その番号を手番すると自分の最初の場所がわかる
-      this.tl_add("場所確定", location.key)
+      const location = this.location_by_name(this.user_name)            // 自分の▲△
+      this.__assert__(location, "location")
       this.sp_viewpoint = location.key                                  // その視点に変更する
     },
     xmatch_setup3(params) {
