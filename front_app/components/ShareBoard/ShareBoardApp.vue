@@ -109,7 +109,6 @@ client-only
                 b-button(@click="reload_modal_handle") リロード確認
                 b-button(@click="room_entry_call('alice')") 入室コール
                 b-button(@click="room_leave_call('alice')") 退室コール
-                b-button(@click="room_leave_call('alice')") 退室コール
 
                 b-button(@click="cc_params_load") cc_params_load
                 b-button(@click="cc_params_save") cc_params_save
