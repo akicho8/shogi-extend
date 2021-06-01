@@ -223,7 +223,7 @@ export const app_ordered_members = {
     },
 
     // 自分の場所を調べて正面をその視点にする
-    sp_viewpoint_set() {
+    sp_viewpoint_set_by_self_location() {
       this.__assert__(this.user_name, "this.user_name")
       const location = this.location_by_name(this.user_name) // 自分の▲△
       if (location) {

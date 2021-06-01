@@ -155,7 +155,7 @@ export const app_xmatch = {
 
       this.turn_offset = 0                                              // 手数0から始める
       this.current_sfen = sbx_rule_info.handicap_preset_info.sfen       // 手合割の反映
-      this.sp_viewpoint_set()                                           // 自分の場所を調べて正面をその視点にする
+      this.sp_viewpoint_set_by_self_location()                                           // 自分の場所を調べて正面をその視点にする
     },
     xmatch_setup3(params) {
       const sbx_rule_info = SbxRuleInfo.fetch(params.sbx_rule_key)
