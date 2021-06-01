@@ -46,7 +46,7 @@ RSpec.describe "共有将棋盤", type: :system do
   it "視点はselfなので駒落ちのときに△側が下に来ている" do
     a_block do
       visit "/share-board?abstract_viewpoint=self&body=position+sfen+4k4%2F9%2F9%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+w+-+1&turn=0"
-      assert_selector(".CustomShogiPlayer .is_viewpoint_white")
+      assert_viewpoint(:white)
       doc_image
     end
   end
@@ -341,14 +341,6 @@ RSpec.describe "共有将棋盤", type: :system do
       b_block do
         assert_no_text("(通知効果音)")                     # 順番設定OFFなので通知されない
       end
-    end
-
-    def order_modal_main_switch_click(stat)
-      side_menu_open
-      menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
-      find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
-      assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
-      first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
     end
   end
 
@@ -781,10 +773,7 @@ RSpec.describe "共有将棋盤", type: :system do
         room_setup("my_room", "bob")   # bobも同じ部屋に入る
       end
       a_block do
-        side_menu_open
-        menu_item_click("手合割")
-        find(".HandicapSetModal .handicap_preset_key").select("香落ち")
-        find(".apply_button").click
+        preset_select("香落ち")
       end
       b_block do
         assert_move("22", "11", "☖1一角")
@@ -802,14 +791,8 @@ RSpec.describe "共有将棋盤", type: :system do
         room_setup("my_room", "bob")                 # bobも同じ部屋に入る
       end
       b_block do
-        side_menu_open
-        menu_item_click("順番設定")                  # 「順番設定」モーダルを開く
-        find(".main_switch").click                   # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
-        first(".close_button_for_capybara").click    # 閉じる (ヘッダーに置いている)
-
-        clock_open                                   # 対局時計を開いて
-        find(".play_button").click                   # 開始
-        first(".close_button_for_capybara").click    # 閉じる (ヘッダーに置いている)
+        order_set_on                                 # 順番設定ON
+        clock_start                                  # 対局時計 PLAY
       end
       a_block do
         assert_text("aliceから開始をaliceだけに通知") # 最初はaliceさんから開始
@@ -831,6 +814,41 @@ RSpec.describe "共有将棋盤", type: :system do
         piece_move("77", "76")
         sleep(@RETRY_DELAY)
         assert_no_text("同期失敗")
+      end
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '時計開始時に視点の自動設定'
+  describe "時計開始時に視点の自動設定" do
+    def test1(preset_key)
+      a_block do
+        room_setup("my_room", "alice") # aliceが部屋を作る
+      end
+      b_block do
+        room_setup("my_room", "bob")   # bobも同じ部屋に入る
+      end
+      a_block do
+        preset_select(preset_key)      # 手合割設定
+        order_set_on                   # 順番設定ON
+        clock_start                    # 対局時計PLAY
+      end
+    end
+    it "平手" do
+      test1("平手")
+      a_block do
+        assert_viewpoint(:black) # bob が▲なので盤が反転していない
+      end
+      b_block do
+        assert_viewpoint(:white) # alice が△なので盤が反転している
+      end
+    end
+    it "駒落ち" do
+      test1("八枚落ち")
+      a_block do
+        assert_viewpoint(:white) # bob が△なので盤が反転している
+      end
+      b_block do
+        assert_viewpoint(:black) # alice が▲なので盤が反転している
       end
     end
   end
@@ -991,5 +1009,35 @@ RSpec.describe "共有将棋盤", type: :system do
     menu_item_click("部屋に入る")  # 「部屋に入る」を自分でクリックする
     first(".leave_button").click   # 退室ボタンをクリックする
     first(".close_button").click   # 閉じる
+  end
+
+  # 手合割選択
+  def preset_select(preset_key)
+    side_menu_open
+    menu_item_click("手合割")
+    find(".HandicapSetModal .handicap_preset_key").select(preset_key)
+    find(".apply_button").click
+  end
+
+  def order_set_on
+    order_modal_main_switch_click("有効")
+  end
+
+  def order_modal_main_switch_click(stat)
+    side_menu_open
+    menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
+    find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+    assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
+    first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+  end
+
+  def clock_start
+    clock_open                                   # 対局時計を開いて
+    find(".play_button").click                   # 開始
+    first(".close_button_for_capybara").click    # 閉じる (ヘッダーに置いている)
+  end
+
+  def assert_viewpoint(location_key)
+    assert_selector(".CustomShogiPlayer .is_viewpoint_#{location_key}")
   end
 end
