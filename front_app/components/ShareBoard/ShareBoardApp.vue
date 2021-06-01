@@ -2,6 +2,9 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox(v-if="development_p")
+      p self_vs_self_p: {{self_vs_self_p}}
+      p ordered_members: {{ordered_members}}
+
       template(v-if="clock_box")
         p next_location: {{next_location.key}}
         p timer: {{clock_box.timer}}
@@ -15,7 +18,6 @@ client-only
       p current_turn_user_name: {{current_turn_user_name}}
       p turn_offset: {{turn_offset}}
       p previous_user_name: {{previous_user_name}}
-      p ordered_members: {{ordered_members}}
       p sp_viewpoint: {{sp_viewpoint}}
       p sp_player_info: {{JSON.stringify(sp_player_info)}}
       //- p room_code: {{JSON.stringify(room_code)}}
