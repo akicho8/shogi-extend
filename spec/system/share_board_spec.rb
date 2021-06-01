@@ -812,7 +812,7 @@ RSpec.describe "共有将棋盤", type: :system do
         first(".close_button_for_capybara").click    # 閉じる (ヘッダーに置いている)
       end
       a_block do
-        assert_text("(通知効果音)")                  # 最初はaliceさんなので牛が鳴いた
+        assert_text("aliceから開始をaliceだけに通知") # 最初はaliceさんから開始
       end
       b_block do
         assert_text("aliceさんから開始してください") # bobさんの方でも誰から開始するかが示された
