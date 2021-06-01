@@ -38,7 +38,7 @@ export const app_room_board_setup = {
         this.sound_play("pon")
       }
       this.clog(`${params.from_connection_id} が要求`)
-      if (params.from_connection_id === this.connection_id) {
+      if (this.received_from_self(params)) {
         this.clog(`自分から自分へ`)
       } else {
         this.clog("参加者に盤の状態を教えてあげる")
@@ -71,7 +71,7 @@ export const app_room_board_setup = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     setup_info_send_broadcasted(params) {
-      if (params.from_connection_id === this.connection_id) {
+      if (this.received_from_self(params)) {
         this.clog("自分から自分へ")
       } else {
         this.clog(`${params.from_user_name} が ${params.to_user_name} に ${params.sfen} を送信したものを ${this.user_name} が受信`)

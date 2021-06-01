@@ -308,14 +308,14 @@ export const app_clock_box = {
     },
     clock_box_share_broadcasted(params) {
       this.debug_alert("時計同期")
-      if (params.from_connection_id === this.connection_id) {
+      if (this.received_from_self(params)) {
       } else {
         if (params.clock_box_attributes) {
           this.cc_create_unless_exist()                               // 時計がなければ作って
           this.clock_box.attributes = params.clock_box_attributes // 内部状態を同じにする
           this.cc_params = {...params.cc_params}                      // モーダルのパラメータを同じにする
         } else {
-          this.cc_destroy()
+          this.cc_destroy()     // 時計を捨てたことを同期
         }
       }
       if (params.message) {

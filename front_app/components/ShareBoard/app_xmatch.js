@@ -118,7 +118,7 @@ export const app_xmatch = {
       }) // --> app/channels/share_board/lobby_channel.rb
     },
     rule_select_broadcasted(params) {
-      if (params.from_connection_id === this.connection_id) {
+      if (this.received_from_self(params)) {
         // 自分から自分
       } else {
         // 自分から他の人

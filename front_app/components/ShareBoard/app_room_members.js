@@ -74,7 +74,7 @@ export const app_room_members = {
 
     // 誰かが存在することが伝えられた
     member_info_share_broadcasted(params) {
-      if (params.from_connection_id === this.connection_id) {
+      if (this.received_from_self(params)) {
         // 誰かが存在することを自分に伝えられた
       } else {
         // 他の人が存在することを自分に伝えられた

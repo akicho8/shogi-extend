@@ -52,7 +52,7 @@ export const app_sfen_share = {
     },
     sfen_share_broadcasted(params) {
       // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
-      if (params.from_connection_id === this.connection_id) {
+      if (this.received_from_self(params)) {
         // 自分から自分へ
       } else {
         // もし edit_mode に入っている場合は強制的に解除する

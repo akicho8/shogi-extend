@@ -175,7 +175,7 @@ export const app_room_setup = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     title_share_broadcasted(params) {
-      if (params.from_connection_id === this.connection_id) {
+      if (this.received_from_self(params)) {
         // 自分から自分へ
       } else {
         this.setup_by_params(params)
