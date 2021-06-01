@@ -1,7 +1,8 @@
 export const app_room_leave = {
   methods: {
     room_entry_call(name) {
-      this.sound_play("door_open")
+      // this.sound_play("door_open")
+      this.sound_play_random(["dog1", "dog2", "dog3"])
       this.delay_block(0.5, () => this.toast_ok(`${this.user_call_name(name)}が入室しました`))
     },
 

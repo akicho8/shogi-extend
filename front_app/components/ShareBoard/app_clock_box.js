@@ -325,9 +325,9 @@ export const app_clock_box = {
             // 開始時の処理
             this.sp_viewpoint_set_by_self_location()               // 自分の場所を調べて正面をその視点にする
             if (this.current_turn_self_p) {       // 自分が手番なら
-              this.tn_notify()                    // 牛
-              // this.sound_play("rooster")
+              // this.tn_notify()                 // 牛
             }
+            this.sound_play("rooster")
           }
         }
 
