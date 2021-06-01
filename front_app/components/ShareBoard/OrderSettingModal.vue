@@ -55,7 +55,10 @@
             b-button(     size="is-small" icon-left="arrow-up"   @click="arrow_handle(row,-1)")
             b-button.ml-1(size="is-small" icon-left="arrow-down" @click="arrow_handle(row, 1)")
 
-      b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message" v-if="development_p")
+      .buttons.mb-0.mt-2
+        b-button.mb-0(@click="shuffle_handle" size="is-small") シャッフル
+
+      b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message" v-if="development_p && false")
         b-field.is-marginless
           template(v-for="e in base.StrictInfo.values")
             b-radio-button(v-model="base.new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
@@ -69,6 +72,8 @@
 </template>
 
 <script>
+const SHUFFLE_MAX = 8
+
 import { support_child } from "./support_child.js"
 import _ from "lodash"
 import { CycleIterator } from "@/components/models/cycle_iterator.js"
@@ -105,6 +110,24 @@ export default {
     test_handle() {
       this.sound_play("click")
       this.base.tn_notify()
+    },
+
+    shuffle_handle() {
+      this.sound_play("click")
+
+      const values = this.base.os_table_rows
+      let a = values.filter(e => e.enabled_p)
+      let b = values.filter(e => !e.enabled_p)
+      let new_values = null
+      for (let i = 0; i < SHUFFLE_MAX; i++) {
+        new_values = [..._.shuffle(a), ...b]
+        if (!_.isEqual(values, new_values)) {
+          break
+        }
+      }
+
+      this.base.os_table_rows = new_values
+      this.order_index_update()
     },
 
     apply_handle() {

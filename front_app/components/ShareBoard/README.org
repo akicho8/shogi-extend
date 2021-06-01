@@ -34,6 +34,10 @@ http://0.0.0.0:4000/share-board?autoexec=general_setting_modal_handle&body=posit
 
    http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice
 
+** 順番設定済みのテスト
+
+   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol&autoexec=os_modal_handle
+
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 
    http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_DELAY=0&SEND_SUCCESS_DELAY=3
