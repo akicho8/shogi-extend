@@ -296,6 +296,10 @@ export const app_ordered_members = {
       return retv
     },
 
+    self_vs_self_p() { return (this.ordered_members || []).length === 1 }, // 自分vs自分で対戦している？
+    one_vs_one_p()   { return (this.ordered_members || []).length === 2 }, // 1vs1で対戦している？
+    many_vs_many_p() { return (this.ordered_members || []).length >= 3  }, // 3人以上で対戦している？
+
     // private
     ordered_members_blank_p()   { return this.blank_p(this.ordered_members)             }, // メンバーリストが空？
     ordered_members_present_p() { return this.present_p(this.ordered_members)           }, // メンバーリストがある？

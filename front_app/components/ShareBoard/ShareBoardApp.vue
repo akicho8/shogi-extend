@@ -273,7 +273,7 @@ export default {
     // },
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
-    // 局面0で1手指したとき last_move_info.turn_offset は 1
+    // 局面0で1手指したとき last_move_info.next_turn_offset は 1
     play_mode_advanced_full_moves_sfen_set(e) {
       this.current_sfen = e.sfen
       this.vibrate(10)
@@ -289,6 +289,12 @@ export default {
 
       // 時計の状態をブロードキャストする
       this.clock_box_share("")
+
+      // 次の人の視点にする
+      if (false) {
+        const location = this.current_sfen_info.location_by_offset(e.last_move_info.next_turn_offset)
+        this.sp_viewpoint = location.key
+      }
     },
 
     // デバッグ用
