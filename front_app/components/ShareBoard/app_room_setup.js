@@ -140,6 +140,8 @@ export const app_room_setup = {
       }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     // perform のラッパーで共通のパラメータを入れる
     ac_room_perform(action, params = {}) {
       params = {
@@ -154,6 +156,16 @@ export const app_room_setup = {
         this.ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
         // this.tl_add("USER", action)
       }
+    },
+
+    // 自分で送信したものを受信した
+    received_from_self(params) {
+      return params.from_connection_id === this.connection_id
+    },
+
+    // 他者が送信したものを受信した
+    received_from_other(params) {
+      return !this.received_from_self(params)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
