@@ -8,10 +8,14 @@ export const app_turn_notify = {
   },
   methods: {
     tn_notify() {
-      this.sound_play_random(["moo1", "moo2", "moo3"])
-      this.debug_alert("(通知効果音)")
-      this.vibrate(0)
-      this.vibrate([50, 50, 50, 50, 50])
+      if (this.self_vs_self_p) {
+        // skip
+      } else {
+        this.sound_play_random(["moo1", "moo2", "moo3"])
+        this.debug_alert("(通知効果音)")
+        this.vibrate(0)
+        this.vibrate([50, 50, 50, 50, 50])
+      }
     },
 
     // user_name が指し終わったら自分の手番とする
