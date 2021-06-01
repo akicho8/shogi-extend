@@ -78,6 +78,12 @@ export const app_sfen_share = {
 
         if (next_user_received_p) {
           this.tn_notify()
+
+          // 自分vs自分なら視点変更
+          if (this.self_vs_self_p) {
+            const location = this.current_sfen_info.location_by_offset(params.lmi.next_turn_offset)
+            this.sp_viewpoint = location.key
+          }
         }
 
         if (this.development_p) {
