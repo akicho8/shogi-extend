@@ -144,6 +144,18 @@ export const app_ordered_members = {
       }
     },
 
+    // 指定の名前の人の location
+    location_by_name(name) {
+      const index = this.turn_by_name(name) // 順番設定から自分の番号(0..)を取得
+      if (this.present_p(index)) {
+        // this.tl_add("順番番号", index)
+        // this.__assert__(this.present_p(index), "this.present_p(index)")
+        const location = this.current_sfen_info.location_by_offset(index) // その番号を手番すると自分の最初の場所がわかる
+        // this.tl_add("場所確定", location.key)
+        return location
+      }
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     order_func_share(params) {
