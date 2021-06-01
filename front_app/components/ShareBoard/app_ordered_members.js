@@ -110,11 +110,6 @@ export const app_ordered_members = {
     ////////////////////////////////////////////////////////////////////////////////
 
     ordered_members_cycle_at(index) {
-      return this.ary_cycle_at(this.ordered_members, index)
-    },
-
-    // 局面 turn の手番のメンバーの名前
-    user_name_by_turn(turn) {
       if (!this.order_func_p) {
         // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
         return null
@@ -122,7 +117,22 @@ export const app_ordered_members = {
       if (this.ordered_members_blank_p) {
         return null
       }
-      return this.ordered_members_cycle_at(turn).user_name
+      return this.ary_cycle_at(this.ordered_members, index)
+    },
+
+    // 局面 turn の手番のメンバーの名前
+    user_name_by_turn(turn) {
+      const e = this.ordered_members_cycle_at(turn)
+      if (e) {
+        return e.user_name
+      }
+    },
+    // 局面 turn の手番の順番
+    order_index_by_turn(turn) {
+      const e = this.ordered_members_cycle_at(turn)
+      if (e) {
+        return e.order_index
+      }
     },
 
     // 指定の名前の人のインデックス
