@@ -11,6 +11,17 @@ export const app_storage = {
       persistent_cc_params: null,
     }
   },
+  beforeMount() {
+    if (true) {
+      this.tl_add("beforeMount", "ls_setup")
+      this.ls_setup() // user_name の復帰
+
+      // URL引数を優先する(ls_setupの直後重要)
+      // http://0.0.0.0:4000/share-board?sp_move_cancel=is_move_cancel_easy
+      // http://0.0.0.0:4000/share-board?sp_move_cancel=is_move_cancel_hard
+      this.sp_move_cancel = this.$route.query.sp_move_cancel || this.sp_move_cancel
+    }
+  },
   computed: {
     // http://0.0.0.0:4000/share-board?default_user_name=foo でハンドルネームを設定できる(主にテスト用)
     // persistent_cc_params の保存のタイミングで user_name が null のまま保存されると
@@ -38,6 +49,7 @@ export const app_storage = {
         share_board_column_width: 80,
         user_name: this.default_user_name,
         persistent_cc_params: this.default_persistent_cc_params,
+        sp_move_cancel: this.DEFAULT_VARS.sp_move_cancel,
       }
     },
   },

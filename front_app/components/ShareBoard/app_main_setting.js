@@ -5,6 +5,7 @@ export const app_main_setting = {
     return {
       ctrl_mode:     null, // 対局時計が動作しているとき盤面下のコントローラーの表示有無
       yomiage_mode:  null, // 検討時の読み上げの有無
+      sp_move_cancel:  null, // 検討時の読み上げの有無
       sync_mode:     null, // 同期方法
       internal_rule: null, // 操作モードの内部ルール strict or free
       debug_mode:    null, // デバッグモード (bool型にしてはいけない)

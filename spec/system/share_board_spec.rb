@@ -865,6 +865,31 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '持ち上げ駒キャンセル方法'
+  describe "持ち上げ駒キャンセル方法" do
+    def test1(selector)
+      visit_with_args(room_code: :my_room, force_user_name: "alice")
+
+      side_menu_open
+      menu_item_click("設定")               # モーダルを開く
+      find(selector).click
+      find(".close_button").click           # 閉じる
+
+      place_click("77")                     # 77を持って
+      place_click("87")                     # 87をタップ
+    end
+
+    it "移動元をタップ" do
+      test1(".is_move_cancel_hard")
+      assert_no_move("27", "26", "☗2六歩")  # キャンセルされていないので別の手が指せない
+    end
+
+    it "他のセルをタップ" do
+      test1(".is_move_cancel_easy")         # 「他のセルをタップ」選択
+      assert_move("27", "26", "☗2六歩")    # キャンセルされたので別の手が指せる
+    end
+  end
+
   def visit_with_args(args)
     visit "/share-board?#{args.to_query}"
   end

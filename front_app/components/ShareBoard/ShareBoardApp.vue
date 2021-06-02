@@ -50,11 +50,14 @@ client-only
               :sp_human_side="sp_human_side"
               :sp_controller="controller_disabled_p ? 'is_controller_off' : 'is_controller_on'"
               :sp_slider="controller_disabled_p ? 'is_slider_off' : 'is_slider_on'"
+
               sp_summary="is_summary_off"
 
               :sp_play_mode_legal_move_only="strict_p"
               :sp_play_mode_only_own_piece_to_move="strict_p"
               :sp_play_mode_can_not_kill_same_team_soldier="strict_p"
+
+              :sp_move_cancel="sp_move_cancel"
 
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
@@ -378,6 +381,7 @@ export default {
         debug_mode: this.development_p ? "is_debug_mode_on" : "is_debug_mode_off",
         sync_mode: this.development_p ? "is_sync_mode_soft" : "is_sync_mode_soft",
         yomiage_mode: this.development_p ? "is_yomiage_mode_on" : "is_yomiage_mode_on",
+        sp_move_cancel: this.development_p ? "is_move_cancel_hard" : "is_move_cancel_easy",
       }
     },
 

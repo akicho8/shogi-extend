@@ -10,21 +10,15 @@ export const app_room_setup = {
       ac_room: null,           // subscriptions.create のインスタンス
     }
   },
-  beforeMount() {
-    this.tl_add("beforeMount", "ls_setup")
-    this.ls_setup() // user_name の復帰
-  },
   mounted() {
-    if (this.$route.query.room_code) {
-      this.room_code = this.$route.query.room_code
-    }
+    if (true) {
+      this.room_code = this.$route.query.room_code || this.room_code
 
-    // 名前の優先順位
-    // 1. query.user_name         (URL引数)
-    // 2. query.default_user_name (URL引数)
-    // 3. g_current_user_name     (ログイン名)
-    if (this.$route.query.force_user_name) {
-      this.user_name = this.$route.query.force_user_name
+      // 名前の優先順位
+      // 1. query.user_name         (URL引数)
+      // 2. query.default_user_name (URL引数)
+      // 3. g_current_user_name     (ログイン名)
+      this.user_name = this.$route.query.force_user_name || this.user_name
     }
 
     if (this.room_code) {
