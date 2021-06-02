@@ -14,7 +14,7 @@
     b-field.yomiage_mode(custom-size="is-small" label="検討時の棋譜読み上げ" message="時計を設置していないときを検討時と想定している。検討に集中したいときは「しない」にしよう")
       b-radio-button.is_yomiage_mode_on(@input="sound_play('click')" size="is-small" v-model="base.yomiage_mode" native-value="is_yomiage_mode_on") する
       b-radio-button.is_yomiage_mode_off(@input="sound_play('click')" size="is-small" v-model="base.yomiage_mode" native-value="is_yomiage_mode_off") しない
-    b-field.sp_move_cancel(custom-size="is-small" label="持ち上げた駒のキャンセル方法" message="右クリックやESCキーでもキャンセル可")
+    b-field.sp_move_cancel(custom-size="is-small" label="持ち上げた駒のキャンセル方法" message="右クリックやESCキーでもキャンセル可。この設定はブラウザに保存する")
       b-radio-button.is_move_cancel_hard(@input="sound_play('click')" size="is-small" v-model="base.sp_move_cancel" native-value="is_move_cancel_hard") 移動元をタップ
       b-radio-button.is_move_cancel_easy(@input="sound_play('click')" size="is-small" v-model="base.sp_move_cancel" native-value="is_move_cancel_easy") 他のセルをタップ
     b-field.sync_mode(custom-size="is-small" label="同期方法" v-if="development_p")
