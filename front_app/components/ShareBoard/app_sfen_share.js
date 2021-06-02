@@ -71,12 +71,7 @@ export const app_sfen_share = {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
       }
       if (true) {
-        const prev_user_name = this.user_name_by_turn(params.lmi.next_turn_offset - 1) // alice, bob がいて初手を指したら alice
-        // const next_user_name = this.user_name_by_turn(params.lmi.next_turn_offset)     // alice, bob がいて初手を指したら bob
-        const next_user_name = params.next_user_name
-        const next_user_received_p = this.user_name === next_user_name                 // コンテキストが bob なら true
-
-        if (next_user_received_p) {
+        if (this.user_name === params.next_user_name) {
           if (this.next_notify_p) {
             this.tn_notify()
           }
@@ -88,13 +83,7 @@ export const app_sfen_share = {
           }
         }
 
-        if (this.development_p) {
-          if (prev_user_name) {
-            if (params.from_user_name !== prev_user_name) {
-              this.debug_alert(`${this.user_call_name(prev_user_name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
-            }
-          }
-        }
+        this.from_user_name_valid(params) // 指し手制限をしていないとき別の人が指したかチェックする
 
         // 「alice ▲76歩」と表示しながら
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
@@ -104,9 +93,9 @@ export const app_sfen_share = {
           this.talk(this.user_call_name(params.from_user_name), {
             onend: () => this.talk(params.lmi.yomiage, {
               onend: () => {
-                if (next_user_name) {
+                if (params.next_user_name) {
                   if (this.next_notify_p) {
-                    this.toast_ok(`次は${this.user_call_name(next_user_name)}の手番です`)
+                    this.toast_ok(`次は${this.user_call_name(params.next_user_name)}の手番です`)
                   }
                 }
               },
@@ -118,6 +107,16 @@ export const app_sfen_share = {
       }
 
       this.al_add(params)
+    },
+    from_user_name_valid(params) {
+      if (this.development_p) {
+        const name = this.user_name_by_turn(params.lmi.next_turn_offset - 1) // alice, bob がいて初手を指したら alice
+        if (name) {
+          if (params.from_user_name !== name) {
+            this.debug_alert(`${this.user_call_name(name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
+          }
+        }
+      }
     },
   },
   computed: {

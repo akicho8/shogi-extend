@@ -16,7 +16,6 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="局面の転送"                     @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="手合割"                         @click="base.handicap_set_modal_handle")
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"    @click="base.room_code_only_url_copy_handle"  :disabled="blank_p(base.ac_room)")
-          b-menu-item.is_active_unset(label="手番が来たら知らせる設定"       @click="base.tn_modal_handle"            :disabled="blank_p(base.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(label="再起動"                         @click="base.room_recreate_modal_handle" :disabled="blank_p(base.ac_room)")
 
         b-menu-list(label="あとで検討")
