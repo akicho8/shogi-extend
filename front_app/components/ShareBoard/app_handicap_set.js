@@ -8,7 +8,23 @@ export const app_handicap_set = {
     }
   },
 
+  created() {
+    this.sfen_set_by_url_params()
+  },
+
   methods: {
+    // 引数でプリセットの初期値設定
+    // http://0.0.0.0:4000/share-board?handicap_preset_key=八枚落ち
+    // これいらんか？
+    sfen_set_by_url_params() {
+      const v = this.$route.query.handicap_preset_key
+      if (v) {
+        this.handicap_preset_key = v
+        const info = this.HandicapPresetInfo.fetch(v)
+        this.current_sfen = info.sfen
+      }
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     handicap_set_modal_handle() {
