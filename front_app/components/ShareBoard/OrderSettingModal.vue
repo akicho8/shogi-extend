@@ -39,7 +39,7 @@
             | {{base.current_sfen_info.location_by_offset(row.order_index).name}}
             | {{row.order_index + 1}}
 
-        b-table-column(v-slot="{row}" field="user_name" label="メンバー")
+        b-table-column(v-slot="{row}" field="user_name" label="メンバー" cell-class="user_name")
           span(:class="{'has-text-weight-bold': row.order_index === base.order_index_by_turn(base.turn_offset)}")
             | {{row.user_name}}
 
@@ -56,7 +56,7 @@
             b-button.ml-1(size="is-small" icon-left="arrow-down" @click="arrow_handle(row, 1)")
 
       .buttons.mb-0.mt-2
-        b-button.mb-0(@click="shuffle_handle" size="is-small") シャッフル
+        b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
 
       b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message" v-if="development_p && false")
         b-field.is-marginless
@@ -115,19 +115,17 @@ export default {
     shuffle_handle() {
       this.sound_play("click")
 
-      const values = this.base.os_table_rows
-      let a = values.filter(e => e.enabled_p)
-      let b = values.filter(e => !e.enabled_p)
-      let new_values = null
+      const rows = this.base.os_table_rows
+      let a = rows.filter(e => e.enabled_p)
+      let b = rows.filter(e => !e.enabled_p)
       for (let i = 0; i < SHUFFLE_MAX; i++) {
-        new_values = [..._.shuffle(a), ...b]
-        if (!_.isEqual(values, new_values)) {
+        const c = _.shuffle(a)
+        if (!_.isEqual(c, a)) {
+          this.base.os_table_rows = [...c, ...b]
+          this.order_index_update()
           break
         }
       }
-
-      this.base.os_table_rows = new_values
-      this.order_index_update()
     },
 
     apply_handle() {

@@ -17,7 +17,6 @@ client-only
       p current_turn_self_p: {{current_turn_self_p}}
       p current_turn_user_name: {{current_turn_user_name}}
       p turn_offset: {{turn_offset}}
-      p previous_user_name: {{previous_user_name}}
       p sp_viewpoint: {{sp_viewpoint}}
       p sp_player_info: {{JSON.stringify(sp_player_info)}}
       //- p room_code: {{JSON.stringify(room_code)}}
