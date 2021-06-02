@@ -381,7 +381,7 @@ export default {
         debug_mode: this.development_p ? "is_debug_mode_on" : "is_debug_mode_off",
         sync_mode: this.development_p ? "is_sync_mode_soft" : "is_sync_mode_soft",
         yomiage_mode: this.development_p ? "is_yomiage_mode_on" : "is_yomiage_mode_on",
-        sp_move_cancel: this.development_p ? "is_move_cancel_hard" : "is_move_cancel_easy",
+        sp_move_cancel: this.development_p ? "is_move_cancel_easy" : "is_move_cancel_hard",
       }
     },
 
