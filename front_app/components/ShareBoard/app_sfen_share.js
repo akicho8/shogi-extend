@@ -77,7 +77,9 @@ export const app_sfen_share = {
         const next_user_received_p = this.user_name === next_user_name                 // コンテキストが bob なら true
 
         if (next_user_received_p) {
-          this.tn_notify()
+          if (this.next_notify_p) {
+            this.tn_notify()
+          }
 
           // 自分vs自分なら視点変更
           if (this.self_vs_self_p) {
@@ -103,7 +105,9 @@ export const app_sfen_share = {
             onend: () => this.talk(params.lmi.yomiage, {
               onend: () => {
                 if (next_user_name) {
-                  this.toast_ok(`次は${this.user_call_name(next_user_name)}の手番です`)
+                  if (this.next_notify_p) {
+                    this.toast_ok(`次は${this.user_call_name(next_user_name)}の手番です`)
+                  }
                 }
               },
             }),
@@ -120,6 +124,11 @@ export const app_sfen_share = {
     // 時計が設置されてなくて読み上げOFFのときはダメ
     // 時計が設置されている または 読み上げON はOK
     yomiagable_p() {
+      // 本番で自分vs自分は読み上げない
+      if (!this.development_p && this.self_vs_self_p) {
+        return false
+      }
+
       return this.clock_box || this.yomiage_mode === "is_yomiage_mode_on"
     },
   },
