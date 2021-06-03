@@ -1,5 +1,7 @@
 export const app_export = {
   methods: {
+    //////////////////////////////////////////////////////////////////////////////// clipboard
+
     // 現在のURLをコピー
     current_url_copy_handle() {
       this.sound_play("click")
@@ -9,28 +11,27 @@ export const app_export = {
     // 指定の棋譜をコピー
     kifu_copy_handle(e) {
       this.sound_play("click")
-      this.general_kifu_copy(this.current_body, {to_format: e.format_key, turn: this.turn_offset})
+      this.general_kifu_copy(this.current_sfen, {to_format: e.format_key, turn: this.turn_offset})
     },
 
     //////////////////////////////////////////////////////////////////////////////// show
 
+    // 指定の棋譜への直リンURL
     kifu_show_url(e) {
       return this.permalink_for({
         format: e.format_key,
-        image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方が優先される
+        image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方を優先する
       })
     },
 
     // 指定の棋譜を表示
     kifu_show_handle(e) {
-      if (typeof window !== 'undefined') {
-        // window.location.href = this.kifu_show_url(e)
-        this.window_popup(this.kifu_show_url(e))
-      }
+      this.window_popup(this.kifu_show_url(e))
     },
 
     //////////////////////////////////////////////////////////////////////////////// download
 
+    // 指定の棋譜のダウンロードURL
     kifu_download_url(e) {
       return this.permalink_for({
         format: e.format_key,
@@ -46,9 +47,5 @@ export const app_export = {
         window.location.href = this.kifu_download_url(e)
       }
     },
-
-    ////////////////////////////////////////////////////////////////////////////////
-  },
-  computed: {
   },
 }

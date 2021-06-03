@@ -3,7 +3,7 @@ import _ from "lodash"
 export const app_sfen_share = {
   data() {
     return {
-      sfen_share_params: null,       // リトライするとき用に送るパラメータを保持しておく
+      sfen_share_params: null, // リトライするとき用に送るパラメータを保持しておく
     }
   },
   methods: {
@@ -13,7 +13,7 @@ export const app_sfen_share = {
 
       this.tl_add("SP", lmi.to_kif_without_from, lmi)
       this.__assert__(this.current_sfen, "this.current_sfen")
-      this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_offset, "lmi.next_turn_offset === this.current_sfen_turn_offset")
+      this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_offset_max, "lmi.next_turn_offset === this.current_sfen_turn_offset_max")
 
       this.x_retry_count = 0    // 新しい手を指したので再送回数を0にしておく
 
@@ -63,12 +63,6 @@ export const app_sfen_share = {
         // 受信したSFENを盤に反映
         this.setup_by_params(params)
         this.vibrate(10)
-      }
-      if (false) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.lmi.next_turn_offset}手目を指しました`)
-      }
-      if (false) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が指しました`)
       }
       if (true) {
         if (this.user_name === params.next_user_name) {

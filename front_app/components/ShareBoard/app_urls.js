@@ -24,7 +24,7 @@ export const app_urls = {
     current_url_params() {
       const e = {
         ...this.$route.query,                  // デバッグ用パラメータを保持するため
-        body:               DotSfen.escape(this.current_body), // 編集モードでもURLを更新するため
+        body:               DotSfen.escape(this.current_sfen), // 編集モードでもURLを更新するため
         turn:               this.turn_offset,
         title:              this.current_title,
         abstract_viewpoint: this.abstract_viewpoint,
