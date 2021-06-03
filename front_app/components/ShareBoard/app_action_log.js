@@ -43,5 +43,16 @@ export const app_action_log = {
         this.scroll_to_bottom(e.$refs.scroll_block)
       }
     },
+
+    action_log_jump(e) {
+      if (false) {
+        if (this.current_sfen === e.sfen && this.turn_offset === e.turn_offset) {
+          this.toast_ok("同じ局面です")
+          return
+        }
+      }
+      this.current_sfen = e.sfen
+      this.turn_offset = e.turn_offset
+    },
   },
 }

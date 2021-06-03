@@ -14,20 +14,13 @@
 import { support_child } from "./support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
-
-const ACTION_LOG_CLICK_CONFIRM_SHOW = true
+import ActionLogModal from "./ActionLogModal.vue"
 
 export default {
   name: "ShareBoardActionLog",
   mixins: [
     support_child,
   ],
-  props: {
-  },
-  data() {
-    return {
-    }
-  },
   mounted() {
     if (this.development_p) {
       for (let i = 0; i < 5; i++) {
@@ -40,47 +33,26 @@ export default {
       return [e.performed_at, e.turn_offset, e.from_connection_id].join("-")
     },
     action_log_click_handle(e) {
-      if (ACTION_LOG_CLICK_CONFIRM_SHOW) {
-        this.sound_play("click")
-        this.$buefy.dialog.confirm({
-          title: `${this.human_time_format(e)}の時点に飛びますか？`,
-          message: `
-            <p class="is-size-6">この時点の棋譜に変更します</p>
-            <p class="is-size-6 mt-4">なので例えば対局後の検討で棋譜が消えてしまっても投了付近に飛べば棋譜を復元できます</p>
-            <p class="is-size-7 has-text-grey mt-4">待ったや前の局面を見るときは盤の下のｺﾝﾄﾛｰﾗｰを使ってください</p>
-          `,
-          cancelText: "キャンセル",
-          confirmText: `本当に飛ぶ`,
-          focusOn: "cancel", // confirm or cancel
-          type: "is-warning",
-          // hasIcon: true,
-          animation: "",
-          onCancel:  () => {
-            this.sound_stop_all()
-            this.sound_play("click")
-          },
-          onConfirm: () => {
-            this.sound_stop_all()
-            this.action_log_jump(e)
-          },
-        })
-      } else {
-        this.action_log_jump(e)
-      }
-    },
-    action_log_jump(e) {
-      // if (this.base.current_sfen === e.sfen && this.base.turn_offset === e.turn_offset) {
-      //   this.toast_ok("同じ局面です")
-      //   return
-      // }
-      this.base.current_sfen = e.sfen
-      this.base.turn_offset = e.turn_offset
+      this.sound_play("click")
+
+      this.$buefy.modal.open({
+        component: ActionLogModal,
+        parent: this,
+        trapFocus: true,
+        hasModalCard: true,
+        animation: "",
+        canCancel: true,
+        onCancel: () => {
+          this.sound_play("click")
+        },
+        props: {
+          base: this.base,
+          action_log: e,
+        },
+      })
     },
     time_format(v) {
       return dayjs(v.performed_at).format("HH:mm:ss")
-    },
-    human_time_format(v) {
-      return dayjs(v.performed_at).format("H時m分")
     },
   },
   computed: {

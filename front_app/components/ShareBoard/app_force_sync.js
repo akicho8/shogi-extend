@@ -94,7 +94,7 @@ export const app_force_sync = {
 
     force_sync_direct() {
       this.ac_log("局面操作", `直接${this.turn_offset}手目`)
-      this.force_sync(`${this.user_call_name(this.user_name)}が${this.turn_offset}手目に変更しました`)
+      this.force_sync(`${this.user_call_name(this.user_name)}が局面を${this.turn_offset}手目の局面を転送しました`)
     },
 
     force_sync_turn_zero() {
