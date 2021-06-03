@@ -16,7 +16,7 @@ module Swars
       end
 
       it do
-        assert { user.user_info.medal_list.all_tag_ratio_for("嬉野流")           == 1.0 }
+        assert { user.user_info.medal_list.all_tag_ratio_for("新嬉野流")           == 1.0 }
         assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0.0 }
       end
     end

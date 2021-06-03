@@ -45,7 +45,7 @@ module Swars
 
     describe "タグ" do
       it do
-        assert { record.memberships[0].attack_tag_list  == ["嬉野流"]       }
+        assert { record.memberships[0].attack_tag_list  == ["新嬉野流"]       }
         assert { record.memberships[1].attack_tag_list  == ["2手目△３ニ飛戦法"] }
         assert { record.memberships[0].defense_tag_list == []               }
         assert { record.memberships[1].defense_tag_list == []               }

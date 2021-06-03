@@ -1016,11 +1016,7 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def assert_turn_offset(turn_offset)
-    if turn_offset >= 1
-      assert_text("##{turn_offset}", wait: 10)
-    else
-      assert_no_text("##{turn_offset}")
-    end
+    assert_text("##{turn_offset}", wait: 10)
   end
 
   # 順番設定後の待ち
