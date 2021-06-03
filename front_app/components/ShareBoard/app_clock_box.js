@@ -293,14 +293,14 @@ export const app_clock_box = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 時計の状態をすべて共有する
-    clock_box_share(message) {
-      this.__assert__(message != null, "message != null")
-      // if (message) {
-      //   this.toast_ok(message)
+    clock_box_share(behaviour) {
+      this.__assert__(behaviour != null, "behaviour != null")
+      // if (behaviour) {
+      //   this.toast_ok(behaviour)
       // }
       const params = {}
       params.cc_params = this.cc_params
-      params.message = message
+      params.behaviour = behaviour
       if (this.clock_box) {
         params.clock_box_attributes = this.clock_box.attributes
       }
@@ -318,7 +318,15 @@ export const app_clock_box = {
           this.cc_destroy()     // 時計を捨てたことを同期
         }
       }
-      if (params.message) {
+      if (params.behaviour) {
+        this.al_add({
+          ...params,
+          label: `時計${params.behaviour}`,
+          sfen: this.current_sfen,
+          turn_offset: this.turn_offset,
+          clock_box_attributes: null, // 容量が大きいので空にしておく
+        })
+
         const attrs = params.clock_box_attributes
         if (attrs) {
           if (this.first_play_trigger_p(attrs)) { // PLAYの初回なら
@@ -333,7 +341,7 @@ export const app_clock_box = {
         }
 
         // 誰が操作したかを通知
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.message}`, {onend: () => {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.behaviour}しました`, {onend: () => {
           if (attrs) {
             // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
             if (this.first_play_trigger_p(attrs)) {

@@ -181,6 +181,14 @@ export const app_ordered_members = {
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`)
       }
+      if (this.present_p(params.message)) {
+        this.al_add({
+          ...params,
+          label: "順番 " + (params.order_func_p ? "ON" : "OFF"),
+          sfen: this.current_sfen,
+          turn_offset: this.turn_offset,
+        })
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -209,6 +217,15 @@ export const app_ordered_members = {
 
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}しました`)
+      }
+
+      if (this.present_p(params.message)) {
+        this.al_add({
+          ...params,
+          label: "順番更新",
+          sfen: this.current_sfen,
+          turn_offset: this.turn_offset,
+        })
       }
     },
 

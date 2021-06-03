@@ -94,7 +94,7 @@ export const app_force_sync = {
 
     force_sync_direct() {
       this.ac_log("局面操作", `直接${this.turn_offset}手目`)
-      this.force_sync(`${this.user_call_name(this.user_name)}が局面を${this.turn_offset}手目の局面を転送しました`)
+      this.force_sync(`${this.user_call_name(this.user_name)}が${this.turn_offset}手目の局面を転送しました`)
     },
 
     force_sync_turn_zero() {
@@ -105,7 +105,9 @@ export const app_force_sync = {
 
     force_sync_turn_previous() {
       this.ac_log("局面操作", "1手戻す")
-      this.turn_offset -= 1
+      if (this.turn_offset >= 1) {
+        this.turn_offset -= 1
+      }
       this.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
     },
 
@@ -135,6 +137,7 @@ export const app_force_sync = {
       if (params.message) {
         this.toast_ok(params.message)
       }
+      this.al_add({...params, label: `局面転送 #${params.turn_offset}`})
     },
   },
 }

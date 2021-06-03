@@ -58,9 +58,9 @@ module ShareBoard
     end
 
     def clock_box_share(data)
-      if data["message"].present?
+      if data["behaviour"].present?
         values = data["cc_params"].fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus")
-        track(data, "対局時計", "#{data["message"]} (#{values.join(" ")})")
+        track(data, "対局時計", "#{data["behaviour"]} (#{values.join(" ")})")
       end
       broadcast(:clock_box_share_broadcasted, data)
     end

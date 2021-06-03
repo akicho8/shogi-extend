@@ -36,6 +36,14 @@ export const app_action_log = {
         last_location_key: "white",
         performed_at: this.time_current_ms(),
       })
+
+      // this.al_add({
+      //   label: "foo",
+      //   sfen: "position startpos",
+      //   turn_offset: 0,
+      //   performed_at: this.time_current_ms(),
+      // })
+
     },
     al_scroll_to_bottom() {
       const e = this.$refs.ShareBoardActionLog

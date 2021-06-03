@@ -3,11 +3,13 @@
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
       a.is-clickable.is-block.is_line_break_off(:key="action_log_key(e)" @click="action_log_click_handle(e)")
-        b-tag.mr-1(type="is-warning" v-if="e.x_retry_count >= 1") 再送{{e.x_retry_count}}
-        span {{e.lmi.next_turn_offset}}
-        span.ml-1 {{e.lmi.kif_without_from}}
-        span.ml-1 {{e.from_user_name}}
-        span.ml-1.is-size-7.time_format.has-text-grey-light {{time_format(e)}}
+        b-tag(type="is-warning" v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
+        b-tag(type="is-primary" v-if="e.label") {{e.label}}
+        template(v-if="e.lmi")
+          span {{e.lmi.next_turn_offset}}
+          span {{e.lmi.kif_without_from}}
+        span(v-if="e.from_user_name") {{e.from_user_name}}
+        span.is-size-7.time_format.has-text-grey-light(v-if="e.performed_at") {{time_format(e)}}
 </template>
 
 <script>
@@ -23,14 +25,14 @@ export default {
   ],
   mounted() {
     if (this.development_p) {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 3; i++) {
         this.base.al_add_test()
       }
     }
   },
   methods: {
     action_log_key(e) {
-      return [e.performed_at, e.turn_offset, e.from_connection_id].join("-")
+      return [e.performed_at, e.turn_offset, e.from_connection_id || ""].join("-")
     },
     action_log_click_handle(e) {
       this.sound_play("click")
@@ -96,6 +98,8 @@ export default {
       color: inherit
       &:hover
         background-color: $grey-lighter
+      > *:not(:first-child)
+        margin-left: 0.25rem
 
 .STAGE-development
   .ShareBoardActionLog

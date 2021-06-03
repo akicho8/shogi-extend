@@ -90,10 +90,10 @@ export default {
       if (v) {
         this.base.cc_create()
         this.base.cc_params_apply() // すぐにパラメータを反映する
-        this.base.clock_box_share("設置しました")
+        this.base.clock_box_share("設置")
       } else {
         this.base.cc_destroy()
-        this.base.clock_box_share("捨てました")
+        this.base.clock_box_share("破棄")
       }
     },
     close_handle() {
@@ -105,13 +105,13 @@ export default {
       this.sound_play("click")
       this.base.cc_params_apply()
       this.base.cc_play_handle()
-      this.base.clock_box_share("開始しました")
+      this.base.clock_box_share("開始")
     },
     stop_handle() {
       this.sound_play("click")
       if (this.instance.running_p) {
         this.base.cc_stop_handle()
-        this.base.clock_box_share("停止しました")
+        this.base.clock_box_share("停止")
       } else {
         this.toast_ok("すでにリセットしています")
       }
@@ -119,12 +119,12 @@ export default {
     pause_handle() {
       this.sound_play("click")
       this.base.cc_pause_handle()
-      this.base.clock_box_share("一時停止しました")
+      this.base.clock_box_share("一時停止")
     },
     resume_handle() {
       this.sound_play("click")
       this.base.cc_resume_handle()
-      this.base.clock_box_share("再開しました")
+      this.base.clock_box_share("再開")
     },
     save_handle() {
       this.sound_play("click")
