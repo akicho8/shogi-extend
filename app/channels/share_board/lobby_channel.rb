@@ -2,7 +2,7 @@ module ShareBoard
   class LobbyChannel < ApplicationCable::Channel
     class << self
       def redis_db_index
-        AppConfig.fetch(:redis_db_for_sbx)
+        AppConfig.fetch(:redis_db_for_xmatch)
       end
     end
 
@@ -10,7 +10,7 @@ module ShareBoard
       simple_track("購読開始")
       stream_from "share_board/lobby_channel"
 
-      data = { sbx_rules_members: SbxRuleInfo.sbx_rules_members }
+      data = { xmatch_rules_members: XmatchRuleInfo.xmatch_rules_members }
       broadcast(:subscribed_broadcasted, data)
     end
 
@@ -19,16 +19,16 @@ module ShareBoard
     end
 
     def rule_select(data)
-      sbx_rule_info = SbxRuleInfo.fetch(data["sbx_rule_key"])
-      track(data, "規則選択", sbx_rule_info.key)
-      data = data.merge(sbx_rule_info.member_add(data))
+      xmatch_rule_info = XmatchRuleInfo.fetch(data["xmatch_rule_key"])
+      track(data, "規則選択", xmatch_rule_info.key)
+      data = data.merge(xmatch_rule_info.member_add(data))
       broadcast(:rule_select_broadcasted, data)
     end
 
     def rule_unselect(data)
       track(data, "規則解除", "")
-      SbxRuleInfo.member_delete(data)
-      data = data.merge(sbx_rules_members: SbxRuleInfo.sbx_rules_members)
+      XmatchRuleInfo.member_delete(data)
+      data = data.merge(xmatch_rules_members: XmatchRuleInfo.xmatch_rules_members)
       broadcast(:rule_unselect_broadcasted, data)
     end
 

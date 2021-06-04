@@ -1,6 +1,6 @@
 import _ from "lodash"
 import XmatchModal from "./XmatchModal.vue"
-import { SbxRuleInfo } from "@/components/models/sbx_rule_info.js"
+import { XmatchRuleInfo } from "@/components/models/xmatch_rule_info.js"
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 
 const WAIT_TIME_MAX           = 60 * 2      // 待ち時間最大
@@ -12,9 +12,9 @@ export const app_xmatch = {
   data() {
     return {
       ac_lobby: null,              // subscriptions.create のインスタンス
-      sbx_rules_members: null,     // XmatchModal で表示していている内容
+      xmatch_rules_members: null,     // XmatchModal で表示していている内容
       xmatch_modal_instance: null, // XmatchModal のインスタンス
-      current_sbx_rule_key: null,  // 現在選択しているルール
+      current_xmatch_rule_key: null,  // 現在選択しているルール
       xmatch_interval_counter: new IntervalCounter(this.xmatch_interval_counter_callback),
     }
   },
@@ -113,13 +113,13 @@ export const app_xmatch = {
     },
 
     subscribed_broadcasted(params) {
-      this.sbx_rules_members = params.sbx_rules_members
+      this.xmatch_rules_members = params.xmatch_rules_members
     },
 
     //////////////////////////////////////////////////////////////////////////////// ルール選択
     rule_select(e) {
       this.ac_lobby_perform("rule_select", {
-        sbx_rule_key: e.key,                     // 選択したルール
+        xmatch_rule_key: e.key,                     // 選択したルール
         xmatch_redis_ttl: this.xmatch_redis_ttl, // JS側で一括管理したいのでこちらからTTLを渡す
       }) // --> app/channels/share_board/lobby_channel.rb
 
@@ -127,13 +127,13 @@ export const app_xmatch = {
     rule_select_broadcasted(params) {
       if (this.received_from_self(params)) {
         // 自分から自分
-        this.current_sbx_rule_key = params.sbx_rule_key
+        this.current_xmatch_rule_key = params.xmatch_rule_key
       } else {
         // 他の人から自分
       }
 
       // マッチング画面の情報
-      this.sbx_rules_members = params.sbx_rules_members
+      this.xmatch_rules_members = params.xmatch_rules_members
       // this.sound_play("click")
 
       // 合言葉がある場合マッチングが成立している
@@ -141,7 +141,7 @@ export const app_xmatch = {
         this.__assert__(params.members, "params.members")
         if (params.members.some(e => e.from_connection_id === this.connection_id)) { // 自分が含まれていれば
 
-          this.sbx_rule_key_reset()
+          this.xmatch_rule_key_reset()
 
           if (this.development_p) {
           } else {
@@ -163,15 +163,15 @@ export const app_xmatch = {
     },
     // 手合割と視点設定
     xmatch_setup2(params) {
-      const sbx_rule_info = SbxRuleInfo.fetch(params.sbx_rule_key)
+      const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
 
       this.turn_offset = 0                                              // 手数0から始める
-      this.current_sfen = sbx_rule_info.handicap_preset_info.sfen       // 手合割の反映
+      this.current_sfen = xmatch_rule_info.handicap_preset_info.sfen       // 手合割の反映
       this.sp_viewpoint_set_by_self_location()                                           // 自分の場所を調べて正面をその視点にする
     },
     xmatch_setup3(params) {
-      const sbx_rule_info = SbxRuleInfo.fetch(params.sbx_rule_key)
-      this.cc_params = {...sbx_rule_info.cc_params} // チェスクロック時間設定
+      const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
+      this.cc_params = {...xmatch_rule_info.cc_params} // チェスクロック時間設定
       this.cc_create()                              // チェスクロック起動 (先後は current_location.code で決める)
       this.cc_params_apply()                        // チェスクロックに時間設定を適用
       this.clock_box.play_handle()                  // PLAY押す
@@ -198,12 +198,12 @@ export const app_xmatch = {
     rule_unselect_broadcasted(params) {
       if (this.received_from_self(params)) {
         // 自分から自分
-        this.sbx_rule_key_reset()
+        this.xmatch_rule_key_reset()
       } else {
         // 他の人から自分
       }
       // マッチング画面の情報
-      this.sbx_rules_members = params.sbx_rules_members
+      this.xmatch_rules_members = params.xmatch_rules_members
       // this.sound_play("click")
     },
 
@@ -211,7 +211,7 @@ export const app_xmatch = {
 
     xmatch_window_blur() {
       if (this.ac_lobby) {
-        if (this.current_sbx_rule_key) {
+        if (this.current_xmatch_rule_key) {
           if (UNSELECT_IF_WINDOW_BLUR) {
             this.sound_play("click")
             this.toast_ok("他の所に行ったので選択を解除しました")
@@ -233,14 +233,14 @@ export const app_xmatch = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    sbx_rule_key_reset() {
-      this.current_sbx_rule_key = null // 基本モーダル内で使うだけなので対局開始と同時に選択していない状態にしておく
+    xmatch_rule_key_reset() {
+      this.current_xmatch_rule_key = null // 基本モーダル内で使うだけなので対局開始と同時に選択していない状態にしておく
       this.xmatch_interval_counter.stop()
     },
 
   },
   computed: {
-    SbxRuleInfo() { return SbxRuleInfo },
+    XmatchRuleInfo() { return XmatchRuleInfo },
 
     wait_time_max()    { return parseInt(this.$route.query.wait_time_max || WAIT_TIME_MAX)       },
     xmatch_redis_ttl() { return parseInt(this.$route.query.xmatch_redis_ttl || XMATCH_REDIS_TTL) },

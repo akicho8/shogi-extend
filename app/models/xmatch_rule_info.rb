@@ -13,7 +13,7 @@
 # r.hset("key", "b", "v2") # => true
 # r.hvals("key")           # => ["v1", "v3", "v2"]
 #
-class SbxRuleInfo
+class XmatchRuleInfo
   include ApplicationMemoryRecord
   memory_record [
     { key: "rule_2vs2_0_10_60_0",          members_count_max: 4, },
@@ -27,8 +27,8 @@ class SbxRuleInfo
   ]
 
   class << self
-    # rails r 'tp SbxRuleInfo.sbx_rules_members'
-    def sbx_rules_members
+    # rails r 'tp XmatchRuleInfo.xmatch_rules_members'
+    def xmatch_rules_members
       inject({}) { |a, e| a.merge(e.key => e.values) }
     end
 
@@ -75,7 +75,7 @@ class SbxRuleInfo
       h[:room_code] = ApplicationRecord.secure_random_urlsafe_base64_token
     end
 
-    h[:sbx_rules_members] = SbxRuleInfo.sbx_rules_members
+    h[:xmatch_rules_members] = XmatchRuleInfo.xmatch_rules_members
     h
   end
 

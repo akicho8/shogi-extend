@@ -3,32 +3,32 @@
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-5.has-text-weight-bold
       | 自動マッチング
-    p.is-size-5(v-if="base.current_sbx_rule_key && base.rest_seconds >= 1")
+    p.is-size-5(v-if="base.current_xmatch_rule_key && base.rest_seconds >= 1")
       | {{base.rest_seconds}}
 
   section.modal-card-body
-    b-loading(:is-full-page="false" :active="!base.sbx_rules_members")
-    template(v-if="base.sbx_rules_members")
+    b-loading(:is-full-page="false" :active="!base.xmatch_rules_members")
+    template(v-if="base.xmatch_rules_members")
       .columns.is-multiline.is-variable.is-2
-        template(v-for="sbx_rule_info in base.SbxRuleInfo.values")
+        template(v-for="xmatch_rule_info in base.XmatchRuleInfo.values")
           .column.is-one-third.py-2
-            a.box(@click="sbx_rule_click(sbx_rule_info)")
+            a.box(@click="xmatch_rule_click(xmatch_rule_info)")
               .has-text-weight-bold.is-size-4.is_line_break_off
-                | {{sbx_rule_info.name}}
+                | {{xmatch_rule_info.name}}
               .has-text-grey-light.is-size-7.is_line_break_off
-                | {{sbx_rule_info.rule_desc}}
-              b-taglist.mt-2(v-if="active_count(sbx_rule_info) >= 1 || true")
-                template(v-if="base.sbx_rules_members[sbx_rule_info.key]")
-                  template(v-for="e in base.sbx_rules_members[sbx_rule_info.key]")
+                | {{xmatch_rule_info.rule_desc}}
+              b-taglist.mt-2(v-if="active_count(xmatch_rule_info) >= 1 || true")
+                template(v-if="base.xmatch_rules_members[xmatch_rule_info.key]")
+                  template(v-for="e in base.xmatch_rules_members[xmatch_rule_info.key]")
                     b-tag(rounded type="is-primary")
                       span(:class="user_name_class(e)")
                         | {{e.from_user_name}}
-                template(v-for="i in rest_count(sbx_rule_info)")
+                template(v-for="i in rest_count(xmatch_rule_info)")
                   b-tag(rounded type="is-grey") ?
 
       // b-loading(:active="!base.ac_lobby")
       //- | {{!!base.ac_lobby}}
-      //- pre {{base.sbx_rules_members}}
+      //- pre {{base.xmatch_rules_members}}
 
   footer.modal-card-foot
     b-button.cancel_handle(@click="cancel_handle") キャンセル
@@ -60,9 +60,9 @@ export default {
       this.sound_play("click")
       this.base.rule_unselect()
     },
-    sbx_rule_click(e) {
+    xmatch_rule_click(e) {
       this.sound_play("click")
-      if (this.base.current_sbx_rule_key === e.key) {
+      if (this.base.current_xmatch_rule_key === e.key) {
         this.base.rule_unselect()
       } else {
         this.base.xmatch_interval_counter.restart()
@@ -72,8 +72,8 @@ export default {
 
     // マッチング中の人数
     active_count(e) {
-      this.__assert__(this.base.sbx_rules_members, "this.base.sbx_rules_members")
-      return this.base.sbx_rules_members[e.key].length
+      this.__assert__(this.base.xmatch_rules_members, "this.base.xmatch_rules_members")
+      return this.base.xmatch_rules_members[e.key].length
     },
 
     // あとN人いれば成立する
