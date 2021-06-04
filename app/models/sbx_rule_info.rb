@@ -16,17 +16,25 @@
 class SbxRuleInfo
   include ApplicationMemoryRecord
   memory_record [
+    { key: "rule_2vs2_0_10_60_0",          members_count_max: 4, },
+    { key: "rule_3vs3_0_10_60_0",          members_count_max: 6, },
+    { key: "rule_4vs4_0_10_60_0",          members_count_max: 8, },
+    { key: "rule_1vs1_0_10_60_0",          members_count_max: 2, },
+    { key: "rule_1vs1_0_10_60_0_presetX1", members_count_max: 2, },
+    { key: "rule_self_0_10_60_0",          members_count_max: 1, },
     { key: "rule_self_0_10_60_0_preset00", members_count_max: 1, },
     { key: "rule_self_0_10_60_0_preset19", members_count_max: 1, },
-    { key: "rule_self_0_10_60_0",          members_count_max: 1, },
-    { key: "rule_1vs1_0_10_60_0",          members_count_max: 2, },
-    { key: "rule_2vs2_0_10_60_0",          members_count_max: 4, },
-    { key: "rule_4vs4_0_10_60_0",          members_count_max: 8, },
   ]
 
   class << self
+    # rails r 'tp SbxRuleInfo.sbx_rules_members'
     def sbx_rules_members
       inject({}) { |a, e| a.merge(e.key => e.values) }
+    end
+
+    # 特定のメンバーを全体から削除する
+    def member_delete(data)
+      each { |e| redis.hdel(e.redis_key, data["current_user_id"]) }
     end
 
     def clear_all
@@ -47,7 +55,10 @@ class SbxRuleInfo
 
     other_rule_delete(data) # 他のルールを選択している場合はいったん削除する
 
-    redis.hset(redis_key, data["current_user_id"], data.to_json) # 初回なら true
+    redis.multi do
+      redis.hset(redis_key, data["current_user_id"], data.to_json) # 初回なら true
+      redis.expire(redis_key, data["xmatch_redis_ttl"])
+    end
 
     h = {}
 

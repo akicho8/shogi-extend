@@ -2,6 +2,7 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox(v-if="development_p")
+      p current_sbx_rule_key: {{current_sbx_rule_key}}
       p self_vs_self_p: {{self_vs_self_p}}
       p ordered_members: {{ordered_members}}
 

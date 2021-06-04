@@ -7,6 +7,10 @@ export const app_chore = {
       this.tl_add("画面焦点", focus_p ? "ON" : "OFF")
       this.ac_log("画面焦点", focus_p ? "ON" : "OFF")
       this.member_info_bc_restart()
+
+      if (!focus_p) {
+        this.xmatch_window_blur()
+      }
     },
 
     // 視点設定変更

@@ -1,15 +1,21 @@
 import _ from "lodash"
 import XmatchModal from "./XmatchModal.vue"
 import { SbxRuleInfo } from "@/components/models/sbx_rule_info.js"
+import { IntervalCounter } from '@/components/models/interval_counter.js'
 
-const START_TOAST_DELAY = 3
+const WAIT_TIME_MAX           = 60 * 2      // 待ち時間最大
+const XMATCH_REDIS_TTL        = 60 * 2 + 3  // redis.hset する度に更新するTTL
+const UNSELECT_IF_WINDOW_BLUR = false       // ウィンドウを離れたときマッチングをキャンセルするか？
+const START_TOAST_DELAY       = 3           // 誰々から開始してくださいをN秒後に発動する
 
 export const app_xmatch = {
   data() {
     return {
-      ac_lobby: null,           // subscriptions.create のインスタンス
-      sbx_rules_members: {},
-      xmatch_modal_instance: null,
+      ac_lobby: null,              // subscriptions.create のインスタンス
+      sbx_rules_members: null,     // XmatchModal で表示していている内容
+      xmatch_modal_instance: null, // XmatchModal のインスタンス
+      current_sbx_rule_key: null,  // 現在選択しているルール
+      xmatch_interval_counter: new IntervalCounter(this.xmatch_interval_counter_callback),
     }
   },
   beforeDestroy() {
@@ -96,7 +102,6 @@ export const app_xmatch = {
         from_connection_id: this.connection_id,     // 送信者識別子
         from_user_name:     this.user_name,         // 送信者名
         performed_at:       this.time_current_ms(), // 実行日時(ms)
-        // active_level:       this.active_level,      // 先輩度(高い方が信憑性のある情報)
         ua_icon:            this.ua_icon,           // 端末の種類を表すアイコン文字列
         current_user_id:    this.g_current_user.id,
         ...params,
@@ -111,26 +116,33 @@ export const app_xmatch = {
       this.sbx_rules_members = params.sbx_rules_members
     },
 
-    // //////////////////////////////////////////////////////////////////////////////// 退室
+    //////////////////////////////////////////////////////////////////////////////// ルール選択
     rule_select(e) {
       this.ac_lobby_perform("rule_select", {
-        sbx_rule_key: e.key,
+        sbx_rule_key: e.key,                     // 選択したルール
+        xmatch_redis_ttl: this.xmatch_redis_ttl, // JS側で一括管理したいのでこちらからTTLを渡す
       }) // --> app/channels/share_board/lobby_channel.rb
+
     },
     rule_select_broadcasted(params) {
       if (this.received_from_self(params)) {
         // 自分から自分
+        this.current_sbx_rule_key = params.sbx_rule_key
       } else {
-        // 自分から他の人
+        // 他の人から自分
       }
 
       // マッチング画面の情報
       this.sbx_rules_members = params.sbx_rules_members
+      // this.sound_play("click")
 
       // 合言葉がある場合マッチングが成立している
       if (params.room_code) {
         this.__assert__(params.members, "params.members")
         if (params.members.some(e => e.from_connection_id === this.connection_id)) { // 自分が含まれていれば
+
+          this.sbx_rule_key_reset()
+
           if (this.development_p) {
           } else {
             this.xmatch_modal_close()
@@ -176,8 +188,65 @@ export const app_xmatch = {
         this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
       })
     },
+
+    //////////////////////////////////////////////////////////////////////////////// ルール非選択
+    rule_unselect() {
+      this.xmatch_interval_counter.stop() // 自分側だけの問題なので早めに停止しておく
+      this.ac_lobby_perform("rule_unselect", {
+      }) // --> app/channels/share_board/lobby_channel.rb
+    },
+    rule_unselect_broadcasted(params) {
+      if (this.received_from_self(params)) {
+        // 自分から自分
+        this.sbx_rule_key_reset()
+      } else {
+        // 他の人から自分
+      }
+      // マッチング画面の情報
+      this.sbx_rules_members = params.sbx_rules_members
+      // this.sound_play("click")
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    xmatch_window_blur() {
+      if (this.ac_lobby) {
+        if (this.current_sbx_rule_key) {
+          if (UNSELECT_IF_WINDOW_BLUR) {
+            this.sound_play("click")
+            this.toast_ok("他の所に行ったので選択を解除しました")
+            this.rule_unselect()
+          }
+        }
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    xmatch_interval_counter_callback() {
+      if (this.rest_seconds <= 1) { // カウンタをインクリメントする直前でコールバックしているため0じゃなくて1
+        this.sound_play("click")
+        this.rule_unselect()
+        this.toast_ok("時間内に集まりませんでした")
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    sbx_rule_key_reset() {
+      this.current_sbx_rule_key = null // 基本モーダル内で使うだけなので対局開始と同時に選択していない状態にしておく
+      this.xmatch_interval_counter.stop()
+    },
+
   },
   computed: {
     SbxRuleInfo() { return SbxRuleInfo },
+
+    wait_time_max()    { return parseInt(this.$route.query.wait_time_max || WAIT_TIME_MAX)       },
+    xmatch_redis_ttl() { return parseInt(this.$route.query.xmatch_redis_ttl || XMATCH_REDIS_TTL) },
+
+    rest_seconds() {
+      return this.wait_time_max - this.xmatch_interval_counter.counter
+    },
   },
 }
