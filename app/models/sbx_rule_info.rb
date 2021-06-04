@@ -61,7 +61,7 @@ class SbxRuleInfo
         h[:members] = members
       end
 
-      h[:room_code] = SecureRandom.hex
+      h[:room_code] = ApplicationRecord.secure_random_urlsafe_base64_token
     end
 
     h[:sbx_rules_members] = SbxRuleInfo.sbx_rules_members
