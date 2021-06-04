@@ -106,6 +106,9 @@ export default {
       this.base.cc_params_apply()
       this.base.cc_play_handle()
       this.base.clock_box_share("開始")
+      if (!this.development_p) {
+        this.$emit("close")
+      }
     },
     stop_handle() {
       this.sound_play("click")
@@ -125,6 +128,9 @@ export default {
       this.sound_play("click")
       this.base.cc_resume_handle()
       this.base.clock_box_share("再開")
+      if (!this.development_p) {
+        this.$emit("close")
+      }
     },
     save_handle() {
       this.sound_play("click")
