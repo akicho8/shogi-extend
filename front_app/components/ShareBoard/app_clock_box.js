@@ -1,10 +1,10 @@
 import { IntervalRunner } from '@/components/models/interval_runner.js'
-import { ClockBox     } from "@/components/models/clock_box/clock_box.js"
+import { ClockBox       } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo     } from "@/components/models/cc_rule_info.js"
 import { Location       } from "shogi-player/components/models/location.js"
 
-import ClockBoxModal from "./ClockBoxModal.vue"
-import TimeLimitModal  from "./TimeLimitModal.vue"
+import ClockBoxModal  from "./ClockBoxModal.vue"
+import TimeLimitModal from "./TimeLimitModal.vue"
 
 const BYOYOMI_TALK_PITCH = 1.65 // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
 
@@ -111,111 +111,34 @@ export const app_clock_box = {
         hasModalCard: true,
         animation: "",
         canCancel: true,
-        onCancel: () => { this.sound_play("click") },
+        onCancel: () => {
+          this.sound_play("click")
+        },
         props: {
           base: this.base,
         },
-        // onCancel: () => this.sound_play("click"),
-        // events: {
-        //   "update:abstract_viewpoint": v => {
-        //     this.abstract_viewpoint = v
-        //   }
-        // },
       })
-
-      // this.$buefy.dialog.prompt({
-      //   title: "リアルタイム共有",
-      //   size: "is-small",
-      //   message: `
-      //     <div class="content">
-      //       <ul>
-      //         <li>同じ合言葉を設定した人とリアルタイムに部屋を共有できます</li>
-      //         <li>合言葉を設定したら同じ合言葉を相手に伝えてください</li>
-      //         <li>合言葉はURLにも付加するのでURLを伝えてもかまいません</li>
-      //       </ul>
-      //     </div>`,
-      //   confirmText: "設定",
-      //   cancelText: "キャンセル",
-      //   inputAttrs: { type: "text", value: this.room_code, required: false },
-      //   onCancel: () => this.sound_play("click"),
-      //   onConfirm: value => {
-      //     this.sound_play("click")
-      //     this.room_code_set(value)
-      //   },
-      // })
     },
 
     cc_resume_handle() {
-      // this.sound_play("click")
       this.clock_box.resume_handle()
       this.sound_stop_all()
     },
     cc_pause_handle() {
       if (this.clock_box.running_p) {
-        // this.sound_stop_all()
-        // this.sound_play("click")
         this.clock_box.pause_handle()
-
-        if (false) {
-          this.$buefy.dialog.confirm({
-            title: "ポーズ中",
-            message: `終了しますか？`,
-            confirmText: "終了",
-            cancelText: "再開",
-            type: "is-danger",
-            hasIcon: false,
-            trapFocus: true,
-            focusOn: "cancel",
-            onCancel:  () => this.cc_resume_handle(),
-            onConfirm: () => this.cc_stop_handle(),
-          })
-        }
       }
     },
     cc_stop_handle() {
       if (this.clock_box.running_p) {
-        // this.sound_stop_all()
-        // this.sound_play("click")
         this.clock_box.stop_handle()
       }
     },
     cc_play_handle() {
       if (this.clock_box.running_p) {
       } else {
-        // this.sound_play("start")
-        // this.ga_click("対局時計●")
         this.clock_box.play_handle()
       }
-    },
-    // 指した直後に片方の時計のボタンを押す
-    // cc_switch_handle(player_location) {
-    //   if (this.clock_box.running_p) {
-    //     this.clock_box.tap_on(player_location)
-    //   }
-    // },
-    cc_copy_handle() {
-      this.sound_play("click")
-      this.talk("左の設定を右にコピーしますか？")
-
-      this.$buefy.dialog.confirm({
-        title: "コピー",
-        message: `左の設定を右にコピーしますか？`,
-        confirmText: "コピーする",
-        cancelText: "キャンセル",
-        // type: "is-danger",
-        hasIcon: false,
-        trapFocus: true,
-        onConfirm: () => {
-          this.sound_stop_all()
-          this.sound_play("click")
-          this.clock_box.copy_1p_to_2p()
-          this.talk("コピーしました")
-        },
-        onCancel: () => {
-          this.sound_stop_all()
-          this.sound_play("click")
-        },
-      })
     },
     cc_dropdown_active_change(on) {
       if (on) {
@@ -295,9 +218,6 @@ export const app_clock_box = {
     // 時計の状態をすべて共有する
     clock_box_share(behaviour) {
       this.__assert__(behaviour != null, "behaviour != null")
-      // if (behaviour) {
-      //   this.toast_ok(behaviour)
-      // }
       const params = {}
       params.cc_params = this.cc_params
       params.behaviour = behaviour
@@ -311,9 +231,9 @@ export const app_clock_box = {
       if (this.received_from_self(params)) {
       } else {
         if (params.clock_box_attributes) {
-          this.cc_create_unless_exist()                               // 時計がなければ作って
+          this.cc_create_unless_exist()                           // 時計がなければ作って
           this.clock_box.attributes = params.clock_box_attributes // 内部状態を同じにする
-          this.cc_params = {...params.cc_params}                      // モーダルのパラメータを同じにする
+          this.cc_params = {...params.cc_params}                  // モーダルのパラメータを同じにする
         } else {
           this.cc_destroy()     // 時計を捨てたことを同期
         }
@@ -356,8 +276,6 @@ export const app_clock_box = {
 
     // 時間切れ
     time_limit_modal_handle() {
-      // this.sidebar_p = false
-      // this.sound_play("click")
       this.$buefy.modal.open({
         component: TimeLimitModal,
         parent: this,
