@@ -6,7 +6,7 @@ import { Location       } from "shogi-player/components/models/location.js"
 import ClockBoxModal  from "./ClockBoxModal.vue"
 import TimeLimitModal from "./TimeLimitModal.vue"
 
-const BYOYOMI_TALK_PITCH = 1.65 // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
+const BYOYOMI_TALK_PITCH = 1.65          // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
 
 export const app_clock_box = {
   data() {

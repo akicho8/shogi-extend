@@ -78,6 +78,7 @@
 
 <script>
 import { support_child } from "./support_child.js"
+const AUTO_CLOSE_IF_START_RESUME = false // START と RESUME 実行後にモーダルを閉じるか？
 
 export default {
   name: "ClockBoxModal",
@@ -106,7 +107,7 @@ export default {
       this.base.cc_params_apply()
       this.base.cc_play_handle()
       this.base.clock_box_share("開始")
-      if (!this.development_p) {
+      if (AUTO_CLOSE_IF_START_RESUME) {
         this.$emit("close")
       }
     },
@@ -128,7 +129,7 @@ export default {
       this.sound_play("click")
       this.base.cc_resume_handle()
       this.base.clock_box_share("再開")
-      if (!this.development_p) {
+      if (AUTO_CLOSE_IF_START_RESUME) {
         this.$emit("close")
       }
     },
