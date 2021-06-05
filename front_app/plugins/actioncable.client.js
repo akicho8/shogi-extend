@@ -32,6 +32,9 @@ export default {
       return consumer.subscriptions.create(params, {
         initialized: e => {
           console.log(`${params.channel} initialized()`)
+          if (callbacks.all_hook) {
+            callbacks.all_hook("initialized", e)
+          }
           if (callbacks.initialized) {
             callbacks.initialized(e)
           }
@@ -40,6 +43,9 @@ export default {
           console.log(`${params.channel} 接続完了`)
           this.debug_alert("connected")
           this.ac_info_update()
+          if (callbacks.all_hook) {
+            callbacks.all_hook("connected", e)
+          }
           if (callbacks.connected) {
             callbacks.connected(e)
           }
@@ -49,6 +55,9 @@ export default {
           console.log(`${params.channel} 切断完了`)
           this.debug_alert("disconnected")
           this.ac_info_update()
+          if (callbacks.all_hook) {
+            callbacks.all_hook("disconnected", e)
+          }
           if (callbacks.disconnected) {
             callbacks.disconnected(e)
           }
@@ -57,11 +66,17 @@ export default {
           console.log(`${params.channel} 接続失敗`)
           this.debug_alert("rejected")
           this.ac_info_update()
+          if (callbacks.all_hook) {
+            callbacks.all_hook("rejected", e)
+          }
           if (callbacks.rejected) {
             callbacks.rejected(e)
           }
         },
         received: data => {
+          if (callbacks.all_hook) {
+            callbacks.all_hook("received", data)
+          }
           if (callbacks.received) {
             callbacks.received(data)
           }
