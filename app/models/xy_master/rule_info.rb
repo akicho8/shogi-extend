@@ -11,10 +11,10 @@ module XyMaster
       # { key: "rule10",    name: "10問",     o_count_max:  10, viewpoint: :black, input_mode: "keyboard", },
       # { key: "rule30",    name: "30問",     o_count_max:  30, viewpoint: :black, input_mode: "keyboard", },
 
-      { key: "rule100t",  name: "☗100問TAP", o_count_max: 100, viewpoint: :black,  input_mode: "tap",      time_limit: 60*5, },
-      { key: "rule100tw", name: "☖100問TAP", o_count_max: 100, viewpoint: :white,  input_mode: "tap",      time_limit: 60*5, },
-      { key: "rule100",   name: "☗100問",    o_count_max: 100, viewpoint: :black,  input_mode: "keyboard", time_limit: 60*5, },
-      { key: "rule100w",  name: "☖100問",    o_count_max: 100, viewpoint: :white,  input_mode: "keyboard", time_limit: 60*5, },
+      { key: "rule100t",  name: "☗100問TAP", o_count_max: 100, viewpoint: :black,  input_mode: "tap",      time_limit: 60*3.5, },
+      { key: "rule100tw", name: "☖100問TAP", o_count_max: 100, viewpoint: :white,  input_mode: "tap",      time_limit: 60*3.5, },
+      { key: "rule100",   name: "☗100問",    o_count_max: 100, viewpoint: :black,  input_mode: "keyboard", time_limit: 60*3.5, },
+      { key: "rule100w",  name: "☖100問",    o_count_max: 100, viewpoint: :white,  input_mode: "keyboard", time_limit: 60*3.5, },
     ]
 
     cattr_accessor(:rank_max) { (Rails.env.production? || Rails.env.staging?) ? 100 : 100 }  # 位まで表示
