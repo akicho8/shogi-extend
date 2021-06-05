@@ -30,8 +30,8 @@ class ServiceInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/share-board?autoexec=vs"},
-      title: "普通の対人戦",
+      nuxt_link_to: {path: "/vs"},
+      title: "対人戦",
       new_p: true,
       og_image_key: "share-board-vs",
       description: "気軽に対局したいときにどうぞ",
