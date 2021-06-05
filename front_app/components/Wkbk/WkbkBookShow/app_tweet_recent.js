@@ -1,4 +1,3 @@
-import { IntervalCounter } from '@/components/models/interval_counter.js'
 import dayjs from "dayjs"
 
 export const app_tweet_recent = {
