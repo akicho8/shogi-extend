@@ -210,9 +210,9 @@ export const app_xmatch = {
         // 他の人から自分
         this.sound_play("click")
         this.debug_alert("他者がエントリー解除")
+        this.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が去りました`))
       }
       this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
-      this.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が去りました`))
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +234,7 @@ export const app_xmatch = {
 
     xmatch_interval_counter_callback() {
       if (this.xmatch_rest_seconds <= 1) { // カウンタをインクリメントする直前でコールバックしているため0じゃなくて1
-        this.sound_play("click")
+        this.sound_play("x")
         this.rule_unselect()
         this.toast_ok("時間内に集まりませんでした")
       }
