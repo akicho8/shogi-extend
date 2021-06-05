@@ -46,14 +46,16 @@ export const app_xmatch = {
     xmatch_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-
-      if (this.development_p) {
-        // ログイン不要
-      } else {
-        if (this.sns_login_required()) {
-          return
-        }
-      }
+      this.xmatch_modal_core()
+    },
+    xmatch_modal_core() {
+      // if (this.development_p) {
+      //   // ログイン不要
+      // } else {
+      //   if (this.sns_login_required()) {
+      //     return
+      //   }
+      // }
 
       this.room_destroy()
 
@@ -144,9 +146,9 @@ export const app_xmatch = {
       }
 
       this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
-      this.sound_play_random(["dog1", "dog2", "dog3"])
+      // this.sound_play_random(["dog1", "dog2", "dog3"])
       this.vibrate(200)
-      this.delay_block(0.5, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}がエントリーしました`))
+      this.delay_block(0.5, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}がやってきました`))
       // this.sound_play("click")
 
       // 合言葉がある場合マッチングが成立している
@@ -197,7 +199,7 @@ export const app_xmatch = {
       this.room_code = params.room_code // サーバー側で決めた共通の合言葉を使う
       this.room_create()
     },
-    xmatch_setup5_call() {
+    xmatch_setup5_call(params) {
       this.delay_block(START_TOAST_DELAY, () => {
         this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
       })
