@@ -236,6 +236,10 @@ export const app_xmatch = {
       this.xmatch_interval_counter.stop()
     },
 
+    // 残りN秒にする
+    xmatch_interval_counter_rest_n(n) {
+      this.xmatch_interval_counter.counter = this.wait_time_max - n
+    },
   },
   computed: {
     XmatchRuleInfo() { return XmatchRuleInfo },
