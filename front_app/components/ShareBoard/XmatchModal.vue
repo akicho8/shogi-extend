@@ -31,9 +31,9 @@
       //- pre {{base.xmatch_rules_members}}
 
   footer.modal-card-foot
-    b-button.cancel_handle(@click="cancel_handle") キャンセル
-    b-button.unselect_handle(@click="unselect_handle") 選択解除
+    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button(size="is-small" @click="base.xmatch_interval_counter_rest_n(3)" v-if="base.current_xmatch_rule_key && development_p") 残3
+    b-button.unselect_handle(@click="unselect_handle" v-if="development_p") 選択解除
 </template>
 
 <script>
@@ -52,7 +52,7 @@ export default {
     this.base.lobby_destroy()
   },
   methods: {
-    cancel_handle() {
+    close_handle() {
       this.sound_play("click")
       this.base.rule_unselect()
       this.$emit("close")
@@ -103,7 +103,7 @@ export default {
   // +tablet
   //   width: 30rem
   .modal-card-head
-    p
+    > *
       line-height: 1
   .modal-card-body
     padding: 1.25rem 1rem
@@ -120,8 +120,10 @@ export default {
   .modal-card-foot
     justify-content: space-between
     .button
-      font-weight: bold
-      min-width: 8rem
+      &.close_handle
+      &.unselect_handle
+        font-weight: bold
+        min-width: 8rem
 .STAGE-development
   .XmatchModal
     // .columns

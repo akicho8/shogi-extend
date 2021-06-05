@@ -110,6 +110,7 @@ export const app_xmatch = {
       }
     },
 
+    // subscribe したタイミングで来る
     subscribed_broadcasted(params) {
       this.xmatch_rules_members = params.xmatch_rules_members
     },
@@ -128,11 +129,17 @@ export const app_xmatch = {
         this.current_xmatch_rule_key = params.xmatch_rule_key
       } else {
         // 他の人から自分
+        this.debug_alert("他者がエントリー")
+        // this.sound_play("click")
       }
 
-      // マッチング画面の情報
-      this.xmatch_rules_members = params.xmatch_rules_members
-      // this.sound_play("click")
+      if (this.blank_p(params.room_code)) {
+        this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
+        this.sound_play_random(["dog1", "dog2", "dog3"])
+        this.vibrate(200)
+        this.delay_block(0.5, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}がエントリーしました`))
+        // this.sound_play("click")
+      }
 
       // 合言葉がある場合マッチングが成立している
       if (params.room_code) {
@@ -145,68 +152,72 @@ export const app_xmatch = {
           } else {
             this.xmatch_modal_close()
           }
-          this.xmatch_setup1(params) // 順番設定(必ず最初)
-          this.xmatch_setup2(params) // 手合割
-          this.xmatch_setup3(params) // チェスクロック
-          this.xmatch_setup4(params) // 部屋に入る
-          this.xmatch_setup5(params) // 「開始してください」コール
+          this.xmatch_setup1_member(params)   // 順番設定(必ず最初)
+          this.xmatch_setup2_handicap(params) // 手合割
+          this.xmatch_setup3_clock(params)    // チェスクロック
+          this.xmatch_setup4_join(params)     // 部屋に入る
+          this.xmatch_setup5_call(params)     // 「開始してください」コール
         }
       }
     },
     // 順番設定
-    xmatch_setup1(params) {
+    xmatch_setup1_member(params) {
       const names = params.members.map(e => e.from_user_name)
       this.os_setup_by_names(names)
       this.tl_add("順番設定", names, this.ordered_members)
     },
     // 手合割と視点設定
-    xmatch_setup2(params) {
+    xmatch_setup2_handicap(params) {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
 
       this.turn_offset = 0                                              // 手数0から始める
       this.current_sfen = xmatch_rule_info.handicap_preset_info.sfen       // 手合割の反映
       this.sp_viewpoint_set_by_self_location()                                           // 自分の場所を調べて正面をその視点にする
     },
-    xmatch_setup3(params) {
+    xmatch_setup3_clock(params) {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
       this.cc_params = {...xmatch_rule_info.cc_params} // チェスクロック時間設定
       this.cc_create()                              // チェスクロック起動 (先後は current_location.code で決める)
       this.cc_params_apply()                        // チェスクロックに時間設定を適用
       this.clock_box.play_handle()                  // PLAY押す
     },
-    xmatch_setup4(params) {
+    xmatch_setup4_join(params) {
       // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる
       // めちゃくちゃだけどホストの概念がないのでこれでいい
       this.room_destroy()               // デバッグ時にダイアログの選択肢再選択も耐えるため
       this.room_code = params.room_code // サーバー側で決めた共通の合言葉を使う
       this.room_create()
     },
-    xmatch_setup5() {
+    xmatch_setup5_call() {
       this.delay_block(START_TOAST_DELAY, () => {
         this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
       })
     },
 
-    //////////////////////////////////////////////////////////////////////////////// ルール非選択
+    //////////////////////////////////////////////////////////////////////////////// 選択解除の同期
+
     rule_unselect() {
       this.xmatch_interval_counter.stop() // 自分側だけの問題なので早めに停止しておく
       this.ac_lobby_perform("rule_unselect", {
       }) // --> app/channels/share_board/lobby_channel.rb
     },
+
     rule_unselect_broadcasted(params) {
       if (this.received_from_self(params)) {
         // 自分から自分
         this.xmatch_rule_key_reset()
       } else {
         // 他の人から自分
+        this.sound_play("click")
+        this.debug_alert("他者がエントリー解除")
       }
-      // マッチング画面の情報
-      this.xmatch_rules_members = params.xmatch_rules_members
-      // this.sound_play("click")
+      this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
+      this.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が去りました`))
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // ウィンドウを離れたらエントリー解除する
     xmatch_window_blur() {
       if (this.ac_lobby) {
         if (this.current_xmatch_rule_key) {
@@ -231,6 +242,7 @@ export const app_xmatch = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // 選択解除
     xmatch_rule_key_reset() {
       this.current_xmatch_rule_key = null // 基本モーダル内で使うだけなので対局開始と同時に選択していない状態にしておく
       this.xmatch_interval_counter.stop()
