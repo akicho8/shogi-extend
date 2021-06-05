@@ -85,9 +85,11 @@ export const app_urls = {
       const params = {
         ...this.current_url_params,
       }
-      if (this.present_p(params.room_code)) {
-        delete params.room_code
-      }
+
+      // 除外するパラメータ
+      delete params.room_code
+      delete params.autoexec
+
       return this.permalink_from_params(params)
     },
   },
