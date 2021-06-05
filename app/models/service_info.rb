@@ -28,6 +28,20 @@ class ServiceInfo
       ],
     },
     {
+      display_p: true,
+      experiment_p: false,
+      nuxt_link_to: {path: "/share-board?autoexec=vs"},
+      title: "普通の対人戦",
+      new_p: true,
+      og_image_key: "share-board-vs",
+      description: "気軽に対局したいときにどうぞ",
+      features: [
+        "プレイ人数 1〜8人",
+        "だいたい1手10秒猶予60秒",
+        "飛車vs角のルールがある",
+      ],
+    },
+    {
       key: :wkbk,
       display_p: true,
       experiment_p: false,
