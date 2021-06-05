@@ -14,7 +14,7 @@ Rails.application.configure do
         :redis_db_for_actb                   => 11,   # actb
         :redis_db_for_sidekiq                => 12,   # sidekiq
         :redis_db_for_emox                   => 14,   # emox
-        :redis_db_for_sbx                    => 15,   # sbx
+        :redis_db_for_share_board            => 15,   # 共有将棋盤
       })
   end
 end

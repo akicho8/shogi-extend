@@ -22,13 +22,13 @@ export const app_xmatch = {
     this.lobby_destroy()
   },
   methods: {
+    // 自動で開始する方法確認
+    // http://0.0.0.0:4000/share-board?autoexec=test_direct1
     test_direct1() {
       this.room_code = "__room_code__"
-      this.user_name
+      this.user_name = "x"
 
       this.os_setup_by_names(["alice"])
-
-      // this.cc_params
 
       this.cc_create()
       this.cc_params_apply()
@@ -36,6 +36,7 @@ export const app_xmatch = {
       this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
     },
 
+    // 自動マッチングモーダル起動
     xmatch_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
@@ -58,6 +59,8 @@ export const app_xmatch = {
         props: { base: this.base },
       })
     },
+
+    // 自動マッチングモーダルを外部から閉じる
     xmatch_modal_close() {
       if (this.xmatch_modal_instance) {
         this.xmatch_modal_instance.close()
@@ -65,26 +68,21 @@ export const app_xmatch = {
       }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     lobby_create() {
       this.__assert__(this.user_name, "this.user_name")
       this.__assert__(this.ac_lobby == null, "this.ac_lobby == null")
 
-      this.tl_add("SBX", `subscriptions.create`)
+      this.tl_add("XMATCH", `subscriptions.create`)
       this.ac_lobby = this.ac_subscription_create({channel: "ShareBoard::LobbyChannel"}, {
-        initialized: e => {
-          this.tl_add("SBX", "initialized", e)
-        },
-        connected: e => {
-          this.tl_add("SBX", "connected", e)
-        },
-        disconnected: e => {
-          this.tl_add("SBX", "disconnected", e)
-        },
-        rejected: e => {
-          this.tl_add("SBX", "rejected", e)
+        all_hook: (method, e) => {
+          if (method !== "received") {
+            this.tl_add("XMATCH", method, e)
+          }
         },
         received: e => {
-          this.tl_add("SBX", `received: ${e.bc_action}`, e)
+          this.tl_add("XMATCH", `received: ${e.bc_action}`, e)
           this.api_version_valid(e.bc_params.API_VERSION)
         },
       })
@@ -224,7 +222,7 @@ export const app_xmatch = {
     ////////////////////////////////////////////////////////////////////////////////
 
     xmatch_interval_counter_callback() {
-      if (this.rest_seconds <= 1) { // カウンタをインクリメントする直前でコールバックしているため0じゃなくて1
+      if (this.xmatch_rest_seconds <= 1) { // カウンタをインクリメントする直前でコールバックしているため0じゃなくて1
         this.sound_play("click")
         this.rule_unselect()
         this.toast_ok("時間内に集まりませんでした")
@@ -245,7 +243,7 @@ export const app_xmatch = {
     wait_time_max()    { return parseInt(this.$route.query.wait_time_max || WAIT_TIME_MAX)       },
     xmatch_redis_ttl() { return parseInt(this.$route.query.xmatch_redis_ttl || XMATCH_REDIS_TTL) },
 
-    rest_seconds() {
+    xmatch_rest_seconds() {
       return this.wait_time_max - this.xmatch_interval_counter.counter
     },
   },

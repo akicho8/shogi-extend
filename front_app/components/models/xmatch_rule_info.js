@@ -4,6 +4,7 @@ import { HandicapPresetInfo } from "@/components/models/handicap_preset_info.js"
 export class XmatchRuleInfo extends MemoryRecord {
   static get define() {
     return [
+      // app/models/xmatch_rule_info.rb
       { key: "rule_2vs2_0_10_60_0",          name: "2 vs 2",            rule_desc: "1手10秒 猶予60秒", members_count_max: 4, handicap_preset_key: "平手",       cc_params: { initial_main_min:  0, initial_read_sec: 10, initial_extra_sec: 60, every_plus: 0, }, stage_only: ["development", "staging", "production"], },
       { key: "rule_3vs3_0_10_60_0",          name: "3 vs 3",            rule_desc: "1手10秒 猶予60秒", members_count_max: 6, handicap_preset_key: "平手",       cc_params: { initial_main_min:  0, initial_read_sec: 10, initial_extra_sec: 60, every_plus: 0, }, stage_only: ["development", "staging", "production"], },
       { key: "rule_4vs4_0_10_60_0",          name: "4 vs 4",            rule_desc: "1手10秒 猶予60秒", members_count_max: 8, handicap_preset_key: "平手",       cc_params: { initial_main_min:  0, initial_read_sec: 10, initial_extra_sec: 60, every_plus: 0, }, stage_only: ["development", "staging", "production"], },

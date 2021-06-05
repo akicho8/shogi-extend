@@ -16,6 +16,7 @@
 class XmatchRuleInfo
   include ApplicationMemoryRecord
   memory_record [
+    # front_app/components/models/xmatch_rule_info.js
     { key: "rule_2vs2_0_10_60_0",          members_count_max: 4, },
     { key: "rule_3vs3_0_10_60_0",          members_count_max: 6, },
     { key: "rule_4vs4_0_10_60_0",          members_count_max: 8, },

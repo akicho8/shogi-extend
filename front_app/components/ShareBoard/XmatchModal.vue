@@ -3,11 +3,11 @@
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-5.has-text-weight-bold
       | 自動マッチング
-    p.is-size-5(v-if="base.current_xmatch_rule_key && base.rest_seconds >= 1")
-      | {{base.rest_seconds}}
+    p.is-size-5(v-if="base.current_xmatch_rule_key && base.xmatch_rest_seconds >= 1")
+      | {{base.xmatch_rest_seconds}}
 
   section.modal-card-body
-    b-loading(:is-full-page="false" :active="!base.xmatch_rules_members")
+    b-loading(:is-full-page="true" :active="!base.xmatch_rules_members")
     template(v-if="base.xmatch_rules_members")
       .columns.is-multiline.is-variable.is-2
         template(v-for="xmatch_rule_info in base.XmatchRuleInfo.values")

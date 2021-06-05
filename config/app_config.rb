@@ -20,7 +20,7 @@ AppConfig.deep_merge!({
     :redis_db_for_actb                   => 4,    # actb
     :redis_db_for_sidekiq                => 5,    # sidekiq
     :redis_db_for_emox                   => 7,    # emox
-    :redis_db_for_sbx                    => 8,    # sbx
+    :redis_db_for_share_board            => 8,    # 共有将棋盤
 
     ################################################################################ login
     :available_providers                 =>  [:twitter, :google, :github], # SNS経由ログインできるもの
