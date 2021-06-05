@@ -41,8 +41,12 @@ export const app_xmatch = {
       this.sidebar_p = false
       this.sound_play("click")
 
-      if (this.sns_login_required()) {
-        return
+      if (this.development_p) {
+        // ログイン不要
+      } else {
+        if (this.sns_login_required()) {
+          return
+        }
       }
 
       this.room_destroy()
@@ -97,11 +101,11 @@ export const app_xmatch = {
     // perform のラッパーで共通のパラメータを入れる
     ac_lobby_perform(action, params = {}) {
       params = {
-        from_connection_id: this.connection_id,     // 送信者識別子
-        from_user_name:     this.user_name,         // 送信者名
-        performed_at:       this.time_current_ms(), // 実行日時(ms)
-        ua_icon:            this.ua_icon,           // 端末の種類を表すアイコン文字列
-        current_user_id:    this.g_current_user.id,
+        from_connection_id: this.connection_id,      // 送信者識別子
+        from_user_name:     this.user_name,          // 送信者名
+        performed_at:       this.time_current_ms(),  // 実行日時(ms)
+        ua_icon:            this.ua_icon,            // 端末の種類を表すアイコン文字列
+        current_user_id:    this.g_current_user?.id, // こっちをRedisのキーにしたかったがsystemテストが書けないため断念
         ...params,
       }
       if (this.ac_lobby) {
@@ -133,13 +137,11 @@ export const app_xmatch = {
         // this.sound_play("click")
       }
 
-      if (this.blank_p(params.room_code)) {
-        this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
-        this.sound_play_random(["dog1", "dog2", "dog3"])
-        this.vibrate(200)
-        this.delay_block(0.5, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}がエントリーしました`))
-        // this.sound_play("click")
-      }
+      this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
+      this.sound_play_random(["dog1", "dog2", "dog3"])
+      this.vibrate(200)
+      this.delay_block(0.5, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}がエントリーしました`))
+      // this.sound_play("click")
 
       // 合言葉がある場合マッチングが成立している
       if (params.room_code) {

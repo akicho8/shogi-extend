@@ -409,10 +409,10 @@ RSpec.describe "共有将棋盤", type: :system do
   describe "局面再送" do
     def test1
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_DELAY: @RETRY_DELAY, SEND_SUCCESS_DELAY: @SEND_SUCCESS_DELAY)
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_DELAY: @RETRY_DELAY, SEND_SUCCESS_DELAY: @SEND_SUCCESS_DELAY)
       end
       b_block do
-        visit_with_args(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
+        visit_app(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
       end
       a_block do
         assert_move("77", "76", "☗7六歩")     # aliceが指した直後bobから応答OKが0.75秒ぐらいで帰ってくる
@@ -590,10 +590,10 @@ RSpec.describe "共有将棋盤", type: :system do
       @PING_OK_SEC = 3 # N秒以内ならPINGを成功とみなす
       @PONG_DELAY  = 5 # PONGするまでの秒数(デバッグ時には PING_OK_SEC 以上の値にする)
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "alice", PING_OK_SEC: @PING_OK_SEC)
+        visit_app(room_code: :my_room, force_user_name: "alice", PING_OK_SEC: @PING_OK_SEC)
       end
       b_block do
-        visit_with_args(room_code: :my_room, force_user_name: "bob", PONG_DELAY: @PONG_DELAY)
+        visit_app(room_code: :my_room, force_user_name: "bob", PONG_DELAY: @PONG_DELAY)
       end
       a_block do
         member_list_click(2)    # 1回押し
@@ -610,14 +610,14 @@ RSpec.describe "共有将棋盤", type: :system do
     it "最新" do
       @API_VERSION = ShareBoardControllerMethods::API_VERSION
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
+        visit_app(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
         assert_no_text("新しいプログラムがあるのでブラウザをリロードします")
       end
     end
     it "更新" do
       @API_VERSION = ShareBoardControllerMethods::API_VERSION + 1
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
+        visit_app(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
         assert_text("新しいプログラムがあるのでブラウザをリロードします")
         doc_image
         buefy_dialog_button_click
@@ -798,7 +798,7 @@ RSpec.describe "共有将棋盤", type: :system do
     it "works" do
       @RETRY_DELAY = 3
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", RETRY_DELAY: @RETRY_DELAY)
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", RETRY_DELAY: @RETRY_DELAY)
         room_leave
         piece_move("77", "76")
         sleep(@RETRY_DELAY)
@@ -846,7 +846,7 @@ RSpec.describe "共有将棋盤", type: :system do
   describe "順番設定シャッフル" do
     it "works" do
       a_block do
-        visit_with_args(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4")
+        visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4")
 
         side_menu_open
         menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
@@ -868,7 +868,7 @@ RSpec.describe "共有将棋盤", type: :system do
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '持ち上げ駒キャンセル方法'
   describe "持ち上げ駒キャンセル方法" do
     def test1(selector)
-      visit_with_args(room_code: :my_room, force_user_name: "alice")
+      visit_app(room_code: :my_room, force_user_name: "alice")
 
       side_menu_open
       menu_item_click("設定")               # モーダルを開く
@@ -890,12 +890,83 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
-  def visit_with_args(args)
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自動マッチング'
+  describe "自動マッチング" do
+    before do
+      Actb.setup
+      Emox.setup
+    end
+
+    it "飛車vs角を1vs1" do
+      a_block do
+        visit_app(force_user_name: "alice")
+      end
+      b_block do
+        visit_app(force_user_name: "bob")
+      end
+      a_block do
+        side_menu_open
+        menu_item_click("自動マッチング")                # モーダルを開く
+      end
+      b_block do
+        side_menu_open
+        menu_item_click("自動マッチング")                # モーダルを開く
+      end
+      a_block do
+        find(".rule_1vs1_0_10_60_0_pRvsB").click         # 飛車vs角を選択
+      end
+      b_block do
+        find(".rule_1vs1_0_10_60_0_pRvsB").click         # 飛車vs角を選択 (ここでマッチング成立)
+      end
+
+      # 開発環境では performed_at で並び換えているので必ず alice, bob の順になる
+      # app/models/xmatch_rule_info.rb
+      a_block do
+        assert_viewpoint(:white)                         # alice, bob の順で alice は上手なので△の向きになっている
+        assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_turn_standby", "bob")  # 2人目(bob)は待機中
+      end
+      b_block do
+        assert_viewpoint(:black)                         # alice, bob の順で bob は下手なので▲の向きになっている
+        assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_turn_standby", "bob")  # 2人目(bob)は待機中
+      end
+    end
+
+    it "自分vs自分 平手" do
+      a_block do
+        visit_app(force_user_name: "alice")
+
+        side_menu_open
+        menu_item_click("自動マッチング")          # モーダルを開く
+        find(".rule_self_0_03_60_0").click         # 飛車vs角を選択
+
+        assert_viewpoint(:black)                         # 平手の初手なので▲視点
+        assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
+      end
+    end
+
+    it "時間切れ" do
+      @wait_time_max = 2
+      a_block do
+        visit_app(force_user_name: "alice", wait_time_max: @wait_time_max)
+
+        side_menu_open
+        menu_item_click("自動マッチング")          # モーダルを開く
+        find(".rule_1vs1_0_10_60_0_pRvsB").click   # 飛車vs角を選択
+
+        sleep(@wait_time_max)
+        assert_text("時間内に集まりませんでした")
+      end
+    end
+  end
+
+  def visit_app(args = {})
     visit "/share-board?#{args.to_query}"
   end
 
   def room_setup(room_code, user_name)
-    visit "/share-board"
+    visit_app
     side_menu_open
     menu_item_click("部屋に入る")        # 「部屋に入る」を自分でクリックする
     Capybara.within(".RoomSetupModal") do

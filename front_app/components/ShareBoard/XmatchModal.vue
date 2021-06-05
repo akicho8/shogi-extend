@@ -12,7 +12,7 @@
       .columns.is-multiline.is-variable.is-2
         template(v-for="xmatch_rule_info in base.XmatchRuleInfo.values")
           .column.is-one-third.py-2
-            a.box(@click="xmatch_rule_click(xmatch_rule_info)")
+            a.box(@click="xmatch_rule_click(xmatch_rule_info)" :class="xmatch_rule_info.key")
               .has-text-weight-bold.is-size-4.is_line_break_off
                 | {{xmatch_rule_info.name}}
               .has-text-grey-light.is-size-7.is_line_break_off

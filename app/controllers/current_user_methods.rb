@@ -52,6 +52,13 @@ module CurrentUserMethods
           true
         end
       end
+
+      # _user_id パラメータが来ればそれ以降もログインした状態にさせる
+      if Rails.env.development? || Rails.env.test?
+        if params[:_user_id]
+          current_user_set(user)
+        end
+      end
     end
 
     unless user

@@ -36,12 +36,12 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         ShareBoardSidebarExport(:base="base")
 
         b-menu-list(label="その他")
+          b-menu-item.is_active_unset(label="自動マッチング"              @click="base.xmatch_modal_handle")
           b-menu-item.is_active_unset(label="使い方"                      @click="base.general_help_modal_handle")
           b-menu-item.is_active_unset(label="設定"                        @click="base.general_setting_modal_handle")
           b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
           b-menu-item.is_active_unset(label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="デバッグ用ログ"              @click="base.track_log_modal_handle" v-if="development_p")
-          b-menu-item.is_active_unset(label="自動マッチング"              @click="base.xmatch_modal_handle" v-if="development_p")
 
       .style_container.box.mt-5
         .title.is-5 スタイル設定

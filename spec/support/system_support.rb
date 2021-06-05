@@ -75,7 +75,7 @@ if true
   RSpec.configure do |config|
     config.before(:example, type: :system) do
       # FIXME: なぜかテスト環境で動かなくなったので開発環境に向けている
-      Capybara.app_host = "http://localhost:4000"
+      Capybara.app_host = "http://0.0.0.0:4000"
 
       # windowをひとつだけにしておく
       Capybara.windows.drop(1).each(&:close)
@@ -120,6 +120,12 @@ if true
     def menu_item_click(text)
       first(:xpath, "//*[text()=' #{text} ']").click
     end
+
+    # user としてログインした状態にする
+    # しかしこの方法はタブを2つ開いても二人を別々にログインした状態で維持にするのが難しい
+    def login_as(user)
+      visit("http://0.0.0.0:3000/?_user_id=#{user.id}")
+    end
   end
 
   RSpec.configure do |config|
@@ -137,5 +143,11 @@ RSpec.configure do |config|
     Dir.chdir(Rails.root) do
       system "rm -f *.zip"
     end
+  end
+end
+
+RSpec.configure do |config|
+  config.after(:suite) do
+    system %(say "テスト完了")
   end
 end

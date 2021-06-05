@@ -21,10 +21,10 @@ class XmatchRuleInfo
     { key: "rule_3vs3_0_10_60_0",          members_count_max: 6, },
     { key: "rule_4vs4_0_10_60_0",          members_count_max: 8, },
     { key: "rule_1vs1_0_10_60_0",          members_count_max: 2, },
-    { key: "rule_1vs1_0_10_60_0_presetX1", members_count_max: 2, },
-    { key: "rule_self_0_10_60_0",          members_count_max: 1, },
-    { key: "rule_self_0_10_60_0_preset00", members_count_max: 1, },
-    { key: "rule_self_0_10_60_0_preset19", members_count_max: 1, },
+    { key: "rule_1vs1_0_10_60_0_pRvsB",    members_count_max: 2, },
+    { key: "rule_self_0_03_60_0",          members_count_max: 1, },
+    { key: "rule_self_0_30_00_0_preset00", members_count_max: 1, },
+    { key: "rule_self_0_30_00_0_preset19", members_count_max: 1, },
   ]
 
   class << self
@@ -35,7 +35,7 @@ class XmatchRuleInfo
 
     # 特定のメンバーを全体から削除する
     def member_delete(data)
-      each { |e| redis.hdel(e.redis_key, data["current_user_id"]) }
+      each { |e| redis.hdel(e.redis_key, data["from_connection_id"]) }
     end
 
     def clear_all
@@ -50,33 +50,23 @@ class XmatchRuleInfo
   delegate :redis, :clear_all, to: "self.class"
 
   def member_add(data)
-    if false
-      redis.hdel(redis_key, data["current_user_id"])
-    end
+    raise ArgumentError, data.inspect if data["from_connection_id"].blank?
+    raise ArgumentError, data.inspect if data["xmatch_redis_ttl"].blank?
+    raise ArgumentError, data.inspect if data["performed_at"].blank?
 
     other_rule_delete(data) # 他のルールを選択している場合はいったん削除する
-
     redis.multi do
-      redis.hset(redis_key, data["current_user_id"], data.to_json) # 初回なら true
+      redis.hset(redis_key, data["from_connection_id"], data.to_json) # 初回なら true
       redis.expire(redis_key, data["xmatch_redis_ttl"])
     end
 
     h = {}
-
     if members_count >= members_count_max
-      if true
-        keys = redis.hkeys(redis_key).take(members_count_max) # キーたちを members_count_max 件に絞る
-        values = redis.hmget(redis_key, *keys)                # 値たちを取得
-        redis.hdel(redis_key, *keys)                          # DBから削除
-        members = values.collect { |e| JSON.parse(e) }
-        # members = members.shuffle
-        h[:members] = members
-      end
-
       h[:room_code] = ApplicationRecord.secure_random_urlsafe_base64_token
+      h[:members] = matched_members
     end
-
     h[:xmatch_rules_members] = XmatchRuleInfo.xmatch_rules_members
+
     h
   end
 
@@ -94,7 +84,7 @@ class XmatchRuleInfo
   def other_rule_delete(data)
     self.class.each do |e|
       if e.key != key
-        redis.hdel(e.redis_key, data["current_user_id"])
+        redis.hdel(e.redis_key, data["from_connection_id"])
       end
     end
   end
@@ -102,5 +92,17 @@ class XmatchRuleInfo
   # このルールを選択しているメンバー数
   def members_count
     redis.hlen(redis_key)
+  end
+
+  def matched_members
+    keys = redis.hkeys(redis_key).take(members_count_max) # キーたちを members_count_max 件に絞る
+    values = redis.hmget(redis_key, *keys)                # 値たちを取得
+    redis.hdel(redis_key, *keys)                          # DBから削除
+    members = values.collect { |e| JSON.parse(e) }
+    members = members.sort_by { |e| e["performed_at"] }   # エントリー順にする
+    if Rails.env.production? || Rails.env.staging?
+      members = members.shuffle
+    end
+    members
   end
 end
