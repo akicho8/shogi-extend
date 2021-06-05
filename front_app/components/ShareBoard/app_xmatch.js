@@ -36,6 +36,12 @@ export const app_xmatch = {
       this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
     },
 
+    // 自動マッチングモーダル起動(ショートカット)
+    // http://0.0.0.0:4000/share-board?autoexec=vs
+    vs() {
+      this.xmatch_modal_core()
+    },
+
     // 自動マッチングモーダル起動
     xmatch_modal_handle() {
       this.sidebar_p = false
