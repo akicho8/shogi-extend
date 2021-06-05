@@ -159,6 +159,7 @@ export const app_xmatch = {
           this.xmatch_setup3_clock(params)    // チェスクロック
           this.xmatch_setup4_join(params)     // 部屋に入る
           this.xmatch_setup5_call(params)     // 「開始してください」コール
+          this.xmatch_setup6_title(params)    // タイトル変更
         }
       }
     },
@@ -194,6 +195,10 @@ export const app_xmatch = {
       this.delay_block(START_TOAST_DELAY, () => {
         this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
       })
+    },
+    xmatch_setup6_title(params) {
+      const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
+      this.current_title = xmatch_rule_info.name
     },
 
     //////////////////////////////////////////////////////////////////////////////// 選択解除の同期
