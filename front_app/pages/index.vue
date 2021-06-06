@@ -26,8 +26,8 @@
                   .content
                     .title.is-5.mt-2
                       h2.title.is-5.is-inline {{e.title}}
-                      template(v-if="e.new_p")
-                        span.has-text-danger.ml-2.is-size-6 NEW!
+                      template(v-if="e.attention_label")
+                        span.has-text-danger.ml-2.is-size-6 {{e.attention_label}}
                     p(v-html="e.description")
                     ul.is-size-7.features
                       template(v-for="e in e.features")

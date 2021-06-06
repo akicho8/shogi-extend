@@ -32,7 +32,7 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/vs"},
       title: "対人戦",
-      new_p: true,
+      attention_label: "NEW!",
       og_image_key: "share-board-vs",
       description: "気軽に対局したいときにどうぞ",
       features: [
@@ -47,7 +47,7 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/rack"},
       title: "インスタント将棋問題集",
-      new_p: true,
+      attention_label: "NEW!",
       og_image_key: "rack",
       # description: "市販の問題集を繰り返し解くよりも、最初のうちは本人のために本人の実戦譜の検討を元に本人が作った問題集を繰り返し解いた方が身に付きやすいのではないか、という実験もかねた、将棋問題投稿復習ツール",
       # description: "本人が本人のために作る問題集を解いた方がためになるのではないかと考えて作った問題集作成ツール",
@@ -69,6 +69,7 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",
+      attention_label: "UPDATE!",
       og_image_key: "share-board",
       description: "リレー将棋・詰将棋作成・仲間内での対戦にどうぞ",
       features: [
@@ -183,7 +184,7 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/vs-clock"},
       title: "対局時計",
-      new_p: false,
+      attention_label: nil,
       og_image_key: "vs-clock",
       description: "大会などで時計が足りないときにどうぞ",
       features: [
@@ -197,7 +198,7 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/style-editor"},
       title: "将棋盤スタイルエディタ",
-      new_p: false,
+      attention_label: nil,
       og_image_key: "style-editor",
       description: "将棋盤のスタイルをいじくる開発用ツール",
       features: [
@@ -210,7 +211,7 @@ class ServiceInfo
       experiment_p: true,
       nuxt_link_to: {path: "/emoshogi"},
       title: "エモ将棋",
-      new_p: false,
+      attention_label: nil,
       og_image_key: "emox",
       description: "気持ちを伝えながら指す実験的ネット将棋",
       features: [
@@ -223,7 +224,7 @@ class ServiceInfo
       experiment_p: true,
       nuxt_link_to: {path: "/training"},
       title: "将棋トレーニングバトル",
-      new_p: false,
+      attention_label: nil,
       og_image_key: "actb",
       description: "将棋の問題を解く力を競うネット対戦ゲーム",
       features: [
@@ -243,7 +244,7 @@ class ServiceInfo
       experiment_p: true,
       nuxt_link_to: {path: "/practical-checkmate"},
       title: "実戦詰将棋『一期一会』",
-      new_p: false,
+      attention_label: nil,
       og_image_key: "practical-checkmate",
       description: "やねうら王の詰将棋500万問からﾗﾝﾀﾞﾑに出題",
       features: [
@@ -257,7 +258,7 @@ class ServiceInfo
       experiment_p: true,
       nuxt_link_to: {path: "/blindfold"},
       title: "目隠し詰将棋",
-      new_p: false,
+      attention_label: nil,
       og_image_key: "blindfold",
       description: "声を聞いて脳内で将棋盤を作って解く<s>苦行</s>練習",
       features: [
