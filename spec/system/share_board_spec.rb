@@ -941,7 +941,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
         side_menu_open
         menu_item_click("自動マッチング")          # モーダルを開く
-        find(".rule_self_0_03_60_0").click         # 飛車vs角を選択
+        find(".rule_self_0_03_60_0").click         # 自分vs自分
 
         assert_viewpoint(:black)                         # 平手の初手なので▲視点
         assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
@@ -956,7 +956,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
         side_menu_open
         menu_item_click("自動マッチング")          # モーダルを開く
-        find(".rule_1vs1_0_10_60_0_pRvsB").click   # 飛車vs角を選択
+        find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛車vs角を選択
 
         sleep(@wait_time_max)
         assert_text("時間内に集まりませんでした")
@@ -1166,6 +1166,6 @@ RSpec.describe "共有将棋盤", type: :system do
   def xmatch_select_1vs1
     side_menu_open
     menu_item_click("自動マッチング")          # モーダルを開く
-    find(".rule_1vs1_0_10_60_0_pRvsB").click   # 飛車vs角を選択
+    find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛車vs角を選択
   end
 end
