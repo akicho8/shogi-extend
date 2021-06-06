@@ -10,20 +10,20 @@
     b-loading(:is-full-page="true" :active="!base.xmatch_rules_members")
     template(v-if="base.xmatch_rules_members")
       .columns.is-multiline.is-variable.is-2
-        template(v-for="xmatch_rule_info in base.XmatchRuleInfo.values")
-          .column.is-one-third.py-2
-            a.box(@click="xmatch_rule_click(xmatch_rule_info)" :class="xmatch_rule_info.key")
+        template(v-for="e in base.XmatchRuleInfo.values")
+          .column.is-one-third.py-2(v-if="e.stage_only.includes($config.STAGE)")
+            a.box(@click="xmatch_rule_click(e)" :class="e.key")
               .has-text-weight-bold.is-size-4.is_line_break_off
-                | {{xmatch_rule_info.name}}
+                | {{e.name}}
               .has-text-grey-light.is-size-7.is_line_break_off
-                | {{xmatch_rule_info.rule_desc}}
-              b-taglist.mt-2(v-if="active_count(xmatch_rule_info) >= 1 || true")
-                template(v-if="base.xmatch_rules_members[xmatch_rule_info.key]")
-                  template(v-for="e in base.xmatch_rules_members[xmatch_rule_info.key]")
+                | {{e.rule_desc}}
+              b-taglist.mt-2(v-if="entry_count(e) >= 1 || true")
+                template(v-if="base.xmatch_rules_members[e.key]")
+                  template(v-for="e in base.xmatch_rules_members[e.key]")
                     b-tag(rounded type="is-primary")
                       span(:class="user_name_class(e)")
                         | {{e.from_user_name}}
-                template(v-for="i in rest_count(xmatch_rule_info)")
+                template(v-for="i in rest_count(e)")
                   b-tag(rounded type="is-grey") ?
 
       // b-loading(:active="!base.ac_lobby")
@@ -31,7 +31,7 @@
       //- pre {{base.xmatch_rules_members}}
 
   footer.modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_button(@click="close_handle" icon-left="chevron-left") やめる
     b-button(size="is-small" @click="base.xmatch_interval_counter_rest_n(3)" v-if="base.current_xmatch_rule_key && development_p") 残3
     b-button.unselect_handle(@click="unselect_handle" v-if="development_p") 選択解除
 </template>
@@ -52,17 +52,33 @@ export default {
     this.base.lobby_destroy()
   },
   methods: {
+    // やめる
     close_handle() {
       this.sound_play("click")
       this.base.rule_unselect()
       this.$emit("close")
     },
+
+    // 選択解除
     unselect_handle() {
       this.sound_play("click")
       this.base.rule_unselect()
     },
+
+    // ルール選択
     xmatch_rule_click(e) {
       this.sound_play("click")
+
+      // 要はハンドルネームがないのが問題なのでログインしているかどうかではなく
+      // if (this.blank_p(this.base.user_name)) { とする手もある
+      // が、捨てハンと問題行動の増加で荒れる。なのできちんとログインさせる
+      // ログインする気にない人にまで配慮して匿名で使ってもらおうとしてはいけない(重要)
+      if (this.base.xmatch_login === "on") {
+        if (this.sns_login_required()) {
+          return
+        }
+      }
+
       if (this.base.current_xmatch_rule_key === e.key) {
         this.base.rule_unselect()
       } else {
@@ -71,15 +87,15 @@ export default {
       }
     },
 
-    // マッチング中の人数
-    active_count(e) {
+    // 指定ルールにエントリーした人数
+    entry_count(e) {
       this.__assert__(this.base.xmatch_rules_members, "this.base.xmatch_rules_members")
       return this.base.xmatch_rules_members[e.key].length
     },
 
-    // あとN人いれば成立する
+    // 指定ルールはあとN人いれば成立する
     rest_count(e) {
-      let r = e.members_count_max - this.active_count(e)
+      let r = e.members_count_max - this.entry_count(e)
       if (r < 0) {
         r = 0
       }

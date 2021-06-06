@@ -5,8 +5,9 @@ import { IntervalCounter } from '@/components/models/interval_counter.js'
 
 const WAIT_TIME_MAX           = 60 * 2      // 待ち時間最大
 const XMATCH_REDIS_TTL        = 60 * 2 + 3  // redis.hset する度に更新するTTL
-const UNSELECT_IF_WINDOW_BLUR = false       // ウィンドウを離れたときマッチングをキャンセルするか？
+const XMATCH_LOGIN            = "on"        // ルール選択時にログインを必須にして確実に名前がある状態にする
 const START_TOAST_DELAY       = 3           // 誰々から開始してくださいをN秒後に発動する
+// const UNSELECT_IF_WINDOW_BLUR = false       // ウィンドウを離れたときマッチングをキャンセルするか？
 
 export const app_xmatch = {
   data() {
@@ -83,7 +84,7 @@ export const app_xmatch = {
     ////////////////////////////////////////////////////////////////////////////////
 
     lobby_create() {
-      this.__assert__(this.user_name, "this.user_name")
+      // this.__assert__(this.user_name, "this.user_name")
       this.__assert__(this.ac_lobby == null, "this.ac_lobby == null")
 
       this.tl_add("XMATCH", `subscriptions.create`)
@@ -129,6 +130,8 @@ export const app_xmatch = {
 
     //////////////////////////////////////////////////////////////////////////////// ルール選択
     rule_select(e) {
+      this.__assert__(this.present_p(this.user_name), "this.present_p(this.user_name)")
+
       this.ac_lobby_perform("rule_select", {
         xmatch_rule_key: e.key,                     // 選択したルール
         xmatch_redis_ttl: this.xmatch_redis_ttl, // JS側で一括管理したいのでこちらからTTLを渡す
@@ -236,9 +239,9 @@ export const app_xmatch = {
     xmatch_window_blur() {
       if (this.ac_lobby) {
         if (this.current_xmatch_rule_key) {
-          if (UNSELECT_IF_WINDOW_BLUR) {
-            this.sound_play("click")
-            this.toast_ok("他の所に行ったので選択を解除しました")
+          this.sound_play("click")
+          this.toast_ok("他の所に行ったので選択を解除しました")
+          if (!this.development_p) {
             this.rule_unselect()
           }
         }
@@ -273,6 +276,7 @@ export const app_xmatch = {
 
     wait_time_max()    { return parseInt(this.$route.query.wait_time_max || WAIT_TIME_MAX)       },
     xmatch_redis_ttl() { return parseInt(this.$route.query.xmatch_redis_ttl || XMATCH_REDIS_TTL) },
+    xmatch_login()     { return this.$route.query.xmatch_login || XMATCH_LOGIN },
 
     xmatch_rest_seconds() {
       return this.wait_time_max - this.xmatch_interval_counter.counter

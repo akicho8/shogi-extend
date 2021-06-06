@@ -126,6 +126,14 @@ if true
     def login_as(user)
       visit("http://0.0.0.0:3000/?_user_id=#{user.id}")
     end
+
+    def login
+      login_as(User.sysop)
+    end
+
+    def logout
+      visit("http://0.0.0.0:3000/?_user_id=0")
+    end
   end
 
   RSpec.configure do |config|

@@ -897,6 +897,7 @@ RSpec.describe "共有将棋盤", type: :system do
       Emox.setup
     end
 
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '飛車vs角を1vs1'
     it "飛車vs角を1vs1" do
       a_block do
         visit_app(force_user_name: "alice")
@@ -933,6 +934,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
     end
 
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自分vs自分 平手'
     it "自分vs自分 平手" do
       a_block do
         visit_app(force_user_name: "alice")
@@ -946,6 +948,7 @@ RSpec.describe "共有将棋盤", type: :system do
       end
     end
 
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '時間切れ'
     it "時間切れ" do
       @wait_time_max = 2
       a_block do
@@ -957,6 +960,16 @@ RSpec.describe "共有将棋盤", type: :system do
 
         sleep(@wait_time_max)
         assert_text("時間内に集まりませんでした")
+      end
+    end
+
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ログイン必須'
+    it "ログイン必須" do
+      a_block do
+        logout                                # ログアウト状態にする
+        visit_app                             # 来る
+        xmatch_select_1vs1                    # 1vs1のルールを選択
+        assert_selector(".SnsLoginContainer") # 「ログインしてください」が発動
       end
     end
   end
@@ -1147,5 +1160,12 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def assert_order_setting_members(names)
     assert { all(".OrderSettingModal .user_name").collect(&:text) === names }
+  end
+  
+  # なんでもいいから1vs1のルールを選択する
+  def xmatch_select_1vs1
+    side_menu_open
+    menu_item_click("自動マッチング")          # モーダルを開く
+    find(".rule_1vs1_0_10_60_0_pRvsB").click   # 飛車vs角を選択
   end
 end

@@ -395,7 +395,7 @@ export default {
     // },
 
     sns_login_required() {
-      if (!this.g_current_user) {
+      if (!this.g_current_user || this.$route.query.sns_login_required === "on") {
         this.toast_ok("ログインしてください")
         this.sns_login_modal_open()
         return true
