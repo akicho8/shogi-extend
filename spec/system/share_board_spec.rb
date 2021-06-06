@@ -900,10 +900,10 @@ RSpec.describe "共有将棋盤", type: :system do
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '飛車vs角を1vs1'
     it "飛車vs角を1vs1" do
       a_block do
-        visit_app(force_user_name: "alice")
+        visit_app(force_user_name: "alice", xmatch_login: "off")
       end
       b_block do
-        visit_app(force_user_name: "bob")
+        visit_app(force_user_name: "bob", xmatch_login: "off")
       end
       a_block do
         side_menu_open
@@ -914,10 +914,10 @@ RSpec.describe "共有将棋盤", type: :system do
         menu_item_click("自動マッチング")                # モーダルを開く
       end
       a_block do
-        find(".rule_1vs1_0_10_60_0_pRvsB").click         # 飛車vs角を選択
+        find(".rule_1vs1_05_00_00_5_pRvsB").click         # 飛車vs角を選択
       end
       b_block do
-        find(".rule_1vs1_0_10_60_0_pRvsB").click         # 飛車vs角を選択 (ここでマッチング成立)
+        find(".rule_1vs1_05_00_00_5_pRvsB").click         # 飛車vs角を選択 (ここでマッチング成立)
       end
 
       # 開発環境では performed_at で並び換えているので必ず alice, bob の順になる
@@ -937,11 +937,11 @@ RSpec.describe "共有将棋盤", type: :system do
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自分vs自分 平手'
     it "自分vs自分 平手" do
       a_block do
-        visit_app(force_user_name: "alice")
+        visit_app(force_user_name: "alice", xmatch_login: "off")
 
         side_menu_open
         menu_item_click("自動マッチング")          # モーダルを開く
-        find(".rule_self_0_03_60_0").click         # 自分vs自分
+        find(".rule_self_05_00_00_5").click         # 自分vs自分
 
         assert_viewpoint(:black)                         # 平手の初手なので▲視点
         assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
@@ -952,7 +952,7 @@ RSpec.describe "共有将棋盤", type: :system do
     it "時間切れ" do
       @wait_time_max = 2
       a_block do
-        visit_app(force_user_name: "alice", wait_time_max: @wait_time_max)
+        visit_app(force_user_name: "alice", wait_time_max: @wait_time_max, xmatch_login: "off")
 
         side_menu_open
         menu_item_click("自動マッチング")          # モーダルを開く
@@ -971,6 +971,66 @@ RSpec.describe "共有将棋盤", type: :system do
         xmatch_select_1vs1                    # 1vs1のルールを選択
         assert_selector(".SnsLoginContainer") # 「ログインしてください」が発動
       end
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'シングルトン時間切れ'
+  describe "シングルトン時間切れ" do
+    before do
+      @initial_read_sec = 5         # 5秒切れ負け
+      @CC_AUTO_TIME_LIMIT_DELAY = 3 # 通知が来なくてもN秒後に自力で時間切れモーダルを表示
+    end
+
+    def test1(force_user_name)
+      visit_app({
+          "room_code"                => "my_room",
+          "force_user_name"          => force_user_name,
+          "ordered_member_names"     => "alice,bob",
+          "RETRY_DELAY"              => -1,
+          "CC_AUTO_TIME_LIMIT_DELAY" => @CC_AUTO_TIME_LIMIT_DELAY,
+          **clock_box_params([0, @initial_read_sec, 0, 0]),
+        })
+    end
+
+    it "当事者側(自分は即座に起動してBC)" do
+      a_block { test1("alice") }
+      b_block { test1("bob")   }
+      a_block { clock_start    }
+      a_block do
+        sleep(@initial_read_sec - 1)
+        assert_text("当事者は自分で起動してブロードキャスト")
+        assert_time_limit_modal_exist
+        assert_text("BC受信→モーダル起動済み")
+      end
+      b_block { assert_time_limit_modal_exist }
+    end
+
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '他者側(予約するがBCの方が速いのでキャンセルされる)'
+    it "他者側(予約するがBCの方が速いのでキャンセルされる)" do
+      a_block { test1("alice") }
+      b_block { test1("bob")   }
+      a_block { clock_start    }
+      b_block do
+        sleep(@initial_read_sec - 1)
+        assert_text("BC受信→モーダル起動開始")
+        assert_text("時間切れ予約キャンセル")
+        assert_time_limit_modal_exist
+      end
+      a_block { assert_time_limit_modal_exist }
+    end
+
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '他者側(予約待ち0なので他者側で即発動)'
+    it "他者側(予約待ち0なので他者側で即発動)" do
+      @CC_AUTO_TIME_LIMIT_DELAY = 0
+      a_block { test1("alice") }
+      b_block { test1("bob")   }
+      a_block { clock_start    }
+      b_block do
+        sleep(@initial_read_sec - 1)
+        assert_text("BC受信→モーダル起動済み")
+        assert_time_limit_modal_exist
+      end
+      a_block { assert_time_limit_modal_exist }
     end
   end
 
@@ -1114,10 +1174,10 @@ RSpec.describe "共有将棋盤", type: :system do
 
   def clock_open
     side_menu_open
-    menu_item_click("対局時計")                # 「対局時計」モーダルを開く
-    assert_clock_off                           # 時計はまだ設置されていない
-    find(".main_switch").click                 # 設置する
-    assert_clock_on                            # 時計が設置された
+    menu_item_click("対局時計") # 「対局時計」モーダルを開く
+    assert_clock_off            # 時計はまだ設置されていない
+    find(".main_switch").click  # 設置する
+    assert_clock_on             # 時計が設置された
   end
 
   # 退室
@@ -1148,10 +1208,11 @@ RSpec.describe "共有将棋盤", type: :system do
     first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
   end
 
+  # 対局時計を設置してPLAY押して閉じる
   def clock_start
-    clock_open                                   # 対局時計を開いて
-    find(".play_button").click                   # 開始
-    first(".close_button_for_capybara").click    # 閉じる (ヘッダーに置いている)
+    clock_open                               # 対局時計を開いて
+    find(".play_button").click               # 開始
+    find(".close_button_for_capybara").click # 閉じる (ヘッダーに置いている)
   end
 
   def assert_viewpoint(location_key)
@@ -1161,11 +1222,26 @@ RSpec.describe "共有将棋盤", type: :system do
   def assert_order_setting_members(names)
     assert { all(".OrderSettingModal .user_name").collect(&:text) === names }
   end
-  
+
   # なんでもいいから1vs1のルールを選択する
   def xmatch_select_1vs1
     side_menu_open
     menu_item_click("自動マッチング")          # モーダルを開く
     find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛車vs角を選択
+  end
+
+  # 時間切れモーダルが存在する
+  def assert_time_limit_modal_exist
+    assert_selector(".TimeLimitModal")
+  end
+
+  # URLにする時計のパラメータ
+  def clock_box_params(values)
+    [
+      :"clock_box.initial_main_min",
+      :"clock_box.initial_read_sec",
+      :"clock_box.initial_extra_sec",
+      :"clock_box.every_plus",
+    ].zip(values).to_h
   end
 end

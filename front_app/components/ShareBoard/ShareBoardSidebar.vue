@@ -36,7 +36,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         ShareBoardSidebarExport(:base="base")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(label="自動マッチング"              @click="base.xmatch_modal_handle")
+          b-menu-item.is_active_unset(label="自動マッチング"              @click="base.xmatch_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
           b-menu-item.is_active_unset(label="使い方"                      @click="base.general_help_modal_handle")
           b-menu-item.is_active_unset(label="設定"                        @click="base.general_setting_modal_handle")

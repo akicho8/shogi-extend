@@ -23,6 +23,11 @@ export default {
     return {
     }
   },
+  mounted() {
+    if (!this.clock_running_p) {
+      this.debug_alert("対局時計は設定されていません")
+    }
+  },
   watch: {
     // 共有によって時計を止められたり消されたりしたら自動的に閉じる
     clock_running_p(v) {
@@ -34,6 +39,7 @@ export default {
   methods: {
     close_handle() {
       this.sound_play("click")
+      this.base.time_limit_modal_close()
       this.$emit("close")
     },
     submit_handle() {

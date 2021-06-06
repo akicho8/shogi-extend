@@ -2,6 +2,9 @@
 client-only
   .ShareBoardApp(:style="component_style")
     DebugBox(v-if="development_p")
+      p time_limit_modal_instance: {{!!time_limit_modal_instance}}
+      p cc_time_limit_delay_id: {{cc_time_limit_delay_id}}
+
       p current_xmatch_rule_key: {{current_xmatch_rule_key}}
       p self_vs_self_p: {{self_vs_self_p}}
       p ordered_members: {{ordered_members}}
@@ -97,6 +100,17 @@ client-only
           .column.is-clipped
             ClockBoxInspector(:clock_box="clock_box" v-if="clock_box")
 
+            .panel
+              .panel-heading
+                | 時間切れメソッド
+              a.panel-block(@click="cc_time_zero_callback") 最初のコールバック
+              a.panel-block(@click="cc_time_limit_modal_show_and_broadcast") 当事者は自分で発動＆ブロードキャスト
+              a.panel-block(@click="cc_delayed_time_limit_modal") 他者は数秒後発動
+              a.panel-block(@click="time_limit_modal_handle_if_not_exist") 受信
+              a.panel-block(@click="cc_time_limit_delay_stop") 数秒後発動キャンセル
+              a.panel-block(@click="time_limit_modal_handle") モーダル
+              a.panel-block(@click="time_limit_modal_close") 閉じる
+
             .box
               .buttons
                 b-button(@click="room_recreate") 再起動
@@ -104,7 +118,6 @@ client-only
                 b-button(@click="room_destroy") 切断
                 b-button(@click="member_info_bc_restart") 生存通知
                 b-button(@click="al_add_test") 指
-                b-button(@click="time_limit_modal_handle") 時間切れ
                 b-button(@click="edit_warn_modal_handle") 編集警告
                 b-button(@click="clock_box_share()") 時計同期
                 //- b-button(@click="clock_box_share(null)") 時計同期(behaviour=null)
@@ -144,6 +157,7 @@ import { support_parent           } from "./support_parent.js"
 import { app_action_log           } from "./app_action_log.js"
 import { app_message_logs         } from "./app_message_logs.js"
 import { app_clock_box            } from "./app_clock_box.js"
+import { app_clock_box_time_limit } from "./app_clock_box_time_limit.js"
 import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
 import { app_turn_notify          } from "./app_turn_notify.js"
 import { app_ordered_members      } from "./app_ordered_members.js"
@@ -180,6 +194,7 @@ export default {
     app_action_log,
     app_message_logs,
     app_clock_box,
+    app_clock_box_time_limit,
     app_persistent_cc_params,
     app_turn_notify,
     app_ordered_members,

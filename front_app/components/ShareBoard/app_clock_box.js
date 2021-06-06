@@ -4,7 +4,6 @@ import { CcRuleInfo     } from "@/components/models/cc_rule_info.js"
 import { Location       } from "shogi-player/components/models/location.js"
 
 import ClockBoxModal  from "./ClockBoxModal.vue"
-import TimeLimitModal from "./TimeLimitModal.vue"
 
 const BYOYOMI_TALK_PITCH = 1.65          // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
 
@@ -64,14 +63,7 @@ export const app_clock_box = {
           // this.sound_play("click")
         },
         time_zero_callback: e => {
-          this.sound_play("lose")
-          this.toast_ok("時間切れ")
-          this.ac_log("対局時計", "時間切れ")
-          this.time_limit_modal_handle()
-          // this.$buefy.dialog.alert({
-          //   message: "時間切れ",
-          //   onConfirm: () => { this.cc_stop_handle() },
-          // })
+          this.cc_time_zero_callback()
         },
         second_decriment_hook: (single_clock, key, t, m, s) => {
           if (1 <= m && m <= 10) {
@@ -217,7 +209,6 @@ export const app_clock_box = {
 
     // 時計の状態をすべて共有する
     clock_box_share(behaviour = null) {
-      this.__assert__(behaviour != null, "behaviour != null")
       const params = {}
       params.cc_params = this.cc_params
       if (behaviour) {
@@ -244,58 +235,64 @@ export const app_clock_box = {
         }
       }
       if (params.behaviour) {
-        this.al_add({
-          ...params,
-          label: `時計${params.behaviour}`,
-          sfen: this.current_sfen,
-          turn_offset: this.turn_offset,
-          clock_box_attributes: null, // 容量が大きいので空にしておく
-        })
+        this.cc_action_log_store(params)         // 履歴追加
+        this.cc_location_change_and_call(params) // ニワトリ
 
-        const attrs = params.clock_box_attributes
-        if (attrs) {
-          if (this.first_play_trigger_p(attrs)) { // PLAYの初回なら
-            // 開始時の処理
-            this.sp_viewpoint_set_by_self_location()               // 自分の場所を調べて正面をその視点にする
-            if (this.current_turn_self_p) {       // 自分が手番なら
-              // this.tn_notify()                 // 牛
-              this.debug_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
-            }
-            this.sound_play("rooster")
-          }
-        }
-
-        // 誰が操作したかを通知
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.behaviour}しました`, {onend: () => {
-          if (attrs) {
+        if (params.behaviour === "時間切れ") {
+          this.time_limit_modal_handle_if_not_exist()
+        } else {
+          // 誰が操作したかを通知
+          this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.behaviour}しました`, {onend: () => {
             // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
-            if (this.first_play_trigger_p(attrs)) {
+            if (this.first_play_trigger_p(params)) {
               this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
             }
-          }
-        }})
+          }})
+        }
       }
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
+    cc_action_log_store(params) {
+      this.__assert__(params.behaviour, "params.behaviour")
 
-    // 時間切れ
-    time_limit_modal_handle() {
-      this.$buefy.modal.open({
-        component: TimeLimitModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        props: { base: this.base },
-        onCancel: () => this.sound_play("click"),
-      })
+      params = {
+        ...params,
+        label: `時計${params.behaviour}`,
+        sfen: this.current_sfen,
+        turn_offset: this.turn_offset,
+        clock_box_attributes: null, // 容量が大きいので空にしておく
+        room_code_except_url: null, // 絶対に使わないので消しておく
+      }
+
+      this.al_add(params)
+    },
+
+    cc_location_change_and_call(params) {
+      if (this.first_play_trigger_p(params)) { // PLAYの初回なら
+        // 開始時の処理
+        this.sp_viewpoint_set_by_self_location()               // 自分の場所を調べて正面をその視点にする
+        if (this.current_turn_self_p) {       // 自分が手番なら
+          // this.tn_notify()                 // 牛
+          this.debug_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
+        }
+        this.sound_play("rooster")
+      }
     },
 
     // private
 
-    first_play_trigger_p(attrs) {
-      return attrs.play_count === 1 && attrs.pause_count === 0 && attrs.resume_count === 0
+    // 最初の PLAY か？
+    first_play_trigger_p(params) {
+      if (true) {
+        return params.behaviour === "開始"
+      } else {
+        if (params.behaviour === "開始") {
+          const attrs = params.clock_box_attributes
+          if (attrs) {
+            return attrs.play_count === 1 && attrs.pause_count === 0 && attrs.resume_count === 0
+          }
+        }
+      }
     },
   },
   computed: {

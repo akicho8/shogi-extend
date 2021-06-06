@@ -64,7 +64,15 @@ export const app_sfen_share = {
         this.setup_by_params(params)
         this.vibrate(10)
       }
+
       if (true) {
+        // 指したので時間切れ発動予約をキャンセルする
+        // alice が残り1秒で指すが、bob 側の時計は0秒になっていた場合にこれが必要になる
+        // これがないと alice は時間切れになっていないと言うが、bob側は3秒後に発動してしまって時間切れだと言って食い違いが発生する
+        // この猶予を利用してわざと alice が残り0秒指しするのが心配かもしれないが、
+        // 時計が0になった時点で即座にブロードキャストするので問題ない
+        this.cc_time_limit_delay_stop()
+
         if (this.user_name === params.next_user_name) {
           if (this.next_notify_p) {
             this.tn_notify()

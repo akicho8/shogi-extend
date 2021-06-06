@@ -28,7 +28,7 @@ class ServiceInfo
       ],
     },
     {
-      display_p: true,
+      display_p: false,
       experiment_p: false,
       nuxt_link_to: {path: "/vs"},
       title: "対人戦",
