@@ -1,6 +1,20 @@
 # -*- compile-command: "scp production.robots.txt i:/var/www/shogi_web_production/current/front_app/static/robots.txt; curl https://www.shogi-extend.com/robots.txt | cat -n" -*-
 # https://developers.google.com/search/reference/robots_txt?hl=ja
 
+################################################################################ Googlebot-image
+# Googlebot-image DoS Attack Avoidance
+#
+# load average: 3.17, 2.61, 2.57
+# https://mackerel.io/orgs/shogi-web-production/hosts/3RWVXVWncbG#period=1d
+#
+# Twitterbot allow for OGP
+#
+user-agent: Googlebot-Image
+disallow: /w/*.png
+disallow: /system/board_images/*.png
+
+################################################################################ all
+
 user-agent: *
 
 disallow: /x/
@@ -12,8 +26,9 @@ disallow: /swars/users/*/kento-api
 
 disallow: /launcher
 
-# "/*.sfen" matches "position.sfen.lnsgkgsnl"
+# "/*.sfen"      matches "position.sfen.lnsgkgsnl"
 # "/*.sfen$" not matches "position.sfen.lnsgkgsnl"
+#
 # disallow: /*.kif$
 # disallow: /*.ki2$
 # disallow: /*.sfen$
