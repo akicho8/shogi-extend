@@ -13,6 +13,10 @@ user-agent: Googlebot-Image
 disallow: /w/*.png
 disallow: /system/board_images/*.png
 
+################################################################################ 
+user-agent: SemrushBot
+disallow: /
+
 ################################################################################ all
 
 user-agent: *
