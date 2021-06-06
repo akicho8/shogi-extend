@@ -1,16 +1,20 @@
 <template lang="pug">
-.vs
-  template(v-for="e in XmatchRuleInfo.values")
-    h2 {{e.name}}
-    h3 {{e.rule_desc}}
+.page-vs
+  template(v-if="false")
+    template(v-for="e in XmatchRuleInfo.values")
+      h2 {{e.name}}
+      h3 {{e.rule_desc}}
+  b-loading(active)
 </template>
 
 <script>
-import { XmatchRuleInfo } from "@/components/models/xmatch_rule_info.js"
+// import { XmatchRuleInfo } from "@/components/models/xmatch_rule_info.js"
 
 export default {
-  name: "share-board-usage",
+  name: "page-vs",
   beforeMount() {
+    // マウント前に実行してもマウント前に遷移するわけじゃない
+    // Googlebot用にHTMLを入れておいたが遷移中に表示されてしまうのでテンプレートは空にしとこう
     this.$router.replace({name: "share-board", query: {...this.$route.query, autoexec: "vs"}})
   },
   computed: {
@@ -27,4 +31,5 @@ export default {
 </script>
 
 <style lang="sass">
+.page-vs
 </style>
