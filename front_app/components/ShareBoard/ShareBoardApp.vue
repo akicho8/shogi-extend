@@ -106,9 +106,9 @@ client-only
                 b-button(@click="al_add_test") 指
                 b-button(@click="time_limit_modal_handle") 時間切れ
                 b-button(@click="edit_warn_modal_handle") 編集警告
-                b-button(@click="clock_box_share('')") 時計同期
-                b-button(@click="clock_box_share()") 時計同期(behaviour=null)
-                b-button(@click="fake_error") エラー
+                b-button(@click="clock_box_share()") 時計同期
+                //- b-button(@click="clock_box_share(null)") 時計同期(behaviour=null)
+                b-button(@click="fake_error") APIにnullのキー送信
                 b-button(@click="reload_modal_handle") リロード確認
                 b-button(@click="room_entry_call('alice')") 入室コール
                 b-button(@click="room_leave_call('alice')") 退室コール

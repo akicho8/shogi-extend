@@ -216,11 +216,16 @@ export const app_clock_box = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 時計の状態をすべて共有する
-    clock_box_share(behaviour) {
+    clock_box_share(behaviour = null) {
       this.__assert__(behaviour != null, "behaviour != null")
       const params = {}
       params.cc_params = this.cc_params
-      params.behaviour = behaviour
+      if (behaviour) {
+        params.behaviour = behaviour
+        params.room_code_except_url = this.room_code_except_url
+      } else {
+        // 静かに同期するとき
+      }
       if (this.clock_box) {
         params.clock_box_attributes = this.clock_box.attributes
       }
