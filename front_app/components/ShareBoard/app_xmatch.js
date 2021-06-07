@@ -64,7 +64,12 @@ export const app_xmatch = {
         hasModalCard: true,
         animation: "",
         canCancel: true,
-        onCancel: () => { this.sound_play("click") },
+        onCancel: () => {
+          this.sound_play("click")
+          this.xmatch_rule_key_reset() // ac_lobbyが閉じているBCが来ないかもしれないため最初に解除しておく
+          this.base.rule_unselect("${name}がやめました")
+          this.xmatch_modal_close()
+        },
         props: { base: this.base },
       })
     },

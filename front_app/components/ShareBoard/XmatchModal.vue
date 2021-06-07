@@ -51,8 +51,7 @@ export default {
     this.base.lobby_create()    // ac_lobby を作る
   },
   beforeDestroy() {
-    this.base.xmatch_interval_counter.stop()
-    this.base.rule_unselect()
+    this.base.xmatch_rule_key_reset()
     this.base.lobby_destroy()
   },
   methods: {
