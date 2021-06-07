@@ -46,6 +46,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       # resource "*", headers: :any, methods: [:head, :get, :post, :patch, :put, :options], credentials: true
       origins *[
         "0.0.0.0:4000",
+        "10.0.1.2:4000",        # スマホを 10.0.1.2:4000 で見ているとき、これを設定するとしゃべるようになる
         "localhost:4000",
       ]
       resource "*", {
