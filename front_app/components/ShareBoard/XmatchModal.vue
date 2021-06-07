@@ -150,7 +150,7 @@ export default {
 
   +tablet
     .animation-content
-      max-width: 960px // $buefy.modal.open({width: 960}) 相当
+      max-width: 640px // $buefy.modal.open({width: 640}) 相当
       .modal-card
         width: auto    // buefyのデモを参考
         .modal-card-body
@@ -165,7 +165,7 @@ export default {
       .modal-card
         max-height: 90vh
         .modal-card-body
-          padding: 1rem 0.75rem
+          padding: 1.25rem 0.75rem
           .column
             padding-top: 0.25rem
             padding-bottom: 0.25rem
@@ -174,8 +174,8 @@ export default {
 
 .STAGE-development
   .XmatchModal
-    // .columns
-    //   border: 1px dashed change_color($primary, $alpha: 0.5)
-    // .column
-    //   border: 1px dashed change_color($danger, $alpha: 0.5)
+    .columns
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .column
+      border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>
