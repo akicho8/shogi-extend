@@ -27,7 +27,7 @@ class XmatchRuleInfo
     { key: "rule_4vs4_05_00_00_5",         members_count_max: 8, name: "4 vs 4",       rule_desc: "5分 + 5秒/手",        handicap_preset_key: "平手",       cc_params: { initial_main_min:  5, initial_read_sec: 0, initial_extra_sec: 0, every_plus: 5, }, stage_only: ["development", "staging", "production"], },
 
     { key: "rule_self_05_00_00_5",         members_count_max: 1, name: "自分 vs 自分", rule_desc: "5分 + 5秒/手",        handicap_preset_key: "平手",       cc_params: { initial_main_min:  5, initial_read_sec:  0, initial_extra_sec:  0, every_plus: 5, }, stage_only: ["development", "staging", "production"], },
-    { key: "rule_1vs1_05_00_00_5_pRvsB",   members_count_max: 2, name: "飛車vs角",     rule_desc: "5分 + 5秒/手",        handicap_preset_key: "飛車vs角",   cc_params: { initial_main_min:  5, initial_read_sec:  0, initial_extra_sec:  0, every_plus: 5, }, stage_only: ["development", "staging", "production"], },
+    { key: "rule_1vs1_05_00_00_5_pRvsB",   members_count_max: 2, name: "飛 vs 角",     rule_desc: "5分 + 5秒/手",        handicap_preset_key: "飛vs角",   cc_params: { initial_main_min:  5, initial_read_sec:  0, initial_extra_sec:  0, every_plus: 5, }, stage_only: ["development", "staging", "production"], },
 
     { key: "rule_self_0_30_00_0_preset00", members_count_max: 1, name: "*☗視点",       rule_desc: "30分",                handicap_preset_key: "平手",       cc_params: { initial_main_min: 30, initial_read_sec:  0, initial_extra_sec:  0, every_plus: 0, }, stage_only: ["development"],                          },
     { key: "rule_self_0_30_00_0_preset19", members_count_max: 1, name: "*☖視点",       rule_desc: "30分",                handicap_preset_key: "十九枚落ち", cc_params: { initial_main_min: 30, initial_read_sec:  0, initial_extra_sec:  0, every_plus: 0, }, stage_only: ["development"],                          },
@@ -41,7 +41,11 @@ class XmatchRuleInfo
 
     # 特定のメンバーを全体から削除する
     def member_delete(data)
-      each { |e| redis.hdel(e.redis_key, data["from_connection_id"]) }
+      if any? { |e| redis.hdel(e.redis_key, data["from_connection_id"]) == 1 }
+        { delete_result: "deleted" }
+      else
+        { delete_result: "not_deleted" }
+      end
     end
 
     def clear_all

@@ -897,8 +897,8 @@ RSpec.describe "共有将棋盤", type: :system do
       Emox.setup
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '飛車vs角を1vs1'
-    it "飛車vs角を1vs1" do
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '飛vs角を1vs1'
+    it "飛vs角を1vs1" do
       a_block do
         visit_app(force_user_name: "alice", xmatch_login: "off")
       end
@@ -914,10 +914,10 @@ RSpec.describe "共有将棋盤", type: :system do
         menu_item_click("自動マッチング")                # モーダルを開く
       end
       a_block do
-        find(".rule_1vs1_05_00_00_5_pRvsB").click         # 飛車vs角を選択
+        find(".rule_1vs1_05_00_00_5_pRvsB").click         # 飛vs角を選択
       end
       b_block do
-        find(".rule_1vs1_05_00_00_5_pRvsB").click         # 飛車vs角を選択 (ここでマッチング成立)
+        find(".rule_1vs1_05_00_00_5_pRvsB").click         # 飛vs角を選択 (ここでマッチング成立)
       end
 
       # 開発環境では performed_at で並び換えているので必ず alice, bob の順になる
@@ -956,7 +956,7 @@ RSpec.describe "共有将棋盤", type: :system do
 
         side_menu_open
         menu_item_click("自動マッチング")          # モーダルを開く
-        find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛車vs角を選択
+        find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
 
         sleep(@wait_time_max)
         assert_text("時間内に面子が集まらなかった")
@@ -1227,7 +1227,7 @@ RSpec.describe "共有将棋盤", type: :system do
   def xmatch_select_1vs1
     side_menu_open
     menu_item_click("自動マッチング")          # モーダルを開く
-    find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛車vs角を選択
+    find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
   end
 
   # 時間切れモーダルが存在する

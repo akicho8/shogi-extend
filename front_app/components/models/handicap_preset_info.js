@@ -4,7 +4,7 @@ export class HandicapPresetInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "平手",           handicap_level:    54, description: "1段級差 (下手先)", sfen: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1", },
-      { key: "飛車vs角",       handicap_level:    21, description: "0.5段級差",        sfen: "position sfen lnsgkgsnl/1b5b1/ppppppppp/9/9/9/PPPPPPPPP/1R5R1/LNSGKGSNL w - 1", },
+      { key: "飛vs角",       handicap_level:    21, description: "0.5段級差",        sfen: "position sfen lnsgkgsnl/1b5b1/ppppppppp/9/9/9/PPPPPPPPP/1R5R1/LNSGKGSNL w - 1", },
       { key: "香落ち",         handicap_level:   107, description: "2段級差",          sfen: "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1", },
       // { key: "右香落ち",    handicap_level:   107, description: "あまり用いない",   sfen: "position sfen 1nsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1", },
       { key: "角落ち",         handicap_level:   773, description: "3段級差",          sfen: "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",   },
