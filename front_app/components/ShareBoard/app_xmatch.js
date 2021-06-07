@@ -53,8 +53,11 @@ export const app_xmatch = {
       // 部屋で相談している途中からもしれないので退室してはいけない
       // this.room_destroy()
 
+      // https://buefy.org/documentation/modal/
       this.xmatch_modal_close()
       this.xmatch_modal_instance = this.$buefy.modal.open({
+        width: "",          // width ではなく max-width に設定される
+        customClass: "XmatchModal",
         component: XmatchModal,
         parent: this,
         trapFocus: true,
@@ -77,6 +80,10 @@ export const app_xmatch = {
     ////////////////////////////////////////////////////////////////////////////////
 
     lobby_create() {
+      // if (this.development_p) {
+      //   this.lobby_destroy()
+      // }
+
       // this.__assert__(this.user_name, "this.user_name")
       this.__assert__(this.ac_lobby == null, "this.ac_lobby == null")
 

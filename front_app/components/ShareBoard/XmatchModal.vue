@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.XmatchModal(style="width:auto")
+.modal-card
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-5.has-text-weight-bold
       | 自動マッチング
@@ -9,22 +9,23 @@
   section.modal-card-body
     b-loading(:is-full-page="true" :active="!base.xmatch_rules_members")
     template(v-if="base.xmatch_rules_members")
-      .columns.is-multiline.is-variable.is-2
+      .columns.is-mobile.is-multiline.is-variable.is-2-tablet.is-1-mobile
         template(v-for="e in base.XmatchRuleInfo.values")
-          .column.is-one-third.py-2(v-if="e.stage_only.includes($config.STAGE)")
+          .column.is-one-third(v-if="e.stage_only.includes($config.STAGE)")
             a.box(@click="xmatch_rule_click(e)" :class="e.key")
-              .has-text-weight-bold.is-size-4.is_line_break_off
-                | {{e.name}}
-              .has-text-grey-light.is-size-7.is_line_break_off
-                | {{e.rule_desc}}
-              b-taglist.mt-2(v-if="entry_count(e) >= 1 || true")
-                template(v-if="base.xmatch_rules_members[e.key]")
-                  template(v-for="e in base.xmatch_rules_members[e.key]")
-                    b-tag(rounded type="is-primary")
-                      span(:class="user_name_class(e)")
-                        | {{e.from_user_name}}
-                template(v-for="i in rest_count(e)")
-                  b-tag(rounded type="is-grey") ?
+              .name {{e.name}}
+              .rule_desc {{e.rule_desc}}
+              b-tag.mt-2(rounded type="is-primary is-light" v-if="rest_count(e) >= 1")
+                | あと{{rest_count(e)}}人
+              .names_list.mt-2(v-if="entry_count(e) >= 1")
+                // エントリー者を並べる
+                template(v-for="e in base.xmatch_rules_members[e.key]")
+                  b-tag(rounded type="is-primary")
+                    span(:class="user_name_class(e)")
+                      | {{e.from_user_name}}
+                //- 空席を並べる
+                //- template(v-for="i in rest_count(e)")
+                //-   b-tag.is-hidden-mobile(rounded type="is-grey") ?
 
       // b-loading(:active="!base.ac_lobby")
       //- | {{!!base.ac_lobby}}
@@ -116,25 +117,28 @@ export default {
 
 <style lang="sass">
 .XmatchModal
-  min-height: 30vh
-
-  // height: 80vh
-  // +tablet
-  //   width: 30rem
   .modal-card-head
     > *
       line-height: 1
   .modal-card-body
-    padding: 1.25rem 1rem
-    // padding: 0rem
-    // background-color: $black-bis
-    // .b-table
-    //   background-color: $black-bis
     .box
       display: flex
       align-items: center
       justify-content: center
       flex-direction: column
+      .name
+        font-weight: bold
+        font-size: $size-5
+      .rule_desc
+        color: $grey-light
+        font-size: $size-7
+      .names_list
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-wrap: wrap
+        .tag
+          margin: calc(0.25rem / 2)
 
   .modal-card-foot
     justify-content: space-between
@@ -143,6 +147,31 @@ export default {
       &.unselect_handle
         font-weight: bold
         min-width: 8rem
+
+  +tablet
+    .animation-content
+      max-width: 960px // $buefy.modal.open({width: 960}) 相当
+      .modal-card
+        width: auto    // buefyのデモを参考
+        .modal-card-body
+          padding: 1.25rem 1rem
+          .column
+            padding-top: 0.5rem
+            padding-bottom: 0.5rem
+
+  +mobile
+    .animation-content
+      max-width: 96vw
+      .modal-card
+        max-height: 90vh
+        .modal-card-body
+          padding: 1rem 0.75rem
+          .column
+            padding-top: 0.25rem
+            padding-bottom: 0.25rem
+            .box
+              padding: 0.75rem
+
 .STAGE-development
   .XmatchModal
     // .columns

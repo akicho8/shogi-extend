@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .ShareBoardApp(:style="component_style")
-    DebugBox(v-if="development_p")
+    DebugBox.is-hidden-mobile(v-if="development_p")
       p time_limit_modal_instance: {{!!time_limit_modal_instance}}
       p cc_time_limit_delay_id: {{cc_time_limit_delay_id}}
 
@@ -96,7 +96,7 @@ client-only
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="ac_room")
           ShareBoardMemberList(:base="base" v-if="ac_room")
 
-        .columns(v-if="development_p")
+        .columns.is-hidden-mobile(v-if="development_p")
           .column.is-clipped
             ClockBoxInspector(:clock_box="clock_box" v-if="clock_box")
 
