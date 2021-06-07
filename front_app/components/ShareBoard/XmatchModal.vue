@@ -43,7 +43,10 @@ import { support_child } from "./support_child.js"
 export default {
   name: "XmatchModal",
   mixins: [support_child],
-  mounted() {
+  created() {
+    this.base.xmatch_rules_members = null // 前の状態が出てしまわないように初期化しておく
+  },
+  beforeMount() {
     this.base.lobby_create()    // ac_lobby を作る
   },
   beforeDestroy() {
