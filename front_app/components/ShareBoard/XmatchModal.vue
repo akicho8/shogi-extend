@@ -58,14 +58,14 @@ export default {
     // やめる
     close_handle() {
       this.sound_play("click")
-      this.base.rule_unselect()
+      this.base.rule_unselect("${name}がやめました")
       this.$emit("close")
     },
 
     // 選択解除
     unselect_handle() {
       this.sound_play("click")
-      this.base.rule_unselect()
+      this.base.rule_unselect("${name}が解除しました")
     },
 
     // ルール選択
@@ -83,7 +83,7 @@ export default {
       }
 
       if (this.base.current_xmatch_rule_key === e.key) {
-        this.base.rule_unselect()
+        this.base.rule_unselect("${name}が解除しました")
       } else {
         this.base.xmatch_interval_counter.restart()
         this.base.rule_select(e)

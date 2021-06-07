@@ -959,7 +959,7 @@ RSpec.describe "共有将棋盤", type: :system do
         find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛車vs角を選択
 
         sleep(@wait_time_max)
-        assert_text("時間内に集まりませんでした")
+        assert_text("時間内に面子が集まらなかった")
       end
     end
 

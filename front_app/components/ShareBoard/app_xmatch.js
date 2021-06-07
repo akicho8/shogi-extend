@@ -7,7 +7,7 @@ const WAIT_TIME_MAX           = 60 * 2      // 待ち時間最大
 const XMATCH_REDIS_TTL        = 60 * 2 + 3  // redis.hset する度に更新するTTL
 const XMATCH_LOGIN            = "on"        // ルール選択時にログインを必須にして確実に名前がある状態にする
 const START_TOAST_DELAY       = 3           // 誰々から開始してくださいをN秒後に発動する
-// const UNSELECT_IF_WINDOW_BLUR = false       // ウィンドウを離れたときマッチングをキャンセルするか？
+const UNSELECT_IF_WINDOW_BLUR = true        // ウィンドウを離れたときマッチングをキャンセルするか？
 
 export const app_xmatch = {
   data() {
@@ -50,15 +50,8 @@ export const app_xmatch = {
       this.xmatch_modal_core()
     },
     xmatch_modal_core() {
-      // if (this.development_p) {
-      //   // ログイン不要
-      // } else {
-      //   if (this.sns_login_required()) {
-      //     return
-      //   }
-      // }
-
-      this.room_destroy()
+      // 部屋で相談している途中からもしれないので退室してはいけない
+      // this.room_destroy()
 
       this.xmatch_modal_close()
       this.xmatch_modal_instance = this.$buefy.modal.open({
@@ -144,14 +137,16 @@ export const app_xmatch = {
         this.current_xmatch_rule_key = params.xmatch_rule_key
       } else {
         // 他の人から自分
+        this.sound_play("click")
         this.debug_alert("他者がエントリー")
         // this.sound_play("click")
       }
 
       this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
       // this.sound_play_random(["dog1", "dog2", "dog3"])
-      this.vibrate(200)
-      this.delay_block(0.5, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}がやってきました`))
+      this.vibrate(100)
+      const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
+      this.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
       // this.sound_play("click")
 
       // 合言葉がある場合マッチングが成立している
@@ -214,10 +209,13 @@ export const app_xmatch = {
 
     //////////////////////////////////////////////////////////////////////////////// 選択解除の同期
 
-    rule_unselect() {
+    rule_unselect(message = null) {
+      const params = {}
+      if (message) {
+        params.message = message
+      }
       this.xmatch_interval_counter.stop() // 自分側だけの問題なので早めに停止しておく
-      this.ac_lobby_perform("rule_unselect", {
-      }) // --> app/channels/share_board/lobby_channel.rb
+      this.ac_lobby_perform("rule_unselect", params) // --> app/channels/share_board/lobby_channel.rb
     },
 
     rule_unselect_broadcasted(params) {
@@ -226,10 +224,22 @@ export const app_xmatch = {
         this.xmatch_rule_key_reset()
       } else {
         // 他の人から自分
-        this.sound_play("click")
         this.debug_alert("他者がエントリー解除")
-        this.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が去りました`))
       }
+
+      if (params.delete_result === "deleted") {
+        if (params.message) {
+          if (!this.received_from_self(params)) {
+            this.sound_play("click")
+          }
+          this.toast_ok(_.template(params.message)({name: this.user_call_name(params.from_user_name)}))
+        } else {
+          // 静かに処理
+        }
+      } else {
+        this.debug_alert("エントリーしていないのに解除しようとした")
+      }
+
       this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
     },
 
@@ -237,12 +247,14 @@ export const app_xmatch = {
 
     // ウィンドウを離れたらエントリー解除する
     xmatch_window_blur() {
-      if (this.ac_lobby) {
-        if (this.current_xmatch_rule_key) {
-          this.sound_play("click")
-          this.toast_ok("他の所に行ったので選択を解除しました")
-          if (!this.development_p) {
-            this.rule_unselect()
+      if (UNSELECT_IF_WINDOW_BLUR) {
+        if (this.ac_lobby) {
+          if (this.current_xmatch_rule_key) {
+            if (this.development_p) {
+              this.debug_alert("他の所に行ったので解除しました")
+            } else {
+              this.rule_unselect("${name}がどっか行ったので解除しました")
+            }
           }
         }
       }
@@ -253,8 +265,7 @@ export const app_xmatch = {
     xmatch_interval_counter_callback() {
       if (this.xmatch_rest_seconds <= 1) { // カウンタをインクリメントする直前でコールバックしているため0じゃなくて1
         this.sound_play("x")
-        this.rule_unselect()
-        this.toast_ok("時間内に集まりませんでした")
+        this.rule_unselect("時間内に面子が集まらなかったので${name}を解除しました")
       }
     },
 
