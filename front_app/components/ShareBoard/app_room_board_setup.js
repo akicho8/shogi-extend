@@ -33,7 +33,7 @@ export const app_room_board_setup = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     setup_info_request_broadcasted(params) {
-      // this.debug_alert(`${this.user_call_name(params.from_user_name)}が入室しました`)
+      // this.tl_alert(`${this.user_call_name(params.from_user_name)}が入室しました`)
       if (this.development_p) {
         this.sound_play("pon")
       }
@@ -80,7 +80,7 @@ export const app_room_board_setup = {
           this.clog(`先輩度比較: 相手(${params.active_level}) > 自分(${this.active_level}) --> ${params.active_level > this.active_level}`)
           if (params.active_level > this.active_level) {
             this.ac_log("情報設定", `${params.from_user_name}の情報を利用 (${this.active_level} < ${params.active_level})`)
-            this.debug_alert("最新の状態を共有してもらった")
+            this.tl_alert("最新の状態を共有してもらった")
             this.active_level = params.active_level
             this.setup_by_params(params)
           } else {

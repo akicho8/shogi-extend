@@ -3,7 +3,7 @@ client-only
   .ShareBoardApp(:style="component_style")
     DebugBox.is-hidden-mobile(v-if="development_p")
       p time_limit_modal_instance: {{!!time_limit_modal_instance}}
-      p cc_time_limit_delay_id: {{cc_time_limit_delay_id}}
+      p cc_auto_time_limit_delay_id: {{cc_auto_time_limit_delay_id}}
 
       p current_xmatch_rule_key: {{current_xmatch_rule_key}}
       p self_vs_self_p: {{self_vs_self_p}}
@@ -96,6 +96,12 @@ client-only
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="ac_room")
           ShareBoardMemberList(:base="base" v-if="ac_room")
 
+        .columns.is-centered(v-if="debug_mode_p")
+          .column
+            .box
+              .title.is-6 TrackLog
+              ShareBoardTrackLog(:base="base")
+
         .columns.is-hidden-mobile(v-if="development_p")
           .column.is-clipped
             ClockBoxInspector(:clock_box="clock_box" v-if="clock_box")
@@ -107,7 +113,7 @@ client-only
               a.panel-block(@click="cc_time_limit_modal_show_and_broadcast") 当事者は自分で発動＆ブロードキャスト
               a.panel-block(@click="cc_delayed_time_limit_modal") 他者は数秒後発動
               a.panel-block(@click="time_limit_modal_handle_if_not_exist") 受信
-              a.panel-block(@click="cc_time_limit_delay_stop") 数秒後発動キャンセル
+              a.panel-block(@click="cc_auto_time_limit_delay_stop") 数秒後発動キャンセル
               a.panel-block(@click="time_limit_modal_handle") モーダル
               a.panel-block(@click="time_limit_modal_close") 閉じる
 
@@ -143,6 +149,7 @@ client-only
             .block
               b this.record
               pre {{JSON.stringify(record, null, 4)}}
+
   //- DebugPre(v-if="development_p") {{$data}}
 </template>
 

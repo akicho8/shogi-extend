@@ -62,7 +62,7 @@ export const app_room_members = {
         // alive_notice_count が変化しないようにするため
         return
       }
-      this.debug_alert("生存通知")
+      this.tl_alert("生存通知")
       // this.tl_add("USER", "member_info_share")
       this.alive_notice_count += 1
       this.ac_room_perform("member_info_share", {

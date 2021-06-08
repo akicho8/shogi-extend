@@ -60,7 +60,20 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // setTimeout のラッパーではない
+    //
+    // seconds < 0:  実行しない
+    // seconds == 0: 即座に実行
+    // seconds > 0:  seconds秒待って実行
+    //
     delay_block(seconds, block) {
+      if (seconds < 0) {
+        return null
+      }
+      if (seconds === 0) {
+        block()
+        return null
+      }
       return setTimeout(block, 1000 * seconds)
     },
 
@@ -68,6 +81,15 @@ export default {
       if (delay_id) {
         clearTimeout(delay_id)
       }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // あとで実行する
+    // だいたい 4ms 後に実行
+    // これで他のイベントを先に動かせる
+    callback_later(block) {
+      return setTimeout(block, 0)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -192,13 +214,27 @@ export default {
       this.$buefy.loading.open()
     },
 
-    debug_alert(message) {
+    ////////////////////////////////////////////////////////////////////////////////
+
+    debug_alert(...args) {
       if (this.development_p) {
-        if (message != null) {
-          this.$buefy.toast.open({message: message.toString(), position: "is-bottom", type: "is-danger", duration: 1000 * 2.5, queue: false})
-        }
+        this.debug_alert_core(...args)
       }
     },
+
+    debug_alert_core(message) {
+      if (message != null) {
+        this.$buefy.toast.open({
+          message: message.toString(),
+          position: "is-bottom",
+          type: "is-danger",
+          duration: 1000 * 2.5,
+          queue: false,
+        })
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     clog(...args) {
       if (this.development_p) {

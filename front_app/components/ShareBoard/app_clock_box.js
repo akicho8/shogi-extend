@@ -223,7 +223,7 @@ export const app_clock_box = {
       this.ac_room_perform("clock_box_share", params) // --> app/channels/share_board/room_channel.rb
     },
     clock_box_share_broadcasted(params) {
-      this.debug_alert("時計同期")
+      this.tl_alert("時計同期")
       if (this.received_from_self(params)) {
       } else {
         if (params.clock_box_attributes) {
@@ -273,7 +273,7 @@ export const app_clock_box = {
         this.sp_viewpoint_set_by_self_location()               // 自分の場所を調べて正面をその視点にする
         if (this.current_turn_self_p) {       // 自分が手番なら
           // this.tn_notify()                 // 牛
-          this.debug_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
+          this.tl_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
         }
         this.sound_play("rooster")
       }

@@ -13,7 +13,7 @@ export const app_update = {
         return
       }
       if (new_api_version === this.API_VERSION) {
-        // this.debug_alert("VERSION OK")
+        // this.tl_alert("VERSION OK")
       } else {
         this.app_update_now = true
         if (AUTO_RELOAD) {

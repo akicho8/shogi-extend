@@ -25,7 +25,7 @@ export default {
   },
   mounted() {
     if (!this.clock_running_p) {
-      this.debug_alert("対局時計は設定されていません")
+      this.base.tl_alert("対局時計は設定されていません")
     }
   },
   watch: {

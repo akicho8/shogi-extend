@@ -82,7 +82,7 @@ export const app_room_setup = {
     },
 
     room_create() {
-      this.debug_alert("room_create")
+      this.tl_alert("room_create")
       this.__assert__(this.user_name, "this.user_name")
       this.__assert__(this.room_code, "this.room_code")
       this.__assert__(this.ac_room == null, "this.ac_room == null")
@@ -122,7 +122,7 @@ export const app_room_setup = {
 
     room_destroy() {
       if (this.ac_room) {
-        this.debug_alert("room_destroy")
+        this.tl_alert("room_destroy")
 
         this.room_leave()
         this.ac_unsubscribe("ac_room")

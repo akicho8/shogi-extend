@@ -20,7 +20,7 @@ export const app_track_log = {
     }
   },
   methods: {
-    track_log_modal_handle() {
+    tl_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
       this.$buefy.modal.open({
@@ -39,6 +39,12 @@ export const app_track_log = {
     },
     tl_test() {
       this.tl_add("(test)", `message${this.track_logs.length}`)
+    },
+    tl_alert(message) {
+      if (this.debug_mode_p && this.present_p(message)) {
+        this.debug_alert_core(message)
+        this.tl_add("ALERT", message)
+      }
     },
     tl_add(section, message, detail_info = null) {
       if (!this.debug_mode_p) {

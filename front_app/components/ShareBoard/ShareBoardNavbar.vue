@@ -13,7 +13,7 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
           | (編集モード)
 
   template(slot="end")
-    b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="base.track_log_modal_handle" v-if="base.debug_mode_p")
+    b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="base.tl_modal_handle" v-if="base.debug_mode_p")
       | ログ
       b-tag.has-text-weight-bold.ml-2(rounded)
         .has-text-primary

@@ -133,7 +133,7 @@ export const app_sfen_share_retry = {
       }
     },
     received_ok(params) {
-      this.debug_alert("受信OK")
+      this.tl_alert("受信OK")
       this.ac_room_perform("received_ok", params) // --> app/channels/share_board/room_channel.rb
     },
     received_ok_broadcasted(params) {
@@ -143,7 +143,7 @@ export const app_sfen_share_retry = {
             this.delay_block(this.SEND_SUCCESS_DELAY, () => { // デバッグ用のウェイト
               this.send_success_p = true           // 送信成功とする
               this.retry_confirm_close()           // 4秒後の場合ダイアログがすでに出ているので消す
-              this.debug_alert("送信OK")
+              this.tl_alert("送信OK")
             })
           }
         }

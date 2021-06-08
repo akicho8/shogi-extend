@@ -57,7 +57,7 @@ export const app_sfen_share = {
       } else {
         // もし edit_mode に入っている場合は強制的に解除する
         if (this.edit_mode_p) {
-          this.debug_alert("指し手のブロードキャストにより編集を解除")
+          this.tl_alert("指し手のブロードキャストにより編集を解除")
           this.sp_run_mode = "play_mode"
         }
         // 受信したSFENを盤に反映
@@ -71,7 +71,7 @@ export const app_sfen_share = {
         // これがないと alice は時間切れになっていないと言うが、bob側は3秒後に発動してしまって時間切れだと言って食い違いが発生する
         // この猶予を利用してわざと alice が残り0秒指しするのが心配かもしれないが、
         // 時計が0になった時点で即座にブロードキャストするので問題ない
-        this.cc_time_limit_delay_stop()
+        this.cc_auto_time_limit_delay_stop()
 
         if (this.user_name === params.next_user_name) {
           if (this.next_notify_p) {
@@ -115,7 +115,7 @@ export const app_sfen_share = {
         const name = this.user_name_by_turn(params.lmi.next_turn_offset - 1) // alice, bob がいて初手を指したら alice
         if (name) {
           if (params.from_user_name !== name) {
-            this.debug_alert(`${this.user_call_name(name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
+            this.tl_alert(`${this.user_call_name(name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
           }
         }
       }

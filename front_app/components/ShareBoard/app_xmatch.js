@@ -150,7 +150,7 @@ export const app_xmatch = {
       } else {
         // 他の人から自分
         this.sound_play("click")
-        this.debug_alert("他者がエントリー")
+        this.tl_alert("他者がエントリー")
         // this.sound_play("click")
       }
 
@@ -236,7 +236,7 @@ export const app_xmatch = {
         this.xmatch_rule_key_reset()
       } else {
         // 他の人から自分
-        this.debug_alert("他者がエントリー解除")
+        this.tl_alert("他者がエントリー解除")
       }
 
       if (params.delete_result === "deleted") {
@@ -249,7 +249,7 @@ export const app_xmatch = {
           // 静かに処理
         }
       } else {
-        this.debug_alert("エントリーしていないのに解除しようとした")
+        this.tl_alert("エントリーしていないのに解除しようとした")
       }
 
       this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
@@ -263,7 +263,7 @@ export const app_xmatch = {
         if (this.ac_lobby) {
           if (this.current_xmatch_rule_key) {
             if (this.development_p) {
-              this.debug_alert("他の所に行ったので解除しました")
+              this.tl_alert("他の所に行ったので解除しました")
             } else {
               this.rule_unselect("${name}がどっか行ったので解除しました")
             }

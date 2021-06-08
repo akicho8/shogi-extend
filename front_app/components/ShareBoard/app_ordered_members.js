@@ -71,7 +71,7 @@ export const app_ordered_members = {
       if (this.$os_modal_instance) {
         this.$os_modal_instance.close()
         this.$os_modal_instance = null
-        this.debug_alert("this.$os_modal_instance = null")
+        this.tl_alert("this.$os_modal_instance = null")
       }
     },
 
@@ -79,7 +79,7 @@ export const app_ordered_members = {
 
     // 順番設定モーダル内で使うデータの準備
     os_modal_vars_setup() {
-      this.debug_alert("os_modal_vars_setup")
+      this.tl_alert("os_modal_vars_setup")
       this.os_table_rows_build()
       this.new_strict_key = this.strict_key
     },
@@ -173,9 +173,9 @@ export const app_ordered_members = {
     },
     order_func_share_broadcasted(params) {
       if (this.received_from_self(params)) {
-        this.debug_alert("order_func_share 自分→自分")
+        this.tl_alert("order_func_share 自分→自分")
       } else {
-        this.debug_alert("order_func_share 自分→他者")
+        this.tl_alert("order_func_share 自分→他者")
       }
       this.order_func_p = params.order_func_p
       if (params.message) {
@@ -198,9 +198,9 @@ export const app_ordered_members = {
     },
     ordered_members_share_broadcasted(params) {
       if (this.received_from_self(params)) {
-        this.debug_alert("ordered_members_share 自分→自分")
+        this.tl_alert("ordered_members_share 自分→自分")
       } else {
-        this.debug_alert("ordered_members_share 自分→他者")
+        this.tl_alert("ordered_members_share 自分→他者")
         if (false) {
           this.os_modal_close() // もし他者が順番設定モーダルを開いていたら閉じる
         }
@@ -232,7 +232,7 @@ export const app_ordered_members = {
     // 後から参加したときリクエストに答えてパラメータを送ってくれた人から受信した内容を反映する
     om_vars_copy_from(params) {
       this.__assert__("order_func_p" in params, '"order_func_p" in params')
-      this.debug_alert("順番設定パラメータを先代から受信")
+      this.tl_alert("順番設定パラメータを先代から受信")
 
       this.order_func_p    = params.order_func_p
       this.ordered_members = params.ordered_members

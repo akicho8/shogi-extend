@@ -978,6 +978,7 @@ RSpec.describe "共有将棋盤", type: :system do
   describe "シングルトン時間切れ" do
     before do
       @initial_read_sec = 5         # 5秒切れ負け
+      @CC_TIME_LIMIT_BC_DELAY = 0 # 当事者はN秒待って他者たちに時間切れをBCする (ネット遅延のシミューレート)
       @CC_AUTO_TIME_LIMIT_DELAY = 3 # 通知が来なくてもN秒後に自力で時間切れモーダルを表示
     end
 
@@ -988,6 +989,7 @@ RSpec.describe "共有将棋盤", type: :system do
           "ordered_member_names"     => "alice,bob",
           "RETRY_DELAY"              => -1,
           "CC_AUTO_TIME_LIMIT_DELAY" => @CC_AUTO_TIME_LIMIT_DELAY,
+          "CC_TIME_LIMIT_BC_DELAY" => @CC_TIME_LIMIT_BC_DELAY,
           **clock_box_params([0, @initial_read_sec, 0, 0]),
         })
     end
@@ -997,38 +999,47 @@ RSpec.describe "共有将棋盤", type: :system do
       b_block { test1("bob")   }
       a_block { clock_start    }
       a_block do
-        sleep(@initial_read_sec - 1)
-        assert_text("当事者は自分で起動してブロードキャスト")
-        assert_time_limit_modal_exist
-        assert_text("BC受信→モーダル起動済み")
+        sleep(@initial_read_sec)
+        Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
+          assert_text("当事者は自分で起動してブロードキャスト")
+          assert_time_limit_modal_exist
+          assert_text("BC受信時にはすでにモーダル起動済み")
+        end
       end
       b_block { assert_time_limit_modal_exist }
     end
 
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '他者側(予約するがBCの方が速いのでキャンセルされる)'
     it "他者側(予約するがBCの方が速いのでキャンセルされる)" do
+      @CC_TIME_LIMIT_BC_DELAY   = 2
+      @CC_AUTO_TIME_LIMIT_DELAY = 4
       a_block { test1("alice") }
       b_block { test1("bob")   }
       a_block { clock_start    }
       b_block do
-        sleep(@initial_read_sec - 1)
-        assert_text("BC受信→モーダル起動開始")
-        assert_text("時間切れ予約キャンセル")
-        assert_time_limit_modal_exist
+        sleep(@initial_read_sec)
+        Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
+          assert_text("BC受信によってモーダル起動開始")
+          assert_text("時間切れ予約キャンセル")
+          assert_time_limit_modal_exist
+        end
       end
       a_block { assert_time_limit_modal_exist }
     end
 
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '他者側(予約待ち0なので他者側で即発動)'
     it "他者側(予約待ち0なので他者側で即発動)" do
+      @CC_TIME_LIMIT_BC_DELAY   = 5
       @CC_AUTO_TIME_LIMIT_DELAY = 0
       a_block { test1("alice") }
       b_block { test1("bob")   }
       a_block { clock_start    }
       b_block do
-        sleep(@initial_read_sec - 1)
-        assert_text("BC受信→モーダル起動済み")
-        assert_time_limit_modal_exist
+        sleep(@initial_read_sec)
+        Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
+          assert_text("BC受信時にはすでにモーダル起動済み")
+          assert_time_limit_modal_exist
+        end
       end
       a_block { assert_time_limit_modal_exist }
     end
