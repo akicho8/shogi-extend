@@ -27,6 +27,8 @@ disallow: /experiment/
 disallow: /xusers/
 disallow: /swars/users/*/direct-open/
 disallow: /swars/users/*/kento-api
+disallow: /api/*.json
+disallow: /w/*.json
 
 disallow: /launcher
 
