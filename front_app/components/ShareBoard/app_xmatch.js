@@ -124,14 +124,17 @@ export const app_xmatch = {
     // perform のラッパーで共通のパラメータを入れる
     ac_lobby_perform(action, params = {}) {
       if (this.ac_lobby) {
-        this.__assert__(this.g_current_user, "this.g_current_user")
+        // this.__assert__(this.g_current_user, "this.g_current_user")
         params = {
           from_connection_id: this.connection_id,      // 送信者識別子
           from_user_name:     this.user_name,          // 送信者名
           performed_at:       this.time_current_ms(),  // 実行日時(ms)
           ua_icon:            this.ua_icon,            // 端末の種類を表すアイコン文字列
-          current_user_id:    this.g_current_user.id,  // こっちをRedisのキーにしたかったがsystemテストが書けないため断念
           ...params,
+        }
+        // これ不要。こっちをRedisのキーにしたかったがsystemテストが書けないため断念
+        if (this.g_current_user) {
+          params.current_user_id = this.g_current_user.id
         }
         this.ac_lobby.perform(action, params) // --> app/channels/share_board/lobby_channel.rb
         this.tl_add("LOBBY", `perform ${action}`, params)
