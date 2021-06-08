@@ -1,5 +1,5 @@
 # -*- compile-command: "scp staging.robots.txt s:/var/www/shogi_web_staging/current/front_app/static/robots.txt; curl https://shogi-flow.xyz/robots.txt | cat -n" -*-" -*-
 
-User-agent: Googlebot
+User-agent: *
 Disallow: /
 
