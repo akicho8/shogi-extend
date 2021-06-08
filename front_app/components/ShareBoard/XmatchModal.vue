@@ -12,7 +12,7 @@
       .columns.is-mobile.is-multiline.is-variable.is-2-tablet.is-1-mobile
         template(v-for="e in base.XmatchRuleInfo.values")
           .column.is-one-third(v-if="e.stage_only.includes($config.STAGE)")
-            a.box(@click="xmatch_rule_click(e)" :class="e.key")
+            a.box(@click="rule_click_handle(e)" :class="e.key")
               .name {{e.name}}
               .rule_desc {{e.rule_desc}}
               b-tag.mt-2(rounded type="is-primary is-light" v-if="rest_count(e) >= 1")
@@ -44,12 +44,6 @@ import { support_child } from "./support_child.js"
 export default {
   name: "XmatchModal",
   mixins: [support_child],
-  created() {
-    this.base.xmatch_rules_members = null // 前の状態が出てしまわないように初期化しておく
-  },
-  beforeMount() {
-    this.base.lobby_create()    // ac_lobby を作る
-  },
   beforeDestroy() {
     this.base.xmatch_rule_key_reset()
     this.base.lobby_destroy()
@@ -69,7 +63,7 @@ export default {
     },
 
     // ルール選択
-    xmatch_rule_click(e) {
+    rule_click_handle(e) {
       this.sound_play("click")
 
       // 要はハンドルネームがないのが問題なのでログインしているかどうかではなく
@@ -105,6 +99,7 @@ export default {
       return r
     },
 
+    // 自分の名前だけ色を濃くする
     user_name_class(e) {
       return {
         'has-text-weight-bold': e.from_connection_id === this.base.connection_id,

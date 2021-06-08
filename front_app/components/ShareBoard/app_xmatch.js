@@ -12,16 +12,18 @@ const UNSELECT_IF_WINDOW_BLUR = true        // ウィンドウを離れたとき
 export const app_xmatch = {
   data() {
     return {
-      ac_lobby: null,              // subscriptions.create のインスタンス
-      xmatch_rules_members: null,     // XmatchModal で表示していている内容
-      xmatch_modal_instance: null, // XmatchModal のインスタンス
-      current_xmatch_rule_key: null,  // 現在選択しているルール
+      ac_lobby: null,                // subscriptions.create のインスタンス
+      xmatch_rules_members: null,    // XmatchModal で表示していている内容
+      xmatch_modal_instance: null,   // XmatchModal のインスタンス
+      current_xmatch_rule_key: null, // 現在選択しているルール
       xmatch_interval_counter: new IntervalCounter(this.xmatch_interval_counter_callback),
     }
   },
+
   beforeDestroy() {
     this.lobby_destroy()
   },
+
   methods: {
     // 自動で開始する方法確認
     // http://0.0.0.0:4000/share-board?autoexec=test_direct1
@@ -49,9 +51,19 @@ export const app_xmatch = {
       this.sound_play("click")
       this.xmatch_modal_core()
     },
+
+    // 自動マッチングモーダル起動 (vsから呼ぶ用)
     xmatch_modal_core() {
       // 部屋で相談している途中からもしれないので退室してはいけない
-      // this.room_destroy()
+      if (false) {
+        this.room_destroy()
+      }
+
+      // 初期化処理 XmatchModal の mounted などで呼ぶと開発時の hot reload 何回も呼ばれるので扱いづらくなる
+      if (true) {
+        this.xmatch_rules_members = null // 前の状態が出てしまわないように初期化しておく
+        this.lobby_create()              // ac_lobby を作る
+      }
 
       // https://buefy.org/documentation/modal/
       this.xmatch_modal_close()
@@ -65,6 +77,7 @@ export const app_xmatch = {
         animation: "",
         canCancel: true,
         onCancel: () => {
+          //
           this.sound_play("click")
           this.xmatch_rule_key_reset() // ac_lobbyが閉じているBCが来ないかもしれないため最初に解除しておく
           this.base.rule_unselect("${name}がやめました")
@@ -82,13 +95,9 @@ export const app_xmatch = {
       }
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////// ActionCable
 
     lobby_create() {
-      // if (this.development_p) {
-      //   this.lobby_destroy()
-      // }
-
       // this.__assert__(this.user_name, "this.user_name")
       this.__assert__(this.ac_lobby == null, "this.ac_lobby == null")
 
@@ -114,15 +123,16 @@ export const app_xmatch = {
 
     // perform のラッパーで共通のパラメータを入れる
     ac_lobby_perform(action, params = {}) {
-      params = {
-        from_connection_id: this.connection_id,      // 送信者識別子
-        from_user_name:     this.user_name,          // 送信者名
-        performed_at:       this.time_current_ms(),  // 実行日時(ms)
-        ua_icon:            this.ua_icon,            // 端末の種類を表すアイコン文字列
-        current_user_id:    this.g_current_user?.id, // こっちをRedisのキーにしたかったがsystemテストが書けないため断念
-        ...params,
-      }
       if (this.ac_lobby) {
+        this.__assert__(this.g_current_user, "this.g_current_user")
+        params = {
+          from_connection_id: this.connection_id,      // 送信者識別子
+          from_user_name:     this.user_name,          // 送信者名
+          performed_at:       this.time_current_ms(),  // 実行日時(ms)
+          ua_icon:            this.ua_icon,            // 端末の種類を表すアイコン文字列
+          current_user_id:    this.g_current_user.id,  // こっちをRedisのキーにしたかったがsystemテストが書けないため断念
+          ...params,
+        }
         this.ac_lobby.perform(action, params) // --> app/channels/share_board/lobby_channel.rb
         this.tl_add("LOBBY", `perform ${action}`, params)
       }
@@ -160,27 +170,29 @@ export const app_xmatch = {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
       this.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
       // this.sound_play("click")
-
       // 合言葉がある場合マッチングが成立している
       if (params.room_code) {
         this.__assert__(params.members, "params.members")
         if (params.members.some(e => e.from_connection_id === this.connection_id)) { // 自分が含まれていれば
-
-          this.xmatch_rule_key_reset()
-
-          if (this.development_p) {
-          } else {
-            this.xmatch_modal_close()
-          }
-          this.xmatch_setup1_member(params)   // 順番設定(必ず最初)
-          this.xmatch_setup2_handicap(params) // 手合割
-          this.xmatch_setup3_clock(params)    // チェスクロック
-          this.xmatch_setup4_join(params)     // 部屋に入る
-          this.xmatch_setup5_call(params)     // 「開始してください」コール
-          this.xmatch_setup6_title(params)    // タイトル変更
+          this.xmatch_establishment(params)
         }
       }
     },
+
+    // マッチング成立
+    xmatch_establishment(params) {
+      this.xmatch_rule_key_reset()
+      if (!this.development_p) {
+        this.xmatch_modal_close()
+      }
+      this.xmatch_setup1_member(params)   // 順番設定(必ず最初)
+      this.xmatch_setup2_handicap(params) // 手合割
+      this.xmatch_setup3_clock(params)    // チェスクロック
+      this.xmatch_setup4_join(params)     // 部屋に入る
+      this.xmatch_setup5_call(params)     // 「開始してください」コール
+      this.xmatch_setup6_title(params)    // タイトル変更
+    },
+
     // 順番設定
     xmatch_setup1_member(params) {
       const names = params.members.map(e => e.from_user_name)
