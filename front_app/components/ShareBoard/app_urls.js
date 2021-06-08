@@ -72,10 +72,11 @@ export const app_urls = {
     },
 
     // 合言葉だけを付与したURL
+    // タイトルを含めるか試行錯誤したけどタイトルを含める利点はなかったので不要
     room_code_only_url() {
       const params = {
         room_code: this.room_code,
-        title: this.current_title,
+        // title: this.current_title,
       }
       return this.permalink_from_params(params)
     },
