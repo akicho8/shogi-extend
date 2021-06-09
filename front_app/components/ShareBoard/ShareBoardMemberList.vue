@@ -150,19 +150,7 @@ export default {
 @import "./support.sass"
 
 .ShareBoardMemberList.column
-  position: relative
-  +tablet
-    max-width: 8rem
-  +desktop
-    max-width: 12rem
-  +widescreen
-    max-width: 16rem
-  +mobile
-    height: 20rem
-
   .scroll_block
-    @extend %overlay
-
     overflow: auto
 
     border-radius: 3px
@@ -217,6 +205,19 @@ export default {
         .left_tag_or_icon
           .tag
             border: 2px solid $primary
+
+.ShareBoardMemberList.column
+  // モバイルのときは最後に来る。高さ制限しない。すべてのメンバーを表示する
+  // タブレット以上は高さ制限する。見切れる場合があるが十分な高さがあるので問題ない
+  +tablet
+    position: relative
+    max-width: 8rem
+    .scroll_block
+      +overlay
+  +desktop
+    max-width: 12rem
+  +widescreen
+    max-width: 16rem
 
 .STAGE-development
   .ShareBoardMemberList
