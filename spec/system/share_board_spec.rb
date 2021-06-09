@@ -959,7 +959,7 @@ RSpec.describe "共有将棋盤", type: :system do
         find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
 
         sleep(@wait_time_max)
-        assert_text("時間内に面子が集まらなかった")
+        assert_text("時間内に集まらなかった")
       end
     end
 
@@ -1001,7 +1001,7 @@ RSpec.describe "共有将棋盤", type: :system do
       a_block do
         sleep(@initial_read_sec)
         Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
-          assert_text("当事者は自分で起動してブロードキャスト")
+          assert_text("当事者は自分で起動してBC")
           assert_time_limit_modal_exist
           assert_text("BC受信時にはすでにモーダル起動済み")
         end
@@ -1046,6 +1046,7 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def visit_app(args = {})
+    args = args.merge("__debug_box_disabled__" => "on")
     visit "/share-board?#{args.to_query}"
   end
 

@@ -12,10 +12,9 @@ name: "DebugBox",
   props: {
     position: { type: String, required: false, default: "bottom_left", },
   },
-
   data() {
     return {
-      show_p: true,
+      show_p: this.$route.query.__debug_box_disabled__ !== "on",
     }
   },
   methods: {
