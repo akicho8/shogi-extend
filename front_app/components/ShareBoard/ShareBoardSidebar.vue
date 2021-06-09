@@ -16,6 +16,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="局面の転送"                     @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="手合割"                         @click="base.handicap_set_modal_handle")
           b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー"    @click="base.room_code_only_url_copy_handle"  :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(label="自動マッチング"                 @click="base.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
           b-menu-item.is_active_unset(label="再起動"                         @click="base.room_recreate_modal_handle" :disabled="blank_p(base.ac_room)")
 
         b-menu-list(label="あとで検討")
@@ -36,7 +37,6 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         ShareBoardSidebarExport(:base="base")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(label="自動マッチング"              @click="base.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
           b-menu-item.is_active_unset(label="タイトル変更"                @click="base.title_edit")
           b-menu-item.is_active_unset(label="使い方"                      @click="base.general_help_modal_handle")
           b-menu-item.is_active_unset(label="設定"                        @click="base.general_setting_modal_handle")
