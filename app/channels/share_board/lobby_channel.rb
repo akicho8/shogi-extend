@@ -20,8 +20,9 @@ module ShareBoard
 
     def rule_select(data)
       xmatch_rule_info = XmatchRuleInfo.fetch(data["xmatch_rule_key"])
-      track(data, "規則選択", xmatch_rule_info.key)
+      track(data, "規則選択", xmatch_rule_info.name)
       data = data.merge(xmatch_rule_info.member_add(data))
+      data = data.merge(xmatch_rules_members: XmatchRuleInfo.xmatch_rules_members)
       broadcast(:rule_select_broadcasted, data)
     end
 

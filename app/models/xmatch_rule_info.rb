@@ -76,8 +76,6 @@ class XmatchRuleInfo
       h[:room_code] = ApplicationRecord.secure_random_urlsafe_base64_token
       h[:members] = matched_members
     end
-    h[:xmatch_rules_members] = XmatchRuleInfo.xmatch_rules_members
-
     h
   end
 
