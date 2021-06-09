@@ -4,8 +4,8 @@ import { XmatchRuleInfo } from "@/components/models/xmatch_rule_info.js"
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 
 const WAIT_TIME_MAX           = 60 * 3      // 待ち時間最大
-const XMATCH_REDIS_TTL        = 60 * 3 + 3  // redis.hset する度に更新するTTL
-const XMATCH_LOGIN            = "on"        // ルール選択時にログインを必須にして確実に名前がある状態にする
+const XMATCH_REDIS_TTL        = 60 * 3 + 3  // エントリー(redis.hset)する度に更新するTTL
+const XMATCH_LOGIN_REQUIRED            = "on"        // ルール選択時にログインを必須にして確実に名前がある状態にする
 const START_TOAST_DELAY       = 3           // 誰々から開始してくださいをN秒後に発動する
 const UNSELECT_IF_WINDOW_BLUR = true        // ウィンドウを離れたときマッチングをキャンセルするか？
 
@@ -205,17 +205,16 @@ export const app_xmatch = {
     // 手合割と視点設定
     xmatch_setup2_handicap(params) {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
-
-      this.turn_offset = 0                                              // 手数0から始める
-      this.current_sfen = xmatch_rule_info.handicap_preset_info.sfen       // 手合割の反映
-      this.sp_viewpoint_set_by_self_location()                                           // 自分の場所を調べて正面をその視点にする
+      this.turn_offset = 0                                           // 手数0から始める
+      this.current_sfen = xmatch_rule_info.handicap_preset_info.sfen // 手合割の反映
+      this.sp_viewpoint_set_by_self_location()                       // 自分の場所を調べて正面をその視点にする
     },
     xmatch_setup3_clock(params) {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
       this.cc_params = {...xmatch_rule_info.cc_params} // チェスクロック時間設定
-      this.cc_create()                              // チェスクロック起動 (先後は current_location.code で決める)
-      this.cc_params_apply()                        // チェスクロックに時間設定を適用
-      this.clock_box.play_handle()                  // PLAY押す
+      this.cc_create()                                 // チェスクロック起動 (先後は current_location.code で決める)
+      this.cc_params_apply()                           // チェスクロックに時間設定を適用
+      this.clock_box.play_handle()                     // PLAY押す
     },
     xmatch_setup4_join(params) {
       // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる
@@ -292,7 +291,7 @@ export const app_xmatch = {
     xmatch_interval_counter_callback() {
       if (this.xmatch_rest_seconds <= 1) { // カウンタをインクリメントする直前でコールバックしているため0じゃなくて1
         this.sound_play("x")
-        this.rule_unselect("時間内に面子が集まらなかったので${name}を解除しました")
+        this.rule_unselect("時間内に集まらなかったので${name}を解除しました")
       }
     },
 
@@ -312,9 +311,9 @@ export const app_xmatch = {
   computed: {
     XmatchRuleInfo() { return XmatchRuleInfo },
 
-    wait_time_max()    { return parseInt(this.$route.query.wait_time_max || WAIT_TIME_MAX)       },
-    xmatch_redis_ttl() { return parseInt(this.$route.query.xmatch_redis_ttl || XMATCH_REDIS_TTL) },
-    xmatch_login()     { return this.$route.query.xmatch_login || XMATCH_LOGIN },
+    wait_time_max()         { return parseInt(this.$route.query.wait_time_max || WAIT_TIME_MAX)       },
+    xmatch_redis_ttl()      { return parseInt(this.$route.query.xmatch_redis_ttl || XMATCH_REDIS_TTL) },
+    xmatch_login_required() { return this.$route.query.xmatch_login_required || XMATCH_LOGIN_REQUIRED },
 
     xmatch_rest_seconds() {
       return this.wait_time_max - this.xmatch_interval_counter.counter

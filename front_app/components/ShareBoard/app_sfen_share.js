@@ -57,7 +57,7 @@ export const app_sfen_share = {
       } else {
         // もし edit_mode に入っている場合は強制的に解除する
         if (this.edit_mode_p) {
-          this.tl_alert("指し手のブロードキャストにより編集を解除")
+          this.tl_alert("指し手のBCにより編集を解除")
           this.sp_run_mode = "play_mode"
         }
         // 受信したSFENを盤に反映
@@ -70,7 +70,7 @@ export const app_sfen_share = {
         // alice が残り1秒で指すが、bob 側の時計は0秒になっていた場合にこれが必要になる
         // これがないと alice は時間切れになっていないと言うが、bob側は3秒後に発動してしまって時間切れだと言って食い違いが発生する
         // この猶予を利用してわざと alice が残り0秒指しするのが心配かもしれないが、
-        // 時計が0になった時点で即座にブロードキャストするので問題ない
+        // 時計が0になった時点で即座にBCするので問題ない
         this.cc_auto_time_limit_delay_stop()
 
         if (this.user_name === params.next_user_name) {

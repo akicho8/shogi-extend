@@ -110,7 +110,7 @@ client-only
               .panel-heading
                 | 時間切れメソッド
               a.panel-block(@click="cc_time_zero_callback") 最初のコールバック
-              a.panel-block(@click="cc_time_limit_modal_show_and_broadcast") 当事者は自分で発動＆ブロードキャスト
+              a.panel-block(@click="cc_time_limit_modal_show_and_broadcast") 当事者は自分で発動＆BC
               a.panel-block(@click="cc_delayed_time_limit_modal") 他者は数秒後発動
               a.panel-block(@click="time_limit_modal_handle_if_not_exist") 受信
               a.panel-block(@click="cc_auto_time_limit_delay_stop") 数秒後発動キャンセル
@@ -313,7 +313,7 @@ export default {
         this.clock_box.tap_on(e.last_move_info.player_location)
       }
 
-      // 時計の状態をブロードキャストする
+      // 時計の状態をBCする
       this.clock_box_share("")
 
       // 次の人の視点にする

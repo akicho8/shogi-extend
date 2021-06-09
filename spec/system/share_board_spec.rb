@@ -900,10 +900,10 @@ RSpec.describe "共有将棋盤", type: :system do
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '飛vs角を1vs1'
     it "飛vs角を1vs1" do
       a_block do
-        visit_app(force_user_name: "alice", xmatch_login: "off")
+        visit_app(force_user_name: "alice", xmatch_login_required: "off")
       end
       b_block do
-        visit_app(force_user_name: "bob", xmatch_login: "off")
+        visit_app(force_user_name: "bob", xmatch_login_required: "off")
       end
       a_block do
         side_menu_open
@@ -937,7 +937,7 @@ RSpec.describe "共有将棋盤", type: :system do
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自分vs自分 平手'
     it "自分vs自分 平手" do
       a_block do
-        visit_app(force_user_name: "alice", xmatch_login: "off")
+        visit_app(force_user_name: "alice", xmatch_login_required: "off")
 
         side_menu_open
         menu_item_click("自動マッチング")          # モーダルを開く
@@ -952,7 +952,7 @@ RSpec.describe "共有将棋盤", type: :system do
     it "時間切れ" do
       @wait_time_max = 2
       a_block do
-        visit_app(force_user_name: "alice", wait_time_max: @wait_time_max, xmatch_login: "off")
+        visit_app(force_user_name: "alice", wait_time_max: @wait_time_max, xmatch_login_required: "off")
 
         side_menu_open
         menu_item_click("自動マッチング")          # モーダルを開く
