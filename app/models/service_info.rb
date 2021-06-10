@@ -28,7 +28,7 @@ class ServiceInfo
       ],
     },
     {
-      display_p: !Rails.env.production?,
+      display_p: true, # !Rails.env.production?,
       experiment_p: false,
       nuxt_link_to: {path: "/vs"},
       title: "対人戦",
