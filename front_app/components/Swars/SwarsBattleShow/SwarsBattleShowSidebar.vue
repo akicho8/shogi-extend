@@ -16,23 +16,23 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
             template(slot="label" slot-scope="props")
               span.ml-1 表示
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            b-menu-item.is_active_unset(label="KIF"  @click.native="base.sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${base.record.show_path}.kif`")
-            b-menu-item.is_active_unset(label="KI2"  @click.native="base.sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${base.record.show_path}.ki2`")
-            b-menu-item.is_active_unset(label="CSA"  @click.native="base.sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${base.record.show_path}.csa`")
-            b-menu-item.is_active_unset(label="SFEN" @click.native="base.sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${base.record.show_path}.sfen`")
-            b-menu-item.is_active_unset(label="BOD"  @click.native="base.sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${base.record.show_path}.bod?turn=${base.new_turn}`")
-            b-menu-item.is_active_unset(label="PNG"  @click.native="base.sidebar_close" :target="target_default" :href="`${$config.MY_SITE_URL}${base.record.show_path}.png?turn=${base.new_turn}&viewpoint=${base.new_viewpoint}&width=`")
+            b-menu-item.is_active_unset(label="KIF"  @click.native="base.sidebar_close" :target="target_default" :href="show_url_for('kif')")
+            b-menu-item.is_active_unset(label="KI2"  @click.native="base.sidebar_close" :target="target_default" :href="show_url_for('ki2')")
+            b-menu-item.is_active_unset(label="CSA"  @click.native="base.sidebar_close" :target="target_default" :href="show_url_for('csa')")
+            b-menu-item.is_active_unset(label="SFEN" @click.native="base.sidebar_close" :target="target_default" :href="show_url_for('sfen')")
+            b-menu-item.is_active_unset(label="BOD"  @click.native="base.sidebar_close" :target="target_default" :href="show_url_for('bod', {turn: base.new_turn})")
+            b-menu-item.is_active_unset(label="PNG"  @click.native="base.sidebar_close" :target="target_default" :href="show_url_for('png', {turn: base.new_turn, viewpoint: base.new_viewpoint, width: ''})")
           b-menu-item.is_active_unset(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               span.ml-1 ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            b-menu-item.is_active_unset(label="KIF"  @click.native="base.sidebar_close" :href="`${$config.MY_SITE_URL}${base.record.show_path}.kif?attachment=true`")
-            b-menu-item.is_active_unset(label="KIF (Shift_JIS)"  @click.native="base.sidebar_close" :href="`${$config.MY_SITE_URL}${base.record.show_path}.kif?attachment=true&body_encode=Shift_JIS`")
-            b-menu-item.is_active_unset(label="KI2"  @click.native="base.sidebar_close" :href="`${$config.MY_SITE_URL}${base.record.show_path}.ki2?attachment=true`")
-            b-menu-item.is_active_unset(label="CSA"  @click.native="base.sidebar_close" :href="`${$config.MY_SITE_URL}${base.record.show_path}.csa?attachment=true`")
-            b-menu-item.is_active_unset(label="SFEN" @click.native="base.sidebar_close" :href="`${$config.MY_SITE_URL}${base.record.show_path}.sfen?attachment=true`")
-            b-menu-item.is_active_unset(label="BOD"  @click.native="base.sidebar_close" :href="`${$config.MY_SITE_URL}${base.record.show_path}.bod?attachment=true&turn=${base.new_turn}`")
-            b-menu-item.is_active_unset(label="PNG"  @click.native="base.sidebar_close" :href="`${$config.MY_SITE_URL}${base.record.show_path}.png?attachment=true&turn=${base.new_turn}&viewpoint=${base.new_viewpoint}&width=`")
+            b-menu-item.is_active_unset(label="KIF"             @click.native="base.sidebar_close" :href="dl_url_for('kif')")
+            b-menu-item.is_active_unset(label="KIF (Shift_JIS)" @click.native="base.sidebar_close" :href="dl_url_for('kif', {body_encode: 'Shift_JIS'})")
+            b-menu-item.is_active_unset(label="KI2"             @click.native="base.sidebar_close" :href="dl_url_for('ki2')")
+            b-menu-item.is_active_unset(label="CSA"             @click.native="base.sidebar_close" :href="dl_url_for('csa')")
+            b-menu-item.is_active_unset(label="SFEN"            @click.native="base.sidebar_close" :href="dl_url_for('sfen')")
+            b-menu-item.is_active_unset(label="BOD"             @click.native="base.sidebar_close" :href="dl_url_for('bod', {turn: base.new_turn})")
+            b-menu-item.is_active_unset(label="PNG"             @click.native="base.sidebar_close" :href="dl_url_for('png', {turn: base.new_turn, viewpoint: base.new_viewpoint, width: ''})")
 
         b-menu-list(label="短かめの直リンコピー")
           b-menu-item.is_active_unset(label="この画面" @click="base.current_url_copy")
@@ -45,10 +45,24 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
 
 <script>
 import { support_child } from "./support_child.js"
+import _ from "lodash"
 
 export default {
   name: "SwarsBattleShowSidebar",
   mixins: [support_child],
+  methods: {
+    show_url_for(format, params = {}) {
+      const base_url = this.$config.MY_SITE_URL + this.base.record.show_path + "." + format
+      const url = new URL(base_url)
+      _.each(params, (val, key) => {
+        url.searchParams.set(key, val)
+      })
+      return url.toString()
+    },
+    dl_url_for(format, params = {}) {
+      return this.show_url_for(format, {attachment: "true", ...params})
+    },
+  },
 }
 </script>
 
