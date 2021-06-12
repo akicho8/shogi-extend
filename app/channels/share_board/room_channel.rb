@@ -53,7 +53,9 @@ module ShareBoard
     end
 
     def setup_info_send(data)
-      track(data, "情報送信", "あげます > #{data["to_user_name"]}")
+      if Rails.env.development? || Rails.env.staging? || Rails.env.test?
+        track(data, "情報送信", "あげます > #{data["to_user_name"]}")
+      end
       broadcast(:setup_info_send_broadcasted, data)
     end
 
