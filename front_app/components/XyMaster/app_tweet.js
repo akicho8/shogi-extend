@@ -91,6 +91,8 @@ export const app_tweet = {
     current_entry_name() {
       if (this.g_current_user) {
         return this.g_current_user.name
+      } else {
+        return ""  // これがないと null のまま localStorage に保存してエラーになる
       }
     },
   },
