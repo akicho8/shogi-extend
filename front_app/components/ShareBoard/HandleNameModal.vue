@@ -50,7 +50,7 @@ export default {
       if (s.match(/[一-龠]/)) {
         // OK
       } else {
-        if (s.length <= 1 || s.match(/名無し|ななし/)) {
+        if (s.length <= 1 || s.match(/[な名][な無]し|nanash?i/i)) {
           if (false) {
             this.toast_warn("真面目に入力してないのでログインしてください")
             this.sns_login_modal_open()
