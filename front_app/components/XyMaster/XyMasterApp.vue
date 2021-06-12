@@ -54,8 +54,11 @@
         XyMasterRanking(:base="base")
 
       XyMasterChart(:base="base" ref="XyMasterChart")
-      XyMasterDebugMenu(:base="base" v-if="development_p")
-  DebugPre(v-if="development_p") {{$data}}
+
+  .section(v-if="development_p")
+    .container.is-fluid
+      XyMasterDebugMenu(:base="base")
+      DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>
