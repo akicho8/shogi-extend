@@ -77,8 +77,9 @@ export default {
           }
         }
         if (this.base.xmatch_auth_mode === "handle_name_required") {
-          if (this.blank_p(this.user_name)) {
-            this.handle_name_modal_handle()
+          if (this.blank_p(this.base.user_name)) {
+            this.toast_warn("ログインするかハンドルネームを入力してください")
+            this.base.handle_name_modal_handle()
             return
           }
         }

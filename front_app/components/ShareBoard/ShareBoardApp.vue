@@ -115,6 +115,7 @@ import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
 import { app_turn_notify          } from "./app_turn_notify.js"
 import { app_ordered_members      } from "./app_ordered_members.js"
 import { app_chore                } from "./app_chore.js"
+import { app_handle_name          } from "./app_handle_name.js"
 import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
 import { app_room_setup           } from "./app_room_setup.js"
@@ -152,6 +153,7 @@ export default {
     app_turn_notify,
     app_ordered_members,
     app_chore,
+    app_handle_name,
     app_urls,
     app_edit_mode,
     app_room_setup,

@@ -18,6 +18,7 @@
       .panel-heading
         | その他
       a.panel-block(@click="base.handle_name_modal_handle") ハンドルネーム入力
+      a.panel-block(@click="base.handle_name_clear_handle") ハンドルネームを空にする
       a.panel-block(@click="base.edit_warn_modal_handle") 編集警告
       a.panel-block(@click="base.member_info_bc_restart") 生存通知
       a.panel-block(@click="base.al_add_test") 指し手

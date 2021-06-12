@@ -65,10 +65,7 @@ export const app_room_setup = {
       user_name = _.trim(user_name)
 
       if (this.user_name !== user_name) {
-        this.user_name = user_name
-        if (this.ac_room) {
-          this.member_info_bc_restart() // ハンドルネームの変更すぐに反映するため
-        }
+        this.handle_name_set(user_name)
       }
 
       if (this.ac_room) {

@@ -5,6 +5,8 @@ RSpec.describe "共有将棋盤", type: :system do
     @alice_window = Capybara.open_new_window
     @bob_window = Capybara.open_new_window
     @carol_window = Capybara.open_new_window
+
+    XmatchRuleInfo.clear_all    # 重要
   end
 
   after do
@@ -963,13 +965,27 @@ RSpec.describe "共有将棋盤", type: :system do
       end
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ログイン必須'
-    it "ログイン必須" do
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ログイン必須モード'
+    it "ログイン必須モード" do
       a_block do
-        logout                                # ログアウト状態にする
-        visit_app                             # 来る
-        xmatch_select_1vs1                    # 1vs1のルールを選択
-        assert_selector(".SnsLoginContainer") # 「ログインしてください」が発動
+        logout                                        # ログアウト状態にする
+        visit_app(xmatch_auth_mode: "login_required") # 来る
+        xmatch_select_1vs1                            # 1vs1のルールを選択
+        assert_selector(".SnsLoginContainer")         # 「ログインしてください」が発動
+      end
+    end
+
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ハンドルネーム必須モード'
+    it "ハンドルネーム必須モード" do
+      a_block do
+        logout                                                 # ログアウト状態にする
+        visit_app(xmatch_auth_mode: "handle_name_required")    # 来る
+        xmatch_select_1vs1                                     # 1vs1のルールを選択
+        assert_selector(".HandleNameModal")                    # ハンドルネームを入力するように言われる
+        find(".HandleNameModal input").set("alice")            # 入力して
+        find(".save_handle").click                             # 保存
+        find(".rule_1vs1_05_00_00_5_pRvsB").click              # あらためて飛vs角を選択
+        assert_text("aliceさんが飛1vs1角にエントリーしました") # エントリーできた
       end
     end
   end
