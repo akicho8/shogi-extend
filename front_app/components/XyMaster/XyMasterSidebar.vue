@@ -15,11 +15,11 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
         b-field.is-hidden-desktop.mb-0(custom-class="is-small" label="横幅 (Touch端末のみ)")
           b-slider(v-bind="slider_attrs" v-model="base.touch_board_width" :min="0" :max="1" :step="0.001")
 
-        b-field(custom-class="is-small" label="グリッドの太さ")
+        b-field(custom-class="is-small" label="グリッドの太さ" v-if="development_p")
           b-slider(v-bind="slider_attrs" v-model="base.xy_grid_stroke" :min="0.5" :max="2" :step="0.5")
 
         b-field(custom-class="is-small" label="グリッドの濃さ")
-          b-slider(v-bind="slider_attrs" v-model="base.xy_grid_color" :min="-20" :max="+20" :step="0.001")
+          b-slider(v-bind="slider_attrs" v-model="base.xy_grid_color" :min="-10" :max="+10" :step="0.1")
 
         b-button.style_default_handle(@click="base.style_default_handle" size="is-small") デフォルトに戻す
 </template>
