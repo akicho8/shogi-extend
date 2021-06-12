@@ -96,61 +96,7 @@ client-only
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="ac_room")
           ShareBoardMemberList(:base="base" v-if="ac_room")
 
-        .columns.is-centered(v-if="debug_mode_p")
-          .column
-            .box
-              .title.is-6 TrackLog
-              ShareBoardTrackLog(:base="base")
-
-        .columns.is-hidden-mobile(v-if="development_p")
-          .column.is-clipped
-            ClockBoxInspector(:clock_box="clock_box" v-if="clock_box")
-
-            .panel
-              .panel-heading
-                | 時間切れメソッド
-              a.panel-block(@click="cc_time_zero_callback") 最初のコールバック
-              a.panel-block(@click="cc_time_limit_modal_show_and_broadcast") 当事者は自分で発動＆BC
-              a.panel-block(@click="cc_delayed_time_limit_modal") 他者は数秒後発動
-              a.panel-block(@click="time_limit_modal_handle_if_not_exist") 受信
-              a.panel-block(@click="cc_auto_time_limit_delay_stop") 数秒後発動キャンセル
-              a.panel-block(@click="time_limit_modal_handle") モーダル
-              a.panel-block(@click="time_limit_modal_close") 閉じる
-
-            .box
-              .buttons
-                b-button(@click="room_recreate") 再起動
-                b-button(@click="room_create") 接続
-                b-button(@click="room_destroy") 切断
-                b-button(@click="member_info_bc_restart") 生存通知
-                b-button(@click="al_add_test") 指
-                b-button(@click="edit_warn_modal_handle") 編集警告
-                b-button(@click="clock_box_share()") 時計同期
-                //- b-button(@click="clock_box_share(null)") 時計同期(behaviour=null)
-                b-button(@click="fake_error") APIにnullのキー送信
-                b-button(@click="reload_modal_handle") リロード確認
-                b-button(@click="room_entry_call('alice')") 入室コール
-                b-button(@click="room_leave_call('alice')") 退室コール
-
-                b-button(@click="cc_params_load") cc_params_load
-                b-button(@click="cc_params_save") cc_params_save
-                b-button(@click="cc_params_reset") cc_params_reset
-
-            .buttons
-              b-button(tag="a" :href="json_debug_url") JSON
-            .block
-              b JS側で作った動的なTwitter画像URL(視点設定プレビューで使用する。Rails側と一致していること)
-              p(:key="twitter_card_url") {{twitter_card_url}}
-              img.is-block(:src="twitter_card_url" width="256")
-            .block
-              b Rails側で作った静的なTwitter画像URL(og:imageにはこっちを指定している)
-              p {{config.twitter_card_options.image}}
-              img.is-block(:src=`$config.MY_SITE_URL + config.twitter_card_options.image` width="256")
-            .block
-              b this.record
-              pre {{JSON.stringify(record, null, 4)}}
-
-  //- DebugPre(v-if="development_p") {{$data}}
+        ShareBoardDebugMenu(:base="base" v-if="debug_mode_p")
 </template>
 
 <script>

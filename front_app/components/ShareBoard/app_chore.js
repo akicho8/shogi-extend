@@ -54,6 +54,24 @@ export const app_chore = {
       })
     },
 
+    // ハンドルネーム入力
+    handle_name_modal_handle() {
+      this.sidebar_p = false
+      this.sound_play("click")
+      this.$buefy.dialog.prompt({
+        title: "タイトル",
+        confirmText: "更新",
+        cancelText: "キャンセル",
+        animation: "",
+        inputAttrs: { type: "text", value: this.user_name, required: true },
+        onCancel: () => this.sound_play("click"),
+        onConfirm: value => {
+          this.sound_play("click")
+          this.current_title_set(value)
+        },
+      })
+    },
+
     exit_handle() {
       this.sound_play("click")
       if (this.ac_room || this.clock_box) {

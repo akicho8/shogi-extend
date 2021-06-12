@@ -3,11 +3,11 @@ import XmatchModal from "./XmatchModal.vue"
 import { XmatchRuleInfo } from "@/components/models/xmatch_rule_info.js"
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 
-const WAIT_TIME_MAX           = 60 * 3      // 待ち時間最大
-const XMATCH_REDIS_TTL        = 60 * 3 + 3  // エントリー(redis.hset)する度に更新するTTL
-const XMATCH_LOGIN_REQUIRED            = "on"        // ルール選択時にログインを必須にして確実に名前がある状態にする
-const START_TOAST_DELAY       = 3           // 誰々から開始してくださいをN秒後に発動する
-const UNSELECT_IF_WINDOW_BLUR = true        // ウィンドウを離れたときマッチングをキャンセルするか？
+const WAIT_TIME_MAX           = 60 * 3                 // 待ち時間最大
+const XMATCH_REDIS_TTL        = 60 * 3 + 3             // エントリー(redis.hset)する度に更新するTTL
+const XMATCH_AUTH_MODE        = "handle_name_required" // ルール選択時に認証方法 login_required, handle_name_required
+const START_TOAST_DELAY       = 3                      // 誰々から開始してくださいをN秒後に発動する
+const UNSELECT_IF_WINDOW_BLUR = true                   // ウィンドウを離れたときマッチングをキャンセルするか？
 
 export const app_xmatch = {
   data() {
@@ -311,9 +311,9 @@ export const app_xmatch = {
   computed: {
     XmatchRuleInfo() { return XmatchRuleInfo },
 
-    wait_time_max()         { return parseInt(this.$route.query.wait_time_max || WAIT_TIME_MAX)       },
-    xmatch_redis_ttl()      { return parseInt(this.$route.query.xmatch_redis_ttl || XMATCH_REDIS_TTL) },
-    xmatch_login_required() { return this.$route.query.xmatch_login_required || XMATCH_LOGIN_REQUIRED },
+    wait_time_max()    { return parseInt(this.$route.query.wait_time_max || WAIT_TIME_MAX)       },
+    xmatch_redis_ttl() { return parseInt(this.$route.query.xmatch_redis_ttl || XMATCH_REDIS_TTL) },
+    xmatch_auth_mode() { return this.$route.query.xmatch_auth_mode || XMATCH_AUTH_MODE },
 
     xmatch_rest_seconds() {
       return this.wait_time_max - this.xmatch_interval_counter.counter

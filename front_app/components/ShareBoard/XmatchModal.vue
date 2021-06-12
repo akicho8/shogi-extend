@@ -70,9 +70,17 @@ export default {
       // if (this.blank_p(this.base.user_name)) { とする手もある
       // が、捨てハンと問題行動の増加で荒れる。なのできちんとログインさせる
       // ログインする気にない人にまで配慮して匿名で使ってもらおうとしてはいけない(重要)
-      if (this.base.xmatch_login_required === "on") {
-        if (this.sns_login_required()) {
-          return
+      if (this.present_p(this.base.xmatch_auth_mode)) {
+        if (this.base.xmatch_auth_mode === "login_required") {
+          if (this.sns_login_required()) {
+            return
+          }
+        }
+        if (this.base.xmatch_auth_mode === "handle_name_required") {
+          if (this.blank_p(this.user_name)) {
+            this.handle_name_modal_handle()
+            return
+          }
         }
       }
 
