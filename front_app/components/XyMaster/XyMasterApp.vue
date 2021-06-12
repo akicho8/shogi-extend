@@ -1,24 +1,7 @@
 <template lang="pug">
 .XyMasterApp(:class="mode" :style="component_style")
-  MainNavbar(v-if="is_mode_idol")
-    template(slot="brand")
-      NavbarItemHome
-      b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'xy'}") 符号の鬼
-    template(slot="end")
-      b-navbar-dropdown(hoverable arrowless right label="デバッグ" v-if="development_p")
-        b-navbar-item(@click="ls_reset") ブラウザに記憶した情報の削除
-        b-navbar-item(@click="var_init") 保存可能な変数のリセット
-        b-navbar-item ランキングタブの各表示ページ:{{current_pages}}
-
-      NavbarItemLogin
-      NavbarItemProfileLink
-
-  b-navbar(type="is-dark" fixed-bottom v-if="development_p")
-    template(slot="start")
-      b-navbar-item(@click="reset_all_handle") リセット
-      b-navbar-item(@click="goal_handle") ゴール
-      b-navbar-item(@click="rebuild_handle") リビルド
-
+  XyMasterSidebar(:base="base")
+  XyMasterNavbar(:base="base")
   MainSection
     PageCloseButton(@click="stop_handle" position="is_absolute" v-if="is_mode_active")
     XyMasterRestart(:base="base" v-if="is_mode_active")
@@ -64,8 +47,6 @@
             .time_container.fixed_font.is-size-3
               | {{time_format}}
 
-          XyMasterSlider(:base="base")
-
           .box.tweet_box_container.has-text-centered(v-if="mode === 'is_mode_goal'")
             | {{summary}}
             TweetButton.mt-2(:body="tweet_body" @after_click="sound_play('click')")
@@ -73,7 +54,11 @@
         XyMasterRanking(:base="base")
 
       XyMasterChart(:base="base" ref="XyMasterChart")
-  DebugPre(v-if="development_p") {{$data}}
+
+  .section(v-if="development_p")
+    .container.is-fluid
+      XyMasterDebugMenu(:base="base")
+      DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>
@@ -95,8 +80,8 @@ import { app_chart       } from "./app_chart.js"
 import { app_keyboard    } from "./app_keyboard.js"
 import { app_debug       } from "./app_debug.js"
 import { app_rule_dialog } from "./app_rule_dialog.js"
-
-import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
+import { app_sidebar     } from "./app_sidebar.js"
+import { app_storage     } from "./app_storage.js"
 
 class RuleInfo extends MemoryRecord {
 }
@@ -117,10 +102,11 @@ export default {
   name: "XyMasterApp",
   mixins: [
     support_parent,
-    ls_support_mixin,
     app_keyboard,
     app_debug,
     app_rule_dialog,
+    app_sidebar,
+    app_storage,
     app_chart,
     app_tweet,
   ],
@@ -143,6 +129,8 @@ export default {
       time_record:        null, // ゲームが終わたっときにランクなどが入っている
       current_pages:      null, // b-table のページ
       touch_board_width:  null, // touchデバイスでの将棋盤の幅(%)
+      xy_grid_stroke:  null, // 線の太さ
+      xy_grid_color:  null, // 線の太さ
       interval_counter:   null,
       interval_frame:     null,
     }
@@ -153,7 +141,7 @@ export default {
     ScopeInfo.memory_record_reset(this.config.scope_info)
     ChartScopeInfo.memory_record_reset(this.config.chart_scope_info)
 
-    this.ls_setup()
+    // this.ls_setup()
     this.init_other_variables()
   },
 
@@ -261,6 +249,8 @@ export default {
       this.entry_name        = null
       this.current_pages     = null
       this.touch_board_width = null
+      this.xy_grid_stroke = null
+      this.xy_grid_color = null
     },
 
     init_other_variables() {
@@ -331,7 +321,7 @@ export default {
         this.record_post()
       } else {
         this.$buefy.dialog.prompt({
-          message: `名前を入力してください`,
+          title: "名前を入力してください",
           confirmText: "保存",
           cancelText: "キャンセル",
           inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
@@ -539,7 +529,14 @@ export default {
     kanji_human(xy) {
       const { x, y } = xy
       return Place.fetch([x, y]).kanji_human
-    }
+    },
+
+    style_default_handle() {
+      this.sound_play("click")
+      this.touch_board_width = this.ls_default.touch_board_width
+      this.xy_grid_stroke    = this.ls_default.xy_grid_stroke
+      this.xy_grid_color    = this.ls_default.xy_grid_color
+    },
   },
 
   computed: {
@@ -557,6 +554,8 @@ export default {
     component_style() {
       return {
         "--touch_board_width": this.touch_board_width,
+        "--xy_grid_stroke": this.xy_grid_stroke,          // グリッド太さ
+        "--xy_grid_color": this.xy_grid_color,          // グリッド太さ
       }
     },
 
@@ -595,27 +594,6 @@ export default {
       return this.time_record.rank_info[this.scope_key].rank
     },
 
-    //////////////////////////////////////////////////////////////////////////////// for ls_support_mixin
-    // |------------------+----------------------------------------|
-    // | "xy_master"      | stopwatch のライブラリを使っていたころ |
-    // | "new_xy_master"  | xy プレフィクスついていたころ          |
-    // | "new_xy_master2" | xy プレフィクスついてない現状          |
-    // |------------------+----------------------------------------|
-    ls_storage_key() {
-      return "new_xy_master2"
-    },
-    ls_default() {
-      return {
-        rule_key:        this.default_rule_key,
-        chart_rule_key:  this.default_rule_key,
-        scope_key:       "scope_today",
-        chart_scope_key: "chart_scope_recently",
-        entry_name:         this.current_entry_name,
-        current_pages:      {},
-        touch_board_width:  0.9,
-      }
-    },
-    ////////////////////////////////////////////////////////////////////////////////
   },
 }
 </script>
@@ -676,17 +654,17 @@ export default {
         width: calc(100vmin * 0.50)
 
     .CustomShogiPlayer
-      --sp_board_padding: 0                  // 盤の隙間なし
-      --sp_board_color: hsla(0, 0%, 0%, 0)   // 盤の色
-      --sp_grid_outer_stroke: 2              // 外枠の太さ
-      --sp_grid_stroke: 1                    // グリッド太さ
-      --sp_grid_outer_color: hsl(0, 0%, 64%) // グリッド外枠色
-      --sp_grid_color:       hsl(0, 0%, 73%) // グリッド色
-      --sp_board_aspect_ratio: 1.0           // 盤を正方形化
-      --sp_grid_star_size: 16%               // 星の大きさ
-      --sp_grid_star_color: hsl(0, 0%, 50%)  // 星の色
-      --sp_shadow_offset: 0                  // 影なし
-      --sp_shadow_blur: 0                    // 影なし
+      --sp_board_padding: 0                                   // 盤の隙間なし
+      --sp_board_color: hsla(0, 0%, 0%, 0)                    // 盤の色
+      --sp_grid_outer_stroke: calc(var(--xy_grid_stroke) + 1) // 外枠の太さ
+      --sp_grid_stroke: var(--xy_grid_stroke)                 // グリッド太さ
+      --sp_grid_outer_color: hsl(0, 0%, calc((64.0 - var(--xy_grid_color)) * 1.0%))                  // グリッド外枠色
+      --sp_grid_color:       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%))                  // グリッド色
+      --sp_board_aspect_ratio: 1.0                            // 盤を正方形化
+      --sp_grid_star_size: 16%                                // 星の大きさ
+      --sp_grid_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))                   // 星の色
+      --sp_shadow_offset: 0                                   // 影なし
+      --sp_shadow_blur: 0                                     // 影なし
 
   .tweet_box_container
     margin-top: 0.75rem
