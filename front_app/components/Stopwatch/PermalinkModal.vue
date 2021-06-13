@@ -1,5 +1,5 @@
 <template lang="pug">
-.StopwatchPermalinkModal.modal-card.mx-4(style="width: auto")
+.PermalinkModal.modal-card.mx-4(style="width: auto")
   header.modal-card-head
     p.modal-card-title.is-size-6 パーマリンク
   section.modal-card-body.px-5.py-5
@@ -15,16 +15,11 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
-  name: "StopwatchPermalinkModal",
-  mixins: [
-    support,
-  ],
-  props: {
-    base: { type: Object, required: true },
-  },
+  name: "PermalinkModal",
+  mixins: [support_child],
   methods: {
     close_handle() {
       this.sound_play("click")
@@ -35,7 +30,7 @@ export default {
 </script>
 
 <style lang="sass">
-.StopwatchPermalinkModal
+.PermalinkModal
   tr:hover
     cursor: pointer
   tr > *

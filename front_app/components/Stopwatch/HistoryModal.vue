@@ -1,5 +1,5 @@
 <template lang="pug">
-.StopwatchHistoryModal.modal-card.is-size-7(style="width: auto")
+.HistoryModal.modal-card.is-size-7(style="width: auto")
   header.modal-card-head
     p.modal-card-title.is-size-6 履歴
   section.modal-card-body
@@ -22,16 +22,11 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
-  name: "StopwatchHistoryModal",
-  mixins: [
-    support,
-  ],
-  props: {
-    base: { type: Object, required: true },
-  },
+  name: "HistoryModal",
+  mixins: [support_child],
   mounted() {
     this.toast_ok("操作を間違えたときや以前の続きから行いたいときに過去の状態に戻れます")
   },
@@ -55,7 +50,7 @@ export default {
 </script>
 
 <style lang="sass">
-.StopwatchHistoryModal
+.HistoryModal
   tr:hover
     cursor: pointer
   .modal-card-foot

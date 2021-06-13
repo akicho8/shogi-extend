@@ -1,5 +1,5 @@
 <template lang="pug">
-.StopwatchKeyboardModal.modal-card.mx-4(style="width: auto")
+.KeyboardModal.modal-card.mx-4(style="width: auto")
   header.modal-card-head
     p.modal-card-title.is-size-6 キーボード操作
   section.modal-card-body
@@ -27,16 +27,11 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { support_child } from "./support_child.js"
 
 export default {
-  name: "StopwatchKeyboardModal",
-  mixins: [
-    support,
-  ],
-  props: {
-    base: { type: Object, required: true },
-  },
+  name: "KeyboardModal",
+  mixins: [support_child],
   methods: {
     close_handle() {
       this.sound_play("click")
@@ -47,7 +42,7 @@ export default {
 </script>
 
 <style lang="sass">
-.StopwatchKeyboardModal
+.KeyboardModal
   tr:hover
     cursor: pointer
   tr > *

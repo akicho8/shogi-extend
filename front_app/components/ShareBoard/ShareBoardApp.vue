@@ -96,7 +96,7 @@ client-only
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="ac_room")
           ShareBoardMemberList(:base="base" v-if="ac_room")
 
-        ShareBoardDebugMenu(:base="base" v-if="debug_mode_p")
+        ShareBoardDebugPanels(:base="base" v-if="debug_mode_p")
 </template>
 
 <script>

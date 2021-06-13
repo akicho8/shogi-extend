@@ -1,30 +1,7 @@
 <template lang="pug">
 .StopwatchApp
-  b-sidebar.is-unselectable.StopwatchApp-Sidebar(fullheight right v-model="sidebar_p" overlay)
-    .mx-4.my-4
-      b-menu
-        b-menu-list(label="Action")
-          b-menu-item.is_active_unset(label="最後のタイムだけリセット (r)"   @click="rap_reset"     :disabled="lap_counter === 0")
-          b-menu-item.is_active_unset(label="1つ前に戻す (z)"                @click="revert_handle" :disabled="rows.length === 0")
-          b-menu-item.is_active_unset(label="最後の解答の正誤を反転する (t)" @click="toggle_handle" :disabled="rows.length === 0")
-
-        b-menu-list(label="再テスト")
-          b-menu-item.is_active_unset(label="不正解のみ"         @click="reset_by_x"                :disabled="rows.length === 0 || mode === 'playing'")
-          b-menu-item.is_active_unset(label="不正解と指定秒以上" @click="reset_by_x_with_n_seconds" :disabled="rows.length === 0 || mode === 'playing'")
-
-        b-menu-list(label="その他")
-          b-menu-item.is_active_unset(label="操作を間違えたら？" @click="history_modal_show"   :disabled="mode !== 'standby'")
-          b-menu-item.is_active_unset(label="パーマリンク"       @click="parmalink_modal_show" :disabled="mode !== 'standby'")
-          b-menu-item.is_active_unset(label="キーボード操作"     @click="keyboard_modal_show"                                )
-
-  MainNavbar
-    template(slot="brand")
-      NavbarItemHome
-      b-navbar-item.has-text-weight-bold(@click="book_title_input_dialog") {{book_title}}
-    template(slot="end")
-      b-navbar-item(@click="sidebar_toggle")
-        b-icon(icon="menu")
-
+  StopwatchSidebar(:base="base")
+  StopwatchNavbar(:base="base")
   MainSection
     .container
       .columns
@@ -98,8 +75,9 @@
             .has-text-centered
               TweetButton(:body="tweet_body" @after_click="sound_play('click')")
 
-  DebugPre(v-if="development_p")
-    div rows = {{rows}}
+  .section(v-if="development_p")
+    .container.is-fluid
+      StopwatchDebugPanels(:base="base")
 </template>
 
 <script>
@@ -109,15 +87,16 @@ const TITLE_DEFAULT = "詰将棋用ストップウォッチ"
 import _ from "lodash"
 import dayjs from "dayjs"
 
-import stopwatch_data_retention from './stopwatch_data_retention.js'
-import stopwatch_memento_list from './stopwatch_memento_list.js'
+import app_storage_legacy from './app_storage_legacy.js'
+import app_memento_list from './app_memento_list.js'
+import { support_parent } from './support_parent.js'
 import { app_keyboard } from './app_keyboard.js'
-import { support } from './support.js'
+import { app_sidebar } from './app_sidebar.js'
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 
-import StopwatchPermalinkModal from './StopwatchPermalinkModal.vue'
-import StopwatchHistoryModal   from './StopwatchHistoryModal.vue'
-import StopwatchKeyboardModal  from './StopwatchKeyboardModal.vue'
+import PermalinkModal from './PermalinkModal.vue'
+import HistoryModal   from './HistoryModal.vue'
+import KeyboardModal  from './KeyboardModal.vue'
 
 import MemoryRecord from 'js-memory-record'
 
@@ -133,10 +112,11 @@ class AnswerInfo extends MemoryRecord {
 export default {
   name: "StopwatchApp",
   mixins: [
-    stopwatch_data_retention,
-    stopwatch_memento_list,
+    app_storage_legacy,
+    app_memento_list,
+    support_parent,
     app_keyboard,
-    support,
+    app_sidebar,
   ],
   data() {
     return {
@@ -152,7 +132,6 @@ export default {
       book_title: null,
       timeout_sec: null,
       total_timeout_min: null,
-      sidebar_p: false,
     }
   },
 
@@ -165,11 +144,6 @@ export default {
   },
 
   methods: {
-    sidebar_toggle() {
-      this.sound_play("click")
-      this.sidebar_p = !this.sidebar_p
-    },
-
     copy_handle(text) {
       this.sound_play("click")
       this.clipboard_copy({text: text})
@@ -182,7 +156,7 @@ export default {
         parent: this,
         hasModalCard: true,
         props: { base: this },
-        component: StopwatchPermalinkModal,
+        component: PermalinkModal,
         animation: "",
         onCancel: () => this.sound_play("click"),
       })
@@ -195,7 +169,7 @@ export default {
         parent: this,
         hasModalCard: true,
         props: { base: this },
-        component: StopwatchHistoryModal,
+        component: HistoryModal,
         animation: "",
         onCancel: () => this.sound_play("click"),
       })
@@ -208,7 +182,7 @@ export default {
         parent: this,
         hasModalCard: true,
         props: { base: this },
-        component: StopwatchKeyboardModal,
+        component: KeyboardModal,
         animation: "",
         onCancel: () => this.sound_play("click"),
       })
@@ -259,7 +233,7 @@ export default {
     book_title_input_dialog() {
       this.sound_play("click")
       this.$buefy.dialog.prompt({
-        message: "タイトル",
+        title: "タイトル",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'text', value: this.book_title, required: false },
@@ -274,7 +248,7 @@ export default {
     track_input_dialog() {
       this.sound_play("click")
       this.$buefy.dialog.prompt({
-        message: "問題番号",
+        title: "問題番号",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'number', value: this.current_track, min: 1 },
@@ -289,7 +263,7 @@ export default {
     lap_counter_input_dialog() {
       this.sound_play("click")
       this.$buefy.dialog.prompt({
-        message: "分",
+        title: "分",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'text', value: (this.lap_counter / 60) + "" },
@@ -607,10 +581,12 @@ export default {
   },
 
   mounted() {
-    this.ga_click(`詰将棋用ストップウォッチ`)
+    this.ga_click("詰将棋用ストップウォッチ")
   },
 
   computed: {
+    base() { return this },
+
     standby() { return this.mode === "standby" },
     playing() { return this.mode === "playing" },
 
@@ -636,10 +612,6 @@ export default {
 
     last_quest_exist_p() {
       return this.quest_name_get(this.new_quest)
-    },
-
-    ls_key() {
-      return "stopwatch"
     },
 
     new_quest() {
@@ -874,15 +846,11 @@ export default {
 <style lang="sass">
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap")
 
-.StopwatchApp-Sidebar
-  .sidebar-content
-    width: unset
-    a
-      white-space: nowrap
-    .menu-label:not(:first-child)
-      margin-top: 2em
-
 .StopwatchApp
+  .MainSection.section
+    +tablet
+      padding: 1rem
+
   touch-action: manipulation
 
   .page_title
@@ -935,4 +903,11 @@ export default {
       white-space: pre-wrap
       line-height: 1.25
       font-size: $size-7
+
+.STAGE-development
+  .StopwatchApp
+    .columns
+      border: 1px dashed change_color($danger, $alpha: 0.5)
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

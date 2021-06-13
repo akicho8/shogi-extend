@@ -103,7 +103,7 @@ export default {
     },
 
     ls_key() {
-      return "dc6c1cd5cf94742da55c164d1b625d22"
+      return "stopwatch"
     },
   },
 }

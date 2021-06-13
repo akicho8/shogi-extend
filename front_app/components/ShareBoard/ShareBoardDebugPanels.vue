@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.ShareBoardDebugMenu
+.columns.is-multiline.ShareBoardDebugPanels
   .column.is-6(v-if="base.clock_box")
     ClockBoxInspector(:clock_box="base.clock_box")
   .column.is-2
@@ -75,12 +75,12 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ShareBoardDebugMenu",
+  name: "ShareBoardDebugPanels",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "./support.sass"
-.ShareBoardDebugMenu
+.ShareBoardDebugPanels
 </style>
