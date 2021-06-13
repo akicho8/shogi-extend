@@ -90,12 +90,12 @@ module Swars
           assert { record.memberships[0].think_max == 5 }
           assert { record.memberships[1].think_max == 7 }
         end
-        it "なのでラベルの最大は5" do
-          assert { record.time_chart_label_max == 5 }
+        it "ラベルの最大" do
+          assert { record.time_chart_label_max == 6 }
         end
         it "それぞれの時間チャートデータが取れる" do
-          assert { record.time_chart_xy_list(:black) == [{x: 0, y: nil}, {x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}, ] }
-          assert { record.time_chart_xy_list(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}, ] }
+          assert { record.time_chart_xy_list(:black) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
+          assert { record.time_chart_xy_list(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}] }
         end
       end
 
@@ -111,8 +111,8 @@ module Swars
           assert { record.memberships[1].think_max == 590 }
         end
         it "後手のチャートの最後にそれを追加してある" do
-          assert { record.time_chart_xy_list(:black) == [{x: 0, y: nil}, {x: 1, y: 1},   {x: 2, y: nil}, {x: 3, y:   5}, {x: 4, y: nil}, {x: 5, y:   2}, {x: 6, y:  nil}] }
-          assert { record.time_chart_xy_list(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y:  -3}, {x: 3, y: nil}, {x: 4, y:  -7}, {x: 5, y: nil}, {x: 6, y: -590}] }
+          assert { record.time_chart_xy_list(:black) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
+          assert { record.time_chart_xy_list(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}, {x: 6, y: -590}, {x: 7, y: nil}] }
         end
         it "そのためチャートのラベルは増えている" do
           assert { record.time_chart_label_max == 6 }
@@ -142,8 +142,20 @@ module Swars
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .................
+# >> .............F...
 # >> 
-# >> Finished in 5.09 seconds (files took 2.5 seconds to load)
-# >> 17 examples, 0 failures
+# >> Failures:
+# >> 
+# >>   1) Swars::Battle 時間チャート 時間切れ 後手のチャートの最後にそれを追加してある
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:119:in `block (4 levels) in <module:Swars>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 5.67 seconds (files took 2.49 seconds to load)
+# >> 17 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:113 # Swars::Battle 時間チャート 時間切れ 後手のチャートの最後にそれを追加してある
 # >> 

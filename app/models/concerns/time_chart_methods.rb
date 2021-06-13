@@ -32,8 +32,10 @@ module TimeChartMethods
     }
   end
 
+  # ウォーズのデータ不整合で先後でデータ数が2つ以上異なる場合があるため sum ではなく大きい方を2倍する
+  # これでグラフ内に必ず収まる
   def time_chart_label_max
-    Bioshogi::Location.collect { |e| time_chart_sec_list_of(e).size }.sum
+    Bioshogi::Location.collect { |e| time_chart_sec_list_of(e).size }.max * 2
   end
 
   # FreeBattle 用
@@ -72,18 +74,33 @@ module TimeChartMethods
     loc = preset_info.to_turn_info.current_location(location.code)
 
     a = time_chart_sec_list_of(location)
+
+    # raise memberships[0].sec_list.collect(&:to_i).inspect
+
+    list = []
     it = a.each
-    (0..time_chart_label_max).collect do |i|
+    #
+    # もともとはこの方法だったがウォーズのデータが壊れていて指し手が先手と後手で2つ以上異なる場合がある
+    # 例えば先手は50手分のデータがあるのに後手は48手までしかないなど
+    # なので (0..time_chart_label_max) までデータがある想定でいくと StopIteration の例外が発生する場合がある
+    # なので逆に StopIteration が発生するまで取り込む
+    #
+    0.step do |i|
       x = i
       y = nil
-      if i >= 1
-        if (loc.code + i).modulo(c).nonzero?
-          y = location.value_sign * (it.next || 0)
+      begin
+        if i >= 1
+          if (loc.code + i).modulo(c).nonzero?
+            y = location.value_sign * (it.next || 0)
+          end
         end
+      rescue StopIteration
+        break
       end
       # いまのところ x は 0 から始まるインデックスと同じなので省略して値だけにもできる
       # x, y は予約語。他にも追加していい
-      { x: x, y: y }
+      list << { x: x, y: y }
     end
+    list
   end
 end

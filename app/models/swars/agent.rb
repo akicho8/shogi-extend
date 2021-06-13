@@ -223,34 +223,136 @@ module Swars
 end
 
 if $0 == __FILE__
-  tp Swars::Agent::Index.fetch(run_remote: true, gtype: "", user_key: "shuei299792458", page_index: 0)
-  tp Swars::Agent::Index.fetch(run_remote: true, gtype: "",   user_key: "kinakom0chi", page_index: 0)
-  tp Swars::Agent::Index.fetch(run_remote: true, gtype: "sb", user_key: "kinakom0chi", page_index: 0)
-  tp Swars::Agent::Index.fetch(run_remote: true, gtype: "s1", user_key: "kinakom0chi", page_index: 0)
-  tp Swars::Agent::Record.fetch(run_remote: true, key: "GRAN0215-kinakom0chi-20200411_195834")
+  # tp Swars::Agent::Index.fetch(run_remote: true, gtype: "", user_key: "shuei299792458", page_index: 0)
+  # tp Swars::Agent::Index.fetch(run_remote: true, gtype: "",   user_key: "kinakom0chi", page_index: 0)
+  # tp Swars::Agent::Index.fetch(run_remote: true, gtype: "sb", user_key: "kinakom0chi", page_index: 0)
+  # tp Swars::Agent::Index.fetch(run_remote: true, gtype: "s1", user_key: "kinakom0chi", page_index: 0)
+  p Swars::Agent::Record.fetch(run_remote: true, key: "patrick0169-Shogochandrsu-20210612_060155")[:csa_seq]
 end
-# >> |------------------------------------------|
-# >> | pc_gucchi-kinakom0chi-20200530_145751    |
-# >> | kinakom0chi-PAPAMOS-20200530_144401      |
-# >> | kinakom0chi-hosiii-20200530_144155       |
-# >> | kinakom0chi-guriguri9000-20200529_190134 |
-# >> | kinakom0chi-dokann-20200529_183638       |
-# >> | LucasMon-kinakom0chi-20200529_183215     |
-# >> | kakarot4649-kinakom0chi-20200528_202833  |
-# >> | kinakom0chi-Yakult1972-20200528_183022   |
-# >> | kinakom0chi-taka7280-20200528_182631     |
-# >> | 1602st-kinakom0chi-20200527_201838       |
-# >> |------------------------------------------|
-# >> |--------------------------------------|
-# >> | kinakom0chi-Onebingo-20200501_233039 |
-# >> |--------------------------------------|
-# >> |-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |               key | GRAN0215-kinakom0chi-20200411_195834                                                                                                                                                                                                                                |
-# >> |        battled_at | 20200411_195834                                                                                                                                                                                                                                                     |
-# >> |          rule_key |                                                                                                                                                                                                                                                                     |
-# >> | preset_dirty_code | 0                                                                                                                                                                                                                                                                   |
-# >> |       __final_key | GOTE_WIN_TIMEOUT                                                                                                                                                                                                                                                    |
-# >> |        user_infos | [{:user_key=>"GRAN0215", :grade_key=>"2級"}, {:user_key=>"kinakom0chi", :grade_key=>"1級"}]                                                                                                                                                                         |
-# >> |           csa_seq | [["+7776FU", 599], ["-8384FU", 600], ["+7968GI", 595], ["-8485FU", 598], ["+6877GI", 593], ["-7172GI", 595], ["+6978KI", 591], ["-7283GI", 594], ["+8879KA", 590], ["-8384GI", 592], ["+9796FU", 589], ["-9394FU", 591], ["+7968KA", 588], ["-3334FU", 588], ["+... |
-# >> |   fetch_successed | true                                                                                                                                                                                                                                                                |
-# >> |-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:558:in `rescue in block in set_autoloads_in_dir': wrong constant name Xmptmp-in22UoRJ inferred by Module from file (Zeitwerk::NameError)
+# ~> 
+# ~>   /Users/ikeda/src/shogi-extend/app/models/swars/xmptmp-in22UoRJ.rb
+# ~> 
+# ~> Possible ways to address this:
+# ~> 
+# ~>   * Tell Zeitwerk to ignore this particular file.
+# ~>   * Tell Zeitwerk to ignore one of its parent directories.
+# ~>   * Rename the file to comply with the naming conventions.
+# ~>   * Modify the inflector to handle this case.
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:534:in `block in set_autoloads_in_dir'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:733:in `block in ls'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:725:in `foreach'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:725:in `ls'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:533:in `set_autoloads_in_dir'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader/callbacks.rb:71:in `block in on_namespace_loaded'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader/callbacks.rb:70:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader/callbacks.rb:70:in `on_namespace_loaded'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/explicit_namespace.rb:68:in `tracepoint_class_callback'
+# ~> 	from /Users/ikeda/src/shogi-extend/app/models/swars.rb:2:in `<module:Swars>'
+# ~> 	from /Users/ikeda/src/shogi-extend/app/models/swars.rb:1:in `<main>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:23:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:23:in `block in require_with_bootsnap_lfi'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/loaded_features_index.rb:92:in `register'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:22:in `require_with_bootsnap_lfi'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:31:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/kernel.rb:26:in `require'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/factories/swars_battles.rb:2:in `block in <main>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/syntax/default.rb:49:in `instance_eval'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/syntax/default.rb:49:in `run'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/syntax/default.rb:7:in `define'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/factories/swars_battles.rb:1:in `<main>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:55:in `load'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:55:in `load'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:20:in `block (2 levels) in find_definitions'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:19:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:19:in `block in find_definitions'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:15:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:15:in `find_definitions'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/reload.rb:6:in `reload'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot_rails-5.1.1/lib/factory_bot_rails/railtie.rb:26:in `block in <class:Railtie>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:68:in `block in execute_hook'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:61:in `with_execution_control'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:66:in `execute_hook'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:52:in `block in run_load_hooks'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:51:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:51:in `run_load_hooks'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/application/finisher.rb:129:in `block in <module:Finisher>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/initializable.rb:32:in `instance_exec'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/initializable.rb:32:in `run'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/initializable.rb:61:in `block in run_initializers'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:228:in `block in tsort_each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:350:in `block (2 levels) in each_strongly_connected_component'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:431:in `each_strongly_connected_component_from'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:349:in `block in each_strongly_connected_component'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:347:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:347:in `call'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:347:in `each_strongly_connected_component'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:226:in `tsort_each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:205:in `tsort_each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/initializable.rb:60:in `run_initializers'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/application.rb:363:in `initialize!'
+# ~> 	from /Users/ikeda/src/shogi-extend/config/environment.rb:5:in `<top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from -:4:in `<main>'
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:777:in `const_defined?': wrong constant name Xmptmp-in22UoRJ (NameError)
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:777:in `cdef?'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:678:in `strict_autoload_path'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:656:in `autoload_for?'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:596:in `autoload_file'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:538:in `block in set_autoloads_in_dir'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:733:in `block in ls'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:725:in `foreach'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:725:in `ls'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader.rb:533:in `set_autoloads_in_dir'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader/callbacks.rb:71:in `block in on_namespace_loaded'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader/callbacks.rb:70:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/loader/callbacks.rb:70:in `on_namespace_loaded'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/explicit_namespace.rb:68:in `tracepoint_class_callback'
+# ~> 	from /Users/ikeda/src/shogi-extend/app/models/swars.rb:2:in `<module:Swars>'
+# ~> 	from /Users/ikeda/src/shogi-extend/app/models/swars.rb:1:in `<main>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:23:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:23:in `block in require_with_bootsnap_lfi'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/loaded_features_index.rb:92:in `register'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:22:in `require_with_bootsnap_lfi'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:31:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.4.2/lib/zeitwerk/kernel.rb:26:in `require'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/factories/swars_battles.rb:2:in `block in <main>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/syntax/default.rb:49:in `instance_eval'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/syntax/default.rb:49:in `run'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/syntax/default.rb:7:in `define'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/factories/swars_battles.rb:1:in `<main>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:55:in `load'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.4.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:55:in `load'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:20:in `block (2 levels) in find_definitions'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:19:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:19:in `block in find_definitions'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:15:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/find_definitions.rb:15:in `find_definitions'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot-5.1.1/lib/factory_bot/reload.rb:6:in `reload'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/factory_bot_rails-5.1.1/lib/factory_bot_rails/railtie.rb:26:in `block in <class:Railtie>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:68:in `block in execute_hook'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:61:in `with_execution_control'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:66:in `execute_hook'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:52:in `block in run_load_hooks'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:51:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.7/lib/active_support/lazy_load_hooks.rb:51:in `run_load_hooks'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/application/finisher.rb:129:in `block in <module:Finisher>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/initializable.rb:32:in `instance_exec'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/initializable.rb:32:in `run'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/initializable.rb:61:in `block in run_initializers'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:228:in `block in tsort_each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:350:in `block (2 levels) in each_strongly_connected_component'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:431:in `each_strongly_connected_component_from'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:349:in `block in each_strongly_connected_component'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:347:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:347:in `call'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:347:in `each_strongly_connected_component'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:226:in `tsort_each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/tsort.rb:205:in `tsort_each'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/initializable.rb:60:in `run_initializers'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/railties-6.0.3.7/lib/rails/application.rb:363:in `initialize!'
+# ~> 	from /Users/ikeda/src/shogi-extend/config/environment.rb:5:in `<top (required)>'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> 	from -:4:in `<main>'
