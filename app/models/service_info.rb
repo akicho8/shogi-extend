@@ -19,6 +19,7 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/xy"},
       title: "符号の鬼",
+      attention_label: "UPDATE!",
       og_image_key: "xy",
       description: "符号マスター養成所",
       features: [
@@ -46,7 +47,7 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/rack"},
       title: "インスタント将棋問題集",
-      attention_label: "NEW!",
+      attention_label: nil,
       og_image_key: "rack",
       # description: "市販の問題集を繰り返し解くよりも、最初のうちは本人のために本人の実戦譜の検討を元に本人が作った問題集を繰り返し解いた方が身に付きやすいのではないか、という実験もかねた、将棋問題投稿復習ツール",
       # description: "本人が本人のために作る問題集を解いた方がためになるのではないかと考えて作った問題集作成ツール",
