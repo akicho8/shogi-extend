@@ -45,7 +45,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # 復元できないときは新規ユーザーを作成する
     # Google の場合なぜか auth.info.name にメールアドレスが入っている
     unless user
-      SlackAgent.message_send(key: "omniauth", body: auth.as_json) # デバッグ用
+      if Rails.env.development? || Rails.env.staging?
+        SlackAgent.message_send(key: "omniauth", body: auth.as_json)
+      end
+
+      SlackAgent.message_send(key: "認証", body: "#{user_name} #{auth.info.email} (#{auth.provider})")
+      SlackAgent.message_send(key: "認証", body: auth.info.image)
 
       user = User.create do |e|
         e.email         = auth.info.email # Twitterの場合は空文字列
@@ -57,7 +62,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       begin
         if user && user.valid?
-          SlackAgent.message_send(key: "auth.info.image", body: auth.info.image)
           if auth.info.image
             filename = Pathname(image_uri.path).basename.to_s
             io = image_uri.open
