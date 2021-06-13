@@ -23,18 +23,38 @@ module Swars
       has_many :battles, through: :memberships
     end
 
-    default_scope { order(:priority) }
-
-    before_validation do
-      self.priority ||= grade_info.priority
-    end
-
     def grade_info
       pure_info
     end
 
     def name
       key
+    end
+
+    concerning :PriorityMethods do
+      included do
+        delegate :god_priority, to: "self.class"
+
+        default_scope { order(:priority) }
+
+        before_validation do
+          self.priority ||= grade_info.priority
+        end
+      end
+
+      class_methods do
+        def god_key
+          "五段"
+        end
+
+        def god_priority
+          @god_priority ||= GradeInfo.fetch(god_key).priority
+        end
+      end
+
+      def like_god?
+        priority <= god_priority
+      end
     end
   end
 end

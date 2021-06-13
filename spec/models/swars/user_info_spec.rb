@@ -253,10 +253,6 @@ module Swars
     end
 
     describe "将棋ウォーズの運営を支える力 kishin_info_records" do
-      before do
-        @black = User.create!
-      end
-
       def csa_seq_generate(n)
         outbreak_csa + n.times.flat_map do |i|
           seconds = 600 - (i * 4.seconds)
@@ -264,17 +260,33 @@ module Swars
         end
       end
 
-      def test1(n)
-        Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+      def test1(rule_key, n)
+        Battle.create!(csa_seq: csa_seq_generate(n), rule_key: rule_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
         @black.user_info.kishin_info_records&.collect { |e| e[:value] }
       end
 
-      it "works" do
-        assert { test1(10) == nil    }
-        assert { test1(11) == [1, 1] }
-        assert { test1(11) == [2, 1] }
+      it "3分 五段以上" do
+        @black = User.create!(grade_key: "五段")
+        assert { test1(:three_min, 10) == nil    }
+        assert { test1(:three_min, 11) == [1, 1] }
+        assert { test1(:three_min, 11) == [2, 1] }
+      end
+
+      it "3分 四段 判定スルー" do
+        @black = User.create!(grade_key: "四段")
+        assert { test1(:three_min, 11) == nil }
+      end
+
+      it "10分 1級 判定あり" do
+        @black = User.create!(grade_key: "1級")
+        assert { test1(:ten_min, 11) == [1, 0] }
+      end
+
+      it "10秒 1級 判定あり" do
+        @black = User.create!(grade_key: "1級")
+        assert { test1(:ten_sec, 11) == [1, 0] }
       end
     end
 
@@ -460,19 +472,19 @@ module Swars
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ...F..................
-# >> 
+# >>
 # >> Failures:
-# >> 
+# >>
 # >>   1) Swars::Battle to_hash 各タブの情報
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      # -:62:in `block (3 levels) in <module:Swars>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >> 
+# >>
 # >> Finished in 11.04 seconds (files took 5.18 seconds to load)
 # >> 22 examples, 1 failure
-# >> 
+# >>
 # >> Failed examples:
-# >> 
+# >>
 # >> rspec -:52 # Swars::Battle to_hash 各タブの情報
-# >> 
+# >>

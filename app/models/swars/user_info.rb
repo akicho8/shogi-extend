@@ -217,38 +217,57 @@ module Swars
 
     # 棋神
     # turn_max >= 2 なら obt_think_avg と think_end_avg は nil ではないので turn_max >= 2 の条件を必ず入れること
+    #
+    #   SELECT swars_memberships.* FROM swars_memberships
+    #     INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id
+    #     INNER JOIN swars_grades  ON swars_grades.id  = swars_memberships.grade_id
+    #     WHERE
+    #           swars_memberships.id = 13
+    #       AND swars_memberships.judge_key = 'win'
+    #       AND swars_battles.turn_max >= 50
+    #       AND swars_memberships.obt_auto_max >= 10
+    #       AND ((swars_battles.rule_key = 'ten_min' OR swars_battles.rule_key = 'ten_sec') OR swars_grades.priority <= 5)
+    #
     def ai_use_battle_count_lv1
       @ai_use_battle_count_lv1 ||= -> {
         # A
         s = win_scope                                                                           # 勝っている
-        s = s.joins(:battle)
-        s = s.where(Swars::Membership.arel_table[:grade_diff].gteq(0)) if false                 # 自分と同じか格上に対して
-        # s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) # もともと CHECKMATE だけだったが……いらない？
-        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
-        if MembershipMedalInfo::AI_JUDGMENT_EXCLUDE_THREE_MIN
-          s = s.where(Swars::Battle.arel_table[:rule_key].not_eq(:three_min))                     # 3分は除く
-        end
+        s = s.joins(:battle, :grade)
+        s = s.where(Membership.arel_table[:grade_diff].gteq(0)) if false                 # 自分と同じか格上に対して
+        # s = s.where(Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) # もともと CHECKMATE だけだったが……いらない？
+        s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
+        s = s.where(Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
+
+        # if MembershipMedalInfo::AI_JUDGMENT_EXCLUDE_THREE_MIN
+        #   s = s.where(Battle.arel_table[:rule_key].not_eq(:three_min))                     # 3分は除く
+        # end
+
+        c1 = Battle.where(Battle.arel_table[:rule_key].eq_any([:ten_min, :ten_sec]))  # 10分 or 10秒
+        c2 = Grade.unscoped.where(Grade.arel_table[:priority].lteq(Grade.god_priority)) # or 5段以上
+
+        # s and (c1 or c2)
+        # ((swars_battles.rule_key = 'ten_min' OR swars_battles.rule_key = 'ten_sec') OR swars_grades.priority <= 5)
+        s = s.merge(c1.or(c2))
 
         # if false
         #   # (B or C)
-        #   a = Swars::Membership.where(Swars::Membership.arel_table[:obt_think_avg].lteq(3))       # 指し手平均3秒以下
-        #   a = a.or(Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
+        #   a = Membership.where(Membership.arel_table[:obt_think_avg].lteq(3))       # 指し手平均3秒以下
+        #   a = a.or(Membership.where(Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
         #
         #   # A and (B or C)
         #   s = s.merge(a)
         # else
 
-        # c1 = Swars::Membership.where(Swars::Membership.arel_table[:obt_think_avg].lteq(1))
-        # c2 = Swars::Membership.where(Swars::Membership.arel_table[:obt_auto_max].gteq(10))
-        c2 = Swars::Membership.where(Swars::Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
+        # c1 = Membership.where(Membership.arel_table[:obt_think_avg].lteq(1))
+        # c2 = Membership.where(Membership.arel_table[:obt_auto_max].gteq(10))
+        # c2 = Membership.where(Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
         # s = s.merge(c1.or(c2))
-        s = s.merge(c2)
 
         # end
 
-        # c1 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(10))
-        # c2 = Swars::Membership.where(Swars::Membership.arel_table[:two_serial_max].gteq(5))
-        # c3 = Swars::Membership.where(Swars::Membership.arel_table[:think_end_avg].lteq(2))
+        # c1 = Membership.where(Membership.arel_table[:two_serial_max].gteq(10))
+        # c2 = Membership.where(Membership.arel_table[:two_serial_max].gteq(5))
+        # c3 = Membership.where(Membership.arel_table[:think_end_avg].lteq(2))
         # c4 = c1.or(c2.merge(c3))     # c1 or c2 and c3 は c1 or (c2 and c3) のこと
         # s = s.merge(c4)
 
@@ -256,21 +275,21 @@ module Swars
       }.call
     end
 
-    def ai_use_battle_count_lv2
-      @ai_use_battle_count_lv2 ||= -> {
-        s = win_scope
-        s = s.joins(:battle)
-        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))
-        if MembershipMedalInfo::AI_JUDGMENT_EXCLUDE_THREE_MIN
-          s = s.where(Swars::Battle.arel_table[:rule_key].not_eq(:three_min))                      # 3分は除く
-        end
-        # c1 = Swars::Membership.where(Swars::Membership.arel_table[:obt_think_avg].lteq(1))
-        c2 = Swars::Membership.where(Swars::Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
-        # s = s.merge(c1.or(c2))
-        s = s.merge(c2)
-        s.count
-      }.call
-    end
+    # def ai_use_battle_count_lv2
+    #   @ai_use_battle_count_lv2 ||= -> {
+    #     s = win_scope
+    #     s = s.joins(:battle)
+    #     s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))
+    #     if MembershipMedalInfo::AI_JUDGMENT_EXCLUDE_THREE_MIN
+    #       s = s.where(Battle.arel_table[:rule_key].not_eq(:three_min))                      # 3分は除く
+    #     end
+    #     # c1 = Membership.where(Membership.arel_table[:obt_think_avg].lteq(1))
+    #     c2 = Membership.where(Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
+    #     # s = s.merge(c1.or(c2))
+    #     s = s.merge(c2)
+    #     s.count
+    #   }.call
+    # end
 
     ################################################################################
 
@@ -341,7 +360,7 @@ module Swars
       s = ids_scope
       s = s.where(judge_key: judge_key)
       s = s.joins(:battle)
-      s = s.group(Swars::Battle.arel_table[:final_key])
+      s = s.group(Battle.arel_table[:final_key])
       if JUDGE_INFO_RECORDS_INCLUDE_EMPTY_LABEL
       else
         s = s.order("count_all DESC")
@@ -392,16 +411,16 @@ module Swars
       end
     end
 
-    def kishin_info_records_lv2
-      if v = ai_use_battle_count_lv2
-        if v.positive?
-          [
-            { name: "有り", value: v,             },
-            { name: "無し", value: win_count - v, },
-          ]
-        end
-      end
-    end
+    # def kishin_info_records_lv2
+    #   if v = ai_use_battle_count_lv2
+    #     if v.positive?
+    #       [
+    #         { name: "有り", value: v,             },
+    #         { name: "無し", value: win_count - v, },
+    #       ]
+    #     end
+    #   end
+    # end
 
     ################################################################################
 
@@ -417,14 +436,14 @@ module Swars
 
     def avg_of_turn_max
       if false
-        s = Swars::Battle.where(id: current_scope.pluck(:battle_id))
+        s = Battle.where(id: current_scope.pluck(:battle_id))
         if v = s.average(:turn_max)
           v.to_i
         end
       else
         s = ids_scope
         s = s.joins(:battle)
-        if v = s.average(Swars::Battle.arel_table[:turn_max])
+        if v = s.average(Battle.arel_table[:turn_max])
           v.to_i
         end
       end
@@ -441,9 +460,9 @@ module Swars
     def timeout_think_last_scope
       s = lose_scope
       s = s.joins(:battle)
-      s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
-      s = s.where(Swars::Battle.arel_table[:final_key].eq("TIMEOUT"))
-      s = s.where(Swars::Membership.arel_table[:think_last].gteq(60))
+      s = s.where(Battle.arel_table[:turn_max].gteq(14))
+      s = s.where(Battle.arel_table[:final_key].eq("TIMEOUT"))
+      s = s.where(Membership.arel_table[:think_last].gteq(60))
     end
 
     def count_of_timeout_think_last
@@ -470,8 +489,8 @@ module Swars
 
       s = lose_scope
       s = s.joins(:battle)
-      s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
-      s = s.where(Swars::Battle.arel_table[:final_key].eq("TORYO"))
+      s = s.where(Battle.arel_table[:turn_max].gteq(14))
+      s = s.where(Battle.arel_table[:final_key].eq("TORYO"))
     end
 
     def count_of_toryo_think_last
@@ -481,7 +500,7 @@ module Swars
 
       # 1分未満は10分割
       s = toryo_think_last_scope0
-      s = s.where(Swars::Membership.arel_table[:think_last].lt(sep_min))
+      s = s.where(Membership.arel_table[:think_last].lt(sep_min))
       h = s.group("think_last DIV #{sep_sec}").order("count_all desc").count
       if h.present?
         list += h.collect do |quotient, count|
@@ -496,7 +515,7 @@ module Swars
 
       # 1分以上
       s = toryo_think_last_scope0
-      s = s.where(Swars::Membership.arel_table[:think_last].gteq(sep_min))
+      s = s.where(Membership.arel_table[:think_last].gteq(sep_min))
       h = s.group("think_last DIV #{sep_min}").order("count_all desc").count
       if h.present?
         list += h.collect do |quotient, count|
@@ -528,9 +547,9 @@ module Swars
     def checkmate_think_last_scope
       s = win_scope
       s = s.joins(:battle)
-      s = s.where(Swars::Membership.arel_table[:think_last].gteq(checkmate_think_last_gteq))
-      s = s.where(Swars::Battle.arel_table[:final_key].eq("CHECKMATE"))
-      # s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
+      s = s.where(Membership.arel_table[:think_last].gteq(checkmate_think_last_gteq))
+      s = s.where(Battle.arel_table[:final_key].eq("CHECKMATE"))
+      # s = s.where(Battle.arel_table[:turn_max].gteq(14))
     end
 
     def count_of_checkmate_think_last
@@ -566,8 +585,8 @@ module Swars
     def disconnect_count
       s = lose_scope
       s = s.joins(:battle)
-      s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
-      s = s.where(Swars::Battle.arel_table[:final_key].eq("DISCONNECT"))
+      s = s.where(Battle.arel_table[:turn_max].gteq(14))
+      s = s.where(Battle.arel_table[:final_key].eq("DISCONNECT"))
       if v = s.count
         if v.positive?
           v
@@ -581,8 +600,8 @@ module Swars
     def avg_of_toryo_turn_max
       s = lose_scope
       s = s.joins(:battle)
-      s = s.where(Swars::Battle.arel_table[:final_key].eq("TORYO"))
-      if v = s.average(Swars::Battle.arel_table[:turn_max])
+      s = s.where(Battle.arel_table[:final_key].eq("TORYO"))
+      if v = s.average(Battle.arel_table[:turn_max])
         v.to_i
       end
     end
@@ -592,7 +611,7 @@ module Swars
     def avg_of_think_end_avg
       s = win_scope
       s = s.joins(:battle)
-      s = s.where(Swars::Battle.arel_table[:final_key].eq("CHECKMATE"))
+      s = s.where(Battle.arel_table[:final_key].eq("CHECKMATE"))
       if v = s.average(:think_end_avg)
         v.to_f.round(2)
       end
@@ -610,7 +629,7 @@ module Swars
     def avg_turn_max_for(judge_key)
       s = ids_scope.where(judge_key: judge_key)
       s = s.joins(:battle)
-      s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
+      s = s.where(Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
       if v = s.average(:turn_max)
         v.to_i
       end
@@ -673,7 +692,7 @@ module Swars
       if battle_ids.present?
         # まず日別の対局数を求める
         battled_at = DbCop.tz_adjust("battled_at")
-        s = Swars::Battle.where(id: battle_ids)
+        s = Battle.where(id: battle_ids)
         counts_hash = s.group("HOUR(#{battled_at})").count
         [*4..23, *0..3].collect do |hour|
           { name: hour.to_s, value: counts_hash[hour] || 0 }
@@ -702,7 +721,7 @@ module Swars
     def rules_hash
       group = current_scope.includes(:battle).group_by { |e| e.battle.rule_key }
 
-      Swars::RuleInfo.inject({}) do |a, e|
+      RuleInfo.inject({}) do |a, e|
         hash = {}
         hash[:rule_name] = e.name
         if membership = (group[e.key.to_s] || []).first
@@ -723,7 +742,7 @@ module Swars
         hash[:day_type]    = day_type_for(battled_at)
         hash[:judge_counts] = judge_counts_of(memberships)
 
-        s = Swars::Membership.where(id: memberships.collect(&:id)) # 再スコープ化
+        s = Membership.where(id: memberships.collect(&:id)) # 再スコープ化
 
         # 戦法と囲いをまぜて一番使われている順にN個表示する場合
         if false
@@ -773,7 +792,7 @@ module Swars
 
       # tag_counts_on をシンプルなSQLで実行させると若干速くなるが、それのためではなく
       # sample_max 件で最初に絞らないといけない
-      s = Swars::Membership.where(id: s.ids) # 再スコープ化
+      s = Membership.where(id: s.ids) # 再スコープ化
 
       tags = s.tag_counts_on(options[:context], at_least: at_least_value, order: "count desc") # FIXME: tag_counts_on.group("name").group("judge_key") のようにできるはず
       tags.collect do |tag|
