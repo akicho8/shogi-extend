@@ -9,7 +9,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
       //-     b-menu-item.is_active_unset(label="部屋に入る"            @click="base.room_setup_modal_handle")
       //-     b-menu-item.is_active_unset(label="順番設定"              @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
       //-     b-menu-item.is_active_unset(label="対局時計"              @click="base.cc_modal_handle")
-      .box.mt-5
+      .box
         .title.is-5 スタイル設定
 
         b-field.is-hidden-desktop.mb-0(custom-class="is-small" label="横幅 (Touch端末のみ)")
@@ -19,7 +19,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
           b-slider(v-bind="slider_attrs" v-model="base.xy_grid_stroke" :min="0.5" :max="2" :step="0.5")
 
         b-field(custom-class="is-small" label="グリッドの濃さ")
-          b-slider(v-bind="slider_attrs" v-model="base.xy_grid_color" :min="-10" :max="+10" :step="0.1")
+          b-slider(v-bind="slider_attrs" v-model="base.xy_grid_color" :min="-25" :max="+25" :step="0.1")
 
         b-button.style_default_handle(@click="base.style_default_handle" size="is-small") デフォルトに戻す
 </template>

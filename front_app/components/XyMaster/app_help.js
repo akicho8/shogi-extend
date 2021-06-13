@@ -15,12 +15,12 @@ const TALK_MESSAGE = `
 ログインしていると毎回出る名前の入力を省略できます。
 `
 
-export const app_rule_dialog = {
+export const app_help = {
   methods: {
-    rule_dialog_show() {
-      this.rule_dialog_cancel_process()
+    help_dialog_show() {
+      this.help_dialog_cancel_process()
 
-      const dialog = this.$buefy.dialog.alert({
+      const help_dialog_instance = this.$buefy.dialog.alert({
         title: "ルール",
         message: DIALOG_MESSAGE,
         confirmText: "わかった",
@@ -28,16 +28,16 @@ export const app_rule_dialog = {
         type: "is-info",
         hasIcon: false,
         trapFocus: true,
-        onConfirm: () => this.rule_dialog_cancel_process(),
-        onCancel:  () => this.rule_dialog_cancel_process(),
+        onConfirm: () => this.help_dialog_cancel_process(),
+        onCancel:  () => this.help_dialog_cancel_process(),
       })
 
-      this.talk(TALK_MESSAGE, {rate: 2.0, onend: () => dialog.close()})
+      this.talk(TALK_MESSAGE, {rate: 2.0, onend: () => help_dialog_instance.close()})
     },
 
     // private
 
-    rule_dialog_cancel_process() {
+    help_dialog_cancel_process() {
       this.sound_stop_all()
       this.sound_play("click")
     },

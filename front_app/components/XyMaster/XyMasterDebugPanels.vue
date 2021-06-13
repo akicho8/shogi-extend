@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.XyMasterDebugMenu
+.columns.is-multiline.XyMasterDebugPanels
   .column.is-3
     .panel
       .panel-heading
@@ -15,18 +15,24 @@
         | ランキングタブの各表示ページ
       .panel-block
         | {{base.current_pages}}
+  .column.is-6
+    .panel
+      .panel-heading
+        | $data
+      .panel-block
+        DebugPre {{base.$data}}
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XyMasterDebugMenu",
+  name: "XyMasterDebugPanels",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "./support.sass"
-.XyMasterDebugMenu
+.XyMasterDebugPanels
 </style>

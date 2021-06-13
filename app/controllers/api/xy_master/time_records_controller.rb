@@ -27,6 +27,7 @@ module Api
       # curl http://0.0.0.0:3000/api/xy_master/time_records?config_fetch=true
       # curl http://0.0.0.0:3000/api/xy_master/time_records?chart_scope_key=chart_scope_recently&chart_rule_key=rule100t
       # curl http://0.0.0.0:3000/api/xy_master/time_records?scope_key=scope_today&entry_name_uniq_p=false&time_records_hash_fetch=true
+      # curl http://0.0.0.0:3000/api/xy_master/time_records.json?time_records_hash_fetch=true&scope_key=scope_today&entry_name_uniq_p=true
       def index
         if request.format.json?
           if params[:config_fetch]

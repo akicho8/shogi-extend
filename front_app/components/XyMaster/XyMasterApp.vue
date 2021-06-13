@@ -18,7 +18,7 @@
               template(v-for="e in RuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
 
-            b-button(@click="rule_dialog_show" icon-right="help")
+            b-button(@click="help_dialog_show" icon-right="help")
 
           .DigitBoardTime.is-unselectable
             .vector_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p && is_mode_active")
@@ -57,8 +57,7 @@
 
   .section(v-if="development_p")
     .container.is-fluid
-      XyMasterDebugMenu(:base="base")
-      DebugPre(v-if="development_p") {{$data}}
+      XyMasterDebugPanels(:base="base")
 </template>
 
 <script>
@@ -75,13 +74,17 @@ import { IntervalFrame   } from '@/components/models/interval_frame.js'
 
 import { support_parent } from "./support_parent.js"
 
-import { app_tweet       } from "./app_tweet.js"
-import { app_chart       } from "./app_chart.js"
-import { app_keyboard    } from "./app_keyboard.js"
-import { app_debug       } from "./app_debug.js"
-import { app_rule_dialog } from "./app_rule_dialog.js"
-import { app_sidebar     } from "./app_sidebar.js"
-import { app_storage     } from "./app_storage.js"
+import { app_chart    } from "./app_chart.js"
+import { app_debug    } from "./app_debug.js"
+import { app_help     } from "./app_help.js"
+import { app_keyboard } from "./app_keyboard.js"
+import { app_main     } from "./app_main.js"
+import { app_ranking  } from "./app_ranking.js"
+import { app_sidebar  } from "./app_sidebar.js"
+import { app_storage  } from "./app_storage.js"
+import { app_style    } from "./app_style.js"
+import { app_tweet    } from "./app_tweet.js"
+import { app_chore    } from "./app_chore.js"
 
 class RuleInfo extends MemoryRecord {
 }
@@ -92,23 +95,26 @@ class ScopeInfo extends MemoryRecord {
 class ChartScopeInfo extends MemoryRecord {
 }
 
-const COUNTDOWN_INTERVAL = 0.5  // カウントダウンはN秒毎に進む
-const COUNTDOWN_MAX      = 3    // カウントダウンはNから開始する
-const DIMENSION          = 9    // 盤面の辺サイズ
-const CONGRATS_LTEQ      = 10   // N位以内ならおめでとう
+const COUNTDOWN_INTERVAL = 0.5     // カウントダウンはN秒毎に進む
+const COUNTDOWN_MAX      = 3       // カウントダウンはNから開始する
+const DIMENSION          = 9       // 盤面の辺サイズ
 const NEXT_IF_X          = "false" // 間違えたら次の問題にするか？
 
 export default {
   name: "XyMasterApp",
   mixins: [
     support_parent,
-    app_keyboard,
+    app_chart,
     app_debug,
-    app_rule_dialog,
+    app_help,
+    app_keyboard,
+    app_main,
+    app_ranking,
     app_sidebar,
     app_storage,
-    app_chart,
+    app_style,
     app_tweet,
+    app_chore,
   ],
   props: {
     config: { type: Object, required: true },
@@ -128,9 +134,6 @@ export default {
       time_records_hash:  null, // 複数のルールでそれぞれにランキング情報も入っている
       time_record:        null, // ゲームが終わたっときにランクなどが入っている
       current_pages:      null, // b-table のページ
-      touch_board_width:  null, // touchデバイスでの将棋盤の幅(%)
-      xy_grid_stroke:  null, // 線の太さ
-      xy_grid_color:  null, // 線の太さ
       interval_counter:   null,
       interval_frame:     null,
     }
@@ -141,7 +144,6 @@ export default {
     ScopeInfo.memory_record_reset(this.config.scope_info)
     ChartScopeInfo.memory_record_reset(this.config.chart_scope_info)
 
-    // this.ls_setup()
     this.init_other_variables()
   },
 
@@ -161,14 +163,6 @@ export default {
   },
 
   watch: {
-    scope_key() {
-      this.time_records_hash_update()
-    },
-
-    entry_name_uniq_p() {
-      this.time_records_hash_update()
-    },
-
     rule_key(v) {
       this.current_rule_index = this.current_rule.code
     },
@@ -193,12 +187,6 @@ export default {
   },
 
   methods: {
-    place_talk(place) {
-      const x = DIMENSION - place.x
-      const y = place.y + 1
-      this.talk(`${x} ${y}`, {rate: 2.0})
-    },
-
     // こっちは prevent.stop されてないので自分で呼ぶ
     sp_board_cell_pointerdown_user_handle(place, event) {
       if (this.mode === "is_mode_run") {
@@ -214,19 +202,6 @@ export default {
       event.preventDefault()
       event.stopPropagation()
       return true
-    },
-
-    // 最後に押したところに色をつける
-    sp_board_piece_back_user_class(place) {
-      if (this.tap_method_p) {
-        if (this.mode === "is_mode_run") {
-          if (this.tapped_place) {
-            if (this.xy_equal_p(this.tapped_place, place)) {
-              return "has-background-primary-light"
-            }
-          }
-        }
-      }
     },
 
     time_records_hash_update() {
@@ -248,9 +223,8 @@ export default {
       this.chart_rule_key = null
       this.entry_name        = null
       this.current_pages     = null
-      this.touch_board_width = null
-      this.xy_grid_stroke = null
-      this.xy_grid_color = null
+
+      this.style_reset()
     },
 
     init_other_variables() {
@@ -316,82 +290,7 @@ export default {
       this.scroll_set(true)
       this.talk("おわりました")
 
-      if (this.current_entry_name) {
-        this.entry_name = this.current_entry_name
-        this.record_post()
-      } else {
-        this.$buefy.dialog.prompt({
-          title: "名前を入力してください",
-          confirmText: "保存",
-          cancelText: "キャンセル",
-          inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
-          canCancel: false,
-          onConfirm: value => {
-            this.entry_name = _.trim(value)
-            if (this.entry_name !== "") {
-              this.record_post()
-            }
-          },
-        })
-      }
-    },
-
-    // 名前を確定してからサーバーに保存する
-    async record_post() {
-      const params = {
-        scope_key: this.scope_key,
-        time_record:    this.post_params,
-      }
-      const data = await this.$axios.$post("/api/xy_master/time_records", params)
-
-      this.entry_name_uniq_p = false // 「プレイヤー別順位」の解除
-      this.data_update(data)         // ランキングに反映
-
-      // ランク内ならランキングのページをそのページに移動する
-      if (this.current_rank <= this.config.rank_max) {
-        this.$set(this.current_pages, this.current_rule_index, this.time_record.rank_info[this.scope_key].page)
-      }
-
-      // おめでとう
-      this.congrats_talk()
-
-      // チャートの表示状態をゲームのルールに合わせて「最近」にして更新しておく
-      this.chart_rule_key = this.rule_key
-      this.chart_scope_key = "chart_scope_recently"
-      this.chart_data_get_and_show()
-    },
-
-    data_update(params) {
-      const rule_info = RuleInfo.fetch(params.time_record.rule_key)
-      this.$set(this.time_records_hash, rule_info.key, params.time_records)
-      this.time_record = params.time_record
-    },
-
-    congrats_talk() {
-      let message = ""
-      if (this.entry_name) {
-        message += `${this.entry_name}さん`
-        if (this.time_record.rank_info.scope_today.rank <= CONGRATS_LTEQ) {
-          message += `おめでとうございます。`
-        }
-        if (this.time_record.best_update_info) {
-          message += `自己ベストを${this.time_record.best_update_info.updated_spent_sec}秒更新しました。`
-        }
-        const t_r = this.time_record.rank_info.scope_today.rank
-        const a_r = this.time_record.rank_info.scope_all.rank
-        message += `本日${t_r}位です。`
-        message += `全体で`
-        if (t_r === a_r) {
-          message += `も`
-        } else {
-          message += `は`
-        }
-        message += `${a_r}位です。`
-        // if (this.current_rank > this.config.rank_max) {
-        //   message += `ランキング外です。`
-        // }
-        this.talk(message)
-      }
+      this.ranking_goal_process()
     },
 
     timer_stop() {
@@ -517,10 +416,6 @@ export default {
       return dayjs(v).format("YYYY-MM-DD")
     },
 
-    magic_number() {
-      return dayjs().format("YYMMDDHHmm")
-    },
-
     // computed 側にすると動かなくなるので注意
     sp_object() {
       return this.$refs.main_sp.sp_object()
@@ -529,13 +424,6 @@ export default {
     kanji_human(xy) {
       const { x, y } = xy
       return Place.fetch([x, y]).kanji_human
-    },
-
-    style_default_handle() {
-      this.sound_play("click")
-      this.touch_board_width = this.ls_default.touch_board_width
-      this.xy_grid_stroke    = this.ls_default.xy_grid_stroke
-      this.xy_grid_color    = this.ls_default.xy_grid_color
     },
   },
 
@@ -550,24 +438,6 @@ export default {
     countdown()      { return COUNTDOWN_MAX - this.countdown_counter },
 
     NEXT_IF_X()      { return this.$route.query.NEXT_IF_X || NEXT_IF_X },
-
-    component_style() {
-      return {
-        "--touch_board_width": this.touch_board_width,
-        "--xy_grid_stroke": this.xy_grid_stroke,          // グリッド太さ
-        "--xy_grid_color": this.xy_grid_color,          // グリッド太さ
-      }
-    },
-
-    post_params() {
-      return [
-        "rule_key",
-        "spent_sec",
-        "entry_name",
-        "x_count",              // なくてもよい
-        "summary",              // なくてもよい
-      ].reduce((a, e) => ({...a, [e]: this[e]}), {})
-    },
 
     curent_scope() {
       return ScopeInfo.fetch(this.scope_key)
