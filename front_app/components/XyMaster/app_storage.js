@@ -29,7 +29,7 @@ export const app_storage = {
         chart_scope_key: "chart_scope_recently",
         entry_name:         this.current_entry_name,
         current_pages:      {},
-        touch_board_width:  0.9,
+        touch_board_width:  0.95,
         xy_grid_stroke:     1.0,
         xy_grid_color:    0.0,
       }
