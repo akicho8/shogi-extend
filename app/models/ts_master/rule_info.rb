@@ -259,7 +259,7 @@ module TsMaster
             palette = PaletteInfo.fetch(i.modulo(PaletteInfo.count))
             v = result.find_all { |e| e.entry_name == name }
             {
-              label: name.truncate(14),
+              label: name.truncate(12),
               data: v.collect { |e| {x: e.created_on, y: e.spent_sec } },
               backgroundColor: palette.background_color,
               borderColor: palette.border_color,

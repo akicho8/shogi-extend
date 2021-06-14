@@ -20,10 +20,10 @@
           default-sort-direction="desc"
           )
           b-table-column(v-slot="props" field="rank"       label="順位"  sortable numeric centered :width="1") {{props.row.rank}}
-          b-table-column(v-slot="props" field="entry_name" label="名前"  sortable cell-class="td_only_truncate entry_name")
+          b-table-column(v-slot="props" field="entry_name" label="名前"  sortable)
             //- | 0123456789 0123456789 0123456789 0123456789 0123456789
-            //- | {{string_truncate(props.row.entry_name || '？？？', {length: 12})}}
-            | {{props.row.entry_name || '？？？'}}
+            //- | {{props.row.entry_name || '？？？'}}
+            | {{string_truncate(props.row.entry_name || '？？？', {length: 12})}}
           b-table-column(v-slot="props" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{base.time_format_from_msec(props.row.spent_sec)}}
           b-table-column(v-slot="props" field="x_count"    label="X" sortable numeric centered) {{props.row.x_count}}
           b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!base.curent_scope.date_visible") {{base.time_default_format(props.row.created_at)}}
@@ -57,6 +57,6 @@ export default {
       +mobile
         justify-content: center
 
-  .entry_name
-    min-width: 12rem // これがないと3文字しか見えない
+  // .entry_name
+  //   min-width: 12rem // これがないと3文字しか見えない
 </style>
