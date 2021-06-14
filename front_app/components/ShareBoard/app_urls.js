@@ -19,6 +19,18 @@ export const app_urls = {
       this.sound_play("click")
       this.clipboard_copy({text: this.room_code_except_url})
     },
+
+    other_app_click_handle(app_name) {
+      this.sound_play("click")
+
+      this.shared_al_add({
+        label: app_name,
+        message: `${app_name}を起動しました`,
+        // message_except_self: false,
+        sfen: this.current_sfen,
+        turn_offset: this.turn_offset,
+      })
+    },
   },
   computed: {
     current_url_params() {

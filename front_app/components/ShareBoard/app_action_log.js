@@ -11,6 +11,29 @@ export const app_action_log = {
     }
   },
   methods: {
+    //////////////////////////////////////////////////////////////////////////////// 共有版
+
+    shared_al_add(e) {
+      this.ac_room_perform("shared_al_add", e) // --> app/channels/share_board/room_channel.rb
+    },
+    shared_al_add_broadcasted(params) {
+      // let exec = true
+      if (this.received_from_self(params)) {
+        // if (params.message_except_self) {
+        //   exec = false
+        // }
+      } else {
+      }
+      this.al_add(params)
+      // if (exec || this.development_p) {
+      if (params.message) {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
+      }
+      // }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     al_add(params) {
       params = {...params}
       params.sfen = params.sfen ?? this.current_sfen
@@ -69,27 +92,6 @@ export const app_action_log = {
 
       this.current_sfen = e.sfen
       this.turn_offset = e.turn_offset
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    shared_al_add(e) {
-      this.ac_room_perform("shared_al_add", e) // --> app/channels/share_board/room_channel.rb
-    },
-    shared_al_add_broadcasted(params) {
-      let exec = true
-      if (this.received_from_self(params)) {
-        if (params.message_except_self) {
-          exec = false
-        }
-      } else {
-      }
-      this.al_add(params)
-      if (exec || this.development_p) {
-        if (params.message) {
-          this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
-        }
-      }
     },
   },
 }

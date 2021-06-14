@@ -16,7 +16,7 @@ export const app_export = {
       this.shared_al_add({
         label: "棋譜コピー",
         message: "棋譜コピーしました",
-        message_except_self: true,
+        // message_except_self: true,
         sfen: this.current_sfen,
         turn_offset: this.turn_offset,
       })
