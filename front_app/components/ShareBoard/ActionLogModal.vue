@@ -43,6 +43,10 @@ export default {
       new_turn_offset: this.action_log.turn_offset,
     }
   },
+  mounted() {
+    this.__assert__('sfen' in this.action_log, "'sfen' in this.action_log")
+    this.__assert__('turn_offset' in this.action_log, "'turn_offset' in this.action_log")
+  },
   methods: {
     close_handle() {
       this.sound_play("click")

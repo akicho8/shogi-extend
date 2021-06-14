@@ -258,8 +258,6 @@ export const app_clock_box = {
       params = {
         ...params,
         label: `時計${params.behaviour}`,
-        sfen: this.current_sfen,
-        turn_offset: this.turn_offset,
         clock_box_attributes: null, // 容量が大きいので空にしておく
         room_code_except_url: null, // 絶対に使わないので消しておく
       }

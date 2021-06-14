@@ -12,6 +12,10 @@ export const app_action_log = {
   },
   methods: {
     al_add(params) {
+      params = {...params}
+      params.sfen = params.sfen ?? this.current_sfen
+      params.turn_offset = params.turn_offset ?? this.current_turn_offset
+
       if (ACTION_LOG_PUSH_TO === "top") {
         this.action_logs.unshift(params)
         this.action_logs = _.take(this.action_logs, ACTION_LOG_MAX)
@@ -59,8 +63,33 @@ export const app_action_log = {
           return
         }
       }
+
+      this.__assert__('sfen' in e, "'sfen' in e")
+      this.__assert__('turn_offset' in e, "'turn_offset' in e")
+
       this.current_sfen = e.sfen
       this.turn_offset = e.turn_offset
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    shared_al_add(e) {
+      this.ac_room_perform("shared_al_add", e) // --> app/channels/share_board/room_channel.rb
+    },
+    shared_al_add_broadcasted(params) {
+      let exec = true
+      if (this.received_from_self(params)) {
+        if (params.message_except_self) {
+          exec = false
+        }
+      } else {
+      }
+      this.al_add(params)
+      if (exec || this.development_p) {
+        if (params.message) {
+          this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
+        }
+      }
     },
   },
 }

@@ -107,6 +107,11 @@ module ShareBoard
       broadcast(:fake_error_broadcasted, data)
     end
 
+    def shared_al_add(data)
+      track(data, data["label"], data)
+      broadcast(:shared_al_add_broadcasted, data)
+    end
+
     private
 
     def room_code

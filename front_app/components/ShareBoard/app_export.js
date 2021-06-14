@@ -12,6 +12,14 @@ export const app_export = {
     kifu_copy_handle(e) {
       this.sound_play("click")
       this.general_kifu_copy(this.current_sfen, {to_format: e.format_key, turn: this.turn_offset})
+
+      this.shared_al_add({
+        label: "棋譜コピー",
+        message: "棋譜コピーしました",
+        message_except_self: true,
+        sfen: this.current_sfen,
+        turn_offset: this.turn_offset,
+      })
     },
 
     //////////////////////////////////////////////////////////////////////////////// show
