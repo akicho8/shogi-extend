@@ -250,7 +250,7 @@ module XyMaster
             palette = PaletteInfo.fetch(i.modulo(PaletteInfo.count))
             v = result.find_all { |e| e.entry_name == name }
             {
-              label: name,
+              label: name.truncate(14),
               data: v.collect { |e| {x: e.created_on, y: e.spent_sec } },
               backgroundColor: palette.background_color,
               borderColor: palette.border_color,
