@@ -31,7 +31,7 @@ export default {
       this.$emit("close")
     },
     submit_handle() {
-      this.close_handle()
+      this.$emit("close")
       this.base.tweet_handle()
     },
     preview_url(options = {}) {
