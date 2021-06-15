@@ -49,8 +49,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         SlackAgent.message_send(key: "omniauth", body: auth.as_json)
       end
 
-      SlackAgent.message_send(key: "認証", body: "#{user_name} #{auth.info.email} (#{auth.provider})")
-      SlackAgent.message_send(key: "認証", body: auth.info.image)
+      SlackAgent.message_send(key: "認証", body: "#{user_name} #{auth.info.email} (#{auth.provider}) #{auth.info.image}")
 
       user = User.create do |e|
         e.email         = auth.info.email # Twitterの場合は空文字列
