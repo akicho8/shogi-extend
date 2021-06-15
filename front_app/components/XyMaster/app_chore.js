@@ -5,7 +5,7 @@ export const app_chore = {
   },
   methods: {
     place_talk(place) {
-      const x = DIMENSION - place.x
+      const x = this.DIMENSION - place.x
       const y = place.y + 1
       this.talk(`${x} ${y}`, {rate: 2.0})
     },

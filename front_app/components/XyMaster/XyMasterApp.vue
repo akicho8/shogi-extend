@@ -97,7 +97,6 @@ class ChartScopeInfo extends MemoryRecord {
 
 const COUNTDOWN_INTERVAL = 0.5     // カウントダウンはN秒毎に進む
 const COUNTDOWN_MAX      = 3       // カウントダウンはNから開始する
-const DIMENSION          = 9       // 盤面の辺サイズ
 const NEXT_IF_X          = "false" // 間違えたら次の問題にするか？
 
 export default {
@@ -316,7 +315,7 @@ export default {
       if (e.key.match(/^\d/)) {
         this.key_queue.push(e.key)
         if (this.key_queue.length >= 2) {
-          const x = DIMENSION - parseInt(this.key_queue.shift())
+          const x = this.DIMENSION - parseInt(this.key_queue.shift())
           const y = parseInt(this.key_queue.shift()) - 1
           this.input_valid({x, y})
         }
@@ -374,7 +373,7 @@ export default {
       let p = null
       while (true) {
         p = this.random_xy()
-        // if ((this.o_count === 0 && (DIMENSION - 1 - p.x) === p.y)) {
+        // if ((this.o_count === 0 && (this.DIMENSION - 1 - p.x) === p.y)) {
         //   continue
         // }
         if (before) {
@@ -405,7 +404,7 @@ export default {
     },
 
     place_random() {
-      return _.random(0, DIMENSION - 1)
+      return _.random(0, this.DIMENSION - 1)
     },
 
     time_format_from_msec(v) {
@@ -432,6 +431,7 @@ export default {
     ScopeInfo()      { return ScopeInfo      },
     ChartScopeInfo() { return ChartScopeInfo },
     RuleInfo()       { return RuleInfo       },
+    DIMENSION()      { return 9              }, // 盤面の辺サイズ
 
     is_mode_idol()   { return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal' },
     is_mode_active() { return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready' },
