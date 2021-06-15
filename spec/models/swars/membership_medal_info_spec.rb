@@ -163,7 +163,7 @@ module Swars
       end
     end
 
-    describe "棋神マン" do
+    describe "運営支えマン" do
       def csa_seq_generate(n)
         outbreak_csa + n.times.flat_map do |i|
           seconds = 600 - (i * 4.seconds)
@@ -183,7 +183,7 @@ module Swars
 
       it do
         test(20)                # =>
-        assert { test(20) == [:棋神マン, "将棋ウォーズの運営を支える力がある"] }
+        assert { test(20) == [:運営支えマン, "将棋ウォーズの運営を支える力がある"] }
       end
     end
 

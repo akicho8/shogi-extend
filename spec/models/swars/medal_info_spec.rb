@@ -213,7 +213,7 @@ module Swars
       end
     end
 
-    describe "棋神マン" do
+    describe "運営支えマン" do
       def csa_seq_generate(n)
         outbreak_csa + n.times.flat_map do |i|
           seconds = 600 - (i * 4.seconds)
@@ -232,7 +232,7 @@ module Swars
       end
 
       it do
-        assert { test(20).include?(:"棋神マン") }
+        assert { test(20).include?(:"運営支えマン") }
       end
     end
 
