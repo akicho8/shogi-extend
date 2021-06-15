@@ -16,7 +16,7 @@ const CHART_CONFIG_DEFAULT = {
   },
   // https://misc.0o0o.org/chartjs-doc-ja/charts/bar.html
   options: {
-    aspectRatio: 4.5, // 大きいほど横長方形になる
+    aspectRatio: 3.0, // 大きいほど横長方形になる
 
     animation: {
       duration: 0, // アニメーションOFF
