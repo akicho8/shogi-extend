@@ -1,3 +1,4 @@
+
 module ShareBoard
   class LobbyChannel < ApplicationCable::Channel
     class << self
@@ -47,7 +48,7 @@ module ShareBoard
     end
 
     def track(data, action, body)
-      key = "共有将棋盤 [ロビー] #{action}"
+      key = "自動マッチング #{action}"
       if Rails.env.development? && false
         SlackAgent.message_send(key: key, body: data)
       end
@@ -59,9 +60,9 @@ module ShareBoard
       if current_user
         body = current_user.name
       else
-        body = ""
+        body = "(未ログイン)"
       end
-      SlackAgent.message_send(key: "共有将棋盤 [ロビー] #{action}", body: body)
+      SlackAgent.message_send(key: "自動マッチング #{action}", body: body)
     end
   end
 end
