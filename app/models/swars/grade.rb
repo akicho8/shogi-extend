@@ -33,7 +33,9 @@ module Swars
 
     concerning :PriorityMethods do
       included do
-        delegate :god_priority, to: "self.class"
+        cattr_accessor(:god_key_range) { ["五段", "九段"] }
+
+        delegate :god_priority_range, to: "self.class"
 
         default_scope { order(:priority) }
 
@@ -43,17 +45,14 @@ module Swars
       end
 
       class_methods do
-        def god_key
-          "五段"
-        end
-
-        def god_priority
-          @god_priority ||= GradeInfo.fetch(god_key).priority
+        # Range にすると 5..1 になってしまうため sort で数値的な順序にしている
+        def god_priority_range
+          @god_priority_range ||= Range.new(*god_key_range.collect { |e| GradeInfo.fetch(e).priority }.sort )
         end
       end
 
       def like_god?
-        priority <= god_priority
+        god_priority_range.cover?(priority)
       end
     end
   end

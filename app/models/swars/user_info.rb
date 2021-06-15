@@ -243,7 +243,7 @@ module Swars
         # end
 
         c1 = Battle.where(Battle.arel_table[:rule_key].eq_any([:ten_min, :ten_sec]))  # 10分 or 10秒
-        c2 = Grade.unscoped.where(Grade.arel_table[:priority].lteq(Grade.god_priority)) # or 5段以上
+        c2 = Grade.unscoped.where(Grade.arel_table[:priority].between(Grade.god_priority_range)) # or 対象段位
 
         # s and (c1 or c2)
         # ((swars_battles.rule_key = 'ten_min' OR swars_battles.rule_key = 'ten_sec') OR swars_grades.priority <= 5)

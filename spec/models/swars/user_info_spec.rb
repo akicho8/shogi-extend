@@ -264,7 +264,13 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate(n), rule_key: rule_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
+
         @black.user_info.kishin_info_records&.collect { |e| e[:value] }
+      end
+
+      def test2(grade_key)
+        @black = User.create!(grade_key: grade_key)
+        assert { test1(:three_min, 11) == nil }
       end
 
       it "3分 五段以上" do
@@ -272,11 +278,6 @@ module Swars
         assert { test1(:three_min, 10) == nil    }
         assert { test1(:three_min, 11) == [1, 1] }
         assert { test1(:three_min, 11) == [2, 1] }
-      end
-
-      it "3分 四段 判定スルー" do
-        @black = User.create!(grade_key: "四段")
-        assert { test1(:three_min, 11) == nil }
       end
 
       it "10分 1級 判定あり" do
@@ -287,6 +288,11 @@ module Swars
       it "10秒 1級 判定あり" do
         @black = User.create!(grade_key: "1級")
         assert { test1(:ten_sec, 11) == [1, 0] }
+      end
+
+      describe "3分の判定スルー" do
+        it { test2("十段") }
+        it { test2("四段") }
       end
     end
 
