@@ -21,6 +21,7 @@ export const app_urls = {
     },
 
     other_app_click_handle(app_name) {
+      this.sidebar_p = false
       this.sound_play("click")
 
       this.shared_al_add({
