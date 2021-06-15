@@ -32,6 +32,7 @@ export const app_storage = {
         touch_board_width:  0.95,
         xy_grid_stroke:     1.0,
         xy_grid_color:    0.0,
+        xy_grid_star_size:    16,
       }
     },
   },
