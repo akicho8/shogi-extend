@@ -15,7 +15,7 @@ RSpec.describe "about", type: :system do
 
   it "クレジット" do
     visit "/about/credit"
-    assert_text "SHOGI APPS"
+    assert_text "THANKS"
     doc_image
   end
 end
