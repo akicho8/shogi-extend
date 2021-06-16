@@ -70,8 +70,9 @@ export default {
     dl_url_for(format, params = {}) {
       return this.show_url_for(format, {attachment: "true", ...params})
     },
-    swars_clipboard_copy_handle(format, params = {}) {
-      if (this.kif_clipboard_copy({kc_path: this.base.record.show_path, kc_format: format})) {
+    async swars_clipboard_copy_handle(format, params = {}) {
+      const retv = await this.kif_clipboard_copy({kc_path: this.base.record.show_path, kc_format: format})
+      if (retv) {
         this.base.sidebar_close()
       }
     },
