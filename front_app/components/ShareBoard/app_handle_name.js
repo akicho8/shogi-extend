@@ -41,7 +41,7 @@ export const app_handle_name = {
         }
       }
       if (message == null) {
-        if (s.match(/[な名][な無]し|nanash?i|無名/i)) {
+        if (s.match(/[な名][な無]し|nanash?i|無名|通りすがり/i)) {
           message = "そのハンドルネームは使えません"
         }
       }
