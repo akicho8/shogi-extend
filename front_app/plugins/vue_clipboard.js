@@ -124,7 +124,7 @@ export default {
           return false
         }
 
-        this.toast_ok(success_message)
+        this.toast_ok(params.success_message ?? success_message)
         return true
       }
 

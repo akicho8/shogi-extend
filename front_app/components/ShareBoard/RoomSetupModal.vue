@@ -3,9 +3,8 @@
   header.modal-card-head.is-justify-content-space-between
     p.modal-card-title.is-size-5.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
       | 部屋に入る
-      b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room") 入室中
-    p
-      b-button(@click="base.room_code_only_url_copy_handle" icon-left="clipboard-plus-outline" size="is-small" rounded v-if="present_p(base.ac_room)") URL
+      b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room && false") 入室中
+    b-button(@click="base.room_code_only_url_copy_handle" icon-left="clipboard-plus-outline" size="is-small" rounded v-if="present_p(base.ac_room)") URL
 
   section.modal-card-body
     .content(v-if="false")
@@ -37,14 +36,14 @@
       template(v-if="room_code_field_locked")
         b-field(key="room_code_field_locked_false")
           .control
-            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" :disabled="present_p(base.ac_room)") 合言葉
+            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" :disabled="present_p(base.ac_room)")
       template(v-else)
-        b-field(label="合言葉" label-position="on-border" key="room_code_field_locked_true")
-          b-input.new_room_code(v-model="new_room_code" :disabled="present_p(base.ac_room)")
+        b-field(:label="label_wrap('合言葉')" label-position="on-border" key="room_code_field_locked_true")
+          b-input.new_room_code(v-model.trim="new_room_code" :disabled="present_p(base.ac_room)")
 
       //- message="順番設定後に変更すると再度順番設定が必要になります"
-      b-field(label="ハンドルネーム" label-position="on-border")
-        b-input.new_user_name(v-model="new_user_name" :disabled="present_p(base.ac_room)")
+      b-field(:label="label_wrap('ハンドルネーム')" label-position="on-border")
+        b-input.new_user_name(v-model.trim="new_user_name" :disabled="present_p(base.ac_room)")
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -124,6 +123,14 @@ export default {
     // 鍵解除
     room_code_field_unlock() {
       this.room_code_field_locked = false
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    label_wrap(label) {
+      if (this.blank_p(this.base.ac_room)) {
+        return label
+      }
     },
   },
 }
