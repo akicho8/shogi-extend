@@ -1061,6 +1061,26 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ハンドルネームバリデーション'
+  describe "ハンドルネームバリデーション" do
+    def test1(name, message)
+      find(".HandleNameModal input").set(name)         # 不正な名前を入力する
+      find(".save_handle").click                       # 保存
+      assert_text(message)                             # エラー出る
+    end
+
+    it "works" do
+      a_block do
+        visit_app
+        side_menu_open
+        menu_item_click("ハンドルネーム変更")
+        test1("", "ハンドルネームを入力してください")
+        test1("名無し", "そのハンドルネームは使えません")
+        test1(".", "正しいハンドルネームを入力してください")
+      end
+    end
+  end
+
   def visit_app(args = {})
     args = args.merge("__debug_box_disabled__" => "on")
     visit "/share-board?#{args.to_query}"

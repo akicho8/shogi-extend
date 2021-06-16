@@ -34,22 +34,29 @@ export const app_handle_name = {
 
     handle_name_validate(s) {
       s = _.trim(s)
-
-      if (s.length === 0) {
-        this.toast_ng("ハンドルネームを入力してください")
-        return false
-      } else if (s.match(/[一-龠]/)) {
-        // OK
-      } else if (s.length <= 1 || s.match(/[な名][な無]し|nanash?i|無名/i)) {
+      let message = null
+      if (message == null) {
+        if (s.length === 0) {
+          message = "ハンドルネームを入力してください"
+        }
+      }
+      if (message == null) {
+        if (s.match(/[な名][な無]し|nanash?i|無名/i)) {
+          message = "そのハンドルネームは使えません"
+        }
+      }
+      if (message == null) {
+        if (s.length <= 1 && !s.match(/[一-龠]/)) {
+          message = "正しいハンドルネームを入力してください"
+        }
+      }
+      if (message) {
+        this.toast_ng(message)
         if (false) {
-          this.toast_ng("ログインしてください")
           this.sns_login_modal_open()
-        } else {
-          this.toast_ng("正しいハンドルネームを入力してください")
         }
         return false
       }
-
       return true
     },
   },
