@@ -4,9 +4,11 @@
     p.modal-card-title.is-size-5.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
       | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room") 入室中
+    p
+      b-button(@click="base.room_code_only_url_copy_handle" icon-left="clipboard-plus-outline" size="is-small" rounded v-if="present_p(base.ac_room)") URL
 
   section.modal-card-body
-    .content
+    .content(v-if="false")
       ul
         li
           | 同じ合言葉を設定した人と部屋を共有します
@@ -31,22 +33,24 @@
           .has-text-grey.is-size-7
             | 何か問題が起きたとき用で基本的には使わないでよい
 
-    template(v-if="!base.ac_room")
+    template(v-if="true || !base.ac_room")
       template(v-if="room_code_field_locked")
-        b-field(label="合言葉" custom-class="is-small" key="room_code_field_locked_false")
+        b-field(key="room_code_field_locked_false")
           .control
-            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" type="is-danger")
+            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" :disabled="present_p(base.ac_room)") 合言葉
       template(v-else)
         b-field(label="合言葉" label-position="on-border" key="room_code_field_locked_true")
-          b-input.new_room_code(v-model="new_room_code")
+          b-input.new_room_code(v-model="new_room_code" :disabled="present_p(base.ac_room)")
 
-      b-field(label="ハンドルネーム" label-position="on-border" message="順番設定後に変更すると再度順番設定が必要になります")
-        b-input.new_user_name(v-model="new_user_name")
+      //- message="順番設定後に変更すると再度順番設定が必要になります"
+      b-field(label="ハンドルネーム" label-position="on-border")
+        b-input.new_user_name(v-model="new_user_name" :disabled="present_p(base.ac_room)")
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    //- b-button(@click="base.room_code_only_url_copy_handle" icon-left="clipboard-plus-outline" :disabled="blank_p(base.ac_room)") 部屋URL
     template(v-if="base.ac_room")
-      b-button.leave_button(@click="leave_handle" type="is-primary") 退室
+      b-button.leave_button(@click="leave_handle" type="is-danger") 退室
     template(v-else)
       b-button.entry_button(@click="entry_handle" type="is-primary") 入室
 </template>
@@ -128,9 +132,14 @@ export default {
 <style lang="sass">
 .RoomSetupModal
   +tablet
-    width: 32rem
+    max-width: 20rem
+
+  .modal-card-head
+    // > *
+    //   line-height: 1
+
   .modal-card-body
-    padding: 0.5rem 1.5rem 1rem
+    padding: 1.5rem
     li:not(:first-child)
       margin-top: 0.75rem
 
@@ -138,7 +147,7 @@ export default {
     justify-content: space-between
     .button
       font-weight: bold
-      min-width: 8rem
+      min-width: 6rem
   .field:not(:last-child)
     margin-bottom: 1.5rem
 </style>

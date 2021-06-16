@@ -16,16 +16,17 @@
   section.modal-card-body
     .description(v-if="!base.order_func_p")
       p 設定する場合は右上のスイッチを<b>有効</b>にしてください
-      p
-        | 設定すると次の2つが機能します
-        .content.mb-0
-          ol
-            li 手番を知らせる
-            li 手番の人だけが駒を動かせる
-      p
-        | 1対1のときは手番が明確なのであまり利点はありません
+      template(v-if="false")
+        p
+          | 設定すると次の2つが機能します
+          .content.mb-0
+            ol
+              li 手番を知らせる
+              li 手番の人だけが駒を動かせる
+        p
+          | 1対1のときは手番が明確なのであまり利点はありません
 
-      p 対局後に<b>検討</b>するときは自由に駒を動かせたほうがよいので<b>無効</b>に戻してください
+        p 対局後に<b>検討</b>するときは自由に駒を動かせたほうがよいので<b>無効</b>に戻してください
 
     template(v-if="base.order_func_p")
       b-table(
