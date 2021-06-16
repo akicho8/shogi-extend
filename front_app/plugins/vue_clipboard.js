@@ -70,7 +70,7 @@ export default {
     // 成功したら true を返す
     clipboard_copy(params) {
       const success_message  = "コピーしました"
-      const failure_message1 = "なぜか最初だけ失敗するのでもう一回タップしてみてください"
+      const failure_message1 = "iOSだけなぜか初回は失敗するのでもう一回タップしてみてください"
       const failure_message2 = "失敗しました。もう何回やってもダメそうです"
 
       let success = false
