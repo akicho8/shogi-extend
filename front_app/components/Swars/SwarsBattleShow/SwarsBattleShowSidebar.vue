@@ -19,7 +19,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
               template(v-if="e.show")
-                b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.sidebar_close" :target="target_default" :href="show_url_for(e.key)")
+                b-menu-item.is_active_unset(:label="e.name" @click="base.sidebar_close" :target="target_default" :href="show_url_for(e.key)")
 
           b-menu-item.is_active_unset(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
@@ -27,19 +27,19 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
               template(v-if="e.clipboard")
-                b-menu-item.is_active_unset(:label="e.name" @click.native="swars_clipboard_copy_handle(e.key)")
+                b-menu-item.is_active_unset(:label="e.name" @click="swars_clipboard_copy_handle(e.key)")
 
           b-menu-item.is_active_unset(@click="sound_play('click')")
             template(slot="label" slot-scope="props")
               span.ml-1 ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            b-menu-item.is_active_unset(label="KIF"             @click.native="base.sidebar_close" :href="dl_url_for('kif')")
-            b-menu-item.is_active_unset(label="KIF (Shift_JIS)" @click.native="base.sidebar_close" :href="dl_url_for('kif', {body_encode: 'Shift_JIS'})")
-            b-menu-item.is_active_unset(label="KI2"             @click.native="base.sidebar_close" :href="dl_url_for('ki2')")
-            b-menu-item.is_active_unset(label="CSA"             @click.native="base.sidebar_close" :href="dl_url_for('csa')")
-            b-menu-item.is_active_unset(label="SFEN"            @click.native="base.sidebar_close" :href="dl_url_for('sfen')")
-            b-menu-item.is_active_unset(label="BOD"             @click.native="base.sidebar_close" :href="dl_url_for('bod', {turn: base.new_turn})")
-            b-menu-item.is_active_unset(label="PNG"             @click.native="base.sidebar_close" :href="dl_url_for('png', {turn: base.new_turn, viewpoint: base.new_viewpoint, width: ''})")
+            b-menu-item.is_active_unset(label="KIF"             @click="base.sidebar_close" :href="dl_url_for('kif')")
+            b-menu-item.is_active_unset(label="KIF (Shift_JIS)" @click="base.sidebar_close" :href="dl_url_for('kif', {body_encode: 'Shift_JIS'})")
+            b-menu-item.is_active_unset(label="KI2"             @click="base.sidebar_close" :href="dl_url_for('ki2')")
+            b-menu-item.is_active_unset(label="CSA"             @click="base.sidebar_close" :href="dl_url_for('csa')")
+            b-menu-item.is_active_unset(label="SFEN"            @click="base.sidebar_close" :href="dl_url_for('sfen')")
+            b-menu-item.is_active_unset(label="BOD"             @click="base.sidebar_close" :href="dl_url_for('bod', {turn: base.new_turn})")
+            b-menu-item.is_active_unset(label="PNG"             @click="base.sidebar_close" :href="dl_url_for('png', {turn: base.new_turn, viewpoint: base.new_viewpoint, width: ''})")
 
         b-menu-list(label="短かめの直リンコピー")
           b-menu-item.is_active_unset(label="この画面" @click="base.current_url_copy")
@@ -71,8 +71,9 @@ export default {
       return this.show_url_for(format, {attachment: "true", ...params})
     },
     swars_clipboard_copy_handle(format, params = {}) {
-      this.kif_clipboard_copy({kc_path: this.base.record.show_path, kc_format: format})
-      this.base.sidebar_close()
+      if (this.kif_clipboard_copy({kc_path: this.base.record.show_path, kc_format: format})) {
+        this.base.sidebar_close()
+      }
     },
   },
   computed: {

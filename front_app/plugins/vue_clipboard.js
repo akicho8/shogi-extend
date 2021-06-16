@@ -47,26 +47,27 @@ export default {
 
     // 指定 URL の結果をクリップボードにコピー
     // 前回取得したテキストを保存し、2度目からはajaxしない
-    kif_clipboard_copy(params) {
+    // 成功したら true を返す
+    async kif_clipboard_copy(params) {
       const kc_format = params.kc_format || "kif"
       const url = `${params.kc_path}.${kc_format}`
       const text = this.kif_clipboard_copy_cache[url]
 
       if (text) {
-        this.clipboard_copy({text: text})
+        return this.clipboard_copy({text: text})
       } else {
-        this.$axios.$get(url).then(text => {
-          if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
-            this.$set(this.kif_clipboard_copy_cache, url, text)
-          }
-          this.clipboard_copy({text: text})
-        })
+        const text = await this.$axios.$get(url)
+        if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
+          this.$set(this.kif_clipboard_copy_cache, url, text)
+        }
+        return this.clipboard_copy({text: text})
       }
     },
 
     // params.text をクリップボードにコピー
     // params を破壊する
     // params をずっと保持していれば1,2度目で挙動がかわる
+    // 成功したら true を返す
     clipboard_copy(params) {
       const success_message  = "コピーしました"
       const failure_message1 = "なぜか最初だけ失敗するのでもう一回タップしてみてください"
