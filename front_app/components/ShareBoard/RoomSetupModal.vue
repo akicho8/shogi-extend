@@ -100,8 +100,7 @@ export default {
         return
       }
 
-      if (!this.new_user_name) {
-        this.toast_ng("ハンドルネームを入力してください")
+      if (!this.base.handle_name_validate(this.new_user_name)) {
         return
       }
 

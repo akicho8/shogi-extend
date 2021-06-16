@@ -38,29 +38,10 @@ export default {
     },
     save_handle() {
       this.sound_play("click")
-
       this.new_name = _.trim(this.new_name)
-      const s = this.new_name
-
-      if (s.length === 0) {
-        this.toast_warn("入力してください")
+      if (!this.base.handle_name_validate(this.new_name)) {
         return
       }
-
-      if (s.match(/[一-龠]/)) {
-        // OK
-      } else {
-        if (s.length <= 1 || s.match(/[な名][な無]し|nanash?i/i)) {
-          if (false) {
-            this.toast_warn("真面目に入力してないのでログインしてください")
-            this.sns_login_modal_open()
-          } else {
-            this.toast_warn("真面目に入力してください")
-            return
-          }
-        }
-      }
-
       this.base.handle_name_set(this.new_name)
       this.$emit("close")
     },
