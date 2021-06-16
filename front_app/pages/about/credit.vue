@@ -2,25 +2,7 @@
 .about-credit.has-background-black.has-text-centered
   b-icon.back_button.is-clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
 
-  .section_title.mt-0 SHOGI APPS
-  ul.apps
-    li.piyo_shogi
-      ExternalLink(beep href="https://www.studiok-i.net/piyo_shogi/") ぴよ将棋
-      //- li.mt-1
-      //-   .sub_text.is-size-7 公式
-      //-   ExternalLink(beep href="https://twitter.com/STUDIOKPONTA") @STUDIOKPONTA
-      .sub_text 開発
-      ExternalLink.creator.mt-1(beep href="https://www.studiok-i.net/about.html") STUDIO-K
-
-    li.kento
-      ExternalLink(beep href="https://twitter.com/shogi_kento") KENTO
-      //- li.mt-1
-      //-   .sub_text.is-size-7 公式
-      //-   ExternalLink(beep href="https://twitter.com/shogi_kento") @shogi_kento
-      .sub_text 開発
-      ExternalLink.creator(beep href="https://twitter.com/na_o_ys") na-o-ys
-
-  .section_title.texture TEXTURE
+  .section_title.texture.mt-0 TEXTURE
   ul
     li: ExternalLink(beep href="http://mucho.girly.jp/bona/") 将棋ｱﾌﾟﾘ用ｸﾘｴﾃｨﾌﾞｺﾓﾝｽﾞ画像
     li: ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
@@ -43,6 +25,28 @@
   ul
     li: ExternalLink(beep href="http://yaneuraou.yaneu.com/2020/12/25/christmas-present/") やねうら王公式ｸﾘｽﾏｽﾌﾟﾚｾﾞﾝﾄ詰将棋500万問
 
+  .section_title THANKS
+  ul.thanks
+    li
+      ExternalLink.is-block(beep href="https://www.studiok-i.net/piyo_shogi/") ぴよ将棋
+      //- li.mt-1
+      //-   .sub_text.is-size-7 公式
+      //-   ExternalLink.is-block(beep href="https://twitter.com/STUDIOKPONTA") @STUDIOKPONTA
+      //- .sub_text 開発
+      ExternalLink.is-block.creator.mt-1(beep href="https://www.studiok-i.net/about.html") STUDIO-K
+
+    li
+      ExternalLink.is-block(beep href="https://twitter.com/shogi_kento") KENTO
+      //- li.mt-1
+      //-   .sub_text.is-size-7 公式
+      //-   ExternalLink.is-block(beep href="https://twitter.com/shogi_kento") @shogi_kento
+      //- .sub_text 開発
+      ExternalLink.is-block.creator(beep href="https://twitter.com/na_o_ys") na-o-ys
+
+    li
+      ExternalLink.is-block(beep href="https://shogiwars.heroz.jp/") 将棋ウォーズ
+      //- .sub_text 開発
+      ExternalLink.is-block.creator.mt-1(beep href="https://heroz.co.jp/") HEROZ
 </template>
 
 <script>
@@ -93,9 +97,9 @@ export default {
     color: #ffa305
     font-weight: normal
 
-  .apps
+  .thanks
     li
-      margin-top: 3rem
+      margin-top: 2rem
       &.kento
         .creator
           font-size: $size-3 * 1.25
