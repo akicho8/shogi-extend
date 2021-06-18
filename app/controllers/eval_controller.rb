@@ -5,6 +5,9 @@ class EvalController < ApplicationController
     raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
   end
 
+  # 必須
+  skip_forgery_protection
+
   def run
     retv = evaluate(current_code)
     console_str = ">> #{current_code}\n#{retv}"
