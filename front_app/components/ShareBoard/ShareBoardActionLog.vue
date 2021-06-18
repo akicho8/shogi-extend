@@ -16,7 +16,7 @@
 import { support_child } from "./support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
-import ActionLogModal from "./ActionLogModal.vue"
+import ActionLogJumpPreviewModal from "./ActionLogJumpPreviewModal.vue"
 
 export default {
   name: "ShareBoardActionLog",
@@ -38,7 +38,7 @@ export default {
       this.sound_play("click")
 
       this.$buefy.modal.open({
-        component: ActionLogModal,
+        component: ActionLogJumpPreviewModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
