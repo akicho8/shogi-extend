@@ -1,5 +1,5 @@
 <template lang="pug">
-components(:is="tag" v-bind="$attrs" v-on="$listeners" :target="target_default" @click="click_handle")
+component(:is="tag" v-bind="$attrs" v-on="$listeners" :target="target_default" @click="click_handle")
   slot
 </template>
 
