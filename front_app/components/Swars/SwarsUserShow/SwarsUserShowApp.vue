@@ -177,7 +177,7 @@ export default {
         .WinLoseCircle
           margin-top: 0.25rem
 
-      +desktop
+      +tablet
         margin-left: auto
         margin-right: auto
         max-width: 28rem
