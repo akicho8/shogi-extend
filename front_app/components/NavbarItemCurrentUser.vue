@@ -3,8 +3,10 @@ b-navbar-dropdown.NavbarItemCurrentUser(:hoverable="false" arrowless right @clic
   template(slot="label")
     .image
       img.is-rounded(:src="g_current_user.avatar_path")
-  b-navbar-item(tag="nuxt-link" :to="{name: 'users-id', params: {id: g_current_user.id}}" @click.native="sound_play('click')") プロフィール
-  b-navbar-item(tag="nuxt-link" :to="{name: 'settings-email'}" @click.natve="sound_play('click')") メールアドレス変更
+  b-navbar-item(tag="nuxt-link" :to="{name: 'users-id', params: {id: g_current_user.id}}" @click.native="sound_play('click')")
+    | プロフィール
+  b-navbar-item(tag="nuxt-link" :to="{name: 'settings-email'}" @click.native="sound_play('click')")
+    | メールアドレス変更
   //- b-navbar-item(tag="nuxt-link" :to="{name: 'profile-edit'") プロフィール
   .navbar-divider
   b-navbar-item(@click="logout_handle") ログアウト
