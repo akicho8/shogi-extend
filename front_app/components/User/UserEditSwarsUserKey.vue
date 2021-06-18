@@ -3,9 +3,9 @@
   b-loading(:active="$fetchState.pending")
   MainNavbar
     template(slot="start")
-      b-navbar-item.has-text-weight-bold(@click="cancel_handle") キャンセル
+      b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="cancel_handle") キャンセル
     template(slot="end")
-      b-navbar-item.has-text-weight-bold(@click="save_handle") 保存
+      b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="save_handle") 保存
 
   MainSection
     .container

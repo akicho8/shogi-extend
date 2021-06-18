@@ -3,15 +3,18 @@
   client-only
     b-sidebar.is-unselectable.UserShow-Sidebar(fullheight right v-model="sidebar_p")
       .mx-4.my-4
-        b-menu
-          b-menu-list(label="Action")
-            b-menu-item.is_active_unset(label="編集"               tag="nuxt-link" :to="{name: 'settings-profile'}"        @click.native="sound_play('click')")
-            b-menu-item.is_active_unset(label="ぴよ将棋の種類"     tag="nuxt-link" :to="{name: 'settings-piyo_shogi'}"     @click.native="sound_play('click')")
-            b-menu-item.is_active_unset(label="メールアドレス変更" tag="nuxt-link" :to="{name: 'settings-email'}"          @click.native="sound_play('click')")
-            b-menu-item.is_active_unset(label="ウォーズIDの設定"   tag="nuxt-link" :to="{name: 'settings-swars-user-key'}" @click.native="sound_play('click')" v-if="development_p")
-          b-menu-list(label="その他")
-            b-menu-item.is_active_unset(label="アカウント連携" :href="`${$config.MY_SITE_URL}/accounts/${record.id}/edit`")
-            b-menu-item.is_active_unset(label="ログアウト" @click="logout_handle")
+        .is-flex.is-justify-content-space-between.is-align-items-center
+          b-button.px-5(@click="sidebar_toggle" icon-left="menu")
+        .mt-0
+          b-menu
+            b-menu-list(label="Action")
+              b-menu-item.is_active_unset(label="プロフィール編集"   tag="nuxt-link" :to="{name: 'settings-profile'}"        @click.native="sound_play('click')")
+              b-menu-item.is_active_unset(label="メールアドレス変更" tag="nuxt-link" :to="{name: 'settings-email'}"          @click.native="sound_play('click')")
+              b-menu-item.is_active_unset(label="ウォーズIDの設定"   tag="nuxt-link" :to="{name: 'settings-swars-user-key'}" @click.native="sound_play('click')" v-if="development_p")
+              b-menu-item.is_active_unset(label="ぴよ将棋の種類"     tag="nuxt-link" :to="{name: 'settings-piyo_shogi'}"     @click.native="sound_play('click')")
+            b-menu-list(label="その他")
+              b-menu-item.is_active_unset(label="アカウント連携" :href="`${$config.MY_SITE_URL}/accounts/${record.id}/edit`")
+              b-menu-item.is_active_unset(label="ログアウト" @click="logout_handle")
     MainNavbar
       template(slot="brand")
         NavbarItemHome
@@ -35,12 +38,14 @@
 </template>
 
 <script>
+import { app_sidebar } from "./app_sidebar.js"
+
 export default {
   name: "UserShow",
+  mixins: [app_sidebar],
   data() {
     return {
       record: null,
-      sidebar_p: false,
     }
   },
   fetch() {
@@ -55,10 +60,6 @@ export default {
       this.sound_play("click")
       await this.a_auth_user_logout()
       this.toast_ok("ログアウトしました")
-    },
-    sidebar_toggle() {
-      this.sound_play("click")
-      this.sidebar_p = !this.sidebar_p
     },
     back_handle() {
       this.sound_play("click")
@@ -100,12 +101,15 @@ export default {
     width: unset
     a
       white-space: nowrap
-    .menu-label:not(:first-child)
-      margin-top: 2em
+    .menu-label
+      margin-top: 2.5em
 
 .UserShow
   .MainSection.section
-    padding-top: 2.8rem
+    +tablet
+      padding-top: 2.8rem
+    +mobile
+      padding-top: 2.0rem
 
   .image
     img
@@ -120,7 +124,6 @@ export default {
     .column
       border: 1px dashed change_color($primary, $alpha: 0.1)
     .image
+
       border: 1px dashed change_color($danger, $alpha: 0.1)
-      .FriendlyWidth
-        border: 1px dashed change_color($primary, $alpha: 0.1)
 </style>

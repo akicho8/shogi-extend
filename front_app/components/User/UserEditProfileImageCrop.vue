@@ -6,13 +6,13 @@
     template(slot="start")
       //- b-navbar-item(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
       //-   .ml-2.has-text-weight-bold {{config.name}}さんのプロフィール
-      b-navbar-item.has-text-weight-bold(@click="cancel_handle") キャンセル
+      b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="cancel_handle") キャンセル
       b-navbar-item(v-if="development_p") {{draw_count}}
 
     template(slot="end")
       //- b-navbar-item(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
       //-   .ml-2.has-text-weight-bold {{config.name}}さんのプロフィール
-      b-navbar-item.has-text-weight-bold(@click="clop_handle") 決定
+      b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="clop_handle") 決定
 
   .columns.is-vcentered
     .column
