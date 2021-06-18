@@ -247,6 +247,15 @@ export const app_ordered_members = {
         this.sp_viewpoint = location.key                     // その視点に変更する
       }
     },
+
+    order_lookup(e) {
+      if (this.base.order_func_p) {
+        if (this.base.ordered_members) {
+          return this.user_names_hash[e.from_user_name]
+        }
+      }
+    },
+
   },
 
   computed: {
@@ -323,5 +332,14 @@ export const app_ordered_members = {
     current_turn_user_name()    { return this.user_name_by_turn(this.turn_offset)       }, // 現在の局面のメンバーの名前
     current_turn_self_p()       { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
     turn_strict_on()            { return this.strict_info.key === "turn_strict_on"      }, // 手番制限ON ?
+
+    // 名前からO(1)で ordered_members の要素を引くためのハッシュ
+    user_names_hash() {
+      if (this.base.order_func_p) {
+        if (this.base.ordered_members) {
+          return this.base.ordered_members.reduce((a, e) => ({...a, [e.user_name]: e}), {})
+        }
+      }
+    },
   },
 }

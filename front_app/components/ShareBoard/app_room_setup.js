@@ -135,15 +135,18 @@ export const app_room_setup = {
 
     // perform のラッパーで共通のパラメータを入れる
     ac_room_perform(action, params = {}) {
-      params = {
-        from_connection_id: this.connection_id,     // 送信者識別子
-        from_user_name:     this.user_name,         // 送信者名
-        performed_at:       this.time_current_ms(), // 実行日時(ms)
-        active_level:       this.active_level,      // 先輩度(高い方が信憑性のある情報)
-        ua_icon:            this.ua_icon,           // 端末の種類を表すアイコン文字列
-        ...params,
-      }
       if (this.ac_room) {
+        params = {
+          from_connection_id: this.connection_id,     // 送信者識別子
+          from_user_name:     this.user_name,         // 送信者名
+          performed_at:       this.time_current_ms(), // 実行日時(ms)
+          active_level:       this.active_level,      // 先輩度(高い方が信憑性のある情報)
+          ua_icon:            this.ua_icon,           // 端末の種類を表すアイコン文字列
+          ...params,
+        }
+        if (this.g_current_user) {
+          params.from_avatar_path = this.g_current_user.avatar_path
+        }
         this.ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
         // this.tl_add("USER", action)
       }

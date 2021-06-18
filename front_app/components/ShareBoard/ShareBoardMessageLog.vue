@@ -3,7 +3,8 @@
   .scroll_block
     template(v-for="(e, i) in base.message_logs")
       .message_log.is_line_break_on(:key="`${e.from_connection_id}_${i}`")
-        span.has-text-primary {{e.from_user_name}}
+        img.avatar_img(:src="e.from_avatar_path" v-if="e.from_avatar_path")
+        span.ml-1.has-text-primary {{e.from_user_name}}
         span.ml-1(v-html="auto_link(e.message)")
 </template>
 
@@ -41,7 +42,17 @@ export default {
 
     .message_log
       line-height: 1.5
-      padding: 0 0.5rem
+      padding: 0.1rem 0.5rem
+
+      display: flex
+      justify-content: start
+      align-items: center
+
+    .avatar_img
+      width: 2rem
+      height: 2rem
+      display: block
+      border-radius: 100%
 
 .STAGE-development
   // .ShareBoardMessageLog

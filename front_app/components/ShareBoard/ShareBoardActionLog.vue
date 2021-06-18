@@ -2,13 +2,14 @@
 .ShareBoardActionLog.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
-      a.is-clickable.is-block.is_line_break_off(:key="action_log_key(e)" @click="action_log_click_handle(e)")
+      a.is-clickable.is_line_break_off(:key="action_log_key(e)" @click="action_log_click_handle(e)")
+        img.avatar_img(:src="e.from_avatar_path" v-if="e.from_avatar_path")
+        span(v-if="e.from_user_name") {{e.from_user_name}}
         b-tag(type="is-warning" v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
         b-tag(type="is-primary" v-if="e.label") {{e.label}}
         template(v-if="e.lmi")
           span {{e.lmi.next_turn_offset}}
           span {{e.lmi.kif_without_from}}
-        span(v-if="e.from_user_name") {{e.from_user_name}}
         span.is-size-7.time_format.has-text-grey-light(v-if="e.performed_at") {{time_format(e)}}
 </template>
 
@@ -93,6 +94,10 @@ export default {
     .time_format
       vertical-align: middle
     a
+      display: flex
+      justify-content: start
+      align-items: center
+
       text-overflow: ellipsis
       padding: 0.2rem 0.5rem
       color: inherit
@@ -100,6 +105,12 @@ export default {
         background-color: $grey-lighter
       > *:not(:first-child)
         margin-left: 0.25rem
+
+    .avatar_img
+      display: block
+      width: 2rem
+      height: 2rem
+      border-radius: 100%
 
 .STAGE-development
   .ShareBoardActionLog

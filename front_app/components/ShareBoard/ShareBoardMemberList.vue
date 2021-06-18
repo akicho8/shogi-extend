@@ -3,14 +3,18 @@
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
       .member_info.is_line_break_off.is-clickable.is-flex.is-align-items-center(:key="e.from_connection_id" @click="row_click_handle(e)" :class="member_info_class(e)")
-        .left_tag_or_icon.is-inline-flex.is-justify-content-center.is-align-items-center(v-if="order_lookup(e)")
+        .left_tag_or_icon.is-inline-flex.is-justify-content-center.is-align-items-center(v-if="base.order_lookup(e)")
           b-tag(rounded) {{tag_body_for(e)}}
-        b-icon.account_icon(:icon="icon_for(e)" size="is-small")
+        template(v-if="e.from_avatar_path")
+          img.avatar_img(:src="e.from_avatar_path")
+        template(v-else)
+          .icon_wrap
+            b-icon.account_icon(:icon="icon_for(e)" size="is-small")
         //- b-icon(icon="sleep" type="is-danger" size="is-small")
         //- b-icon(icon="lan-disconnect" type="is-danger" size="is-small")
         .user_name {{e.from_user_name}}
         b-icon.mx-1(icon="lan-disconnect" type="is-danger" size="is-small" v-if="base.member_disconnect_p(e) || development_p")
-        b-icon.mx-1(icon="arrow-left" size="is-small" v-if="base.connection_id === e.from_connection_id")
+        b-icon.mx-1(icon="arrow-left-bold" size="is-small" v-if="base.connection_id === e.from_connection_id")
         template(v-if="development_p")
           .mx-1 {{time_format(e)}}
           .mx-1 {{e.room_joined_at}}
@@ -71,16 +75,8 @@ export default {
     //   // return "is-primary"
     // },
 
-    order_lookup(e) {
-      if (this.base.order_func_p) {
-        if (this.base.ordered_members) {
-          return this.user_names_hash[e.from_user_name]
-        }
-      }
-    },
-
     tag_body_for(e) {
-      const found = this.order_lookup(e)
+      const found = this.base.order_lookup(e)
       return found.order_index + 1
     },
 
@@ -90,7 +86,7 @@ export default {
       // if (!this.base.member_alive_p(e)) {
       //   return "is-grey"
       // }
-      // const found = this.order_lookup(e)
+      // const found = this.base.order_lookup(e)
       // if (found) {
       // if (this.base.current_turn_user_name === e.from_user_name) {
       //   return "is_turn_active"
@@ -104,9 +100,9 @@ export default {
       return {
         is_joined:        !this.base.order_func_p,                                                       // 初期状態
         is_disconnect:    this.base.member_disconnect_p(e),                                              // 霊圧が消えかけ
-        is_turn_active:   this.order_lookup(e) && this.base.current_turn_user_name === e.from_user_name, // 手番の人
-        is_turn_standby: this.order_lookup(e) && this.base.current_turn_user_name !== e.from_user_name, // 手番待ちの人
-        is_watching:      this.base.order_func_p && !this.order_lookup(e),                               // 観戦
+        is_turn_active:   this.base.order_lookup(e) && this.base.current_turn_user_name === e.from_user_name, // 手番の人
+        is_turn_standby: this.base.order_lookup(e) && this.base.current_turn_user_name !== e.from_user_name, // 手番待ちの人
+        is_watching:      this.base.order_func_p && !this.base.order_lookup(e),                               // 観戦
         is_self:          this.base.connection_id === e.from_connection_id,                                      // 自分？
         is_window_blur:   !e.window_active_p,                                                            // Windowが非アクティブ状態か？
       }
@@ -121,7 +117,7 @@ export default {
             if (false) {
               found = this.base.ordered_members.find(v => v.user_name === e.from_user_name) // O(n)
             } else {
-              found = this.user_names_hash[e.from_user_name] // O(1)
+              found = this.base.user_names_hash[e.from_user_name] // O(1)
             }
             if (found) {
               return found.order_index
@@ -133,14 +129,6 @@ export default {
         }
       }
       return this.base.member_infos
-    },
-    // 名前からO(1)で ordered_members の要素を引くためのハッシュ
-    user_names_hash() {
-      if (this.base.order_func_p) {
-        if (this.base.ordered_members) {
-          return this.base.ordered_members.reduce((a, e) => ({...a, [e.user_name]: e}), {})
-        }
-      }
     },
   },
 }
@@ -163,13 +151,14 @@ export default {
       line-height: 2.25
       // text-overflow: ellipsis
       // overflow-x: auto
-      padding: 0 0.5rem
+      padding: 0.2rem 0.5rem
       color: inherit
       &:hover
         background-color: $grey-lighter
 
     .user_name
-      margin: 0 0.25rem
+      margin-left: 0.5rem
+      margin-right: 0.25rem
 
     .left_tag_or_icon
       min-width: 1.75rem
@@ -186,8 +175,14 @@ export default {
         //   background-color: unset
         //   // border: 2px solid change_color($primary, $alpha: 0.2)
 
+    .account_icon, .avatar_img
+      width: 2rem
+      height: 2rem
     .account_icon
       color: $primary
+    .avatar_img
+      display: block
+      border-radius: 100%
 
     .member_info
       &.is_window_blur

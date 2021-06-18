@@ -1,7 +1,11 @@
 <template lang="pug">
 client-only
   .ShareBoardApp(:style="component_style")
+    div(is="style" v-text="component_css")
+
     DebugBox.is-hidden-mobile(v-if="development_p")
+      p avatars_hash: {{avatars_hash}}
+
       p time_limit_modal_instance: {{!!time_limit_modal_instance}}
       p cc_auto_time_limit_delay_id: {{cc_auto_time_limit_delay_id}}
 
@@ -115,6 +119,7 @@ import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
 import { app_turn_notify          } from "./app_turn_notify.js"
 import { app_ordered_members      } from "./app_ordered_members.js"
 import { app_chore                } from "./app_chore.js"
+import { app_avatar               } from "./app_avatar.js"
 import { app_handle_name          } from "./app_handle_name.js"
 import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
@@ -153,6 +158,7 @@ export default {
     app_turn_notify,
     app_ordered_members,
     app_chore,
+    app_avatar,
     app_handle_name,
     app_urls,
     app_edit_mode,
@@ -488,4 +494,12 @@ export default {
       &.read_sec_10, &.extra_sec_10
         background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
         color: $black !important
+
+    // .PieceTexture
+    //   .PieceTextureSelf
+    //     &.location_black
+    //     &.promoted_false
+    //     &.piece_name
+    //     &.piece_K
+    //       background-image: url("/icon.png")
 </style>
