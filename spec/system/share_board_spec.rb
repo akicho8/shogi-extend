@@ -1170,12 +1170,12 @@ RSpec.describe "共有将棋盤", type: :system do
   # 一気に調べるのではなく段階的に調べる
   def assert_member_list(i, klass, user_name)
     Capybara.within(".ShareBoardMemberList") do
-      assert_selector(".member_info:nth-child(#{i})")             # まずi番目が存在する
-      assert_selector(".member_info:nth-child(#{i}).#{klass}")    # 次にi番目の種類
+      assert_selector(".member_one_line:nth-child(#{i})")             # まずi番目が存在する
+      assert_selector(".member_one_line:nth-child(#{i}).#{klass}")    # 次にi番目の種類
     end
     # i 番目のメンバーは user_name である
     Capybara.within(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]") do
-      assert_selector(:xpath, "//*[contains(@class, 'member_info')][#{i}]//*[text()='#{user_name}']")
+      assert_selector(:xpath, "//*[contains(@class, 'member_one_line')][#{i}]//*[text()='#{user_name}']")
     end
   end
 
@@ -1190,7 +1190,7 @@ RSpec.describe "共有将棋盤", type: :system do
   end
 
   def member_list_click(i)
-    find(".ShareBoardMemberList .member_info:nth-child(#{i})").click
+    find(".ShareBoardMemberList .member_one_line:nth-child(#{i})").click
   end
 
   def sp_controller_click(klass)
