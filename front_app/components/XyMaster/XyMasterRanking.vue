@@ -67,11 +67,16 @@ export default {
   //   min-width: 12rem // これがないと3文字しか見えない
 
   .table
-    .index_td
+    td
       vertical-align: middle
+  .table
+    .index_td
       padding: 0
       height: 100%
       .medal
         display: flex
         justify-content: center
+        .xemoji
+          height: 1.25em
+          width: unset
 </style>
