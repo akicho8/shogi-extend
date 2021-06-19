@@ -25,7 +25,7 @@ export const app_message_logs = {
       this.ml_add({
         from_user_name: "alice",
         from_connection_id: this.message_logs.length,
-        message: this.message_logs.length.toString(),
+        message: ("🪳🍌💀" + this.message_logs.length.toString()).repeat(10),
         performed_at: this.time_current_ms(),
       })
     },

@@ -2,25 +2,22 @@
 .ShareBoardMemberList.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
-      .member_info.is_line_break_off.is-clickable.is-flex.is-align-items-center(:key="e.from_connection_id" @click="row_click_handle(e)" :class="member_info_class(e)")
-        .left_tag_or_icon.is-inline-flex.is-justify-content-center.is-align-items-center(v-if="base.order_lookup(e)")
+      ShareBoardAvatarLine.is-clickable(:info="e" :key="e.from_connection_id" @click="row_click_handle(e)" :class="member_info_class(e)")
+        .flex_item.left_tag_or_icon(v-if="base.order_lookup(e)")
           b-tag(rounded) {{tag_body_for(e)}}
-        template(v-if="e.from_avatar_path")
-          img.avatar_img(:src="e.from_avatar_path")
-        template(v-else)
-          .icon_wrap
-            b-icon.account_icon(:icon="icon_for(e)" size="is-small")
+        //- .icon_wrap(v-if="e.from_avatar_path == null")
+        //-   b-icon.account_icon(:icon="icon_for(e)" size="is-small")
         //- b-icon(icon="sleep" type="is-danger" size="is-small")
         //- b-icon(icon="lan-disconnect" type="is-danger" size="is-small")
-        .user_name {{e.from_user_name}}
-        b-icon.mx-1(icon="lan-disconnect" type="is-danger" size="is-small" v-if="base.member_disconnect_p(e) || development_p")
-        b-icon.mx-1(icon="arrow-left-bold" size="is-small" v-if="base.connection_id === e.from_connection_id")
+        //- .user_name {{e.from_user_name}}
+        b-icon.flex_item(icon="arrow-left-bold" size="is-small" v-if="base.connection_id === e.from_connection_id")
+        b-icon.flex_item(icon="lan-disconnect" type="is-danger" size="is-small" v-if="base.member_disconnect_p(e) || development_p")
         template(v-if="development_p")
-          .mx-1 {{time_format(e)}}
-          .mx-1 {{e.room_joined_at}}
-          .mx-1 LV:{{e.active_level}}
-          .mx-1 通知{{e.alive_notice_count}}回目
-          .mx-1 {{base.member_elapsed_sec(e)}}秒前
+          .flex_item {{time_format(e)}}
+          .flex_item {{e.room_joined_at}}
+          .flex_item LV:{{e.active_level}}
+          .flex_item 通知{{e.alive_notice_count}}回目
+          .flex_item {{base.member_elapsed_sec(e)}}秒前
 </template>
 
 <script>
@@ -140,29 +137,27 @@ export default {
 .ShareBoardMemberList.column
   .scroll_block
     overflow: auto
-
-    border-radius: 3px
-    background-color: $white-ter
     padding: 0
 
     .time_format
       vertical-align: middle
-    .member_info
+    .ShareBoardAvatarLine
       line-height: 2.25
       // text-overflow: ellipsis
       // overflow-x: auto
-      padding: 0.2rem 0.5rem
+      padding: 0.2rem 0rem
       color: inherit
       &:hover
-        background-color: $grey-lighter
+        background-color: $white-ter
 
-    .user_name
-      margin-left: 0.5rem
-      margin-right: 0.25rem
+    // .user_name
+    //   margin-left: 0.5rem
+    //   margin-right: 0.25rem
 
     .left_tag_or_icon
-      min-width: 1.75rem
       .tag
+        // min-width: 1.75rem
+        // margin-right: 0.25rem
         background-color: unset
         // font-size: unset
         // height: unset
@@ -175,16 +170,13 @@ export default {
         //   background-color: unset
         //   // border: 2px solid change_color($primary, $alpha: 0.2)
 
-    .account_icon, .avatar_img
+    .account_icon
       width: 2rem
       height: 2rem
     .account_icon
       color: $primary
-    .avatar_img
-      display: block
-      border-radius: 100%
 
-    .member_info
+    .ShareBoardAvatarLine
       &.is_window_blur
         opacity: 0.5
       &.is_disconnect
@@ -216,4 +208,7 @@ export default {
 
 .STAGE-development
   .ShareBoardMemberList
+    .scroll_block
+      // border-radius: 3px
+      // background-color: $white-ter
 </style>

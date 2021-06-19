@@ -2,15 +2,13 @@
 .ShareBoardActionLog.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
-      a.is-clickable.is_line_break_off(:key="action_log_key(e)" @click="action_log_click_handle(e)")
-        img.avatar_img(:src="e.from_avatar_path" v-if="e.from_avatar_path")
-        span(v-if="e.from_user_name") {{e.from_user_name}}
-        b-tag(type="is-warning" v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
-        b-tag(type="is-primary" v-if="e.label") {{e.label}}
+      ShareBoardAvatarLine.is-clickable(:info="e" tag="a" :key="action_log_key(e)" @click="action_log_click_handle(e)")
+        b-tag.flex_item(type="is-warning" v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
+        b-tag.flex_item(type="is-primary" v-if="e.label") {{e.label}}
         template(v-if="e.lmi")
-          span {{e.lmi.next_turn_offset}}
-          span {{e.lmi.kif_without_from}}
-        span.is-size-7.time_format.has-text-grey-light(v-if="e.performed_at") {{time_format(e)}}
+          .flex_item {{e.lmi.next_turn_offset}}
+          .flex_item {{e.lmi.kif_without_from}}
+        .flex_item.is-size-7.time_format.has-text-grey-light(v-if="e.performed_at") {{time_format(e)}}
 </template>
 
 <script>
@@ -87,31 +85,36 @@ export default {
     overflow-y: auto
     overflow-x: hidden
 
-    border-radius: 3px
-    background-color: $white-ter
     padding: 0
 
     .time_format
       vertical-align: middle
-    a
-      display: flex
-      justify-content: start
-      align-items: center
 
-      text-overflow: ellipsis
-      padding: 0.2rem 0.5rem
+    .ShareBoardAvatarLine
+      line-height: 2.25
+      // text-overflow: ellipsis
+      // overflow-x: auto
+      padding: 0.2rem 0rem
       color: inherit
       &:hover
-        background-color: $grey-lighter
-      > *:not(:first-child)
-        margin-left: 0.25rem
+        background-color: $white-ter
 
-    .avatar_img
-      display: block
-      width: 2rem
-      height: 2rem
-      border-radius: 100%
+    // a
+    //   display: flex
+    //   justify-content: start
+    //   align-items: center
+    // 
+    //   text-overflow: ellipsis
+    //   padding: 0.2rem 0.5rem
+    //   color: inherit
+    //   &:hover
+    //     background-color: $grey-lighter
+    //   > *:not(:first-child)
+    //     margin-left: 0.25rem
 
 .STAGE-development
   .ShareBoardActionLog
+    .scroll_block
+      // border-radius: 3px
+      // background-color: $white-ter
 </style>

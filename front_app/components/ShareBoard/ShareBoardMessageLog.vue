@@ -2,10 +2,8 @@
 .ShareBoardMessageLog(v-if="base.message_logs.length >= 1")
   .scroll_block
     template(v-for="(e, i) in base.message_logs")
-      .message_log.is_line_break_on(:key="`${e.from_connection_id}_${i}`")
-        img.avatar_img(:src="e.from_avatar_path" v-if="e.from_avatar_path")
-        span.ml-1.has-text-primary {{e.from_user_name}}
-        span.ml-1(v-html="auto_link(e.message)")
+      ShareBoardAvatarLine(:info="e" :key="`${e.from_connection_id}_${i}`")
+        .flex_item.is_line_break_on.my_message(v-html="auto_link(e.message)" v-xemoji)
 </template>
 
 <script>
@@ -36,27 +34,26 @@ export default {
 
     overflow-y: auto
 
-    border-radius: 3px
-    background-color: $white-ter
+    // border-radius: 3px
+    // background-color: $white-ter
     padding: 0
 
-    .message_log
-      line-height: 1.5
-      padding: 0.1rem 0.5rem
+    .ShareBoardAvatarLine
+      padding: 0.2rem 0
+      .my_message
+        flex-shrink: 1
+        line-height: 1.1
 
-      display: flex
-      justify-content: start
-      align-items: center
-
-    .avatar_img
-      width: 2rem
-      height: 2rem
-      display: block
-      border-radius: 100%
+    // .message_log
+    //   line-height: 1.5
+    //   padding: 0.1rem 0.5rem
+    //
+    //   display: flex
+    //   justify-content: start
+    //   align-items: center
 
 .STAGE-development
-  // .ShareBoardMessageLog
-  //   border: 1px dashed change_color($primary, $alpha: 0.5)
-  //   .message_log
-  //     border: 1px dashed change_color($primary, $alpha: 0.5)
+  .ShareBoardMessageLog
+    .scroll_block
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
