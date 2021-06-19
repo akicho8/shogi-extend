@@ -15,7 +15,7 @@ b-sidebar.is-unselectable.StopwatchSidebar(fullheight right overlay v-model="bas
           b-menu-item.is_active_unset(label="不正解と指定秒以上" @click="base.reset_by_x_with_n_seconds" :disabled="base.rows.length === 0 || base.mode === 'playing'")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(label="操作を間違えたら？" @click="base.history_modal_show"   :disabled="base.mode !== 'standby'")
+          b-menu-item.is_active_unset(label="履歴"               @click="base.history_modal_show"   :disabled="base.mode !== 'standby'")
           b-menu-item.is_active_unset(label="パーマリンク"       @click="base.parmalink_modal_show" :disabled="base.mode !== 'standby'")
           b-menu-item.is_active_unset(label="キーボード操作"     @click="base.keyboard_modal_show"                                )
 </template>
