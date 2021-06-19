@@ -2,9 +2,12 @@
 
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 
+import twemoji from 'twemoji'
+
 const strip_tags = require('striptags')
 
 import { isMobile } from "../components/models/is_mobile.js"
+
 
 import Autolinker from 'autolinker'
 
@@ -575,6 +578,26 @@ export default {
     //    PC  → _blank
     target_default() {
       return isMobile.any() ? "_self" : "_blank"
+    },
+  },
+
+  directives: {
+    // Twitter で使われている絵文字に置き換える
+    //
+    // https://github.com/twitter/twemoji
+    // https://qiita.com/tdkn/items/3e3d0d61338557ec259f
+    //
+    // 使い方: span(v-twemoji) {{message}}
+    //
+    // これによって解決される問題
+    // ・Macで「ぴえん」が白黒
+    // ・AndroidやWindowsで「ゴキブリ」が出ない
+    // ・Windowsの残念な絵文字を置き換えれる
+    //
+    xemoji: {
+      inserted(el) {
+        el.innerHTML = twemoji.parse(el.innerHTML, { folder: "svg", ext: ".svg", className: "xemoji" })
+      }
     },
   },
 }

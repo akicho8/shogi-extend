@@ -130,6 +130,9 @@ const config = {
       { hid: "twitter:creator",    property: "twitter:creator",    content: "@sgkinakomochi" }, // これいるのか？
 
     ],
+    // script: [
+    //   { src: "https://twemoji.maxcdn.com/v/latest/twemoji.min.js", crossorigin: "anonymous", },
+    // ],
     link: [
       { hid: "icon",             rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'          },
       { hid: "apple-touch-icon", rel: "apple-touch-icon",           href: "/apple-touch-icon.png" },
