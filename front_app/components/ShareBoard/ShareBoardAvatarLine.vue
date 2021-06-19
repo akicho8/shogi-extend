@@ -42,12 +42,12 @@ export default {
     &.avatar_img
       display: block // inlineだと余計な隙間が生まれるため念のためblockにしておく
       width: unset
-      height: 2em
+      height: 1.5em
       border-radius: 100%
     &.user_guardian
       .xemoji
         width: unset
-        height: 2em
+        height: 1.5em
     &.user_name
       color: $primary
 

@@ -3,7 +3,7 @@
   .scroll_block
     template(v-for="(e, i) in base.message_logs")
       ShareBoardAvatarLine(:base="base" :info="e" :key="`${e.from_connection_id}_${i}`")
-        .flex_item.is_line_break_on.my_message(v-html="auto_link(e.message)" v-xemoji)
+        .flex_item.is_line_break_on.message_body(v-html="auto_link(e.message)" v-xemoji)
 </template>
 
 <script>
@@ -40,7 +40,7 @@ export default {
 
     .ShareBoardAvatarLine
       padding: 0.2rem 0
-      .my_message
+      .message_body
         flex-shrink: 1
         line-height: 1.1
 
