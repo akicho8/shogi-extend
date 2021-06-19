@@ -3,8 +3,8 @@
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
       ShareBoardAvatarLine.is-clickable(:base="base" :info="e" tag="a" :key="action_log_key(e)" @click="action_log_click_handle(e)")
-        b-tag.flex_item(type="is-warning" v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
-        b-tag.flex_item(type="is-primary" v-if="e.label") {{e.label}}
+        b-tag.flex_item(type="is-warning is-light" v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
+        b-tag.flex_item(type="is-primary is-light" v-if="e.label") {{e.label}}
         template(v-if="e.lmi")
           .flex_item {{e.lmi.next_turn_offset}}
           .flex_item {{e.lmi.kif_without_from}}
