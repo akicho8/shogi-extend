@@ -8,7 +8,6 @@ const strip_tags = require('striptags')
 
 import { isMobile } from "../components/models/is_mobile.js"
 
-
 import Autolinker from 'autolinker'
 
 import _ from "lodash"
@@ -167,6 +166,12 @@ export default {
 
     ary_cycle_at(ary, index) {
       return ary[this.ruby_like_modulo(index, ary.length)]
+    },
+
+    // 文字列からハッシュコードに変換
+    // これは単純なものでよい
+    hash_number_from_str(str) {
+      return _.sumBy([...str], e => e.codePointAt(0))
     },
 
     // list 内のインデックス from の要素を to に移動

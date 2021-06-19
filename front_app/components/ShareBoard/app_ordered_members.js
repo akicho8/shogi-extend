@@ -249,13 +249,17 @@ export const app_ordered_members = {
     },
 
     order_lookup(e) {
+      return this.order_lookup_from_name(e.from_user_name)
+    },
+
+    order_lookup_from_name(name) {
       if (this.base.order_func_p) {
         if (this.base.ordered_members) {
-          return this.user_names_hash[e.from_user_name]
+          return this.user_names_hash[name]
         }
       }
     },
-
+    
   },
 
   computed: {
@@ -332,6 +336,7 @@ export const app_ordered_members = {
     current_turn_user_name()    { return this.user_name_by_turn(this.turn_offset)       }, // 現在の局面のメンバーの名前
     current_turn_self_p()       { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
     turn_strict_on()            { return this.strict_info.key === "turn_strict_on"      }, // 手番制限ON ?
+    self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)  }, // 自分はメンバーに含まれているか？
 
     // 名前からO(1)で ordered_members の要素を引くためのハッシュ
     user_names_hash() {

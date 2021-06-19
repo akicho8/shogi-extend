@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .ShareBoardApp(:style="component_style")
-    div(is="style" v-text="component_css")
+    div(is="style" v-text="component_raw_css")
 
     DebugBox.is-hidden-mobile(v-if="development_p")
       p avatars_hash: {{avatars_hash}}
@@ -120,6 +120,7 @@ import { app_turn_notify          } from "./app_turn_notify.js"
 import { app_ordered_members      } from "./app_ordered_members.js"
 import { app_chore                } from "./app_chore.js"
 import { app_avatar               } from "./app_avatar.js"
+import { app_guardian             } from "./app_guardian.js"
 import { app_handle_name          } from "./app_handle_name.js"
 import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
@@ -127,7 +128,7 @@ import { app_room_setup           } from "./app_room_setup.js"
 import { app_devise               } from "./app_devise.js"
 import { app_room_leave           } from "./app_room_leave.js"
 import { app_track_log            } from "./app_track_log.js"
-import { app_xmatch           } from "./app_xmatch.js"
+import { app_xmatch               } from "./app_xmatch.js"
 import { app_room_board_setup     } from "./app_room_board_setup.js"
 import { app_room_members         } from "./app_room_members.js"
 import { app_ping                 } from "./app_ping.js"
@@ -159,6 +160,7 @@ export default {
     app_ordered_members,
     app_chore,
     app_avatar,
+    app_guardian,
     app_handle_name,
     app_urls,
     app_edit_mode,

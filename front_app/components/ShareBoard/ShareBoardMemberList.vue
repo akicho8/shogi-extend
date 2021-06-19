@@ -2,7 +2,7 @@
 .ShareBoardMemberList.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in member_infos")
-      ShareBoardAvatarLine.is-clickable(:info="e" :key="e.from_connection_id" @click="row_click_handle(e)" :class="member_info_class(e)")
+      ShareBoardAvatarLine.is-clickable(:base="base" :info="e" :key="e.from_connection_id" @click="row_click_handle(e)" :class="member_info_class(e)")
         .flex_item.left_tag_or_icon(v-if="base.order_lookup(e)")
           b-tag(rounded) {{tag_body_for(e)}}
         //- .icon_wrap(v-if="e.from_avatar_path == null")

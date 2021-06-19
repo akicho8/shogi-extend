@@ -51,7 +51,7 @@ export const app_action_log = {
     al_add_test() {
       const i = this.base.action_logs.length
       this.al_add({
-        from_user_name: "あいうえおあいうえお",
+        from_user_name: "あいうえお",
         lmi: {
           kif_without_from:    "☗00歩",
           next_turn_offset:    i,

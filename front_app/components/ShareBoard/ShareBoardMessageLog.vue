@@ -2,7 +2,7 @@
 .ShareBoardMessageLog(v-if="base.message_logs.length >= 1")
   .scroll_block
     template(v-for="(e, i) in base.message_logs")
-      ShareBoardAvatarLine(:info="e" :key="`${e.from_connection_id}_${i}`")
+      ShareBoardAvatarLine(:base="base" :info="e" :key="`${e.from_connection_id}_${i}`")
         .flex_item.is_line_break_on.my_message(v-html="auto_link(e.message)" v-xemoji)
 </template>
 

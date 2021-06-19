@@ -1,6 +1,9 @@
 import _ from "lodash"
 import { Location   } from "shogi-player/components/models/location.js"
 
+const AVATAR_AS_KING   = true // アバターを玉にする(優先度高)
+const GUARDIAN_AS_KING = true // 守護獣を玉にする(優先度低)
+
 export const app_avatar = {
   methods: {
     // private
@@ -11,13 +14,13 @@ export const app_avatar = {
             .PieceTexture
               .PieceTextureSelf.piece_K.location_${e.location_key} {
                 background-image: url(${e.from_avatar_path});
-                border-radius: 100%;
+                border-radius: ${e.border_radius}%;
                 background-size: cover;
               }`
     },
   },
   computed: {
-    component_css() {
+    component_raw_css() {
       let v = null
       v = _.map(this.avatars_hash, (e, key) => this.one_side_piece_replace_style(e))
       v = v.join(" ")
@@ -32,20 +35,42 @@ export const app_avatar = {
     //
     // return:
     //   {
-    //     black: { location_key: "black", from_avatar_path: "path/to/black_side_alice.png" },
-    //     white: { location_key: "white", from_avatar_path: "path/to/white_side_bob.png"   },
+    //     black: { location_key: "black", from_avatar_path: "path/to/black_side_alice.png", border_radius: 100, },
+    //     white: { location_key: "white", from_avatar_path: "path/to/white_side_bob.png"  , border_radius: 0,   },
     //   }
     //
     avatars_hash() {
       const hash = {}
       if (this.order_func_p && this.ordered_members_present_p) {
         for (const e of this.member_infos) {
-          if (e.from_avatar_path) {
-            const info = this.base.user_names_hash[e.from_user_name]
-            if (info) {
-              const location = this.current_sfen_info.location_by_offset(info.order_index)
-              if (hash[location.key] == null) {
-                hash[location.key] = { location_key: location.key, from_avatar_path: e.from_avatar_path }
+          const info = this.base.user_names_hash[e.from_user_name]
+          if (info) { // 対局メンバーなら
+            const location = this.current_sfen_info.location_by_offset(info.order_index)
+            if (hash[location.key] == null) {
+              let value = null
+
+              if (AVATAR_AS_KING) {
+                if (value == null) {
+                  if (e.from_avatar_path) {
+                    value = {
+                      from_avatar_path: e.from_avatar_path,
+                      border_radius: 100,
+                    }
+                  }
+                }
+              }
+
+              if (GUARDIAN_AS_KING) {
+                if (value == null) {
+                  value = {
+                    from_avatar_path: this.guardian_url_from_str(e.from_user_name),
+                    border_radius: 0,
+                  }
+                }
+              }
+
+              if (value) {
+                hash[location.key] = { location_key: location.key, ...value }
                 if (hash[location.flip.key]) {
                   break
                 }
@@ -53,8 +78,8 @@ export const app_avatar = {
             }
           }
         }
+        return hash
       }
-      return hash
     },
   },
 }

@@ -1,13 +1,14 @@
 <template lang="pug">
 .ShareBoardAvatarLine(v-bind="$attrs" v-on="$listeners")
   img.avatar_img.flex_item(:src="info.from_avatar_path" v-if="info.from_avatar_path")
-  .user_char.flex_item(v-if="info.from_avatar_path == null" v-text="user_char" v-xemoji)
+  .user_guardian.flex_item.is-flex(v-if="info.from_avatar_path == null" v-text="user_guardian" v-xemoji)
   .user_name.flex_item(v-text="info.from_user_name" v-xemoji)
   slot
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
+import _ from "lodash"
 
 export default {
   name: "ShareBoardAvatarLine",
@@ -16,20 +17,7 @@ export default {
     info: { type: Object, required: true },
   },
   computed: {
-    user_char() {
-      const index = this.ruby_like_modulo(this.name_hash, this.emoji_list.length)
-      return this.emoji_list[index]
-    },
-
-    // private
-
-    emoji_list() { return [..."🐰🐥🦉🐔🦔🐻🐹🐷🐮🐯🦁🐱🦊🐺🐶🐵🐸🐛🦋🥀🍀☘🍄"] },
-
-    name_hash() {
-      const chars = [...this.info.from_user_name]
-      const total = _.sumBy(chars, e => e.codePointAt(0))
-      return total
-    },
+    user_guardian() { return this.base.guardian_from_str(this.info.from_user_name) },
   },
 }
 </script>
@@ -53,11 +41,13 @@ export default {
       margin-left: 0.25rem // 基本の隙間はここだけ
     &.avatar_img
       display: block // inlineだと余計な隙間が生まれるため念のためblockにしておく
-      width: 2rem
-      height: 2rem
+      width: 2em
+      height: 2em
       border-radius: 100%
-    &.user_char
-      font-size: 1.8rem // できれば wh = 2rem x 2rem としたいがフォントなので見た目で決める
+    &.user_guardian
+      .xemoji
+        width: 2em
+        height: 2em
     &.user_name
       color: $primary
 
