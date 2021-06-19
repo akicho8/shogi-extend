@@ -33,6 +33,7 @@ module Swars
         assert { b("角不成")   == "角不成マン"   }
         assert { b("飛車不成") == "飛車不成マン" }
         assert { b("背水の陣") == "背水マン"     }
+        assert { b("入玉")     == "入玉勝ちマン" }
       end
     end
 

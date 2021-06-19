@@ -120,6 +120,16 @@ module Swars
         },
       },
       {
+        key: "入玉勝ちマン",
+        message: "入玉で勝った",
+        medal_params: "🪳",
+        if_cond: -> m {
+          m.tag_names_for(:note).include?("入玉") &&
+          m.judge_key == "win" &&
+          m.battle.final_info.toryo_or_tsumi
+        },
+      },
+      {
         key: "段級位差",
         message: nil,
         medal_params: nil,
