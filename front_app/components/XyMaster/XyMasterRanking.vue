@@ -19,7 +19,13 @@
           :narrowed="true"
           default-sort-direction="desc"
           )
-          b-table-column(v-slot="props" field="rank"       label="順位"  sortable numeric centered :width="1") {{props.row.rank}}
+          b-table-column(v-slot="props" field="rank" label="順位"  sortable numeric centered :width="1" cell-class="index_td")
+            template(v-if="false")
+            .medal(v-else-if="props.row.rank === 1" v-xemoji) 🥇
+            .medal(v-else-if="props.row.rank === 2" v-xemoji) 🥈
+            .medal(v-else-if="props.row.rank === 3" v-xemoji) 🥉
+            template(v-else)
+              | {{props.row.rank}}
           b-table-column(v-slot="props" field="entry_name" label="名前"  sortable)
             //- | 0123456789 0123456789 0123456789 0123456789 0123456789
             //- | {{props.row.entry_name || '？？？'}}
@@ -59,4 +65,13 @@ export default {
 
   // .entry_name
   //   min-width: 12rem // これがないと3文字しか見えない
+
+  .table
+    .index_td
+      vertical-align: middle
+      padding: 0
+      height: 100%
+      .medal
+        display: flex
+        justify-content: center
 </style>
