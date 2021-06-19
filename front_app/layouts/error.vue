@@ -15,7 +15,7 @@ client-only
             | ログイン
           b-button.mt-4(type="is-primary is-outlined" @click="reload_handle" v-if="error_status_code === 500")
             | ブラウザをリロードする
-        .emoji.has-text-centered.is-unselectable
+        .emoji.has-text-centered.is-unselectable(v-xemoji)
           | {{charactor}}
     DebugPre(v-if="development_p")
       | {{error}}
