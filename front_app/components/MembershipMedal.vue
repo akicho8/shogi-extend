@@ -1,9 +1,8 @@
 <template lang="pug">
 span.MembershipMedal(:class="wrapper_class" @click="click_handle")
-  template(v-if="params.emoji")
-    | {{params.emoji}}
-  template(v-else-if="params.icon")
-    b-icon(:icon="params.icon" :type="params.type" size="is-small" :class="params.class")
+  template(v-if="false")
+  span(v-else-if="params.emoji" v-xemoji) {{params.emoji}}
+  b-icon(v-else-if="params.icon" :icon="params.icon" :type="params.type" size="is-small" :class="params.class")
   template(v-else)
     | {{params}}
 </template>
@@ -28,7 +27,7 @@ export default {
       return {
         my_emoji: this.params.emoji,
         my_icon:  this.params.icon,
-        my_raw:   !(this.params.emoji || this.params.icon),
+        // my_raw:   !(this.params.emoji || this.params.icon),
         "is-clickable": this.params.message,
       }
     },

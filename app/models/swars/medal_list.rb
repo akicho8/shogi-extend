@@ -25,8 +25,8 @@ module Swars
         list << { method: "tag", name: "💩", type: "is-white" }
         list << { method: "raw", name: "💩" }
         list << { method: "icon", name: "link", type: "is-warning" }
-        list << { method: "icon", name: "pac-man", type: "is-warning", tag_wrap: {type: "is-black"} }
-        list << { method: "icon", name: "timer-sand-empty", type: nil, tag_wrap: { type: "is-light" } }
+        # list << { method: "tag_with_icon", name: "pac-man", type: "is-warning", tag_wrap: { type: "is-black"} }
+        # list << { method: "tag_with_icon", name: "timer-sand-empty", type: nil, tag_wrap: { type: "is-light" } }
       end
 
       list
