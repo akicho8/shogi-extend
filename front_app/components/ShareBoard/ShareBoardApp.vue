@@ -72,6 +72,7 @@ client-only
               @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
               @update:turn_offset="v => turn_offset = v"
               @update:turn_offset_max="v => turn_offset_max = v"
+              @operation_invalid="operation_invalid_handle"
             )
 
             .footer_buttons(v-if="edit_mode_p")
@@ -344,6 +345,19 @@ export default {
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
       this.turn_offset  = this.config.record.initial_turn     // 現在の手数
       this.toast_ok("局面をいっちばん最初にここに来たときの状態に戻しました")
+    },
+
+    operation_invalid_handle() {
+      if (this.base.order_func_p) {
+        if (this.base.ordered_members) {
+          const name = this.current_turn_user_name
+          if (name) {
+            this.toast_ok(`今は${this.user_call_name(name)}の手番です`)
+          } else {
+            this.toast_ok(`順番設定で対局者の指定がないので誰も操作できません`)
+          }
+        }
+      }
     },
   },
 
