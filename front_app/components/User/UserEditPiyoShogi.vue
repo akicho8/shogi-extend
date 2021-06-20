@@ -6,26 +6,14 @@
     template(slot="end")
       b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="save_handle") 保存
 
-  MainSection
+  MainSection(v-if="new_piyo_shogi_type_key")
     .container
       .columns.is-centered
         .column
-          b-field(label="このブラウザから起動するぴよ将棋の種類")
+          b-field(label="このブラウザから起動するぴよ将棋の種類" :message="new_piyo_shogi_type_info.message")
             template(v-for="e in PiyoShogiTypeInfo.values")
               b-radio-button(v-model="new_piyo_shogi_type_key" :native-value="e.key" @input="sound_play('click')")
                 | {{e.name}}
-
-          b-message.my-5(type="is-primary")
-            .content
-              p
-                strong 自動判別
-                span.ml-2 一般的なスマホやPCを使っている人はこちら
-              p
-                strong ぴよ将棋
-                span.ml-2 M1 Mac に「ぴよ将棋」を入れたのに「ぴよ将棋ｗ」が起動して困っている人はこちら
-              p
-                strong ぴよ将棋ｗ
-                span.ml-2 スマホになんかしらの制約で「ぴよ将棋」を入れられなかったり「ぴよ将棋」があるのに「ぴよ将棋ｗ」を使いたい人はこちら
 </template>
 
 <script>
@@ -68,6 +56,7 @@ export default {
   computed: {
     PiyoShogiTypeInfo()    { return PiyoShogiTypeInfo                                 },
     piyo_shogi_type_info() { return PiyoShogiTypeInfo.fetch(this.piyo_shogi_type_key) },
+    new_piyo_shogi_type_info() { return PiyoShogiTypeInfo.fetch(this.new_piyo_shogi_type_key) },
     page_title()           { return "ぴよ将棋の種類の変更"                            },
   },
 }
