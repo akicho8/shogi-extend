@@ -68,6 +68,14 @@
         | TrackLog
       .panel-block
         ShareBoardTrackLog(:base="base")
+  .column.is-12
+    .panel
+      .panel-heading
+        | 絵文字
+      .panel-block.is-block
+        template(v-for="e in base.guardian_list")
+          span(v-xemoji) {{e}}
+
 //- DebugPre(v-if="development_p") {{$data}}
 </template>
 
@@ -83,4 +91,7 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .ShareBoardDebugPanels
+  .xemoji
+    height: 4rem
+    width: unset
 </style>
