@@ -8,6 +8,7 @@
         template(v-if="e.lmi")
           .flex_item {{e.lmi.next_turn_offset}}
           .flex_item {{e.lmi.kif_without_from}}
+        .flex_item.is-size-7.has-text-grey(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
         .flex_item.is-size-7.time_format.has-text-grey-light(v-if="e.performed_at") {{time_format(e)}}
 </template>
 
@@ -87,30 +88,20 @@ export default {
 
     padding: 0
 
-    .time_format
-      vertical-align: middle
-
     .ShareBoardAvatarLine
       line-height: 2.25
-      // text-overflow: ellipsis
-      // overflow-x: auto
       padding: 0.2rem 0rem
       color: inherit
+
       &:hover
         background-color: $white-ter
 
-    // a
-    //   display: flex
-    //   justify-content: start
-    //   align-items: center
-    // 
-    //   text-overflow: ellipsis
-    //   padding: 0.2rem 0.5rem
-    //   color: inherit
-    //   &:hover
-    //     background-color: $grey-lighter
-    //   > *:not(:first-child)
-    //     margin-left: 0.25rem
+      +desktop
+        .time_format
+          display: none
+        &:hover
+          .time_format
+            display: block
 
 .STAGE-development
   .ShareBoardActionLog
