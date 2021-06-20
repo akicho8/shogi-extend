@@ -61,11 +61,18 @@
       .buttons.mb-0.mt-2
         b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
 
-      b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message" v-if="development_p && false")
-        b-field.is-marginless
-          template(v-for="e in base.StrictInfo.values")
-            b-radio-button(v-model="base.new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
-              | {{e.name}}
+      .box.mt-4
+        b-field(label="アバター" custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message")
+          b-field.is-marginless
+            template(v-for="e in base.AvatarKingInfo.values")
+              b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                | {{e.name}}
+
+        b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message" v-if="development_p")
+          b-field.is-marginless
+            template(v-for="e in base.StrictInfo.values")
+              b-radio-button(v-model="base.new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                | {{e.name}}
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -171,6 +178,7 @@ export default {
       this.base.ordered_members_share({
         ordered_members: this.base.new_ordered_members,
         strict_key: this.base.new_strict_key,
+        avatar_king_key: this.base.new_avatar_king_key,
         message: message,
       })
     },

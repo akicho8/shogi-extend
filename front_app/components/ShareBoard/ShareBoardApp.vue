@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .ShareBoardApp(:style="component_style")
-    div(is="style" v-text="component_raw_css")
+    div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'avatar_king_on'")
 
     DebugBox.is-hidden-mobile(v-if="development_p")
       p avatars_hash: {{avatars_hash}}

@@ -1,5 +1,6 @@
 import OrderSettingModal from "./OrderSettingModal.vue"
 import { StrictInfo } from "@/components/models/strict_info.js"
+import { AvatarKingInfo } from "@/components/models/avatar_king_info.js"
 import _ from "lodash"
 const FAKE_P = false
 
@@ -10,11 +11,13 @@ export const app_ordered_members = {
       order_func_p: false,          // 順番設定 true:有効 false:無効 モーダル内では元変数を直接変更している
       ordered_members: null,        // 出走順の実配列
       strict_key: "turn_strict_on", // 手番制限
+      avatar_king_key: "avatar_king_on", // アバター表示
 
       // ローカルのモーダルで使うテンポラリ変数
       // 「適用」してはじめて実変数に反映する
       os_table_rows:  null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
       new_strict_key: null, // 手番制限
+      new_avatar_king_key: null, // アバター表示
     }
   },
 
@@ -82,6 +85,7 @@ export const app_ordered_members = {
       this.tl_alert("os_modal_vars_setup")
       this.os_table_rows_build()
       this.new_strict_key = this.strict_key
+      this.new_avatar_king_key = this.avatar_king_key
     },
 
     os_table_rows_build() {
@@ -206,8 +210,7 @@ export const app_ordered_members = {
         }
       }
 
-      this.ordered_members = params.ordered_members
-      this.strict_key      = params.strict_key
+      this.om_vars_copy_from(params)
 
       // 順番設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
       // これは「自分→自身」でも動くので「観戦」状態の人が一番下に移動する
@@ -230,13 +233,17 @@ export const app_ordered_members = {
     },
 
     // 後から参加したときリクエストに答えてパラメータを送ってくれた人から受信した内容を反映する
-    om_vars_copy_from(params) {
+    om_vars_copy_all_from(params) {
       this.__assert__("order_func_p" in params, '"order_func_p" in params')
       this.tl_alert("順番設定パラメータを先代から受信")
 
       this.order_func_p    = params.order_func_p
+      this.om_vars_copy_from(params)
+    },
+    om_vars_copy_from(params) {
       this.ordered_members = params.ordered_members
       this.strict_key      = params.strict_key
+      this.avatar_king_key = params.avatar_king_key
     },
 
     // 自分の場所を調べて正面をその視点にする
@@ -259,12 +266,14 @@ export const app_ordered_members = {
         }
       }
     },
-    
+
   },
 
   computed: {
-    StrictInfo()  { return StrictInfo                                },
-    strict_info() { return this.StrictInfo.fetch_if(this.strict_key) },
+    StrictInfo()       { return StrictInfo                                         },
+    strict_info()      { return this.StrictInfo.fetch_if(this.strict_key)          },
+    AvatarKingInfo()   { return AvatarKingInfo                                     },
+    avatar_king_info() { return this.AvatarKingInfo.fetch_if(this.avatar_king_key) },
 
     // あとから接続した人に伝える内容
     om_params() {
@@ -272,6 +281,7 @@ export const app_ordered_members = {
         order_func_p:    this.order_func_p,
         ordered_members: this.ordered_members,
         strict_key:      this.strict_key,
+        avatar_king_key: this.avatar_king_key,
 
         __nil_check_skip_keys__: "ordered_members", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
