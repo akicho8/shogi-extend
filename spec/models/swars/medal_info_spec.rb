@@ -188,7 +188,7 @@ module Swars
       it do
         assert { test(2.5).include?(:"長考マン")   }
         assert { test(2.5).exclude?(:"大長考マン") }
-        assert { test(3.5).include?(:"大長考マン") }
+        assert { test(3.0).include?(:"大長考マン") }
       end
     end
 
