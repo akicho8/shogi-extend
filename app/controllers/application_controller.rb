@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include CurrentUserMethods
 
-  skip_forgery_protection :if => proc { request.format.json? }
+  skip_forgery_protection :if => proc { request.format.json? || Rails.env.development? }
 
   before_action do
     ActiveStorage::Current.host = request.base_url
