@@ -16,7 +16,7 @@ export const app_force_sync = {
           <p>これは次のショートカットです</p>
           <div class="content">
             <ol>
-              <li>左矢印で局面を0手目に移動</li>
+              <li>局面を0手目に移動</li>
               <li><b>局面の転送</b>の実行</li>
             </ol>
           </div>
@@ -48,7 +48,7 @@ export const app_force_sync = {
           <p>これは次のショートカットです</p>
           <div class="content">
             <ol>
-              <li>小さい左矢印で局面を1手戻す</li>
+              <li>局面を1手戻す</li>
               <li><b>局面の転送</b>の実行</li>
             </ol>
           </div>
