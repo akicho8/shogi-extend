@@ -61,7 +61,7 @@
       .buttons.mb-0.mt-2
         b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
 
-      .box.mt-4
+      .box.mt-5.has-background-primary-light.is-shadowless
         b-field(label="アバター" custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message")
           b-field.is-marginless
             template(v-for="e in base.AvatarKingInfo.values")
