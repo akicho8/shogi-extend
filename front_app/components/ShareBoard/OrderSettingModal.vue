@@ -16,7 +16,7 @@
   section.modal-card-body
     .description(v-if="!base.order_func_p")
       .has-text-centered.has-text-grey.my-6
-        | 設定する場合は右上のスイッチを<b>有効</b>にしよう
+        | 設定する場合は右上のスイッチを有効にしよう
 
       template(v-if="false")
         p
