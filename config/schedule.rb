@@ -40,6 +40,10 @@ every("5 3 * * *") do
     # %(SlackAgent.message_send(key: "schedule", body: "obt_auto_max update")),
     # 'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(7.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; SlackAgent.message_send(key: "obt_auto_max", body: i) }',
 
+    %(SlackAgent.message_send(key: "schedule", body: "耀龍四間飛車 update begin")),
+    %(ActsAsTaggableOn::Tag.find_by(name: "耀龍四間飛車").taggings.where(taggable_type: "Swars::Membership").order(id: :desc).in_batches.each_record{|e|e.taggable.battle.remake rescue nil}),
+    %(SlackAgent.message_send(key: "schedule", body: "耀龍四間飛車 update end")),
+
     # 全部0件
     # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
     # "Swars::Battle.where(:sfen_hash => nil).find_each{|e|e.save!}",
