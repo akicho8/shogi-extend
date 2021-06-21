@@ -18,6 +18,7 @@ export class SoundPreset extends MemoryRecord {
       { key: "dog1",           source: require("@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Dog_Bark_01_Mono.wav"),                                volume: 0.50, },
       { key: "dog2",           source: require("@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Dog_Bark_02_Mono.wav"),                                volume: 0.50, },
       { key: "dog3",           source: require("@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Dog_Yelp_01_Mono.wav"),                                volume: 0.50, },
+      { key: "shout_08",       source: require("@/assets/UniversalSoundFX/VOICES/Martial_Arts_Male/VOICE_Martial_Art_Shout_08_mono.wav"),       volume: 0.50, },
       // { key: "door_open",      source: require("@/assets/UniversalSoundFX/DOORS_GATES_DRAWERS/DOOR_Indoor_Wood_Open_stereo.wav"),               volume: 0.50, },
       { key: "door_close",     source: require("@/assets/UniversalSoundFX/DOORS_GATES_DRAWERS/DOOR_Indoor_Wood_Close_stereo.wav"),              volume: 0.50, },
       { key: "deden",          source: require("@/static/sound_effect/soundeffect_lab/deden.mp3"),                                              volume: 0.20, },
@@ -31,6 +32,7 @@ export class SoundPreset extends MemoryRecord {
       { key: "spon",           source: require("@/static/sound_effect/oto_logic/Onmtp-Pop01-4.mp3"),                                            volume: 0.50, },
       { key: "pon",            source: require("@/assets/UniversalSoundFX/CARTOON/POP_Mouth_mono.wav"),                                         volume: 0.40, },
       { key: "piece_sound",    source: require("shogi-player/assets/Universal_Sound_FX/TABLE_TENNIS_Racket_Ball_Hit_07_Hard_mono.wav"),         volume: 0.20, },
+
     ]
   }
 }

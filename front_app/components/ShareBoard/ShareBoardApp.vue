@@ -59,6 +59,7 @@ client-only
               :sp_controller="controller_disabled_p ? 'is_controller_off' : 'is_controller_on'"
               :sp_slider="controller_disabled_p ? 'is_slider_off' : 'is_slider_on'"
 
+              sp_debug="is_debug_off"
               sp_summary="is_summary_off"
 
               :sp_play_mode_legal_move_only="strict_p"
@@ -72,7 +73,8 @@ client-only
               @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
               @update:turn_offset="v => turn_offset = v"
               @update:turn_offset_max="v => turn_offset_max = v"
-              @operation_invalid="operation_invalid_handle"
+              @operation_invalid1="operation_invalid1_handle"
+              @operation_invalid2="operation_invalid2_handle"
             )
 
             .footer_buttons(v-if="edit_mode_p")
@@ -259,6 +261,7 @@ export default {
     // 局面0で1手指したとき last_move_info.next_turn_offset は 1
     play_mode_advanced_full_moves_sfen_set(e) {
       this.current_sfen = e.sfen
+      // this.sound_play("shout_08")
       this.vibrate(10)
       this.sfen_share_params_set(e.last_move_info)
       this.sfen_share()
@@ -347,9 +350,10 @@ export default {
       this.toast_ok("局面をいっちばん最初にここに来たときの状態に戻しました")
     },
 
-    operation_invalid_handle() {
+    operation_invalid1_handle() {
       if (this.base.order_func_p) {
         if (this.base.ordered_members) {
+          this.sound_play("x")
           const name = this.current_turn_user_name
           if (name) {
             this.toast_ok(`今は${this.user_call_name(name)}の手番です`)
@@ -358,6 +362,10 @@ export default {
           }
         }
       }
+    },
+    operation_invalid2_handle() {
+      this.sound_play("x")
+      this.toast_ok("それは相手の駒です")
     },
   },
 
