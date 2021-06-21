@@ -32,7 +32,7 @@ module ShareBoard
     end
 
     def received_ok(data)
-      track(data, "指手受信", "OK > #{data['to_user_name']}")
+      track(data, "指手受信", "OK > #{data['to_user_name']}") unless Rails.env.production?
       broadcast(:received_ok_broadcasted, data)
     end
 
@@ -53,9 +53,7 @@ module ShareBoard
     end
 
     def setup_info_send(data)
-      if Rails.env.development? || Rails.env.staging? || Rails.env.test?
-        track(data, "情報送信", "あげます > #{data["to_user_name"]}")
-      end
+      track(data, "情報送信", "あげます > #{data["to_user_name"]}") unless Rails.env.production?
       broadcast(:setup_info_send_broadcasted, data)
     end
 
@@ -73,7 +71,7 @@ module ShareBoard
     end
 
     def order_func_share(data)
-      track(data, "順番機能", data["order_func_p"] ? "ON" : "OFF")
+      track(data, "順番設定", data["order_func_p"] ? "ON" : "OFF")
       broadcast(:order_func_share_broadcasted, data)
     end
 
