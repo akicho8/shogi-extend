@@ -1,6 +1,6 @@
 <template lang="pug">
 .SwarsBattleIndexMembership
-  .icon_with_name.is-inline-block
+  .icon_with_name
     MembershipMedal(:params="m.medal_params" v-if="m.medal_params")
     SwarsBattleShowUserLink(:membership="m")
   b-taglist
@@ -39,6 +39,10 @@ export default {
 .SwarsBattleIndexMembership
   // モバイルのときは縦表示になるので名前を大きくする
   .icon_with_name
+    display: flex
+    align-items: center
+    justify-content: start
+
     +mobile
       font-size: $size-4
     +tablet
@@ -69,4 +73,11 @@ export default {
     //   color: $text
     //   &:hover
     //     color: $link
+
+.STAGE-development
+  .SwarsBattleIndexMembership
+    .icon_with_name
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .tags
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

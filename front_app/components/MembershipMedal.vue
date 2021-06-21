@@ -1,7 +1,7 @@
 <template lang="pug">
-span.MembershipMedal(:class="wrapper_class" @click="click_handle")
+.MembershipMedal(:class="wrapper_class" @click="click_handle")
   template(v-if="false")
-  span(v-else-if="params.emoji" v-xemoji) {{params.emoji}}
+  .xemoji_wrap(v-else-if="params.emoji" v-xemoji) {{params.emoji}}
   b-icon(v-else-if="params.icon" :icon="params.icon" :type="params.type" size="is-small" :class="params.class")
   template(v-else)
     | {{params}}
@@ -37,15 +37,22 @@ export default {
 
 <style lang="sass">
 .MembershipMedal
-  &.my_emoji
-    margin-right: 0.3rem
-  &.my_icon
-    margin-right: 0.5rem
+  display: flex
+  align-items: center
+  justify-content: center
 
-  +mobile
-    &.my_emoji
-      // 絵文字によって大きさが異なるのので結局完璧に揃えるのは難しい
-      margin-right: 0.45rem
-    &.my_icon
-      margin-right: 0.8rem
+  .xemoji_wrap
+    display: flex
+
+  .xemoji, .icon
+    height: 1em
+    width: unset
+
+  margin-right: 0.3em
+
+.STAGE-development
+  .MembershipMedal
+    border: 1px dashed change_color($primary, $alpha: 0.5)
+    .xemoji_wrap, .icon
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
