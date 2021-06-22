@@ -1,3 +1,4 @@
+import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
 import HandleNameModal from "./HandleNameModal.vue"
 import _ from "lodash"
 
@@ -33,23 +34,7 @@ export const app_handle_name = {
     },
 
     handle_name_validate(s) {
-      s = _.trim(s)
-      let message = null
-      if (message == null) {
-        if (s.length === 0) {
-          message = "ハンドルネームを入力してください"
-        }
-      }
-      if (message == null) {
-        if (s.match(/[な名][な無]し|nanash?i|無名|通りすがり/i)) {
-          message = "そのハンドルネームは使えません"
-        }
-      }
-      if (message == null) {
-        if (s.length <= 1 && !s.match(/[一-龠]/)) {
-          message = "正しいハンドルネームを入力してください"
-        }
-      }
+      const message = HandleNameValidator.valid_with_message(s)
       if (message) {
         this.toast_ng(message)
         if (false) {

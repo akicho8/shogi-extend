@@ -7,6 +7,7 @@ import twemoji from 'twemoji'
 const strip_tags = require('striptags')
 
 import { isMobile } from "../components/models/is_mobile.js"
+import { AnySupport } from "../components/models/any_support.js"
 
 import Autolinker from 'autolinker'
 
@@ -14,6 +15,8 @@ import _ from "lodash"
 
 export default {
   methods: {
+    ...AnySupport,
+
     mobile_p()  { return isMobile.any()  },
     desktop_p() { return !isMobile.any() },
 
@@ -150,28 +153,6 @@ export default {
 
     number_floor(v, precision = 0) {
       return _.floor(v, precision)
-    },
-
-    ruby_like_modulo(v, n) {
-      if (n === 0) {
-        throw new Error("divided by 0")
-      }
-      v = v % n
-      v = Math.trunc(v)
-      if (v < 0) {
-        v = n + v
-      }
-      return v + 0
-    },
-
-    ary_cycle_at(ary, index) {
-      return ary[this.ruby_like_modulo(index, ary.length)]
-    },
-
-    // 文字列からハッシュコードに変換
-    // これは単純なものでよい
-    hash_number_from_str(str) {
-      return _.sumBy([...str], e => e.codePointAt(0))
     },
 
     // list 内のインデックス from の要素を to に移動
