@@ -36,7 +36,7 @@ export const app_handle_name = {
     handle_name_validate(s) {
       const message = HandleNameValidator.valid_with_message(s)
       if (message) {
-        this.toast_ng(message)
+        this.toast_warn(message)
         if (false) {
           this.sns_login_modal_open()
         }
