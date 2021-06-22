@@ -848,7 +848,7 @@ RSpec.describe "共有将棋盤", type: :system do
   describe "順番設定シャッフル" do
     it "works" do
       a_block do
-        visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4")
+        visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
 
         side_menu_open
         menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
@@ -1075,8 +1075,18 @@ RSpec.describe "共有将棋盤", type: :system do
         side_menu_open
         menu_item_click("ハンドルネーム変更")
         test1("", "ハンドルネームを入力してください")
-        test1("名無し", "そのハンドルネームは使えません")
-        test1(".", "正しいハンドルネームを入力してください")
+        test1("名無し", "ハンドルネームを入力してください")
+        test1(".", "ハンドルネームを入力してください")
+      end
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'URLから来ても不正なハンドルネームは通さない'
+  describe "URLから来ても不正なハンドルネームは通さない" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "nanashi", ordered_member_names: "nanashi")
+        assert_text("部屋に入る")                         # ハンドルネームが不正なのでダイアログが出ている
       end
     end
   end

@@ -34,6 +34,9 @@ export const app_handle_name = {
     },
 
     handle_name_validate(s) {
+      if (this.$route.query.handle_name_validate_skip === "true") {
+        return true
+      }
       const message = HandleNameValidator.valid_with_message(s)
       if (message) {
         this.toast_warn(message)
