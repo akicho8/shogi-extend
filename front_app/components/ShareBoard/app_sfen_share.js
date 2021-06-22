@@ -32,7 +32,7 @@ export const app_sfen_share = {
         this.sfen_share_params["next_user_name"] = next_user_name
       }
 
-      if (this.clock_box) {
+      if (this.clock_box && this.clock_box.working_p) {
         this.sfen_share_params["elapsed_sec"] = this.clock_box.elapsed_sec
       }
 
