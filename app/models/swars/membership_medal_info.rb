@@ -82,7 +82,7 @@ module Swars
       {
         key: "大長考マン",
         message: -> m { "対局放棄と受け取られかねない#{m.think_max_s}の長考をした" },
-        medal_params: "🚫",
+        medal_params: "⚠",
         if_cond: -> m {
           (t = m.battle.rule_info.long_leave_alone) && m.think_max >= t
         },
