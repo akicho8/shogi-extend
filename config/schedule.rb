@@ -25,7 +25,7 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 
 every("5 3 * * *") do
   runner [
-    %(SlackAgent.message_send(key: "schedule", body: "begin")),
+    %(SlackAgent.message_send(key: "CRON", body: "begin")),
 
     # "ActiveRecord::Base.logger = nil",
     "Swars::Crawler::ExpertCrawler.run",
@@ -37,12 +37,12 @@ every("5 3 * * *") do
     "Swars::Battle.cleanup",
     "FreeBattle.cleanup",
 
-    # %(SlackAgent.message_send(key: "schedule", body: "obt_auto_max update")),
+    # %(SlackAgent.message_send(key: "CRON", body: "obt_auto_max update")),
     # 'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(7.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; SlackAgent.message_send(key: "obt_auto_max", body: i) }',
 
-    %(SlackAgent.message_send(key: "schedule", body: "耀龍四間飛車 update begin")),
+    %(SlackAgent.message_send(key: "CRON", body: "耀龍四間飛車 update begin")),
     %(ActsAsTaggableOn::Tag.find_by(name: "耀龍四間飛車").taggings.where(taggable_type: "Swars::Membership").order(id: :desc).in_batches.each_record{|e|e.taggable.battle.remake rescue nil}),
-    %(SlackAgent.message_send(key: "schedule", body: "耀龍四間飛車 update end")),
+    %(SlackAgent.message_send(key: "CRON", body: "耀龍四間飛車 update end")),
 
     # 全部0件
     # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
@@ -57,7 +57,7 @@ every("5 3 * * *") do
     "Emox::SchoolChannel.active_users_clear",
     "Emox::RoomChannel.active_users_clear",
 
-    %(SlackAgent.message_send(key: "schedule", body: "end")),
+    %(SlackAgent.message_send(key: "CRON", body: "end")),
   ].join(";")
 end
 
