@@ -1,4 +1,5 @@
 import _ from "lodash"
+import dayjs from "dayjs"
 import { parse as TwitterEmojiParser } from 'twemoji-parser'
 
 export const app_guardian = {
@@ -21,7 +22,8 @@ export const app_guardian = {
       // if (this.development_p) {
       //   return _.sample(this.guardian_list)
       // }
-      const hash_number = this.hash_number_from_str(str)
+      const pepper = dayjs().format("YYYY-MM")
+      const hash_number = this.hash_number_from_str([pepper, str].join("-"))
       return this.ary_cycle_at(this.guardian_list, hash_number)
     },
   },
@@ -29,6 +31,13 @@ export const app_guardian = {
     // 簡単に採取できる便利サイト
     // https://jp.piliapp.com/twitter-symbols/
     // 💩
-    guardian_list() { return [..."🍉🥕🍆🥦🥝🍩", ..."💀💩🧠🫀", ..."🔰🔞🃏", ..."🐶🐱🐹🐻🧸🐼️🐯🦁🐮🐷🐸🐵🦍🦧🐔🐧🐦🐤🐣🐥🐺🦊🦝🐗🐴🦓🦒🦌🦘🦥🦫🦄🐝🐛🦋🐌🪲🐞🐜🦗🪳🕷🦂🦟🪰🐢🐍🦎🐙🦑🦞🦀🐠🐟🐡🐬🦈🐳🐊🐆🐅🐄🦬🦣🦇🐓🦃🦅🦆🦢🦉🦩🦜🦤🦔🐲"] },
+    guardian_list() {
+      return [
+        ..."🍉🥕🍆🥦🥝🍩",
+        ..."💀💩🧠🫀",
+        ..."🔰🔞🃏",
+        ..."🐶🐱🐹🐻🧸🐼️🐯🦁🐮🐷🐸🐵🦍🦧🐔🐧🐦🐤🐣🐥🐺🦊🦝🐗🐴🦓🦒🦌🦘🦥🦫🦄🐝🐛🦋🐌🪲🐞🐜🦗🪳🕷🦂🦟🪰🐢🐍🦎🐙🦑🦞🦀🐠🐟🐡🐬🦈🐳🐊🐆🐅🐄🦬🦣🦇🐓🦃🦅🦆🦢🦉🦩🦜🦤🦔🐲",
+      ]
+    },
   },
 }
