@@ -62,17 +62,26 @@
         b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
 
       .box.mt-5.has-background-primary-light.is-shadowless
-        b-field(label="アバター" custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message")
-          b-field.is-marginless
-            template(v-for="e in base.AvatarKingInfo.values")
-              b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
-                | {{e.name}}
-
-        b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message" v-if="development_p")
-          b-field.is-marginless
-            template(v-for="e in base.StrictInfo.values")
-              b-radio-button(v-model="base.new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
-                | {{e.name}}
+        .columns.is-mobile
+          .column
+            b-field(label="アバター" custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message")
+              b-field.is-marginless
+                template(v-for="e in base.AvatarKingInfo.values")
+                  b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                    | {{e.name}}
+          .column
+            b-field(label="シャウト" custom-class="is-small" :message="base.ShoutInfo.fetch(base.new_shout_key).message")
+              b-field.is-marginless
+                template(v-for="e in base.ShoutInfo.values")
+                  b-radio-button(v-model="base.new_shout_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                    | {{e.name}}
+        .columns.is-mobile(v-if="development_p && false")
+          .column
+            b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message")
+              b-field.is-marginless
+                template(v-for="e in base.StrictInfo.values")
+                  b-radio-button(v-model="base.new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                    | {{e.name}}
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -179,6 +188,7 @@ export default {
         ordered_members: this.base.new_ordered_members,
         strict_key: this.base.new_strict_key,
         avatar_king_key: this.base.new_avatar_king_key,
+        shout_key: this.base.new_shout_key,
         message: message,
       })
     },

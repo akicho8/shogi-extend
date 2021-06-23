@@ -151,18 +151,20 @@ export const app_sfen_share = {
     fast_sound_effect_func(params) {
       this.vibrate(10)
 
-      const info = BehaviorEffectInfo.fetch(params.lmi.effect_key)
-      this.sound_play_random(info.sound_key)
+      if (this.shout_info.key === "shout_on") {
+        const info = BehaviorEffectInfo.fetch(params.lmi.effect_key)
+        this.sound_play_random(info.sound_key)
 
-      this.delay_block(0.25, () => {
-        // location_key: ks.location.key,
-        // piece_key:    ks.piece.key,
-        // promoted:     ks.promoted,
-        if (params.lmi.killed_soldier) {
-          const info = BehaviorEffectInfo.fetch("killed_and_death")
-          this.sound_play_random(info.sound_key)
-        }
-      })
+        this.delay_block(0.25, () => {
+          // location_key: ks.location.key,
+          // piece_key:    ks.piece.key,
+          // promoted:     ks.promoted,
+          if (params.lmi.killed_soldier) {
+            const info = BehaviorEffectInfo.fetch("killed_and_death")
+            this.sound_play_random(info.sound_key)
+          }
+        })
+      }
     },
   },
   computed: {
