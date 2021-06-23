@@ -1,4 +1,5 @@
 import _ from "lodash"
+import { BehaviorEffectInfo } from "../models/behavior_effect_info.js"
 
 export const app_sfen_share = {
   data() {
@@ -23,8 +24,18 @@ export const app_sfen_share = {
           next_turn_offset:    lmi.next_turn_offset,    // 1
           player_location_key: lmi.player_location.key, // "black"
           yomiage:             lmi.to_yomiage,          // "ななろくふ"
+          effect_key:          lmi.effect_key,          // 効果音キー
         },
         ...this.current_sfen_attrs, // turn_offset が含まれる
+      }
+
+      const ks = lmi.killed_soldier
+      if (ks) {
+        this.sfen_share_params.lmi.killed_soldier = {
+          location_key: ks.location.key,
+          piece_key:    ks.piece.key,
+          promoted:     ks.promoted,
+        }
       }
 
       const next_user_name = this.user_name_by_turn(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
@@ -37,6 +48,8 @@ export const app_sfen_share = {
       }
 
       this.sequence_code_embed()
+
+      this.fast_sound_effect_func(this.sfen_share_params) // ブロードキャスト前に実行
     },
 
     sfen_share() {
@@ -60,9 +73,11 @@ export const app_sfen_share = {
           this.tl_alert("指し手のBCにより編集を解除")
           this.sp_run_mode = "play_mode"
         }
+
+        this.fast_sound_effect_func(params)
+
         // 受信したSFENを盤に反映
         this.setup_by_params(params)
-        this.vibrate(10)
       }
 
       if (true) {
@@ -86,6 +101,15 @@ export const app_sfen_share = {
         }
 
         this.from_user_name_valid(params) // 指し手制限をしていないとき別の人が指したかチェックする
+
+        // const ks = params.killed_soldier
+        // if (ks) {
+        //   this.sfen_share_params.lmi.killed_soldier = {
+        //     location_key: ks.location.key,
+        //     piece_key:    ks.piece.key,
+        //     promoted:     ks.promoted,
+        //   }
+        // }
 
         // 「alice ▲76歩」と表示しながら
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
@@ -119,6 +143,26 @@ export const app_sfen_share = {
           }
         }
       }
+    },
+
+    // 即時実行させたいエフェクト
+    // エフェクトのタイミングがずれないようにローカルでは自分側だけで実行する
+    // ブロードキャストは相手側だけで実行する
+    fast_sound_effect_func(params) {
+      this.vibrate(10)
+
+      const info = BehaviorEffectInfo.fetch(params.lmi.effect_key)
+      this.sound_play_random(info.sound_key)
+
+      this.delay_block(0.25, () => {
+        // location_key: ks.location.key,
+        // piece_key:    ks.piece.key,
+        // promoted:     ks.promoted,
+        if (params.lmi.killed_soldier) {
+          const info = BehaviorEffectInfo.fetch("killed_and_death")
+          this.sound_play_random(info.sound_key)
+        }
+      })
     },
   },
   computed: {
