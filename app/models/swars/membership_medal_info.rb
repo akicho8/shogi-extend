@@ -143,6 +143,7 @@ module Swars
           s1 = "#{a}#{a <= 9 ? 'つ' : ''}"
           s2 = "#{s1}#{a >= 2 ? 'も' : ''}"
 
+          # if m.battle.preset_key == "平手"
           v = nil
           case
           when m.judge_info.key == :win
@@ -180,6 +181,7 @@ module Swars
           #   v[:message] = "(#{d})#{v[:message]}"
           # end
           v
+          # end
         },
       },
     ]
