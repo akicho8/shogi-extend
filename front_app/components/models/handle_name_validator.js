@@ -31,6 +31,7 @@ export const HandleNameValidator = {
   },
   valid(s) {
     s = _.trim(s)
+    s = AnySupport.hankaku_format(s)
     let error = false
     if (!error) {
       error = (s.length === 0)
