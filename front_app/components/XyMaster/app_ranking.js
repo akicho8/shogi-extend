@@ -1,6 +1,7 @@
 const CONGRATS_LTEQ = 10      // N位以内ならおめでとう
 
 import _ from "lodash"
+import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
 
 export const app_ranking = {
   data() {
@@ -17,24 +18,41 @@ export const app_ranking = {
   },
   methods: {
     ranking_goal_process() {
-      if (this.current_entry_name) {
-        this.entry_name = this.current_entry_name
-        this.record_post()
-      } else {
-        this.$buefy.dialog.prompt({
-          title: "名前を入力してください",
-          confirmText: "保存",
-          cancelText: "キャンセル",
-          inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
-          canCancel: false,
-          onConfirm: value => {
-            this.entry_name = _.trim(value)
-            if (this.present_p(this.entry_name)) {
-              this.record_post()
-            }
-          },
-        })
+      if (this.blank_p(this.current_entry_name)) {
+        this.name_input_dialog()
+        return
       }
+
+      this.entry_name_set_and_record_post(this.current_entry_name)
+    },
+
+    name_input_dialog() {
+      this.$buefy.dialog.prompt({
+        title: "名前を入力してください",
+        confirmText: "保存",
+        cancelText: "キャンセル",
+        inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
+        canCancel: false,
+        onCancel: () => {
+          this.sound_play("click")
+        },
+        onConfirm: value => {
+          const message = HandleNameValidator.valid_with_message(value, {name: "名前"})
+          if (message) {
+            this.sound_play("x")
+            this.toast_warn(message)
+            this.name_input_dialog()
+          } else {
+            this.sound_play("click")
+            this.entry_name_set_and_record_post(value)
+          }
+        },
+      })
+    },
+
+    entry_name_set_and_record_post(value) {
+      this.entry_name = value
+      this.record_post()
     },
 
     // 名前を確定してからサーバーに保存する

@@ -12,6 +12,11 @@
   .column.is-3
     .panel
       .panel-heading
+        | その他
+      a.panel-block(@click="base.name_input_dialog") 名前入力
+  .column.is-3
+    .panel
+      .panel-heading
         | ランキングタブの各表示ページ
       .panel-block
         | {{base.current_pages}}
