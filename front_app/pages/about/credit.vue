@@ -23,7 +23,7 @@
 
   .section_title 実戦詰将棋『一期一会』問題集
   ul
-    li: ExternalLink(beep href="http://yaneuraou.yaneu.com/2020/12/25/christmas-present/") やねうら王公式ｸﾘｽﾏｽﾌﾟﾚｾﾞﾝﾄ詰将棋500万問
+    li: ExternalLink(beep href="https://yaneuraou.yaneu.com/2020/12/25/christmas-present/") やねうら王公式ｸﾘｽﾏｽﾌﾟﾚｾﾞﾝﾄ詰将棋500万問より
 
   .section_title THANKS
   ul.thanks
