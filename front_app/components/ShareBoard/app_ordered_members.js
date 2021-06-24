@@ -12,8 +12,6 @@ export const app_ordered_members = {
       order_func_p: false,          // 順番設定 true:有効 false:無効 モーダル内では元変数を直接変更している
       ordered_members: null,        // 出走順の実配列
       strict_key: "turn_strict_on", // 手番制限
-      avatar_king_key: "avatar_king_on", // アバター表示
-      shout_key: "shout_on", // 叫びモード
 
       // ローカルのモーダルで使うテンポラリ変数
       // 「適用」してはじめて実変数に反映する
