@@ -4,7 +4,7 @@
     p.modal-card-title.is-size-5.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
       | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room && false") 入室中
-    b-button(@click="base.room_code_only_url_copy_handle" icon-left="clipboard-plus-outline" size="is-small" rounded v-if="present_p(base.ac_room)") URL
+    b-button(@click="base.room_code_only_url_copy_handle" icon-left="clipboard-plus-outline" size="is-small" rounded v-if="present_p(base.ac_room)") 部屋のリンク
 
   section.modal-card-body
     .content(v-if="false")
