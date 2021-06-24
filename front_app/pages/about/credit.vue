@@ -29,7 +29,7 @@
   ul
     li: ExternalLink(beep href="https://twitter.com/sgkinakomochi") きなこもち
 
-  .section_title THANKS
+  .section_title SPECIAL THANKS
   ul.thanks
     li
       ExternalLink.is-block(beep href="https://www.studiok-i.net/piyo_shogi/") ぴよ将棋
