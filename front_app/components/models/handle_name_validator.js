@@ -3,10 +3,22 @@ import dayjs from "dayjs"
 import { AnySupport } from "./any_support.js"
 
 export const HandleNameValidator = {
-  valid_with_message(s) {
+  // import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
+  //
+  // const message = HandleNameValidator.valid_with_message(str, {name: "名前"})
+  // if (message) {
+  //   this.toast_warn(message)
+  //   return
+  // }
+  //
+  valid_with_message(s, options = {}) {
+    options = {
+      name: "ハンドルネーム",
+      ...options,
+    }
     s = _.trim(s)
     if (s.length === 0) {
-      return "ハンドルネームを入力してください"
+      return `${options.name}を入力してください`
     }
     if (this.valid(s)) {
       return null
@@ -14,7 +26,7 @@ export const HandleNameValidator = {
       const pepper = dayjs().format("YYYY-MM-DD")
       const hash_number = AnySupport.hash_number_from_str([pepper, s].join("-"))
       const prefix = AnySupport.ary_cycle_at(this.prefix_list, hash_number)
-      return `${prefix}ハンドルネームを入力してください`
+      return `${prefix}${options.name}を入力してください`
     }
   },
   valid(s) {
