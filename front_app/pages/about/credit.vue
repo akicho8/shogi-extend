@@ -25,6 +25,10 @@
   ul
     li: ExternalLink(beep href="https://yaneuraou.yaneu.com/2020/12/25/christmas-present/") やねうら王公式ｸﾘｽﾏｽﾌﾟﾚｾﾞﾝﾄ詰将棋500万問より
 
+  .section_title PROGRAM
+  ul
+    li: ExternalLink(beep href="https://twitter.com/sgkinakomochi") きなこもち
+
   .section_title THANKS
   ul.thanks
     li
