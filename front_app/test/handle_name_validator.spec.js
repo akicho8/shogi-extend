@@ -14,6 +14,7 @@ describe('HandleNameValidator', () => {
     expect(HandleNameValidator.valid("a")).toEqual(false)
     expect(HandleNameValidator.valid("aa")).toEqual(false)
     expect(HandleNameValidator.valid("aaa")).toEqual(false)
+    expect(HandleNameValidator.valid("aａa")).toEqual(false)
     expect(HandleNameValidator.valid("abbbc")).toEqual(false)
   })
 
