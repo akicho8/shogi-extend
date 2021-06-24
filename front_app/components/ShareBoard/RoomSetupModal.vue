@@ -14,9 +14,9 @@
         li
           | 合言葉を設定したら同じ合言葉を相手にも伝えよう
           .has-text-grey.is-size-7
-            | メニューにある「合言葉だけを含むURL」を伝えてもよし
+            | メニューにある「部屋のリンク」を伝えてもよし
           .is-flex.is-align-items-center(v-if="false")
-            b-button(@click="base.room_code_only_url_copy_handle" icon-left="clipboard-plus-outline" outlined :disabled="!base.room_code") 合言葉だけを含むURL
+            b-button(@click="base.room_code_only_url_copy_handle" icon-left="clipboard-plus-outline" outlined :disabled="!base.room_code") 部屋のリンク
             span.ml-1 を伝えてもよし
         li(v-if="false")
           | <b>待った</b>や<b>反則の取り消し</b>は合意の上、当人が下の左矢印で局面を戻して指し直してください

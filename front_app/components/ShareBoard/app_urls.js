@@ -10,7 +10,7 @@ export const app_urls = {
         this.toast_warn("まだ合言葉を設定してません")
         return
       }
-      this.clipboard_copy({text: this.room_code_only_url, success_message: "合言葉だけを含むURLをコピーしました"})
+      this.clipboard_copy({text: this.room_code_only_url, success_message: "部屋のリンクをコピーしました"})
     },
 
     // 棋譜だけを含むURLのコピー

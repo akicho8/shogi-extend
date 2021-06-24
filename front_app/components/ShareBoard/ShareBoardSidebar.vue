@@ -19,7 +19,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(label="1手戻す"                     @click="base.force_sync_turn_previous_modal_handle")
           b-menu-item.is_active_unset(label="局面の転送"                  @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="手合割"                      @click="base.handicap_set_modal_handle")
-          b-menu-item.is_active_unset(label="合言葉だけを含むURLのコピー" @click="base.room_code_only_url_copy_handle"  :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(label="部屋のリンクのコピー" @click="base.room_code_only_url_copy_handle"  :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="自動マッチング"              @click="base.xmatch_modal_handle" v-if="$config.STAGE !== 'production' || true")
           b-menu-item.is_active_unset(label="再起動"                      @click="base.room_recreate_modal_handle" :disabled="blank_p(base.ac_room)")
 
