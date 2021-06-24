@@ -24,6 +24,7 @@ export const app_edit_mode = {
         onConfirm: () => {
           this.sound_stop_all()
           this.sound_play("click")
+          this.al_add({label: "局面編集前"})
           this.sp_run_mode = "edit_mode"
         },
       })
@@ -33,11 +34,11 @@ export const app_edit_mode = {
     edit_mode_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-      if (this.present_p(this.room_code)) {
+      if (this.ac_room) {
         this.edit_warn_modal_handle()
-      } else {
-        this.sp_run_mode = "edit_mode"
+        return
       }
+      this.sp_run_mode = "edit_mode"
     },
 
     // 編集完了
@@ -45,6 +46,7 @@ export const app_edit_mode = {
       this.sidebar_p = false
       this.sound_play("click")
       this.sp_run_mode = "play_mode"
+      this.al_add({label: "局面編集後"})
     },
 
     // 駒箱調整
@@ -84,9 +86,11 @@ export const app_edit_mode = {
               }
               if (e.body) {
                 this.sound_play("click")
-                this.toast_ok("読み込みました")
+                this.toast_ok("棋譜を読み込みました")
+                this.al_add({label: "棋譜読込前"})
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
+                this.al_add({label: "棋譜読込後"})
                 this.sp_viewpoint = "black"
                 this.ac_log("棋譜読込", e.body)
                 modal_instance.close()

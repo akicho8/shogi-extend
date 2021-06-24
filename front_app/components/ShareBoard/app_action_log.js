@@ -36,8 +36,8 @@ export const app_action_log = {
 
     al_add(params) {
       params = {...params}
-      params.sfen = params.sfen ?? this.current_sfen
-      params.turn_offset = params.turn_offset ?? this.current_turn_offset
+      params.sfen ??= this.current_sfen
+      params.turn_offset ??= this.current_turn_offset
 
       if (ACTION_LOG_PUSH_TO === "top") {
         this.action_logs.unshift(params)
