@@ -1,10 +1,16 @@
 import _ from "lodash"
 import { Location   } from "shogi-player/components/models/location.js"
+import { AvatarKingInfo } from "@/components/models/avatar_king_info.js"
 
 const AVATAR_AS_KING   = true // アバターを玉にする(優先度高)
 const GUARDIAN_AS_KING = true // 守護獣を玉にする(優先度低)
 
 export const app_avatar = {
+  data() {
+    return {
+      avatar_king_key: null, // アバター表示
+    }
+  },
   methods: {
     // private
     one_side_piece_replace_style(e) {
@@ -19,7 +25,16 @@ export const app_avatar = {
               }`
     },
   },
+  created() {
+    this.DEFAULT_VARS = {
+      ...this.DEFAULT_VARS,
+      avatar_king_key: this.development_p ? "is_avatar_king_on" : "is_avatar_king_on",
+    }
+  },
   computed: {
+    AvatarKingInfo()   { return AvatarKingInfo                                     },
+    avatar_king_info() { return this.AvatarKingInfo.fetch_if(this.avatar_king_key) },
+
     component_raw_css() {
       let v = null
       v = _.map(this.avatars_hash, (e, key) => this.one_side_piece_replace_style(e))

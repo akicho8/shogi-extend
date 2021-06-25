@@ -9,7 +9,6 @@ export const app_main_setting = {
       sync_mode:       null, // 同期方法
       internal_rule:   null, // 操作モードの内部ルール strict or free
       debug_mode:      null, // デバッグモード (bool型にしてはいけない)
-      avatar_king_key: null, // アバター表示
       shout_key:       null, // 叫びモード
     }
   },

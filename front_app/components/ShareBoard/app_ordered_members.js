@@ -1,6 +1,5 @@
 import OrderSettingModal from "./OrderSettingModal.vue"
 import { StrictInfo } from "@/components/models/strict_info.js"
-import { AvatarKingInfo } from "@/components/models/avatar_king_info.js"
 import { ShoutInfo } from "@/components/models/shout_info.js"
 import _ from "lodash"
 const FAKE_P = false
@@ -275,8 +274,6 @@ export const app_ordered_members = {
   computed: {
     StrictInfo()       { return StrictInfo                                         },
     strict_info()      { return this.StrictInfo.fetch_if(this.strict_key)          },
-    AvatarKingInfo()   { return AvatarKingInfo                                     },
-    avatar_king_info() { return this.AvatarKingInfo.fetch_if(this.avatar_king_key) },
     ShoutInfo()   { return ShoutInfo                                     },
     shout_info() { return this.ShoutInfo.fetch_if(this.shout_key) },
 
