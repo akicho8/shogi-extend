@@ -42,6 +42,24 @@
       a.panel-block(@click="base.room_create") 接続
       a.panel-block(@click="base.room_destroy") 切断
       a.panel-block(@click="base.fake_error") 値null送信
+  .column.is-3
+    .panel
+      .panel-heading
+        | JSON
+      .panel-block
+        pre {{JSON.stringify(base.record, null, 4)}}
+  .column.is-3
+    .panel
+      .panel-heading
+        | CustomVarInfo
+      .panel-block
+        pre {{JSON.stringify(base.custom_var_all, null, 4)}}
+  .column.is-3
+    .panel
+      .panel-heading
+        | DEFAULT_VARS
+      .panel-block
+        pre {{JSON.stringify(base.DEFAULT_VARS, null, 4)}}
   .column.is-4
     .panel
       .panel-heading
@@ -56,12 +74,6 @@
       .panel-block
         p.is_line_break_on {{$config.MY_SITE_URL + base.config.twitter_card_options.image}}
         img.is-block(:src=`$config.MY_SITE_URL + base.config.twitter_card_options.image` width="256")
-  .column.is-3
-    .panel
-      .panel-heading
-        | JSON
-      .panel-block
-        pre {{JSON.stringify(base.record, null, 4)}}
   .column.is-6.is-clipped
     .panel
       .panel-heading

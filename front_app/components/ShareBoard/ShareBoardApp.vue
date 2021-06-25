@@ -220,20 +220,6 @@ export default {
   },
   created() {
     this.vars_setup()
-
-    this.DEFAULT_VARS = {
-      ...this.DEFAULT_VARS,
-      title: "共有将棋盤",
-      sp_run_mode: "play_mode",
-      internal_rule: "strict",
-      ctrl_mode:       this.development_p ? "is_ctrl_mode_visible" : "is_ctrl_mode_hidden",
-      debug_mode:      this.development_p ? "is_debug_mode_on" : "is_debug_mode_off",
-      sync_mode:       this.development_p ? "is_sync_mode_soft" : "is_sync_mode_soft",
-      yomiage_mode:    this.development_p ? "is_yomiage_mode_on" : "is_yomiage_mode_on",
-      sp_move_cancel:  this.development_p ? "is_move_cancel_easy" : "is_move_cancel_hard",
-      shout_key:       this.development_p ? "is_shout_on" : "is_shout_on",
-    }
-    this.sp_run_mode = this.$route.query.sp_run_mode || this.DEFAULT_VARS.sp_run_mode
   },
 
   mounted() {
