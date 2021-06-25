@@ -5,7 +5,7 @@ import { IntervalCounter } from '@/components/models/interval_counter.js'
 
 const WAIT_TIME_MAX           = 60 * 3           // 待ち時間最大
 const XMATCH_REDIS_TTL        = 60 * 3 + 3       // エントリー(redis.hset)する度に更新するTTL
-const XMATCH_AUTH_MODE        = "login_required" // ルール選択時に認証方法 login_required, handle_name_required
+const XMATCH_AUTH_MODE        = "handle_name_required" // ルール選択時に認証方法 login_required, handle_name_required
 const START_TOAST_DELAY       = 3                // 誰々から開始してくださいをN秒後に発動する
 const UNSELECT_IF_WINDOW_BLUR = true             // ウィンドウを離れたときマッチングをキャンセルするか？
 

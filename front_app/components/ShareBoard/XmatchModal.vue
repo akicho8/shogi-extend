@@ -34,12 +34,13 @@
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") やめる
     b-button(size="is-small" @click="base.xmatch_interval_counter_rest_n(3)" v-if="base.current_xmatch_rule_key && development_p") 残3
-    b-button.unselect_handle(@click="unselect_handle" v-if="development_p") 選択解除
+    b-button.unselect_handle(@click="unselect_handle") 選択解除
 </template>
 
 <script>
 import _ from "lodash"
 import { support_child } from "./support_child.js"
+import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
 
 export default {
   name: "XmatchModal",
@@ -77,9 +78,9 @@ export default {
           }
         }
         if (this.base.xmatch_auth_mode === "handle_name_required") {
-          if (this.blank_p(this.base.user_name)) {
+          if (!HandleNameValidator.valid(this.base.user_name)) {
             this.toast_warn("ログインするかハンドルネームを入力してください")
-            this.base.handle_name_modal_handle()
+            this.base.handle_name_modal_core()
             return
           }
         }
@@ -148,7 +149,6 @@ export default {
     .button
       &.close_handle
       &.unselect_handle
-        font-weight: bold
         min-width: 8rem
 
   +tablet

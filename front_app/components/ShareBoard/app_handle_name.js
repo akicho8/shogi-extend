@@ -8,7 +8,9 @@ export const app_handle_name = {
     handle_name_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-
+      this.handle_name_modal_core()
+    },
+    handle_name_modal_core() {
       // https://buefy.org/documentation/modal/
       this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
