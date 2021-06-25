@@ -36,8 +36,14 @@ export const app_action_log = {
 
     al_add(params) {
       params = {...params}
+
+      // BCではなくローカルの場合もあるので復帰用に棋譜を埋める
       params.sfen ??= this.current_sfen
       params.turn_offset ??= this.current_turn_offset
+
+      // その他
+      params.from_user_name ??= this.user_name
+      params.performed_at ??= this.time_current_ms()
 
       if (ACTION_LOG_PUSH_TO === "top") {
         this.action_logs.unshift(params)
@@ -51,7 +57,6 @@ export const app_action_log = {
     al_add_test() {
       const i = this.base.action_logs.length
       this.al_add({
-        from_user_name: "あいうえお",
         lmi: {
           kif_without_from:    "☗00歩",
           next_turn_offset:    i,
@@ -61,6 +66,7 @@ export const app_action_log = {
         sfen: "position startpos",
         turn_offset: i,
         last_location_key: "white",
+        from_user_name: "あいうえお",
         performed_at: this.time_current_ms(),
       })
 

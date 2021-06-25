@@ -80,7 +80,7 @@ export const app_room_members = {
         // 他の人が存在することを自分に伝えられた
       }
       if (params.alive_notice_count === 1) {
-        this.room_entry_call(params.from_user_name)
+        this.room_entry_call(params)
       }
       this.member_add(params)
     },
