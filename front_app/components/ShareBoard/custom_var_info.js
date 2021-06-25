@@ -11,9 +11,9 @@ export class CustomVarInfo extends MemoryRecord {
       { key: "sync_mode",       type: "string", name: "同期モード",         default: { development: null,                   production: "is_sync_mode_soft",    }, desc: "",                                                           },
       { key: "yomiage_mode",    type: "string", name: "読み上げモード",     default: { development: null,                   production: "is_yomiage_mode_on",   }, desc: "",                                                           },
       { key: "sp_move_cancel",  type: "string", name: "駒移動キャンセル",   default: { development: "is_move_cancel_easy",  production: "is_move_cancel_hard",  }, desc: "",                                                           },
-      { key: "avatar_king_key", type: "string", name: "アバター表示",       default: { development: "is_avatar_king_on",    production: "is_avatar_king_off",   }, desc: "",                                                           },
-      { key: "shout_key",       type: "string", name: "叫びモード",         default: { development: "is_shout_off",         production: "is_shout_off",         }, desc: "",                                                           },
-      { key: "guardian_mode",   type: "string", name: "守護獣モード",       default: { development: "is_guardian_mode_off", production: "is_guardian_mode_off", }, desc: "",                                                           },
+      { key: "avatar_king_key", type: "string", name: "アバター表示",       default: { development: "is_avatar_king_on",    production: "is_avatar_king_on",    }, desc: "",                                                           },
+      { key: "shout_key",       type: "string", name: "叫びモード",         default: { development: "is_shout_off",         production: "is_shout_on",          }, desc: "",                                                           },
+      { key: "guardian_mode",   type: "string", name: "守護獣モード",       default: { development: "is_guardian_mode_off", production: "is_guardian_mode_on",  }, desc: "",                                                           },
     ]
   }
 }
