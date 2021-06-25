@@ -3,7 +3,6 @@ import { Location   } from "shogi-player/components/models/location.js"
 import { AvatarKingInfo } from "@/components/models/avatar_king_info.js"
 
 const AVATAR_AS_KING   = true // アバターを玉にする(優先度高)
-const GUARDIAN_AS_KING = true // 守護獣を玉にする(優先度低)
 
 export const app_avatar = {
   methods: {
@@ -64,7 +63,7 @@ export const app_avatar = {
                 }
               }
 
-              if (GUARDIAN_AS_KING) {
+              if (this.guardian_mode === "is_guardian_mode_on") {
                 if (value == null) {
                   value = {
                     from_avatar_path: this.guardian_url_from_str(e.from_user_name),

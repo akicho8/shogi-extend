@@ -64,13 +64,13 @@
       .box.mt-5.has-background-primary-light.is-shadowless
         .columns.is-mobile
           .column
-            b-field(label="アバター" custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message")
+            b-field(label="アバター" custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message || base.AvatarKingInfo.message")
               b-field.is-marginless
                 template(v-for="e in base.AvatarKingInfo.values")
                   b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
                     | {{e.name}}
           .column
-            b-field(label="シャウト" custom-class="is-small" :message="base.ShoutInfo.fetch(base.new_shout_key).message")
+            b-field(label="シャウト" custom-class="is-small" :message="base.ShoutInfo.fetch(base.new_shout_key).message || base.ShoutInfo.message")
               b-field.is-marginless
                 template(v-for="e in base.ShoutInfo.values")
                   b-radio-button(v-model="base.new_shout_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
