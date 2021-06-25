@@ -37,6 +37,9 @@ export const HandleNameValidator = {
       error = (s.length === 0)
     }
     if (!error) {
+      error = s.match(/^\d+$/)
+    }
+    if (!error) {
       error = s.match(/[な名][な無]し|nanash?i|無名|通りすがり/i)
     }
     if (!error) {
