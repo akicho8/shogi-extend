@@ -6,11 +6,6 @@ const AVATAR_AS_KING   = true // アバターを玉にする(優先度高)
 const GUARDIAN_AS_KING = true // 守護獣を玉にする(優先度低)
 
 export const app_avatar = {
-  data() {
-    return {
-      avatar_king_key: null, // アバター表示
-    }
-  },
   methods: {
     // private
     one_side_piece_replace_style(e) {
@@ -24,12 +19,6 @@ export const app_avatar = {
                 background-size: cover;
               }`
     },
-  },
-  created() {
-    this.DEFAULT_VARS = {
-      ...this.DEFAULT_VARS,
-      avatar_king_key: this.development_p ? "is_avatar_king_on" : "is_avatar_king_on",
-    }
   },
   computed: {
     AvatarKingInfo()   { return AvatarKingInfo                                     },

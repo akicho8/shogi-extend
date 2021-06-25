@@ -114,6 +114,7 @@ import { Location                 } from "shogi-player/components/models/locatio
 
 import { support_parent           } from "./support_parent.js"
 
+import { app_vars                 } from "./app_vars.js"
 import { app_action_log           } from "./app_action_log.js"
 import { app_message_logs         } from "./app_message_logs.js"
 import { app_clock_box            } from "./app_clock_box.js"
@@ -154,6 +155,7 @@ export default {
   name: "ShareBoardApp",
   mixins: [
     support_parent,
+    app_vars,
     app_action_log,
     app_message_logs,
     app_clock_box,
@@ -217,6 +219,8 @@ export default {
     }
   },
   created() {
+    this.vars_setup()
+
     this.DEFAULT_VARS = {
       ...this.DEFAULT_VARS,
       title: "共有将棋盤",

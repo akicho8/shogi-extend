@@ -18,7 +18,6 @@ export const app_main_setting = {
     this.sync_mode       = this.$route.query.sync_mode       ?? this.DEFAULT_VARS.sync_mode
     this.internal_rule   = this.$route.query.internal_rule   ?? this.DEFAULT_VARS.internal_rule
     this.yomiage_mode    = this.$route.query.yomiage_mode    ?? this.DEFAULT_VARS.yomiage_mode
-    this.avatar_king_key = this.$route.query.avatar_king_key ?? this.DEFAULT_VARS.avatar_king_key
     this.shout_key       = this.$route.query.shout_key       ?? this.DEFAULT_VARS.shout_key
   },
 

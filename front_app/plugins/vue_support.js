@@ -8,6 +8,7 @@ const strip_tags = require('striptags')
 
 import { isMobile } from "../components/models/is_mobile.js"
 import { AnySupport } from "../components/models/any_support.js"
+import { HandleNameParser } from "../components/models/handle_name_parser.js"
 
 import Autolinker from 'autolinker'
 
@@ -481,23 +482,8 @@ export default {
       return strip_tags(...args)
     },
 
-    // user_call_name("SOS団")             → "SOS団"
-    // user_call_name("ありす")            → "ありすさん"
-    // user_call_name("ありす123(居飛車)") → "ありすさん"
-    user_call_name(name) {
-      name = name.replace(/(.+)\(.*\)$/, "$1") // "name123(xxx)"   → "name123"
-      name = name.replace(/(.+)（.*）$/, "$1") // "name123（xxx）" → "name123"
-      name = name.replace(/(\D+)\d+$/, "$1")   // "name123"        → "name"
-      if (name.match(/.(ん|ン|ﾝ|さま|サマ|ｻﾏ|様|氏|段|級|団|冠)[!！]?$/)) {
-        return name
-      }
-      if (name.match(/.(コ|ｺ|こ|子)$/)) {
-        return `${name}ちゃん`
-      }
-      if (name.match(/.(王)$/)) { // "女王" → "女王様"
-        return `${name}様`
-      }
-      return `${name}さん`
+    user_call_name(str) {
+      return HandleNameParser.call_name(str)
     },
 
     // {a: 1, b: null, c:undefined, d: ""} => {a: 1, d: ""}
