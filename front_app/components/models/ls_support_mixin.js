@@ -107,7 +107,7 @@ export const ls_support_mixin = {
         v = d
       }
       const before_value = this.$data[key]
-      if (SKIP_IF_PRESENT && this.present_p(before_value)) {
+      if (SKIP_IF_PRESENT && before_value != null) {
         console.log(`[ls_restore] ${key} は復帰する前に値があるためスキップ : ${before_value}`)
         // if (this.development_p) {
         //   alert(`[ls_restore] ${key} は復帰する前に値があるためスキップ : ${before_value}`)
