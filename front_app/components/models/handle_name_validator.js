@@ -48,9 +48,6 @@ export const HandleNameValidator = {
       error = s.match(/^\d+$/)
     }
     if (!error) {
-      error = s.match(/[。]$/)
-    }
-    if (!error) {
       error = s.match(/[な名][な無]し|nanash?i|無名|匿名/i)
     }
     if (!error) {
@@ -87,6 +84,10 @@ export const HandleNameValidator = {
       "初心者",
       "死",
       "通りすがり",
+      "。",
+      "、",
+      "「",
+      "」",
     ]
   },
 }
