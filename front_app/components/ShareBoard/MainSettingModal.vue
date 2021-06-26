@@ -20,18 +20,15 @@
       b-radio-button.is_move_cancel_hard(@input="sound_play('click')" size="is-small" v-model="base.sp_move_cancel" native-value="is_move_cancel_hard") 移動元をタップ
       b-radio-button.is_move_cancel_easy(@input="sound_play('click')" size="is-small" v-model="base.sp_move_cancel" native-value="is_move_cancel_easy") 他のセルをタップ
 
-    b-field.sync_mode(custom-size="is-small" label="同期方法" v-if="development_p")
-      b-radio-button.is_sync_mode_on(@input="sound_play('click')" size="is-small" v-model="base.sync_mode" native-value="is_sync_mode_hard") 完全同期
-      b-radio-button.is_sync_mode_off(@input="sound_play('click')" size="is-small" v-model="base.sync_mode" native-value="is_sync_mode_soft") 着手
+    b-field.debug_key(custom-size="is-small" :label="base.DebugInfo.field_label" :message="base.DebugInfo.field_message")
+      template(v-for="e in base.DebugInfo.values")
+        b-radio-button(:class="e.key" @input="sound_play('click')" size="is-small" v-model="base.debug_key" :native-value="e.key" :type="e.type")
+          | {{e.name}}
 
     b-field.sp_internal_rule_key(custom-size="is-small" :label="base.SpInternalRuleInfo.field_label" :message="base.SpInternalRuleInfo.field_message")
       template(v-for="e in base.SpInternalRuleInfo.values")
         b-radio-button(:class="e.key" @input="sound_play('click')" size="is-small" v-model="base.sp_internal_rule_key" :native-value="e.key" :type="e.type")
           | {{e.name}}
-
-    b-field.debug_mode(custom-size="is-small" label="デバッグモード")
-      b-radio-button.is_debug_mode_off(@input="sound_play('click')" size="is-small" v-model="base.debug_mode" native-value="is_debug_mode_off") OFF
-      b-radio-button.is_debug_mode_on(@input="sound_play('click')" size="is-small" v-model="base.debug_mode" native-value="is_debug_mode_on" type="is-danger") ON
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
