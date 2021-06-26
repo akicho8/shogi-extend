@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.StopwatchDebugPanels
+.columns.is-multiline.StopwatchDebugPanels.is-centered
   //- .column.is-2
   //-   .panel
   //-     .panel-heading

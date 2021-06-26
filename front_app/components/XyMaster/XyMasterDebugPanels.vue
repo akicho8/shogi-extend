@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.XyMasterDebugPanels
+.columns.is-multiline.XyMasterDebugPanels.is-centered
   .column.is-3
     .panel
       .panel-heading

@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.ShareBoardDebugPanels
+.columns.is-multiline.ShareBoardDebugPanels.is-centered
   .column.is-6(v-if="base.clock_box")
     ClockBoxInspector(:clock_box="base.clock_box")
   .column.is-2
