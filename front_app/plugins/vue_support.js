@@ -483,6 +483,9 @@ export default {
     },
 
     user_call_name(str) {
+      if (this.development_p) {
+        this.__assert__(this.present_p(str), "this.present_p(str)")
+      }
       return HandleNameParser.call_name(str)
     },
 
