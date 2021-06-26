@@ -13,7 +13,7 @@ export const app_urls = {
       this.clipboard_copy({text: this.room_code_only_url, success_message: "部屋のリンクをコピーしました"})
     },
 
-    // 棋譜だけを含むURLのコピー
+    // 棋譜だけを含むリンクのコピー
     room_code_except_url_copy_handle() {
       this.sidebar_p = false
       this.sound_play("click")
@@ -94,7 +94,7 @@ export const app_urls = {
       return this.permalink_from_params(params)
     },
 
-    // 棋譜だけを含むURL
+    // 棋譜だけを含むリンク
     room_code_except_url() {
       const params = {
         ...this.current_url_params,
