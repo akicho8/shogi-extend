@@ -17,9 +17,9 @@ export const app_storage = {
       this.ls_setup() // user_name の復帰
 
       // URL引数を優先する(ls_setupの直後重要)
-      // http://0.0.0.0:4000/share-board?sp_move_cancel=is_move_cancel_easy
-      // http://0.0.0.0:4000/share-board?sp_move_cancel=is_move_cancel_hard
-      this.sp_move_cancel = this.$route.query.sp_move_cancel || this.sp_move_cancel // FIXME
+      // http://localhost:4000/share-board?autoexec=general_setting_modal_handle&sp_move_cancel=is_move_cancel_easy
+      // http://localhost:4000/share-board?autoexec=general_setting_modal_handle&sp_move_cancel=is_move_cancel_hard
+      // this.sp_move_cancel = this.$route.query.sp_move_cancel || this.sp_move_cancel // FIXME
     }
   },
   computed: {

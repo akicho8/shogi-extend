@@ -34,6 +34,7 @@ import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
 
 const HASH_MERGE_P = true // ハッシュは復元するときに初期値に対してマージするか？
+const SKIP_IF_PRESENT = true // 値があるものは上書きしない
 
 export const ls_support_mixin = {
   beforeDestroy() {
@@ -83,29 +84,39 @@ export const ls_support_mixin = {
     },
 
     ls_restore(hash) {
-      if (!hash) {
-        hash = {}
-      }
       this.ls_keys.forEach(key => {
-        const d = this.ls_default[key]    // => {a: 1, b: 2} (default value)
-        let v = null
-        if ((key in hash) && (hash[key] != null)) { // 保存している値が null のときは初期値に戻す
-          const s = hash[key]             // => {a: 0,     } (stored value)
-          if (HASH_MERGE_P && _.isPlainObject(d) && _.isPlainObject(s)) {
-            v = {..._.cloneDeep(d), ...s} // => {a: 0, b: 2} 初期値に対してマージ
-            this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(v)} (hash)`)
-          } else {
-            this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(s)} (direct)`)
-            v = s                         // マージできないのでストアされたものをそのまま使う
-          }
-        } else {
-          this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(d)} (default)`)
-          v = d
-        }
-        this[key] = v
+        this.ls_restore_one_from_hash(key, hash)
       })
     },
 
+    ls_restore_one_from_hash(key, hash) {
+      hash ??= {}
+      const d = this.ls_default[key]    // => {a: 1, b: 2} (default value)
+      let v = null
+      if ((key in hash) && (hash[key] != null)) { // 保存している値が null のときは初期値に戻す
+        const s = hash[key]             // => {a: 0,     } (stored value)
+        if (HASH_MERGE_P && _.isPlainObject(d) && _.isPlainObject(s)) {
+          v = {..._.cloneDeep(d), ...s} // => {a: 0, b: 2} 初期値に対してマージ
+          this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(v)} (hash)`)
+        } else {
+          this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(s)} (direct)`)
+          v = s                         // マージできないのでストアされたものをそのまま使う
+        }
+      } else {
+        this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(d)} (default)`)
+        v = d
+      }
+      const before_value = this.$data[key]
+      if (SKIP_IF_PRESENT && this.present_p(before_value)) {
+        console.log(`[ls_restore] ${key} は復帰する前に値があるためスキップ : ${before_value}`)
+        // if (this.development_p) {
+        //   alert(`[ls_restore] ${key} は復帰する前に値があるためスキップ : ${before_value}`)
+        // }
+      } else {
+        this.$data[key] = v
+      }
+    },
+    
     ls_reset() {
       MyLocalStorage.remove(this.ls_storage_key)
       this.ls_load()
