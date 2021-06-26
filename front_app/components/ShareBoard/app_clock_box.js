@@ -245,7 +245,11 @@ export const app_clock_box = {
           this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.behaviour}しました`, {onend: () => {
             // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
             if (this.first_play_trigger_p(params)) {
-              this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
+              if (this.current_turn_user_name) {
+                this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
+              } else {
+                // 順番設定をしていない場合
+              }
             }
           }})
         }
