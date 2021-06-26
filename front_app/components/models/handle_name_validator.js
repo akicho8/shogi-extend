@@ -3,6 +3,8 @@ import dayjs from "dayjs"
 import { AnySupport } from "./any_support.js"
 
 export const HandleNameValidator = {
+  get MAX_LENGTH() { return 16 },
+
   // import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
   //
   // const message = HandleNameValidator.valid_with_message(str, {name: "名前"})
@@ -20,6 +22,9 @@ export const HandleNameValidator = {
     if (s.length === 0) {
       return `${options.name}を入力してください`
     }
+    if (s.length > this.MAX_LENGTH) {
+      return `${options.name}が長すぎます`
+    }
     if (this.valid(s)) {
       return null
     } else {
@@ -35,6 +40,9 @@ export const HandleNameValidator = {
     let error = false
     if (!error) {
       error = (s.length === 0)
+    }
+    if (!error) {
+      error = (s.length > this.MAX_LENGTH)
     }
     if (!error) {
       error = s.match(/^\d+$/)
