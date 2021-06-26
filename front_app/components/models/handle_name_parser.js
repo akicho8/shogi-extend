@@ -27,7 +27,7 @@ export class HandleNameParser {
     if (s.match(/.(ん|ン|ﾝ|さま|サマ|ｻﾏ|様|氏|段|級|団|冠)[!！]?$/)) {
       return s
     }
-    if (s.match(/.(コ|ｺ|こ|子)$/)) {
+    if (s.match(/.(コ|ｺ|こ|子|ko|co)$/i)) {
       return `${s}ちゃん`
     }
     if (s.match(/.(王)$/)) { // "女王" → "女王様"

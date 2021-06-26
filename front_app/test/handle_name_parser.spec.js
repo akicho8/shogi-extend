@@ -6,6 +6,7 @@ describe('HandleNameParser', () => {
     expect(HandleNameParser.call_name("foo123(456)")).toEqual("fooさん")
     expect(HandleNameParser.call_name("女王")).toEqual("女王様")
     expect(HandleNameParser.call_name("ココ")).toEqual("ココちゃん")
+    expect(HandleNameParser.call_name("coco")).toEqual("cocoちゃん")
     expect(HandleNameParser.call_name("パーヤン")).toEqual("パーヤン")
     expect(HandleNameParser.call_name("ありす。")).toEqual("ありすさん")
     expect(HandleNameParser.call_name("alice@日本")).toEqual("aliceさん")
