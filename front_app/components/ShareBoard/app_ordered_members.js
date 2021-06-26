@@ -1,5 +1,5 @@
 import OrderSettingModal from "./OrderSettingModal.vue"
-import { StrictInfo } from "@/components/models/strict_info.js"
+import { MoveGuardInfo } from "@/components/models/move_guard_info.js"
 import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
 import _ from "lodash"
 const FAKE_P = false
@@ -10,12 +10,12 @@ export const app_ordered_members = {
       // 共有する変数
       order_func_p: false,          // 順番設定 true:有効 false:無効 モーダル内では元変数を直接変更している
       ordered_members: null,        // 出走順の実配列
-      strict_key: "turn_strict_on", // 手番制限
+      // move_guard_key: "is_move_guard_on", // 手番制限
 
       // ローカルのモーダルで使うテンポラリ変数
       // 「適用」してはじめて実変数に反映する
       os_table_rows:  null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
-      new_strict_key: null, // 手番制限
+      new_move_guard_key: null, // 手番制限
       new_avatar_king_key: null, // アバター表示
       new_shout_mode_key: null, // 叫びモード
     }
@@ -84,7 +84,7 @@ export const app_ordered_members = {
     os_modal_vars_setup() {
       this.tl_alert("os_modal_vars_setup")
       this.os_table_rows_build()
-      this.new_strict_key = this.strict_key
+      this.new_move_guard_key = this.move_guard_key
       this.new_avatar_king_key = this.avatar_king_key
       this.new_shout_mode_key = this.shout_mode_key
     },
@@ -243,7 +243,7 @@ export const app_ordered_members = {
     },
     om_vars_copy_from(params) {
       this.ordered_members = params.ordered_members
-      this.strict_key      = params.strict_key
+      this.move_guard_key = params.move_guard_key
       this.avatar_king_key = params.avatar_king_key
       this.shout_mode_key = params.shout_mode_key
     },
@@ -272,9 +272,9 @@ export const app_ordered_members = {
   },
 
   computed: {
-    StrictInfo()       { return StrictInfo                                         },
-    strict_info()      { return this.StrictInfo.fetch_if(this.strict_key)          },
-    ShoutModeInfo()   { return ShoutModeInfo                                     },
+    MoveGuardInfo()   { return MoveGuardInfo                                    },
+    move_guard_info() { return this.MoveGuardInfo.fetch_if(this.move_guard_key) },
+    ShoutModeInfo()   { return ShoutModeInfo                                    },
     shout_mode_info() { return this.ShoutModeInfo.fetch_if(this.shout_mode_key) },
 
     // あとから接続した人に伝える内容
@@ -282,7 +282,7 @@ export const app_ordered_members = {
       return {
         order_func_p:    this.order_func_p,
         ordered_members: this.ordered_members,
-        strict_key:      this.strict_key,
+        move_guard_key:      this.move_guard_key,
         avatar_king_key: this.avatar_king_key,
         shout_mode_key: this.shout_mode_key,
 
@@ -326,7 +326,7 @@ export const app_ordered_members = {
         if (this.ac_room) {
           // メンバーリストが揃っているなら
           // if (this.ordered_members_blank_p) {
-          if (this.turn_strict_on) {
+          if (this.move_guard_info.key === "is_move_guard_on") {
             // 手番制限なら観戦者含めて全体を「禁止」にする
             retv = "none"
             if (this.current_turn_self_p) {
@@ -348,7 +348,6 @@ export const app_ordered_members = {
     ordered_members_present_p() { return this.present_p(this.ordered_members)           }, // メンバーリストがある？
     current_turn_user_name()    { return this.user_name_by_turn(this.turn_offset)       }, // 現在の局面のメンバーの名前
     current_turn_self_p()       { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
-    turn_strict_on()            { return this.strict_info.key === "turn_strict_on"      }, // 手番制限ON ?
     self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)  }, // 自分はメンバーに含まれているか？
 
     // 名前からO(1)で ordered_members の要素を引くためのハッシュ

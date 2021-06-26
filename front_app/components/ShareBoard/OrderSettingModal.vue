@@ -77,10 +77,10 @@
                     | {{e.name}}
         .columns.is-mobile(v-if="development_p && false")
           .column
-            b-field(label="手番制限" custom-class="is-small" :message="base.StrictInfo.fetch(base.new_strict_key).message")
+            b-field(label="手番制限" custom-class="is-small" :message="base.MoveGuardInfo.fetch(base.new_move_guard_key).message")
               b-field.is-marginless
-                template(v-for="e in base.StrictInfo.values")
-                  b-radio-button(v-model="base.new_strict_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                template(v-for="e in base.MoveGuardInfo.values")
+                  b-radio-button(v-model="base.new_move_guard_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
                     | {{e.name}}
 
   footer.modal-card-foot
@@ -186,7 +186,7 @@ export default {
     form_params_share(message) {
       this.base.ordered_members_share({
         ordered_members: this.base.new_ordered_members,
-        strict_key: this.base.new_strict_key,
+        move_guard_key: this.base.new_move_guard_key,
         avatar_king_key: this.base.new_avatar_king_key,
         shout_mode_key: this.base.new_shout_mode_key,
         message: message,

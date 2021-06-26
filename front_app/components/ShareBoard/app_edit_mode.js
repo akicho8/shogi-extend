@@ -90,7 +90,7 @@ export const app_edit_mode = {
                 this.shared_al_add({label: "棋譜読込前"})
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
-                this.shared_al_add({label: "棋譜読込後"})
+                this.delay_block(0.5, () => this.shared_al_add({label: "棋譜読込後"})) // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
                 this.sp_viewpoint = "black"
                 this.ac_log("棋譜読込", e.body)
                 modal_instance.close()

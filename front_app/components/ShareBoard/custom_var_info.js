@@ -10,8 +10,9 @@ export class CustomVarInfo extends MemoryRecord {
       { key: "debug_mode_key",       type: "string", name: "デバッグモード",     default: { development: "is_debug_mode_on",     production: "is_debug_mode_off",       }, desc: "",                                                           },
       { key: "yomiage_mode_key",     type: "string", name: "読み上げモード",     default: { development: null,                   production: "is_yomiage_mode_on",      }, desc: "",                                                           },
       { key: "sp_move_cancel",       type: "string", name: "駒移動キャンセル",   default: { development: "is_move_cancel_easy",  production: "is_move_cancel_hard",     }, desc: "",                                                           },
+      { key: "move_guard_key",       type: "string", name: "操作制限",           default: { development: null,                   production: "is_move_guard_on",        }, desc: "",                                                           },
       { key: "avatar_king_key",      type: "string", name: "アバター表示",       default: { development: "is_avatar_king_on",    production: "is_avatar_king_off",      }, desc: "",                                                           },
-      { key: "shout_mode_key",            type: "string", name: "叫びモード",         default: { development: "is_shout_mode_off",         production: "is_shout_mode_off",            }, desc: "",                                                           },
+      { key: "shout_mode_key",       type: "string", name: "叫びモード",         default: { development: "is_shout_mode_off",    production: "is_shout_mode_off",       }, desc: "",                                                           },
       { key: "guardian_mode",        type: "string", name: "守護獣モード",       default: { development: "is_guardian_mode_on",  production: "is_guardian_mode_on",     }, desc: "フォームなし。OFFなら動物は出ない",                          },
     ]
   }
