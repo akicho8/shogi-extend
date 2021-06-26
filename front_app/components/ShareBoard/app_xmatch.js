@@ -185,7 +185,9 @@ export const app_xmatch = {
     // マッチング成立
     xmatch_establishment(params) {
       this.xmatch_rule_key_reset()
-      if (!this.development_p) {
+      if (this.development_p) {
+        this.debug_alert("production なら XmatchModal は閉じる")
+      } else {
         this.xmatch_modal_close()
       }
       this.xmatch_setup1_member(params)   // 順番設定(必ず最初)

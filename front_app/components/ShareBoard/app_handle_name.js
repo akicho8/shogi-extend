@@ -12,7 +12,7 @@ export const app_handle_name = {
     },
     handle_name_modal_core(params = {}) {
       // https://buefy.org/documentation/modal/
-      return this.$buefy.modal.open({
+      this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
         customClass: "HandleNameModal",
         component: HandleNameModal,
