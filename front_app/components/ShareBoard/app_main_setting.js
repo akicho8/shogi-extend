@@ -3,12 +3,12 @@ import { CtrlModeInfo       } from "../../components/models/ctrl_mode_info.js"
 import { YomiageModeInfo    } from "../../components/models/yomiage_mode_info.js"
 import { SpMoveCancelInfo   } from "../../components/models/sp_move_cancel_info.js"
 import { SpInternalRuleInfo } from "../../components/models/sp_internal_rule_info.js"
-import { DebugInfo          } from "../../components/models/debug_info.js"
+import { DebugModeInfo          } from "../../components/models/debug_mode_info.js"
 
 export const app_main_setting = {
   methods: {
     // for autoexec
-    is_debug_on() { this.debug_key = "is_debug_on" },
+    is_debug_mode_on() { this.debug_mode_key = "is_debug_mode_on" },
 
     general_setting_modal_handle() {
       this.sidebar_p = false
@@ -45,8 +45,8 @@ export const app_main_setting = {
     sp_internal_rule_info() { return this.SpInternalRuleInfo.fetch(this.sp_internal_rule_key)     },
     strict_p()              { return this.sp_internal_rule_info.key === "is_internal_rule_strict" },
 
-    DebugInfo()             { return DebugInfo                                                    },
-    debug_info()            { return this.DebugInfo.fetch(this.debug_key)                         },
-    debug_mode_p()          { return this.debug_info.key === "is_debug_on"                        },
+    DebugModeInfo()         { return DebugModeInfo                                                    },
+    debug_mode_info()       { return this.DebugModeInfo.fetch(this.debug_mode_key)                         },
+    debug_mode_p()          { return this.debug_mode_info.key === "is_debug_mode_on"                        },
   },
 }

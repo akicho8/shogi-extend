@@ -59,7 +59,7 @@ client-only
               :sp_controller="controller_disabled_p ? 'is_controller_off' : 'is_controller_on'"
               :sp_slider="controller_disabled_p ? 'is_slider_off' : 'is_slider_on'"
 
-              sp_debug="is_debug_off"
+              sp_debug_mode="is_debug_mode_off"
               sp_summary="is_summary_off"
 
               :sp_play_mode_legal_move_only="strict_p"
@@ -247,7 +247,7 @@ export default {
   },
   methods: {
     // http://0.0.0.0:4000/share-board?autoexec=general_setting_modal_handle
-    // http://0.0.0.0:4000/share-board?autoexec=is_debug_on,general_setting_modal_handle
+    // http://0.0.0.0:4000/share-board?autoexec=is_debug_mode_on,general_setting_modal_handle
     autoexec() {
       this.$nextTick(() => {
         const s = this.$route.query.autoexec
