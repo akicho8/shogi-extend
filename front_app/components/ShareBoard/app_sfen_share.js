@@ -176,7 +176,7 @@ export const app_sfen_share = {
         return false
       }
 
-      return this.clock_box || this.yomiage_mode === "is_yomiage_mode_on"
+      return this.clock_box || this.yomiage_mode_info.key === "is_yomiage_mode_on"
     },
   },
 }

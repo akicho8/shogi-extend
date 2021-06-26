@@ -19,7 +19,7 @@ export const app_storage = {
       // URL引数を優先する(ls_setupの直後重要)
       // http://0.0.0.0:4000/share-board?sp_move_cancel=is_move_cancel_easy
       // http://0.0.0.0:4000/share-board?sp_move_cancel=is_move_cancel_hard
-      this.sp_move_cancel = this.$route.query.sp_move_cancel || this.sp_move_cancel
+      this.sp_move_cancel = this.$route.query.sp_move_cancel || this.sp_move_cancel // FIXME
     }
   },
   computed: {

@@ -66,7 +66,7 @@ client-only
               :sp_play_mode_only_own_piece_to_move="strict_p"
               :sp_play_mode_can_not_kill_same_team_soldier="strict_p"
 
-              :sp_move_cancel="sp_move_cancel"
+              :sp_move_cancel="sp_move_cancel_info.key"
 
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
@@ -425,7 +425,7 @@ export default {
       //   return false
       // }
 
-      if (this.ctrl_mode === "is_ctrl_mode_hidden") {
+      if (this.ctrl_mode_info.key === "is_ctrl_mode_hidden") {
         if (this.clock_box) {
           return this.clock_box.working_p
         }
