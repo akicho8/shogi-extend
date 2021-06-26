@@ -106,6 +106,12 @@ export const ls_support_mixin = {
         this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(d)} (default)`)
         v = d
       }
+
+      if (key in this.$data) {
+      } else {
+        alert(`data() に ${key} を null で定義してください`)
+      }
+
       const before_value = this.$data[key]
       if (SKIP_IF_PRESENT && before_value != null) {
         console.log(`[ls_restore] ${key} は復帰する前に値があるためスキップ : ${before_value}`)
@@ -116,7 +122,7 @@ export const ls_support_mixin = {
         this.$data[key] = v
       }
     },
-    
+
     ls_reset() {
       MyLocalStorage.remove(this.ls_storage_key)
       this.ls_load()
