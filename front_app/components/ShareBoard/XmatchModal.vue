@@ -80,12 +80,15 @@ export default {
         if (this.base.xmatch_auth_mode === "handle_name_required") {
           if (!HandleNameValidator.valid(this.base.user_name)) {
             this.toast_warn("ログインするかハンドルネームを入力してください")
-            this.base.handle_name_modal_core()
+            this.base.handle_name_modal_core({success_callback: () => this.rule_click_core(e) })
             return
           }
         }
       }
 
+      this.rule_click_core(e)
+    },
+    rule_click_core(e) {
       if (this.base.current_xmatch_rule_key === e.key) {
         this.base.rule_unselect("${name}が解除しました")
       } else {

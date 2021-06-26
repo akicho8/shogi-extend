@@ -23,6 +23,9 @@ export default {
   mixins: [
     support_child,
   ],
+  props: {
+    params: { type: Object, required: false, default: null, },
+  },
   data() {
     return {
       new_name: this.base.user_name,
@@ -43,6 +46,14 @@ export default {
         return
       }
       this.base.handle_name_set(this.new_name)
+
+      // ハンドルネームを正しく入力した場合にのみ success_callback を実行する
+      if (this.params) {
+        if (this.params.success_callback) {
+          this.params.success_callback()
+        }
+      }
+
       this.$emit("close")
     },
     input_focus() {

@@ -10,14 +10,14 @@ export const app_handle_name = {
       this.sound_play("click")
       this.handle_name_modal_core()
     },
-    handle_name_modal_core() {
+    handle_name_modal_core(params = {}) {
       // https://buefy.org/documentation/modal/
-      this.$buefy.modal.open({
+      return this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
         customClass: "HandleNameModal",
         component: HandleNameModal,
         parent: this,
-        props: { base: this.base },
+        props: { base: this.base, params: params },
         trapFocus: true,
         hasModalCard: true,
         animation: "",
