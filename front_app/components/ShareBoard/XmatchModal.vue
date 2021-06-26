@@ -22,7 +22,7 @@
                 template(v-for="e in base.xmatch_rules_members[e.key]")
                   b-tag(rounded type="is-primary")
                     span(:class="user_name_class(e)")
-                      | {{e.from_user_name}}
+                      | {{string_truncate(e.from_user_name, {length: 8 + 3})}}
                 //- 空席を並べる
                 //- template(v-for="i in rest_count(e)")
                 //-   b-tag.is-hidden-mobile(rounded type="is-grey") ?
