@@ -38,4 +38,8 @@ describe('HandleNameValidator', () => {
   test('長すぎる', () => {
     expect(HandleNameValidator.valid("12345678901234567")).toEqual(false)
   })
+
+  test('文章を書いている', () => {
+    expect(HandleNameValidator.valid("よろしく。")).toEqual(false)
+  })
 })
