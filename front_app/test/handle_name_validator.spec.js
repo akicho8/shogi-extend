@@ -30,4 +30,8 @@ describe('HandleNameValidator', () => {
     expect(HandleNameValidator.valid("123")).toEqual(false)
     expect(HandleNameValidator.valid("７７７")).toEqual(false)
   })
+
+  test('NGワード', () => {
+    expect(HandleNameValidator.valid("将棋初心者")).toEqual(false)
+  })
 })

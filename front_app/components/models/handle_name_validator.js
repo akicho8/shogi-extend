@@ -40,7 +40,10 @@ export const HandleNameValidator = {
       error = s.match(/^\d+$/)
     }
     if (!error) {
-      error = s.match(/[な名][な無]し|nanash?i|無名|通りすがり/i)
+      error = s.match(/[な名][な無]し|nanash?i|無名|匿名/i)
+    }
+    if (!error) {
+      error = s.match(new RegExp(this.ng_words.join("|"), "i"))
     }
     if (!error) {
       error = (s.length <= 1 && !s.match(/[一-龠]/))
@@ -64,6 +67,15 @@ export const HandleNameValidator = {
       "捨てハンでない",
       "愛嬌のある",
       "打ち解けやすい",
+      "かっこいい",
+    ]
+  },
+  get ng_words() {
+    return [
+      "戦犯",
+      "初心者",
+      "死",
+      "通りすがり",
     ]
   },
 }
