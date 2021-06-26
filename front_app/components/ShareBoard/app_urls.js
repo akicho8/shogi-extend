@@ -43,7 +43,7 @@ export const app_urls = {
         abstract_viewpoint: this.abstract_viewpoint,
         room_code:          this.room_code,
         sp_run_mode:        this.sp_run_mode,
-        internal_rule:      this.internal_rule,
+        sp_internal_rule_key:      this.sp_internal_rule_key,
       }
       if (this.blank_p(e.room_code)) {
         delete e.room_code
@@ -54,8 +54,8 @@ export const app_urls = {
       if (e.sp_run_mode === this.DEFAULT_VARS.sp_run_mode) {
         delete e.sp_run_mode
       }
-      if (e.internal_rule === this.DEFAULT_VARS.internal_rule) {
-        delete e.internal_rule
+      if (e.sp_internal_rule_key === this.DEFAULT_VARS.sp_internal_rule_key) {
+        delete e.sp_internal_rule_key
       }
       return e
     },

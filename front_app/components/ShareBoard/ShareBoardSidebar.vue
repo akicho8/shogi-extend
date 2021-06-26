@@ -54,13 +54,6 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         .title.is-5 スタイル設定
         b-field(custom-class="is-small" label="盤の大きさ")
           b-slider(v-bind="slider_attrs" v-model="base.share_board_column_width" :min="0" :max="100" :step="1.0")
-
-      //- .box.mt-5(v-if="false")
-      //-   .title.is-5 ☠危険な設定
-      //-   b-field(custom-class="is-small" label="将棋のルール" message="無視にすると「自分の手番では自分の駒を操作する」の制約を無視するので、自分の手番で相手の駒を操作できる。それを利用して後手のときも先手の駒を動かせば見た目上はずっと先手側を操作できるので先手だけの囲いの手順の棋譜を作ったりするのが簡単になる。しかし反則のため他のアプリでは読めない棋譜になってしまう")
-      //-     b-radio-button(size="is-small" v-model="base.internal_rule" native-value="strict" @input="base.internal_rule_input_handle") 守る
-      //-     b-radio-button(size="is-small" v-model="base.internal_rule" native-value="free"   @input="base.internal_rule_input_handle" type="is-danger") 無視
-
 </template>
 
 <script>

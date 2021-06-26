@@ -1,4 +1,5 @@
 import MainSettingModal from "./MainSettingModal.vue"
+import { SpInternalRuleInfo } from "@/components/models/sp_internal_rule_info.js"
 
 export const app_main_setting = {
   methods: {
@@ -11,6 +12,7 @@ export const app_main_setting = {
       this.sound_play("click")
 
       this.$buefy.modal.open({
+        customClass: "MainSettingModal",
         component: MainSettingModal,
         parent: this,
         trapFocus: true,
@@ -27,8 +29,11 @@ export const app_main_setting = {
     },
   },
   computed: {
+    SpInternalRuleInfo()    { return SpInternalRuleInfo },
+    sp_internal_rule_info() { return this.SpInternalRuleInfo.fetch(this.sp_internal_rule_key) },
+    strict_p()              { return this.sp_internal_rule_key === "is_internal_rule_strict"  },
+
     debug_mode_p() { return this.debug_mode === "is_debug_mode_on" },
     hard_sync_p()  { return this.sync_mode === "is_sync_mode_hard" },
-    strict_p()     { return this.internal_rule === "strict"  },
   },
 }
