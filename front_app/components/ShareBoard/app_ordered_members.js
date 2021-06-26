@@ -1,6 +1,6 @@
 import OrderSettingModal from "./OrderSettingModal.vue"
 import { StrictInfo } from "@/components/models/strict_info.js"
-import { ShoutInfo } from "@/components/models/shout_info.js"
+import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
 import _ from "lodash"
 const FAKE_P = false
 
@@ -17,7 +17,7 @@ export const app_ordered_members = {
       os_table_rows:  null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
       new_strict_key: null, // 手番制限
       new_avatar_king_key: null, // アバター表示
-      new_shout_key: null, // 叫びモード
+      new_shout_mode_key: null, // 叫びモード
     }
   },
 
@@ -86,7 +86,7 @@ export const app_ordered_members = {
       this.os_table_rows_build()
       this.new_strict_key = this.strict_key
       this.new_avatar_king_key = this.avatar_king_key
-      this.new_shout_key = this.shout_key
+      this.new_shout_mode_key = this.shout_mode_key
     },
 
     os_table_rows_build() {
@@ -245,7 +245,7 @@ export const app_ordered_members = {
       this.ordered_members = params.ordered_members
       this.strict_key      = params.strict_key
       this.avatar_king_key = params.avatar_king_key
-      this.shout_key = params.shout_key
+      this.shout_mode_key = params.shout_mode_key
     },
 
     // 自分の場所を調べて正面をその視点にする
@@ -274,8 +274,8 @@ export const app_ordered_members = {
   computed: {
     StrictInfo()       { return StrictInfo                                         },
     strict_info()      { return this.StrictInfo.fetch_if(this.strict_key)          },
-    ShoutInfo()   { return ShoutInfo                                     },
-    shout_info() { return this.ShoutInfo.fetch_if(this.shout_key) },
+    ShoutModeInfo()   { return ShoutModeInfo                                     },
+    shout_mode_info() { return this.ShoutModeInfo.fetch_if(this.shout_mode_key) },
 
     // あとから接続した人に伝える内容
     om_params() {
@@ -284,7 +284,7 @@ export const app_ordered_members = {
         ordered_members: this.ordered_members,
         strict_key:      this.strict_key,
         avatar_king_key: this.avatar_king_key,
-        shout_key: this.shout_key,
+        shout_mode_key: this.shout_mode_key,
 
         __nil_check_skip_keys__: "ordered_members", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }

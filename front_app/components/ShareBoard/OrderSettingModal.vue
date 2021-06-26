@@ -70,10 +70,10 @@
                   b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
                     | {{e.name}}
           .column
-            b-field(label="シャウト" custom-class="is-small" :message="base.ShoutInfo.fetch(base.new_shout_key).message || base.ShoutInfo.message")
+            b-field(label="シャウト" custom-class="is-small" :message="base.ShoutModeInfo.fetch(base.new_shout_mode_key).message || base.ShoutModeInfo.message")
               b-field.is-marginless
-                template(v-for="e in base.ShoutInfo.values")
-                  b-radio-button(v-model="base.new_shout_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                template(v-for="e in base.ShoutModeInfo.values")
+                  b-radio-button(v-model="base.new_shout_mode_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
                     | {{e.name}}
         .columns.is-mobile(v-if="development_p && false")
           .column
@@ -188,7 +188,7 @@ export default {
         ordered_members: this.base.new_ordered_members,
         strict_key: this.base.new_strict_key,
         avatar_king_key: this.base.new_avatar_king_key,
-        shout_key: this.base.new_shout_key,
+        shout_mode_key: this.base.new_shout_mode_key,
         message: message,
       })
     },
