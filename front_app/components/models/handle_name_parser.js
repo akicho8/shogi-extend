@@ -19,6 +19,7 @@ export class HandleNameParser {
 
   get call_name() {
     let s = _.trim(this.source)
+    s = s.replace(/(.+)[@＠].*/, "$1") // "alice@xxx"      → "alice"
     s = s.replace(/[。]/g, "")         // "name。"         → "name"
     s = s.replace(/(.+)\(.*\)$/, "$1") // "name123(xxx)"   → "name123"
     s = s.replace(/(.+)（.*）$/, "$1") // "name123（xxx）" → "name123"
