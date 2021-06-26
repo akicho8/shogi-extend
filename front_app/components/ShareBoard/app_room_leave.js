@@ -15,7 +15,7 @@ export const app_room_leave = {
     ////////////////////////////////////////////////////////////////////////////////
 
     room_leave() {
-      this.room_leave_call({from_user_name: this.user_name})  // (実行後に切断するので)自分には届かないため自分側だけで実行しておく
+      this.room_leave_call(this.ac_room_perform_default_params())  // (実行後に切断するので)自分には届かないため自分側だけで実行しておく
       this.ac_room_perform("room_leave", {
       }) // --> app/channels/share_board/room_channel.rb
     },
