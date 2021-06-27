@@ -5,6 +5,8 @@
       | 自動マッチング
     p.is-size-5(v-if="base.current_xmatch_rule_key && base.xmatch_rest_seconds >= 1")
       | {{base.xmatch_rest_seconds}}
+    a(@click="base.handle_name_modal_handle" v-if="!base.current_xmatch_rule_key && present_p(base.user_name)")
+      | {{base.user_name}}
 
   section.modal-card-body
     b-loading(:is-full-page="true" :active="!base.xmatch_rules_members")
