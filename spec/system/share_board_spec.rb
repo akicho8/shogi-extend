@@ -902,10 +902,10 @@ RSpec.describe "共有将棋盤", type: :system do
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '飛vs角を1vs1'
     it "飛vs角を1vs1" do
       a_block do
-        visit_app(force_user_name: "alice", xmatch_auth_mode: "handle_name_required")
+        visit_app(force_user_name: "alice", xmatch_auth_key: "handle_name_required")
       end
       b_block do
-        visit_app(force_user_name: "bob", xmatch_auth_mode: "handle_name_required")
+        visit_app(force_user_name: "bob", xmatch_auth_key: "handle_name_required")
       end
       a_block do
         side_menu_open
@@ -939,7 +939,7 @@ RSpec.describe "共有将棋盤", type: :system do
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自分vs自分 平手'
     it "自分vs自分 平手" do
       a_block do
-        visit_app(force_user_name: "alice", xmatch_auth_mode: "handle_name_required")
+        visit_app(force_user_name: "alice", xmatch_auth_key: "handle_name_required")
 
         side_menu_open
         menu_item_click("自動マッチング")          # モーダルを開く
@@ -952,15 +952,15 @@ RSpec.describe "共有将棋盤", type: :system do
 
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '時間切れ'
     it "時間切れ" do
-      @wait_time_max = 2
+      @xmatch_wait_max = 2
       a_block do
-        visit_app(force_user_name: "alice", wait_time_max: @wait_time_max, xmatch_auth_mode: "handle_name_required")
+        visit_app(force_user_name: "alice", xmatch_wait_max: @xmatch_wait_max, xmatch_auth_key: "handle_name_required")
 
         side_menu_open
         menu_item_click("自動マッチング")          # モーダルを開く
         find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
 
-        sleep(@wait_time_max)
+        sleep(@xmatch_wait_max)
         assert_text("時間内に集まらなかった")
       end
     end
@@ -969,7 +969,7 @@ RSpec.describe "共有将棋盤", type: :system do
     it "ログイン必須モード" do
       a_block do
         logout                                        # ログアウト状態にする
-        visit_app(xmatch_auth_mode: "login_required") # 来る
+        visit_app(xmatch_auth_key: "login_required") # 来る
         xmatch_select_1vs1                            # 1vs1のルールを選択
         assert_selector(".SnsLoginContainer")         # 「ログインしてください」が発動
       end
@@ -979,7 +979,7 @@ RSpec.describe "共有将棋盤", type: :system do
     it "ハンドルネーム必須モード" do
       a_block do
         logout                                                 # ログアウト状態にする
-        visit_app(xmatch_auth_mode: "handle_name_required")    # 来る
+        visit_app(xmatch_auth_key: "handle_name_required")    # 来る
         xmatch_select_1vs1                                     # 1vs1のルールを選択
         assert_selector(".HandleNameModal")                    # ハンドルネームを入力するように言われる
         find(".HandleNameModal input").set("alice")            # 入力して

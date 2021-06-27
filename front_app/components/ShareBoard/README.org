@@ -77,8 +77,8 @@
   | clock_box.initial_extra_sec | 猶予(秒)                                                |                                                                                         |
   | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                         |
   | clock_box.play_handle       | true なら即開始                                         |                                                                                         |
-  | xmatch_auth_mode            |                                                         |                                                                                         |
-  | wait_time_max               |                                                         |                                                                                         |
+  | xmatch_auth_key            |                                                         |                                                                                         |
+  | xmatch_wait_max               |                                                         |                                                                                         |
   |-----------------------------+---------------------------------------------------------+-----------------------------------------------------------------------------------------|
 
 * 開発用URL
