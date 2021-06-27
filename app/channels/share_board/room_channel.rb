@@ -77,7 +77,7 @@ module ShareBoard
 
     def ordered_members_share(data)
       user_names = data["ordered_members"].collect { |e| e["user_name"] }.join(" → ")
-      track(data, "順番設定", "#{user_names} (#{data["avatar_king_key"]} #{data["shout_key"]})")
+      track(data, "順番設定", "#{user_names} (#{data["avatar_king_key"]} #{data["shout_mode_key"]})")
       broadcast(:ordered_members_share_broadcasted, data)
     end
 
