@@ -60,6 +60,10 @@ class UsersController < ApplicationController
     end
 
     if params[:command] == "social_disconnect"
+      if current_record.auth_infos.one?
+        redirect_to polymorphic_path([:edit, current_record]), alert: "最後の1つのアカウント連携を解除してしまうとログインできなくなってしまいます"
+        return
+      end
       current_record.auth_infos.where(provider: social_media_info.key).destroy_all
       redirect_to polymorphic_path([:edit, current_record]), notice: "#{social_media_info.name} アカウントとの連携を解除しました"
       return
