@@ -30,7 +30,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # ユーザーが特定できていないときは認証情報から復元する
     unless user
       if current_auth_info
-        restoration = true
         user ||= current_auth_info.user
       end
 
