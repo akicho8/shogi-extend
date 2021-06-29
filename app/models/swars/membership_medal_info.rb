@@ -120,6 +120,14 @@ module Swars
         },
       },
       {
+        key: "無気力マン",
+        message: "無気力対局",
+        medal_params: "🦥",
+        if_cond: -> m {
+          m.judge_key == "lose" && m.battle.turn_max <= 19 && m.battle.final_info.toryo_or_tsumi
+        },
+      },
+      {
         key: "入玉勝ちマン",
         message: "入玉で勝った",
         medal_params: "🪳",

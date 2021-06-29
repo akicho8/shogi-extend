@@ -117,6 +117,32 @@ module Swars
       end
     end
 
+    describe "無気力マン" do
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      end
+
+      def test1(n, final_key)
+        @black = User.create!
+        @white = User.create!
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: final_key) do |e|
+          e.memberships.build(user: @black, judge_key: :lose)
+          e.memberships.build(user: @white, judge_key: :win)
+        end
+        @black.memberships.first.first_matched_medal_key_and_message
+      end
+
+      it do
+        result = [:"無気力マン", "無気力対局"]
+        assert { test1(19, :TORYO)     == result }
+        assert { test1(20, :TORYO)     != result }
+        assert { test1(19, :CHECKMATE) == result }
+        assert { test1(20, :CHECKMATE) != result }
+        assert { test1(19, :TIMEOUT)   != result }
+        assert { test1(20, :TIMEOUT)   != result }
+      end
+    end
+
     describe "ただの千日手" do
       def csa_seq_generate(n)
         [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]] * n
@@ -183,14 +209,18 @@ module Swars
       end
 
       it do
-        test(20)                # =>
+        test(20)                # => [:運営支えマン, "将棋ウォーズの運営を支える力がある"]
         assert { test(20) == [:運営支えマン, "将棋ウォーズの運営を支える力がある"] }
       end
     end
 
     describe "段級差" do
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      end
+
       def test1(*keys)
-        Battle.create! { |e|
+        Battle.create!(csa_seq: csa_seq_generate(20)) { |e|
           keys.each do |key|
             e.memberships.build(user: User.create!(grade_key: key))
           end
@@ -250,8 +280,8 @@ module Swars
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> .........
-# >>
-# >> Finished in 12.15 seconds (files took 2.68 seconds to load)
-# >> 9 examples, 0 failures
-# >>
+# >> ..........
+# >> 
+# >> Finished in 14.56 seconds (files took 4.85 seconds to load)
+# >> 10 examples, 0 failures
+# >> 

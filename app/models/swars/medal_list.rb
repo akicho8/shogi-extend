@@ -372,5 +372,21 @@ module Swars
         end
       }.call
     end
+
+    # 19手以下で投了または詰まされて負けた率 (分母: 負け数)
+    def hayai_toryo
+      @hayai_toryo ||= -> {
+        if lose_count.positive?
+          s = lose_scope
+          s = s.joins(:battle)
+          s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "CHECKMATE"]))
+          s = s.where(Swars::Battle.arel_table[:turn_max].lteq(19))
+          c = s.count
+          c.fdiv(lose_count)
+        else
+          0
+        end
+      }.call
+    end
   end
 end

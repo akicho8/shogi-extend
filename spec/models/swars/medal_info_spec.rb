@@ -259,5 +259,59 @@ module Swars
         assert { test(["lose"] * 5).include?(:"波が激しいマン") }
       end
     end
+
+    describe "無気力マン" do
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      end
+
+      def test1(n, final_key)
+        @black = User.create!
+        @white = User.create!
+        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: final_key) do |e|
+          e.memberships.build(user: @black, judge_key: :lose)
+          e.memberships.build(user: @white, judge_key: :win)
+        end
+        @black.user_info.medal_list.matched_medal_infos.collect(&:key)
+      end
+
+      it do
+        result = [:"居飛車党", :"無気力マン"]
+        assert { test1(19, :TORYO) == result }
+        assert { test1(19, :CHECKMATE) == result }
+        assert { test1(20, :CHECKMATE) != result }
+        assert { test1(19, :TIMEOUT) != result }
+        assert { test1(20, :TIMEOUT) != result }
+      end
+    end
+
   end
 end
+# >> Run options: exclude {:slow_spec=>true}
+# >> ........F..
+# >> 
+# >> Failures:
+# >> 
+# >>   1) {:type=>:model} 運営支えマン 
+# >>      Failure/Error: Unable to find - to read failed line
+# >> 
+# >>      NameError:
+# >>        undefined local variable or method `outbreak_csa' for #<RSpec::ExampleGroups::TypeModel::Nested_8 "example at -:234">
+# >>      # -:218:in `csa_seq_generate'
+# >>      # -:227:in `test'
+# >>      # -:235:in `block (4 levels) in <module:Swars>'
+# >>      # <internal:prelude>:137:in `__enable'
+# >>      # <internal:prelude>:137:in `enable'
+# >>      # <internal:prelude>:137:in `__enable'
+# >>      # <internal:prelude>:137:in `enable'
+# >>      # -:235:in `block (3 levels) in <module:Swars>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
+# >> 
+# >> Finished in 20.82 seconds (files took 2.55 seconds to load)
+# >> 11 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:234 # {:type=>:model} 運営支えマン 
+# >> 
