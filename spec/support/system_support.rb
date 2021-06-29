@@ -121,6 +121,11 @@ if true
       first(:xpath, "//*[text()=' #{text} ']").click
     end
 
+    # サブメニューは左右にスペースがない
+    def menu_item_sub_menu_click(text)
+      first(:xpath, "//*[text()='#{text}']").click
+    end
+
     # user としてログインした状態にする
     # しかしこの方法はタブを2つ開いても二人を別々にログインした状態で維持にするのが難しい
     def login_as(user)

@@ -1091,6 +1091,17 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'KI2棋譜コピー'
+  describe "KI2棋譜コピー" do
+    it "works" do
+      visit_app
+      side_menu_open
+      menu_item_sub_menu_click("コピー")
+      menu_item_click("KI2")
+      assert_text("コピーしました")
+    end
+  end
+
   def visit_app(args = {})
     args = args.merge("__debug_box_disabled__" => "on")
     visit "/share-board?#{args.to_query}"
