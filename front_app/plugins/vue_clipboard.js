@@ -20,7 +20,7 @@ export default {
     // general_kifu_copy(sfen, {to_format: "kif"})
     general_kifu_copy(any_source, options = {}) {
       options = {
-        candidate_enable: false,
+        candidate_enable: true, // KI2の場合trueにしないとエラーになる
         validate_enable: false,
         any_source: any_source,
         ...options,
