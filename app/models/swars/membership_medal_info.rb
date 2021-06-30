@@ -41,24 +41,19 @@ module Swars
           m.battle.final_info.key == :TIMEOUT &&
           m.judge_key == "lose" &&
           m.battle.turn_max >= 14 &&
-          (t = m.battle.rule_info.long_leave_alone) &&
-          (m.think_last || 0) >= t
+          (t = m.battle.rule_info.long_leave_alone) && (m.think_last || 0) >= t
         },
       },
       {
-        key: "角不成マン",
-        message: "角成らずで舐めプした",
-        medal_params: "☠",
+        # 「絶対投了しないマン」より後に判定すること
+        key: "相手退席待ちマン",
+        message: -> m { "放置に痺れを切らした相手が離席したころ1手指して切れ勝ちを狙ったが失敗した" },
+        medal_params: "🚷",
         if_cond: -> m {
-          m.tag_names_for(:note).include?("角不成")
-        }
-      },
-      {
-        key: "飛車不成マン",
-        message: "飛車成らずで舐めプした",
-        medal_params: "💀",
-        if_cond: -> m {
-          m.tag_names_for(:note).include?("飛車不成")
+          m.judge_key == "lose" &&
+          m.battle.turn_max >= 14 &&
+          m.think_last && m.think_max != m.think_last &&
+          (t = m.battle.rule_info.long_leave_alone2) && m.think_max >= t
         },
       },
       {
@@ -66,9 +61,8 @@ module Swars
         message: "大駒すべて捨てたのに勝った",
         medal_params: "🧠",
         if_cond: -> m {
-          m.tag_names_for(:note).include?("背水の陣") &&
-          m.judge_key == "win" &&
-          m.battle.final_info.toryo_or_tsumi
+          m.judge_key == "win" && m.battle.final_info.toryo_or_tsumi &&
+          m.tag_names_for(:note).include?("背水の陣")
         },
       },
       {
@@ -76,7 +70,7 @@ module Swars
         message: -> m { "対局放棄と受け取られかねない#{m.think_max_s}の長考をしたあげく負けた" },
         medal_params: "🚫",
         if_cond: -> m {
-          (m.judge_key == "lose" && t = m.battle.rule_info.long_leave_alone) && m.think_max >= t
+          m.judge_key == "lose" && (t = m.battle.rule_info.long_leave_alone) && m.think_max >= t
         },
       },
       {
@@ -93,6 +87,22 @@ module Swars
         medal_params: "🤯",
         if_cond: -> m {
           (t = m.battle.rule_info.short_leave_alone) && m.think_max >= t && m.judge_key == "lose"
+        },
+      },
+      {
+        key: "角不成マン",
+        message: "角成らずで舐めプした",
+        medal_params: "☠",
+        if_cond: -> m {
+          m.tag_names_for(:note).include?("角不成")
+        }
+      },
+      {
+        key: "飛車不成マン",
+        message: "飛車成らずで舐めプした",
+        medal_params: "💀",
+        if_cond: -> m {
+          m.tag_names_for(:note).include?("飛車不成")
         },
       },
       {

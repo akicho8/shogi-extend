@@ -149,6 +149,26 @@ module Swars
       end
     end
 
+    describe "相手退席待ちマン" do
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      end
+
+      def test1
+        @black = User.create!
+        @white = User.create!
+        Swars::Battle.create!(csa_seq: csa_seq_generate(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
+          e.memberships.build(user: @black, judge_key: :lose)
+          e.memberships.build(user: @white, judge_key: :win)
+        end
+        @black.user_info.medal_list.matched_medal_infos.collect(&:key)
+      end
+
+      it "works" do
+        assert { test1.include?(:"相手退席待ちマン") }
+      end
+    end
+
     describe "絶対投了しないマン" do
       def csa_seq_generate(n)
         [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
@@ -289,12 +309,12 @@ module Swars
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ........F..
-# >> 
+# >>
 # >> Failures:
-# >> 
-# >>   1) {:type=>:model} 運営支えマン 
+# >>
+# >>   1) {:type=>:model} 運営支えマン
 # >>      Failure/Error: Unable to find - to read failed line
-# >> 
+# >>
 # >>      NameError:
 # >>        undefined local variable or method `outbreak_csa' for #<RSpec::ExampleGroups::TypeModel::Nested_8 "example at -:234">
 # >>      # -:218:in `csa_seq_generate'
@@ -307,11 +327,11 @@ end
 # >>      # -:235:in `block (3 levels) in <module:Swars>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >> 
+# >>
 # >> Finished in 20.82 seconds (files took 2.55 seconds to load)
 # >> 11 examples, 1 failure
-# >> 
+# >>
 # >> Failed examples:
-# >> 
-# >> rspec -:234 # {:type=>:model} 運営支えマン 
-# >> 
+# >>
+# >> rspec -:234 # {:type=>:model} 運営支えマン
+# >>

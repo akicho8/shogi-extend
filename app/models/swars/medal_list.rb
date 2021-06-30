@@ -239,6 +239,28 @@ module Swars
       end
     end
 
+    ################################################################################ 相手退席待ちマン
+
+    def taisekimachi_ratio
+      if real_count.positive?
+        c = RuleInfo.sum { |e| taisekimachi_count_for(e) || 0 }
+        c.fdiv(real_count)
+      end
+    end
+
+    def taisekimachi_count_for(rule_info)
+      if t = rule_info.long_leave_alone2
+        s = lose_scope
+        s = s.where(Swars::Membership.arel_table[:think_last].not_eq(nil))
+        s = s.where(Swars::Membership.arel_table[:think_max].not_eq(Swars::Membership.arel_table[:think_last]))
+        s = s.where(Swars::Membership.arel_table[:think_max].gteq(t)) # 最後ではないところで長考がある
+        s = s.joins(:battle)
+        s = s.where(Swars::Battle.arel_table[:rule_key].eq(rule_info.key))
+        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
+        s.count
+      end
+    end
+
     ################################################################################ 長考
 
     # 大長考または放置 (勝ち負け関係なし)

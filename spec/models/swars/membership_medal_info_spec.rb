@@ -80,6 +80,26 @@ module Swars
       end
     end
 
+    describe "相手退席待ちマン" do
+      def csa_seq_generate(n)
+        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      end
+
+      def test1
+        @black = User.create!
+        @white = User.create!
+        Swars::Battle.create!(csa_seq: csa_seq_generate(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
+          e.memberships.build(user: @black, judge_key: :lose)
+          e.memberships.build(user: @white, judge_key: :win)
+        end
+        @black.memberships.first.first_matched_medal_key_and_message.first
+      end
+
+      it do
+        assert { test1 == :"相手退席待ちマン" }
+      end
+    end
+
     describe "1手詰じらしマン" do
       def test1
         @black = User.create!
@@ -281,7 +301,7 @@ module Swars
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ..........
-# >> 
+# >>
 # >> Finished in 14.56 seconds (files took 4.85 seconds to load)
 # >> 10 examples, 0 failures
-# >> 
+# >>
