@@ -7,7 +7,7 @@ export class MainSettingInfo extends MemoryRecord {
       { key: "yomiage_mode_key",     model: "YomiageModeInfo",    },
       { key: "sp_move_cancel",       model: "SpMoveCancelInfo",   },
       { key: "sp_internal_rule_key", model: "SpInternalRuleInfo", },
-      { key: "debug_mode_key",            model: "DebugModeInfo",          },
+      { key: "debug_mode_key",       model: "DebugModeInfo",      },
     ]
   }
 }
