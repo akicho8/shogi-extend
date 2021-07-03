@@ -76,7 +76,7 @@ export default {
   },
   mounted() {
     this.interval_counter = new IntervalCounter(() => window.scrollBy(0, 1), {early: true, interval: 0.02})
-    if (true) {
+    if (false) {
       this.interval_counter.start()
     }
   },
