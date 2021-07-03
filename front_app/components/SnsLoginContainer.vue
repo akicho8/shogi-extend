@@ -5,6 +5,9 @@
       template(v-for="e in SocialMediaInfo.values")
         b-button.has-text-weight-bold(rounded :type="`is-${e.key}`" :icon-left="e.key" @click="click_handle(e)")
           span {{e.name}} でログインする
+      template(v-if="true")
+        b-button.has-text-weight-bold(rounded type="is-primary"  @click="passowrd_login_click_handle(e)")
+          span パスワードでログインする
 </template>
 
 <script>
@@ -31,6 +34,11 @@ export default {
     },
     sns_auth_url(e) {
       return this.login_url_build({social_media_key: e.key})
+    },
+    passowrd_login_click_handle() {
+      this.sound_play('click')
+      this.$emit("close")
+      this.login_url_jump()
     },
   },
   computed: {
