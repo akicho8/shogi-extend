@@ -3,7 +3,7 @@ const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
 const SITE_DESC = "将棋に関連するツールを提供するサイトです"
 
 // https://github.com/nuxt-community/sitemap-module
-// http://10.0.1.2:4000/sitemap.xml
+// http://localhost:4000/sitemap.xml
 const axios = require('axios')
 const sitemap = {
   hostname: process.env.MY_NUXT_URL,
@@ -21,16 +21,16 @@ const sitemap = {
     let list = []
     let res = null
 
-    // http://10.0.1.2:3000/api/wkbk/tops/sitemap
+    // http://localhost:3000/api/wkbk/tops/sitemap
     res = await axios.get(`${process.env.API_URL}/api/wkbk/tops/sitemap`)
     list = list.concat(res.data.books.map(({key}) => `/rack/books/${key}`))
     list = list.concat(res.data.articles.map(({key}) => `/rack/articles/${key}`))
 
-    // http://10.0.1.2:3000/api/tsl_user_all
+    // http://localhost:3000/api/tsl_user_all
     res = await axios.get(`${process.env.API_URL}/api/tsl_league_all`)
     list = list.concat(res.data.map(({generation}) => `/three-stage-leagues/${generation}`))
 
-    // http://10.0.1.2:3000/api/tsl_league_all
+    // http://localhost:3000/api/tsl_league_all
     res = await axios.get(`${process.env.API_URL}/api/tsl_user_all`)
     list = list.concat(res.data.map(({name}) => `/three-stage-league-players/${name}`))
 
@@ -97,7 +97,7 @@ const config = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: SITE_DESC },
-      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? "http://10.0.1.2:3000" : "") + "/maincable" },
+      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? process.env.MY_SITE_URL : "") + "/maincable" },
 
       // 「ホーム画面に追加」したあとアプリのような画面にする設定
       //
@@ -137,7 +137,7 @@ const config = {
       { hid: "icon",             rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'          },
       { hid: "apple-touch-icon", rel: "apple-touch-icon",           href: "/apple-touch-icon.png" },
     ],
-    // base: { href: "http://10.0.1.2:3000" },
+    // base: { href: process.env.MY_SITE_URL },
   },
   /*
   ** Customize the progress-bar color
@@ -351,14 +351,14 @@ const config = {
 if (process.env.NODE_ENV === 'development') {
   // // これがないと CORS にひっかかる
   // // ↓これいらんはず
-  // config.proxy["/api"]        = "http://10.0.1.2:3000"
+  // config.proxy["/api"]        = process.env.MY_SITE_URL
 
   // ↓これはいる(たぶん)
-  config.proxy["/system"]     = "http://10.0.1.2:3000" // for mp3
-  config.proxy["/rails"]      = "http://10.0.1.2:3000" // for /rails/active_storage/*
-  config.proxy["/assets"]     = "http://10.0.1.2:3000" // for /assets/human/0005_fallback_avatar_icon-f076233f605139a9b8991160e1d79e6760fe6743d157446f88b12d9dae5f0e03.png
-  // config.proxy["/x.json"]     = "http://10.0.1.2:3000" // for /x.json
-  config.proxy["/admin"]     = "http://10.0.1.2:3000"
+  config.proxy["/system"]     = process.env.MY_SITE_URL // for mp3
+  config.proxy["/rails"]      = process.env.MY_SITE_URL // for /rails/active_storage/*
+  config.proxy["/assets"]     = process.env.MY_SITE_URL // for /assets/human/0005_fallback_avatar_icon-f076233f605139a9b8991160e1d79e6760fe6743d157446f88b12d9dae5f0e03.png
+  // config.proxy["/x.json"]     = process.env.MY_SITE_URL // for /x.json
+  config.proxy["/admin"]     = process.env.MY_SITE_URL
 }
 
 export default config
