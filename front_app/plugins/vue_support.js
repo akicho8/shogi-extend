@@ -448,6 +448,24 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // body ではなく html を対象にしないと隙間が見えてしまう
+    html_background_color_set(color) {
+      const elem = document.querySelector("html")
+      elem.style.backgroundColor = color
+    },
+
+    html_background_color_unset() {
+      this.html_background_color_set("unset")
+    },
+
+    // this.$el の background-color を html の background-color に設定する
+    // これを使うより html_background_black_mixin.js を mixin する方がよい
+    html_background_color_set_from_current_element() {
+      const css_style_declaration = window.getComputedStyle(this.$el)
+      const color = css_style_declaration.getPropertyValue("background-color")
+      this.html_background_color_set(color)
+    },
+
     // 一番下までスクロール
     scroll_to_bottom(elem) {
       if (elem) {
