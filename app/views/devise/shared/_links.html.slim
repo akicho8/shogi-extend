@@ -2,7 +2,7 @@
   .column
     .card
       .card-content
-        .title.is-4.has-text-centered
+        .title.is-5.has-text-centered
           | 簡単なログイン
         - if devise_mapping.omniauthable?
           .content
@@ -17,7 +17,7 @@
             - SocialMediaInfo.each do |e|
               - if AppConfig[:available_providers].include?(e.key)
                 p
-                  = link_to(omniauth_authorize_path(resource_name, e.key), class: ["button", "is-large", "is-primary", "is-fullwidth", "is-rounded", "brand_button", e.key, "has-text-weight-bold"]) do
+                  = link_to(omniauth_authorize_path(resource_name, e.key), class: ["button", "is-primary", "is-fullwidth", "is-rounded", "brand_button", e.key, "has-text-weight-bold"]) do
                     span.icon.is-medium
                       i(class="fab fa-#{e.key}")
                     span
@@ -26,8 +26,8 @@
                         = " ←"
             - if AppConfig[:nanasi_login]
               p
-                = link_to([:direct_session], method: :post, class: "button is-large has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button") do
-                  span.is-size-5
+                = link_to([:direct_session], method: :post, class: "button has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button") do
+                  span
                     | 適当にアカウントを作成してログイン
 
 - if AppConfig[:email_pw_login]

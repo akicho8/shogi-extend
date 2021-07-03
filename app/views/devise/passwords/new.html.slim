@@ -4,14 +4,14 @@
   .column
     .card
       .card-content
-        .title.is-4
+        .title.is-5
           = t('.forgot_your_password', default: 'Forgot your password?')
         = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, role: "form" }) do |f|
           .field
             = f.label :email
             .control
               = f.email_field :email, autofocus: true, class: 'input'
-          = f.submit t('.send_me_reset_password_instructions', default: 'Send me reset password instructions'), class: 'button is-primary'
+          .mt-5
+            = f.submit t('.send_me_reset_password_instructions', default: 'Send me reset password instructions'), class: 'button is-primary'
 
-  .column
-    = render 'devise/shared/links'
+= render 'devise/shared/links'

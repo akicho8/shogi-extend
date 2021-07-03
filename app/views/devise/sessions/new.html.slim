@@ -1,24 +1,18 @@
-.columns
-  .column
-    = render 'devise/shared/links'
-
-    - if AppConfig[:email_pw_login]
+- if AppConfig[:email_pw_login]
+  .columns
+    .column
       .card
         .card-content
-          .title.is-4
+          .title.is-5
             | 面倒なログイン
           = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f|
             .field
-              .control.has-icons-left.has-icons-right
-                = f.email_field(:email, autofocus: false, class: 'input', placeholder: "メールアドレス")
-                span.icon.is-small.is-left
-                  i.fas.fa-envelope
+              .control
+                = f.email_field(:email, class: 'input', placeholder: "メールアドレス")
 
             .field
-              .control.has-icons-left
-                = f.password_field :password, autocomplete: 'off', class: 'input', placeholder: "パスワード"
-                span.icon.is-small.is-left
-                  i.fas.fa-lock
+              .control
+                = f.password_field :password, class: 'input', placeholder: "パスワード"
 
             - if devise_mapping.rememberable?
               .field
@@ -28,8 +22,7 @@
                       = f.check_box :remember_me
                       =<> t('.remember_me', default: 'Remember me')
 
-            .field
-              .control
-                = f.submit t('.sign_in', default: 'Sign in'), class: 'button is-primary'
+            .mt-4
+              = f.submit t('.sign_in', default: 'Sign in'), class: 'button is-primary'
 
-          br
+= render 'devise/shared/links'

@@ -1,13 +1,16 @@
 = bulma_devise_error_messages!
-.card
-  .title.is-4
-    h4
-      = t('.resend_unlock_instructions', default: 'Resend unlock instructions')
-  .card-content
-    = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, html: { role: "form" } }) do |f|
-      .field
-        = f.label :email
-        = f.email_field :email, autofocus: true, class: 'input'
-      = f.submit t('.resend_unlock_instructions', default: 'Resend unlock instructions'), class: 'button is-primary'
+.columns
+  .column
+    .card
+      .title.is-5
+        h4
+          = t('.resend_unlock_instructions', default: 'Resend unlock instructions')
+      .card-content
+        = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, html: { role: "form" } }) do |f|
+          .field
+            = f.label :email
+            = f.email_field :email, autofocus: true, class: 'input'
+          .mt-5
+            = f.submit t('.resend_unlock_instructions', default: 'Resend unlock instructions'), class: 'button is-primary'
 
 = render 'devise/shared/links'

@@ -1,11 +1,15 @@
 = bulma_devise_error_messages!
-.card
-  .card-content
-    .title.is-4
-      = t('.resend_confirmation_instructions', default: 'Resend confirmation instructions')
-    = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, role: 'form' }) do |f|
-      .field
-        = f.label :email
-        = f.email_field :email, autofocus: true, class: "input"
-      = f.submit t('.resend_confirmation_instructions', default: 'Resend confirmation instructions'), class: 'button is-primary'
+.columns
+  .column
+    .card
+      .card-content
+        .title.is-5
+          = t('.resend_confirmation_instructions', default: 'Resend confirmation instructions')
+        = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, role: 'form' }) do |f|
+          .field
+            = f.label :email
+            = f.email_field :email, autofocus: true, class: "input"
+          .mt-5
+            = f.submit t('.resend_confirmation_instructions', default: 'Resend confirmation instructions'), class: 'button is-primary'
+
 = render 'devise/shared/links'

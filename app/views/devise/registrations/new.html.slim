@@ -1,11 +1,11 @@
 = bulma_devise_error_messages!
 
-.columns
-  - if AppConfig[:email_pw_login]
+- if AppConfig[:email_pw_login]
+  .columns
     .column
       .card
         .card-content
-          .title.is-4
+          .title.is-5
             = t(".sign_up", default: "Sign up")
           = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { role: "form" }) do |f|
             .field
@@ -20,8 +20,7 @@
               = f.label :password_confirmation
               .control
                 = f.password_field :password_confirmation, class: "input"
+            .mt-5
+              = f.submit t(".sign_up", default: "Sign up"), class: "button is-primary"
 
-            = f.submit t(".sign_up", default: "Sign up"), class: "button is-primary"
-
-  .column
-    = render 'devise/shared/links'
+= render 'devise/shared/links'
