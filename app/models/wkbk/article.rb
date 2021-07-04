@@ -205,8 +205,10 @@ module Wkbk
     end
 
     def book_keys=(v)
-      if new_record?
-        warn "article をDBに保存していないタイミングでは bookships も保存できていない"
+      if Rails.env.development?
+        if new_record?
+            warn "article をDBに保存していないタイミングでは bookships も保存できていない"
+        end
       end
       self.books = Book.where(key: v) # persisted? なら INSERT が走る
     end
@@ -265,8 +267,6 @@ module Wkbk
       end
     end
 
-    private
-
     def default_assign_from_source_article(params)
       if source_article = params[:source_article]
         [
@@ -312,6 +312,8 @@ module Wkbk
         self.folder_key ||= v.first.folder_key # 問題集と同じ公開設定にしておく
       end
     end
+
+    private
 
     concerning :BookshipMethods do
       included do

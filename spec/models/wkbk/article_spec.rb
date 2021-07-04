@@ -186,20 +186,16 @@ module Wkbk
       article.destroy!
     end
 
-    describe "default_assign コピーして新規用" do
-      before do
-        @user = User.create!
-      end
-
-      def source_article
-        article = @user.wkbk_articles.create!(init_sfen: "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1")
-        article.moves_answers.create!("moves_str" => "G*5b")
-        article
-      end
-
+    describe "default_assign" do
       it do
+        @user = User.create!
+
+        source_article = @user.wkbk_articles.create!(init_sfen: "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1")
+        source_article.default_assign_from_individual_params({})
+        source_article.moves_answers.create!("moves_str" => "G*5b")
+
         article = @user.wkbk_articles.build
-        article.default_assign(source_article: source_article)
+        article.default_assign_from_source_article(source_article: source_article)
         article.moves_answer_validate_skip = true
         assert { article.title.include?("のコピー") }
         assert { article.valid? }
