@@ -42,4 +42,9 @@ describe('HandleNameValidator', () => {
   test('文章を書いている', () => {
     expect(HandleNameValidator.valid("よろしく。")).toEqual(false)
   })
+
+  test('絵文字のみ', () => {
+    expect(HandleNameValidator.valid("🥇")).toEqual(false)
+    expect(HandleNameValidator.valid("🥇🥇")).toEqual(false)
+  })
 })

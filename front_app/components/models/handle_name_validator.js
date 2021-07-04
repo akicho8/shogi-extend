@@ -1,6 +1,7 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import { AnySupport } from "./any_support.js"
+import { parse as TwitterEmojiParser } from 'twemoji-parser'
 
 export const HandleNameValidator = {
   get MAX_LENGTH() { return 16 },
@@ -61,6 +62,9 @@ export const HandleNameValidator = {
     }
     if (!error) {
       error = s.match(/(.)\1\1/i)
+    }
+    if (!error) {
+      error = [...s].length === TwitterEmojiParser(s).length
     }
     return !error
   },
