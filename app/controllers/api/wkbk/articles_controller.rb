@@ -72,7 +72,7 @@ module Api
         else
           # article = current_user.wkbk_articles.build
           article = current_user.wkbk_articles.build
-          article.default_assign(params.merge(books: default_books))
+          article.default_assign(params.merge(source_article: source_article, books: default_books))
           # retv[:article] = ::Wkbk::Article.default_attributes.merge(book_key: default_book_key)
           # retv[:meta] = ::Wkbk::Article.new_og_meta
         end
@@ -148,6 +148,13 @@ module Api
       # PageMethods override
       def default_per
         ::Wkbk::Config[:api_articles_fetch_per]
+      end
+
+      # コピー元は編集権限と同じスコープで取得する
+      def source_article
+        if v = params[:source_article_key]
+          current_user.wkbk_articles.find_by!(key: v)
+        end
       end
     end
   end

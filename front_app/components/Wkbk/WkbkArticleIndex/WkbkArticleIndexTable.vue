@@ -60,9 +60,10 @@
     b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.ArticleIndexColumnInfo.fetch('created_at').name"       sortable         :visible="!!base.visible_hash.created_at")       {{row_time_format(row.created_at)}}
     b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="base.ArticleIndexColumnInfo.fetch('updated_at').name"       sortable         :visible="!!base.visible_hash.updated_at")       {{row_time_format(row.updated_at)}}
 
-    b-table-column(v-slot="{row}" custom-key="operation" label="" :width="1")
+    b-table-column(v-slot="{row}" custom-key="operation" label="" :width="1" cell-class="operation_block")
       template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-        nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
+        nuxt-link.button.is-small(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sound_play('click')") 編集
+        nuxt-link.button.is-small(:to="{name: 'rack-articles-new', query: {source_article_key: row.key}}" @click.native="sound_play('click')") コピーして新規
 
     template(slot="empty" v-if="base.articles != null")
       section.section.is-unselectable
@@ -118,6 +119,11 @@ export default {
     // 複数並ぶ問題集の隙間
     // .book_title:not(:first-child)
     //   margin-left: 3rem
+
+  .operation_block
+    white-space: nowrap
+    .button:not(:first-child)
+      margin-left: 0.5rem
 
   // モバイルでは CustomShogiPlayer を横幅最大にしたいので横のパディングを取る
   +mobile

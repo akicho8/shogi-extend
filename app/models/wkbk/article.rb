@@ -253,6 +253,47 @@ module Wkbk
     end
 
     def default_assign(params = {})
+      default_assign_from_source_article(params)
+      default_assign_from_individual_params(params)
+
+      if Rails.env.development? && false
+        self.init_sfen = "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
+        self.moves_answers.build(moves_str: "S*2c 2b3c G*4c")
+        self.moves_answers.build(moves_str: "S*2c 2b1c 2c1b+ 1c1b G*2c")
+        self.moves_answers.build(moves_str: "S*2c 2b1c 2c1b+ 1a1b G*2c")
+        self.moves_answers.build(moves_str: "S*2c 2b3a G*3b")
+      end
+    end
+
+    private
+
+    def default_assign_from_source_article(params)
+      if source_article = params[:source_article]
+        [
+          :description,
+          :direction_message,
+          :init_sfen,
+          :viewpoint,
+          :mate_skip,
+          :difficulty,
+          :folder_key,
+          :lineage_key,
+          :tag_list,
+          :book_keys,
+        ].each do |attr|
+          public_send("#{attr}=", source_article.public_send(attr))
+        end
+
+        self.title = "#{source_article.title}のコピー"
+
+        source_article.moves_answers.each do |e|
+          moves_answers.build(moves_str: e.moves_str)
+        end
+      end
+    end
+
+    # 個別のパラメータで初期値設定
+    def default_assign_from_individual_params(params)
       self.title             ||= params[:title]
       self.description       ||= params[:description]
       self.direction_message ||= params[:direction_message]
@@ -270,17 +311,7 @@ module Wkbk
         self.books = books.presence || v
         self.folder_key ||= v.first.folder_key # 問題集と同じ公開設定にしておく
       end
-
-      if Rails.env.development?
-        self.init_sfen = "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
-        self.moves_answers.build(moves_str: "S*2c 2b3c G*4c")
-        self.moves_answers.build(moves_str: "S*2c 2b1c 2c1b+ 1c1b G*2c")
-        self.moves_answers.build(moves_str: "S*2c 2b1c 2c1b+ 1a1b G*2c")
-        self.moves_answers.build(moves_str: "S*2c 2b3a G*3b")
-      end
     end
-
-    private
 
     concerning :BookshipMethods do
       included do
