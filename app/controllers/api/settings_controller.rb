@@ -2,8 +2,6 @@ module Api
   class SettingsController < ::Api::ApplicationController
     before_action :api_login_required
 
-    DIRECCT_EMAIL_SET = true
-
     # curl -d _method=put http://localhost:3000/api/settings/profile_update.json
     def profile_update
       user = current_user
@@ -59,10 +57,11 @@ module Api
         return
       end
 
-      # メールアドレス未設定なら即設定
-      if user.email_invalid? || DIRECCT_EMAIL_SET
+      # 確認なしで設定
+      # user.email_invalid?
+      if AppConfig[:email_direct_set]
         user.email = params[:email]
-        user.skip_reconfirmation!
+        user.skip_reconfirmation! # メールを飛ばさずに既存ユーザーのメールアドレスを変更する
         user_save(user)
         return if performed?
         notice_collector = NoticeCollector.single(:success, "メールアドレスを更新しました")

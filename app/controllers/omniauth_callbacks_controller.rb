@@ -74,6 +74,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     end
 
+    if user.invalid?
+      SlackAgent.message_send(key: "ユーザー作成失敗", body: [user.errors.full_messages, user.attributes, auth].as_json)
+      # SystemMailer.simple_track(subject: "ユーザー作成失敗", body: user.attributes).deliver_later
+    end
+
     # ユーザーのメールアドレスが空だったり初期値なら設定する
     if user.valid?
       if user.email_invalid?
