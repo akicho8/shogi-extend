@@ -346,15 +346,20 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     window_popup(url, options = {}) {
+      // https://developer.mozilla.org/ja/docs/Web/API/Window/open
+      // https://qiita.com/yun_bow/items/356f21fc376133037d84
       options = {
         width: 800,
-        height:640,
+        height: 640,
+        location: "no",         // Chrome では効かない
+        status: "no",
         ...options,
       }
       const left = (window.screen.width  - options.width)  / 2
       const top  = (window.screen.height - options.height) / 2
-      const opts = `status=no,top=${top},left=${left},width=${options.width},height=${options.height}`
-      window.open(url, "_blank", opts)
+      options = { top, left, ...options }
+      const features = _.map(options, (v, k) => `${k}=${v}`).join(",")
+      window.open(url, "_blank", features)
     },
 
     kento_full_url({sfen, turn, viewpoint}) {
