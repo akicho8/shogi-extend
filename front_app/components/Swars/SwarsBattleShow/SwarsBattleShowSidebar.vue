@@ -46,6 +46,9 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
           b-menu-item.is_active_unset(label="ぴよ将棋" @click="base.short_url_copy('piyo_shogi')")
           b-menu-item.is_active_unset(label="KENTO"    @click="base.short_url_copy('kento')")
 
+        b-menu-list(label="リンク")
+          b-menu-item.is_active_unset(label="本家" @click="official_show_handle")
+
   //- PageCloseButton(@click="back_handle" position="is_absolute" size="is-medium")
   //- b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text")
 </template>
@@ -76,9 +79,14 @@ export default {
         this.base.sidebar_close()
       }
     },
+    official_show_handle() {
+      this.sound_play("click")
+      this.window_popup_if_desktop(this.official_show_url, {width: 400, height: 700})
+    },
   },
   computed: {
     FormatTypeInfo() { return FormatTypeInfo },
+    official_show_url() { return `https://shogiwars.heroz.jp/games/${this.base.record.key}` },
   },
 }
 </script>
