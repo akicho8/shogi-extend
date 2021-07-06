@@ -28,21 +28,9 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" field="id" :label="base.config.table_columns_hash['id'].label" :visible="!!base.visible_hash.id" sortable numeric v-if="base.config.table_columns_hash.id")
     a(@click="show_handle(row)") \#{{row.id}}
 
-  template(v-if="base.config.viewpoint")
-    b-table-column(v-slot="{row}" :label="l_column_label")
-      SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
-    b-table-column(v-slot="{row}" :label="r_column_label")
-      SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
-  template(v-else-if="base.config.current_swars_user_key")
-    b-table-column(v-slot="{row}" label="自分")
-      SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
-    b-table-column(v-slot="{row}" label="相手")
-      SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
-  template(v-else)
-    b-table-column(v-slot="{row}" label="勝ち")
-      SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
-    b-table-column(v-slot="{row}" label="負け")
-      SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
+  template(v-for="(membership_label, i) in membership_labels")
+    b-table-column(v-slot="{row}" :label="membership_label")
+      SwarsBattleIndexMembership(:base="base" :membership="row.memberships[i]" key="`records/${row.id}/${i}`")
 
   b-table-column(v-slot="{row}" field="final_key" :label="base.config.table_columns_hash.final_info.label" :visible="!!base.visible_hash.final_info" sortable)
     span(:class="row.final_info.class")
@@ -87,8 +75,27 @@ export default {
   mixins: [support_child],
   computed: {
     current_viewpoint_location() { return Location.fetch(this.base.config.viewpoint) },
-    l_column_label()             { return this.current_viewpoint_location.name       },
-    r_column_label()             { return this.current_viewpoint_location.flip.name  },
+
+    membership_labels() {
+      let retv = null
+      if (this.base.config.viewpoint) {
+        retv = [
+          this.current_viewpoint_location.name,
+          this.current_viewpoint_location.flip.name,
+        ]
+      } else if (this.base.config.current_swars_user_key) {
+        retv = [
+          "自分",
+          "相手",
+        ]
+      } else {
+        retv = [
+          "勝ち",
+          "負け",
+        ]
+      }
+      return retv
+    }
   },
 }
 </script>
