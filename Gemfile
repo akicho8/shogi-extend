@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "2.6.5"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
+gem 'rails', ">= 6.1"
 # Use sqlite3 as the database for Active Record
 # gem "sqlite3"
 gem 'mysql2', '>= 0.4.4'
@@ -136,7 +136,7 @@ gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
 
 gem "acts-as-taggable-on"
 
-gem "rubyzip", require: "zip" # KIF一括ダウンロード用
+gem "rubyzip", "~> 2.3.0", require: "zip" # KIF一括ダウンロード用
 
 gem "whenever", require: false
 

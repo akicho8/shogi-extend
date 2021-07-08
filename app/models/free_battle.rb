@@ -66,7 +66,7 @@ class FreeBattle < ApplicationRecord
   belongs_to :user, required: false
 
   class << self
-    def generate_unique_secure_token
+    def generate_unique_secure_token(*)
       if Rails.env.test?
         return "#{name.demodulize.underscore}#{count.next}"
       end
