@@ -62,7 +62,6 @@ export const app_tweet_stat = {
 
     // O or X を選択したとき
     journal_record(answer_kind_key) {
-      this.sound_stop_all()
       this.interval_counter.stop()
 
       // 「START」してからの経過時間を確定する
