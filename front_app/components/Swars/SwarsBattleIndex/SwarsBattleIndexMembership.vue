@@ -41,7 +41,7 @@ export default {
   .icon_with_name
     display: flex
     align-items: center
-    justify-content: start
+    justify-content: flex-start
 
     +mobile
       font-size: $size-4

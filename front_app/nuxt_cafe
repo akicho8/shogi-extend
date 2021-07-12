@@ -1,4 +1,4 @@
 #!/bin/sh
 sudo kill -9 $(sudo lsof -t -i:4000)
-r -Q 10.0.1.2 localhost .env nuxt.config.js -x
+r -Q 10.0.1.2 localhost .env -x
 nuxt dev -p 4000 -o

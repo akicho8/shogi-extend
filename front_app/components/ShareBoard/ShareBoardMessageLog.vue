@@ -49,7 +49,7 @@ export default {
     //   padding: 0.1rem 0.5rem
     //
     //   display: flex
-    //   justify-content: start
+    //   justify-content: flex-start
     //   align-items: center
 
 .STAGE-development

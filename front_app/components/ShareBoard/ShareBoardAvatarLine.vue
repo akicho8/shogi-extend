@@ -30,7 +30,7 @@ export default {
 
   display: flex
   align-items: center
-  justify-content: start
+  justify-content: flex-start
 
   .flex_item
     // 基本横1行の設定とする
