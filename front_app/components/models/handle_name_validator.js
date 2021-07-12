@@ -49,9 +49,6 @@ export const HandleNameValidator = {
       error = s.match(/^\d+$/)
     }
     if (!error) {
-      error = s.match(/[な名][な無]し|nanash?i|無名|匿名/i)
-    }
-    if (!error) {
       error = s.match(new RegExp(this.ng_words.join("|"), "i"))
     }
     if (!error) {
@@ -84,6 +81,7 @@ export const HandleNameValidator = {
   },
   get ng_words() {
     return [
+      "[な名][な無]し|nanash?i|無名|匿名",
       "戦犯",
       "初心者",
       "死",
