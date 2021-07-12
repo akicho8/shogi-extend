@@ -37,6 +37,8 @@ export default {
 
 <style lang="sass">
 .MembershipMedal
+  flex-shrink: 0                // 絵文字潰れを防ぐ
+
   display: flex
   align-items: center
   justify-content: center
