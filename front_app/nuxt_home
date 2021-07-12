@@ -1,4 +1,3 @@
 #!/bin/sh
 sudo kill -9 $(sudo lsof -t -i:4000)
-r -Q localhost 10.0.1.2 .env -x
 nuxt dev -p 4000 -H 0.0.0.0 -o
