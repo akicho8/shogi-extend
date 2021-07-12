@@ -82,6 +82,7 @@ export const HandleNameValidator = {
   get ng_words() {
     return [
       "[な名][な無]し|nanash?i|無名|匿名",
+      "テスト|test|てすと",
       "戦犯",
       "初心者",
       "死",
