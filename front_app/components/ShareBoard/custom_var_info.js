@@ -11,12 +11,12 @@ export class CustomVarInfo extends MemoryRecord {
       { key: "yomiage_mode_key",     type: "string",  name: "読み上げモード",                default: { development: null,                   production: "is_yomiage_mode_on",      }, desc: "",                                                           },
       { key: "sp_move_cancel",       type: "string",  name: "駒移動キャンセル",              default: { development: "is_move_cancel_easy",  production: "is_move_cancel_hard",     }, desc: "",                                                           },
       { key: "move_guard_key",       type: "string",  name: "操作制限",                      default: { development: null,                   production: "is_move_guard_on",        }, desc: "",                                                           },
-      { key: "avatar_king_key",      type: "string",  name: "アバター表示",                  default: { development: "is_avatar_king_off",   production: "is_avatar_king_off",      }, desc: "",                                                           },
-      { key: "shout_mode_key",       type: "string",  name: "叫びモード",                    default: { development: "is_shout_mode_off",    production: "is_shout_mode_off",       }, desc: "",                                                           },
-      { key: "guardian_mode",        type: "string",  name: "守護獣モード",                  default: { development: "is_guardian_mode_off", production: "is_guardian_mode_on",     }, desc: "フォームなし。OFFなら動物は出ない",                          },
-      { key: "xmatch_wait_max",      type: "integer", name: "待ち時間最大",                  default: { development: null,                  production: 60 * 3,                    }, desc: null, },
-      { key: "xmatch_redis_ttl",     type: "integer", name: "マッチングエントリ度の更新TTL", default: { development: null,                  production: 60 * 3 + 3,                }, desc: null, },
-      { key: "xmatch_auth_key",      type: "string",  name: "ルール選択時に認証方法",        default: { development: null,                  production: "handle_name_required",    }, desc: null, },
+      { key: "guardian_mode",        type: "string",  name: "守護獣表示",                    default: { development: "is_guardian_mode_on",  production: "is_guardian_mode_on",     }, desc: "組み込み機能の有効化",                          },
+      { key: "avatar_king_key",      type: "string",  name: "玉をアバターにする",            default: { development: "is_avatar_king_off",   production: "is_avatar_king_off",      }, desc: "フォーム初期値",                                                           },
+      { key: "shout_mode_key",       type: "string",  name: "叫びモード",                    default: { development: "is_shout_mode_off",    production: "is_shout_mode_off",       }, desc: "フォーム初期値",                                                           },
+      { key: "xmatch_wait_max",      type: "integer", name: "待ち時間最大",                  default: { development: null,                   production: 60 * 3,                    }, desc: null, },
+      { key: "xmatch_redis_ttl",     type: "integer", name: "マッチングエントリ度の更新TTL", default: { development: null,                   production: 60 * 3 + 3,                }, desc: null, },
+      { key: "xmatch_auth_key",      type: "string",  name: "ルール選択時に認証方法",        default: { development: null,                   production: "handle_name_required",    }, desc: null, },
     ]
   }
 }
