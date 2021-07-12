@@ -61,6 +61,9 @@
       .buttons.mb-0.mt-2
         b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
 
+      hr
+
+      .mt-3
         .columns.is-mobile
           .column
             b-field(label="アバター" custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message || base.AvatarKingInfo.message")
