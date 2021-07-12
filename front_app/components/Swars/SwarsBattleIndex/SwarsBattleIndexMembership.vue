@@ -45,6 +45,7 @@ export default {
 
     +mobile
       font-size: $size-4
+      justify-content: flex-end
     +tablet
       font-size: $size-5
 
