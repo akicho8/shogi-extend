@@ -10,14 +10,16 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
     .mt-4
       b-menu
         b-menu-list(label="リアルタイム共有")
-          b-menu-item.is_active_unset(label="部屋に入る" @click="base.room_setup_modal_handle")
-          b-menu-item.is_active_unset(label="順番設定"   @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
-          b-menu-item.is_active_unset(label="対局時計"   @click="base.cc_modal_handle")
+          b-menu-item.is_active_unset(icon="key" label="部屋に入る" @click="base.room_setup_modal_handle")
+          b-menu-item.is_active_unset(icon="account-multiple" label="順番設定"   @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(icon="alarm" label="対局時計"   @click="base.cc_modal_handle")
 
         b-menu-list(label="共有サポート")
-          b-menu-item.is_active_unset(label="初期配置に戻す"              @click="base.board_init_modal_handle")
-          b-menu-item.is_active_unset(label="1手戻す"                     @click="base.force_sync_turn_previous_modal_handle")
-          b-menu-item.is_active_unset(label="局面の転送"                  @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(icon="page-first" label="初期配置に戻す"              @click="base.board_init_modal_handle")
+          b-menu-item.is_active_unset(icon="undo" label="1手戻す"                     @click="base.force_sync_turn_previous_modal_handle")
+          b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"                  @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
+
+        b-menu-list(label="共有サポート(あまり使わないやつ)")
           b-menu-item.is_active_unset(label="手合割"                      @click="base.handicap_set_modal_handle")
           b-menu-item.is_active_unset(label="部屋のリンクのコピー" @click="base.room_code_only_url_copy_handle"  :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset(label="自動マッチング"              @click="base.xmatch_modal_handle" v-if="$config.STAGE !== 'production' || true")
@@ -99,4 +101,9 @@ export default {
       max-height: none
       height: 32px
       width: 32px
+
+  .menu-list
+    .icon
+      color: $primary
+      margin-right: 0.5rem
 </style>
