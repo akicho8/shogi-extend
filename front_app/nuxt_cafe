@@ -1,3 +1,0 @@
-#!/bin/sh
-sudo kill -9 $(sudo lsof -t -i:4000)
-nuxt dev -p 4000 -o --dotenv .env.cafe

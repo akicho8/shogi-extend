@@ -1,0 +1,3 @@
+#!/bin/sh
+sudo kill -9 $(sudo lsof -t -i:4000)
+(cd front_app && nuxt dev -p 4000 -H 0.0.0.0 -o)
