@@ -58,6 +58,8 @@
 import _ from "lodash"
 import { support_child } from "./support_child.js"
 
+const ROOM_ENTRY_THEN_MODAL_CLOSE = false // 入室後にモーダルを閉じるか？ (閉じると「部屋のリンク」がコピーできない)
+
 export default {
   name: "RoomSetupModal",
   mixins: [support_child],
@@ -107,8 +109,7 @@ export default {
       this.base.room_code_set(this.new_room_code, this.new_user_name)
       this.room_code_field_lock()
 
-      if (this.development_p) {
-      } else {
+      if (ROOM_ENTRY_THEN_MODAL_CLOSE) {
         this.$emit("close")
       }
     },
