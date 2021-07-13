@@ -184,3 +184,5 @@ gem 'sidekiq'
 gem 'redis-namespace'
 
 gem "puma_worker_killer"
+
+gem 'psych', '~> 3.1' # Psych::BadAlias: Unknown alias: default 回避
