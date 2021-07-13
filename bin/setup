@@ -73,7 +73,7 @@ chdir APP_ROOT do
   puts "\n== Testing =="
   system! "rm -fr doc/images montage*.png"
   system 'GENERATE_IMAGE=1 SLACK_AGENT_DISABLE=true rails spec'
-  system! 'rails create_montage'
+  system! 'rails my:create_montage'
   # system! 'open montage.png'
 
   system! "say 'セットアップ完了'"
