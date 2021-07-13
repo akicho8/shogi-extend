@@ -1,4 +1,0 @@
-#!/bin/sh
-rm -fr doc/images montage*.png
-rails spec
-rails create_montage
