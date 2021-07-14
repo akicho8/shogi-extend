@@ -10,12 +10,13 @@ describe('HandleNameValidator', () => {
     expect(HandleNameValidator.valid("")).toEqual(false)
   })
 
-  test('短かすぎるアルファベット', () => {
+  test('同じ文字の繰替えし', () => {
     expect(HandleNameValidator.valid("a")).toEqual(false)
     expect(HandleNameValidator.valid("aa")).toEqual(false)
     expect(HandleNameValidator.valid("aaa")).toEqual(false)
     expect(HandleNameValidator.valid("aａa")).toEqual(false)
     expect(HandleNameValidator.valid("abbbc")).toEqual(false)
+    expect(HandleNameValidator.valid("あああ")).toEqual(false)
   })
 
   test('明かな捨てハンは禁止', () => {
@@ -37,6 +38,11 @@ describe('HandleNameValidator', () => {
 
   test('NGワード', () => {
     expect(HandleNameValidator.valid("将棋初心者")).toEqual(false)
+    expect(HandleNameValidator.valid("noname")).toEqual(false)
+  })
+
+  test('prefixが含まれる', () => {
+    expect(HandleNameValidator.valid("親しみのある")).toEqual(false)
   })
 
   test('長すぎる', () => {
