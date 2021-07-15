@@ -30,6 +30,10 @@ export default {
       this.sound_play('click')
       this.$emit("close")
       this.$buefy.loading.open()
+      // 「Not found. Authentication passthru.」対策
+      // https://zenn.dev/koshilife/articles/b71f8cfcb50e33
+      // ../../config/initializers/0290_omnauth.rb でGETを許可してあるので通る
+      // 本当はPOSTしないといけない
       location.href = this.sns_auth_url(e)
     },
     sns_auth_url(e) {

@@ -17,7 +17,7 @@
             - SocialMediaInfo.each do |e|
               - if AppConfig[:available_providers].include?(e.key)
                 p
-                  = link_to(omniauth_authorize_path(resource_name, e.key), class: ["button", "is-primary", "is-fullwidth", "is-rounded", "brand_button", e.key, "has-text-weight-bold"]) do
+                  = link_to(omniauth_authorize_path(resource_name, e.key), method: :post, class: ["button", "is-primary", "is-fullwidth", "is-rounded", "brand_button", e.key, "has-text-weight-bold"]) do
                     span.icon.is-medium
                       i(class="fab fa-#{e.key}")
                     span

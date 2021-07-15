@@ -152,13 +152,13 @@ gem "exception_notification"
 gem "slack-notifier"
 
 # devise
-gem "devise"
+gem 'devise'
 gem "devise-i18n"
 gem "devise-i18n-views"
 gem "bcrypt"
 
 # omniauth
-gem "omniauth"
+gem "omniauth-rails_csrf_protection"
 gem "omniauth-google-oauth2"
 gem "omniauth-twitter"
 gem "omniauth-github"
