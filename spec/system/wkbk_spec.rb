@@ -1,16 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "インスタント将棋問題集", type: :system do
-  before do
-    # FIXME: テスト対象は development なのでこれらは意味ない
-    Actb.setup
-    Emox.setup
-    Wkbk.setup
-    Wkbk::Book.mock_setup
-    # tp Wkbk.info
-    # tp Wkbk::Book
-  end
-
   it "問題集トップ" do
     visit "/rack"
     assert_text "問題集"
@@ -30,7 +20,7 @@ RSpec.describe "インスタント将棋問題集", type: :system do
   end
 
   it "問題集編集" do
-    visit "/rack/books/1/edit?_user_id=#{User.sysop.id}"
+    visit "/rack/books/1/edit?_login_by_key=sysop"
     assert_text ""
     doc_image
   end
@@ -48,7 +38,7 @@ RSpec.describe "インスタント将棋問題集", type: :system do
   end
 
   it "問題編集" do
-    visit "/rack/articles/1/edit?_user_id=#{User.sysop.id}"
+    visit "/rack/articles/1/edit?_login_by_key=sysop"
     doc_image
   end
 end

@@ -34,6 +34,12 @@ module CurrentUserMethods
 
     if Rails.env.development? || Rails.env.test?
       id ||= params[:_user_id]
+
+      if v = params[:_login_by_key]
+        if v = User.find_by(key: v)
+          id ||= v.id
+        end
+      end
     end
 
     id ||= session[:user_id]
