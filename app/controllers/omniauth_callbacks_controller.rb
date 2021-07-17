@@ -4,7 +4,14 @@
 # | Twitter  | "sgkinakomochi" | "きなこもち"              | ""                       | "..."       |
 # | Google   | nil             | "Akira Ikeda"             | "pinpon.ikeda@gmail.com" | nil         |
 # |----------+-----------------+---------------------------+--------------------------+-------------|
-
+#
+# リダイレクト先
+# |----------+--------------------------------------+-------------------------|
+# | 場所     | URL                                  | method                  |
+# |----------+--------------------------------------+-------------------------|
+# | ログイン | http://localhost:3000/xusers/sign_in | :new_xuser_session      |
+# | 登録     | http://localhost:3000/xusers/sign_up | :new_xuser_registration |
+# |----------+--------------------------------------+-------------------------|
 require "open-uri" # for URI#open
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
@@ -51,7 +58,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       SlackAgent.message_send(key: "認証", body: "#{user_name} #{auth.info.email} (#{auth.provider}) #{auth.info.image}")
 
       user = User.create do |e|
-        e.email         = auth.info.email # Twitterの場合は空文字列
+        e.email         = auth.info.email # Twitterの場合は空文字列 (TODO: 空なのは認証していないってことなのでは？)
         e.confirmed_at  = Time.current    # メール認証したことにする
         e.name          = user_name
         e.name_input_at = Time.current
@@ -93,7 +100,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       unless user.auth_infos.find_by(provider: auth.provider)
         auth_info = user.auth_infos.create(auth: auth)
         if auth_info.invalid?
-          return_to = session[:return_to] || :new_xuser_registration
+          return_to = session[:return_to] || :new_xuser_session
           session[:return_to] = nil
           redirect_to return_to, alert: auth_info.errors.full_messages.join("\n")
           return
@@ -102,7 +109,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     if user.invalid?
-      redirect_to :new_xuser_registration, alert: user.errors.full_messages.join("\n")
+      redirect_to :new_xuser_session, alert: user.errors.full_messages.join("\n")
       return
     end
 
@@ -112,7 +119,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # 元々ユーザーが存在していればアカウント連携しようとしたことになる
     if current_user
       message = "#{social_media_info.name} アカウントと連携しました"
-      return_to = session[:return_to] || :new_xuser_registration
+      return_to = session[:return_to] || :new_xuser_session
       session[:return_to] = nil
       redirect_to return_to, notice: message
       return
@@ -134,7 +141,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # | Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
   # |
   def after_omniauth_failure_path_for(resource_name)
-    :new_xuser_registration
+    :new_xuser_session
   end
 
   private

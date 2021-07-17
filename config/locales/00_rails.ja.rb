@@ -1,45 +1,48 @@
-errors = {
-  template: {
-    header: {
-      # one: "%{model}に1つのエラーがあります",
-      # other: "%{model}に%{count}つのエラーがあります",
-      one: "1つのエラーがあります",              # %{model} が使える
-      other: "%{count}つのエラーがあります",       # %{model} が使える
-    },
-    body: "次の項目を確認してください"
-  },
-  format: "%{attribute}%{message}",
-  messages: {
-    inclusion: "は一覧にありません",
-    exclusion: "は予約されています",
-    invalid: "が正しくありません",
-    confirmation: "が一致しません",
-    accepted: "を受諾してください",
-    empty: "を入力してください",
-    blank: "を入力してください",
-    too_long: "は%{count}文字以内で入力してください",
-    too_short: "は%{count}文字以上で入力してください",
-    wrong_length: "は%{count}文字で入力してください",
-    not_a_number: "は数値で入力してください",
-    not_an_integer: "は整数で入力してください",
-    greater_than: "は%{count}より大きい値にしてください",
-    greater_than_or_equal_to: "は%{count}以上の値にしてください",
-    equal_to: "は%{count}にしてください",
-    less_than: "は%{count}より小さい値にしてください",
-    less_than_or_equal_to: "は%{count}以下の値にしてください",
-    odd: "は奇数にしてください",
-    even: "は偶数にしてください",
-    taken: "の値 %{value} が重複しています",
-    # record_invalid: "バリデーションに失敗しました %{errors}",
-    record_invalid: "%{errors}",
-  },
-}
-
 {
   ja: {
-    errors: errors,
-    activerecord: {errors: errors},
-    activemodel: {errors: errors},
+    errors: {
+      template: {
+        header: {
+          # one: "%{model}に1つのエラーがあります",
+          # other: "%{model}に%{count}つのエラーがあります",
+          one: "1つのエラーがあります",              # %{model} が使える
+          other: "%{count}つのエラーがあります",       # %{model} が使える
+        },
+        body: "次の項目を確認してください"
+      },
+      format: "%{attribute}%{message}",
+      messages: {
+        inclusion: "は一覧にありません",
+        exclusion: "は予約されています",
+        invalid: "が正しくありません",
+        confirmation: "が一致しません",
+        accepted: "を受諾してください",
+        empty: "を入力してください",
+        blank: "を入力してください",
+        too_long: "は%{count}文字以内で入力してください",
+        too_short: "は%{count}文字以上で入力してください",
+        wrong_length: "は%{count}文字で入力してください",
+        not_a_number: "は数値で入力してください",
+        not_an_integer: "は整数で入力してください",
+        greater_than: "は%{count}より大きい値にしてください",
+        greater_than_or_equal_to: "は%{count}以上の値にしてください",
+        equal_to: "は%{count}にしてください",
+        less_than: "は%{count}より小さい値にしてください",
+        less_than_or_equal_to: "は%{count}以下の値にしてください",
+        odd: "は奇数にしてください",
+        even: "は偶数にしてください",
+        taken: "の値 %{value} が重複しています",
+      },
+    },
+    activerecord: {
+      errors: {
+        # record_invalid: "バリデーションに失敗しました %{errors}",
+        messages: {
+          record_invalid: "%{errors}",
+        },
+      },
+    },
+    # activemodel: {errors: errors},
     number: {
       # Used in number_with_delimiter()
       # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'

@@ -1,5 +1,5 @@
 <template lang="pug">
-component(:is="component" class="has-text-weight-bold" v-if="!g_current_user" @click="click_handle")
+component(:is="component" class="NavbarItemLogin has-text-weight-bold" v-if="!g_current_user" @click="click_handle")
   | ログイン
 </template>
 
