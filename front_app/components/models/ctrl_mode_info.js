@@ -11,8 +11,8 @@ export class CtrlModeInfo extends MemoryRecord {
 
   static get define() {
     return [
-      { key: "is_ctrl_mode_visible", name: "表示", type: "is-primary", message: null, },
       { key: "is_ctrl_mode_hidden",  name: "隠す", type: "is-primary", message: null, },
+      { key: "is_ctrl_mode_visible", name: "表示", type: "is-primary", message: null, },
     ]
   }
 }
