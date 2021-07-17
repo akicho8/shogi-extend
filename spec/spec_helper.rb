@@ -53,6 +53,9 @@ RSpec.configure do |config|
   # rspec --tag slow_spec
   config.filter_run_excluding :slow_spec => true
 
+  # rspec --tag login_spec
+  config.filter_run_excluding :login_spec => true
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin

@@ -1,8 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "認証", type: :system do
+RSpec.describe "認証", type: :system, login_spec: true do
   before do
-    eval_code(%(User.destroy_all))
+    target_user_destroy
+  end
+
+  before do
+    target_user_destroy
   end
 
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/login_spec.rb -e 'SNS経由で新規登録しながらログイン'
@@ -40,10 +44,17 @@ RSpec.describe "認証", type: :system do
     find("#username_or_email").set(system_test_twitter_account[:email])
     find("#password").set(system_test_twitter_account[:password])
     find("#allow.submit").click
+
+    # 別のログインフォームに飛ばされたとき
+    # find('input[name="session[username_or_email]"]').set("xxx")
   end
 
   # ログイン中になっている
   def assert_login_ok
     assert_selector(".NavbarItemProfileLink")
+  end
+
+  def target_user_destroy
+    eval_code(%(User.where(email: "#{system_test_twitter_account[:email]}").destroy_all))
   end
 end
