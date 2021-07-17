@@ -55,13 +55,7 @@ export const HandleNameValidator = {
       error = (s.length <= 1 && !s.match(/[一-龠]/))
     }
     if (!error) {
-      error = s.match(/^(.)\1\1?$/i)
-    }
-    if (!error) {
-      error = s.match(/(.)\1\1/i)
-    }
-    if (!error) {
-      error = [...s].length === TwitterEmojiParser(s).length
+      error = [...s].length === TwitterEmojiParser(s).length // すべて絵文字
     }
     return !error
   },
@@ -74,10 +68,6 @@ export const HandleNameValidator = {
       "フレンドリーな",
       "親しみのある",
       "捨てハンでない",
-      // "好感のある",
-      // "愛嬌のある",
-      // "打ち解けやすい",
-      // "かっこいい",
     ]
   },
   get ng_words() {
@@ -86,6 +76,7 @@ export const HandleNameValidator = {
       "[な名][な無]し|nanash?i|無名|匿名|NONAME",
       "テスト|test|てすと",
       "名前|ハンドルネーム",
+      "^あ+$",
       "戦犯",
       "初心者",
       "死",

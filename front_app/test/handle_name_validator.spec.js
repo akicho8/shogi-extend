@@ -6,17 +6,19 @@ describe('HandleNameValidator', () => {
     expect(HandleNameValidator.valid("金")).toEqual(true)
   })
 
+  test('文字の連続だけどありがちな名前', () => {
+    expect(HandleNameValidator.valid("キキ")).toEqual(true)
+    expect(HandleNameValidator.valid("らら")).toEqual(true)
+    expect(HandleNameValidator.valid("めめめ")).toEqual(true)
+  })
+
   test('未入力', () => {
     expect(HandleNameValidator.valid("")).toEqual(false)
   })
 
-  test('同じ文字の繰替えし', () => {
+  test('1文字', () => {
     expect(HandleNameValidator.valid("a")).toEqual(false)
-    expect(HandleNameValidator.valid("aa")).toEqual(false)
-    expect(HandleNameValidator.valid("aaa")).toEqual(false)
-    expect(HandleNameValidator.valid("aａa")).toEqual(false)
-    expect(HandleNameValidator.valid("abbbc")).toEqual(false)
-    expect(HandleNameValidator.valid("あああ")).toEqual(false)
+    expect(HandleNameValidator.valid("あ")).toEqual(false)
   })
 
   test('明かな捨てハンは禁止', () => {
@@ -39,6 +41,7 @@ describe('HandleNameValidator', () => {
   test('NGワード', () => {
     expect(HandleNameValidator.valid("将棋初心者")).toEqual(false)
     expect(HandleNameValidator.valid("noname")).toEqual(false)
+    expect(HandleNameValidator.valid("あああ")).toEqual(false)
   })
 
   test('prefixが含まれる', () => {
