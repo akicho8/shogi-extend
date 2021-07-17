@@ -2,8 +2,8 @@ module Api
   class EtcController < ::Api::ApplicationController
     skip_forgery_protection
 
-    # curl -X GET  http://0.0.0.0:3000/api/echo.json?message=ok
-    # curl -X POST http://0.0.0.0:3000/api/echo.json?message=ok
+    # curl -X GET  http://localhost:3000/api/echo.json?message=ok
+    # curl -X POST http://localhost:3000/api/echo.json?message=ok
     def echo
       render json: {
         :message   => params[:message],
@@ -11,7 +11,7 @@ module Api
       }
     end
 
-    # curl -X GET http://0.0.0.0:3000/api/sleep.json?sleep=2
+    # curl -X GET http://localhost:3000/api/sleep.json?sleep=2
     def sleep
       if Rails.env.development?
         Kernel.sleep(params[:sleep].to_f)
@@ -19,7 +19,7 @@ module Api
       render json: params[:retval]
     end
 
-    # http://0.0.0.0:3000/api/ping.json
+    # http://localhost:3000/api/ping.json
     def ping
       render json: {
         :message   => "PONG",
@@ -64,25 +64,25 @@ module Api
     end
 
     # 三段リーグのユーザー配列
-    # http://0.0.0.0:3000/api/tsl_user_all
+    # http://localhost:3000/api/tsl_user_all
     def tsl_user_all
       render json: Tsl::User.all
     end
 
     # 三段リーグのユーザーの代表
-    # http://0.0.0.0:3000/api/tsl_user_newest
+    # http://localhost:3000/api/tsl_user_newest
     def tsl_user_newest
       render json: Tsl::User.all.sample
     end
 
     # 三段リーグのリーグ配列
-    # http://0.0.0.0:3000/api/tsl_league_all
+    # http://localhost:3000/api/tsl_league_all
     def tsl_league_all
       render json: Tsl::League.all
     end
 
     # 三段リーグの最新
-    # http://0.0.0.0:3000/api/tsl_league_newest
+    # http://localhost:3000/api/tsl_league_newest
     def tsl_league_newest
       render json: Tsl::League.newest_order.first
     end

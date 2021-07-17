@@ -27,10 +27,10 @@ module ShogiWeb
     end
 
     if Rails.env.development? || Rails.env.test?
-      config.action_mailer.default_url_options = {host: "localhost", port: 3000} # update だと nil.update になる
+      config.action_mailer.default_url_options = {host: ENV["DOMAIN"] || "localhost", port: 3000} # update だと nil.update になる
       # https://github.com/rails/rails/issues/32500
       # OGP画像がフルURLになるか確認するためだけにある
-      Rails.application.routes.default_url_options.update(host: "0.0.0.0", port: 3000)
+      Rails.application.routes.default_url_options.update(host: ENV["DOMAIN"] || "localhost", port: 3000)
     end
 
     config.action_view.field_error_proc = proc { |html_tag, instance|

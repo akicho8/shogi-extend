@@ -1,8 +1,8 @@
 <template lang="pug">
 .ThreeStageLeaguePlayerApp
   DebugBox(v-if="development_p")
-    p http://0.0.0.0:3000/api/three_stage_league_player
-    p http://0.0.0.0:3000/api/three_stage_league_player?name=西山朋佳
+    p http://localhost:3000/api/three_stage_league_player
+    p http://localhost:3000/api/three_stage_league_player?name=西山朋佳
 
   MainNavbar
     template(slot="brand")

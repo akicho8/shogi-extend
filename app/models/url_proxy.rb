@@ -47,7 +47,7 @@ module UrlProxy
     end
 
     if Rails.env.development? || Rails.env.test?
-      domain = ENV["DOMAIN"] || "0.0.0.0"
+      domain = ENV["DOMAIN"] || "localhost"
       path = "http://#{domain}:4000" + path
     else
       if options[:long_url]

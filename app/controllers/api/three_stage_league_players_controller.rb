@@ -1,6 +1,6 @@
 module Api
   class ThreeStageLeaguePlayersController < ::Api::ApplicationController
-    # http://0.0.0.0:3000/api/three_stage_league_player.json
+    # http://localhost:3000/api/three_stage_league_player.json
     def show
       unless main_user
         # FIXME: これはやっかい。どうしよう？

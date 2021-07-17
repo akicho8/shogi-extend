@@ -1,6 +1,6 @@
 * 共有将棋盤
 
-  http://0.0.0.0:4000/share-board
+  http://localhost:4000/share-board
   https://shogi-flow.xyz/share-board
   https://www.shogi-extend.com/share-board
 
@@ -67,9 +67,9 @@
   |-----------------------------+---------------------------------------------------------+-----------------------------------------------------------------------------------------|
   | key                         | desc                                                    | Example                                                                                 |
   |-----------------------------+---------------------------------------------------------+-----------------------------------------------------------------------------------------|
-  | default_user_name           | localStorage が空のときの user_name 初期値              | http://0.0.0.0:4000/share-board?room_code=a&default_user_name=bob                       |
-  | force_user_name             | localStorage に関係なくこの名前にする                   | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice                       |
-  | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&SEND_SUCCESS_DELAY=-1 |
+  | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_code=a&default_user_name=bob                       |
+  | force_user_name             | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_code=a&force_user_name=alice                       |
+  | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_code=a&force_user_name=alice&SEND_SUCCESS_DELAY=-1 |
   | RETRY_DELAY                 | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                         |
   | ordered_member_names        | 順番設定の名前(複数)                                    |                                                                                         |
   | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                         |
@@ -85,38 +85,38 @@
 
 ** alice と bob の部屋を作るには？
 
-  http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=alice
-  http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=bob
+  http://localhost:4000/share-board?room_code=my_room&force_user_name=alice
+  http://localhost:4000/share-board?room_code=my_room&force_user_name=bob
 
 ** 順番設定済みで開始するには？
 
-   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice
 
 ** 順番設定済みのテスト
 
-   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol&autoexec=os_modal_handle
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol&autoexec=os_modal_handle
 
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 
-   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_DELAY=0&SEND_SUCCESS_DELAY=3
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_DELAY=0&SEND_SUCCESS_DELAY=3
 
 ** 再送モーダル発動確認するには？
 
-   http://0.0.0.0:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&SEND_SUCCESS_DELAY=-1
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&SEND_SUCCESS_DELAY=-1
 
 ** 時計設定済みで部屋に入るには？
 
-   http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_sec=60&clock_box.every_plus=0&clock_box.play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_sec=60&clock_box.every_plus=0&clock_box.play_handle=true
 
 ** プリセット指定
 
-   http://0.0.0.0:4000/share-board?handicap_preset_key=八枚落ち
+   http://localhost:4000/share-board?handicap_preset_key=八枚落ち
 
 ** 自動マッチング
 
-   http://0.0.0.0:4000/share-board?autoexec=xmatch_modal_handle
+   http://localhost:4000/share-board?autoexec=xmatch_modal_handle
 
 ** 順番設定あり・時計あり・すぐ時間切れになる
 
-   http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true
-   http://0.0.0.0:4000/share-board?room_code=my_room&force_user_name=bob&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=bob&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true

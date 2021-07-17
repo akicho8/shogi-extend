@@ -26,7 +26,7 @@ module Api
       }.merge(params.to_unsafe_h.to_options)
     end
 
-    # curl -s "http://0.0.0.0:3000/api/cpu_battle?config_fetch=true" | jq .
+    # curl -s "http://localhost:3000/api/cpu_battle?config_fetch=true" | jq .
     def show
       if params[:config_fetch]
         render json: config_params

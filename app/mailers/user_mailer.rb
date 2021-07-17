@@ -1,7 +1,7 @@
 class UserMailer < ApplicationMailer
   # 管理者へ通知
   # UserMailer.user_created(User.first).deliver_later
-  # http://0.0.0.0:3000/rails/mailers/user/user_created
+  # http://localhost:3000/rails/mailers/user/user_created
   def user_created(user)
     attrs = {
       :id    => user.id,
@@ -22,7 +22,7 @@ class UserMailer < ApplicationMailer
 
   # 問題の作者に通知
   # UserMailer.question_owner_message(Actb::QuestionMessage.first).deliver_later
-  # http://0.0.0.0:3000/rails/mailers/user/question_owner_message
+  # http://localhost:3000/rails/mailers/user/question_owner_message
   def question_owner_message(message)
     subject = "#{message.user.name}さんが「#{message.question.title}」にコメントしました"
 
@@ -45,7 +45,7 @@ class UserMailer < ApplicationMailer
 
   # 以前コメントした人に通知
   # UserMailer.question_other_message(User.first, Actb::QuestionMessage.first).deliver_later
-  # http://0.0.0.0:3000/rails/mailers/user/question_other_message
+  # http://localhost:3000/rails/mailers/user/question_other_message
   def question_other_message(user, message)
     subject = "以前コメントした「#{message.question.title}」に#{message.user.name}さんがコメントしました"
 
@@ -61,7 +61,7 @@ class UserMailer < ApplicationMailer
 
   # 以前コメントした人に通知
   # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
-  # http://0.0.0.0:3000/rails/mailers/user/battle_fetch_notify
+  # http://localhost:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify(record, other_options = {})
     subject = "【将棋ウォーズ棋譜検索】#{record.target_user.key}さんの棋譜取得完了"
 

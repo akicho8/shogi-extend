@@ -1,9 +1,9 @@
 <template lang="pug">
 .ThreeStageLeagueApp
   DebugBox(v-if="development_p")
-    p http://0.0.0.0:3000/api/three_stage_league
-    p http://0.0.0.0:4000/three-stage-leagues/67
-    p http://0.0.0.0:4000/three-stage-leagues/28
+    p http://localhost:3000/api/three_stage_league
+    p http://localhost:4000/three-stage-leagues/67
+    p http://localhost:4000/three-stage-leagues/28
 
   MainNavbar
     template(slot="brand")

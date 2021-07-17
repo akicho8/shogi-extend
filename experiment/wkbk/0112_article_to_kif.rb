@@ -7,7 +7,7 @@ puts Wkbk::Article.first.to_kif
 # >> 問題タイトル：寄せの手筋200 001
 # >> 投稿者：運営
 # >> 公開設定：非公開
-# >> *詳細URL：http://0.0.0.0:4000/rack/articles/vFo52WwVPB0
+# >> *詳細URL：http://localhost:4000/rack/articles/vFo52WwVPB0
 # >> 種類：手筋
 # >> 難易度：1
 # >> メッセージ：

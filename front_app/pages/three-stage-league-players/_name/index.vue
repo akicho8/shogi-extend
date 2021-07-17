@@ -6,7 +6,7 @@ ThreeStageLeaguePlayerApp(:config="config")
 export default {
   name: "three-stage-league-player",
   async asyncData({ $axios, params }) {
-    // http://0.0.0.0:3000/api/three_stage_league
+    // http://localhost:3000/api/three_stage_league
     const config = await $axios.$get("/api/three_stage_league_player", {params: params})
     return { config }
   },

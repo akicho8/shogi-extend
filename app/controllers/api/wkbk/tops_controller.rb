@@ -25,8 +25,8 @@
 module Api
   module Wkbk
     class TopsController < ApplicationController
-      # http://0.0.0.0:3000/api/wkbk/tops/index.json
-      # http://0.0.0.0:3000/api/wkbk/tops/index.json?query=a&tag=b,c
+      # http://localhost:3000/api/wkbk/tops/index.json
+      # http://localhost:3000/api/wkbk/tops/index.json?query=a&tag=b,c
       def index
         retv = {}
         retv[:books] = current_books.as_json(::Wkbk::Book.json_struct_for_top)
@@ -34,8 +34,8 @@ module Api
         render json: retv
       end
 
-      # http://0.0.0.0:3000/api/wkbk/tops/sitemap.json
-      # http://0.0.0.0:4000/sitemap.xml
+      # http://localhost:3000/api/wkbk/tops/sitemap.json
+      # http://localhost:4000/sitemap.xml
       def sitemap
         retv = {}
         retv[:books]    = ::Wkbk::Book.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])

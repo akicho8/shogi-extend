@@ -23,7 +23,7 @@ client-only
 export default {
   name: "swars-top-group",
   async asyncData({ $axios, query }) {
-    // http://0.0.0.0:3000/api/top_group.json
+    // http://localhost:3000/api/top_group.json
     const records = await $axios.$get("/api/top_group.json", {params: query})
     return { records }
   },

@@ -2,7 +2,7 @@ module Api
   class TopGroupsController < ::Api::ApplicationController
     DEFAULT_LIMIT = 200
 
-    # http://0.0.0.0:3000/api/top_group.json
+    # http://localhost:3000/api/top_group.json
     def show
       render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.hour : 0) { records }
     end

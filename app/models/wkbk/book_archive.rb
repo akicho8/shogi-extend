@@ -1,4 +1,4 @@
-# http://0.0.0.0:3000/api/wkbk/books/download?book_key=B92grdhLdHH
+# http://localhost:3000/api/wkbk/books/download?book_key=B92grdhLdHH
 module Wkbk
   class BookArchive
     attr_accessor :params

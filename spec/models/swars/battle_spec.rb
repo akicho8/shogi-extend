@@ -47,7 +47,7 @@ module Swars
         it do
           assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"              }
           assert { value[:url]         == nil                                                        }
-          assert { value[:image]       == "http://0.0.0.0:3000/w/battle1.png?turn=5&viewpoint=black" }
+          assert { value[:image]       == "http://localhost:3000/w/battle1.png?turn=5&viewpoint=black" }
           assert { value[:description] == "新嬉野流 vs 2手目△３ニ飛戦法"                                   }
         end
         it "turnを変更できる" do

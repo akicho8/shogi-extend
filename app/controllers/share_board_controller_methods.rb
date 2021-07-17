@@ -125,7 +125,7 @@ module ShareBoardControllerMethods
   # これは JS 側で作る手もある。そうすればリアルタイムに更新できる。が、og:image なのでリアルタイムな必要がない。迷う。
   # API 単体として使う場合は API の方で作っておいた方が都合がよい
   # ので、こっちで作るのであってる
-  # http://0.0.0.0:3000/api/share_board.json?turn=1&title=%E3%81%82%E3%81%84%E3%81%88%E3%81%86%E3%81%8A
+  # http://localhost:3000/api/share_board.json?turn=1&title=%E3%81%82%E3%81%84%E3%81%88%E3%81%86%E3%81%8A
   def current_og_image_path
     # if true
     #   # params[:image_viewpoint] が渡せていないけどこれでいい

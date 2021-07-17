@@ -24,7 +24,7 @@ module Api
     class AnswerLogsController < ApplicationController
       before_action :api_login_required, only: [:create]
 
-      # POST http://0.0.0.0:3000/api/wkbk/answer_logs/create
+      # POST http://localhost:3000/api/wkbk/answer_logs/create
       def create
         book = ::Wkbk::Book.find(params[:book_id])
         show_can!(book)

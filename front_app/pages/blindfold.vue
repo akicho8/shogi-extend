@@ -8,7 +8,7 @@ import _ from "lodash"
 export default {
   name: "blindfold",
   async asyncData({ $axios, query }) { // FIXME: nuxtError に飛ばすためにfetchに変更するべき。
-    // http://0.0.0.0:3000/api/blindfold
+    // http://localhost:3000/api/blindfold
     const config = await $axios.$get("/api/blindfold", {params: query})
     return { config }
   },

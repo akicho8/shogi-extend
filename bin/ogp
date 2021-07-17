@@ -181,7 +181,7 @@ class Ogp < Thor
 
   def host
     {
-      :development => "http://0.0.0.0:4000",
+      :development => "http://localhost:4000",
       :staging     => "https://shogi-flow.xyz",
       :production  => "https://www.shogi-extend.com",
     }.fetch(options[:env].to_sym)

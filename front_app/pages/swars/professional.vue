@@ -21,7 +21,7 @@ client-only
 export default {
   name: "swars-professional",
   async asyncData({ $axios, query }) {
-    // http://0.0.0.0:3000/api/professional.json
+    // http://localhost:3000/api/professional.json
     const records = await $axios.$get("/api/professional.json", {params: query})
     return { records }
   },

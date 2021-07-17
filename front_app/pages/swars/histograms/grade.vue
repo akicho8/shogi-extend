@@ -33,7 +33,7 @@ export default {
   name: "swars-histograms-grade",
   watchQuery: ["max"],
   async asyncData({$axios, params, query}) {
-    // http://0.0.0.0:3000/api/swars_grade_histogram.json
+    // http://localhost:3000/api/swars_grade_histogram.json
     const config = await $axios.$get("/api/swars_histogram.json", {params: {...params, ...query, key: "grade"}})
     return { config }
   },

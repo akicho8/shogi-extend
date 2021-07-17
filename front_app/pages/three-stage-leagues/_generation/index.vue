@@ -7,7 +7,7 @@
 export default {
   name: "three-stage-league-generation",
   async asyncData({ $axios, params }) {
-    // http://0.0.0.0:3000/api/three_stage_league?generation=28
+    // http://localhost:3000/api/three_stage_league?generation=28
     const config = await $axios.$get("/api/three_stage_league", {params: params})
     return { config }
   },

@@ -34,8 +34,8 @@ module Api
     class ArticlesController < ApplicationController
       before_action :api_login_required, only: [:edit, :save, :destroy]
 
-      # http://0.0.0.0:3000/api/wkbk/articles/index?_user_id=1
-      # http://0.0.0.0:3000/api/wkbk/articles/index?_user_id=1&sort_column=id&sort_order=desc
+      # http://localhost:3000/api/wkbk/articles/index?_user_id=1
+      # http://localhost:3000/api/wkbk/articles/index?_user_id=1&sort_column=id&sort_order=desc
       def index
         retv = {}
         retv[:articles] = current_articles.sorted(sort_info).as_json(::Wkbk::Article.json_struct_for_index)
@@ -44,9 +44,9 @@ module Api
         render json: retv
       end
 
-      # http://0.0.0.0:3000/api/wkbk/articles/show
-      # http://0.0.0.0:3000/api/wkbk/articles/show?article_key=1
-      # http://0.0.0.0:3000/api/wkbk/articles/show?article_key=1&_user_id=1
+      # http://localhost:3000/api/wkbk/articles/show
+      # http://localhost:3000/api/wkbk/articles/show?article_key=1
+      # http://localhost:3000/api/wkbk/articles/show?article_key=1&_user_id=1
       def show
         retv = {}
         retv[:config] = ::Wkbk::Config
@@ -57,10 +57,10 @@ module Api
         render json: retv
       end
 
-      # http://0.0.0.0:3000/api/wkbk/articles/edit.json
-      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_key=1
-      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?book_key=1&_user_id=1
-      # http://0.0.0.0:3000/api/wkbk/articles/edit.json?article_key=1&_user_id=1
+      # http://localhost:3000/api/wkbk/articles/edit.json
+      # http://localhost:3000/api/wkbk/articles/edit.json?book_key=1
+      # http://localhost:3000/api/wkbk/articles/edit.json?book_key=1&_user_id=1
+      # http://localhost:3000/api/wkbk/articles/edit.json?article_key=1&_user_id=1
       def edit
         retv = {}
         retv[:config] = ::Wkbk::Config
@@ -91,7 +91,7 @@ module Api
         render json: retv
       end
 
-      # POST http://0.0.0.0:3000/api/wkbk/articles/save
+      # POST http://localhost:3000/api/wkbk/articles/save
       def save
         retv = {}
         if v = params[:article][:key]
@@ -108,7 +108,7 @@ module Api
         render json: retv
       end
 
-      # DELETE http://0.0.0.0:3000/api/wkbk/books/destroy
+      # DELETE http://localhost:3000/api/wkbk/books/destroy
       def destroy
         current_user.wkbk_articles.find(params[:article_id]).destroy!
         render json: {}

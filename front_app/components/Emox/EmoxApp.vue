@@ -61,7 +61,7 @@ export default {
 
   fetchOnServer: false,
   fetch() {
-    // http://0.0.0.0:3000/api/emox/resource_fetch.json
+    // http://localhost:3000/api/emox/resource_fetch.json
     return this.$axios.$get("/api/emox/resource_fetch.json", {params: this.$route.query}).then(e => {
       this.info        = e
       this.RuleInfo    = RuleInfo.memory_record_reset(e.RuleInfo)

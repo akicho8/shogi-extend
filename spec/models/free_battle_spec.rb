@@ -75,7 +75,7 @@ RSpec.describe FreeBattle, type: :model do
         params = record.to_twitter_card_params
         assert { params[:title]       == "5手目"                                                      }
         assert { params[:url]         == nil                                                          }
-        assert { params[:image]       == "http://0.0.0.0:3000/x/free_battle1.png?turn=5&viewpoint=black" }
+        assert { params[:image]       == "http://localhost:3000/x/free_battle1.png?turn=5&viewpoint=black" }
         assert { params[:description] == nil                                                          }
       end
     end

@@ -49,8 +49,8 @@ export default {
     }
   },
   fetch() {
-    // http://0.0.0.0:3000/api/users/1.json
-    // http://0.0.0.0:4000/users/1
+    // http://localhost:3000/api/users/1.json
+    // http://localhost:4000/users/1
     return this.$axios.$get(`/api/users/${this.$route.params.id}.json`).then(e => {
       this.record = e
     })

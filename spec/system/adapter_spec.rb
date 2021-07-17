@@ -24,7 +24,7 @@ RSpec.describe "なんでも棋譜変換", type: :system do
     doc_image
   end
 
-  # http://0.0.0.0:3000/adapter?body=foo
+  # http://localhost:3000/adapter?body=foo
   it "bodyパラメータで棋譜を渡せる" do
     visit "/adapter?body=(foo)"
     value = find("textarea").value

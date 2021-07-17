@@ -28,10 +28,10 @@ module Api
     class BooksController < ApplicationController
       before_action :api_login_required, only: [:edit, :save, :destroy, :download]
 
-      # http://0.0.0.0:3000/api/wkbk/books.json
-      # http://0.0.0.0:3000/api/wkbk/books.json?scope=everyone
-      # http://0.0.0.0:3000/api/wkbk/books.json?scope=public
-      # http://0.0.0.0:3000/api/wkbk/books.json?scope=private
+      # http://localhost:3000/api/wkbk/books.json
+      # http://localhost:3000/api/wkbk/books.json?scope=everyone
+      # http://localhost:3000/api/wkbk/books.json?scope=public
+      # http://localhost:3000/api/wkbk/books.json?scope=private
       def index
         retv = {}
         retv[:books] = current_books.sorted(sort_info).as_json(::Wkbk::Book.json_struct_for_index)
@@ -40,8 +40,8 @@ module Api
         render json: retv
       end
 
-      # http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=6&_user_id=1
-      # http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=5
+      # http://localhost:3000/api/wkbk/books/show.json?book_key=6&_user_id=1
+      # http://localhost:3000/api/wkbk/books/show.json?book_key=5
       def show
         retv = {}
         retv[:config] = ::Wkbk::Config
@@ -55,10 +55,10 @@ module Api
 
       # 問題編集用
       #
-      # http://0.0.0.0:3000/api/wkbk/books/edit.json
-      # http://0.0.0.0:3000/api/wkbk/books/edit.json?book_key=1
-      # http://0.0.0.0:4000/rack/books/new
-      # http://0.0.0.0:4000/rack/books/1/edit
+      # http://localhost:3000/api/wkbk/books/edit.json
+      # http://localhost:3000/api/wkbk/books/edit.json?book_key=1
+      # http://localhost:4000/rack/books/new
+      # http://localhost:4000/rack/books/1/edit
       def edit
         retv = {}
         retv[:config] = ::Wkbk::Config
@@ -76,7 +76,7 @@ module Api
         render json: retv
       end
 
-      # POST http://0.0.0.0:3000/api/wkbk/books/save
+      # POST http://localhost:3000/api/wkbk/books/save
       # nginx の client_max_body_size を調整が必要
       def save
         retv = {}
@@ -94,7 +94,7 @@ module Api
         render json: retv
       end
 
-      # DELETE http://0.0.0.0:3000/api/wkbk/books/destroy
+      # DELETE http://localhost:3000/api/wkbk/books/destroy
       def destroy
         current_user.wkbk_books.find(params[:book_id]).destroy!
         render json: {}

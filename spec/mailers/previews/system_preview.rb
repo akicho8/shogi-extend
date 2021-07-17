@@ -1,4 +1,4 @@
-# http://0.0.0.0:3000/rails/mailers/application
+# http://localhost:3000/rails/mailers/application
 
 class SystemPreview < ActionMailer::Preview
   def fixed_track

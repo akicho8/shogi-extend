@@ -62,9 +62,9 @@ export default {
     },
   },
 
-  // http://0.0.0.0:4000/swars/users/devuser1
-  // http://0.0.0.0:3000/w.json?query=devuser1&format_type=user
-  // http://0.0.0.0:3000/w.json?query=foo&format_type=user
+  // http://localhost:4000/swars/users/devuser1
+  // http://localhost:3000/w.json?query=devuser1&format_type=user
+  // http://localhost:3000/w.json?query=foo&format_type=user
   //
   // fetch({error}) とすると $fetchState がつくられなくなる謎の罠あり
   fetch() {

@@ -1,6 +1,6 @@
 module Swars
   module Histogram
-    # http://0.0.0.0:3000/api/swars_histogram.json
+    # http://localhost:3000/api/swars_histogram.json
     class Base
       DEFAULT_LIMIT     = 10000
       DEFAULT_LIMIT_MAX = 10000

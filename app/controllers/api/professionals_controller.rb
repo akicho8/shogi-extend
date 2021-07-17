@@ -40,7 +40,7 @@
 
 module Api
   class ProfessionalsController < ::Api::ApplicationController
-    # http://0.0.0.0:3000/api/professional.json
+    # http://localhost:3000/api/professional.json
     def show
       render json: Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.days : 0) { rows }
     end

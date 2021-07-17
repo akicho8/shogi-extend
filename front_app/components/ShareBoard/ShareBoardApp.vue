@@ -246,8 +246,8 @@ export default {
     this.autoexec()
   },
   methods: {
-    // http://0.0.0.0:4000/share-board?autoexec=general_setting_modal_handle
-    // http://0.0.0.0:4000/share-board?autoexec=is_debug_mode_on,general_setting_modal_handle
+    // http://localhost:4000/share-board?autoexec=general_setting_modal_handle
+    // http://localhost:4000/share-board?autoexec=is_debug_mode_on,general_setting_modal_handle
     autoexec() {
       this.$nextTick(() => {
         const s = this.$route.query.autoexec

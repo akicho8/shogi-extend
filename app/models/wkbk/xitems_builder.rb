@@ -1,4 +1,4 @@
-# http://0.0.0.0:3000/api/wkbk/books/show.json?book_key=6&_user_id=1
+# http://localhost:3000/api/wkbk/books/show.json?book_key=6&_user_id=1
 # rails r "User.sysop.wkbk_answer_logs.destroy_all"
 module Wkbk
   class XitemsBuilder

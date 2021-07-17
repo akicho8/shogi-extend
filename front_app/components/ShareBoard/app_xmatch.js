@@ -24,7 +24,7 @@ export const app_xmatch = {
 
   methods: {
     // 自動で開始する方法確認
-    // http://0.0.0.0:4000/share-board?autoexec=test_direct1
+    // http://localhost:4000/share-board?autoexec=test_direct1
     test_direct1() {
       this.room_code = "__room_code__"
       this.user_name = "x"
@@ -38,7 +38,7 @@ export const app_xmatch = {
     },
 
     // 自動マッチングモーダル起動(ショートカット)
-    // http://0.0.0.0:4000/share-board?autoexec=vs
+    // http://localhost:4000/share-board?autoexec=vs
     vs() {
       this.xmatch_modal_core()
     },

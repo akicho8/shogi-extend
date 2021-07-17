@@ -51,7 +51,7 @@ module Api
 
     # delegate :current_user, to: :h
 
-    # http://0.0.0.0:3000/api/actb
+    # http://localhost:3000/api/actb
     def show
       if v = params[:remote_action]
         v = public_send(v)
@@ -112,7 +112,7 @@ module Api
       #   Actb::BaseChannel.redis_clear
       # end
 
-      # http://0.0.0.0:3000/api/actb.json
+      # http://localhost:3000/api/actb.json
       if request.format.json?
         render json: info
         return

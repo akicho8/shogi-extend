@@ -1,6 +1,6 @@
 class LoginController < ApplicationController
-  # http://0.0.0.0:3000/login?return_to=http://0.0.0.0:4000/xy
-  # http://0.0.0.0:3000/login?return_to=http://0.0.0.0:4000/xy&social_media_key=twitter
+  # http://localhost:3000/login?return_to=http://localhost:4000/xy
+  # http://localhost:3000/login?return_to=http://localhost:4000/xy&social_media_key=twitter
   def show
     path = :new_xuser_session
 

@@ -76,7 +76,7 @@ if true
     config.before(:example, type: :system) do
       # FIXME: なぜかテスト環境で動かなくなったので開発環境に向けている
       # test環境で動くRailsでdevelopmentのnuxtをテストしているせいでカオスになっている
-      # Capybara.app_host = "http://0.0.0.0:4000"
+      # Capybara.app_host = "http://localhost:4000"
       Capybara.app_host = "http://localhost:4000"
 
       # windowをひとつだけにしておく
@@ -131,7 +131,7 @@ if true
     # user としてログインした状態にする
     # しかしこの方法はタブを2つ開いても二人を別々にログインした状態で維持にするのが難しい
     def login_as(user)
-      visit("http://0.0.0.0:3000/?_user_id=#{user.id}")
+      visit("http://localhost:3000/?_user_id=#{user.id}")
     end
 
     def login
@@ -139,7 +139,7 @@ if true
     end
 
     def logout
-      visit("http://0.0.0.0:3000/?_user_id=0")
+      visit("http://localhost:3000/?_user_id=0")
     end
   end
 

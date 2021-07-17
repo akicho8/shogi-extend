@@ -2,7 +2,7 @@
 
 module Api
   class ThreeStageLeaguesController < ::Api::ApplicationController
-    # http://0.0.0.0:3000/api/three_stage_league
+    # http://localhost:3000/api/three_stage_league
     def show
       # リクエストされたリーグが存在しないか、
       # 最新の三段リーグだけ、ときどきクロールする

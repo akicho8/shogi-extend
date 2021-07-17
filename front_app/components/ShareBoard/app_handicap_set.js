@@ -14,7 +14,7 @@ export const app_handicap_set = {
 
   methods: {
     // 引数でプリセットの初期値設定
-    // http://0.0.0.0:4000/share-board?handicap_preset_key=八枚落ち
+    // http://localhost:4000/share-board?handicap_preset_key=八枚落ち
     // これいらんか？
     sfen_set_by_url_params() {
       const v = this.$route.query.handicap_preset_key

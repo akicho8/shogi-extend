@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       end
     end
 
-    # http://0.0.0.0:3000/w?query=devuser1&latest_open_index=0&external_app_key=piyo_shogi
+    # http://localhost:3000/w?query=devuser1&latest_open_index=0&external_app_key=piyo_shogi
     unless path
       if request.params[:latest_open_index]
         user_key = request.params[:query]
@@ -48,7 +48,7 @@ Rails.application.routes.draw do
       end
     end
 
-    # http://0.0.0.0:3000/w?query=devuser1&user_info_show=true
+    # http://localhost:3000/w?query=devuser1&user_info_show=true
     unless path
       if request.params[:user_info_show]
         user_key = request.params[:query]
@@ -56,7 +56,7 @@ Rails.application.routes.draw do
       end
     end
 
-    # http://0.0.0.0:3000/w?query=devuser1
+    # http://localhost:3000/w?query=devuser1
     unless path
       path = { path: "/swars/search", query: query }
     end
@@ -99,9 +99,9 @@ Rails.application.routes.draw do
 
   ################################################################################ api
 
-  # http://0.0.0.0:3000/ping
-  # http://0.0.0.0:3000/ping.json
-  # http://0.0.0.0:3000/ping.txt
+  # http://localhost:3000/ping
+  # http://localhost:3000/ping.json
+  # http://localhost:3000/ping.txt
   match "ping(.:format)", to: "api/etc#ping", via: :all, format: nil
 
   namespace :api, format: "json" do
