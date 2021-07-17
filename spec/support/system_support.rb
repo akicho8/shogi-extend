@@ -141,6 +141,11 @@ if true
     def logout
       visit("http://localhost:3000/?_user_id=0")
     end
+
+    def eval_code(*code)
+      code = Array.wrap(code).flatten.join(";")
+      visit "http://localhost:3000/eval?#{code.to_query(:code)}"
+    end
   end
 
   RSpec.configure do |config|

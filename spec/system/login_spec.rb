@@ -30,10 +30,6 @@ RSpec.describe "認証", type: :system, login_spec: true do
     Rails.application.credentials[:system_test_twitter_account]
   end
 
-  def eval_code(code)
-    visit "http://localhost:3000/eval?#{code.to_query(:code)}"
-  end
-
   def twitter_login
     visit "/"
 
