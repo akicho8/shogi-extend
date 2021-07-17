@@ -75,7 +75,9 @@ if true
   RSpec.configure do |config|
     config.before(:example, type: :system) do
       # FIXME: なぜかテスト環境で動かなくなったので開発環境に向けている
-      Capybara.app_host = "http://0.0.0.0:4000"
+      # test環境で動くRailsでdevelopmentのnuxtをテストしているせいでカオスになっている
+      # Capybara.app_host = "http://0.0.0.0:4000"
+      Capybara.app_host = "http://localhost:4000"
 
       # windowをひとつだけにしておく
       Capybara.windows.drop(1).each(&:close)
