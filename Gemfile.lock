@@ -519,7 +519,6 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
   omniauth-twitter
-  power_assert
   puma (~> 5.0)
   puma_worker_killer
   rack-cors
