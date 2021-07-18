@@ -91,6 +91,7 @@ group :development, :test do
   gem "rspec-mocks"
   gem "rspec-power_assert"
   gem "rspec-support"
+  gem "power_assert"
   ################################################################################
 
   gem "factory_bot_rails"
