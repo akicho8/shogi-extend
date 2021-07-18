@@ -81,6 +81,7 @@ export const HandleNameValidator = {
       "初心者",
       "死",
       "通りすがり",
+      "あいうえお",
       "ゴミ",
       "クズ",
       "クソ",
