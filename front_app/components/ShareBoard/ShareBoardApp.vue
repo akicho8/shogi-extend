@@ -299,13 +299,14 @@ export default {
     // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
     edit_mode_snapshot_sfen_set(v) {
-      if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから
-        this.current_sfen = v
-        // 意図せず共有してしまうのを防ぐため共有しない
-        // if (false) {
-        //   this.sfen_share_params_set()
-        // }
-      }
+      this.__assert__(this.sp_run_mode === "edit_mode", 'this.sp_run_mode === "edit_mode"')
+      // if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから←編集モードでのみ
+      this.current_sfen = v
+      // 意図せず共有してしまうのを防ぐため共有しない
+      // if (false) {
+      //   this.sfen_share_params_set()
+      // }
+      // }
     },
 
     // private
