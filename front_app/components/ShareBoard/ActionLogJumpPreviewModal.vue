@@ -22,6 +22,10 @@
         :sp_body="action_log.sfen"
         @update:turn_offset="v => new_turn_offset = v"
       )
+    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
+      PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
+      //- KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
+      //- KifCopyButton(@click="kifu_copy_handle('kif')") コピー
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
@@ -57,6 +61,18 @@ export default {
       this.sound_play("click")
       this.base.action_log_jump({...this.action_log, turn_offset: this.new_turn_offset})
       this.$emit("close")
+    },
+  },
+  computed: {
+    // 外部アプリ
+    piyo_shogi_app_with_params_url() {
+      return this.piyo_shogi_auto_url({
+        // path: this.current_url,
+        sfen: this.action_log.sfen,
+        turn: this.new_turn_offset,
+        viewpoint: this.base.sp_viewpoint,
+        game_name: this.base.current_title,
+      })
     },
   },
 }
