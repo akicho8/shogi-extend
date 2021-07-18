@@ -1102,6 +1102,57 @@ RSpec.describe "共有将棋盤", type: :system do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴'
+  describe "操作履歴" do
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴から過去の局面に戻る'
+    it "操作履歴から過去の局面に戻る" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob")
+      end
+      b_block do
+        visit_app(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
+      end
+      a_block do
+        assert_move("77", "76", "☗7六歩")
+        assert_turn_offset(1)
+      end
+      b_block do
+        assert_move("33", "34", "☖3四歩")
+        assert_turn_offset(2)
+      end
+      a_block do
+        action_log_row_of(1).click   # 初手(76歩)の行をクリックしてモーダル起動
+        first(".apply_button").click # この局面まで戻る実行
+        assert_turn_offset(1)        # 1手目に戻った
+      end
+      b_block do
+        assert_turn_offset(2)        # 戻るのはalice側だけなのでbob側は2手目のまま
+      end
+    end
+
+    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴モーダル内の補助機能'
+    it "操作履歴モーダル内の補助機能" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice")
+        assert_move("77", "76", "☗7六歩")               # 初手を指す
+        assert_turn_offset(1)
+        action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
+
+        find(".KentoButton").click                      # 「KENTO」
+        assert_text("KENTO起動")
+
+        find(".PiyoShogiButton").click                  # 「ぴよ将棋」
+        assert_text("ぴよ将棋起動")
+
+        find(".KifCopyButton").click                    # 「コピー」
+        assert_text("棋譜コピー")
+
+        find(".room_code_except_url_copy_handle").click # 「リンク」
+        assert_text("棋譜リンクコピー")
+      end
+    end
+  end
+
   def visit_app(args = {})
     args = args.merge("__debug_box_disabled__" => "on")
     visit "/share-board?#{args.to_query}"
@@ -1312,5 +1363,10 @@ RSpec.describe "共有将棋盤", type: :system do
       :"clock_box.initial_extra_sec",
       :"clock_box.every_plus",
     ].zip(values).to_h
+  end
+
+  # 履歴の上から index 目の行
+  def action_log_row_of(index)
+    find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
   end
 end
