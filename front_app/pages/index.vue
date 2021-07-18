@@ -35,25 +35,25 @@
   .footer(v-if="config")
     .container
       .columns
-        .column.has-text-centered-tablet
-          .title.is-5.mb-0.has-text-weight-bold Apps
-          ul.mt-1
+        .column
+          .title Apps
+          ul
             template(v-for="e in config")
               template(v-if="e.display_p && !e.experiment_p")
                 li
                   nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play('click')") {{e.title}}
 
-        .column.has-text-centered-tablet
-          .title.is-5.mb-0.has-text-weight-bold Experiment
-          ul.mt-1
+        .column
+          .title Experiment
+          ul
             template(v-for="e in config")
               template(v-if="e.display_p && e.experiment_p")
                 li
                   nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play('click')") {{e.title}}
 
-        .column.has-text-centered-tablet
-          .title.is-5.mb-0.has-text-weight-bold About
-          ul.mt-1
+        .column
+          .title About
+          ul
             li
               nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="sound_play('click')") プライバシー
             li
@@ -63,9 +63,9 @@
             li
               ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
 
-        .column.has-text-centered-tablet
-          .title.is-5.mb-0.has-text-weight-bold GitHub
-          ul.mt-1
+        .column
+          .title GitHub
+          ul
             li
               ExternalLink(href="https://github.com/akicho8/shogi-extend" beep) shogi-extend
             li
@@ -127,13 +127,23 @@ export default {
       padding: 1.5rem
 
   .footer
+    color: $text
     padding-bottom: 8rem
+    .title
+      font-size: $size-5
+      font-weight: bold
+      margin-bottom: 0
+      +mobile
+        margin-top: 1rem
+        line-height: 2.5rem
+        border-bottom: 1px solid $grey-lighter
+    ul
+      margin-top: 0.75rem
+    li
+      margin: 0.5rem 0
+      a
+        color: inherit
 
   .box
     padding-bottom: 2rem
-
-  .footer
-    color: $text
-    a
-      color: inherit
 </style>
