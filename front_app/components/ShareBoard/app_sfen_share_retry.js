@@ -140,9 +140,9 @@ export const app_sfen_share_retry = {
       if (params.to_connection_id === this.connection_id) {       // いろんな人に届くため送信元の確認
         if (this.sequence_codes.includes(params.sequence_code)) { // 最近送ったものなら
           if (this.SEND_SUCCESS_DELAY >= 0) {
-            this.delay_block(this.SEND_SUCCESS_DELAY, () => { // デバッグ用のウェイト
-              this.send_success_p = true           // 送信成功とする
-              this.retry_confirm_close()           // 4秒後の場合ダイアログがすでに出ているので消す
+            this.delay_block(this.SEND_SUCCESS_DELAY, () => {     // デバッグ用のウェイト
+              this.send_success_p = true                          // 送信成功とする
+              this.retry_confirm_close()                          // 4秒後の場合ダイアログがすでに出ているので消す
               this.tl_alert("送信OK")
             })
           }
