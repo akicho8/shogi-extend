@@ -10843,10 +10843,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shogi-player@^0.0.290:
-  version "0.0.290"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.290.tgz#05ad5cb4cf9c68f484fa6132a6e7c9f0bc7afe25"
-  integrity sha512-18j4UQyFh3YqLjr1Yp77RTTOy30znUF89jEeU/ghJKP47RkFKdbx3t4nEQZmuCd5u3cO1dVZpLmSNadoaY2XYg==
+shogi-player@^0.0.291:
+  version "0.0.291"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.291.tgz#6f3e78f8f11f62aa41bfd040f29334c1a97d8775"
+  integrity sha512-/hXCVRd3d5HNIfP1P5HSH/9hySdy1Xi5mFPPn5XWmP67ESacY1RD/54QMIwDo+YdNSQqrOAHaom3Xh7QOkc96g==
   dependencies:
     autolinker latest
     buefy "^0.9.4"

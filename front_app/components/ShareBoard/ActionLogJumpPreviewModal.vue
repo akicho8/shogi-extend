@@ -15,6 +15,7 @@
         sp_layout="is_horizontal"
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"
+        :sp_view_mode_soldier_movable="false"
         :sp_viewpoint="base.sp_viewpoint"
         :sp_sound_enabled="true"
         :sp_turn="action_log.turn_offset"
