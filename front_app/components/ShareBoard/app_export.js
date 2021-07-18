@@ -13,14 +13,7 @@ export const app_export = {
       this.sidebar_p = false
       this.sound_play("click")
       this.general_kifu_copy(this.current_sfen, {to_format: e.format_key, turn: this.turn_offset})
-
-      this.shared_al_add({
-        label: "棋譜コピー",
-        message: "棋譜コピーしました",
-        // message_except_self: true,
-        sfen: this.current_sfen,
-        turn_offset: this.turn_offset,
-      })
+      this.shared_al_add_simple("棋譜コピー")
     },
 
     //////////////////////////////////////////////////////////////////////////////// show
@@ -36,6 +29,7 @@ export const app_export = {
     // 指定の棋譜を表示
     kifu_show_handle(e) {
       this.window_popup(this.kifu_show_url(e))
+      this.shared_al_add_simple("棋譜表示")
     },
 
     //////////////////////////////////////////////////////////////////////////////// download
@@ -54,6 +48,7 @@ export const app_export = {
     kifu_download_handle(e) {
       if (typeof window !== 'undefined') {
         window.location.href = this.kifu_download_url(e)
+        this.shared_al_add_simple("棋譜ダウンロード")
       }
     },
   },

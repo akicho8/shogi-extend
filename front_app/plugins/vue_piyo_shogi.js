@@ -80,7 +80,7 @@ export default {
 
     // モバイルアプリ版が起動できるか？
     piyo_shogi_app_p() {
-      const v = MyLocalStorage.get("user_settings")
+      const v = MyLocalStorage.get("user_settings") // TODO: ここが遅いんでは？
       this.clog(v)
       if (v) {
         const info = PiyoShogiTypeInfo.fetch(v.piyo_shogi_type_key)

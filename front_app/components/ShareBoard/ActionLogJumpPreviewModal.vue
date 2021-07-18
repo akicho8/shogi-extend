@@ -22,23 +22,26 @@
         :sp_body="action_log.sfen"
         @update:turn_offset="v => new_turn_offset = v"
       )
-    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-      PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-      //- KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
-      //- KifCopyButton(@click="kifu_copy_handle('kif')") コピー
+    .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
+      PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="base.other_app_click_handle('ぴよ将棋')")
+      KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
+      KifCopyButton(@click="kifu_copy_handle('kif')") コピー
+      b-button.room_code_except_url_copy_handle(@click="room_code_except_url_copy_handle" icon-left="link") リンク
 
   footer.modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
-    b-button.apply_button(@click="apply_handle" type="is-primary") この局面に移動する
+    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.apply_button(@click="apply_handle" type="is-primary") この局面まで戻る
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
+import { ActionLogJumpPreviewModalButtons } from "./ActionLogJumpPreviewModalButtons.js"
 
 export default {
   name: "ActionLogJumpPreviewModal",
   mixins: [
     support_child,
+    ActionLogJumpPreviewModalButtons,
   ],
   props: {
     action_log: { type: Object, required: true, },
@@ -63,18 +66,6 @@ export default {
       this.$emit("close")
     },
   },
-  computed: {
-    // 外部アプリ
-    piyo_shogi_app_with_params_url() {
-      return this.piyo_shogi_auto_url({
-        // path: this.current_url,
-        sfen: this.action_log.sfen,
-        turn: this.new_turn_offset,
-        viewpoint: this.base.sp_viewpoint,
-        game_name: this.base.current_title,
-      })
-    },
-  },
 }
 </script>
 
@@ -85,6 +76,9 @@ export default {
     width: 32rem
   .modal-card-body
     padding: 1.25rem
+    .buttons > *
+      margin-bottom: 0
+
   .modal-card-foot
     justify-content: space-between
     .button

@@ -25,26 +25,16 @@ export const app_urls = {
       this.sound_play("click")
 
       this.shared_al_add({
-        label: app_name,
+        label: `${app_name}起動`,
         message: `${app_name}を起動しました`,
         // message_except_self: false,
         sfen: this.current_sfen,
         turn_offset: this.turn_offset,
       })
     },
-  },
-  computed: {
-    current_url_params() {
-      const e = {
-        ...this.$route.query,                  // デバッグ用パラメータを保持するため
-        body:               DotSfen.escape(this.current_sfen), // 編集モードでもURLを更新するため
-        turn:               this.turn_offset,
-        title:              this.current_title,
-        abstract_viewpoint: this.abstract_viewpoint,
-        room_code:          this.room_code,
-        sp_run_mode:        this.sp_run_mode,
-        sp_internal_rule_key:      this.sp_internal_rule_key,
-      }
+
+    url_params_clean(url_params) {
+      const e = {...url_params}
       if (this.blank_p(e.room_code)) {
         delete e.room_code
       }
@@ -58,6 +48,22 @@ export const app_urls = {
         delete e.sp_internal_rule_key
       }
       return e
+    },
+
+  },
+  computed: {
+    current_url_params() {
+      const e = {
+        ...this.$route.query,                  // デバッグ用パラメータを保持するため
+        body: DotSfen.escape(this.current_sfen), // 編集モードでもURLを更新するため
+        turn:                 this.turn_offset,
+        title:                this.current_title,
+        abstract_viewpoint:   this.abstract_viewpoint,
+        room_code:            this.room_code,
+        sp_run_mode:          this.sp_run_mode,
+        sp_internal_rule_key: this.sp_internal_rule_key,
+      }
+      return this.url_params_clean(e)
     },
 
     // URL

@@ -1,10 +1,10 @@
 <template lang="pug">
-  a.button.PiyoShogiButton.is-small(v-bind="$attrs" v-on="$listeners" :target="target_default" @click="click_handle")
-    span.icon
-      img.left_icon(src="~/assets/piyo_shogi_icon.png")
-    span(v-if="!icon_only")
-      | ぴよ将棋
-      span(v-if="web_version_p") ｗ
+a.button.PiyoShogiButton.is-small(v-bind="$attrs" v-on="$listeners" :target="target_default" @click="click_handle")
+  span.icon
+    img.left_icon(src="~/assets/piyo_shogi_icon.png")
+  span(v-if="!icon_only")
+    | ぴよ将棋
+    span(v-if="web_version_p") ｗ
 </template>
 
 <script>

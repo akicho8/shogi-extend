@@ -13,6 +13,16 @@ export const app_action_log = {
   methods: {
     //////////////////////////////////////////////////////////////////////////////// 共有版
 
+    // 発動する側の棋譜を持っている
+    shared_al_add_simple(label) {
+      this.shared_al_add({
+        label: label,
+        message: `${label}しました`,
+        // message_except_self: true,
+        sfen: this.current_sfen,
+        turn_offset: this.turn_offset,
+      })
+    },
     shared_al_add(e) {
       this.ac_room_perform("shared_al_add", e) // --> app/channels/share_board/room_channel.rb
     },
