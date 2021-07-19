@@ -50,6 +50,7 @@ chdir APP_ROOT do
   puts "\n== Removing old logs and tempfiles =="
   system! 'rails log:clear'
   system! 'rails tmp:clear'
+  system! 'rm -fr tmp/storage'
   # system! 'rails webpacker:clobber'
 
   # puts "\n== Production log download =="
