@@ -2,6 +2,24 @@
 @import "~bulma"
 @import "~buefy/src/scss/buefy"
 
+////////////////////////////////////////////////////////////////////////////// ログイン画面がモバイルで狭すぎる対策
+
+.MainSection.section
+  +mobile
+    padding: 1.0rem 0.75rem
+    // is-fluid 付きの container は mobile のときも左右の padding が入ったままになっているため取る
+    .container.is-fluid
+      padding-left: unset
+      padding-right: unset
+      .columns
+        margin: 0
+        padding: 0
+        &:not(:first-child)
+          margin-top: 0.75rem
+        .column
+          margin: 0
+          padding: 0
+
 ////////////////////////////////////////////////////////////////////////////// b-notification の下の隙間調整
 
 #flash_notify_tag

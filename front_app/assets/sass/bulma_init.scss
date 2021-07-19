@@ -42,3 +42,6 @@ $modal-background-background-color: bulmaRgba($black, 0.4);
 // これをするとモバイルのときバーが小さくならない
 // が、メニュー化されることの弊害の方が大きいのでメニュー化を阻止する
 $navbar-breakpoint: 0;
+
+// // PC用になっているので狭くする
+// $section-padding: 0rem;

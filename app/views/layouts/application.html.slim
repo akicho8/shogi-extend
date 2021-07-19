@@ -4,7 +4,7 @@ html(lang="ja" class=([Rails.env]))
     = render partial: "layouts/head"
   body
     = render partial: "layouts/main_navbar"
-    .section
+    .section.MainSection
       .container.is-fluid
         = flash_notify_tag
         = yield
