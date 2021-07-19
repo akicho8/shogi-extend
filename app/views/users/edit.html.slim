@@ -22,7 +22,7 @@ hr
                 = " - "
                 = link_to("取り消す", [current_record, command: :social_disconnect, provider: e.key], method: :put)
               - else
-                = link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: ["button", "is-primary", "is-outlined", "brand_button", e.key]) do
+                = link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: ["button", "is-primary", "is-outlined", "has-background-#{e.key}"]) do
                   span(class="icon is-medium")
                     i(class="fab fa-#{e.key}")
                   span
