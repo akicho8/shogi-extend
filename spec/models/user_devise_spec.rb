@@ -31,10 +31,10 @@ RSpec.describe User, type: :model do
     assert { user.email == "new@example.com" }
     assert { ActionMailer::Base.deliveries.count == 0 }
   end
+
+  it "emailが重複したときのエラーメッセージが利用者向けの案内になっている" do
+    User.create!(email: "alice@example.com", confirmed_at: Time.current)
+    user = User.create(email: "alice@example.com", confirmed_at: Time.current)
+    assert { user.errors.full_messages.join.include?("メールアドレスとパスワードでログインしてください") }
+  end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> ...
-# >> 
-# >> Finished in 1.82 seconds (files took 3.62 seconds to load)
-# >> 3 examples, 0 failures
-# >> 
