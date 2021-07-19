@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "共有将棋盤", type: :system do
+RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   before do
     @alice_window = Capybara.open_new_window
     @bob_window = Capybara.open_new_window

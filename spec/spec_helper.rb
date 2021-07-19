@@ -56,6 +56,11 @@ RSpec.configure do |config|
   # rspec --tag login_spec
   config.filter_run_excluding :login_spec => true
 
+  # SHARE_BOARD_SPEC_SKIP=1 rspec
+  if ENV["SHARE_BOARD_SPEC_SKIP"]
+    config.filter_run_excluding :share_board_spec => true
+  end
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
