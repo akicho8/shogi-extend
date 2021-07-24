@@ -32,7 +32,9 @@ module ShareBoard
     end
 
     def received_ok(data)
-      track(data, "指手受信", "OK > #{data['to_user_name']}") unless Rails.env.production?
+      if Rails.env.production? || true
+        track(data, "指手受信", "OK > #{data['to_user_name']}")
+      end
       broadcast(:received_ok_broadcasted, data)
     end
 
@@ -53,7 +55,9 @@ module ShareBoard
     end
 
     def setup_info_send(data)
-      track(data, "情報送信", "あげます > #{data["to_user_name"]}") unless Rails.env.production?
+      if !Rails.env.production? || true
+        track(data, "情報送信", "あげます > #{data["to_user_name"]}")
+      end
       broadcast(:setup_info_send_broadcasted, data)
     end
 
