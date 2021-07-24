@@ -24,12 +24,12 @@ tmux send-keys -t shogi.1 'cd ~/src/shogi-player' C-m
 tmux send-keys -t shogi.1 'nuxt dev -p 5000' C-m
 
 tmux send-keys -t shogi.2 'cd ~/src/shogi-extend' C-m
-tmux send-keys -t shogi.2 'fs' C-m
+tmux send-keys -t shogi.2 'start' C-m
 
 tmux send-keys -t shogi.3 'cd ~/src/shogi-extend' C-m
 # tmux send-keys -t shogi.3 'cd front_app' C-m
 # tmux send-keys -t shogi.3 'nuxt dev -p 4000' C-m
-tmux send-keys -t shogi.3 './nuxt_home' C-m
+tmux send-keys -t shogi.3 'nuxt_home' C-m
 
 tmux select-pane -t shogi.3
 
