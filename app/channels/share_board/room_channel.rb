@@ -133,7 +133,7 @@ module ShareBoard
         SlackAgent.message_send(key: key, body: data)
       end
       prefix = data["from_user_name"] + ":"
-      SlackAgent.message_send(key: key, body: "#{data["ua_icon"]} #{prefix} #{body}")
+      SlackAgent.message_send(key: key, body: "#{data["ua_icon"]} #{once_uuid} #{prefix} #{body}")
     end
 
     def simple_track(action)
@@ -142,7 +142,7 @@ module ShareBoard
       else
         body = ""
       end
-      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: body)
+      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: "#{once_uuid} #{body}")
     end
 
     def sfen_share_track_body(data)
