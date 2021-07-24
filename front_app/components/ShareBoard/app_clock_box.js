@@ -207,8 +207,8 @@ export const app_clock_box = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // 時計の状態をすべて共有する
-    clock_box_share(behaviour = null) {
+    // 時計の状態をすべて共有するためのパラメータを作る
+    clock_box_share_params_build(behaviour = null) {
       const params = {}
       params.cc_params = this.cc_params
       if (behaviour) {
@@ -220,7 +220,11 @@ export const app_clock_box = {
       if (this.clock_box) {
         params.clock_box_attributes = this.clock_box.attributes
       }
-      this.ac_room_perform("clock_box_share", params) // --> app/channels/share_board/room_channel.rb
+      return params
+    },
+    // 時計の状態をすべて共有する
+    clock_box_share(behaviour = null) {
+      this.ac_room_perform("clock_box_share", this.clock_box_share_params_build(behaviour)) // --> app/channels/share_board/room_channel.rb
     },
     clock_box_share_broadcasted(params) {
       this.tl_alert("時計同期")

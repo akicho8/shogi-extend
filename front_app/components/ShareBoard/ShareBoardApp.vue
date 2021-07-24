@@ -265,10 +265,9 @@ export default {
     // 局面0で1手指したとき last_move_info.next_turn_offset は 1
     play_mode_advanced_full_moves_sfen_set(e) {
       this.current_sfen = e.sfen
+
       // this.sound_play("shout_08")
       this.vibrate(10)
-      this.sfen_share_params_set(e.last_move_info)
-      this.sfen_share()
 
       // 時計があれば操作した側のボタンを押す
       // last_move_info.player_location なら指した人の色で判定
@@ -277,8 +276,8 @@ export default {
         this.clock_box.tap_on(e.last_move_info.player_location)
       }
 
-      // 時計の状態をBCする
-      this.clock_box_share("")
+      this.sfen_share_params_set(e.last_move_info) // 再送用可能なパラメータ作成
+      this.sfen_share()                            // 指し手と時計状態の配信
 
       // 次の人の視点にする
       if (false) {

@@ -9,6 +9,8 @@ export const app_sfen_share = {
   },
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
+
+    // あとで再送するかもしれないのでいったん送るパラメータを作って保持しておく
     sfen_share_params_set(last_move_info) {
       const lmi = last_move_info
 
@@ -27,8 +29,10 @@ export const app_sfen_share = {
           effect_key:          lmi.effect_key,          // 効果音キー
         },
         ...this.current_sfen_attrs, // turn_offset が含まれる
+        clock_box_params: this.clock_box_share_params_build(), // 指し手と合わせて時計の情報も送る
       }
 
+      // シャウトモード用
       const ks = lmi.killed_soldier
       if (ks) {
         this.sfen_share_params.lmi.killed_soldier = {
@@ -52,6 +56,7 @@ export const app_sfen_share = {
       this.fast_sound_effect_func(this.sfen_share_params) // ブロードキャスト前に実行
     },
 
+    // 指し手の配信
     sfen_share() {
       if (this.ac_room) { // ac_room が有効でないときに sfen_share_callback_set を呼ばないようにするため
         this.send_success_p = false // 数ms後に相手から応答があると true になる
@@ -63,6 +68,8 @@ export const app_sfen_share = {
         this.sfen_share_callback_set()
       }
     },
+
+    // 指し手を受信
     sfen_share_broadcasted(params) {
       // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
       if (this.received_from_self(params)) {
@@ -74,11 +81,14 @@ export const app_sfen_share = {
           this.sp_run_mode = "play_mode"
         }
 
+        // 即座にシャウトする
         this.fast_sound_effect_func(params)
 
         // 受信したSFENを盤に反映
         this.setup_by_params(params)
       }
+
+      this.clock_box_share_broadcasted(params.clock_box_params)
 
       if (true) {
         // 指したので時間切れ発動予約をキャンセルする
@@ -101,15 +111,6 @@ export const app_sfen_share = {
         }
 
         this.from_user_name_valid(params) // 指し手制限をしていないとき別の人が指したかチェックする
-
-        // const ks = params.killed_soldier
-        // if (ks) {
-        //   this.sfen_share_params.lmi.killed_soldier = {
-        //     location_key: ks.location.key,
-        //     piece_key:    ks.piece.key,
-        //     promoted:     ks.promoted,
-        //   }
-        // }
 
         // 「alice ▲76歩」と表示しながら
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
