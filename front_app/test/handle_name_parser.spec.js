@@ -11,5 +11,8 @@ describe('HandleNameParser', () => {
     expect(HandleNameParser.call_name("ありす。")).toEqual("ありすさん")
     expect(HandleNameParser.call_name("alice@日本")).toEqual("aliceさん")
     expect(HandleNameParser.call_name("alice＠日本")).toEqual("aliceさん")
+    expect(HandleNameParser.call_name("alice!")).toEqual("aliceさん")
+    expect(HandleNameParser.call_name("alice！")).toEqual("aliceさん")
+    expect(HandleNameParser.call_name("alice!!")).toEqual("aliceさん")
   })
 })

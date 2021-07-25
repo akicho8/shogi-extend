@@ -19,11 +19,12 @@ export class HandleNameParser {
 
   get call_name() {
     let s = _.trim(this.source)
-    s = s.replace(/(.+)[@＠].*/, "$1") // "alice@xxx"      → "alice"
-    s = s.replace(/[。]/g, "")         // "name。"         → "name"
-    s = s.replace(/(.+)\(.*\)$/, "$1") // "name123(xxx)"   → "name123"
-    s = s.replace(/(.+)（.*）$/, "$1") // "name123（xxx）" → "name123"
-    s = s.replace(/(\D+)\d+$/, "$1")   // "name123"        → "name"
+    s = s.replace(/(.+)[@＠].*/, "$1")  // "alice@xxx"      → "alice"
+    s = s.replace(/(.+?)[!！]+$/, "$1") // "alice!"         → "alice"
+    s = s.replace(/[。]/g, "")          // "name。"         → "name"
+    s = s.replace(/(.+)\(.*\)$/, "$1")  // "name123(xxx)"   → "name123"
+    s = s.replace(/(.+)（.*）$/, "$1")  // "name123（xxx）" → "name123"
+    s = s.replace(/(\D+)\d+$/, "$1")    // "name123"        → "name"
     if (s.match(/.(ん|ン|ﾝ|さま|サマ|ｻﾏ|様|氏|段|級|団|冠)[!！]?$/)) {
       return s
     }
