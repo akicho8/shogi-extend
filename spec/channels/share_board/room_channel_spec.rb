@@ -6,7 +6,7 @@ module ShareBoard
     let(:room_code) { SecureRandom.hex }
 
     before do
-      stub_connection(current_user: user1)
+      stub_connection(current_user: user1, once_uuid: "(uuid)")
     end
 
     describe "接続" do
