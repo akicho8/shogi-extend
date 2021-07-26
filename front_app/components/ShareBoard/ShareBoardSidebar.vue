@@ -30,8 +30,8 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           //- b-menu-item.is_active_unset(label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="sound_play('click')")
           b-menu-item.is_active_unset(icon="duck"                   label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="base.other_app_click_handle('ぴよ将棋')")
           b-menu-item.is_active_unset(icon="alpha-k-box-outline"    label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="base.other_app_click_handle('KENTO')")
-          b-menu-item.is_active_unset(icon="clipboard-plus-outline" label="棋譜コピー (for ShogiGUI)" @click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif'))")
-          b-menu-item.is_active_unset(icon="link"                   label="棋譜だけを含むリンクのコピー" @click="base.room_code_except_url_copy_handle")
+          b-menu-item.is_active_unset(icon="clipboard-plus-outline" label="棋譜コピー" @click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif'))")
+          b-menu-item.is_active_unset(icon="link"                   label="棋譜リンクコピー" @click="base.room_code_except_url_copy_handle")
 
         b-menu-list(label="詰将棋や特殊な手合割の作成")
           b-menu-item.is_active_unset(icon="pencil-box-outline" label="局面編集"       @click="base.edit_mode_handle")

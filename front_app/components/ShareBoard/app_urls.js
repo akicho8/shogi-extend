@@ -13,7 +13,7 @@ export const app_urls = {
       this.clipboard_copy({text: this.room_code_only_url, success_message: "部屋のリンクをコピーしました"})
     },
 
-    // 棋譜だけを含むリンクのコピー
+    // 棋譜リンクコピー
     room_code_except_url_copy_handle() {
       this.sidebar_p = false
       this.sound_play("click")
