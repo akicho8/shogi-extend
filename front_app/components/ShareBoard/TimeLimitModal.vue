@@ -1,9 +1,16 @@
 <template lang="pug">
+//- time_limit_key
 .modal-card.TimeLimitModal(v-if="clock_running_p")
   header.modal-card-head
     p.modal-card-title.is-size-5.has-text-weight-bold
-      | 時間切れで{{clock.current.location.flip.name}}の勝ち！
+      template(v-if="time_limit_info.key === 'default'")
+        | 時間切れで
+      template(v-if="time_limit_info.key === 'judge'")
+        | 判定により
+      | {{clock.current.location.flip.name}}の勝ち！
   section.modal-card-body
+    template(v-if="time_limit_info.key === 'judge'")
+      p {{user_call_name(base.current_turn_user_name)}}は時間切れになったと思われますが{{base.cc_auto_time_limit_delay}}秒待っても本人からの通知がありませんでした
     template(v-if="clock.current.time_recovery_mode_p")
       p 時間切れになっても時計は止まってないので合意の上で続行できます
     template(v-else)
@@ -14,10 +21,13 @@
 </template>
 
 <script>
+import { TimeLimitInfo } from "../models/time_limit_info.js"
+
 export default {
   name: "TimeLimitModal",
   props: {
-    base:  { type: Object, required: true, },
+    base:           { type: Object, required: true, },
+    time_limit_key: { type: String, required: true, },
   },
   data() {
     return {
@@ -49,6 +59,9 @@ export default {
   computed: {
     clock()           { return this.base.clock_box              },
     clock_running_p() { return this.clock && this.clock.running_p },
+
+    TimeLimitInfo()   { return TimeLimitInfo },
+    time_limit_info() { return this.TimeLimitInfo.fetch(this.time_limit_key) },
   },
 }
 </script>

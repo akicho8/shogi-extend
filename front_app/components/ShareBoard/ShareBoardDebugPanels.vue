@@ -11,7 +11,8 @@
       a.panel-block(@click="base.cc_delayed_time_limit_modal") 他者は数秒後発動
       a.panel-block(@click="base.time_limit_modal_handle_if_not_exist") 受信
       a.panel-block(@click="base.cc_auto_time_limit_delay_stop") 数秒後発動キャンセル
-      a.panel-block(@click="base.time_limit_modal_handle") モーダル
+      a.panel-block(@click="base.time_limit_modal_handle('default')") モーダル(通常)
+      a.panel-block(@click="base.time_limit_modal_handle('judge')") モーダル(推測)
       a.panel-block(@click="base.time_limit_modal_close") 閉じる
   .column.is-2
     .panel
