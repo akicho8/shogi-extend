@@ -1,6 +1,6 @@
 <template lang="pug">
 .ShareBoardSidebarExport
-  b-menu-list(label="棋譜Export")
+  b-menu-list(label="いろんな種類で棋譜取得")
     b-menu-item.is_active_unset(icon="eye" :expanded="false" @click="sound_play('click')")
       template(slot="label" slot-scope="props")
         | 表示
