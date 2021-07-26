@@ -136,8 +136,12 @@ module ShareBoard
       if Rails.env.development? && false
         SlackAgent.message_send(key: key, body: data)
       end
-      prefix = data["from_user_name"] + ":"
-      SlackAgent.message_send(key: key, body: "#{data["ua_icon"]} #{once_uuid} #{prefix} #{body}")
+      user_name = data["from_user_name"] + ":"
+      ac_events_hash = data["ac_events_hash"]
+      connected = ac_events_hash["connected"] || 0
+      disconnected = ac_events_hash["disconnected"] || 0
+
+      SlackAgent.message_send(key: key, body: "#{data["ua_icon"]} (接#{connected} 切#{disconnected}) #{user_name} #{body}")
     end
 
     def simple_track(action)
@@ -146,7 +150,7 @@ module ShareBoard
       else
         body = ""
       end
-      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: "#{once_uuid} #{body}")
+      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: "#{body}")
     end
 
     def sfen_share_track_body(data)

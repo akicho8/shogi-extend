@@ -8,6 +8,7 @@ export const app_room_setup = {
       // room_code: this.config.record.room_code, // リアルタイム共有合言葉
       room_code: null,         // 合言葉
       ac_room: null,           // subscriptions.create のインスタンス
+      ac_events_hash: {},      // ACのイベントが発生した回数を記録(デバッグ用)
     }
   },
   mounted() {
@@ -93,23 +94,28 @@ export const app_room_setup = {
       this.tl_add("USER", `subscriptions.create ${this.room_code}`)
       this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
         initialized: e => {
+          this.ac_events_hash_inc("initialized")
           this.tl_add("HOOK", "initialized", e)
         },
         connected: e => {
+          this.ac_events_hash_inc("connected")
           this.tl_add("HOOK", "connected", e)
-          this.ua_notify_once()
-          this.active_level_increment_timer.restart()
+          this.ua_notify_once()                       // USER_AGENT を記録
+          this.active_level_increment_timer.restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
           this.setup_info_request()
           this.member_info_bc_restart()
         },
         disconnected: e => {
+          this.ac_events_hash_inc("disconnected")
           this.tl_add("HOOK", "disconnected", e)
-          this.active_level_increment_timer.stop() // 切断されているときはアクティブなレベルを上げないようにする
+          this.active_level_increment_timer.stop() // 切断後にアクティブレベルを上げないようにする
         },
         rejected: e => {
+          this.ac_events_hash_inc("rejected")
           this.tl_add("HOOK", "rejected", e)
         },
         received: e => {
+          this.ac_events_hash_inc("received")
           // this.tl_add("HOOK", `received: ${e.bc_action}`, e)
           this.api_version_valid(e.bc_params.API_VERSION)
         },
@@ -149,6 +155,7 @@ export const app_room_setup = {
         performed_at:       this.time_current_ms(), // 実行日時(ms)
         active_level:       this.active_level,      // 先輩度(高い方が信憑性のある情報)
         ua_icon:            this.ua_icon,           // 端末の種類を表すアイコン文字列
+        ac_events_hash:     this.ac_events_hash,    // イベント数(デバッグ用)
         ...params,
       }
       if (this.g_current_user) {
@@ -208,6 +215,11 @@ export const app_room_setup = {
       }) // --> app/channels/share_board/room_channel.rb
     },
     fake_error_broadcasted(params) {
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    ac_events_hash_inc(key) {
+      this.ac_events_hash[key] = (this.ac_events_hash[key] || 0) + 1
     },
   },
   computed: {
