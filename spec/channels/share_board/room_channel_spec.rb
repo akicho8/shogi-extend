@@ -31,6 +31,7 @@ module ShareBoard
         "from_user_name" => "alice",
         "performed_at"   => Time.current.to_i,
         "active_level"   => 1,
+        "ac_events_hash" => {},
         "API_VERSION"    => ShareBoardControllerMethods::API_VERSION, # サーバー側で生める
       }.merge(params)
     end
