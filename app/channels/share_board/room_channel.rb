@@ -137,7 +137,7 @@ module ShareBoard
         SlackAgent.message_send(key: key, body: data)
       end
       user_name = data["from_user_name"] + ":"
-      ac_events_hash = data["ac_events_hash"] || {}
+      ac_events_hash = data["ac_events_hash"]
       connected = ac_events_hash["connected"] || 0
       disconnected = ac_events_hash["disconnected"] || 0
 
