@@ -8,12 +8,12 @@ module ShareBoard
         reject
         return
       end
-      simple_track("購読開始")
+      subscribed_track("購読開始")
       stream_from "share_board/room_channel/#{room_code}"
     end
 
     def unsubscribed
-      simple_track("購読停止")
+      subscribed_track("購読停止")
     end
 
     def room_leave(data)
@@ -136,15 +136,11 @@ module ShareBoard
       if Rails.env.development? && false
         SlackAgent.message_send(key: key, body: data)
       end
-      user_name = data["from_user_name"] + ":"
-      ac_events_hash = data["ac_events_hash"] || {}
-      connected = ac_events_hash["connected"] || 0
-      disconnected = ac_events_hash["disconnected"] || 0
 
-      SlackAgent.message_send(key: key, body: "#{data["ua_icon"]} (接#{connected} 切#{disconnected}) #{user_name} #{body}")
+      SlackAgent.message_send(key: key, body: %(#{data["ua_icon"]} #{ac_event_str(data)} #{data["from_user_name"]}(#{data["active_level"]}): #{body}).squish)
     end
 
-    def simple_track(action)
+    def subscribed_track(action)
       if current_user
         body = current_user.name
       else
@@ -168,6 +164,20 @@ module ShareBoard
         s << "#{-v}秒"
       end
       s.join(" ")
+    end
+
+    # ActionCable の JavaScript 側で発生したイベント数がわかる文字列 (接続1 切0)" を返す
+    def ac_event_str(data)
+      hash = data["ac_events_hash"] || {}
+
+      str = hash.collect { |key, val|
+        info = ActionCableEventInfo.fetch(key)
+        [info.short_name, val].join("")
+      }.join(" ")
+
+      if str.present?
+        "(#{str})"
+      end
     end
   end
 end
