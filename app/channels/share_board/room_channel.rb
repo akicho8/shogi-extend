@@ -55,7 +55,7 @@ module ShareBoard
     end
 
     def setup_info_send(data)
-      if !Rails.env.production? || true
+      if !Rails.env.production?
         track(data, "情報送信", "あげます > #{data["to_user_name"]}")
       end
       broadcast(:setup_info_send_broadcasted, data)
