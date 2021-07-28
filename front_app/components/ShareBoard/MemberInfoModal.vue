@@ -45,7 +45,7 @@ export default {
       this.$emit("close")
     },
     ping_handle() {
-      this.sound_play("click")
+      // this.sound_play("click")
       this.base.member_info_ping_handle(this.member_info)
       // this.$emit("close")
     },

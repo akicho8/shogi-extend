@@ -22,7 +22,7 @@ export const app_ping = {
     member_info_ping_handle(e) {
       this.sound_play("click")
       if (this.ping_running_p()) {
-        this.toast_warn("PING実行中...")
+        this.toast_warn("PONG応答待ち中...")
       } else {
         this.ping_command(e)
       }
