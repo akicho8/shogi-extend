@@ -17,24 +17,24 @@ export default {
   methods: {
     ...AnySupport,
 
-    ua_icon_detect() {
+    ua_icon_key_get() {
       if (typeof window === "undefined") {
-        return "(window undefined)"
+        return "question"
       } else {
         const ua = window.navigator.userAgent.toLowerCase()
         if (this.mobile_p()) {
           if (ua.indexOf("android") >= 0) {
-            return ":android:"
+            return "android"
           } else if (ua.indexOf("ipad") >= 0 || (ua.indexOf("macintosh") >= 0 && "ontouchend" in document)) {
-            return ":tablet:"
+            return "tablet"
           } else {
-            return ":iphone:"
+            return "iphone"
           }
         } else {
           if (ua.indexOf("windows") >= 0) {
-            return ":windows:"
+            return "windows"
           } else {
-            return ":desktop_computer:"
+            return "desktop_computer"
           }
         }
       }

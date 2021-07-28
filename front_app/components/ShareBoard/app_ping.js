@@ -19,7 +19,7 @@ export const app_ping = {
   methods: {
     // メンバーをタップしたとき
     // --> ShareBoardMemberList.vue
-    member_info_click_handle(e) {
+    member_info_ping_handle(e) {
       this.sound_play("click")
       if (this.ping_running_p()) {
         this.toast_warn("PING実行中...")
@@ -42,7 +42,8 @@ export const app_ping = {
       if (params.to_connection_id === this.connection_id) {
         const now = this.time_current_ms()
         this.delay_block(this.PONG_DELAY, () => this.pong_command(params))
-        this.ac_log("PING", `${params.from_user_name} → ${this.user_name} ${now - params.ping_at}ms`)
+        const gap = now - params.ping_at
+        this.ac_log("PING", `${params.from_user_name} → ${this.user_name} ${gap}ms`)
       }
     },
     pong_command(params) {
@@ -62,7 +63,7 @@ export const app_ping = {
         const now = this.time_current_ms()
         const gap = now - params.ping_at
         this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {toast_only: true})
-        this.ac_log("PONG", `${this.user_name} ← ${params.from_user_name} ${now - params.pong_at}ms`)
+        this.ac_log("PONG", `${this.user_name} ← ${params.from_user_name} ${gap}ms`)
       }
     },
 

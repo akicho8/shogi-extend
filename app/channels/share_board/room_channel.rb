@@ -137,7 +137,7 @@ module ShareBoard
         SlackAgent.message_send(key: key, body: data)
       end
 
-      SlackAgent.message_send(key: key, body: %(#{data["ua_icon"]} #{ac_event_str(data)} #{data["from_user_name"]}(#{data["active_level"]}): #{body}).squish)
+      SlackAgent.message_send(key: key, body: %(:#{data["ua_icon_key"]}: #{ac_event_str(data)} #{data["from_user_name"]}(#{data["active_level"]}): #{body}).squish)
     end
 
     def subscribed_track(action)

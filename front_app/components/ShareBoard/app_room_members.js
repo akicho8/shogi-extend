@@ -146,7 +146,7 @@ export const app_room_members = {
       return this.member_elapsed_sec(e) < ALIVE_SEC
     },
     // 寝ているか？
-    member_disconnect_p(e) {
+    member_is_disconnect(e) {
       return !this.member_alive_p(e)
     },
 
@@ -159,6 +159,44 @@ export const app_room_members = {
     member_reject(leave_info) {
       this.member_infos = _.reject(this.member_infos, e => e.from_connection_id === leave_info.from_connection_id)
     },
+
+    //////////////////////////////////////////////////////////////////////////////// 通信環境チェック
+
+    // 入室してからの経過秒数
+    member_elapsed_sec_from_join(e) {
+      return (this.time_current_ms() - e.room_joined_at) / 1000
+    },
+
+    // 入室してから1分当たりの接続切れ数
+    member_disconnected_count_per_min(e) {
+      const count = e.ac_events_hash.disconnected || 0
+      const min = Math.ceil(this.member_elapsed_sec_from_join(e) / 60)
+      return count / min
+    },
+
+    // 通信環境
+    member_network_status_label(e) {
+      const v = this.member_disconnected_count_per_min(e)
+      if (v >= 0.50) {
+        return "めっちゃ悪い"
+      }
+      if (v >= 0.25) {
+        return "やや悪い"
+      }
+      if (v >= 0.10) {
+        return "普通"
+      }
+      if (v >= 0.05) {
+        return "良好"
+      }
+      if (v >= 0.001) {
+        return "めっちゃ良い"
+      }
+      return "最高"
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    
   },
   computed: {
     name_uniqued_member_infos() {

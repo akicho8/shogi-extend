@@ -573,6 +573,18 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'メンバー情報'
+  describe "メンバー情報" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")
+        member_list_click(1)
+        assert_text("通信状況")
+        doc_image
+      end
+    end
+  end
+
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'PING'
   describe "PING" do
     it "成功" do
@@ -584,6 +596,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         member_list_click(2)
+        find(".ping_handle").click
         assert_text("bobさんの反応速度は")
         doc_image
       end
@@ -598,8 +611,10 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app(room_code: :my_room, force_user_name: "bob", PONG_DELAY: @PONG_DELAY)
       end
       a_block do
-        member_list_click(2)    # 1回押し
-        member_list_click(2)    # 続けて押すと
+        member_list_click(2)
+        find(".ping_handle").click # 1回押し
+        find(".ping_handle").click # 続けて押すと
+
         assert_text("PING実行中...")
         assert_text("bobさんの霊圧が消えました")
         doc_image
