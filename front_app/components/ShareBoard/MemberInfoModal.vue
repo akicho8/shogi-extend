@@ -62,12 +62,12 @@ export default {
     table_rows() {
       return [
         {
-          label: "接続切れ",
-          value: `${this.number_floor(this.base.member_disconnected_count_per_min(this.member_info), 2)}回/1分 計${this.member_info.ac_events_hash.disconnected || 0}回`,
+          label: "通信状況",
+          value: this.base.member_net_level(this.member_info),
         },
         {
-          label: "通信状況",
-          value: this.base.member_network_status_label(this.member_info),
+          label: "接続切れ",
+          value: `${this.number_floor(this.base.member_disconnected_count_per_min(this.member_info), 2)}回/1分 計${this.member_info.ac_events_hash.disconnected || 0}回`,
         },
         {
           label: "接続",
@@ -90,7 +90,7 @@ export default {
           value: this.base.member_status_label(this.member_info),
         },
         {
-          label: "フォーカス",
+          label: "画面フォーカス",
           value: this.member_info.window_active_p ? "ON" : "OFF (よそ見中)",
           // desc: this.member_info.window_active_p ? null : "よそ見中",
           // desc_class: "has-text-danger",
@@ -102,6 +102,10 @@ export default {
         {
           label: "イベント受信",
           value: `${this.member_info.ac_events_hash.received || 0}回`,
+        },
+        {
+          label: "イベント受信拒否",
+          value: `${this.member_info.ac_events_hash.rejected || 0}回`,
         },
         {
           label: "接続ID",
