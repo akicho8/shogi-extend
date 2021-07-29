@@ -111,6 +111,10 @@ export default {
           label: "接続ID",
           value: this.member_info.from_connection_id,
         },
+        {
+          label: "API Version",
+          value: this.member_info.API_VERSION,
+        },
         // {
         //   label: "霊圧",
         //   value: this.base.member_alive_p(this.member_info) ? "あり" : "なし",
