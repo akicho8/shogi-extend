@@ -26,7 +26,7 @@ export const app_net_level = {
     // 指定メンバーの通信環境
     member_net_level(e) {
       const v = this.member_disconnected_count_per_min(e)
-      const found = NetLevelInfo.values.find(e => e.threshold >= v)
+      const found = NetLevelInfo.values.find(e => v >= e.threshold)
       this.__assert__(found, "found")
       return found.name
     },
