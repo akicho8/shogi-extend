@@ -22,7 +22,7 @@ export const app_ping = {
     member_info_ping_handle(e) {
       this.sound_play("click")
       if (this.ping_running_p()) {
-        this.toast_warn("PONG応答待ち中...")
+        this.toast_warn("応答待ち")
       } else {
         this.ping_command(e)
       }
@@ -62,7 +62,12 @@ export const app_ping = {
         this.ping_done()
         const now = this.time_current_ms()
         const gap = now - params.ping_at
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {toast_only: true})
+        const sec = this.number_floor(gap / 1000, 3)
+        if (false) {
+          this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {toast_only: true, duration: 500})
+        } else {
+          this.toast_ok(`応答速度: ${sec}秒`, {toast_only: true, duration: 1000})
+        }
         this.ac_log("PONG", `${this.user_name} ← ${params.from_user_name} ${gap}ms`)
       }
     },
