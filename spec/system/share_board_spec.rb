@@ -615,7 +615,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         find(".ping_handle").click # 1回押し
         find(".ping_handle").click # 続けて押すと
 
-        assert_text("PING実行中...")
+        assert_text("応答待ち")
         assert_text("bobさんの霊圧が消えました")
         doc_image
       end
