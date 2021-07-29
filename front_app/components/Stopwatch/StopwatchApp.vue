@@ -697,7 +697,7 @@ export default {
 
     human_rate() {
       if (this.rows.length >= 1) {
-        const v = Math.floor(this.rate * 100.0)
+        const v = this.float_to_perc(this.rate, 2)
         return `正解率${v}%`
       }
     },

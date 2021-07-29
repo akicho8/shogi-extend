@@ -133,8 +133,11 @@ export default {
       return Math.floor(Math.random() * n)
     },
 
+    // float_to_perc(0.33, 2)    // => 33
+    // float_to_perc(0.333, 2)   // => 33.3
+    // float_to_perc(0.33333, 2) // => 33.33
     float_to_perc(v, precision = 0) {
-      return _.floor(v * 100, precision)
+      return this.number_floor(v * 100, precision)
     },
 
     // 0.1234 -> 12.34
@@ -148,6 +151,9 @@ export default {
       return Math.trunc(v * 100)
     },
 
+    // number_floor(0.3, 2)   // => 0.3
+    // number_floor(0.33, 2)  // => 0.33
+    // number_floor(0.333, 2) // => 0.33
     number_floor(v, precision = 0) {
       return _.floor(v, precision)
     },
