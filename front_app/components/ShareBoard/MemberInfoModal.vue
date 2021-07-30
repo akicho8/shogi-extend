@@ -84,8 +84,8 @@ export default {
         },
         {
           enabled: true,
-          label: "最終生存通知",
-          value: `${this.seconds_ago(this.member_info.performed_at)} 計${this.member_info.alive_notice_count}回`,
+          label: "生存通知",
+          value: `直近${this.seconds_ago(this.member_info.performed_at)} 計${this.member_info.alive_notice_count}回`,
         },
         {
           enabled: true,
