@@ -16,6 +16,8 @@
 #  ・リンクは         share-board?body%3Dposition になっている
 #  ・ので不正なアドレスと認識される。Chrome では問題なし
 #
+require "resolv"
+
 module ShareBoardControllerMethods
   API_VERSION = 6
 
@@ -179,7 +181,9 @@ module ShareBoardControllerMethods
     attrs = attrs.merge({
         # :room_code => params[:room_code] || "",
         :connection_id => ApplicationRecord.secure_random_urlsafe_base64_token,
-        :API_VERSION => API_VERSION, # これとActionCableで返すバージョンを比較する
+        :API_VERSION   => API_VERSION,       # これとActionCableで返すバージョンを比較する
+        :remote_ip     => request.remote_ip, # メンバー情報で表示する
+        :remote_name   => (Resolv.getname(request.remote_ip.to_s) rescue nil), # 最低 6ms かかる
       })
 
     attrs

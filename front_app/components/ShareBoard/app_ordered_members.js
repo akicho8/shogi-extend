@@ -261,6 +261,14 @@ export const app_ordered_members = {
       return this.order_lookup_from_name(e.from_user_name)
     },
 
+    // 表示用の手番の番号
+    order_display_index(e) {
+      const found = this.order_lookup(e)
+      if (found) {
+        return found.order_index + 1
+      }
+    },
+
     order_lookup_from_name(name) {
       if (this.base.order_func_p) {
         if (this.base.ordered_members) {

@@ -4,7 +4,7 @@
     template(v-for="(e, i) in member_infos")
       ShareBoardAvatarLine.member_one_line.is-clickable(:base="base" :info="e" :key="e.from_connection_id" @click="row_click_handle(e)" :class="base.member_info_class(e)")
         .flex_item.left_tag_or_icon(v-if="base.order_lookup(e)")
-          b-tag(rounded) {{tag_body_for(e)}}
+          b-tag(rounded) {{base.order_display_index(e)}}
         //- .icon_wrap(v-if="e.from_avatar_path == null")
         //-   b-icon.account_icon(:icon="icon_for(e)" size="is-small")
         //- b-icon(icon="sleep" type="is-danger" size="is-small")
@@ -75,11 +75,6 @@ export default {
     //   // // // }
     //   // return "is-primary"
     // },
-
-    tag_body_for(e) {
-      const found = this.base.order_lookup(e)
-      return found.order_index + 1
-    },
 
     // 自分のアイコンの色
     // 反応がなくなったら灰色になる

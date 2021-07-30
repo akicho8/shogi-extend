@@ -67,10 +67,11 @@ export const app_room_members = {
       this.alive_notice_count += 1
       this.ac_room_perform("member_info_share", {
         // この情報はそのまま member_infos に追加する
-        alive_notice_count:  this.alive_notice_count,    // 通知した回数
-        room_joined_at:      this.room_joined_at,        // 部屋に入った日時(古参比較用)
-        window_active_p:     this.window_active_p,       // Windowの状態
-        user_agent:          window.navigator.userAgent, // ブラウザ情報
+        alive_notice_count:  this.alive_notice_count,      // 通知した回数
+        room_joined_at:      this.room_joined_at,          // 部屋に入った日時(古参比較用)
+        window_active_p:     this.window_active_p,         // Windowの状態
+        user_agent:          window.navigator.userAgent,   // ブラウザ情報
+        remote_ip:           this.config.record.remote_ip, // Rails側で取得したIP
       }) // --> app/channels/share_board/room_channel.rb
     },
 
