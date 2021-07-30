@@ -12,7 +12,7 @@
         tbody
           tr(v-for="row in table_rows")
             th {{row.label}}
-            td
+            td.is_line_break_on(:class="row.value_class")
               template(v-if="typeof row.value === 'function'")
                 | {{row.value()}}
               template(v-else)
@@ -114,6 +114,11 @@ export default {
         {
           label: "API Version",
           value: this.member_info.API_VERSION,
+        },
+        {
+          label: "ブラウザ",
+          value: this.member_info.user_agent,
+          value_class: "is-size-7",
         },
         // {
         //   label: "霊圧",

@@ -16,9 +16,9 @@ const FAKE_P = false
 export const app_room_members = {
   data() {
     return {
-      member_infos:   null, // 参加者たち
-      room_joined_at: null, // 部屋に接続した時間(ms)
-      alive_notice_count:       null, // 生存通知を送信した回数
+      member_infos:       null, // 参加者たち
+      room_joined_at:     null, // 部屋に接続した時間(ms)
+      alive_notice_count: null, // 生存通知を送信した回数
 
       member_bc_interval_runner: new IntervalRunner(this.member_bc_interval_callback, {early: true, interval: ALIVE_NOTIFY_INTERVAL}),
     }
@@ -66,9 +66,11 @@ export const app_room_members = {
       // this.tl_add("USER", "member_info_share")
       this.alive_notice_count += 1
       this.ac_room_perform("member_info_share", {
-        alive_notice_count:  this.alive_notice_count, // 通知した回数
-        room_joined_at:      this.room_joined_at,     // 部屋に入った日時(古参比較用)
-        window_active_p:     this.window_active_p,    // Windowの状態
+        // この情報はそのまま member_infos に追加する
+        alive_notice_count:  this.alive_notice_count,    // 通知した回数
+        room_joined_at:      this.room_joined_at,        // 部屋に入った日時(古参比較用)
+        window_active_p:     this.window_active_p,       // Windowの状態
+        user_agent:          window.navigator.userAgent, // ブラウザ情報
       }) // --> app/channels/share_board/room_channel.rb
     },
 
