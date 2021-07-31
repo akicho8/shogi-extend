@@ -2,8 +2,16 @@ require "pp"
 
 class BoardImageGenerator
   class << self
+    def file_format
+      :png
+    end
+
+    def cache_name
+      "board_images"
+    end
+
     def cache_root
-      Rails.public_path.join("system", "board_images")
+      Rails.public_path.join("system", cache_name)
     end
 
     # cap production rails:runner CODE='BoardImageGenerator.cache_delete_all'
@@ -82,6 +90,23 @@ class BoardImageGenerator
     @turn ||= record.adjust_turn(params[:turn])
   end
 
+  def file_exist?
+    @options[:disk_cache_enable] && real_path.exist?
+  end
+
+  # system/ だと /s/system になってしまうので / から始めるようにする
+  def browser_path
+    "/" + real_path.relative_path_from(Rails.public_path).to_s
+  end
+
+  def not_found_then_generate
+    if file_exist?
+      return
+    end
+
+    force_generate
+  end
+
   private
 
   def real_path
@@ -89,7 +114,7 @@ class BoardImageGenerator
   end
 
   def filename
-    "#{unique_key}.png"
+    "#{unique_key}.#{self.class.file_format}"
   end
 
   def unique_key
@@ -107,28 +132,15 @@ class BoardImageGenerator
     ].join(":")
   end
 
-  def not_found_then_generate
-    if @options[:disk_cache_enable] && real_path.exist?
-      return
-    end
-
-    force_generate
-  end
-
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
-    parser.to_blob(to_blob_options)
+    parser.public_send("to_#{self.class.file_format}", to_blob_options)
   end
 
   def force_generate
     real_path.dirname.mkpath
     real_path.binwrite(to_blob)
     real_path.sub_ext(".rb").write(to_blob_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
-  end
-
-  # system/ だと /s/system になってしまうので / から始めるようにする
-  def browser_path
-    "/" + real_path.relative_path_from(Rails.public_path).to_s
   end
 
   def dir_parts

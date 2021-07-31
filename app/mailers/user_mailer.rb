@@ -59,7 +59,7 @@ class UserMailer < ApplicationMailer
     mail(subject: subject, to: user.email, bcc: AppConfig[:admin_email], body: body)
   end
 
-  # 以前コメントした人に通知
+  # 棋譜取得完了
   # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
   # http://localhost:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify(record, other_options = {})
@@ -99,6 +99,31 @@ class UserMailer < ApplicationMailer
     if record.attachment_mode == "with_zip"
       attachments[record.zip_filename] = record.to_zip.string
     end
+
+    mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)
+  end
+
+  # 棋譜取得完了
+  # UserMailer.battle_fetch_notify2(Swars::CrawlReservation.first).deliver_later
+  # http://localhost:3000/rails/mailers/user/battle_fetch_notify2
+  def battle_fetch_notify2(henkan_record)
+    subject = "【GIF変換完了】"
+
+    out = []
+    out << henkan_record.browser_full_path
+
+    out << ""
+    out << "--"
+    out << "SHOGI-EXTEND"
+    out << url_for(:root)
+
+    body = out.join("\n")
+
+    user = record.user
+
+    to = "#{henkan_record.user.name} <#{henkan_record.user.email}>"
+
+    attachments["#{henkan_record.to_param}.gif"] = henkan_record.to_real_path.read
 
     mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)
   end

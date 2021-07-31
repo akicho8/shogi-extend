@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_113128) do
+ActiveRecord::Schema.define(version: 2021_07_31_115500) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -934,6 +934,19 @@ ActiveRecord::Schema.define(version: 2021_07_08_113128) do
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
     t.index ["use_key"], name: "index_free_battles_on_use_key"
     t.index ["user_id"], name: "index_free_battles_on_user_id"
+  end
+
+  create_table "henkan_records", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対局者"
+    t.string "recordable_type", null: false
+    t.bigint "recordable_id", null: false, comment: "対象レコード"
+    t.text "generator_params", null: false, comment: "変換パラメータ"
+    t.datetime "process_begin_at", comment: "処理開始日時"
+    t.datetime "process_end_at", comment: "処理終了日時"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["recordable_type", "recordable_id"], name: "index_henkan_records_on_recordable_type_and_recordable_id"
+    t.index ["user_id"], name: "index_henkan_records_on_user_id"
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
