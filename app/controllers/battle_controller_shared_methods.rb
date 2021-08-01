@@ -189,7 +189,7 @@ module BattleControllerSharedMethods
           if false
             henkan_record.main_process!
           else
-            HenkanRecord.background_job_start
+            HenkanRecord.background_job_kick
           end
 
           render html: "GIF#{henkan_record.status_name}<br>終わったら #{current_user.email} に通知します#{HenkanRecord.info.to_html}#{HenkanRecord.order(:id).to_html}".html_safe

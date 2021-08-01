@@ -175,6 +175,13 @@ Rails.application.routes.draw do
       post :record_create
     end
 
+    resource :gif_conv, only: [] do
+      post :record_create
+      if Rails.env.development?
+        get :record_create
+      end
+    end
+
     namespace :xy_master, format: "json" do
       resources :time_records, only: [:index, :create, :update]
     end

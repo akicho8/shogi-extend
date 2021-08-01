@@ -153,6 +153,10 @@ class BoardImageGenerator
       true
     when e == "false"
       false
+    when e == "on"
+      true
+    when e == "off"
+      false
     else
       Integer(e) rescue Float(e) rescue e
     end

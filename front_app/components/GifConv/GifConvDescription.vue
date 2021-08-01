@@ -34,7 +34,7 @@ export default {
   computed: {
     meta() {
       return {
-        title: ["対応フォーマットの確認", "タイトルGIF変換"],
+        title: ["対応フォーマットの確認", "アニメーションGIF変換"],
       }
     },
     _()               { return _               },

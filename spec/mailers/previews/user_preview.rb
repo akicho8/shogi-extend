@@ -23,5 +23,11 @@ class UserPreview < ActionMailer::Preview
     crawl_reservation = user.swars_crawl_reservations.create!(:target_user_key => battle.users.first.key)
     UserMailer.battle_fetch_notify(crawl_reservation)
   end
+
+  # http://localhost:3000/rails/mailers/user/gif_conv_notify
+  def gif_conv_notify
+    free_battle = FreeBattle.create!(kifu_body: "68S", use_key: "adapter", user: User.sysop)
+    henkan_record = HenkanRecord.create!(recordable: free_battle, user: User.sysop, generator_params: {})
+    UserMailer.gif_conv_notify(henkan_record)
   end
 end

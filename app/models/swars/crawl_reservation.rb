@@ -39,6 +39,7 @@ module Swars
       if user
         self.to_email ||= user.email
       end
+      self.attachment_mode ||= "with_zip"
     end
 
     with_options presence: true do
