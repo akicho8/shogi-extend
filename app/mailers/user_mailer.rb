@@ -63,7 +63,12 @@ class UserMailer < ApplicationMailer
   # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
   # http://localhost:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify(record, other_options = {})
-    subject = "【将棋ウォーズ棋譜検索】#{record.target_user.key}さんの棋譜取得完了"
+    subject_suffix = ""
+    if record.attachment_mode == "with_zip"
+      subject_suffix = "(添付あり)"
+    end
+
+    subject = "【将棋ウォーズ棋譜検索】#{record.target_user.key}さんの棋譜取得完了 #{subject_suffix}".squish
 
     diff_count = other_options[:diff_count] || 0
 
