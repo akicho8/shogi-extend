@@ -56,6 +56,9 @@ module XyMaster
       # 全削除
       # rails r 'RuleInfo.reset_all'
       def reset_all
+        if Rails.env.production?
+          raise "must not happen"
+        end
         TimeRecord.delete_all
         rebuild
       end
@@ -170,8 +173,16 @@ module XyMaster
       ymd_table_key_for_time(Time.current)
     end
 
+    def table_key_for_yesterday
+      ymd_table_key_for_time(Time.current.yesterday)
+    end
+
     def table_key_for_month
       ym_table_key_for_time(Time.current)
+    end
+
+    def table_key_for_prev_month
+      ym_table_key_for_time(Time.current.prev_month)
     end
 
     def ymd_table_key_for_time(created_at)
