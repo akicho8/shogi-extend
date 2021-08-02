@@ -89,11 +89,12 @@ const CHART_CONFIG_DEFAULT = {
           labelString: "タイム",
         },
         ticks: {
-          maxTicksLimit: 7, // 最大横N個の目盛りにする
+          maxTicksLimit: 5, // 最大横N個の目盛りにする
           // suggestedMax: 1,
-          // suggestedMin: 1,
-          // stepSize: 15,
+          suggestedMin: 60,
+          stepSize: 30,
           // max: 60*3,
+          // min: 60,
           callback(value, index, values) {
             return dayjs.unix(value).format("mm:ss")
             // return Math.trunc(value / 60) + "時"
