@@ -1,17 +1,11 @@
 require "pp"
 
 class BoardImageGenerator
+  PAPPER = 1
+
   class << self
-    def file_format
-      :png
-    end
-
-    def cache_name
-      "board_images"
-    end
-
     def cache_root
-      Rails.public_path.join("system", cache_name)
+      Rails.public_path.join("system", "board_images")
     end
 
     # cap production rails:runner CODE='BoardImageGenerator.cache_delete_all'
@@ -56,6 +50,7 @@ class BoardImageGenerator
     FileUtils.rm_f(real_path)
   end
 
+  # FIXME: 必要なパラメータだけを切り取る
   def to_blob_options
     @to_blob_options ||= -> {
       opts = params.deep_dup
@@ -114,7 +109,7 @@ class BoardImageGenerator
   end
 
   def filename
-    "#{unique_key}.#{self.class.file_format}"
+    "#{unique_key}.#{to_format}"
   end
 
   def unique_key
@@ -124,8 +119,8 @@ class BoardImageGenerator
   # なるべく画像を共有したいのであってレコード毎にユニークにしたいわけじゃないので record.to_param を入れてはいけない
   def unique_key_source_string
     [
-      1,
-      "blob",
+      PAPPER,
+      to_format,
       record.sfen_hash,
       turn,
       to_blob_options,
@@ -134,13 +129,13 @@ class BoardImageGenerator
 
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
-    parser.public_send("to_#{self.class.file_format}", to_blob_options)
+    parser.public_send("to_#{to_format}", to_blob_options)
   end
 
   def force_generate
     real_path.dirname.mkpath
     real_path.binwrite(to_blob)
-    real_path.sub_ext(".rb").write(to_blob_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
+    Pathname("#{real_path}.rb").write(to_blob_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
   end
 
   def dir_parts
@@ -180,5 +175,13 @@ class BoardImageGenerator
       :mediator_class     => Bioshogi::MediatorFast,
       :turn_limit         => turn,
     }
+  end
+
+  def to_format
+    v = (params[:to_format].presence || :png).to_sym
+    if ["gif", "webp", "apng", "png", "jpg", "bmp"].exclude?(v.to_s)
+      raise ArgumentError, v.inspect
+    end
+    v
   end
 end

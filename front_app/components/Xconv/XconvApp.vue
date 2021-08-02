@@ -1,5 +1,5 @@
 <template lang="pug">
-.GifConvApp
+.XconvApp
   DebugBox(v-if="development_p")
     div foo:
 
@@ -10,8 +10,8 @@
 
   MainSection
     .container
-      GifConvPreview(:base="base")
-      GifConvForm(:base="base" ref="GifConvForm" v-if="form_show_p")
+      XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
+      XconvPreview(:base="base")
 
       template(v-if="response_hash && response_hash.url")
         .columns
@@ -19,7 +19,7 @@
             .box
               b-image(:src="response_hash.url")
 
-      template(v-if="teiki_haisin")
+      template(v-if="xconv_info")
         .columns
           .column
             .level_container
@@ -27,35 +27,39 @@
                 .level-item.has-text-centered
                   div
                     p.heading 待ち
-                    p.title {{teiki_haisin.unprocessed_count}}
-                .level-item.has-text-centered
+                    p.title {{xconv_info.standby_only_count}}
+                .level-item.has-text-centered(v-if="xconv_info.processing_only_count > 0 || true")
                   div
                     p.heading 変換中
-                    p.title {{teiki_haisin.processing_count}}
+                    p.title {{xconv_info.processing_only_count}}
                 .level-item.has-text-centered
                   div
                     p.heading 完了
-                    p.title {{teiki_haisin.processed_count}}
+                    p.title {{xconv_info.success_only_count}}
+                .level-item.has-text-centered(v-if="xconv_info.error_only_count > 0 || true")
+                  div
+                    p.heading 失敗
+                    p.title {{xconv_info.error_only_count}}
 
             b-table(
-              v-if="teiki_haisin.henkan_records.length >= 1"
-              :data="teiki_haisin.henkan_records"
+              v-if="xconv_info.xconv_records.length >= 1"
+              :data="xconv_info.xconv_records"
               :mobile-cards="false"
               :paginated="false"
               :per-page="10"
               )
               b-table-column(v-slot="{row}" label="予約ID" numeric)
-                template(v-if="henkan_record && henkan_record.id === row.id")
+                template(v-if="xconv_record && xconv_record.id === row.id")
                   b-tag(rounded type="is-primary") {{row.id}}
                 template(v-else)
-                  | {{row.id}}
+                  b-tag(rounded) {{row.id}}
               b-table-column(v-slot="{row}" field="name" label="名前")
                 | {{row.user.name}}
-              b-table-column(v-slot="{row}" field="status_name" label="ステイタス")
-                | {{row.status_name}}
+              b-table-column(v-slot="{row}" field="status_info.name" label="ステイタス")
+                | {{row.status_info.name}}
 
   DebugPre(v-if="development_p")
-    | {{success_record}}
+    | {{done_record}}
     | {{response_hash}}
 </template>
 
@@ -73,7 +77,7 @@ import { app_form         } from "./app_form.js"
 import _ from "lodash"
 
 export default {
-  name: "GifConvApp",
+  name: "XconvApp",
   mixins: [
     support_parent,
     app_chore,
@@ -87,8 +91,8 @@ export default {
     return {
       // データ
       response_hash:   null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
-      teiki_haisin:   null,
-      henkan_record: null,
+      xconv_info:   null,
+      xconv_record: null,
 
       // その他
       // change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
@@ -103,7 +107,7 @@ export default {
       return {
         title: "アニメーションGIF変換",
         description: "棋譜をアニメーションGIFに変換する",
-        og_image_key: "gif_conv",
+        og_image_key: "xconv",
       }
     },
   },
@@ -112,7 +116,7 @@ export default {
 </script>
 
 <style lang="sass">
-.GifConvApp
+.XconvApp
   .MainSection.section
     +tablet
       padding: 2rem

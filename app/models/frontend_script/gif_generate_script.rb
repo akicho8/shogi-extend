@@ -15,10 +15,10 @@ module FrontendScript
 
     def script_body
       battle = FreeBattle.create!(kifu_body: params[:body])
-      henkan_record = HenkanRecord.create!(recordable: battle, user: h.current_user, generator_params: params)
-      henkan_record.main_process!
+      xconv_record = XconvRecord.create!(recordable: battle, user: h.current_user, convert_params: params)
+      xconv_record.main_process!
       {
-        browser_full_path: henkan_record.browser_full_path,
+        browser_url: xconv_record.browser_url,
       }
     end
 

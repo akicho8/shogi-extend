@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_31_115500) do
+ActiveRecord::Schema.define(version: 2021_08_02_191700) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -464,6 +464,19 @@ ActiveRecord::Schema.define(version: 2021_07_31_115500) do
     t.string "subject", null: false
     t.string "body", limit: 8192, null: false
     t.datetime "created_at", null: false
+  end
+
+  create_table "any_convert_records", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対局者"
+    t.string "recordable_type", null: false
+    t.bigint "recordable_id", null: false, comment: "対象レコード"
+    t.text "convert_params", null: false, comment: "変換パラメータ"
+    t.datetime "process_begin_at", comment: "処理開始日時"
+    t.datetime "process_end_at", comment: "処理終了日時"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["recordable_type", "recordable_id"], name: "index_any_convert_records_on_recordable_type_and_recordable_id"
+    t.index ["user_id"], name: "index_any_convert_records_on_user_id"
   end
 
   create_table "auth_infos", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
@@ -1329,6 +1342,27 @@ ActiveRecord::Schema.define(version: 2021_07_31_115500) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["key"], name: "index_wkbk_sequences_on_key", unique: true
     t.index ["position"], name: "index_wkbk_sequences_on_position"
+  end
+
+  create_table "xconv_records", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対局者"
+    t.string "recordable_type", null: false
+    t.bigint "recordable_id", null: false, comment: "対象レコード"
+    t.text "convert_params", null: false, comment: "変換パラメータ"
+    t.datetime "process_begin_at", comment: "処理開始日時"
+    t.datetime "process_end_at", comment: "処理終了日時"
+    t.datetime "successed_at", comment: "成功日時"
+    t.datetime "errored_at", comment: "エラー日時"
+    t.string "error_message", comment: "エラーメッセージ"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_xconv_records_on_created_at"
+    t.index ["errored_at"], name: "index_xconv_records_on_errored_at"
+    t.index ["process_begin_at"], name: "index_xconv_records_on_process_begin_at"
+    t.index ["process_end_at"], name: "index_xconv_records_on_process_end_at"
+    t.index ["recordable_type", "recordable_id"], name: "index_xconv_records_on_recordable_type_and_recordable_id"
+    t.index ["successed_at"], name: "index_xconv_records_on_successed_at"
+    t.index ["user_id"], name: "index_xconv_records_on_user_id"
   end
 
   create_table "xy_master_rules", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

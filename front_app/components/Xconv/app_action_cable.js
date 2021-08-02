@@ -15,7 +15,7 @@ export const app_action_cable = {
   methods: {
     room_create() {
       this.__assert__(this.ac_room == null, "this.ac_room == null")
-      this.ac_room = this.ac_subscription_create({channel: "GifConv::RoomChannel"})
+      this.ac_room = this.ac_subscription_create({channel: "Xconv::RoomChannel"})
     },
 
     room_destroy() {
@@ -67,14 +67,19 @@ export const app_action_cable = {
       this.ac_room_perform("ac_log", { subject, body })
     },
 
-    henkan_record_list_broadcasted(data) {
-      this.teiki_haisin = data
-      if (this.henkan_record && this.teiki_haisin.success_record) {
-        if (this.henkan_record.id === this.teiki_haisin.success_record.id) {
-          this.success_record = this.teiki_haisin.success_record
+    xconv_record_list_broadcasted(data) {
+      this.xconv_info = data
+      if (this.xconv_record && this.xconv_info.done_record) {
+        if (this.xconv_record.id === this.xconv_info.done_record.id) {
+          this.done_record = this.xconv_info.done_record
           // this.sound_stop_all()
           this.sound_play("click")
-          this.toast_ok("変換が完了しました")
+          if (this.done_record.successed_at) {
+            this.toast_ok("変換が完了しました")
+          }
+          if (this.done_record.errored_at) {
+            this.toast_ok("変換に失敗しました")
+          }
         }
       }
     },

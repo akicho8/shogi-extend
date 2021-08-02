@@ -1,9 +1,9 @@
-module GifConv
+module Xconv
   class RoomChannel < ApplicationCable::Channel
     def subscribed
       subscribed_track("購読開始")
-      stream_from "gif_conv/room_channel"
-      HenkanRecord.teiki_haisin_bc
+      stream_from "xconv/room_channel"
+      XconvRecord.xconv_info_broadcast
     end
 
     def unsubscribed
@@ -29,7 +29,7 @@ module GifConv
         end
       end
       # bc_params = bc_params.merge("API_VERSION" => ShareBoardControllerMethods::API_VERSION)
-      ActionCable.server.broadcast("gif_conv/room_channel", {bc_action: bc_action, bc_params: bc_params})
+      ActionCable.server.broadcast("xconv/room_channel", {bc_action: bc_action, bc_params: bc_params})
     end
 
     def track(data, action, body)

@@ -109,33 +109,33 @@ class UserMailer < ApplicationMailer
   end
 
   # 棋譜取得完了
-  # UserMailer.gif_conv_notify(Swars::CrawlReservation.first).deliver_later
-  # http://localhost:3000/rails/mailers/user/gif_conv_notify
-  def gif_conv_notify(henkan_record)
+  # UserMailer.xconv_notify(Swars::CrawlReservation.first).deliver_later
+  # http://localhost:3000/rails/mailers/user/xconv_notify
+  def xconv_notify(xconv_record)
     subject = "GIF変換完了 (添付あり)"
 
     out = []
 
     if Rails.env.development?
-      out << henkan_record.browser_full_path
+      out << xconv_record.browser_url
     end
-    out << "ID:#{henkan_record.id} のGIF変換が完了しました"
+    out << "ID:#{xconv_record.id} のGIF変換が完了しました"
 
     out << ""
     out << "--"
     out << "SHOGI-EXTEND"
     out << url_for(:root)
     if Rails.env.development?
-      out << henkan_record.to_t
+      out << xconv_record.to_t
     end
 
     body = out.join("\n")
 
-    user = henkan_record.user
+    user = xconv_record.user
 
-    to = "#{henkan_record.user.name} <#{henkan_record.user.email}>"
+    to = "#{xconv_record.user.name} <#{xconv_record.user.email}>"
 
-    attachments["#{henkan_record.to_param}.gif"] = henkan_record.generator.to_real_path.read
+    attachments["#{xconv_record.to_param}.gif"] = xconv_record.generator.to_real_path.read
 
     mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)
   end

@@ -175,7 +175,7 @@ Rails.application.routes.draw do
       post :record_create
     end
 
-    resource :gif_conv, only: [] do
+    resource :xconv, only: [] do
       post :record_create
       if Rails.env.development?
         get :record_create

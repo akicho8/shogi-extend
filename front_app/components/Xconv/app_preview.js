@@ -1,7 +1,7 @@
 export const app_preview = {
   data() {
     return {
-      success_record:  null,
+      done_record:  null,
     }
   },
   methods: {
@@ -10,18 +10,18 @@ export const app_preview = {
       // this.body = ""
 
       // this.response_hash   = null
-      // this.teiki_haisin    = null
-      this.henkan_record = null
-      this.success_record = null
-      // this.henkan_record   = null
+      // this.xconv_info    = null
+      this.xconv_record = null
+      this.done_record = null
+      // this.xconv_record   = null
     },
     other_window_open_handle() {
       this.sound_play("click")
-      this.window_popup(this.success_record.browser_full_path, {width: 1200, height: 630})
+      this.window_popup(this.done_record.browser_url, {width: 1200, height: 630})
     },
     download_handle() {
       this.sound_play("click")
-      window.location.href = this.success_record.browser_full_path
+      window.location.href = this.done_record.browser_url
     },
   },
 }

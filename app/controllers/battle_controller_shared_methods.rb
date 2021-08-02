@@ -159,41 +159,45 @@ module BattleControllerSharedMethods
       respond_to do |format|
         format.html
         format.png {
-          generator = BoardImageGenerator.new(current_record, params)
+          generator = BoardImageGenerator.new(current_record, params.merge(to_format: :png))
           send_file_or_redirect(generator)
         }
-        format.gif {
-          generator = BoardGifGenerator.new(current_record, params)
+        if Rails.env.development?
+          format.gif {
+            generator = BoardImageGenerator.new(current_record, params.merge(to_format: :gif))
 
-          # url = UrlProxy.wrap2(path: generator.to_browser_path)
-          # render html: url
-          # return
+            # FIXME: リダイレクト
 
-          if generator.file_exist?
-            send_file_or_redirect(generator)
-            return
-          end
+            # url = UrlProxy.wrap2(path: generator.to_browser_path)
+            # render html: url
+            # return
 
-          if !current_user
-            render html: "ログインしてください"
-            return
-          end
+            if generator.file_exist?
+              send_file_or_redirect(generator)
+              return
+            end
 
-          if henkan_record = HenkanRecord.find_by(recordable: current_record)
-            # render html: henkan_record.to_html
-            render html: [henkan_record.status_name, HenkanRecord.info.to_html].join.html_safe
-            return
-          end
+            if !current_user
+              render html: "ログインしてください"
+              return
+            end
 
-          henkan_record = HenkanRecord.create!(recordable: current_record, user: current_user, generator_params: params.to_unsafe_h)
-          if false
-            henkan_record.main_process!
-          else
-            HenkanRecord.background_job_kick
-          end
+            if xconv_record = XconvRecord.find_by(recordable: current_record)
+              # render html: xconv_record.to_html
+              render html: [xconv_record.status_info, XconvRecord.info.to_html].join.html_safe
+              return
+            end
 
-          render html: "GIF#{henkan_record.status_name}<br>終わったら #{current_user.email} に通知します#{HenkanRecord.info.to_html}#{HenkanRecord.order(:id).to_html}".html_safe
-        }
+            xconv_record = XconvRecord.create!(recordable: current_record, user: current_user, convert_params: params.to_unsafe_h)
+            if false
+              xconv_record.main_process!
+            else
+              XconvRecord.background_job_kick
+            end
+
+            render html: "GIF#{xconv_record.status_info}<br>終わったら #{current_user.email} に通知します#{XconvRecord.info.to_html}#{XconvRecord.order(:id).to_html}".html_safe
+          }
+        end
         format.any { kif_data_send }
       end
     end
