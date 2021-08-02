@@ -1,8 +1,8 @@
 <template lang="pug">
-.GifConvPreview.columns(v-if="base.owattayo_record")
+.GifConvPreview.columns(v-if="base.success_record")
   .column
     .box
-      b-image(:src="base.owattayo_record.browser_full_path" alt="foo")
+      b-image(:src="base.success_record.browser_full_path" alt="foo")
     .buttons.is-centered.mb-0
       b-button.mb-0(@click="base.close_handle") 戻る
       b-button.mb-0(@click="base.download_handle" type="is-primary") ダウンロード

@@ -15,7 +15,7 @@ export const app_form = {
     body() {
       this.bs_error = null
       this.henkan_record = null
-      this.owattayo_record = null
+      this.success_record = null
     },
   },
   mounted() {
@@ -51,7 +51,7 @@ export const app_form = {
 
       this.response_hash   = null
       // this.teiki_haisin    = null
-      this.owattayo_record = null
+      this.success_record = null
       this.henkan_record   = null
 
       // this.body_focus()
@@ -61,7 +61,7 @@ export const app_form = {
     //- },
 
     sumit_handle() {
-      this.owattayo_record = null
+      this.success_record = null
 
       //- this.record_fetch(() => {
       //-   this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`)
@@ -121,7 +121,7 @@ export const app_form = {
       // return this.blank_p(this.henkan_record)
     },
     processing_p() {
-      return this.henkan_record && !this.owattayo_record
+      return this.henkan_record && !this.success_record
     },
   },
 }

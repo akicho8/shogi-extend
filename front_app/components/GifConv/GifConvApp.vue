@@ -55,7 +55,7 @@
                 | {{row.status_name}}
 
   DebugPre(v-if="development_p")
-    | {{owattayo_record}}
+    | {{success_record}}
     | {{response_hash}}
 </template>
 

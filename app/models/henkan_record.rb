@@ -104,7 +104,7 @@ class HenkanRecord < ApplicationRecord
     generator.not_found_then_generate
     sleep(generator_params[:sleep].to_i)
     update!(process_end_at: Time.current)
-    teiki_haisin_bc(owattayo_record: as_json(json_struct))
+    teiki_haisin_bc(success_record: as_json(json_struct))
 
     SlackAgent.message_send(key: "GIF変換完了", body: browser_full_path)
     UserMailer.gif_conv_notify(self).deliver_later

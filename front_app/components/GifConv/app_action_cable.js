@@ -69,9 +69,9 @@ export const app_action_cable = {
 
     henkan_record_list_broadcasted(data) {
       this.teiki_haisin = data
-      if (this.henkan_record && this.teiki_haisin.owattayo_record) {
-        if (this.henkan_record.id === this.teiki_haisin.owattayo_record.id) {
-          this.owattayo_record = this.teiki_haisin.owattayo_record
+      if (this.henkan_record && this.teiki_haisin.success_record) {
+        if (this.henkan_record.id === this.teiki_haisin.success_record.id) {
+          this.success_record = this.teiki_haisin.success_record
           // this.sound_stop_all()
           this.sound_play("click")
           this.toast_ok("変換が完了しました")
