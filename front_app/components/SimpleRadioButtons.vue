@@ -9,7 +9,7 @@ b-field(:label="model.field_label" :message="model.fetch(base[var_name]).message
 export default {
   name: "SimpleRadioButtons",
   props: {
-    model:    { type: Object, required: true, },
+    model:    { type: Function, required: true, },
     base:     { type: Object, required: true, },
     var_name: { type: String, required: true, },
   },
