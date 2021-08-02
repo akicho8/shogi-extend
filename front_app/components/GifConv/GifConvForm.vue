@@ -1,5 +1,5 @@
 <template lang="pug">
-.GifConvForm.columns.is-centered(v-if="component_show_p")
+.GifConvForm.columns.is-centered
   .column.MainColumn
     b-field(label="棋譜" :type="base.body_field_type")
       b-input(type="textarea" ref="body" v-model.trim="base.body" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFEN風パラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むサイトのURL。戦法名・囲い名などを入力してください")
@@ -34,12 +34,11 @@ import { LoopInfo } from "../models/loop_info.js"
 export default {
   name: "GifConvForm",
   mixins: [support_child],
+  mounted() {
+    this.base.body_focus()
+  },
   computed: {
     LoopInfo() { return LoopInfo },
-
-    component_show_p() {
-      return this.blank_p(this.base.henkan_record)
-    },
   },
 }
 </script>

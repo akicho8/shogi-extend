@@ -39,11 +39,11 @@ export const app_form = {
       //- }
     }
 
-    this.body_focus()
+    // this.body_focus()
   },
   methods: {
     body_focus() {
-      this.desktop_focus_to(this.$refs.body)
+      this.desktop_focus_to(this.$refs.GifConvForm.$refs.body.$refs.textarea)
     },
     reset_handle() {
       this.sound_play("click")
@@ -54,13 +54,15 @@ export const app_form = {
       this.owattayo_record = null
       this.henkan_record   = null
 
-      this.body_focus()
+      // this.body_focus()
     },
     //- app_open(url) {
     //-   this.url_open(url, this.target_default)
     //- },
 
     sumit_handle() {
+      this.owattayo_record = null
+
       //- this.record_fetch(() => {
       //-   this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`)
       //- })
@@ -93,6 +95,7 @@ export const app_form = {
           const henkan_record = e.response_hash.henkan_record
           if (henkan_record) {
             this.henkan_record = henkan_record
+            this.toast_ok("変換を予約しました")
           }
         }
       }).finally(() => {
@@ -112,6 +115,13 @@ export const app_form = {
       if (this.henkan_record) {
         return "is-success"
       }
+    },
+    form_show_p() {
+      return true
+      // return this.blank_p(this.henkan_record)
+    },
+    processing_p() {
+      return this.henkan_record && !this.owattayo_record
     },
   },
 }

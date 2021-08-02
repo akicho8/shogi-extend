@@ -72,6 +72,9 @@ export const app_action_cable = {
       if (this.henkan_record && this.teiki_haisin.owattayo_record) {
         if (this.henkan_record.id === this.teiki_haisin.owattayo_record.id) {
           this.owattayo_record = this.teiki_haisin.owattayo_record
+          // this.sound_stop_all()
+          this.sound_play("click")
+          this.toast_ok("変換が完了しました")
         }
       }
     },

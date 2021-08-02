@@ -10,19 +10,14 @@
 
   MainSection
     .container
-      GifConvForm(:base="base")
+      GifConvPreview(:base="base")
+      GifConvForm(:base="base" ref="GifConvForm" v-if="form_show_p")
 
       template(v-if="response_hash && response_hash.url")
         .columns
           .column
             .box
               b-image(:src="response_hash.url")
-
-      template(v-if="owattayo_record")
-        .columns
-          .column
-            .box
-              b-image(:src="owattayo_record.browser_full_path")
 
       template(v-if="teiki_haisin")
         .columns
@@ -69,6 +64,7 @@
 
 import { support_parent   } from "./support_parent.js"
 import { app_chore        } from "./app_chore.js"
+import { app_preview        } from "./app_preview.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_action_cable } from "./app_action_cable.js"
 import { app_form         } from "./app_form.js"
@@ -81,6 +77,7 @@ export default {
   mixins: [
     support_parent,
     app_chore,
+    app_preview,
     app_sidebar,
     app_action_cable,
     app_form,
@@ -91,7 +88,6 @@ export default {
       // データ
       response_hash:   null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
       teiki_haisin:   null,
-      owattayo_record:   null,
       henkan_record: null,
 
       // その他
