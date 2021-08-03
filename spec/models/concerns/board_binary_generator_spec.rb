@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe BoardImageGenerator, type: :model do
+RSpec.describe BoardBinaryGenerator, type: :model do
   describe "to_browser_path" do
     it "works" do
-      obj = BoardImageGenerator.new(FreeBattle.create!)
+      obj = BoardBinaryGenerator.new(FreeBattle.create!)
       assert { obj.to_browser_path.match?(/system.*board_images.*png/) }
     end
   end
 
   describe "to_blob_options" do
     def test1(params)
-      obj = BoardImageGenerator.new(FreeBattle.create!, params)
+      obj = BoardBinaryGenerator.new(FreeBattle.create!, params)
       obj.to_blob_options
     end
     it "works" do
@@ -25,7 +25,7 @@ RSpec.describe BoardImageGenerator, type: :model do
 
   describe "turn" do
     def test1(params)
-      obj = BoardImageGenerator.new(FreeBattle.create!, params)
+      obj = BoardBinaryGenerator.new(FreeBattle.create!, params)
       obj.turn
     end
     it "works" do
@@ -41,7 +41,7 @@ RSpec.describe BoardImageGenerator, type: :model do
 
   describe "cache_delete" do
     it "works" do
-      obj = BoardImageGenerator.new(FreeBattle.create!)
+      obj = BoardBinaryGenerator.new(FreeBattle.create!)
       path = obj.to_real_path
       assert { path.exist? }
       obj.cache_delete

@@ -4,10 +4,15 @@ module Api
 
     # curl -d _method=post http://localhost:3000/api/xconv/record_create.json
     def record_create
+      if !current_user
+        render html: "ログインしてください"
+        return
+      end
+
       free_battle = FreeBattle.create!(kifu_body: params[:body], use_key: "adapter", user: current_user)
 
       if FAST_RESPONSE && free_battle.turn_max <= FAST_RESPONSE
-        generator = BoardImageGenerator.new(free_battle, convert_params)
+        generator = BoardBinaryGenerator.new(free_battle, params[:convert_params])
         generator.not_found_then_generate
         url = UrlProxy.wrap2(path: generator.to_browser_path)
         render json: {
@@ -30,7 +35,7 @@ module Api
       #   return
       # end
 
-      xconv_record = XconvRecord.create!(recordable: free_battle, user: current_user, convert_params: convert_params)
+      xconv_record = current_user.xconv_records.create!(recordable: free_battle, convert_params: params.to_unsafe_h[:xconv_record_params])
       if false
         xconv_record.main_process!
       else
@@ -54,34 +59,6 @@ module Api
       #   return
       # end
       #
-      # if !current_user
-      #   render html: "ログインしてください"
-      #   return
-      # end
-      #
-      # if xconv_record = XconvRecord.find_by(recordable: free_battle)
-      #   # render html: xconv_record.to_html
-      #   render html: [xconv_record.status_info, XconvRecord.info.to_html].join.html_safe
-      #   return
-      # end
-      #
-      # xconv_record = XconvRecord.create!(recordable: free_battle, user: current_user, convert_params: params.to_unsafe_h)
-      # if false
-      #   xconv_record.main_process!
-      # else
-      #   XconvRecord.background_job_kick
-      # end
-      #
-      # render html: "GIF#{xconv_record.status_info}<br>終わったら #{current_user.email} に通知します#{XconvRecord.info.to_html}#{XconvRecord.order(:id).to_html}".html_safe
-
-      # render json: { record: record.as_json(methods: [:all_kifs, :display_turn, :piyo_shogi_base_params]) }
-    end
-
-    def convert_params
-      v = params.to_unsafe_h
-      v.extract!(:controller, :action, :format) # TODO: format が BoardGifGenerator のオプションと干渉している
-      v.extract!(:body)
-      v
     end
   end
 end

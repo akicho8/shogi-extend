@@ -20,6 +20,10 @@ module UserChoreMethods
     end
   end
 
+  included do
+    has_many :xconv_records, dependent: :destroy
+  end
+
   def show_path
     Rails.application.routes.url_helpers.url_for([self, only_path: true])
   end

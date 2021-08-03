@@ -106,7 +106,7 @@ class XconvRecord < ApplicationRecord
   # end
 
   def generator
-    @generator ||= BoardImageGenerator.new(recordable, convert_params)
+    @generator ||= BoardBinaryGenerator.new(recordable, convert_params[:board_binary_generator_params])
   end
 
   def browser_url

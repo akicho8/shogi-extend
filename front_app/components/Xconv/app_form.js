@@ -65,12 +65,23 @@ export const app_form = {
 
       this.ga_click("アニメーションGIF変換●")
       const params = {
-        body:          this.body,
-        sleep:         this.sleep,
-        raise_message:         this.raise_message,
-        loop:          this.loop,
-        delay_per_one: this.delay_per_one,
-        to_format:     this.to_format,
+        // for XconvRecord
+        body: this.body,
+
+        // for XconvRecord#convert_params
+        xconv_record_params: {
+          sleep: this.sleep,
+          raise_message: this.raise_message,
+
+          board_binary_generator_params: {
+            to_format: this.to_format,
+            // for AnimationFormatter
+            // animation_formatter_params: {
+            loop: this.loop,
+            delay_per_one: this.delay_per_one,
+            // },
+          },
+        },
       }
       const loading = this.$buefy.loading.open()
       this.$axios.$post("/api/xconv/record_create.json", params).then(e => {

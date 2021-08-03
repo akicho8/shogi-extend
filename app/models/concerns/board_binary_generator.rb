@@ -1,6 +1,6 @@
 require "pp"
 
-class BoardImageGenerator
+class BoardBinaryGenerator
   PAPPER = 1
 
   class << self
@@ -8,7 +8,7 @@ class BoardImageGenerator
       Rails.public_path.join("system", "board_images")
     end
 
-    # cap production rails:runner CODE='BoardImageGenerator.cache_delete_all'
+    # cap production rails:runner CODE='BoardBinaryGenerator.cache_delete_all'
     def cache_delete_all
       FileUtils.rm_rf(cache_root)
     end
@@ -50,32 +50,38 @@ class BoardImageGenerator
     FileUtils.rm_f(real_path)
   end
 
-  # FIXME: 必要なパラメータだけを切り取る
   def to_blob_options
     @to_blob_options ||= -> {
-      opts = params.deep_dup
+      opts = params.dup
 
-      if opts[:image_preset] == "small"
-        opts.update({
-                      width: 320,
-                      height: 256,
-                      piece_pull_down_rate:  { black: 0.06, white: 0      },
-                      piece_pull_right_rate: { black: 0.06, white: -0.045 },
-                    })
+      Bioshogi::BinaryFormatter.assert_valid_keys(params.except(:to_format))
+
+      opts = opts.deep_symbolize_keys
+
+      # if opts[:image_preset] == "small"
+      #   opts.update({
+      #                 width: 320,
+      #                 height: 256,
+      #                 piece_pull_down_rate:  { black: 0.06, white: 0      },
+      #                 piece_pull_right_rate: { black: 0.06, white: -0.045 },
+      #               })
+      # end
+
+      # opts                                                # => {"width" => "",   "height" => "1234" }
+      # opts = opts.to_options                           # => {:width  => "",   :height  => "1234" }
+      # hash = opts.transform_values { |e| native_cast(e) } # => {:width  => "",   :height  => 1234   }
+      # hash = hash.reject { |k, v| v.blank? }                 # => {                 :height  => 1234   }
+      # opts = default_size.merge(hash)            # => {:width  => 1200, :height  => 1234   }
+      #
+      # opts = opts.deep_symbolize_keys # opts[:piece_pull_right_rate][:black] でアクセスできるようにするため
+
+      default_size.each do |key, val|
+        if v = opts[key]
+          opts[key] = v.to_i.clamp(0, val)                   # => {:width  => 1200, :height  => 630    }
+        end
       end
 
-      opts                                                # => {"width" => "",   "height" => "1234" }
-      opts = opts.to_options                           # => {:width  => "",   :height  => "1234" }
-      hash = opts.transform_values { |e| native_cast(e) } # => {:width  => "",   :height  => 1234   }
-      hash = hash.reject { |k, v| v.blank? }                 # => {                 :height  => 1234   }
-      opts = image_default_options.merge(hash)            # => {:width  => 1200, :height  => 1234   }
-
-      opts = opts.deep_symbolize_keys # opts[:piece_pull_right_rate][:black] でアクセスできるようにするため
-
-      # 最大値を超えないように補正
-      image_default_options.each do |key, val|
-        opts[key] = opts[key].clamp(1, val)                   # => {:width  => 1200, :height  => 630    }
-      end
+      opts = opts.slice(*Bioshogi::BinaryFormatter.all_options.keys) # 不要なオプションを取る
 
       opts
     }.call
@@ -129,7 +135,17 @@ class BoardImageGenerator
 
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
-    parser.public_send("to_#{to_format}", to_blob_options)
+    parser.animation_formatter(to_blob_options.merge(animation_format: to_format)).to_blob
+
+    # if [:gif, :webp, :apng].include?(to_format)
+    #   parser.animation_formatter(to_blob_options.merge(animation_format: to_format)).to_blob
+    # elsif [:png].include?(to_format)
+    #   # options = to_blob_options.except(Bioshogi::ImageFormatter.default_params.keys)
+    #   parser.image_formatter(options.merge(image_format: to_format)).to_blob
+    # else
+    #   parser.public_send("to_#{to_format}", to_blob_options)
+    # end
+
   end
 
   def force_generate
@@ -143,7 +159,9 @@ class BoardImageGenerator
   end
 
   def native_cast(e)
-    case
+    case e
+    when Integer, Float
+      e
     when e == "true"
       true
     when e == "false"
@@ -152,12 +170,12 @@ class BoardImageGenerator
       true
     when e == "off"
       false
-    else
+    when e.kind_of?(String)
       Integer(e) rescue Float(e) rescue e
     end
   end
 
-  def image_default_options
+  def default_size
     {
       width: 1200,
       height: 630,
@@ -178,8 +196,8 @@ class BoardImageGenerator
   end
 
   def to_format
-    v = (params[:to_format].presence || :png).to_sym
-    if ["gif", "webp", "apng", "png", "jpg", "bmp"].exclude?(v.to_s)
+    v = params[:to_format].presence || "png"
+    if ["gif", "webp", "apng", "png", "jpg", "bmp"].exclude?(v)
       raise ArgumentError, v.inspect
     end
     v

@@ -1,7 +1,9 @@
 <template lang="pug">
 .XconvPreview.columns(v-if="base.done_record")
   .column
-    b-message.mt-4(title="失敗" :closable="false" type="is-warning" v-if="base.done_record.errored_at")
+    //- b-message.mt-4(title="失敗" :closable="false" type="is-warning" v-if="base.done_record.errored_at")
+    //-   | {{base.done_record.error_message}}
+    b-notification.mt-4(:closable="false" type="is-warning" v-if="base.done_record.errored_at")
       | {{base.done_record.error_message}}
 
     template(v-if="base.done_record.successed_at")
