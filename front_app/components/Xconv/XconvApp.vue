@@ -6,7 +6,7 @@
   MainNavbar
     template(slot="brand")
       NavbarItemHome
-      b-navbar-item.has-text-weight-bold(@click="reset_handle") アニメーションGIF変換
+      b-navbar-item.has-text-weight-bold(@click="reset_handle") アニメーション画像変換
 
   MainSection
     .container
@@ -99,13 +99,13 @@ export default {
     }
   },
   mounted() {
-    this.ga_click("アニメーションGIF変換")
+    this.ga_click("アニメーション画像変換")
   },
   computed: {
     base() { return this },
     meta() {
       return {
-        title: "アニメーションGIF変換",
+        title: "アニメーション画像変換",
         description: "棋譜をアニメーションGIFに変換する",
         og_image_key: "xconv",
       }
