@@ -13,7 +13,7 @@ namespace :my do
   # rake db_sync TABLES=time_records
   desc "本番サーバーの production の DB をローカルの development にコピーする (オプション: TABLES=t1,t2,t3)"
   task :db_sync do
-    Rake::Task[:production_db_backup_to_local].invoke
+    Rake::Task["my:production_db_backup_to_local"].invoke
     system "zcat db/shogi_web_production.sql.gz | mysql -u root shogi_web_development"
   end
 
@@ -28,7 +28,7 @@ namespace :my do
   desc "DBを新サーバーにコピー"
   task :db_copy_to_ishikari do
     p "ローカルに取得"
-    Rake::Task[:production_db_backup_to_local].invoke
+    Rake::Task["my:production_db_backup_to_local"].invoke
     p "石狩へ"
     system "scp db/shogi_web_production.sql i:~/"
     p "インポート"

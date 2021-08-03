@@ -84,6 +84,11 @@ const CHART_CONFIG_DEFAULT = {
         },
       }],
       yAxes: [{
+        gridLines: {
+          display: false,
+          // offsetGridLines: false,
+          // zeroLineWidth: 0,
+        },
         scaleLabel: {
           display: false,
           labelString: "タイム",
@@ -91,7 +96,7 @@ const CHART_CONFIG_DEFAULT = {
         ticks: {
           maxTicksLimit: 5, // 最大横N個の目盛りにする
           // suggestedMax: 1,
-          suggestedMin: 60,
+          // suggestedMin: 60,
           stepSize: 30,
           // max: 60*3,
           // min: 60,
