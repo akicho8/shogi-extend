@@ -46,7 +46,7 @@ class ServiceInfo
       display_p: !Rails.env.production?,
       experiment_p: false,
       nuxt_link_to: {path: "/heavy-export"},
-      title: "アニメーション画像変換",
+      title: "アニメーション変換",
       attention_label: "NEW!",
       og_image_key: "heavy-export",
       description: "棋譜をアニメーションGIFなどに変換",

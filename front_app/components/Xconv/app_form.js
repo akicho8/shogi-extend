@@ -63,7 +63,7 @@ export const app_form = {
         return
       }
 
-      this.ga_click("アニメーション画像変換●")
+      this.ga_click("アニメーション変換●")
       const params = {
         // for XconvRecord
         body: this.body,

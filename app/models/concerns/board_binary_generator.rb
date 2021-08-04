@@ -197,9 +197,9 @@ class BoardBinaryGenerator
 
   def to_format
     v = params[:to_format].presence || "png"
-    if ["gif", "webp", "apng", "png", "jpg", "bmp"].exclude?(v)
-      raise ArgumentError, v.inspect
-    end
+    # if ["gif", "webp", "apng", "png", "jpg", "bmp"].exclude?(v)
+    #   raise ArgumentError, v.inspect
+    # end
     v
   end
 end
