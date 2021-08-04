@@ -77,7 +77,7 @@ export const app_form = {
             to_format: this.to_format,
             // for AnimationFormatter
             // animation_formatter_params: {
-            loop: this.loop,
+            loop: this.loop === "true",
             delay_per_one: this.delay_per_one,
             // },
           },

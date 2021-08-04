@@ -19,9 +19,19 @@ export const app_preview = {
       this.sound_play("click")
       this.window_popup(this.done_record.browser_url, {width: 1200, height: 630})
     },
-    download_handle() {
+    direct_link_handle() {
       this.sound_play("click")
       window.location.href = this.done_record.browser_url
+    },
+    download_handle() {
+      this.sound_play("click")
+      const url = this.$config.MY_SITE_URL + `/animation-files/${this.done_record.id}`
+      window.location.href = url
+    },
+    json_show_handle() {
+      this.sound_play("click")
+      const url = this.$config.MY_SITE_URL + `/animation-files/${this.done_record.id}.json`
+      window.location.href = url
     },
   },
 }

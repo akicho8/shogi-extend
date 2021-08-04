@@ -89,6 +89,8 @@ Rails.application.routes.draw do
 
   resource :share_board, path: "share-board", only: [:show]
 
+  resources :xconvs, path: "animation-files", only: [:show]
+
   ################################################################################ 将棋トレーニングバトル
 
   # match "actb", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]

@@ -48,14 +48,14 @@ class BoardBinaryGenerator
 
   def cache_delete
     FileUtils.rm_f(real_path)
+    FileUtils.rm_f("#{real_path}.rb")
   end
 
   def to_blob_options
     @to_blob_options ||= -> {
-      opts = params.dup
-
       Bioshogi::BinaryFormatter.assert_valid_keys(params.except(:to_format))
 
+      opts = params.dup
       opts = opts.deep_symbolize_keys
 
       # if opts[:image_preset] == "small"
@@ -92,7 +92,7 @@ class BoardBinaryGenerator
   end
 
   def file_exist?
-    @options[:disk_cache_enable] && real_path.exist?
+    real_path.exist?
   end
 
   # system/ だと /s/system になってしまうので / から始めるようにする
@@ -101,22 +101,26 @@ class BoardBinaryGenerator
   end
 
   def not_found_then_generate
-    if file_exist?
+    if @options[:disk_cache_enable] && file_exist?
       return
     end
 
     force_generate
   end
 
-  private
-
   def real_path
     @real_path ||= self.class.cache_root.join(*dir_parts, filename)
+  end
+
+  def to_format
+    params[:to_format].presence || "png"
   end
 
   def filename
     "#{unique_key}.#{to_format}"
   end
+
+  private
 
   def unique_key
     @unique_key ||= Digest::MD5.hexdigest(unique_key_source_string)
@@ -135,17 +139,18 @@ class BoardBinaryGenerator
 
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
-    parser.animation_formatter(to_blob_options.merge(animation_format: to_format)).to_blob
-
-    # if [:gif, :webp, :apng].include?(to_format)
-    #   parser.animation_formatter(to_blob_options.merge(animation_format: to_format)).to_blob
-    # elsif [:png].include?(to_format)
-    #   # options = to_blob_options.except(Bioshogi::ImageFormatter.default_params.keys)
-    #   parser.image_formatter(options.merge(image_format: to_format)).to_blob
-    # else
-    #   parser.public_send("to_#{to_format}", to_blob_options)
-    # end
-
+    if false
+      parser.public_send("to_#{to_format}", to_blob_options) # ← やっぱりこのインターフェイスにした方がいいかも
+    else
+      if to_format.in?(["png", "jpg", "bmp"])
+        # png は to_blob の結果とする
+        parser.image_formatter(to_blob_options.merge(image_format: to_format)).to_blob_binary
+      else
+        # mp4 は write で吐いたファイルを読み込んで返す
+        # こちらで png を処理すると foo-1.png などが生成されて to_write_binary は "" を返してしまう
+        parser.animation_formatter(to_blob_options.merge(animation_format: to_format)).to_write_binary
+      end
+    end
   end
 
   def force_generate
@@ -158,22 +163,22 @@ class BoardBinaryGenerator
     unique_key.match(/(.{2})(.{2})/).captures
   end
 
-  def native_cast(e)
-    case e
-    when Integer, Float
-      e
-    when e == "true"
-      true
-    when e == "false"
-      false
-    when e == "on"
-      true
-    when e == "off"
-      false
-    when e.kind_of?(String)
-      Integer(e) rescue Float(e) rescue e
-    end
-  end
+  # def native_cast(e)
+  #   case e
+  #   when Integer, Float
+  #     e
+  #   when e == "true"
+  #     true
+  #   when e == "false"
+  #     false
+  #   when e == "on"
+  #     true
+  #   when e == "off"
+  #     false
+  #   when e.kind_of?(String)
+  #     Integer(e) rescue Float(e) rescue e
+  #   end
+  # end
 
   def default_size
     {
@@ -193,13 +198,5 @@ class BoardBinaryGenerator
       :mediator_class     => Bioshogi::MediatorFast,
       :turn_limit         => turn,
     }
-  end
-
-  def to_format
-    v = params[:to_format].presence || "png"
-    # if ["gif", "webp", "apng", "png", "jpg", "bmp"].exclude?(v)
-    #   raise ArgumentError, v.inspect
-    # end
-    v
   end
 end

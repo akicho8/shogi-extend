@@ -162,42 +162,42 @@ module BattleControllerSharedMethods
           generator = BoardBinaryGenerator.new(current_record, params.merge(to_format: :png))
           send_file_or_redirect(generator)
         }
-        if Rails.env.development?
-          format.gif {
-            generator = BoardBinaryGenerator.new(current_record, params.merge(to_format: :gif))
-
-            # FIXME: リダイレクト
-
-            # url = UrlProxy.wrap2(path: generator.to_browser_path)
-            # render html: url
-            # return
-
-            if generator.file_exist?
-              send_file_or_redirect(generator)
-              return
-            end
-
-            if !current_user
-              render html: "ログインしてください"
-              return
-            end
-
-            if xconv_record = XconvRecord.find_by(recordable: current_record)
-              # render html: xconv_record.to_html
-              render html: [xconv_record.status_info, XconvRecord.info.to_html].join.html_safe
-              return
-            end
-
-            xconv_record = XconvRecord.create!(recordable: current_record, user: current_user, convert_params: params.to_unsafe_h)
-            if false
-              xconv_record.main_process!
-            else
-              XconvRecord.background_job_kick
-            end
-
-            render html: "GIF#{xconv_record.status_info}<br>終わったら #{current_user.email} に通知します#{XconvRecord.info.to_html}#{XconvRecord.order(:id).to_html}".html_safe
-          }
-        end
+        # if Rails.env.development?
+        #   format.gif {
+        #     generator = BoardBinaryGenerator.new(current_record, params.merge(to_format: :gif))
+        #
+        #     # FIXME: リダイレクト
+        #
+        #     # url = UrlProxy.wrap2(path: generator.to_browser_path)
+        #     # render html: url
+        #     # return
+        #
+        #     if generator.file_exist?
+        #       send_file_or_redirect(generator)
+        #       return
+        #     end
+        #
+        #     if !current_user
+        #       render html: "ログインしてください"
+        #       return
+        #     end
+        #
+        #     if xconv_record = XconvRecord.find_by(recordable: current_record)
+        #       # render html: xconv_record.to_html
+        #       render html: [xconv_record.status_info, XconvRecord.info.to_html].join.html_safe
+        #       return
+        #     end
+        #
+        #     xconv_record = XconvRecord.create!(recordable: current_record, user: current_user, convert_params: params.to_unsafe_h)
+        #     if false
+        #       xconv_record.main_process!
+        #     else
+        #       XconvRecord.background_job_kick
+        #     end
+        #
+        #     render html: "GIF#{xconv_record.status_info}<br>終わったら #{current_user.email} に通知します#{XconvRecord.info.to_html}#{XconvRecord.order(:id).to_html}".html_safe
+        #   }
+        # end
         format.any { kif_data_send }
       end
     end
