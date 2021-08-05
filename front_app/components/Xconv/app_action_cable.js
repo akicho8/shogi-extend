@@ -75,10 +75,10 @@ export const app_action_cable = {
           // this.sound_stop_all()
           this.sound_play("click")
           if (this.done_record.successed_at) {
-            this.toast_ok("変換が完了しました")
+            this.toast_ok("完了しました")
           }
           if (this.done_record.errored_at) {
-            this.toast_ok("変換に失敗しました")
+            this.toast_ok("失敗しました")
           }
         }
       }

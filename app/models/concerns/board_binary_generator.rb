@@ -140,7 +140,7 @@ class BoardBinaryGenerator
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
     if false
-      parser.public_send("to_#{to_format}", to_blob_options) # ← やっぱりこのインターフェイスにした方がいいかも
+      parser.public_send("to_#{to_format}", to_blob_options) # FIXME: やっぱりこのインターフェイスにした方がいいかも
     else
       if to_format.in?(["png", "jpg", "bmp"])
         # png は to_blob の結果とする

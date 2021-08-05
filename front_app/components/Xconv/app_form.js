@@ -94,7 +94,7 @@ export const app_form = {
           const xconv_record = e.response_hash.xconv_record
           if (xconv_record) {
             this.xconv_record = xconv_record
-            this.toast_ok("変換を予約しました")
+            this.toast_ok("予約しました")
           }
         }
       }).finally(() => {

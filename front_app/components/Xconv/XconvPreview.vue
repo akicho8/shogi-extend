@@ -14,7 +14,7 @@
         template(v-else)
           img(:src="base.done_record.browser_url")
 
-      .buttons.is-centered.mb-0(v-if="development_p || true")
+      .buttons.mb-0.is-centered.mt-4(v-if="development_p || true")
         b-button.mb-0(@click="base.close_handle" v-if="development_p") 戻る
         b-button.mb-0(@click="base.download_handle" type="is-primary") ダウンロード
         b-button.mb-0(@click="base.direct_link_handle" type="is-primary") 直リンク
@@ -42,7 +42,9 @@ export default {
 <style lang="sass">
 .XconvPreview
   .is_preview_box
-    max-width: 600
+    +tablet
+      margin: auto
+      max-width: 600px
 
     display: flex
     justify-content: center
