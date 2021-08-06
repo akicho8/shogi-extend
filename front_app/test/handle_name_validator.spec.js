@@ -42,6 +42,8 @@ describe('HandleNameValidator', () => {
     expect(HandleNameValidator.valid("将棋初心者")).toEqual(false)
     expect(HandleNameValidator.valid("noname")).toEqual(false)
     expect(HandleNameValidator.valid("あああ")).toEqual(false)
+    expect(HandleNameValidator.valid("雑　魚")).toEqual(false)
+    expect(HandleNameValidator.valid("雑 魚")).toEqual(false)
   })
 
   test('prefixが含まれる', () => {
