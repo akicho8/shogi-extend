@@ -1,5 +1,7 @@
 class UpdateXyMaster < ActiveRecord::Migration[6.0]
   def change
-    XyMaster::RuleInfo.rebuild
+    if XyMaster::Rule.count.nonzero?
+      XyMaster::RuleInfo.rebuild
+    end
   end
 end
