@@ -7418,6 +7418,15 @@ js-memory-record@^0.0.18:
     core-js latest
     lodash latest
 
+js-memory-record@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.19.tgz#826a8737051baf533cd3cc269fc75fd45e2f97cb"
+  integrity sha512-FT7hcC0keSZXhHmqSmXhAIepTREWWTfbbxsFY9nPIqswVSNYW59ik9ttgK7ZAB/OMD7Bpk7ocYBVbI+ZQmh5uQ==
+  dependencies:
+    babel-runtime latest
+    core-js latest
+    lodash latest
+
 js-stringify@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/js-stringify/-/js-stringify-1.0.2.tgz#1736fddfd9724f28a3682adc6230ae7e4e9679db"
@@ -10843,10 +10852,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shogi-player@^0.0.294:
-  version "0.0.294"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.294.tgz#9538f7e54a6185e1e5b488dd9c75b97221fbb3c6"
-  integrity sha512-2cbRin2xObGsB8lyyUpeAsMGYtQt4seEOKfU/nlhQd3Hr9PyDNPVtYy+Xk4DZwxDCT5M8UEFyngvdPZ2ygPDBw==
+shogi-player@^0.0.296:
+  version "0.0.296"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.296.tgz#2c57b0adae67f7b432d3e0888525645946169887"
+  integrity sha512-4Ddayp7gEUO8W9RFyl5qCggyqoejvthy3JLzE4v4aYxPeSB0UaibepACBfeHN5s6Z7gG9JqVI/BytyfsjQSkhg==
   dependencies:
     autolinker latest
     buefy "^0.9.4"
@@ -10855,7 +10864,7 @@ shogi-player@^0.0.294:
     dayjs latest
     file-loader "^6.2.0"
     howler "^2.2.1"
-    js-memory-record "^0.0.18"
+    js-memory-record "^0.0.19"
     lodash latest
     node-sass ">= 4.0.0 < 5.0.0"
     pug "^3.0.0"
