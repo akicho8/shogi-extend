@@ -12,51 +12,7 @@
     .container
       XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
       XconvPreview(:base="base")
-
-      template(v-if="response_hash && response_hash.url")
-        .columns
-          .column
-            .box
-              b-image(:src="response_hash.url")
-
-      template(v-if="xconv_info")
-        .columns
-          .column
-            .level_container
-              nav.level.is-mobile
-                .level-item.has-text-centered
-                  div
-                    p.heading 待ち
-                    p.title {{xconv_info.standby_only_count}}
-                .level-item.has-text-centered(v-if="xconv_info.processing_only_count > 0 || true")
-                  div
-                    p.heading 変換中
-                    p.title {{xconv_info.processing_only_count}}
-                .level-item.has-text-centered
-                  div
-                    p.heading 完了
-                    p.title {{xconv_info.success_only_count}}
-                .level-item.has-text-centered(v-if="xconv_info.error_only_count > 0 || true")
-                  div
-                    p.heading 失敗
-                    p.title {{xconv_info.error_only_count}}
-
-            b-table(
-              v-if="xconv_info.xconv_records.length >= 1"
-              :data="xconv_info.xconv_records"
-              :mobile-cards="false"
-              :paginated="false"
-              :per-page="10"
-              )
-              b-table-column(v-slot="{row}" label="予約ID" numeric)
-                template(v-if="xconv_record && xconv_record.id === row.id")
-                  b-tag(rounded type="is-primary") {{row.id}}
-                template(v-else)
-                  b-tag(rounded) {{row.id}}
-              b-table-column(v-slot="{row}" field="name" label="名前")
-                | {{row.user.name}}
-              b-table-column(v-slot="{row}" field="status_info.name" label="ステイタス")
-                | {{row.status_info.name}}
+      XconvQueueWatch(:base="base")
 
   XconvDebugPanels(:base="base" v-if="development_p")
 </template>
