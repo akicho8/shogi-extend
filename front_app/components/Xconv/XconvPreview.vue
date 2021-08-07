@@ -16,15 +16,14 @@
 
       .buttons.mb-0.is-centered.mt-4(v-if="development_p || true")
         b-button.mb-0(@click="base.close_handle" v-if="development_p") 戻る
-        b-button.mb-0(@click="base.download_handle" type="is-primary") ダウンロード
-        b-button.mb-0(@click="base.direct_link_handle" type="is-primary") 直リンク
-        b-button.mb-0(@click="base.json_show_handle" type="is-primary") JSON
-        b-button.mb-0(@click="base.other_window_open_handle" type="is-primary") 別Windowで開く
+        b-button.mb-0.has-text-weight-bold(@click="base.download_handle" type="is-primary" icon-left="download") ダウンロード
+        b-button.mb-0(@click="base.direct_link_handle" icon-left="link") 直リン
+        b-button.mb-0(@click="base.other_window_open_handle" icon-left="open-in-new") 別で開く
+        b-button.mb-0(@click="base.json_show_handle") JSON
 
-    template(v-if="base.done_record.successed_at")
+    template(v-if="base.done_record.successed_at && false")
       pre
         | {{base.done_record.browser_url}}
-
 </template>
 
 <script>
@@ -41,7 +40,10 @@ export default {
 
 <style lang="sass">
 .XconvPreview
+  margin-top: 1.5rem
+
   .is_preview_box
+    // タブレット以上では小さく
     +tablet
       margin: auto
       max-width: 600px
@@ -49,6 +51,8 @@ export default {
     display: flex
     justify-content: center
     align-items: center
+
+    // フルスクリーンでは装飾しない
     > *:not(:fullscreen)
       border: 2px solid $grey-lighter
       border-radius: 4px
