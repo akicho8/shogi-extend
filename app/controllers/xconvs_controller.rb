@@ -31,7 +31,7 @@ class XconvsController < ApplicationController
         unless generator.real_path.exist?
           raise ActionController::RoutingError, "ファイルが生成されていません"
         end
-        send_file generator.real_path, type: Mime[generator.to_format], disposition: :disposition, filename: generator.filename
+        send_file generator.real_path, type: Mime[generator.xout_format_info.real_ext], disposition: :disposition, filename: generator.filename
       }
     end
   end

@@ -31,23 +31,23 @@
     SimpleRadioButtons(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
     //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
     SimpleRadioButtons(:base="base" :model="base.LoopInfo" var_name="loop_key")
-    SimpleRadioButtons(:base="base" :model="base.AnimationFormatInfo" var_name="to_format")
+    SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")
 
-    //- SimpleRadioButtons(:base="base" :model="base.AnimationFormatInfo" var_name="to_format")
+    //- SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")
 
-    b-field(:label="base.AnimationFormatInfo.field_label" :message="base.AnimationFormatInfo.fetch(base.to_format).message || base.AnimationFormatInfo.field_message")
+    b-field(:label="base.XoutFormatInfo.field_label" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
       template(#label)
         | Label with custom
         span(class="has-text-primary is-italic") style
-      template(v-for="e in base.AnimationFormatInfo.values")
+      template(v-for="e in base.XoutFormatInfo.values")
         template(v-if="blank_p(e.development_only) || development_p")
-          b-radio-button(@input="sound_play('click')" v-model="base.to_format" :native-value="e.key" :type="e.type")
+          b-radio-button(@input="sound_play('click')" v-model="base.xout_format_key" :native-value="e.key" :type="e.type")
             | {{e.name}}
 
     //- https://buefy.org/documentation/field#combining-addons-and-groups
-    b-field(:label="base.AnimationFormatInfo.field_label" :message="base.AnimationFormatInfo.fetch(base.to_format).message || base.AnimationFormatInfo.field_message")
-      b-select(type="number" v-model="base.to_format" @input="sound_play('click')")
-        option(v-for="e in base.AnimationFormatInfo.values" :value="e.key" v-text="e.name")
+    b-field(:label="base.XoutFormatInfo.field_label" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
+      b-select(type="number" v-model="base.xout_format_key" @input="sound_play('click')")
+        option(v-for="e in base.XoutFormatInfo.values" :value="e.key" v-text="e.name")
 
     template(v-if="false")
       b-field(:label="base.LoopInfo.field_label" :message="base.LoopInfo.fetch(base.loop_key).message || base.LoopInfo.field_message")

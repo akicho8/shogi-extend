@@ -9,7 +9,7 @@
     template(v-if="base.done_record.successed_at")
       //- .box
       .is_preview_box
-        template(v-if="['mp4', 'mov'].includes(to_format)")
+        template(v-if="xout_format_info.mime_group === 'video'")
           video(:src="base.done_record.browser_url" controls autoplay loop)
         template(v-else)
           img(:src="base.done_record.browser_url")
@@ -33,7 +33,8 @@ export default {
   name: "XconvPreview",
   mixins: [support_child],
   computed: {
-    to_format() { return this.base.done_record?.convert_params.board_binary_generator_params.to_format },
+    xout_format_key() { return this.base.done_record?.convert_params.board_binary_generator_params.xout_format_key },
+    xout_format_info() { return this.base.XoutFormatInfo.fetch(this.xout_format_key) },
   },
 }
 </script>

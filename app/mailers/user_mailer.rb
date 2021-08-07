@@ -112,7 +112,7 @@ class UserMailer < ApplicationMailer
   # UserMailer.xconv_notify(Swars::CrawlReservation.first).deliver_later
   # http://localhost:3000/rails/mailers/user/xconv_notify
   def xconv_notify(xconv_record)
-    subject = "#{xconv_record.to_format.upcase}変換完了 (添付あり)"
+    subject = "#{xconv_record.xout_format_info.name}変換完了 (添付あり)"
 
     out = []
 

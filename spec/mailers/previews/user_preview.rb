@@ -30,7 +30,7 @@ class UserPreview < ActionMailer::Preview
       :sleep         => 0,
       :raise_message => "",
       :board_binary_generator_params => {
-        :to_format     => "gif",
+        :xout_format_key    => "is_format_gif",
         :loop_key      => "is_loop_infinite",
         :delay_per_one => 1,
         :end_frames => 1,

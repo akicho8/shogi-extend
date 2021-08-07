@@ -53,7 +53,7 @@ class BoardBinaryGenerator
 
   def to_blob_options
     @to_blob_options ||= -> {
-      Bioshogi::BinaryFormatter.assert_valid_keys(params.except(:to_format))
+      Bioshogi::BinaryFormatter.assert_valid_keys(params.except(:xout_format_key))
 
       opts = params.dup
       opts = opts.deep_symbolize_keys
@@ -112,12 +112,16 @@ class BoardBinaryGenerator
     @real_path ||= self.class.cache_root.join(*dir_parts, filename)
   end
 
-  def to_format
-    params[:to_format].presence || "png"
+  def xout_format_key
+    params[:xout_format_key].presence || "is_format_png"
+  end
+
+  def xout_format_info
+    XoutFormatInfo.fetch(xout_format_key)
   end
 
   def filename
-    "#{unique_key}.#{to_format}"
+    "#{unique_key}.#{xout_format_info.real_ext}"
   end
 
   private
@@ -130,7 +134,7 @@ class BoardBinaryGenerator
   def unique_key_source_string
     [
       PAPPER,
-      to_format,
+      xout_format_info.key,
       record.sfen_hash,
       turn,
       to_blob_options,
@@ -140,22 +144,38 @@ class BoardBinaryGenerator
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
     if false
-      parser.public_send("to_#{to_format}", to_blob_options) # FIXME: やっぱりこのインターフェイスにした方がいいかも
+      parser.public_send("to_#{xout_format_info.real_ext}", to_blob_options) # FIXME: やっぱりこのインターフェイスにした方がいいかも
     else
-      if to_format.in?(["png", "jpg", "bmp"])
+      if xout_format_info.real_ext.in?(["png", "jpg", "bmp"]) # FIXME: ぽりもるふぃっく
         # png は to_blob の結果とする
-        parser.image_formatter(to_blob_options.merge(image_format: to_format)).to_blob_binary
+        parser.image_formatter(to_blob_options.merge(image_format: xout_format_info.real_ext)).to_blob_binary
       else
         # mp4 は write で吐いたファイルを読み込んで返す
         # こちらで png を処理すると foo-1.png などが生成されて to_write_binary は "" を返してしまう
-        parser.animation_formatter(to_blob_options.merge(animation_format: to_format)).to_write_binary
+        parser.animation_formatter(to_blob_options.merge(animation_format: xout_format_info.real_ext)).to_write_binary
       end
     end
   end
 
+  def adjustment_blob
+    bin = to_blob
+    if xout_format_info.twitter_support
+      real_path.dirname.mkpath
+      in_path = real_path.dirname + "tmp_#{real_path.basename}"
+      in_path.binwrite(bin)
+      out_path = real_path.dirname + "out_#{real_path.basename}"
+      command = "ffmpeg -y -i #{in_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{out_path}"
+      system(command)
+      bin = out_path.read
+      # FileUtils.rm_f(in_path)
+      # FileUtils.rm_f(out_path)
+    end
+    bin
+  end
+
   def force_generate
     real_path.dirname.mkpath
-    real_path.binwrite(to_blob)
+    real_path.binwrite(adjustment_blob)
     Pathname("#{real_path}.rb").write(to_blob_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
   end
 

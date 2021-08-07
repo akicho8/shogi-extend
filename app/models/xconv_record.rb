@@ -151,11 +151,16 @@ class XconvRecord < ApplicationRecord
   end
 
   # for ActionMailer
-  def to_format
-    convert_params.fetch(:board_binary_generator_params).fetch(:to_format)
+  def xout_format_info
+    XoutFormatInfo.fetch(xout_format_key)
   end
 
   private
+
+  # for ActionMailer
+  def xout_format_key
+    convert_params.fetch(:board_binary_generator_params).fetch(:xout_format_key)
+  end
 
   def track(name, body = nil)
     SlackAgent.message_send(key: "GIF変換 - #{name}", body: [user.name, id, recordable.to_param, body].compact)

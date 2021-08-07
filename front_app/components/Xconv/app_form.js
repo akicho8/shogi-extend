@@ -1,7 +1,7 @@
 import { LoopInfo } from "../models/loop_info.js"
 import { ViewpointInfo } from "../models/viewpoint_info.js"
 import { AnimationSizeInfo } from "../models/animation_size_info.js"
-import { AnimationFormatInfo } from "../models/animation_format_info.js"
+import { XoutFormatInfo } from "../models/xout_format_info.js"
 
 export const app_form = {
   data() {
@@ -17,7 +17,7 @@ export const app_form = {
       end_frames: 3,  // 終了図だけ指定枚数ぶん停止
       sleep: 0,           // 遅延(デバッグ用)
       raise_message: "",         // 例外メッセージ
-      to_format: "gif",   // 変換先
+      xout_format_key: "is_format_gif",   // 変換先
 
       //////////////////////////////////////////////////////////////////////////////// POST後
       xconv_record: null, // POSTして変換待ちになっているレコード
@@ -133,7 +133,7 @@ export const app_form = {
     animation_size_info() { return AnimationSizeInfo.fetch(this.animation_size_key)   },
     ViewpointInfo()   { return ViewpointInfo   },
     viewpoint_info() { return ViewpointInfo.fetch(this.viewpoint_key)   },
-    AnimationFormatInfo() { return AnimationFormatInfo },
+    XoutFormatInfo() { return XoutFormatInfo },
 
     body_field_type() {
       if (this.bs_error) {
@@ -162,7 +162,7 @@ export const app_form = {
 
           // パラメータの差異はなるべくここだけで吸収する
           board_binary_generator_params: {
-            to_format: this.to_format,
+            xout_format_key: this.xout_format_key,
             // for AnimationFormatter
             // animation_formatter_params: {
             loop_key: this.loop_key,
