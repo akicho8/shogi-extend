@@ -49,7 +49,7 @@ export const app_form = {
     //-   this.url_open(url, this.target_default)
     //- },
 
-    sumit_handle() {
+    submit_handle() {
       this.done_record = null
 
       //- this.record_fetch(() => {
