@@ -1,7 +1,7 @@
 export const app_action_cable = {
   data() {
     return {
-      ac_room: null,           // subscriptions.create のインスタンス
+      ac_room: null, // subscriptions.create のインスタンス
     }
   },
   mounted() {
@@ -11,7 +11,6 @@ export const app_action_cable = {
   beforeDestroy() {
     this.room_destroy()
   },
-
   methods: {
     room_create() {
       this.__assert__(this.ac_room == null, "this.ac_room == null")
@@ -33,55 +32,17 @@ export const app_action_cable = {
           ...this.ac_room_perform_default_params(),
           ...params,
         }) // --> app/channels/share_board/room_channel.rb
-        // this.tl_add("USER", action)
       }
     },
+
     ac_room_perform_default_params() {
       const params = {
-        // from_connection_id: this.connection_id,     // 送信者識別子
-        // from_user_name:     this.user_name,         // 送信者名
-        // performed_at:       this.time_current_ms(), // 実行日時(ms)
-        // active_level:       this.active_level,      // 先輩度(高い方が信憑性のある情報)
-        // ua_icon_key:            this.ua_icon_key,           // 端末の種類を表すアイコン文字列
-        // ac_events_hash:     this.ac_events_hash,    // イベント数(デバッグ用)
-        ...params,
       }
-      // if (this.g_current_user) {
-      //   params.from_avatar_path = this.g_current_user.avatar_path
-      // }
       return params
     },
 
-    // // 自分で送信したものを受信した
-    // received_from_self(params) {
-    //   return params.from_connection_id === this.connection_id
-    // },
-    //
-    // // 他者が送信したものを受信した
-    // received_from_other(params) {
-    //   return !this.received_from_self(params)
-    // },
-
-    ////////////////////////////////////////////////////////////////////////////////
     ac_log(subject = "", body = "") {
       this.ac_room_perform("ac_log", { subject, body })
-    },
-
-    xconv_record_list_broadcasted(data) {
-      this.xconv_info = data
-      if (this.xconv_record && this.xconv_info.done_record) {
-        if (this.xconv_record.id === this.xconv_info.done_record.id) {
-          this.done_record = this.xconv_info.done_record
-          // this.sound_stop_all()
-          this.sound_play("click")
-          if (this.done_record.successed_at) {
-            this.toast_ok("完了しました")
-          }
-          if (this.done_record.errored_at) {
-            this.toast_ok("失敗しました")
-          }
-        }
-      }
     },
   },
 }

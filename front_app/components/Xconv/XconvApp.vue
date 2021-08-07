@@ -25,6 +25,7 @@ import { app_chore        } from "./app_chore.js"
 import { app_preview        } from "./app_preview.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_action_cable } from "./app_action_cable.js"
+import { app_queue_watch } from "./app_queue_watch.js"
 import { app_form         } from "./app_form.js"
 //- import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 
@@ -38,6 +39,7 @@ export default {
     app_preview,
     app_sidebar,
     app_action_cable,
+    app_queue_watch,
     app_form,
   ],
 
@@ -45,8 +47,6 @@ export default {
     return {
       // データ
       response_hash:   null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
-      xconv_info:   null,
-      xconv_record: null,
 
       // その他
       // change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
