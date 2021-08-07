@@ -10,7 +10,7 @@
   | any_source | 棋譜           | ▲68銀△62玉 | [[https://www.shogi-extend.com/adapter][なんでも棋譜変換]] の入力と同じ |
   | to_format  | 変換先形式     | sfen         | kif ki2 csa sfen bod など     |
   | turn       | 手数           | 1            | bod のとき有効                |
-  | format     | レスポンス形式 |              | json txt                      |
+  | format     | レスポンス形式 | json         | 普通は拡張子として指定する    |
   |------------+----------------+--------------+-------------------------------|
 
   - POST で実行する
