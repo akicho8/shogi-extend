@@ -49,7 +49,7 @@ class ServiceInfo
       title: "アニメーション変換",
       attention_label: "NEW!",
       og_image_key: "heavy-export",
-      description: "棋譜をアニメーションGIFなどに変換",
+      description: "棋譜をアニメーション形式に変換する",
       features: [
         "1",
         "2",
