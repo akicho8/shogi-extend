@@ -36,7 +36,7 @@
                   div
                     p.heading 完了
                     p.title {{xconv_info.success_only_count}}
-                .level-item.has-text-centered(v-if="xconv_info.error_only_count > 0 || $config.STAGE !== 'production'")
+                .level-item.has-text-centered(v-if="xconv_info.error_only_count > 0 || true")
                   div
                     p.heading 失敗
                     p.title {{xconv_info.error_only_count}}
