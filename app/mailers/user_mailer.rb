@@ -112,21 +112,24 @@ class UserMailer < ApplicationMailer
   # UserMailer.xconv_notify(Swars::CrawlReservation.first).deliver_later
   # http://localhost:3000/rails/mailers/user/xconv_notify
   def xconv_notify(xconv_record)
-    subject = "GIF変換完了 (添付あり)"
+    subject = "#{xconv_record.to_format.upcase}変換完了 (添付あり)"
 
     out = []
 
     if Rails.env.development?
       out << xconv_record.browser_url
     end
-    out << "ID:#{xconv_record.id} のGIF変換が完了しました"
 
-    out << ""
-    out << "--"
-    out << "SHOGI-EXTEND"
-    out << url_for(:root)
     if Rails.env.development?
-      out << xconv_record.to_t
+      out << "ID:#{xconv_record.id} のGIF変換が完了しました"
+
+      out << ""
+      out << "--"
+      out << "SHOGI-EXTEND"
+      out << url_for(:root)
+      if Rails.env.development?
+        out << xconv_record.to_t
+      end
     end
 
     body = out.join("\n")
