@@ -15,6 +15,9 @@ export const app_form = {
   },
   watch: {
     body() {
+      if (this.sns_login_required()) {
+        return
+      }
       this.bs_error = null
       this.xconv_record = null
       this.done_record = null
@@ -53,6 +56,11 @@ export const app_form = {
       //-   this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`)
       //- })
       this.sound_play("click")
+
+      if (this.sns_login_required()) {
+        return
+      }
+
       if (this.bs_error) {
         this.error_show()
         return
