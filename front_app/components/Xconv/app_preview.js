@@ -21,7 +21,9 @@ export const app_preview = {
     },
     direct_link_handle() {
       this.sound_play("click")
-      window.location.href = this.done_record.browser_url
+      // window.location.href = this.done_record.browser_url
+      // this.other_window_open(this.done_record.browser_url)
+      this.url_open(this.done_record.browser_url, this.target_default)
     },
     download_handle() {
       this.sound_play("click")
