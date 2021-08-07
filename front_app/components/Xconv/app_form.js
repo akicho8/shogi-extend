@@ -3,7 +3,7 @@ export const app_form = {
     return {
       //////////////////////////////////////////////////////////////////////////////// POSTする値
       body: "",           // 棋譜
-      loop: "false",      // ループ
+      loop_key: "is_loop_infinite",      // ループ
       delay_per_one: 1.0, // 表示秒数/1枚
       sleep: 0,           // 遅延(デバッグ用)
       raise_message: "",         // 例外メッセージ
@@ -72,27 +72,9 @@ export const app_form = {
       }
 
       this.ga_click("アニメーション変換●")
-      const params = {
-        // for XconvRecord
-        body: this.body,
 
-        // for XconvRecord#convert_params
-        xconv_record_params: {
-          sleep: this.sleep,
-          raise_message: this.raise_message,
-
-          board_binary_generator_params: {
-            to_format: this.to_format,
-            // for AnimationFormatter
-            // animation_formatter_params: {
-            loop: this.loop === "true",
-            delay_per_one: this.delay_per_one,
-            // },
-          },
-        },
-      }
       const loading = this.$buefy.loading.open()
-      this.$axios.$post("/api/xconv/record_create.json", params).then(e => {
+      this.$axios.$post("/api/xconv/record_create.json", this.post_params).then(e => {
         if (e.bs_error) {
           this.bs_error = e.bs_error
           this.error_show()
@@ -129,6 +111,27 @@ export const app_form = {
     },
     processing_p() {
       return this.xconv_record && !this.done_record
+    },
+    post_params() {
+      return {
+        // for XconvRecord
+        body: this.body,
+
+        // for XconvRecord#convert_params
+        xconv_record_params: {
+          sleep: this.sleep,
+          raise_message: this.raise_message,
+
+          board_binary_generator_params: {
+            to_format: this.to_format,
+            // for AnimationFormatter
+            // animation_formatter_params: {
+            loop_key: this.loop_key,
+            delay_per_one: this.delay_per_one,
+            // },
+          },
+        },
+      }
     },
   },
 }

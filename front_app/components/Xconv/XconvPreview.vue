@@ -10,7 +10,7 @@
       //- .box
       .is_preview_box
         template(v-if="['mp4', 'mov'].includes(to_format)")
-          video(:src="base.done_record.browser_url" controls autoplay loop)
+          video(:src="base.done_record.browser_url" controls autoplay loop_key)
         template(v-else)
           img(:src="base.done_record.browser_url")
 

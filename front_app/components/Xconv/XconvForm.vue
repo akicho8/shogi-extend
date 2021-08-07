@@ -16,13 +16,13 @@
     b-field(label="表示秒数/1枚")
       b-numberinput(v-model="base.delay_per_one" :min="0.1" :max="5" :step="0.1" exponential)
 
-    SimpleRadioButtons(:base="base" :model="LoopInfo" var_name="loop")
+    SimpleRadioButtons(:base="base" :model="LoopInfo" var_name="loop_key")
     SimpleRadioButtons(:base="base" :model="AnimationFormatInfo" var_name="to_format")
 
     template(v-if="false")
-      b-field(:label="LoopInfo.field_label" :message="LoopInfo.fetch(base.loop).message || LoopInfo.field_message")
+      b-field(:label="LoopInfo.field_label" :message="LoopInfo.fetch(base.loop_key).message || LoopInfo.field_message")
         template(v-for="e in LoopInfo.values")
-          b-radio-button(@input="sound_play('click')" v-model="base.loop" :native-value="e.key" :type="e.type")
+          b-radio-button(@input="sound_play('click')" v-model="base.loop_key" :native-value="e.key" :type="e.type")
             | {{e.name}}
 
     b-field
