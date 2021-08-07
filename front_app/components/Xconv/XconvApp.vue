@@ -58,9 +58,7 @@
               b-table-column(v-slot="{row}" field="status_info.name" label="ステイタス")
                 | {{row.status_info.name}}
 
-  DebugPre(v-if="development_p")
-    | {{done_record}}
-    | {{response_hash}}
+  XconvDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
