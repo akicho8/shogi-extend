@@ -13,16 +13,16 @@
   | format     | レスポンス形式 |              | json txt                      |
   |------------+----------------+--------------+-------------------------------|
 
-  * POST で実行する
-  * 開発時に確認しやすくするため GET でも使える
-  * が、本番で GET するとURLが長すぎるエラーになりがち
-  * どのパラメータも必須ではない
+  - POST で実行する
+  - 開発時に確認しやすくするため GET でも使える
+  - が、本番で GET するとURLが長すぎるエラーになりがち
+  - どのパラメータも必須ではない
 
 *** 例
 
-  https://www.shogi-extend.com/api/general/any_source_to.json?any_source=68S62K&to_format=ki2
-  https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=ki2
-  https://www.shogi-extend.com/api/general/any_source_to.json?any_source=68S62K&to_format=kif
-  https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=kif
-  https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=bod&turn=0
-  https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=bod&turn=1
+  1. https://www.shogi-extend.com/api/general/any_source_to.json?any_source=68S62K&to_format=ki2
+  1. https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=ki2
+  1. https://www.shogi-extend.com/api/general/any_source_to.json?any_source=68S62K&to_format=kif
+  1. https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=kif
+  1. https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=bod&turn=0
+  1. https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=bod&turn=1
