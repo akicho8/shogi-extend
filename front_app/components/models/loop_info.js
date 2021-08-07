@@ -6,13 +6,13 @@ export class LoopInfo extends MemoryRecord {
   }
 
   static get field_message() {
-    return ""
+    return "この設定に関係なくTwitterでは60秒以下の動画はループする"
   }
 
   static get define() {
     return [
-      { key: "is_loop_once",     name: "しない", type: "is-primary", message: "Twitterでは強制的にループする", },
-      { key: "is_loop_infinite", name: "する",   type: "is-primary", message: "繰り返す",                      },
+      { key: "is_loop_infinite", name: "する",   type: "is-primary", message: null, },
+      { key: "is_loop_once",     name: "しない", type: "is-primary", message: null, },
     ]
   }
 }

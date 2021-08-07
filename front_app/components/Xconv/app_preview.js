@@ -17,7 +17,9 @@ export const app_preview = {
     },
     other_window_open_handle() {
       this.sound_play("click")
-      this.window_popup(this.done_record.browser_url, {width: 1200, height: 630})
+      // TODO: JS に Hash#slice はないんか？
+      const { width, height } = this.done_record.convert_params.board_binary_generator_params
+      this.window_popup(this.done_record.browser_url, { width, height })
     },
     direct_link_handle() {
       this.sound_play("click")

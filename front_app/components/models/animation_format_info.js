@@ -16,7 +16,7 @@ export class AnimationFormatInfo extends MemoryRecord {
       { key: "apng", name: "APNG", type: "is-primary", message: "Twitter非対応だけど画質は良いマイナーフォーマット",             development_only: false, },
       { key: "mp4",  name: "MP4",  type: "is-primary", message: "Twitter非対応だけど再生しやすい",                               development_only: false, },
       { key: "mov",  name: "MOV",  type: "is-primary", message: "Twitter非対応のうえに再生しづらい",                             development_only: false, },
-      { key: "png",  name: "PNG",  type: "is-primary", message: "動画生成の準備をしてから画像保存は何がしたいのかわからない",    development_only: false, },
+      { key: "png",  name: "PNG",  type: "is-primary", message: "動画生成の過程を経て画像化は何がしたいのかわからない",    development_only: false, },
       { key: "jpg",  name: "JPG",  type: "is-primary", message: "動画用のデータを準備して画像保存は非効率",                      development_only: true,  },
       { key: "bmp",  name: "BMP",  type: "is-primary", message: "動画用のデータを準備して画像保存は非効率",                      development_only: true,  },
     ]

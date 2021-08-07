@@ -10,7 +10,7 @@
       //- .box
       .is_preview_box
         template(v-if="['mp4', 'mov'].includes(to_format)")
-          video(:src="base.done_record.browser_url" controls autoplay loop_key)
+          video(:src="base.done_record.browser_url" controls autoplay loop)
         template(v-else)
           img(:src="base.done_record.browser_url")
 
@@ -46,7 +46,7 @@ export default {
     // タブレット以上では小さく
     +tablet
       margin: auto
-      max-width: 600px
+      // max-width: 600px
 
     display: flex
     justify-content: center

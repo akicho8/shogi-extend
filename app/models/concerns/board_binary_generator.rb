@@ -77,7 +77,7 @@ class BoardBinaryGenerator
 
       default_size.each do |key, val|
         if v = opts[key]
-          opts[key] = v.to_i.clamp(0, val)                   # => {:width  => 1200, :height  => 630    }
+          opts[key] = v.to_i.clamp(0, max_size[key])                # => {:width  => 1200, :height  => 630    }
         end
       end
 
@@ -184,6 +184,13 @@ class BoardBinaryGenerator
     {
       width: 1200,
       height: 630,
+    }
+  end
+
+  def max_size
+    {
+      width: 1200 * 2,
+      height: 630 * 2,
     }
   end
 

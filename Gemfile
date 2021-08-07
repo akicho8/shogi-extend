@@ -127,8 +127,8 @@ group :development do
   gem "aam"
 end
 
-gem "bioshogi", path: "~/src/bioshogi"
-# gem "bioshogi", github: "akicho8/bioshogi"
+# gem "bioshogi", path: "~/src/bioshogi"
+gem "bioshogi", github: "akicho8/bioshogi"
 gem "rmagick"                   # for Bioshogi to_img method (mini-magickに変更したい)
 
 gem "nokogiri" # for Swars::Agent

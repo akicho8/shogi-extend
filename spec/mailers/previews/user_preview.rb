@@ -33,6 +33,7 @@ class UserPreview < ActionMailer::Preview
         :to_format     => "gif",
         :loop_key      => "is_loop_infinite",
         :delay_per_one => 1,
+        :end_frames => 1,
       },
     }
 
