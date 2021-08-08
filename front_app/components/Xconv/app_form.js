@@ -3,6 +3,8 @@ import { ViewpointInfo } from "../models/viewpoint_info.js"
 import { AnimationSizeInfo } from "../models/animation_size_info.js"
 import { XoutFormatInfo } from "../models/xout_format_info.js"
 
+const TWITTER_RATIO_MAX = 2.39
+
 export const app_form = {
   data() {
     return {
@@ -126,6 +128,30 @@ export const app_form = {
       this.i_width = this.animation_size_info.width
       this.i_height = this.animation_size_info.height
     },
+
+    // 100 : 50 = x : 1
+    // 50x = 100
+    // x = 100 / 50
+    // x = 2
+    // ↓
+    // a : b = x : 1
+    // bx = a
+    // x = a / b
+    math_ratio_wh(w, h) {
+      w = w || 0
+      h = h || 0
+      if (w === 0 || h === 0) {
+        return
+      }
+      if (w >= h) {
+        w = w / h
+        h = 1
+      } else {
+        h = h / w
+        w = 1
+      }
+      return [w, h]
+    },
   },
   computed: {
     LoopInfo()            { return LoopInfo            },
@@ -178,5 +204,30 @@ export const app_form = {
         },
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    i_size_ratio() {
+      return this.math_ratio_wh(this.i_width, this.i_height)
+    },
+
+    i_size_field_message() {
+      let r = this.i_size_ratio
+      if (r == null) {
+        return "? : ?"
+      }
+      return r.map(e => this.number_floor(e, 2)).join(" : ")
+    },
+
+    i_size_danger_p() {
+      let r = this.i_size_ratio
+      if (r == null) {
+        return true
+      }
+      return Math.max(...r) > TWITTER_RATIO_MAX
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
   },
 }

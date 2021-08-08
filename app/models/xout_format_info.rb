@@ -1,5 +1,8 @@
-# TWITTERに投稿できる動画と画像の仕様について
+# TWITTERに投稿できる動画と画像の仕様について ← めちゃくちゃ詳しい
 # https://nico-lab.net/twitter_upload_format_spec/
+#
+# 色の情報の扱いについて
+# https://nico-lab.net/setting_in_out_color_with_ffmpeg/
 #
 # TwitterにMP4動画をアップロードするにはyuv420pを使う必要がある（らしい）
 # https://kivantium.hateblo.jp/entry/2017/07/16/160859
