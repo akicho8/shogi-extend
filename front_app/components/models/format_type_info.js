@@ -10,7 +10,7 @@ export class FormatTypeInfo extends MemoryRecord {
       { key: "sfen",          name: `SFEN`,             name_with_turn: t => `SFEN`,             format_key: "sfen", body_encode: "UTF-8",     show: true,  clipboard: true,  },
       { key: "bod",           name: `BOD`,              name_with_turn: t => `BOD #${t}`,        format_key: "bod",  body_encode: "UTF-8",     show: true,  clipboard: true,  },
       { key: "png",           name: `PNG`,              name_with_turn: t => `PNG #${t}`,        format_key: "png",  body_encode: "",          show: true,  clipboard: false, },
-      { key: "gif",           name: `GIF`,              name_with_turn: t => `GIF`,              format_key: "gif",  body_encode: "",          show: true,  clipboard: false, },
+      // { key: "gif",           name: `GIF`,              name_with_turn: t => `GIF`,              format_key: "gif",  body_encode: "",          show: true,  clipboard: false, },
     ]
   }
 }

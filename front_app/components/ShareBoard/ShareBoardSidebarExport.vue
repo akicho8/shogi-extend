@@ -1,7 +1,10 @@
 <template lang="pug">
 .ShareBoardSidebarExport
   b-menu-list(label="いろんな種類で棋譜取得")
-    b-menu-item.is_active_unset(icon="eye" :expanded="false" @click="sound_play('click')")
+    b-menu-item.is_active_unset(icon="movie" label="アニメーション変換" tag="nuxt-link" :to="{name: 'heavy-export', query: {body: base.current_sfen, viewpoint_key: base.sp_viewpoint}}" @click.native="sound_play('click')")
+
+    b-menu-item.is_active_unset(icon="eye" :expanded="false"
+    @click="sound_play('click')")
       template(slot="label" slot-scope="props")
         | 表示
         b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")

@@ -48,9 +48,15 @@ export const app_form = {
   },
   mounted() {
     let v = null
+
     v = this.$route.query.body
     if (this.present_p(v)) {
       this.body = v
+    }
+
+    v = this.$route.query.viewpoint_key
+    if (this.present_p(v)) {
+      this.viewpoint_key = v
     }
   },
   methods: {
