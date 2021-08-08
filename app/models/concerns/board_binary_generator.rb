@@ -75,9 +75,11 @@ class BoardBinaryGenerator
       #
       # opts = opts.deep_symbolize_keys # opts[:piece_pull_right_rate][:black] でアクセスできるようにするため
 
-      default_size.each do |key, val|
-        if v = opts[key]
-          opts[key] = v.to_i.clamp(0, max_size[key])                # => {:width  => 1200, :height  => 630    }
+      default_size.each do |e|
+        if v = opts[e[:key]]
+          v = v.to_i
+          v = v.clamp(0, e[:max])
+          opts[e[:key]] = v
         end
       end
 
@@ -200,18 +202,14 @@ class BoardBinaryGenerator
   #   end
   # end
 
+  # 基本サイズは指定されてなくて下位互換のためOGP画像推奨サイズを初期値にしている
+  # 動画の場合は 4:3 にした方がいい
+  # 動画の場合はサイズが渡ってくる
   def default_size
-    {
-      width: 1200,
-      height: 630,
-    }
-  end
-
-  def max_size
-    {
-      width: 1200 * 2,
-      height: 630 * 2,
-    }
+    [
+      { key: :width,  default: 1200, max: Rails.env.development? ? 3200 : 1600, },
+      { key: :height, default:  630, max: Rails.env.development? ? 3200 : 1200, },
+    ]
   end
 
   # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
