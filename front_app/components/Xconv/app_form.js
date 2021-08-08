@@ -1,6 +1,7 @@
 import { LoopInfo } from "../models/loop_info.js"
 import { ViewpointInfo } from "../models/viewpoint_info.js"
-import { AnimationSizeInfo } from "../models/animation_size_info.js"
+import { AnimationSizeInfo } from "./models/animation_size_info.js"
+import { FormQueryInfo } from "./models/form_query_info.js"
 import { XoutFormatInfo } from "../models/xout_format_info.js"
 
 const TWITTER_RATIO_MAX = 2.39  // Twitterでアップロードできるのは比率がこれ以下のとき
@@ -8,29 +9,29 @@ const TWITTER_RATIO_MAX = 2.39  // Twitterでアップロードできるのは�
 export const app_form = {
   data() {
     return {
-      //////////////////////////////////////////////////////////////////////////////// POSTする値
-      body: "",                         // 棋譜
-      loop_key: "is_loop_infinite",     // ループ
-      animation_size_key: "is1024x768", // 画像サイズ
-      i_width: null,                    // w
-      i_height: null,                   // h
-      viewpoint_key: "black",           // 視点
-      delay_per_one: 1.0,               // 表示秒数/1枚
-      end_frames: 3,                    // 終了図だけ指定枚数ぶん停止
-      sleep: 0,                         // 遅延(デバッグ用)
-      raise_message: null,              // 例外メッセージ
-      xout_format_key: "is_format_gif", // 変換先
+      //////////////////////////////////////////////////////////////////////////////// POST前
+      body:               null, // 棋譜
+      loop_key:           null, // ループ
+      animation_size_key: null, // 画像サイズ
+      i_width:            null, // w
+      i_height:           null, // h
+      viewpoint_key:      null, // 視点
+      delay_per_one:      null, // 表示秒数/1枚
+      end_frames:         null, // 終了図だけ指定枚数ぶん停止
+      sleep:              null, // 遅延(デバッグ用)
+      raise_message:      null, // 例外メッセージ
+      xout_format_key:    null, // 変換先
 
       //////////////////////////////////////////////////////////////////////////////// POST後
       xconv_record: null, // POSTして変換待ちになっているレコード
-
-      //////////////////////////////////////////////////////////////////////////////// その他
-      bs_error: null, //  エラー情報
+      bs_error: null,     // エラー情報
     }
   },
 
   created() {
-    this.width_height_udpate()
+    this.form_params_set_form_query()
+    this.i_width  = this.i_width ?? this.animation_size_info.width
+    this.i_height = this.i_height ?? this.animation_size_info.height
   },
 
   watch: {
@@ -47,17 +48,6 @@ export const app_form = {
     // },
   },
   mounted() {
-    let v = null
-
-    v = this.$route.query.body
-    if (this.present_p(v)) {
-      this.body = v
-    }
-
-    v = this.$route.query.viewpoint_key
-    if (this.present_p(v)) {
-      this.viewpoint_key = v
-    }
   },
   methods: {
     body_focus() {
@@ -134,11 +124,29 @@ export const app_form = {
       this.i_width = this.animation_size_info.width
       this.i_height = this.animation_size_info.height
     },
+
+    form_params_set_form_query() {
+      this.FormQueryInfo.values.forEach(e => {
+        let v = this.$route.query[e.key]
+        if (this.present_p(v)) {
+          if (e.type === "integer") {
+            v = Math.trunc(Number(v))
+          } else if (e.type === "float") {
+            v = Number(v)
+          }
+          this.$data[e.key] = v
+        } else {
+          this.$data[e.key] = e.default
+        }
+      })
+    },
   },
   computed: {
     LoopInfo()            { return LoopInfo            },
     AnimationSizeInfo()   { return AnimationSizeInfo   },
     animation_size_info() { return AnimationSizeInfo.fetch(this.animation_size_key)   },
+    FormQueryInfo()   { return FormQueryInfo   },
+    form_query_info() { return FormQueryInfo.fetch(this.form_query_key)   },
     ViewpointInfo()   { return ViewpointInfo   },
     viewpoint_info() { return ViewpointInfo.fetch(this.viewpoint_key)   },
     XoutFormatInfo() { return XoutFormatInfo },
