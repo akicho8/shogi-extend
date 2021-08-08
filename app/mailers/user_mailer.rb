@@ -112,36 +112,34 @@ class UserMailer < ApplicationMailer
   # UserMailer.xconv_notify(Swars::CrawlReservation.first).deliver_later
   # http://localhost:3000/rails/mailers/user/xconv_notify
   def xconv_notify(xconv_record)
-    subject = "#{xconv_record.xout_format_info.name}変換完了 (添付あり)"
-
-    out = []
+    # 本文
+    body = []
 
     if Rails.env.development?
-      out << xconv_record.browser_url
+      body << xconv_record.browser_url
     end
 
     if Rails.env.development?
-      out << "ID:#{xconv_record.id} のGIF変換が完了しました"
+      body << "ID:#{xconv_record.id} のGIF変換が完了しました"
 
-      out << ""
-      out << "--"
-      out << "SHOGI-EXTEND"
-      out << url_for(:root)
+      body << ""
+      body << "--"
+      body << "SHOGI-EXTEND"
+      body << url_for(:root)
       if Rails.env.development?
-        out << xconv_record.to_t
+        body << xconv_record.to_t
       end
     end
 
-    body = out.join("\n")
     # 添付
     real_path = xconv_record.generator.real_path
     attachments[real_path.basename.to_s] = real_path.read
 
-    user = xconv_record.user
-
-    to = "#{xconv_record.user.name} <#{xconv_record.user.email}>"
-
-
-    mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)
+    mail({
+        subject: "#{xconv_record.xout_format_info.name} 変換完了 (添付あり)",
+        to: "#{xconv_record.user.name} <#{xconv_record.user.email}>",
+        bcc: AppConfig[:admin_email],
+        body: body.join("\n"),
+      })
   end
 end

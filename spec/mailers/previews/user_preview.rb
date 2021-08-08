@@ -30,15 +30,16 @@ class UserPreview < ActionMailer::Preview
       :sleep         => 0,
       :raise_message => "",
       :board_binary_generator_params => {
-        :xout_format_key    => "is_format_gif",
-        :loop_key      => "is_loop_infinite",
-        :delay_per_one => 1,
-        :end_frames => 1,
+        :xout_format_key => "is_format_gif",
+        :loop_key        => "is_loop_infinite",
+        :delay_per_one   => 1,
+        :end_frames      => 1,
       },
     }
 
     free_battle = FreeBattle.create!(kifu_body: "68S", use_key: "adapter", user: User.sysop)
     xconv_record = XconvRecord.create!(recordable: free_battle, user: User.sysop, convert_params: convert_params)
+    xconv_record.main_process!
     UserMailer.xconv_notify(xconv_record)
   end
 end
