@@ -16,17 +16,20 @@
     b-field(label="表示秒数/1枚")
       b-numberinput(v-model="base.delay_per_one" :min="0.1" :max="5" :step="0.1" exponential)
 
-    b-field(label="終了図停止枚数" message="ループする場合に最後の局面を少し止めることで終局した風味を出すためのもの")
+    b-field(label="終了図停止枚数" message="ループする場合に最後の局面を少し止めて終局した風にする")
       b-numberinput(v-model="base.end_frames" :min="0" :max="15" :step="1" exponential)
 
     //- https://buefy.org/documentation/field#combining-addons-and-groups
     b-field(grouped)
-      b-field(label="サイズ" expanded :message="base.i_size_field_message" )
+      b-field(label="サイズ" expanded :message="[base.animation_size_info.message, base.i_size_ratio_human]" )
         b-field(:type="{'is-danger': base.i_size_danger_p}")
           b-select(type="number" v-model="base.animation_size_key" @input="base.animation_size_key_input_handle")
             option(v-for="e in base.AnimationSizeInfo.values" :value="e.key" v-text="e.name")
-          b-input(type="number" v-model="base.i_width" :min="0" :max="development_p ? 3200 : 1600" :step="1" exponential expanded placeholder="width")
-          b-input(type="number" v-model="base.i_height" :min="0" :max="development_p ? 3200 : 1200" :step="1" exponential expanded placeholder="height")
+          b-input(required type="number" v-model="base.i_width"  :min="0" :max="development_p ? 3200 : 1600" :step="1" exponential expanded placeholder="width")
+          b-input(required type="number" v-model="base.i_height" :min="0" :max="development_p ? 3200 : 1200" :step="1" exponential expanded placeholder="height")
+          p.control(v-if="development_p && false")
+            span.button.is-static
+              | {{base.i_size_ratio_human}}
 
     SimpleRadioButtons(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
     //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")

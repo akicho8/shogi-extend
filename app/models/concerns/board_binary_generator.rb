@@ -83,6 +83,8 @@ class BoardBinaryGenerator
         end
       end
 
+      opts.update(xout_format_info.override_options)
+
       opts = opts.slice(*Bioshogi::BinaryFormatter.all_options.keys) # 不要なオプションを取る
 
       opts
@@ -159,25 +161,9 @@ class BoardBinaryGenerator
     end
   end
 
-  def adjustment_blob
-    bin = to_blob
-    if xout_format_info.twitter_support
-      real_path.dirname.mkpath
-      in_path = real_path.dirname + "tmp_#{real_path.basename}"
-      in_path.binwrite(bin)
-      out_path = real_path.dirname + "out_#{real_path.basename}"
-      command = "ffmpeg -y -i #{in_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{out_path}"
-      system(command)
-      bin = out_path.read
-      # FileUtils.rm_f(in_path)
-      # FileUtils.rm_f(out_path)
-    end
-    bin
-  end
-
   def force_generate
     real_path.dirname.mkpath
-    real_path.binwrite(adjustment_blob)
+    real_path.binwrite(yuv420_convert(to_blob))
     Pathname("#{real_path}.rb").write(to_blob_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
   end
 
@@ -223,5 +209,29 @@ class BoardBinaryGenerator
       :mediator_class     => Bioshogi::MediatorFast,
       :turn_limit         => turn,
     }
+  end
+
+  def yuv420_convert(bin)
+    if xout_format_info.force_convert_to_yuv420p
+      i_path = real_path.dirname + "i_#{real_path.basename}"
+      o_path = real_path.dirname + "o_#{real_path.basename}"
+
+      real_path.dirname.mkpath
+      i_path.binwrite(bin)
+
+      command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
+      # command = "ruby -e '1 / 0'"
+      Pathname("#{real_path}.ffmpeg_command.txt").write(command)
+      system(command, exception: true)
+
+      bin = o_path.read
+
+      if Rails.env.development?
+      else
+        FileUtils.rm_f(i_path)
+        FileUtils.rm_f(o_path)
+      end
+    end
+    bin
   end
 end

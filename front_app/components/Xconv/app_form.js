@@ -3,23 +3,23 @@ import { ViewpointInfo } from "../models/viewpoint_info.js"
 import { AnimationSizeInfo } from "../models/animation_size_info.js"
 import { XoutFormatInfo } from "../models/xout_format_info.js"
 
-const TWITTER_RATIO_MAX = 2.39
+const TWITTER_RATIO_MAX = 2.39  // Twitterでアップロードできるのは比率がこれ以下のとき
 
 export const app_form = {
   data() {
     return {
       //////////////////////////////////////////////////////////////////////////////// POSTする値
-      body: "",           // 棋譜
-      loop_key: "is_loop_infinite",      // ループ
-      animation_size_key: "is1200x630",  // 画像サイズ
-      i_width: null,      // w
-      i_height: null,      // h
-      viewpoint_key: "black",  // 画像サイズ
-      delay_per_one: 1.0, // 表示秒数/1枚
-      end_frames: 3,  // 終了図だけ指定枚数ぶん停止
-      sleep: 0,           // 遅延(デバッグ用)
-      raise_message: "",         // 例外メッセージ
-      xout_format_key: "is_format_gif",   // 変換先
+      body: "",                         // 棋譜
+      loop_key: "is_loop_infinite",     // ループ
+      animation_size_key: "is1024x768", // 画像サイズ
+      i_width: null,                    // w
+      i_height: null,                   // h
+      viewpoint_key: "black",           // 視点
+      delay_per_one: 1.0,               // 表示秒数/1枚
+      end_frames: 3,                    // 終了図だけ指定枚数ぶん停止
+      sleep: 0,                         // 遅延(デバッグ用)
+      raise_message: null,              // 例外メッセージ
+      xout_format_key: "is_format_gif", // 変換先
 
       //////////////////////////////////////////////////////////////////////////////// POST後
       xconv_record: null, // POSTして変換待ちになっているレコード
@@ -128,30 +128,6 @@ export const app_form = {
       this.i_width = this.animation_size_info.width
       this.i_height = this.animation_size_info.height
     },
-
-    // 100 : 50 = x : 1
-    // 50x = 100
-    // x = 100 / 50
-    // x = 2
-    // ↓
-    // a : b = x : 1
-    // bx = a
-    // x = a / b
-    math_ratio_wh(w, h) {
-      w = w || 0
-      h = h || 0
-      if (w === 0 || h === 0) {
-        return
-      }
-      if (w >= h) {
-        w = w / h
-        h = 1
-      } else {
-        h = h / w
-        w = 1
-      }
-      return [w, h]
-    },
   },
   computed: {
     LoopInfo()            { return LoopInfo            },
@@ -207,12 +183,8 @@ export const app_form = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    i_size_ratio() {
-      return this.math_ratio_wh(this.i_width, this.i_height)
-    },
-
-    i_size_field_message() {
-      let r = this.i_size_ratio
+    i_size_ratio_human() {
+      let r = this.math_wh_gcd_ratio(this.i_width, this.i_height)
       if (r == null) {
         return "? : ?"
       }
@@ -220,7 +192,7 @@ export const app_form = {
     },
 
     i_size_danger_p() {
-      let r = this.i_size_ratio
+      let r = this.math_wh_normalize_ratio(this.i_width, this.i_height)
       if (r == null) {
         return true
       }

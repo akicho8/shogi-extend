@@ -11,17 +11,20 @@
 # ・yuv420p にすることで Twitter に投稿できる
 #
 
+
 class XoutFormatInfo
   include ApplicationMemoryRecord
   memory_record [
-    { key: "is_format_gif",         name: "GIF",           real_ext: "gif",  twitter_support: false, },
-    { key: "is_format_webp",        name: "WebP",          real_ext: "webp", twitter_support: false, },
-    { key: "is_format_apng",        name: "APNG",          real_ext: "apng", twitter_support: false, },
-    { key: "is_format_mp4",         name: "MP4",           real_ext: "mp4",  twitter_support: false, },
-    { key: "is_format_mp4_yuv420p", name: "MP4 (yuv420p)", real_ext: "mp4",  twitter_support: true,  },
-    { key: "is_format_mov",         name: "MOV",           real_ext: "mov",  twitter_support: false, },
-    { key: "is_format_png",         name: "PNG",           real_ext: "png",  twitter_support: false, },
-    { key: "is_format_jpg",         name: "JPG",           real_ext: "jpg",  twitter_support: false, },
-    { key: "is_format_bmp",         name: "BMP",           real_ext: "bmp",  twitter_support: false, },
+    # ../../front_app/components/models/xout_format_info.js
+    { key: "is_format_gif",            name: "GIF",                  real_ext: "gif",  override_options: {},                      force_convert_to_yuv420p: false, },
+    { key: "is_format_webp",           name: "WebP",                 real_ext: "webp", override_options: {},                      force_convert_to_yuv420p: false, },
+    { key: "is_format_apng",           name: "APNG",                 real_ext: "apng", override_options: {},                      force_convert_to_yuv420p: false, },
+    { key: "is_format_mp4",            name: "MP4",                  real_ext: "mp4",  override_options: {},                      force_convert_to_yuv420p: false, },
+    { key: "is_format_safe_mp4",       name: "MP4 (yuv420p)",        real_ext: "mp4",  override_options: {},                      force_convert_to_yuv420p: true,  },
+    { key: "is_format_safe_mp4_noopt", name: "MP4 (yuv420p, noopt)", real_ext: "mp4",  override_options: {optimize_layer: false}, force_convert_to_yuv420p: true,  },
+    { key: "is_format_mov",            name: "MOV",                  real_ext: "mov",  override_options: {},                      force_convert_to_yuv420p: false, },
+    { key: "is_format_png",            name: "PNG",                  real_ext: "png",  override_options: {},                      force_convert_to_yuv420p: false, },
+    { key: "is_format_jpg",            name: "JPG",                  real_ext: "jpg",  override_options: {},                      force_convert_to_yuv420p: false, },
+    { key: "is_format_bmp",            name: "BMP",                  real_ext: "bmp",  override_options: {},                      force_convert_to_yuv420p: false, },
   ]
 end
