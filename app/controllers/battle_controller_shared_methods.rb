@@ -159,7 +159,8 @@ module BattleControllerSharedMethods
       respond_to do |format|
         format.html
         format.png {
-          generator = BoardBinaryGenerator.new(current_record, params.merge(xout_format_key: :is_format_png))
+          params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
+          generator = BoardBinaryGenerator.new(current_record, params2.merge(xout_format_key: :is_format_png))
           send_file_or_redirect(generator)
         }
         # if Rails.env.development?
@@ -204,7 +205,7 @@ module BattleControllerSharedMethods
 
     def send_file_or_redirect(generator)
       if current_disposition == :attachment
-        send_file generator.to_real_path, type: Mime[generator.class.file_format], disposition: current_disposition, filename: current_filename
+        send_file generator.to_real_path, type: Mime[generator.xout_format_info.real_ext], disposition: current_disposition, filename: current_filename
       else
         redirect_to generator.to_browser_path
       end

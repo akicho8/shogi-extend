@@ -34,12 +34,12 @@ class KifuParser
     core.to_png(*args)
   end
 
-  def to_gif(*args)
-    if Rails.env.production?
-      raise "いまのところproductionでのリアルタイムなGIF変換はサーバーが死ぬので禁止"
-    end
-    core.to_gif(*args)
-  end
+  # def to_gif(*args)
+  #   if Rails.env.production?
+  #     raise "いまのところproductionでのリアルタイムなGIF変換はサーバーが死ぬので禁止"
+  #   end
+  #   core.to_gif(*args)
+  # end
 
   def to_xxx(key = to_format, *args)
     public_send("to_#{key}", *args)

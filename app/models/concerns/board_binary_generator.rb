@@ -76,7 +76,7 @@ class BoardBinaryGenerator
       # opts = opts.deep_symbolize_keys # opts[:piece_pull_right_rate][:black] でアクセスできるようにするため
 
       default_size.each do |e|
-        if v = opts[e[:key]]
+        if v = opts[e[:key]].presence || e[:default]
           v = v.to_i
           v = v.clamp(0, e[:max])
           opts[e[:key]] = v
