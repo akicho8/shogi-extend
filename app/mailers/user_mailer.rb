@@ -133,12 +133,14 @@ class UserMailer < ApplicationMailer
     end
 
     body = out.join("\n")
+    # 添付
+    real_path = xconv_record.generator.real_path
+    attachments[real_path.basename.to_s] = real_path.read
 
     user = xconv_record.user
 
     to = "#{xconv_record.user.name} <#{xconv_record.user.email}>"
 
-    attachments["#{xconv_record.to_param}.gif"] = xconv_record.generator.to_real_path.read
 
     mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)
   end
