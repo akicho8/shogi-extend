@@ -75,8 +75,8 @@ export default {
     +tablet
       padding: 2rem
 
-  .MainColumn
-    // +tablet
-    //   max-width: 40rem
+  // .MainColumn
+  //   // +tablet
+  //   //   max-width: 40rem
 
 </style>
